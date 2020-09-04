@@ -1,0 +1,335 @@
+%%{
+    let component_target_list_string = [];
+    let component_target_private_list_string = [];
+    let component_target_prebuilt_list_string = [];
+    let component_target_clean_list_string = [];
+    let component_target_scrub_list_string = [];
+    let component_target_prebuilt_clean_list_string = [];
+    let component_target_prebuilt_scrub_list_string = [];
+    for (component of args.component_list) {
+        if(component.isSkipTopLevelBuild) {
+            component_target_private_list_string +=` \$(BUILD_COMBO_${component.name})`
+            component_target_clean_list_string +=` \$(BUILD_COMBO_CLEAN_${component.name})`
+            component_target_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
+        }
+        else if(component.isPrebuilt) {
+            component_target_prebuilt_list_string +=` \$(BUILD_COMBO_${component.name})`
+            component_target_prebuilt_clean_list_string +=` \$(BUILD_COMBO_CLEAN_${component.name})`
+            component_target_prebuilt_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
+        }
+        else {
+            component_target_list_string +=` \$(BUILD_COMBO_${component.name})`
+            component_target_clean_list_string +=` \$(BUILD_COMBO_CLEAN_${component.name})`
+            component_target_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
+        }
+    }
+%%}
+#
+# Auto generated makefile
+#
+
+all:
+	$(MAKE) -f makefile.`device` libs
+	$(MAKE) -f makefile.`device` sbl
+	$(MAKE) -f makefile.`device` examples
+
+clean: libs-clean sbl-clean examples-clean
+scrub: libs-scrub sbl-scrub examples-scrub
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=debug or PROFILE=release [default] to build in debug or release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.`device` help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.`device` all
+	@echo  $(MAKE) -s -f makefile.`device` clean  # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.`device` scrub  # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.`device` libs
+	@echo  $(MAKE) -s -f makefile.`device` libs-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.`device` libs-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.`device` examples
+	@echo  $(MAKE) -s -f makefile.`device` examples-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.`device` examples-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  Library build targets,
+	@echo  ======================
+% for (component of args.component_list) {
+	@echo  $(MAKE) -s -f makefile.`device``component.buildTarget`
+% }
+	@echo  .
+	@echo  Library clean targets,
+	@echo  ======================
+% for (component of args.component_list) {
+	@echo  $(MAKE) -s -f makefile.`device``component.buildTargetClean`
+% }
+	@echo  .
+	@echo  Example build targets,
+	@echo  ======================
+% for (example of args.example_list) {
+	@echo  $(MAKE) -s -C `example.relpath` [all clean syscfg-gui syscfg]
+% }
+	@echo  .
+	@echo  System Example build targets,
+	@echo  =============================
+% for (example of args.system_example_list) {
+	@echo  $(MAKE) -s -C `example.relpath` [all clean syscfg-gui syscfg]
+% }
+	@echo  .
+
+# Various Component Targets
+% for (component of args.component_list) {
+BUILD_COMBO_`component.name` =`component.buildTarget`
+% }
+
+# Combine all Components
+BUILD_COMBO_ALL =`component_target_list_string`
+
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL =`component_target_prebuilt_list_string`
+
+# Combine all Private Components
+BUILD_COMBO_PRIVATE_ALL =`component_target_private_list_string`
+
+libs: $(BUILD_COMBO_ALL)
+
+libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
+
+libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+% for (component of args.component_list) {
+$(BUILD_COMBO_`component.name`):
+	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$@) all
+
+% }
+
+# Various Component Clean Targets
+% for (component of args.component_list) {
+BUILD_COMBO_CLEAN_`component.name` =`component.buildTargetClean`
+% }
+
+# Combine all Components Clean
+BUILD_COMBO_CLEAN_ALL =`component_target_clean_list_string`
+
+# Combine all Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL =`component_target_prebuilt_clean_list_string`
+
+libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+% for (component of args.component_list) {
+$(BUILD_COMBO_CLEAN_`component.name`):
+	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _clean,,$@)) clean
+
+% }
+
+# Various Component Scrub Targets
+% for (component of args.component_list) {
+BUILD_COMBO_SCRUB_`component.name` =`component.buildTargetScrub`_scrub
+% }
+
+# Combine all Components Scrub Targets
+BUILD_COMBO_SCRUB_ALL =`component_target_scrub_list_string`
+
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL =`component_target_prebuilt_scrub_list_string`
+
+libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+% for (component of args.component_list) {
+$(BUILD_COMBO_SCRUB_`component.name`):
+	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _scrub,,$@)) scrub
+
+% }
+
+BUILD_COMBO_EXAMPLE_ALL =
+# Various Example Targets
+% for (example of args.example_list) {
+%   if(!example.isSkipTopLevelBuild && !example.isBootLoader) {
+BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
+%   }
+% }
+# Various System Example Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
+%   }
+% }
+
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
+# Various Private Example Targets
+% for (example of args.example_list) {
+%   if(example.isSkipTopLevelBuild && !example.isBootLoader) {
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL +=`example.buildTarget`
+%   }
+% }
+# Various Private System Example Targets
+% for (example of args.system_example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL +=`example.buildTarget`
+%   }
+% }
+
+examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+% for (example of args.example_list) {
+`example.buildTarget`:
+	$(MAKE) -C `example.relpath` -f makefile all
+
+% }
+% for (example of args.system_example_list) {
+`example.buildTarget`:
+	$(MAKE) -C `example.relpath` -f makefile all
+
+% }
+
+BUILD_COMBO_EXAMPLE_CLEAN_ALL =
+# Various Example Clean Targets
+% for (example of args.example_list) {
+%   if(!example.isSkipTopLevelBuild && !example.isBootLoader) {
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
+%   }
+% }
+# Various System Example Clean Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
+%   }
+% }
+
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
+# Various Private Example Targets
+% for (example of args.example_list) {
+%   if(example.isSkipTopLevelBuild && !example.isBootLoader) {
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL +=`example.buildTargetClean`
+%   }
+% }
+# Various Private System Example Targets
+% for (example of args.system_example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL +=`example.buildTargetClean`
+%   }
+% }
+
+examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
+
+examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+% for (example of args.example_list) {
+`example.buildTargetClean`:
+	$(MAKE) -C `example.relpath` -f makefile clean
+
+% }
+% for (example of args.system_example_list) {
+`example.buildTargetClean`:
+	$(MAKE) -C `example.relpath` -f makefile clean
+
+% }
+
+BUILD_COMBO_EXAMPLE_SCRUB_ALL =
+# Various Example Scrub Targets
+% for (example of args.example_list) {
+%   if(!example.isSkipTopLevelBuild && !example.isBootLoader) {
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
+%   }
+% }
+# Various System Example Scrub Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
+%   }
+% }
+
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
+# Various Private Example Targets
+% for (example of args.example_list) {
+%   if(example.isSkipTopLevelBuild && !example.isBootLoader) {
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL +=`example.buildTargetScrub`
+%   }
+% }
+# Various Private System Example Targets
+% for (example of args.system_example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL +=`example.buildTargetScrub`
+%   }
+% }
+
+examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+
+examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+% for (example of args.example_list) {
+`example.buildTargetScrub`:
+	$(MAKE) -C `example.relpath` -f makefile scrub
+
+% }
+% for (example of args.system_example_list) {
+`example.buildTargetScrub`:
+	$(MAKE) -C `example.relpath` -f makefile scrub
+
+% }
+
+sbl: libs
+% for (example of args.example_list) {
+% if(example.isBootLoader) {
+	$(MAKE) -C `example.relpath` -f makefile all
+%}
+%}
+
+sbl-clean:
+% for (example of args.example_list) {
+% if(example.isBootLoader) {
+	$(MAKE) -C `example.relpath` -f makefile clean
+%}
+%}
+
+sbl-scrub:
+% for (example of args.example_list) {
+% if(example.isBootLoader) {
+	$(MAKE) -C `example.relpath` -f makefile scrub
+%}
+%}
+
+% if ((device == "am64x") || (device == "am243x")) {
+sbl-hs:
+% for (example of args.example_list) {
+% if(example.isBootLoader) {
+	$(MAKE) -C `example.relpath` -f makefile all DEVICE_TYPE=HS
+%}
+%}
+
+sbl-hs-clean:
+% for (example of args.example_list) {
+% if(example.isBootLoader) {
+	$(MAKE) -C `example.relpath` -f makefile clean DEVICE_TYPE=HS
+%}
+%}
+
+sbl-hs-scrub:
+% for (example of args.example_list) {
+% if(example.isBootLoader) {
+	$(MAKE) -C `example.relpath` -f makefile scrub DEVICE_TYPE=HS
+%}
+%}
+% }
+
+.PHONY: all clean scrub help
+.PHONY: libs libs-clean libs-scrub
+.PHONY: libs-private
+.PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
+.PHONY: examples examples-clean examples-scrub
+.PHONY: examples-private examples-private-clean examples-private-scrub
+.PHONY: sbl sbl-clean sbl-scrub
+.PHONY: $(BUILD_COMBO_ALL) $(BUILD_COMBO_CLEAN_ALL) $(BUILD_COMBO_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_ALL) $(BUILD_COMBO_EXAMPLE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)

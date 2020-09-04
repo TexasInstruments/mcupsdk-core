@@ -1,0 +1,17 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("hsmclient");
+    let module = system.modules['/drivers/hsmclient/hsmclient'];
+    let instance = module.$instances[0]; 
+    let config = module.getInstanceConfig(instance); 
+%%}
+/*
+ *  HSM Client 
+ */
+#include <drivers/hsmclient.h>
+
+/* sysconfig generated parameter QUEUE LENGTH */
+#define SIPC_QUEUE_LENGTH   (`config.sipc_que_depth`u)
+/* Total number of secure cores */ 
+#define SIPC_NUM_R5_CORES   (`config.sipc_r5cores`u)

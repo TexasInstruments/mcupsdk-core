@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="C6000"
+                deviceId="TMS320C66XX.AM273x.evmAM273x"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Crc 16bit"
+        name = "crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000"
+        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+            Debug,
+            Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TI"
+        cgtVersion="8.3.12"
+        device="TMS320C66XX.AM273x.evmAM273x"
+        deviceCore="C66xx_DSP"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${CG_TOOL_ROOT}/include
+            -I${MCU_PLUS_SDK_PATH}/source
+            -mv6600
+            --abi=eabi
+            -q
+            -mi10
+            -mo
+            -pden
+            -pds=238
+            -pds=880
+            -pds1110
+            --emit_warnings_as_errors
+            -DSOC_AM273X
+        "
+        linkerBuildOptions="
+            -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
+            -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${CG_TOOL_ROOT}/lib
+            -m=crc_16bit.${ConfigName}.map
+            --warn_sections
+            --emit_warnings_as_errors
+            --rom_model
+            -x
+        "
+
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"
+
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --context c66ss0 --part Default --package ZCE
+        "
+
+        description="A Crc 16bit NORTOS project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+                -lnortos.am273x.c66.ti-c6000.debug.lib
+                -ldrivers.am273x.c66.ti-c6000.debug.lib
+                -lboard.am273x.c66.ti-c6000.debug.lib
+                -llibc.a
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                --program_level_compile
+                -o3
+                -mf3
+            "
+            linkerBuildOptions="
+                -lnortos.am273x.c66.ti-c6000.release.lib
+                -ldrivers.am273x.c66.ti-c6000.release.lib
+                -lboard.am273x.c66.ti-c6000.release.lib
+                -llibc.a
+            "
+        ></configuration>
+        <pathVariable name="DSPLIB_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/source/dsplib_c66x_3_4_0_0" scope="project" />
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../crc_16bit.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am273x/EXAMPLES_DRIVERS_CRC_16BIT.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="makefile_ccs_bootimage_gen" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+    </project>
+</projectSpec>

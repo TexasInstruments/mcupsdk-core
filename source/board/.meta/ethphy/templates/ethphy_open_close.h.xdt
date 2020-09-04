@@ -1,0 +1,30 @@
+%%{
+    let module = system.modules['/board/ethphy/ethphy'];
+%%}
+% if( module.getNumValidInstances(module) > 0 ) {
+/*
+ * ETHPHY
+ */
+#include <board/ethphy.h>
+
+/* ETHPHY Driver handles */
+extern ETHPHY_Handle gEthPhyHandle[CONFIG_ETHPHY_NUM_INSTANCES];
+
+/* ETHPHY Driver open/close - can be used by application when Board_driversOpen() and
+ * Board_driversClose() is not used directly and app wants to control the various driver
+ * open/close sequences */
+int32_t Board_ethPhyOpen(void);
+void Board_ethPhyClose(void);
+% }
+% let manualModeEnabled = 0;
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.manualMode) {
+        % manualModeEnabled += 1;
+    % }
+% }
+% if(manualModeEnabled != 0) {
+#define     MDIO_MANUAL_MODE_ENABLED
+#define     MDIO_MANUAL_MODE_BASE_ADDRESS   0x`(module.$instances[0].mdioManualModeBaseAddr).toString(16)`
+% };

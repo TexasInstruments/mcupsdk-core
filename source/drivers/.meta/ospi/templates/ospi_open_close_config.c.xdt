@@ -1,0 +1,77 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("ospi");
+    let module = system.modules['/drivers/ospi/ospi'];
+%%}
+/*
+ * OSPI
+ */
+/* OSPI Driver handles */
+OSPI_Handle gOspiHandle[CONFIG_OSPI_NUM_INSTANCES];
+
+/* OSPI Driver Parameters */
+OSPI_Params gOspiParams[CONFIG_OSPI_NUM_INSTANCES] =
+{
+% let dmaInstanceIndex = 0;
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        %if(config.dmaEnable == true) {
+        .ospiDmaChIndex = `dmaInstanceIndex`,
+        %dmaInstanceIndex++;
+        %}
+        %else {
+        .ospiDmaChIndex = -1,
+        %}
+    },
+% }
+};
+
+void Drivers_ospiOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_OSPI_NUM_INSTANCES; instCnt++)
+    {
+        gOspiHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_OSPI_NUM_INSTANCES; instCnt++)
+    {
+        gOspiHandle[instCnt] = OSPI_open(instCnt, &gOspiParams[instCnt]);
+        if(NULL == gOspiHandle[instCnt])
+        {
+            DebugP_logError("OSPI open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_ospiClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_ospiClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_OSPI_NUM_INSTANCES; instCnt++)
+    {
+        if(gOspiHandle[instCnt] != NULL)
+        {
+            OSPI_close(gOspiHandle[instCnt]);
+            gOspiHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

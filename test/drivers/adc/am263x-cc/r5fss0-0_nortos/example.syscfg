@@ -1,0 +1,109 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1       = gpio.addInstance();
+const gpio2       = gpio.addInstance();
+const rti         = scripting.addModule("/drivers/rti/rti", {}, false);
+const rti1        = rti.addInstance();
+const rti2        = rti.addInstance();
+const rti3        = rti.addInstance();
+const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1       = uart.addInstance();
+const clock       = scripting.addModule("/kernel/dpl/clock");
+const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
+const mpu_armv75  = mpu_armv7.addInstance();
+const input_xbar  = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
+const input_xbar1 = input_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+gpio1.$name                = "INPUT_PIN";
+gpio1.GPIO.gpioPin.$assign = "I2C1_SDA";
+
+gpio2.pinDir               = "OUTPUT";
+gpio2.$name                = "OUTPUT_PIN";
+gpio2.GPIO.gpioPin.$assign = "I2C1_SCL";
+
+rti1.counter0Enable = true;
+rti1.compare0Enable = true;
+rti1.enableIntr0    = true;
+rti1.eventCallback0 = "RTI_INT_ISR";
+rti1.$name          = "CONFIG_RTI1";
+rti1.RTI.$assign    = "RTI1";
+
+rti2.counter0Enable = true;
+rti2.compare0Enable = true;
+rti2.enableIntr0    = true;
+rti2.eventCallback0 = "RTI_INT_ISR";
+rti2.$name          = "CONFIG_RTI2";
+rti2.RTI.$assign    = "RTI2";
+
+rti3.counter0Enable = true;
+rti3.compare0Enable = true;
+rti3.enableIntr0    = true;
+rti3.eventCallback0 = "RTI_INT_ISR";
+rti3.$name          = "CONFIG_RTI3";
+rti3.RTI.$assign    = "RTI3";
+
+uart1.$name            = "TESTER_UART";
+uart1.UART.$assign     = "UART3";
+uart1.UART.RXD.$assign = "SPI0_CS0";
+uart1.UART.TXD.$assign = "SPI0_CLK";
+
+debug_log.enableUartLog            = true;
+debug_log.enableCssLog             = false;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name      = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr   = 0x502C0000;
+mpu_armv75.attributes = "Device";
+mpu_armv75.size       = 12;
+
+input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
+input_xbar1.instance   = "INPUT_XBAR_5";
+input_xbar1.xbarOutput = "GPIO24";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+gpio1.GPIO.$suggestSolution = "GPIO0";
+gpio2.GPIO.$suggestSolution = "GPIO0";

@@ -1,0 +1,26 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+export PROFILE?=Release
+
+PROJECT_NAME=ipc_notify_echo_am64x-sk_system_freertos_nortos
+
+all:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
+
+clean:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE) -ccs.clean
+	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../m4fss0-0_nortos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../a53ss0-0_nortos/gcc-aarch64/ -f makefile_projectspec clean
+
+export:
+	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectCreate -ccs.projectSpec system.projectspec -ccs.overwrite full

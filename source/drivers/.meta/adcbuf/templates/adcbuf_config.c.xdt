@@ -1,0 +1,36 @@
+%%{
+    let module = system.modules['/drivers/adcbuf/adcbuf'];
+%%}
+/*
+ * ADCBUF
+ */
+/* ADCBUF atrributes */
+static ADCBuf_Attrs gADCBufAttrs[CONFIG_ADCBUF_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .baseAddr           = `config.baseAddr`,
+        .interruptNum       = `config.interruptNum`U,
+        .adcbufBaseAddr     = `config.adcbufBaseAddr`,
+        .cqbufBaseAddr      = `config.cqbufBaseAddr`,
+    },
+% }
+};
+/* ADCBUF objects - initialized by the driver */
+static ADCBuf_Object gADCBufObjects[CONFIG_ADCBUF_NUM_INSTANCES];
+/* ADCBUF driver configuration */
+ADCBuf_Config gADCBufConfig[CONFIG_ADCBUF_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gADCBufAttrs[`instance.$name.toUpperCase()`],
+        &gADCBufObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gADCBufConfigNum = CONFIG_ADCBUF_NUM_INSTANCES;

@@ -1,0 +1,36 @@
+
+ [ req ]
+ distinguished_name     = req_distinguished_name
+ x509_extensions        = v3_ca
+ prompt                 = no
+
+ dirstring_type = nobmp
+
+ [ req_distinguished_name ]
+ C                      = US
+ ST                     = SC
+ L                      = New York
+ O                      = Texas Instruments., Inc.
+ OU                     = DSP
+ CN                     = Albert
+ emailAddress           = Albert@gt.ti.com
+
+ [ v3_ca ]
+
+  basicConstraints = CA:true
+  1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+  1.3.6.1.4.1.294.1.34=ASN1:SEQUENCE:sysfw_image_integrity
+  1.3.6.1.4.1.294.1.35=ASN1:SEQUENCE:sysfw_image_load
+
+ [ swrv ]
+ swrv = INTEGER:1
+
+ [ sysfw_image_integrity ]
+ shaType = OID:TEST_IMAGE_SHA_OID
+ shaValue = FORMAT:HEX,OCT:TEST_IMAGE_SHA_VAL
+ imageSize = INTEGER:TEST_IMAGE_LENGTH
+
+ [ sysfw_image_load ]
+ destAddr = FORMAT:HEX,OCT:00000000
+ authInPlace = INTEGER:2
+

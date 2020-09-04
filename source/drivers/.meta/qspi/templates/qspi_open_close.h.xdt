@@ -1,0 +1,23 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/qspi/qspi'];
+%%}
+/*
+ * QSPI
+ */
+#include <drivers/qspi.h>
+
+/* QSPI Driver handles */
+extern QSPI_Handle gQspiHandle[CONFIG_QSPI_NUM_INSTANCES];
+
+/*
+ * QSPI Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* QSPI Driver Parameters */
+extern QSPI_Params gQspiParams[CONFIG_QSPI_NUM_INSTANCES];
+/* QSPI Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_qspiOpen(void);
+void Drivers_qspiClose(void);

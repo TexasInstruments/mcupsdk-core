@@ -1,0 +1,23 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/edma/edma'];
+%%}
+/*
+ * EDMA
+ */
+#include <drivers/edma.h>
+
+/* EDMA Driver handles */
+extern EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+/*
+ * EDMA Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* EDMA Driver Open Parameters */
+extern EDMA_Params gEdmaParams[CONFIG_EDMA_NUM_INSTANCES];
+/* EDMA Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_edmaOpen(void);
+void Drivers_edmaClose(void);

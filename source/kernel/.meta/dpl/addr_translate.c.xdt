@@ -1,0 +1,20 @@
+%%{
+    let module = system.modules['/kernel/dpl/addr_translate'];
+%%}
+% if (module.$instances.length > 0) {
+/* ----------- AddrTranslateP ----------- */
+#define CONFIG_ADDR_TRANSLATE_RAT_BASE_ADDR  (0x0`module.getRatBaseAddr().toString(16).toUpperCase()`u)
+#define CONFIG_ADDR_TRANSLATE_REGIONS  (`module.$instances.length`u)
+
+AddrTranslateP_RegionConfig gAddrTranslateRegionConfig[CONFIG_ADDR_TRANSLATE_REGIONS] = 
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        .localAddr = 0x`instance.localAddr.toString(16).toUpperCase()`u,
+        .systemAddr = 0x`instance.systemAddr.toString(16).toUpperCase()`u,
+        .size = AddrTranslateP_RegionSize_`module.getSizeString(instance.size)`,
+    },
+% }
+};
+% }

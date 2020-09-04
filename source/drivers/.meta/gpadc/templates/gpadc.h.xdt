@@ -1,0 +1,20 @@
+%%{
+    let module = system.modules['/drivers/gpadc/gpadc'];
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("gpadc");
+    let module_ch = system.modules[`/drivers/gpadc/${driverVer}/gpadc_${driverVer}_channel`];
+%%}
+/*
+ * GPADC
+ */
+#include <drivers/gpadc.h>
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name.toUpperCase()`_CHANNEL_BITMAP (`config.ChannelBitmap`)
+% }
+#define CONFIG_GPADC_NUM_INSTANCES (`module.$instances.length`U)
+#define CONFIG_GPADC_CHANNEL_NUM_INSTANCES (`module.$instances[module.$instances.length-1].gpadcChannel.length`)

@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/fs/freertos_fat/freertos_fat'];
+%%}
+/*
+ * FreeRTOS+FAT
+ */
+
+/* FF Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_FF_NUM_INSTANCES (`module.$instances.length`U)
+

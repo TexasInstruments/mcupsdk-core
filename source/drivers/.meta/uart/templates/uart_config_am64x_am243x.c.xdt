@@ -1,0 +1,118 @@
+%%{
+    let module = system.modules['/drivers/uart/uart'];
+    let common = system.getScript("/common");
+    let uartUdmaInstances = [];
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.intrEnable == "DMA") {
+            uartUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
+        }
+    }
+%%}
+/*
+ * UART
+ */
+
+/* UART atrributes */
+static UART_Attrs gUartAttrs[CONFIG_UART_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name.replace('USART', 'UART');
+    {
+        .baseAddr           = `config.baseAddr`,
+        .inputClkFreq       = `config.inputClkFreq`U,
+    },
+% }
+};
+/* UART objects - initialized by the driver */
+static UART_Object gUartObjects[CONFIG_UART_NUM_INSTANCES];
+/* UART driver configuration */
+UART_Config gUartConfig[CONFIG_UART_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gUartAttrs[`instance.$name.toUpperCase()`],
+        &gUartObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gUartConfigNum = CONFIG_UART_NUM_INSTANCES;
+
+#include <drivers/uart/v0/dma/uart_dma.h>
+%if(uartUdmaInstances.length > 0) {
+#include <drivers/uart/v0/dma/udma/uart_dma_udma.h>
+#include <drivers/udma.h>
+
+/*
+ * Ring parameters
+ */
+/** \brief Number of ring entries - we can prime this much UART operations */
+#define UART_UDMA_TEST_RING_ENTRIES          (1U)
+/** \brief Size (in bytes) of each ring entry (Size of pointer - 64-bit) */
+#define UART_UDMA_TEST_RING_ENTRY_SIZE       (sizeof(uint64_t))
+/** \brief Total ring memory */
+#define UART_UDMA_TEST_RING_MEM_SIZE         (UART_UDMA_TEST_RING_ENTRIES * UART_UDMA_TEST_RING_ENTRY_SIZE)
+/** \brief UDMA host mode buffer descriptor memory size. */
+#define UART_UDMA_TEST_DESC_SIZE             (sizeof(CSL_UdmapCppi5HMPD))
+
+%}
+
+%for(let i = 0; i < uartUdmaInstances.length; i++) {
+/* UART UDMA TX Channel Objects */
+static Udma_ChObject gUart`i`UdmaTxObj;
+
+/* UART UDMA RX Channel Objects */
+static Udma_ChObject gUart`i`UdmaRxObj;
+
+/**< UDMA TX completion queue object */
+static Udma_EventObject        gUart`i`UdmaCqTxEventObj;
+/**< UDMA RX completion queue object */
+static Udma_EventObject        gUart`i`UdmaCqRxEventObj;
+
+/* UART UDMA Channel Ring Mem */
+static uint8_t gUart`i`UdmaRxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+static uint8_t gUart`i`UdmaTxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+
+/* UART UDMA Channel HPD Mem */
+static uint8_t gUart`i`UdmaTxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+static uint8_t gUart`i`UdmaRxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+
+UartDma_UdmaArgs gUartUdma`i`Args =
+{
+    .drvHandle        = &gUdmaDrvObj[0U],
+    .txChHandle       = &gUart`i`UdmaTxObj,
+    .rxChHandle       = &gUart`i`UdmaRxObj,
+    .cqTxEvtHandle    = &gUart`i`UdmaCqTxEventObj,
+    .cqRxEvtHandle    = &gUart`i`UdmaCqRxEventObj,
+    .txHpdMem         = &gUart`i`UdmaTxHpdMem,
+    .rxHpdMem         = &gUart`i`UdmaRxHpdMem,
+    .hpdMemSize       = UART_UDMA_TEST_DESC_SIZE,
+    .txRingMem        = &gUart`i`UdmaTxRingMem,
+    .rxRingMem        = &gUart`i`UdmaRxRingMem,
+    .ringMemSize      = UART_UDMA_TEST_RING_MEM_SIZE,
+    .ringElemCnt      = UART_UDMA_TEST_RING_ENTRIES,
+    .isOpen           = FALSE,
+};
+%}
+
+UART_DmaConfig gUartDmaConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
+{
+%for(let i = 0; i < uartUdmaInstances.length; i++) {
+    {
+        .fxns        = &gUartDmaUdmaFxns,
+        .uartDmaArgs = (void *)&gUartUdma`i`Args,
+    },
+%}
+};
+
+uint32_t gUartDmaConfigNum = CONFIG_UART_NUM_DMA_INSTANCES;
+
+
+void Drivers_uartInit(void)
+{
+    UART_init();
+}

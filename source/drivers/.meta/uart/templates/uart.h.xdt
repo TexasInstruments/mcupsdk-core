@@ -1,0 +1,23 @@
+%%{
+    let module = system.modules['/drivers/uart/uart'];
+    let uartDmaInstanceCount = 0;
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.intrEnable == "DMA") {
+            uartDmaInstanceCount++;
+        }
+    }
+%%}
+
+/*
+ * UART
+ */
+#include <drivers/uart.h>
+
+/* UART Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_UART_NUM_INSTANCES (`module.$instances.length`U)
+#define CONFIG_UART_NUM_DMA_INSTANCES (`uartDmaInstanceCount`U)

@@ -1,0 +1,73 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("watchdog");
+    let module = system.modules['/drivers/watchdog/watchdog'];
+%%}
+
+/* watchdog Driver handles */
+Watchdog_Handle gWatchdogHandle[CONFIG_WATCHDOG_NUM_INSTANCES];
+
+/* watchdog Driver Parameters */
+Watchdog_Params gWatchdogParams[CONFIG_WATCHDOG_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .callbackFxn        = NULL,
+        .callbackFxnArgs    = NULL,
+        .resetMode          = `config.resetMode`,
+        .debugStallMode     = Watchdog_DEBUG_STALL_ON,
+        .windowSize         = `config.windowSize`,
+        .expirationTime     = `config.expirationTime`,
+    },
+% }
+};
+
+void Drivers_watchdogOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_WATCHDOG_NUM_INSTANCES; instCnt++)
+    {
+        gWatchdogHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_WATCHDOG_NUM_INSTANCES; instCnt++)
+    {
+        gWatchdogHandle[instCnt] = Watchdog_open(instCnt, &gWatchdogParams[instCnt]);
+        if(NULL == gWatchdogHandle[instCnt])
+        {
+            DebugP_logError("Watchdog open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_watchdogClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_watchdogClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_WATCHDOG_NUM_INSTANCES; instCnt++)
+    {
+        if(gWatchdogHandle[instCnt] != NULL)
+        {
+            Watchdog_close(gWatchdogHandle[instCnt]);
+            gWatchdogHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

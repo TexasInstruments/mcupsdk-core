@@ -1,0 +1,25 @@
+void Drivers_socTimeSyncXbar1Open()
+{
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/xbar/soc_timesync_xbar1/soc/soc_timesync_xbar1_${common.getSocName()}`);
+    let module = system.modules['/xbar/soc_timesync_xbar1/soc_timesync_xbar1'];
+%%}
+% let base = "CSL_SOC_TIMESYNC_XBAR1_U_BASE";
+% let OPTION_LIST = soc.getOptionList("INTERNAL");
+    /*
+    * TIME SYNC 1 XBAR
+    */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let xbarOutput = config.xbarOutput;
+        % let path = OPTION_LIST.find(o => o.name == xbarOutput).path;
+        % if (path.search("<-") == -1) {
+    SOC_xbarSelectTimesyncXbar1InputSource(`base`, `config.name`, `xbarOutput`);
+        % }
+        % else {
+    SOC_xbarSelectTimesyncXbar1InputSource(`base`, `config.name`, `config.name`_INPUT);
+        % }
+    % }
+}

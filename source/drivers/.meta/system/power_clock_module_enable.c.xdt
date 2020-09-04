@@ -1,0 +1,12 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+% if (module.getClockEnableIds) {
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let moduleIds = module.getClockEnableIds(instance);
+        % moduleIds.forEach( function(moduleId) {
+    `moduleId`,
+        % } );
+    % }
+% }

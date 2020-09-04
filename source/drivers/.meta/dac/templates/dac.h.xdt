@@ -1,0 +1,11 @@
+% let moduleName = "dac"
+% let module = system.modules['/drivers/dac/dac'];
+%if (module != null)
+%{
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let modInst  = instance[moduleName];
+#define `instance.$name`_BASE_ADDR (`instance.dacBase`)
+    % }
+%}
+%

@@ -1,0 +1,8 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+
+/* ENET MACROS */
+% let instance = module.$instances[0];
+#define `instance.$name.toUpperCase()`_PHY1_ADDR (`instance.phyAddr1`U)
+#define `instance.$name.toUpperCase()`_PHY2_ADDR (`instance.phyAddr2`U)

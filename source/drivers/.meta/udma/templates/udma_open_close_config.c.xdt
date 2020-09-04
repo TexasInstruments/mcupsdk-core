@@ -1,0 +1,212 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let module = system.modules['/drivers/udma/udma'];
+    let blkcopy_ch = system.modules[`/drivers/udma/udma_blkcopy_channel`];
+    let tx_ch = system.modules[`/drivers/udma/udma_tx_channel`];
+    let rx_ch = system.modules[`/drivers/udma/udma_rx_channel`];
+%%}
+/*
+ * UDMA
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let ch_instances = instance.udmaBlkCopyChannel;
+    % if(ch_instances && ch_instances.length > 0) {
+/*
+ * UDMA `config.name.toUpperCase()` Blockcopy Parameters
+ */
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Objects */
+static Udma_ChObject g`instNameCamelCase`BlkCopyChObj[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH];
+/* UDMA `instance.$name.toUpperCase()` Blockcopy Channel Handle */
+Udma_ChHandle g`instNameCamelCase`BlkCopyChHandle[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH];
+
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Ring Mem Size */
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+            % let ch_instance = ch_instances[ch];
+            % let ch_config = blkcopy_ch.getInstanceConfig(ch_instance);
+#define UDMA_`instance.$name.toUpperCase()`_BLK_COPY_CH_`ch`_RING_MEM_SIZE     (((`ch_config.elemCnt`U * 8U) + UDMA_CACHELINE_ALIGNMENT) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
+        % }
+
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Ring Mem */
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+            % let ch_instance = ch_instances[ch];
+            % let ch_config = blkcopy_ch.getInstanceConfig(ch_instance);
+static uint8_t g`instNameCamelCase`BlkCopyCh`ch`RingMem[UDMA_`instance.$name.toUpperCase()`_BLK_COPY_CH_`ch`_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+        % }
+
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Ring Memory Pointers - for all channels */
+static uint8_t *g`instNameCamelCase`BlkCopyChRingMem[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH] = {
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+            % let ch_instance = ch_instances[ch];
+            % let ch_config = blkcopy_ch.getInstanceConfig(ch_instance);
+    &g`instNameCamelCase`BlkCopyCh`ch`RingMem[0U],
+        % }
+};
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Ring Elem Count */
+static uint32_t g`instNameCamelCase`BlkCopyChRingElemCnt[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH] = {
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+            % let ch_instance = ch_instances[ch];
+            % let ch_config = blkcopy_ch.getInstanceConfig(ch_instance);
+    `ch_config.elemCnt`U,
+        % }
+};
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Ring Memory Size */
+static uint32_t g`instNameCamelCase`BlkCopyChRingMemSize[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH] = {
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+            % let ch_instance = ch_instances[ch];
+            % let ch_config = blkcopy_ch.getInstanceConfig(ch_instance);
+    UDMA_`instance.$name.toUpperCase()`_BLK_COPY_CH_`ch`_RING_MEM_SIZE,
+        % }
+};
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Event Object */
+static Udma_EventObject g`instNameCamelCase`BlkCopyCqEventObj[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH];
+/* UDMA `config.name.toUpperCase()` Blockcopy Channel Event Callback */
+static Udma_EventCallback g`instNameCamelCase`BlkCopyCqEventCb[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH] = {
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+            % let ch_instance = ch_instances[ch];
+            % let ch_config = blkcopy_ch.getInstanceConfig(ch_instance);
+            % if(ch_config.intrEnable == true) {
+    &`ch_config.transferCallbackFxn`,
+            % }
+            % else {
+    NULL,
+            % }
+        % }
+};
+/* UDMA `instance.$name.toUpperCase()` Blockcopy Event Handle */
+Udma_EventHandle g`instNameCamelCase`BlkCopyCqEventHandle[`instance.$name.toUpperCase()`_NUM_BLKCOPY_CH];
+    % }
+
+% }
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let ch_instances = instance.udmaBlkCopyChannel;
+    % if(ch_instances && ch_instances.length > 0) {
+static void Drivers_udma`instNameCamelCase`BlkCopyOpen(void)
+{
+    int32_t             retVal = UDMA_SOK;
+    uint32_t            chType, chCnt;
+    Udma_ChHandle       chHandle;
+    Udma_ChPrms         chPrms;
+    Udma_ChTxPrms       txPrms;
+    Udma_ChRxPrms       rxPrms;
+    Udma_DrvHandle      drvHandle = &gUdmaDrvObj[`instance.$name.toUpperCase()`];
+    Udma_EventPrms      cqEventPrms;
+    Udma_EventHandle    cqEventHandle;
+
+    for(chCnt = 0U; chCnt < `instance.$name.toUpperCase()`_NUM_BLKCOPY_CH; chCnt++)
+    {
+        chHandle = &g`instNameCamelCase`BlkCopyChObj[chCnt];
+        g`instNameCamelCase`BlkCopyChHandle[chCnt] = chHandle;
+
+        /* Init channel parameters */
+        chType = UDMA_CH_TYPE_TR_BLK_COPY;
+        UdmaChPrms_init(&chPrms, chType);
+        chPrms.fqRingPrms.ringMem       = g`instNameCamelCase`BlkCopyChRingMem[chCnt];
+        chPrms.fqRingPrms.ringMemSize   = g`instNameCamelCase`BlkCopyChRingMemSize[chCnt];
+        chPrms.fqRingPrms.elemCnt       = g`instNameCamelCase`BlkCopyChRingElemCnt[chCnt];
+
+        /* Open channel for block copy */
+        retVal = Udma_chOpen(drvHandle, chHandle, chType, &chPrms);
+        DebugP_assert(UDMA_SOK == retVal);
+
+        /* Config TX channel */
+        UdmaChTxPrms_init(&txPrms, chType);
+        retVal = Udma_chConfigTx(chHandle, &txPrms);
+        DebugP_assert(UDMA_SOK == retVal);
+
+        /* Config RX channel - which is implicitly paired to TX channel in
+         * block copy mode */
+        UdmaChRxPrms_init(&rxPrms, chType);
+        retVal = Udma_chConfigRx(chHandle, &rxPrms);
+        DebugP_assert(UDMA_SOK == retVal);
+
+        /* Register completion event */
+        if(NULL != g`instNameCamelCase`BlkCopyCqEventCb[chCnt])
+        {
+            cqEventHandle = &g`instNameCamelCase`BlkCopyCqEventObj[chCnt];
+            g`instNameCamelCase`BlkCopyCqEventHandle[chCnt] = cqEventHandle;
+            UdmaEventPrms_init(&cqEventPrms);
+            cqEventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
+            cqEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
+            cqEventPrms.chHandle          = chHandle;
+            cqEventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+            cqEventPrms.eventCb           = g`instNameCamelCase`BlkCopyCqEventCb[chCnt];
+            retVal = Udma_eventRegister(drvHandle, cqEventHandle, &cqEventPrms);
+            DebugP_assert(UDMA_SOK == retVal);
+        }
+    }
+
+    return;
+}
+
+static void Drivers_udma`instNameCamelCase`BlkCopyClose(void)
+{
+    int32_t         retVal, tempRetVal;
+    uint32_t        chCnt;
+    Udma_ChHandle   chHandle;
+    uint64_t        pDesc;
+
+    for(chCnt = 0U; chCnt < `instance.$name.toUpperCase()`_NUM_BLKCOPY_CH; chCnt++)
+    {
+        chHandle = &g`instNameCamelCase`BlkCopyChObj[chCnt];
+
+        /* Flush any pending request from the free queue */
+        while(1)
+        {
+            tempRetVal = Udma_ringFlushRaw(
+                             Udma_chGetFqRingHandle(chHandle), &pDesc);
+            if(UDMA_ETIMEOUT == tempRetVal)
+            {
+                break;
+            }
+        }
+
+        /* Unregister completion event */
+        if(NULL != g`instNameCamelCase`BlkCopyCqEventHandle[chCnt])
+        {
+            retVal = Udma_eventUnRegister(g`instNameCamelCase`BlkCopyCqEventHandle[chCnt]);
+            DebugP_assert(UDMA_SOK == retVal);
+            g`instNameCamelCase`BlkCopyCqEventHandle[chCnt] = NULL;
+        }
+
+        /* Close channel */
+        retVal = Udma_chClose(chHandle);
+        DebugP_assert(UDMA_SOK == retVal);
+    }
+
+    return;
+}
+
+    % }
+% }
+void Drivers_udmaOpen(void)
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let ch_instances = instance.udmaBlkCopyChannel;
+    % if(ch_instances && ch_instances.length > 0) {
+    Drivers_udma`instNameCamelCase`BlkCopyOpen();
+    % }
+% }
+}
+
+void Drivers_udmaClose(void)
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let ch_instances = instance.udmaBlkCopyChannel;
+    % if(ch_instances && ch_instances.length > 0) {
+    Drivers_udma`instNameCamelCase`BlkCopyClose();
+    % }
+% }
+}

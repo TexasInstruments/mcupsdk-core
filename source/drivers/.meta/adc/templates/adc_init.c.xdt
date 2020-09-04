@@ -1,0 +1,13 @@
+%%{
+    let module = system.modules['/drivers/adc/adc'];
+    let common   = system.getScript("/common");
+%%}
+    /* ADC */
+    {
+        /* Enable ADC Reference */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+        SOC_enableAdcReference(`config.name.slice(3)`);
+% }
+    }

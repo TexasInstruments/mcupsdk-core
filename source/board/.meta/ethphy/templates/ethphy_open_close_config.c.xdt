@@ -1,0 +1,111 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/board/ethphy/ethphy'];
+%%}
+% if( module.getNumValidInstances(module) > 0 ) {
+/*
+ * ETHPHY
+ */
+/* ETHPHY Driver handles - opened during Board_ethPhyOpen() */
+ETHPHY_Handle gEthPhyHandle[CONFIG_ETHPHY_NUM_INSTANCES];
+
+/* ETHPHY Attrs */
+ETHPHY_Attrs gEthPhyAttrs[CONFIG_ETHPHY_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (config.name != "NONE") {
+    {
+    %   if(config.manualMode) {
+        .mdioBaseAddress = `config.mdioInstance === "ICSSG0" ? "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE" : "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE"` + 0x`config.mdioManualModeBaseAddr.toString(16)`,
+    % } else {
+        .mdioBaseAddress = `config.mdioBaseAddr`,
+    % }
+        .phyAddress      = `config.mdioPort`,
+    },
+    % }
+% }
+};
+
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (config.name == "CUSTOM") {
+/* ETHPHY customer driver functions, MUST be implemented by users else there will be linker error */
+extern ETHPHY_Fxns gEthPhyFxns_`config.customDeviceName`;
+    % }
+% }
+
+/* ETHPHY Config */
+% let num_instance = 0;
+ETHPHY_Config gEthPhyConfig[CONFIG_ETHPHY_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (config.name != "NONE") {
+    {
+        .attrs = &gEthPhyAttrs[`num_instance`],
+         % if (config.name == "CUSTOM") {
+        .fxns = &gEthPhyFxns_`config.customDeviceName`,
+        % } else {
+        .fxns = &gEthPhyFxns_`config.name`,
+        % }
+        .object = (void *)NULL,
+    },
+    % num_instance = num_instance + 1;
+    % }
+% }
+};
+uint32_t gEthPhyConfigNum = CONFIG_ETHPHY_NUM_INSTANCES;
+
+ETHPHY_Params gEthPhyParams[CONFIG_ETHPHY_NUM_INSTANCES];
+
+int32_t Board_ethPhyOpen()
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_ETHPHY_NUM_INSTANCES; instCnt++)
+    {
+        gEthPhyHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_ETHPHY_NUM_INSTANCES; instCnt++)
+    {
+        ETHPHY_Params_init(&gEthPhyParams[instCnt]);
+        gEthPhyHandle[instCnt] = ETHPHY_open(instCnt, &gEthPhyParams[instCnt]);
+        if(NULL == gEthPhyHandle[instCnt])
+        {
+            DebugP_logError("ETHPHY open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Board_ethPhyClose();   /* Exit gracefully */
+    }
+    return status;
+}
+
+void Board_ethPhyClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_ETHPHY_NUM_INSTANCES; instCnt++)
+    {
+        if(gEthPhyHandle[instCnt] != NULL)
+        {
+            ETHPHY_close(gEthPhyHandle[instCnt]);
+            gEthPhyHandle[instCnt] = NULL;
+        }
+    }
+    return;
+}
+% }

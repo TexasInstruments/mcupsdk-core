@@ -1,0 +1,62 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <string.h>
+#include <stdint.h>
+#include <stdarg.h>
+
+#include <enet.h>
+#include <include/core/enet_types.h>
+
+#include <kernel/dpl/EventP.h>
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/*                         Structure Declarations                             */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+
+/*!
+ * \brief  Opens Enet Driver from Application.
+ *
+ * \param enetType  Enet Peripheral type
+ * \param instId    Enet Peripheral instance id
+ */
+extern int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId);
+
+% if(instance.McmEnable == false){
+/*!
+ * \brief  Closes Enet Driver from Application when MCM is disabled
+ *
+ * \param enetType  Enet Peripheral type
+ * \param instId    Enet Peripheral instance id
+ */
+void EnetApp_driverClose(Enet_Type enetType, uint32_t instId);
+% }
+
+
+void EnetApp_initLinkArgs(Enet_Type enetType,  uint32_t instId, EnetPer_PortLinkCfg *linkArgs,   Enet_MacPort macPort);
+
+void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId,   Cpsw_Cfg *cpswCfg);
+
+void EnetApp_initPhyStateHandlerTask(EventP_Object* pEvent);
+
+void EnetApp_phyStateHandler();
+
+/* ========================================================================== */
+/*                       Static Function Definitions                          */
+/* ========================================================================== */
+
+/* None */

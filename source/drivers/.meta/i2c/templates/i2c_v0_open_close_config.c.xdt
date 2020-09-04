@@ -1,0 +1,85 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("i2c");
+    let module = system.modules['/drivers/i2c/i2c'];
+%%}
+/*
+ * I2C
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.transferMode == "CALLBACK" && config.transferCallbackFxn != "NULL") {
+/* I2C Callback */
+void `config.transferCallbackFxn`(I2C_Handle handle, I2C_Transaction *transaction, int32_t transferStatus);
+    % }
+% }
+
+/* I2C Driver handles */
+I2C_Handle gI2cHandle[CONFIG_I2C_NUM_INSTANCES];
+
+/* I2C Driver Parameters */
+I2C_Params gI2cParams[CONFIG_I2C_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .transferMode        = I2C_MODE_`config.transferMode`,
+        % if(config.transferMode == "CALLBACK" && config.transferCallbackFxn != "NULL") {
+        .transferCallbackFxn = `config.transferCallbackFxn`,
+        % } else {
+        .transferCallbackFxn = NULL,
+        % }
+        .bitRate             = I2C_`config.bitRate`,
+    },
+% }
+};
+
+void Drivers_i2cOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_I2C_NUM_INSTANCES; instCnt++)
+    {
+        gI2cHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_I2C_NUM_INSTANCES; instCnt++)
+    {
+        gI2cHandle[instCnt] = I2C_open(instCnt, &gI2cParams[instCnt]);
+        if(NULL == gI2cHandle[instCnt])
+        {
+            DebugP_logError("I2C open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_i2cClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_i2cClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_I2C_NUM_INSTANCES; instCnt++)
+    {
+        if(gI2cHandle[instCnt] != NULL)
+        {
+            I2C_close(gI2cHandle[instCnt]);
+            gI2cHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

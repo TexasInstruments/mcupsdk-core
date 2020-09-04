@@ -1,0 +1,22 @@
+%%{
+    let module = system.modules['/drivers/epwm/epwm'];
+    let common = system.getScript("/common");
+%%}
+    /* EPWM */
+    {
+        /* Enable time base clock for the selected ePWM */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (["am263x"].includes(common.getSocName())) {
+        SOC_setEpwmTbClk(`config.name.slice(4)`, TRUE);
+        SOC_setEpwmGroup(`config.name.slice(4)`, `instance.epwmGroup.slice(-1)`);
+    % }
+    % else if((["am273x"].includes(common.getSocName())) || (["awr294x"].includes(common.getSocName()))){
+	   SOC_setEpwmTbClk(`i`,TRUE); 
+    % }
+	% else {      
+       SOC_setEpwmTbClk(`parseInt(config.baseAddr.slice(8,9))`, TRUE);			 
+	% }	
+% }
+    }

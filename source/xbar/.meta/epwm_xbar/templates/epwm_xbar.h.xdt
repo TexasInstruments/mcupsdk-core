@@ -1,0 +1,3 @@
+%%{
+    let module = system.modules['/xbar/epwm_xbar/epwm_xbar'];
+%%}

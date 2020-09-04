@@ -1,0 +1,23 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/watchdog/watchdog'];
+%%}
+/*
+ * watchdog
+ */
+#include <drivers/watchdog.h>
+
+/* watchdog Driver handles */
+extern Watchdog_Handle gWatchdogHandle[CONFIG_WATCHDOG_NUM_INSTANCES];
+
+/*
+ * watchdog Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* watchdog Driver Parameters */
+extern Watchdog_Params gWatchdogParams[CONFIG_WATCHDOG_NUM_INSTANCES];
+/* watchdog Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_watchdogOpen(void);
+void Drivers_watchdogClose(void);

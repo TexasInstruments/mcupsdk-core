@@ -1,0 +1,26 @@
+%%{
+    let module = system.modules['/drivers/ecap/ecap'];
+    let common   = system.getScript("/common");
+%%}
+/*
+ * ECAP
+ */
+#include <drivers/ecap.h>
+#include <drivers/soc.h>
+
+/* ECAP Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % if (["am263x"].includes(common.getSocName())) {
+    % let modInst  = instance["ecap"];
+#define `instance.$name`_BASE_ADDR (`instance.ecapBase`)
+    % }
+    % else {
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name.toUpperCase()`_FCLK (`config.funcClk`)
+#define `instance.$name.toUpperCase()`_INTR (`config.intrNum`)
+#define `instance.$name.toUpperCase()`_INTR_IS_PULSE (TRUE)
+    % }
+% }
+#define CONFIG_ECAP_NUM_INSTANCES (`module.$instances.length`U)

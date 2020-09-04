@@ -1,0 +1,184 @@
+#
+# Auto generated makefile
+#
+
+% if (["am243x", "am64x"].includes(args.device)) {
+export `args.sdkPath`?=$(abspath `args.relPath`)
+include $(`args.sdkPath`)/imports.mak
+
+% }
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
+# Various Example Projectspec Build Targets
+% for (example of args.example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=`example.buildTarget`_build
+%   }
+% }
+# Various System Example Projectspec Build Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=`example.buildTarget`_build
+%   }
+% }
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
+# Various Private Example Projectspec Build Targets
+% for (example of args.example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL +=`example.buildTarget`_build
+%   }
+% }
+# Various Private System Example Projectspec Build Targets
+% for (example of args.system_example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL +=`example.buildTarget`_build
+%   }
+% }
+
+all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
+
+all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+% for (example of args.example_list) {
+`example.buildTarget`_build:
+	$(MAKE) -C `example.relpath` -f makefile_projectspec all
+
+% }
+% for (example of args.system_example_list) {
+`example.buildTarget`_build:
+	$(MAKE) -C `example.relpath` -f makefile_projectspec all
+
+% }
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
+# Various Example Projectspec Clean Targets
+% for (example of args.example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=`example.buildTarget`_clean
+%   }
+% }
+# Various System Example Projectspec Clean Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=`example.buildTarget`_clean
+%   }
+% }
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
+# Various Private Example Projectspec Clean Targets
+% for (example of args.example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL +=`example.buildTarget`_clean
+%   }
+% }
+# Various Private System Example Projectspec Clean Targets
+% for (example of args.system_example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL +=`example.buildTarget`_clean
+%   }
+% }
+
+clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
+
+clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+% for (example of args.example_list) {
+`example.buildTarget`_clean:
+	$(MAKE) -C `example.relpath` -f makefile_projectspec clean
+
+% }
+% for (example of args.system_example_list) {
+`example.buildTarget`_clean:
+	$(MAKE) -C `example.relpath` -f makefile_projectspec clean
+
+% }
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
+# Various Example Projectspec Export Targets
+% for (example of args.example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=`example.buildTarget`_export
+%   }
+% }
+# Various System Example Projectspec Export Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=`example.buildTarget`_export
+%   }
+% }
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
+# Various Private Example Projectspec Export Targets
+% for (example of args.example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL +=`example.buildTarget`_export
+%   }
+% }
+# Various Private System Example Projectspec Export Targets
+% for (example of args.system_example_list) {
+%   if(example.isSkipTopLevelBuild) {
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL +=`example.buildTarget`_export
+%   }
+% }
+
+export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
+
+export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+% for (example of args.example_list) {
+`example.buildTarget`_export:
+	$(MAKE) -C `example.relpath` -f makefile_projectspec export
+
+% }
+% for (example of args.system_example_list) {
+`example.buildTarget`_export:
+	$(MAKE) -C `example.relpath` -f makefile_projectspec export
+
+% }
+
+% if (["am243x", "am64x"].includes(args.device)) {
+# Import extra components into CCS workspace before creating a project
+# Setup dependency separately so that it runs if one or all projects are built via the makefile
+$(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL) $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL): import_extra_components
+
+# Import extra components based on the configured makefile variables.
+# Same CCS workspace used by the examples is used here.
+import_extra_components:
+	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.common.core.initialize -ccs.productDiscoveryPath $(MCU_PLUS_SDK_IND_COMMS_LIBS_PATH)
+% }
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=Debug or PROFILE=Release [default] to build in Debug or Release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile_projectspec.`device` help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile_projectspec.`device` [export all clean]
+	@echo  .
+	@echo  export = export projectspec to CCS project in the folder ./ccs_projects/,
+	@echo           export MUST be called once before 'all' or 'clean'
+	@echo  all    = build the previously exported projectspecs
+	@echo  clean  = clean the previously exported projectspecs
+	@echo  .
+	@echo  Example ProjectSpec build targets,
+	@echo  ==================================
+% for (example of args.example_list) {
+	@echo  $(MAKE) -s -C `example.relpath` -f makefile_projectspec [export all clean]
+% }
+	@echo  .
+	@echo  System Example ProjectSpec build targets,
+	@echo  =========================================
+% for (example of args.system_example_list) {
+	@echo  $(MAKE) -s -C `example.relpath` -f makefile_projectspec [export all clean]
+% }
+	@echo  .
+
+.PHONY: all all-private
+.PHONY: clean clean-private
+.PHONY: help

@@ -1,0 +1,119 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/gpio/gpio'];
+    let soc = system.getScript(`/drivers/gpio/soc/gpio_${common.getSocName()}`);
+%%}
+/*
+ * GPIO
+ */
+%for(let i = 0; i < module.$instances.length; i++) {
+   % let instance = module.$instances[i];
+   % let config = module.getInstanceConfig(instance);
+%if(config.advanced){
+ /*
+ * Board info
+ */
+/* This is based on DMSC board config and core */
+#define BOARD_BUTTON_GPIO_INTR_NUM     (CSLR_R5FSS0_CORE0_INTR_MAIN_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`)
+
+/*GPIO Interrupt Macros */
+#define BOARD_BUTTON_GPIO_SWITCH_NUM    (5)
+
+/** \brief bank interrupt source index base */
+#define TISCI_BANK_SRC_IDX_BASE_GPIO0       (90U)
+#define TISCI_BANK_SRC_IDX_BASE_GPIO1       (90U)
+#define TISCI_BANK_SRC_IDX_BASE_MCU_GPIO0   (90U)
+
+
+static void Sciclient_gpioIrqSet(void);
+static void Sciclient_gpioIrqRelease(void);
+
+
+void Board_gpioInit(void)
+{
+    Sciclient_gpioIrqSet();
+}
+
+void Board_gpioDeinit(void)
+{
+    Sciclient_gpioIrqRelease();
+}
+
+uint32_t Board_getGpioButtonIntrNum(void)
+{
+    return (BOARD_BUTTON_GPIO_INTR_NUM);
+}
+
+
+uint32_t Board_getGpioButtonSwitchNum(void)
+{
+    return (BOARD_BUTTON_GPIO_SWITCH_NUM);
+}
+
+static void Sciclient_gpioIrqSet(void)
+{
+    int32_t                             retVal;
+    struct tisci_msg_rm_irq_set_req     rmIrqReq;
+    struct tisci_msg_rm_irq_set_resp    rmIrqResp;
+%for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.advanced){
+    rmIrqReq.valid_params           = 0U;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
+    rmIrqReq.global_event           = 0U;
+    rmIrqReq.src_id                 = TISCI_DEV_`config.moduleIndex`;
+    rmIrqReq.src_index              = TISCI_BANK_SRC_IDX_BASE_`config.moduleIndex` + GPIO_GET_BANK_INDEX(`config.pinIndex`);
+    rmIrqReq.dst_id                 = TISCI_DEV_`config.CoreID`;
+    rmIrqReq.dst_host_irq           = CSLR_`config.CoreID`_INTR_MAIN_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`;
+    rmIrqReq.ia_id                  = 0U;
+    rmIrqReq.vint                   = 0U;
+    rmIrqReq.vint_status_bit_index  = 0U;
+    rmIrqReq.secondary_host         = TISCI_MSG_VALUE_RM_UNUSED_SECONDARY_HOST;
+
+    retVal = Sciclient_rmIrqSet(&rmIrqReq, &rmIrqResp, SystemP_WAIT_FOREVER);
+    if(0 != retVal)
+    {
+        DebugP_log("[Error] Sciclient event config failed!!!\r\n");
+        DebugP_assert(FALSE);
+    }
+    % }
+    % }
+    return;
+}
+
+static void Sciclient_gpioIrqRelease(void)
+{
+    int32_t                             retVal;
+    struct tisci_msg_rm_irq_release_req rmIrqReq;
+%for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.advanced){
+    rmIrqReq.valid_params           = 0U;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
+    rmIrqReq.global_event           = 0U;
+    rmIrqReq.src_id                 = TISCI_DEV_`config.moduleIndex`;
+    rmIrqReq.src_index              = TISCI_BANK_SRC_IDX_BASE_`config.moduleIndex` + GPIO_GET_BANK_INDEX(`config.pinIndex`);
+    rmIrqReq.dst_id                 = TISCI_DEV_`config.CoreID`;
+    rmIrqReq.dst_host_irq           = CSLR_`config.CoreID`_INTR_MAIN_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`;
+    rmIrqReq.ia_id                  = 0U;
+    rmIrqReq.vint                   = 0U;
+    rmIrqReq.vint_status_bit_index  = 0U;
+    rmIrqReq.secondary_host         = TISCI_MSG_VALUE_RM_UNUSED_SECONDARY_HOST;
+
+    retVal = Sciclient_rmIrqRelease(&rmIrqReq, SystemP_WAIT_FOREVER);
+    if(0 != retVal)
+    {
+        DebugP_log("[Error] Sciclient event reset failed!!!\r\n");
+        DebugP_assert(FALSE);
+    }
+    % }
+    % }
+    return;
+}
+%break;
+% }
+% }

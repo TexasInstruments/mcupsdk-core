@@ -1,0 +1,65 @@
+%%{
+    let module = system.modules['/drivers/ddr/ddr'];
+    let instance = module.$instances[0];
+    let config = module.getInstanceConfig(instance);
+%%}
+/* DDR */
+
+/* DDR register config .h file as generated from DDR SUBSYSTEM REGISTER CONFIGURATION tool
+ * Make sure path to this file is specified in your application project/makefile include path
+ */
+#include "`config.ddrConfigIncludeFileName`"
+
+% if (config.eccEnableFlag) {
+
+DDR_EccRegion gDdrEccRegion =
+{
+    % if ((config.eccStart0 != 0) || (config.eccEnd0 != 0)) {
+    .ddrEccStart0 = DDR_ECC_REGION0_START,
+    .ddrEccEnd0 = DDR_ECC_REGION0_END,
+    % } else {
+    .ddrEccStart0 = 0xFFFF0000U,
+    .ddrEccEnd0 = 0x00000000U,
+    % }
+
+    % if ((config.eccStart1 != 0) || (config.eccEnd1 != 0)) {
+    .ddrEccStart1 = DDR_ECC_REGION1_START,
+    .ddrEccEnd1 = DDR_ECC_REGION1_END,
+    % } else {
+    .ddrEccStart1 = 0xFFFF0000U,
+    .ddrEccEnd1 = 0x00000000U,
+    % }
+
+    % if ((config.eccStart2 != 0) || (config.eccEnd2 != 0)) {
+    .ddrEccStart2 = DDR_ECC_REGION2_START,
+    .ddrEccEnd2 = DDR_ECC_REGION2_END,
+    % } else {
+    .ddrEccStart2 = 0xFFFF0000U,
+    .ddrEccEnd2 = 0x00000000U,
+    % }
+};
+
+% }
+static DDR_Params gDdrParams =
+{
+    /* below values are set using the globals defined in `config.ddrConfigIncludeFileName` */
+    .clk1Freq              = DDRSS_PLL_FREQUENCY_1,
+    .clk2Freq              = DDRSS_PLL_FREQUENCY_2,
+    .ddrssCtlReg           = DDRSS_ctlReg,
+    .ddrssPhyIndepReg      = DDRSS_phyIndepReg,
+    .ddrssPhyReg           = DDRSS_phyReg,
+    .ddrssCtlRegNum        = DDRSS_ctlRegNum,
+    .ddrssPhyIndepRegNum   = DDRSS_phyIndepRegNum,
+    .ddrssPhyRegNum        = DDRSS_phyRegNum,
+    .ddrssCtlRegCount      = DDRSS_CTL_REG_INIT_COUNT,
+    .ddrssPhyIndepRegCount = DDRSS_PHY_INDEP_REG_INIT_COUNT,
+    .ddrssPhyRegCount      = DDRSS_PHY_REG_INIT_COUNT,
+	.fshcount              = DDRSS_PLL_FHS_CNT,
+% if (config.eccEnableFlag) {
+    .enableEccFlag = 1,
+    .eccRegion = &gDdrEccRegion,
+% } else {
+    .enableEccFlag = 0,
+    .eccRegion = NULL,
+% }
+};

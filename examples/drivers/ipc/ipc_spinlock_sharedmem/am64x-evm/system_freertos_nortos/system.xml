@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <project configuration="@match" id="project_0" name="ipc_spinlock_sharedmem_am64x-evm_r5fss0-0_freertos_ti-arm-clang">
+    </project>
+    <core id="MAIN_PULSAR_Cortex_R5_0_0" project="project_0"/>
+    <project configuration="@match" id="project_1" name="ipc_spinlock_sharedmem_am64x-evm_r5fss0-1_nortos_ti-arm-clang">
+    </project>
+    <core id="MAIN_PULSAR_Cortex_R5_0_1" project="project_1"/>
+	<preBuildSteps>
+	</preBuildSteps>
+    <postBuildSteps>
+        <step command="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_system_ccs_bootimage_gen OUTNAME=ipc_spinlock_sharedmem_system PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"/>
+    </postBuildSteps>
+
+</system>

@@ -1,0 +1,131 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/bootloader/bootloader'];
+
+    let isFlashBoot = false;
+    let isMMCSDBoot = false;
+    let isBufIoBoot = false;
+    for(let i = 0; i < module.$instances.length; i++) {
+        if(module.$instances[i].bootMedia == "FLASH") {
+            isFlashBoot = true;
+            break;
+        }
+    }
+    for(let i = 0; i < module.$instances.length; i++) {
+        if(module.$instances[i].bootMedia == "EMMC") {
+            isMMCSDBoot = true;
+            break;
+        }
+    }
+    for(let i = 0; i < module.$instances.length; i++) {
+        if(module.$instances[i].bootMedia == "BUFIO") {
+            isBufIoBoot = true;
+            break;
+        }
+    }
+%%}
+
+/*
+ * BOOTLOADER
+ */
+% if(isFlashBoot){
+/* Include ti_board_config.h for flash config macros */
+#include "ti_board_config.h"
+%}
+% if(isMMCSDBoot) {
+#include "drivers/bootloader/bootloader_mmcsd_raw.h"
+% }
+% if(isBufIoBoot) {
+#include "drivers/bootloader/bootloader_buf_io.h"
+% }
+
+/* Bootloader boot media specific arguments */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+        % if(instance.bootMedia == "EMMC") {
+Bootloader_MmcsdArgs gBootloader`i`Args =
+        % } else if(instance.bootMedia == "BUFIO") {
+Bootloader_BufIoArgs gBootloader`i`Args =
+        % } else {
+Bootloader_`common.camelSentence(instance.bootMedia)`Args gBootloader`i`Args =
+        % }
+{
+    % if(instance.bootMedia == "FLASH") {
+    .flashIndex     = `instance.flashDriver.$name.toUpperCase()`,
+    .curOffset      = 0,
+    .appImageOffset = `instance.appImageOffset`,
+    % }
+    % else if(instance.bootMedia == "MEM") {
+    .curOffset        = 0,
+    .appImageBaseAddr = `instance.appImageBaseAddress`,
+    % }
+    % else if(instance.bootMedia == "EMMC") {
+    .MMCSDIndex      = `instance.MMCSDDriver.$name.toUpperCase()`,
+    .curOffset       = 0,
+    .appImageOffset  = `instance.EMMCAppImageOffset`,
+    % }
+    % else if(instance.bootMedia == "BUFIO") {
+    .curOffset      = 0,
+    .tempBufSize    = 0,
+    .virtMemOffset  = 0,
+    .drvIdx         = 0,
+    .tempBuf        = 0,
+    % }
+};
+% }
+
+/* Configuration option for lockstep or standalone */
+% if(common.getSocName() == "am263x"){
+Bootloader_socCoreOpModeConfig operatingMode=
+{
+    % if(module.$instances[0].R5FSS0operatingMode == "Standalone"){
+    BOOTLOADER_OPMODE_STANDALONE,
+    % } else{
+    BOOTLOADER_OPMODE_LOCKSTEP,
+    % }
+    % if(module.$instances[0].R5FSS1operatingMode == "Standalone"){
+    BOOTLOADER_OPMODE_STANDALONE,
+    % } else{
+    BOOTLOADER_OPMODE_LOCKSTEP,
+    % }
+};
+%}
+% else if(common.getSocName() == "am273x"){
+Bootloader_socCoreOpModeConfig operatingMode=
+{
+    % if(module.$instances[0].R5FSS0operatingMode == "Standalone"){
+    BOOTLOADER_OPMODE_STANDALONE,
+    % } else{
+    BOOTLOADER_OPMODE_LOCKSTEP,
+    % }
+};
+%}
+% else{
+void* operatingMode = NULL;
+%}
+
+
+/* Bootloader driver configuration */
+Bootloader_Config gBootloaderConfig[CONFIG_BOOTLOADER_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+    % if(module.$instances[i].bootMedia == "EMMC") {
+        &gBootloaderMmcsdFxns,
+    % } else if(module.$instances[i].bootMedia == "BUFIO") {
+        &gBootloaderBufIoFxns,
+    % } else {
+        &gBootloader`common.camelSentence(instance.bootMedia)`Fxns,
+    % }
+        &gBootloader`i`Args,
+        BOOTLOADER_MEDIA_`instance.bootMedia`,
+        0,
+        0,
+        NULL,
+        .socCoreOpMode= (void *)&operatingMode,
+    },
+% }
+};
+
+uint32_t gBootloaderConfigNum = CONFIG_BOOTLOADER_NUM_INSTANCES;

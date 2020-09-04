@@ -1,0 +1,20 @@
+%%{
+    let module = system.modules['/drivers/edma/edma'];
+%%}
+/*
+ * EDMA
+ */
+#include <drivers/edma.h>
+#include <drivers/soc.h>
+
+/* EDMA Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+% }
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_EDMA_NUM_INSTANCES (`module.$instances.length`U)

@@ -1,0 +1,4777 @@
+[
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Jtag Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_jtag_uniflash",
+        "location": "../../examples/drivers/boot/sbl_jtag_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_jtag_uniflash",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_null",
+        "location": "../../examples/drivers/boot/sbl_null/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_null",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Dummy app which runs a while loop. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_multicore_app",
+        "location": "../../examples/drivers/boot/sbl_multicore_app/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_multicore_app",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Dummy app which runs a while loop. CPU is R5FSS0-1 running NORTOS.",
+        "name": "sbl_multicore_app",
+        "location": "../../examples/drivers/boot/sbl_multicore_app/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_multicore_app",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Dummy app which runs a while loop. CPU is C66SS0 running NORTOS.",
+        "name": "sbl_multicore_app",
+        "location": "../../examples/drivers/boot/sbl_multicore_app/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_multicore_app",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Qspi Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_qspi",
+        "location": "../../examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_qspi",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Uart Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_uart",
+        "location": "../../examples/drivers/boot/sbl_uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_uart",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Uart Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_uart_uniflash",
+        "location": "../../examples/drivers/boot/sbl_uart_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_uart_uniflash",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in 16-bit mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "crc_16bit",
+        "location": "../../examples/drivers/crc/crc_16bit/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "crc",
+            "crc_16bit",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in 16-bit mode of operation CPU is C66SS0 running NORTOS.",
+        "name": "crc_16bit",
+        "location": "../../examples/drivers/crc/crc_16bit/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "crc",
+            "crc_16bit",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows how to use CSIRX capture using the internal test mode in CSIRX HW. CPU is R5FSS0-0 running NORTOS.",
+        "name": "csirx_internal_capture",
+        "location": "../../examples/drivers/csirx/csirx_internal_capture/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "csirx",
+            "csirx_internal_capture",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows how to use CSIRX capture using the internal test mode in CSIRX HW. CPU is C66SS0 running NORTOS.",
+        "name": "csirx_internal_capture",
+        "location": "../../examples/drivers/csirx/csirx_internal_capture/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "csirx",
+            "csirx_internal_capture",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA chain transfer example. This example demonstrates chain in EDMA. CPU is R5FSS0-0 running NORTOS.",
+        "name": "edma_chain_transfer",
+        "location": "../../examples/drivers/edma/edma_chain_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_chain_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA chain transfer example. This example demonstrates chain in EDMA. CPU is C66SS0 running NORTOS.",
+        "name": "edma_chain_transfer",
+        "location": "../../examples/drivers/edma/edma_chain_transfer/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_chain_transfer",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-1 running NORTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is C66SS0 running NORTOS.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA link transfer example. This example demonstrates linking in EDMA. CPU is R5FSS0-0 running NORTOS.",
+        "name": "edma_link_transfer",
+        "location": "../../examples/drivers/edma/edma_link_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_link_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA link transfer example. This example demonstrates linking in EDMA. CPU is C66SS0 running NORTOS.",
+        "name": "edma_link_transfer",
+        "location": "../../examples/drivers/edma/edma_link_transfer/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_link_transfer",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Polled transfer example. This example demonstrates polling in EDMA. CPU is R5FSS0-0 running NORTOS.",
+        "name": "edma_polled_transfer",
+        "location": "../../examples/drivers/edma/edma_polled_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_polled_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Polled transfer example. This example demonstrates polling in EDMA. CPU is C66SS0 running NORTOS.",
+        "name": "edma_polled_transfer",
+        "location": "../../examples/drivers/edma/edma_polled_transfer/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_polled_transfer",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_duty_cycle",
+        "location": "../../examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_duty_cycle",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "epwm_duty_cycle",
+        "location": "../../examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_duty_cycle",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpadc Group Channel Read Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gpadc_group_channel_read",
+        "location": "../../examples/drivers/gpadc/gpadc_group_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpadc",
+            "gpadc_group_channel_read",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpadc Single Channel Read Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gpadc_single_channel_read",
+        "location": "../../examples/drivers/gpadc/gpadc_single_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpadc",
+            "gpadc_single_channel_read",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpadc Temperature Sensor Read Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gpadc_temperature_sensor_read",
+        "location": "../../examples/drivers/gpadc/gpadc_temperature_sensor_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpadc",
+            "gpadc_temperature_sensor_read",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpio Input Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An Gpio Led Blink example. This example demonstrates Gpio Led BlinkAn Gpio Led Blink example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gpio_led_blink",
+        "location": "../../examples/drivers/gpio/gpio_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_led_blink",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "HWA based FFT example. This example demonstrates HWA FFT operation for real input data CPU is R5FSS0-0 running NORTOS.",
+        "name": "hwa_real_fft",
+        "location": "../../examples/drivers/hwa/hwa_real_fft/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "hwa",
+            "hwa_real_fft",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "HWA based FFT example. This example demonstrates HWA FFT operation for real input data CPU is C66SS0 running NORTOS.",
+        "name": "hwa_real_fft",
+        "location": "../../examples/drivers/hwa/hwa_real_fft/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "hwa",
+            "hwa_real_fft",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Read Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "i2c_read",
+        "location": "../../examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_read",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A I2c Temperature Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "i2c_temperature",
+        "location": "../../examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "i2c",
+            "i2c_temperature",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is C66SS0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is C66SS0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcan_external_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "mcan_external_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcan_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcan_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_interrupt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcan_loopback_polling",
+        "location": "../../examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_polling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Polling Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcan_loopback_polling",
+        "location": "../../examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_polling",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MIBSPI loopback mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "mibspi_loopback",
+        "location": "../../examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mibspi",
+            "mibspi_loopback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MIBSPI loopback mode of operation CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mibspi_loopback",
+        "location": "../../examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mibspi",
+            "mibspi_loopback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MIBSPI loopback mode of operation in multi icount mode CPU is R5FSS0-0 running NORTOS.",
+        "name": "mibspi_loopback_icount",
+        "location": "../../examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mibspi",
+            "mibspi_loopback_icount",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MIBSPI loopback mode of operation in multi icount mode CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mibspi_loopback_icount",
+        "location": "../../examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mibspi",
+            "mibspi_loopback_icount",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MIBSPI loopback DMA mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "mibspi_loopback_dma",
+        "location": "../../examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mibspi",
+            "mibspi_loopback_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MIBSPI loopback DMA mode of operation CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mibspi_loopback_dma",
+        "location": "../../examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mibspi",
+            "mibspi_loopback_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash transfer example. This example demonstrates transfer using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_dma_transfer",
+        "location": "../../examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_dma_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash transfer example. This example demonstrates transfer using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_dma_transfer",
+        "location": "../../examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_dma_transfer",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_diag",
+        "location": "../../examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_diag",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_diag",
+        "location": "../../examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_diag",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash transfer example. This example demonstrates transfer using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_transfer",
+        "location": "../../examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash transfer example. This example demonstrates transfer using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_transfer",
+        "location": "../../examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_transfer",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rti_led_blink",
+        "location": "../../examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "rti",
+            "rti_led_blink",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "rti_led_blink",
+        "location": "../../examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "rti",
+            "rti_led_blink",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo",
+        "location": "../../examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo",
+        "location": "../../examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Example. CPU is C66SS0 running NORTOS.",
+        "name": "uart_echo",
+        "location": "../../examples/drivers/uart/uart_echo/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_callback",
+        "location": "../../examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_callback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_callback",
+        "location": "../../examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_callback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Callback Example. CPU is C66SS0 running NORTOS.",
+        "name": "uart_echo_callback",
+        "location": "../../examples/drivers/uart/uart_echo_callback/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_callback",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Example. CPU is C66SS0 running NORTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Watchdog non reset mode example. This example generates NMI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "watchdog_interrupt",
+        "location": "../../examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "watchdog",
+            "watchdog_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Watchdog non reset mode example. This example generates NMI. CPU is C66SS0 running NORTOS.",
+        "name": "watchdog_interrupt",
+        "location": "../../examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "watchdog",
+            "watchdog_interrupt",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Watchdog reset mode example. This example triggers the SOC warm reset. CPU is R5FSS0-0 running NORTOS.",
+        "name": "watchdog_reset_mode",
+        "location": "../../examples/drivers/watchdog/watchdog_reset/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "watchdog",
+            "watchdog_reset",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is C66SS0 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/c66ss0_freertos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "empty",
+            "c66ss0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is C66SS0 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "empty",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-1 running NORTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is C66SS0 running NORTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "hello_world",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-1 running FREERTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is C66SS0 running FREERTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/awr294x-evm/c66ss0_freertos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "hello_world",
+            "c66ss0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "hello_world_cpp",
+        "location": "../../examples/hello_world_cpp/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_cpp",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hello_world_cpp",
+        "location": "../../examples/hello_world_cpp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_cpp",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-1 running NORTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is C66SS0 running NORTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is C66SS0 running FREERTOS.",
+        "name": "dpl_demo",
+        "location": "../../examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_freertos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_demo",
+            "c66ss0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Posix Demo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "posix_demo",
+        "location": "../../examples/kernel/freertos/posix_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "posix_demo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Posix Demo Example. CPU is C66SS0 running FREERTOS.",
+        "name": "posix_demo",
+        "location": "../../examples/kernel/freertos/posix_demo/awr294x-evm/c66ss0_freertos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "posix_demo",
+            "c66ss0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Task Switch Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "task_switch",
+        "location": "../../examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "task_switch",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Task Switch Example. CPU is C66SS0 running FREERTOS.",
+        "name": "task_switch",
+        "location": "../../examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "task_switch",
+            "c66ss0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_loopback",
+        "location": "../../examples/networking/enet_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_lwip_cpsw",
+        "location": "../../examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_lwip_cpsw",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_lwip_cpsw",
+        "location": "../../examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_lwip_cpsw",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tcpserver",
+        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_tcpserver",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Rawhttpserver Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "enet_cpsw_rawhttpserver",
+        "location": "../../examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_rawhttpserver",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Udpserver Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_udpserver",
+        "location": "../../examples/networking/lwip/enet_cpsw_udpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_udpserver",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Udp Igmp Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_udp_igmp",
+        "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_udp_igmp",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Tcpclient Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tcpclient",
+        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_tcpclient",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Socket Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_socket",
+        "location": "../../examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_socket",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Txsg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_txsg",
+        "location": "../../examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_tx_scatter_gather",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_l2_multi_channel",
+        "location": "../../examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_multi_channel",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_l2_multi_channel",
+        "location": "../../examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_multi_channel",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "dcc",
+        "location": "../../examples/sdl/dcc/dcc_modes1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "dcc",
+            "dcc_modes1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies DCC in various modes of operation CPU is C66SS0 running NORTOS.",
+        "name": "dcc",
+        "location": "../../examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "dcc",
+            "dcc_modes1",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADCBUF example. This example demonstrates ADCBUF  ECC Diagnostics CPU is C66SS0 running NORTOS.",
+        "name": "sdl_adcbuf_example",
+        "location": "../../examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "adcbuf",
+            "adcbuf_main",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "DSS L3 example. This example demonstrates DSS L3  ECC Diagnostics CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_l3_example",
+        "location": "../../examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "dss_l3",
+            "dss_l3_main",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "HWA example. This example demonstrates HWA Parity,FSM Lockstep and HWA ECC Diagnostics CPU is C66SS0 running NORTOS.",
+        "name": "sdl_hwa_example",
+        "location": "../../examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "hwa",
+            "hwa_main",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "MBOX example. This example demonstrates MBOX  ECC Diagnostics CPU is C66SS0 running NORTOS.",
+        "name": "sdl_mbox_example",
+        "location": "../../examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "mbox",
+            "mbox_main",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "MBOX example. This example demonstrates MBOX  ECC Diagnostics CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_mbox_example",
+        "location": "../../examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mbox",
+            "mbox_main",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ECC BUS SAFETY Example. This example demonstrates all MSS and DSS Nodes ECC BUS Safety Diagnostics CPU is C66SS0 running NORTOS.",
+        "name": "sdl_ecc_bus_safety_example",
+        "location": "../../examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc_bus_safety",
+            "ecc_bus_safety_main",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ECC BUS SAFETY Example. This example demonstrates all MSS and DSS Nodes ECC BUS Safety Diagnostics CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ecc_bus_safety_example",
+        "location": "../../examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc_bus_safety",
+            "ecc_bus_safety_main",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies STC in two modes of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_stc",
+        "location": "../../examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stc",
+            "stc_mcu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies STC in two modes of operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_stc",
+        "location": "../../examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "stc",
+            "stc_mcu",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc1",
+        "location": "../../examples/sdl/rti/UC1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_rti_example_uc1",
+        "location": "../../examples/sdl/rti/UC1/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC1",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc2",
+        "location": "../../examples/sdl/rti/UC2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC2",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_rti_example_uc2",
+        "location": "../../examples/sdl/rti/UC2/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC2",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc3",
+        "location": "../../examples/sdl/rti/UC3/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC3",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_rti_example_uc3",
+        "location": "../../examples/sdl/rti/UC3/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC3",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc4",
+        "location": "../../examples/sdl/rti/UC4/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC4",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_rti_example_uc4",
+        "location": "../../examples/sdl/rti/UC4/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC4",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in auto CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_mcrc_auto_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_auto_cpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in auto CPU mode of operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_mcrc_auto_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_auto_cpu",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in full CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_mcrc_full_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_full_cpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in full CPU mode of operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_mcrc_full_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_full_cpu",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in semi CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_mcrc_semi_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_semi_cpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for R5FA ATCM0 CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ecc_r5_atcm0",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_atcm0/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_r5_atcm0",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for MSS L2 CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ecc_mss_l2",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_l2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mss_l2",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for MCAN CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ecc_mcan",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mcan",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_pbist_example",
+        "location": "../../examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pbist",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the PBIST CPU is R5FSS0-1 running NORTOS.",
+        "name": "sdl_pbist_example",
+        "location": "../../examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pbist",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations for DSS ECC AGGRs in single and double bits CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_ecc_hwa",
+        "location": "../../examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_dss_ecc_hwa",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations for DSS ECC AGGRs in single and double bits  CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_ecc_l3_example",
+        "location": "../../examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_dss_l3_ecc",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations for DSS ECC AGGRs in single and double bits  CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_ecc_mailbox",
+        "location": "../../examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_dss_mailbox",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of CCM module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ccm_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Dummy app which runs a while loop. System project.",
+        "name": "sbl_multicore_app",
+        "location": "../../examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_multicore_app",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
+        "name": "edma_interrupt_transfer",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_interrupt_transfer",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo System Example.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/awr294x-evm/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo System Example.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt System Example.",
+        "name": "mcan_external_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/system_freertos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "empty",
+            "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
+        "name": "empty",
+        "location": "../../examples/empty/awr294x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "empty",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "web.page",
+        "resourceClass": [
+            "document"
+        ],
+        "name": "User Guide",
+        "location": "../../docs/api_guide_awr294x/index.html",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "mainCategories": [
+            [
+                "Documents"
+            ]
+        ]
+    }
+]

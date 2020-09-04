@@ -1,0 +1,13 @@
+%%{
+    let module = system.modules['/drivers/ipc/ipc'];
+    let instance = module.$static;
+    let selfCpuName = module.getSelfIpcCoreName();
+    let enabledCpus = module.getEnabledCpus(instance);
+    let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
+%%}
+% if ( enabledRPMessageCpus.length > 0 || instance.enableLinuxIpc === true ) {
+    RPMessage_deInit();
+% }
+% if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
+    IpcNotify_deInit();
+% }

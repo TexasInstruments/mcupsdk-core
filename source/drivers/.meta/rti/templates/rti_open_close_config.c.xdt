@@ -1,0 +1,133 @@
+%%{
+    let module = system.modules['/drivers/rti/rti'];
+    let common = system.getScript("/common");
+%%}
+HwiP_Object gRtiEvent0HwiObj[RTI_NUM_INSTANCES];
+HwiP_Object gRtiEvent1HwiObj[RTI_NUM_INSTANCES];
+HwiP_Object gRtiEvent2HwiObj[RTI_NUM_INSTANCES];
+HwiP_Object gRtiEvent3HwiObj[RTI_NUM_INSTANCES];
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % for( let j=0; j<4; j++)
+    % {
+        % if (config.compareEnable[j] && config.enableInt[j]) {
+void RTI`i`_event`j`Isr(void *args)
+{
+            % if (config.eventCallback[j] != "NULL") {
+    void `config.eventCallback[j]`(void *args);
+
+    `config.eventCallback[j]`(args);
+            % }
+    RTI_intStatusClear(`config.$name`_BASE_ADDR, RTI_TMR_INT_INT`j`_FLAG);
+    HwiP_clearInt(`config.$name`_INT_NUM_EVENT`j`);
+}
+        % }
+    % }
+% }
+
+void Drivers_rtiOpen(void)
+{
+    % let intEnable = false;
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % for( let j=0; j<4; j++)
+    % {
+    % if (config.enableInt[j]) {
+    HwiP_Params rtiHwiParams;
+    int32_t status;
+    % intEnable = true;
+    % break; }
+    % }
+    % if(intEnable)
+    % break;
+    % }
+    % let varDeclared = false;
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(!varDeclared)
+    % {
+    uint32_t baseAddr;
+    uint64_t timeInNsec;
+    uint32_t cntrPrescaler;
+    uint32_t compPrescaler;
+    % varDeclared = true;
+    % }
+
+    baseAddr = `config.$name`_BASE_ADDR;
+
+    /* Configure RTI input clock source */
+    SOC_controlModuleUnlockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+    *(volatile uint32_t*)AddrTranslateP_getLocalAddr(`config.$name`_CLOCK_SRC_MUX_ADDR) = `config.$name`_CLOCK_SRC_`config.clkSource`;
+    SOC_controlModuleLockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+
+    /* Enable/Disable Continue on Suspend */
+    % if(config.continueOnSuspend) {
+    RTIG_setStallMode(baseAddr, RTI_GC_STALL_MODE_ON);
+    % } else {
+    RTIG_setStallMode(baseAddr, RTI_GC_STALL_MODE_OFF);
+    % }
+
+    % if(config.counter0Enable)
+    % {
+    /* Configure Counter block 0 */
+    cntrPrescaler = (`config.$name`_INPUT_CLK_HZ/`config.$name`_CNTR0_OUTPUT_CLK_HZ) - 1;
+    RTI_counterConfigure(baseAddr, RTI_TMR_CNT_BLK_INDEX_0, RTI_TMR_CLK_SRC_`config.cntr0ClkSrc`, RTI_TMR_NTU_`config.ntuSrc`, cntrPrescaler);
+    RTI_captureConfig(baseAddr, RTI_TMR_CNT_BLK_INDEX_0, RTI_TMR_CAPTURE_EVT_`config.captureEvent0`);
+    % }
+
+    % if(config.counter1Enable)
+    % {
+    /* Configure Counter block 1 */
+    cntrPrescaler = (`config.$name`_INPUT_CLK_HZ/`config.$name`_CNTR1_OUTPUT_CLK_HZ)-1;
+    RTI_counterConfigure(baseAddr, RTI_TMR_CNT_BLK_INDEX_1, 0, 0, cntrPrescaler);
+    RTI_captureConfig(baseAddr, RTI_TMR_CNT_BLK_INDEX_1, RTI_TMR_CAPTURE_EVT_`config.captureEvent1`);
+    % }
+
+    % for( let j=0; j<4; j++)
+    % {
+    % if(config.compareEnable[j])
+    % {
+    /* Configure Compare event `j` */
+    timeInNsec = `config.$name`_NSEC_PER_TICK_COMP`j`;
+    if(timeInNsec == 0)
+    {
+        timeInNsec = `config.$name`_USEC_PER_TICK_COMP`j` * 1000U;
+    }
+    compPrescaler = (timeInNsec*`config.$name`_COMP`j`_INPUT_CLK_HZ)/1000000000;
+
+    RTI_compareEventConfig(baseAddr, RTI_TMR_CMP_BLK_INDEX_`j`, `config.$name`_COMP`j`_SRC, compPrescaler, compPrescaler);
+    RTI_intStatusClear(baseAddr, RTI_TMR_INT_INT`j`_FLAG);
+    % if(config.enableInt[j])
+    % {
+    HwiP_Params_init(&rtiHwiParams);
+    rtiHwiParams.intNum = `config.$name`_INT_NUM_EVENT`j`;
+    rtiHwiParams.callback = RTI`i`_event`j`Isr;
+    rtiHwiParams.isPulse = 0;
+    rtiHwiParams.priority = `config.intrPriority[j]`;
+    status = HwiP_construct(&gRtiEvent`j`HwiObj[`config.$name`], &rtiHwiParams);
+    DebugP_assertNoLog(status==SystemP_SUCCESS);
+
+    RTI_intEnable(baseAddr, RTI_TMR_INT_INT`j`_FLAG);
+    % }
+    % else
+    % {
+    RTI_intDisable(baseAddr, RTI_TMR_INT_INT`j`_FLAG);
+    % }
+
+    % if(config.enableDmaTrigger[j])
+    % {
+    RTI_intEnable(baseAddr, RTI_TMR_INT_DMA`j`_FLAG);
+    % }
+    % else
+    % {
+    RTI_intDisable(baseAddr, RTI_TMR_INT_DMA`j`_FLAG);
+    % }
+
+    % }
+    % }
+    % }
+}

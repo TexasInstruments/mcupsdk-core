@@ -1,0 +1,84 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
+# Various Example Projectspec Build Targets
+# Various System Example Projectspec Build Targets
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
+# Various Private Example Projectspec Build Targets
+# Various Private System Example Projectspec Build Targets
+
+all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
+
+all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
+# Various Example Projectspec Clean Targets
+# Various System Example Projectspec Clean Targets
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
+# Various Private Example Projectspec Clean Targets
+# Various Private System Example Projectspec Clean Targets
+
+clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
+
+clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
+# Various Example Projectspec Export Targets
+# Various System Example Projectspec Export Targets
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
+# Various Private Example Projectspec Export Targets
+# Various Private System Example Projectspec Export Targets
+
+export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
+
+export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+
+# Import extra components into CCS workspace before creating a project
+# Setup dependency separately so that it runs if one or all projects are built via the makefile
+$(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL) $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL): import_extra_components
+
+# Import extra components based on the configured makefile variables.
+# Same CCS workspace used by the examples is used here.
+import_extra_components:
+	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.common.core.initialize -ccs.productDiscoveryPath $(MCU_PLUS_SDK_IND_COMMS_LIBS_PATH)
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=Debug or PROFILE=Release [default] to build in Debug or Release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile_projectspec.am243x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile_projectspec.am243x [export all clean]
+	@echo  .
+	@echo  export = export projectspec to CCS project in the folder ./ccs_projects/,
+	@echo           export MUST be called once before 'all' or 'clean'
+	@echo  all    = build the previously exported projectspecs
+	@echo  clean  = clean the previously exported projectspecs
+	@echo  .
+	@echo  Example ProjectSpec build targets,
+	@echo  ==================================
+	@echo  .
+	@echo  System Example ProjectSpec build targets,
+	@echo  =========================================
+	@echo  .
+
+.PHONY: all all-private
+.PHONY: clean clean-private
+.PHONY: help

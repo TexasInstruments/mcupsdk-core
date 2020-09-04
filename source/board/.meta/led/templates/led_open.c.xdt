@@ -1,0 +1,4 @@
+    if(status==SystemP_SUCCESS)
+    {
+        status = Board_ledOpen();
+    }

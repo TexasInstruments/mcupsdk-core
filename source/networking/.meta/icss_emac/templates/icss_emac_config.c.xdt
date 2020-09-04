@@ -1,0 +1,69 @@
+%%{
+    let module = system.modules['/networking/icss_emac/icss_emac'];
+    let pktBufSizes = module.getPktBufSizes(module);
+%%}
+
+/*
+ * ICSS EMAC
+ */
+
+/* ICSS EMAC Packet Buffers */
+% for(let i=0; i<pktBufSizes.length; i++) {
+    % if(pktBufSizes[i]) {
+#define ICSS_EMAC_PKT_BUF_`i`_MEM_SIZE (`pktBufSizes[i]`)
+uint8_t gIcssEmacPktBufMem`i`[ICSS_EMAC_PKT_BUF_`i`_MEM_SIZE] __attribute__((aligned(128), section(".bss.icss_emac_pktbuf_mem")));
+    % }
+% }
+
+/* ICSS EMAC atrributes */
+static ICSS_EMAC_Attrs gIcssEmacAttrs[CONFIG_ICSS_EMAC_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .emacMode = (`config.emacMode[0]` | `config.emacMode[1]`),
+        .phyAddr = {`config.phyAddr[0]`, `config.phyAddr[1]`},
+        .phyToMacInterfaceMode = ICSS_EMAC_`config.phyToMacInterfaceMode`_MODE,
+        .halfDuplexEnable = `Number(config.halfDuplexEnable)`,
+        % if (config.enableIntrPacing == true) {
+        .enableIntrPacing = ICSS_EMAC_ENABLE_PACING,
+        % } else {
+        .enableIntrPacing = ICSS_EMAC_DISABLE_PACING,
+        % }
+        .intrPacingMode = ICSS_EMAC_INTR_PACING_`config.intrPacingMode`,
+        .pacingThreshold = `config.pacingThreshold`,
+        .ethPrioQueue = `config.ethPrioQueue`,
+        % if (config.learningEnable == true) {
+        .learningEnable = ICSS_EMAC_LEARNING_ENABLE,
+        % } else {
+        .learningEnable = ICSS_EMAC_LEARNING_DISABLE,
+        % }
+        .portMask = `config.portMask`,
+        .txInterruptEnable = `Number(config.txInterruptEnable)`,
+        .linkIntNum = `config.linkIntNum`,
+        .rxIntNum = `config.rxIntNum`,
+        .txIntNum = `config.txIntNum`,
+        .l3OcmcBaseAddr = (uint32_t)&gIcssEmacPktBufMem`config.pktBufIndex`[0],
+        .l3OcmcSize = ICSS_EMAC_PKT_BUF_`config.pktBufIndex`_MEM_SIZE,
+        .linkTaskPriority = `config.linkTaskPriority`,
+        .rxTaskPriority = `config.rxTaskPriority`,
+        .txTaskPriority = `config.txTaskPriority`,
+        .splitQueue = `Number(config.splitQueue)`,
+    },
+% }
+};
+/* ICSS EMAC objects - initialized by the driver */
+static ICSS_EMAC_InternalObject gIcssEmacObjects[CONFIG_ICSS_EMAC_INSTANCES];
+/* ICSS EMAC driver configuration */
+ICSS_EMAC_Config gIcssEmacConfig[CONFIG_ICSS_EMAC_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gIcssEmacObjects[`instance.$name.toUpperCase()`],
+        &gIcssEmacAttrs[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+uint32_t gIcssEmacConfigNum = CONFIG_ICSS_EMAC_INSTANCES;

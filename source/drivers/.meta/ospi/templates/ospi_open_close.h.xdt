@@ -1,0 +1,23 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/ospi/ospi'];
+%%}
+/*
+ * OSPI
+ */
+#include <drivers/ospi.h>
+
+/* OSPI Driver handles */
+extern OSPI_Handle gOspiHandle[CONFIG_OSPI_NUM_INSTANCES];
+
+/*
+ * OSPI Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* OSPI Driver Parameters */
+extern OSPI_Params gOspiParams[CONFIG_OSPI_NUM_INSTANCES];
+/* OSPI Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_ospiOpen(void);
+void Drivers_ospiClose(void);

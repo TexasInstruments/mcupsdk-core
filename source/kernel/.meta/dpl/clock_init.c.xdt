@@ -1,0 +1,26 @@
+%%{
+    let module = system.modules['/kernel/dpl/clock'];
+    let instance = module.$static;
+    let config = module.getInstanceConfig(instance);
+    let lockUnLockArgs = module.getInstanceConfig(instance);
+    let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
+%%}
+% if (! config.disableClkSourceConfig) {
+    /* set timer clock source */
+    SOC_controlModuleUnlockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+    *(volatile uint32_t*)(`config.name`_CLOCK_SRC_MUX_ADDR) = `config.name`_CLOCK_SRC_`config.clkSource`;
+    SOC_controlModuleLockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+% }
+% if(cpuName.match(/a53/)) {
+    /* Initialize Clock from Core0 only */
+    if(0 == Armv8_getCoreId())
+    {
+
+% }
+    /* initialize Clock */
+    ClockP_init();
+
+% if(cpuName.match(/a53/)) {
+
+    }
+% }

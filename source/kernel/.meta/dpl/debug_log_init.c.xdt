@@ -1,0 +1,53 @@
+%%{
+    let module = system.modules['/kernel/dpl/debug_log'];
+    let instance = module.$static;
+    let ipc_module = system.modules['/drivers/ipc/ipc'];
+    let ipc_instance = undefined;
+    if(ipc_module)
+    {
+        ipc_instance = ipc_module.$static;
+    }
+    let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
+%%}
+% if(cpuName.match(/a53/)) {
+
+    /* Initialize Debug module from Core0 only */
+    if(0 == Armv8_getCoreId())
+    {
+
+% }
+    /* Debug log init */
+% if(instance.enableLogZoneError) {
+    DebugP_logZoneEnable(DebugP_LOG_ZONE_ERROR);
+% }
+% if(instance.enableLogZoneWarning) {
+    DebugP_logZoneEnable(DebugP_LOG_ZONE_WARN);
+% }
+% if(instance.enableLogZoneInfo) {
+    DebugP_logZoneEnable(DebugP_LOG_ZONE_INFO);
+% }
+% if(instance.enableSharedMemLog && !instance.enableSharedMemLogReader) {
+    /* Initialize shared memory writer on this CPU */
+    DebugP_shmLogWriterInit(&gDebugShmLog[`module.getCpuID()`], `module.getCpuID()`);
+% }
+% if( (ipc_instance && ipc_instance.enableLinuxIpc === true) || instance.enableMemLog) {
+    /* Initialize linux trace log writer */
+    DebugP_memLogWriterInit(`module.getCpuID()`);
+% }
+% if(instance.enableSharedMemLog && instance.enableSharedMemLogReader) {
+    /* Shared memory reader is enabled on this core, in this case, logs go straight to
+     * to the enabled console (e.g CCS or UART), instead of shared memory
+     */
+% }
+% if(instance.enableSharedMemLogReader) {
+    /* Initialize shared memory reader on this CPU */
+    DebugP_shmLogReaderInit(gDebugShmLog, CSL_CORE_ID_MAX);
+% }
+% if(instance.enableUartLog) {
+    /* UART console to use for reading input */
+    DebugP_uartSetDrvIndex(`instance.uartLog.$name`);
+% }
+
+% if(cpuName.match(/a53/)) {
+    }
+% }

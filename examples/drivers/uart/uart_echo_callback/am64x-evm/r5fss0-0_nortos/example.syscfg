@@ -1,0 +1,60 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.00"
+ * @versions {"data":"2021021813","timestamp":"2021021813","tool":"1.8.0+1824","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1      = uart.addInstance();
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+uart1.$name            = "CONFIG_UART_CONSOLE";
+uart1.readMode         = "CALLBACK";
+uart1.writeMode        = "CALLBACK";
+uart1.readCallbackFxn  = "uart_echo_read_callback";
+uart1.writeCallbackFxn = "uart_echo_write_callback";
+uart1.UART.$assign     = "USART0";
+uart1.UART.RXD.$assign = "D15";
+uart1.UART.TXD.$assign = "C16";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name             = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr          = 0x80000000;
+mpu_armv76.size              = 31;

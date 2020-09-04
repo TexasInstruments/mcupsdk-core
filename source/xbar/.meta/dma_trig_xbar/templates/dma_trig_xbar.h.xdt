@@ -1,0 +1,3 @@
+%%{
+    let module = system.modules['/xbar/dma_trig_xbar/dma_trig_xbar'];
+%%}

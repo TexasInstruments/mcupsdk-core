@@ -1,0 +1,466 @@
+{
+    "TRACEDATA": {
+        "architecture_identifier": [],
+        "architecture_traceability": [],
+        "design_identifier": [
+            {
+                "design_file": "./docs/DOCUMENTATION_STYLE.rst",
+                "design_id": "did_component1_design_id",
+                "design_linenumber": 476,
+                "design_sectionname": "Example Design Document template"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_SEC.rst",
+                "design_id": "did_boardcfg_sec_design",
+                "design_linenumber": 57,
+                "design_sectionname": "Design"
+            },
+            {
+                "design_file": "./docs/design/MSMC.rst",
+                "design_id": "did_msmc",
+                "design_linenumber": 99,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/MSMC_MAT.rst",
+                "design_id": "did_mat_msmc_erratum",
+                "design_linenumber": 91,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/COMBINED_IMAGE.rst",
+                "design_id": "did_combined_image",
+                "design_linenumber": 155,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/SYSFW_DEVGRPS.rst",
+                "design_id": "did_devgrp_init",
+                "design_linenumber": 101,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_PM.rst",
+                "design_id": "did_boardcfg_pm_design",
+                "design_linenumber": 44,
+                "design_sectionname": "Design"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover",
+                "design_linenumber": 2,
+                "design_sectionname": "Functional Overview"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover_intro",
+                "design_linenumber": 9,
+                "design_sectionname": "Functional Overview Introduction"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover_comm_dmsc",
+                "design_linenumber": 39,
+                "design_sectionname": "Communication with DMSC"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover_dmsc_int",
+                "design_linenumber": 74,
+                "design_sectionname": "Overview of DMSC internals"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover_dmsc_sec_over",
+                "design_linenumber": 85,
+                "design_sectionname": "Security Services Overview"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover_dmsc_pwr_over",
+                "design_linenumber": 95,
+                "design_sectionname": "Power Management Services Overview"
+            },
+            {
+                "design_file": "./docs/design/FUNCTIONAL_OVERVIEW.rst",
+                "design_id": "did_funcover_dmsc_dev_over",
+                "design_linenumber": 107,
+                "design_sectionname": "Device Management Services Overview"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_RM.rst",
+                "design_id": "did_boardcfg_rm_design",
+                "design_linenumber": 78,
+                "design_sectionname": "Design"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_RM.rst",
+                "design_id": "did_boardcfg_interrupts",
+                "design_linenumber": 688,
+                "design_sectionname": "Design details for interrupt management"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_RM.rst",
+                "design_id": "did_boardcfg_rm_res_psil",
+                "design_linenumber": 729,
+                "design_sectionname": "Design details for PSIL Configuration"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_RM.rst",
+                "design_id": "did_boardcfg_rm_res_udma",
+                "design_linenumber": 741,
+                "design_sectionname": "Design details for UDMA Configuration"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_RM.rst",
+                "design_id": "did_boardcfg_rm_res_ringacc",
+                "design_linenumber": 757,
+                "design_sectionname": "Design details for RingAcc and RingAccRT Configuration"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG_RM.rst",
+                "design_id": "did_boardcfg_rm_res_insec_proxy",
+                "design_linenumber": 773,
+                "design_sectionname": "Design details for Proxy Configuration"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG.rst",
+                "design_id": "did_boardcfg_secchan",
+                "design_linenumber": 238,
+                "design_sectionname": "Design for Secure Channel Communication Setup"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG.rst",
+                "design_id": "did_msmc_cache",
+                "design_linenumber": 365,
+                "design_sectionname": "Design for boardcfg_msmc"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG.rst",
+                "design_id": "did_boardcfg_clock",
+                "design_linenumber": 413,
+                "design_sectionname": "Design for Clocking"
+            },
+            {
+                "design_file": "./docs/design/BOARDCFG.rst",
+                "design_id": "did_boardcfg_debug",
+                "design_linenumber": 424,
+                "design_sectionname": "Design details for DMSC Debug Console"
+            },
+            {
+                "design_file": "./docs/design/sec/FIREWALL_EXCEPTION.rst",
+                "design_id": "did_sec_fwl_exc_goals",
+                "design_linenumber": 33,
+                "design_sectionname": "Functional goals"
+            },
+            {
+                "design_file": "./docs/design/sec/SA2UL_RM.rst",
+                "design_id": "did_sa2ul_rm",
+                "design_linenumber": 810,
+                "design_sectionname": "Final Decision"
+            },
+            {
+                "design_file": "./docs/design/drivers/PROXY.rst",
+                "design_id": "did_rm_proxy_driver",
+                "design_linenumber": 105,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/drivers/PSIL.rst",
+                "design_id": "did_rm_psil_driver",
+                "design_linenumber": 105,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/drivers/UDMAP.rst",
+                "design_id": "did_rm_udmap_driver",
+                "design_linenumber": 114,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/drivers/RING_ACCELERATOR.rst",
+                "design_id": "did_rm_ring_accelerator_driver",
+                "design_linenumber": 110,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/pm/PM_CLOCK.rst",
+                "design_id": "did_pm_clock_init",
+                "design_linenumber": 107,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/pm/PM_CLOCK.rst",
+                "design_id": "did_pm_clock",
+                "design_linenumber": 860,
+                "design_sectionname": "Final Decision"
+            },
+            {
+                "design_file": "./docs/design/pm/PM_DEVICE.rst",
+                "design_id": "did_pm_device_init",
+                "design_linenumber": 108,
+                "design_sectionname": "Features Not Supported"
+            },
+            {
+                "design_file": "./docs/design/pm/PM_DEVICE.rst",
+                "design_id": "did_pm_device",
+                "design_linenumber": 404,
+                "design_sectionname": "Final Decision"
+            }
+        ],
+        "design_traceability": [],
+        "requirement_traceability": [
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_component1_design_id"
+                ],
+                "req_id": "SYSFW-1207",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_sec_design",
+                    "did_boardcfg_pm_design",
+                    "did_boardcfg_rm_design",
+                    "did_boardcfg_clock"
+                ],
+                "req_id": "SYSFW-239",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_sec_design",
+                    "did_boardcfg_pm_design",
+                    "did_boardcfg_rm_design"
+                ],
+                "req_id": "SYSFW-1661",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_msmc"
+                ],
+                "req_id": "SYSFW-1892",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_msmc"
+                ],
+                "req_id": "SYSFW-1890",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_mat_msmc_erratum"
+                ],
+                "req_id": "SYSFW-1891",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_rm_design",
+                    "did_rm_proxy_driver"
+                ],
+                "req_id": "SYSFW-270",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_interrupts"
+                ],
+                "req_id": "SYSFW-297",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_rm_res_psil",
+                    "did_rm_psil_driver"
+                ],
+                "req_id": "SYSFW-291",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_rm_res_udma",
+                    "did_rm_udmap_driver"
+                ],
+                "req_id": "SYSFW-1463",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_rm_res_ringacc",
+                    "did_rm_ring_accelerator_driver"
+                ],
+                "req_id": "SYSFW-285",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_rm_res_insec_proxy",
+                    "did_rm_proxy_driver"
+                ],
+                "req_id": "SYSFW-943",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_secchan"
+                ],
+                "req_id": "SYSFW-217",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_secchan"
+                ],
+                "req_id": "SYSFW-218",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_msmc_cache"
+                ],
+                "req_id": "SYSFW-785",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_debug"
+                ],
+                "req_id": "SYSFW-181",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_debug"
+                ],
+                "req_id": "SYSFW-179",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_boardcfg_debug"
+                ],
+                "req_id": "SYSFW-180",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_sec_fwl_exc_goals"
+                ],
+                "req_id": "SYSFW-281",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_sa2ul_rm"
+                ],
+                "req_id": "SYSFW-3270",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_psil_driver"
+                ],
+                "req_id": "SYSFW-2078",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_udmap_driver"
+                ],
+                "req_id": "SYSFW-936",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_udmap_driver"
+                ],
+                "req_id": "SYSFW-289",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_ring_accelerator_driver"
+                ],
+                "req_id": "SYSFW-1459",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_ring_accelerator_driver"
+                ],
+                "req_id": "SYSFW-2641",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_ring_accelerator_driver"
+                ],
+                "req_id": "SYSFW-1930",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_rm_ring_accelerator_driver"
+                ],
+                "req_id": "SYSFW-1931",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_pm_clock"
+                ],
+                "req_id": "SYSFW-367",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_pm_clock"
+                ],
+                "req_id": "SYSFW-172",
+                "source_ids": []
+            },
+            {
+                "arch_ids": [],
+                "design_ids": [
+                    "did_pm_device"
+                ],
+                "req_id": "SYSFW-366",
+                "source_ids": []
+            }
+        ],
+        "source_identifier": []
+    }
+}

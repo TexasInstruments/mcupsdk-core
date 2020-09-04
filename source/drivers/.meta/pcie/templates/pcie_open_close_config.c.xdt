@@ -1,0 +1,59 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("pcie");
+    let module = system.modules['/drivers/pcie/pcie'];
+%%}
+/*
+ * PCIe
+ */
+
+/* PCIe Driver handles */
+Pcie_Handle gPcieHandle[CONFIG_PCIE_NUM_INSTANCES];
+
+void Drivers_pcieOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_PCIE_NUM_INSTANCES; instCnt++)
+    {
+        gPcieHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_PCIE_NUM_INSTANCES; instCnt++)
+    {
+        gPcieHandle[instCnt] = Pcie_open(instCnt);
+        if(NULL == gPcieHandle[instCnt])
+        {
+            DebugP_logError("Pcie open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_pcieClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_pcieClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_PCIE_NUM_INSTANCES; instCnt++)
+    {
+        if(gPcieHandle[instCnt] != NULL)
+        {
+            Pcie_close(gPcieHandle[instCnt]);
+            gPcieHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

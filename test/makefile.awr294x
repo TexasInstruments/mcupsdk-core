@@ -1,0 +1,1136 @@
+#
+# Auto generated makefile
+#
+
+all:
+	$(MAKE) -f makefile.awr294x libs
+	$(MAKE) -f makefile.awr294x sbl
+	$(MAKE) -f makefile.awr294x examples
+
+clean: libs-clean sbl-clean examples-clean
+scrub: libs-scrub sbl-scrub examples-scrub
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=debug or PROFILE=release [default] to build in debug or release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.awr294x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.awr294x all
+	@echo  $(MAKE) -s -f makefile.awr294x clean  # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.awr294x scrub  # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.awr294x libs
+	@echo  $(MAKE) -s -f makefile.awr294x libs-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.awr294x libs-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.awr294x examples
+	@echo  $(MAKE) -s -f makefile.awr294x examples-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.awr294x examples-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  Library build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.awr294x unity_r5f.ti-arm-clang unity_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.awr294x doxy_samples_r5f.ti-arm-clang
+	@echo  .
+	@echo  Library clean targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.awr294x unity_r5f.ti-arm-clang_clean unity_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.awr294x doxy_samples_r5f.ti-arm-clang_clean
+	@echo  .
+	@echo  Example build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -C board/eeprom/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/led/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/flash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/adcbuf/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/crc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/crc/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/csirx/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/csirx/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/edma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/edma/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/epwm/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/gpio/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/hwa/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/hwa/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_slave/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/uart/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/uart/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/awr294x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/awr294x-evm/c66ss0_safertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/awr294x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/rov/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/v1/esm_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/common/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ccm/ccm_ip_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  .
+	@echo  System Example build targets,
+	@echo  =============================
+	@echo  $(MAKE) -s -C drivers/esm/awr294x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/awr294x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/awr294x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/awr294x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  .
+
+# Various Component Targets
+BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_c66.ti-c6000
+BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
+
+# Combine all Components
+BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
+
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL =
+
+# Combine all Private Components
+BUILD_COMBO_PRIVATE_ALL =
+
+libs: $(BUILD_COMBO_ALL)
+
+libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
+
+libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+$(BUILD_COMBO_unity):
+	$(MAKE) -C unity -f makefile.awr294x.$(subst unity_,,$@) all
+
+$(BUILD_COMBO_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.awr294x.$(subst doxy_samples_,,$@) all
+
+
+# Various Component Clean Targets
+BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
+
+# Combine all Components Clean
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
+
+# Combine all Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL =
+
+libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+$(BUILD_COMBO_CLEAN_unity):
+	$(MAKE) -C unity -f makefile.awr294x.$(subst unity_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.awr294x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
+
+
+# Various Component Scrub Targets
+BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub unity_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
+
+# Combine all Components Scrub Targets
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
+
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL =
+
+libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+$(BUILD_COMBO_SCRUB_unity):
+	$(MAKE) -C unity -f makefile.awr294x.$(subst unity_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.awr294x.$(subst doxy_samples_,,$(subst _scrub,,$@)) scrub
+
+
+BUILD_COMBO_EXAMPLE_ALL =
+# Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += test_eeprom_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_crc_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_csirx_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_csirx_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_edma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_edma_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_epwm_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mibspi_slave_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_uart_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_uart_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_awr294x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_awr294x-evm_c66ss0_safertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_awr294x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_rov_awr294x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += esm_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_common_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000
+# Various System Example Targets
+BUILD_COMBO_EXAMPLE_ALL += test_esm_awr294x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_awr294x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_awr294x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_awr294x-evm_system_freertos
+
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ test_eeprom_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/eeprom/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/led/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/flash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/adcbuf/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/crc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_crc_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/crc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_csirx_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/csirx/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_csirx_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/csirx/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_edma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/edma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_edma_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/edma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_epwm_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/epwm/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/gpio/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/hwa/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mibspi_slave_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mibspi/mibspi_slave/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_uart_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/uart/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_uart_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/uart/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_dpl_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dpl_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_dpl_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_dpl_awr294x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ test_dpl_awr294x-evm_c66ss0_safertos_ti-c6000:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_safertos/ti-c6000 -f makefile all
+
+ test_freertos_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/freertos/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_freertos_awr294x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C kernel/freertos/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/rov/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_rov_awr294x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ dcc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ dcc_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_unit_test_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/rti/rtiFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/rti/rtiFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/mcrc/mcrcUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ esm_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/v1/esm_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_common_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/common/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_func_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_pbist_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+ pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ccm/ccm_ip_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_esm_awr294x-evm_system_freertos:
+	$(MAKE) -C drivers/esm/awr294x-evm/system_freertos -f makefile all
+
+ test_ipc_notify_awr294x-evm_system_freertos_nortos:
+	$(MAKE) -C drivers/ipc_notify/awr294x-evm/system_freertos_nortos -f makefile all
+
+ test_ipc_rpmsg_awr294x-evm_system_freertos:
+	$(MAKE) -C drivers/ipc_rpmsg/awr294x-evm/system_freertos -f makefile all
+
+ test_soc_r5f_awr294x-evm_system_freertos:
+	$(MAKE) -C drivers/soc/soc_r5f/awr294x-evm/system_freertos -f makefile all
+
+
+BUILD_COMBO_EXAMPLE_CLEAN_ALL =
+# Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_crc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_csirx_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_csirx_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_epwm_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mibspi_slave_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_awr294x-evm_c66ss0_safertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += esm_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_common_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+# Various System Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_awr294x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_awr294x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_awr294x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_awr294x-evm_system_freertos_clean
+
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
+
+examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ test_eeprom_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/eeprom/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/led/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/flash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/adcbuf/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/crc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_crc_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/crc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_csirx_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/csirx/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_csirx_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/csirx/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_edma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/edma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_edma_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/edma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_epwm_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/epwm/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/gpio/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/hwa/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mibspi_slave_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mibspi/mibspi_slave/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_uart_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/uart/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_uart_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/uart/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_dpl_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dpl_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_dpl_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_dpl_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ test_dpl_awr294x-evm_c66ss0_safertos_ti-c6000_clean:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_safertos/ti-c6000 -f makefile clean
+
+ test_freertos_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/freertos/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_freertos_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C kernel/freertos/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/rov/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ dcc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ dcc_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_unit_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/rti/rtiFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/rti/rtiFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/mcrc/mcrcUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ esm_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/v1/esm_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_common_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/common/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_func_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_pbist_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ccm/ccm_ip_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_esm_awr294x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/esm/awr294x-evm/system_freertos -f makefile clean
+
+ test_ipc_notify_awr294x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/awr294x-evm/system_freertos_nortos -f makefile clean
+
+ test_ipc_rpmsg_awr294x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/ipc_rpmsg/awr294x-evm/system_freertos -f makefile clean
+
+ test_soc_r5f_awr294x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/soc/soc_r5f/awr294x-evm/system_freertos -f makefile clean
+
+
+BUILD_COMBO_EXAMPLE_SCRUB_ALL =
+# Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_crc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_csirx_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_csirx_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_epwm_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mibspi_slave_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_awr294x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_awr294x-evm_c66ss0_safertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_awr294x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += esm_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_common_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+# Various System Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_awr294x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_awr294x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_awr294x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_awr294x-evm_system_freertos_scrub
+
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+
+examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ test_eeprom_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/eeprom/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/led/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/flash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/adcbuf/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/crc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_crc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/crc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_csirx_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/csirx/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_csirx_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/csirx/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_edma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/edma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_edma_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/edma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_epwm_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/epwm/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/gpio/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/hwa/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_mcan_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcan/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mibspi_performance_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mibspi_slave_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mibspi/mibspi_slave/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_uart_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/uart/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_uart_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/uart/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_dpl_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dpl_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_dpl_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_dpl_awr294x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ test_dpl_awr294x-evm_c66ss0_safertos_ti-c6000_scrub:
+	$(MAKE) -C kernel/dpl/awr294x-evm/c66ss0_safertos/ti-c6000 -f makefile scrub
+
+ test_freertos_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/freertos/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_freertos_awr294x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C kernel/freertos/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/rov/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ dcc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ dcc_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_unit_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/rti/rtiFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/rti/rtiFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_mcrc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mcrc_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ esm_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/v1/esm_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_common_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/common/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_func_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecc_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_pbist_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ccm/ccm_ip_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_esm_awr294x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/esm/awr294x-evm/system_freertos -f makefile scrub
+
+ test_ipc_notify_awr294x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C drivers/ipc_notify/awr294x-evm/system_freertos_nortos -f makefile scrub
+
+ test_ipc_rpmsg_awr294x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/ipc_rpmsg/awr294x-evm/system_freertos -f makefile scrub
+
+ test_soc_r5f_awr294x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/soc/soc_r5f/awr294x-evm/system_freertos -f makefile scrub
+
+
+sbl: libs
+
+sbl-clean:
+
+sbl-scrub:
+
+
+.PHONY: all clean scrub help
+.PHONY: libs libs-clean libs-scrub
+.PHONY: libs-private
+.PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
+.PHONY: examples examples-clean examples-scrub
+.PHONY: examples-private examples-private-clean examples-private-scrub
+.PHONY: sbl sbl-clean sbl-scrub
+.PHONY: $(BUILD_COMBO_ALL) $(BUILD_COMBO_CLEAN_ALL) $(BUILD_COMBO_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_ALL) $(BUILD_COMBO_EXAMPLE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)

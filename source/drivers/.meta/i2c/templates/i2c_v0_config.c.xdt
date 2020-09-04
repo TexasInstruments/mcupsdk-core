@@ -1,0 +1,43 @@
+%%{
+    let module = system.modules['/drivers/i2c/i2c'];
+%%}
+/*
+ * I2C
+ */
+/* I2C atrributes */
+static I2C_HwAttrs gI2cHwAttrs[CONFIG_I2C_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .baseAddr       = `config.baseAddr`,
+        .intNum         = `config.intNum`,
+        .eventId        = `config.eventId`,
+        .funcClk        = `config.funcClk`U,
+        .enableIntr     = `Number(config.enableIntr)`,
+        .ownSlaveAddr   =
+        {
+            0x`config.ownSlaveAddr1.toString(16).toUpperCase()`,
+            0x`config.ownSlaveAddr2.toString(16).toUpperCase()`,
+            0x`config.ownSlaveAddr3.toString(16).toUpperCase()`,
+            0x`config.ownSlaveAddr4.toString(16).toUpperCase()`,
+        },
+    },
+% }
+};
+/* I2C objects - initialized by the driver */
+static I2C_Object gI2cObjects[CONFIG_I2C_NUM_INSTANCES];
+/* I2C driver configuration */
+I2C_Config gI2cConfig[CONFIG_I2C_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        .object = &gI2cObjects[`instance.$name.toUpperCase()`],
+        .hwAttrs = &gI2cHwAttrs[`instance.$name.toUpperCase()`]
+    },
+% }
+};
+
+uint32_t gI2cConfigNum = CONFIG_I2C_NUM_INSTANCES;

@@ -1,0 +1,109 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const fsi_rx     = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
+const fsi_rx1    = fsi_rx.addInstance();
+const fsi_rx2    = fsi_rx.addInstance();
+const fsi_rx3    = fsi_rx.addInstance();
+const fsi_rx4    = fsi_rx.addInstance();
+const fsi_rx5    = fsi_rx.addInstance();
+const fsi_rx6    = fsi_rx.addInstance();
+const fsi_tx     = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
+const fsi_tx1    = fsi_tx.addInstance();
+const fsi_tx2    = fsi_tx.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+fsi_rx1.$name              = "CONFIG_FSI_RX0";
+fsi_rx1.FSI_RX.$assign     = "FSI_RX0";
+fsi_rx1.FSI_RX.CLK.$assign = "V19";
+fsi_rx1.FSI_RX.D0.$assign  = "T17";
+fsi_rx1.FSI_RX.D1.$assign  = "R16";
+
+fsi_rx2.$name          = "CONFIG_FSI_RX1";
+fsi_rx2.FSI_RX.$assign = "FSI_RX1";
+
+fsi_rx3.$name          = "CONFIG_FSI_RX2";
+fsi_rx3.FSI_RX.$assign = "FSI_RX2";
+
+fsi_rx4.$name = "CONFIG_FSI_RX3";
+
+fsi_rx5.$name          = "CONFIG_FSI_RX4";
+fsi_rx5.FSI_RX.$assign = "FSI_RX4";
+
+fsi_rx6.$name          = "CONFIG_FSI_RX5";
+fsi_rx6.FSI_RX.$assign = "FSI_RX5";
+
+fsi_tx1.$name              = "CONFIG_FSI_TX0";
+fsi_tx1.FSI_TX.$assign     = "FSI_TX0";
+fsi_tx1.FSI_TX.CLK.$assign = "T19";
+fsi_tx1.FSI_TX.D0.$assign  = "Y21";
+fsi_tx1.FSI_TX.D1.$assign  = "Y20";
+
+fsi_tx2.$name = "CONFIG_FSI_TX1";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign     = "USART0";
+debug_log.uartLog.UART.RXD.$assign = "D15";
+debug_log.uartLog.UART.TXD.$assign = "C16";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+fsi_rx2.FSI_RX.CLK.$suggestSolution = "W20";
+fsi_rx2.FSI_RX.D0.$suggestSolution  = "W21";
+fsi_rx2.FSI_RX.D1.$suggestSolution  = "V18";
+fsi_rx3.FSI_RX.CLK.$suggestSolution = "T20";
+fsi_rx3.FSI_RX.D0.$suggestSolution  = "U21";
+fsi_rx3.FSI_RX.D1.$suggestSolution  = "T18";
+fsi_rx4.FSI_RX.$suggestSolution     = "FSI_RX3";
+fsi_rx4.FSI_RX.CLK.$suggestSolution = "U20";
+fsi_rx4.FSI_RX.D0.$suggestSolution  = "U18";
+fsi_rx4.FSI_RX.D1.$suggestSolution  = "U19";
+fsi_rx5.FSI_RX.CLK.$suggestSolution = "R17";
+fsi_rx5.FSI_RX.D0.$suggestSolution  = "V20";
+fsi_rx5.FSI_RX.D1.$suggestSolution  = "V21";
+fsi_rx6.FSI_RX.CLK.$suggestSolution = "P16";
+fsi_rx6.FSI_RX.D0.$suggestSolution  = "R18";
+fsi_rx6.FSI_RX.D1.$suggestSolution  = "T21";
+fsi_tx2.FSI_TX.$suggestSolution     = "FSI_TX1";
+fsi_tx2.FSI_TX.CLK.$suggestSolution = "N16";
+fsi_tx2.FSI_TX.D0.$suggestSolution  = "P17";
+fsi_tx2.FSI_TX.D1.$suggestSolution  = "Y18";

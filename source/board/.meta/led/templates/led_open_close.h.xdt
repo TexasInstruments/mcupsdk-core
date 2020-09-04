@@ -1,0 +1,13 @@
+/*
+ * LED
+ */
+#include <board/led.h>
+
+/* LED Driver handles */
+extern LED_Handle gLedHandle[CONFIG_LED_NUM_INSTANCES];
+
+/* LED Driver open/close - can be used by application when Board_driversOpen() and
+ * Board_driversClose() is not used directly and app wants to control the various driver
+ * open/close sequences */
+int32_t Board_ledOpen(void);
+void Board_ledClose(void);

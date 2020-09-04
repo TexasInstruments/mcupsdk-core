@@ -1,0 +1,123 @@
+%%{
+    let module = system.modules['/drivers/ospi/ospi'];
+    let ospiUdmaInstances = [];
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.dmaEnable == true) {
+            ospiUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
+        }
+    }
+%%}
+/*
+ * OSPI
+ */
+
+% let dmaRestrictRegions = module.getDmaRestrictedRegions();
+
+/* Regions restricted for DMA. We should use CPU memcpy in these cases */
+static OSPI_AddrRegion gOspiDmaRestrictRegions[] = 
+{
+% for(let i = 0; i < dmaRestrictRegions.length; i++) {
+    % let region = dmaRestrictRegions[i];
+    {
+        .regionStartAddr = `region.start`,
+        .regionSize      = `region.size`,
+    },  
+% }
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+};
+
+/* OSPI attributes */
+static OSPI_Attrs gOspiAttrs[CONFIG_OSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .baseAddr             = `config.baseAddr`,
+        .dataBaseAddr         = `config.dataBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .intrNum              = `config.intrNum`U,
+        .intrEnable           = `config.intrEnable.toString(10).toUpperCase()`,
+        .intrPriority         = `config.intrPriority`U,
+        .dmaEnable            = `config.dmaEnable.toString(10).toUpperCase()`,
+        .phyEnable            = `config.phyEnable.toString(10).toUpperCase()`,
+        .dacEnable            = `config.dacEnable.toString(10).toUpperCase()`,
+        .chipSelect           = OSPI_`config.chipSelect`,
+        .frmFmt               = OSPI_FF_`config.frmFmt`,
+        .decChipSelect        = `config.decChipSelect`,
+        .baudRateDiv          = `config.baudRateDiv`,
+        .dmaRestrictedRegions = gOspiDmaRestrictRegions,
+    },
+% }
+};
+/* OSPI objects - initialized by the driver */
+static OSPI_Object gOspiObjects[CONFIG_OSPI_NUM_INSTANCES];
+/* OSPI driver configuration */
+OSPI_Config gOspiConfig[CONFIG_OSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gOspiAttrs[`instance.$name.toUpperCase()`],
+        &gOspiObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gOspiConfigNum = CONFIG_OSPI_NUM_INSTANCES;
+
+#include <drivers/ospi/v0/dma/ospi_dma.h>
+%if(ospiUdmaInstances.length > 0) {
+#include <drivers/ospi/v0/dma/udma/ospi_dma_udma.h>
+#include <drivers/udma.h>
+
+/*
+ * OSPI UDMA Blockcopy Parameters
+ */
+#define OSPI_UDMA_BLK_COPY_CH_RING_ELEM_CNT (1U)
+#define OSPI_UDMA_BLK_COPY_CH_RING_MEM_SIZE (((OSPI_UDMA_BLK_COPY_CH_RING_ELEM_CNT * 8U) + UDMA_CACHELINE_ALIGNMENT) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
+#define OSPI_UDMA_BLK_COPY_CH_TRPD_MEM_SIZE (UDMA_GET_TRPD_TR15_SIZE(1U))
+#define OSPI_UDMA_NUM_BLKCOPY_CH (`ospiUdmaInstances.length`U)
+
+/* OSPI UDMA Blockcopy Channel Objects */
+static Udma_ChObject gOspiUdmaBlkCopyChObj[OSPI_UDMA_NUM_BLKCOPY_CH];
+
+/* OSPI UDMA Blockcopy Channel Ring Mem */
+%for(let i = 0; i < ospiUdmaInstances.length; i++) {
+static uint8_t gOspiUdmaBlkCopyCh`i`RingMem[OSPI_UDMA_BLK_COPY_CH_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+%}
+
+/* OSPI UDMA Blockcopy Channel TRPD Mem */
+%for(let i = 0; i < ospiUdmaInstances.length; i++) {
+static uint8_t gOspiUdmaBlkCopyCh`i`TrpdMem[OSPI_UDMA_BLK_COPY_CH_TRPD_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+%}
+
+%for(let i = 0; i < ospiUdmaInstances.length; i++) {
+OspiDma_UdmaArgs gOspiUdma`i`Args =
+{
+    .drvHandle     = &gUdmaDrvObj[`ospiUdmaInstances[i].$name`],
+    .chHandle      = &gOspiUdmaBlkCopyChObj[`i`],
+    .trpdMem       = &gOspiUdmaBlkCopyCh`i`TrpdMem,
+    .trpdMemSize   = OSPI_UDMA_BLK_COPY_CH_TRPD_MEM_SIZE,
+    .ringMem       = &gOspiUdmaBlkCopyCh`i`RingMem,
+    .ringMemSize   = OSPI_UDMA_BLK_COPY_CH_RING_MEM_SIZE,
+    .ringElemCount = OSPI_UDMA_BLK_COPY_CH_RING_ELEM_CNT,
+};
+%}
+%}
+OSPI_DmaConfig gOspiDmaConfig[CONFIG_OSPI_NUM_DMA_INSTANCES] =
+{
+%for(let i = 0; i < ospiUdmaInstances.length; i++) {
+    {
+        .fxns        = &gOspiDmaUdmaFxns,
+        .ospiDmaArgs = (void *)&gOspiUdma`i`Args,
+    }
+%}
+};
+
+uint32_t gOspiDmaConfigNum = CONFIG_OSPI_NUM_DMA_INSTANCES;

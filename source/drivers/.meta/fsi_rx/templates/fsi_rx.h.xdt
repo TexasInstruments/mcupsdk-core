@@ -1,0 +1,33 @@
+%%{
+    let module = system.modules[args[0]];
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/fsi_rx/soc/fsi_rx_${common.getSocName()}`);
+%%}
+/*
+ * FSI RX
+ */
+#include <drivers/fsi.h>
+
+/* FSI RX Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+% if(instance.intrEnable == true) {
+% if(soc.interruptXbarConfig == false) {
+#define `instance.$name.toUpperCase()`_INTR1 (`config.intrNum1`)
+#define `instance.$name.toUpperCase()`_INTR2 (`config.intrNum2`)
+% } else {
+% let xbarInst0 = instance.fsiRxIntXbar0.instance;
+% let xbarInst1 = instance.fsiRxIntXbar1.instance;
+% let xbarInstNum0 = xbarInst0.substring(xbarInst0.lastIndexOf('_') + 1);
+% let xbarInstNum1 = xbarInst1.substring(xbarInst1.lastIndexOf('_') + 1);
+% let intNum0 = "CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_" + xbarInstNum0.toString();
+% let intNum1 = "CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_" + xbarInstNum1.toString();
+#define `instance.$name.toUpperCase()`_INTR1 (`intNum0`)
+#define `instance.$name.toUpperCase()`_INTR2 (`intNum1`)
+% }
+% }
+#define `instance.$name.toUpperCase()`_CLK (`config.funcClk`U)
+% }
+#define CONFIG_FSI_RX_NUM_INSTANCES (`module.$instances.length`U)

@@ -1,0 +1,80 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2127"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
+const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1      = udma.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mcspi1.$name                       = "CONFIG_MCSPI0";
+mcspi1.inputSelect                 = "0";
+mcspi1.intrEnable                  = "DMA";
+mcspi1.SPI.$assign                 = "SPI0";
+mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].CSn.$assign = "ball.D12";
+
+udma1.$name       = "CONFIG_UDMA0";
+mcspi1.udmaDriver = udma1;
+udma1.instance    = "PKTDMA_0";
+
+debug_log.enableUartLog        = true;
+debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mcspi1.SPI.CLK.$suggestSolution             = "ball.D13";
+mcspi1.SPI.D0.$suggestSolution              = "ball.A13";
+mcspi1.SPI.D1.$suggestSolution              = "ball.A14";
+debug_log.uartLog.UART.RXD.$suggestSolution = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution = "ball.C16";

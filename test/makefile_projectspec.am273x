@@ -1,0 +1,124 @@
+#
+# Auto generated makefile
+#
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
+# Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_rov_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_rov_am273x-evm_c66ss0_freertos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
+# Various System Example Projectspec Build Targets
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
+# Various Private Example Projectspec Build Targets
+# Various Private System Example Projectspec Build Targets
+
+all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
+
+all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_build:
+	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
+
+ test_rov_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C kernel/rov/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ test_rov_am273x-evm_c66ss0_freertos_ti-c6000_build:
+	$(MAKE) -C kernel/rov/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
+
+ cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
+# Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_rov_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_rov_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+# Various System Example Projectspec Clean Targets
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
+# Various Private Example Projectspec Clean Targets
+# Various Private System Example Projectspec Clean Targets
+
+clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
+
+clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
+
+ test_rov_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/rov/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ test_rov_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C kernel/rov/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
+
+ cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
+# Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_rov_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_rov_am273x-evm_c66ss0_freertos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
+# Various System Example Projectspec Export Targets
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
+# Various Private Example Projectspec Export Targets
+# Various Private System Example Projectspec Export Targets
+
+export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
+
+export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_export:
+	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ test_rov_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C kernel/rov/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ test_rov_am273x-evm_c66ss0_freertos_ti-c6000_export:
+	$(MAKE) -C kernel/rov/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=Debug or PROFILE=Release [default] to build in Debug or Release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile_projectspec.am273x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile_projectspec.am273x [export all clean]
+	@echo  .
+	@echo  export = export projectspec to CCS project in the folder ./ccs_projects/,
+	@echo           export MUST be called once before 'all' or 'clean'
+	@echo  all    = build the previously exported projectspecs
+	@echo  clean  = clean the previously exported projectspecs
+	@echo  .
+	@echo  Example ProjectSpec build targets,
+	@echo  ==================================
+	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C kernel/rov/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C kernel/rov/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  .
+	@echo  System Example ProjectSpec build targets,
+	@echo  =========================================
+	@echo  .
+
+.PHONY: all all-private
+.PHONY: clean clean-private
+.PHONY: help

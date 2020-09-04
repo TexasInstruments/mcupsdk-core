@@ -1,0 +1,112 @@
+# SDL STC Example {#EXAMPLES_SDL_STC}
+
+[TOC]
+
+# Introduction
+
+This example demonstrates how to perform STC for a given core.
+
+
+\cond SOC_AM273X
+This example displays:
+
+    * How to check if STC is Done for a Instance(CPU core).
+    * How to Run STC for the Instance (CPU core).
+
+\endcond
+
+
+\cond SOC_AM273X || AWR294X
+Use Cases
+---------
+* STC run for R5F core.
+
+\endcond
+\cond SOC_AM263X
+Use Cases
+---------
+* STC run for R5F1 core after that it will run R5F0( SELF CORE).
+
+\endcond
+
+# Supported Combinations {#EXAMPLES_SDL_STC_COMBOS}
+
+
+\cond SOC_AM273X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/stc/stc_mcu/
+
+\endcond
+
+\cond SOC_AWR294X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/stc/stc_mcu/
+
+\endcond
+
+\cond SOC_AM263X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/stc/stc_mcu/
+
+\endcond
+
+# Steps to Run the Example
+
+- **When using CCS projects to build**, import the CCS project for the required combination
+  and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
+- **When using makefiles to build**, note the required combination and build using
+  make command (see \ref MAKEFILE_BUILD_PAGE)
+- Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+
+# See Also
+
+\ref SDL_STC_PAGE
+
+# Sample Output
+
+\cond SOC_AM273X || SOC_AWR294X
+Shown below is a sample output when the application is run for R5F,
+
+\code
+
+STC Test Application started.
+If STC test is successfull, Core will go in to Reset.
+Core is Reset.
+STC is done Successfully & Passed.
+Waiting in loop in STC_Main().
+
+\endcode
+\endcond
+
+\cond SOC_AM263X
+Shown below is a sample output when the application is run for R5F1 followed by R5F0,
+code is running on  R5F0 core.
+\code
+
+STC Test Application started.
+If STC test is successfull, Core1 will go in to Reset.
+STC Test Application started.
+If STC test is successfull, Core0 will go in to Reset.
+Core1 is Reset.
+STC is done Successfully & Passed for R5F1.
+Core0 is Reset.
+STC is done Successfully & Passed for R5F0.
+Waiting in loop in STC_Main().
+
+\endcode
+\endcond

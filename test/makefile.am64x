@@ -1,0 +1,1284 @@
+#
+# Auto generated makefile
+#
+
+all:
+	$(MAKE) -f makefile.am64x libs
+	$(MAKE) -f makefile.am64x sbl
+	$(MAKE) -f makefile.am64x examples
+
+clean: libs-clean sbl-clean examples-clean
+scrub: libs-scrub sbl-scrub examples-scrub
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=debug or PROFILE=release [default] to build in debug or release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am64x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am64x all
+	@echo  $(MAKE) -s -f makefile.am64x clean  # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am64x scrub  # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am64x libs
+	@echo  $(MAKE) -s -f makefile.am64x libs-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am64x libs-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am64x examples
+	@echo  $(MAKE) -s -f makefile.am64x examples-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am64x examples-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  Library build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am64x unity_r5f.ti-arm-clang unity_r5f.gcc-armv7 unity_m4f.ti-arm-clang unity_a53.gcc-aarch64
+	@echo  $(MAKE) -s -f makefile.am64x doxy_samples_r5f.ti-arm-clang
+	@echo  .
+	@echo  Library clean targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am64x unity_r5f.ti-arm-clang_clean unity_r5f.gcc-armv7_clean unity_m4f.ti-arm-clang_clean unity_a53.gcc-aarch64_clean
+	@echo  $(MAKE) -s -f makefile.am64x doxy_samples_r5f.ti-arm-clang_clean
+	@echo  .
+	@echo  Example build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/flash/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/led/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/led/am64x-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/adc/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ddr/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ddr/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/eqep/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/firewall/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/fsi/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/fsi/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/gpio/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/gpio/am64x-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am64x-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am64x-sk/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcan/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_eeprom_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mmcsd/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ospi/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ospi/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/sciclient/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/sciclient/am64x-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/sciclient/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/sciclient/am64x-sk/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/soc/soc_m4f/am64x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/uart/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/uart/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/udma/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/udma/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/dpl/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/am64x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/am64x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/am64x-sk/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos/am64x-sk/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/freertos_smp/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/test_smp_kernel/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/rov/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/rov/am64x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C kernel/rov/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  .
+	@echo  System Example build targets,
+	@echo  =============================
+	@echo  $(MAKE) -s -C drivers/ipc_notify/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am64x-sk/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  .
+
+# Various Component Targets
+BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_r5f.gcc-armv7 unity_m4f.ti-arm-clang unity_a53.gcc-aarch64
+BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
+
+# Combine all Components
+BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
+
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL =
+
+# Combine all Private Components
+BUILD_COMBO_PRIVATE_ALL =
+
+libs: $(BUILD_COMBO_ALL)
+
+libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
+
+libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+$(BUILD_COMBO_unity):
+	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$@) all
+
+$(BUILD_COMBO_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$@) all
+
+
+# Various Component Clean Targets
+BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_r5f.gcc-armv7_clean unity_m4f.ti-arm-clang_clean unity_a53.gcc-aarch64_clean
+BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
+
+# Combine all Components Clean
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
+
+# Combine all Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL =
+
+libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+$(BUILD_COMBO_CLEAN_unity):
+	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
+
+
+# Various Component Scrub Targets
+BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub unity_r5f.gcc-armv7_scrub unity_m4f.ti-arm-clang_scrub unity_a53.gcc-aarch64_scrub_scrub
+BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
+
+# Combine all Components Scrub Targets
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
+
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL =
+
+libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+$(BUILD_COMBO_SCRUB_unity):
+	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_doxy_samples):
+	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$(subst _scrub,,$@)) scrub
+
+
+BUILD_COMBO_EXAMPLE_ALL =
+# Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_led_am64x-evm_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_firewall_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_fsi_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_gpio_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_gpio_am64x-evm_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-evm_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_eeprom_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mmcsd_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ospi_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ospi_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_sciclient_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_sciclient_am64x-evm_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_sciclient_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_sciclient_am64x-sk_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_soc_m4f_am64x-evm_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_uart_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_uart_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_udma_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_udma_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_a53ss0-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_am64x-evm_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_am64x-evm_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_am64x-sk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_am64x-sk_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_am64x-sk_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_freertos_smp_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_smp_kernel_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_rov_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_rov_am64x-evm_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_rov_am64x-evm_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+# Various System Example Targets
+BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am64x-sk_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am64x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am64x-sk_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_master_slave_am64x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am64x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos
+
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/flash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/led/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_led_am64x-evm_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C board/led/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/adc/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/ddr/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/ddr/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/eqep/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_firewall_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/firewall/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/fsi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_fsi_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/fsi/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_gpio_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/gpio/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_gpio_am64x-evm_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C drivers/gpio/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_i2c_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_i2c_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_i2c_am64x-evm_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C drivers/i2c/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C drivers/i2c/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcan/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mcspi_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi_eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_mcspi_eeprom_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/mcspi/mcspi_eeprom_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_mmcsd_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/mmcsd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ospi_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/ospi/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ospi_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/ospi/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_sciclient_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/sciclient/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_sciclient_am64x-evm_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C drivers/sciclient/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_sciclient_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/sciclient/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_sciclient_am64x-sk_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C drivers/sciclient/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_soc_m4f_am64x-evm_m4fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/soc/soc_m4f/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_uart_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/uart/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_uart_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/uart/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_udma_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/udma/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_udma_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/udma/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-evm_m4fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-evm_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_dpl_am64x-evm_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ test_dpl_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile all
+
+ test_dpl_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-sk_m4fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_dpl_am64x-sk_a53ss0-0_nortos_gcc-aarch64:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile all
+
+ test_dpl_am64x-sk_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ test_dpl_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile all
+
+ test_freertos_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/freertos/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_freertos_am64x-evm_m4fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/freertos/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_freertos_am64x-evm_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C kernel/freertos/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ test_freertos_am64x-sk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/freertos/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_freertos_am64x-sk_m4fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/freertos/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_freertos_am64x-sk_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C kernel/freertos/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ test_freertos_smp_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64:
+	$(MAKE) -C kernel/freertos_smp/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile all
+
+ test_smp_kernel_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64:
+	$(MAKE) -C kernel/test_smp_kernel/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile all
+
+ test_rov_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/rov/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_rov_am64x-evm_m4fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/rov/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_rov_am64x-evm_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C kernel/rov/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile all
+
+ test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ipc_notify_am64x-evm_system_freertos_nortos:
+	$(MAKE) -C drivers/ipc_notify/am64x-evm/system_freertos_nortos -f makefile all
+
+ test_ipc_notify_am64x-sk_system_freertos_nortos:
+	$(MAKE) -C drivers/ipc_notify/am64x-sk/system_freertos_nortos -f makefile all
+
+ test_ipc_rpmsg_am64x-evm_system_freertos:
+	$(MAKE) -C drivers/ipc_rpmsg/am64x-evm/system_freertos -f makefile all
+
+ test_ipc_rpmsg_am64x-sk_system_freertos:
+	$(MAKE) -C drivers/ipc_rpmsg/am64x-sk/system_freertos -f makefile all
+
+ test_mcspi_master_slave_am64x-evm_system_freertos:
+	$(MAKE) -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos -f makefile all
+
+ test_soc_r5f_am64x-evm_system_freertos:
+	$(MAKE) -C drivers/soc/soc_r5f/am64x-evm/system_freertos -f makefile all
+
+ test_syscfg_combo_1_am64x-evm_system_freertos_nortos:
+	$(MAKE) -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos -f makefile all
+
+ test_syscfg_combo_1_am64x-sk_system_freertos_nortos:
+	$(MAKE) -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos -f makefile all
+
+
+BUILD_COMBO_EXAMPLE_CLEAN_ALL =
+# Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_firewall_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_fsi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_eeprom_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mmcsd_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ospi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ospi_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sciclient_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sciclient_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sciclient_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sciclient_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_m4f_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_udma_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_udma_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_smp_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_smp_kernel_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rov_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rov_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rov_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+# Various System Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am64x-sk_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am64x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am64x-sk_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_master_slave_am64x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_am64x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean
+
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
+
+examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/flash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/led/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_led_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C board/led/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/adc/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/ddr/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/ddr/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/eqep/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_firewall_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/firewall/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/fsi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_fsi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/fsi/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_gpio_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/gpio/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_gpio_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C drivers/gpio/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_i2c_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_i2c_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_i2c_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C drivers/i2c/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C drivers/i2c/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcan/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mcspi_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_mcspi_eeprom_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_eeprom_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_mmcsd_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mmcsd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ospi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/ospi/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ospi_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/ospi/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_sciclient_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/sciclient/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_sciclient_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C drivers/sciclient/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_sciclient_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/sciclient/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_sciclient_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C drivers/sciclient/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_soc_m4f_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/soc/soc_m4f/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_uart_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/uart/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_uart_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/uart/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_udma_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/udma/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_udma_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/udma/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_dpl_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ test_dpl_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile clean
+
+ test_dpl_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_dpl_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile clean
+
+ test_dpl_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ test_dpl_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_clean:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile clean
+
+ test_freertos_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/freertos/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_freertos_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/freertos/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_freertos_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/freertos/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ test_freertos_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/freertos/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_freertos_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/freertos/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_freertos_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/freertos/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ test_freertos_smp_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean:
+	$(MAKE) -C kernel/freertos_smp/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile clean
+
+ test_smp_kernel_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean:
+	$(MAKE) -C kernel/test_smp_kernel/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile clean
+
+ test_rov_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/rov/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_rov_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/rov/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_rov_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C kernel/rov/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
+
+ test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ipc_notify_am64x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/am64x-evm/system_freertos_nortos -f makefile clean
+
+ test_ipc_notify_am64x-sk_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/am64x-sk/system_freertos_nortos -f makefile clean
+
+ test_ipc_rpmsg_am64x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/ipc_rpmsg/am64x-evm/system_freertos -f makefile clean
+
+ test_ipc_rpmsg_am64x-sk_system_freertos_clean:
+	$(MAKE) -C drivers/ipc_rpmsg/am64x-sk/system_freertos -f makefile clean
+
+ test_mcspi_master_slave_am64x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos -f makefile clean
+
+ test_soc_r5f_am64x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/soc/soc_r5f/am64x-evm/system_freertos -f makefile clean
+
+ test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos -f makefile clean
+
+ test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean:
+	$(MAKE) -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos -f makefile clean
+
+
+BUILD_COMBO_EXAMPLE_SCRUB_ALL =
+# Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_firewall_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_fsi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_eeprom_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mmcsd_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ospi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ospi_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sciclient_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sciclient_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sciclient_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sciclient_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_m4f_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_udma_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_udma_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am64x-sk_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_smp_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_smp_kernel_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rov_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rov_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rov_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+# Various System Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am64x-sk_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am64x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am64x-sk_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_master_slave_am64x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_am64x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub
+
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+
+examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/flash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/led/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_led_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C board/led/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/adc/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/ddr/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/ddr/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/eqep/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_firewall_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/firewall/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/fsi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_fsi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/fsi/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_gpio_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/gpio/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_gpio_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C drivers/gpio/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_i2c_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_i2c_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_i2c_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C drivers/i2c/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_i2c_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_i2c_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_i2c_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C drivers/i2c/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_mcan_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcan/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_mcspi_eeprom_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_eeprom_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_mmcsd_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mmcsd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ospi_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/ospi/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ospi_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/ospi/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_sciclient_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/sciclient/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_sciclient_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C drivers/sciclient/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_sciclient_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/sciclient/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_sciclient_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C drivers/sciclient/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_soc_m4f_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/soc/soc_m4f/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_uart_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/uart/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_uart_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/uart/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_udma_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/udma/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_udma_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/udma/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-evm_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_dpl_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ test_dpl_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/dpl/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile scrub
+
+ test_dpl_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-sk_m4fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_dpl_am64x-sk_a53ss0-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile scrub
+
+ test_dpl_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ test_dpl_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/dpl/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile scrub
+
+ test_freertos_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/freertos/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_freertos_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/freertos/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_freertos_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/freertos/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ test_freertos_am64x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/freertos/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_freertos_am64x-sk_m4fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/freertos/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_freertos_am64x-sk_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/freertos/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ test_freertos_smp_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/freertos_smp/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile scrub
+
+ test_smp_kernel_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/test_smp_kernel/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile scrub
+
+ test_rov_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/rov/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_rov_am64x-evm_m4fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/rov/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_rov_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C kernel/rov/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ipc_notify_am64x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C drivers/ipc_notify/am64x-evm/system_freertos_nortos -f makefile scrub
+
+ test_ipc_notify_am64x-sk_system_freertos_nortos_scrub:
+	$(MAKE) -C drivers/ipc_notify/am64x-sk/system_freertos_nortos -f makefile scrub
+
+ test_ipc_rpmsg_am64x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/ipc_rpmsg/am64x-evm/system_freertos -f makefile scrub
+
+ test_ipc_rpmsg_am64x-sk_system_freertos_scrub:
+	$(MAKE) -C drivers/ipc_rpmsg/am64x-sk/system_freertos -f makefile scrub
+
+ test_mcspi_master_slave_am64x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos -f makefile scrub
+
+ test_soc_r5f_am64x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/soc/soc_r5f/am64x-evm/system_freertos -f makefile scrub
+
+ test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos -f makefile scrub
+
+ test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub:
+	$(MAKE) -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos -f makefile scrub
+
+
+sbl: libs
+
+sbl-clean:
+
+sbl-scrub:
+
+sbl-hs:
+
+sbl-hs-clean:
+
+sbl-hs-scrub:
+
+.PHONY: all clean scrub help
+.PHONY: libs libs-clean libs-scrub
+.PHONY: libs-private
+.PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
+.PHONY: examples examples-clean examples-scrub
+.PHONY: examples-private examples-private-clean examples-private-scrub
+.PHONY: sbl sbl-clean sbl-scrub
+.PHONY: $(BUILD_COMBO_ALL) $(BUILD_COMBO_CLEAN_ALL) $(BUILD_COMBO_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_ALL) $(BUILD_COMBO_EXAMPLE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)

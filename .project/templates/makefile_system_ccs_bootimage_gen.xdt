@@ -1,0 +1,153 @@
+#
+# Auto generated makefile
+#
+
+# Below variables need to be defined outside this file or via command line
+# - MCU_PLUS_SDK_PATH
+# - PROFILE
+# - OUTNAME
+# - CCS_INSTALL_DIR
+
+CCS_PATH=$(CCS_INSTALL_DIR)
+include $(`args.sdkName`)/imports.mak
+% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+include $(`args.sdkName`)/devconfig/devconfig.mak
+% }
+
+% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+ifeq ($(OS), Windows_NT)
+	PYTHON=python
+else
+	PYTHON=python3
+endif
+% }
+
+MULTI_CORE_BOOTIMAGE_PATH=$(abspath $(PROFILE))
+MULTI_CORE_BOOTIMAGE_NAME:=$(PROFILE)/$(OUTNAME).appimage
+MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(PROFILE)/$(OUTNAME).appimage.signed
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(PROFILE)/$(OUTNAME).appimage_xip
+% if (args.project.device == "awr294x") {
+MULTI_CORE_BOOTIMAGE_NAME_QSPI:=$(PROFILE)/$(OUTNAME).appimage_qspi
+% }
+
+#
+# Generation of multi-core boot image which can be loaded by Secondary Boot Loader (SBL)
+#
+ifeq ($(OS),Windows_NT)
+EXE_EXT=.exe
+endif
+BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
+
+% if (args.project.device == "am64x") {
+BOOTIMAGE_CORE_ID_a53ss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_r5fss0-1 = 5
+BOOTIMAGE_CORE_ID_r5fss1-0 = 6
+BOOTIMAGE_CORE_ID_r5fss1-1 = 7
+BOOTIMAGE_CORE_ID_m4fss0-0 = 14
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+% }
+% if (args.project.device == "am243x") {
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_r5fss0-1 = 5
+BOOTIMAGE_CORE_ID_r5fss1-0 = 6
+BOOTIMAGE_CORE_ID_r5fss1-1 = 7
+BOOTIMAGE_CORE_ID_m4fss0-0 = 14
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+% }
+% if (args.project.device == "am263x") {
+BOOTIMAGE_CORE_ID_r5fss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-1 = 1
+BOOTIMAGE_CORE_ID_r5fss1-0 = 2
+BOOTIMAGE_CORE_ID_r5fss1-1 = 3
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+% }
+% if ((args.project.device == "am273x") || (args.project.device == "awr294x")) {
+BOOTIMAGE_CORE_ID_r5fss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-1 = 1
+BOOTIMAGE_CORE_ID_c66ss0   = 2
+% if (args.project.device == "awr294x") {
+BOOTIMAGE_CORE_ID_r4       = 3
+R4_RPRC_PATH = $(MCU_PLUS_SDK_PATH)/source/drivers/bootloader/soc/awr294x/xwr2xxx_radarss_metarprc.bin
+% }
+SBL_RUN_ADDRESS=0x10200000
+SBL_DEV_ID=55
+% }
+% if (args.project.device == "am62x") {
+BOOTIMAGE_CORE_ID_a53ss0-0 = 0
+BOOTIMAGE_CORE_ID_a53ss0-1 = 1
+BOOTIMAGE_CORE_ID_a53ss1-0 = 2
+BOOTIMAGE_CORE_ID_a53ss1-1 = 3
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_m4fss0-0 = 5
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+% }
+
+MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
+OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
+% }
+
+MULTI_CORE_APP_PARAMS = \
+% for (let project of args.project.projects) {
+    ../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`.rprc@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+% }
+
+MULTI_CORE_APP_PARAMS_XIP = \
+% for (let project of args.project.projects) {
+    ../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`.rprc_xip@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+% }
+
+% if (args.project.device == "awr294x") {
+MULTI_CORE_APP_PARAMS_QSPI = $(MULTI_CORE_APP_PARAMS) $(R4_RPRC_PATH)@$(BOOTIMAGE_CORE_ID_r4)
+
+% }
+all:
+ifeq ($(CCS_IDE_MODE),cloud)
+#	No post build steps
+else
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) ...
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+% if (args.project.device == "awr294x") {
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_QSPI) $(MULTI_CORE_APP_PARAMS_QSPI) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+% }
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+# Sign the appimage for HS-FS using appimage signing script
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs
+% }
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+ifeq ($(DEVICE_TYPE),HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+endif
+endif
+% }
+% for (let project of args.project.projects) {
+% if (project.isLinuxFwGen) {
+	$(COPY) ../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.device.getLinuxFwName(project.cpu)` $(PROFILE)/
+% }
+% }
+% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+ifeq ($(DEVICE_TYPE),HS)
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
+else
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) Done !!!
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs Done !!!
+endif
+% } else {
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) Done !!!
+% }
+	@echo  .
+endif

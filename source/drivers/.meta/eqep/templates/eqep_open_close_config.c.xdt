@@ -1,0 +1,194 @@
+void Drivers_eqepOpen()
+{
+% let module = system.modules['/drivers/eqep/eqep'];
+% let common   = system.getScript("/common");
+% let nameOfModule = "eqep";
+% let nameOfPeripheral = module.peripheralName;
+%if (module != null)
+%{
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+	/* `instance.$name` initialization */
+		% if(instance.useInterrupts && instance.enableInterrupt){
+	/* Disable, clear all flags and interrupts */
+	EQEP_disableInterrupt(`baseName`,
+		(EQEP_INT_GLOBAL     		|
+		EQEP_INT_POS_CNT_ERROR		|
+		EQEP_INT_PHASE_ERROR    	|
+		EQEP_INT_DIR_CHANGE    		|
+		EQEP_INT_WATCHDOG          	|
+		EQEP_INT_UNDERFLOW         	|
+		EQEP_INT_OVERFLOW        	|
+		EQEP_INT_POS_COMP_READY    	|
+		EQEP_INT_POS_COMP_MATCH   	|
+		EQEP_INT_STROBE_EVNT_LATCH	|
+		EQEP_INT_INDEX_EVNT_LATCH 	|
+		EQEP_INT_UNIT_TIME_OUT   	|
+		EQEP_INT_QMA_ERROR));
+	EQEP_clearInterruptStatus(`baseName`,
+		(EQEP_INT_GLOBAL     		|
+		EQEP_INT_POS_CNT_ERROR		|
+		EQEP_INT_PHASE_ERROR    	|
+		EQEP_INT_DIR_CHANGE    		|
+		EQEP_INT_WATCHDOG          	|
+		EQEP_INT_UNDERFLOW         	|
+		EQEP_INT_OVERFLOW        	|
+		EQEP_INT_POS_COMP_READY    	|
+		EQEP_INT_POS_COMP_MATCH   	|
+		EQEP_INT_STROBE_EVNT_LATCH	|
+		EQEP_INT_INDEX_EVNT_LATCH 	|
+		EQEP_INT_UNIT_TIME_OUT   	|
+		EQEP_INT_QMA_ERROR));
+		% }
+	/* Set the strobe input source of the eQEP module */
+	EQEP_setStrobeSource(`baseName`,`instance.strobeSource`);
+%%{
+	let inputCount = 0
+	let invertQEPA = false
+	let invertQEPB = false
+	let invertIndex = false
+	let invertStrobe = false
+	for (let inputEntry in instance.inputPolarity){
+		if (instance.inputPolarity[inputCount] == "invertQEPA"){
+			invertQEPA = true
+		}
+		else if (instance.inputPolarity[inputCount] == "invertQEPB"){
+			invertQEPB = true
+		}
+		else if (instance.inputPolarity[inputCount] == "invertIndex"){
+			invertIndex = true
+		}
+		else if (instance.inputPolarity[inputCount] == "invertStrobe"){
+			invertStrobe = true
+		}
+		inputCount++
+	}
+%%}
+	/* Sets the polarity of the eQEP module's input signals */
+	EQEP_setInputPolarity(`baseName`,`invertQEPA`,`invertQEPB`,`invertIndex`,`invertStrobe`);
+	/* Configures eQEP module's quadrature decoder unit */
+	EQEP_setDecoderConfig(`baseName`, (`instance.eqepOperationMode` | `instance.eqepResolution` | `instance.eqepSwap`));
+	/* Set the emulation mode of the eQEP module */
+	EQEP_setEmulationMode(`baseName`,`instance.emulationMode`);
+	/* Configures eQEP module position counter unit */
+	EQEP_setPositionCounterConfig(`baseName`,`instance.positionCounterMode`,`instance.positionCounterMax`);
+	/* Sets the current encoder position */
+	EQEP_setPosition(`baseName`,`instance.setPosition`);
+		% if(instance.enableUnitTimer){
+	/* Enables the eQEP module unit timer */
+	EQEP_enableUnitTimer(`baseName`,`instance.unitTimerPeriod`);
+		% }
+		% else {
+	/* Disables the eQEP module unit timer */
+	EQEP_disableUnitTimer(`baseName`);
+		% }
+		% if(instance.enableWatchdog){
+	/* Enables the eQEP module watchdog timer */
+	EQEP_enableWatchdog(`baseName`,`instance.watchdogTimerPeriod`);
+	/* Sets the eQEP module watchdog timer value */
+	EQEP_setWatchdogTimerValue(`baseName`,`instance.watchdogTimerValue`);
+		% }
+		% else{
+	/* Disables the eQEP module watchdog timer */
+	EQEP_disableWatchdog(`baseName`);
+		% }
+	/* Configures the quadrature modes in which the position count can be latched */
+	EQEP_setLatchMode(`baseName`,(`instance.latchPositionCounter`|`instance.latchStrobePosition`|`instance.latchIndexPosition`));
+	/* Set the quadrature mode adapter (QMA) module mode */
+	EQEP_setQMAModuleMode(`baseName`,`instance.qmaModuleMode`);
+			% if(instance.enableDirectionChange){
+	/* Enable Direction Change During Index */
+	EQEP_enableDirectionChangeDuringIndex(`baseName`);
+			% }
+			% else{
+	/* Disable Direction Change During Index */
+	EQEP_disableDirectionChangeDuringIndex(`baseName`);
+			% }
+		% if(instance.useInterrupts && instance.enableInterrupt){
+			% if (instance.interruptSources.length>0)
+			%{
+%%{
+			let sourceCount = 0
+			let sourcesToEnableOR = "("
+			for (let sourceToEnable in instance.interruptSources)
+			{
+				if (sourceCount == 0)
+				{
+					sourcesToEnableOR += instance.interruptSources[sourceCount]
+				}
+				else
+				{
+					sourcesToEnableOR += "\n\t\t"
+					sourcesToEnableOR += " | " + instance.interruptSources[sourceCount]
+				}
+				sourceCount++
+			}
+			sourcesToEnableOR += ")"
+%%}
+	/* Enables individual eQEP module interrupt sources */
+	EQEP_enableInterrupt(`baseName`,`sourcesToEnableOR`);
+			% }
+		% }
+%%{
+		let initModeStr = ""
+		if(!(instance.positionStrobeEvents == "EQEP_INIT_DO_NOTHING")){
+			initModeStr += instance.positionStrobeEvents
+			if(!(instance.positionIndexEvents == "EQEP_INIT_DO_NOTHING")){
+				initModeStr += " | " + instance.positionIndexEvents
+			}
+		}
+		else{
+			initModeStr = instance.positionIndexEvents
+		}
+%%}
+	/* Configures the mode in which the position counter is initialized */
+	EQEP_setPositionInitMode(`baseName`,(`initModeStr`));
+	/* Sets the software initialization of the encoder position counter */
+	EQEP_setSWPositionInit(`baseName`,`instance.swPositionInit`);
+	/* Sets the init value for the encoder position counter */
+	EQEP_setInitialPosition(`baseName`,`instance.initialPosition`);
+		% if(instance.enableModule){
+	/* Enables the eQEP module */
+	EQEP_enableModule(`baseName`);
+		% }
+		% else{
+	/* Disables the eQEP module */
+	EQEP_disableModule(`baseName`);
+		% }
+		% if(instance.captureConfig){
+	/* Configures eQEP module edge-capture unit */
+	EQEP_setCaptureConfig(`baseName`,`instance.capPrescale`,`instance.evntPrescale`);
+			% if(instance.enableCapture){
+	/* Enables the eQEP module edge-capture unit */
+	EQEP_enableCapture(`baseName`);
+			% }
+			% else{
+	/* Disables the eQEP module edge-capture unit */
+	EQEP_disableCapture(`baseName`);
+			% }
+		% }
+		% if(instance.compareConfig){
+	/* Configures eQEP module position-compare unit */
+	EQEP_setCompareConfig(`baseName`,(`instance.compareSyncPulsePin` | `instance.compareShadowRegisterUse`), `instance.compareValue`, `instance.compareCycles`);
+			% if(instance.enableCompare){
+	/* Enables the eQEP module position-compare unit */
+	EQEP_enableCompare(`baseName`);
+			% }
+			% else{
+	/* Disables the eQEP module position-compare unit */
+	EQEP_disableCompare(`baseName`);
+			% }
+		% }
+
+	% if(i==0){
+	EQEP_SourceSelect sourceSelect;
+	%}
+	sourceSelect.sourceA = `instance.selectSourceA`;
+	sourceSelect.sourceB = `instance.selectSourceB`;
+	sourceSelect.sourceIndex = `instance.selectSourceIndex`;
+	EQEP_selectSource(`baseName`, sourceSelect);
+
+	%}
+%}
+}

@@ -1,0 +1,37 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/esm/esm'];
+%%}
+/*
+ * ESM
+ */
+#include <drivers/esm.h>
+
+/* ESM Driver handles */
+extern ESM_Handle gEsmHandle[CONFIG_ESM_NUM_INSTANCES];
+
+/*
+ * ESM Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* ESM Driver Open Parameters */
+extern ESM_OpenParams gEsmParams[CONFIG_ESM_NUM_INSTANCES];
+
+/* ESM Notifier Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let notify_instances = instance.esmNotifier;
+#define `instance.$name.toUpperCase()`_NOTIFIER (`notify_instances.length`U)
+% }
+/* ESM Notifier Configurations */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+extern ESM_NotifyParams g`instNameCamelCase`Params[`instance.$name.toUpperCase()`_NOTIFIER];
+% }
+
+/* ESM Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_esmOpen(void);
+void Drivers_esmClose(void);

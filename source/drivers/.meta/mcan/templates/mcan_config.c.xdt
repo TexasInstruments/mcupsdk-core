@@ -1,0 +1,18 @@
+%%{
+    let module = system.modules['/drivers/mcan/mcan'];
+%%}
+/*
+ * MCAN
+ */
+/* MCASP Default Bit timing Parameters */
+MCAN_BitTimingParams gMcanBitTimingDefaultParams =
+{
+    .nomRatePrescalar   = 0x`module.$static.nomRatePrescalar.toString(16).toUpperCase()`U,
+    .nomTimeSeg1        = 0x`module.$static.nomTimeSeg1.toString(16).toUpperCase()`U,
+    .nomTimeSeg2        = 0x`module.$static.nomTimeSeg2.toString(16).toUpperCase()`U,
+    .nomSynchJumpWidth  = 0x`module.$static.nomSynchJumpWidth.toString(16).toUpperCase()`U,
+    .dataRatePrescalar  = 0x`module.$static.dataRatePrescalar.toString(16).toUpperCase()`U,
+    .dataTimeSeg1       = 0x`module.$static.dataTimeSeg1.toString(16).toUpperCase()`U,
+    .dataTimeSeg2       = 0x`module.$static.dataTimeSeg2.toString(16).toUpperCase()`U,
+    .dataSynchJumpWidth = 0x`module.$static.dataSynchJumpWidth.toString(16).toUpperCase()`U,
+};

@@ -1,0 +1,161 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+
+CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
+AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+LIBNAME:=usb_device_freertos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
+
+FILES_common := \
+    cdn_print.c \
+    cps.c \
+    usb_init.c \
+    usbss_functions.c \
+    usb_wrapper.c \
+    cusb_ch9_sanity.c \
+    cusbd.c \
+    cusbd_obj_if.c \
+    cusbd_sanity.c \
+    cusbdma.c \
+    cusbdma_obj_if.c \
+    cusbdma_sanity.c \
+    list_sanity.c \
+    dcd.c \
+    tusb.c \
+    tusb_fifo.c \
+    usbd.c \
+    usbd_control.c \
+    cdc_device.c \
+
+FILES_PATH_common = \
+    cdn/core_driver/common/src \
+    cdn/core_driver/device/src \
+    cdn/soc/am64x_am243x \
+    cdn \
+    tinyusb/tinyusb-stack/src \
+    tinyusb/tinyusb-stack/src/common \
+    tinyusb/tinyusb-stack/src/device \
+    tinyusb/tinyusb-stack/src/class/cdc \
+    tinyusb/portable/am64x_am243x \
+
+INCLUDES_common := \
+    -I${CG_TOOL_ROOT}/include/c \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -I../drivers/hw_include \
+    -I../drivers/hw_include/am64x_am243x \
+    -I../drivers/soc/am64x_am243x \
+    -I../kernel/freertos/FreeRTOS-Kernel/include \
+    -I../kernel/freertos/config/am64x/r5f \
+    -I../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+    -Icdn/core_driver/common/src \
+    -Icdn/core_driver/common/include \
+    -Icdn/core_driver/device/src \
+    -Icdn/core_driver/device/include \
+    -Icdn/include \
+    -Icdn/soc/am64x_am243x \
+    -Itinyusb/config/freertos/am64x_am243x \
+    -Itinyusb/tinyusb-stack/src \
+    -Itinyusb/tinyusb-stack/src/common \
+    -Itinyusb/tinyusb-stack/src/device \
+    -Itinyusb/tinyusb-stack/src/class/cdc \
+
+DEFINES_common := \
+    -DSOC_AM64X \
+
+CFLAGS_common := \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -mthumb \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-gnu-variable-sized-type-not-at-end \
+    -Wno-unused-function \
+    -Wno-address-of-packed-member \
+
+CFLAGS_cpp_common := \
+    -Wno-c99-designator \
+    -Wno-extern-c-compat \
+    -Wno-c++11-narrowing \
+    -Wno-reorder-init-list \
+    -Wno-deprecated-register \
+    -Wno-writable-strings \
+    -Wno-enum-compare \
+    -Wno-reserved-user-defined-literal \
+    -Wno-unused-const-variable \
+    -x c++ \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+CFLAGS_release := \
+    -Os \
+
+ARFLAGS_common := \
+    rc \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/usb_device_freertos/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

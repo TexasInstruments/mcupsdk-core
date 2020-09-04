@@ -1,0 +1,232 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+
+CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
+AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+LIBNAME:=enet-cpsw.am64x.r5f.ti-arm-clang.$(PROFILE).lib
+
+FILES_common := \
+    enet.c \
+    enet_trace.c \
+    enet_utils.c \
+    enet_osal.c \
+    enet_queue.c \
+    enet_rm.c \
+    enet_rm_ioctl.c \
+    enet_rm_ioctl_register.c \
+    enet_osal_dflt.c \
+    enet_utils_dflt.c \
+    enet_phymdio_dflt.c \
+    enet_phymdio_dflt_ioctl.c \
+    enet_phymdio_dflt_ioctl_register.c \
+    mod_null.c \
+    mdio.c \
+    mdio_manual_ioctl.c \
+    mdio_ioctl.c \
+    mdio_ioctl_register.c \
+    cpsw_macport.c \
+    cpsw_macport_ioctl.c \
+    cpsw_macport_ioctl_register.c \
+    cpsw_macport_intervlan.c \
+    cpsw_macport_intervlan_ioctl.c \
+    cpsw_macport_intervlan_ioctl_register.c \
+    cpsw_macport_est.c \
+    cpsw_macport_est_ioctl.c \
+    cpsw_hostport.c \
+    cpsw_hostport_ioctl.c \
+    cpsw_hostport_ioctl_register.c \
+    cpsw_ale.c \
+    cpsw_ale_ioctl.c \
+    cpsw_ale_ioctl_register.c \
+    cpsw_stats.c \
+    cpsw_stats_ioctl.c \
+    cpsw_stats_ioctl_register.c \
+    cpsw_cpts.c \
+    cpsw_cpts_ioctl.c \
+    cpsw_cpts_ioctl_register.c \
+    per_null.c \
+    cpsw_intervlan.c \
+    cpsw.c \
+    cpsw_ioctl.c \
+    cpsw_ioctl_register.c \
+    cpsw_est.c \
+    cpsw_est_ioctl.c \
+    cpsw_est_ioctl_register.c \
+    enet_hostport.c \
+    enet_udma.c \
+    enet_udma_priv.c \
+    csl_cpgmac_sl.c \
+    csl_cpsw.c \
+    csl_cpsw_ss.c \
+    csl_cpsw_ale_9g_tblcfg.c \
+    csl_cpts.c \
+    csl_mdio.c \
+    k3_soc.c \
+    enetphy.c \
+    generic_phy.c \
+    dp83869.c \
+    dp83867.c \
+    enet_apputils.c \
+    enet_appmemutils.c \
+    enet_appethpatterns.c \
+    enet_udmautils.c \
+    enet_ioctlutils.c \
+    enet_apputils_k3.c \
+
+FILES_PATH_common = \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/core \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/mod \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per/V1 \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/common \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/dma/udma \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/emac/V5/priv \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpsw/V5/V5_0/priv \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpsw/V5/priv \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3 \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3 \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/defcfg \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src/am64x_am243x_evm \
+
+INCLUDES_common := \
+    -I${CG_TOOL_ROOT}/include/c \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3 \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/emac/V5 \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpsw/V5 \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpsw/V5/V5_0 \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/board \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src/am64x_am243x_evm/include \
+
+DEFINES_common := \
+    -DSOC_AM64X \
+    -DMAKEFILE_BUILD \
+    -DENET_CFG_ASSERT=1 \
+    -DENET_CFG_PRINT_ENABLE \
+    -DENET_CFG_TRACE_LEVEL=3 \
+    -DENET_ENABLE_PER_CPSW=1 \
+    -DENABLE_ENET_LOG \
+
+DEFINES_debug := \
+    -DENET_CFG_DEV_ERROR=1 \
+    -DLWIPIF_INSTRUMENTATION_ENABLED=1 \
+    -DENETDMA_INSTRUMENTATION_ENABLED=1 \
+
+CFLAGS_common := \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -mthumb \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-gnu-variable-sized-type-not-at-end \
+    -Wno-unused-function \
+    -Wno-extra \
+
+CFLAGS_release := \
+    -Os \
+    -Oz \
+    -flto \
+
+CFLAGS_cpp_common := \
+    -Wno-c99-designator \
+    -Wno-extern-c-compat \
+    -Wno-c++11-narrowing \
+    -Wno-reorder-init-list \
+    -Wno-deprecated-register \
+    -Wno-writable-strings \
+    -Wno-enum-compare \
+    -Wno-reserved-user-defined-literal \
+    -Wno-unused-const-variable \
+    -x c++ \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+ARFLAGS_common := \
+    rc \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/enet-cpsw/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

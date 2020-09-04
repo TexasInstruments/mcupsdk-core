@@ -1,0 +1,12 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+% if (module.getClockFrequencies) {
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let clockFrequencies = module.getClockFrequencies(instance);
+        % clockFrequencies.forEach( function(clockFrequency) {
+    { `clockFrequency.moduleId`, `clockFrequency.clkId`, `clockFrequency.clkRate` },
+        % } );
+    % }
+% }

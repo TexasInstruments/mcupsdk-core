@@ -1,0 +1,124 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("uart");
+    let module = system.modules['/drivers/uart/uart'];
+%%}
+/*
+ * UART
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.readMode == "CALLBACK" && config.readCallbackFxn != "NULL") {
+/* UART Read Callback */
+void `config.readCallbackFxn`(UART_Handle handle, UART_Transaction *transaction);
+    % }
+% }
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.writeMode == "CALLBACK" && config.writeCallbackFxn != "NULL") {
+/* UART Write Callback */
+void `config.writeCallbackFxn`(UART_Handle handle, UART_Transaction *transaction);
+    % }
+% }
+
+/* UART Driver handles */
+UART_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
+
+/* UART Driver Parameters */
+UART_Params gUartParams[CONFIG_UART_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .baudRate           = `config.baudRate`,
+        .dataLength         = UART_LEN_`config.dataLength`,
+        .stopBits           = UART_STOPBITS_`config.stopBits`,
+        .parityType         = UART_PARITY_`config.parityType`,
+        .readMode           = UART_TRANSFER_MODE_`config.readMode`,
+        .writeMode          = UART_TRANSFER_MODE_`config.writeMode`,
+        % if(config.readMode == "CALLBACK" && config.readCallbackFxn != "NULL") {
+        .readCallbackFxn    = `config.readCallbackFxn`,
+        % } else {
+        .readCallbackFxn    = NULL,
+        % }
+        % if(config.writeMode == "CALLBACK" && config.writeCallbackFxn != "NULL") {
+        .writeCallbackFxn   = `config.writeCallbackFxn`,
+        % } else {
+        .writeCallbackFxn   = NULL,
+        % }
+        % if(config.intrEnable == "DISABLE") {
+        .transferMode       = UART_CONFIG_MODE_POLLED,
+        % }
+        % if(config.intrEnable == "ENABLE") {
+        .transferMode       = UART_CONFIG_MODE_INTERRUPT,
+        % }
+        % if(config.intrEnable == "USER_INTR") {
+        .transferMode       = UART_CONFIG_MODE_USER_INTR,
+        % }
+        % if(config.intrEnable == "DMA") {
+        .transferMode       = UART_CONFIG_MODE_DMA,
+        % }
+        .intrNum            = `config.intrNum`U,
+        .intrPriority       = `config.intrPriority`U,
+        %if(config.intrEnable == "DMA") {
+        .edmaInst           = `instance.edmaConfig.$name`,
+        %}
+        %else {
+        .edmaInst           = 0xFFFFFFFFU,
+        %}
+        .rxEvtNum           = `config.rxDmaEvt`U,
+        .txEvtNum           = `config.txDmaEvt`U,
+    },
+% }
+};
+
+void Drivers_uartOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_UART_NUM_INSTANCES; instCnt++)
+    {
+        gUartHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_UART_NUM_INSTANCES; instCnt++)
+    {
+        gUartHandle[instCnt] = UART_open(instCnt, &gUartParams[instCnt]);
+        if(NULL == gUartHandle[instCnt])
+        {
+            DebugP_logError("UART open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_uartClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_uartClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_UART_NUM_INSTANCES; instCnt++)
+    {
+        if(gUartHandle[instCnt] != NULL)
+        {
+            UART_close(gUartHandle[instCnt]);
+            gUartHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

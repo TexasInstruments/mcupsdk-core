@@ -1,0 +1,2 @@
+#include <drivers/soc/am263x/soc_xbar.h>
+void Drivers_epwmXbarOpen(void);

@@ -1,0 +1,18 @@
+This release is the Cadence USB Super Speed driver for USB Super Speed
+hardware IP
+
+USB Super Speed driver Release History
+=====================================
+
+2.0.8:
+ * Added ZLP feature
+ * Modified license header in reference code
+
+2.0.7:
+ * combined delivery for USB Host, Device, DRD
+ * increased code quality
+ * DEBUG macro is not considered while allocating memory for the
+   hardware
+ * added a callback to perform PHY reset in Host driver when USB2.0
+   reset is detected
+ * added code to set AXI access to non secure in Device driver

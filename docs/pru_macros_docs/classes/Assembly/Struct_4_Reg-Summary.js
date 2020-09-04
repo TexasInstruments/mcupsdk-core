@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("AssemblyClass:Struct_4_Reg","Struct_4_Reg");NDSummary.OnSummaryLoaded("AssemblyClass:Struct_4_Reg",[["Assembly","Assembly"]],[["Structs","Struct"]],[[45,0,0,"Struct_4_Reg"]]);

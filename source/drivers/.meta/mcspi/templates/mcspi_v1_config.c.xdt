@@ -1,0 +1,81 @@
+%%{
+    let module = system.modules['/drivers/mcspi/mcspi'];
+    let common = system.getScript("/common");
+    let mcspiEdmaInstances = [];
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        let ch_instances = instance.mcspiChannel;
+        if(instance.intrEnable == "DMA") {
+            mcspiEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
+        }
+    }
+%%}
+/*
+ * MCSPI
+ */
+
+/* MCSPI atrributes */
+static MCSPI_Attrs gMcspiAttrs[CONFIG_MCSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let chMode = "SINGLE";
+    % if(config.mode == "MULTI_MASTER") {
+    %   chMode = "MULTI";
+    % }
+    {
+        .baseAddr           = `config.baseAddr`,
+        .inputClkFreq       = `config.inputClkFreq`U,
+        .intrNum            = `config.intrNum`,
+        .operMode           = MCSPI_OPER_MODE_`config.intrEnable`,
+        .intrPriority       = `config.intrPriority`U,
+        .chMode             = MCSPI_CH_MODE_`chMode`,
+        .pinMode            = MCSPI_PINMODE_`config.pinMode`PIN,
+        .initDelay          = MCSPI_INITDLY_`config.initDelay`,
+    },
+% }
+};
+/* MCSPI objects - initialized by the driver */
+static MCSPI_Object gMcspiObjects[CONFIG_MCSPI_NUM_INSTANCES];
+/* MCSPI driver configuration */
+MCSPI_Config gMcspiConfig[CONFIG_MCSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gMcspiAttrs[`instance.$name.toUpperCase()`],
+        &gMcspiObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gMcspiConfigNum = CONFIG_MCSPI_NUM_INSTANCES;
+
+#include <drivers/mcspi/v0/dma/mcspi_dma.h>
+%if(mcspiEdmaInstances.length > 0) {
+#include <drivers/mcspi/v0/dma/edma/mcspi_dma_edma.h>
+#include <drivers/edma.h>
+
+McspiDma_EdmaArgs gMcspiEdmaArgs =
+{
+    .drvHandle        = (void *)&gEdmaConfig[`mcspiEdmaInstances[0].$name`],
+};
+
+MCSPI_DmaConfig gMcspiDmaConfig =
+{
+    .fxns        = &gMcspiDmaEdmaFxns,
+    .mcspiDmaArgs = (void *)&gMcspiEdmaArgs,
+};
+
+%}
+%else {
+MCSPI_DmaConfig gMcspiDmaConfig =
+{
+    .fxns        = NULL,
+    .mcspiDmaArgs = (void *)NULL,
+};
+%}
+
+
+uint32_t gMcspiDmaConfigNum = CONFIG_MCSPI_NUM_DMA_INSTANCES;

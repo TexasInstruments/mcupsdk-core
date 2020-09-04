@@ -1,0 +1,436 @@
+/*
+ *  Copyright (C) 2022 Texas Instruments Incorporated
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <drivers/sipc_notify.h>
+#include <kernel/dpl/SemaphoreP.h>
+#include <kernel/dpl/SystemP.h>
+#include <drivers/hw_include/cslr_soc.h>
+#include <kernel/dpl/HwiP.h>
+#include <drivers/hsmclient.h>
+#include <drivers/hsmclient/hsmclient_msg.h>
+#include <drivers/soc.h>
+#include <string.h>
+#include <kernel/dpl/DebugP.h>
+
+
+/*==========================================================================
+ *                        Static Function Declarations
+ *==========================================================================*/
+
+/**
+ * @brief
+ *        Calculate crc16_ccit for a given data.
+ * @param data data pointer
+ * @param length data length
+ * @return 16 bit crc calculated from given data.
+ */
+static uint16_t crc16_ccit(uint8_t* data, uint16_t length);
+
+/**
+ * @brief
+ *      Generic send and receive message api
+ * @param HsmClient client type
+ * @param timeout time to wait for interrupt from HSM before throwing timeout
+ *                exception.
+ * @return SystemP_SUCCESS if transaction succesful else SystemP_FAILURE.
+ */
+static int32_t HsmClient_SendAndRecv(HsmClient_t * HsmClient,uint32_t timeout);
+
+/*==============================================================================*
+ *                          Static Functions definition.
+ *==============================================================================*/
+
+/* CRC 16 CCIT soft implementation */
+static uint16_t crc16_ccit(uint8_t* data, uint16_t length)
+{
+        uint8_t x;
+        uint16_t crc = 0xFFFF;
+
+        while(length--) {
+            x = crc >> 8 ^ *data++;
+            x ^= x>>4;
+            crc = (crc << 8) ^ ((uint16_t)(x << 12)) ^ ((uint16_t)(x <<5)) ^ ((uint16_t)x);
+        }
+        return crc;
+}
+
+static int32_t HsmClient_SendAndRecv(HsmClient_t * HsmClient,uint32_t timeout)
+{
+    uint8_t localClientId ;
+    uint8_t remoteClientId ;
+    int32_t status ;
+    uint16_t crcMsg ;
+
+    localClientId = HsmClient->ReqMsg.srcClientId ;
+    remoteClientId = HsmClient->ReqMsg.destClientId ;
+
+    /* Add message crc. Exclude crcMsg argument of HsmMsg_t from crc calculations*/
+    HsmClient->ReqMsg.crcMsg = crc16_ccit((uint8_t*)&HsmClient->ReqMsg,(sizeof(HsmMsg_t)-2));
+    SemaphoreP_constructBinary(&HsmClient->Semaphore, 0);
+
+    status = SIPC_sendMsg(CORE_INDEX_HSM,remoteClientId,localClientId,
+                                    (uint8_t*)&HsmClient->ReqMsg,WAIT_IF_FIFO_FULL);
+    if(status == SystemP_SUCCESS)
+    {
+        status = SemaphoreP_pend(&HsmClient->Semaphore,timeout);
+        if(status == SystemP_FAILURE)
+        {
+            return SystemP_FAILURE ;
+        }
+        else if( status == SystemP_TIMEOUT)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Timeout exception \r\n");
+            return SystemP_TIMEOUT ;
+        }
+        else
+        {
+            crcMsg = crc16_ccit((uint8_t*)&HsmClient->RespMsg,SIPC_MSG_SIZE - 2);
+            /* if the message is okay then send whatever the flag receive */
+            if(crcMsg == HsmClient->RespMsg.crcMsg)
+            {
+                HsmClient->RespFlag = HsmClient->RespMsg.flags;
+                status = SystemP_SUCCESS;
+            }
+            /* corrupted message received */
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] Corrupted message received \r\n");
+                HsmClient->RespFlag =  HSM_FLAG_NACK;
+                status = SystemP_FAILURE;
+            }
+            return status ;
+        }
+    }
+    else
+    {
+        return status ;
+    }
+}
+
+/*==============================================================================*
+ *                          Public Function definition.
+ *==============================================================================*/
+
+void HsmClient_isr(uint8_t remoteCoreId,uint8_t localClientId ,
+                               uint8_t remoteClientId , uint8_t* msgValue, void* args)
+{
+    HsmClient_t *HsmClient = (HsmClient_t*) args;
+    /* here we will just post the semaphore */
+    /* copy message to client response variable */
+    /* As this ISR is blocking, quickly copy the message and exit ISR */
+    memcpy(&HsmClient->RespMsg,msgValue,SIPC_MSG_SIZE);
+    SemaphoreP_post(&HsmClient->Semaphore);
+}
+
+/* return SystemP_FAILURE if clientId is greater the max or
+ * A callback has been registered. already */
+int32_t HsmClient_register(HsmClient_t* HsmClient, uint8_t clientId)
+{
+    uint8_t status;
+
+    if(HsmClient == NULL)
+    {
+        DebugP_log(" \r\n [HSM_CLIENT] HsmCliet_t type error. \r\n");
+        return SystemP_FAILURE;
+    }
+    else
+    {
+        status = SystemP_SUCCESS ;
+    }
+
+    HsmClient->ClientId = clientId ;
+
+    /* register HSM_Isr and pass the pointer as args */
+    status = SIPC_registerClient(clientId,HsmClient_isr,(void *)HsmClient);
+    if(status == SystemP_SUCCESS)
+    {
+        DebugP_log("\r\n [HSM_CLIENT] New Client Registered with Client Id = %d\r\n ",clientId);
+    }
+    else
+    {
+        DebugP_log(" \r\n [HSM_CLIENT] Client already registered or Invalid ClientId\r\n");
+    }
+    return status;
+}
+
+int32_t HsmClient_init(SIPC_Params* params)
+{
+    /* get the params and do SIPC init */
+    int32_t status;
+    uint32_t selfCoreId;
+    status = SIPC_init(params);
+    /* TODO: keyrings initialization */
+    if(status == SystemP_FAILURE)
+    {
+        selfCoreId = SIPC_getSelfCoreId();
+        DebugP_log("[HSM_CLIENT] Secure Host initialization failed for R5F%d \r\n",selfCoreId);
+    }
+    return status;
+}
+
+/* do sipc deinit */
+void HsmClient_deinit(void)
+{
+    SIPC_deInit();
+}
+
+void HsmClient_unregister(HsmClient_t* HsmClient,uint8_t clientId)
+{
+    /* unregister a client */
+    SIPC_unregisterClient(clientId);
+}
+
+int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
+                                        HsmVer_t* hsmVer,uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_GET_VERSION;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t*)hsmVer,sizeof(HsmVer_t));
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(hsmVer);
+
+    status = HsmClient_SendAndRecv(HsmClient,timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the hsmVer has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Get version request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)(HsmClient->RespMsg.args),sizeof(HsmVer_t));
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for getversion response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_getUID(HsmClient_t* HsmClient,
+                                        uint8_t* uid, uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_GET_UID;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)uid, HSM_UID_SIZE);
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(uid);
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the getUID has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Get UID request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, HSM_UID_SIZE);
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for getUID response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_openDbgFirewall(HsmClient_t* HsmClient,
+                                        uint8_t* cert,
+                                        uint32_t cert_size,
+                                        uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_OPEN_DBG_FIREWALLS;
+    HsmClient->ReqMsg.args = (void*)cert;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t*)cert, cert_size);
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(cert);
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the OpenDbgFirewalls has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] OpenDbgFirewall request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
+
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for openDbgFirewall response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_waitForBootNotify(HsmClient_t* HsmClient, uint32_t timeout)
+{
+    int32_t status ;
+
+    SemaphoreP_constructBinary(&HsmClient->Semaphore,0);
+
+    status = SemaphoreP_pend(&HsmClient->Semaphore,timeout);
+
+    /* first wait for bootnotify from HsmServer
+     * once received return SystemP_SUCCESS */
+    if((status == SystemP_TIMEOUT) || (status == SystemP_FAILURE))
+    {
+        return SystemP_FAILURE;
+    }
+    else
+    {
+        /*TODO: check crc latency and add crc checks later */
+        if(HsmClient->RespMsg.serType == HSM_MSG_BOOT_NOTIFY )
+        {
+            return SystemP_SUCCESS;
+        }
+        /* if message received is not bootnotify */
+        else
+        {
+            return SystemP_FAILURE;
+        }
+    }
+    /* ISR will transfer the response message to HsmClient->RespMsg */
+}

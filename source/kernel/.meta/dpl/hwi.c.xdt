@@ -1,0 +1,10 @@
+%%{
+    let module = system.getScript('/kernel/dpl/hwi.js');
+    let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
+%%}
+% if (cpuName.match(/r5f*/)) {
+/* ----------- HwiP ----------- */
+HwiP_Config gHwiConfig = {
+    .intcBaseAddr = 0x`module.getIntcBaseAddr().toString(16).toUpperCase()`u,
+};
+% }

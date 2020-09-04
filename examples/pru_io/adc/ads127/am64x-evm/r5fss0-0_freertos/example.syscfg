@@ -1,0 +1,103 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK_AM64x@08.03.00"
+ * @versions {"tool":"1.12.1+2446"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1   = pruicss.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+const adc        = scripting.addModule("/pru_io/adc/adc", {}, false);
+const adc1       = adc.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+i2c1.$name           = "CONFIG_I2C0";
+i2c1.I2C.$assign     = "I2C1";
+i2c1.I2C.SCL.$assign = "I2C1_SCL";
+i2c1.I2C.SDA.$assign = "I2C1_SDA";
+
+debug_log.enableUartLog        = true;
+debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+
+adc1.$name                                             = "CONFIG_ADC0";
+adc1.adcIC                                             = "ADS127L11";
+adc1.adcConfig[0].$name                                = "CONFIG_ADS8598H_PINMUX0";
+adc1.adcConfig[0].PRU_ICSSG0_IEP.$assign               = "PRU_ICSSG0_IEP0";
+adc1.adcConfig[0].PRU_ICSSG0_IEP.EDC_SYNC_OUT0.$assign = "PRG0_PRU0_GPO19";
+adc1.adcConfig[0].PRU_ICSSG0_PRU.$assign               = "PRU_ICSSG0_PRU0";
+adc1.adcConfig[0].PRU_ICSSG0_PRU.GPO8.$assign          = "PRG0_PRU0_GPO8";
+adc1.adcConfig[0].PRU_ICSSG0_PRU.GPO9.$assign          = "PRG0_PRU0_GPO9";
+adc1.adcConfig[0].PRU_ICSSG0_PRU.GPO10.$assign         = "PRG0_PRU0_GPO10";
+adc1.adcConfig[0].PRU_ICSSG0_PRU.GPI14.$assign         = "PRG0_PRU0_GPO14";
+adc1.adcConfig[0].PRU_ICSSG0_PRU.GPI16.$assign         = "PRG0_PRU0_GPO16";
+adc1.adcConfig[0].power.$name                          = "ADC_POWER_ENABLE_PIN_1";
+adc1.adcConfig[0].power.GPIO.$assign                   = "GPIO0";
+adc1.adcConfig[0].power.GPIO.gpioPin.$assign           = "GPMC0_AD15";
+adc1.adcConfig[0].rst.$name                            = "ADC_RESET_PIN";
+adc1.adcConfig[0].rst.GPIO.$assign                     = "GPIO1";
+adc1.adcConfig[0].rst.GPIO.gpioPin.$assign             = "PRG0_PRU0_GPO13";
+adc1.adcConfig[0].pruIpc.create(1);
+adc1.adcConfig[0].pruIpc[0].$name                      = "CONFIG_PRU_IPC0";
+adc1.adcConfig[0].pruIpc[0].noOfBlocks                 = 2;
+adc1.adcConfig[0].pruIpc[0].blockSize                  = 128;
+adc1.adcConfig[0].pruIpc[0].rxIntcMapping.$name        = "CONFIG_ICSS0_INTC_MAPPING0";
+
+pruicss1.$name                  = "CONFIG_PRU_ICSS0";
+adc1.adcConfig[0].icss          = pruicss1;
+pruicss1.intcMapping.create(1);
+pruicss1.intcMapping[0].$name   = "CONFIG_ICSS0_INTC_MAPPING1";
+pruicss1.intcMapping[0].event   = "22";
+pruicss1.intcMapping[0].channel = "1";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";

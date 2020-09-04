@@ -1,0 +1,25 @@
+%%{
+    let module = system.modules[args[0]];
+    // Use icss = system.modules['/drivers/pruicss/pruicss'];
+    // to get CONFIG_PRU_ICSS0 value as it might change
+
+    /* ICSS_INTC */
+
+    // % if (module.$instances[0].icssInstance === "ICSSG0") {
+    // PRUICSS_Handle icss0_handle = PRUICSS_open(CONFIG_PRU_ICSS0);
+    // % }
+    // % if (module.$instances[0].icssInstance === "ICSSG1") {
+    // PRUICSS_Handle icss1_handle = PRUICSS_open(CONFIG_PRU_ICSS1);
+    // % }
+
+    // int32_t status;
+    // % if (module.$instances[0].icssInstance === "ICSSG0") {
+    // status = PRUICSS_intcInit(icss0_handle, &icss0_intc_initdata);
+    // DebugP_assert(status == SystemP_SUCCESS);
+    // % }
+    // % if (module.$instances[0].icssInstance === "ICSSG1") {
+    // status = PRUICSS_intcInit(icss1_handle, &icss1_intc_initdata);
+    // DebugP_assert(status == SystemP_SUCCESS);
+    // % }
+
+%%}

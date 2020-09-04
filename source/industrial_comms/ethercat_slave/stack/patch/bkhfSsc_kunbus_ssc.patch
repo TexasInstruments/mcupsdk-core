@@ -1,0 +1,2215 @@
+diff --git a/SlaveFiles/src/EtherCATSampleLibrary.h b/SlaveFiles/src/EtherCATSampleLibrary.h
+index 4340452..56305d8 100644
+--- a/SlaveFiles/src/EtherCATSampleLibrary.h
++++ b/SlaveFiles/src/EtherCATSampleLibrary.h
+@@ -13,22 +13,6 @@
+ ------ 
+ -----------------------------------------------------------------------------------------*/
+ 
+-#include <windows.h>
+-
+-#ifdef __cplusplus
+-#ifdef IMPL_OR_EXTERN
+-#define EXPORT extern "C" __declspec (dllexport)
+-#else
+-#define EXPORT extern "C" __declspec (dllimport)
+-#endif
+-#else
+-#ifdef IMPL_OR_EXTERN
+-#define EXPORT __declspec (dllexport)
+-#else
+-#define EXPORT __declspec (dllimport)
+-#endif
+-#endif
+-
+ 
+ typedef struct
+ {
+@@ -41,8 +25,8 @@ typedef struct
+ ECAT_SLAVE_INTERFACE, *pECAT_SLAVE_INTERFACE;
+ 
+ 
+-EXPORT pECAT_SLAVE_INTERFACE __stdcall Ecat_Open(unsigned short InputSize, unsigned short OutputSize);
+-
+-EXPORT void __stdcall Ecat_OnTimer(void);
++pECAT_SLAVE_INTERFACE Ecat_Open(unsigned short InputSize, unsigned short OutputSize);
++ 
++void Ecat_OnTimer(void);
+ 
+-EXPORT void __stdcall Ecat_Close(void);
++void Ecat_Close(void);
+diff --git a/SlaveFiles/src/aoeappl.c b/SlaveFiles/src/aoeappl.c
+index f0f88fc..e9be967 100644
+--- a/SlaveFiles/src/aoeappl.c
++++ b/SlaveFiles/src/aoeappl.c
+@@ -121,7 +121,6 @@ UINT16    AOEAPPL_AmsInd(AmsCmd MBXMEM *pCmd)
+ #endif
+                 UINT32 dataLen = 0;
+ 
+-
+                 /* we have to check the size */
+                 if ( ( cmdId == ADSSRVID_READ && dataSize == (SIZEOF(TAdsReadReq) - SIZEOF(AmsHead)) )
+                     ||( cmdId == ADSSRVID_WRITE && dataSize >= (SIZEOF(TAdsWriteReq) - SIZEOF(AmsHead)) )
+diff --git a/SlaveFiles/src/bootloaderappl.c b/SlaveFiles/src/bootloaderappl.c
+index 78f38d4..326dc2f 100644
+--- a/SlaveFiles/src/bootloaderappl.c
++++ b/SlaveFiles/src/bootloaderappl.c
+@@ -309,22 +309,12 @@ UINT16 APPL_GetDeviceID()
+ *////////////////////////////////////////////////////////////////////////////////////////
+ #if _PIC24
+ int main(void)
+-#elif _WIN32
+-int main(int argc, char* argv[])
+ #else
+ void main(void)
+ #endif
+ {
+     /* initialize the Hardware and the EtherCAT Slave Controller */
+ #if FC1100_HW
+-#if _WIN32
+-    u16FcInstance = 0;
+-
+-    if (argc > 1)
+-    {
+-        u16FcInstance = atoi(argv[1]);
+-    }
+-#endif
+     if(HW_Init())
+     {
+         HW_Release();
+diff --git a/SlaveFiles/src/bootmode.c b/SlaveFiles/src/bootmode.c
+index c6b9fad..5011e93 100644
+--- a/SlaveFiles/src/bootmode.c
++++ b/SlaveFiles/src/bootmode.c
+@@ -28,6 +28,9 @@ V4.20: File created
+ ------
+ --------------------------------------------------------------------------------------*/
+ #include "ecat_def.h"
++#if TIESC_HW
++#include "tiescbsp.h"
++#endif
+ #if BOOTSTRAPMODE_SUPPORTED
+ 
+ 
+@@ -66,6 +69,11 @@ void BL_Stop(void)
+ *////////////////////////////////////////////////////////////////////////////////////////
+ void BL_StartDownload(UINT32 password)
+ {
++#if TIESC_HW
++#ifdef ENABLE_ONLINE_FIRMWARE_UPGRADE
++    bsp_start_fw_download(password);
++#endif    
++#endif  
+ }
+ /////////////////////////////////////////////////////////////////////////////////////////
+ /**
+@@ -79,6 +87,11 @@ void BL_StartDownload(UINT32 password)
+ *////////////////////////////////////////////////////////////////////////////////////////
+ UINT16 BL_Data(UINT16 *pData,UINT16 Size)
+ {
++#if TIESC_HW
++#ifdef ENABLE_ONLINE_FIRMWARE_UPGRADE
++    bsp_store_fw_data(pData,Size);
++#endif 
++#endif
+     return 0;
+ }
+ #endif //BOOTSTRAPMODE_SUPPORTED
+diff --git a/SlaveFiles/src/coeappl.c b/SlaveFiles/src/coeappl.c
+index a27afd6..390eafb 100644
+--- a/SlaveFiles/src/coeappl.c
++++ b/SlaveFiles/src/coeappl.c
+@@ -147,8 +147,11 @@ V4.00 ECAT 1: The handling of the Sync Manager Parameter was included according
+ #include "testappl.h"
+ #elif SAMPLE_APPLICATION_INTERFACE
+ #include "SampleApplicationInterface.h"
++#elif KUNBUS_STACK_APPLICATION
++#include <ssc_kbStack.h>
+ #else
+ /*CODE_INSERT_START (APPLICATION_FILE)*/
++#include "tiescappl.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -309,7 +312,7 @@ OBJCONST UCHAR OBJMEM aName0x1010[] = "Store parameters";
+ 
+ UINT8 Write0x1010( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM * pData, UINT8 bCompleteAccess )
+ {
+-    
++
+    if ( bCompleteAccess )
+    {
+       /* Complete Access is not supported for object 0x1010 */
+@@ -351,7 +354,7 @@ OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x1011[] = {
+    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READWRITE}};
+ 
+ /**
+- * \brief 0x1011 (Restore default parameters) object name 
++ * \brief 0x1011 (Restore default parameters) object name
+  */
+ OBJCONST UCHAR OBJMEM aName0x1011[] = "Restore default parameters";
+ 
+@@ -370,7 +373,7 @@ OBJCONST UCHAR OBJMEM aName0x1011[] = "Restore default parameters";
+ */
+ UINT8 Write0x1011( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM * pData, UINT8 bCompleteAccess )
+ {
+-    
++
+    if ( bCompleteAccess )
+    {
+       /* Complete Access is not supported for object 0x1011 */
+@@ -409,7 +412,7 @@ TOBJ1018 sIdentity = {4, (VENDOR_ID), (PRODUCT_CODE), (REVISION_NUMBER), (SERIAL
+ 
+ /**
+  * \brief 0x1018 (Identity) entry descriptions
+- * 
++ *
+  * Subindex 000
+  * SubIndex 001: Vendor ID
+  * SubIndex 002: Product code
+@@ -418,9 +421,9 @@ TOBJ1018 sIdentity = {4, (VENDOR_ID), (PRODUCT_CODE), (REVISION_NUMBER), (SERIAL
+  */
+ OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x1018[] = {
+    {DEFTYPE_UNSIGNED8, 0x8, ACCESS_READ },
+-   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, 
+-   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, 
+-   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, 
++   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ},
++   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ},
++   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ},
+    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}};
+ 
+ /**
+@@ -439,7 +442,7 @@ TOBJ10F0 sBackupparameterhandling = {2, 0x00,0};
+ 
+ /**
+  * \brief 0x10F0 (Backup parameter handling) entry descriptions
+- * 
++ *
+  * Subindex 000
+  * SubIndex 001: Checksum
+  * SubIndex 002: Backup Parameter Changed
+@@ -466,16 +469,17 @@ OBJCONST UCHAR OBJMEM aName0x10F0[] = "Backup parameter handling\000Checksum\000
+  * SubIndex 001: Local Error Reaction
+  * SubIndex 002: Sync Error Counter Limit
+  */
+-OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x10F1[] = {
+-   {DEFTYPE_UNSIGNED8, 0x8, ACCESS_READ },
+-/*ECATCHANGE_START(V5.13) COE10*/
+-   {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ},
+-/*ECATCHANGE_END(V5.13) COE10*/
+-   {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READWRITE}};
++OBJCONST TSDOINFOENTRYDESC OBJMEM asEntryDesc0x10F1[] = {
++    {DEFTYPE_UNSIGNED8, 0x8, ACCESS_READ },
++    /*ECATCHANGE_START(V5.13) COE10*/
++    // SH for CTT 2.2.1.0 {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ},
++    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READWRITE},
++    /*ECATCHANGE_END(V5.13) COE10*/
++    {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READWRITE}};
+ 
+ /**
+  * \brief 0x10F1 (Error settings) object and entry names
+- */   
++ */
+ OBJCONST UCHAR OBJMEM aName0x10F1[] = "Error Settings\000Local Error Reaction\000Sync Error Counter Limit\000\377";
+ 
+ 
+@@ -520,7 +524,7 @@ UINT8 Read0x10F8(UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM *
+         return ABORTIDX_PARAM_IS_INCOMPATIBLE;
+     }
+ 
+-    
++
+     if (bCompleteAccess)
+     {
+          /* Complete Access is not supported for object 0x10F8 */
+@@ -552,7 +556,7 @@ UINT8 Read0x10F8(UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 MBXMEM *
+ /////////////////////////////////////////////////////////////////////////////////////////
+ /**
+ \brief    This function updates the local time stamp object (0x10F8) and has to be called at least every 4.2sec to detect an 32Bit DC unit overrun.
+-          Called from the Timer handler 
++          Called from the Timer handler
+ *////////////////////////////////////////////////////////////////////////////////////////
+ void COE_SyncTimeStamp(void)
+ {
+@@ -572,13 +576,13 @@ void COE_SyncTimeStamp(void)
+             /*32Bit overrun*/
+             u64Timestamp = u64Timestamp + ((UINT64)0x0000000100000000);
+         }
+-        
++
+         u32LastDc32Value = DcTime;
+     }
+     else
+     {
+         /*The DC unit supports 64Bit => update the complete object*/
+-        
++
+         HW_EscRead((MEM_ADDR *)&u64Timestamp, ESC_SYSTEMTIME_OFFSET, 8);
+     }
+ 
+@@ -743,7 +747,7 @@ TOBJECT    OBJMEM GenObjDic[] = {
+    /* Object 0x1C33 */
+    {NULL,NULL, 0x1C33, {DEFTYPE_SMPAR, 32 | (OBJCODE_REC << 8)}, asEntryDesc0x1C3x, aName0x1C33, &sSyncManInPar, NULL, NULL, 0x0000 },
+ #endif
+-   
++
+   /*end of entries*/
+   {NULL,NULL, 0xFFFF, {0, 0}, NULL, NULL, NULL, NULL, NULL, 0x000}};
+ 
+@@ -1083,7 +1087,7 @@ void COE_UpdateSyncErrorStatus(void)
+     {
+         sSyncManInPar.u8SyncError = 0;
+     }
+-#endif	
++#endif
+ 
+ }
+ 
+@@ -1167,7 +1171,7 @@ void COE_ObjInit(void)
+     /* default mode is ECAT Synchron Mode, if output size > 0 the inputs are updated with the SM2-event */
+     sSyncManInPar.u16SyncType         = SYNCTYPE_FREERUN;
+ 
+-    
++
+     /* subindex 2: same as 0x1C32:02 */
+ #if MAX_PD_OUTPUT_SIZE > 0
+     sSyncManInPar.u32CycleTime     = sSyncManOutPar.u32CycleTime;
+@@ -1450,7 +1454,7 @@ UINT16 COE_ObjDictionaryInit(void)
+     {
+         return result;
+     }
+-    
++
+     if(ApplicationObjDic != NULL)
+     {
+         result = AddObjectsToObjDictionary((TOBJECT OBJMEM *) ApplicationObjDic);
+@@ -1474,7 +1478,7 @@ void COE_Main(void)
+ {
+ #if SDO_RES_INTERFACE
+      UINT8 abort = 0;
+-     
++
+     if(pSdoPendFunc != NULL)
+     {
+         abort = pSdoPendFunc(u16StoreIndex,u8StoreSubindex,u32StoreDataSize,pStoreData,bStoreCompleteAccess);
+diff --git a/SlaveFiles/src/ecat_def.h b/SlaveFiles/src/ecat_def.h
+index d40330c..367342e 100644
+--- a/SlaveFiles/src/ecat_def.h
++++ b/SlaveFiles/src/ecat_def.h
+@@ -10,36 +10,45 @@
+ ------  SSC version : 5.13
+ -----------------------------------------------------------------------------------------*/
+ 
+-#ifndef _ECATDEF_H_
+-#define _ECATDEF_H_
++#if !(defined _ECATDEF_H_)
++#define _ECATDEF_H_     1
+ 
+ /*-----------------------------------------------------------------------------------------
+-------	
++------
+ ------	Includes
+------- 
++------
+ -----------------------------------------------------------------------------------------*/
+ #include <stdlib.h>
++#include <stdint.h>
++#include <stdbool.h>
+ #include <string.h>
++#include <stdio.h>
++#if defined(SOC_AM65XX) || defined(SOC_AM64X)
++#if !defined (__aarch64__)
++/* Only for R5F build. */
++#include <stdint.h>
++#endif
++#endif
+ 
+ /*-----------------------------------------------------------------------------------------
+-------	
++------
+ ------	Slave Sample Code Configuration Defines
+-------	
++------
+ -----------------------------------------------------------------------------------------*/
+ #define SSC_VERSION_MAJOR 5
+ #define SSC_VERSION_MINOR 13
+ 
+ 
+-/** 
++/**
+ EL9800_HW: Shall be set if the Slave code is executed on the PIC mounted on the EL9800 EtherCAT Evaluation Board.<br>
+ (if the MCI interface provided by EL9800 board should be used MCI_HW shall be set and this define shall be reset).<br>
+ This settings should also be enabled if the ESC is connected via a serial interface and no specific hardware access files are avilable yet.<br>
+ NOTE: The PDI type needs also to be configured in the "ESC_CONFIG_DATA". */
+ #ifndef EL9800_HW
+-#define EL9800_HW                                 1
++#define EL9800_HW                                 0
+ #endif
+ 
+-/** 
++/**
+ MCI_HW: Shall be set if the MCI of the ESC is connected.<br>
+ This settings should also be enabled if the ESC is connected via a parallel interface and no specific hardware access files are avilable yet.<br>
+ NOTE: The PDI type needs also to be configured in the "ESC_CONFIG_DATA". */
+@@ -47,78 +56,72 @@ NOTE: The PDI type needs also to be configured in the "ESC_CONFIG_DATA". */
+ #define MCI_HW                                    0
+ #endif
+ 
+-/** 
++/**
+ FC1100_HW: Shall be set if the EtherCAT slave controller is located on an FC1100 PCI card.<br>
+ NOTE: The PDI type needs also to be configured in the "ESC_CONFIG_DATA". */
+ #ifndef FC1100_HW
+ #define FC1100_HW                                 0
+ #endif
+ 
+-/** 
++/**
+ TIESC_HW: Temporary define to support TI ICE/IDK development board (Shall be set if the Slave code shall executed on an AM335X ICE/IDK Evaluation Board<br>
+ from Texas Instruments) */
+ #ifndef TIESC_HW
+-#define TIESC_HW                                  0
++#define TIESC_HW                                  1
+ #endif
+ 
+-/** 
++/**
+ CONTROLLER_16BIT: Shall be set if the host controller is a 16Bit architecture */
+ #ifndef CONTROLLER_16BIT
+-#define CONTROLLER_16BIT                          1
++#define CONTROLLER_16BIT                          0
+ #endif
+ 
+-/** 
++/**
+ CONTROLLER_32BIT: Shall be set if the host controller is a 32Bit architecture */
+ #ifndef CONTROLLER_32BIT
+ #define CONTROLLER_32BIT                          0
+ #endif
+ 
+-/** 
+-MEMORY_UNIT_16BIT: Shall be set if the smallest controller memory unit is 16bit */
+-#ifndef MEMORY_UNIT_16BIT
+-#define MEMORY_UNIT_16BIT                         0
+-#endif
+-
+-/** 
++/**
+ _PIC18: Microchip PIC18F452 Specific Code <br>
+ This processor is mounted on the Beckhoff Slave Evaluation Board (Hardware version up to EL9800_2). */
+ #ifndef _PIC18
+ #define _PIC18                                    0
+ #endif
+ 
+-/** 
++/**
+ _PIC24: Microchip PIC24HJ128GP306 Specific Code <br>
+ This processor is mounted on the Beckhoff Slave Evaluation Board (Hardware version up to EL9800_4A). */
+ #ifndef _PIC24
+-#define _PIC24                                    1
++#define _PIC24                                    0
+ #endif
+ 
+-/** 
++/**
+ ESC_16BIT_ACCESS: If the microcontroller only supports 16Bit access to the ESC. */
+ #ifndef ESC_16BIT_ACCESS
+-#define ESC_16BIT_ACCESS                          1
++#define ESC_16BIT_ACCESS                          0
+ #endif
+ 
+-/** 
++/**
+ ESC_32BIT_ACCESS: If the microcontroller only supports 32Bit access to the ESC. */
+ #ifndef ESC_32BIT_ACCESS
+ #define ESC_32BIT_ACCESS                          0
+ #endif
+ 
+-/** 
++/**
+ MBX_16BIT_ACCESS: If the microcontroller only supports 16Bit access to local mailbox memory(access to ESC DPRAM is controlled by "ESC_16BIT_ACCESS"). If reset 8Bit access is used. */
+ #ifndef MBX_16BIT_ACCESS
+-#define MBX_16BIT_ACCESS                          1
++#define MBX_16BIT_ACCESS                          0
+ #endif
+ 
+-/** 
++/**
+ BIG_ENDIAN_16BIT: If the microcontroller always make 16 bit access to external memory, operates in BigEndian format<br>
+ and the switching of the high and low byte is done in hardware. */
+ #ifndef BIG_ENDIAN_16BIT
+ #define BIG_ENDIAN_16BIT                          0
+ #endif
+ 
+-/** 
++/**
+ BIG_ENDIAN_FORMAT: If the microcontroller works with BigEndian format, then this switch shall be set. In that case all WORD-<br>
+ and DWORD-accesses will make a BYTE- or WORD-swapping, the macros SWAPWORD and SWAPDWORD in ecatslv.h might be adapted. <br>
+ If this switch is set, then BIG_ENDIAN_16BIT shall be reset. */
+@@ -126,44 +129,44 @@ If this switch is set, then BIG_ENDIAN_16BIT shall be reset. */
+ #define BIG_ENDIAN_FORMAT                         0
+ #endif
+ 
+-/** 
++/**
+ EXT_DEBUGER_INTERFACE: If this switch is set, the external debugger interface on the EL9800_4A (_PIC24) will be activated.<br>
+ This define will be ignored if _PIC24 is not set. */
+ #ifndef EXT_DEBUGER_INTERFACE
+ #define EXT_DEBUGER_INTERFACE                     0
+ #endif
+ 
+-/** 
++/**
+ UC_SET_ECAT_LED: If set the EtherCAT Run and Error LEDs are set by the uController. If set ESC_SUPPORT_ECAT_LED shall be reset. */
+ #ifndef UC_SET_ECAT_LED
+ #define UC_SET_ECAT_LED                           1
+ #endif
+ 
+-/** 
++/**
+ ESC_SUPPORT_ECAT_LED: This switch can be enabled if the connected ESC support Error and Run LED indication. See the ESC datasheet if the LED indication is supported. If set UC_SET_ECAT_LED shall be reset. */
+ #ifndef ESC_SUPPORT_ECAT_LED
+ #define ESC_SUPPORT_ECAT_LED                      0
+ #endif
+ 
+-/** 
++/**
+ ESC_EEPROM_EMULATION: If this switch is set EEPROM emulation is supported. Not all ESC types support EEPROM emulation. See ESC datasheet for more information. */
+ #ifndef ESC_EEPROM_EMULATION
+-#define ESC_EEPROM_EMULATION                      0
++#define ESC_EEPROM_EMULATION                      1
+ #endif
+ 
+-/** 
++/**
+ ESC_EEPROM_SIZE: Specify the EEPROM size in Bytes of the connected EEPROM or the emulated EEPROM. */
+ #ifndef ESC_EEPROM_SIZE
+ #define ESC_EEPROM_SIZE                           0x800
+ #endif
+ 
+-/** 
++/**
+ EEPROM_WRITE_SIZE: Only required if EEPROM emulation is active. This value defines the number of bytes which will be written per opertion. */
+ #ifndef EEPROM_WRITE_SIZE
+ #define EEPROM_WRITE_SIZE                         0x2
+ #endif
+ 
+-/** 
++/**
+ AL_EVENT_ENABLED: If an interrupt routine shall be called when one of the Events in the AL Event Register (0x220) changes, <br>
+ this switch has to be defined to 1 (synchronous modes are supported). <br>
+ If the AL Event register shall only be polled, this switch has to be defined to 0 (only free run mode is supported). */
+@@ -178,13 +181,13 @@ NOTE: The DC support needs also be set in the "ESC_CONFIG_DATA" settings. */
+ #define DC_SUPPORTED                              1
+ #endif
+ 
+-/** 
++/**
+ ECAT_TIMER_INT: If this switch is set, then the watchdog time for the EtherCAT watchdog will be checked in a timer interrupt routine. */
+ #ifndef ECAT_TIMER_INT
+ #define ECAT_TIMER_INT                            0
+ #endif
+ 
+-/** 
++/**
+ INTERRUPTS_SUPPORTED: If this switch is set the slave stack provides interrupt handling.<br>
+ NOTE: value will be evaluated automatically!! */
+ #ifndef INTERRUPTS_SUPPORTED
+@@ -195,91 +198,90 @@ NOTE: value will be evaluated automatically!! */
+ #endif
+ #endif
+ 
+-/** 
++/**
+ TEST_APPLICATION: NOTE: THIS SETTING SHALL NOT BE USED TO CREATE A USER SPECIFIC APPLICATION!<br>
+ Select this setting to test the slave stack or a master implementation. For further information about this application see the SSC Application Node. */
+ #ifndef TEST_APPLICATION
+ #define TEST_APPLICATION                          0
+ #endif
+ 
+-/** 
+-TEST_APPLICATION_REDUCED_MEMORY: This define reduces the memory footprint of the test application (should only be used if the default test application generates no memory errors when accessing the OD or FoE files) */
+-#ifndef TEST_APPLICATION_REDUCED_MEMORY
+-#define TEST_APPLICATION_REDUCED_MEMORY           0
+-#endif
+-
+-/** 
++/**
+ EL9800_APPLICATION: Should be set if the Slave Sample Code runs on an EL9800_x Evaluation Board. */
+ #ifndef EL9800_APPLICATION
+-#define EL9800_APPLICATION                        1
++#define EL9800_APPLICATION                        0
+ #endif
+ 
+-/** 
+-CiA402_SAMPLE_APPLICATION: If this switch is set, then the sample implementation of CiA402 device profile will be activated. */
+-#ifndef CiA402_SAMPLE_APPLICATION
+-#define CiA402_SAMPLE_APPLICATION                 0
++/**
++CiA402_DEVICE: If this switch is set, then the sample implementation of CiA402 device profile will be activated. */
++#ifndef CiA402_DEVICE
++#define CiA402_DEVICE                             0
+ #endif
+ 
+-/** 
++/**
+ SAMPLE_APPLICATION: Select this define if the hardware independent sample application shall be activated. */
+ #ifndef SAMPLE_APPLICATION
+ #define SAMPLE_APPLICATION                        0
+ #endif
+ 
+-/** 
++/**
+ SAMPLE_APPLICATION_INTERFACE: Select this define to activate the Sample Application Interface. This provides an simple interface to create a static library and used in an external application.<br>
+ NOTE: The file "EtherCATSampleLibrary.h" includes the library interface (maybe need to be adapted).  */
+ #ifndef SAMPLE_APPLICATION_INTERFACE
+ #define SAMPLE_APPLICATION_INTERFACE              0
+ #endif
+ 
+-/** 
++/**
+ BOOTLOADER_SAMPLE: Select this define to enable a small footprint application which only supports the BOOT state and FoE mailbox protocol. */
+ #ifndef BOOTLOADER_SAMPLE
+ #define BOOTLOADER_SAMPLE                         0
+ #endif
+ 
+-/** 
++#ifndef TIESC_APPLICATION
++/*TIESC_APPLICATION: Should be set if the Slave Sample Code runs on an ICE/IDK EVM. */
++#define TIESC_APPLICATION                         1
++#endif
++
++/**
+ USE_DEFAULT_MAIN: Set to 1 if the main function of a default application shall be used.<br>
+ Otherwise the Init functions and the mainloop handler shall be called for a user specific function (see ET9300 Application Note for further details http://www.beckhoff.com/english.asp?download/ethercat_development_products.htm?id=71003127100387). */
+ #ifndef USE_DEFAULT_MAIN
+ #define USE_DEFAULT_MAIN                          1
+ #endif
+ 
+-/** 
++/**
+ MAILBOX_QUEUE: If this switch is set, the mailbox services will be stored in a queue.<br>
+ With this switch reset only one mailbox service can be processed in parallel. */
+ #ifndef MAILBOX_QUEUE
+ #define MAILBOX_QUEUE                             1
+ #endif
+ 
+-/** 
++/**
+ AOE_SUPPORTED: If the AoE services are supported, then this switch shall be set. */
+ #ifndef AOE_SUPPORTED
+ #define AOE_SUPPORTED                             0
+ #endif
+ 
+-/** 
++/**
+ COE_SUPPORTED: If the CoE services are supported, then his switch shall be set. */
+ #ifndef COE_SUPPORTED
+ #define COE_SUPPORTED                             1
+ #endif
+ 
+-/** 
++/**
+ COMPLETE_ACCESS_SUPPORTED: If the complete SDO access (accessing all entries of an object with one SDO service, then this<br>
+ switch shall be set. Furthermore,COE_SUPPORTED shall be set. */
+ #ifndef COMPLETE_ACCESS_SUPPORTED
+ #define COMPLETE_ACCESS_SUPPORTED                 1
+ #endif
+ 
+-/** 
++/**
+ SEGMENTED_SDO_SUPPORTED: If the segmented SDO services should be supported, then this switch shall be set.<br>
+ Furthermore, COE_SUPPORTED shall be set. */
+ #ifndef SEGMENTED_SDO_SUPPORTED
+ #define SEGMENTED_SDO_SUPPORTED                   1
+ #endif
+ 
+-/** 
++/**
+ SDO_RES_INTERFACE: If a SDO response cannot be generated immediately (e.g. when access over<br>
+ a serial interface is needed), this switch should be set. In that case ABORTIDX_WORKING shall be<br>
+ returned from OBJ_Read or OBJ_Write and the response shall be sent by calling SDOS_SdoRes, when<br>
+@@ -288,26 +290,26 @@ the response is available. */
+ #define SDO_RES_INTERFACE                         1
+ #endif
+ 
+-/** 
++/**
+ USE_SINGLE_PDO_MAPPING_ENTRY_DESCR: If this setting is set a PDO mapping entry description just need to be defined for the first entry. For all furher entries the same description is used. */
+ #ifndef USE_SINGLE_PDO_MAPPING_ENTRY_DESCR
+ #define USE_SINGLE_PDO_MAPPING_ENTRY_DESCR        0
+ #endif
+ 
+-/** 
++/**
+ BACKUP_PARAMETER_SUPPORTED: If this switch is set, then the functions in the application example to load and<br>
+ store backup parameter will be compiled. Furthermore, COE_SUPPORTED shall be set. */
+ #ifndef BACKUP_PARAMETER_SUPPORTED
+ #define BACKUP_PARAMETER_SUPPORTED                0
+ #endif
+ 
+-/** 
++/**
+ STORE_BACKUP_PARAMETER_IMMEDIATELY: Objet values will be stored when they are written.This switch is only evaluated if "BACKUP_PARAMETER_SUPPORTED" is set. */
+ #ifndef STORE_BACKUP_PARAMETER_IMMEDIATELY
+ #define STORE_BACKUP_PARAMETER_IMMEDIATELY        0
+ #endif
+ 
+-/** 
++/**
+ DIAGNOSIS_SUPPORTED: If this define is set the slave stack supports diagnosis messages (Object 0x10F3). <br>
+ To support diagnosis messages COE_SUPPORTED shall be enabled and the platform shall support dynamic memory allocation.<br>
+ NOTE: this feature is implemented according to ETG.1020 */
+@@ -315,13 +317,13 @@ NOTE: this feature is implemented according to ETG.1020 */
+ #define DIAGNOSIS_SUPPORTED                       0
+ #endif
+ 
+-/** 
++/**
+ EMERGENCY_SUPPORTED: If this define is set the slave stack supports emergency messages. COE_SUPPORTED or SOE_SUPPORTED shall be enabled */
+ #ifndef EMERGENCY_SUPPORTED
+-#define EMERGENCY_SUPPORTED                       0
++#define EMERGENCY_SUPPORTED                       1
+ #endif
+ 
+-/** 
++/**
+ VOE_SUPPORTED: If the VoE services should be supported, then this switch shall be set. This means only the calling of the <br>
+ VoE functions in mailbox.c are implemented, but the VoE service functions have to be added. Furthermore, the example code cannot be linked<br>
+ correctly, because these functions are missing. */
+@@ -329,33 +331,33 @@ correctly, because these functions are missing. */
+ #define VOE_SUPPORTED                             0
+ #endif
+ 
+-/** 
++/**
+ SOE_SUPPORTED: If the SoE services should be supported, then this switch shall be set. This means only the calling of the <br>
+ SoE functions in mailbox.c are implemented, but the SoE service functions have to be added. Furthermore, the example code cannot be linked<br>
+ correctly, because these functions are missing. */
+ #ifndef SOE_SUPPORTED
+-#define SOE_SUPPORTED                             0
++#define SOE_SUPPORTED                             1
+ #endif
+ 
+-/** 
++/**
+ EOE_SUPPORTED: If the EoE services should be supported, then this switch shall be set. */
+ #ifndef EOE_SUPPORTED
+-#define EOE_SUPPORTED                             0
++#define EOE_SUPPORTED                             1
+ #endif
+ 
+-/** 
++/**
+ STATIC_ETHERNET_BUFFER: If this switch is set a static buffer is used to store ethernet frames, otherwise the buffer is allocated on demand */
+ #ifndef STATIC_ETHERNET_BUFFER
+ #define STATIC_ETHERNET_BUFFER                    0
+ #endif
+ 
+-/** 
++/**
+ FOE_SUPPORTED: If the FoE services should be supported, then this switch shall be set.  */
+ #ifndef FOE_SUPPORTED
+-#define FOE_SUPPORTED                             0
++#define FOE_SUPPORTED                             1
+ #endif
+ 
+-/** 
++/**
+ MAILBOX_SUPPORTED: This switch is set automatically if at least one mailbox protocol is enabled. */
+ #ifndef MAILBOX_SUPPORTED
+ #if !COE_SUPPORTED && !AOE_SUPPORTED && !EOE_SUPPORTED && !FOE_SUPPORTED && !SOE_SUPPORTED && !VOE_SUPPORTED
+@@ -365,59 +367,59 @@ MAILBOX_SUPPORTED: This switch is set automatically if at least one mailbox prot
+ #endif
+ #endif
+ 
+-/** 
++/**
+ BOOTSTRAPMODE_SUPPORTED: If the firmware update over FoE services should be supported, then this switch shall be set.<br>
+ If this switch is set, then also "FOE_SUPPORTED" shall be set.  */
+ #ifndef BOOTSTRAPMODE_SUPPORTED
+-#define BOOTSTRAPMODE_SUPPORTED                   0
++#define BOOTSTRAPMODE_SUPPORTED                   1
+ #endif
+ 
+-/** 
++/**
+ OP_PD_REQUIRED: If this switch is reset the state transition SAFEOP_2_OP will also successful if no process data was received. The watchdog will only be active when first process data was received (bEcatFirstOutputsReceived) */
+ #ifndef OP_PD_REQUIRED
+ #define OP_PD_REQUIRED                            1
+ #endif
+ 
+-/** 
++/**
+ PREOPTIMEOUT: Specify timeout value in ms for the state transition from Init to PreOP/Boot.(ESI Value : "PreopTimeout").<br>
+ NOTE: Within the stack this value - 50ms will be used to react before the master run into the timeout. */
+ #ifndef PREOPTIMEOUT
+ #define PREOPTIMEOUT                              0x7D0
+ #endif
+ 
+-/** 
++/**
+ SAFEOP2OPTIMEOUT: Specifiy the timeout in ms from SafeOP to OP. (ESI Value : "SafeopOpTimeout")<br>
+ NOTE: Within the stack this value - 50ms will be used to react before the master run into the timeout. */
+ #ifndef SAFEOP2OPTIMEOUT
+ #define SAFEOP2OPTIMEOUT                          0x2328
+ #endif
+ 
+-/** 
++/**
+ CHECK_SM_PARAM_ALIGNMENT: If true the SyncManager length and start address will be checked according the ESC Access.<br>
+ e.g. ESC_32BIT_ACCESS is set the length and address shall be to an even 4Byte address. */
+ #ifndef CHECK_SM_PARAM_ALIGNMENT
+ #define CHECK_SM_PARAM_ALIGNMENT                  0
+ #endif
+ 
+-/** 
++/**
+ EXPLICIT_DEVICE_ID: If this switch is set Explicit device ID requests are handled. For further information about Explicit Device ID see ETG.1020 specification: www.ethercat.org/MemberArea/download_protocolenhancements.asp */
+ #ifndef EXPLICIT_DEVICE_ID
+ #define EXPLICIT_DEVICE_ID                        0
+ #endif
+ 
+-/** 
++/**
+ ESC_SM_WD_SUPPORTED: This switch should be set if the SyncManger watchdog provided by the ESC should be used. If reset the process data watchdog is triggered by a local timer */
+ #ifndef ESC_SM_WD_SUPPORTED
+ #define ESC_SM_WD_SUPPORTED                       1
+ #endif
+ 
+-/** 
++/**
+ STATIC_OBJECT_DIC: If this switch is set, the object dictionary is "build" static (by default only PIC18 objects are added static) */
+ #ifndef STATIC_OBJECT_DIC
+ #define STATIC_OBJECT_DIC                         0
+ #endif
+ 
+-/** 
++/**
+ ESC_EEPROM_ACCESS_SUPPORT: If this switch is set the slave stack provides functions to access the EEPROM. */
+ #ifndef ESC_EEPROM_ACCESS_SUPPORT
+ #define ESC_EEPROM_ACCESS_SUPPORT                 0
+@@ -425,354 +427,354 @@ ESC_EEPROM_ACCESS_SUPPORT: If this switch is set the slave stack provides functi
+ 
+ 
+ /*-----------------------------------------------------------------------------------------
+-------	
++------
+ ------	Compiler Defines
+-------	
++------
+ -----------------------------------------------------------------------------------------*/
+ 
+-/** 
++/**
+ FALSE: Will be used for variables from type BOOL */
+ #ifndef FALSE
+ #define FALSE                                     0
+ #endif
+ 
+-/** 
++/**
+ TRUE: Will be used for variables from type BOOL  */
+ #ifndef TRUE
+ #define TRUE                                      1
+ #endif
+ 
+-/** 
++/**
+ BOOL: Should be adapted to the boolean type of the microcontroller */
+ #ifndef BOOL
+-#define BOOL                                      unsigned char
++#define BOOL                                      uint8_t
+ #endif
+ 
+-/** 
++/**
+ UINT8: Should be adapted to the unsigned8 type of the microcontroller  */
+ #ifndef UINT8
+-#define UINT8                                     unsigned char
++#define UINT8                                     uint8_t
+ #endif
+ 
+-/** 
++/**
+ UINT16: Should be adapted to the unsigned16 type of the microcontroller  */
+ #ifndef UINT16
+-#define UINT16                                    unsigned short
++#define UINT16                                    uint16_t
+ #endif
+ 
+-/** 
++/**
+ UINT32: Should be adapted to the unsigned32 type of the microcontroller  */
+ #ifndef UINT32
+-#define UINT32                                    unsigned long
++#define UINT32                                    uint32_t
+ #endif
+ 
+-/** 
++/**
+ UINT64: Should be adapted to the unsigned64 type of the microcontroller  */
+ #ifndef UINT64
+ #define UINT64                                    unsigned long long
+ #endif
+ 
+-/** 
++/**
+ USHORT: Should be adapted to the unsigned16 type of the microcontroller */
+ #ifndef USHORT
+-#define USHORT                                    unsigned short
++#define USHORT                                    uint16_t
+ #endif
+ 
+-/** 
++/**
+ INT8: Should be adapted to the integer8 type of the microcontroller */
+ #ifndef INT8
+-#define INT8                                      char
++#define INT8                                      int8_t
+ #endif
+ 
+-/** 
++/**
+ INT16: Should be adapted to the integer16 type of the microcontroller  */
+ #ifndef INT16
+-#define INT16                                     short
++#define INT16                                     int16_t
+ #endif
+ 
+-/** 
++/**
+ INT32: Should be adapted to the integer32 type of the microcontroller */
+ #ifndef INT32
+-#define INT32                                     long
++#define INT32                                     int32_t
+ #endif
+ 
+-/** 
++/**
+ INT64: Should be adapted to the integer64 type of the microcontroller */
+ #ifndef INT64
+ #define INT64                                     long long
+ #endif
+ 
+-/** 
++/**
+ CHAR: Should be adapted to the character type of the microcontroller */
+ #ifndef CHAR
+ #define CHAR                                      char
+ #endif
+ 
+-/** 
++/**
+ UCHAR: Should be adapted to the unsigned character type of the microcontroller */
+ #ifndef UCHAR
+-#define UCHAR                                     unsigned char
++#define UCHAR                                     uint8_t
+ #endif
+ 
+-/** 
++/**
+ REAL32: Should be adapted to the 32bit real type of the microcontroller */
+ #ifndef REAL32
+ #define REAL32                                    float
+ #endif
+ 
+-/** 
++/**
+ REAL64: Should be adapted to the 64bit real type of the microcontroller */
+ #ifndef REAL64
+ #define REAL64                                    long double
+ #endif
+ 
+-/** 
++/**
+ SIZEOF(x): Used to calculate the size in Bytes */
+ #ifndef SIZEOF
+ #define SIZEOF(x)                                 sizeof(x)
+ #endif
+ 
+-/** 
++/**
+ HUGE: Should be adapted to the huge type of the microcontroller, if the microcontroller<br>
+ does not support a huge type, HUGE shall be defined to nothing */
+ #ifndef HUGE
+-#define HUGE 
++#define HUGE
+ #endif
+ 
+-/** 
++/**
+ HMEMSET: Should be defined to the memset function for huge memory, if the microcontroller<br>
+ does not support a huge type, HMEMSET shall be defined to a 'normal' memset function */
+ #ifndef HMEMSET
+ #define HMEMSET                                   memset
+ #endif
+ 
+-/** 
++/**
+ HMEMCPY: Should be defined to the memcpy function for huge memory, if the microcontroller<br>
+ does not support a huge type, HMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef HMEMCPY
+ #define HMEMCPY                                   memcpy
+ #endif
+ 
+-/** 
++/**
+ HMEMCMP: Should be defined to the memcmp function for huge memory, if the microcontroller<br>
+ does not support a huge type, HMEMCMP shall be defined to a 'normal' memcmp function */
+ #ifndef HMEMCMP
+ #define HMEMCMP                                   memcmp
+ #endif
+ 
+-/** 
++/**
+ ESCMEM: Should be defined to select the memory type of the ESC memory (e.g. near, far or huge), if the microcontroller<br>
+ does not support different memory types, ESCMEM shall be defined to nothing */
+ #ifndef ESCMEM
+-#define ESCMEM 
++#define ESCMEM
+ #endif
+ 
+-/** 
++/**
+ ESCMEMCPY: Should be defined to the memcpy function for ESCMEM memory, if the microcontroller<br>
+ does not support different memory types, ESCMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef ESCMEMCPY
+ #define ESCMEMCPY                                 memcpy
+ #endif
+ 
+-/** 
++/**
+ ESCMEMSET: Should be defined to the memset function for ESCMEM memory, if the microcontroller<br>
+ does not support different memory types, ESCMEMSET shall be defined to a 'normal' memset function */
+ #ifndef ESCMEMSET
+ #define ESCMEMSET                                 memset
+ #endif
+ 
+-/** 
++/**
+ ESCMBXMEMCPY: Should be defined to the memcpy function for copying ESCMEM memory to or from MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, ESCMBXMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef ESCMBXMEMCPY
+ #define ESCMBXMEMCPY                              memcpy
+ #endif
+ 
+-/** 
++/**
+ MBXMEM: Should be defined to select the memory type of the memory used for mailbox communication (e.g. near, far or huge), <br>
+ if the microcontroller does not support different memory types, MBXMEM shall be defined to nothing */
+ #ifndef MBXMEM
+-#define MBXMEM 
++#define MBXMEM
+ #endif
+ 
+-/** 
++/**
+ MBXMEMCPY: Should be defined to the memcpy function for MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, MBXMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef MBXMEMCPY
+ #define MBXMEMCPY                                 memcpy
+ #endif
+ 
+-/** 
++/**
+ MBXMEMCMP: Should be defined to the memcmp function for MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, MBXMEMCMP shall be defined to a 'normal' memcmp function */
+ #ifndef MBXMEMCMP
+ #define MBXMEMCMP                                 memcmp
+ #endif
+ 
+-/** 
++/**
+ MBXMEMSET: Should be defined to the memcpy function for MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, MBXMEMSET shall be defined to a 'normal' memset function */
+ #ifndef MBXMEMSET
+ #define MBXMEMSET                                 memset
+ #endif
+ 
+-/** 
++/**
+ MBXSTRLEN: Should be defined to the strlen function for MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, MBXSTRLEN shall be defined to a 'normal' strlen function */
+ #ifndef MBXSTRLEN
+ #define MBXSTRLEN                                 strlen
+ #endif
+ 
+-/** 
++/**
+ MBXSTRCPY: Should be defined to the strcpy function for MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, MBXSTRCPY shall be defined to a 'normal' strcpy function */
+ #ifndef MBXSTRCPY
+ #define MBXSTRCPY                                 memcpy
+ #endif
+ 
+-/** 
++/**
+ OBJCONST: Should be used to define the object dictionary in ROM (f.e. define OBJCONST const) or<br>
+ in RAM (e.g. define OBJCONST) */
+ #ifndef OBJCONST
+ #define OBJCONST                                  const
+ #endif
+ 
+-/** 
++/**
+ VARCONST: Should be used to define the constant variables in ROM (f.e. define VARCONST const) or<br>
+ in RAM (e.g. define VARCONST) */
+ #ifndef VARCONST
+-#define VARCONST 
++#define VARCONST
+ #endif
+ 
+-/** 
++/**
+ VARVOLATILE: Should be used to prevent dummy variables to be deleted due to compiler optimization.  */
+ #ifndef VARVOLATILE
+ #define VARVOLATILE                               volatile
+ #endif
+ 
+-/** 
++/**
+ OBJMEM: Should be defined to select the memory type of the memory used for the object dictionary (e.g. near, far or huge), <br>
+ if the microcontroller does not support different memory types, OBJMEM shall be defined to nothing */
+ #ifndef OBJMEM
+-#define OBJMEM 
++#define OBJMEM
+ #endif
+ 
+-/** 
++/**
+ OBJTOMBXMEMCPY: Should be defined to the memcpy function for copying OBJMEM memory to MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, OBJTOMBXMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef OBJTOMBXMEMCPY
+ #define OBJTOMBXMEMCPY                            memcpy
+ #endif
+ 
+-/** 
++/**
+ OBJTOMBXSTRCPY: Should be defined to the strcpy function for copying OBJMEM memory to MBXMEM memory, if the microcontroller<br>
+ does not support different memory types, OBJTOMBXSTRCPY shall be defined to a 'normal' memcpy function */
+ #ifndef OBJTOMBXSTRCPY
+ #define OBJTOMBXSTRCPY                            memcpy
+ #endif
+ 
+-/** 
++/**
+ MBXTOOBJSTRCPY: Should be defined to the strcpy function for copying MBXMEM memory to OBJMEM memory, if the microcontroller<br>
+ does not support different memory types, MBXTOOBJSTRCPY shall be defined to a 'normal' memcpy function */
+ #ifndef MBXTOOBJSTRCPY
+ #define MBXTOOBJSTRCPY                            memcpy
+ #endif
+ 
+-/** 
++/**
+ OBJMEMCPY: Should be defined to the memcpy function for OBJMEM memory, if the microcontroller<br>
+ does not support different memory types, OBJMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef OBJMEMCPY
+ #define OBJMEMCPY                                 memcpy
+ #endif
+ 
+-/** 
++/**
+ OBJSTRLEN: Should be defined to the strlen function for OBJMEM memory, if the microcontroller<br>
+ does not support different memory types, OBJSTRLEN shall be defined to a 'normal' strlen function */
+ #ifndef OBJSTRLEN
+ #define OBJSTRLEN                                 strlen
+ #endif
+ 
+-/** 
++/**
+ OBJSTRCPY: Should be defined to the strcpy function for OBJMEM memory, if the microcontroller<br>
+ does not support different memory types, OBJSTRCPY shall be defined to a 'normal' strcpy function */
+ #ifndef OBJSTRCPY
+ #define OBJSTRCPY                                 memcpy
+ #endif
+ 
+-/** 
++/**
+ MAKE_HUGE_PTR: Should be defined to the initialize a pointer variable with an absolute address */
+ #ifndef MAKE_HUGE_PTR
+ #if !_PIC24
+ #define MAKE_HUGE_PTR                             _mkhp
+ #else
+-#define MAKE_HUGE_PTR 
++#define MAKE_HUGE_PTR
+ #endif
+ #endif
+ 
+-/** 
++/**
+ MAKE_PTR_TO_ESC: Should be defined to the initialize the pointer to the ESC */
+ #ifndef MAKE_PTR_TO_ESC
+ #if MCI_HW && !FC1100_HW
+ #define MAKE_PTR_TO_ESC                           &sEsc
+ #else
+-#define MAKE_PTR_TO_ESC 
++#define MAKE_PTR_TO_ESC
+ #endif
+ #endif
+ 
+-/** 
++/**
+ EMCYMEMCPY: Should be defined to the memcpy function for EMCYMEM memory, if the microcontroller<br>
+ does not support different memory types, EMCYMEMCPY shall be defined to a 'normal' memcpy function */
+ #ifndef EMCYMEMCPY
+ #define EMCYMEMCPY                                memcpy
+ #endif
+ 
+-/** 
++/**
+ EMCYMEMSET: Should be defined to the memset function for EMCYMEM memory, if the microcontroller<br>
+ does not support different memory types, EMCYMEMSET shall be defined to a 'normal' memcset function */
+ #ifndef EMCYMEMSET
+ #define EMCYMEMSET                                memset
+ #endif
+ 
+-/** 
++/**
+ EMCYMEM: Should be defined to select the memory type of the memory used for the emergencies (e.g. near, far or huge), <br>
+ if the microcontroller does not support different memory types, EMCYMEM shall be defined to nothing */
+ #ifndef EMCYMEM
+-#define EMCYMEM 
++#define EMCYMEM
+ #endif
+ 
+-/** 
++/**
+ MEMCPY: Should be defined to copy data within local memory. */
+ #ifndef MEMCPY
+ #define MEMCPY                                    memcpy
+ #endif
+ 
+-/** 
++/**
+ ALLOCMEM(size): Should be defined to the alloc function to get dynamic memory */
+ #ifndef ALLOCMEM
+ #define ALLOCMEM(size)                            malloc((size))
+ #endif
+ 
+-/** 
++/**
+ FREEMEM(pointer): Should be defined to the free function to put back dynamic memory */
+ #ifndef FREEMEM
+ #define FREEMEM(pointer)                          free((pointer))
+ #endif
+ 
+-/** 
++/**
+ VARMEMSET: Should be defined to the memset function for VARMEM memory, if the microcontroller<br>
+ does not support different memory types, EMCYMEMSET shall be defined to a 'normal' memcset function */
+ #ifndef VARMEMSET
+ #define VARMEMSET                                 memset
+ #endif
+ 
+-/** 
++/**
+ VARMEM: Should be defined to select the memory type of the memory used for dynamic memory (e.g. near, far or huge), <br>
+ if the microcontroller does not support different memory types, VARMEM shall be defined to nothing */
+ #ifndef VARMEM
+-#define VARMEM 
++#define VARMEM
+ #endif
+ 
+-/** 
++/**
+ MEM_ADDR: Type to access local memory addresses */
+ #ifndef MEM_ADDR
+ #if CONTROLLER_32BIT
+@@ -784,7 +786,7 @@ MEM_ADDR: Type to access local memory addresses */
+ #endif
+ #endif
+ 
+-/** 
++/**
+ GET_MEM_SIZE(ByteSize): Round up the byte size to next matching memory boundary depending on "MEM_ADDR" */
+ #ifndef GET_MEM_SIZE
+ #if CONTROLLER_32BIT
+@@ -796,65 +798,65 @@ GET_MEM_SIZE(ByteSize): Round up the byte size to next matching memory boundary
+ #endif
+ #endif
+ 
+-/** 
++/**
+ APPL_AllocMailboxBuffer(size): Should be defined to a function to get a buffer for a mailbox service,<br>
+ this is only used if the switch MAILBOX_QUEUE is set */
+ #ifndef APPL_AllocMailboxBuffer
+ #if MAILBOX_QUEUE
+ #define APPL_AllocMailboxBuffer(size)             malloc((size))
+ #else
+-#define APPL_AllocMailboxBuffer(size) 
++#define APPL_AllocMailboxBuffer(size)
+ #endif
+ #endif
+ 
+-/** 
++/**
+ APPL_FreeMailboxBuffer(pointer): Should be defined to a function to put back a buffer for a mailbox service,<br>
+ this is only used if the switch MAILBOX_QUEUE is set */
+ #ifndef APPL_FreeMailboxBuffer
+ #if MAILBOX_QUEUE
+ #define APPL_FreeMailboxBuffer(pointer)           free((pointer))
+ #else
+-#define APPL_FreeMailboxBuffer(pointer) 
++#define APPL_FreeMailboxBuffer(pointer)
+ #endif
+ #endif
+ 
+-/** 
++/**
+ STRUCT_PACKED_START: Is defined before the typedef struct construct to pack the generic structures if necessary */
+ #ifndef STRUCT_PACKED_START
+-#define STRUCT_PACKED_START 
++#define STRUCT_PACKED_START
+ #endif
+ 
+-/** 
++/**
+ STRUCT_PACKED_END: Is defined after the typedef struct {} construct to pack the generic structures if necessary */
+ #ifndef STRUCT_PACKED_END
+-#define STRUCT_PACKED_END 
++#define STRUCT_PACKED_END __attribute__((packed))
+ #endif
+ 
+-/** 
++/**
+ MBX_STRUCT_PACKED_START: Is defined before the typedef struct construct to pack the MAILBOX structures if necessary */
+ #ifndef MBX_STRUCT_PACKED_START
+-#define MBX_STRUCT_PACKED_START 
++#define MBX_STRUCT_PACKED_START
+ #endif
+ 
+-/** 
++/**
+ MBX_STRUCT_PACKED_END: Is defined after the typedef struct {} construct to pack the MAILBOX structures if necessary */
+ #ifndef MBX_STRUCT_PACKED_END
+-#define MBX_STRUCT_PACKED_END 
++#define MBX_STRUCT_PACKED_END __attribute__((packed))
+ #endif
+ 
+-/** 
++/**
+ OBJ_STRUCT_PACKED_START: Is defined before the typedef struct construct to pack the OBJECT structures if necessary */
+ #ifndef OBJ_STRUCT_PACKED_START
+-#define OBJ_STRUCT_PACKED_START 
++#define OBJ_STRUCT_PACKED_START
+ #endif
+ 
+-/** 
++/**
+ OBJ_STRUCT_PACKED_END: Is defined after the typedef struct {} construct to pack the OBJECT structures if necessary */
+ #ifndef OBJ_STRUCT_PACKED_END
+-#define OBJ_STRUCT_PACKED_END 
++#define OBJ_STRUCT_PACKED_END __attribute__((packed))
+ #endif
+ 
+-/** 
++/**
+ OBJ_DWORD_ALIGN: Shall be set if the object structures are not Byte aligned and 32bit entries are implicitly padded to even 32bit memory addresses. */
+ #ifndef OBJ_DWORD_ALIGN
+ #if CONTROLLER_32BIT
+@@ -864,7 +866,7 @@ OBJ_DWORD_ALIGN: Shall be set if the object structures are not Byte aligned and
+ #endif
+ #endif
+ 
+-/** 
++/**
+ OBJ_WORD_ALIGN: Shall be set if the object structures are not Byte aligned and 16bit entries are implicitly padded to even 16bit memory addresses. */
+ #ifndef OBJ_WORD_ALIGN
+ #if CONTROLLER_16BIT
+@@ -877,236 +879,282 @@ OBJ_WORD_ALIGN: Shall be set if the object structures are not Byte aligned and 1
+ /** 
+ ENTER_MBX_CRITICAL: Macro which is called when a critical mailbox section is entered */
+ #ifndef ENTER_MBX_CRITICAL
+-#define ENTER_MBX_CRITICAL 
++#define ENTER_MBX_CRITICAL
+ #endif
+ 
+ /** 
+ LEAVE_MBX_CRITICAL: Macro which is called when a critical mailbox section is left */
+ #ifndef LEAVE_MBX_CRITICAL
+-#define LEAVE_MBX_CRITICAL 
++#define LEAVE_MBX_CRITICAL
+ #endif
+ 
+ /** 
+ ENTER_AOE_CRITICAL: Macro which is called when a critical AoE section is entered */
+ #ifndef ENTER_AOE_CRITICAL
+-#define ENTER_AOE_CRITICAL 
++#define ENTER_AOE_CRITICAL
+ #endif
+ 
+ /** 
+ LEAVE_AOE_CRITICAL: Macro which is called when a critical AoE section is left */
+ #ifndef LEAVE_AOE_CRITICAL
+-#define LEAVE_AOE_CRITICAL 
++#define LEAVE_AOE_CRITICAL
+ #endif
+ 
+ /** 
+ ENTER_EMCY_CRITICAL: Macro which is called when a critical emergency section is entered */
+ #ifndef ENTER_EMCY_CRITICAL
+-#define ENTER_EMCY_CRITICAL 
++#define ENTER_EMCY_CRITICAL
+ #endif
+ 
+ /** 
+ LEAVE_EMCY_CRITICAL: Macro which is called when a critical emergency section is left */
+ #ifndef LEAVE_EMCY_CRITICAL
+-#define LEAVE_EMCY_CRITICAL 
++#define LEAVE_EMCY_CRITICAL
+ #endif
+ 
+ 
+ /*-----------------------------------------------------------------------------------------
+-------	
++------
+ ------	Application Specific Defines
+-------	
++------
+ -----------------------------------------------------------------------------------------*/
+ 
+-/** 
++/**
+ MAX_DIAG_MSG: Number of diagnosis message ringbuffer */
+ #ifndef MAX_DIAG_MSG
+ #define MAX_DIAG_MSG                              0x14
+ #endif
+ 
+-/** 
++/**
+ MAX_EMERGENCIES: Number of emergencies supported in parallel */
+ #ifndef MAX_EMERGENCIES
+ #define MAX_EMERGENCIES                           0x1
+ #endif
+ 
+-/** 
++/**
+ VENDOR_ID: Object 0x1018 SI1 (Vendor ID)	 <br>
+ An unique EtherCAT Vendor ID is required. Please find all valid Vendor IDs listed at www.ethercat.org/en/vendor_id_list.html.<br>
+ If your company is not listed, please assign an ID for free at www.ethercat.org/memberarea/vendor_id.asp */
+-#ifndef VENDOR_ID
++#if SAMPLE_APPLICATION_INTERFACE && TIESC_HW
++#define VENDOR_ID                                 0xE000059D
++#elif TIESC_HW
++#define VENDOR_ID                                 0x0000059D
++#else
+ #define VENDOR_ID                                 0xE0000002
+ #endif
++//#endif
+ 
+-/** 
++/**
+ PRODUCT_CODE: Object 0x1018 SI2 (EtherCAT product code) */
+ #ifndef PRODUCT_CODE
+-#define PRODUCT_CODE                              0x00000001
+-#endif
+-
+-/** 
++ #if FC1100_HW
++  #define PRODUCT_CODE                              0x044C0C62
++ #elif EL9800_HW
++  #define PRODUCT_CODE                              0x26483052
++ #elif TIESC_HW
++  #if defined (TIESC_SPI_MASTER_MODE)
++   #define PRODUCT_CODE                              0x54490081
++  #elif defined (SOC_K2G) || (SOC_AM65XX) || defined (SOC_AM64X)
++   #define PRODUCT_CODE                              0x54490004
++  #elif defined (SOC_AM574x) || defined (SOC_AM572x) || defined (SOC_AM571x)
++   #define PRODUCT_CODE                              0x54490003
++  #elif defined (AM43XX_FAMILY_BUILD)
++   #define PRODUCT_CODE                              0x54490002
++  #else
++   #define PRODUCT_CODE                              0x54490001
++  #endif
++ #else
++  #define PRODUCT_CODE                              0x00000000
++ #endif
++#endif
++
++/**
+ REVISION_NUMBER: Object 0x1018 SI3 (EtherCAT product revision number) */
+ #ifndef REVISION_NUMBER
+-#define REVISION_NUMBER                           0x00000001
+-#endif
+-
+-/** 
++ #if CiA402_DEVICE
++  #define REVISION_NUMBER                           0x00030211
++ #elif EL9800_APPLICATION && _PIC18
++  #define REVISION_NUMBER                           0x00010101
++ #elif EL9800_APPLICATION && _PIC24
++  #define REVISION_NUMBER                           0x00030111
++ #elif FC1100_HW
++  #define REVISION_NUMBER                           0x00030300
++ #elif MCI_HW
++  #define REVISION_NUMBER                           0x00010082
++ #elif TEST_APPLICATION  && EL9800_HW
++  #define REVISION_NUMBER                           0x00010411
++ #elif SAMPLE_APPLICATION_INTERFACE && TIESC_HW
++  #define REVISION_NUMBER                           0x00000001
++ #elif TIESC_APPLICATION
++  #define REVISION_NUMBER                           0x00000011
++ #else
++  #define REVISION_NUMBER                           0x00010000
++ #endif
++#endif
++
++/**
+ SERIAL_NUMBER: Object 0x1018 SI4 (EtherCAT product serial number) */
+ #ifndef SERIAL_NUMBER
+ #define SERIAL_NUMBER                             0x00000000
+ #endif
+ 
+-/** 
++/**
+ DEVICE_PROFILE_TYPE: Slave device type (Object 0x1000)  */
+ #ifndef DEVICE_PROFILE_TYPE
++#if CiA402_DEVICE
++#define DEVICE_PROFILE_TYPE                       0x00000192
++#else
+ #define DEVICE_PROFILE_TYPE                       0x00001389
+ #endif
++#endif
+ 
+-/** 
++/**
+ DEVICE_NAME: Name of the slave device (Object 0x1008) */
+ #ifndef DEVICE_NAME
+ #define DEVICE_NAME                               "SSC-Device"
+ #endif
+ 
+-/** 
++/**
+ DEVICE_NAME_LEN: Length of 'DEVICE_NAME' without '\0' */
+ #ifndef DEVICE_NAME_LEN
+ #define DEVICE_NAME_LEN                           0xA
+ #endif
+ 
+-/** 
++/**
+ DEVICE_HW_VERSION: Hardware version of the slave device (Object 0x1009) */
+ #ifndef DEVICE_HW_VERSION
+ #define DEVICE_HW_VERSION                         "n.a."
+ #endif
+ 
+-/** 
++/**
+ DEVICE_HW_VERSION_LEN: Length of 'DEVICE_HW_VERSION' without '\0' */
+ #ifndef DEVICE_HW_VERSION_LEN
+ #define DEVICE_HW_VERSION_LEN                     0x4
+ #endif
+ 
+-/** 
++/**
+ DEVICE_SW_VERSION: Software version of the slave device (Object 0x100A) */
+ #ifndef DEVICE_SW_VERSION
+ #define DEVICE_SW_VERSION                         "5.13"
+ #endif
+ 
+-/** 
++/**
+ DEVICE_SW_VERSION_LEN: Length of 'DEVICE_SW_VERSION' without '\0' */
+ #ifndef DEVICE_SW_VERSION_LEN
+ #define DEVICE_SW_VERSION_LEN                     0x4
+ #endif
+ 
+-/** 
++/**
+ MIN_PD_WRITE_ADDRESS: Minimum address for the process output data (Sync Manager 2)<br>
+ inside the application memory of the EtherCAT Slave Controller which could be set by the master. The setting have to be within the ranges of the user memory of the ESC (this is not checked by the tool). */
+ #ifndef MIN_PD_WRITE_ADDRESS
+ #define MIN_PD_WRITE_ADDRESS                      0x1000
+ #endif
+ 
+-/** 
++/**
+ MAX_PD_WRITE_ADDRESS: Maximum address for the process output data (Sync Manager 2)<br>
+ inside the application memory of the EtherCAT Slave Controller which could be set by the master. The setting have to be within the ranges of the user memory of the ESC (this is not checked by the tool). */
+ #ifndef MAX_PD_WRITE_ADDRESS
+ #define MAX_PD_WRITE_ADDRESS                      0x2FFF
+ #endif
+ 
+-/** 
++/**
+ MIN_PD_READ_ADDRESS: Minimum address for the process input data (Sync Manager 3)<br>
+ inside the application memory of the EtherCAT Slave Controller which could be set by the master. The setting have to be within the ranges of the user memory of the ESC (this is not checked by the tool). */
+ #ifndef MIN_PD_READ_ADDRESS
+ #define MIN_PD_READ_ADDRESS                       0x1000
+ #endif
+ 
+-/** 
++/**
+ MAX_PD_READ_ADDRESS: Maximum address for the process input data (Sync Manager 3)<br>
+ inside the application memory of the EtherCAT Slave Controller which could be set by the master. The setting have to be within the ranges of the user memory of the ESC (this is not checked by the tool). */
+ #ifndef MAX_PD_READ_ADDRESS
+ #define MAX_PD_READ_ADDRESS                       0x2FFF
+ #endif
+ 
+-/** 
++/**
+ MIN_MBX_SIZE: Minimum mailbox size (Sync Manager 0 and 1) which could be set by the master. The SSC don't support fragmented SDO info object/entry service => at least entry info including 12byte name shall fit in the mailbox buffer */
+ #ifndef MIN_MBX_SIZE
+ #define MIN_MBX_SIZE                              0x0024
+ #endif
+ 
+-/** 
++/**
+ MAX_MBX_SIZE: Maximum mailbox size (Sync Manager 0 and 1) which could be set by the master. */
+ #ifndef MAX_MBX_SIZE
+-#define MAX_MBX_SIZE                              0x0080
++/* increment from 0x80, since KB stack requires 0x100 MBX size, maybe this has to be overridden dynamically */
++#define MAX_MBX_SIZE                              0x0100
+ #endif
+ 
+-/** 
++/**
+ MIN_MBX_WRITE_ADDRESS: Minimum address for the write (receive) mailbox (Sync Manager 0). The setting have to be within the ranges of the user memory of the ESC (this is not checked by the tool). */
+ #ifndef MIN_MBX_WRITE_ADDRESS
+ #define MIN_MBX_WRITE_ADDRESS                     0x1000
+ #endif
+ 
+-/** 
++/**
+ MAX_MBX_WRITE_ADDRESS: Maximum address for the write (receive) mailbox (Sync Manager 0). The setting have to be within the ranges of the user memory of the ESC (this is not checked by the tool). */
+ #ifndef MAX_MBX_WRITE_ADDRESS
+ #define MAX_MBX_WRITE_ADDRESS                     0x2FFF
+ #endif
+ 
+-/** 
++/**
+ MAX_PD_INPUT_SIZE: Maximum size of the process input data (Sync Manager 3) for cyclic exchange. */
+ #ifndef MAX_PD_INPUT_SIZE
+-#define MAX_PD_INPUT_SIZE                         0x0044
++#define MAX_PD_INPUT_SIZE                         1024
+ #endif
+ 
+-/** 
++/**
+ MIN_MBX_READ_ADDRESS: Minimum address for the read (send) mailbox (Sync Manager 1). */
+ #ifndef MIN_MBX_READ_ADDRESS
+ #define MIN_MBX_READ_ADDRESS                      0x1000
+ #endif
+ 
+-/** 
++/**
+ MAX_MBX_READ_ADDRESS: Maximum address for the read (send) mailbox (Sync Manager 1). */
+ #ifndef MAX_MBX_READ_ADDRESS
+ #define MAX_MBX_READ_ADDRESS                      0x2FFF
+ #endif
+ 
+-/** 
++/**
+ MAX_PD_OUTPUT_SIZE: Maximum size of the process output data (Sync Manager 2) for cyclic exchange. */
+ #ifndef MAX_PD_OUTPUT_SIZE
+-#define MAX_PD_OUTPUT_SIZE                        0x044
++#define MAX_PD_OUTPUT_SIZE                        1024
+ #endif
+ 
+-/** 
++/**
+ MIN_PD_CYCLE_TIME: Minimum cycle time in ns the slave is supporting (entry 0x1C3x:05).<br>
+ In case that the value is set to 0 the value of 0x1C3x:5 is calculated if 0x1C3x.8 is 1 */
+ #ifndef MIN_PD_CYCLE_TIME
+-#define MIN_PD_CYCLE_TIME                         0x7A120
++#define MIN_PD_CYCLE_TIME                         0xC350 /* MIN PD Cycle KB 50usec = 50000 nsec = 0xc350 */
+ #endif
+ 
+-/** 
++/**
+ MAX_PD_CYCLE_TIME: Maximum cycle time in ns the slave is supporting */
+ #ifndef MAX_PD_CYCLE_TIME
+ #define MAX_PD_CYCLE_TIME                         0xC3500000
+ #endif
+ 
+-/** 
++/**
+ PD_OUTPUT_DELAY_TIME: Minimum output delay time in ns the slave is supporting (entry 0x1C32:09) */
+ #ifndef PD_OUTPUT_DELAY_TIME
+ #define PD_OUTPUT_DELAY_TIME                      0x0
+ #endif
+ 
+-/** 
++/**
+ PD_OUTPUT_CALC_AND_COPY_TIME: Output calc+copy time in ns the slave is supporting (entry 0x1C32:06)<br>
+ In case that the value is set to 0 the value of 0x1C32:6 is calculated if 0x1C3x.8 is 1 */
+ #ifndef PD_OUTPUT_CALC_AND_COPY_TIME
+ #define PD_OUTPUT_CALC_AND_COPY_TIME              0x0
+ #endif
+ 
+-/** 
++/**
+ PD_INPUT_CALC_AND_COPY_TIME: Input calc+copy time in ns the slave is supporting (entry 0x1C33:06)<br>
+ In case that the value is set to 0 the value of 0x1C33:6 is calculated if 0x1C3x.8 is 1 */
+ #ifndef PD_INPUT_CALC_AND_COPY_TIME
+ #define PD_INPUT_CALC_AND_COPY_TIME               0x0
+ #endif
+ 
+-/** 
++/**
+ PD_INPUT_DELAY_TIME: Input delay time in ns the slave is supporting (entry 0x1C33:09) */
+ #ifndef PD_INPUT_DELAY_TIME
+ #define PD_INPUT_DELAY_TIME                       0x0
+@@ -1115,9 +1163,9 @@ PD_INPUT_DELAY_TIME: Input delay time in ns the slave is supporting (entry 0x1C3
+ 
+ 
+ /*-----------------------------------------------------------------------------------------
+-------	
++------
+ ------	Test Configuration Defines
+-------	
++------
+ -----------------------------------------------------------------------------------------*/
+ 
+ #if EL9800_HW && !_PIC24 && !_PIC18
+@@ -1163,7 +1211,7 @@ PD_INPUT_DELAY_TIME: Input delay time in ns the slave is supporting (entry 0x1C3
+ #if SEGMENTED_SDO_SUPPORTED && _PIC18
+ #error The PIC18 configuration does not support segmented SDO
+ #endif
+-
++/*
+ #if OBJ_STRUCT_PACKED_START &&OBJ_DWORD_ALIGN
+ #error Either the object structure packing (OBJ_STRUCT_PACKED_START) or implicit DWORD alignment handling (OBJ_DWORD_ALIGN) shall be defined. If both defines are set an invalid object structure handling may result.
+ #endif
+@@ -1171,7 +1219,7 @@ PD_INPUT_DELAY_TIME: Input delay time in ns the slave is supporting (entry 0x1C3
+ #if OBJ_STRUCT_PACKED_START &&OBJ_WORD_ALIGN
+ #error Either the object structure packing (OBJ_STRUCT_PACKED_START) or implicit WORD alignment handling (OBJ_WORD_ALIGN) shall be defined. If both defines are set an invalid object structure handling may result.
+ #endif
+-
++*/
+ #if MAILBOX_QUEUE && _PIC18
+ #error The PIC18 configuration does not support mailbox queue
+ #endif
+@@ -1217,7 +1265,7 @@ PD_INPUT_DELAY_TIME: Input delay time in ns the slave is supporting (entry 0x1C3
+ #endif
+ 
+ #if SOE_SUPPORTED && COE_SUPPORTED
+-#error Enable either CoE or SoE
++//#error Enable either CoE or SoE
+ #endif
+ 
+ #if EMERGENCY_SUPPORTED && !COE_SUPPORTED && !SOE_SUPPORTED
+diff --git a/SlaveFiles/src/ecatappl.c b/SlaveFiles/src/ecatappl.c
+index 724c1d0..286d2e3 100644
+--- a/SlaveFiles/src/ecatappl.c
++++ b/SlaveFiles/src/ecatappl.c
+@@ -168,8 +168,11 @@ V4.00 APPL 6: The main function was split in MainInit and MainLoop
+ #include "SampleApplicationInterface.h"
+ #elif BOOTLOADER_SAMPLE
+ #include "bootloaderappl.h"
++#elif KUNBUS_STACK_APPLICATION
++#include <ssc_kbStack.h>
+ #else
+ /*CODE_INSERT_START (APPLICATION_FILE)*/
++#include "tiescappl.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -243,11 +246,19 @@ UINT16 u16EepromStoreTimeoutValue; /** <\brief timeout in ms to store the EEPROM
+ 
+ 
+ #if MAX_PD_OUTPUT_SIZE > 0
++#ifdef EDMA_LATENCY_ENHANCEMENT
++UINT16             * volatile aPdOutputData;
++#else
+ UINT16             aPdOutputData[(MAX_PD_OUTPUT_SIZE>>1)];
+ #endif
++#endif
+ #if MAX_PD_INPUT_SIZE > 0
++#ifdef EDMA_LATENCY_ENHANCEMENT
++UINT16           * volatile aPdInputData;
++#else
+ UINT16           aPdInputData[(MAX_PD_INPUT_SIZE>>1)];
+ #endif
++#endif
+ 
+ /*variables are declared in ecatslv.c*/
+ #if ESC_32BIT_ACCESS
+@@ -1494,6 +1505,25 @@ void MainLoop(void)
+         }
+ 
+ #if !ECAT_TIMER_INT
++#if (defined SSC_CHECKTIMER) && (SSC_CHECKTIMER==1)
++
++        /* pseudoC:
++         * if t>=ECAT_TIMER_INC_P_MS:
++         *     CurTime+=(t/ECAT_TIMER_INC_P_MS);
++         *     HW_ClearTimer;
++         * /pseudoC; */
++
++        SSC_checkTimer(
++            /* ECAT_CheckTimer */
++            bEcatWaitForAlControlRes, &EsmTimeoutCounter,
++            /* ECAT_SetLedIndication */
++            bEcatOutputUpdateRunning, nAlStatus, &u8EcatRunLed, &u8EcatErrorLed,
++            /* EEPROM */
++            &u16EepromStoreTimeoutValue, &u16EepromStoreTimeoutCounter, pAPPL_EEPROM_Store,
++            /* DC */
++            b32BitDc, &u64Timestamp, &u32CheckForDcOverrunCnt
++            );
++#else
+         /* there is no interrupt routine for the hardware timer so check the timer register if the desired cycle elapsed*/
+         {
+             UINT32 CurTimer = (UINT32)HW_GetTimer();
+@@ -1507,6 +1537,8 @@ void MainLoop(void)
+         }
+ #endif
+ 
++#endif
++
+ #if DC_SUPPORTED && COE_SUPPORTED
+ #if !_PIC18
+         if (u32CheckForDcOverrunCnt >= CHECK_DC_OVERRUN_IN_MS)
+@@ -2033,6 +2065,8 @@ void EEPROM_CommandHandler(void)
+         EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
+         switch (cmd) {
+         case 0x00: //IDLE
++        //Clear error bits (except the eeprom crc error)
++            EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
+             break;
+         case ESC_EEPROM_CMD_READ_MASK:
+         {
+@@ -2052,6 +2086,8 @@ void EEPROM_CommandHandler(void)
+               {
+                  UINT16 *pData = (UINT16 *)pEEPROM;
+                  HW_EscWrite((MEM_ADDR *)&pData[(addr)], ESC_EEPROM_DATA_OFFSET, EepromReadSize);
++                 //Clear error bits (except the eeprom crc error)
++                 EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
+               }
+               else
+               {
+@@ -2075,10 +2111,12 @@ void EEPROM_CommandHandler(void)
+                  else
+                  {
+ 
+-                    if (addr <= ESC_EEPROM_SIZE && (pEEPROM != NULL))
++                    if (addr <= ESC_EEPROM_SIZE && (pEEPROM != NULL) && (EEPROMReg & 1))
+                     {
+                        UINT16 *pData = (UINT16 *)pEEPROM;
+                        HW_EscRead((MEM_ADDR *)&pData[(addr)], ESC_EEPROM_DATA_OFFSET, EEPROM_WRITE_SIZE);
++                       //Clear error bits
++                       EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK);
+                     }
+                     else
+                     {
+@@ -2093,7 +2131,8 @@ void EEPROM_CommandHandler(void)
+             }
+             break;
+         case ESC_EEPROM_CMD_RELOAD_MASK:
+-            if (EepromReadSize == 8)
++            //if (EepromReadSize == 8)
++            if (0) // For TI EtherCAT slaves the below code doesn't work for reload
+             {
+                 /* "full" EEPROM emulation ( 8Bytes EEPROM data) */
+                 do
+@@ -2132,7 +2171,7 @@ void EEPROM_CommandHandler(void)
+                         }
+ 
+                         //Clear error bits
+-                        EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK);
++                        //EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK);
+ 
+                         //ack current reload segment
+                         {
+diff --git a/SlaveFiles/src/ecatappl.h b/SlaveFiles/src/ecatappl.h
+index 94a7737..63470a2 100644
+--- a/SlaveFiles/src/ecatappl.h
++++ b/SlaveFiles/src/ecatappl.h
+@@ -44,11 +44,10 @@ V5.01 : Start file change log
+ ------
+ -----------------------------------------------------------------------------------------*/
+ 
+-#include "ecat_def.h"
+-
+-
+ #ifndef _ECATAPPL_H_
+-#define _ECATAPPL_H_
++#define _ECATAPPL_H_    1
++
++#include "ecat_def.h"
+ 
+ /*-----------------------------------------------------------------------------------------
+ ------
+@@ -57,70 +56,69 @@ V5.01 : Start file change log
+ -----------------------------------------------------------------------------------------*/
+ 
+ #if CONTROLLER_16BIT || CONTROLLER_32BIT
+-/*Set to unsigned short to handle bit entries correct*/
+-#define     BOOLEAN(x)                 UINT16 x:1 /**< \brief Macro to define BOOLEAN object entry*/
+-#define     BIT1(x)                    UINT16 x:1 /**< \brief Macro to define BIT1 object entry*/
+-#define     BIT2(x)                    UINT16 x:2 /**< \brief Macro to define BIT2 object entry*/
+-#define     BIT3(x)                    UINT16 x:3 /**< \brief Macro to define BIT3 object entry*/
+-#define     BIT4(x)                    UINT16 x:4 /**< \brief Macro to define BIT4 object entry*/
+-#define     BIT5(x)                    UINT16 x:5 /**< \brief Macro to define BIT5 object entry*/
+-#define     BIT6(x)                    UINT16 x:6 /**< \brief Macro to define BIT5 object entry*/
+-#define     BIT7(x)                    UINT16 x:7 /**< \brief Macro to define BIT6 object entry*/
+-#define     BIT8(x)                    UINT16 x:8 /**< \brief Macro to define BIT7 object entry*/
+-#define     ALIGN0(x)
+-#define     ALIGN1(x)                  UINT16 x:1; /**< \brief Macro to define ALIGN1 object entry*/
+-#define     ALIGN2(x)                  UINT16 x:2; /**< \brief Macro to define ALIGN2 object entry*/
+-#define     ALIGN3(x)                  UINT16 x:3; /**< \brief Macro to define ALIGN3 object entry*/
+-#define     ALIGN4(x)                  UINT16 x:4; /**< \brief Macro to define ALIGN4 object entry*/
+-#define     ALIGN5(x)                  UINT16 x:5; /**< \brief Macro to define ALIGN5 object entry*/
+-#define     ALIGN6(x)                  UINT16 x:6; /**< \brief Macro to define ALIGN6 object entry*/
+-#define     ALIGN7(x)                  UINT16 x:7; /**< \brief Macro to define ALIGN7 object entry*/
+-#define     ALIGN8(x)                  UINT16 x:8; /**< \brief Macro to define ALIGN8 object entry*/
+-#define     ALIGN9(x)                  UINT16 x:9; /**< \brief Macro to define ALIGN9 object entry*/
+-#define     ALIGN10(x)                 UINT16 x:10; /**< \brief Macro to define ALIGN10 object entry*/
+-#define     ALIGN11(x)                 UINT16 x:11; /**< \brief Macro to define ALIGN11 object entry*/
+-#define     ALIGN12(x)                 UINT16 x:12; /**< \brief Macro to define ALIGN12 object entry*/
+-#define     ALIGN13(x)                 UINT16 x:13; /**< \brief Macro to define ALIGN13 object entry*/
+-#define     ALIGN14(x)                 UINT16 x:14; /**< \brief Macro to define ALIGN14 object entry*/
+-#define     ALIGN15(x)                 UINT16 x:15; /**< \brief Macro to define ALIGN15 object entry*/
+-#else
+-#define     BOOLEAN(x)                  UINT8 x:1 /**< \brief Macro to define BOOLEAN object entry*/
+-#define     BIT1(x)                     UINT8 x:1 /**< \brief Macro to define BIT1 object entry*/
+-#define     BIT2(x)                     UINT8 x:2 /**< \brief Macro to define BIT2 object entry*/
+-#define     BIT3(x)                     UINT8 x:3 /**< \brief Macro to define BIT3 object entry*/
+-#define     BIT4(x)                     UINT8 x:4 /**< \brief Macro to define BIT4 object entry*/
+-#define     BIT5(x)                     UINT8 x:5 /**< \brief Macro to define BIT5 object entry*/
+-#define     BIT6(x)                     UINT8 x:6 /**< \brief Macro to define BIT5 object entry*/
+-#define     BIT7(x)                     UINT8 x:7 /**< \brief Macro to define BIT6 object entry*/
+-#define     BIT8(x)                     UINT8 x:8 /**< \brief Macro to define BIT7 object entry*/
+-#define     ALIGN0(x)
+-#define     ALIGN1(x)                   UINT8 x:1; /**< \brief Macro to define ALIGN1 object entry*/
+-#define     ALIGN2(x)                   UINT8 x:2; /**< \brief Macro to define ALIGN2 object entry*/
+-#define     ALIGN3(x)                   UINT8 x:3; /**< \brief Macro to define ALIGN3 object entry*/
+-#define     ALIGN4(x)                   UINT8 x:4; /**< \brief Macro to define ALIGN4 object entry*/
+-#define     ALIGN5(x)                   UINT8 x:5; /**< \brief Macro to define ALIGN5 object entry*/
+-#define     ALIGN6(x)                   UINT8 x:6; /**< \brief Macro to define ALIGN6 object entry*/
+-#define     ALIGN7(x)                   UINT8 x:7; /**< \brief Macro to define ALIGN7 object entry*/
+-#define     ALIGN8(x)                   UINT8 x:8; /**< \brief Macro to define ALIGN8 object entry*/
+-#if _PIC18
+-#define     ALIGN9(x)                   UINT8 x1:1; UINT8 x:8;
+-#define     ALIGN10(x)                  UINT8 x1:2; UINT8 x:8;
+-#define     ALIGN11(x)                  UINT8 x1:3; UINT8 x:8;
+-#define     ALIGN12(x)                  UINT8 x1:4; UINT8 x:8;
+-#define     ALIGN13(x)                  UINT8 x1:5; UINT8 x:8;
+-#define     ALIGN14(x)                  UINT8 x1:6; UINT8 x:8;
+-#define     ALIGN15(x)                  UINT8 x1:7; UINT8 x:8;
++ /*Set to unsigned short to handle bit entries correct*/
++ #define     BOOLEAN(x)                 UINT16(x):1 /**< \brief Marco to define BOOLEAN object entry*/
++ #define     BIT1(x)                    UINT16(x):1 /**< \brief Marco to define BIT1 object entry*/
++ #define     BIT2(x)                    UINT16(x):2 /**< \brief Marco to define BIT2 object entry*/
++ #define     BIT3(x)                    UINT16(x):3 /**< \brief Marco to define BIT3 object entry*/
++ #define     BIT4(x)                    UINT16(x):4 /**< \brief Marco to define BIT4 object entry*/
++ #define     BIT5(x)                    UINT16(x):5 /**< \brief Marco to define BIT5 object entry*/
++ #define     BIT6(x)                    UINT16(x):6 /**< \brief Marco to define BIT5 object entry*/
++ #define     BIT7(x)                    UINT16(x):7 /**< \brief Marco to define BIT6 object entry*/
++ #define     BIT8(x)                    UINT16(x):8 /**< \brief Marco to define BIT7 object entry*/
++ #define     ALIGN0(x)
++ #define     ALIGN1(x)                  UINT16(x):1; /**< \brief Marco to define ALIGN1 object entry*/
++ #define     ALIGN2(x)                  UINT16(x):2; /**< \brief Marco to define ALIGN2 object entry*/
++ #define     ALIGN3(x)                  UINT16(x):3; /**< \brief Marco to define ALIGN3 object entry*/
++ #define     ALIGN4(x)                  UINT16(x):4; /**< \brief Marco to define ALIGN4 object entry*/
++ #define     ALIGN5(x)                  UINT16(x):5; /**< \brief Marco to define ALIGN5 object entry*/
++ #define     ALIGN6(x)                  UINT16(x):6; /**< \brief Marco to define ALIGN6 object entry*/
++ #define     ALIGN7(x)                  UINT16(x):7; /**< \brief Marco to define ALIGN7 object entry*/
++ #define     ALIGN8(x)                  UINT16(x):8; /**< \brief Marco to define ALIGN8 object entry*/
++ #define     ALIGN9(x)                  UINT16(x):9; /**< \brief Marco to define ALIGN9 object entry*/
++ #define     ALIGN10(x)                 UINT16(x):10; /**< \brief Marco to define ALIGN10 object entry*/
++ #define     ALIGN11(x)                 UINT16(x):11; /**< \brief Marco to define ALIGN11 object entry*/
++ #define     ALIGN12(x)                 UINT16(x):12; /**< \brief Marco to define ALIGN12 object entry*/
++ #define     ALIGN13(x)                 UINT16(x):13; /**< \brief Marco to define ALIGN13 object entry*/
++ #define     ALIGN14(x)                 UINT16(x):14; /**< \brief Marco to define ALIGN14 object entry*/
++ #define     ALIGN15(x)                 UINT16(x):15; /**< \brief Marco to define ALIGN15 object entry*/
+ #else
+-#define     ALIGN9(x)                  UINT16 x:9; /**< \brief Macro to define ALIGN9 object entry*/
+-#define     ALIGN10(x)                 UINT16 x:10; /**< \brief Macro to define ALIGN10 object entry*/
+-#define     ALIGN11(x)                 UINT16 x:11; /**< \brief Macro to define ALIGN11 object entry*/
+-#define     ALIGN12(x)                 UINT16 x:12; /**< \brief Macro to define ALIGN12 object entry*/
+-#define     ALIGN13(x)                 UINT16 x:13; /**< \brief Macro to define ALIGN13 object entry*/
+-#define     ALIGN14(x)                 UINT16 x:14; /**< \brief Macro to define ALIGN14 object entry*/
+-#define     ALIGN15(x)                 UINT16 x:15; /**< \brief Macro to define ALIGN15 object entry*/
++ #define     BOOLEAN(x)                  UINT8(x):1 /**< \brief Marco to define BOOLEAN object entry*/
++ #define     BIT1(x)                     UINT8(x):1 /**< \brief Marco to define BIT1 object entry*/
++ #define     BIT2(x)                     UINT8(x):2 /**< \brief Marco to define BIT2 object entry*/
++ #define     BIT3(x)                     UINT8(x):3 /**< \brief Marco to define BIT3 object entry*/
++ #define     BIT4(x)                     UINT8(x):4 /**< \brief Marco to define BIT4 object entry*/
++ #define     BIT5(x)                     UINT8(x):5 /**< \brief Marco to define BIT5 object entry*/
++ #define     BIT6(x)                     UINT8(x):6 /**< \brief Marco to define BIT5 object entry*/
++ #define     BIT7(x)                     UINT8(x):7 /**< \brief Marco to define BIT6 object entry*/
++ #define     BIT8(x)                     UINT8(x):8 /**< \brief Marco to define BIT7 object entry*/
++ #define     ALIGN0(x)
++ #define     ALIGN1(x)                   UINT8(x):1; /**< \brief Marco to define ALIGN1 object entry*/
++ #define     ALIGN2(x)                   UINT8(x):2; /**< \brief Marco to define ALIGN2 object entry*/
++ #define     ALIGN3(x)                   UINT8(x):3; /**< \brief Marco to define ALIGN3 object entry*/
++ #define     ALIGN4(x)                   UINT8(x):4; /**< \brief Marco to define ALIGN4 object entry*/
++ #define     ALIGN5(x)                   UINT8(x):5; /**< \brief Marco to define ALIGN5 object entry*/
++ #define     ALIGN6(x)                   UINT8(x):6; /**< \brief Marco to define ALIGN6 object entry*/
++ #define     ALIGN7(x)                   UINT8(x):7; /**< \brief Marco to define ALIGN7 object entry*/
++ #define     ALIGN8(x)                   UINT8(x):8; /**< \brief Marco to define ALIGN8 object entry*/
++ #if _PIC18
++  #define     ALIGN9(x)                   UINT8 x1:1; UINT8(x):8;
++  #define     ALIGN10(x)                  UINT8 x1:2; UINT8(x):8;
++  #define     ALIGN11(x)                  UINT8 x1:3; UINT8(x):8;
++  #define     ALIGN12(x)                  UINT8 x1:4; UINT8(x):8;
++  #define     ALIGN13(x)                  UINT8 x1:5; UINT8(x):8;
++  #define     ALIGN14(x)                  UINT8 x1:6; UINT8(x):8;
++  #define     ALIGN15(x)                  UINT8 x1:7; UINT8(x):8;
++ #else
++  #define     ALIGN9(x)                  UINT16(x):9; /**< \brief Marco to define ALIGN9 object entry*/
++  #define     ALIGN10(x)                 UINT16(x):10; /**< \brief Marco to define ALIGN10 object entry*/
++  #define     ALIGN11(x)                 UINT16(x):11; /**< \brief Marco to define ALIGN11 object entry*/
++  #define     ALIGN12(x)                 UINT16(x):12; /**< \brief Marco to define ALIGN12 object entry*/
++  #define     ALIGN13(x)                 UINT16(x):13; /**< \brief Marco to define ALIGN13 object entry*/
++  #define     ALIGN14(x)                 UINT16(x):14; /**< \brief Marco to define ALIGN14 object entry*/
++  #define     ALIGN15(x)                 UINT16(x):15; /**< \brief Marco to define ALIGN15 object entry*/
++ #endif
+ #endif
+-#endif
+-#endif //_ECATAPPL_H_
+ 
+ #if defined(_ECATAPPL_) && (_ECATAPPL_ == 1)
+     #define PROTO
+@@ -148,7 +146,9 @@ PROTO BOOL bRunApplication; /**< \brief Indicates if the stack shall be running
+ 
+ 
+ #if ESC_EEPROM_EMULATION
++/*ECATCHANGE_START(V5.12) EEPROM1*/
+ PROTO UINT16 EepromReadSize; /**< \brief either 4 or 8 depending on register 0x502.6 (0 = 4Byte; 1 = 8Byte)*/
++/*ECATCHANGE_END(V5.12) EEPROM1*/
+ #endif
+ /*-----------------------------------------------------------------------------------------
+ ------
+@@ -158,8 +158,9 @@ PROTO UINT16 EepromReadSize; /**< \brief either 4 or 8 depending on register 0x5
+ 
+ 
+ 
+-
++#if (!defined SSC_CHECKTIMER) || (SSC_CHECKTIMER==0)
+ PROTO    void       ECAT_CheckTimer(void);
++#endif
+ PROTO    void       PDI_Isr(void);
+ PROTO    void       Sync0_Isr(void);
+ PROTO    void       Sync1_Isr(void);
+@@ -185,7 +186,7 @@ PROTO    UINT16     ESC_EepromWriteCRC(void);
+ PROTO   void EEPROM_CommandHandler(void);
+ #endif
+ 
+-
++#endif //_ECATAPPL_H_
+ 
+ #undef PROTO
+ /** @}*/
+diff --git a/SlaveFiles/src/ecatfoe.h b/SlaveFiles/src/ecatfoe.h
+index cc37e5f..78fa978 100644
+--- a/SlaveFiles/src/ecatfoe.h
++++ b/SlaveFiles/src/ecatfoe.h
+@@ -75,6 +75,33 @@ V5.01 : Start file change log
+ /*CODE_INSERT_END*/
+ 
+ 
++typedef struct MBX_STRUCT_PACKED_START
++{
++    UINT16    Cmd;
++        #define    EFW_CMD_IGNORE               0
++        #define    EFW_CMD_MEMORY_TRANSFER      1
++        #define    EFW_CMD_WRCODE               2
++        #define    EFW_CMD_CHK_DEVID            3
++        #define    EFW_CMD_CHK_DEVICEID         3
++        #define    EFW_CMD_CHKSUM               4
++        #define    EFW_CMD_WRCODECHKSUM         5
++        #define    EFW_CMD_SET_DEVID            6
++        #define    EFW_CMD_CHKSUMCHKSUM         6
++        #define    EFW_CMD_BOOTCHKSUM           7
++        #define    EFW_CMD_SET_EEPROM           10
++    UINT16    Size;
++    UINT32    Address;
++#if !CONTROLLER_16BIT && !CONTROLLER_32BIT
++    UINT8       Data[BL_PAGE_SIZE];
++#else
++    UINT16      Data[BL_PAGE_SIZE>>1];
++#endif
++}MBX_STRUCT_PACKED_END
++TEFWUPDATE;
++
++#define FW_UPDATE_SIZE  SIZEOF(TEFWUPDATE)
++
++
+ 
+ /** \brief FoE header*/
+ typedef struct  MBX_STRUCT_PACKED_START
+diff --git a/SlaveFiles/src/ecatslv.c b/SlaveFiles/src/ecatslv.c
+index 88d42ea..4b7bafb 100644
+--- a/SlaveFiles/src/ecatslv.c
++++ b/SlaveFiles/src/ecatslv.c
+@@ -247,8 +247,11 @@ V4.00 ECAT 7: The return values for the AL-StatusCode were changed to UINT16
+ #include "sampleappl.h"
+ #elif BOOTLOADER_SAMPLE
+ #include "bootloaderappl.h"
++#elif KUNBUS_STACK_APPLICATION
++#include <ssc_kbStack.h>
+ #else
+ /*CODE_INSERT_START (APPLICATION_FILE)*/
++#include "tiescappl.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -2654,7 +2657,11 @@ void AL_ControlInd(UINT8 alControl, UINT16 alStatusCode)
+ 
+             BackToInitTransition();
+ 
+-
++#if TIESC_HW
++#ifdef ENABLE_ONLINE_FIRMWARE_UPGRADE
++            bsp_boot_2_init_handler();
++#endif
++#endif
+ 
+             break;
+         case INIT_2_PREOP :
+@@ -4101,7 +4108,8 @@ void ECAT_Main(void)
+             HW_EscWriteWord(u16dummy,u16EscAddrSendMbx);
+ #else
+             u8dummy = 0;
+-            HW_EscWriteByte(u8dummy,u16EscAddrSendMbx);
++            // SH 20220320 ignore clear 0x1100 because CTT TF1200-45 error
++            //HW_EscWriteByte(u8dummy,u16EscAddrSendMbx);
+ #endif
+ 
+             /* the Mailbox Read event in the variable ALEventReg shall be reset before calling
+diff --git a/SlaveFiles/src/ecatslv.h b/SlaveFiles/src/ecatslv.h
+index 32a424c..b324141 100644
+--- a/SlaveFiles/src/ecatslv.h
++++ b/SlaveFiles/src/ecatslv.h
+@@ -51,9 +51,14 @@ V5.01 : Start file change log
+ #include "fc1100hw.h"
+ #elif MCI_HW
+ #include "mcihw.h"
++#elif KUNBUS_STACK_APPLICATION
++#include  "esc.h"
++#include <ssc_kbStack.h>
+ #else
+ #include  "esc.h"
+ /*CODE_INSERT_START (HW_ACCESS_FILE)*/
++#error Shall not be used !!!
++#include "tieschw.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -373,6 +378,7 @@ V5.01 : Start file change log
+ #define     SYNC1_EVENT                         ((UINT16) 0x08) /**< \brief Sync1 event*/
+ #define     SM_CHANGE_EVENT                     ((UINT16) 0x10) /**< \brief SyncManager changed event*/
+ #define     EEPROM_CMD_PENDING                  ((UINT16) 0x20) /**< \brief EEPROM command pending*/
++#define     WATCHDOG_EXPIRED_EVENT              ((UINT16) 0x40) /**< \brief Watchdog expired event*/
+ #if MAILBOX_SUPPORTED
+ #define     MAILBOX_WRITE_EVENT                 ((UINT16) 0x0100) /**< \brief MBoxOut write event*/
+ #define     MAILBOX_READ_EVENT                  ((UINT16) 0x0200) /**< \brief MBoxIn read event*/
+diff --git a/SlaveFiles/src/el9800appl.h b/SlaveFiles/src/el9800appl.h
+index a3946e5..392251a 100644
+--- a/SlaveFiles/src/el9800appl.h
++++ b/SlaveFiles/src/el9800appl.h
+@@ -357,7 +357,7 @@ OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x1802[] = {
+    {0, 0x0, 0},
+    {0, 0x0, 0},
+    {0, 0x0, 0},
+-   {DEFTYPE_OCTETSTRING, 0x00, ACCESS_READ},
++   {DEFTYPE_OCTETSTRING, 0x00, ACCESS_READ | OBJACCESS_TXPDOMAPPING},
+    {DEFTYPE_BOOLEAN, 0x01, ACCESS_READ | OBJACCESS_TXPDOMAPPING},
+    {0, 0x0, 0},
+    {DEFTYPE_BOOLEAN, 0x01, ACCESS_READ | OBJACCESS_TXPDOMAPPING}};
+diff --git a/SlaveFiles/src/emcy.c b/SlaveFiles/src/emcy.c
+index a12d13a..70aaaec 100644
+--- a/SlaveFiles/src/emcy.c
++++ b/SlaveFiles/src/emcy.c
+@@ -283,15 +283,22 @@ void EMCY_ContinueInd(TMBX MBXMEM * pMbx)
+ 
+ TEMCYMESSAGE EMCYMEM * EMCY_GetEmcyBuffer(void)
+ {
+-    TEMCYMESSAGE EMCYMEM* pEmcy = GetOutOfEmptyEmcyQueue();
+-
+-
+ #if SOE_SUPPORTED
++    TEMCYMESSAGE EMCYMEM * pEmcy = GetOutOfEmptyEmcyQueue();
+     pEmcy->SoeHeader[0] = SWAPWORD(ECAT_SOE_OPCODE_EMCY);
+     pEmcy->SoeHeader[1] = 0;
+-#endif
+ 
++    
+     return pEmcy;
++#else
++    TEMCYMESSAGE EMCYMEM * pEmcy;
++
++    
++
++    pEmcy = GetOutOfEmptyEmcyQueue();
++
++    return pEmcy;
++#endif
+ }
+ 
+ 
+diff --git a/SlaveFiles/src/esc.h b/SlaveFiles/src/esc.h
+index 88208ac..1be00a8 100644
+--- a/SlaveFiles/src/esc.h
++++ b/SlaveFiles/src/esc.h
+@@ -197,7 +197,6 @@ V5.01 : Start file change log
+ #endif
+ 
+ #define    ESC_DC_SYNC_STATUS		            0x098C                              /**< \brief Register Description: register 0x98E and 0x98F reflecting the status of Sync0 and Sync1*/
+-
+ #define ESC_DC_SYNC0_CYCLETIME_OFFSET           0x09A0                              /**< \brief Register Description: 32Bit Time between two consecutive SYNC0 pulses in ns*/
+ #define ESC_DC_SYNC1_CYCLETIME_OFFSET           0x09A4                              /**< \brief Register Description: 32Bit Time between two consecutive SYNC1 pulses in ns*/
+ 
+@@ -212,7 +211,7 @@ V5.01 : Start file change log
+ /*---------------------------------------------
+ -    Sync Manager
+ -----------------------------------------------*/
+-/** \brief SyncManager register structure*/
++/** \brief SyncManager Register struture*/
+ typedef struct STRUCT_PACKED_START
+ {
+ #if ESC_32BIT_ACCESS
+@@ -252,7 +251,6 @@ typedef struct STRUCT_PACKED_START
+ #define SM_SETTING_REPAET_REQ_MASK          0x00020000 /**< \brief SyncManager repeat request mask*/
+ #define SM_SETTING_REPEAT_REQ_SHIFT         16 /**< \brief SyncManager repeat request shift*/
+ 
+-
+ /*SyncManger PDI Control (0x0807) access*/
+ #define SM_SETTING_PDI_DISABLE              0x01000000            /**< \brief Bit0 of register 0x0807 (if 1 SM is disabled from PDI)*/
+ #define SM_SETTING_REPEAT_ACK               0x02000000            /**< \brief Bit1 of register 0x0807*/
+diff --git a/SlaveFiles/src/fc1100hw.h b/SlaveFiles/src/fc1100hw.h
+index 8b3064f..49a2557 100644
+--- a/SlaveFiles/src/fc1100hw.h
++++ b/SlaveFiles/src/fc1100hw.h
+@@ -94,10 +94,7 @@ V5.01 : Start file change log
+ /*---------------------------------------------
+ -    Timer
+ -----------------------------------------------*/
+-#if _WIN32
+-#pragma message ("Warning: define increments per ms of the 'HW_GetTimer()' return value'")
+-#endif
+-#define ECAT_TIMER_INC_P_MS        3000 /**< \brief 1 timer tick per ms*/
++#define ECAT_TIMER_INC_P_MS        0x1 /**< \brief 1 timer tick per second*/
+ 
+ #if ESC_EEPROM_ACCESS_SUPPORT
+ #define     ESC_RD                    0x02 /**< \brief Indicates a read access to ESC or EEPROM*/
+diff --git a/SlaveFiles/src/sampleappl.c b/SlaveFiles/src/sampleappl.c
+index a9a87d5..6f0fee0 100644
+--- a/SlaveFiles/src/sampleappl.c
++++ b/SlaveFiles/src/sampleappl.c
+@@ -753,22 +753,12 @@ UINT16 APPL_GetDeviceID()
+ *////////////////////////////////////////////////////////////////////////////////////////
+ #if _PIC24
+ int main(void)
+-#elif _WIN32
+-int main(int argc, char* argv[])
+ #else
+ void main(void)
+ #endif
+ {
+     /* initialize the Hardware and the EtherCAT Slave Controller */
+ #if FC1100_HW
+-#if _WIN32
+-    u16FcInstance = 0;
+-
+-    if (argc > 1)
+-    {
+-        u16FcInstance = atoi(argv[1]);
+-    }
+-#endif
+     if(HW_Init())
+     {
+         HW_Release();

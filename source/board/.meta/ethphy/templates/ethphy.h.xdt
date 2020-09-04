@@ -1,0 +1,29 @@
+%%{
+    let module = system.modules['/board/ethphy/ethphy'];
+    let num_instances = 0;
+%%}
+% if( module.getNumValidInstances(module) > 0 ) {
+/*
+ * ETHPHY
+ */
+#include <board/ethphy.h>
+/* ETHPHY specific include */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (config.name != "NONE" && config.name != "CUSTOM") {
+#include <board/ethphy/ethphy_`config.name.toLowerCase()`.h>
+    % }
+% }
+
+/* ETHPHY Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (config.name != "NONE") {
+#define `instance.$name.toUpperCase()` (`num_instances`U)
+        % num_instances = num_instances + 1;
+    % }
+% }
+#define CONFIG_ETHPHY_NUM_INSTANCES (`num_instances`U)
+% }

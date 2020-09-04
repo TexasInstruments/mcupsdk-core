@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("AssemblyClass:s_PruIpc_iterator",{9:"<div class=\"NDToolTip TStruct LAssembly\"><div class=\"TTSummary\">Strucutre to store the iterators for the Pru Ipc Instance</div></div>"});

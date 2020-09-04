@@ -1,0 +1,30 @@
+%%{
+    let module = system.modules['/xbar/input_xbar/input_xbar'];
+%%}
+% let signalmap = {};
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let masterInstance = "";
+    % let config = module.getInstanceConfig(instance);
+    % if(instance.$ownedBy)
+    % {
+    %     masterInstance = instance.$ownedBy.instance;
+    % }
+    % if( masterInstance != "" && masterInstance.search("XBAR") != -1)
+    % {
+        % if(signalmap[masterInstance] == undefined) {
+            % signalmap[masterInstance] = [];
+        % }
+        % signalmap[masterInstance].push(config.name);
+    % }
+% }
+/* Macros for configuring ePWM Xbar */
+% for(let epwm_xbar_instance in signalmap) {
+    % let mask = "(";
+    % for(let input_xbar_instances of signalmap[epwm_xbar_instance]) {
+        % mask += input_xbar_instances.replace("INPUT_XBAR_", "EPWM_XBAR_INPUT_XBAR");
+        % mask += "|";
+    % }
+    % mask = mask.slice(0, -1) + ")";
+#define `epwm_xbar_instance`  `mask`
+% }

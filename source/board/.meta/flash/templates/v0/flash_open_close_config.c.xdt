@@ -1,0 +1,228 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/board/flash/flash'];
+%%}
+/*
+ * FLASH
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+/* FLASH Object - initialized during Flash_open() */
+Flash_NorOspiObject gFlashObject_`config.fname`;
+% }
+
+/* FLASH Driver handles - opened during Board_flashOpen() */
+Flash_Handle gFlashHandle[CONFIG_FLASH_NUM_INSTANCES];
+
+/* FLASH Attrs */
+% for (let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+Flash_Attrs gFlashAttrs_`config.fname` =
+{
+    .flashName = "`config.fname`",
+    .deviceId = `config.flashDeviceId`,
+    .manufacturerId = `config.flashManfId`,
+    .flashSize = `config.flashSize`,
+    .blockCount = `Math.round(config.flashSize/config.flashBlockSize)`,
+    .blockSize = `config.flashBlockSize`,
+    .pageCount = `Math.round(config.flashBlockSize/config.flashPageSize)`,
+    .pageSize = `config.flashPageSize`,
+    .sectorCount = `Math.round(config.flashSize/config.flashSectorSize)`,
+    .sectorSize = `config.flashSectorSize`,
+};
+% }
+
+/* FLASH DevConfig */
+% for (let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+Flash_DevConfig gFlashDevCfg_`config.fname` =
+{
+    .cmdExtType = OSPI_CMD_EXT_TYPE_`config.cmdExtType`,
+    .enable4BAddr = `config.enable4BAddr.toString(10).toUpperCase()`,
+    .addrByteSupport = `config.addressByteSupport`,
+    .fourByteAddrEnSeq = `config.fourByteEnableSeq`,
+    .cmdWren = `config.cmdWren`,
+    .cmdRdsr = `config.cmdRdsr`,
+    .srWip = (1 << `config.srWip`),
+    .srWel = (1 << `config.srWel`),
+    .xspiWipRdCmd = `config.xspiWipRdCmd`,
+    .xspiWipReg = `config.xspiWipReg`,
+    .xspiWipBit = (1 << `config.xspiWipBit`),
+    .resetType = `config.resetType`,
+    .eraseCfg = {
+        .blockSize = `config.flashBlockSize`,
+        .sectorSize = `config.flashSectorSize`,
+        .cmdBlockErase3B = `config.cmdBlockErase3B`,
+        .cmdBlockErase4B = `config.cmdBlockErase4B`,
+        .cmdSectorErase3B = `config.cmdSectorErase3B`,
+        .cmdSectorErase4B = `config.cmdSectorErase4B`,
+        .cmdChipErase = `config.cmdChipErase`,
+    },
+    .idCfg = {
+        .cmd = 0x9F, /* Constant */
+        .numBytes = 3,
+        .dummy4 = 0,
+        .dummy8 = 0,
+    },
+    .protocolCfg = {
+        .protocol = FLASH_CFG_PROTO_`config.protocol.toUpperCase()`,
+        .isDtr = `config.protocol.includes("d").toString(10).toUpperCase()`,
+        .cmdRd = `config.cmdRd`,
+        .cmdWr = `config.cmdWr`,
+        .modeClksCmd = `config.modeClksCmd`,
+        .modeClksRd = `config.modeClksRd`,
+        .dummyClksCmd = `config.dummyClksCmd`,
+        .dummyClksRd = `config.dummyClksRd`,
+% if( !(config.protocol.includes("4")) && !(config.protocol.includes("8")) ) {
+        .enableType = 0xFF,
+% } else {
+    % if( (config.protocol.includes("4")) ) {
+        .enableType = `config.flashQeType`,
+    % } else if( (config.protocol.includes("8")) ) {
+        .enableType = `config.flashOeType`,
+    % }
+% }
+% if( ["4s_4s_4s", "4s_4d_4d", "8s_8s_8s", "8d_8d_8d"].includes(config.protocol) ) {
+    % if(config.protocol.includes("4")) {
+        .enableSeq = `config.flash444Seq`,
+    % } else if(config.protocol.includes("8")) {
+        .enableSeq = `config.flash888Seq`,
+    % }
+        .protoCfg = {
+            .isAddrReg = `config.proto_isAddrReg.toString(10).toUpperCase()`,
+            .cmdRegRd = `config.proto_cmdRegRd`,
+            .cmdRegWr = `config.proto_cmdRegWr`,
+            .cfgReg = `config.proto_cfgReg`,
+            .shift = `config.proto_shift`,
+            .mask = `config.proto_mask`,
+            .cfgRegBitP = `config.proto_bitP`,
+        },
+        .strDtrCfg = {
+            .isAddrReg = `config.strDtr_isAddrReg.toString(10).toUpperCase()`,
+            .cmdRegRd = `config.strDtr_cmdRegRd`,
+            .cmdRegWr = `config.strDtr_cmdRegWr`,
+            .cfgReg = `config.strDtr_cfgReg`,
+            .shift = `config.strDtr_shift`,
+            .mask = `config.strDtr_mask`,
+            .cfgRegBitP = `config.strDtr_bitP`,
+        },
+% } else {
+        .enableSeq = 0xFF,
+% }
+        .dummyCfg = {
+            .isAddrReg = `config.dummy_isAddrReg.toString(10).toUpperCase()`,
+            .cmdRegRd = `config.dummy_cmdRegRd`,
+            .cmdRegWr = `config.dummy_cmdRegWr`,
+            .cfgReg = `config.dummy_cfgReg`,
+            .shift = `config.dummy_shift`,
+            .mask = `config.dummy_mask`,
+            .cfgRegBitP = `config.dummy_bitP`,
+        },
+    },
+    .flashWriteTimeout = `config.flashPageProgTimeout`,
+    .flashBusyTimeout = `config.flashDeviceBusyTimeout`,
+};
+% }
+
+/* FLASH Config */
+Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let typeStr = common.camelSentence(config.type);
+    {
+        .attrs = &gFlashAttrs_`config.fname`,
+        .fxns = &gFlashNorOspiFxns,
+        .devConfig = &gFlashDevCfg_`config.fname`,
+        .object = (void *)&gFlashObject_`config.fname`,
+    },
+% }
+};
+
+/* Externs of quirk functions and custom protocol functions */
+% for(let i = 0; i < module.$instances.length; i++) {
+% let instance = module.$instances[i];
+% let config = module.getInstanceConfig(instance);
+% if (config.quirks != "NULL") {
+extern int32_t `config.quirks`(Flash_Config *config);
+% }
+% if (config.customProtoFxn != "NULL") {
+extern int32_t `config.customProtoFxn`(Flash_Config *config);
+% }
+% }
+
+/* FLASH Open Params - populated from SysConfig options */
+Flash_Params gFlashParams[CONFIG_FLASH_NUM_INSTANCES] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .quirksFxn = `config.quirks`,
+        .custProtoFxn = `config.customProtoFxn`,
+    },
+    % }
+};
+
+uint32_t gFlashConfigNum = CONFIG_FLASH_NUM_INSTANCES;
+
+int32_t Board_flashOpen()
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    /* Set the peripheral instance to use in the under lying flash implementation */
+    gFlashConfig[CONFIG_FLASH0].attrs->driverInstance = CONFIG_OSPI0;
+
+    for(instCnt = 0U; instCnt < CONFIG_FLASH_NUM_INSTANCES; instCnt++)
+    {
+        gFlashHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Set the underlying driver instance to the FLASH config */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let peripheralDriver = instance.peripheralDriver;
+    gFlashAttrs_`config.fname`.driverInstance = `peripheralDriver.$name.toUpperCase()`;
+% }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_FLASH_NUM_INSTANCES; instCnt++)
+    {
+
+        gFlashHandle[instCnt] = Flash_open(instCnt, &gFlashParams[instCnt]);
+        if(NULL == gFlashHandle[instCnt])
+        {
+            DebugP_logError("FLASH open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Board_flashClose();   /* Exit gracefully */
+    }
+    return status;
+}
+
+void Board_flashClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_FLASH_NUM_INSTANCES; instCnt++)
+    {
+        if(gFlashHandle[instCnt] != NULL)
+        {
+            Flash_close(gFlashHandle[instCnt]);
+            gFlashHandle[instCnt] = NULL;
+        }
+    }
+    return;
+}

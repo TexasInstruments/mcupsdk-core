@@ -1,0 +1,44 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
+const mmu_armv81 = mmu_armv8.addInstance();
+const mmu_armv82 = mmu_armv8.addInstance();
+const mmu_armv83 = mmu_armv8.addInstance();
+const mmu_armv84 = mmu_armv8.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+debug_log.enableCssLog       = false;
+debug_log.enableSharedMemLog = true;
+
+mmu_armv81.$name = "CONFIG_MMU_REGION0";
+mmu_armv81.size  = 0x80000000;
+
+mmu_armv82.$name     = "CONFIG_MMU_REGION1";
+mmu_armv82.vAddr     = 0x70000000;
+mmu_armv82.pAddr     = 0x70000000;
+mmu_armv82.size      = 0x200000;
+mmu_armv82.attribute = "MAIR7";
+
+mmu_armv83.$name     = "CONFIG_MMU_REGION2";
+mmu_armv83.vAddr     = 0x701D0000;
+mmu_armv83.pAddr     = 0x701D0000;
+mmu_armv83.attribute = "MAIR4";
+mmu_armv83.size      = 0x10000;
+
+mmu_armv84.$name     = "CONFIG_MMU_REGION3";
+mmu_armv84.vAddr     = 0x80000000;
+mmu_armv84.pAddr     = 0x80000000;
+mmu_armv84.size      = 0x80000000;
+mmu_armv84.attribute = "MAIR7";

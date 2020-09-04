@@ -1,0 +1,93 @@
+%%{
+    let module = system.modules['/kernel/dpl/timer'];
+    let common = system.getScript("/common");
+%%}
+/* ----------- TimerP ----------- */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `config.$name`_CLOCK_SRC_MUX_ADDR (0x`config.clkSelMuxAddr.toString(16).toUpperCase()`u)
+#define `config.$name`_CLOCK_SRC_`config.clkSource` (0x`config.clkSelMuxValue.toString(16).toUpperCase()`u)
+
+%}
+
+HwiP_Object gTimerHwiObj[TIMER_NUM_INSTANCES];
+uint32_t gTimerBaseAddr[TIMER_NUM_INSTANCES];
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+% if (config.enableIntr) {
+void TimerP_isr`i`(void *args)
+{
+% if (config.timerCallback != "NULL") {
+    void `config.timerCallback`(void *args);
+
+    `config.timerCallback`(args);
+% }
+    TimerP_clearOverflowInt(gTimerBaseAddr[`config.$name`]);
+    HwiP_clearInt(`config.$name`_INT_NUM);
+}
+% }
+
+% }
+void TimerP_init()
+{
+    TimerP_Params timerParams;
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (config.enableIntr) {
+    HwiP_Params timerHwiParams;
+    int32_t status;
+    % break; }
+% }
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    /* set timer clock source */
+    SOC_controlModuleUnlockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+    *(volatile uint32_t*)AddrTranslateP_getLocalAddr(`config.$name`_CLOCK_SRC_MUX_ADDR) = `config.$name`_CLOCK_SRC_`config.clkSource`;
+    SOC_controlModuleLockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+
+    gTimerBaseAddr[`config.$name`] = (uint32_t)AddrTranslateP_getLocalAddr(`config.$name`_BASE_ADDR);
+
+    TimerP_Params_init(&timerParams);
+    timerParams.inputPreScaler = `config.$name`_INPUT_PRE_SCALER;
+    timerParams.inputClkHz     = `config.$name`_INPUT_CLK_HZ;
+    timerParams.periodInNsec   = `config.$name`_NSEC_PER_TICK;
+    timerParams.oneshotMode    = `Number(config.enableOneShotMode)`;
+    timerParams.enableOverflowInt = `Number(config.enableIntr)`;
+    timerParams.enableDmaTrigger  = `Number(config.enableDmaTrigger)`;
+    TimerP_setup(gTimerBaseAddr[`config.$name`], &timerParams);
+
+    % if (config.enableIntr) {
+    HwiP_Params_init(&timerHwiParams);
+    timerHwiParams.intNum = `config.$name`_INT_NUM;
+    timerHwiParams.callback = TimerP_isr`i`;
+    timerHwiParams.isPulse = 0;
+    timerHwiParams.priority = `config.intrPriority`;
+    status = HwiP_construct(&gTimerHwiObj[`config.$name`], &timerHwiParams);
+    DebugP_assertNoLog(status==SystemP_SUCCESS);
+    % }
+    % if (config.startTimer) {
+
+    TimerP_start( gTimerBaseAddr[`config.$name`] );
+    % }
+
+% }
+}
+
+void TimerP_deinit()
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    TimerP_stop(gTimerBaseAddr[`config.$name`]);
+    % if (config.enableIntr) {
+    HwiP_destruct(&gTimerHwiObj[`config.$name`]);
+    % }
+
+% }
+}

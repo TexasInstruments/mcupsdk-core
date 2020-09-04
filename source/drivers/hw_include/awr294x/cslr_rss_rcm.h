@@ -1,0 +1,734 @@
+/********************************************************************
+ * Copyright (C) 2021 Texas Instruments Incorporated.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *  Name        : cslr_rss_rcm.h
+*/
+#ifndef CSLR_RSS_RCM_H_
+#define CSLR_RSS_RCM_H_
+
+#include <drivers/hw_include/cslr.h>
+#include <drivers/hw_include/tistdtypes.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+/**************************************************************************
+* Hardware Region  :
+**************************************************************************/
+
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct {
+    volatile uint32_t PID;
+    volatile uint32_t HW_REG0;
+    volatile uint32_t HW_REG1;
+    volatile uint32_t HW_REG2;
+    volatile uint32_t HW_REG3;
+    volatile uint32_t RSS_CSI2A_SYS_CLK_GATE;
+    volatile uint32_t RSS_BSS_SYS_CLK_GATE;
+    volatile uint32_t RSS_CSI2A_RST_CTRL;
+    volatile uint32_t RSS_EDMA_RST_CTRL;
+    volatile uint32_t RSS_BSS_RST_CTRL;
+    volatile uint32_t RSS_FRC_CLK_SRC_SEL;
+    volatile uint32_t RSS_FRC_CLK_GATE;
+    volatile uint32_t RSS_FRC_CLK_DIV_VAL;
+    volatile uint32_t RSS_FRC_CLK_STATUS;
+    volatile uint32_t RSS_FRC_RST_CTRL;
+    volatile uint8_t  Resv_4048[3988];
+    volatile uint32_t HW_SPARE_RW0;
+    volatile uint32_t HW_SPARE_RW1;
+    volatile uint32_t HW_SPARE_RW2;
+    volatile uint32_t HW_SPARE_RW3;
+    volatile uint32_t HW_SPARE_RO0;
+    volatile uint32_t HW_SPARE_RO1;
+    volatile uint32_t HW_SPARE_RO2;
+    volatile uint32_t HW_SPARE_RO3;
+    volatile uint32_t HW_SPARE_WPH;
+    volatile uint32_t HW_SPARE_REC;
+    volatile uint8_t  Resv_4104[16];
+    volatile uint32_t LOCK0_KICK0;
+    volatile uint32_t LOCK0_KICK1;
+    volatile uint32_t INTR_RAW_STATUS;
+    volatile uint32_t INTR_ENABLED_STATUS_CLEAR;
+    volatile uint32_t INTR_ENABLE;
+    volatile uint32_t INTR_ENABLE_CLEAR;
+    volatile uint32_t EOI;
+    volatile uint32_t FAULT_ADDRESS;
+    volatile uint32_t FAULT_TYPE_STATUS;
+    volatile uint32_t FAULT_ATTR_STATUS;
+    volatile uint32_t FAULT_CLEAR;
+} CSL_rss_rcmRegs;
+
+
+/**************************************************************************
+* Register Macros
+**************************************************************************/
+
+#define CSL_RSS_RCM_PID                                                        (0x00000000U)
+#define CSL_RSS_RCM_HW_REG0                                                    (0x00000004U)
+#define CSL_RSS_RCM_HW_REG1                                                    (0x00000008U)
+#define CSL_RSS_RCM_HW_REG2                                                    (0x0000000CU)
+#define CSL_RSS_RCM_HW_REG3                                                    (0x00000010U)
+#define CSL_RSS_RCM_RSS_CSI2A_SYS_CLK_GATE                                     (0x00000014U)
+#define CSL_RSS_RCM_RSS_BSS_SYS_CLK_GATE                                       (0x00000018U)
+#define CSL_RSS_RCM_RSS_CSI2A_RST_CTRL                                         (0x0000001CU)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL                                          (0x00000020U)
+#define CSL_RSS_RCM_RSS_BSS_RST_CTRL                                           (0x00000024U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_SRC_SEL                                        (0x00000028U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_GATE                                           (0x0000002CU)
+#define CSL_RSS_RCM_RSS_FRC_CLK_DIV_VAL                                        (0x00000030U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS                                         (0x00000034U)
+#define CSL_RSS_RCM_RSS_FRC_RST_CTRL                                           (0x00000038U)
+#define CSL_RSS_RCM_HW_SPARE_RW0                                               (0x00000FD0U)
+#define CSL_RSS_RCM_HW_SPARE_RW1                                               (0x00000FD4U)
+#define CSL_RSS_RCM_HW_SPARE_RW2                                               (0x00000FD8U)
+#define CSL_RSS_RCM_HW_SPARE_RW3                                               (0x00000FDCU)
+#define CSL_RSS_RCM_HW_SPARE_RO0                                               (0x00000FE0U)
+#define CSL_RSS_RCM_HW_SPARE_RO1                                               (0x00000FE4U)
+#define CSL_RSS_RCM_HW_SPARE_RO2                                               (0x00000FE8U)
+#define CSL_RSS_RCM_HW_SPARE_RO3                                               (0x00000FECU)
+#define CSL_RSS_RCM_HW_SPARE_WPH                                               (0x00000FF0U)
+#define CSL_RSS_RCM_HW_SPARE_REC                                               (0x00000FF4U)
+#define CSL_RSS_RCM_LOCK0_KICK0                                                (0x00001008U)
+#define CSL_RSS_RCM_LOCK0_KICK1                                                (0x0000100CU)
+#define CSL_RSS_RCM_INTR_RAW_STATUS                                            (0x00001010U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR                                  (0x00001014U)
+#define CSL_RSS_RCM_INTR_ENABLE                                                (0x00001018U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR                                          (0x0000101CU)
+#define CSL_RSS_RCM_EOI                                                        (0x00001020U)
+#define CSL_RSS_RCM_FAULT_ADDRESS                                              (0x00001024U)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS                                          (0x00001028U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS                                          (0x0000102CU)
+#define CSL_RSS_RCM_FAULT_CLEAR                                                (0x00001030U)
+
+/**************************************************************************
+* Field Definition Macros
+**************************************************************************/
+
+
+/* PID */
+
+#define CSL_RSS_RCM_PID_PID_MINOR_MASK                                         (0x0000003FU)
+#define CSL_RSS_RCM_PID_PID_MINOR_SHIFT                                        (0x00000000U)
+#define CSL_RSS_RCM_PID_PID_MINOR_RESETVAL                                     (0x00000014U)
+#define CSL_RSS_RCM_PID_PID_MINOR_MAX                                          (0x0000003FU)
+
+#define CSL_RSS_RCM_PID_PID_CUSTOM_MASK                                        (0x000000C0U)
+#define CSL_RSS_RCM_PID_PID_CUSTOM_SHIFT                                       (0x00000006U)
+#define CSL_RSS_RCM_PID_PID_CUSTOM_RESETVAL                                    (0x00000000U)
+#define CSL_RSS_RCM_PID_PID_CUSTOM_MAX                                         (0x00000003U)
+
+#define CSL_RSS_RCM_PID_PID_MAJOR_MASK                                         (0x00000700U)
+#define CSL_RSS_RCM_PID_PID_MAJOR_SHIFT                                        (0x00000008U)
+#define CSL_RSS_RCM_PID_PID_MAJOR_RESETVAL                                     (0x00000002U)
+#define CSL_RSS_RCM_PID_PID_MAJOR_MAX                                          (0x00000007U)
+
+#define CSL_RSS_RCM_PID_PID_MISC_MASK                                          (0x0000F800U)
+#define CSL_RSS_RCM_PID_PID_MISC_SHIFT                                         (0x0000000BU)
+#define CSL_RSS_RCM_PID_PID_MISC_RESETVAL                                      (0x00000000U)
+#define CSL_RSS_RCM_PID_PID_MISC_MAX                                           (0x0000001FU)
+
+#define CSL_RSS_RCM_PID_PID_MSB16_MASK                                         (0xFFFF0000U)
+#define CSL_RSS_RCM_PID_PID_MSB16_SHIFT                                        (0x00000010U)
+#define CSL_RSS_RCM_PID_PID_MSB16_RESETVAL                                     (0x00006180U)
+#define CSL_RSS_RCM_PID_PID_MSB16_MAX                                          (0x0000FFFFU)
+
+#define CSL_RSS_RCM_PID_RESETVAL                                               (0x61800214U)
+
+/* HW_REG0 */
+
+#define CSL_RSS_RCM_HW_REG0_HW_REG0_HWREG_MASK                                 (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_REG0_HW_REG0_HWREG_SHIFT                                (0x00000000U)
+#define CSL_RSS_RCM_HW_REG0_HW_REG0_HWREG_RESETVAL                             (0x00000000U)
+#define CSL_RSS_RCM_HW_REG0_HW_REG0_HWREG_MAX                                  (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_REG0_RESETVAL                                           (0x00000000U)
+
+/* HW_REG1 */
+
+#define CSL_RSS_RCM_HW_REG1_HW_REG1_HWREG_MASK                                 (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_REG1_HW_REG1_HWREG_SHIFT                                (0x00000000U)
+#define CSL_RSS_RCM_HW_REG1_HW_REG1_HWREG_RESETVAL                             (0x00000000U)
+#define CSL_RSS_RCM_HW_REG1_HW_REG1_HWREG_MAX                                  (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_REG1_RESETVAL                                           (0x00000000U)
+
+/* HW_REG2 */
+
+#define CSL_RSS_RCM_HW_REG2_HW_REG2_HWREG_MASK                                 (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_REG2_HW_REG2_HWREG_SHIFT                                (0x00000000U)
+#define CSL_RSS_RCM_HW_REG2_HW_REG2_HWREG_RESETVAL                             (0x00000000U)
+#define CSL_RSS_RCM_HW_REG2_HW_REG2_HWREG_MAX                                  (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_REG2_RESETVAL                                           (0x00000000U)
+
+/* HW_REG3 */
+
+#define CSL_RSS_RCM_HW_REG3_HW_REG3_HWREG_MASK                                 (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_REG3_HW_REG3_HWREG_SHIFT                                (0x00000000U)
+#define CSL_RSS_RCM_HW_REG3_HW_REG3_HWREG_RESETVAL                             (0x00000000U)
+#define CSL_RSS_RCM_HW_REG3_HW_REG3_HWREG_MAX                                  (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_REG3_RESETVAL                                           (0x00000000U)
+
+/* RSS_CSI2A_SYS_CLK_GATE */
+
+#define CSL_RSS_RCM_RSS_CSI2A_SYS_CLK_GATE_RSS_CSI2A_SYS_CLK_GATE_GATED_MASK   (0x00000007U)
+#define CSL_RSS_RCM_RSS_CSI2A_SYS_CLK_GATE_RSS_CSI2A_SYS_CLK_GATE_GATED_SHIFT  (0x00000000U)
+#define CSL_RSS_RCM_RSS_CSI2A_SYS_CLK_GATE_RSS_CSI2A_SYS_CLK_GATE_GATED_RESETVAL (0x00000000U)
+#define CSL_RSS_RCM_RSS_CSI2A_SYS_CLK_GATE_RSS_CSI2A_SYS_CLK_GATE_GATED_MAX    (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_CSI2A_SYS_CLK_GATE_RESETVAL                            (0x00000000U)
+
+/* RSS_BSS_SYS_CLK_GATE */
+
+#define CSL_RSS_RCM_RSS_BSS_SYS_CLK_GATE_RSS_BSS_SYS_CLK_GATE_GATED_MASK       (0x00000007U)
+#define CSL_RSS_RCM_RSS_BSS_SYS_CLK_GATE_RSS_BSS_SYS_CLK_GATE_GATED_SHIFT      (0x00000000U)
+#define CSL_RSS_RCM_RSS_BSS_SYS_CLK_GATE_RSS_BSS_SYS_CLK_GATE_GATED_RESETVAL   (0x00000000U)
+#define CSL_RSS_RCM_RSS_BSS_SYS_CLK_GATE_RSS_BSS_SYS_CLK_GATE_GATED_MAX        (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_BSS_SYS_CLK_GATE_RESETVAL                              (0x00000000U)
+
+/* RSS_CSI2A_RST_CTRL */
+
+#define CSL_RSS_RCM_RSS_CSI2A_RST_CTRL_RSS_CSI2A_RST_CTRL_ASSERT_MASK          (0x00000007U)
+#define CSL_RSS_RCM_RSS_CSI2A_RST_CTRL_RSS_CSI2A_RST_CTRL_ASSERT_SHIFT         (0x00000000U)
+#define CSL_RSS_RCM_RSS_CSI2A_RST_CTRL_RSS_CSI2A_RST_CTRL_ASSERT_RESETVAL      (0x00000000U)
+#define CSL_RSS_RCM_RSS_CSI2A_RST_CTRL_RSS_CSI2A_RST_CTRL_ASSERT_MAX           (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_CSI2A_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* RSS_EDMA_RST_CTRL */
+
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_ASSERT_MASK            (0x00000007U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_ASSERT_SHIFT           (0x00000000U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_ASSERT_RESETVAL        (0x00000000U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_ASSERT_MAX             (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPCCA_ASSERT_MASK      (0x00000070U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPCCA_ASSERT_SHIFT     (0x00000004U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPCCA_ASSERT_RESETVAL  (0x00000000U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPCCA_ASSERT_MAX       (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPTCA0_ASSERT_MASK     (0x00000700U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPTCA0_ASSERT_SHIFT    (0x00000008U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPTCA0_ASSERT_RESETVAL (0x00000000U)
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RSS_EDMA_RST_CTRL_TPTCA0_ASSERT_MAX      (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_EDMA_RST_CTRL_RESETVAL                                 (0x00000000U)
+
+/* RSS_BSS_RST_CTRL */
+
+#define CSL_RSS_RCM_RSS_BSS_RST_CTRL_RSS_BSS_RST_CTRL_ASSERT_MASK              (0x00000007U)
+#define CSL_RSS_RCM_RSS_BSS_RST_CTRL_RSS_BSS_RST_CTRL_ASSERT_SHIFT             (0x00000000U)
+#define CSL_RSS_RCM_RSS_BSS_RST_CTRL_RSS_BSS_RST_CTRL_ASSERT_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_RSS_BSS_RST_CTRL_RSS_BSS_RST_CTRL_ASSERT_MAX               (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_BSS_RST_CTRL_RESETVAL                                  (0x00000000U)
+
+/* RSS_FRC_CLK_SRC_SEL */
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_SRC_SEL_RSS_FRC_CLK_SRC_SEL_CLKSRCSEL_MASK     (0x00000FFFU)
+#define CSL_RSS_RCM_RSS_FRC_CLK_SRC_SEL_RSS_FRC_CLK_SRC_SEL_CLKSRCSEL_SHIFT    (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_SRC_SEL_RSS_FRC_CLK_SRC_SEL_CLKSRCSEL_RESETVAL (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_SRC_SEL_RSS_FRC_CLK_SRC_SEL_CLKSRCSEL_MAX      (0x00000FFFU)
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_SRC_SEL_RESETVAL                               (0x00000000U)
+
+/* RSS_FRC_CLK_GATE */
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_GATE_RSS_FRC_CLK_GATE_GATED_MASK               (0x00000007U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_GATE_RSS_FRC_CLK_GATE_GATED_SHIFT              (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_GATE_RSS_FRC_CLK_GATE_GATED_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_GATE_RSS_FRC_CLK_GATE_GATED_MAX                (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_GATE_RESETVAL                                  (0x00000000U)
+
+/* RSS_FRC_CLK_DIV_VAL */
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_DIV_VAL_RSS_FRC_CLK_DIV_VAL_CLKDIVR_MASK       (0x00000FFFU)
+#define CSL_RSS_RCM_RSS_FRC_CLK_DIV_VAL_RSS_FRC_CLK_DIV_VAL_CLKDIVR_SHIFT      (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_DIV_VAL_RSS_FRC_CLK_DIV_VAL_CLKDIVR_RESETVAL   (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_DIV_VAL_RSS_FRC_CLK_DIV_VAL_CLKDIVR_MAX        (0x00000FFFU)
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_DIV_VAL_RESETVAL                               (0x00000000U)
+
+/* RSS_FRC_CLK_STATUS */
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CLKINUSE_MASK        (0x000000FFU)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CLKINUSE_SHIFT       (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CLKINUSE_RESETVAL    (0x00000001U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CLKINUSE_MAX         (0x000000FFU)
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CURRDIVIDER_MASK     (0x0000FF00U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CURRDIVIDER_SHIFT    (0x00000008U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CURRDIVIDER_RESETVAL (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RSS_FRC_CLK_STATUS_CURRDIVIDER_MAX      (0x000000FFU)
+
+#define CSL_RSS_RCM_RSS_FRC_CLK_STATUS_RESETVAL                                (0x00000001U)
+
+/* RSS_FRC_RST_CTRL */
+
+#define CSL_RSS_RCM_RSS_FRC_RST_CTRL_RSS_FRC_RST_CTRL_ASSERT_MASK              (0x00000007U)
+#define CSL_RSS_RCM_RSS_FRC_RST_CTRL_RSS_FRC_RST_CTRL_ASSERT_SHIFT             (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_RST_CTRL_RSS_FRC_RST_CTRL_ASSERT_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_RSS_FRC_RST_CTRL_RSS_FRC_RST_CTRL_ASSERT_MAX               (0x00000007U)
+
+#define CSL_RSS_RCM_RSS_FRC_RST_CTRL_RESETVAL                                  (0x00000000U)
+
+/* HW_SPARE_RW0 */
+
+#define CSL_RSS_RCM_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RW0_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RW1 */
+
+#define CSL_RSS_RCM_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RW1_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RW2 */
+
+#define CSL_RSS_RCM_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RW2_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RW3 */
+
+#define CSL_RSS_RCM_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RW3_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RO0 */
+
+#define CSL_RSS_RCM_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RO0_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RO1 */
+
+#define CSL_RSS_RCM_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RO1_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RO2 */
+
+#define CSL_RSS_RCM_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RO2_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_RO3 */
+
+#define CSL_RSS_RCM_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_RO3_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_WPH */
+
+#define CSL_RSS_RCM_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_MASK                (0xFFFFFFFFU)
+#define CSL_RSS_RCM_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_SHIFT               (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_RESETVAL            (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_MAX                 (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_HW_SPARE_WPH_RESETVAL                                      (0x00000000U)
+
+/* HW_SPARE_REC */
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_MASK               (0x00000001U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_SHIFT              (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_MASK               (0x00000002U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_SHIFT              (0x00000001U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_MASK               (0x00000004U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_SHIFT              (0x00000002U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_MASK               (0x00000008U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_SHIFT              (0x00000003U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_MASK               (0x00000010U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_SHIFT              (0x00000004U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_MASK               (0x00000020U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_SHIFT              (0x00000005U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_MASK               (0x00000040U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_SHIFT              (0x00000006U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_MASK               (0x00000080U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_SHIFT              (0x00000007U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_MASK               (0x00000100U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_SHIFT              (0x00000008U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_MASK               (0x00000200U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_SHIFT              (0x00000009U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_RESETVAL           (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_MAX                (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_MASK              (0x00000400U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_SHIFT             (0x0000000AU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_MASK              (0x00000800U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_SHIFT             (0x0000000BU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_MASK              (0x00001000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_SHIFT             (0x0000000CU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_MASK              (0x00002000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_SHIFT             (0x0000000DU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_MASK              (0x00004000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_SHIFT             (0x0000000EU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_MASK              (0x00008000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_SHIFT             (0x0000000FU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_MASK              (0x00010000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_SHIFT             (0x00000010U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_MASK              (0x00020000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_SHIFT             (0x00000011U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_MASK              (0x00040000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_SHIFT             (0x00000012U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_MASK              (0x00080000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_SHIFT             (0x00000013U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_MASK              (0x00100000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_SHIFT             (0x00000014U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_MASK              (0x00200000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_SHIFT             (0x00000015U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_MASK              (0x00400000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_SHIFT             (0x00000016U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_MASK              (0x00800000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_SHIFT             (0x00000017U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_MASK              (0x01000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_SHIFT             (0x00000018U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_MASK              (0x02000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_SHIFT             (0x00000019U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_MASK              (0x04000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_SHIFT             (0x0000001AU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_MASK              (0x08000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_SHIFT             (0x0000001BU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_MASK              (0x10000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_SHIFT             (0x0000001CU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_MASK              (0x20000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_SHIFT             (0x0000001DU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_MASK              (0x40000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_SHIFT             (0x0000001EU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_MASK              (0x80000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_SHIFT             (0x0000001FU)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_RESETVAL          (0x00000000U)
+#define CSL_RSS_RCM_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_MAX               (0x00000001U)
+
+#define CSL_RSS_RCM_HW_SPARE_REC_RESETVAL                                      (0x00000000U)
+
+/* LOCK0_KICK0 */
+
+#define CSL_RSS_RCM_LOCK0_KICK0_LOCK0_KICK0_MASK                               (0xFFFFFFFFU)
+#define CSL_RSS_RCM_LOCK0_KICK0_LOCK0_KICK0_SHIFT                              (0x00000000U)
+#define CSL_RSS_RCM_LOCK0_KICK0_LOCK0_KICK0_RESETVAL                           (0x00000000U)
+#define CSL_RSS_RCM_LOCK0_KICK0_LOCK0_KICK0_MAX                                (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_LOCK0_KICK0_RESETVAL                                       (0x00000000U)
+
+/* LOCK0_KICK1 */
+
+#define CSL_RSS_RCM_LOCK0_KICK1_LOCK0_KICK1_MASK                               (0xFFFFFFFFU)
+#define CSL_RSS_RCM_LOCK0_KICK1_LOCK0_KICK1_SHIFT                              (0x00000000U)
+#define CSL_RSS_RCM_LOCK0_KICK1_LOCK0_KICK1_RESETVAL                           (0x00000000U)
+#define CSL_RSS_RCM_LOCK0_KICK1_LOCK0_KICK1_MAX                                (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_LOCK0_KICK1_RESETVAL                                       (0x00000000U)
+
+/* INTR_RAW_STATUS */
+
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROT_ERR_MASK                              (0x00000001U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROT_ERR_SHIFT                             (0x00000000U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROT_ERR_RESETVAL                          (0x00000000U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROT_ERR_MAX                               (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_RAW_STATUS_ADDR_ERR_MASK                              (0x00000002U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_ADDR_ERR_SHIFT                             (0x00000001U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_ADDR_ERR_RESETVAL                          (0x00000000U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_ADDR_ERR_MAX                               (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_RAW_STATUS_KICK_ERR_MASK                              (0x00000004U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_KICK_ERR_SHIFT                             (0x00000002U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_KICK_ERR_RESETVAL                          (0x00000000U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_KICK_ERR_MAX                               (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROXY_ERR_MASK                             (0x00000008U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROXY_ERR_SHIFT                            (0x00000003U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROXY_ERR_RESETVAL                         (0x00000000U)
+#define CSL_RSS_RCM_INTR_RAW_STATUS_PROXY_ERR_MAX                              (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_RAW_STATUS_RESETVAL                                   (0x00000000U)
+
+/* INTR_ENABLED_STATUS_CLEAR */
+
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_MASK            (0x00000001U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_SHIFT           (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_RESETVAL        (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_MAX             (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_MASK            (0x00000002U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_SHIFT           (0x00000001U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_RESETVAL        (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_MAX             (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_MASK            (0x00000004U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_SHIFT           (0x00000002U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_RESETVAL        (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_MAX             (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_MASK           (0x00000008U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_SHIFT          (0x00000003U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_RESETVAL       (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_MAX            (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLED_STATUS_CLEAR_RESETVAL                         (0x00000000U)
+
+/* INTR_ENABLE */
+
+#define CSL_RSS_RCM_INTR_ENABLE_PROT_ERR_EN_MASK                               (0x00000001U)
+#define CSL_RSS_RCM_INTR_ENABLE_PROT_ERR_EN_SHIFT                              (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_PROT_ERR_EN_RESETVAL                           (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_PROT_ERR_EN_MAX                                (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_ADDR_ERR_EN_MASK                               (0x00000002U)
+#define CSL_RSS_RCM_INTR_ENABLE_ADDR_ERR_EN_SHIFT                              (0x00000001U)
+#define CSL_RSS_RCM_INTR_ENABLE_ADDR_ERR_EN_RESETVAL                           (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_ADDR_ERR_EN_MAX                                (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_KICK_ERR_EN_MASK                               (0x00000004U)
+#define CSL_RSS_RCM_INTR_ENABLE_KICK_ERR_EN_SHIFT                              (0x00000002U)
+#define CSL_RSS_RCM_INTR_ENABLE_KICK_ERR_EN_RESETVAL                           (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_KICK_ERR_EN_MAX                                (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_PROXY_ERR_EN_MASK                              (0x00000008U)
+#define CSL_RSS_RCM_INTR_ENABLE_PROXY_ERR_EN_SHIFT                             (0x00000003U)
+#define CSL_RSS_RCM_INTR_ENABLE_PROXY_ERR_EN_RESETVAL                          (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_PROXY_ERR_EN_MAX                               (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_RESETVAL                                       (0x00000000U)
+
+/* INTR_ENABLE_CLEAR */
+
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_MASK                     (0x00000001U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_SHIFT                    (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_RESETVAL                 (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_MAX                      (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_MASK                     (0x00000002U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_SHIFT                    (0x00000001U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_RESETVAL                 (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_MAX                      (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_MASK                     (0x00000004U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_SHIFT                    (0x00000002U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_RESETVAL                 (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_MAX                      (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_MASK                    (0x00000008U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_SHIFT                   (0x00000003U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_RESETVAL                (0x00000000U)
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_MAX                     (0x00000001U)
+
+#define CSL_RSS_RCM_INTR_ENABLE_CLEAR_RESETVAL                                 (0x00000000U)
+
+/* EOI */
+
+#define CSL_RSS_RCM_EOI_EOI_VECTOR_MASK                                        (0x000000FFU)
+#define CSL_RSS_RCM_EOI_EOI_VECTOR_SHIFT                                       (0x00000000U)
+#define CSL_RSS_RCM_EOI_EOI_VECTOR_RESETVAL                                    (0x00000000U)
+#define CSL_RSS_RCM_EOI_EOI_VECTOR_MAX                                         (0x000000FFU)
+
+#define CSL_RSS_RCM_EOI_RESETVAL                                               (0x00000000U)
+
+/* FAULT_ADDRESS */
+
+#define CSL_RSS_RCM_FAULT_ADDRESS_FAULT_ADDR_MASK                              (0xFFFFFFFFU)
+#define CSL_RSS_RCM_FAULT_ADDRESS_FAULT_ADDR_SHIFT                             (0x00000000U)
+#define CSL_RSS_RCM_FAULT_ADDRESS_FAULT_ADDR_RESETVAL                          (0x00000000U)
+#define CSL_RSS_RCM_FAULT_ADDRESS_FAULT_ADDR_MAX                               (0xFFFFFFFFU)
+
+#define CSL_RSS_RCM_FAULT_ADDRESS_RESETVAL                                     (0x00000000U)
+
+/* FAULT_TYPE_STATUS */
+
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_TYPE_MASK                          (0x0000003FU)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_TYPE_SHIFT                         (0x00000000U)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_TYPE_RESETVAL                      (0x00000000U)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_TYPE_MAX                           (0x0000003FU)
+
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_NS_MASK                            (0x00000040U)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_NS_SHIFT                           (0x00000006U)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_NS_RESETVAL                        (0x00000000U)
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_FAULT_NS_MAX                             (0x00000001U)
+
+#define CSL_RSS_RCM_FAULT_TYPE_STATUS_RESETVAL                                 (0x00000000U)
+
+/* FAULT_ATTR_STATUS */
+
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_PRIVID_MASK                        (0x000000FFU)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_PRIVID_SHIFT                       (0x00000000U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_PRIVID_RESETVAL                    (0x00000000U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_PRIVID_MAX                         (0x000000FFU)
+
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_ROUTEID_MASK                       (0x000FFF00U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_ROUTEID_SHIFT                      (0x00000008U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_ROUTEID_RESETVAL                   (0x00000000U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_ROUTEID_MAX                        (0x00000FFFU)
+
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_XID_MASK                           (0xFFF00000U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_XID_SHIFT                          (0x00000014U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_XID_RESETVAL                       (0x00000000U)
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_FAULT_XID_MAX                            (0x00000FFFU)
+
+#define CSL_RSS_RCM_FAULT_ATTR_STATUS_RESETVAL                                 (0x00000000U)
+
+/* FAULT_CLEAR */
+
+#define CSL_RSS_RCM_FAULT_CLEAR_FAULT_CLR_MASK                                 (0x00000001U)
+#define CSL_RSS_RCM_FAULT_CLEAR_FAULT_CLR_SHIFT                                (0x00000000U)
+#define CSL_RSS_RCM_FAULT_CLEAR_FAULT_CLR_RESETVAL                             (0x00000000U)
+#define CSL_RSS_RCM_FAULT_CLEAR_FAULT_CLR_MAX                                  (0x00000001U)
+
+#define CSL_RSS_RCM_FAULT_CLEAR_RESETVAL                                       (0x00000000U)
+
+#ifdef __cplusplus
+}
+#endif
+#endif

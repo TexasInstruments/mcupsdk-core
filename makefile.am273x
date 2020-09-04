@@ -1,0 +1,2135 @@
+#
+# Auto generated makefile
+#
+
+all:
+	$(MAKE) -f makefile.am273x libs
+	$(MAKE) -f makefile.am273x sbl
+	$(MAKE) -f makefile.am273x examples
+
+clean: libs-clean sbl-clean examples-clean
+scrub: libs-scrub sbl-scrub examples-scrub
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=debug or PROFILE=release [default] to build in debug or release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am273x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am273x all
+	@echo  $(MAKE) -s -f makefile.am273x clean  # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am273x scrub  # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am273x libs
+	@echo  $(MAKE) -s -f makefile.am273x libs-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am273x libs-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am273x examples
+	@echo  $(MAKE) -s -f makefile.am273x examples-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am273x examples-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  Library build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am273x board_r5f.ti-arm-clang board_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.am273x drivers_r5f.ti-arm-clang drivers_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.am273x freertos_r5f.ti-arm-clang freertos_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.am273x nortos_r5f.ti-arm-clang nortos_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.am273x mathlib_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x enet-cpsw_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x lwipif-cpsw-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x lwipif-cpsw-nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x lwip-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x lwip-nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x lwip-contrib-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x lwip-contrib-nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am273x sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang sdl_c66.ti-c6000
+	@echo  .
+	@echo  Library clean targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am273x board_r5f.ti-arm-clang_clean board_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.am273x drivers_r5f.ti-arm-clang_clean drivers_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.am273x freertos_r5f.ti-arm-clang_clean freertos_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.am273x nortos_r5f.ti-arm-clang_clean nortos_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.am273x mathlib_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x enet-cpsw_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x lwip-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x lwip-nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x lwip-contrib-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x lwip-contrib-nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am273x sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean sdl_c66.ti-c6000_clean
+	@echo  .
+	@echo  Example build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/crc/crc_16bit/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/crc/crc_16bit/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/dsplib/add32/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpadc/gpadc_group_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpadc/gpadc_single_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpadc/gpadc_temperature_sensor_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_real_fft/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcasp/mcasp_playback/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_reset/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am273x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am273x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_rawhttpserver/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpclient/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_socket/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_cpsw_est/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/dss_l3/dss_l3_main/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mbox/mbox_main/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mbox/mbox_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC2/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC2/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC3/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC3/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC4/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC4/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_semi_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_l2/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mcan/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_ecc_hwa/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l3_ecc/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  .
+	@echo  System Example build targets,
+	@echo  =============================
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
+	@echo  .
+
+# Various Component Targets
+BUILD_COMBO_board = board_r5f.ti-arm-clang board_c66.ti-c6000
+BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang drivers_c66.ti-c6000
+BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_c66.ti-c6000
+BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_c66.ti-c6000
+BUILD_COMBO_mathlib = mathlib_r5f.ti-arm-clang
+BUILD_COMBO_enet-cpsw = enet-cpsw_r5f.ti-arm-clang
+BUILD_COMBO_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang
+BUILD_COMBO_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang
+BUILD_COMBO_lwip-freertos = lwip-freertos_r5f.ti-arm-clang
+BUILD_COMBO_lwip-nortos = lwip-nortos_r5f.ti-arm-clang
+BUILD_COMBO_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang
+BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
+BUILD_COMBO_sdl = sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang sdl_c66.ti-c6000
+
+# Combine all Components
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl)
+
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL =
+
+# Combine all Private Components
+BUILD_COMBO_PRIVATE_ALL =
+
+libs: $(BUILD_COMBO_ALL)
+
+libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
+
+libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+$(BUILD_COMBO_board):
+	$(MAKE) -C source/board -f makefile.am273x.$(subst board_,,$@) all
+
+$(BUILD_COMBO_drivers):
+	$(MAKE) -C source/drivers -f makefile.am273x.$(subst drivers_,,$@) all
+
+$(BUILD_COMBO_freertos):
+	$(MAKE) -C source/kernel/freertos -f makefile.am273x.$(subst freertos_,,$@) all
+
+$(BUILD_COMBO_nortos):
+	$(MAKE) -C source/kernel/nortos -f makefile.am273x.$(subst nortos_,,$@) all
+
+$(BUILD_COMBO_mathlib):
+	$(MAKE) -C source/mathlib -f makefile.am273x.$(subst mathlib_,,$@) all
+
+$(BUILD_COMBO_enet-cpsw):
+	$(MAKE) -C source/networking/enet -f makefile.cpsw.am273x.$(subst enet-cpsw_,,$@) all
+
+$(BUILD_COMBO_lwipif-cpsw-freertos):
+	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-freertos.am273x.$(subst lwipif-cpsw-freertos_,,$@) all
+
+$(BUILD_COMBO_lwipif-cpsw-nortos):
+	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am273x.$(subst lwipif-cpsw-nortos_,,$@) all
+
+$(BUILD_COMBO_lwip-freertos):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am273x.$(subst lwip-freertos_,,$@) all
+
+$(BUILD_COMBO_lwip-nortos):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_nortos.am273x.$(subst lwip-nortos_,,$@) all
+
+$(BUILD_COMBO_lwip-contrib-freertos):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos.am273x.$(subst lwip-contrib-freertos_,,$@) all
+
+$(BUILD_COMBO_lwip-contrib-nortos):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am273x.$(subst lwip-contrib-nortos_,,$@) all
+
+$(BUILD_COMBO_sdl):
+	$(MAKE) -C source/sdl -f makefile.am273x.$(subst sdl_,,$@) all
+
+
+# Various Component Clean Targets
+BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean drivers_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_mathlib = mathlib_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_sdl = sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean sdl_c66.ti-c6000_clean
+
+# Combine all Components Clean
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl)
+
+# Combine all Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL =
+
+libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+$(BUILD_COMBO_CLEAN_board):
+	$(MAKE) -C source/board -f makefile.am273x.$(subst board_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_drivers):
+	$(MAKE) -C source/drivers -f makefile.am273x.$(subst drivers_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_freertos):
+	$(MAKE) -C source/kernel/freertos -f makefile.am273x.$(subst freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_nortos):
+	$(MAKE) -C source/kernel/nortos -f makefile.am273x.$(subst nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_mathlib):
+	$(MAKE) -C source/mathlib -f makefile.am273x.$(subst mathlib_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_enet-cpsw):
+	$(MAKE) -C source/networking/enet -f makefile.cpsw.am273x.$(subst enet-cpsw_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos):
+	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-freertos.am273x.$(subst lwipif-cpsw-freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos):
+	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am273x.$(subst lwipif-cpsw-nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwip-freertos):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am273x.$(subst lwip-freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwip-nortos):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_nortos.am273x.$(subst lwip-nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwip-contrib-freertos):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos.am273x.$(subst lwip-contrib-freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwip-contrib-nortos):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am273x.$(subst lwip-contrib-nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_sdl):
+	$(MAKE) -C source/sdl -f makefile.am273x.$(subst sdl_,,$(subst _clean,,$@)) clean
+
+
+# Various Component Scrub Targets
+BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub drivers_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_mathlib = mathlib_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_sdl = sdl_r5f.ti-arm-clang_scrub sdl_r5fss1.ti-arm-clang_scrub sdl_c66.ti-c6000_scrub_scrub
+
+# Combine all Components Scrub Targets
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl)
+
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL =
+
+libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+$(BUILD_COMBO_SCRUB_board):
+	$(MAKE) -C source/board -f makefile.am273x.$(subst board_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_drivers):
+	$(MAKE) -C source/drivers -f makefile.am273x.$(subst drivers_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_freertos):
+	$(MAKE) -C source/kernel/freertos -f makefile.am273x.$(subst freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_nortos):
+	$(MAKE) -C source/kernel/nortos -f makefile.am273x.$(subst nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_mathlib):
+	$(MAKE) -C source/mathlib -f makefile.am273x.$(subst mathlib_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_enet-cpsw):
+	$(MAKE) -C source/networking/enet -f makefile.cpsw.am273x.$(subst enet-cpsw_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos):
+	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-freertos.am273x.$(subst lwipif-cpsw-freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos):
+	$(MAKE) -C source/networking/enet -f makefile.lwipif-cpsw-nortos.am273x.$(subst lwipif-cpsw-nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwip-freertos):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am273x.$(subst lwip-freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwip-nortos):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_nortos.am273x.$(subst lwip-nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwip-contrib-freertos):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos.am273x.$(subst lwip-contrib-freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwip-contrib-nortos):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am273x.$(subst lwip-contrib-nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_sdl):
+	$(MAKE) -C source/sdl -f makefile.am273x.$(subst sdl_,,$(subst _scrub,,$@)) scrub
+
+
+BUILD_COMBO_EXAMPLE_ALL =
+# Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += sbl_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cbuff_sw_trigger_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cbuff_sw_trigger_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += crc_16bit_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += csirx_internal_capture_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += csirx_internal_capture_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += add32_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += edma_polled_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_polled_transfer_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += epwm_duty_cycle_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += epwm_duty_cycle_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gpadc_group_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gpadc_single_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gpadc_temperature_sensor_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gpio_input_interrupt_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_icount_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_icount_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_icount_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_dma_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += qspi_flash_diag_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += qspi_flash_diag_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += qspi_flash_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += qspi_flash_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_callback_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_callback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_callback_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += uart_echo_dma_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += watchdog_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += watchdog_interrupt_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += watchdog_reset_mode_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am273x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am273x-evm_r5fss0-1_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hello_world_am273x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += hello_world_cpp_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hello_world_cpp_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am273x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am273x-evm_r5fss0-1_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am273x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += posix_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += posix_demo_am273x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += task_switch_am273x-evm_c66ss0_freertos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am273x-evm_r5fss0-1_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_rawhttpserver_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpclient_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_socket_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_dss_l3_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_mbox_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_mbox_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc2_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc2_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc3_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc3_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc4_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc4_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_auto_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_auto_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_full_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_full_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_atcm0_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mss_l2_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mcan_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+# Various System Example Targets
+BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += empty_am273x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += empty_am273x-evm_system_nortos
+
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ sbl_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_null_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_qspi_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_uart_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_uart_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ cbuff_sw_trigger_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ cbuff_sw_trigger_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ crc_16bit_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ csirx_internal_capture_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ csirx_internal_capture_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ add32_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/dsplib/add32/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ ecap_epwm_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ edma_polled_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ edma_polled_transfer_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ epwm_duty_cycle_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ epwm_duty_cycle_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ gpadc_group_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_group_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ gpadc_single_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_single_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ gpadc_temperature_sensor_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_temperature_sensor_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ gpio_input_interrupt_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/mcasp/mcasp_playback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mibspi_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ mibspi_loopback_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ mibspi_loopback_icount_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mibspi_loopback_icount_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ mibspi_loopback_icount_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ mibspi_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mibspi_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ mibspi_loopback_dma_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ qspi_flash_dma_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ qspi_flash_dma_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ qspi_flash_diag_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ qspi_flash_diag_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ qspi_flash_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ qspi_flash_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ uart_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ uart_echo_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ uart_echo_callback_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ uart_echo_callback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ uart_echo_callback_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ uart_echo_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ uart_echo_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ uart_echo_dma_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ watchdog_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ watchdog_interrupt_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ watchdog_reset_mode_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hello_world_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hello_world_am273x-evm_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+ hello_world_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/hello_world/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ hello_world_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ hello_world_am273x-evm_r5fss0-1_freertos_ti-arm-clang:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
+
+ hello_world_am273x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C examples/hello_world/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ hello_world_cpp_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/hello_world_cpp/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hello_world_cpp_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/hello_world_cpp/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ dpl_demo_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dpl_demo_am273x-evm_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+ dpl_demo_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ dpl_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ dpl_demo_am273x-evm_r5fss0-1_freertos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
+
+ dpl_demo_am273x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ posix_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ posix_demo_am273x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ task_switch_am273x-evm_c66ss0_freertos_ti-c6000:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile all
+
+ mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ enet_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_lwip_cpsw_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_lwip_cpsw_am273x-evm_r5fss0-1_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_tcpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_rawhttpserver_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ enet_cpsw_udpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_udp_igmp_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_tcpclient_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_socket_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile all
+
+ enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_cpsw_est/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_dss_l3_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_mbox_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_mbox_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/rti/UC1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/rti/UC1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_rti_example_uc2_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/rti/UC2/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_example_uc2_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/rti/UC2/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_rti_example_uc3_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/rti/UC3/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_example_uc3_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/rti/UC3/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_rti_example_uc4_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/rti/UC4/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_example_uc4_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/rti/UC4/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_mcrc_auto_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mcrc_auto_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_mcrc_full_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mcrc_full_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_r5_atcm0_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_mss_l2_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_mcan_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l3_ecc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+ sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecap_epwm_loopback_am273x-evm_system_nortos:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile all
+
+ edma_interrupt_transfer_am273x-evm_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile all
+
+ ipc_notify_echo_am273x-evm_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile all
+
+ ipc_rpmsg_echo_am273x-evm_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile all
+
+ mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile all
+
+ empty_am273x-evm_system_freertos:
+	$(MAKE) -C examples/empty/am273x-evm/system_freertos -f makefile all
+
+ empty_am273x-evm_system_nortos:
+	$(MAKE) -C examples/empty/am273x-evm/system_nortos -f makefile all
+
+
+BUILD_COMBO_EXAMPLE_CLEAN_ALL =
+# Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sbl_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cbuff_sw_trigger_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cbuff_sw_trigger_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crc_16bit_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += csirx_internal_capture_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += csirx_internal_capture_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += add32_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_polled_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_polled_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_duty_cycle_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_duty_cycle_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpadc_group_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpadc_single_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpadc_temperature_sensor_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_input_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_icount_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_icount_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_icount_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_dma_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_diag_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_diag_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_callback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_callback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_callback_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_dma_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += watchdog_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += watchdog_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += watchdog_reset_mode_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_cpp_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_cpp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += posix_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += posix_demo_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am273x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_rawhttpserver_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpclient_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_socket_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mbox_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mbox_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc2_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc3_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc3_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc4_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc4_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_auto_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_auto_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_full_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_full_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_atcm0_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mss_l2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mcan_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+# Various System Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am273x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am273x-evm_system_nortos_clean
+
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
+
+examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ sbl_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_null_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_qspi_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_uart_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_uart_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ cbuff_sw_trigger_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ cbuff_sw_trigger_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ crc_16bit_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ csirx_internal_capture_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ csirx_internal_capture_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ add32_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/dsplib/add32/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ ecap_epwm_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ edma_polled_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ edma_polled_transfer_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ epwm_duty_cycle_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ epwm_duty_cycle_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ gpadc_group_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_group_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ gpadc_single_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_single_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ gpadc_temperature_sensor_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_temperature_sensor_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ gpio_input_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/mcasp/mcasp_playback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mibspi_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ mibspi_loopback_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ mibspi_loopback_icount_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mibspi_loopback_icount_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ mibspi_loopback_icount_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ mibspi_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mibspi_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ mibspi_loopback_dma_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ qspi_flash_dma_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ qspi_flash_dma_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ qspi_flash_diag_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ qspi_flash_diag_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ qspi_flash_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ qspi_flash_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ uart_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ uart_echo_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ uart_echo_callback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ uart_echo_callback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ uart_echo_callback_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ uart_echo_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ uart_echo_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ uart_echo_dma_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ watchdog_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ watchdog_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ watchdog_reset_mode_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hello_world_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hello_world_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ hello_world_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/hello_world/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ hello_world_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ hello_world_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+
+ hello_world_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/hello_world/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ hello_world_cpp_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hello_world_cpp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ dpl_demo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dpl_demo_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ dpl_demo_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ dpl_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ dpl_demo_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+
+ dpl_demo_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ posix_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ posix_demo_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ task_switch_am273x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile clean
+
+ mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ enet_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_lwip_cpsw_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_lwip_cpsw_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_tcpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_rawhttpserver_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_udpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_udp_igmp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_tcpclient_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_socket_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile clean
+
+ enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_cpsw_est/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_dss_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_mbox_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_mbox_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_rti_example_uc2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC2/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_example_uc2_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC2/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_rti_example_uc3_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC3/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_example_uc3_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC3/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_rti_example_uc4_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC4/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_example_uc4_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC4/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_mcrc_auto_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mcrc_auto_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_mcrc_full_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mcrc_full_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_r5_atcm0_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_mss_l2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_mcan_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l3_ecc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecap_epwm_loopback_am273x-evm_system_nortos_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile clean
+
+ edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile clean
+
+ ipc_notify_echo_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile clean
+
+ ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile clean
+
+ mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile clean
+
+ empty_am273x-evm_system_freertos_clean:
+	$(MAKE) -C examples/empty/am273x-evm/system_freertos -f makefile clean
+
+ empty_am273x-evm_system_nortos_clean:
+	$(MAKE) -C examples/empty/am273x-evm/system_nortos -f makefile clean
+
+
+BUILD_COMBO_EXAMPLE_SCRUB_ALL =
+# Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sbl_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cbuff_sw_trigger_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cbuff_sw_trigger_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crc_16bit_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += csirx_internal_capture_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += csirx_internal_capture_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += add32_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_polled_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_polled_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_duty_cycle_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_duty_cycle_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpadc_group_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpadc_single_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpadc_temperature_sensor_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_input_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_icount_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_icount_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_icount_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_dma_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_diag_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_diag_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_callback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_callback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_callback_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_dma_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += watchdog_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += watchdog_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += watchdog_reset_mode_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am273x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_cpp_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_cpp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am273x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += posix_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += posix_demo_am273x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am273x-evm_c66ss0_freertos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_rawhttpserver_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpclient_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_socket_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mbox_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mbox_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc2_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc3_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc3_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc4_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc4_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_auto_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_auto_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_full_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_full_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_atcm0_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mss_l2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mcan_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+# Various System Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am273x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am273x-evm_system_nortos_scrub
+
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+
+examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ sbl_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_null_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_qspi_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_uart_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_uart_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ cbuff_sw_trigger_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ cbuff_sw_trigger_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/cbuff/cbuff_sw_trigger/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ crc_16bit_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crc_16bit_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ csirx_internal_capture_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ csirx_internal_capture_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ add32_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/dsplib/add32/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ ecap_epwm_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecap_epwm_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ edma_chain_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ edma_chain_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ edma_link_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ edma_link_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ edma_polled_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ edma_polled_transfer_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ epwm_duty_cycle_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ epwm_duty_cycle_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ gpadc_group_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_group_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ gpadc_single_channel_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_single_channel_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ gpadc_temperature_sensor_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_temperature_sensor_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ gpio_input_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mcan_loopback_polling_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ mcasp_loopback_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/mcasp/mcasp_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ mcasp_playback_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/mcasp/mcasp_playback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ mibspi_loopback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mibspi_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ mibspi_loopback_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ mibspi_loopback_icount_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mibspi_loopback_icount_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ mibspi_loopback_icount_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ mibspi_loopback_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mibspi_loopback_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ mibspi_loopback_dma_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ qspi_flash_dma_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ qspi_flash_dma_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ qspi_flash_diag_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ qspi_flash_diag_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ qspi_flash_transfer_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ qspi_flash_transfer_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ rti_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rti_led_blink_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ uart_echo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ uart_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ uart_echo_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ uart_echo_callback_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ uart_echo_callback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ uart_echo_callback_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ uart_echo_dma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ uart_echo_dma_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ uart_echo_dma_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ watchdog_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ watchdog_interrupt_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ watchdog_reset_mode_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hello_world_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hello_world_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ hello_world_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/hello_world/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ hello_world_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ hello_world_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/hello_world/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+
+ hello_world_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C examples/hello_world/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ hello_world_cpp_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/hello_world_cpp/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hello_world_cpp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/hello_world_cpp/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ dpl_demo_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dpl_demo_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ dpl_demo_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ dpl_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ dpl_demo_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+
+ dpl_demo_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ posix_demo_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ posix_demo_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ task_switch_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ task_switch_am273x-evm_c66ss0_freertos_ti-c6000_scrub:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am273x-evm/c66ss0_freertos/ti-c6000 -f makefile scrub
+
+ mathlib_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/mathlib/benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ enet_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_lwip_cpsw_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_lwip_cpsw_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_tcpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_rawhttpserver_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_udpserver_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpserver/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_udp_igmp_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_tcpclient_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_socket_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile scrub
+
+ enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_cpsw_est/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_dss_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_mbox_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_mbox_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/rti/UC1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/rti/UC1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_rti_example_uc2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/rti/UC2/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_example_uc2_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/rti/UC2/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_rti_example_uc3_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/rti/UC3/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_example_uc3_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/rti/UC3/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_rti_example_uc4_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/rti/UC4/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_example_uc4_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/rti/UC4/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_mcrc_auto_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mcrc_auto_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_mcrc_full_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mcrc_full_cpu_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_r5_atcm0_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_mss_l2_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_mcan_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l3_ecc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecap_epwm_loopback_am273x-evm_system_nortos_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile scrub
+
+ edma_interrupt_transfer_am273x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ ipc_notify_echo_am273x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ empty_am273x-evm_system_freertos_scrub:
+	$(MAKE) -C examples/empty/am273x-evm/system_freertos -f makefile scrub
+
+ empty_am273x-evm_system_nortos_scrub:
+	$(MAKE) -C examples/empty/am273x-evm/system_nortos -f makefile scrub
+
+
+sbl: libs
+	$(MAKE) -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+sbl-clean:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+sbl-scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+
+.PHONY: all clean scrub help
+.PHONY: libs libs-clean libs-scrub
+.PHONY: libs-private
+.PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
+.PHONY: examples examples-clean examples-scrub
+.PHONY: examples-private examples-private-clean examples-private-scrub
+.PHONY: sbl sbl-clean sbl-scrub
+.PHONY: $(BUILD_COMBO_ALL) $(BUILD_COMBO_CLEAN_ALL) $(BUILD_COMBO_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_ALL) $(BUILD_COMBO_EXAMPLE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)

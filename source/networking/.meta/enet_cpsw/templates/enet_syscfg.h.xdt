@@ -1,0 +1,53 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+/*
+ * Enet DMA memory allocation utility functions.
+ */
+
+/* ========================================================================== */
+/*                         Macros & Typedefs                                  */
+/* ========================================================================== */
+
+#define ENET_SYSCFG_TOTAL_NUM_TX_PKT      (`Number(module.getTxPacketsCount(instance))`U)
+#define ENET_SYSCFG_TOTAL_NUM_RX_PKT      (`Number(module.getRxPacketsCount(instance))`U)
+#define ENET_SYSCFG_PKT_POOL_ENABLE       (`Number(instance.PktPoolEnable)`U)
+#define ENET_SYSCFG_PKT_INFO_ONLY_ENABLE  (`Number(instance.PktInfoOnlyEnable)`U)
+#define ENET_SYSCFG_MAX_MAC_PORTS         (`Number((module.getCpswInstInfo(instance)).numMacPorts)`U)
+#define ENET_SYSCFG_ENABLE_EXTPHY         (`Number((instance.ExternalPhyMgmtEnable == true))`U)
+#define ENET_SYSCFG_ENABLE_MDIO_MANUALMODE   (`Number(instance.mdioMode === "MDIO_MODE_MANUAL")`U)
+#define ENET_SYSCFG_RX_FLOWS_NUM          (`Number(module.getRxChannelCount(instance))`U)
+#define ENET_SYSCFG_TX_CHANNELS_NUM       (`Number(module.getTxChannelCount(instance))`U)
+#define ENET_SYSCFG_RING_MON_NUM          (3U) /*Not appicable for LCDMA devices*/
+/* TX DMA Channel indexes. Name of TX DMA channel can be changed in example syscfg */
+/* Application should use the define below when opening a Tx DMA channel */
+% for(let i = 0; i < module.getTxChannelCount(instance); i++) {
+#define `module.getChannelConfig(instance, "TX", i).$name.toUpperCase()`          (`i`U)
+% }
+
+/* RX DMA Channel indexes. Name of RX DMA channel can be changed in example syscfg */
+/* Application should use the define below when opening a Rx DMA channel */
+% for(let i = 0; i < module.getRxChannelCount(instance); i++) {
+#define `module.getChannelConfig(instance, "RX", i).$name.toUpperCase()`          (`i`U)
+% }
+
+/* TX DMA max num packets allocated to the DMA channel */
+/* Application should use the define below when opening a Tx DMA channel */
+% for(let i = 0; i < module.getTxChannelCount(instance); i++) {
+#define `module.getChannelConfig(instance, "TX", i).$name.toUpperCase()`_NUM_PKTS          (`Number(module.getChannelConfig(instance, "TX", i).PacketsCount)`U)
+% }
+
+/* RX DMA DMA max num packets allocated to the DMA channel  */
+/* Application should use the define below when opening a Rx DMA channel */
+% for(let i = 0; i < module.getRxChannelCount(instance); i++) {
+#define `module.getChannelConfig(instance, "RX", i).$name.toUpperCase()`_NUM_PKTS          (`Number(module.getChannelConfig(instance, "RX", i).PacketsCount)`U)
+% }
+
+/*
+ * Packet sizes for different pools. LARGE_POOL is largest packet size pool with MEDIUM_POOL
+ * second largest and SMALL_POOL smallest
+ */
+#define ENET_MEM_LARGE_POOL_PKT_SIZE        ENET_UTILS_ALIGN(`Number(instance.LargePoolPktSize)`U, ENET_UTILS_CACHELINE_SIZE)
+#define ENET_MEM_MEDIUM_POOL_PKT_SIZE       ENET_UTILS_ALIGN(`Number(instance.MediumPoolPktSize)`U, ENET_UTILS_CACHELINE_SIZE)
+#define ENET_MEM_SMALL_POOL_PKT_SIZE        ENET_UTILS_ALIGN(`Number(instance.SmallPoolPktSize)`U, ENET_UTILS_CACHELINE_SIZE)

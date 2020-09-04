@@ -1,0 +1,3 @@
+#include <drivers/epwm.h>
+
+void Drivers_epwmOpen(void);

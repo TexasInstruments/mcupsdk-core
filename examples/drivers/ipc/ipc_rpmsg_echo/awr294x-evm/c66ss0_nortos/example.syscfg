@@ -1,0 +1,26 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2123"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc       = scripting.addModule("/drivers/ipc/ipc");
+const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.vringNumBuf  = 1;
+ipc.vringMsgSize = 1152;
+
+cache_c6x.marRegionConfig.create(1);
+cache_c6x.marRegionConfig[0].$name    = "kernel_dpl_cache_c6x_mar0";
+cache_c6x.marRegionConfig[0].baseAddr = 0xC5000000;
+
+debug_log.enableCssLog       = false;
+debug_log.enableSharedMemLog = true;

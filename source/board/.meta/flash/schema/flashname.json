@@ -1,0 +1,79 @@
+{
+    "flashSize": "<flash size in decimal>",
+    "flashPageSize": "<flash page size in decimal>",
+    "flashManfId": "<flash manufacturer ID in 2 digit hexadecimal with leading 0x>",
+    "flashDeviceId": "<flash device ID in 4 digit hexadecimal with leading 0x>",
+    "flashBlockSize": "<flash block size in decimal>",
+    "flashSectorSize": "<flash sector size in decimal>",
+    "cmdBlockErase3B": "<block erase command in 3B addressing mode>",
+    "cmdBlockErase4B": "<block erase command in 4B addressing mode>",
+    "cmdSectorErase3B": "<sector erase command in 3B addressing mode>",
+    "cmdSectorErase4B": "<sector erase command in 3B addressing mode>",
+    "protos": {
+        "p111": {
+            /* Check p888d */
+        },
+        "p112": {
+            /* Check p888d */
+        },
+        "p114": {
+            /* Check p888d */
+        },
+        "p118": {
+            /* Check p888d */
+        },
+        "p444s": {
+            /* Check p888d */
+        },
+        "p444d": {
+            /* Check p888d */
+        },
+        "p888s": {
+            /* Check p888d */
+        },
+        "p888d": {
+            "isDtr": "<true if DTR protocol, false if not>",
+            "cmdRd": "<Command for reading in the protocol as 2 digit hexadecimal with leading 0x>",
+            "cmdWr": "<Command for writing/page programming in the protocol as 2 digit hexadecimal with leading 0x>",
+            "modeClksCmd": "<Mode clocks needed for commands to execute in this protocol as decimal>",
+            "modeClksRd": "<Mode clocks needed for data reads in this protocol as decimal>",
+            "dummyClksCmd": "<Dummy clocks needed for commands to execute in this protocol as decimal>",
+            "dummyClksRd": "<Mode clocks needed for data reads in this protocol as decimal>",
+            "enableType": "<Enable Type for Octal or Quad modes as per JEDEC in decimal format>",
+            "enableSeq": "<Enable Sequence for 4-4-4 or 8-8-8 modes as per JEDEC as a 2 digit hexadecimal bit map>",
+            "protoCfg": {
+                "isAddrReg": "<true if configured via addressed register, false if not>",
+                "cmdRegRd": "<Command for reading config register, addressed or otherwise, as 2 digit hexadecimal with leading 0x>",
+                "cmdRegWr": "<Command for reading config register, addressed or otherwise, as 2 digit hexadecimal with leading 0x>",
+                "cfgReg": "<Config register address if exists in 8 digit hexadecimal with leading 0x>",
+                "shift": "<Bits to shift to reach LSB of bit field where the config data needs to written, in decimal>",
+                "mask": "<Bit mask of the config data in the register, as 2 digit hexadecimal with leading 0x>",
+                "bitP": "<Config data as decimal>"
+            },
+            "dummyCfg": {
+                /* Similar to protoCfg */
+            },
+            "strDtrCfg": {
+                /* Similar to protoCfg */
+            }
+        },
+        "pCustom": {
+            "fxn": null
+        }
+    },
+    "resetType": "<reset type supported as 2 digit hexadecimal with leading 0x>",
+    "cmdWren": "<Command for WREN as 2 digit hexadecimal with leading 0x>",
+    "cmdRdsr": "<Command for reading status register as 2 digit hexadecimal with leading 0x>",
+    "srWip": "<Bit position of WIP bit in status register as decimal number>",
+    "srWel": "<Bit position of WEL bit in status register as decimal number>",
+    "cmdChipErase" : "<Command for erasing full chip as 2 digit hexadecimal with leading 0x>",
+    "rdIdSettings": {
+        "cmd": "<Command for reading JEDEC ID as 2 digit hexadecimal with leading 0x>",
+        "numBytes": "<Number of bytes to read when reading JEDEC ID in decimal>",
+        "dummyCycles1": "<Number of dummy cycles to use to read JEDEC ID in 1s mode>",
+        "dummyCycles4": "<Number of dummy cycles to use to read JEDEC ID in quad mode>",
+        "dummyCycles8": "<Number of dummy cycles to use to read JEDEC ID in quad mode>"
+    },
+    "flashDeviceBusyTimeout": "<Timeout in microseconds to wait for device busy bit>",
+    "flashPageProgTimeout": "<Timeout in microseconds to wait for page program>"
+}

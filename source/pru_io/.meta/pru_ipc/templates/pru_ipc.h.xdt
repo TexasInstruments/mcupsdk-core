@@ -1,0 +1,17 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+/*
+ * PRU_IPC
+ */
+#include <pru_io/driver/pru_ipc.h>
+#include <pru_io/driver/icss_intc_defines.h>
+
+/* PRU_IPC Instance Macros */
+#define CONFIG_PRU_IPC_NUM_INSTANCES    `module.$instances.length`
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name`                 `i`
+#define `instance.$name`_BLOCKSIZE       `instance.blockSize`
+#define `instance.$name`_BUFFERS         `instance.noOfBuffers`
+% }

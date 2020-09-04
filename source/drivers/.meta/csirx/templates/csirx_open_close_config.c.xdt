@@ -1,0 +1,552 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/csirx/csirx'];
+%%}
+/*
+ * CSIRX
+ */
+
+/* CSIRX Driver handles */
+CSIRX_Handle gCsirxHandle[CONFIG_CSIRX_NUM_INSTANCES];
+
+/* CSIRX flag to control phy init during driver open */
+bool gCsirxPhyEnable[CONFIG_CSIRX_NUM_INSTANCES] = {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    `instance.phyEnable`,
+% }
+};
+
+/* CSIRX Dphy config */
+CSIRX_DphyConfig gCsirxDphyConfig[CONFIG_CSIRX_NUM_INSTANCES] = {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let dphy = instance.dphy;
+    { /* `instance.$name.toUpperCase()` */
+        .ddrClockInHz = `dphy.ddrClockInHz`U,
+        .isClockMissingDetectionEnabled = `dphy.isClockMissingDetectionEnabled`,
+        .triggerEscapeCode = { 0, 0, 0, 0 },
+    },
+% }
+};
+
+/* CSIRX complex IO config */
+CSIRX_ComplexioConfig gCsirxComplexioConfig[CONFIG_CSIRX_NUM_INSTANCES] = {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let complexio = instance.complexio;
+    { /* `instance.$name.toUpperCase()` */
+        .lanesConfig =
+        {
+            .dataLane =
+            {
+                {
+                    .polarity = `complexio.dataLane0_polarity`,
+                    .position = `complexio.dataLane0_position`,
+                },
+                {
+                    .polarity = `complexio.dataLane1_polarity`,
+                    .position = `complexio.dataLane1_position`,
+                },
+                {
+                    .polarity = `complexio.dataLane2_polarity`,
+                    .position = `complexio.dataLane2_position`,
+                },
+                {
+                    .polarity = `complexio.dataLane3_polarity`,
+                    .position = `complexio.dataLane3_position`,
+                },
+            },
+            .clockLane =
+            {
+                .polarity = `complexio.clockLane_polarity`,
+                .position = `complexio.clockLane_position`,
+            },
+        },
+        .enableIntr =
+        {
+            .isAllLanesEnterULPM = `complexio.isAllLanesEnterULPM`,
+            .isAllLanesExitULPM = `complexio.isAllLanesExitULPM`,
+            .dataLane =
+            {
+                {
+                    .isStateTransitionToULPM = `complexio.isStateTransitionToULPM`,
+                    .isControlError = `complexio.isControlError`,
+                    .isEscapeEntryError = `complexio.isEscapeEntryError`,
+                    .isStartOfTransmissionSyncError = `complexio.isStartOfTransmissionSyncError`,
+                    .isStartOfTransmissionError = `complexio.isStartOfTransmissionError`,
+                },
+                {
+                    .isStateTransitionToULPM = `complexio.isStateTransitionToULPM`,
+                    .isControlError = `complexio.isControlError`,
+                    .isEscapeEntryError = `complexio.isEscapeEntryError`,
+                    .isStartOfTransmissionSyncError = `complexio.isStartOfTransmissionSyncError`,
+                    .isStartOfTransmissionError = `complexio.isStartOfTransmissionError`,
+                },
+                {
+                    .isStateTransitionToULPM = `complexio.isStateTransitionToULPM`,
+                    .isControlError = `complexio.isControlError`,
+                    .isEscapeEntryError = `complexio.isEscapeEntryError`,
+                    .isStartOfTransmissionSyncError = `complexio.isStartOfTransmissionSyncError`,
+                    .isStartOfTransmissionError = `complexio.isStartOfTransmissionError`,
+                },
+                {
+                    .isStateTransitionToULPM = `complexio.isStateTransitionToULPM`,
+                    .isControlError = `complexio.isControlError`,
+                    .isEscapeEntryError = `complexio.isEscapeEntryError`,
+                    .isStartOfTransmissionSyncError = `complexio.isStartOfTransmissionSyncError`,
+                    .isStartOfTransmissionError = `complexio.isStartOfTransmissionError`,
+                },
+            },
+            .clockLane =
+            {
+                .isStateTransitionToULPM = `complexio.isStateTransitionToULPM`,
+                .isControlError = `complexio.isControlError`,
+                .isEscapeEntryError = `complexio.isEscapeEntryError`,
+                .isStartOfTransmissionSyncError = `complexio.isStartOfTransmissionSyncError`,
+                .isStartOfTransmissionError = `complexio.isStartOfTransmissionError`,
+            },
+        },
+        .isPowerAuto = `complexio.isPowerAuto`,
+    },
+% }
+};
+
+/* Callbacks */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let common = instance.common;
+
+/* Callbacks for `instance.$name.toUpperCase()` */
+    % if(common.combinedEndOfLineCallback!="NULL") {
+void `common.combinedEndOfLineCallback`(CSIRX_Handle handle, void *arg);
+    % }
+    % if(common.combinedEndOfFrameCallback!="NULL") {
+void `common.combinedEndOfFrameCallback`(CSIRX_Handle handle, void *arg);
+    % }
+    % if(common.commonCallback!="NULL") {
+void `common.commonCallback`(CSIRX_Handle handle, void *arg, struct CSIRX_CommonIntr_s *irq);
+    % }
+    % if(common.startOfFrameIntr0Callback!="NULL") {
+void `common.startOfFrameIntr0Callback`(CSIRX_Handle handle, void *arg, uint8_t contextId);
+    % }
+    % if(common.startOfFrameIntr1Callback!="NULL") {
+void `common.startOfFrameIntr1Callback`(CSIRX_Handle handle, void *arg, uint8_t contextId);
+    % }
+
+/* Callbacks Args for `instance.$name.toUpperCase()` */
+    % if(common.combinedEndOfLineCallbackArgs!="NULL") {
+extern void *`common.combinedEndOfLineCallbackArgs`; /* args for `common.combinedEndOfLineCallback` */
+    % }
+    % if(common.combinedEndOfFrameCallbackArgs!="NULL") {
+extern void *`common.combinedEndOfFrameCallbackArgs`; /* args for `common.combinedEndOfFrameCallback` */
+    % }
+    % if(common.commonCallbackArgs!="NULL") {
+extern void *`common.commonCallbackArgs`; /* args for `common.commonCallback` */
+    % }
+    % if(common.startOfFrameIntr0CallbackArgs!="NULL") {
+extern void *`common.startOfFrameIntr0CallbackArgs`; /* args for `common.startOfFrameIntr0Callback` */
+    % }
+    % if(common.startOfFrameIntr1CallbackArgs!="NULL") {
+extern void *`common.startOfFrameIntr1CallbackArgs`; /* args for `common.startOfFrameIntr0Callback` */
+    % }
+% }
+
+/* CSIRX common config */
+CSIRX_CommonConfig gCsirxCommonConfig[CONFIG_CSIRX_NUM_INSTANCES] = {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let context = instance.context;
+    % let common = instance.common;
+    { /* `instance.$name.toUpperCase()` */
+        .isSoftStoppingOnInterfaceDisable = `common.isSoftStoppingOnInterfaceDisable`,
+        .isHeaderErrorCheckEnabled = `common.isHeaderErrorCheckEnabled`,
+        .isSignExtensionEnabled = `common.isSignExtensionEnabled`,
+        % if (common.burstSize == "CSIRX_BURST_SIZE_16X64") {
+        .isBurstSizeExpand = false,
+        .burstSize = CSIRX_BURST_SIZE_8X64, /* NOT USED when isBurstSizeExpand is false */
+        % } else {
+        .isBurstSizeExpand = true,
+        .burstSize = `common.burstSize`,
+        % }
+        .isNonPostedWrites = true,
+        .isOcpAutoIdle = true,
+        .stopStateFsmTimeoutInNanoSecs = CSIRX_STOP_STATE_FSM_TIMEOUT_MAX,
+        .endianness = `common.endianness`,
+        .startOfFrameIntr0ContextId = `common.startOfFrameIntr0ContextId`,
+        .startOfFrameIntr1ContextId = `common.startOfFrameIntr1ContextId`,
+        .endOfFrameIntr0ContextId = 0,
+        .endOfFrameIntr1ContextId = 0,
+        .enableIntr =
+        {
+            .isOcpError = `common.isOcpError`,
+            .isGenericShortPacketReceive = `common.isGenericShortPacketReceive`,
+            .isOneBitShortPacketErrorCorrect = `common.isOneBitShortPacketErrorCorrect`,
+            .isMoreThanOneBitShortPacketErrorCannotCorrect = `common.isMoreThanOneBitShortPacketErrorCannotCorrect`,
+            .isComplexioError = `common.isComplexioError`,
+            .isFifoOverflow = `common.isFifoOverflow`,
+            .isContextIntr = {
+                % let j = 0;
+                % for(; j < context.length; j++) {
+                `module.enableContextInterrupt(context[j])`,
+                % }
+                % for(; j < 8; j++) {
+                false,
+                % }
+            },
+        },
+        .intrCallbacks =
+        {
+            .combinedEndOfLineCallback = `common.combinedEndOfLineCallback`,
+            .combinedEndOfLineCallbackArgs = NULL, /* will be set later in Drivers_csirxOpen */
+            .combinedEndOfFrameCallback = `common.combinedEndOfFrameCallback`,
+            .combinedEndOfFrameCallbackArgs = NULL, /* will be set later in Drivers_csirxOpen */
+            .commonCallback = `common.commonCallback`,
+            .commonCallbackArgs = NULL, /* will be set later in Drivers_csirxOpen */
+            .startOfFrameIntr0Callback = `common.startOfFrameIntr0Callback`,
+            .startOfFrameIntr0CallbackArgs = NULL, /* will be set later in Drivers_csirxOpen */
+            .startOfFrameIntr1Callback = `common.startOfFrameIntr1Callback`,
+            .startOfFrameIntr1CallbackArgs = NULL, /* will be set later in Drivers_csirxOpen */
+        },
+    },
+% }
+};
+
+/* CSIRX context configurations */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let contexts = instance.context;
+
+/* CSIRX `instance.$name.toUpperCase()` context config */
+CSIRX_ContextConfig g`instNameCamelCase`ContextConfig[`instance.$name.toUpperCase()`_NUM_CONTEXT] =
+{
+    % for(let j = 0; j < contexts.length; j++) {
+        % let context = contexts[j];
+    { /* context `j` */
+        .virtualChannelId = `context.virtualChannelId`,
+        .format = `context.format`,
+        .userDefinedMapping = `context.userDefinedMapping`,
+        .numFramesToAcquire = `context.numFramesToAcquire`,
+        .numLinesForIntr = `context.numLinesForIntr`,
+        .alpha = `context.alpha`,
+        .isByteSwapEnabled = `context.isByteSwapEnabled`,
+        .isGenericEnabled = `context.isGenericEnabled`,
+        .isEndOfFramePulseEnabled = `context.isEndOfFramePulseEnabled`,
+        .isEndOfLinePulseEnabled = `context.isEndOfLinePulseEnabled`,
+        .isPayloadChecksumEnable = `context.isPayloadChecksumEnable`,
+        .isGenerateIntrEveryNumLinesForIntr = `context.isGenerateIntrEveryNumLinesForIntr`,
+        .transcodeConfig =
+        {
+            .transcodeFormat = `context.transcodeFormat`,
+            .isHorizontalDownscalingBy2Enabled = `context.isHorizontalDownscalingBy2Enabled`,
+            .crop =
+            {
+                .horizontalCount = `context.horizontalCount`,
+                .horizontalSkip = `context.horizontalSkip`,
+                .verticalCount = `context.verticalCount`,
+                .verticalSkip = `context.verticalSkip`,
+            },
+        },
+        .pingPongConfig =
+        {
+            .pingAddress = `context.pingAddress`,
+            .pongAddress = `context.pongAddress`,
+            .lineOffset = `context.lineOffset`,
+            .pingPongSwitchMode = `context.pingPongSwitchMode`,
+            .numFramesForFrameBasedPingPongSwitching = `context.numFramesForFrameBasedPingPongSwitching`,
+            .numLinesForLineBasedPingPongSwitching = `context.numLinesForLineBasedPingPongSwitching`,
+        },
+        .enableIntr =
+        {
+            .isNumLines = `context.isNumLines`,
+            .isFramesToAcquire = `context.isFramesToAcquire`,
+            .isPayloadChecksumMismatch = `context.isPayloadChecksumMismatch`,
+            .isLineStartCodeDetect = `context.isLineStartCodeDetect`,
+            .isLineEndCodeDetect = `context.isLineEndCodeDetect`,
+            .isFrameStartCodeDetect = `context.isFrameStartCodeDetect`,
+            .isFrameEndCodeDetect = `context.isFrameEndCodeDetect`,
+            .isLongPacketOneBitErrorCorrect = `context.isLongPacketOneBitErrorCorrect`,
+        },
+        .eolCallback = NULL,
+        .eolCallbackArgs = NULL,
+    },
+    % }
+};
+% }
+
+int32_t Drivers_csirxInstanceOpen(uint32_t instanceId, uint16_t numContexts, CSIRX_ContextConfig *pContextConfig)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    gCsirxHandle[instanceId] = CSIRX_open(CONFIG_CSIRX0);
+    if(gCsirxHandle[instanceId] == NULL)
+    {
+        status = SystemP_FAILURE;
+        DebugP_logError("CSIRX %d: CSIRX_open failed !!!\r\n", instanceId);
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        status = CSIRX_reset(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_reset failed !!!\r\n", instanceId);
+        }
+    }
+    if(status==SystemP_SUCCESS && gCsirxPhyEnable[instanceId])
+    {
+        status = CSIRX_complexioSetConfig(gCsirxHandle[instanceId], &gCsirxComplexioConfig[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_complexioSetConfig failed !!!\r\n", instanceId);
+        }
+
+        if(status==SystemP_SUCCESS)
+        {
+            status = CSIRX_complexioDeassertReset(gCsirxHandle[instanceId]);
+            if(status!=SystemP_SUCCESS)
+            {
+                DebugP_logError("CSIRX %d: CSIRX_complexioDeassertReset failed !!!\r\n", instanceId);
+            }
+        }
+        if(status==SystemP_SUCCESS)
+        {
+            uint32_t numComplexioDonePolls = 0;
+            bool isResetDone = false;
+
+            /* Wait until complex IO reset complete */
+            do
+            {
+                status = CSIRX_complexioIsResetDone(gCsirxHandle[instanceId], &isResetDone);
+                if(status!=SystemP_SUCCESS)
+                {
+                    break;
+                }
+                ClockP_usleep(1000);
+                numComplexioDonePolls++;
+            } while(( isResetDone == false) && (numComplexioDonePolls < 5U) );
+
+            if(isResetDone == false)
+            {
+                status = SystemP_FAILURE;
+            }
+            if(status!=SystemP_SUCCESS)
+            {
+                DebugP_logError("CSIRX %d: CSIRX_complexioIsResetDone failed !!!\r\n", instanceId);
+            }
+        }
+        if(status==SystemP_SUCCESS)
+        {
+            status = CSIRX_dphySetConfig(gCsirxHandle[instanceId], &gCsirxDphyConfig[instanceId]);
+            if(status!=SystemP_SUCCESS)
+            {
+                DebugP_logError("CSIRX %d: CSIRX_dphySetConfig failed !!!\r\n", instanceId);
+            }
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        status = CSIRX_commonSetConfig(gCsirxHandle[instanceId], &gCsirxCommonConfig[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_commonSetConfig failed !!!\r\n", instanceId);
+        }
+    }
+    if(status==SystemP_SUCCESS && gCsirxPhyEnable[instanceId])
+    {
+        status = CSIRX_complexioAssertForceRxModeOn(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_complexioAssertForceRxModeOn failed !!!\r\n", instanceId);
+        }
+
+        if(status==SystemP_SUCCESS)
+        {
+            uint32_t numForceRxModeDeassertedPolls = 0;
+            bool isForceRxModeDeasserted = false;
+
+            /* wait until force rx mode deasserted: This may depend on Tx */
+            do
+            {
+                status = CSIRX_complexioIsDeassertForceRxModeOn(gCsirxHandle[instanceId],
+                                                                    &isForceRxModeDeasserted);
+                if(status != SystemP_SUCCESS)
+                {
+                    break;
+                }
+                ClockP_usleep(1000);
+                numForceRxModeDeassertedPolls++;
+            } while( (isForceRxModeDeasserted == false) && (numForceRxModeDeassertedPolls < 5) );
+
+            if(isForceRxModeDeasserted == false)
+            {
+                status = SystemP_SUCCESS;
+            }
+            if(status!=SystemP_SUCCESS)
+            {
+                DebugP_logError("CSIRX %d: CSIRX_complexioIsDeassertForceRxModeOn failed !!!\r\n", instanceId);
+            }
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        /* enable interface */
+        status = CSIRX_commonEnable(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_commonEnable failed !!!\r\n", instanceId);
+        }
+    }
+    if(status==SystemP_SUCCESS && gCsirxPhyEnable[instanceId])
+    {
+        /* Power on complex IO */
+        status = CSIRX_complexioPowerOn(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_complexioPowerOn failed !!!\r\n", instanceId);
+        }
+
+        if(status == SystemP_SUCCESS)
+        {
+            uint32_t numComplexioPowerStatusPolls = 0;
+            uint8_t powerStatus = 0;
+
+            /* Wait until complex IO powered up */
+            numComplexioPowerStatusPolls = 0;
+            do
+            {
+                status = CSIRX_complexioGetPowerStatus(gCsirxHandle[instanceId], &powerStatus);
+                if(status != SystemP_SUCCESS)
+                {
+                    break;
+                }
+                ClockP_usleep(1000);
+                numComplexioPowerStatusPolls++;
+            } while((powerStatus != CSIRX_COMPLEXIO_POWER_STATUS_ON) &&
+                    (numComplexioPowerStatusPolls < 5) );
+
+            if(powerStatus != CSIRX_COMPLEXIO_POWER_STATUS_ON)
+            {
+                status = SystemP_FAILURE;
+            }
+            if(status!=SystemP_SUCCESS)
+            {
+                DebugP_logError("CSIRX %d: CSIRX_complexioGetPowerStatus failed !!!\r\n", instanceId);
+            }
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        uint32_t i;
+
+        for(i = 0; i < numContexts; i++)
+        {
+            /* config contexts */
+            status = CSIRX_contextSetConfig(gCsirxHandle[instanceId], i, &pContextConfig[i] );
+            if(status!=SystemP_SUCCESS)
+            {
+                DebugP_logError("CSIRX %d: CSIRX_contextSetConfig for context %d failed !!!\r\n", instanceId, i);
+            }
+            if(status != SystemP_SUCCESS)
+            {
+                break;
+            }
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        /* Debug mode, first flush FIFO - disable debug mode and enable interface */
+        status = CSIRX_debugModeDisable(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_debugModeDisable failed !!!\r\n", instanceId);
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        /* enable interface */
+        status = CSIRX_commonEnable(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_commonEnable failed !!!\r\n", instanceId);
+        }
+    }
+    return status;
+}
+
+int32_t Drivers_csirxInstanceClose(uint32_t instanceId, uint16_t numContexts)
+{
+    uint32_t i;
+    int32_t status = SystemP_SUCCESS;
+
+    CSIRX_debugModeDisable(gCsirxHandle[instanceId]);
+
+    for(i = 0; i < numContexts; i++)
+    {
+        /* enable context */
+        status = CSIRX_contextDisable(gCsirxHandle[instanceId], i);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_contextDisable for context %d failed !!!\r\n", instanceId, i);
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        /* enable interface */
+        status = CSIRX_commonDisable(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_commonDisable failed !!!\r\n", instanceId);
+        }
+    }
+    if(status==SystemP_SUCCESS)
+    {
+        status = CSIRX_close(gCsirxHandle[instanceId]);
+        if(status!=SystemP_SUCCESS)
+        {
+            DebugP_logError("CSIRX %d: CSIRX_close failed !!!\r\n", instanceId);
+        }
+    }
+    return status;
+}
+
+int32_t Drivers_csirxOpen()
+{
+    int32_t status = SystemP_SUCCESS;
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % if (instance.instOpenEnable) {
+    if(status == SystemP_SUCCESS)
+    {
+        status = Drivers_csirxInstanceOpen(
+                    `instance.$name.toUpperCase()`,
+                    `instance.$name.toUpperCase()`_NUM_CONTEXT,
+                    g`instNameCamelCase`ContextConfig
+            );
+    }
+    % }
+% }
+
+    return status;
+}
+
+int32_t Drivers_csirxClose()
+{
+    int32_t status = SystemP_SUCCESS;
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % if (instance.instOpenEnable) {
+    if(status == SystemP_SUCCESS)
+    {
+        status = Drivers_csirxInstanceClose(
+                    `instance.$name.toUpperCase()`,
+                    `instance.$name.toUpperCase()`_NUM_CONTEXT
+                    );
+    }
+    % }
+% }
+    return status;
+}

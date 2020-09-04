@@ -1,0 +1,1 @@
+`JSON.stringify(args.tirex_content_list, null, "    ")`

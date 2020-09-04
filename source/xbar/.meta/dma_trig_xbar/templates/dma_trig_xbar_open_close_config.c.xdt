@@ -1,0 +1,45 @@
+void Drivers_dmaTrigXbarOpen()
+{
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/xbar/dma_trig_xbar/soc/dma_trig_xbar_${common.getSocName()}`);
+    let module = system.modules['/xbar/dma_trig_xbar/dma_trig_xbar'];
+%%}
+% let base = "CSL_EDMA_TRIG_XBAR_U_BASE";
+% let OPTION_LIST = soc.getOptionList("INTERNAL");
+    /*
+    * DMA TRIGGER XBAR
+    */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let xbarOutput = config.xbarOutput;
+        % if(config.parentName != "NONE"){
+        % if(config.parentName == "MCSPI_RX")
+        % {
+        %   let csPinName = instance.$ownedBy.CSn.$solution.peripheralPinName;
+        %   xbarOutput = "DMA_TRIG_XBAR_"+instance.$ownedBy.$ownedBy.SPI.$solution.peripheralName+"_DMA_READ_REQ"+csPinName[csPinName.length-1];
+        % }
+        % else if(config.parentName == "MCSPI_TX")
+        % {
+        %   let csPinName = instance.$ownedBy.CSn.$solution.peripheralPinName;
+        %   xbarOutput = "DMA_TRIG_XBAR_"+instance.$ownedBy.$ownedBy.SPI.$solution.peripheralName+"_DMA_WRITE_REQ"+csPinName[csPinName.length-1];
+        % }
+        % else if(config.parentName == "UART_RX")
+        % {
+        %   xbarOutput = "DMA_TRIG_XBAR_USART"+(instance.$ownedBy.UART.$solution.peripheralName).replace("UART","")+"_DMA_1";
+        % }
+        % else if(config.parentName == "UART_TX")
+        % {
+        %   xbarOutput = "DMA_TRIG_XBAR_USART"+(instance.$ownedBy.UART.$solution.peripheralName).replace("UART","")+"_DMA_0";
+        % }
+        % }
+        % let path = OPTION_LIST.find(o => o.name == xbarOutput).path;
+        % if (path.search("<-") == -1) {
+    SOC_xbarSelectEdmaTrigXbarInputSource(`base`, `config.name`, `xbarOutput`);
+        % }
+        % else {
+    SOC_xbarSelectEdmaTrigXbarInputSource(`base`, `config.name`, `config.name`_INPUT);
+        % }
+    % }
+}

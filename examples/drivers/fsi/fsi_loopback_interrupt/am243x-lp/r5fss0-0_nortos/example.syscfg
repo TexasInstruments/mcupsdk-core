@@ -1,0 +1,67 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const fsi_rx     = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
+const fsi_rx1    = fsi_rx.addInstance();
+const fsi_tx     = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
+const fsi_tx1    = fsi_tx.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+fsi_rx1.$name              = "CONFIG_FSI_RX0";
+fsi_rx1.FSI_RX.$assign     = "FSI_RX0";
+fsi_rx1.FSI_RX.CLK.$assign = "U18";
+fsi_rx1.FSI_RX.D0.$assign  = "U20";
+fsi_rx1.FSI_RX.D1.$assign  = "V20";
+
+fsi_tx1.$name              = "CONFIG_FSI_TX0";
+fsi_tx1.FSI_TX.$assign     = "FSI_TX0";
+fsi_tx1.FSI_TX.CLK.$assign = "P21";
+fsi_tx1.FSI_TX.D0.$assign  = "Y18";
+fsi_tx1.FSI_TX.D1.$assign  = "AA19";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign     = "USART0";
+debug_log.uartLog.UART.RXD.$assign = "B10";
+debug_log.uartLog.UART.TXD.$assign = "B11";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";

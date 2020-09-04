@@ -1,0 +1,2997 @@
+/********************************************************************
+ * Copyright (C) 2022 Texas Instruments Incorporated.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *  Name        : cslr_hsm_ctrl.h
+*/
+#ifndef CSLR_HSM_CTRL_H_
+#define CSLR_HSM_CTRL_H_
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+#include <drivers/hw_include/cslr.h>
+#include <stdint.h>
+
+/**************************************************************************
+* Hardware Region  :
+**************************************************************************/
+
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct {
+    volatile uint32_t PID;
+    volatile uint32_t HW_REG0;
+    volatile uint32_t HW_REG1;
+    volatile uint32_t HW_REG2;
+    volatile uint32_t HW_REG3;
+    volatile uint32_t HSM_B0_MEMINIT_START;
+    volatile uint32_t HSM_B0_MEMINIT_STATUS;
+    volatile uint32_t HSM_B0_MEMINIT_DONE;
+    volatile uint32_t HSM_B1_MEMINIT_START;
+    volatile uint32_t HSM_B1_MEMINIT_STATUS;
+    volatile uint32_t HSM_B1_MEMINIT_DONE;
+    volatile uint32_t HSM_B2_MEMINIT_START;
+    volatile uint32_t HSM_B2_MEMINIT_STATUS;
+    volatile uint32_t HSM_B2_MEMINIT_DONE;
+    volatile uint32_t HSM_B3_MEMINIT_START;
+    volatile uint32_t HSM_B3_MEMINIT_STATUS;
+    volatile uint32_t HSM_B3_MEMINIT_DONE;
+    volatile uint32_t HSM_SECURERAM_MEMINIT_START;
+    volatile uint32_t HSM_SECURERAM_MEMINIT_STATUS;
+    volatile uint32_t HSM_SECURERAM_MEMINIT_DONE;
+    volatile uint32_t HSM_TPCCA_MEMINIT_START;
+    volatile uint32_t HSM_TPCCA_MEMINIT_STATUS;
+    volatile uint32_t HSM_TPCCA_MEMINIT_DONE;
+    volatile uint32_t HSM_TPTC_DBS_CONFIG;
+    volatile uint32_t HSM_TPCC_A_PARITY_CTRL;
+    volatile uint32_t HSM_TPCC_A_PARITY_STATUS;
+    volatile uint32_t HSM_TPTC_BOUNDARY_CFG;
+    volatile uint32_t HSM_TPTC_XID_REORDER_CFG;
+    volatile uint32_t HSM_DBG_ACK_CTL0;
+    volatile uint32_t HSM_CM4_POR_RST_CTRL;
+    volatile uint32_t HSM_CM4_SYS_RST_CTRL;
+    volatile uint32_t HSM_RTC_RST_CTRL;
+    volatile uint32_t HSM_RTIA_RST_CTRL;
+    volatile uint32_t HSM_WDT_RST_CTRL;
+    volatile uint32_t HSM_DCCA_RST_CTRL;
+    volatile uint32_t HSM_ESM_RST_CTRL;
+    volatile uint32_t HSM_DMTA_RST_CTRL;
+    volatile uint32_t HSM_DMTB_RST_CTRL;
+    volatile uint32_t HSM_EDMA_RST_CTRL;
+    volatile uint32_t HSM_INFRA_RST_CTRL;
+    volatile uint32_t HSM_DTHE_RST_CTRL;
+    volatile uint32_t HSM_EIP57T_RST_CTRL;
+    volatile uint32_t HSM_EIP76D_RST_CTRL;
+    volatile uint32_t HSM_EIP29T2_RST_CTRL;
+    volatile uint32_t HSM_EIP38T_CM_RST_CTRL;
+    volatile uint32_t HSM_DMT_CFG;
+    volatile uint32_t HSM_DCC_CFG;
+    volatile uint32_t HSM_CM4_CFG;
+    volatile uint32_t HSM_CM4_RST_CAUSE_CLR;
+    volatile uint32_t HSM_CM4_RST_CAUSE;
+    volatile uint32_t HSM_CM4_ROM_ECLIPSE_CTRL;
+    volatile uint32_t HSM_CM4_ROM_ECLIPSE_STATUS;
+    volatile uint32_t HSM_CM4_WFI_OVERRIDE;
+    volatile uint32_t HSM_TPCC_A_ERRAGG_MASK;
+    volatile uint32_t HSM_TPCC_A_ERRAGG_STATUS;
+    volatile uint32_t HSM_TPCC_A_ERRAGG_STATUS_RAW;
+    volatile uint32_t HSM_TPCC_A_INTAGG_MASK;
+    volatile uint32_t HSM_TPCC_A_INTAGG_STATUS;
+    volatile uint32_t HSM_TPCC_A_INTAGG_STATUS_RAW;
+    volatile uint32_t HSM_IBUS_AHB_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_IBUS_AHB_BUS_SAFETY_FI;
+    volatile uint32_t HSM_IBUS_AHB_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_DBUS_AHB_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_DBUS_AHB_BUS_SAFETY_FI;
+    volatile uint32_t HSM_DBUS_AHB_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_SBUS_AHB_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_SBUS_AHB_BUS_SAFETY_FI;
+    volatile uint32_t HSM_SBUS_AHB_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_GLOBAL_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_SCR_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_SCR_BUS_SAFETY_FI;
+    volatile uint32_t HSM_SCR_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL;
+    volatile uint32_t HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI;
+    volatile uint32_t HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR;
+    volatile uint32_t HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0;
+    volatile uint32_t HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1;
+    volatile uint32_t SOP_MODE;
+    volatile uint32_t DEVICE_TYPE;
+    volatile uint32_t RS232_FIREWALL;
+    volatile uint32_t DMM_FIREWALL;
+    volatile uint32_t TRACE_FIREWALL;
+    volatile uint32_t HSM_SEC_MGR_FIREWALL_STATUS;
+    volatile uint32_t RS232_FIREWALL_STATUS;
+    volatile uint32_t DMM_FIREWALL_STATUS;
+    volatile uint32_t TRACE_FIREWALL_STATUS;
+    volatile uint8_t  Resv_4048[3552];
+    volatile uint32_t HW_SPARE_RW0;
+    volatile uint32_t HW_SPARE_RW1;
+    volatile uint32_t HW_SPARE_RW2;
+    volatile uint32_t HW_SPARE_RW3;
+    volatile uint32_t HW_SPARE_RO0;
+    volatile uint32_t HW_SPARE_RO1;
+    volatile uint32_t HW_SPARE_RO2;
+    volatile uint32_t HW_SPARE_RO3;
+    volatile uint32_t HW_SPARE_WPH;
+    volatile uint32_t HW_SPARE_REC;
+    volatile uint8_t  Resv_4104[16];
+    volatile uint32_t LOCK0_KICK0;
+    volatile uint32_t LOCK0_KICK1;
+    volatile uint32_t INTR_RAW_STATUS;
+    volatile uint32_t INTR_ENABLED_STATUS_CLEAR;
+    volatile uint32_t INTR_ENABLE;
+    volatile uint32_t INTR_ENABLE_CLEAR;
+    volatile uint32_t EOI;
+    volatile uint32_t FAULT_ADDRESS;
+    volatile uint32_t FAULT_TYPE_STATUS;
+    volatile uint32_t FAULT_ATTR_STATUS;
+    volatile uint32_t FAULT_CLEAR;
+} CSL_hsm_ctrlRegs;
+
+
+/**************************************************************************
+* Register Macros
+**************************************************************************/
+
+#define CSL_HSM_CTRL_PID                                                       (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG0                                                   (0x00000004U)
+#define CSL_HSM_CTRL_HW_REG1                                                   (0x00000008U)
+#define CSL_HSM_CTRL_HW_REG2                                                   (0x0000000CU)
+#define CSL_HSM_CTRL_HW_REG3                                                   (0x00000010U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_START                                      (0x00000014U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_STATUS                                     (0x00000018U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_DONE                                       (0x0000001CU)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_START                                      (0x00000020U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_STATUS                                     (0x00000024U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_DONE                                       (0x00000028U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_START                                      (0x0000002CU)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_STATUS                                     (0x00000030U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_DONE                                       (0x00000034U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_START                                      (0x00000038U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_STATUS                                     (0x0000003CU)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_DONE                                       (0x00000040U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_START                               (0x00000044U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_STATUS                              (0x00000048U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_DONE                                (0x0000004CU)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_START                                   (0x00000050U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_STATUS                                  (0x00000054U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_DONE                                    (0x00000058U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG                                       (0x0000005CU)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL                                    (0x00000060U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_STATUS                                  (0x00000064U)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG                                     (0x00000068U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG                                  (0x0000006CU)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0                                          (0x00000070U)
+#define CSL_HSM_CTRL_HSM_CM4_POR_RST_CTRL                                      (0x00000074U)
+#define CSL_HSM_CTRL_HSM_CM4_SYS_RST_CTRL                                      (0x00000078U)
+#define CSL_HSM_CTRL_HSM_RTC_RST_CTRL                                          (0x0000007CU)
+#define CSL_HSM_CTRL_HSM_RTIA_RST_CTRL                                         (0x00000080U)
+#define CSL_HSM_CTRL_HSM_WDT_RST_CTRL                                          (0x00000084U)
+#define CSL_HSM_CTRL_HSM_DCCA_RST_CTRL                                         (0x00000088U)
+#define CSL_HSM_CTRL_HSM_ESM_RST_CTRL                                          (0x0000008CU)
+#define CSL_HSM_CTRL_HSM_DMTA_RST_CTRL                                         (0x00000090U)
+#define CSL_HSM_CTRL_HSM_DMTB_RST_CTRL                                         (0x00000094U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL                                         (0x00000098U)
+#define CSL_HSM_CTRL_HSM_INFRA_RST_CTRL                                        (0x0000009CU)
+#define CSL_HSM_CTRL_HSM_DTHE_RST_CTRL                                         (0x000000A0U)
+#define CSL_HSM_CTRL_HSM_EIP57T_RST_CTRL                                       (0x000000A4U)
+#define CSL_HSM_CTRL_HSM_EIP76D_RST_CTRL                                       (0x000000A8U)
+#define CSL_HSM_CTRL_HSM_EIP29T2_RST_CTRL                                      (0x000000ACU)
+#define CSL_HSM_CTRL_HSM_EIP38T_CM_RST_CTRL                                    (0x000000B0U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG                                               (0x000000B4U)
+#define CSL_HSM_CTRL_HSM_DCC_CFG                                               (0x000000B8U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG                                               (0x000000BCU)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_CLR                                     (0x000000C0U)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE                                         (0x000000C4U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL                                  (0x000000C8U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_STATUS                                (0x000000CCU)
+#define CSL_HSM_CTRL_HSM_CM4_WFI_OVERRIDE                                      (0x000000D0U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK                                    (0x000000D4U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS                                  (0x000000D8U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW                              (0x000000DCU)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK                                    (0x000000E0U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS                                  (0x000000E4U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW                              (0x000000E8U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL                              (0x000000ECU)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI                                (0x000000F0U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR                               (0x000000F4U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0                    (0x000000F8U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1                    (0x000000FCU)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL                              (0x00000100U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI                                (0x00000104U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR                               (0x00000108U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0                    (0x0000010CU)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1                    (0x00000110U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL                              (0x00000114U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI                                (0x00000118U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR                               (0x0000011CU)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0                    (0x00000120U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1                    (0x00000124U)
+#define CSL_HSM_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL                                (0x00000128U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL                                   (0x0000012CU)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI                                     (0x00000130U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR                                    (0x00000134U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0                         (0x00000138U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1                         (0x0000013CU)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL                        (0x00000140U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI                          (0x00000144U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR                         (0x00000148U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0              (0x0000014CU)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1              (0x00000150U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL                 (0x00000154U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI                   (0x00000158U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR                  (0x0000015CU)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0       (0x00000160U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1       (0x00000164U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL                     (0x00000168U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI                       (0x0000016CU)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR                      (0x00000170U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0           (0x00000174U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1           (0x00000178U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL                     (0x0000017CU)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI                       (0x00000180U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR                      (0x00000184U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0           (0x00000188U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1           (0x0000018CU)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL                     (0x00000190U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI                       (0x00000194U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR                      (0x00000198U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0           (0x0000019CU)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1           (0x000001A0U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL                     (0x000001A4U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI                       (0x000001A8U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR                      (0x000001ACU)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0           (0x000001B0U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1           (0x000001B4U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL              (0x000001B8U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI                (0x000001BCU)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR               (0x000001C0U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0    (0x000001C4U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1    (0x000001C8U)
+#define CSL_HSM_CTRL_SOP_MODE                                                  (0x000001CCU)
+#define CSL_HSM_CTRL_DEVICE_TYPE                                               (0x000001D0U)
+#define CSL_HSM_CTRL_RS232_FIREWALL                                            (0x000001D4U)
+#define CSL_HSM_CTRL_DMM_FIREWALL                                              (0x000001D8U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL                                            (0x000001DCU)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS                               (0x000001E0U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS                                     (0x000001E4U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS                                       (0x000001E8U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS                                     (0x000001ECU)
+#define CSL_HSM_CTRL_HW_SPARE_RW0                                              (0x00000FD0U)
+#define CSL_HSM_CTRL_HW_SPARE_RW1                                              (0x00000FD4U)
+#define CSL_HSM_CTRL_HW_SPARE_RW2                                              (0x00000FD8U)
+#define CSL_HSM_CTRL_HW_SPARE_RW3                                              (0x00000FDCU)
+#define CSL_HSM_CTRL_HW_SPARE_RO0                                              (0x00000FE0U)
+#define CSL_HSM_CTRL_HW_SPARE_RO1                                              (0x00000FE4U)
+#define CSL_HSM_CTRL_HW_SPARE_RO2                                              (0x00000FE8U)
+#define CSL_HSM_CTRL_HW_SPARE_RO3                                              (0x00000FECU)
+#define CSL_HSM_CTRL_HW_SPARE_WPH                                              (0x00000FF0U)
+#define CSL_HSM_CTRL_HW_SPARE_REC                                              (0x00000FF4U)
+#define CSL_HSM_CTRL_LOCK0_KICK0                                               (0x00001008U)
+#define CSL_HSM_CTRL_LOCK0_KICK1                                               (0x0000100CU)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS                                           (0x00001010U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR                                 (0x00001014U)
+#define CSL_HSM_CTRL_INTR_ENABLE                                               (0x00001018U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR                                         (0x0000101CU)
+#define CSL_HSM_CTRL_EOI                                                       (0x00001020U)
+#define CSL_HSM_CTRL_FAULT_ADDRESS                                             (0x00001024U)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS                                         (0x00001028U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS                                         (0x0000102CU)
+#define CSL_HSM_CTRL_FAULT_CLEAR                                               (0x00001030U)
+
+/**************************************************************************
+* Field Definition Macros
+**************************************************************************/
+
+
+/* PID */
+
+#define CSL_HSM_CTRL_PID_PID_MINOR_MASK                                        (0x0000003FU)
+#define CSL_HSM_CTRL_PID_PID_MINOR_SHIFT                                       (0x00000000U)
+#define CSL_HSM_CTRL_PID_PID_MINOR_RESETVAL                                    (0x00000013U)
+#define CSL_HSM_CTRL_PID_PID_MINOR_MAX                                         (0x0000003FU)
+
+#define CSL_HSM_CTRL_PID_PID_CUSTOM_MASK                                       (0x000000C0U)
+#define CSL_HSM_CTRL_PID_PID_CUSTOM_SHIFT                                      (0x00000006U)
+#define CSL_HSM_CTRL_PID_PID_CUSTOM_RESETVAL                                   (0x00000000U)
+#define CSL_HSM_CTRL_PID_PID_CUSTOM_MAX                                        (0x00000003U)
+
+#define CSL_HSM_CTRL_PID_PID_MAJOR_MASK                                        (0x00000700U)
+#define CSL_HSM_CTRL_PID_PID_MAJOR_SHIFT                                       (0x00000008U)
+#define CSL_HSM_CTRL_PID_PID_MAJOR_RESETVAL                                    (0x00000002U)
+#define CSL_HSM_CTRL_PID_PID_MAJOR_MAX                                         (0x00000007U)
+
+#define CSL_HSM_CTRL_PID_PID_MISC_MASK                                         (0x0000F800U)
+#define CSL_HSM_CTRL_PID_PID_MISC_SHIFT                                        (0x0000000BU)
+#define CSL_HSM_CTRL_PID_PID_MISC_RESETVAL                                     (0x00000000U)
+#define CSL_HSM_CTRL_PID_PID_MISC_MAX                                          (0x0000001FU)
+
+#define CSL_HSM_CTRL_PID_PID_MSB16_MASK                                        (0xFFFF0000U)
+#define CSL_HSM_CTRL_PID_PID_MSB16_SHIFT                                       (0x00000010U)
+#define CSL_HSM_CTRL_PID_PID_MSB16_RESETVAL                                    (0x00006180U)
+#define CSL_HSM_CTRL_PID_PID_MSB16_MAX                                         (0x0000FFFFU)
+
+#define CSL_HSM_CTRL_PID_RESETVAL                                              (0x61800213U)
+
+/* HW_REG0 */
+
+#define CSL_HSM_CTRL_HW_REG0_HW_REG0_HWREG0_MASK                               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_REG0_HW_REG0_HWREG0_SHIFT                              (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG0_HW_REG0_HWREG0_RESETVAL                           (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG0_HW_REG0_HWREG0_MAX                                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_REG0_RESETVAL                                          (0x00000000U)
+
+/* HW_REG1 */
+
+#define CSL_HSM_CTRL_HW_REG1_HW_REG1_HWREG1_MASK                               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_REG1_HW_REG1_HWREG1_SHIFT                              (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG1_HW_REG1_HWREG1_RESETVAL                           (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG1_HW_REG1_HWREG1_MAX                                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_REG1_RESETVAL                                          (0x00000000U)
+
+/* HW_REG2 */
+
+#define CSL_HSM_CTRL_HW_REG2_HW_REG2_HWREG2_MASK                               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_REG2_HW_REG2_HWREG2_SHIFT                              (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG2_HW_REG2_HWREG2_RESETVAL                           (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG2_HW_REG2_HWREG2_MAX                                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_REG2_RESETVAL                                          (0x00000000U)
+
+/* HW_REG3 */
+
+#define CSL_HSM_CTRL_HW_REG3_HW_REG3_HWREG3_MASK                               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_REG3_HW_REG3_HWREG3_SHIFT                              (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG3_HW_REG3_HWREG3_RESETVAL                           (0x00000000U)
+#define CSL_HSM_CTRL_HW_REG3_HW_REG3_HWREG3_MAX                                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_REG3_RESETVAL                                          (0x00000000U)
+
+/* HSM_B0_MEMINIT_START */
+
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_HSM_B0_MEMINIT_START_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_START_RESETVAL                             (0x00000000U)
+
+/* HSM_B0_MEMINIT_STATUS */
+
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_HSM_B0_MEMINIT_STATUS_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_STATUS_RESETVAL                            (0x00000000U)
+
+/* HSM_B0_MEMINIT_DONE */
+
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_HSM_B0_MEMINIT_DONE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B0_MEMINIT_DONE_RESETVAL                              (0x00000000U)
+
+/* HSM_B1_MEMINIT_START */
+
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_HSM_B1_MEMINIT_START_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_START_RESETVAL                             (0x00000000U)
+
+/* HSM_B1_MEMINIT_STATUS */
+
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_HSM_B1_MEMINIT_STATUS_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_STATUS_RESETVAL                            (0x00000000U)
+
+/* HSM_B1_MEMINIT_DONE */
+
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_HSM_B1_MEMINIT_DONE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B1_MEMINIT_DONE_RESETVAL                              (0x00000000U)
+
+/* HSM_B2_MEMINIT_START */
+
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_HSM_B2_MEMINIT_START_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_START_RESETVAL                             (0x00000000U)
+
+/* HSM_B2_MEMINIT_STATUS */
+
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_HSM_B2_MEMINIT_STATUS_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_STATUS_RESETVAL                            (0x00000000U)
+
+/* HSM_B2_MEMINIT_DONE */
+
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_HSM_B2_MEMINIT_DONE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B2_MEMINIT_DONE_RESETVAL                              (0x00000000U)
+
+/* HSM_B3_MEMINIT_START */
+
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_HSM_B3_MEMINIT_START_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_START_RESETVAL                             (0x00000000U)
+
+/* HSM_B3_MEMINIT_STATUS */
+
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_HSM_B3_MEMINIT_STATUS_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_STATUS_RESETVAL                            (0x00000000U)
+
+/* HSM_B3_MEMINIT_DONE */
+
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_HSM_B3_MEMINIT_DONE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_B3_MEMINIT_DONE_RESETVAL                              (0x00000000U)
+
+/* HSM_SECURERAM_MEMINIT_START */
+
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_START_HSM_SECURERAM_MEMINIT_START_HSM_SECURE_MEMINIT_START_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_START_HSM_SECURERAM_MEMINIT_START_HSM_SECURE_MEMINIT_START_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_START_HSM_SECURERAM_MEMINIT_START_HSM_SECURE_MEMINIT_START_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_START_HSM_SECURERAM_MEMINIT_START_HSM_SECURE_MEMINIT_START_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_START_RESETVAL                      (0x00000000U)
+
+/* HSM_SECURERAM_MEMINIT_STATUS */
+
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURE_MEMINIT_STATUS_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURE_MEMINIT_STATUS_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURE_MEMINIT_STATUS_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURERAM_MEMINIT_STATUS_HSM_SECURE_MEMINIT_STATUS_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_STATUS_RESETVAL                     (0x00000000U)
+
+/* HSM_SECURERAM_MEMINIT_DONE */
+
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURE_MEMINIT_DONE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURE_MEMINIT_DONE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURE_MEMINIT_DONE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURERAM_MEMINIT_DONE_HSM_SECURE_MEMINIT_DONE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SECURERAM_MEMINIT_DONE_RESETVAL                       (0x00000000U)
+
+/* HSM_TPCCA_MEMINIT_START */
+
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_START_HSM_TPCCA_MEMINIT_START_TPCC_A_MEMINIT_START_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_START_HSM_TPCCA_MEMINIT_START_TPCC_A_MEMINIT_START_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_START_HSM_TPCCA_MEMINIT_START_TPCC_A_MEMINIT_START_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_START_HSM_TPCCA_MEMINIT_START_TPCC_A_MEMINIT_START_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_START_RESETVAL                          (0x00000000U)
+
+/* HSM_TPCCA_MEMINIT_STATUS */
+
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_STATUS_HSM_TPCCA_MEMINIT_STATUS_TPCC_A_MEMINIT_STATUS_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_STATUS_HSM_TPCCA_MEMINIT_STATUS_TPCC_A_MEMINIT_STATUS_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_STATUS_HSM_TPCCA_MEMINIT_STATUS_TPCC_A_MEMINIT_STATUS_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_STATUS_HSM_TPCCA_MEMINIT_STATUS_TPCC_A_MEMINIT_STATUS_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_STATUS_RESETVAL                         (0x00000000U)
+
+/* HSM_TPCCA_MEMINIT_DONE */
+
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_DONE_HSM_TPCCA_MEMINIT_DONE_TPCC_A_MEMINIT_DONE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_DONE_HSM_TPCCA_MEMINIT_DONE_TPCC_A_MEMINIT_DONE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_DONE_HSM_TPCCA_MEMINIT_DONE_TPCC_A_MEMINIT_DONE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_DONE_HSM_TPCCA_MEMINIT_DONE_TPCC_A_MEMINIT_DONE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCCA_MEMINIT_DONE_RESETVAL                           (0x00000000U)
+
+/* HSM_TPTC_DBS_CONFIG */
+
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A0_MASK      (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A0_SHIFT     (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A0_RESETVAL  (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A0_MAX       (0x00000003U)
+
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A1_MASK      (0x00000030U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A1_SHIFT     (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A1_RESETVAL  (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_HSM_TPTC_DBS_CONFIG_TPTC_A1_MAX       (0x00000003U)
+
+#define CSL_HSM_CTRL_HSM_TPTC_DBS_CONFIG_RESETVAL                              (0x00000000U)
+
+/* HSM_TPCC_A_PARITY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_EN_MASK     (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_EN_SHIFT    (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_EN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_EN_MAX      (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_TESTEN_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_TESTEN_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_TESTEN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_TESTEN_MAX  (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_PARITY_ERR_CLR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_PARITY_ERR_CLR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_PARITY_ERR_CLR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_HSM_TPCC_A_PARITY_CTRL_PARITY_ERR_CLR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_CTRL_RESETVAL                           (0x00000000U)
+
+/* HSM_TPCC_A_PARITY_STATUS */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_STATUS_HSM_TPCC_A_PARITY_STATUS_ADDR_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_STATUS_HSM_TPCC_A_PARITY_STATUS_ADDR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_STATUS_HSM_TPCC_A_PARITY_STATUS_ADDR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_STATUS_HSM_TPCC_A_PARITY_STATUS_ADDR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_PARITY_STATUS_RESETVAL                         (0x00000000U)
+
+/* HSM_TPTC_BOUNDARY_CFG */
+
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A0_SIZE_MASK (0x0000003FU)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A0_SIZE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A0_SIZE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A0_SIZE_MAX (0x0000003FU)
+
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A1_SIZE_MASK (0x00003F00U)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A1_SIZE_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A1_SIZE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_HSM_TPTC_BOUNDARY_CFG_TPTC_A1_SIZE_MAX (0x0000003FU)
+
+#define CSL_HSM_CTRL_HSM_TPTC_BOUNDARY_CFG_RESETVAL                            (0x00000000U)
+
+/* HSM_TPTC_XID_REORDER_CFG */
+
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A0_DISABLE_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A0_DISABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A0_DISABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A0_DISABLE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A1_DISABLE_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A1_DISABLE_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A1_DISABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_HSM_TPTC_XID_REORDER_CFG_TPTC_A1_DISABLE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPTC_XID_REORDER_CFG_RESETVAL                         (0x00000000U)
+
+/* HSM_DBG_ACK_CTL0 */
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_RTI_MASK                (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_RTI_SHIFT               (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_RTI_RESETVAL            (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_RTI_MAX                 (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_WDT_MASK                (0x00000070U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_WDT_SHIFT               (0x00000004U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_WDT_RESETVAL            (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_WDT_MAX                 (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DCCA_MASK               (0x00000700U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DCCA_SHIFT              (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DCCA_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DCCA_MAX                (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTA_MASK               (0x00007000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTA_SHIFT              (0x0000000CU)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTA_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTA_MAX                (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTB_MASK               (0x00070000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTB_SHIFT              (0x00000010U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTB_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DMTB_MAX                (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DTHE_MASK               (0x00700000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DTHE_SHIFT              (0x00000014U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DTHE_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_HSM_DBG_ACK_CTL0_DTHE_MAX                (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBG_ACK_CTL0_RESETVAL                                 (0x00000000U)
+
+/* HSM_CM4_POR_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_CM4_POR_RST_CTRL_HSM_CM4_POR_RST_CTRL_ASSERT_MASK     (0x00000007U)
+#define CSL_HSM_CTRL_HSM_CM4_POR_RST_CTRL_HSM_CM4_POR_RST_CTRL_ASSERT_SHIFT    (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_POR_RST_CTRL_HSM_CM4_POR_RST_CTRL_ASSERT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_POR_RST_CTRL_HSM_CM4_POR_RST_CTRL_ASSERT_MAX      (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_POR_RST_CTRL_RESETVAL                             (0x00000000U)
+
+/* HSM_CM4_SYS_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_CM4_SYS_RST_CTRL_HSM_CM4_SYS_RST_CTRL_ASSERT_MASK     (0x00000007U)
+#define CSL_HSM_CTRL_HSM_CM4_SYS_RST_CTRL_HSM_CM4_SYS_RST_CTRL_ASSERT_SHIFT    (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_SYS_RST_CTRL_HSM_CM4_SYS_RST_CTRL_ASSERT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_SYS_RST_CTRL_HSM_CM4_SYS_RST_CTRL_ASSERT_MAX      (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_SYS_RST_CTRL_RESETVAL                             (0x00000000U)
+
+/* HSM_RTC_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RTC_RST_CTRL_HSM_RTC_RST_CTRL_ASSERT_MASK             (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RTC_RST_CTRL_HSM_RTC_RST_CTRL_ASSERT_SHIFT            (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RTC_RST_CTRL_HSM_RTC_RST_CTRL_ASSERT_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RTC_RST_CTRL_HSM_RTC_RST_CTRL_ASSERT_MAX              (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RTC_RST_CTRL_RESETVAL                                 (0x00000000U)
+
+/* HSM_RTIA_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RTIA_RST_CTRL_HSM_RTIA_RST_CTRL_ASSERT_MASK           (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RTIA_RST_CTRL_HSM_RTIA_RST_CTRL_ASSERT_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RTIA_RST_CTRL_HSM_RTIA_RST_CTRL_ASSERT_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RTIA_RST_CTRL_HSM_RTIA_RST_CTRL_ASSERT_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RTIA_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* HSM_WDT_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_WDT_RST_CTRL_HSM_WDT_RST_CTRL_ASSERT_MASK             (0x00000007U)
+#define CSL_HSM_CTRL_HSM_WDT_RST_CTRL_HSM_WDT_RST_CTRL_ASSERT_SHIFT            (0x00000000U)
+#define CSL_HSM_CTRL_HSM_WDT_RST_CTRL_HSM_WDT_RST_CTRL_ASSERT_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HSM_WDT_RST_CTRL_HSM_WDT_RST_CTRL_ASSERT_MAX              (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_WDT_RST_CTRL_RESETVAL                                 (0x00000000U)
+
+/* HSM_DCCA_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_DCCA_RST_CTRL_HSM_DCCA_RST_CTRL_ASSERT_MASK           (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DCCA_RST_CTRL_HSM_DCCA_RST_CTRL_ASSERT_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DCCA_RST_CTRL_HSM_DCCA_RST_CTRL_ASSERT_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DCCA_RST_CTRL_HSM_DCCA_RST_CTRL_ASSERT_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DCCA_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* HSM_ESM_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_ESM_RST_CTRL_HSM_ESM_RST_CTRL_ASSERT_MASK             (0x00000007U)
+#define CSL_HSM_CTRL_HSM_ESM_RST_CTRL_HSM_ESM_RST_CTRL_ASSERT_SHIFT            (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ESM_RST_CTRL_HSM_ESM_RST_CTRL_ASSERT_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ESM_RST_CTRL_HSM_ESM_RST_CTRL_ASSERT_MAX              (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_ESM_RST_CTRL_RESETVAL                                 (0x00000000U)
+
+/* HSM_DMTA_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_DMTA_RST_CTRL_HSM_DMTA_RST_CTRL_ASSERT_MASK           (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DMTA_RST_CTRL_HSM_DMTA_RST_CTRL_ASSERT_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMTA_RST_CTRL_HSM_DMTA_RST_CTRL_ASSERT_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMTA_RST_CTRL_HSM_DMTA_RST_CTRL_ASSERT_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DMTA_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* HSM_DMTB_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_DMTB_RST_CTRL_HSM_DMTB_RST_CTRL_ASSERT_MASK           (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DMTB_RST_CTRL_HSM_DMTB_RST_CTRL_ASSERT_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMTB_RST_CTRL_HSM_DMTB_RST_CTRL_ASSERT_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMTB_RST_CTRL_HSM_DMTB_RST_CTRL_ASSERT_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DMTB_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* HSM_EDMA_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_ASSERT_MASK           (0x00000007U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_ASSERT_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_ASSERT_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_ASSERT_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPCC_ASSERT_MASK      (0x00000070U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPCC_ASSERT_SHIFT     (0x00000004U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPCC_ASSERT_RESETVAL  (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPCC_ASSERT_MAX       (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A0_ASSERT_MASK   (0x00000700U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A0_ASSERT_SHIFT  (0x00000008U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A0_ASSERT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A0_ASSERT_MAX    (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A1_ASSERT_MASK   (0x00007000U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A1_ASSERT_SHIFT  (0x0000000CU)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A1_ASSERT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_HSM_EDMA_RST_CTRL_TPTC_A1_ASSERT_MAX    (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EDMA_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* HSM_INFRA_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_INFRA_RST_CTRL_HSM_INFRA_RST_CTRL_ASSERT_MASK         (0x00000007U)
+#define CSL_HSM_CTRL_HSM_INFRA_RST_CTRL_HSM_INFRA_RST_CTRL_ASSERT_SHIFT        (0x00000000U)
+#define CSL_HSM_CTRL_HSM_INFRA_RST_CTRL_HSM_INFRA_RST_CTRL_ASSERT_RESETVAL     (0x00000000U)
+#define CSL_HSM_CTRL_HSM_INFRA_RST_CTRL_HSM_INFRA_RST_CTRL_ASSERT_MAX          (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_INFRA_RST_CTRL_RESETVAL                               (0x00000000U)
+
+/* HSM_DTHE_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_DTHE_RST_CTRL_HSM_DTHE_RST_CTRL_ASSERT_MASK           (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DTHE_RST_CTRL_HSM_DTHE_RST_CTRL_ASSERT_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DTHE_RST_CTRL_HSM_DTHE_RST_CTRL_ASSERT_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DTHE_RST_CTRL_HSM_DTHE_RST_CTRL_ASSERT_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DTHE_RST_CTRL_RESETVAL                                (0x00000000U)
+
+/* HSM_EIP57T_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_EIP57T_RST_CTRL_HSM_EIP57T_RST_CTRL_ASSERT_MASK       (0x00000007U)
+#define CSL_HSM_CTRL_HSM_EIP57T_RST_CTRL_HSM_EIP57T_RST_CTRL_ASSERT_SHIFT      (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP57T_RST_CTRL_HSM_EIP57T_RST_CTRL_ASSERT_RESETVAL   (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP57T_RST_CTRL_HSM_EIP57T_RST_CTRL_ASSERT_MAX        (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EIP57T_RST_CTRL_RESETVAL                              (0x00000000U)
+
+/* HSM_EIP76D_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_EIP76D_RST_CTRL_HSM_EIP76D_RST_CTRL_ASSERT_MASK       (0x00000007U)
+#define CSL_HSM_CTRL_HSM_EIP76D_RST_CTRL_HSM_EIP76D_RST_CTRL_ASSERT_SHIFT      (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP76D_RST_CTRL_HSM_EIP76D_RST_CTRL_ASSERT_RESETVAL   (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP76D_RST_CTRL_HSM_EIP76D_RST_CTRL_ASSERT_MAX        (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EIP76D_RST_CTRL_RESETVAL                              (0x00000000U)
+
+/* HSM_EIP29T2_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_EIP29T2_RST_CTRL_HSM_EIP29T2_RST_CTRL_ASSERT_MASK     (0x00000007U)
+#define CSL_HSM_CTRL_HSM_EIP29T2_RST_CTRL_HSM_EIP29T2_RST_CTRL_ASSERT_SHIFT    (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP29T2_RST_CTRL_HSM_EIP29T2_RST_CTRL_ASSERT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP29T2_RST_CTRL_HSM_EIP29T2_RST_CTRL_ASSERT_MAX      (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EIP29T2_RST_CTRL_RESETVAL                             (0x00000000U)
+
+/* HSM_EIP38T_CM_RST_CTRL */
+
+#define CSL_HSM_CTRL_HSM_EIP38T_CM_RST_CTRL_HSM_EIP38T_CM_RST_CTRL_ASSERT_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_EIP38T_CM_RST_CTRL_HSM_EIP38T_CM_RST_CTRL_ASSERT_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP38T_CM_RST_CTRL_HSM_EIP38T_CM_RST_CTRL_ASSERT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_EIP38T_CM_RST_CTRL_HSM_EIP38T_CM_RST_CTRL_ASSERT_MAX  (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_EIP38T_CM_RST_CTRL_RESETVAL                           (0x00000000U)
+
+/* HSM_DMT_CFG */
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_CLK_EN_MASK                  (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_CLK_EN_SHIFT                 (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_CLK_EN_RESETVAL              (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_CLK_EN_MAX                   (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_CLK_EN_MASK                  (0x00000002U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_CLK_EN_SHIFT                 (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_CLK_EN_RESETVAL              (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_CLK_EN_MAX                   (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_FCLKEN_MASK                  (0x00000010U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_FCLKEN_SHIFT                 (0x00000004U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_FCLKEN_RESETVAL              (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_FCLKEN_MAX                   (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_FCLKEN_MASK                  (0x00000020U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_FCLKEN_SHIFT                 (0x00000005U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_FCLKEN_RESETVAL              (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_FCLKEN_MAX                   (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_INTR_SWKUP_MASK              (0x00100000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_INTR_SWKUP_SHIFT             (0x00000014U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_INTR_SWKUP_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTA_INTR_SWKUP_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_INTR_SWKUP_MASK              (0x00200000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_INTR_SWKUP_SHIFT             (0x00000015U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_INTR_SWKUP_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_DMTB_INTR_SWKUP_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_CASCADE_EN_MASK                   (0x80000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_CASCADE_EN_SHIFT                  (0x0000001FU)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_CASCADE_EN_RESETVAL               (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DMT_CFG_HSM_DMT_CFG_CASCADE_EN_MAX                    (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DMT_CFG_RESETVAL                                      (0x00000030U)
+
+/* HSM_DCC_CFG */
+
+#define CSL_HSM_CTRL_HSM_DCC_CFG_HSM_DCC_CFG_DCCA_FORC_CNT_VAL_LATCH_MASK      (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DCC_CFG_HSM_DCC_CFG_DCCA_FORC_CNT_VAL_LATCH_SHIFT     (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DCC_CFG_HSM_DCC_CFG_DCCA_FORC_CNT_VAL_LATCH_RESETVAL  (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DCC_CFG_HSM_DCC_CFG_DCCA_FORC_CNT_VAL_LATCH_MAX       (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DCC_CFG_RESETVAL                                      (0x00000000U)
+
+/* HSM_CM4_CFG */
+
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_FORCE_HCLK_ACTIVE_MASK            (0x00000001U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_FORCE_HCLK_ACTIVE_SHIFT           (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_FORCE_HCLK_ACTIVE_RESETVAL        (0x00000001U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_FORCE_HCLK_ACTIVE_MAX             (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_SLEEP_HOLD_REQN_MASK              (0x00000002U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_SLEEP_HOLD_REQN_SHIFT             (0x00000001U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_SLEEP_HOLD_REQN_RESETVAL          (0x00000001U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_SLEEP_HOLD_REQN_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_WICENREQ_MASK                     (0x00000004U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_WICENREQ_SHIFT                    (0x00000002U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_WICENREQ_RESETVAL                 (0x00000001U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_WICENREQ_MAX                      (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_CLK_GATE_MASK                 (0x00000100U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_CLK_GATE_SHIFT                (0x00000008U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_CLK_GATE_RESETVAL             (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_CLK_GATE_MAX                  (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_SYS_RESET_HOLD_MASK           (0x00007000U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_SYS_RESET_HOLD_SHIFT          (0x0000000CU)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_SYS_RESET_HOLD_RESETVAL       (0x00000007U)
+#define CSL_HSM_CTRL_HSM_CM4_CFG_HSM_CM4_CFG_CM4_SYS_RESET_HOLD_MAX            (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_CFG_RESETVAL                                      (0x00007007U)
+
+/* HSM_CM4_RST_CAUSE_CLR */
+
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_CLR_HSM_CM4_RST_CAUSE_CLR_CLEAR_MASK    (0x00000007U)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_CLR_HSM_CM4_RST_CAUSE_CLR_CLEAR_SHIFT   (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_CLR_HSM_CM4_RST_CAUSE_CLR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_CLR_HSM_CM4_RST_CAUSE_CLR_CLEAR_MAX     (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_CLR_RESETVAL                            (0x00000000U)
+
+/* HSM_CM4_RST_CAUSE */
+
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_HSM_CM4_RST_CAUSE_STATUS_MASK           (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_HSM_CM4_RST_CAUSE_STATUS_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_HSM_CM4_RST_CAUSE_STATUS_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_HSM_CM4_RST_CAUSE_STATUS_MAX            (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_CM4_RST_CAUSE_RESETVAL                                (0x00000000U)
+
+/* HSM_CM4_ROM_ECLIPSE_CTRL */
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_WAIT_MASK (0x00000070U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_WAIT_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_WAIT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_MEMSWAP_WAIT_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST2ASSERTDLY_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST2ASSERTDLY_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST2ASSERTDLY_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST2ASSERTDLY_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_ASSERTDLY_COMMON_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_ASSERTDLY_COMMON_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_ASSERTDLY_COMMON_RESETVAL (0x0000000FU)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_ASSERTDLY_COMMON_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_WFICHECK_MASK (0x07000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_WFICHECK_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_WFICHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_WFICHECK_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_FSM_TRIG_MASK (0x70000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_FSM_TRIG_SHIFT (0x0000001CU)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_FSM_TRIG_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RST_FSM_TRIG_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_CTRL_RESETVAL                         (0x000F0000U)
+
+/* HSM_CM4_ROM_ECLIPSE_STATUS */
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_STATUS_HSM_CM4_ROM_ECLIPSE_STATUS_INDICATOR_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_STATUS_HSM_CM4_ROM_ECLIPSE_STATUS_INDICATOR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_STATUS_HSM_CM4_ROM_ECLIPSE_STATUS_INDICATOR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_STATUS_HSM_CM4_ROM_ECLIPSE_STATUS_INDICATOR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_CM4_ROM_ECLIPSE_STATUS_RESETVAL                       (0x00000000U)
+
+/* HSM_CM4_WFI_OVERRIDE */
+
+#define CSL_HSM_CTRL_HSM_CM4_WFI_OVERRIDE_HSM_CM4_WFI_OVERRIDE_WFI_OVERRIDE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_CM4_WFI_OVERRIDE_HSM_CM4_WFI_OVERRIDE_WFI_OVERRIDE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_WFI_OVERRIDE_HSM_CM4_WFI_OVERRIDE_WFI_OVERRIDE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_CM4_WFI_OVERRIDE_HSM_CM4_WFI_OVERRIDE_WFI_OVERRIDE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_CM4_WFI_OVERRIDE_RESETVAL                             (0x00000000U)
+
+/* HSM_TPCC_A_ERRAGG_MASK */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_ERRINT_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_ERRINT_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_ERRINT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_ERRINT_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_MPINT_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_MPINT_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_MPINT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_MPINT_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_ERR_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_ERR_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_ERR_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_ERR_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_PAR_ERR_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_PAR_ERR_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_PAR_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_PAR_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_WRITE_ACCESS_ERROR_MASK (0x00010000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_WRITE_ACCESS_ERROR_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_WRITE_ACCESS_ERROR_MASK (0x00020000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_WRITE_ACCESS_ERROR_SHIFT (0x00000011U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_WRITE_ACCESS_ERROR_MASK (0x00040000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_WRITE_ACCESS_ERROR_SHIFT (0x00000012U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_READ_ACCESS_ERROR_MASK (0x01000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_READ_ACCESS_ERROR_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPCC_A_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_READ_ACCESS_ERROR_MASK (0x02000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_READ_ACCESS_ERROR_SHIFT (0x00000019U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A0_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_READ_ACCESS_ERROR_MASK (0x04000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_READ_ACCESS_ERROR_SHIFT (0x0000001AU)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_HSM_TPCC_A_ERRAGG_MASK_TPTC_A1_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_MASK_RESETVAL                           (0x00000000U)
+
+/* HSM_TPCC_A_ERRAGG_STATUS */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_ERRINT_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_ERRINT_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_ERRINT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_ERRINT_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_MPINT_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_MPINT_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_MPINT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_MPINT_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_ERR_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_ERR_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_ERR_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_ERR_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_PAR_ERR_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_PAR_ERR_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_PAR_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_PAR_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_WRITE_ACCESS_ERROR_MASK (0x00010000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_WRITE_ACCESS_ERROR_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_WRITE_ACCESS_ERROR_MASK (0x00020000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_WRITE_ACCESS_ERROR_SHIFT (0x00000011U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_WRITE_ACCESS_ERROR_MASK (0x00040000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_WRITE_ACCESS_ERROR_SHIFT (0x00000012U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_READ_ACCESS_ERROR_MASK (0x01000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_READ_ACCESS_ERROR_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPCC_A_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_READ_ACCESS_ERROR_MASK (0x02000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_READ_ACCESS_ERROR_SHIFT (0x00000019U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A0_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_READ_ACCESS_ERROR_MASK (0x04000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_READ_ACCESS_ERROR_SHIFT (0x0000001AU)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_HSM_TPCC_A_ERRAGG_STATUS_TPTC_A1_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RESETVAL                         (0x00000000U)
+
+/* HSM_TPCC_A_ERRAGG_STATUS_RAW */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_ERRINT_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_ERRINT_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_ERRINT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_ERRINT_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_MPINT_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_MPINT_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_MPINT_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_MPINT_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_ERR_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_ERR_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_ERR_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_ERR_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_PAR_ERR_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_PAR_ERR_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_PAR_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_PAR_ERR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_WRITE_ACCESS_ERROR_MASK (0x00010000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_WRITE_ACCESS_ERROR_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_WRITE_ACCESS_ERROR_MASK (0x00020000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_WRITE_ACCESS_ERROR_SHIFT (0x00000011U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_WRITE_ACCESS_ERROR_MASK (0x00040000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_WRITE_ACCESS_ERROR_SHIFT (0x00000012U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_WRITE_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_WRITE_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_READ_ACCESS_ERROR_MASK (0x01000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_READ_ACCESS_ERROR_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPCC_A_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_READ_ACCESS_ERROR_MASK (0x02000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_READ_ACCESS_ERROR_SHIFT (0x00000019U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A0_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_READ_ACCESS_ERROR_MASK (0x04000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_READ_ACCESS_ERROR_SHIFT (0x0000001AU)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_READ_ACCESS_ERROR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_HSM_TPCC_A_ERRAGG_STATUS_RAW_TPTC_A1_READ_ACCESS_ERROR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_ERRAGG_STATUS_RAW_RESETVAL                     (0x00000000U)
+
+/* HSM_TPCC_A_INTAGG_MASK */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INTG_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INTG_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INTG_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INTG_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT0_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT0_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT0_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT1_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT1_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT1_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT2_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT2_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT2_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT2_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT3_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT3_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT3_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT3_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT4_MASK (0x00000020U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT4_SHIFT (0x00000005U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT4_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT4_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT5_MASK (0x00000040U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT5_SHIFT (0x00000006U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT5_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT5_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT6_MASK (0x00000080U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT6_SHIFT (0x00000007U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT6_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT6_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT7_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT7_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT7_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPCC_A_INT7_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A0_MASK (0x00010000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A0_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A0_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A1_MASK (0x00020000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A1_SHIFT (0x00000011U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_HSM_TPCC_A_INTAGG_MASK_TPTC_A1_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_MASK_RESETVAL                           (0x00000000U)
+
+/* HSM_TPCC_A_INTAGG_STATUS */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INTG_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INTG_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INTG_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INTG_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT0_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT0_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT0_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT1_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT1_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT1_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT2_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT2_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT2_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT2_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT3_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT3_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT3_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT3_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT4_MASK (0x00000020U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT4_SHIFT (0x00000005U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT4_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT4_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT5_MASK (0x00000040U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT5_SHIFT (0x00000006U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT5_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT5_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT6_MASK (0x00000080U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT6_SHIFT (0x00000007U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT6_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT6_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT7_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT7_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT7_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPCC_A_INT7_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A0_MASK (0x00010000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A0_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A0_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A1_MASK (0x00020000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A1_SHIFT (0x00000011U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_HSM_TPCC_A_INTAGG_STATUS_TPTC_A1_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RESETVAL                         (0x00000000U)
+
+/* HSM_TPCC_A_INTAGG_STATUS_RAW */
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INTG_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INTG_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INTG_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INTG_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT0_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT0_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT0_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT1_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT1_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT1_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT2_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT2_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT2_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT2_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT3_MASK (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT3_SHIFT (0x00000004U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT3_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT3_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT4_MASK (0x00000020U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT4_SHIFT (0x00000005U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT4_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT4_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT5_MASK (0x00000040U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT5_SHIFT (0x00000006U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT5_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT5_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT6_MASK (0x00000080U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT6_SHIFT (0x00000007U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT6_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT6_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT7_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT7_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT7_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPCC_A_INT7_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A0_MASK (0x00010000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A0_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A0_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A1_MASK (0x00020000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A1_SHIFT (0x00000011U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_HSM_TPCC_A_INTAGG_STATUS_RAW_TPTC_A1_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_TPCC_A_INTAGG_STATUS_RAW_RESETVAL                     (0x00000000U)
+
+/* HSM_IBUS_AHB_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_CTRL_RESETVAL                     (0x00000007U)
+
+/* HSM_IBUS_AHB_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_HSM_IBUS_AHB_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_FI_RESETVAL                       (0x00000000U)
+
+/* HSM_IBUS_AHB_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_HSM_IBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_RESETVAL                      (0x00000000U)
+
+/* HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL           (0x00000000U)
+
+/* HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_IBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL           (0x00000000U)
+
+/* HSM_DBUS_AHB_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_CTRL_RESETVAL                     (0x00000007U)
+
+/* HSM_DBUS_AHB_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_HSM_DBUS_AHB_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_FI_RESETVAL                       (0x00000000U)
+
+/* HSM_DBUS_AHB_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_HSM_DBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_RESETVAL                      (0x00000000U)
+
+/* HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL           (0x00000000U)
+
+/* HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_DBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL           (0x00000000U)
+
+/* HSM_SBUS_AHB_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_CTRL_RESETVAL                     (0x00000007U)
+
+/* HSM_SBUS_AHB_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_HSM_SBUS_AHB_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_FI_RESETVAL                       (0x00000000U)
+
+/* HSM_SBUS_AHB_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_HSM_SBUS_AHB_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_RESETVAL                      (0x00000000U)
+
+/* HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL           (0x00000000U)
+
+/* HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SBUS_AHB_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL           (0x00000000U)
+
+/* HSM_GLOBAL_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_GLOBAL_BUS_SAFETY_CTRL_RESETVAL                       (0x00000000U)
+
+/* HSM_SCR_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_HSM_SCR_BUS_SAFETY_CTRL_TYPE_MAX  (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_CTRL_RESETVAL                          (0x00000007U)
+
+/* HSM_SCR_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_DATA_MASK     (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_DATA_SHIFT    (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_DATA_MAX      (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_MAIN_MASK     (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_MAIN_SHIFT    (0x00000010U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_MAIN_MAX      (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_SAFE_MASK     (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_SAFE_SHIFT    (0x00000018U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_HSM_SCR_BUS_SAFETY_FI_SAFE_MAX      (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_FI_RESETVAL                            (0x00000000U)
+
+/* HSM_SCR_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_HSM_SCR_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_RESETVAL                           (0x00000000U)
+
+/* HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL                (0x00000000U)
+
+/* HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_SCR_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL                (0x00000000U)
+
+/* HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL               (0x00000007U)
+
+/* HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL                 (0x00000000U)
+
+/* HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL                (0x00000000U)
+
+/* HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL     (0x00000000U)
+
+/* HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL     (0x00000000U)
+
+/* HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL        (0x00000007U)
+
+/* HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL          (0x00000000U)
+
+/* HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL         (0x00000000U)
+
+/* HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL (0x00000000U)
+
+/* HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_ROM_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL (0x00000000U)
+
+/* HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL            (0x00000007U)
+
+/* HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL              (0x00000000U)
+
+/* HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL             (0x00000000U)
+
+/* HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B0_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL            (0x00000007U)
+
+/* HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL              (0x00000000U)
+
+/* HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL             (0x00000000U)
+
+/* HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B1_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL            (0x00000007U)
+
+/* HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL              (0x00000000U)
+
+/* HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL             (0x00000000U)
+
+/* HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B2_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL            (0x00000007U)
+
+/* HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL              (0x00000000U)
+
+/* HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL             (0x00000000U)
+
+/* HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B3_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL  (0x00000000U)
+
+/* HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL */
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MASK (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_RESETVAL (0x00000007U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ENABLE_MAX (0x00000007U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_ERR_CLEAR_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_TYPE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_CTRL_RESETVAL     (0x00000007U)
+
+/* HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI */
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MASK (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_SHIFT (0x00000001U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MASK (0x00000004U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_SHIFT (0x00000002U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_MAIN_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MASK (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_SHIFT (0x00000003U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_GLOBAL_SAFE_REQ_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_DATA_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MASK (0x00FF0000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_SHIFT (0x00000010U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_MAIN_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MASK (0xFF000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_SHIFT (0x00000018U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_SAFE_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_FI_RESETVAL       (0x00000000U)
+
+/* HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR */
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_ERR_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_COMP_CHECK_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_RESETVAL      (0x00000000U)
+
+/* HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA0_RESETVAL (0x00000000U)
+
+/* HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1 */
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MASK (0x000000FFU)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D0_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MASK (0x0000FF00U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_D1_MAX (0x000000FFU)
+
+#define CSL_HSM_CTRL_HSM_RAM_B4_SECURE_VBUSP2SRAM_BUS_SAFETY_ERR_STAT_DATA1_RESETVAL (0x00000000U)
+
+/* SOP_MODE */
+
+#define CSL_HSM_CTRL_SOP_MODE_SOP_MODE_TYPE_MASK                               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_SOP_MODE_SOP_MODE_TYPE_SHIFT                              (0x00000000U)
+#define CSL_HSM_CTRL_SOP_MODE_SOP_MODE_TYPE_RESETVAL                           (0x00000000U)
+#define CSL_HSM_CTRL_SOP_MODE_SOP_MODE_TYPE_MAX                                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_SOP_MODE_RESETVAL                                         (0x00000000U)
+
+/* DEVICE_TYPE */
+
+#define CSL_HSM_CTRL_DEVICE_TYPE_DEVICE_TYPE_DTYPE_RAW_MASK                    (0x0000FFFFU)
+#define CSL_HSM_CTRL_DEVICE_TYPE_DEVICE_TYPE_DTYPE_RAW_SHIFT                   (0x00000000U)
+#define CSL_HSM_CTRL_DEVICE_TYPE_DEVICE_TYPE_DTYPE_RAW_RESETVAL                (0x00000000U)
+#define CSL_HSM_CTRL_DEVICE_TYPE_DEVICE_TYPE_DTYPE_RAW_MAX                     (0x0000FFFFU)
+
+#define CSL_HSM_CTRL_DEVICE_TYPE_RESETVAL                                      (0x00000000U)
+
+/* RS232_FIREWALL */
+
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_ENABLE_MASK                 (0x0000000FU)
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_ENABLE_SHIFT                (0x00000000U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_ENABLE_RESETVAL             (0x0000000AU)
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_ENABLE_MAX                  (0x0000000FU)
+
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_LOCK_REGSITER_MASK          (0x000000F0U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_LOCK_REGSITER_SHIFT         (0x00000004U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_LOCK_REGSITER_RESETVAL      (0x0000000AU)
+#define CSL_HSM_CTRL_RS232_FIREWALL_RS232_FIREWALL_LOCK_REGSITER_MAX           (0x0000000FU)
+
+#define CSL_HSM_CTRL_RS232_FIREWALL_RESETVAL                                   (0x000000AAU)
+
+/* DMM_FIREWALL */
+
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_ENABLE_MASK                     (0x0000000FU)
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_ENABLE_SHIFT                    (0x00000000U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_ENABLE_RESETVAL                 (0x0000000AU)
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_ENABLE_MAX                      (0x0000000FU)
+
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_LOCK_REGSITER_MASK              (0x000000F0U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_LOCK_REGSITER_SHIFT             (0x00000004U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_LOCK_REGSITER_RESETVAL          (0x0000000AU)
+#define CSL_HSM_CTRL_DMM_FIREWALL_DMM_FIREWALL_LOCK_REGSITER_MAX               (0x0000000FU)
+
+#define CSL_HSM_CTRL_DMM_FIREWALL_RESETVAL                                     (0x000000AAU)
+
+/* TRACE_FIREWALL */
+
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_ENABLE_MASK                 (0x0000000FU)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_ENABLE_SHIFT                (0x00000000U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_ENABLE_RESETVAL             (0x0000000AU)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_ENABLE_MAX                  (0x0000000FU)
+
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_LOCK_REGSITER_MASK          (0x000000F0U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_LOCK_REGSITER_SHIFT         (0x00000004U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_LOCK_REGSITER_RESETVAL      (0x0000000AU)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_TRACE_FIREWALL_LOCK_REGSITER_MAX           (0x0000000FU)
+
+#define CSL_HSM_CTRL_TRACE_FIREWALL_RESETVAL                                   (0x000000AAU)
+
+/* HSM_SEC_MGR_FIREWALL_STATUS */
+
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_HSM_MASK (0x00000001U)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_HSM_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_HSM_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_SOC_MASK (0x00000100U)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_SOC_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_SOC_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_HSM_SEC_MGR_FIREWALL_STATUS_SOC_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_HSM_SEC_MGR_FIREWALL_STATUS_RESETVAL                      (0x00000000U)
+
+/* RS232_FIREWALL_STATUS */
+
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_ENABLE_MASK (0x0000000FU)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_ENABLE_MAX (0x0000000FU)
+
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_MASK (0x00000100U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RS232_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_RS232_FIREWALL_STATUS_RESETVAL                            (0x00000000U)
+
+/* DMM_FIREWALL_STATUS */
+
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_ENABLE_MASK (0x0000000FU)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_ENABLE_MAX (0x0000000FU)
+
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_MASK (0x00000100U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_DMM_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_DMM_FIREWALL_STATUS_RESETVAL                              (0x00000000U)
+
+/* TRACE_FIREWALL_STATUS */
+
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_ENABLE_MASK (0x0000000FU)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_ENABLE_SHIFT (0x00000000U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_ENABLE_MAX (0x0000000FU)
+
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_MASK (0x00000100U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_SHIFT (0x00000008U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_RESETVAL (0x00000000U)
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_TRACE_FIREWALL_STATUS_POST_LOCK_POST_DEVICE_TYPE_ENABLE_MAX (0x00000001U)
+
+#define CSL_HSM_CTRL_TRACE_FIREWALL_STATUS_RESETVAL                            (0x00000000U)
+
+/* HW_SPARE_RW0 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW0_HW_SPARE_RW0_HW_SPARE_RW0_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RW0_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RW1 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW1_HW_SPARE_RW1_HW_SPARE_RW1_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RW1_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RW2 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW2_HW_SPARE_RW2_HW_SPARE_RW2_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RW2_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RW3 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RW3_HW_SPARE_RW3_HW_SPARE_RW3_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RW3_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RO0 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO0_HW_SPARE_RO0_HW_SPARE_RO0_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RO0_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RO1 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO1_HW_SPARE_RO1_HW_SPARE_RO1_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RO1_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RO2 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO2_HW_SPARE_RO2_HW_SPARE_RO2_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RO2_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_RO3 */
+
+#define CSL_HSM_CTRL_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_RO3_HW_SPARE_RO3_HW_SPARE_RO3_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_RO3_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_WPH */
+
+#define CSL_HSM_CTRL_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_MASK               (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_SHIFT              (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_RESETVAL           (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_WPH_HW_SPARE_WPH_HW_SPARE_WPH_MAX                (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_HW_SPARE_WPH_RESETVAL                                     (0x00000000U)
+
+/* HW_SPARE_REC */
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_MASK              (0x00000001U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_SHIFT             (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC0_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_MASK              (0x00000002U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_SHIFT             (0x00000001U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC1_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_MASK              (0x00000004U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_SHIFT             (0x00000002U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC2_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_MASK              (0x00000008U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_SHIFT             (0x00000003U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC3_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_MASK              (0x00000010U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_SHIFT             (0x00000004U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC4_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_MASK              (0x00000020U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_SHIFT             (0x00000005U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC5_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_MASK              (0x00000040U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_SHIFT             (0x00000006U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC6_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_MASK              (0x00000080U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_SHIFT             (0x00000007U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC7_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_MASK              (0x00000100U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_SHIFT             (0x00000008U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC8_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_MASK              (0x00000200U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_SHIFT             (0x00000009U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_RESETVAL          (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC9_MAX               (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_MASK             (0x00000400U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_SHIFT            (0x0000000AU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC10_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_MASK             (0x00000800U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_SHIFT            (0x0000000BU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC11_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_MASK             (0x00001000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_SHIFT            (0x0000000CU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC12_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_MASK             (0x00002000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_SHIFT            (0x0000000DU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC13_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_MASK             (0x00004000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_SHIFT            (0x0000000EU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC14_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_MASK             (0x00008000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_SHIFT            (0x0000000FU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC15_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_MASK             (0x00010000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_SHIFT            (0x00000010U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC16_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_MASK             (0x00020000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_SHIFT            (0x00000011U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC17_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_MASK             (0x00040000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_SHIFT            (0x00000012U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC18_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_MASK             (0x00080000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_SHIFT            (0x00000013U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC19_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_MASK             (0x00100000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_SHIFT            (0x00000014U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC20_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_MASK             (0x00200000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_SHIFT            (0x00000015U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC21_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_MASK             (0x00400000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_SHIFT            (0x00000016U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC22_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_MASK             (0x00800000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_SHIFT            (0x00000017U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC23_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_MASK             (0x01000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_SHIFT            (0x00000018U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC24_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_MASK             (0x02000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_SHIFT            (0x00000019U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC25_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_MASK             (0x04000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_SHIFT            (0x0000001AU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC26_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_MASK             (0x08000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_SHIFT            (0x0000001BU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC27_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_MASK             (0x10000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_SHIFT            (0x0000001CU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC28_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_MASK             (0x20000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_SHIFT            (0x0000001DU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC29_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_MASK             (0x40000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_SHIFT            (0x0000001EU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC30_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_MASK             (0x80000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_SHIFT            (0x0000001FU)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_RESETVAL         (0x00000000U)
+#define CSL_HSM_CTRL_HW_SPARE_REC_HW_SPARE_REC_HW_SPARE_REC31_MAX              (0x00000001U)
+
+#define CSL_HSM_CTRL_HW_SPARE_REC_RESETVAL                                     (0x00000000U)
+
+/* LOCK0_KICK0 */
+
+#define CSL_HSM_CTRL_LOCK0_KICK0_LOCK0_KICK0_MASK                              (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_LOCK0_KICK0_LOCK0_KICK0_SHIFT                             (0x00000000U)
+#define CSL_HSM_CTRL_LOCK0_KICK0_LOCK0_KICK0_RESETVAL                          (0x00000000U)
+#define CSL_HSM_CTRL_LOCK0_KICK0_LOCK0_KICK0_MAX                               (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_LOCK0_KICK0_RESETVAL                                      (0x00000000U)
+
+/* LOCK0_KICK1 */
+
+#define CSL_HSM_CTRL_LOCK0_KICK1_LOCK0_KICK1_MASK                              (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_LOCK0_KICK1_LOCK0_KICK1_SHIFT                             (0x00000000U)
+#define CSL_HSM_CTRL_LOCK0_KICK1_LOCK0_KICK1_RESETVAL                          (0x00000000U)
+#define CSL_HSM_CTRL_LOCK0_KICK1_LOCK0_KICK1_MAX                               (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_LOCK0_KICK1_RESETVAL                                      (0x00000000U)
+
+/* INTR_RAW_STATUS */
+
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROT_ERR_MASK                             (0x00000001U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROT_ERR_SHIFT                            (0x00000000U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROT_ERR_RESETVAL                         (0x00000000U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROT_ERR_MAX                              (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_ADDR_ERR_MASK                             (0x00000002U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_ADDR_ERR_SHIFT                            (0x00000001U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_ADDR_ERR_RESETVAL                         (0x00000000U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_ADDR_ERR_MAX                              (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_KICK_ERR_MASK                             (0x00000004U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_KICK_ERR_SHIFT                            (0x00000002U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_KICK_ERR_RESETVAL                         (0x00000000U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_KICK_ERR_MAX                              (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROXY_ERR_MASK                            (0x00000008U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROXY_ERR_SHIFT                           (0x00000003U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROXY_ERR_RESETVAL                        (0x00000000U)
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_PROXY_ERR_MAX                             (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_RAW_STATUS_RESETVAL                                  (0x00000000U)
+
+/* INTR_ENABLED_STATUS_CLEAR */
+
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_MASK           (0x00000001U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_SHIFT          (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_MAX            (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_MASK           (0x00000002U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_SHIFT          (0x00000001U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_MAX            (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_MASK           (0x00000004U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_SHIFT          (0x00000002U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_RESETVAL       (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_KICK_ERR_MAX            (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_MASK          (0x00000008U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_SHIFT         (0x00000003U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_RESETVAL      (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_MAX           (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLED_STATUS_CLEAR_RESETVAL                        (0x00000000U)
+
+/* INTR_ENABLE */
+
+#define CSL_HSM_CTRL_INTR_ENABLE_PROT_ERR_EN_MASK                              (0x00000001U)
+#define CSL_HSM_CTRL_INTR_ENABLE_PROT_ERR_EN_SHIFT                             (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_PROT_ERR_EN_RESETVAL                          (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_PROT_ERR_EN_MAX                               (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_ADDR_ERR_EN_MASK                              (0x00000002U)
+#define CSL_HSM_CTRL_INTR_ENABLE_ADDR_ERR_EN_SHIFT                             (0x00000001U)
+#define CSL_HSM_CTRL_INTR_ENABLE_ADDR_ERR_EN_RESETVAL                          (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_ADDR_ERR_EN_MAX                               (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_KICK_ERR_EN_MASK                              (0x00000004U)
+#define CSL_HSM_CTRL_INTR_ENABLE_KICK_ERR_EN_SHIFT                             (0x00000002U)
+#define CSL_HSM_CTRL_INTR_ENABLE_KICK_ERR_EN_RESETVAL                          (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_KICK_ERR_EN_MAX                               (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_PROXY_ERR_EN_MASK                             (0x00000008U)
+#define CSL_HSM_CTRL_INTR_ENABLE_PROXY_ERR_EN_SHIFT                            (0x00000003U)
+#define CSL_HSM_CTRL_INTR_ENABLE_PROXY_ERR_EN_RESETVAL                         (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_PROXY_ERR_EN_MAX                              (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_RESETVAL                                      (0x00000000U)
+
+/* INTR_ENABLE_CLEAR */
+
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_MASK                    (0x00000001U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_SHIFT                   (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_RESETVAL                (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROT_ERR_EN_CLR_MAX                     (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_MASK                    (0x00000002U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_SHIFT                   (0x00000001U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_RESETVAL                (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_ADDR_ERR_EN_CLR_MAX                     (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_MASK                    (0x00000004U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_SHIFT                   (0x00000002U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_RESETVAL                (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_KICK_ERR_EN_CLR_MAX                     (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_MASK                   (0x00000008U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_SHIFT                  (0x00000003U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_RESETVAL               (0x00000000U)
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_MAX                    (0x00000001U)
+
+#define CSL_HSM_CTRL_INTR_ENABLE_CLEAR_RESETVAL                                (0x00000000U)
+
+/* EOI */
+
+#define CSL_HSM_CTRL_EOI_EOI_VECTOR_MASK                                       (0x000000FFU)
+#define CSL_HSM_CTRL_EOI_EOI_VECTOR_SHIFT                                      (0x00000000U)
+#define CSL_HSM_CTRL_EOI_EOI_VECTOR_RESETVAL                                   (0x00000000U)
+#define CSL_HSM_CTRL_EOI_EOI_VECTOR_MAX                                        (0x000000FFU)
+
+#define CSL_HSM_CTRL_EOI_RESETVAL                                              (0x00000000U)
+
+/* FAULT_ADDRESS */
+
+#define CSL_HSM_CTRL_FAULT_ADDRESS_FAULT_ADDR_MASK                             (0xFFFFFFFFU)
+#define CSL_HSM_CTRL_FAULT_ADDRESS_FAULT_ADDR_SHIFT                            (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_ADDRESS_FAULT_ADDR_RESETVAL                         (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_ADDRESS_FAULT_ADDR_MAX                              (0xFFFFFFFFU)
+
+#define CSL_HSM_CTRL_FAULT_ADDRESS_RESETVAL                                    (0x00000000U)
+
+/* FAULT_TYPE_STATUS */
+
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_TYPE_MASK                         (0x0000003FU)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_TYPE_SHIFT                        (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_TYPE_RESETVAL                     (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_TYPE_MAX                          (0x0000003FU)
+
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_NS_MASK                           (0x00000040U)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_NS_SHIFT                          (0x00000006U)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_NS_RESETVAL                       (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_FAULT_NS_MAX                            (0x00000001U)
+
+#define CSL_HSM_CTRL_FAULT_TYPE_STATUS_RESETVAL                                (0x00000000U)
+
+/* FAULT_ATTR_STATUS */
+
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_PRIVID_MASK                       (0x000000FFU)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_PRIVID_SHIFT                      (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_PRIVID_RESETVAL                   (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_PRIVID_MAX                        (0x000000FFU)
+
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_ROUTEID_MASK                      (0x000FFF00U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_ROUTEID_SHIFT                     (0x00000008U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_ROUTEID_RESETVAL                  (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_ROUTEID_MAX                       (0x00000FFFU)
+
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_XID_MASK                          (0xFFF00000U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_XID_SHIFT                         (0x00000014U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_XID_RESETVAL                      (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_FAULT_XID_MAX                           (0x00000FFFU)
+
+#define CSL_HSM_CTRL_FAULT_ATTR_STATUS_RESETVAL                                (0x00000000U)
+
+/* FAULT_CLEAR */
+
+#define CSL_HSM_CTRL_FAULT_CLEAR_FAULT_CLR_MASK                                (0x00000001U)
+#define CSL_HSM_CTRL_FAULT_CLEAR_FAULT_CLR_SHIFT                               (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_CLEAR_FAULT_CLR_RESETVAL                            (0x00000000U)
+#define CSL_HSM_CTRL_FAULT_CLEAR_FAULT_CLR_MAX                                 (0x00000001U)
+
+#define CSL_HSM_CTRL_FAULT_CLEAR_RESETVAL                                      (0x00000000U)
+
+#ifdef __cplusplus
+}
+#endif
+#endif

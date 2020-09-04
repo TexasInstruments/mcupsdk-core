@@ -1,0 +1,28 @@
+%%{
+	let module = system.modules['/drivers/gpio/gpio'];
+%%}
+/*
+ * GPIO
+ */
+#include <drivers/gpio.h>
+#include <drivers/soc.h>
+
+/* GPIO PIN Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let interfaceName = instance.instance;
+    % let pinIndex = config.pinIndex;
+    % if(interfaceName == "RCSS_GPIO") {
+    %   pinIndex = config.pinIndex - 32;
+    % }
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name.toUpperCase()`_PIN (`pinIndex`U)
+#define `instance.$name.toUpperCase()`_DIR (GPIO_DIRECTION_`config.pinDir`)
+#define `instance.$name.toUpperCase()`_TRIG_TYPE (GPIO_TRIG_TYPE_`config.trigType`)
+#define `instance.$name.toUpperCase()`_OPEN_DRAIN (GPIO_OPEN_DRAIN_`config.openDrain`)
+#define `instance.$name.toUpperCase()`_INTR_LEVEL (GPIO_INTR_LEVEL_`config.trigLevel`)
+#define `instance.$name.toUpperCase()`_INTR_HIGH (`config.intrNumHigh`)
+#define `instance.$name.toUpperCase()`_INTR_LOW (`config.intrNumLow`)
+% }
+#define CONFIG_GPIO_NUM_INSTANCES (`module.$instances.length`U)

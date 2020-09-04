@@ -1,0 +1,23 @@
+#
+# Auto generated makefile
+#
+
+export `args.sdkName`?=$(abspath `args.relPath`)
+include $(`args.sdkName`)/imports.mak
+
+export PROFILE?=Release
+
+PROJECT_NAME=`args.project.name`_`args.project.board`_system_`args.project.tag`
+
+all:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
+
+clean:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE) -ccs.clean
+% for (let project of args.project.projects) {
+	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ -f makefile_projectspec clean
+% }
+
+export:
+	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectCreate -ccs.projectSpec system.projectspec -ccs.overwrite full

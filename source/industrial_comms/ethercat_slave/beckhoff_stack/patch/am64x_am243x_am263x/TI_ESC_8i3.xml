@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<SscToolConfiguration SSCVersion="5.13" VendorID="#x0000059D" VendorName="Texas Instruments Incorporated" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SscToolConfiguration.xsd">
+	<Configurations>
+		<Configuration Name="TI AM263x/AM243x/AM64x Sample" Version="8.3" Info="Shall be set if the Slave code executes on an AM263x/AM243x/AM64x device (CPU: ARM Cortex-R5F) . The application should run on an AM263x/AM243x/AM64x EVM Board
+from Texas Instruments and requires the MCU_PLUS_SDK for building the project." Patch="../TI_ECAT.patch">
+			<Setting CodeDefine="MCI_HW" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="TIESC_HW" Value="1">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="EL9800_HW" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="FC1100_HW" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="AL_EVENT_ENABLED" Value="1"></Setting>
+			<Setting CodeDefine="DC_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="_PIC18" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="_PIC24" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="EL9800_APPLICATION" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="TEST_APPLICATION" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="SAMPLE_APPLICATION" Value="0"></Setting>
+			<Setting CodeDefine="SAMPLE_APPLICATION_INTERFACE" Value="0"></Setting>
+			<Setting CodeDefine="ESC_16BIT_ACCESS" Value="0"></Setting>
+			<Setting CodeDefine="ESC_32BIT_ACCESS" Value="0"></Setting>
+			<Setting CodeDefine="MBX_16BIT_ACCESS" Value="0"></Setting>
+			<Setting CodeDefine="BIG_ENDIAN_16BIT" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="BIG_ENDIAN_FORMAT" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="CONTROLLER_32BIT" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="CONTROLLER_16BIT" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="OBJ_DWORD_ALIGN" Value="0"></Setting>
+			<Setting CodeDefine="OBJ_WORD_ALIGN" Value="0"></Setting>
+			<Setting CodeDefine="MAILBOX_QUEUE" Value="1"></Setting>
+			<Setting CodeDefine="AOE_SUPPORTED" Value="0"></Setting>
+			<Setting CodeDefine="COE_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="COMPLETE_ACCESS_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="SEGMENTED_SDO_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="BACKUP_PARAMETER_SUPPORTED" Value="0"></Setting>
+			<Setting CodeDefine="SDO_RES_INTERFACE" Value="1"></Setting>
+			<Setting CodeDefine="DIAGNOSIS_SUPPORTED" Value="0"></Setting>
+			<Setting CodeDefine="EMERGENCY_SUPPORTED" Value="0"></Setting>
+			<Setting CodeDefine="EOE_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="FOE_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="BOOTSTRAPMODE_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="VOE_SUPPORTED" Value="0"></Setting>
+			<Setting CodeDefine="SOE_SUPPORTED" Value="0"></Setting>
+			<Setting CodeDefine="ESC_SM_WD_SUPPORTED" Value="1"></Setting>
+			<Setting CodeDefine="OP_PD_REQUIRED" Value="1"></Setting>
+			<Setting CodeDefine="ECAT_TIMER_INT" Value="0"></Setting>
+			<Setting CodeDefine="EXT_DEBUGER_INTERFACE" Value="0">
+				<Flags Visible="False"></Flags>
+			</Setting>
+			<Setting CodeDefine="CiA402_SAMPLE_APPLICATION" Value="0"></Setting>
+			<Setting CodeDefine="SYSTEM_HEADER_FILE" Value="#include &lt;stdio.h&gt;&#10;#include &lt;stdint.h&gt;"></Setting>
+			<Setting CodeDefine="STATIC_OBJECT_DIC" Value="0"></Setting>
+			<Setting CodeDefine="ESC_EEPROM_ACCESS_SUPPORT" Value="0"></Setting>
+			<Setting CodeDefine="ESC_EEPROM_EMULATION" Value="1"></Setting>
+			<Setting CodeDefine="ESC_CONFIG_DATA" Value="8000e000010000000000"></Setting>
+			<Setting CodeDefine="HW_ACCESS_FILE" Value="#include &quot;tieschw.h&quot;"></Setting>
+			<Setting CodeDefine="APPLICATION_FILE" Value="#include &quot;tiescappl.h&quot;"></Setting>
+			<Setting CodeDefine="BOOL" Value="uint8_t"></Setting>
+			<Setting CodeDefine="UINT8" Value="uint8_t"></Setting>
+			<Setting CodeDefine="UINT16" Value="uint16_t"></Setting>
+			<Setting CodeDefine="UINT32" Value="uint32_t"></Setting>
+			<Setting CodeDefine="USHORT" Value="uint16_t"></Setting>
+			<Setting CodeDefine="INT8" Value="int8_t"></Setting>
+			<Setting CodeDefine="INT16" Value="int16_t"></Setting>
+			<Setting CodeDefine="INT32" Value="int32_t"></Setting>
+			<Setting CodeDefine="CHAR" Value="char"></Setting>
+			<Setting CodeDefine="UCHAR" Value="unsigned char"></Setting>
+			<Setting CodeDefine="SIZEOF(x)" Value="sizeof(x)"></Setting>
+			<Setting CodeDefine="STRUCT_PACKED_END" Value="__attribute__((packed))"></Setting>
+			<Setting CodeDefine="MBX_STRUCT_PACKED_END" Value="__attribute__((packed))"></Setting>
+			<Setting CodeDefine="OBJ_STRUCT_PACKED_END" Value="__attribute__((packed))"></Setting>
+			<Setting CodeDefine="VENDOR_ID" Value="0x0000059D"></Setting>
+			<Setting CodeDefine="VENDOR_NAME" Value="Texas Instruments Incorporated"></Setting>
+			<Setting CodeDefine="PRODUCT_CODE" Value="0x54490004"></Setting>
+			<Setting CodeDefine="REVISION_NUMBER" Value="0x00000011"></Setting>
+			<Setting CodeDefine="DEVICE_NAME" Value="TIESC-004"></Setting>
+			<Setting CodeDefine="DEVICE_HW_VERSION" Value="TI-ESC.4"></Setting>
+			<Setting CodeDefine="GROUP_NAME" Value="TI Slave"></Setting>
+			<Setting CodeDefine="MIN_PD_CYCLE_TIME" Value="0x79E0"></Setting>
+			<ApplicationFile>tiescappl.xlsx</ApplicationFile>
+			<ESI Path="/EtherCATInfo/Descriptions/Devices/Device/Info">
+				<Value>
+					<EtherCATController>
+						<DpramSize>60416</DpramSize>
+						<SmCount>8</SmCount>
+						<FmmuCount>8</FmmuCount>
+					</EtherCATController>
+				</Value>
+				<!--ESC Parameter-->
+			</ESI>
+		</Configuration>
+	</Configurations>
+</SscToolConfiguration>

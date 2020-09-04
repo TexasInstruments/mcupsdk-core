@@ -1,0 +1,7 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+
+/* ENET MACROS */
+% let instance = module.$instances[0];
+

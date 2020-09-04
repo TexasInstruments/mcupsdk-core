@@ -1,0 +1,1855 @@
+[
+    {
+      "fwl_name": "PSRAMECC0",
+      "fwl_id": 34,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45008800",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "PSRAMECC0",
+          "Interface": "RAM",
+          "start_addr": "0x00000000",
+          "end_addr": "0x000003FF"
+        },
+        {
+          "Instance": "PADCFG_CTRL0",
+          "Interface": "CFG0",
+          "start_addr": "0x000F0000",
+          "end_addr": "0x000F7FFF"
+        },
+        {
+          "Instance": "CBASS_DBG0",
+          "Interface": "ERR",
+          "start_addr": "0x00200000",
+          "end_addr": "0x002003FF"
+        },
+        {
+          "Instance": "CBASS_FW0",
+          "Interface": "ERR",
+          "start_addr": "0x00220000",
+          "end_addr": "0x002203FF"
+        },
+        {
+          "Instance": "EFUSE0",
+          "Interface": "mem",
+          "start_addr": "0x00300000",
+          "end_addr": "0x003000FF"
+        },
+        {
+          "Instance": "PBIST0",
+          "Interface": "mem",
+          "start_addr": "0x00310000",
+          "end_addr": "0x003103FF"
+        },
+        {
+          "Instance": "COMPUTE_CLUSTER0",
+          "Interface": "PBIST",
+          "start_addr": "0x00330000",
+          "end_addr": "0x003303FF"
+        },
+        {
+          "Instance": "PSC0",
+          "Interface" :"BANK",
+          "start_addr": "0x00400000",
+          "end_addr": "0x00400FFF"
+        },
+        {
+          "Instance": "PLLCTRL0",
+          "Interface": "mem",
+          "start_addr": "0x00410000",
+          "end_addr": "0x004101FF"
+        },
+        {
+          "Instance": "ESM0",
+          "Interface": "CFG",
+          "start_addr": "0x00420000",
+          "end_addr": "0x00420FFF"
+        },
+        {
+          "Instance": "DFTSS0",
+          "Interface": "mem",
+          "start_addr": "0x00500000",
+          "end_addr": "0x005003FF"
+        },
+        {
+          "Instance": "DDPA0",
+          "Interface" :"BANK",
+          "start_addr": "0x00580000",
+          "end_addr": "0x005803FF"
+        },
+        {
+          "Instance": "GPIO0",
+          "Interface": "mem",
+          "start_addr": "0x00600000",
+          "end_addr": "0x006000FF"
+        },
+        {
+          "Instance": "GPIO1",
+          "Interface": "mem",
+          "start_addr": "0x00601000",
+          "end_addr": "0x006010FF"
+        },
+        {
+          "Instance": "PLL0",
+          "Interface": "CFG",
+          "start_addr": "0x00680000",
+          "end_addr": "0x0068FFFF"
+        },
+        {
+          "Instance": "PSRAMECC0",
+          "Interface": "REGS",
+          "start_addr": "0x00700000",
+          "end_addr": "0x007003FF"
+        },
+        {
+          "Instance": "ECC_AGGR1",
+          "Interface": "REGS",
+          "start_addr": "0x00701000",
+          "end_addr": "0x007013FF"
+        },
+        {
+          "Instance": "USB0",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x00703000",
+          "end_addr": "0x007033FF"
+        },
+        {
+          "Instance": "CPSW0",
+          "Interface": "ECC",
+          "start_addr": "0x00704000",
+          "end_addr": "0x007043FF"
+        },
+        {
+          "Instance": "MMCSD0",
+          "Interface": "ECC_AGGR_RXMEM",
+          "start_addr": "0x00706000",
+          "end_addr": "0x007063FF"
+        },
+        {
+          "Instance": "MMCSD0",
+          "Interface": "ECC_AGGR_TXMEM",
+          "start_addr": "0x00707000",
+          "end_addr": "0x007073FF"
+        },
+        {
+          "Instance": "MMCSD1",
+          "Interface": "ECC_AGGR_RXMEM",
+          "start_addr": "0x00708000",
+          "end_addr": "0x007083FF"
+        },
+        {
+          "Instance": "MMCSD1",
+          "Interface": "ECC_AGGR_TXMEM",
+          "start_addr": "0x00709000",
+          "end_addr": "0x007093FF"
+        },
+        {
+          "Instance": "FSS0",
+          "Interface": "OSPI0_ECC_AGGR",
+          "start_addr": "0x00716000",
+          "end_addr": "0x007163FF"
+        },
+        {
+          "Instance": "COMPUTE_CLUSTER0",
+          "Interface": "SS_ECC_AGGR",
+          "start_addr": "0x00717000",
+          "end_addr": "0x007173FF"
+        },
+        {
+          "Instance": "COMPUTE_CLUSTER0",
+          "Interface": "CORE0_ECC_AGGR",
+          "start_addr": "0x00717400",
+          "end_addr": "0x007177FF"
+        },
+        {
+          "Instance": "COMPUTE_CLUSTER0",
+          "Interface": "CORE1_ECC_AGGR",
+          "start_addr": "0x00717800",
+          "end_addr": "0x00717BFF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_ECC_AGGR0",
+          "start_addr": "0x00718000",
+          "end_addr": "0x007183FF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_ECC_AGGR1",
+          "start_addr": "0x00719000",
+          "end_addr": "0x007193FF"
+        },
+        {
+          "Instance": "MAIN_GPIOMUX_INTROUTER0",
+          "Interface": "CFG",
+          "start_addr": "0x00A00000",
+          "end_addr": "0x00A007FF"
+        },
+        {
+          "Instance": "CMP_EVENT_INTROUTER0",
+          "Interface": "CFG",
+          "start_addr": "0x00A30000",
+          "end_addr": "0x00A307FF"
+        },
+        {
+          "Instance": "TIMESYNC_EVENT_INTROUTER0",
+          "Interface": "CFG",
+          "start_addr": "0x00A40000",
+          "end_addr": "0x00A407FF"
+        },
+        {
+          "Instance": "GTC0",
+          "Interface": "GTC_CFG0",
+          "start_addr": "0x00A80000",
+          "end_addr": "0x00A803FF"
+        },
+        {
+          "Instance": "GTC0",
+          "Interface": "GTC_CFG1",
+          "start_addr": "0x00A90000",
+          "end_addr": "0x00A93FFF"
+        },
+        {
+          "Instance": "GTC0",
+          "Interface": "GTC_CFG2",
+          "start_addr": "0x00AA0000",
+          "end_addr": "0x00AA3FFF"
+        },
+        {
+          "Instance": "GTC0",
+          "Interface": "GTC_CFG3",
+          "start_addr": "0x00AB0000",
+          "end_addr": "0x00AB3FFF"
+        },
+        {
+          "Instance": "VTM0",
+          "Interface": "MMR_VBUSP_CFG1",
+          "start_addr": "0x00B00000",
+          "end_addr": "0x00B003FF"
+        },
+        {
+          "Instance": "VTM0",
+          "Interface": "MMR_VBUSP_CFG2",
+          "start_addr": "0x00B01000",
+          "end_addr": "0x00B013FF"
+        },
+        {
+          "Instance": "VTM0",
+          "Interface": "ECCAGGR_CFG",
+          "start_addr": "0x00B02000",
+          "end_addr": "0x00B023FF"
+        },
+        {
+          "Instance": "PDMA0",
+          "Interface": "REGS",
+          "start_addr": "0x00C00000",
+          "end_addr": "0x00C003FF"
+        },
+        {
+          "Instance": "PDMA1",
+          "Interface": "REGS",
+          "start_addr": "0x00C01000",
+          "end_addr": "0x00C013FF"
+        },
+        {
+          "Instance": "PBIST3",
+          "Interface": "mem",
+          "start_addr": "0x03310000",
+          "end_addr": "0x033103FF"
+        },
+        {
+          "Instance": "PBIST2",
+          "Interface": "mem",
+          "start_addr": "0x03330000",
+          "end_addr": "0x033303FF"
+        },
+        {
+          "Instance": "CPSW0",
+          "Interface": "NUSS",
+          "start_addr": "0x08000000",
+          "end_addr": "0x081FFFFF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_DBN_CFG_PCIE_CORE",
+          "start_addr": "0x0D000000",
+          "end_addr": "0x0D7FFFFF"
+        },
+        {
+          "Instance": "SERDES_10G0",
+          "Interface": "wiz16b2m4ct",
+          "start_addr": "0x0F000000",
+          "end_addr": "0x0F00FFFF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_USER_CFG_USER_CFG",
+          "start_addr": "0x0F100000",
+          "end_addr": "0x0F1003FF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_VMAP_OB_MMRS",
+          "start_addr": "0x0F101000",
+          "end_addr": "0x0F101FFF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_PCIE_INTD_CFG_INTD_CFG",
+          "start_addr": "0x0F102000",
+          "end_addr": "0x0F102FFF"
+        },
+        {
+          "Instance": "PCIE0",
+          "Interface": "CORE_CPTS_CFG_CPTS_VBUSP",
+          "start_addr": "0x0F103000",
+          "end_addr": "0x0F1033FF"
+        },
+        {
+          "Instance": "DDR16SS0",
+          "Interface": "SS_CFG",
+          "start_addr": "0x0F300000",
+          "end_addr": "0x0F3001FF"
+        },
+        {
+          "Instance": "DDR16SS0",
+          "Interface": "CTL_CFG",
+          "start_addr": "0x0F308000",
+          "end_addr": "0x0F30FFFF"
+        },
+        {
+          "Instance": "USB0",
+          "Interface": "VBP2APB_WRAP_CONTROLLER_VBP_CORE_ADDR_MAP",
+          "start_addr": "0x0F400000",
+          "end_addr": "0x0F43FFFF"
+        },
+        {
+          "Instance": "USB0",
+          "Interface": "MMR_MMRVBP_USBSS_CMN",
+          "start_addr": "0x0F900000",
+          "end_addr": "0x0F9000FF"
+        },
+        {
+          "Instance": "USB0",
+          "Interface": "RAMS_INJ_CFG",
+          "start_addr": "0x0F901000",
+          "end_addr": "0x0F9013FF"
+        },
+        {
+          "Instance": "USB0",
+          "Interface": "PHY2",
+          "start_addr": "0x0F908000",
+          "end_addr": "0x0F9083FF"
+        },
+        {
+          "Instance": "MMCSD1",
+          "Interface": "CTL_CFG",
+          "start_addr": "0x0FA00000",
+          "end_addr": "0x0FA00FFF"
+        },
+        {
+          "Instance": "MMCSD1",
+          "Interface": "SS_CFG",
+          "start_addr": "0x0FA08000",
+          "end_addr": "0x0FA083FF"
+        },
+        {
+          "Instance": "MMCSD0",
+          "Interface": "CTL_CFG",
+          "start_addr": "0x0FA10000",
+          "end_addr": "0x0FA10FFF"
+        },
+        {
+          "Instance": "MMCSD0",
+          "Interface": "SS_CFG",
+          "start_addr": "0x0FA18000",
+          "end_addr": "0x0FA183FF"
+        },
+        {
+          "Instance": "FSS0",
+          "Interface": "CFG",
+          "start_addr": "0x0FC00000",
+          "end_addr": "0x0FC000FF"
+        },
+        {
+          "Instance": "FSS0",
+          "Interface": "FSAS_CFG",
+          "start_addr": "0x0FC10000",
+          "end_addr": "0x0FC100FF"
+        },
+        {
+          "Instance": "FSS0",
+          "Interface": "OTFA_CFG",
+          "start_addr": "0x0FC20000",
+          "end_addr": "0x0FC20FFF"
+        },
+        {
+          "Instance": "FSS0",
+          "Interface": "OSPI0_CTRL",
+          "start_addr": "0x0FC40000",
+          "end_addr": "0x0FC400FF"
+        },
+        {
+          "Instance": "FSS0",
+          "Interface": "OSPI0_SS_CFG",
+          "start_addr": "0x0FC44000",
+          "end_addr": "0x0FC441FF"
+        },
+        {
+          "Instance": "ELM0",
+          "Interface": "mem",
+          "start_addr": "0x25010000",
+          "end_addr": "0x25010FFF"
+        },
+        {
+          "Instance": "CTRL_MMR0",
+          "Interface": "CFG0",
+          "start_addr": "0x43000000",
+          "end_addr": "0x4301FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "SA2UL",
+      "fwl_id": 35,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45008C00",
+      "locked_regions":[0],
+      "Modules": [
+        {
+          "Instance": "SA2_UL0",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x00712000",
+          "end_addr": "0x007123FF"
+        },
+        {
+          "Instance": "ADC0",
+          "Interface": "ECC_REGS",
+          "start_addr": "0x0071A000",
+          "end_addr": "0x0071A3FF"
+        },
+        {
+          "Instance": "UART0",
+          "Interface": "mem",
+          "start_addr": "0x02800000",
+          "end_addr": "0x028001FF"
+        },
+        {
+          "Instance": "UART1",
+          "Interface": "mem",
+          "start_addr": "0x02810000",
+          "end_addr": "0x028101FF"
+        },
+        {
+          "Instance": "UART2",
+          "Interface": "mem",
+          "start_addr": "0x02820000",
+          "end_addr": "0x028201FF"
+        },
+        {
+          "Instance": "UART3",
+          "Interface": "mem",
+          "start_addr": "0x02830000",
+          "end_addr": "0x028301FF"
+        },
+        {
+          "Instance": "UART4",
+          "Interface": "mem",
+          "start_addr": "0x02840000",
+          "end_addr": "0x028401FF"
+        },
+        {
+          "Instance": "UART5",
+          "Interface": "mem",
+          "start_addr": "0x02850000",
+          "end_addr": "0x028501FF"
+        },
+        {
+          "Instance": "UART6",
+          "Interface": "mem",
+          "start_addr": "0x02860000",
+          "end_addr": "0x028601FF"
+        },
+        {
+          "Instance": "I2C0",
+          "Interface": "CFG",
+          "start_addr": "0x20000000",
+          "end_addr": "0x200000FF"
+        },
+        {
+          "Instance": "I2C1",
+          "Interface": "CFG",
+          "start_addr": "0x20010000",
+          "end_addr": "0x200100FF"
+        },
+        {
+          "Instance": "I2C2",
+          "Interface": "CFG",
+          "start_addr": "0x20020000",
+          "end_addr": "0x200200FF"
+        },
+        {
+          "Instance": "I2C3",
+          "Interface": "CFG",
+          "start_addr": "0x20030000",
+          "end_addr": "0x200300FF"
+        },
+        {
+          "Instance": "MCSPI0",
+          "Interface": "CFG",
+          "start_addr": "0x20100000",
+          "end_addr": "0x201003FF"
+        },
+        {
+          "Instance": "MCSPI1",
+          "Interface": "CFG",
+          "start_addr": "0x20110000",
+          "end_addr": "0x201103FF"
+        },
+        {
+          "Instance": "MCSPI2",
+          "Interface": "CFG",
+          "start_addr": "0x20120000",
+          "end_addr": "0x201203FF"
+        },
+        {
+          "Instance": "MCSPI3",
+          "Interface": "CFG",
+          "start_addr": "0x20130000",
+          "end_addr": "0x201303FF"
+        },
+        {
+          "Instance": "MCSPI4",
+          "Interface": "CFG",
+          "start_addr": "0x20140000",
+          "end_addr": "0x201403FF"
+        },
+        {
+          "Instance": "MCAN0",
+          "Interface": "SS",
+          "start_addr": "0x20700000",
+          "end_addr": "0x207000FF"
+        },
+        {
+          "Instance": "MCAN0",
+          "Interface": "CFG",
+          "start_addr": "0x20701000",
+          "end_addr": "0x207011FF"
+        },
+        {
+          "Instance": "MCAN0",
+          "Interface": "MSGMEM_RAM",
+          "start_addr": "0x20708000",
+          "end_addr": "0x2070FFFF"
+        },
+        {
+          "Instance": "MCAN1",
+          "Interface": "SS",
+          "start_addr": "0x20710000",
+          "end_addr": "0x207100FF"
+        },
+        {
+          "Instance": "MCAN1",
+          "Interface": "CFG",
+          "start_addr": "0x20711000",
+          "end_addr": "0x207111FF"
+        },
+        {
+          "Instance": "MCAN1",
+          "Interface": "MSGMEM_RAM",
+          "start_addr": "0x20718000",
+          "end_addr": "0x2071FFFF"
+        },
+        {
+          "Instance": "MCAN0",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x24018000",
+          "end_addr": "0x240183FF"
+        },
+        {
+          "Instance": "MCAN1",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x24019000",
+          "end_addr": "0x240193FF"
+        },
+        {
+          "Instance": "ADC0",
+          "Interface": "FIFO",
+          "start_addr": "0x28000000",
+          "end_addr": "0x280003FF"
+        },
+        {
+          "Instance": "ADC0",
+          "Interface": "BANK",
+          "start_addr": "0x28001000",
+          "end_addr": "0x280013FF"
+        },
+        {
+          "Instance": "SA2_UL0",
+          "Interface": "BANK",
+          "start_addr": "0x40900000",
+          "end_addr": "0x40900FFF"
+        },
+        {
+          "Instance": "SA2_UL0",
+          "Interface": "MMRA",
+          "start_addr": "0x40901000",
+          "end_addr": "0x409011FF"
+        },
+        {
+          "Instance": "SA2_UL0",
+          "Interface": "EIP_76",
+          "start_addr": "0x40910000",
+          "end_addr": "0x4091007F"
+        },
+        {
+          "Instance": "SA2_UL0",
+          "Interface": "EIP_29T2",
+          "start_addr": "0x40920000",
+          "end_addr": "0x4092FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MCU_PSC0",
+      "fwl_id": 21,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45005400",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MCU_PSC0",
+          "start_addr": "0x04000000",
+          "end_addr": "0x04000FFF"
+        },
+        {
+          "Instance": "MCU_PLLCTRL0",
+          "Interface": "mem",
+          "start_addr": "0x04020000",
+          "end_addr": "0x040201FF"
+        },
+        {
+          "Instance": "MCU_PLL0",
+          "Interface": "CFG",
+          "start_addr": "0x04040000",
+          "end_addr": "0x04040FFF"
+        },
+        {
+          "Instance": "MCU_PADCFG_CTRL0",
+          "Interface": "CFG0",
+          "start_addr": "0x04080000",
+          "end_addr": "0x04087FFF"
+        },
+        {
+          "Instance": "MCU_ESM0",
+          "Interface": "CFG",
+          "start_addr": "0x04100000",
+          "end_addr": "0x04100FFF"
+        },
+        {
+          "Instance": "MCU_GPIO0",
+          "Interface": "mem",
+          "start_addr": "0x04201000",
+          "end_addr": "0x042010FF"
+        },
+        {
+          "Instance": "MCU_MCU_GPIOMUX_INTROUTER0",
+          "Interface": "CFG",
+          "start_addr": "0x04210000",
+          "end_addr": "0x042101FF"
+        },
+        {
+          "Instance": "MCU_TIMEOUT0",
+          "Interface": "CFG",
+          "start_addr": "0x04300000",
+          "end_addr": "0x043003FF"
+        },
+        {
+          "Instance": "MCU_CTRL_MMR0",
+          "Interface": "CFG0",
+          "start_addr": "0x04500000",
+          "end_addr": "0x0451FFFF"
+        },
+        {
+          "Instance": "MCU_ECC_AGGR0",
+          "Interface": "REGS",
+          "start_addr": "0x04700000",
+          "end_addr": "0x047003FF"
+        },
+        {
+          "Instance": "MCU_CBASS0",
+          "Interface": "ERR",
+          "start_addr": "0x04720000",
+          "end_addr": "0x047203FF"
+        },
+        {
+          "Instance": "MCU_TIMER0",
+          "Interface": "CFG",
+          "start_addr": "0x04800000",
+          "end_addr": "0x048003FF"
+        },
+        {
+          "Instance": "MCU_TIMER1",
+          "Interface": "CFG",
+          "start_addr": "0x04810000",
+          "end_addr": "0x048103FF"
+        },
+        {
+          "Instance": "MCU_TIMER2",
+          "Interface": "CFG",
+          "start_addr": "0x04820000",
+          "end_addr": "0x048203FF"
+        },
+        {
+          "Instance": "MCU_TIMER3",
+          "Interface": "CFG",
+          "start_addr": "0x04830000",
+          "end_addr": "0x048303FF"
+        },
+        {
+          "Instance": "MCU_RTI0",
+          "Interface": "CFG",
+          "start_addr": "0x04880000",
+          "end_addr": "0x048800FF"
+        },
+        {
+          "Instance": "MCU_I2C0",
+          "Interface": "CFG",
+          "start_addr": "0x04900000",
+          "end_addr": "0x049000FF"
+        },
+        {
+          "Instance": "MCU_I2C1",
+          "Interface": "CFG",
+          "start_addr": "0x04910000",
+          "end_addr": "0x049100FF"
+        },
+        {
+          "Instance": "MCU_UART0",
+          "Interface": "mem",
+          "start_addr": "0x04A00000",
+          "end_addr": "0x04A001FF"
+        },
+        {
+          "Instance": "MCU_UART1",
+          "Interface": "mem",
+          "start_addr": "0x04A10000",
+          "end_addr": "0x04A101FF"
+        },
+        {
+          "Instance": "MCU_MCSPI0",
+          "Interface": "CFG",
+          "start_addr": "0x04B00000",
+          "end_addr": "0x04B003FF"
+        },
+        {
+          "Instance": "MCU_MCSPI1",
+          "Interface": "CFG",
+          "start_addr": "0x04B10000",
+          "end_addr": "0x04B103FF"
+        },
+        {
+          "Instance": "MCU_DCC0",
+          "Interface": "CFG",
+          "start_addr": "0x04C00000",
+          "end_addr": "0x04C0003F"
+        },
+        {
+          "Instance": "MCU_MCRC64_0",
+          "Interface": "REGS",
+          "start_addr": "0x04D00000",
+          "end_addr": "0x04D00FFF"
+        },
+        {
+          "Instance": "MCU_M4FSS0",
+          "Interface": "IRAM",
+          "start_addr": "0x05000000",
+          "end_addr": "0x0503FFFF"
+        },
+        {
+          "Instance": "MCU_M4FSS0",
+          "Interface": "DRAM",
+          "start_addr": "0x05040000",
+          "end_addr": "0x0504FFFF"
+        },
+        {
+          "Instance": "MCU_M4FSS0",
+          "Interface": "RAT",
+          "start_addr": "0x05FF0000",
+          "end_addr": "0x05FF0FFF"
+        },
+        {
+          "Instance": "MCU_M4FSS0",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x05FF1000",
+          "end_addr": "0x05FF13FF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "DDR16SS0",
+      "fwl_id": 1,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45000400",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "DDR16SS0",
+          "Interface": "DRAM",
+          "start_addr": "0x80000000",
+          "end_addr": "0xFFFFFFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K0",
+      "fwl_id": 14,
+      "fwl_regions": 4,
+      "fwl_mmr_addr": "0x45003800",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K0",
+          "Interface": "RAM",
+          "start_addr": "0x70000000",
+          "end_addr": "0x7003FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K1",
+      "fwl_id": 15,
+      "fwl_regions": 4,
+      "fwl_mmr_addr": "0x45003C00",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K1",
+          "Interface": "RAM",
+          "start_addr": "0x70040000",
+          "end_addr": "0x7007FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K2",
+      "fwl_id": 16,
+      "fwl_regions": 4,
+      "fwl_mmr_addr": "0x45004000",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K2",
+          "Interface": "RAM",
+          "start_addr": "0x70080000",
+          "end_addr": "0x700BFFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K5",
+      "fwl_id": 17,
+      "fwl_regions": 4,
+      "fwl_mmr_addr": "0x45004400",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K5",
+          "Interface": "RAM",
+          "start_addr": "0x70140000",
+          "end_addr": "0x7017FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K4",
+      "fwl_id": 18,
+      "fwl_regions": 4,
+      "fwl_mmr_addr": "0x45004800",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K4",
+          "Interface": "RAM",
+          "start_addr": "0x70100000",
+          "end_addr": "0x7013FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K3",
+      "fwl_id": 19,
+      "fwl_regions": 4,
+      "fwl_mmr_addr": "0x45004C00",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K3",
+          "Interface": "RAM",
+          "start_addr": "0x700C0000",
+          "end_addr": "0x700FFFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "DMASS0",
+      "fwl_id": 20,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45005000",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "DMASS0",
+          "Interface": "SEC_PROXY_SRC_TARGET_DATA",
+          "start_addr": "0x4D000000",
+          "end_addr": "0x4D07FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "RINGACC_SRC_FIFOS",
+          "start_addr": "0x4E000000",
+          "end_addr": "0x4E3FFFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "GICSS0",
+      "fwl_id": 22,
+      "fwl_regions": 16,
+      "fwl_mmr_addr": "0x45005800",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "GICSS0",
+          "Interface": "GIC_TRANSLATER",
+          "start_addr": "0x01000000",
+          "end_addr": "0x013FFFFF"
+        },
+        {
+          "Instance": "GICSS0",
+          "Interface": "GIC",
+          "start_addr": "0x01800000",
+          "end_addr": "0x018FFFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "DRAM0_SLV_RAM",
+          "start_addr": "0x30000000",
+          "end_addr": "0x30001FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "DRAM1_SLV_RAM",
+          "start_addr": "0x30002000",
+          "end_addr": "0x30003FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_RTU0_PR1_RTU0_IRAM_RAM",
+          "start_addr": "0x30004000",
+          "end_addr": "0x30005FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_RTU1_PR1_RTU1_IRAM_RAM",
+          "start_addr": "0x30006000",
+          "end_addr": "0x30007FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "RAT_SLICE0_CFG",
+          "start_addr": "0x30008000",
+          "end_addr": "0x30008FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "RAT_SLICE1_CFG",
+          "start_addr": "0x30009000",
+          "end_addr": "0x30009FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP_TX0_IRAM_RAM",
+          "start_addr": "0x3000A000",
+          "end_addr": "0x3000BFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP_TX1_IRAM_RAM",
+          "start_addr": "0x3000C000",
+          "end_addr": "0x3000DFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "RAM_SLV_RAM",
+          "start_addr": "0x30010000",
+          "end_addr": "0x3001FFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_ICSS_INTC_INTC_SLV",
+          "start_addr": "0x30020000",
+          "end_addr": "0x30021FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP0_IRAM",
+          "start_addr": "0x30022000",
+          "end_addr": "0x300220FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP0_IRAM_DEBUG",
+          "start_addr": "0x30022400",
+          "end_addr": "0x300224FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_RTU0_PR1_RTU0_IRAM",
+          "start_addr": "0x30023000",
+          "end_addr": "0x300230FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_RTU0_PR1_RTU0_IRAM_DEBUG",
+          "start_addr": "0x30023400",
+          "end_addr": "0x300234FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_RTU1_PR1_RTU1_IRAM",
+          "start_addr": "0x30023800",
+          "end_addr": "0x300238FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_RTU1_PR1_RTU1_IRAM_DEBUG",
+          "start_addr": "0x30023C00",
+          "end_addr": "0x30023CFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP1_IRAM",
+          "start_addr": "0x30024000",
+          "end_addr": "0x300240FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP1_IRAM_DEBUG",
+          "start_addr": "0x30024400",
+          "end_addr": "0x300244FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PROT_SLV",
+          "start_addr": "0x30024C00",
+          "end_addr": "0x30024CFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP_TX0_IRAM",
+          "start_addr": "0x30025000",
+          "end_addr": "0x300250FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP_TX0_IRAM_DEBUG",
+          "start_addr": "0x30025400",
+          "end_addr": "0x300254FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP_TX1_IRAM",
+          "start_addr": "0x30025800",
+          "end_addr": "0x300258FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP_TX1_IRAM_DEBUG",
+          "start_addr": "0x30025C00",
+          "end_addr": "0x30025CFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_CFG_SLV",
+          "start_addr": "0x30026000",
+          "end_addr": "0x300261FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PA_STAT_WRAP_PA_SLV_QSTAT",
+          "start_addr": "0x30027000",
+          "end_addr": "0x300277FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_ICSS_UART_UART_SLV",
+          "start_addr": "0x30028000",
+          "end_addr": "0x3002803F"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_TASKS_MGR_PRU0_PR1_TASKS_MGR_PRU0_MMR",
+          "start_addr": "0x3002A000",
+          "end_addr": "0x3002A0FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_TASKS_MGR_RTU0_PR1_TASKS_MGR_RTU0_MMR",
+          "start_addr": "0x3002A100",
+          "end_addr": "0x3002A1FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_TASKS_MGR_PRU1_PR1_TASKS_MGR_PRU1_MMR",
+          "start_addr": "0x3002A200",
+          "end_addr": "0x3002A2FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_TASKS_MGR_RTU1_PR1_TASKS_MGR_RTU1_MMR",
+          "start_addr": "0x3002A300",
+          "end_addr": "0x3002A3FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_TASKS_MGR_PRU_TX0_PR1_TASKS_MGR_PRU_TX0_MMR",
+          "start_addr": "0x3002A400",
+          "end_addr": "0x3002A4FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_TASKS_MGR_PRU_TX1_PR1_TASKS_MGR_PRU_TX1_MMR",
+          "start_addr": "0x3002A500",
+          "end_addr": "0x3002A5FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PA_STAT_WRAP_PA_SLV_CSTAT",
+          "start_addr": "0x3002C000",
+          "end_addr": "0x3002C7FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "IEP0",
+          "start_addr": "0x3002E000",
+          "end_addr": "0x3002EFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "IEP1",
+          "start_addr": "0x3002F000",
+          "end_addr": "0x3002FFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_ICSS_ECAP0_ECAP_SLV",
+          "start_addr": "0x30030000",
+          "end_addr": "0x300300FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_MII_RT_PR1_MII_RT_CFG",
+          "start_addr": "0x30032000",
+          "end_addr": "0x300320FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_MII_RT_PR1_SGMII0_CFG_SGMII0",
+          "start_addr": "0x30032100",
+          "end_addr": "0x300321FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_MII_RT_PR1_SGMII1_CFG_SGMII1",
+          "start_addr": "0x30032200",
+          "end_addr": "0x300322FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_MDIO_V1P7_MDIO",
+          "start_addr": "0x30032400",
+          "end_addr": "0x300324FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G",
+          "start_addr": "0x30033000",
+          "end_addr": "0x30033FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP0_IRAM_RAM",
+          "start_addr": "0x30034000",
+          "end_addr": "0x30037FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PR1_PDSP1_IRAM_RAM",
+          "start_addr": "0x30038000",
+          "end_addr": "0x3003BFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "PA_STAT_WRAP_PA_SLV",
+          "start_addr": "0x3003C000",
+          "end_addr": "0x3003C0FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "DRAM0_SLV_RAM",
+          "start_addr": "0x30080000",
+          "end_addr": "0x30081FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "DRAM1_SLV_RAM",
+          "start_addr": "0x30082000",
+          "end_addr": "0x30083FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_RTU0_PR1_RTU0_IRAM_RAM",
+          "start_addr": "0x30084000",
+          "end_addr": "0x30085FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_RTU1_PR1_RTU1_IRAM_RAM",
+          "start_addr": "0x30086000",
+          "end_addr": "0x30087FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "RAT_SLICE0_CFG",
+          "start_addr": "0x30088000",
+          "end_addr": "0x30088FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "RAT_SLICE1_CFG",
+          "start_addr": "0x30089000",
+          "end_addr": "0x30089FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP_TX0_IRAM_RAM",
+          "start_addr": "0x3008A000",
+          "end_addr": "0x3008BFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP_TX1_IRAM_RAM",
+          "start_addr": "0x3008C000",
+          "end_addr": "0x3008DFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "RAM_SLV_RAM",
+          "start_addr": "0x30090000",
+          "end_addr": "0x3009FFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_ICSS_INTC_INTC_SLV",
+          "start_addr": "0x300A0000",
+          "end_addr": "0x300A1FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP0_IRAM",
+          "start_addr": "0x300A2000",
+          "end_addr": "0x300A20FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP0_IRAM_DEBUG",
+          "start_addr": "0x300A2400",
+          "end_addr": "0x300A24FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_RTU0_PR1_RTU0_IRAM",
+          "start_addr": "0x300A3000",
+          "end_addr": "0x300A30FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_RTU0_PR1_RTU0_IRAM_DEBUG",
+          "start_addr": "0x300A3400",
+          "end_addr": "0x300A34FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_RTU1_PR1_RTU1_IRAM",
+          "start_addr": "0x300A3800",
+          "end_addr": "0x300A38FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_RTU1_PR1_RTU1_IRAM_DEBUG",
+          "start_addr": "0x300A3C00",
+          "end_addr": "0x300A3CFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP1_IRAM",
+          "start_addr": "0x300A4000",
+          "end_addr": "0x300A40FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP1_IRAM_DEBUG",
+          "start_addr": "0x300A4400",
+          "end_addr": "0x300A44FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PROT_SLV",
+          "start_addr": "0x300A4C00",
+          "end_addr": "0x300A4CFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP_TX0_IRAM",
+          "start_addr": "0x300A5000",
+          "end_addr": "0x300A50FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP_TX0_IRAM_DEBUG",
+          "start_addr": "0x300A5400",
+          "end_addr": "0x300A54FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP_TX1_IRAM",
+          "start_addr": "0x300A5800",
+          "end_addr": "0x300A58FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP_TX1_IRAM_DEBUG",
+          "start_addr": "0x300A5C00",
+          "end_addr": "0x300A5CFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_CFG_SLV",
+          "start_addr": "0x300A6000",
+          "end_addr": "0x300A61FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PA_STAT_WRAP_PA_SLV_QSTAT",
+          "start_addr": "0x300A7000",
+          "end_addr": "0x300A77FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_ICSS_UART_UART_SLV",
+          "start_addr": "0x300A8000",
+          "end_addr": "0x300A803F"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_TASKS_MGR_PRU0_PR1_TASKS_MGR_PRU0_MMR",
+          "start_addr": "0x300AA000",
+          "end_addr": "0x300AA0FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_TASKS_MGR_RTU0_PR1_TASKS_MGR_RTU0_MMR",
+          "start_addr": "0x300AA100",
+          "end_addr": "0x300AA1FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_TASKS_MGR_PRU1_PR1_TASKS_MGR_PRU1_MMR",
+          "start_addr": "0x300AA200",
+          "end_addr": "0x300AA2FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_TASKS_MGR_RTU1_PR1_TASKS_MGR_RTU1_MMR",
+          "start_addr": "0x300AA300",
+          "end_addr": "0x300AA3FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_TASKS_MGR_PRU_TX0_PR1_TASKS_MGR_PRU_TX0_MMR",
+          "start_addr": "0x300AA400",
+          "end_addr": "0x300AA4FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_TASKS_MGR_PRU_TX1_PR1_TASKS_MGR_PRU_TX1_MMR",
+          "start_addr": "0x300AA500",
+          "end_addr": "0x300AA5FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PA_STAT_WRAP_PA_SLV_CSTAT",
+          "start_addr": "0x300AC000",
+          "end_addr": "0x300AC7FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "IEP0",
+          "start_addr": "0x300AE000",
+          "end_addr": "0x300AEFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "IEP1",
+          "start_addr": "0x300AF000",
+          "end_addr": "0x300AFFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_ICSS_ECAP0_ECAP_SLV",
+          "start_addr": "0x300B0000",
+          "end_addr": "0x300B00FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_MII_RT_PR1_MII_RT_CFG",
+          "start_addr": "0x300B2000",
+          "end_addr": "0x300B20FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_MII_RT_PR1_SGMII0_CFG_SGMII0",
+          "start_addr": "0x300B2100",
+          "end_addr": "0x300B21FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_MII_RT_PR1_SGMII1_CFG_SGMII1",
+          "start_addr": "0x300B2200",
+          "end_addr": "0x300B22FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_MDIO_V1P7_MDIO",
+          "start_addr": "0x300B2400",
+          "end_addr": "0x300B24FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G",
+          "start_addr": "0x300B3000",
+          "end_addr": "0x300B3FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP0_IRAM_RAM",
+          "start_addr": "0x300B4000",
+          "end_addr": "0x300B7FFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PR1_PDSP1_IRAM_RAM",
+          "start_addr": "0x300B8000",
+          "end_addr": "0x300BBFFF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "PA_STAT_WRAP_PA_SLV",
+          "start_addr": "0x300BC000",
+          "end_addr": "0x300BC0FF"
+        },
+        {
+          "Instance": "TIMERMGR0",
+          "Interface": "TIMERS",
+          "start_addr": "0x37000000",
+          "end_addr": "0x3703FFFF"
+        },
+        {
+          "Instance": "CPTS0",
+          "Interface": "CPTS_VBUSP",
+          "start_addr": "0x39000000",
+          "end_addr": "0x390003FF"
+        },
+        {
+          "Instance": "CBASS0",
+          "Interface": "ERR",
+          "start_addr": "0x3A000000",
+          "end_addr": "0x3A0003FF"
+        },
+        {
+          "Instance": "R5FSS0",
+          "Interface": "REGS",
+          "start_addr": "0x3C010000",
+          "end_addr": "0x3C0103FF"
+        },
+        {
+          "Instance": "R5FSS0",
+          "Interface": "EVNT_BUS_VBUSP_MMRS",
+          "start_addr": "0x3C018000",
+          "end_addr": "0x3C0180FF"
+        },
+        {
+          "Instance": "R5FSS1",
+          "Interface": "REGS",
+          "start_addr": "0x3C030000",
+          "end_addr": "0x3C0303FF"
+        },
+        {
+          "Instance": "R5FSS1",
+          "Interface": "EVNT_BUS_VBUSP_MMRS",
+          "start_addr": "0x3C038000",
+          "end_addr": "0x3C0380FF"
+        },
+        {
+          "Instance": "TIMERMGR0",
+          "Interface": "CONFIG",
+          "start_addr": "0x3CD00000",
+          "end_addr": "0x3CD001FF"
+        },
+        {
+          "Instance": "MSRAM_256K0",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F001000",
+          "end_addr": "0x3F0013FF"
+        },
+        {
+          "Instance": "MSRAM_256K1",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F002000",
+          "end_addr": "0x3F0023FF"
+        },
+        {
+          "Instance": "MSRAM_256K2",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F003000",
+          "end_addr": "0x3F0033FF"
+        },
+        {
+          "Instance": "GICSS0",
+          "Interface": "REGS",
+          "start_addr": "0x3F004000",
+          "end_addr": "0x3F0043FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "ECCAGGR",
+          "start_addr": "0x3F005000",
+          "end_addr": "0x3F0053FF"
+        },
+        {
+          "Instance": "MSRAM_256K5",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F006000",
+          "end_addr": "0x3F0063FF"
+        },
+        {
+          "Instance": "MSRAM_256K4",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F007000",
+          "end_addr": "0x3F0073FF"
+        },
+        {
+          "Instance": "MSRAM_256K3",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F008000",
+          "end_addr": "0x3F0083FF"
+        },
+        {
+          "Instance": "PRU_ICSSG0",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x3F00A000",
+          "end_addr": "0x3F00A3FF"
+        },
+        {
+          "Instance": "PRU_ICSSG1",
+          "Interface": "ECC_AGGR",
+          "start_addr": "0x3F00B000",
+          "end_addr": "0x3F00B3FF"
+        },
+        {
+          "Instance": "R5FSS0",
+          "Interface": "CORE0_ECC_AGGR",
+          "start_addr": "0x3F00D000",
+          "end_addr": "0x3F00D3FF"
+        },
+        {
+          "Instance": "R5FSS1",
+          "Interface": "CORE0_ECC_AGGR",
+          "start_addr": "0x3F00E000",
+          "end_addr": "0x3F00E3FF"
+        },
+        {
+          "Instance": "ECC_AGGR0",
+          "Interface": "REGS",
+          "start_addr": "0x3F00F000",
+          "end_addr": "0x3F00F3FF"
+        },
+        {
+          "Instance": "MSRAM_256K6",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F010000",
+          "end_addr": "0x3F0103FF"
+        },
+        {
+          "Instance": "MSRAM_256K7",
+          "Interface": "ECC_AGGR_REGS",
+          "start_addr": "0x3F011000",
+          "end_addr": "0x3F0113FF"
+        },
+        {
+          "Instance": "PBIST1",
+          "Interface": "mem",
+          "start_addr": "0x3F100000",
+          "end_addr": "0x3F1003FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_INTR",
+          "start_addr": "0x48000000",
+          "end_addr": "0x480FFFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_IMAP",
+          "start_addr": "0x48100000",
+          "end_addr": "0x48103FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_CFG",
+          "start_addr": "0x48110000",
+          "end_addr": "0x4811001F"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_L2G",
+          "start_addr": "0x48120000",
+          "end_addr": "0x481203FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PSILCFG_PROXY",
+          "start_addr": "0x48130000",
+          "end_addr": "0x481301FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PSILSS_MMRS",
+          "start_addr": "0x48140000",
+          "end_addr": "0x48140FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_UNMAP",
+          "start_addr": "0x48180000",
+          "end_addr": "0x4819FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_MCAST",
+          "start_addr": "0x48210000",
+          "end_addr": "0x48210FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_GCNTCFG",
+          "start_addr": "0x48220000",
+          "end_addr": "0x48221FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "ETLSW_MMRS",
+          "start_addr": "0x48230000",
+          "end_addr": "0x48230FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "RINGACC_GCFG",
+          "start_addr": "0x48240000",
+          "end_addr": "0x482403FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "SEC_PROXY_MMRS",
+          "start_addr": "0x48250000",
+          "end_addr": "0x482500FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_CRED",
+          "start_addr": "0x48400000",
+          "end_addr": "0x484007FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_CRED",
+          "start_addr": "0x48410000",
+          "end_addr": "0x48411FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_BCHAN",
+          "start_addr": "0x48420000",
+          "end_addr": "0x48421FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_RFLOW",
+          "start_addr": "0x48430000",
+          "end_addr": "0x48433FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_TCHAN",
+          "start_addr": "0x484A0000",
+          "end_addr": "0x484A3FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_TCHAN",
+          "start_addr": "0x484A4000",
+          "end_addr": "0x484A5FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_RCHAN",
+          "start_addr": "0x484C0000",
+          "end_addr": "0x484C1FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_RCHAN",
+          "start_addr": "0x484C2000",
+          "end_addr": "0x484C3FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_GCFG",
+          "start_addr": "0x485C0000",
+          "end_addr": "0x485C00FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_GCFG",
+          "start_addr": "0x485C0100",
+          "end_addr": "0x485C01FF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_RING",
+          "start_addr": "0x485E0000",
+          "end_addr": "0x485FFFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_RING",
+          "start_addr": "0x48600000",
+          "end_addr": "0x48607FFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "RINGACC_RT",
+          "start_addr": "0x49000000",
+          "end_addr": "0x493FFFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "RINGACC_CFG",
+          "start_addr": "0x49800000",
+          "end_addr": "0x4983FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "INTAGGR_GCNTRTI",
+          "start_addr": "0x4A000000",
+          "end_addr": "0x4A0FFFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "SEC_PROXY_SCFG",
+          "start_addr": "0x4A400000",
+          "end_addr": "0x4A47FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "SEC_PROXY_RT",
+          "start_addr": "0x4A600000",
+          "end_addr": "0x4A67FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_RCHANRT",
+          "start_addr": "0x4A800000",
+          "end_addr": "0x4A81FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_RCHANRT",
+          "start_addr": "0x4A820000",
+          "end_addr": "0x4A83FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_TCHANRT",
+          "start_addr": "0x4AA00000",
+          "end_addr": "0x4AA3FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_TCHANRT",
+          "start_addr": "0x4AA40000",
+          "end_addr": "0x4AA5FFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "PKTDMA_RINGRT",
+          "start_addr": "0x4B800000",
+          "end_addr": "0x4BBFFFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_RINGRT",
+          "start_addr": "0x4BC00000",
+          "end_addr": "0x4BCFFFFF"
+        },
+        {
+          "Instance": "DMASS0",
+          "Interface": "BCDMA_BCHANRT",
+          "start_addr": "0x4C000000",
+          "end_addr": "0x4C01FFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K6",
+      "fwl_id": 23,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45005C00",
+      "locked_regions":[],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K6",
+          "Interface": "RAM",
+          "start_addr": "0x70180000",
+          "end_addr": "0x701BFFFF"
+        }
+      ]
+    },
+    {
+      "fwl_name": "MSRAM_256K7",
+      "fwl_id": 24,
+      "fwl_regions": 8,
+      "fwl_mmr_addr": "0x45006000",
+      "locked_regions":[1,2,6,7],
+      "Modules": [
+        {
+          "Instance": "MSRAM_256K7",
+          "Interface": "RAM",
+          "start_addr": "0x701C0000",
+          "end_addr": "0x701FFFFF"
+        }
+      ]
+    }
+  ]

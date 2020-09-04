@@ -1,0 +1,106 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2127"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
+const edma2      = edma.addInstance();
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const mcan       = scripting.addModule("/drivers/mcan/mcan", {}, false);
+const mcan1      = mcan.addInstance();
+const mibspi     = scripting.addModule("/drivers/mibspi/mibspi", {}, false);
+const mibspi1    = mibspi.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+edma1.$name                        = "CONFIG_EDMA0";
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
+
+ipc.c66ss0   = "NONE";
+ipc.r5fss0_1 = "notify";
+
+mcan1.$name           = "CONFIG_MCAN0";
+mcan1.MCAN.$assign    = "MCANA";
+mcan1.MCAN.RX.$assign = "ball.D16";
+mcan1.MCAN.TX.$assign = "ball.D17";
+
+mibspi1.$name                            = "CONFIG_MIBSPI0";
+mibspi1.instance                         = "MIBSPIB";
+mibspi1.advanced                         = true;
+mibspi1.dataSize                         = 8;
+mibspi1.frameFormat                      = "POL0_PHA1";
+mibspi1.csHold                           = true;
+mibspi1.t2cDelay                         = 0x5;
+mibspi1.c2tDelay                         = 0x5;
+mibspi1.bitRate                          = 600000;
+mibspi1.MIBSPI.$assign                   = "MIBSPIB";
+mibspi1.MIBSPI.CLK.pu_pd                 = "nopull";
+mibspi1.MIBSPI.CLK.$assign               = "ball.T13";
+mibspi1.MIBSPI.MISO.pu_pd                = "nopull";
+mibspi1.MIBSPI.MISO.$assign              = "ball.U13";
+mibspi1.MIBSPI.MOSI.pu_pd                = "nopull";
+mibspi1.MIBSPI.MOSI.$assign              = "ball.V12";
+mibspi1.mibspiChannel[0].$name           = "CONFIG_MIBSPI_CH0";
+mibspi1.mibspiChannel[0].MSS_CSn.$assign = "ball.U14";
+
+edma2.$name                        = "CONFIG_EDMA1";
+edma2.instance                     = "EDMA_MSS_A";
+mibspi1.edmaConfig                 = edma2;
+edma2.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM5";
+edma2.edmaRmDmaCh[0].resourceType  = scripting.forceWrite("ownDmaCh");
+edma2.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM6";
+edma2.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM7";
+edma2.edmaRmParam[0].$name         = "CONFIG_EDMA_RM8";
+edma2.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM9";
+
+debug_log.enableUartLog           = true;
+debug_log.uartLog.$name           = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.RX.$assign = "ball.B16";
+debug_log.uartLog.UART.TX.$assign = "ball.C16";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 14;
+
+mpu_armv73.$name    = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr = 0x80000;
+mpu_armv73.size     = 14;
+
+mpu_armv74.$name    = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr = 0x10200000;
+mpu_armv74.size     = 20;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x102E0000;
+mpu_armv75.size         = 16;
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.$suggestSolution = "UARTA";

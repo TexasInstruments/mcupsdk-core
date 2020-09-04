@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/adcbuf/adcbuf'];
+%%}
+/*
+ * ADCBUF
+ */
+#include <drivers/adcbuf.h>
+
+/* ADCBUF Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_ADCBUF_NUM_INSTANCES (`module.$instances.length`U)

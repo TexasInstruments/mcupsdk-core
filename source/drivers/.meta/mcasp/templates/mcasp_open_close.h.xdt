@@ -1,0 +1,24 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/mcasp/mcasp'];
+%%}
+/*
+ * MCASP
+ */
+#include <drivers/mcasp.h>
+
+/* MCASP Driver handles */
+extern MCASP_Handle gMcaspHandle[CONFIG_MCASP_NUM_INSTANCES];
+
+/*
+ * MCASP Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* MCASP Driver default Open Parameters */
+extern MCASP_OpenParams gMcaspOpenParams[CONFIG_MCASP_NUM_INSTANCES];
+
+/* MCASP Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_mcaspOpen(void);
+void Drivers_mcaspClose(void);

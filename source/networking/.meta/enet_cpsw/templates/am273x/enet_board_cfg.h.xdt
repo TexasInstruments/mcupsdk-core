@@ -1,0 +1,42 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <networking/enet/utils/include/enet_board.h>
+
+/* ========================================================================== */
+/*                                 Macros                                     */
+/* ========================================================================== */
+/*!
+ * \brief Define indicating application has enabled custom board configuration.
+ *
+ * Custom boards are board not supported by MCU+SDK out of the box
+ */
+#define ENETBOARD_SYSCFG_CUSTOM_BOARD                   (`Number(instance.customBoardEnable)`)
+
+/*!
+ * \brief AM273X Common Processor Board (CPB) id.
+ */
+#define ENETBOARD_CPB_ID                      (ENETPHY_BIT(0U))
+
+/*!
+ * \brief AM273X dummy board, used for MAC loopback.
+ */
+#define ENETBOARD_LOOPBACK_ID                 (ENETPHY_BIT(1U))
+
+/*!
+ * \brief AM273X EVM base configuration: CPB and loopback.
+ */
+#define ENETBOARD_AM273X_EVM                  (ENETBOARD_CPB_ID | \
+                                               ENETBOARD_LOOPBACK_ID)
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+
+uint32_t EnetBoard_getId(void);
+
+void EnetBoard_getMiiConfig(EnetMacPort_Interface *mii);

@@ -1,0 +1,25 @@
+void Drivers_icssXbarOpen()
+{
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/xbar/icss_xbar/soc/icss_xbar_${common.getSocName()}`);
+    let module = system.modules['/xbar/icss_xbar/icss_xbar'];
+%%}
+% let base = "CSL_ICSSM_INTR_XBAR_U_BASE";
+% let OPTION_LIST = soc.getOptionList("INTERNAL");
+    /*
+    * ICSS XBAR
+    */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let xbarOutput = config.xbarOutput;
+        % let path = OPTION_LIST.find(o => o.name == xbarOutput).path;
+        % if (path.search("<-") == -1) {
+    SOC_xbarSelectIcssmIntrXbarInputSource(`base`, `config.name`, `xbarOutput`);
+        % }
+        % else {
+    SOC_xbarSelectIcssmIntrXbarInputSource(`base`, `config.name`, `config.name`_INPUT);
+        % }
+    % }
+}

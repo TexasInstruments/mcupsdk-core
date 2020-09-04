@@ -1,0 +1,1478 @@
+/********************************************************************
+ * Copyright (C) 2021 Texas Instruments Incorporated.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *  Name        : cslr_bss_prog_filt.h
+*/
+#ifndef CSLR_BSS_PROG_FILT_H_
+#define CSLR_BSS_PROG_FILT_H_
+
+#include <drivers/hw_include/cslr.h>
+#include <drivers/hw_include/tistdtypes.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+/**************************************************************************
+* Hardware Region  :
+**************************************************************************/
+
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct {
+    volatile uint32_t PROGFILTCFG1;
+    volatile uint32_t PROGFILTCFG2;
+    volatile uint32_t PROGFILTCFG3;
+    volatile uint32_t PROGFILTCFG4;
+    volatile uint32_t PROGFILTCFG5;
+    volatile uint32_t PROGFILTCFG6;
+    volatile uint32_t PROGFILTCFG7;
+    volatile uint32_t PROGFILTCFG8;
+    volatile uint32_t PROGFILTCFG9;
+    volatile uint32_t PROGFILTCFG10;
+    volatile uint32_t PROGFILTCFG11;
+    volatile uint32_t PROGFILTCFG12;
+    volatile uint32_t PROGFILTCFG13;
+    volatile uint32_t PROGFILTCFG14;
+    volatile uint32_t PROGFILTCFG15;
+    volatile uint32_t PROGFILTCFG16;
+    volatile uint32_t PROGFILTCFG17;
+    volatile uint32_t PROGFILTCFG18;
+    volatile uint32_t PROGFILTCFG19;
+    volatile uint32_t PROGFILTCFG20;
+    volatile uint32_t PROGFILTCFG21;
+    volatile uint32_t PROGFILTCFG22;
+    volatile uint32_t PROGFILTCFG23;
+    volatile uint32_t PROGFILTCFG24;
+    volatile uint32_t PROGFILTCFG25;
+    volatile uint32_t PROGFILTCFG26;
+    volatile uint32_t PROGFILTCFG27;
+    volatile uint32_t PROGFILTCFG28;
+    volatile uint32_t PROGFILTCFG29;
+    volatile uint32_t PROGFILTCFG30;
+    volatile uint32_t PROGFILTCFG31;
+    volatile uint32_t PROGFILTCFG32;
+    volatile uint32_t PROGFILTCFG33;
+    volatile uint32_t PROGFILTCFG34;
+    volatile uint32_t PROGFILTCFG35;
+    volatile uint32_t PROGFILTCFG36;
+    volatile uint32_t PROGFILTCFG37;
+    volatile uint32_t PROGFILTCFG38;
+    volatile uint32_t PROGFILTCFG39;
+    volatile uint32_t PROGFILTCFG40;
+    volatile uint32_t PROGFILTCFG41;
+    volatile uint32_t PROGFILTCFG42;
+    volatile uint32_t PROGFILTCFG43;
+    volatile uint32_t PROGFILTCFG44;
+    volatile uint32_t PROGFILTCFG45;
+    volatile uint32_t PROGFILTCFG46;
+    volatile uint32_t PROGFILTDMEMADDR;
+    volatile uint32_t PROGFILTDMEMWRDATA;
+    volatile uint32_t PROGFILTDMEMRDDATA;
+    volatile uint32_t PROGFILTECCERRSTAT;
+    volatile uint32_t PROGFILTECCCFG1;
+    volatile uint32_t PROGFILTECCCFG2;
+    volatile uint32_t PROGFILTECCCFG3;
+    volatile uint32_t PROGFILTECCCFG4;
+    volatile uint32_t PROGFILTCLKGATE;
+    volatile uint32_t HWECOSPARE1;
+    volatile uint32_t HWECOSPARE2;
+} CSL_bss_prog_filtRegs;
+
+
+/**************************************************************************
+* Register Macros
+**************************************************************************/
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1                                         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2                                         (0x00000004U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3                                         (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4                                         (0x0000000CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5                                         (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6                                         (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7                                         (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8                                         (0x0000001CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9                                         (0x00000020U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10                                        (0x00000024U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11                                        (0x00000028U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12                                        (0x0000002CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13                                        (0x00000030U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14                                        (0x00000034U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15                                        (0x00000038U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16                                        (0x0000003CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17                                        (0x00000040U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18                                        (0x00000044U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19                                        (0x00000048U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20                                        (0x0000004CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21                                        (0x00000050U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22                                        (0x00000054U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23                                        (0x00000058U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24                                        (0x0000005CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25                                        (0x00000060U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26                                        (0x00000064U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27                                        (0x00000068U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28                                        (0x0000006CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29                                        (0x00000070U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30                                        (0x00000074U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31                                        (0x00000078U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32                                        (0x0000007CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33                                        (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34                                        (0x00000084U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35                                        (0x00000088U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36                                        (0x0000008CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37                                        (0x00000090U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38                                        (0x00000094U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39                                        (0x00000098U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40                                        (0x0000009CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41                                        (0x000000A0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42                                        (0x000000A4U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43                                        (0x000000A8U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44                                        (0x000000ACU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45                                        (0x000000B0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46                                        (0x000000B4U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR                                     (0x000000B8U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMWRDATA                                   (0x000000BCU)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMRDDATA                                   (0x000000C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT                                   (0x000000C4U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1                                      (0x000000C8U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2                                      (0x000000CCU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3                                      (0x000000D0U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4                                      (0x000000D4U)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE                                      (0x000000D8U)
+#define CSL_BSS_PROG_FILT_HWECOSPARE1                                          (0x000000DCU)
+#define CSL_BSS_PROG_FILT_HWECOSPARE2                                          (0x000000E0U)
+
+/**************************************************************************
+* Field Definition Macros
+**************************************************************************/
+
+
+/* PROGFILTCFG1 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTDECIMENCFG_MASK                 (0x0000FFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTDECIMENCFG_SHIFT                (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTDECIMENCFG_RESETVAL             (0x0000FFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTDECIMENCFG_MAX                  (0x0000FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTEN_MASK                         (0xFFFF0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTEN_SHIFT                        (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTEN_RESETVAL                     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_PROGFILTEN_MAX                          (0x0000FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG1_RESETVAL                                (0x0000FFFFU)
+
+/* PROGFILTCFG2 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP0_MASK                      (0x0000003FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP0_SHIFT                     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP0_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP0_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU1_MASK                                (0x000000C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU1_SHIFT                               (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU1_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP1_MASK                      (0x00003F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP1_SHIFT                     (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP1_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP1_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU2_MASK                                (0x0000C000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU2_SHIFT                               (0x0000000EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU2_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP2_MASK                      (0x003F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP2_SHIFT                     (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP2_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP2_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU3_MASK                                (0x00C00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU3_SHIFT                               (0x00000016U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU3_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP3_MASK                      (0x3F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP3_SHIFT                     (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP3_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_PROGFILTLENP3_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU4_MASK                                (0xC0000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU4_SHIFT                               (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_NU4_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG2_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG3 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP4_MASK                      (0x0000003FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP4_SHIFT                     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP4_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP4_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU1_MASK                                (0x000000C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU1_SHIFT                               (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU1_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP5_MASK                      (0x00003F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP5_SHIFT                     (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP5_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP5_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU2_MASK                                (0x0000C000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU2_SHIFT                               (0x0000000EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU2_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP6_MASK                      (0x003F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP6_SHIFT                     (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP6_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP6_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU3_MASK                                (0x00C00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU3_SHIFT                               (0x00000016U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU3_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP7_MASK                      (0x3F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP7_SHIFT                     (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP7_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_PROGFILTLENP7_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU4_MASK                                (0xC0000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU4_SHIFT                               (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_NU4_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG3_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG4 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP8_MASK                      (0x0000003FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP8_SHIFT                     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP8_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP8_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU1_MASK                                (0x000000C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU1_SHIFT                               (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU1_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP9_MASK                      (0x00003F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP9_SHIFT                     (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP9_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP9_MAX                       (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU2_MASK                                (0x0000C000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU2_SHIFT                               (0x0000000EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU2_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP10_MASK                     (0x003F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP10_SHIFT                    (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP10_RESETVAL                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP10_MAX                      (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU3_MASK                                (0x00C00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU3_SHIFT                               (0x00000016U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU3_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP11_MASK                     (0x3F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP11_SHIFT                    (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP11_RESETVAL                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_PROGFILTLENP11_MAX                      (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU4_MASK                                (0xC0000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU4_SHIFT                               (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_NU4_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG4_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG5 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP12_MASK                     (0x0000003FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP12_SHIFT                    (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP12_RESETVAL                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP12_MAX                      (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU1_MASK                                (0x000000C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU1_SHIFT                               (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU1_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP13_MASK                     (0x00003F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP13_SHIFT                    (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP13_RESETVAL                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP13_MAX                      (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU2_MASK                                (0x0000C000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU2_SHIFT                               (0x0000000EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU2_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP14_MASK                     (0x003F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP14_SHIFT                    (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP14_RESETVAL                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP14_MAX                      (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU3_MASK                                (0x00C00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU3_SHIFT                               (0x00000016U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU3_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP15_MASK                     (0x3F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP15_SHIFT                    (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP15_RESETVAL                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_PROGFILTLENP15_MAX                      (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU4_MASK                                (0xC0000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU4_SHIFT                               (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_NU4_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG5_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG6 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP0_MASK                 (0x0000007FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP0_SHIFT                (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP0_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP0_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU1_MASK                                (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU1_SHIFT                               (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU1_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP1_MASK                 (0x00007F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP1_SHIFT                (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP1_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP1_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU2_MASK                                (0x00008000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU2_SHIFT                               (0x0000000FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU2_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP2_MASK                 (0x007F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP2_SHIFT                (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP2_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP2_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU3_MASK                                (0x00800000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU3_SHIFT                               (0x00000017U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU3_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP3_MASK                 (0x7F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP3_SHIFT                (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP3_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_PROGFILTCEFFADDRP3_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU4_MASK                                (0x80000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU4_SHIFT                               (0x0000001FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_NU4_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG6_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG7 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP4_MASK                 (0x0000007FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP4_SHIFT                (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP4_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP4_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU1_MASK                                (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU1_SHIFT                               (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU1_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP5_MASK                 (0x00007F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP5_SHIFT                (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP5_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP5_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU2_MASK                                (0x00008000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU2_SHIFT                               (0x0000000FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU2_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP6_MASK                 (0x007F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP6_SHIFT                (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP6_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP6_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU3_MASK                                (0x00800000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU3_SHIFT                               (0x00000017U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU3_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP7_MASK                 (0x7F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP7_SHIFT                (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP7_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_PROGFILTCEFFADDRP7_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU4_MASK                                (0x80000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU4_SHIFT                               (0x0000001FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_NU4_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG7_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG8 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP8_MASK                 (0x0000007FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP8_SHIFT                (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP8_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP8_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU1_MASK                                (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU1_SHIFT                               (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU1_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP9_MASK                 (0x00007F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP9_SHIFT                (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP9_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP9_MAX                  (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU2_MASK                                (0x00008000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU2_SHIFT                               (0x0000000FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU2_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP10_MASK                (0x007F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP10_SHIFT               (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP10_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP10_MAX                 (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU3_MASK                                (0x00800000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU3_SHIFT                               (0x00000017U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU3_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP11_MASK                (0x7F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP11_SHIFT               (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP11_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_PROGFILTCEFFADDRP11_MAX                 (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU4_MASK                                (0x80000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU4_SHIFT                               (0x0000001FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_NU4_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG8_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG9 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP12_MASK                (0x0000007FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP12_SHIFT               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP12_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP12_MAX                 (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU1_MASK                                (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU1_SHIFT                               (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU1_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU1_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP13_MASK                (0x00007F00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP13_SHIFT               (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP13_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP13_MAX                 (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU2_MASK                                (0x00008000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU2_SHIFT                               (0x0000000FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU2_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU2_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP14_MASK                (0x007F0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP14_SHIFT               (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP14_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP14_MAX                 (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU3_MASK                                (0x00800000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU3_SHIFT                               (0x00000017U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU3_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU3_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP15_MASK                (0x7F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP15_SHIFT               (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP15_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_PROGFILTCEFFADDRP15_MAX                 (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU4_MASK                                (0x80000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU4_SHIFT                               (0x0000001FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU4_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_NU4_MAX                                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG9_RESETVAL                                (0x00000000U)
+
+/* PROGFILTCFG10 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_NU_MASK                                (0x0000FFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_NU_SHIFT                               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_NU_MAX                                 (0x0000FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_PROGFILTDECIMPHASESEL_MASK             (0xFFFF0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_PROGFILTDECIMPHASESEL_SHIFT            (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_PROGFILTDECIMPHASESEL_RESETVAL         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_PROGFILTDECIMPHASESEL_MAX              (0x0000FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG10_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG11 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP0_MASK                (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP0_SHIFT               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP0_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP0_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP1_MASK                (0x00000038U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP1_SHIFT               (0x00000003U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP1_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP1_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP2_MASK                (0x000001C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP2_SHIFT               (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP2_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP2_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP3_MASK                (0x00000E00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP3_SHIFT               (0x00000009U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP3_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP3_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP4_MASK                (0x00007000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP4_SHIFT               (0x0000000CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP4_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP4_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP5_MASK                (0x00038000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP5_SHIFT               (0x0000000FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP5_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP5_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP6_MASK                (0x001C0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP6_SHIFT               (0x00000012U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP6_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP6_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP7_MASK                (0x00E00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP7_SHIFT               (0x00000015U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP7_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP7_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP8_MASK                (0x07000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP8_SHIFT               (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP8_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP8_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP9_MASK                (0x38000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP9_SHIFT               (0x0000001BU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP9_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_PROGFILTROUNDCFGP9_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_NU_MASK                                (0xC0000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_NU_SHIFT                               (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_NU_MAX                                 (0x00000003U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG11_RESETVAL                               (0x09249249U)
+
+/* PROGFILTCFG12 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP10_MASK               (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP10_SHIFT              (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP10_RESETVAL           (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP10_MAX                (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP11_MASK               (0x00000038U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP11_SHIFT              (0x00000003U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP11_RESETVAL           (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP11_MAX                (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP12_MASK               (0x000001C0U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP12_SHIFT              (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP12_RESETVAL           (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP12_MAX                (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP13_MASK               (0x00000E00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP13_SHIFT              (0x00000009U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP13_RESETVAL           (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP13_MAX                (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP14_MASK               (0x00007000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP14_SHIFT              (0x0000000CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP14_RESETVAL           (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP14_MAX                (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP15_MASK               (0x00038000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP15_SHIFT              (0x0000000FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP15_RESETVAL           (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTROUNDCFGP15_MAX                (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_NU_MASK                                (0x00FC0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_NU_SHIFT                               (0x00000012U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_NU_MAX                                 (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARINVEN_MASK                (0x01000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARINVEN_SHIFT               (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARINVEN_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARINVEN_MAX                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARCOMPDIS_MASK              (0x02000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARCOMPDIS_SHIFT             (0x00000019U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARCOMPDIS_RESETVAL          (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARCOMPDIS_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARINVEN_MASK                  (0x04000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARINVEN_SHIFT                 (0x0000001AU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARINVEN_RESETVAL              (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARINVEN_MAX                   (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARCOMPDIS_MASK                (0x08000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARCOMPDIS_SHIFT               (0x0000001BU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARCOMPDIS_RESETVAL            (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARCOMPDIS_MAX                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPAROROUT_MASK                (0x10000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPAROROUT_SHIFT               (0x0000001CU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPAROROUT_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPAROROUT_MAX                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARANDOUT_MASK               (0x20000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARANDOUT_SHIFT              (0x0000001DU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARANDOUT_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_ADCVALCNTRPARANDOUT_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPAROROUT_MASK                  (0x40000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPAROROUT_SHIFT                 (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPAROROUT_RESETVAL              (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPAROROUT_MAX                   (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARANDOUT_MASK                 (0x80000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARANDOUT_SHIFT                (0x0000001FU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARANDOUT_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_PROGFILTPARANDOUT_MAX                  (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG12_RESETVAL                               (0x0A009249U)
+
+/* PROGFILTCFG13 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_PROGFILTADCVALSTRTIMEP0_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_PROGFILTADCVALSTRTIMEP0_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_PROGFILTADCVALSTRTIMEP0_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_PROGFILTADCVALSTRTIMEP0_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG13_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG14 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_PROGFILTADCVALSTRTIMEP1_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_PROGFILTADCVALSTRTIMEP1_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_PROGFILTADCVALSTRTIMEP1_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_PROGFILTADCVALSTRTIMEP1_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG14_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG15 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_PROGFILTADCVALSTRTIMEP2_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_PROGFILTADCVALSTRTIMEP2_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_PROGFILTADCVALSTRTIMEP2_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_PROGFILTADCVALSTRTIMEP2_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG15_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG16 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_PROGFILTADCVALSTRTIMEP3_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_PROGFILTADCVALSTRTIMEP3_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_PROGFILTADCVALSTRTIMEP3_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_PROGFILTADCVALSTRTIMEP3_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG16_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG17 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_PROGFILTADCVALSTRTIMEP4_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_PROGFILTADCVALSTRTIMEP4_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_PROGFILTADCVALSTRTIMEP4_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_PROGFILTADCVALSTRTIMEP4_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG17_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG18 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_PROGFILTADCVALSTRTIMEP5_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_PROGFILTADCVALSTRTIMEP5_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_PROGFILTADCVALSTRTIMEP5_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_PROGFILTADCVALSTRTIMEP5_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG18_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG19 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_PROGFILTADCVALSTRTIMEP6_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_PROGFILTADCVALSTRTIMEP6_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_PROGFILTADCVALSTRTIMEP6_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_PROGFILTADCVALSTRTIMEP6_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG19_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG20 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_PROGFILTADCVALSTRTIMEP7_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_PROGFILTADCVALSTRTIMEP7_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_PROGFILTADCVALSTRTIMEP7_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_PROGFILTADCVALSTRTIMEP7_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG20_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG21 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_PROGFILTADCVALSTRTIMEP8_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_PROGFILTADCVALSTRTIMEP8_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_PROGFILTADCVALSTRTIMEP8_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_PROGFILTADCVALSTRTIMEP8_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG21_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG22 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_PROGFILTADCVALSTRTIMEP9_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_PROGFILTADCVALSTRTIMEP9_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_PROGFILTADCVALSTRTIMEP9_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_PROGFILTADCVALSTRTIMEP9_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG22_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG23 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_PROGFILTADCVALSTRTIMEP10_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_PROGFILTADCVALSTRTIMEP10_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_PROGFILTADCVALSTRTIMEP10_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_PROGFILTADCVALSTRTIMEP10_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG23_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG24 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_PROGFILTADCVALSTRTIMEP11_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_PROGFILTADCVALSTRTIMEP11_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_PROGFILTADCVALSTRTIMEP11_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_PROGFILTADCVALSTRTIMEP11_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG24_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG25 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_PROGFILTADCVALSTRTIMEP12_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_PROGFILTADCVALSTRTIMEP12_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_PROGFILTADCVALSTRTIMEP12_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_PROGFILTADCVALSTRTIMEP12_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG25_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG26 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_PROGFILTADCVALSTRTIMEP13_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_PROGFILTADCVALSTRTIMEP13_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_PROGFILTADCVALSTRTIMEP13_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_PROGFILTADCVALSTRTIMEP13_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG26_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG27 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_PROGFILTADCVALSTRTIMEP14_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_PROGFILTADCVALSTRTIMEP14_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_PROGFILTADCVALSTRTIMEP14_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_PROGFILTADCVALSTRTIMEP14_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG27_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG28 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_PROGFILTADCVALSTRTIMEP15_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_PROGFILTADCVALSTRTIMEP15_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_PROGFILTADCVALSTRTIMEP15_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_PROGFILTADCVALSTRTIMEP15_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG28_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG29 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_PROGFILTADCVALENDTIMEP0_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_PROGFILTADCVALENDTIMEP0_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_PROGFILTADCVALENDTIMEP0_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_PROGFILTADCVALENDTIMEP0_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG29_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG30 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_PROGFILTADCVALENDTIMEP1_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_PROGFILTADCVALENDTIMEP1_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_PROGFILTADCVALENDTIMEP1_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_PROGFILTADCVALENDTIMEP1_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG30_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG31 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_PROGFILTADCVALENDTIMEP2_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_PROGFILTADCVALENDTIMEP2_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_PROGFILTADCVALENDTIMEP2_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_PROGFILTADCVALENDTIMEP2_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG31_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG32 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_PROGFILTADCVALENDTIMEP3_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_PROGFILTADCVALENDTIMEP3_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_PROGFILTADCVALENDTIMEP3_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_PROGFILTADCVALENDTIMEP3_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG32_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG33 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_PROGFILTADCVALENDTIMEP4_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_PROGFILTADCVALENDTIMEP4_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_PROGFILTADCVALENDTIMEP4_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_PROGFILTADCVALENDTIMEP4_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG33_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG34 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_PROGFILTADCVALENDTIMEP5_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_PROGFILTADCVALENDTIMEP5_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_PROGFILTADCVALENDTIMEP5_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_PROGFILTADCVALENDTIMEP5_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG34_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG35 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_PROGFILTADCVALENDTIMEP6_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_PROGFILTADCVALENDTIMEP6_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_PROGFILTADCVALENDTIMEP6_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_PROGFILTADCVALENDTIMEP6_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG35_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG36 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_PROGFILTADCVALENDTIMEP7_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_PROGFILTADCVALENDTIMEP7_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_PROGFILTADCVALENDTIMEP7_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_PROGFILTADCVALENDTIMEP7_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG36_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG37 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_PROGFILTADCVALENDTIMEP8_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_PROGFILTADCVALENDTIMEP8_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_PROGFILTADCVALENDTIMEP8_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_PROGFILTADCVALENDTIMEP8_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG37_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG38 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_PROGFILTADCVALENDTIMEP9_MASK           (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_PROGFILTADCVALENDTIMEP9_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_PROGFILTADCVALENDTIMEP9_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_PROGFILTADCVALENDTIMEP9_MAX            (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG38_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG39 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_PROGFILTADCVALENDTIMEP10_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_PROGFILTADCVALENDTIMEP10_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_PROGFILTADCVALENDTIMEP10_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_PROGFILTADCVALENDTIMEP10_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG39_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG40 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_PROGFILTADCVALENDTIMEP11_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_PROGFILTADCVALENDTIMEP11_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_PROGFILTADCVALENDTIMEP11_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_PROGFILTADCVALENDTIMEP11_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG40_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG41 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_PROGFILTADCVALENDTIMEP12_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_PROGFILTADCVALENDTIMEP12_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_PROGFILTADCVALENDTIMEP12_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_PROGFILTADCVALENDTIMEP12_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG41_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG42 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_PROGFILTADCVALENDTIMEP13_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_PROGFILTADCVALENDTIMEP13_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_PROGFILTADCVALENDTIMEP13_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_PROGFILTADCVALENDTIMEP13_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG42_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG43 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_PROGFILTADCVALENDTIMEP14_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_PROGFILTADCVALENDTIMEP14_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_PROGFILTADCVALENDTIMEP14_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_PROGFILTADCVALENDTIMEP14_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG43_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG44 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_PROGFILTADCVALENDTIMEP15_MASK          (0x000FFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_PROGFILTADCVALENDTIMEP15_SHIFT         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_PROGFILTADCVALENDTIMEP15_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_PROGFILTADCVALENDTIMEP15_MAX           (0x000FFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_NU_MASK                                (0xFFF00000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_NU_SHIFT                               (0x00000014U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_NU_MAX                                 (0x00000FFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG44_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG45 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRSTAT_MASK                   (0x0000FFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRSTAT_SHIFT                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRSTAT_RESETVAL               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRSTAT_MAX                    (0x0000FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRCLR_MASK                    (0xFFFF0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRCLR_SHIFT                   (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRCLR_RESETVAL                (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_PROGFILTERRCLR_MAX                     (0x0000FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG45_RESETVAL                               (0x00000000U)
+
+/* PROGFILTCFG46 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSATBITS_MASK                (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSATBITS_SHIFT               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSATBITS_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSATBITS_MAX                 (0x00000007U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSHFT_MASK                   (0x00000078U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSHFT_SHIFT                  (0x00000003U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSHFT_RESETVAL               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILOPNUMSHFT_MAX                    (0x0000000FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILADCVALBYP_MASK                   (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILADCVALBYP_SHIFT                  (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILADCVALBYP_RESETVAL               (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_PRGFILADCVALBYP_MAX                    (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_NU_MASK                                (0xFFFFFF00U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_NU_SHIFT                               (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_NU_RESETVAL                            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_NU_MAX                                 (0x00FFFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCFG46_RESETVAL                               (0x00000000U)
+
+/* PROGFILTDMEMADDR */
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_ADDR_MASK              (0x000000FFU)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_ADDR_SHIFT             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_ADDR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_ADDR_MAX               (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU1_MASK                            (0x0000FF00U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU1_SHIFT                           (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU1_RESETVAL                        (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU1_MAX                             (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_EN_MASK                (0x00010000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_EN_SHIFT               (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_EN_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_EN_MAX                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU2_MASK                            (0x00FE0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU2_SHIFT                           (0x00000011U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU2_RESETVAL                        (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU2_MAX                             (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_RD_MASK                (0x01000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_RD_SHIFT               (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_RD_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_PROGFILTDMEM_RD_MAX                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU3_MASK                            (0xFE000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU3_SHIFT                           (0x00000019U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU3_RESETVAL                        (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_NU3_MAX                             (0x0000007FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMADDR_RESETVAL                            (0x00000000U)
+
+/* PROGFILTDMEMWRDATA */
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMWRDATA_PROGFILTDMEMWRDATA_MASK           (0xFFFFFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMWRDATA_PROGFILTDMEMWRDATA_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMWRDATA_PROGFILTDMEMWRDATA_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMWRDATA_PROGFILTDMEMWRDATA_MAX            (0xFFFFFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMWRDATA_RESETVAL                          (0x00000000U)
+
+/* PROGFILTDMEMRDDATA */
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMRDDATA_PROGFILTDMEMRDDATA_MASK           (0xFFFFFFFFU)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMRDDATA_PROGFILTDMEMRDDATA_SHIFT          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMRDDATA_PROGFILTDMEMRDDATA_RESETVAL       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMRDDATA_PROGFILTDMEMRDDATA_MAX            (0xFFFFFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTDMEMRDDATA_RESETVAL                          (0x00000000U)
+
+/* PROGFILTECCERRSTAT */
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMREPAIRINTR_MASK               (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMREPAIRINTR_SHIFT              (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMREPAIRINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMREPAIRINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMFATALINTR_MASK                (0x00000002U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMFATALINTR_SHIFT               (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMFATALINTR_RESETVAL            (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_CMEMFATALINTR_MAX                 (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6REPAIRINTR_MASK              (0x00000004U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6REPAIRINTR_SHIFT             (0x00000002U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6REPAIRINTR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6REPAIRINTR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6FATALINTR_MASK               (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6FATALINTR_SHIFT              (0x00000003U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6FATALINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM6FATALINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5REPAIRINTR_MASK              (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5REPAIRINTR_SHIFT             (0x00000004U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5REPAIRINTR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5REPAIRINTR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5FATALINTR_MASK               (0x00000020U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5FATALINTR_SHIFT              (0x00000005U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5FATALINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM5FATALINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4REPAIRINTR_MASK              (0x00000040U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4REPAIRINTR_SHIFT             (0x00000006U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4REPAIRINTR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4REPAIRINTR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4FATALINTR_MASK               (0x00000080U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4FATALINTR_SHIFT              (0x00000007U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4FATALINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM4FATALINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3REPAIRINTR_MASK              (0x00000100U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3REPAIRINTR_SHIFT             (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3REPAIRINTR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3REPAIRINTR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3FATALINTR_MASK               (0x00000200U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3FATALINTR_SHIFT              (0x00000009U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3FATALINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM3FATALINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2REPAIRINTR_MASK              (0x00000400U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2REPAIRINTR_SHIFT             (0x0000000AU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2REPAIRINTR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2REPAIRINTR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2FATALINTR_MASK               (0x00000800U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2FATALINTR_SHIFT              (0x0000000BU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2FATALINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM2FATALINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1REPAIRINTR_MASK              (0x00001000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1REPAIRINTR_SHIFT             (0x0000000CU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1REPAIRINTR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1REPAIRINTR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1FATALINTR_MASK               (0x00002000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1FATALINTR_SHIFT              (0x0000000DU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1FATALINTR_RESETVAL           (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_DMEM1FATALINTR_MAX                (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_NU_MASK                           (0xFFFFC000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_NU_SHIFT                          (0x0000000EU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_NU_RESETVAL                       (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_NU_MAX                            (0x0003FFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCERRSTAT_RESETVAL                          (0x00000000U)
+
+/* PROGFILTECCCFG1 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCEN_MASK                  (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCEN_SHIFT                 (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCEN_RESETVAL              (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCEN_MAX                   (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCERRCLR_MASK              (0x00000002U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCERRCLR_SHIFT             (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCERRCLR_RESETVAL          (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILDATECCERRCLR_MAX               (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCFAULTADDR_MASK          (0x000000FCU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCFAULTADDR_SHIFT         (0x00000002U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCFAULTADDR_RESETVAL      (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCFAULTADDR_MAX           (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCREPAIREDBIT_MASK        (0x0000FF00U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCREPAIREDBIT_SHIFT       (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCREPAIREDBIT_RESETVAL    (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCREPAIREDBIT_MAX         (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCEN_MASK                 (0x00010000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCEN_SHIFT                (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCEN_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCEN_MAX                  (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCERRCLR_MASK             (0x00020000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCERRCLR_SHIFT            (0x00000011U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCERRCLR_RESETVAL         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILCOEFECCERRCLR_MAX              (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU1_MASK                             (0x00FC0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU1_SHIFT                            (0x00000012U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU1_RESETVAL                         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU1_MAX                              (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU2_MASK                             (0x3F000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU2_SHIFT                            (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU2_RESETVAL                         (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_NU2_MAX                              (0x0000003FU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINIT_MASK                      (0x40000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINIT_SHIFT                     (0x0000001EU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINIT_RESETVAL                  (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINIT_MAX                       (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINITDONE_MASK                  (0x80000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINITDONE_SHIFT                 (0x0000001FU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINITDONE_RESETVAL              (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_PRGFILINITDONE_MAX                   (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG1_RESETVAL                             (0x00000000U)
+
+/* PROGFILTECCCFG2 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCFAULTADDR_MASK         (0x000000FFU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCFAULTADDR_SHIFT        (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCFAULTADDR_RESETVAL     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCFAULTADDR_MAX          (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCREPAIREDBIT_MASK       (0x0000FF00U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCREPAIREDBIT_SHIFT      (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCREPAIREDBIT_RESETVAL   (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM1ECCREPAIREDBIT_MAX        (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCFAULTADDR_MASK         (0x00FF0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCFAULTADDR_SHIFT        (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCFAULTADDR_RESETVAL     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCFAULTADDR_MAX          (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCREPAIREDBIT_MASK       (0xFF000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCREPAIREDBIT_SHIFT      (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCREPAIREDBIT_RESETVAL   (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_PRGFILDMEM2ECCREPAIREDBIT_MAX        (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG2_RESETVAL                             (0x00000000U)
+
+/* PROGFILTECCCFG3 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCFAULTADDR_MASK         (0x000000FFU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCFAULTADDR_SHIFT        (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCFAULTADDR_RESETVAL     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCFAULTADDR_MAX          (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCREPAIREDBIT_MASK       (0x0000FF00U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCREPAIREDBIT_SHIFT      (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCREPAIREDBIT_RESETVAL   (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM3ECCREPAIREDBIT_MAX        (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCFAULTADDR_MASK         (0x00FF0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCFAULTADDR_SHIFT        (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCFAULTADDR_RESETVAL     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCFAULTADDR_MAX          (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCREPAIREDBIT_MASK       (0xFF000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCREPAIREDBIT_SHIFT      (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCREPAIREDBIT_RESETVAL   (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_PRGFILDMEM4ECCREPAIREDBIT_MAX        (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG3_RESETVAL                             (0x00000000U)
+
+/* PROGFILTECCCFG4 */
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCFAULTADDR_MASK         (0x000000FFU)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCFAULTADDR_SHIFT        (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCFAULTADDR_RESETVAL     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCFAULTADDR_MAX          (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCREPAIREDBIT_MASK       (0x0000FF00U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCREPAIREDBIT_SHIFT      (0x00000008U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCREPAIREDBIT_RESETVAL   (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM5ECCREPAIREDBIT_MAX        (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCFAULTADDR_MASK         (0x00FF0000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCFAULTADDR_SHIFT        (0x00000010U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCFAULTADDR_RESETVAL     (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCFAULTADDR_MAX          (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCREPAIREDBIT_MASK       (0xFF000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCREPAIREDBIT_SHIFT      (0x00000018U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCREPAIREDBIT_RESETVAL   (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_PRGFILDMEM6ECCREPAIREDBIT_MAX        (0x000000FFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTECCCFG4_RESETVAL                             (0x00000000U)
+
+/* PROGFILTCLKGATE */
+
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_PROGFILTCLKGATE_MASK                 (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_PROGFILTCLKGATE_SHIFT                (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_PROGFILTCLKGATE_RESETVAL             (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_PROGFILTCLKGATE_MAX                  (0x00000001U)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_RESERVED_MASK                        (0xFFFFFFFEU)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_RESERVED_SHIFT                       (0x00000001U)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_RESERVED_RESETVAL                    (0x00000000U)
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_RESERVED_MAX                         (0x7FFFFFFFU)
+
+#define CSL_BSS_PROG_FILT_PROGFILTCLKGATE_RESETVAL                             (0x00000000U)
+
+/* HWECOSPARE1 */
+
+#define CSL_BSS_PROG_FILT_HWECOSPARE1_HWECOSPARE1_MASK                         (0xFFFFFFFFU)
+#define CSL_BSS_PROG_FILT_HWECOSPARE1_HWECOSPARE1_SHIFT                        (0x00000000U)
+#define CSL_BSS_PROG_FILT_HWECOSPARE1_HWECOSPARE1_RESETVAL                     (0x00000000U)
+#define CSL_BSS_PROG_FILT_HWECOSPARE1_HWECOSPARE1_MAX                          (0xFFFFFFFFU)
+
+#define CSL_BSS_PROG_FILT_HWECOSPARE1_RESETVAL                                 (0x00000000U)
+
+/* HWECOSPARE2 */
+
+#define CSL_BSS_PROG_FILT_HWECOSPARE2_HWECOSPARE2_MASK                         (0xFFFFFFFFU)
+#define CSL_BSS_PROG_FILT_HWECOSPARE2_HWECOSPARE2_SHIFT                        (0x00000000U)
+#define CSL_BSS_PROG_FILT_HWECOSPARE2_HWECOSPARE2_RESETVAL                     (0x00000000U)
+#define CSL_BSS_PROG_FILT_HWECOSPARE2_HWECOSPARE2_MAX                          (0xFFFFFFFFU)
+
+#define CSL_BSS_PROG_FILT_HWECOSPARE2_RESETVAL                                 (0x00000000U)
+
+#ifdef __cplusplus
+}
+#endif
+#endif

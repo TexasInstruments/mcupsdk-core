@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+/*
+ * PRU_ADC
+ */
+/* PRU_ADC Instance Macros */
+% let instance = module.$instances[0];
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % if (instance.adaptor === "TandMAdapterBoard") {
+#define `instance.$name`_T_M_SEM_ADAPTER        `1`
+% }
+% }

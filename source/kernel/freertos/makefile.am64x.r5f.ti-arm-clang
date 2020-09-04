@@ -1,0 +1,185 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+
+CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
+AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+LIBNAME:=freertos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
+
+FILES_common := \
+    boot_armv7r.c \
+    DebugP_shmLogWriter.c \
+    DebugP_shmLogReader.c \
+    DebugP_uartLogWriter.c \
+    DebugP_uartScanf.c \
+    DebugP_memTraceLogWriter.c \
+    DebugP_log.c \
+    TimerP.c \
+    HwiP_armv7r_vim.c \
+    MpuP_armv7r.c \
+    CacheP_armv7r.c \
+    CpuId_armv7r.c \
+    HeapP_internal.c \
+    printf.c \
+    AddrTranslateP.c \
+    PmuP_armv7r.c \
+    QueueP_nortos.c \
+    ClockP_freertos.c \
+    ClockP_freertos_r5.c \
+    SemaphoreP_freertos.c \
+    HwiP_armv7r_handlers_freertos.c \
+    HeapP_freertos.c \
+    DebugP_freertos.c \
+    DebugP_shmLogReader_freertos.c \
+    TaskP_freertos.c \
+    EventP_freertos.c \
+    event_groups.c \
+    tasks.c \
+    timers.c \
+    queue.c \
+    list.c \
+    heap_3.c \
+    FreeRTOS_POSIX_clock.c \
+    FreeRTOS_POSIX_mqueue.c \
+    FreeRTOS_POSIX_pthread_barrier.c \
+    FreeRTOS_POSIX_pthread_cond.c \
+    FreeRTOS_POSIX_pthread_mutex.c \
+    FreeRTOS_POSIX_pthread.c \
+    FreeRTOS_POSIX_sched.c \
+    FreeRTOS_POSIX_semaphore.c \
+    FreeRTOS_POSIX_timer.c \
+    FreeRTOS_POSIX_unistd.c \
+    FreeRTOS_POSIX_utils.c \
+    port.c \
+
+ASMFILES_common := \
+    boot_armv7r_asm.S \
+    HwiP_armv7r_asm.S \
+    MpuP_armv7r_asm.S \
+    CacheP_armv7r_asm.S \
+    CpuId_armv7r_asm.S \
+    PmuP_armv7r_asm.S \
+    HwiP_armv7r_vectors_freertos_asm.S \
+    portASM.S \
+
+FILES_PATH_common = \
+    ../nortos/dpl/r5 \
+    ../nortos/dpl/common \
+    dpl/common \
+    dpl/r5 \
+    FreeRTOS-Kernel/ \
+    FreeRTOS-Kernel/portable/MemMang \
+    FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
+    portable/TI_ARM_CLANG/ARM_CR5F \
+
+INCLUDES_common := \
+    -I${CG_TOOL_ROOT}/include/c \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -IFreeRTOS-Kernel/include \
+    -Iportable/TI_ARM_CLANG/ARM_CR5F \
+    -Iconfig/am64x/r5f \
+    -IFreeRTOS-POSIX/include \
+    -IFreeRTOS-POSIX/include/private \
+    -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
+    -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
+
+DEFINES_common := \
+    -DSOC_AM64X \
+
+CFLAGS_common := \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -mthumb \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-gnu-variable-sized-type-not-at-end \
+    -Wno-unused-function \
+    -Wno-extra \
+
+CFLAGS_cpp_common := \
+    -Wno-c99-designator \
+    -Wno-extern-c-compat \
+    -Wno-c++11-narrowing \
+    -Wno-reorder-init-list \
+    -Wno-deprecated-register \
+    -Wno-writable-strings \
+    -Wno-enum-compare \
+    -Wno-reserved-user-defined-literal \
+    -Wno-unused-const-variable \
+    -x c++ \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+CFLAGS_release := \
+    -Os \
+
+ARFLAGS_common := \
+    rc \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/freertos/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

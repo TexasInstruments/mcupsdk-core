@@ -1,0 +1,76 @@
+%%{
+    let module = system.modules[args[0]];
+
+    function getEventMacro(event) {
+        return `ICSS_INTC_EVENT_${event}`;
+    }
+
+    function getChannelMacro(channel) {
+        return `ICSS_INTC_CHANNEL_${channel}`;
+    }
+
+    function getHostMacro(host) {
+        return `ICSS_INTC_HOST_INTR_${host}`;
+    }
+
+    function getHostEnableMaskMacro(host) {
+        return `ICSS_INTC_HOST_INTR_${host}_HOSTEN_MASK`;
+    }
+
+    let channelHostMap = new Map();
+    for(let i = 0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if (!channelHostMap.has(instance.channel))
+            channelHostMap.set(instance.channel, instance.host);
+    }
+
+    let hosts = new Array();
+    for (const value of channelHostMap.values())
+        hosts.push(value);
+%%}
+/*
+ *  `module.$instances[0].icssInstance`_INTC
+ */
+% if (module.$instances[0].icssInstance === "ICSSG0") {
+PRUICSS_IntcInitData icss0_intc_initdata =
+% }
+% if (module.$instances[0].icssInstance === "ICSSG1") {
+PRUICSS_IntcInitData icss1_intc_initdata =
+% }
+{
+    {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+        `getEventMacro(instance.event)`,
+% }
+        0xFF
+    },
+    {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+        {
+            `getEventMacro(instance.event)`,
+            `getChannelMacro(instance.channel)`,
+            SYS_EVT_POLARITY_`instance.sysEventPolarity`,
+            SYS_EVT_TYPE_`instance.sysEventType`,
+        },
+% }
+        {0xFF, 0xFF, 0xFF, 0xFF}
+    },
+    {
+% for (const [key, value] of channelHostMap) {
+        {
+            `getChannelMacro(key)`,
+            `getHostMacro(value)`
+        },
+% }
+        {0xFF, 0xFF}
+    },
+    (
+% let i = 0;
+% for(i = 0; i < hosts.length - 1; i++) {
+        `getHostEnableMaskMacro(hosts[i])` |
+% }
+        `getHostEnableMaskMacro(hosts[i])`
+    )
+};

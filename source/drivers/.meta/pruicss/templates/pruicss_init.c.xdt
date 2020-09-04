@@ -1,0 +1,99 @@
+%%{
+    let module = system.modules['/drivers/pruicss/pruicss'];
+    let common = system.getScript("/common");
+
+    function getDeviceName() {
+        return common.getDeviceName();
+    }
+%%}
+    PRUICSS_init();
+% for(let i = 0; i < module.$instances.length; i++) {
+    % if(module.$instances[i].iepSyncMode) {
+    /* PRU IEP Enable SYNC MODE */
+% break;
+% }
+% }
+% let device = getDeviceName();
+% if((device === "am64x-evm") || (device === "am243x-evm") || (device === "am243x-lp"))
+% {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    %   if(instance.iepSyncMode) {
+    %       if(instance.instance === "ICSSG0") {
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_IEPCLK, 1);
+    %       }
+    %       if(instance.instance === "ICSSG1") {
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_IEPCLK, 1);
+    %       }
+    %   }
+    %   if(instance.instance === "ICSSG0") {
+    % // For EnDat Interface Load Sharing Mode
+    %       if(instance.EDLoadSharingMode === "Slice0") {
+    /* Enable EnDat Load Sharing Mode for ICSSG0 Slice 0 */
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU0TXCFGREGISTER, 0x0800);
+    %       }
+    %       if(instance.EDLoadSharingMode === "Slice1") {
+    /* Enable EnDat Load Sharing Mode for ICSSG0 Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, 0x0800);
+    %       }
+    %       if(instance.EDLoadSharingMode === "Slice0 & Slice1") {
+    /* Enable EnDat Load Sharing Mode for ICSSG0 Slice 0 and Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU0TXCFGREGISTER, 0x0800);
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, 0x0800);
+    %       }
+    % // For Sigma-Delta Interface Load Sharing Mode
+    %       if(instance.SDLoadSharingMode === "Slice0") {
+    /* Enable Sigma-Delta Load Sharing Mode for ICSSG0 Slice 0 */
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU0CLKDIV, 0x080);
+    %       }
+    %       if(instance.SDLoadSharingMode === "Slice1") {
+    /* Enable Sigma-Delta Load Sharing Mode for ICSSG0 Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU1CLKDIV, 0x080);
+    %       }
+    %       if(instance.SDLoadSharingMode === "Slice0 & Slice1") {
+    /* Enable Sigma-Delta Load Sharing Mode for ICSSG0 Slice 0 and Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU0CLKDIV, 0x080);
+    CSL_REG32_WR(CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU1CLKDIV, 0x080);
+    %       }
+    %   }
+    %   if(instance.instance === "ICSSG1") {
+    % // For EnDat Interface Load Sharing Mode
+    %       if(instance.EDLoadSharingMode === "Slice0") {
+    /* Enable EnDat Load Sharing Mode for ICSSG1 Slice 0 */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU0TXCFGREGISTER, 0x0800);
+    %       }
+    %       if(instance.EDLoadSharingMode === "Slice1") {
+    /* Enable EnDat Load Sharing Mode for ICSSG1 Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, 0x0800);
+    %       }
+    %       if(instance.EDLoadSharingMode === "Slice0 & Slice1") {
+    /* Enable EnDat Load Sharing Mode for ICSSG1 Slice 0 and Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU0TXCFGREGISTER, 0x0800);
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, 0x0800);
+    %       }
+    % // For Sigma-Delta Interface Load Sharing Mode
+    %       if(instance.SDLoadSharingMode === "Slice0") {
+    /* Enable Sigma-Delta Load Sharing Mode for ICSSG1 Slice 0 */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU0CLKDIV, 0x080);
+    %       }
+    %       if(instance.SDLoadSharingMode === "Slice1") {
+    /* Enable Sigma-Delta Load Sharing Mode for ICSSG1 Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU1CLKDIV, 0x080);
+    %       }
+    %       if(instance.SDLoadSharingMode === "Slice0 & Slice1") {
+    /* Enable Sigma-Delta Load Sharing Mode for ICSSG1 Slice 0 and Slice 1 */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU0CLKDIV, 0x080);
+    CSL_REG32_WR(CSL_PRU_ICSSG1_PR1_CFG_SLV_BASE + CSL_ICSSCFG_SDPRU1CLKDIV, 0x080);
+    %       }
+    %   }
+% }
+% }
+% if((device === "am263x-cc") || (device === "am263x-lp"))
+% {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    %   if(instance.iepSyncMode) {
+    CSL_REG32_WR(CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_CFG_SLV_REGS_BASE + CSL_ICSS_M_PR1_CFG_SLV_IEPCLK_REG, 1);
+    %   }
+% }
+% }

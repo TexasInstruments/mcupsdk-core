@@ -1,0 +1,10 @@
+%%{
+    let module = system.getScript('/drivers/sciclient/sciclient.js');
+%%}
+    /* SCICLIENT init */
+    {
+        int32_t retVal = SystemP_SUCCESS;
+
+        retVal = Sciclient_init(`module.getCpuID()`);
+        DebugP_assertNoLog(SystemP_SUCCESS == retVal);
+    }

@@ -1,0 +1,4 @@
+#include <drivers/dac.h>
+#include <kernel/dpl/ClockP.h>
+
+void Drivers_dacOpen(void);

@@ -1,0 +1,19 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/firewall/firewall'];
+%%}
+/*
+ * Firewall
+ */
+#include <drivers/firewall.h>
+
+/* Firewall Driver handles */
+extern Firewall_Handle gFirewallHandle[CONFIG_FWL_NUM_INSTANCES];
+/* Externally defined driver config array */
+extern Firewall_Config gFirewallConfig[];
+
+/* Firewall Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_firewallOpen(void);
+void Drivers_firewallClose(void);

@@ -1,0 +1,105 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const eqep            = scripting.addModule("/drivers/eqep/eqep", {}, false);
+const eqep1           = eqep.addInstance();
+const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1           = gpio.addInstance();
+const gpio2           = gpio.addInstance();
+const gpio3           = gpio.addInstance();
+const gpio4           = gpio.addInstance();
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
+const mpu_armv76      = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+eqep1.$name        = "CONFIG_EQEP0";
+eqep1.EQEP.$assign = "EQEP0";
+
+gpio1.$name                = "CONFIG_GPIO0";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.gpioPin.rx      = false;
+gpio1.GPIO.gpioPin.$assign = "W20";
+
+gpio2.$name                = "CONFIG_GPIO1";
+gpio2.pinDir               = "OUTPUT";
+gpio2.GPIO.gpioPin.rx      = false;
+gpio2.GPIO.gpioPin.$assign = "W21";
+
+gpio3.$name                = "CONFIG_GPIO2";
+gpio3.pinDir               = "OUTPUT";
+gpio3.GPIO.gpioPin.rx      = false;
+gpio3.GPIO.gpioPin.$assign = "P19";
+
+gpio4.$name                = "CONFIG_GPIO3";
+gpio4.pinDir               = "OUTPUT";
+gpio4.GPIO.gpioPin.rx      = false;
+gpio4.GPIO.gpioPin.$assign = "R21";
+
+addr_translate1.$name = "CONFIG_ADDR_TRANSLATE_REGION0";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "USART0";
+debug_log.uartLog.UART.RXD.$assign = "D15";
+debug_log.uartLog.UART.TXD.$assign = "C16";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+eqep1.EQEP.A.$suggestSolution = "N16";
+eqep1.EQEP.B.$suggestSolution = "N17";
+eqep1.EQEP.I.$suggestSolution = "R20";
+eqep1.EQEP.S.$suggestSolution = "R19";
+gpio1.GPIO.$suggestSolution   = "GPIO0";
+gpio2.GPIO.$suggestSolution   = "GPIO0";
+gpio3.GPIO.$suggestSolution   = "GPIO0";
+gpio4.GPIO.$suggestSolution   = "GPIO0";

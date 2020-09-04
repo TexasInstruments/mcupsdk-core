@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="PRU"
+                deviceId="AM64x_GP_EVM"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Ads127"
+        name = "ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt"
+        products="com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+            Debug,
+            Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TI"
+        cgtVersion="2.3.3"
+        device="AM64x_GP_EVM"
+        deviceCore="ICSS_G0_PRU_0"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${CG_TOOL_ROOT}/include
+            -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common
+            -I${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/adc/include
+            -DICSSG0
+            -DPRU0
+            -DSLICE0
+            -v4
+            -DSOC_AM64X
+        "
+        linkerBuildOptions="
+            -i${CG_TOOL_ROOT}/lib
+            -m=ads127.${ConfigName}.map
+            -llibc.a
+        "
+
+        postBuildStep="
+            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads127/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt/hexpru.cmd ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt.out;
+            ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt.b00 pru_load_bin.h PRUFirmware 4;
+        "
+
+        description="A Ads127 FW project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                -O3
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../main.asm" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am64x/EXAMPLES_PRU_ADC_ADS127.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+    </project>
+</projectSpec>

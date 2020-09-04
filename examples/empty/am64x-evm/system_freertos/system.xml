@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <project configuration="@match" id="project_0" name="empty_am64x-evm_r5fss0-0_freertos_ti-arm-clang">
+    </project>
+    <core id="MAIN_PULSAR_Cortex_R5_0_0" project="project_0"/>
+    <project configuration="@match" id="project_1" name="empty_am64x-evm_r5fss0-1_freertos_ti-arm-clang">
+    </project>
+    <core id="MAIN_PULSAR_Cortex_R5_0_1" project="project_1"/>
+    <project configuration="@match" id="project_2" name="empty_am64x-evm_r5fss1-0_freertos_ti-arm-clang">
+    </project>
+    <core id="MAIN_PULSAR_Cortex_R5_1_0" project="project_2"/>
+    <project configuration="@match" id="project_3" name="empty_am64x-evm_r5fss1-1_freertos_ti-arm-clang">
+    </project>
+    <core id="MAIN_PULSAR_Cortex_R5_1_1" project="project_3"/>
+    <project configuration="@match" id="project_4" name="empty_am64x-evm_m4fss0-0_freertos_ti-arm-clang">
+    </project>
+    <core id="Cortex_M4F_0" project="project_4"/>
+    <project configuration="@match" id="project_5" name="empty_am64x-evm_a53ss0-0_freertos_gcc-aarch64">
+    </project>
+    <core id="CortexA53_0" project="project_5"/>
+	<preBuildSteps>
+	</preBuildSteps>
+    <postBuildSteps>
+        <step command="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_system_ccs_bootimage_gen OUTNAME=empty_system PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"/>
+    </postBuildSteps>
+
+</system>

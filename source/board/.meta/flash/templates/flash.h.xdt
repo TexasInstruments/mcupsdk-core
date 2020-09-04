@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/board/flash/flash'];
+%%}
+/*
+ * FLASH
+ */
+#include <board/flash.h>
+
+/* FLASH Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_FLASH_NUM_INSTANCES (`module.$instances.length`U)

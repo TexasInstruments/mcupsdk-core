@@ -1,0 +1,63 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2061"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const csirx      = scripting.addModule("/drivers/csirx/csirx", {}, false);
+const csirx1     = csirx.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+csirx1.$name                           = "CONFIG_CSIRX0";
+csirx1.dphy.$name                      = "CONFIG_CSIRX_DPHY0";
+csirx1.complexio.$name                 = "CONFIG_CSIRX_COMPLEXIO0";
+csirx1.common.$name                    = "CONFIG_CSIRX_COMMON0";
+csirx1.common.commonCallback           = "test_csirxCommonCallback";
+csirx1.context.create(2);
+csirx1.context[0].$name                = "CONFIG_CSIRX_CONTEXT0";
+csirx1.context[0].isFrameEndCodeDetect = true;
+csirx1.context[1].$name                = "CONFIG_CSIRX_CONTEXT1";
+csirx1.context[1].virtualChannelId     = 1;
+csirx1.context[1].pingPongSwitchMode   = "CSIRX_PING_PONG_LINE_SWITCHING";
+csirx1.context[1].isNumLines           = true;
+
+debug_log.enableUartLog           = true;
+debug_log.uartLog.$name           = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign    = "UARTA";
+debug_log.uartLog.UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.UART.TX.$assign = "PAD_DB";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 14;
+
+mpu_armv73.$name    = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr = 0x80000;
+mpu_armv73.size     = 14;
+
+mpu_armv74.$name    = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr = 0x10200000;
+mpu_armv74.size     = 20;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x102E0000;
+mpu_armv75.size         = 16;
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;

@@ -1,0 +1,12 @@
+void Drivers_sdfmOpen()
+{
+% let module = system.modules['/drivers/sdfm/sdfm'];
+% let common   = system.getScript("/common");
+% let nameOfPeripheral = module.peripheralName;
+%if (module != null)
+%{
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+	%}
+%}
+}

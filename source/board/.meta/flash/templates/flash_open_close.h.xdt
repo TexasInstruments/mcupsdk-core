@@ -1,0 +1,13 @@
+/*
+ * FLASH
+ */
+#include <board/flash.h>
+
+/* FLASH Driver handles */
+extern Flash_Handle gFlashHandle[CONFIG_FLASH_NUM_INSTANCES];
+
+/* FLASH Driver open/close - can be used by application when Board_driversOpen() and
+ * Board_driversClose() is not used directly and app wants to control the various driver
+ * open/close sequences */
+int32_t Board_flashOpen(void);
+void Board_flashClose(void);

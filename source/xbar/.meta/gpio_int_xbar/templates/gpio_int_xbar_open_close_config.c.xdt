@@ -1,0 +1,16 @@
+void Drivers_gpioIntXbarOpen()
+{
+%%{
+    let module = system.modules['/xbar/gpio_int_xbar/gpio_int_xbar'];
+%%}
+% let base = "CSL_GPIO_INTR_XBAR_U_BASE"
+    /*
+    * GPIO INTERRUPT XBAR
+    */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let xbarOutput = config.xbarOutput;
+    SOC_xbarSelectGpioIntrXbarInputSource(`base`, `config.name`, `xbarOutput`);
+    % }
+}

@@ -1,0 +1,21 @@
+%%{
+    let module = system.modules['/drivers/ddr/ddr'];
+    let instance = module.$instances[0];
+    let config = module.getInstanceConfig(instance);
+%%}
+/*
+ * DDR
+ */
+#include <drivers/ddr.h>
+
+% if (config.eccEnableFlag) {
+/* DDR inline ECC regions */
+#define DDR_ECC_REGION0_START  `config.eccStart0`
+#define DDR_ECC_REGION0_END  `config.eccEnd0`
+
+#define DDR_ECC_REGION1_START  `config.eccStart1`
+#define DDR_ECC_REGION1_END  `config.eccEnd1`
+
+#define DDR_ECC_REGION2_START  `config.eccStart2`
+#define DDR_ECC_REGION2_END  `config.eccEnd2`
+% }

@@ -1,0 +1,30 @@
+%%{
+    let module = system.modules['/drivers/watchdog/watchdog'];
+%%}
+
+%%{
+    let common = system.getScript("/common");
+%%}
+
+%%{
+    let soc = common.getSocName();
+%%}
+
+
+
+/*
+ * WATCHDOG
+ */
+#include <drivers/watchdog.h>
+
+/* Watchdog Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name.toUpperCase()` (`i`U)
+%if((soc == "am64x") || (soc == "am243x")) {
+#define `instance.$name.toUpperCase()`_INTR (`config.intrNum`U)
+%}
+#define WATCHDOG_INSTANCE (`config.wdtInstance`)
+% }
+#define CONFIG_WATCHDOG_NUM_INSTANCES (`module.$instances.length`U)

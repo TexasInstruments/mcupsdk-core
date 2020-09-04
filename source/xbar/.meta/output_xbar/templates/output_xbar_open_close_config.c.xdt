@@ -1,0 +1,173 @@
+void Drivers_outputXbarOpen()
+{
+    %%{
+        let common = system.getScript("/common");
+        let soc = system.getScript(`/xbar/output_xbar/soc/output_xbar_${common.getSocName()}`);
+        let module = system.modules['/xbar/output_xbar/output_xbar'];
+    %%}
+    % let base = "CSL_CONTROLSS_OUTPUTXBAR_U_BASE";
+/* OUTPUT XBAR */
+    % let latch_invert_mask = 0;
+    % let output_invert_mask = 0;
+    % let latch_select_mask = 0;
+    % let stretch_select_mask = 0;
+    % let stretch_len_mask = 0;
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let usedInstance = module.getSelectedInstance(instance);
+        % if(config.invertLatchOutput) {
+            % latch_invert_mask = latch_invert_mask | (1 << usedInstance);
+        % }
+        % if(config.invertOutput) {
+            % output_invert_mask = output_invert_mask | (1 << usedInstance);
+        % }
+        % if(config.selectLatchSignalSource == "LATCHED_OUTPUT") {
+            % latch_select_mask = latch_select_mask | (1 << usedInstance);
+        % }
+        % if(config.selectStretchedPulseSource == "STRETCHED_OUTPUT") {
+            % stretch_select_mask = stretch_select_mask | (1 << usedInstance);
+            % if(config.selectStretchedPulseLength == "PULSE_LENGTH_32_SYSCLK") {
+            % stretch_len_mask = stretch_len_mask | (1 << usedInstance);
+            % }
+        % }
+        % let grp0mask = "(";
+        % let grp1mask = "(";
+        % let grp2mask = "(";
+        % let grp3mask = "(";
+        % let grp4mask = "(";
+        % let grp5mask = "(";
+        % let grp6mask = "(";
+        % let grp7mask = "(";
+        % let grp8mask = "(";
+        % let epwm_syncout_mask = "";
+        % let grp9mask = "(";
+        % let grp10mask = "(";
+        % for(let i=0; i<config.xbarOutput.length; i++) {
+            % let group = soc.getOptionList("INTERNAL").find(o => o.name == config.xbarOutput[i]).group;
+            % let path = soc.getOptionList("INTERNAL").find(o => o.name == config.xbarOutput[i]).path;
+            % if (path.search("<-") != -1) {
+                % epwm_syncout_mask = instance.$name;
+            % }
+            % else if(group == 0) {
+                % grp0mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 1) {
+                % grp1mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 2) {
+                % grp2mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 3) {
+                % grp3mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 4) {
+                % grp4mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 5) {
+                % grp5mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 6) {
+                % grp6mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 7) {
+                % grp7mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 8) {
+                % grp8mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 9) {
+                % grp9mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else {
+                % grp10mask += (" OUTPUT_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+        % }
+        % if(epwm_syncout_mask != "") {
+            % grp9mask += epwm_syncout_mask + " |";
+        % }
+        % if(grp0mask.length > 1) {
+            % grp0mask = grp0mask.slice(0, -1);
+            % grp0mask += ")";
+        % }
+        % else {
+            % grp0mask = 0;
+        % }
+        % if(grp1mask.length > 1) {
+            % grp1mask = grp1mask.slice(0, -1);
+            % grp1mask += ")";
+        % }
+        % else {
+            % grp1mask = 0;
+        % }
+        % if(grp2mask.length > 1) {
+            % grp2mask = grp2mask.slice(0, -1);
+            % grp2mask += ")";
+        % }
+        % else {
+            % grp2mask = 0;
+        % }
+        % if(grp3mask.length > 1) {
+            % grp3mask = grp3mask.slice(0, -1);
+            % grp3mask += ")";
+        % }
+        % else {
+            % grp3mask = 0;
+        % }
+        % if(grp4mask.length > 1) {
+            % grp4mask = grp4mask.slice(0, -1);
+            % grp4mask += ")";
+        % }
+        % else {
+            % grp4mask = 0;
+        % }
+        % if(grp5mask.length > 1) {
+            % grp5mask = grp5mask.slice(0, -1);
+            % grp5mask += ")";
+        % }
+        % else {
+            % grp5mask = 0;
+        % }
+        % if(grp6mask.length > 1) {
+            % grp6mask = grp6mask.slice(0, -1);
+            % grp6mask += ")";
+        % }
+        % else {
+            % grp6mask = 0;
+        % }
+        % if(grp7mask.length > 1) {
+            % grp7mask = grp7mask.slice(0, -1);
+            % grp7mask += ")";
+        % }
+        % else {
+            % grp7mask = 0;
+        % }
+        % if(grp8mask.length > 1) {
+            % grp8mask = grp8mask.slice(0, -1);
+            % grp8mask += ")";
+        % }
+        % else {
+            % grp8mask = 0;
+        % }
+        % if(grp9mask.length > 1) {
+            % grp9mask = grp9mask.slice(0, -1);
+            % grp9mask += ")";
+        % }
+        % else {
+            % grp9mask = 0;
+        % }
+        % if(grp10mask.length > 1) {
+            % grp10mask = grp10mask.slice(0, -1);
+            % grp10mask += ")";
+        % }
+        % else {
+            % grp10mask = 0;
+        % }
+    SOC_xbarSelectOutputXBarInputSource(`base`, `usedInstance`, `grp0mask`, `grp1mask`, `grp2mask`, `grp3mask`, `grp4mask`, `grp5mask`, `grp6mask`, `grp7mask`, `grp8mask`, `grp9mask`, `grp10mask`);
+    % }
+    SOC_xbarInvertOutputXBarOutputSignalBeforeLatch(`base`, `latch_invert_mask`);
+    SOC_xbarInvertOutputXBarOutputSignal(`base`, `output_invert_mask`);
+    SOC_xbarSelectLatchOutputXBarOutputSignal(`base`, `latch_select_mask`);
+    SOC_xbarSelectStretchedPulseOutputXBarOutputSignal(`base`, `stretch_select_mask`);
+    SOC_xbarSelectStretchedPulseLengthOutputXBarOutputSignal(`base`, `stretch_len_mask`);
+}

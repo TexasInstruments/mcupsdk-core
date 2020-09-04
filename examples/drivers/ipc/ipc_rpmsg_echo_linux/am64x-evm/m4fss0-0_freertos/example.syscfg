@@ -1,0 +1,78 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc             = scripting.addModule("/drivers/ipc/ipc");
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
+const addr_translate2 = addr_translate.addInstance();
+const addr_translate3 = addr_translate.addInstance();
+const addr_translate4 = addr_translate.addInstance();
+const addr_translate5 = addr_translate.addInstance();
+const addr_translate6 = addr_translate.addInstance();
+const addr_translate7 = addr_translate.addInstance();
+const addr_translate8 = addr_translate.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.enableLinuxIpc = true;
+
+addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
+addr_translate1.localAddr = 0x80000000;
+addr_translate1.size      = 28;
+
+addr_translate2.$name      = "CONFIG_ADDR_TRANSLATE_REGION1";
+addr_translate2.size       = 28;
+addr_translate2.systemAddr = 0x10000000;
+addr_translate2.localAddr  = 0x90000000;
+
+addr_translate3.$name      = "CONFIG_ADDR_TRANSLATE_REGION2";
+addr_translate3.localAddr  = 0xA0000000;
+addr_translate3.systemAddr = 0xA0000000;
+addr_translate3.size       = 28;
+
+addr_translate4.$name      = "CONFIG_ADDR_TRANSLATE_REGION3";
+addr_translate4.systemAddr = 0x20000000;
+addr_translate4.localAddr  = 0xB0000000;
+addr_translate4.size       = 28;
+
+addr_translate5.$name      = "CONFIG_ADDR_TRANSLATE_REGION4";
+addr_translate5.size       = 28;
+addr_translate5.systemAddr = 0x30000000;
+addr_translate5.localAddr  = 0xC0000000;
+
+addr_translate6.$name      = "CONFIG_ADDR_TRANSLATE_REGION5";
+addr_translate6.systemAddr = 0x40000000;
+addr_translate6.localAddr  = 0xD0000000;
+addr_translate6.size       = 28;
+
+addr_translate7.$name      = "CONFIG_ADDR_TRANSLATE_REGION6";
+addr_translate7.systemAddr = 0x60000000;
+addr_translate7.localAddr  = 0x60000000;
+addr_translate7.size       = 28;
+
+addr_translate8.$name      = "CONFIG_ADDR_TRANSLATE_REGION7";
+addr_translate8.localAddr  = 0x70000000;
+addr_translate8.systemAddr = 0x70000000;
+addr_translate8.size       = 28;
+
+debug_log.enableCssLog = false;
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.allowExecute = false;
+mpu_armv71.attributes   = "NonCached";
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 18;

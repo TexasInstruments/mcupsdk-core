@@ -1,0 +1,1003 @@
+Index: EtherCATSampleLibrary.h
+===================================================================
+--- EtherCATSampleLibrary.h
++++ EtherCATSampleLibrary.h
+@@ -13,23 +13,6 @@
+ ------ 
+ -----------------------------------------------------------------------------------------*/
+ 
+-#include <windows.h>
+-
+-#ifdef __cplusplus
+-#ifdef IMPL_OR_EXTERN
+-#define EXPORT extern "C" __declspec (dllexport)
+-#else
+-#define EXPORT extern "C" __declspec (dllimport)
+-#endif
+-#else
+-#ifdef IMPL_OR_EXTERN
+-#define EXPORT __declspec (dllexport)
+-#else
+-#define EXPORT __declspec (dllimport)
+-#endif
+-#endif
+-
+-
+ typedef struct
+ {
+     unsigned long * pInput;
+@@ -41,8 +24,8 @@ typedef struct
+ ECAT_SLAVE_INTERFACE, *pECAT_SLAVE_INTERFACE;
+ 
+ 
+-EXPORT pECAT_SLAVE_INTERFACE __stdcall Ecat_Open(unsigned short InputSize, unsigned short OutputSize);
++pECAT_SLAVE_INTERFACE Ecat_Open(unsigned short InputSize, unsigned short OutputSize);
+ 
+-EXPORT void __stdcall Ecat_OnTimer(void);
++void Ecat_OnTimer(void);
+ 
+-EXPORT void __stdcall Ecat_Close(void);
++void Ecat_Close(void);
+Index: SampleApplicationInterface.c
+===================================================================
+--- SampleApplicationInterface.c
++++ SampleApplicationInterface.c
+@@ -243,6 +243,8 @@ UINT16 APPL_StopOutputHandler(void)
+ *////////////////////////////////////////////////////////////////////////////////////////
+ UINT16 APPL_GenerateMapping(UINT16 *pInputSize,UINT16 *pOutputSize)
+ {
++    *pInputSize = 4;
++    *pOutputSize = 4;
+     return ALSTATUSCODE_NOERROR;
+ }
+ 
+@@ -399,8 +401,7 @@ UINT16 APPL_GetDeviceID()
+     return 0x5;
+ }
+ #endif
+-
+-pECAT_SLAVE_INTERFACE _stdcall Ecat_Open(unsigned short InputSize, unsigned short OutputSize)
++pECAT_SLAVE_INTERFACE Ecat_Open(unsigned short InputSize, unsigned short OutputSize)
+ {
+     UINT16 result = 0;
+     UINT16 counter = 0;
+@@ -589,7 +590,7 @@ pECAT_SLAVE_INTERFACE _stdcall Ecat_Open(unsigned short InputSize, unsigned shor
+    return &SlaveInterface;
+ }
+ 
+-void __stdcall Ecat_OnTimer(void)
++void Ecat_OnTimer(void)
+ {
+     if(HardwareOpened == 0)
+         return;
+@@ -597,7 +598,7 @@ void __stdcall Ecat_OnTimer(void)
+     MainLoop();
+ }
+ 
+-void __stdcall Ecat_Close(void)
++void Ecat_Close(void)
+ {
+     if(HardwareOpened == 0)
+         return;
+Index: bootmode.c
+===================================================================
+--- bootmode.c
++++ bootmode.c
+@@ -28,6 +28,9 @@ V4.20: File created
+ ------
+ --------------------------------------------------------------------------------------*/
+ #include "ecat_def.h"
++#if (TIESC_HW) && (FOE_SUPPORTED)
++#include "tiesceoefoe.h"
++#endif
+ #if BOOTSTRAPMODE_SUPPORTED
+ 
+ 
+@@ -56,6 +59,9 @@ void BL_Start( UINT8 State)
+ *////////////////////////////////////////////////////////////////////////////////////////
+ void BL_Stop(void)
+ {
++#if (TIESC_HW) && (FOE_SUPPORTED)
++    tiesc_boot_2_init_handler();
++#endif
+ }
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////
+Index: cia402appl.c
+===================================================================
+--- cia402appl.c
++++ cia402appl.c
+@@ -62,6 +62,24 @@ V4.30 : create file (state machine; handling state transition options; input fee
+ #include "cia402appl.h"
+ #undef _CiA402_
+ 
++#if TIESC_HW
++#include "tiescutils.h"
++#endif
++
++#ifdef CiA402_MOTOR_CONTROL
++#include <motor_control/control/math_blocks/IQmathLib.h>
++
++#include <motor_control/control/foc/foc.h>
++extern volatile STRUCT_FOC_PARAMS *p_mem_foc_params;
++extern Uint32 ElecThetaCalibrateFlag;
++#define LSW_CURRENT 1
++#define LSW_ENDAT 2
++#define CURRENT_LSW LSW_ENDAT
++#define SPEED_EPSILON 1e-3
++
++#define TWINCAT_SINGLE_TURN_RES pow(2, 20)
++#define TWINCAT_VELOCITY_RES pow(2, 20)
++#endif
+ 
+ /*--------------------------------------------------------------------------------------
+ ------
+@@ -96,6 +114,13 @@ UINT16 CiA402_Init(void)
+     UINT32 ObjectOffset = 0x800;
+     UINT8 PDOOffset = 0x10;
+ 
++    // currently supports only one axis per board
++#ifdef CiA402_MOTOR_CONTROL
++        int32_t val;
++        setECAT_lsw(0);
++        setECAT_ChannelSel(0);    // set depending on the mode - csv / csp
++#endif
++
+     for(AxisCnt = 0; AxisCnt < MAX_AXES ; AxisCnt++)
+     {
+         /*Reset Axis buffer*/
+@@ -175,6 +200,8 @@ UINT16 CiA402_Init(void)
+         while(pDiCEntry->Index != 0xFFFF)
+         {
+             BOOL bObjectFound = TRUE;
++            /* Below to fix the compiler warning when CiA402_DEVICE is enabled */
++            (void) bObjectFound;
+ 
+             switch(pDiCEntry->Index)
+             {
+@@ -344,12 +371,18 @@ void CiA402_StateMachine(void)
+         if (pCiA402Axis->i16State < STATE_READY_TO_SWITCH_ON && nAlStatus == STATE_OP)
+         {
+             pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON;
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(0);
++#endif
+         }
+ 
+         switch(pCiA402Axis->i16State)
+         {
+         case STATE_NOT_READY_TO_SWITCH_ON:
+             StatusWord |= (STATUSWORD_STATE_NOTREADYTOSWITCHON);
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(0);
++#endif
+             if(nAlStatus == STATE_OP)
+             {
+                 // Automatic transition -> Communication shall be activated
+@@ -366,6 +399,9 @@ void CiA402_StateMachine(void)
+             break;
+         case STATE_SWITCH_ON_DISABLED:
+             StatusWord |= (STATUSWORD_STATE_SWITCHEDONDISABLED);
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(0);
++#endif
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_SHUTDOWN_MASK) == CONTROLWORD_COMMAND_SHUTDOWN)
+             {
+                 pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 2
+@@ -373,6 +409,9 @@ void CiA402_StateMachine(void)
+             break;
+         case STATE_READY_TO_SWITCH_ON:
+             StatusWord |= (STATUSWORD_STATE_READYTOSWITCHON);
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(0);
++#endif
+             if (((ControlWord6040 & CONTROLWORD_COMMAND_QUICKSTOP_MASK) == CONTROLWORD_COMMAND_QUICKSTOP)
+                 || ((ControlWord6040 & CONTROLWORD_COMMAND_DISABLEVOLTAGE_MASK) == CONTROLWORD_COMMAND_DISABLEVOLTAGE))
+             {
+@@ -386,7 +425,9 @@ void CiA402_StateMachine(void)
+                 break;
+         case STATE_SWITCHED_ON:
+             StatusWord |= (STATUSWORD_STATE_SWITCHEDON);
+-
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(0);
++#endif
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_SHUTDOWN_MASK) == CONTROLWORD_COMMAND_SHUTDOWN)
+             {
+                 pCiA402Axis->i16State = STATE_READY_TO_SWITCH_ON; // Transition 6
+@@ -406,7 +447,9 @@ void CiA402_StateMachine(void)
+                     break;
+         case STATE_OPERATION_ENABLED:
+             StatusWord |= (STATUSWORD_STATE_OPERATIONENABLED);
+-
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(CURRENT_LSW);       // set ECAT_lsw = 1 for current feedback = 2 for EnDat feedback
++#endif
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_DISABLEOPERATION_MASK) == CONTROLWORD_COMMAND_DISABLEOPERATION)
+             {
+                 if(pCiA402Axis->Objects.objDisableOperationOptionCode!= DISABLE_DRIVE)
+@@ -440,7 +483,9 @@ void CiA402_StateMachine(void)
+                         break;
+         case STATE_QUICK_STOP_ACTIVE:
+             StatusWord |= STATUSWORD_STATE_QUICKSTOPACTIVE;
+-
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(CURRENT_LSW);       // set ECAT_lsw = 1 for current feedback = 2 for EnDat feedback
++#endif
+             if((pCiA402Axis->Objects.objQuickStopOptionCode != DISABLE_DRIVE) &&
+                 ((pCiA402Axis->Objects.objStatusWord & STATUSWORD_STATE_MASK)!= STATUSWORD_STATE_QUICKSTOPACTIVE))
+             {
+@@ -458,6 +503,9 @@ void CiA402_StateMachine(void)
+             break;
+         case STATE_FAULT_REACTION_ACTIVE:
+             StatusWord |= (STATUSWORD_STATE_FAULTREACTIONACTIVE);
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(CURRENT_LSW);       // set ECAT_lsw = 1 for current feedback = 2 for EnDat feedback
++#endif
+             if(pCiA402Axis->Objects.objFaultReactionCode!= DISABLE_DRIVE)
+             {
+                 /*fault reaction pending*/
+@@ -470,6 +518,9 @@ void CiA402_StateMachine(void)
+             break;
+         case STATE_FAULT:
+             StatusWord |= (STATUSWORD_STATE_FAULT);
++#ifdef CiA402_MOTOR_CONTROL
++            setECAT_lsw(0);
++#endif
+ 
+             if ((ControlWord6040 & CONTROLWORD_COMMAND_FAULTRESET_MASK) == CONTROLWORD_COMMAND_FAULTRESET)
+             {
+@@ -559,6 +610,84 @@ void CiA402_LocalError(UINT16 ErrorCode)
+     }
+ }
+ 
++#ifdef CiA402_MOTOR_CONTROL
++void CiA402_MotionControl(TCiA402Axis *pCiA402Axis)
++{
++    INT32 i32TargetVelocity = 0, i32TargetPosition = 0;
++
++    /*Motion Controller shall only be triggered if application is trigger by DC Sync Signals,
++    and a valid mode of operation is set*/
++
++    /* Currently, multi-turn not supported by LEVEL5 in motor control application
++     * So, for csp mode, use single_turn_angle
++     */
++    switch(pCiA402Axis->Objects.objModesOfOperationDisplay) {
++        case CYCLIC_SYNC_POSITION_MODE:
++            pCiA402Axis->fCurPosition = foc_get_single_turn_angle() * TWINCAT_SINGLE_TURN_RES;
++            break;
++        case CYCLIC_SYNC_VELOCITY_MODE:
++            pCiA402Axis->fCurPosition = foc_get_multi_turn_angle() * TWINCAT_SINGLE_TURN_RES;
++            break;
++        }
++    pCiA402Axis->Objects.objPositionActualValue = pCiA402Axis->fCurPosition;
++
++    if(pCiA402Axis->bAxisFunctionEnabled &&
++    pCiA402Axis->bLowLevelPowerApplied &&
++    pCiA402Axis->bHighLevelPowerApplied &&
++    !pCiA402Axis->bBrakeApplied)
++    {
++        if((pCiA402Axis->Objects.objSoftwarePositionLimit.i32MaxLimit> pCiA402Axis->Objects.objPositionActualValue
++            || pCiA402Axis->Objects.objPositionActualValue > pCiA402Axis->Objects.objTargetPosition) &&
++            (pCiA402Axis->Objects.objSoftwarePositionLimit.i32MinLimit < pCiA402Axis->Objects.objPositionActualValue
++            || pCiA402Axis->Objects.objPositionActualValue < pCiA402Axis->Objects.objTargetPosition))
++        {
++            pCiA402Axis->Objects.objStatusWord &= ~STATUSWORD_INTERNAL_LIMIT;
++
++            switch(pCiA402Axis->Objects.objModesOfOperationDisplay)
++            {
++            case CYCLIC_SYNC_POSITION_MODE:
++                if(pCiA402Axis->i16State == STATE_OPERATION_ENABLED) {
++                    i32TargetPosition = pCiA402Axis->Objects.objTargetPosition;
++                    setECAT_lsw(CURRENT_LSW);
++                    setECAT_SpeedRef((float)i32TargetPosition / (TWINCAT_SINGLE_TURN_RES));
++                }
++                else
++                    setECAT_lsw(0);
++                break;
++            case CYCLIC_SYNC_VELOCITY_MODE:
++                if(pCiA402Axis->i16State == STATE_OPERATION_ENABLED)
++                    i32TargetVelocity = pCiA402Axis->Objects.objTargetVelocity;
++                else
++                        i32TargetVelocity = 0;
++                //setECAT_SpeedRef takes input as velocity in RPM/4000
++                setECAT_SpeedRef((float)i32TargetVelocity / ((float)4000 * (float)TWINCAT_VELOCITY_RES));
++                setECAT_lsw(CURRENT_LSW);
++
++                break;
++            default:
++                break;
++            }
++        }
++        else
++        {
++            pCiA402Axis->Objects.objStatusWord |= STATUSWORD_INTERNAL_LIMIT;
++        }
++    }
++    /*Accept new mode of operation*/
++    pCiA402Axis->Objects.objModesOfOperationDisplay = pCiA402Axis->Objects.objModesOfOperation;
++    // take care of the cases in which change of mode is allowed
++    switch(pCiA402Axis->Objects.objModesOfOperationDisplay) {
++    case CYCLIC_SYNC_POSITION_MODE:
++        setECAT_ChannelSel(1);
++        break;
++    case CYCLIC_SYNC_VELOCITY_MODE:
++        setECAT_ChannelSel(0);
++        break;
++    }
++
++}
++#endif
++
+ /////////////////////////////////////////////////////////////////////////////////////////
+ /**
+  \brief    CiA402_DummyMotionControl
+@@ -636,45 +765,69 @@ void CiA402_DummyMotionControl(TCiA402Axis *pCiA402Axis)
+ *////////////////////////////////////////////////////////////////////////////////////////
+ BOOL CiA402_TransitionAction(INT16 Characteristic,TCiA402Axis *pCiA402Axis)
+ {
++#ifdef CiA402_MOTOR_CONTROL
++    // Behaviour of STOP_ON_CURRENT/VOLTAGE_LIMIT same as other two.
++    setUseRamp(1);
++    float cur_speed = p_mem_foc_params->mem_speed * (float)4000;
++
+    switch(Characteristic)
+    {
+ 
+    case SLOW_DOWN_RAMP:
+-#if _WIN32
+-      #pragma message ("Warning: Implement slowdown ramp")
+-#else
+-      #warning "Implement slowdown ramp"
+-#endif
+-      return TRUE;
+-      break;
++        setECAT_ChannelSel(0);
++        setECAT_lsw(CURRENT_LSW);
++        setECAT_SpeedRef(0);
++        if (cur_speed < SPEED_EPSILON) {
++            setUseRamp(0);
++            return TRUE;
++        }
++        else {
++          return FALSE;
++        }
++        break;
+    case QUICKSTOP_RAMP:
+-#if _WIN32
+-      #pragma message ("Warning: Implement quick stop ramp ramp")
+-#else
+-      #warning "Implement quick stop ramp ramp"
+-#endif
+-      return TRUE;
+-      break;
++       setECAT_ChannelSel(0);
++       setECAT_lsw(CURRENT_LSW);
++        setECAT_SpeedRef(0);
++        if (cur_speed < SPEED_EPSILON) {
++            setUseRamp(0);
++            return TRUE;
++        }
++        else {
++            return FALSE;
++        }
++        break;
+    case STOP_ON_CURRENT_LIMIT:
+-#if _WIN32
+-      #pragma message ("Warning: Implement slowdown on current limit ramp")
+-#else
+-      #warning "Implement slowdown on current limit ramp"
+-#endif
+-      return TRUE;
+-      break;
++       setECAT_ChannelSel(0);
++       setECAT_lsw(CURRENT_LSW);
++        setECAT_SpeedRef(0);
++        if (cur_speed < SPEED_EPSILON) {
++            setUseRamp(0);
++            return TRUE;
++        }
++        else {
++           return FALSE;
++        }
++        break;
+    case STOP_ON_VOLTAGE_LIMIT:
+-#if _WIN32
+-      #pragma message ("Warning: Implement slowdown on voltage limit ramp")
+-#else
+-      #warning "Implement slowdown on voltage limit ramp"
+-#endif
+-      return TRUE;
+-      break;
++       setECAT_ChannelSel(0);
++       setECAT_lsw(CURRENT_LSW);
++        setECAT_SpeedRef(0);
++        if (cur_speed < SPEED_EPSILON) {
++            setUseRamp(0);
++            return TRUE;
++        }
++        else {
++          return FALSE;
++        }
++        break;
+    default:
+       break;
+    }
+-    return FALSE;
++   return FALSE;
++#else
++   return TRUE;
++#endif
+ }
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////
+@@ -785,7 +938,15 @@ void CiA402_Application(TCiA402Axis *pCiA402Axis)
+         && (pCiA402Axis->u32CycleTime != 0)
+         && ((pCiA402Axis->Objects.objSupportedDriveModes >> (pCiA402Axis->Objects.objModesOfOperation - 1)) & 0x1)) //Mode of Operation (0x6060) - 1 specifies the Bit within Supported Drive Modes (0x6502)
+     {
++#ifdef CiA402_MOTOR_CONTROL
++        CiA402_MotionControl(pCiA402Axis);
++#else
++#ifdef TI_CiA402_3AXIS_MOTOR_CONTROL
++        TI_CiA402_3axisMotionControl(pCiA402Axis);
++#else
+         CiA402_DummyMotionControl(pCiA402Axis);
++#endif
++#endif
+     }
+ 
+ 
+@@ -1454,6 +1615,7 @@ void APPL_Application(void)
+     {
+             if (LocalAxes[i].bAxisIsActive)
+             {
++                LocalAxes[i].axisIndex = i;
+                 CiA402_Application(&LocalAxes[i]);
+             }
+     }
+@@ -1481,6 +1643,9 @@ UINT16 APPL_GetDeviceID(void)
+ *////////////////////////////////////////////////////////////////////////////////////////
+ int main(void)
+ {
++#if TIESC_HW
++    common_main();
++#else
+     /* initialize the Hardware and the EtherCAT Slave Controller */
+     HW_Init();
+ 
+@@ -1502,6 +1667,7 @@ int main(void)
+ 
+     HW_Release();
+     return 0;
++#endif    
+ }
+ #endif //#if USE_DEFAULT_MAIN
+ #endif //#if CiA402_SAMPLE_APPLICATION
+Index: cia402appl.h
+===================================================================
+--- cia402appl.h
++++ cia402appl.h
+@@ -324,7 +324,7 @@ V5.01 : Start file change log
+ //9 to 32767        RESERVED
+ 
+ 
+-#define MAX_AXES    2 /**< \brief Number of supported axes*/
++#define MAX_AXES    3 /**< \brief Number of supported axes*/
+ 
+ /*CODE_INSERT_START (FILE_PACKED_START)*/
+ #if FC1100_HW
+@@ -634,6 +634,7 @@ typedef struct
+ 
+     CiA402Objects        Objects; /**< \brief CiA402 Axis object variable*/
+     TOBJECT OBJMEM        * ObjDic; /**< \brief Pointer to Axis specific object dictionary*/
++    UINT16               axisIndex; /**< \brief CiA402 Axis index variable */
+ }
+ TCiA402Axis, *pTCiA402Axis;
+ /** @}*/
+@@ -1041,7 +1042,7 @@ OBJCONST UCHAR OBJMEM aName0xF050[] = "Module detected list";
+  */
+ PROTO TOBJ1C12 sRxPDOassign
+ #ifdef _CiA402_
+-= {1,{0x1602,0x0}}
++= {3,{0x1602,0x1612,0x1622}}
+ #endif
+ ;
+ 
+@@ -1055,7 +1056,7 @@ PROTO TOBJ1C12 sRxPDOassign
+  */
+ PROTO TOBJ1C13 sTxPDOassign
+ #ifdef _CiA402_
+-= {1,{0x1A02,0x0}}
++= {3,{0x1A02,0x1A12,0x1A22}}
+ #endif
+ ;
+ /** @}*/
+@@ -1101,7 +1102,7 @@ PROTO TOBJF010 sModuleProfileInfo
+  */
+ PROTO TOBJF030 sConfiguredModuleIdentList
+ #ifdef _CiA402_
+-= {1,{0x319800,0}}
++= {1,{CSV_MODULE_ID,0}}
+ #endif
+ ;
+ 
+@@ -1117,7 +1118,7 @@ PROTO UINT8 Write0xF030( UINT16 index, UINT8 subindex, UINT32 dataSize, UINT16 M
+  */
+ PROTO TOBJF050 sDetectedModuleIdentList
+ #ifdef _CiA402_
+-= {1,{0x319800,0}}
++= {1,{CSV_MODULE_ID,0}}
+ #endif
+ ;
+ /** @}*/
+Index: coeappl.c
+===================================================================
+--- coeappl.c
++++ coeappl.c
+@@ -149,6 +149,7 @@ V4.00 ECAT 1: The handling of the Sync Manager Parameter was included according
+ #include "SampleApplicationInterface.h"
+ #else
+ /*CODE_INSERT_START (APPLICATION_FILE)*/
++#include "tiescappl.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -604,7 +605,11 @@ void COE_SyncTimeStamp(void)
+  *
+  */
+  /*ECATCHANGE_START(V5.13)*/
++#if BIG_ENDIAN_FORMAT
++TOBJ1C00 sSyncmanagertype = {0x04, {0x0102, 0x0304}};
++#else
+ TOBJ1C00 sSyncmanagertype = {0x04, {0x0201, 0x0403}};
++#endif
+ /*ECATCHANGE_END(V5.13)*/
+ 
+ 
+Index: ecat_def.h
+===================================================================
+--- ecat_def.h
++++ ecat_def.h
+@@ -20,6 +20,13 @@
+ -----------------------------------------------------------------------------------------*/
+ #include <stdlib.h>
+ #include <string.h>
++#include <stdio.h>
++#if defined(SOC_AM65XX) || defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263X)
++#if !defined (__aarch64__)
++/* Only for R5F build. */
++#include <stdint.h>
++#endif
++#endif
+ 
+ /*-----------------------------------------------------------------------------------------
+ ------	
+@@ -36,7 +43,7 @@ EL9800_HW: Shall be set if the Slave code is executed on the PIC mounted on the
+ This settings should also be enabled if the ESC is connected via a serial interface and no specific hardware access files are avilable yet.<br>
+ NOTE: The PDI type needs also to be configured in the "ESC_CONFIG_DATA". */
+ #ifndef EL9800_HW
+-#define EL9800_HW                                 1
++#define EL9800_HW                                 0
+ #endif
+ 
+ /** 
+@@ -58,13 +65,13 @@ NOTE: The PDI type needs also to be configured in the "ESC_CONFIG_DATA". */
+ TIESC_HW: Temporary define to support TI ICE/IDK development board (Shall be set if the Slave code shall executed on an AM335X ICE/IDK Evaluation Board<br>
+ from Texas Instruments) */
+ #ifndef TIESC_HW
+-#define TIESC_HW                                  0
++#define TIESC_HW                                  1
+ #endif
+ 
+ /** 
+ CONTROLLER_16BIT: Shall be set if the host controller is a 16Bit architecture */
+ #ifndef CONTROLLER_16BIT
+-#define CONTROLLER_16BIT                          1
++#define CONTROLLER_16BIT                          0
+ #endif
+ 
+ /** 
+@@ -90,13 +97,13 @@ This processor is mounted on the Beckhoff Slave Evaluation Board (Hardware versi
+ _PIC24: Microchip PIC24HJ128GP306 Specific Code <br>
+ This processor is mounted on the Beckhoff Slave Evaluation Board (Hardware version up to EL9800_4A). */
+ #ifndef _PIC24
+-#define _PIC24                                    1
++#define _PIC24                                    0
+ #endif
+ 
+ /** 
+ ESC_16BIT_ACCESS: If the microcontroller only supports 16Bit access to the ESC. */
+ #ifndef ESC_16BIT_ACCESS
+-#define ESC_16BIT_ACCESS                          1
++#define ESC_16BIT_ACCESS                          0
+ #endif
+ 
+ /** 
+@@ -108,7 +115,7 @@ ESC_32BIT_ACCESS: If the microcontroller only supports 32Bit access to the ESC.
+ /** 
+ MBX_16BIT_ACCESS: If the microcontroller only supports 16Bit access to local mailbox memory(access to ESC DPRAM is controlled by "ESC_16BIT_ACCESS"). If reset 8Bit access is used. */
+ #ifndef MBX_16BIT_ACCESS
+-#define MBX_16BIT_ACCESS                          1
++#define MBX_16BIT_ACCESS                          0
+ #endif
+ 
+ /** 
+@@ -148,7 +155,7 @@ ESC_SUPPORT_ECAT_LED: This switch can be enabled if the connected ESC support Er
+ /** 
+ ESC_EEPROM_EMULATION: If this switch is set EEPROM emulation is supported. Not all ESC types support EEPROM emulation. See ESC datasheet for more information. */
+ #ifndef ESC_EEPROM_EMULATION
+-#define ESC_EEPROM_EMULATION                      0
++#define ESC_EEPROM_EMULATION                      1
+ #endif
+ 
+ /** 
+@@ -211,7 +218,7 @@ TEST_APPLICATION_REDUCED_MEMORY: This define reduces the memory footprint of the
+ /** 
+ EL9800_APPLICATION: Should be set if the Slave Sample Code runs on an EL9800_x Evaluation Board. */
+ #ifndef EL9800_APPLICATION
+-#define EL9800_APPLICATION                        1
++#define EL9800_APPLICATION                        0
+ #endif
+ 
+ /** 
+@@ -239,6 +246,11 @@ BOOTLOADER_SAMPLE: Select this define to enable a small footprint application wh
+ #define BOOTLOADER_SAMPLE                         0
+ #endif
+ 
++#ifndef TIESC_APPLICATION
++/*TIESC_APPLICATION: Should be set if the Slave Sample Code runs on an ICE/IDK EVM. */
++#define TIESC_APPLICATION                         1
++#endif
++
+ /** 
+ USE_DEFAULT_MAIN: Set to 1 if the main function of a default application shall be used.<br>
+ Otherwise the Init functions and the mainloop handler shall be called for a user specific function (see ET9300 Application Note for further details http://www.beckhoff.com/english.asp?download/ethercat_development_products.htm?id=71003127100387). */
+@@ -340,7 +352,7 @@ correctly, because these functions are missing. */
+ /** 
+ EOE_SUPPORTED: If the EoE services should be supported, then this switch shall be set. */
+ #ifndef EOE_SUPPORTED
+-#define EOE_SUPPORTED                             0
++#define EOE_SUPPORTED                             1
+ #endif
+ 
+ /** 
+@@ -352,7 +364,7 @@ STATIC_ETHERNET_BUFFER: If this switch is set a static buffer is used to store e
+ /** 
+ FOE_SUPPORTED: If the FoE services should be supported, then this switch shall be set.  */
+ #ifndef FOE_SUPPORTED
+-#define FOE_SUPPORTED                             0
++#define FOE_SUPPORTED                             1
+ #endif
+ 
+ /** 
+@@ -369,7 +381,7 @@ MAILBOX_SUPPORTED: This switch is set automatically if at least one mailbox prot
+ BOOTSTRAPMODE_SUPPORTED: If the firmware update over FoE services should be supported, then this switch shall be set.<br>
+ If this switch is set, then also "FOE_SUPPORTED" shall be set.  */
+ #ifndef BOOTSTRAPMODE_SUPPORTED
+-#define BOOTSTRAPMODE_SUPPORTED                   0
++#define BOOTSTRAPMODE_SUPPORTED                   1
+ #endif
+ 
+ /** 
+@@ -445,25 +457,25 @@ TRUE: Will be used for variables from type BOOL  */
+ /** 
+ BOOL: Should be adapted to the boolean type of the microcontroller */
+ #ifndef BOOL
+-#define BOOL                                      unsigned char
++#define BOOL                                      uint8_t
+ #endif
+ 
+ /** 
+ UINT8: Should be adapted to the unsigned8 type of the microcontroller  */
+ #ifndef UINT8
+-#define UINT8                                     unsigned char
++#define UINT8                                     uint8_t
+ #endif
+ 
+ /** 
+ UINT16: Should be adapted to the unsigned16 type of the microcontroller  */
+ #ifndef UINT16
+-#define UINT16                                    unsigned short
++#define UINT16                                    uint16_t
+ #endif
+ 
+ /** 
+ UINT32: Should be adapted to the unsigned32 type of the microcontroller  */
+ #ifndef UINT32
+-#define UINT32                                    unsigned long
++#define UINT32                                    uint32_t
+ #endif
+ 
+ /** 
+@@ -475,25 +487,25 @@ UINT64: Should be adapted to the unsigned64 type of the microcontroller  */
+ /** 
+ USHORT: Should be adapted to the unsigned16 type of the microcontroller */
+ #ifndef USHORT
+-#define USHORT                                    unsigned short
++#define USHORT                                    uint16_t
+ #endif
+ 
+ /** 
+ INT8: Should be adapted to the integer8 type of the microcontroller */
+ #ifndef INT8
+-#define INT8                                      char
++#define INT8                                      int8_t
+ #endif
+ 
+ /** 
+ INT16: Should be adapted to the integer16 type of the microcontroller  */
+ #ifndef INT16
+-#define INT16                                     short
++#define INT16                                     int16_t
+ #endif
+ 
+ /** 
+ INT32: Should be adapted to the integer32 type of the microcontroller */
+ #ifndef INT32
+-#define INT32                                     long
++#define INT32                                     int32_t
+ #endif
+ 
+ /** 
+@@ -827,7 +839,7 @@ STRUCT_PACKED_START: Is defined before the typedef struct construct to pack the
+ /** 
+ STRUCT_PACKED_END: Is defined after the typedef struct {} construct to pack the generic structures if necessary */
+ #ifndef STRUCT_PACKED_END
+-#define STRUCT_PACKED_END 
++#define STRUCT_PACKED_END __attribute__((packed))
+ #endif
+ 
+ /** 
+@@ -839,7 +851,7 @@ MBX_STRUCT_PACKED_START: Is defined before the typedef struct construct to pack
+ /** 
+ MBX_STRUCT_PACKED_END: Is defined after the typedef struct {} construct to pack the MAILBOX structures if necessary */
+ #ifndef MBX_STRUCT_PACKED_END
+-#define MBX_STRUCT_PACKED_END 
++#define MBX_STRUCT_PACKED_END __attribute__((packed))
+ #endif
+ 
+ /** 
+@@ -851,7 +863,7 @@ OBJ_STRUCT_PACKED_START: Is defined before the typedef struct construct to pack
+ /** 
+ OBJ_STRUCT_PACKED_END: Is defined after the typedef struct {} construct to pack the OBJECT structures if necessary */
+ #ifndef OBJ_STRUCT_PACKED_END
+-#define OBJ_STRUCT_PACKED_END 
++#define OBJ_STRUCT_PACKED_END __attribute__((packed))
+ #endif
+ 
+ /** 
+@@ -934,19 +946,45 @@ VENDOR_ID: Object 0x1018 SI1 (Vendor ID)	 <br>
+ An unique EtherCAT Vendor ID is required. Please find all valid Vendor IDs listed at www.ethercat.org/en/vendor_id_list.html.<br>
+ If your company is not listed, please assign an ID for free at www.ethercat.org/memberarea/vendor_id.asp */
+ #ifndef VENDOR_ID
++#if SAMPLE_APPLICATION_INTERFACE && TIESC_HW
++#define VENDOR_ID                                 0xE000059D
++#elif TIESC_HW
++#define VENDOR_ID                                 0x0000059D
++#else
+ #define VENDOR_ID                                 0xE0000002
+ #endif
++#endif
+ 
+ /** 
+ PRODUCT_CODE: Object 0x1018 SI2 (EtherCAT product code) */
+ #ifndef PRODUCT_CODE
++#if TIESC_HW
++#if defined (TIESC_SPI_MASTER_MODE)
++#define PRODUCT_CODE                              0x54490081
++#elif defined (SOC_AM65XX) || defined (SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263X)
++#define PRODUCT_CODE                              0x54490004
++#elif defined (SOC_AM572x) || defined (SOC_AM571x)
++#define PRODUCT_CODE                              0x54490003
++#elif defined (AM43XX_FAMILY_BUILD)
++#define PRODUCT_CODE                              0x54490002
++#else
++#define PRODUCT_CODE                              0x54490001
++#endif
++#else
+ #define PRODUCT_CODE                              0x00000001
+ #endif
++#endif
+ 
+ /** 
+ REVISION_NUMBER: Object 0x1018 SI3 (EtherCAT product revision number) */
+ #ifndef REVISION_NUMBER
++#if SAMPLE_APPLICATION_INTERFACE && TIESC_HW
+ #define REVISION_NUMBER                           0x00000001
++#elif TIESC_APPLICATION
++#define REVISION_NUMBER                           0x00000011
++#else
++#define REVISION_NUMBER                           0x00000001
++#endif
+ #endif
+ 
+ /** 
+@@ -1077,7 +1115,7 @@ MAX_PD_OUTPUT_SIZE: Maximum size of the process output data (Sync Manager 2) for
+ MIN_PD_CYCLE_TIME: Minimum cycle time in ns the slave is supporting (entry 0x1C3x:05).<br>
+ In case that the value is set to 0 the value of 0x1C3x:5 is calculated if 0x1C3x.8 is 1 */
+ #ifndef MIN_PD_CYCLE_TIME
+-#define MIN_PD_CYCLE_TIME                         0x7A120
++#define MIN_PD_CYCLE_TIME                         0x79E0// 31.2us 0x7A120
+ #endif
+ 
+ /** 
+@@ -1164,11 +1202,11 @@ PD_INPUT_DELAY_TIME: Input delay time in ns the slave is supporting (entry 0x1C3
+ #error The PIC18 configuration does not support segmented SDO
+ #endif
+ 
+-#if OBJ_STRUCT_PACKED_START &&OBJ_DWORD_ALIGN
++#if defined(OBJ_STRUCT_PACKED_START) &&OBJ_DWORD_ALIGN
+ #error Either the object structure packing (OBJ_STRUCT_PACKED_START) or implicit DWORD alignment handling (OBJ_DWORD_ALIGN) shall be defined. If both defines are set an invalid object structure handling may result.
+ #endif
+ 
+-#if OBJ_STRUCT_PACKED_START &&OBJ_WORD_ALIGN
++#if defined(OBJ_STRUCT_PACKED_START) &&OBJ_WORD_ALIGN
+ #error Either the object structure packing (OBJ_STRUCT_PACKED_START) or implicit WORD alignment handling (OBJ_WORD_ALIGN) shall be defined. If both defines are set an invalid object structure handling may result.
+ #endif
+ 
+Index: ecatappl.c
+===================================================================
+--- ecatappl.c
++++ ecatappl.c
+@@ -170,6 +170,7 @@ V4.00 APPL 6: The main function was split in MainInit and MainLoop
+ #include "bootloaderappl.h"
+ #else
+ /*CODE_INSERT_START (APPLICATION_FILE)*/
++#include "tiescappl.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -243,11 +244,19 @@ UINT16 u16EepromStoreTimeoutValue; /** <\brief timeout in ms to store the EEPROM
+ 
+ 
+ #if MAX_PD_OUTPUT_SIZE > 0
++#ifdef EDMA_LATENCY_ENHANCEMENT
++UINT16             * volatile aPdOutputData;
++#else
+ UINT16             aPdOutputData[(MAX_PD_OUTPUT_SIZE>>1)];
+ #endif
++#endif
+ #if MAX_PD_INPUT_SIZE > 0
++#ifdef EDMA_LATENCY_ENHANCEMENT
++UINT16           * volatile aPdInputData;
++#else
+ UINT16           aPdInputData[(MAX_PD_INPUT_SIZE>>1)];
+ #endif
++#endif
+ 
+ /*variables are declared in ecatslv.c*/
+ #if ESC_32BIT_ACCESS
+@@ -763,6 +772,7 @@ void PDI_Isr(void)
+     /*
+       Check if cycle exceed
+     */
++ #if !TIESC_HW
+     /*if next SM event was triggered during runtime increment cycle exceed counter*/
+     ALEvent = HW_GetALEventRegister_Isr();
+     ALEvent = SWAPWORD(ALEvent);
+@@ -810,6 +820,42 @@ void PDI_Isr(void)
+ 
+     }
+ #endif
++#else //!TIESC_HW
++    /* In TI ESC above approach won't work to figure out cycle exceeded scenario as it may take longer
++       to clear AL event IRQ by firmware, so we measure PDI ISR period instead */
++#ifdef SUPPORT_TI_ESC_CYCLE_EXCEEDED_COUNTER
++    static Uint32 curPdiTimeStamp = 0, lastPdiTimeStamp = 0, pdiIsrPeriod;
++    bsp_get_local_sys_time(&curPdiTimeStamp, 0);
++    if (curPdiTimeStamp < lastPdiTimeStamp)
++        pdiIsrPeriod = 0xFFFFFFFF-lastPdiTimeStamp+curPdiTimeStamp;
++    else  
++        pdiIsrPeriod =  curPdiTimeStamp - lastPdiTimeStamp;
++    lastPdiTimeStamp = 	curPdiTimeStamp;
++#if MAX_PD_OUTPUT_SIZE > 0		
++    if (pdiIsrPeriod	< sSyncManOutPar.u32MinCycleTime)
++#elif MAX_PD_INPUT_SIZE > 0
++    if (pdiIsrPeriod	< sSyncManInPar.u32MinCycleTime)
++#endif
++    {	
++#if MAX_PD_OUTPUT_SIZE > 0
++    if ( ALEvent & PROCESS_OUTPUT_EVENT )
++    {
++#if COE_SUPPORTED
++        sSyncManOutPar.u16CycleExceededCounter++;
++#if MAX_PD_INPUT_SIZE > 0
++        sSyncManInPar.u16CycleExceededCounter = sSyncManOutPar.u16CycleExceededCounter;
++#endif
++#endif
++    }
++#elif MAX_PD_INPUT_SIZE > 0
++    if ( ALEvent & PROCESS_INPUT_EVENT )
++    {
++        sSyncManInPar.u16CycleExceededCounter++;
++	}	
++#endif
++    }
++#endif //SUPPORT_TI_ESC_CYCLE_EXCEEDED_COUNTER
++#endif //!TIESC_HW
+     } //if(bEscIntEnabled)
+ 
+ #if DC_SUPPORTED
+@@ -2030,9 +2076,12 @@ void EEPROM_CommandHandler(void)
+         addr = SWAPDWORD(addr);
+ 
+         //Clear error bits (except the eeprom crc error)
+-        EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
++        //EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
++/*ECATCHANGE_END(V5.12) EEPROM1*/
+         switch (cmd) {
+         case 0x00: //IDLE
++            //Clear error bits (except the eeprom crc error)
++            EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
+             break;
+         case ESC_EEPROM_CMD_READ_MASK:
+         {
+@@ -2052,6 +2101,9 @@ void EEPROM_CommandHandler(void)
+               {
+                  UINT16 *pData = (UINT16 *)pEEPROM;
+                  HW_EscWrite((MEM_ADDR *)&pData[(addr)], ESC_EEPROM_DATA_OFFSET, EepromReadSize);
++                //Clear error bits (except the eeprom crc error)
++                EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK & ~ESC_EEPROM_ERROR_CRC);
++/*ECATCHANGE_END(V5.12) EEPROM1*/
+               }
+               else
+               {
+@@ -2075,10 +2127,12 @@ void EEPROM_CommandHandler(void)
+                  else
+                  {
+ 
+-                    if (addr <= ESC_EEPROM_SIZE && (pEEPROM != NULL))
++                    if (addr <= ESC_EEPROM_SIZE && (pEEPROM != NULL) && (EEPROMReg & 1))
+                     {
+                        UINT16 *pData = (UINT16 *)pEEPROM;
+                        HW_EscRead((MEM_ADDR *)&pData[(addr)], ESC_EEPROM_DATA_OFFSET, EEPROM_WRITE_SIZE);
++                       //Clear error bits
++                       EEPROMReg &= ~(ESC_EEPROM_ERROR_MASK);
+                     }
+                     else
+                     {
+@@ -2093,7 +2147,9 @@ void EEPROM_CommandHandler(void)
+             }
+             break;
+         case ESC_EEPROM_CMD_RELOAD_MASK:
+-            if (EepromReadSize == 8)
++/* ECATCHANGE_START(V5.12) EEPROM2*/
++            //if (EepromReadSize == 8)
++            if (0) // For TI EtherCAT slaves the below code doesn't work for reload
+             {
+                 /* "full" EEPROM emulation ( 8Bytes EEPROM data) */
+                 do
+Index: ecatslv.c
+===================================================================
+--- ecatslv.c
++++ ecatslv.c
+@@ -249,6 +249,7 @@ V4.00 ECAT 7: The return values for the AL-StatusCode were changed to UINT16
+ #include "bootloaderappl.h"
+ #else
+ /*CODE_INSERT_START (APPLICATION_FILE)*/
++#include "tiescappl.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 
+@@ -2653,9 +2654,6 @@ void AL_ControlInd(UINT8 alControl, UINT16 alStatusCode)
+ #endif
+ 
+             BackToInitTransition();
+-
+-
+-
+             break;
+         case INIT_2_PREOP :
+ 
+Index: ecatslv.h
+===================================================================
+--- ecatslv.h
++++ ecatslv.h
+@@ -54,6 +54,7 @@ V5.01 : Start file change log
+ #else
+ #include  "esc.h"
+ /*CODE_INSERT_START (HW_ACCESS_FILE)*/
++#include "tieschw.h"
+ /*CODE_INSERT_END*/
+ #endif
+ 

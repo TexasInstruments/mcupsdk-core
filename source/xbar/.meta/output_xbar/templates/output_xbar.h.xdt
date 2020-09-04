@@ -1,0 +1,3 @@
+%%{
+    let module = system.modules['/xbar/output_xbar/output_xbar'];
+%%}

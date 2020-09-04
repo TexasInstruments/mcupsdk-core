@@ -1,0 +1,30 @@
+%%{
+    let module = system.modules['/drivers/pruicss/pruicss'];
+%%}
+/*
+ * PRUICSS
+ */
+/* PRUICSS HW attributes - provided by the driver */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+extern PRUICSS_HwAttrs const gPruIcssHwAttrs_`config.name`;
+% }
+
+/* PRUICSS objects - initialized by the driver */
+static PRUICSS_Object gPruIcssObjects[CONFIG_PRUICSS_NUM_INSTANCES];
+/* PRUICSS driver configuration */
+PRUICSS_Config gPruIcssConfig[CONFIG_PRUICSS_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let hwAttrsInstance = module.$instances[i].$name.toUpperCase();
+    {
+        .object = &gPruIcssObjects[`instance.$name.toUpperCase()`],
+        .hwAttrs = &gPruIcssHwAttrs_`config.name`
+    },
+% }
+};
+
+uint32_t gPruIcssConfigNum = CONFIG_PRUICSS_NUM_INSTANCES;

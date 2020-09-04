@@ -1,0 +1,99 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+const endat      = scripting.addModule("/motor_control/position_sense/endat", {}, false);
+const endat1     = endat.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+i2c1.$name       = "CONFIG_I2C0";
+i2c1.I2C.$assign = "I2C1";
+
+debug_log.enableUartLog        = true;
+debug_log.enableCssLog         = false;
+debug_log.uartLog.$name        = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+
+timer1.$name         = "CONFIG_TIMER0";
+timer1.timerCallback = "endat_position_loop";
+timer1.intrPriority  = 0;
+timer1.TIMER.$assign = "DMTIMER0";
+
+endat1.$name                  = "CONFIG_ENDAT0";
+endat1.PRU_ICSSG0_PRU.$assign = "PRU_ICSSG0_PRU1";
+
+const pruicss  = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1 = pruicss.addInstance({}, false);
+pruicss1.$name = "CONFIG_PRU_ICSS0";
+endat1.pru     = pruicss1;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+i2c1.I2C.SCL.$suggestSolution                = "ball.C18";
+i2c1.I2C.SDA.$suggestSolution                = "ball.B19";
+debug_log.uartLog.UART.RXD.$suggestSolution  = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution  = "ball.C16";
+endat1.PRU_ICSSG0_PRU.GPO2.$suggestSolution  = "ball.V3";
+endat1.PRU_ICSSG0_PRU.GPO1.$suggestSolution  = "ball.W2";
+endat1.PRU_ICSSG0_PRU.GPO0.$suggestSolution  = "ball.Y2";
+endat1.PRU_ICSSG0_PRU.GPI13.$suggestSolution = "ball.T6";
+endat1.PRU_ICSSG0_PRU.GPO5.$suggestSolution  = "ball.P4";
+endat1.PRU_ICSSG0_PRU.GPO4.$suggestSolution  = "ball.W3";
+endat1.PRU_ICSSG0_PRU.GPO3.$suggestSolution  = "ball.T4";
+endat1.PRU_ICSSG0_PRU.GPI14.$suggestSolution = "ball.U6";
+endat1.PRU_ICSSG0_PRU.GPO8.$suggestSolution  = "ball.R1";
+endat1.PRU_ICSSG0_PRU.GPO12.$suggestSolution = "ball.Y4";
+endat1.PRU_ICSSG0_PRU.GPO6.$suggestSolution  = "ball.R5";
+endat1.PRU_ICSSG0_PRU.GPI11.$suggestSolution = "ball.W4";

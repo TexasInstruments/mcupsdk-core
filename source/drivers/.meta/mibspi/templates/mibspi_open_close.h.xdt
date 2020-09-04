@@ -1,0 +1,24 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/mibspi/mibspi'];
+%%}
+/*
+ * MIBSPI
+ */
+#include <drivers/mibspi.h>
+
+/* MIBSPI Driver handles */
+extern MIBSPI_Handle gMibspiHandle[CONFIG_MIBSPI_NUM_INSTANCES];
+
+/*
+ * MIBSPI Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* MIBSPI Driver default Open Parameters */
+extern MIBSPI_OpenParams gMibspiParams;
+
+/* MIBSPI Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_mibspiOpen(void);
+void Drivers_mibspiClose(void);

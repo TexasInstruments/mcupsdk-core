@@ -1,0 +1,36 @@
+%%{
+    let module = system.modules['/drivers/esm/esm'];
+%%}
+/*
+ * ESM
+ */
+/* ESM atrributes */
+static ESM_Attrs gEsmAttrs[CONFIG_ESM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .ptrESMRegs             = (CSL_esmRegs *)`config.regBaseAddr`,
+        .highPrioIntNum         = `config.highPrioIntNum`,
+        .lowPrioIntNum          = `config.lowPrioIntNum`,
+        .intrHighPriority       = `config.intHighPriority`U,
+        .intrLowPriority        = `config.intLowPriority`U,
+    },
+%}
+};
+/* ESM objects - initialized by the driver */
+static ESM_Object gEsmObjects[CONFIG_ESM_NUM_INSTANCES];
+/* ESM driver configuration */
+ESM_Config gEsmConfig[CONFIG_ESM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gEsmAttrs[`instance.$name.toUpperCase()`],
+        &gEsmObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gEsmConfigNum = CONFIG_ESM_NUM_INSTANCES;

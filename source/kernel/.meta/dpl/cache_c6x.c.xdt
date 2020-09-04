@@ -1,0 +1,50 @@
+%%{
+    let module = system.modules['/kernel/dpl/cache_c6x'];
+    let instance = module.$static;
+    let mar = system.modules[`/kernel/dpl/cache_c6x_mar`];
+    let mar_instances = instance.marRegionConfig;
+%%}
+/* ----------- CacheP ----------- */
+const CacheP_Config       gCacheConfig = {
+    .enable = 1,
+    .enableForceWrThru = 0,
+};
+
+CacheP_Size         gCacheSize = {
+    .l1pSize = CacheP_L1Size_`instance.l1psize`K,
+    .l1dSize = CacheP_L1Size_`instance.l1dsize`K,
+    .l2Size  = CacheP_L2Size_`instance.l2size`K,
+};
+
+uint32_t            gCacheMarRegionNum = `mar_instances.length`U;
+
+% if(mar_instances && mar_instances.length > 0) {
+CacheP_MarRegion    gCacheMarRegion[] = {
+    % for(let mar_reg = 0; mar_reg < mar_instances.length; mar_reg++) {
+    % let mar_instance = mar_instances[mar_reg];
+    % let mar_reg_config = mar.getRegionAttributes(mar_instance);
+    % let value = "0";
+    % if(mar_reg_config.enableCache) {
+    %   value = "CacheP_MarMask_PC";
+    %   if(mar_reg_config.enablePrefetch) {
+    %       value = "CacheP_MarMask_PC | CacheP_MarMask_PFX";
+    %   }
+    % }
+    % if(mar_reg_config.enablePrefetch) {
+    %   value = "CacheP_MarMask_PFX";
+    %   if(mar_reg_config.enableCache) {
+    %       value = "CacheP_MarMask_PC | CacheP_MarMask_PFX";
+    %   }
+    % }
+    {
+        .baseAddr = (void *) 0x`mar_reg_config.baseAddr.toString(16).toUpperCase()`U,
+        .size = `mar_reg_config.size`U * 1024U * 1024U,
+        .value = `value`,
+    },
+    % }
+};
+%} else {
+CacheP_MarRegion    gCacheMarRegion[] = {
+    {NULL, 0, 0},
+};
+%};

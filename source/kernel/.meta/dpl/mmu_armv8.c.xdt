@@ -1,0 +1,33 @@
+%%{
+    let module = system.modules['/kernel/dpl/mmu_armv8'];
+%%}
+% if (module.$instances.length > 0) {
+/* ----------- MmuP_armv8 ----------- */
+#define CONFIG_MMU_NUM_REGIONS  (`module.$instances.length`u)
+
+MmuP_Config gMmuConfig = {
+    .numRegions = CONFIG_MMU_NUM_REGIONS,
+    .enableMmu = 1,
+};
+
+MmuP_RegionConfig gMmuRegionConfig[CONFIG_MMU_NUM_REGIONS] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let attributes = module.getRegionAttributes(instance);
+    {
+        .vaddr = 0x`instance.vAddr.toString(16).toUpperCase()`u,
+        .paddr = 0x`instance.pAddr.toString(16).toUpperCase()`u,
+        .size = 0x`instance.size.toString(16).toUpperCase()`u,
+        .attr = {
+            .accessPerm = `attributes.accessPerm`,
+            .privExecute = `attributes.privExecute`,
+            .userExecute = `attributes.userExecute`,
+            .shareable = `attributes.shareable`,
+            .attrIndx = `attributes.attrIndx`,
+            .global = `attributes.global`
+        }
+    },
+% }
+};
+% }

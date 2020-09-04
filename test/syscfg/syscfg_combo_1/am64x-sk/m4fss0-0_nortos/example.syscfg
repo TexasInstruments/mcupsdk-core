@@ -1,0 +1,140 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1           = gpio.addInstance();
+const gpio2           = gpio.addInstance();
+const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1            = i2c.addInstance();
+const i2c2            = i2c.addInstance();
+const ipc             = scripting.addModule("/drivers/ipc/ipc");
+const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1          = mcspi.addInstance();
+const mcspi2          = mcspi.addInstance();
+const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1           = uart.addInstance();
+const uart2           = uart.addInstance();
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
+const addr_translate2 = addr_translate.addInstance();
+const addr_translate3 = addr_translate.addInstance();
+const addr_translate4 = addr_translate.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const timer           = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1          = timer.addInstance();
+const timer2          = timer.addInstance();
+const timer3          = timer.addInstance();
+const timer4          = timer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+gpio1.$name            = "CONFIG_GPIO0";
+gpio1.MCU_GPIO.$assign = "MCU_GPIO0";
+
+gpio2.$name            = "CONFIG_GPIO1";
+gpio2.pinDir           = "OUTPUT";
+gpio2.MCU_GPIO.$assign = "MCU_GPIO0";
+
+i2c1.$name           = "CONFIG_I2C0";
+i2c1.advanced        = true;
+i2c1.MCU_I2C.$assign = "MCU_I2C0";
+
+i2c2.$name           = "CONFIG_I2C1";
+i2c2.advanced        = true;
+i2c2.ownSlaveAddr1   = 0x1E;
+i2c2.ownSlaveAddr2   = 0x12;
+i2c2.ownSlaveAddr3   = 0x13;
+i2c2.ownSlaveAddr4   = 0x15;
+i2c2.MCU_I2C.$assign = "MCU_I2C1";
+
+ipc.r5fss0_0 = "notify";
+ipc.r5fss1_0 = "NONE";
+ipc.r5fss1_1 = "NONE";
+ipc.r5fss0_1 = "notify";
+
+mcspi1.$name                 = "CONFIG_MCSPI0";
+mcspi1.MCU_SPI.$assign       = "MCU_SPI1";
+mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+
+mcspi2.$name                 = "CONFIG_MCSPI1";
+mcspi2.MCU_SPI.$assign       = "MCU_SPI0";
+mcspi2.mcspiChannel[0].$name = "CONFIG_MCSPI_CH1";
+
+uart1.$name            = "CONFIG_UART0";
+uart1.MCU_UART.$assign = "MCU_USART0";
+
+uart2.$name            = "CONFIG_UART1";
+uart2.MCU_UART.$assign = "MCU_USART1";
+
+addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
+addr_translate1.localAddr = 0x80000000;
+
+addr_translate2.$name      = "CONFIG_ADDR_TRANSLATE_REGION1";
+addr_translate2.systemAddr = 0x20000000;
+addr_translate2.localAddr  = 0xA0000000;
+
+addr_translate3.$name      = "CONFIG_ADDR_TRANSLATE_REGION2";
+addr_translate3.systemAddr = 0x40000000;
+addr_translate3.localAddr  = 0xC0000000;
+
+addr_translate4.$name      = "CONFIG_ADDR_TRANSLATE_REGION3";
+addr_translate4.systemAddr = 0x60000000;
+addr_translate4.localAddr  = 0x60000000;
+
+debug_log.enableCssLog       = false;
+debug_log.enableSharedMemLog = true;
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 18;
+
+timer1.$name = "CONFIG_TIMER0";
+
+timer2.$name = "CONFIG_TIMER1";
+
+timer3.$name = "CONFIG_TIMER2";
+
+timer4.$name = "CONFIG_TIMER3";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+gpio1.MCU_GPIO.gpioPin.$suggestSolution         = "ball.D8";
+gpio2.MCU_GPIO.gpioPin.$suggestSolution         = "ball.E8";
+i2c1.MCU_I2C.SCL.$suggestSolution               = "ball.E9";
+i2c1.MCU_I2C.SDA.$suggestSolution               = "ball.A10";
+i2c2.MCU_I2C.SCL.$suggestSolution               = "ball.A11";
+i2c2.MCU_I2C.SDA.$suggestSolution               = "ball.B10";
+mcspi1.MCU_SPI.CLK.$suggestSolution             = "ball.D7";
+mcspi1.MCU_SPI.D0.$suggestSolution              = "ball.C7";
+mcspi1.MCU_SPI.D1.$suggestSolution              = "ball.C8";
+mcspi1.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.A7";
+mcspi2.MCU_SPI.CLK.$suggestSolution             = "ball.E6";
+mcspi2.MCU_SPI.D0.$suggestSolution              = "ball.E7";
+mcspi2.MCU_SPI.D1.$suggestSolution              = "ball.B6";
+mcspi2.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.D6";
+uart1.MCU_UART.RXD.$suggestSolution             = "ball.A9";
+uart1.MCU_UART.TXD.$suggestSolution             = "ball.A8";
+uart2.MCU_UART.RXD.$suggestSolution             = "ball.C9";
+uart2.MCU_UART.TXD.$suggestSolution             = "ball.D9";
+timer1.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER3";
+timer2.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER2";
+timer3.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER1";
+timer4.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER0";

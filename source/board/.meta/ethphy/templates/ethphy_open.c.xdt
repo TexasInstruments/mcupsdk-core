@@ -1,0 +1,9 @@
+%%{
+    let module = system.modules['/board/ethphy/ethphy'];
+%%}
+% if( module.getNumValidInstances(module) > 0 ) {
+    if(status==SystemP_SUCCESS)
+    {
+        status = Board_ethPhyOpen();
+    }
+% }

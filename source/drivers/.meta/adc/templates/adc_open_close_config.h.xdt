@@ -1,0 +1,4 @@
+#include <drivers/adc.h>
+#include <kernel/dpl/ClockP.h>
+
+void Drivers_adcOpen(void);

@@ -1,0 +1,93 @@
+%%{
+    let module = system.modules['/drivers/ipc/ipc'];
+    let instance = module.$static;
+    let selfCpuName = module.getSelfIpcCoreName();
+    let enabledCpus = module.getEnabledCpus(instance);
+    let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
+    let implementationVersion = module.getImplementationVersion();
+%%}
+% if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
+/*
+ * IPC Notify
+ */
+#include <drivers/ipc_notify.h>
+#include <drivers/ipc_notify/`implementationVersion`/ipc_notify_`implementationVersion`.h>
+
+/* this function is called within IpcNotify_init, this function returns core specific IPC config */
+void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *interruptConfigNum)
+{
+    /* extern globals that are specific to this core */
+    extern IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_`selfCpuName`[];
+    extern uint32_t gIpcNotifyInterruptConfigNum_`selfCpuName`;
+
+    *interruptConfig = &gIpcNotifyInterruptConfig_`selfCpuName`[0];
+    *interruptConfigNum = gIpcNotifyInterruptConfigNum_`selfCpuName`;
+}
+
+% }
+% if ( enabledRPMessageCpus.length > 0 || instance.enableLinuxIpc === true ) {
+/*
+ * IPC RP Message
+ */
+#include <drivers/ipc_rpmsg.h>
+
+    % if ( enabledRPMessageCpus.length > 0) {
+/* Number of CPUs that are enabled for IPC RPMessage */
+#define IPC_RPMESSAGE_NUM_CORES           (`enabledRPMessageCpus.length+1`U)
+/* Number of VRINGs for the numner of CPUs that are enabled for IPC */
+#define IPC_RPMESSAGE_NUM_VRINGS          (IPC_RPMESSAGE_NUM_CORES*(IPC_RPMESSAGE_NUM_CORES-1))
+/* Number of a buffers in a VRING, i.e depth of VRING queue */
+#define IPC_RPMESSAGE_NUM_VRING_BUF       (`instance.vringNumBuf`U)
+/* Max size of a buffer in a VRING */
+#define IPC_RPMESSAGE_MAX_VRING_BUF_SIZE  (`instance.vringMsgSize`U)
+/* Size of each VRING is
+ *     number of buffers x ( size of each buffer + space for data structures of one buffer (32B) )
+ */
+#define IPC_RPMESSAGE_VRING_SIZE          RPMESSAGE_VRING_SIZE(IPC_RPMESSAGE_NUM_VRING_BUF, IPC_RPMESSAGE_MAX_VRING_BUF_SIZE)
+
+/* VRING base address, all VRINGs are put one after other in the below region.
+ *
+ * IMPORTANT: Make sure of below,
+ * - The section defined below should be placed at the exact same location in memory for all the CPUs
+ * - The memory should be marked as non-cached for all the CPUs
+ * - The section should be marked as NOLOAD in all the CPUs linker command file
+ */
+/* In this case gRPMessageVringMem size is `module.getRPMessageVringSize(instance)` bytes */
+uint8_t gRPMessageVringMem[IPC_RPMESSAGE_NUM_VRINGS][IPC_RPMESSAGE_VRING_SIZE] __attribute__((aligned(128), section(".bss.ipc_vring_mem")));
+
+    % }
+    % if (instance.enableLinuxIpc === true ) {
+
+/* Buffer used for trace, address and size of this buffer is put in the resource table so that Linux can read it */
+extern char gDebugMemLog[];
+
+const RPMessage_ResourceTable gRPMessage_linuxResourceTable __attribute__ ((section (".resource_table"), aligned (4096))) =
+{
+    {
+        1U,         /* we're the first version that implements this */
+        2U,         /* number of entries, MUST be 2 */
+        { 0U, 0U, } /* reserved, must be zero */
+    },
+    /* offsets to the entries */
+    {
+        offsetof(RPMessage_ResourceTable, vdev),
+        offsetof(RPMessage_ResourceTable, trace),
+    },
+    /* vdev entry */
+    {
+        RPMESSAGE_RSC_TYPE_VDEV, RPMESSAGE_RSC_VIRTIO_ID_RPMSG,
+        0U, 1U, 0U, 0U, 0U, 2U, { 0U, 0U },
+    },
+    /* the two vrings */
+    { RPMESSAGE_RSC_VRING_ADDR_ANY, 4096U, 256U, 1U, 0U },
+    { RPMESSAGE_RSC_VRING_ADDR_ANY, 4096U, 256U, 2U, 0U },
+    {
+        (RPMESSAGE_RSC_TRACE_INTS_VER0 | RPMESSAGE_RSC_TYPE_TRACE),
+        (uint32_t)gDebugMemLog, DebugP_MEM_LOG_SIZE,
+        0, "trace:`selfCpuName`",
+    },
+};
+
+    % }
+% }
+

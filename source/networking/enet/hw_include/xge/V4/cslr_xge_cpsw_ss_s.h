@@ -1,0 +1,721 @@
+/********************************************************************
+ * Copyright (C) 2019 Texas Instruments Incorporated.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *  Name        : cslr_xge_cpsw_ss_s.h
+*/
+#ifndef CSLR_XGE_CPSW_SS_S_H_
+#define CSLR_XGE_CPSW_SS_S_H_
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+#include <drivers/hw_include/cslr.h>
+#include <stdint.h>
+
+/**************************************************************************
+* The following are base address byte offsets to various modules in the
+* CPSW subsystem.
+**************************************************************************/
+#define CPSW_NUSS_OFFSET    (0x00000000U)                   /* CPSW_NUSS offset memory map */
+#define CPSW_ECC_OFFSET     (0x00000000U)                   /* CPSW_ECC offset memory map */
+#define CPSW_SGMII0_OFFSET(n)  (0x00000100U+((n)*0x100U))   /* SGMII0 offset memory map */
+#define CPSW_MDIO_OFFSET    (0x00000F00U)                   /* MDIO offset memory map */
+#define CPSW_INTD_OFFSET    (0x00001000U)                   /* INTD offset memory map */
+#define CPSW_PCSR_OFFSET(n) (0x00002100U+((n)*0x100U))      /* PCSR offset memory map */
+#define CPSW_NU_OFFSET      (0x00020000U)                   /* CPSW offset memory map */
+#define CPSW_CPPI_OFFSET    (CPSW_NU_OFFSET+0x00001000U)    /* CPPI offset memory map */
+#define CPSW_ETHX_OFFSET(n) (CPSW_NU_OFFSET+0x00002000U+((n)*0x1000U))    /* Ethernet_X port n offset memory map */
+#define CPSW_ETHX0_OFFSET   (CPSW_NU_OFFSET+0x00002000U)    /* Ethernet_X port 0 offset memory map */
+#define CPSW_ETHX1_OFFSET   (CPSW_NU_OFFSET+0x00003000U)    /* Ethernet_X port 1 offset memory map */
+#define CPSW_ETHG_OFFSET(n) (CPSW_NU_OFFSET+0x00004000U+((n)*0x1000U))    /* Ethernet_G port n offset memory map */
+#define CPSW_ETHG0_OFFSET   (CPSW_NU_OFFSET+0x00005000U)    /* Ethernet_G port 0 offset memory map */
+#define CPSW_ETHG1_OFFSET   (CPSW_NU_OFFSET+0x00006000U)    /* Ethernet_G port 1 offset memory map */
+#define CPSW_ETHG2_OFFSET   (CPSW_NU_OFFSET+0x00007000U)    /* Ethernet_G port 2 offset memory map */
+#define CPSW_ETHG3_OFFSET   (CPSW_NU_OFFSET+0x00008000U)    /* Ethernet_G port 3 offset memory map */
+#define CPSW_ETHG4_OFFSET   (CPSW_NU_OFFSET+0x00009000U)    /* Ethernet_G port 4 offset memory map */
+#define CPSW_ETHG5_OFFSET   (CPSW_NU_OFFSET+0x0000A000U)    /* Ethernet_G port 5 offset memory map */
+#define CPSW_STAT_OFFSET(n) (CPSW_NU_OFFSET+0x0001A000U+((n)*0x200U))    /* STATn offset memory map */
+#define CPSW_STAT0_OFFSET   (CPSW_NU_OFFSET+0x0001A000U)    /* STAT0 offset memory map */
+#define CPSW_STAT1_OFFSET   (CPSW_NU_OFFSET+0x0001A200U)    /* STAT1 offset memory map */
+#define CPSW_STAT2_OFFSET   (CPSW_NU_OFFSET+0x0001A400U)    /* STAT2 offset memory map */
+#define CPSW_STAT3_OFFSET   (CPSW_NU_OFFSET+0x0001A600U)    /* STAT3 offset memory map */
+#define CPSW_STAT4_OFFSET   (CPSW_NU_OFFSET+0x0001A800U)    /* STAT4 offset memory map */
+#define CPSW_STAT5_OFFSET   (CPSW_NU_OFFSET+0x0001AA00U)    /* STAT5 offset memory map */
+#define CPSW_STAT6_OFFSET   (CPSW_NU_OFFSET+0x0001AC00U)    /* STAT6 offset memory map */
+#define CPSW_STAT7_OFFSET   (CPSW_NU_OFFSET+0x0001AE00U)    /* STAT7 offset memory map */
+#define CPSW_STAT8_OFFSET   (CPSW_NU_OFFSET+0x0001B000U)    /* STAT8 offset memory map */
+#define CPSW_CPTS_OFFSET    (CPSW_NU_OFFSET+0x0001D000U)    /* CPTS offset memory map */
+#define CPSW_ALE_OFFSET     (CPSW_NU_OFFSET+0x0001E000U)    /* ALE offset memory map */
+
+/**************************************************************************
+* Hardware Region  : CPSW_NUSS Subsystem registers
+**************************************************************************/
+
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct {
+    volatile uint32_t PCSR_TX_CTL_REG;           /* PCSR Transmit Control Register */
+    volatile uint32_t PCSR_TX_STATUS_REG;        /* PCSR Transmit Status Register */
+    volatile uint32_t PCSR_RX_CTL_REG;           /* PCSR Receive Control Register */
+    volatile uint32_t PCSR_RX_STATUS_REG;        /* PCSR Receive Status Register */
+    volatile uint32_t PCSR_SEED_A_LO_REG;        /* PCSR Seed A Low Register */
+    volatile uint32_t PCSR_SEED_A_HI_REG;        /* PCSR SEED A High Register */
+    volatile uint32_t PCSR_SEED_B_LO_REG;        /* PCSR Seed B Low Register */
+    volatile uint32_t PCSR_SEED_B_HI_REG;        /* PCSR SEED B High Register */
+    volatile uint32_t PCSR_FEC_REG;              /* PCSR FEC Register */
+    volatile uint32_t PCSR_CTL_REG;              /* PCSR CTL Register */
+    volatile uint32_t PCSR_FEC_CNT_REG;          /* PCSR FEC Count Register */
+    volatile uint32_t PCSR_ERROR_FIFO_REG;       /* PCSR Error FIFO Register */
+    volatile uint8_t  Resv_256[208];
+} CSL_Xge_cpsw_ss_sRegs_PCSR;
+
+
+typedef struct {
+    volatile uint32_t IDVER_REG;       /* ID Version Register */
+    volatile uint32_t SYNCE_COUNT_REG;           /* SyncE Count Register */
+    volatile uint32_t SYNCE_MUX_REG;             /* SyncE Mux Register */
+    volatile uint32_t CONTROL_REG;               /* Control Register */
+    volatile uint32_t SGMII_NON_FIBER_MODE_REG;   /* SGMII NON FIBER Mode Register */
+    volatile uint32_t SERDES_RESET_ISO_REG;      /* SyncE Mux Register */
+    volatile uint8_t  Resv_28[4];
+    volatile uint32_t SUBSSYSTEM_STATUS_REG;     /* Subsystem Status Register */
+    volatile uint8_t  Resv_48[16];
+    volatile uint32_t RGMII1_STATUS_REG;         /* RGMII1 Status Register */
+    volatile uint32_t RGMII2_STATUS_REG;         /* RGMII2 Status Register */
+    volatile uint32_t RGMII3_STATUS_REG;         /* RGMII3 Status Register */
+    volatile uint32_t RGMII4_STATUS_REG;         /* RGMII4 Status Register */
+    volatile uint32_t RGMII5_STATUS_REG;         /* RGMII5 Status Register */
+    volatile uint32_t RGMII6_STATUS_REG;         /* RGMII6 Status Register */
+    volatile uint32_t RGMII7_STATUS_REG;         /* RGMII7 Status Register */
+    volatile uint32_t RGMII8_STATUS_REG;         /* RGMII8 Status Register */
+    volatile uint8_t  Resv_96[16];
+    volatile uint32_t QSGMII_CONTROL_REG;        /* QSGMII Control Register */
+    volatile uint32_t QSGMII_STATUS_REG;         /* QSGMII Status Register */
+    volatile uint8_t  Resv_116[12];
+    volatile uint32_t STATUS_XGMII_LINK_REG;     /* XGMII Link Status Register */
+    volatile uint32_t STATUS_SGMII_LINK_REG;     /* SGMII Link Status Register */
+    volatile uint8_t  Resv_8448[8324];
+    CSL_Xge_cpsw_ss_sRegs_PCSR PCSR[2];
+} CSL_Xge_cpsw_ss_sRegs;
+
+typedef struct {
+    volatile uint32_t REVISION;
+    volatile uint8_t  Resv_16[12];
+    volatile uint32_t EOI_REG;
+    volatile uint32_t INTR_VECTOR_REG;
+    volatile uint8_t  Resv_256[232];
+    volatile uint32_t ENABLE_REG_OUT_PULSE_0;
+    volatile uint8_t  Resv_768[508];
+    volatile uint32_t ENABLE_CLR_REG_OUT_PULSE_0;
+    volatile uint8_t  Resv_1280[508];
+    volatile uint32_t STATUS_REG_OUT_PULSE_0;
+    volatile uint8_t  Resv_2688[1404];
+    volatile uint32_t INTR_VECTOR_REG_OUT_PULSE;
+} CSL_cpswRegs_INTD;
+
+/**************************************************************************
+* Register Macros
+**************************************************************************/
+
+#define CSL_XGE_CPSW_SS_S_IDVER_REG                                  (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SYNCE_COUNT_REG                                      (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_SYNCE_MUX_REG                                        (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG                                          (0x0000000CU)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG                             (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_SERDES_RESET_ISO_REG                                 (0x00000014U)
+#define CSL_XGE_CPSW_SS_S_SUBSSYSTEM_STATUS_REG                                (0x0000001CU)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG                                    (0x00000030U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG                                    (0x00000034U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG                                    (0x00000038U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG                                    (0x0000003CU)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG                                    (0x00000040U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG                                    (0x00000044U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG                                    (0x00000048U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG                                    (0x0000004CU)
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG                                   (0x00000060U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG                                    (0x00000064U)
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG                                (0x00000074U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG                                (0x00000078U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG(PCSR)                           (0x00002100U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_STATUS_REG(PCSR)                        (0x00002104U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG(PCSR)                           (0x00002108U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG(PCSR)                        (0x0000210CU+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_LO_REG(PCSR)                        (0x00002110U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_HI_REG(PCSR)                        (0x00002114U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_LO_REG(PCSR)                        (0x00002118U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_HI_REG(PCSR)                        (0x0000211CU+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG(PCSR)                              (0x00002120U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG(PCSR)                              (0x00002124U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG(PCSR)                          (0x00002128U+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_ERROR_FIFO_REG(PCSR)                       (0x0000212CU+((PCSR)*0x100U))
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION                                        (0x00001000U)
+#define CSL_XGE_CPSW_SS_S_INTD_EOI_REG                                         (0x00001010U)
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG                                 (0x00001014U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0                          (0x00001100U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0                      (0x00001300U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0                          (0x00001500U)
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_OUT_PULSE                       (0x00001A80U)
+
+/**************************************************************************
+* Field Definition Macros
+**************************************************************************/
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_SCHEME_MASK                              (0xC0000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_SCHEME_SHIFT                             (0x0000001EU)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_SCHEME_MAX                               (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_BU_MASK                                  (0x30000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_BU_SHIFT                                 (0x0000001CU)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_BU_MAX                                   (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_FUNCTION_MASK                            (0x0FFF0000U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_FUNCTION_SHIFT                           (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_FUNCTION_MAX                             (0x00000FFFU)
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_RTLVER_MASK                              (0x0000F800U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_RTLVER_SHIFT                             (0x0000000BU)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_RTLVER_MAX                               (0x0000001FU)
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_MAJREV_MASK                              (0x00000700U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_MAJREV_SHIFT                             (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_MAJREV_MAX                               (0x00000007U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_CUSTOM_MASK                              (0x000000C0U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_CUSTOM_SHIFT                             (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_CUSTOM_MAX                               (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_MINREV_MASK                              (0x0000003FU)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_MINREV_SHIFT                             (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_REVISION_MINREV_MAX                               (0x0000003FU)
+
+/* EOI_REG */
+
+#define CSL_XGE_CPSW_SS_S_INTD_EOI_REG_EOI_VECTOR_MASK                           (0x000000FFU)
+#define CSL_XGE_CPSW_SS_S_INTD_EOI_REG_EOI_VECTOR_SHIFT                          (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_EOI_REG_EOI_VECTOR_MAX                            (0x000000FFU)
+
+/* INTR_VECTOR_REG */
+
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_INTR_VECTOR_MASK                  (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_INTR_VECTOR_SHIFT                 (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_INTR_VECTOR_MAX                   (0xFFFFFFFFU)
+
+/* ENABLE_REG_OUT_PULSE_0 */
+
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_EVNT_PENDA_MASK (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_EVNT_PENDA_SHIFT (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_EVNT_PENDA_MAX (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_MDIO_PENDA_MASK (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_MDIO_PENDA_SHIFT (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_MDIO_PENDA_MAX (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_STAT_PENDA_MASK (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_STAT_PENDA_SHIFT (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_STAT_PENDA_MAX (0x00000001U)
+
+/* ENABLE_CLR_REG_OUT_PULSE_0 */
+
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_EVNT_PENDA_CLR_MASK (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_EVNT_PENDA_CLR_SHIFT (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_EVNT_PENDA_CLR_MAX (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_MDIO_PENDA_CLR_MASK (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_MDIO_PENDA_CLR_SHIFT (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_MDIO_PENDA_CLR_MAX (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_STAT_PENDA_CLR_MASK (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_STAT_PENDA_CLR_SHIFT (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_INTD_ENABLE_CLR_REG_OUT_PULSE_0_ENABLE_OUT_PULSE_EN_STAT_PENDA_CLR_MAX (0x00000001U)
+
+/* STATUS_REG_OUT_PULSE_0 */
+
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_EVNT_PENDA_MASK (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_EVNT_PENDA_SHIFT (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_EVNT_PENDA_MAX (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_MDIO_PENDA_MASK (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_MDIO_PENDA_SHIFT (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_MDIO_PENDA_MAX (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_STAT_PENDA_MASK (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_STAT_PENDA_SHIFT (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_INTD_STATUS_REG_OUT_PULSE_0_STATUS_OUT_PULSE_STAT_PENDA_MAX (0x00000001U)
+
+/* INTR_VECTOR_REG_OUT_PULSE */
+
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_OUT_PULSE_INTR_VECTOR_OUT_PULSE_MASK   (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_OUT_PULSE_INTR_VECTOR_OUT_PULSE_SHIFT  (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_INTD_INTR_VECTOR_REG_OUT_PULSE_INTR_VECTOR_OUT_PULSE_MAX    (0xFFFFFFFFU)
+
+/* PCSR_TX_CTL_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_DATAPATH_EN_MASK             (0x00000100U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_DATAPATH_EN_SHIFT            (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_DATAPATH_EN_MAX              (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_SCR_BPYASS_MASK              (0x00000080U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_SCR_BPYASS_SHIFT             (0x00000007U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_SCR_BPYASS_MAX               (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_EN_MASK                 (0x00000040U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_EN_SHIFT                (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_EN_MAX                  (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_SEL_MASK                (0x00000020U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_SEL_SHIFT               (0x00000005U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_SEL_MAX                 (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_DAT_SEL_MASK            (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_DAT_SEL_SHIFT           (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_TEST_DAT_SEL_MAX             (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_PRBS31_EN_MASK               (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_PRBS31_EN_SHIFT              (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_PRBS31_EN_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_PRBS9_EN_MASK                (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_PRBS9_EN_SHIFT               (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_PRBS9_EN_MAX                 (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_LOOPBACK_EN_MASK             (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_LOOPBACK_EN_SHIFT            (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_LOOPBACK_EN_MAX              (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_SCR_LOOPBK_EN_MASK           (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_SCR_LOOPBK_EN_SHIFT          (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_CTL_REG_TX_SCR_LOOPBK_EN_MAX            (0x00000001U)
+
+/* PCSR_TX_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_STATUS_REG_TX_FAULT_MASK                (0x00000100U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_STATUS_REG_TX_FAULT_SHIFT               (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_TX_STATUS_REG_TX_FAULT_MAX                 (0x00000001U)
+
+/* PCSR_RX_CTL_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_PRBS9_EN_MASK                (0x00000100U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_PRBS9_EN_SHIFT               (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_PRBS9_EN_MAX                 (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_EN_MASK                 (0x00000080U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_EN_SHIFT                (0x00000007U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_EN_MAX                  (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_DAT_SEL_MASK            (0x00000040U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_DAT_SEL_SHIFT           (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_DAT_SEL_MAX             (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_PRBS31_EN_MASK               (0x00000020U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_PRBS31_EN_SHIFT              (0x00000005U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_PRBS31_EN_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_ERR_BLK_CNT_RST_MASK         (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_ERR_BLK_CNT_RST_SHIFT        (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_ERR_BLK_CNT_RST_MAX          (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_BER_CNT_RST_MASK             (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_BER_CNT_RST_SHIFT            (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_BER_CNT_RST_MAX              (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_CNT_PRE_MASK            (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_CNT_PRE_SHIFT           (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_CNT_PRE_MAX             (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_CNT_125US_MASK          (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_CNT_125US_SHIFT         (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TEST_CNT_125US_MAX           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TPTER_CNT_RST_MASK           (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TPTER_CNT_RST_SHIFT          (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_CTL_REG_RX_TPTER_CNT_RST_MAX            (0x00000001U)
+
+/* PCSR_RX_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_HI_BER_MASK               (0x80000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_HI_BER_SHIFT              (0x0000001FU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_HI_BER_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_BLOCK_LOCK_MASK           (0x40000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_BLOCK_LOCK_SHIFT          (0x0000001EU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_BLOCK_LOCK_MAX            (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_BER_COUNT_MASK            (0x3F000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_BER_COUNT_SHIFT           (0x00000018U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_BER_COUNT_MAX             (0x0000003FU)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_ERR_BLK_CNT_MASK          (0x00FF0000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_ERR_BLK_CNT_SHIFT         (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_ERR_BLK_CNT_MAX           (0x000000FFU)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_TPT_ERR_CNT_MASK          (0x0000FFFFU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_TPT_ERR_CNT_SHIFT         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_RX_STATUS_REG_RX_TPT_ERR_CNT_MAX           (0x0000FFFFU)
+
+/* PCSR_SEED_A_LO_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_LO_REG_SEED_A_LO_MASK               (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_LO_REG_SEED_A_LO_SHIFT              (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_LO_REG_SEED_A_LO_MAX                (0xFFFFFFFFU)
+
+/* PCSR_SEED_A_HI_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_HI_REG_SEED_A_HI_MASK               (0x03FFFFFFU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_HI_REG_SEED_A_HI_SHIFT              (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_A_HI_REG_SEED_A_HI_MAX                (0x03FFFFFFU)
+
+/* PCSR_SEED_B_LO_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_LO_REG_SEED_B_LO_MASK               (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_LO_REG_SEED_B_LO_SHIFT              (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_LO_REG_SEED_B_LO_MAX                (0xFFFFFFFFU)
+
+/* PCSR_SEED_B_HI_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_HI_REG_SEED_B_HI_MASK               (0x03FFFFFFU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_HI_REG_SEED_B_HI_SHIFT              (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_SEED_B_HI_REG_SEED_B_HI_MAX                (0x03FFFFFFU)
+
+/* PCSR_FEC_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG_FEC_ENA_ERR_IND_MASK               (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG_FEC_ENA_ERR_IND_SHIFT              (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG_FEC_ENA_ERR_IND_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG_FEC_ENABLE_MASK                    (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG_FEC_ENABLE_SHIFT                   (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_REG_FEC_ENABLE_MAX                     (0x00000001U)
+
+/* PCSR_CTL_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG_SIGNAL_OK_EN_MASK                  (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG_SIGNAL_OK_EN_SHIFT                 (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG_SIGNAL_OK_EN_MAX                   (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG_SIGNAL_OK_MASK                     (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG_SIGNAL_OK_SHIFT                    (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_CTL_REG_SIGNAL_OK_MAX                      (0x00000001U)
+
+/* PCSR_FEC_CNT_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG_FEC_CORR_CNT_MASK              (0xFFFF0000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG_FEC_CORR_CNT_SHIFT             (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG_FEC_CORR_CNT_MAX               (0x0000FFFFU)
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG_FEC_UNCORRCNT_MASK             (0x0000FFFFU)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG_FEC_UNCORRCNT_SHIFT            (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_FEC_CNT_REG_FEC_UNCORRCNT_MAX              (0x0000FFFFU)
+
+/* PCSR_ERROR_FIFO_REG */
+
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_ERROR_FIFO_REG_ERROR_FIFO_CTC_MASK         (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_ERROR_FIFO_REG_ERROR_FIFO_CTC_SHIFT        (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_PCSR_PCSR_ERROR_FIFO_REG_ERROR_FIFO_CTC_MAX          (0x00000001U)
+
+/* IDVER_REG */
+
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_MINOR_VER_MASK                             (0x000000FFU)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_MINOR_VER_SHIFT                            (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_MINOR_VER_MAX                              (0x000000FFU)
+
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_MAJOR_VER_MASK                             (0x00000700U)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_MAJOR_VER_SHIFT                            (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_MAJOR_VER_MAX                              (0x00000007U)
+
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_RTL_VER_MASK                               (0x0000F800U)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_RTL_VER_SHIFT                              (0x0000000BU)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_RTL_VER_MAX                                (0x0000001FU)
+
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_IDENT_MASK                                 (0xFFFF0000U)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_IDENT_SHIFT                                (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_IDVER_REG_IDENT_MAX                                  (0x0000FFFFU)
+
+/* SYNCE_COUNT_REG */
+
+#define CSL_XGE_CPSW_SS_S_SYNCE_COUNT_REG_SYNCE_CNT_MASK                       (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_SS_S_SYNCE_COUNT_REG_SYNCE_CNT_SHIFT                      (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SYNCE_COUNT_REG_SYNCE_CNT_MAX                        (0xFFFFFFFFU)
+
+/* SYNCE_MUX_REG */
+
+#define CSL_XGE_CPSW_SS_S_SYNCE_MUX_REG_SYNCE_SEL_MASK                         (0x0000003FU)
+#define CSL_XGE_CPSW_SS_S_SYNCE_MUX_REG_SYNCE_SEL_SHIFT                        (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SYNCE_MUX_REG_SYNCE_SEL_MAX                          (0x0000003FU)
+
+/* CONTROL_REG */
+
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG_EEE_EN_MASK                              (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG_EEE_EN_SHIFT                             (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG_EEE_EN_MAX                               (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG_EEE_PHY_ONLY_MASK                        (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG_EEE_PHY_ONLY_SHIFT                       (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_CONTROL_REG_EEE_PHY_ONLY_MAX                         (0x00000001U)
+
+/* SGMII_MODE_REG */
+
+#define CSL_XGE_CPSW_SS_S_SGMII_MODE_REG_SYNCE_SEL_MASK                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_SGMII_MODE_REG_SYNCE_SEL_SHIFT                       (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SGMII_MODE_REG_SYNCE_SEL_MAX                         (0x00000001U)
+
+/* SGMII_NON_FIBER_MODE_REG */
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_MASK            (0x000000FFU)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SHIFT           (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_MAX             (0x000000FFU)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII1_MASK     (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII1_SHIFT    (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII1_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII2_MASK     (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII2_SHIFT    (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII2_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII3_MASK     (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII3_SHIFT    (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII3_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII4_MASK     (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII4_SHIFT    (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII4_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII5_MASK     (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII5_SHIFT    (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII5_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII6_MASK     (0x00000020U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII6_SHIFT    (0x00000005U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII6_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII7_MASK     (0x00000040U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII7_SHIFT    (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII7_MAX      (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII8_MASK     (0x00000080U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII8_SHIFT    (0x00000007U)
+#define CSL_XGE_CPSW_SS_S_SGMII_NON_FIBER_MODE_REG_SGMII_NON_FIBER_MODE_SGMII8_MAX      (0x00000001U)
+
+/* SERDES_RESET_ISO_REG */
+
+#define CSL_XGE_CPSW_SS_S_SERDES_RESET_ISO_REG_SERDES_RESET_ISO_MASK           (0x000000FFU)
+#define CSL_XGE_CPSW_SS_S_SERDES_RESET_ISO_REG_SERDES_RESET_ISO_SHIFT          (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SERDES_RESET_ISO_REG_SERDES_RESET_ISO_MAX            (0x000000FFU)
+
+/* SUBSSYSTEM_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_SUBSSYSTEM_STATUS_REG_EEE_CLKSTOP_ACK_MASK           (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_SUBSSYSTEM_STATUS_REG_EEE_CLKSTOP_ACK_SHIFT          (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_SUBSSYSTEM_STATUS_REG_EEE_CLKSTOP_ACK_MAX            (0x00000001U)
+
+/* RGMII1_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII1_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII2_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII2_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII3_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII3_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII4_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII4_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII5_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII5_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII6_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII6_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII7_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII7_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* RGMII8_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_LINK_MASK                          (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_LINK_SHIFT                         (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_LINK_MAX                           (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_SPEED_MASK                         (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_SPEED_SHIFT                        (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_SPEED_MAX                          (0x00000003U)
+
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_FULLDUPLEX_MASK                    (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_FULLDUPLEX_SHIFT                   (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_RGMII8_STATUS_REG_FULLDUPLEX_MAX                     (0x00000001U)
+
+/* QSGMII_CONTROL_REG */
+
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG_Q0_RDCD_MASK                      (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG_Q0_RDCD_SHIFT                     (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG_Q0_RDCD_MAX                       (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG_Q1_RDCD_MASK                      (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG_Q1_RDCD_SHIFT                     (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_CONTROL_REG_Q1_RDCD_MAX                       (0x00000001U)
+
+/* QSGMII_STATUS_REG */
+
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG_Q0_RX_SYNC_MASK                    (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG_Q0_RX_SYNC_SHIFT                   (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG_Q0_RX_SYNC_MAX                     (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG_Q1_RX_SYNC_MASK                    (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG_Q1_RX_SYNC_SHIFT                   (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_QSGMII_STATUS_REG_Q1_RX_SYNC_MAX                     (0x00000001U)
+
+/* STATUS_XGMII_LINK_REG */
+
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG_XGMII1_LINK_MASK               (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG_XGMII1_LINK_SHIFT              (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG_XGMII1_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG_XGMII2_LINK_MASK               (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG_XGMII2_LINK_SHIFT              (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_STATUS_XGMII_LINK_REG_XGMII2_LINK_MAX                (0x00000001U)
+
+/* STATUS_SGMII_LINK_REG */
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII1_LINK_MASK               (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII1_LINK_SHIFT              (0x00000000U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII1_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII2_LINK_MASK               (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII2_LINK_SHIFT              (0x00000001U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII2_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII3_LINK_MASK               (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII3_LINK_SHIFT              (0x00000002U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII3_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII4_LINK_MASK               (0x00000008U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII4_LINK_SHIFT              (0x00000003U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII4_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII5_LINK_MASK               (0x00000010U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII5_LINK_SHIFT              (0x00000004U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII5_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII6_LINK_MASK               (0x00000020U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII6_LINK_SHIFT              (0x00000005U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII6_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII7_LINK_MASK               (0x00000040U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII7_LINK_SHIFT              (0x00000006U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII7_LINK_MAX                (0x00000001U)
+
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII8_LINK_MASK               (0x00000080U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII8_LINK_SHIFT              (0x00000007U)
+#define CSL_XGE_CPSW_SS_S_STATUS_SGMII_LINK_REG_SGMII8_LINK_MAX                (0x00000001U)
+
+#ifdef __cplusplus
+}
+#endif
+#endif

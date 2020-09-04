@@ -1,0 +1,43 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/csirx/csirx'];
+%%}
+/*
+ * CSIRX
+ */
+#include <drivers/csirx.h>
+
+/* CSIRX Context Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let ctx_instances = instance.context;
+#define `instance.$name.toUpperCase()`_NUM_CONTEXT (`ctx_instances.length`U)
+% }
+
+/* CSIRX driver handles */
+extern CSIRX_Handle gCsirxHandle[CONFIG_CSIRX_NUM_INSTANCES];
+
+/*
+ * CSIRX configuration
+ */
+extern bool gCsirxPhyEnable[CONFIG_CSIRX_NUM_INSTANCES];
+extern CSIRX_DphyConfig gCsirxDphyConfig[CONFIG_CSIRX_NUM_INSTANCES];
+extern CSIRX_ComplexioConfig gCsirxComplexioConfig[CONFIG_CSIRX_NUM_INSTANCES];
+extern CSIRX_CommonConfig gCsirxCommonConfig[CONFIG_CSIRX_NUM_INSTANCES];
+
+/* CSIRX context configurations */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+extern CSIRX_ContextConfig g`instNameCamelCase`ContextConfig[`instance.$name.toUpperCase()`_NUM_CONTEXT];
+% }
+
+/* CSIRX Driver open/close - can be used by application when Drivers_open() and
+ * Drivers_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+int32_t Drivers_csirxOpen(void);
+int32_t Drivers_csirxClose(void);
+
+/* These APIs run the to open or close seqquence for one instance of CSIRX driver */
+int32_t Drivers_csirxInstanceOpen(uint32_t instanceId, uint16_t numContexts, CSIRX_ContextConfig *pContextConfig);
+int32_t Drivers_csirxInstanceClose(uint32_t instanceId, uint16_t numContexts);

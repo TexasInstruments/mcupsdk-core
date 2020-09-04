@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/hwa/hwa'];
+%%}
+/*
+ * HWA
+ */
+#include <drivers/hwa.h>
+
+/* HWA Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_HWA_NUM_INSTANCES (`module.$instances.length`U)

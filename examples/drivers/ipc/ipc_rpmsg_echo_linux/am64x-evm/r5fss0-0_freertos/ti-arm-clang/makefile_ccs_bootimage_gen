@@ -1,0 +1,88 @@
+#
+# Auto generated makefile
+#
+
+# Below variables need to be defined outside this file or via command line
+# - MCU_PLUS_SDK_PATH
+# - PROFILE
+# - CG_TOOL_ROOT
+# - OUTNAME
+# - CCS_INSTALL_DIR
+# - CCS_IDE_MODE
+
+CCS_PATH=$(CCS_INSTALL_DIR)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
+
+STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
+OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+ifeq ($(OS), Windows_NT)
+	PYTHON=python
+else
+	PYTHON=python3
+endif
+
+OUTFILE=$(PROFILE)/$(OUTNAME).out
+BOOTIMAGE_PATH=$(abspath ${PROFILE})
+BOOTIMAGE_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage
+BOOTIMAGE_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage.signed
+BOOTIMAGE_RPRC_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
+
+#
+# Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
+#
+ifeq ($(OS),Windows_NT)
+EXE_EXT=.exe
+endif
+ifeq ($(OS),Windows_NT)
+  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.ps1
+else
+  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.sh
+endif
+BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
+
+BOOTIMAGE_CORE_ID_a53ss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_r5fss0-1 = 5
+BOOTIMAGE_CORE_ID_r5fss1-0 = 6
+BOOTIMAGE_CORE_ID_r5fss1-1 = 7
+BOOTIMAGE_CORE_ID_m4fss0-0 = 14
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+
+MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
+OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+
+ifeq ($(OS),Windows_NT)
+  XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
+else
+  XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
+endif
+
+MULTI_CORE_IMAGE_PARAMS = \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+
+MULTI_CORE_IMAGE_PARAMS_XIP = \
+	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0)  \
+
+all:
+ifeq ($(CCS_IDE_MODE),cloud)
+#	No post build steps
+else
+	@echo  Boot image: am64x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_NAME)  ...
+	$(OUTRPRC_CMD) $(OUTFILE) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(COPY) $(OUTNAME).rprc $(BOOTIMAGE_RPRC_NAME)
+	$(COPY) $(BOOTIMAGE_RPRC_NAME) $(BOOTIMAGE_RPRC_NAME_TMP)
+	$(RM) $(BOOTIMAGE_RPRC_NAME)
+	$(XIPGEN_CMD) -i $(BOOTIMAGE_RPRC_NAME_TMP) -o $(BOOTIMAGE_RPRC_NAME) -x $(BOOTIMAGE_RPRC_NAME_XIP) --flash-start-addr 0x60000000 -v > $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME) $(MULTI_CORE_IMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
+	$(RM) $(PROFILE)/am64-main-r5f0_0-fw
+	$(STRIP) -o=$(PROFILE)/am64-main-r5f0_0-fw $(OUTFILE)
+	@echo  Boot image: am64x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
+	@echo  .
+endif

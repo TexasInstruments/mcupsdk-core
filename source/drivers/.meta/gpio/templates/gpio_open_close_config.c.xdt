@@ -1,0 +1,26 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("gpio");
+    let module = system.modules['/drivers/gpio/gpio'];
+    let gpioModuleBaseAddresses = new Set();
+%%}
+
+/*
+ * GPIO
+ */
+#include <drivers/gpio.h>
+#include <drivers/soc.h>
+
+%for(let i = 0; i < module.$instances.length; i++) {
+   % let instance = module.$instances[i];
+   % let config = module.getInstanceConfig(instance);
+   % gpioModuleBaseAddresses.add(config.baseAddr); 
+%}
+
+void Drivers_gpioOpen(void)
+{
+% for(let addrStr of gpioModuleBaseAddresses) {
+    GPIO_moduleEnable(`addrStr`);
+% }
+}

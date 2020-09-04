@@ -1,0 +1,3 @@
+#include <drivers/rti.h>
+
+void Drivers_rtiOpen(void);

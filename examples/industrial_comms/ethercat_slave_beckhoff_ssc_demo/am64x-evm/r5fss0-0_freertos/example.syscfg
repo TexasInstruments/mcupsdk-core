@@ -1,0 +1,169 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK_AM64x@08.03.00"
+ * @versions {"tool":"1.12.1+2446"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+ const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
+ const eeprom1    = eeprom.addInstance();
+ const flash      = scripting.addModule("/board/flash/flash", {}, false);
+ const flash1     = flash.addInstance();
+ const led        = scripting.addModule("/board/led/led", {}, false);
+ const led1       = led.addInstance();
+ const led2       = led.addInstance();
+ const led3       = led.addInstance();
+ const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+ const gpio1      = gpio.addInstance();
+ const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+ const i2c1       = i2c.addInstance();
+ const i2c2       = i2c.addInstance();
+ const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+ const pruicss1   = pruicss.addInstance();
+ const ethercat   = scripting.addModule("/industrial_comms/ethercat/ethercat", {}, false);
+ const ethercat1  = ethercat.addInstance();
+ const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+ const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+ const mpu_armv71 = mpu_armv7.addInstance();
+ const mpu_armv72 = mpu_armv7.addInstance();
+ const mpu_armv73 = mpu_armv7.addInstance();
+ const mpu_armv74 = mpu_armv7.addInstance();
+ const mpu_armv75 = mpu_armv7.addInstance();
+
+ /**
+  * Write custom configuration values to the imported modules.
+  */
+ eeprom1.$name = "CONFIG_EEPROM0";
+
+ flash1.$name                  = "CONFIG_FLASH0";
+ flash1.peripheralDriver.$name = "CONFIG_OSPI0";
+
+ led1.name  = "TPIC2810";
+ led1.$name = "CONFIG_LED_DIGITAL_OUTPUT";
+
+ led2.$name = "CONFIG_LED_RUN";
+
+ led3.name    = "Ioexp";
+ led3.ioIndex = 16;
+ led3.$name   = "CONFIG_LED_ERROR";
+
+ gpio1.$name                    = "CONFIG_GPIO0";
+ led2.peripheralDriver          = gpio1;
+ gpio1.pinDir                   = "OUTPUT";
+ gpio1.useMcuDomainPeripherals  = true;
+ gpio1.MCU_GPIO.$assign         = "MCU_GPIO0";
+ gpio1.MCU_GPIO.gpioPin.$assign = "MCU_SPI1_CS0";
+
+ i2c1.$name               = "CONFIG_I2C0";
+ eeprom1.peripheralDriver = i2c1;
+ i2c1.I2C.$assign         = "I2C0";
+ i2c1.I2C.SCL.$assign     = "I2C0_SCL";
+ i2c1.I2C.SDA.$assign     = "I2C0_SDA";
+
+ i2c2.$name            = "CONFIG_I2C1";
+ led1.peripheralDriver = i2c2;
+ led3.peripheralDriver = i2c2;
+ i2c2.I2C.$assign      = "I2C1";
+ i2c2.I2C.SCL.$assign  = "I2C1_SCL";
+ i2c2.I2C.SDA.$assign  = "I2C1_SDA";
+
+ ethercat1.$name                            = "CONFIG_ETHERCAT0";
+ ethercat1.instance                         = "ICSSG1";
+ ethercat1.ethphy[0].$name                  = "CONFIG_ETHPHY0";
+ ethercat1.ethphy[0].mdioManualModeBaseAddr = 0x10E40;
+ ethercat1.ethphy[1].$name                  = "CONFIG_ETHPHY1";
+ ethercat1.ethphy[1].mdioPort               = 3;
+ ethercat1.ethphy[1].mdioManualModeBaseAddr = 0x10E40;
+
+ pruicss1.iepSyncMode = scripting.forceWrite(true);
+ ethercat1.icss       = pruicss1;
+ pruicss1.$name       = "CONFIG_PRU_ICSS1";
+
+ debug_log.enableUartLog = true;
+ debug_log.enableCssLog  = false;
+ debug_log.uartLog.$name = "CONFIG_UART0";
+
+ mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+ mpu_armv71.size              = 31;
+ mpu_armv71.attributes        = "Device";
+ mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+ mpu_armv71.allowExecute      = false;
+
+ mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+ mpu_armv72.size              = 15;
+ mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+ mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+ mpu_armv73.baseAddr          = 0x41010000;
+ mpu_armv73.size              = 15;
+ mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+ mpu_armv74.baseAddr          = 0x70000000;
+ mpu_armv74.size              = 21;
+
+ mpu_armv75.$name    = "CONFIG_MPU_REGION4";
+ mpu_armv75.baseAddr = 0x80000000;
+ mpu_armv75.size     = 31;
+
+ /**
+  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+  * re-solve from scratch.
+  */
+ flash1.peripheralDriver.OSPI.$suggestSolution              = "OSPI0";
+ flash1.peripheralDriver.OSPI.CLK.$suggestSolution          = "OSPI0_CLK";
+ flash1.peripheralDriver.OSPI.CSn0.$suggestSolution         = "OSPI0_CSn0";
+ flash1.peripheralDriver.OSPI.DQS.$suggestSolution          = "OSPI0_DQS";
+ flash1.peripheralDriver.OSPI.D7.$suggestSolution           = "OSPI0_D7";
+ flash1.peripheralDriver.OSPI.D6.$suggestSolution           = "OSPI0_D6";
+ flash1.peripheralDriver.OSPI.D5.$suggestSolution           = "OSPI0_D5";
+ flash1.peripheralDriver.OSPI.D4.$suggestSolution           = "OSPI0_D4";
+ flash1.peripheralDriver.OSPI.D3.$suggestSolution           = "OSPI0_D3";
+ flash1.peripheralDriver.OSPI.D2.$suggestSolution           = "OSPI0_D2";
+ flash1.peripheralDriver.OSPI.D1.$suggestSolution           = "OSPI0_D1";
+ flash1.peripheralDriver.OSPI.D0.$suggestSolution           = "OSPI0_D0";
+ ethercat1.PRU_ICSSG1_MDIO.$suggestSolution                 = "PRU_ICSSG1_MDIO0";
+ ethercat1.PRU_ICSSG1_MDIO.MDC.$suggestSolution             = "PRG1_MDIO0_MDC";
+ ethercat1.PRU_ICSSG1_MDIO.MDIO.$suggestSolution            = "PRG1_MDIO0_MDIO";
+ ethercat1.PRU_ICSSG1_IEP.$suggestSolution                  = "PRU_ICSSG1_IEP0";
+ ethercat1.PRU_ICSSG1_IEP.EDC_LATCH_IN0.$suggestSolution    = "PRG1_PRU0_GPO18";
+ ethercat1.PRU_ICSSG1_IEP.EDC_LATCH_IN1.$suggestSolution    = "PRG1_PRU0_GPO7";
+ ethercat1.PRU_ICSSG1_IEP.EDC_SYNC_OUT0.$suggestSolution    = "PRG1_PRU0_GPO19";
+ ethercat1.PRU_ICSSG1_IEP.EDC_SYNC_OUT1.$suggestSolution    = "PRG1_PRU0_GPO17";
+ ethercat1.PRU_ICSSG1_MII_G_RT.$suggestSolution             = "PRU_ICSSG1_MII_G_RT";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD0.$suggestSolution   = "PRG1_PRU0_GPO0";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD1.$suggestSolution   = "PRG1_PRU0_GPO1";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD2.$suggestSolution   = "PRG1_PRU0_GPO2";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD3.$suggestSolution   = "PRG1_PRU0_GPO3";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXDV.$suggestSolution   = "PRG1_PRU0_GPO4";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXER.$suggestSolution   = "PRG1_PRU0_GPO5";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXLINK.$suggestSolution = "PRG1_PRU0_GPO8";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD0.$suggestSolution   = "PRG1_PRU0_GPO11";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD1.$suggestSolution   = "PRG1_PRU0_GPO12";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD2.$suggestSolution   = "PRG1_PRU0_GPO13";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD3.$suggestSolution   = "PRG1_PRU0_GPO14";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXEN.$suggestSolution   = "PRG1_PRU0_GPO15";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD0.$suggestSolution   = "PRG1_PRU1_GPO0";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD1.$suggestSolution   = "PRG1_PRU1_GPO1";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD2.$suggestSolution   = "PRG1_PRU1_GPO2";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD3.$suggestSolution   = "PRG1_PRU1_GPO3";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXDV.$suggestSolution   = "PRG1_PRU1_GPO4";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXER.$suggestSolution   = "PRG1_PRU1_GPO5";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXLINK.$suggestSolution = "PRG1_PRU1_GPO8";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD0.$suggestSolution   = "PRG1_PRU1_GPO11";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD1.$suggestSolution   = "PRG1_PRU1_GPO12";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD2.$suggestSolution   = "PRG1_PRU1_GPO13";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD3.$suggestSolution   = "PRG1_PRU1_GPO14";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXEN.$suggestSolution   = "PRG1_PRU1_GPO15";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII_MR0_CLK.$suggestSolution = "PRG1_PRU0_GPO6";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII_MR1_CLK.$suggestSolution = "PRG1_PRU1_GPO6";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII_MT0_CLK.$suggestSolution = "PRG1_PRU0_GPO16";
+ ethercat1.PRU_ICSSG1_MII_G_RT.MII_MT1_CLK.$suggestSolution = "PRG1_PRU1_GPO16";
+ debug_log.uartLog.UART.$suggestSolution                    = "USART0";
+ debug_log.uartLog.UART.RXD.$suggestSolution                = "UART0_RXD";
+ debug_log.uartLog.UART.TXD.$suggestSolution                = "UART0_TXD";

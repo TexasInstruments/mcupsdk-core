@@ -1,0 +1,70 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2127"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1          = mcspi.addInstance();
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
+const addr_translate2 = addr_translate.addInstance();
+const addr_translate3 = addr_translate.addInstance();
+const addr_translate4 = addr_translate.addInstance();
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mcspi1.$name                    = "CONFIG_MCSPI0";
+mcspi1.inputSelect              = "0";
+mcspi1.trMode                   = "TX_ONLY";
+mcspi1.MCU_SPI.$assign          = "MCU_SPI0";
+mcspi1.mcspiChannel[0].$name    = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].advanced = true;
+mcspi1.mcspiChannel[0].bitRate  = 50000000;
+
+addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
+addr_translate1.localAddr = 0x80000000;
+
+addr_translate2.$name      = "CONFIG_ADDR_TRANSLATE_REGION1";
+addr_translate2.systemAddr = 0x20000000;
+addr_translate2.localAddr  = 0xA0000000;
+
+addr_translate3.$name      = "CONFIG_ADDR_TRANSLATE_REGION2";
+addr_translate3.systemAddr = 0x40000000;
+addr_translate3.localAddr  = 0xC0000000;
+
+addr_translate4.$name      = "CONFIG_ADDR_TRANSLATE_REGION3";
+addr_translate4.systemAddr = 0x60000000;
+addr_translate4.localAddr  = 0x60000000;
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.MCU_UART.$assign = "MCU_USART0";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 18;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mcspi1.MCU_SPI.CLK.$suggestSolution             = "ball.E6";
+mcspi1.MCU_SPI.D0.$suggestSolution              = "ball.E7";
+mcspi1.MCU_SPI.D1.$suggestSolution              = "ball.B6";
+mcspi1.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.D6";
+debug_log.uartLog.MCU_UART.RXD.$suggestSolution = "ball.A9";
+debug_log.uartLog.MCU_UART.TXD.$suggestSolution = "ball.A8";

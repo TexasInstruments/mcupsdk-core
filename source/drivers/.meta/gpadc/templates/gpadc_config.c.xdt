@@ -1,0 +1,10 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/gpadc/gpadc'];
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("gpadc");
+%%}
+/*
+ * gpadc
+ */
+

@@ -1,0 +1,16 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/security/sa2ul/sa2ul'];
+%%}
+/*
+ * SA2UL
+ */
+#include <security/crypto/sa2ul/sa2ul.h>
+#include <security/crypto/pka/pka.h>
+
+/* sa2ul Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_SA2UL_NUM_INSTANCES (`module.$instances.length`U)

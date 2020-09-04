@@ -1,0 +1,156 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("mcasp");
+    let module = system.modules['/drivers/mcasp/mcasp'];
+    let module_ch = system.modules[`/drivers/mcasp/${driverVer}/mcasp_${driverVer}_channel`];
+%%}
+
+/*
+ * MCASP
+ */
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.enableMcaspTx == true && config.txCallbackFxn != "NULL") {
+/* MCASP transfer Callback */
+void `config.txCallbackFxn`(MCASP_Handle handle, MCASP_Transaction *transaction);
+    % }
+    % if(config.enableMcaspRx == true && config.rxCallbackFxn != "NULL") {
+/* MCASP receive Callback */
+void `config.rxCallbackFxn`(MCASP_Handle handle, MCASP_Transaction *transaction);
+    % }
+    % if(config.enableMcaspTx == true && config.txLoopjobEnable == true) {
+/* MCASP transfer loopjob buffer */
+uint8_t `config.txLoopjobBuf`[`config.txLoopjobBufLength`] __attribute__((aligned(256))) = {0};
+    % }
+    % if(config.enableMcaspRx == true && config.rxLoopjobEnable == true) {
+/* MCASP receive loopjob buffer */
+uint8_t `config.rxLoopjobBuf`[`config.rxLoopjobBufLength`] __attribute__((aligned(256))) = {0};
+    % }
+% }
+
+/* Arrays containing indices of MCASP Tx/Rx serializers used */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let serInstances = instance.mcaspSer;
+    % let serTxArr = [], serRxArr = [];
+    % let numTxSer = 0, numRxSer = 0;
+    % for (let si = 0; si < serInstances.length; si++) {
+        % let serInstance = serInstances[si];
+        % if(serInstance.dataDir == "Transmit") {
+            % serTxArr[numTxSer] = serInstance.serNum;
+            % numTxSer++;
+        %} else {
+            % serRxArr[numRxSer] = serInstance.serNum;
+            % numRxSer++;
+            % }
+    % }
+uint8_t gMcasp`i`TxSersUsed[`numTxSer`] = {`serTxArr`};
+uint8_t gMcasp`i`RxSersUsed[`numRxSer`] = {`serRxArr`};
+% }
+
+/* MCASP Driver handles */
+MCASP_Handle gMcaspHandle[CONFIG_MCASP_NUM_INSTANCES];
+/* MCASP Driver Open Parameters */
+MCASP_OpenParams gMcaspOpenParams[CONFIG_MCASP_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        %if(config.transferMode == "DMA") {
+        .edmaInst     = `instance.edmaConfig.$name`,
+        %}
+        %else {
+        .edmaInst     = -1,
+        %}
+        .transferMode = MCASP_TRANSFER_MODE_`instance.transferMode`,
+        .txBufferFormat = MCASP_AUDBUFF_FORMAT_`instance.txBufferFormat`,
+        .rxBufferFormat = MCASP_AUDBUFF_FORMAT_`instance.rxBufferFormat`,
+        % let serInstances = instance.mcaspSer;
+        % let serTxArr = [], serRxArr = [];
+        % let numTxSer = 0, numRxSer = 0;
+        % for (let si = 0; si < serInstances.length; si++) {
+            % let serInstance = serInstances[si];
+            % if(serInstance.dataDir == "Transmit") {
+                % serTxArr[numTxSer] = serInstance.serNum;
+                % numTxSer++;
+            %} else {
+                % serRxArr[numRxSer] = serInstance.serNum;
+                % numRxSer++;
+            % }
+        % }
+        .txSerUsedCount = `numTxSer`,
+        .rxSerUsedCount = `numRxSer`,
+        .txSerUsedArray = (uint8_t *) gMcasp`i`TxSersUsed,
+        .rxSerUsedArray = (uint8_t *) gMcasp`i`RxSersUsed,
+        .txSlotCount = `instance.NumTxSlots`,
+        .rxSlotCount = `instance.NumRxSlots`,
+        % if(config.enableMcaspTx == true && config.txCallbackFxn != "NULL") {
+        .txCallbackFxn = `instance.txCallbackFxn`,
+        % }
+         % if(config.enableMcaspRx == true && config.rxCallbackFxn != "NULL") {
+        .rxCallbackFxn = `instance.rxCallbackFxn`,
+        % }
+        .txLoopjobEnable = `config.txLoopjobEnable`,
+        % if(config.enableMcaspTx == true && config.txLoopjobEnable == true) {
+        .txLoopjobBuf = (uint8_t *) `instance.txLoopjobBuf`,
+        .txLoopjobBufLength = `instance.txLoopjobBufLength / (instance.TxSlotSize / 8)`,
+        .rxLoopjobEnable = `config.rxLoopjobEnable`,
+        % }
+        % if(config.enableMcaspRx == true && config.rxLoopjobEnable == true) {
+        .rxLoopjobBuf = (uint8_t *) `instance.rxLoopjobBuf`,
+        .rxLoopjobBufLength = `instance.rxLoopjobBufLength / (instance.RxSlotSize / 8)`,
+        % }
+    },
+   %}
+};
+
+void Drivers_mcaspOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_MCASP_NUM_INSTANCES; instCnt++)
+    {
+        gMcaspHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_MCASP_NUM_INSTANCES; instCnt++)
+    {
+        gMcaspHandle[instCnt] = MCASP_open(instCnt, &gMcaspOpenParams[instCnt]);
+        if(NULL == gMcaspHandle[instCnt])
+        {
+            DebugP_logError("MCASP open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_mcaspClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_mcaspClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_MCASP_NUM_INSTANCES; instCnt++)
+    {
+        if(gMcaspHandle[instCnt] != NULL)
+        {
+            MCASP_close(gMcaspHandle[instCnt]);
+            gMcaspHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

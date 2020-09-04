@@ -1,0 +1,25 @@
+%%{
+    let module = system.modules['/drivers/eqep/eqep'];
+    let common   = system.getScript("/common");
+%%}
+/*
+ * EQEP
+ */
+#include <drivers/eqep.h>
+#include <drivers/soc.h>
+
+/* EQEP Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (["am263x"].includes(common.getSocName())) {
+#define `instance.$name`_BASE_ADDR (`config.baseAddr`)
+    % }
+    % else {
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name.toUpperCase()`_FCLK (`config.funcClk`)
+#define `instance.$name.toUpperCase()`_INTR (`config.intrNum`)
+#define `instance.$name.toUpperCase()`_INTR_IS_PULSE (TRUE)
+    % }
+% }
+#define CONFIG_EQEP_NUM_INSTANCES (`module.$instances.length`U)

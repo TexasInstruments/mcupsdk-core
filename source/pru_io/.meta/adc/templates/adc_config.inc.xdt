@@ -1,0 +1,175 @@
+%%{
+    let module = system.modules[args[0]];
+
+    let adcIcsInfo = {
+        ADS8598H: {
+            parallel: {
+                mode: "MSB",
+                timings: {
+                    RDLowTime:  15,
+                    RDHighTime: 15,
+                },
+                interface: "PARALLEL16",
+            },
+            byteParallel: {
+                mode: "MSB",
+                interface: "PARALLEL8",
+            },
+            serial: {
+                mode: "MSB",
+                interface: "SERIAL",
+            },
+            trigPrd: 15,
+            resolution: 18,
+            maxSamplingRate: 500,
+            maxChannels: 8,
+        },
+        ADS8598S: {
+            parallel: {
+                mode: "MSB",
+                interface: "PARALLEL16",
+            },
+            byteParallel: {
+                mode: "MSB",
+                interface: "PARALLEL8",
+            },
+            serial: {
+                mode: "MSB",
+                interface: "SERIAL",
+            },
+            trigPrd: 15,
+            resolution: 18,
+            maxSamplingRate: 200,
+            maxChannels: 8,
+        },
+        ADS8588H: {
+            parallel: {
+                mode: "MSB",
+                interface: "PARALLEL16",
+            },
+            byteParallel: {
+                mode: "MSB",
+                interface: "PARALLEL8",
+            },
+            serial: {
+                mode: "MSB",
+                interface: "SERIAL",
+            },
+            trigPrd: 15,
+            resolution: 16,
+            maxSamplingRate: 500,
+            maxChannels: 8,
+        },
+        ADS8588S: {
+            parallel: {
+                mode: "MSB",
+                interface: "PARALLEL16",
+            },
+            byteParallel: {
+                mode: "MSB",
+                interface: "PARALLEL8",
+            },
+            serial: {
+                mode: "MSB",
+                interface: "SERIAL",
+            },
+            trigPrd: 15,
+            resolution: 16,
+            maxSamplingRate: 200,
+            maxChannels: 8,
+        },
+        ADS8586S: {
+            parallel: {
+                mode: "MSB",
+                interface: "PARALLEL16",
+            },
+            byteParallel: {
+                mode: "MSB",
+                interface: "PARALLEL8",
+            },
+            serial: {
+                mode: "MSB",
+                interface: "SERIAL",
+            },
+            trigPrd: 15,
+            resolution: 16,
+            maxSamplingRate: 250,
+            maxChannels: 6,
+        },
+        ADS8584S: {
+            parallel: {
+                mode: "MSB",
+                interface: "PARALLEL16",
+            },
+            byteParallel: {
+                mode: "MSB",
+                interface: "PARALLEL8",
+            },
+            serial: {
+                mode: "MSB",
+                interface: "SERIAL",
+            },
+            trigPrd: 15,
+            resolution: 16,
+            maxSamplingRate: 330,
+            maxChannels: 4,
+        },
+    };
+
+    function getadcinfo() {
+        return adcIcsInfo;
+    }
+%%}
+;------------------------------------------------------------------------------
+;   PRU ADC
+;   Configuration symbols for PRU ADC interface
+;------------------------------------------------------------------------------
+% adcIcsInfo = getadcinfo();
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config   = module.getInstanceConfig(instance);
+    % let core     = instance.adcConfig[0].PRU_ICSSG0_PRU?.$solution.peripheralName.substring(11) || instance.adcConfig[0].PRU_ICSSG1_PRU?.$solution.peripheralName.substring(11);
+    .if     $defined(`config.icssInstance`)
+    .if     $defined(`core`)
+
+    .asg    `config.adcIC`,                 ADC_IC
+    % if(instance.adcIC === "ADS8598H" || instance.adcIC === "ADS8598S" || instance.adcIC === "ADS8588H" || instance.adcIC === "ADS8588S") {
+    .asg    `adcIcsInfo[config.adcIC][instance.adcConfig[0].interface].mode`,                ADC_COMM_MODE
+    .asg    `adcIcsInfo[config.adcIC][instance.adcConfig[0].interface].interface`,           ADC_COMM_INTERFACE
+    .asg    `adcIcsInfo[config.adcIC].resolution`,              ADC_COMM_DATAWIDTH
+    .asg    `adcIcsInfo[config.adcIC].trigPrd`,                 ADC_COMM_TRIG_PRD
+    .asg    `config.adcConfig[0].overSampling.toUpperCase()`,                 ADC_OSR
+    .asg    `Math.round((1000000000/instance.adcConfig[0].samplingRate)-2)`,              ADC_CONVST_IEP_PRD_CONST
+    % if (config.adaptor === "TandMAdapterBoard") {
+    .asg    18,         CS_PIN
+    .asg    19,         RD_PIN
+    % }
+    % if (config.adaptor === "AM64xAdapterBoard") {
+    .asg    17,         CS_PIN
+    .asg    19,         RD_PIN
+    % }
+    % } else if (instance.adcIC === "ADS127L11") {
+    .asg    8,          ADC_CS_PIN
+    .asg    9,          SDO_PIN
+    .asg    10,         START_PIN
+    .asg    13,         RESET_PIN
+    .asg    14,         SDI_PIN
+    .asg    16,         DRDY_PIN
+    .asg    19,         SCLK_PIN
+
+    .asg    0,          SPI_IEP_INST  ; IEP being used for SPI clock generation
+    % } // config.adcIC check
+
+    % if (instance.adcConfig[0].icss.coreClk === 333333333) {
+    .asg    3,          PRU_CLK_CYC_PRD_CONST ; 3ns cycle period
+    % }
+    % if (instance.adcConfig[0].icss.coreClk === 250000000) {
+    .asg    4,          PRU_CLK_CYC_PRD_CONST ; 4ns cycle period
+    % }
+    % if (instance.adcConfig[0].icss.coreClk === 200000000) {
+    .asg    5,          PRU_CLK_CYC_PRD_CONST ; 5ns cycle period
+    % }
+
+    .endif  ; `core`
+    .endif  ; `config.icssInstance`
+% }

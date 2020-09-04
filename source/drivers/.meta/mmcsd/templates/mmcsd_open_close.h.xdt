@@ -1,0 +1,23 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/mmcsd/mmcsd'];
+%%}
+/*
+ * MMCSD
+ */
+#include <drivers/mmcsd.h>
+
+/* MMCSD Driver handles */
+extern MMCSD_Handle gMmcsdHandle[CONFIG_MMCSD_NUM_INSTANCES];
+
+/*
+ * MMCSD Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* MMCSD Driver Parameters */
+extern MMCSD_Params gMmcsdParams[CONFIG_MMCSD_NUM_INSTANCES];
+/* MMCSD Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_mmcsdOpen(void);
+void Drivers_mmcsdClose(void);

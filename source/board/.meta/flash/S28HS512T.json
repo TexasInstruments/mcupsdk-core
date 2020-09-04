@@ -1,0 +1,96 @@
+{
+    "flashSize": 67108864,
+    "flashPageSize": 256,
+    "flashManfId": "0x34",
+    "flashDeviceId": "0x5B1A",
+    "flashBlockSize": 262144,
+    "flashSectorSize": 4096,
+    "cmdBlockErase3B": "0xDC",
+    "cmdBlockErase4B": "0xDC",
+    "cmdSectorErase3B": "0x21",
+    "cmdSectorErase4B": "0x21",
+    "protos": {
+        "p111": {
+            "isDtr": false,
+            "cmdRd": "0x03",
+            "cmdWr": "0x02",
+            "modeClksCmd": 0,
+            "modeClksRd": 0,
+            "dummyClksCmd": 0,
+            "dummyClksRd": 0,
+            "enableType": "0",
+            "enableSeq": "0x00",
+            "dummyCfg": null,
+            "protoCfg": null,
+            "strDtrCfg": null
+        },
+        "p112": null,
+        "p114": null,
+        "p118": null,
+        "p444s": null,
+        "p444d": null,
+        "p888s": null,
+        "p888d": {
+            "isDtr": true,
+            "cmdRd": "0xEE",
+            "cmdWr": "0x12",
+            "modeClksCmd": 0,
+            "modeClksRd": 0,
+            "dummyClksCmd": 4,
+            "dummyClksRd": 25,
+            "enableType": "0",
+            "enableSeq": "0x00",
+            "dummyCfg": {
+                "isAddrReg": true,
+                "cmdRegRd": "0x65",
+                "cmdRegWr": "0x71",
+                "cfgReg": "0x00800003",
+                "shift": 0,
+                "mask": "0x0F",
+                "bitP": 11
+            },
+            "protoCfg": {
+                "isAddrReg": true,
+                "cmdRegRd": "0x65",
+                "cmdRegWr": "0x71",
+                "cfgReg": "0x00800006",
+                "shift": 0,
+                "mask": "0x01",
+                "bitP": 1
+            },
+            "strDtrCfg": {
+                "isAddrReg": true,
+                "cmdRegRd": "0x65",
+                "cmdRegWr": "0x71",
+                "cfgReg": "0x00800006",
+                "shift": 1,
+                "mask": "0x02",
+                "bitP": 1
+            }
+        },
+        "pCustom": {
+            "fxn": null
+        }
+    },
+    "addrByteSupport": "1",
+    "fourByteAddrEnSeq": "0xA0",
+    "cmdExtType": "REPEAT",
+    "resetType": "0x10",
+    "deviceBusyType": "1",
+    "cmdWren": "0x06",
+    "cmdRdsr": "0x05",
+    "srWip": 0,
+    "srWel": 1,
+    "cmdChipErase": "0xC7",
+    "rdIdSettings": {
+        "cmd": "0x9F",
+        "numBytes": 3,
+        "dummy4": 0,
+        "dummy8": 0
+    },
+    "xspiWipRdCmd": "0x65",
+    "xspiWipReg": "0x00800000",
+    "xspiWipBit": 0,
+    "flashDeviceBusyTimeout": 256000000,
+    "flashPageProgTimeout": 512
+}

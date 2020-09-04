@@ -1,0 +1,114 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const eqep            = scripting.addModule("/drivers/eqep/eqep", {}, false);
+const eqep1           = eqep.addInstance();
+const eqep2           = eqep.addInstance();
+const eqep3           = eqep.addInstance();
+const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1           = gpio.addInstance();
+const gpio2           = gpio.addInstance();
+const gpio3           = gpio.addInstance();
+const gpio4           = gpio.addInstance();
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+eqep1.$name          = "CONFIG_EQEP0";
+eqep1.EQEP.$assign   = "EQEP1";
+eqep1.EQEP.A.$assign = "ball.L2";
+eqep1.EQEP.B.$assign = "ball.L3";
+eqep1.EQEP.I.$assign = "ball.R5";
+eqep1.EQEP.S.$assign = "ball.E3";
+
+eqep2.$name = "CONFIG_EQEP1";
+
+eqep3.$name = "CONFIG_EQEP2";
+
+gpio1.$name                = "CONFIG_GPIO0";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.$assign         = "GPIO1";
+gpio1.GPIO.gpioPin.rx      = false;
+gpio1.GPIO.gpioPin.$assign = "ball.B12";
+
+gpio2.$name                = "CONFIG_GPIO1";
+gpio2.pinDir               = "OUTPUT";
+gpio2.GPIO.$assign         = "GPIO1";
+gpio2.GPIO.gpioPin.rx      = false;
+gpio2.GPIO.gpioPin.$assign = "ball.A12";
+
+gpio3.$name                = "CONFIG_GPIO2";
+gpio3.pinDir               = "OUTPUT";
+gpio3.GPIO.$assign         = "GPIO1";
+gpio3.GPIO.gpioPin.rx      = false;
+gpio3.GPIO.gpioPin.$assign = "ball.G1";
+
+gpio4.$name                = "CONFIG_GPIO3";
+gpio4.GPIO.$assign         = "GPIO1";
+gpio4.GPIO.gpioPin.$assign = "ball.C11";
+
+addr_translate1.$name = "CONFIG_ADDR_TRANSLATE_REGION0";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "USART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.B10";
+debug_log.uartLog.UART.TXD.$assign = "ball.B11";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+eqep2.EQEP.$suggestSolution   = "EQEP2";
+eqep2.EQEP.A.$suggestSolution = "ball.B14";
+eqep2.EQEP.B.$suggestSolution = "ball.A15";
+eqep2.EQEP.I.$suggestSolution = "ball.B13";
+eqep2.EQEP.S.$suggestSolution = "ball.A14";
+eqep3.EQEP.$suggestSolution   = "EQEP0";
+eqep3.EQEP.A.$suggestSolution = "ball.L5";
+eqep3.EQEP.B.$suggestSolution = "ball.J2";
+eqep3.EQEP.I.$suggestSolution = "ball.T4";
+eqep3.EQEP.S.$suggestSolution = "ball.M2";

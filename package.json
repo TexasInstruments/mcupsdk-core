@@ -1,0 +1,23 @@
+{
+  "name": "MCU_PLUS_SDK",
+  "version": "07.03.00",
+  "description": "MCU+ SDK",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@bitbucket.itg.ti.com/processor-sdk-mcu/sandbox.git"
+  },
+  "author": "TI",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "yargs": "^16.0.3"
+  }
+}

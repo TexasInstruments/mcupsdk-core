@@ -1,0 +1,1710 @@
+#
+# Auto generated makefile
+#
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
+# Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_jtag_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_null_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_uart_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crc_16bit_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crc_16bit_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += csirx_internal_capture_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += csirx_internal_capture_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_link_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_link_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_duty_cycle_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_duty_cycle_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpadc_group_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpadc_single_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpadc_temperature_sensor_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_real_fft_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mibspi_loopback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mibspi_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_reset_mode_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_awr294x-evm_c66ss0_freertos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_awr294x-evm_c66ss0_freertos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_awr294x-evm_c66ss0_freertos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_awr294x-evm_c66ss0_freertos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_udpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc2_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc3_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc3_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc4_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc4_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_auto_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_auto_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_full_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_full_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+# Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_multicore_app_awr294x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_awr294x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_awr294x-evm_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_awr294x-evm_system_nortos_build
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
+# Various Private Example Projectspec Build Targets
+# Various Private System Example Projectspec Build Targets
+
+all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
+
+all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ sbl_jtag_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_null_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_null/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_uart_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crc_16bit_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crc_16bit_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ csirx_internal_capture_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ csirx_internal_capture_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ edma_chain_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_chain_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ edma_link_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_link_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ edma_polled_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_polled_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ epwm_duty_cycle_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_duty_cycle_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ gpadc_group_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_group_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpadc_single_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_single_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpadc_temperature_sensor_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_temperature_sensor_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_input_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hwa_real_fft_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_polling_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mibspi_loopback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mibspi_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_diag_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ rti_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ rti_led_blink_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ uart_echo_callback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_callback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_callback_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ uart_echo_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ watchdog_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ watchdog_interrupt_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ watchdog_reset_mode_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/hello_world/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ hello_world_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_awr294x-evm_c66ss0_freertos_ti-c6000_build:
+	$(MAKE) -C examples/hello_world/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
+
+ hello_world_cpp_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_cpp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ dpl_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_awr294x-evm_c66ss0_freertos_ti-c6000_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
+
+ posix_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ posix_demo_awr294x-evm_c66ss0_freertos_ti-c6000_build:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
+
+ task_switch_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ task_switch_awr294x-evm_c66ss0_freertos_ti-c6000_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
+
+ enet_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/enet_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_udpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dcc_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/rti/UC1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/rti/UC1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_rti_example_uc2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/rti/UC2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_rti_example_uc2_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/rti/UC2/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_rti_example_uc3_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/rti/UC3/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_rti_example_uc3_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/rti/UC3/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_rti_example_uc4_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/rti/UC4/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_rti_example_uc4_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/rti/UC4/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_mcrc_auto_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_mcrc_auto_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_mcrc_full_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_mcrc_full_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_multicore_app_awr294x-evm_system_nortos_build:
+	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec all
+
+ edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/system_freertos_nortos -f makefile_projectspec all
+
+ ipc_notify_echo_awr294x-evm_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec all
+
+ ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec all
+
+ mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/system_freertos_nortos -f makefile_projectspec all
+
+ empty_awr294x-evm_system_freertos_build:
+	$(MAKE) -C examples/empty/awr294x-evm/system_freertos -f makefile_projectspec all
+
+ empty_awr294x-evm_system_nortos_build:
+	$(MAKE) -C examples/empty/awr294x-evm/system_nortos -f makefile_projectspec all
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
+# Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_jtag_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_null_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_uart_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crc_16bit_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crc_16bit_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += csirx_internal_capture_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += csirx_internal_capture_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_link_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_link_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_duty_cycle_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_duty_cycle_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpadc_group_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpadc_single_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpadc_temperature_sensor_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_real_fft_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mibspi_loopback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mibspi_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_reset_mode_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_awr294x-evm_c66ss0_freertos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_udpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc2_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc3_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc3_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc4_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc4_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_auto_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_auto_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_full_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_full_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+# Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_multicore_app_awr294x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_awr294x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_awr294x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_awr294x-evm_system_nortos_clean
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
+# Various Private Example Projectspec Clean Targets
+# Various Private System Example Projectspec Clean Targets
+
+clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
+
+clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ sbl_jtag_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_null_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_null/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_uart_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crc_16bit_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crc_16bit_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ csirx_internal_capture_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ csirx_internal_capture_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ edma_chain_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_chain_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ edma_link_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_link_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ edma_polled_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_polled_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ epwm_duty_cycle_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_duty_cycle_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ gpadc_group_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_group_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpadc_single_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_single_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpadc_temperature_sensor_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_temperature_sensor_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_input_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hwa_real_fft_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_polling_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mibspi_loopback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mibspi_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_diag_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ rti_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ rti_led_blink_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ uart_echo_callback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_callback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_callback_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ uart_echo_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ watchdog_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ watchdog_interrupt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ watchdog_reset_mode_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/hello_world/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ hello_world_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/hello_world/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
+
+ hello_world_cpp_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_cpp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ dpl_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
+
+ posix_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ posix_demo_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
+
+ task_switch_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ task_switch_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
+
+ enet_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_udpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dcc_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_rti_example_uc2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_rti_example_uc2_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC2/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_rti_example_uc3_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC3/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_rti_example_uc3_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC3/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_rti_example_uc4_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rti/UC4/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_rti_example_uc4_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/rti/UC4/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_mcrc_auto_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_mcrc_auto_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_mcrc_full_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_mcrc_full_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_multicore_app_awr294x-evm_system_nortos_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec clean
+
+ edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/system_freertos_nortos -f makefile_projectspec clean
+
+ ipc_notify_echo_awr294x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec clean
+
+ ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec clean
+
+ mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/system_freertos_nortos -f makefile_projectspec clean
+
+ empty_awr294x-evm_system_freertos_clean:
+	$(MAKE) -C examples/empty/awr294x-evm/system_freertos -f makefile_projectspec clean
+
+ empty_awr294x-evm_system_nortos_clean:
+	$(MAKE) -C examples/empty/awr294x-evm/system_nortos -f makefile_projectspec clean
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
+# Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_jtag_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_null_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_uart_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crc_16bit_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crc_16bit_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += csirx_internal_capture_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += csirx_internal_capture_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_link_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_link_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_duty_cycle_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_duty_cycle_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpadc_group_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpadc_single_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpadc_temperature_sensor_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_real_fft_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mibspi_loopback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mibspi_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_reset_mode_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_awr294x-evm_c66ss0_freertos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_awr294x-evm_c66ss0_freertos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_awr294x-evm_c66ss0_freertos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_awr294x-evm_c66ss0_freertos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_udpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc2_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc3_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc3_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc4_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc4_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_auto_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_auto_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_full_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_full_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+# Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_multicore_app_awr294x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_awr294x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_awr294x-evm_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_awr294x-evm_system_nortos_export
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
+# Various Private Example Projectspec Export Targets
+# Various Private System Example Projectspec Export Targets
+
+export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
+
+export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ sbl_jtag_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_null_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_null/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_uart_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_uart_uniflash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crc_16bit_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crc_16bit_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/crc/crc_16bit/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ csirx_internal_capture_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ csirx_internal_capture_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ edma_chain_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_chain_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ edma_link_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_link_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ edma_polled_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_polled_transfer_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ epwm_duty_cycle_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_duty_cycle_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ gpadc_group_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_group_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpadc_single_channel_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_single_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpadc_temperature_sensor_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpadc/gpadc_temperature_sensor_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_input_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hwa_real_fft_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_polling_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mibspi_loopback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mibspi_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_diag_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ rti_led_blink_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ rti_led_blink_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ uart_echo_callback_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_callback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_callback_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ uart_echo_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ watchdog_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ watchdog_interrupt_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ watchdog_reset_mode_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/hello_world/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ hello_world_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_awr294x-evm_c66ss0_freertos_ti-c6000_export:
+	$(MAKE) -C examples/hello_world/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ hello_world_cpp_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_cpp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ dpl_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_awr294x-evm_c66ss0_freertos_ti-c6000_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ posix_demo_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ posix_demo_awr294x-evm_c66ss0_freertos_ti-c6000_export:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ task_switch_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ task_switch_awr294x-evm_c66ss0_freertos_ti-c6000_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ enet_loopback_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/enet_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_lwip_cpsw_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_lwip_cpsw_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_tcpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_rawhttpserver_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_udpserver_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_udp_igmp_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_tcpclient_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_socket_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_txsg_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_l2_multi_channel_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dcc_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/rti/UC1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/rti/UC1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_rti_example_uc2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/rti/UC2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_rti_example_uc2_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/rti/UC2/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_rti_example_uc3_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/rti/UC3/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_rti_example_uc3_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/rti/UC3/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_rti_example_uc4_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/rti/UC4/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_rti_example_uc4_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/rti/UC4/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_mcrc_auto_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_mcrc_auto_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_mcrc_full_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_mcrc_full_cpu_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_multicore_app_awr294x-evm_system_nortos_export:
+	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec export
+
+ edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/system_freertos_nortos -f makefile_projectspec export
+
+ ipc_notify_echo_awr294x-evm_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec export
+
+ ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec export
+
+ mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/system_freertos_nortos -f makefile_projectspec export
+
+ empty_awr294x-evm_system_freertos_export:
+	$(MAKE) -C examples/empty/awr294x-evm/system_freertos -f makefile_projectspec export
+
+ empty_awr294x-evm_system_nortos_export:
+	$(MAKE) -C examples/empty/awr294x-evm/system_nortos -f makefile_projectspec export
+
+
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=Debug or PROFILE=Release [default] to build in Debug or Release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile_projectspec.awr294x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile_projectspec.awr294x [export all clean]
+	@echo  .
+	@echo  export = export projectspec to CCS project in the folder ./ccs_projects/,
+	@echo           export MUST be called once before 'all' or 'clean'
+	@echo  all    = build the previously exported projectspecs
+	@echo  clean  = clean the previously exported projectspecs
+	@echo  .
+	@echo  Example ProjectSpec build targets,
+	@echo  ==================================
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_jtag_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/crc/crc_16bit/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/crc/crc_16bit/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/csirx/csirx_internal_capture/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_duty_cycle/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpadc/gpadc_group_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpadc/gpadc_single_channel_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpadc/gpadc_temperature_sensor_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_real_fft/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_icount/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_reset/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/enet_loopback/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_rawhttpserver/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udpserver/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpclient/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_socket/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC2/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC3/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC3/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC4/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/rti/UC4/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_semi_cpu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_atcm0/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_l2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  .
+	@echo  System Example ProjectSpec build targets,
+	@echo  =========================================
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/awr294x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/awr294x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/empty/awr294x-evm/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/empty/awr294x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  .
+
+.PHONY: all all-private
+.PHONY: clean clean-private
+.PHONY: help

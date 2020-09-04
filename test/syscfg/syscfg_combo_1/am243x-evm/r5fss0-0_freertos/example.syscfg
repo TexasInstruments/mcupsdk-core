@@ -1,0 +1,269 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1    = eeprom.addInstance();
+const ethphy     = scripting.addModule("/board/ethphy/ethphy", {}, false);
+const ethphy1    = ethphy.addInstance();
+const flash      = scripting.addModule("/board/flash/flash", {}, false);
+const flash1     = flash.addInstance();
+const led        = scripting.addModule("/board/led/led", {}, false);
+const led1       = led.addInstance();
+const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
+const adc1       = adc.addInstance();
+const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1      = epwm.addInstance();
+const epwm2      = epwm.addInstance();
+const epwm3      = epwm.addInstance();
+const fsi_rx     = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
+const fsi_rx1    = fsi_rx.addInstance();
+const fsi_rx2    = fsi_rx.addInstance();
+const fsi_tx     = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
+const fsi_tx1    = fsi_tx.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const i2c2       = i2c.addInstance();
+const i2c3       = i2c.addInstance();
+const i2c4       = i2c.addInstance();
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const mcan       = scripting.addModule("/drivers/mcan/mcan", {}, false);
+const mcan1      = mcan.addInstance();
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
+const mcspi2     = mcspi.addInstance();
+const mcspi3     = mcspi.addInstance();
+const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1   = pruicss.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+const timer2     = timer.addInstance();
+const timer3     = timer.addInstance();
+const timer4     = timer.addInstance();
+const timer5     = timer.addInstance();
+const timer6     = timer.addInstance();
+const timer7     = timer.addInstance();
+const timer8     = timer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+eeprom1.$name = "CONFIG_EEPROM0";
+
+ethphy1.$name = "CONFIG_ETHPHY0";
+
+flash1.$name                  = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name = "CONFIG_OSPI0";
+
+led1.$name = "CONFIG_LED0";
+
+adc1.$name = "CONFIG_ADC0";
+
+epwm1.$name = "CONFIG_EPWM0";
+
+epwm2.$name = "CONFIG_EPWM1";
+
+epwm3.$name = "CONFIG_EPWM2";
+
+fsi_rx1.$name = "CONFIG_FSI_RX0";
+
+fsi_rx2.$name = "CONFIG_FSI_RX1";
+
+fsi_tx1.$name = "CONFIG_FSI_TX0";
+
+gpio1.$name                = "CONFIG_GPIO0";
+led1.peripheralDriver      = gpio1;
+gpio1.GPIO.gpioPin.$assign = "ball.D18";
+
+gpio2.$name = "CONFIG_GPIO1";
+
+i2c1.$name               = "CONFIG_I2C0";
+eeprom1.peripheralDriver = i2c1;
+
+i2c2.$name = "CONFIG_I2C1";
+
+i2c3.$name = "CONFIG_I2C2";
+
+i2c4.$name = "CONFIG_I2C3";
+
+ipc.m4fss0_0 = "notify";
+ipc.r5fss1_0 = "NONE";
+ipc.r5fss1_1 = "NONE";
+ipc.r5fss0_1 = "notify";
+
+mcan1.$name = "CONFIG_MCAN0";
+
+mcspi1.$name                 = "CONFIG_MCSPI0";
+mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+
+mcspi2.$name                 = "CONFIG_MCSPI1";
+mcspi2.mcspiChannel[0].$name = "CONFIG_MCSPI_CH1";
+
+mcspi3.$name                 = "CONFIG_MCSPI2";
+mcspi3.mcspiChannel[0].$name = "CONFIG_MCSPI_CH2";
+
+pruicss1.$name = "CONFIG_PRU_ICSS0";
+
+debug_log.enableUartLog            = true;
+debug_log.enableSharedMemLogReader = true;
+debug_log.enableSharedMemLog       = true;
+debug_log.enableCssLog             = false;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;
+mpu_armv75.baseAddr     = 0x701D0000;
+mpu_armv75.size         = 16;
+
+timer1.$name = "CONFIG_TIMER0";
+
+timer2.$name = "CONFIG_TIMER1";
+
+timer3.$name = "CONFIG_TIMER2";
+
+timer4.$name = "CONFIG_TIMER3";
+
+timer5.$name = "CONFIG_TIMER4";
+
+timer6.$name = "CONFIG_TIMER5";
+
+timer7.$name = "CONFIG_TIMER6";
+
+timer8.$name = "CONFIG_TIMER7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "ball.N20";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "ball.L19";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "ball.N19";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "ball.M17";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "ball.N18";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "ball.P20";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "ball.P21";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "ball.M21";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "ball.M20";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "ball.M18";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "ball.M19";
+adc1.ADC.$suggestSolution                          = "ADC0";
+adc1.ADC.AIN0.$suggestSolution                     = "ball.G20";
+adc1.ADC.AIN1.$suggestSolution                     = "ball.F20";
+adc1.ADC.AIN2.$suggestSolution                     = "ball.E21";
+adc1.ADC.AIN3.$suggestSolution                     = "ball.D20";
+adc1.ADC.AIN4.$suggestSolution                     = "ball.G21";
+adc1.ADC.AIN5.$suggestSolution                     = "ball.F21";
+adc1.ADC.AIN6.$suggestSolution                     = "ball.F19";
+adc1.ADC.AIN7.$suggestSolution                     = "ball.E20";
+adc1.ADC.EXT_TRIGGER0.$suggestSolution             = "ball.C13";
+adc1.ADC.EXT_TRIGGER1.$suggestSolution             = "ball.D16";
+epwm1.EPWM.$suggestSolution                        = "EHRPWM0";
+epwm1.EPWM.A.$suggestSolution                      = "ball.U20";
+epwm1.EPWM.B.$suggestSolution                      = "ball.U18";
+epwm1.EPWM.SYNCO.$suggestSolution                  = "ball.U21";
+epwm1.EPWM.SYNCI.$suggestSolution                  = "ball.T20";
+epwm2.EPWM.$suggestSolution                        = "EHRPWM3";
+epwm2.EPWM.A.$suggestSolution                      = "ball.V18";
+epwm2.EPWM.B.$suggestSolution                      = "ball.Y21";
+epwm2.EPWM.SYNCO.$suggestSolution                  = "ball.R17";
+epwm2.EPWM.SYNCI.$suggestSolution                  = "ball.Y20";
+epwm3.EPWM.$suggestSolution                        = "EHRPWM6";
+epwm3.EPWM.A.$suggestSolution                      = "ball.B14";
+epwm3.EPWM.B.$suggestSolution                      = "ball.N17";
+epwm3.EPWM.SYNCO.$suggestSolution                  = "ball.R20";
+epwm3.EPWM.SYNCI.$suggestSolution                  = "ball.R19";
+fsi_rx1.FSI_RX.$suggestSolution                    = "FSI_RX5";
+fsi_rx1.FSI_RX.CLK.$suggestSolution                = "ball.P16";
+fsi_rx1.FSI_RX.D0.$suggestSolution                 = "ball.R18";
+fsi_rx1.FSI_RX.D1.$suggestSolution                 = "ball.T21";
+fsi_rx2.FSI_RX.$suggestSolution                    = "FSI_RX0";
+fsi_rx2.FSI_RX.CLK.$suggestSolution                = "ball.V19";
+fsi_rx2.FSI_RX.D0.$suggestSolution                 = "ball.T17";
+fsi_rx2.FSI_RX.D1.$suggestSolution                 = "ball.R16";
+fsi_tx1.FSI_TX.$suggestSolution                    = "FSI_TX1";
+fsi_tx1.FSI_TX.CLK.$suggestSolution                = "ball.N16";
+fsi_tx1.FSI_TX.D0.$suggestSolution                 = "ball.P17";
+fsi_tx1.FSI_TX.D1.$suggestSolution                 = "ball.Y18";
+gpio1.GPIO.$suggestSolution                        = "GPIO1";
+gpio2.GPIO.$suggestSolution                        = "GPIO1";
+gpio2.GPIO.gpioPin.$suggestSolution                = "ball.W2";
+i2c1.I2C.$suggestSolution                          = "I2C3";
+i2c1.I2C.SCL.$suggestSolution                      = "ball.C17";
+i2c1.I2C.SDA.$suggestSolution                      = "ball.D17";
+i2c2.I2C.$suggestSolution                          = "I2C0";
+i2c2.I2C.SCL.$suggestSolution                      = "ball.A18";
+i2c2.I2C.SDA.$suggestSolution                      = "ball.B18";
+i2c3.I2C.$suggestSolution                          = "I2C2";
+i2c3.I2C.SCL.$suggestSolution                      = "ball.P19";
+i2c3.I2C.SDA.$suggestSolution                      = "ball.R21";
+i2c4.I2C.$suggestSolution                          = "I2C1";
+i2c4.I2C.SCL.$suggestSolution                      = "ball.C18";
+i2c4.I2C.SDA.$suggestSolution                      = "ball.B19";
+mcan1.MCAN.$suggestSolution                        = "MCAN0";
+mcan1.MCAN.RX.$suggestSolution                     = "ball.B17";
+mcan1.MCAN.TX.$suggestSolution                     = "ball.A17";
+mcspi1.SPI.$suggestSolution                        = "SPI3";
+mcspi1.SPI.CLK.$suggestSolution                    = "ball.U4";
+mcspi1.SPI.D0.$suggestSolution                     = "ball.R6";
+mcspi1.SPI.D1.$suggestSolution                     = "ball.V4";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution        = "ball.U1";
+mcspi2.SPI.$suggestSolution                        = "SPI1";
+mcspi2.SPI.CLK.$suggestSolution                    = "ball.C14";
+mcspi2.SPI.D0.$suggestSolution                     = "ball.B15";
+mcspi2.SPI.D1.$suggestSolution                     = "ball.A15";
+mcspi2.mcspiChannel[0].CSn.$suggestSolution        = "ball.D14";
+mcspi3.SPI.$suggestSolution                        = "SPI0";
+mcspi3.SPI.CLK.$suggestSolution                    = "ball.D13";
+mcspi3.SPI.D0.$suggestSolution                     = "ball.A13";
+mcspi3.SPI.D1.$suggestSolution                     = "ball.A14";
+mcspi3.mcspiChannel[0].CSn.$suggestSolution        = "ball.D12";
+debug_log.uartLog.UART.RXD.$suggestSolution        = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution        = "ball.C16";
+timer1.TIMER.$suggestSolution                      = "DMTIMER7";
+timer2.TIMER.$suggestSolution                      = "DMTIMER6";
+timer3.TIMER.$suggestSolution                      = "DMTIMER5";
+timer4.TIMER.$suggestSolution                      = "DMTIMER4";
+timer5.TIMER.$suggestSolution                      = "DMTIMER3";
+timer6.TIMER.$suggestSolution                      = "DMTIMER2";
+timer7.TIMER.$suggestSolution                      = "DMTIMER1";
+timer8.TIMER.$suggestSolution                      = "DMTIMER0";

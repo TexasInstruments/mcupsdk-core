@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ext",["Constant"],[["EXT0_SPIN_XID",,[[,,,,0,"File:firmware/common/icss_xfer_defines.inc:EXT0_SPIN_XID"]]],["EXT1_SPIN_XID",,[[,,,,0,"File:firmware/common/icss_xfer_defines.inc:EXT1_SPIN_XID"]]]]);

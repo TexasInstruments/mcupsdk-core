@@ -1,0 +1,76 @@
+%%{
+    let module = system.modules['/drivers/mibspi/mibspi'];
+%%}
+/*
+ * MIBSPI
+ */
+/* MIBSPI atrributes */
+static MIBSPI_Attrs gMibspiAttrs[CONFIG_MIBSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .mibspiInstId           = `config.instanceID`,
+        .ptrSpiRegBase          = (CSL_mss_spiRegs *)`config.regBaseAddr`,
+        .ptrMibSpiRam           = (CSL_mibspiRam   *)`config.ramBaseAddr`,
+        .clockSrcFreq           = `config.inputClkFreq`U,
+        .interrupt0Num          = `config.intr0Num`U,
+        .interrupt1Num          = `config.intr1Num`U,
+        .mibspiRamSize          = CSL_MIBSPIRAM_MAX_ELEMENTS,
+        .numTransferGroups      = `config.numTransferGroups`U,
+        .numParallelModePins    = MIBSPI_FEATURE_PARALLEL_MODE_`config.numParallelModePins`,
+        .featureBitMap          = MIBSPI_FEATURE_SPIENA_PIN_`config.featureBitMap`,
+        .numDmaReqLines         = `config.numDmaReqLines`U,
+        .dmaReqlineCfg =
+        {
+      % for( let j = 0,k=0; j < config.numDmaReqLines; j++,k=k+2){
+            [`j`] =
+        %   if((config.name == "MSS_MIBSPIA") || (config.name == "MIBSPIA"))
+        %   {
+            {
+                EDMA_MSS_TPCC_A_EVT_SPIA_DMA_REQ`k`,
+                EDMA_MSS_TPCC_A_EVT_SPIA_DMA_REQ`k+1`
+            },
+        %   }
+        %   if((config.name == "MSS_MIBSPIB") || (config.name == "MIBSPIB"))
+        %   {
+            {
+                EDMA_MSS_TPCC_A_EVT_SPIB_DMA_REQ`k`,
+                EDMA_MSS_TPCC_A_EVT_SPIB_DMA_REQ`k+1`
+            },
+        %   }
+        %   if(config.name == "RCSS_MIBSPIA")
+        %   {
+            {
+                EDMA_RCSS_TPCC_A_EVT_SPIA_DMA_REQ`k`,
+                EDMA_RCSS_TPCC_A_EVT_SPIA_DMA_REQ`k+1`
+            },
+        %   }
+        %   if(config.name == "RCSS_MIBSPIB")
+        %   {
+            {
+                EDMA_RCSS_TPCC_A_EVT_SPIB_DMA_REQ`k`,
+                EDMA_RCSS_TPCC_A_EVT_SPIB_DMA_REQ`k+1`
+            },
+        %   }
+      % }
+        }
+    },
+%}
+};
+/* MIBSPI objects - initialized by the driver */
+static MIBSPI_Object gMibspiObjects[CONFIG_MIBSPI_NUM_INSTANCES];
+/* MIBSPI driver configuration */
+MIBSPI_Config gMibspiConfig[CONFIG_MIBSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gMibspiAttrs[`instance.$name.toUpperCase()`],
+        &gMibspiObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gMibspiConfigNum = CONFIG_MIBSPI_NUM_INSTANCES;

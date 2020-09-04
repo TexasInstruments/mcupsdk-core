@@ -1,0 +1,204 @@
+void Drivers_adcOpen()
+{
+% let module = system.modules['/drivers/adc/adc'];
+% let common   = system.getScript("/common");
+% let nameOfModule = "adc";
+% let nameOfPeripheral = module.peripheralName;
+% let powerUpTime = 500;
+%if (module != null)
+%{
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+	/* `instance.$name` initialization */
+
+	/* Configures the analog-to-digital converter module prescaler. */
+	ADC_setPrescaler(`baseName`, `instance.adcClockPrescaler`);
+	/* Configures the analog-to-digital converter resolution and signal mode. */
+	ADC_setMode(`baseName`, `instance.adcResolutionMode`, `instance.adcSignalMode`);
+	/* Sets the priority mode of the SOCs. */
+	ADC_setSOCPriority(`baseName`, `instance.socHighPriorityMode`);
+
+		% let sociTotal = 16
+		% for(let socNumber = 0; socNumber < sociTotal; socNumber++) {
+	/* Start of Conversion `socNumber` Configuration */
+	/* Configures a start-of-conversion (SOC) in the ADC. */
+	ADC_setupSOC(`baseName`, `socNumber`, `instance["soc"+socNumber+"Trigger"]`, `instance["soc"+socNumber+"Channel"]`, `instance["soc"+socNumber+"SampleWindow"]`);
+	/* Configures the interrupt SOC trigger of an SOC. */
+	ADC_setInterruptSOCTrigger(`baseName`, `socNumber`, `instance["soc"+socNumber+"InterruptTrigger"]`);
+
+		% }
+		% if(instance.enableConverter){
+	/* Powers up the analog-to-digital converter core. */
+	ADC_enableConverter(`baseName`);
+    /* Delay for ADC to power up. */
+    ClockP_usleep(`powerUpTime`);
+		% }
+		% else{
+	/* Powers down the analog-to-digital converter module. */
+	ADC_disableConverter(`baseName`);
+		% }
+	/* Sets the timing of the end-of-conversion pulse */
+	ADC_setInterruptPulseMode(`baseName`, `instance.interruptPulseMode`);
+
+		% let intiTotal = 4
+		% for(let intNumber = 1; intNumber <= intiTotal; intNumber++) {
+
+	/* ADC Interrupt `intNumber` Configuration */
+			% if(instance["enableInterrupt"+intNumber]){
+	/* Enables an ADC interrupt source. */
+	ADC_enableInterrupt(`baseName`, `intNumber-1`);
+			% }
+			% else{
+	/* Disables an ADC interrupt source. */
+	ADC_disableInterrupt(`baseName`, `intNumber-1`);
+			% }
+	/* Sets the source EOC for an analog-to-digital converter interrupt. */
+	ADC_setInterruptSource(`baseName`, `intNumber-1`, `instance["interrupt"+intNumber+"SOCSource"]`);
+			% if(instance["enableInterrupt"+intNumber+"ContinuousMode"]){
+	/* Enables continuous mode for an ADC interrupt. */
+	ADC_enableContinuousMode(`baseName`, `intNumber-1`);
+			% }
+			% else{
+	/* Disables continuous mode for an ADC interrupt. */
+	ADC_disableContinuousMode(`baseName`, `intNumber-1`);
+			% }
+		% }
+
+		% let ppbiTotal = 4
+		% for(let ppbNumber = 1; ppbNumber <= ppbiTotal; ppbNumber++) {
+
+	/* Post Processing Block `ppbNumber` Configuration */
+	/* Configures a post-processing block (PPB) in the ADC. */
+	ADC_setupPPB(`baseName`, `ppbNumber-1`, `instance["ppb"+ppbNumber+"SOCNumber"]`);
+%%{
+			let eventOptions = ["ADC_EVT_TRIPHI","ADC_EVT_TRIPLO","ADC_EVT_ZERO"]
+			let currentEvent = ""
+			let enableEventCount = 0
+			let eventsToEnableOR = "("
+			for (let eventToEnable in instance["ppb"+ppbNumber+"EventEnable"])
+			{
+				currentEvent = instance["ppb"+ppbNumber+"EventEnable"][enableEventCount]
+				if (enableEventCount == 0)
+				{
+					eventsToEnableOR += currentEvent
+				}
+				else
+				{
+					eventsToEnableOR += " | " + currentEvent
+				}
+				let disableIndex = eventOptions.indexOf(currentEvent)
+				if(disableIndex>-1){
+					eventOptions.splice(disableIndex,1)
+				}
+				enableEventCount++
+			}
+			eventsToEnableOR += ")"
+			let eventsToDisableOR = "("
+			let disableEventCount = 0
+			for(let eventToDisable in eventOptions){
+				currentEvent = eventOptions[disableEventCount]
+				if (disableEventCount == 0)
+				{
+					eventsToDisableOR += currentEvent
+				}
+				else
+				{
+					eventsToDisableOR += " | " + currentEvent
+				}
+				disableEventCount++
+			}
+			eventsToDisableOR += ")"
+%%}
+			% if(enableEventCount > 0){
+	/* Enables individual ADC PPB event sources. */
+	ADC_enablePPBEvent(`baseName`, `ppbNumber-1`, `eventsToEnableOR`);
+			% }
+			% if(disableEventCount > 0){
+	/* Disables individual ADC PPB event sources. */
+	ADC_disablePPBEvent(`baseName`, `ppbNumber-1`, `eventsToDisableOR`);
+			% }
+%%{
+			let eventInterruptOptions = ["ADC_EVT_TRIPHI","ADC_EVT_TRIPLO","ADC_EVT_ZERO"]
+			let currentEventInterrupt = ""
+			let enableEventInterruptCount = 0
+			let eventInterruptsToEnableOR = "("
+			for (let eventInterruptToEnable in instance["ppb"+ppbNumber+"EventInterruptEnable"])
+			{
+				currentEventInterrupt = instance["ppb"+ppbNumber+"EventInterruptEnable"][enableEventInterruptCount]
+				if (enableEventInterruptCount == 0)
+				{
+					eventInterruptsToEnableOR += currentEventInterrupt
+				}
+				else
+				{
+					eventInterruptsToEnableOR += " | " + currentEventInterrupt
+				}
+				let disableIndex = eventInterruptOptions.indexOf(currentEventInterrupt)
+				if(disableIndex>-1){
+					eventInterruptOptions.splice(disableIndex,1)
+				}
+				enableEventInterruptCount++
+			}
+			eventInterruptsToEnableOR += ")"
+			let eventInterruptsToDisableOR = "("
+			let disableEventInterruptCount = 0
+			for(let eventInterruptToDisable in eventInterruptOptions){
+				currentEventInterrupt = eventInterruptOptions[disableEventInterruptCount]
+				if (disableEventInterruptCount == 0)
+				{
+					eventInterruptsToDisableOR += currentEventInterrupt
+				}
+				else
+				{
+					eventInterruptsToDisableOR += " | " + currentEventInterrupt
+				}
+				disableEventInterruptCount++
+			}
+			eventInterruptsToDisableOR += ")"
+%%}
+			% if(enableEventInterruptCount > 0){
+	/* Enables individual ADC PPB event interrupt sources. */
+	ADC_enablePPBEventInterrupt(`baseName`, `ppbNumber-1`, `eventInterruptsToEnableOR`);
+			% }
+			% if(disableEventInterruptCount > 0){
+	/* Disables individual ADC PPB event interrupt sources. */
+	ADC_disablePPBEventInterrupt(`baseName`, `ppbNumber-1`, `eventInterruptsToDisableOR`);
+			% }
+	/* Sets the post processing block offset correction. */
+	ADC_setPPBCalibrationOffset(`baseName`, `ppbNumber-1`, `instance["ppb"+ppbNumber+"CalibrationOffset"]`);
+	/* Sets the post processing block reference offset. */
+	ADC_setPPBReferenceOffset(`baseName`, `ppbNumber-1`, `instance["ppb"+ppbNumber+"ReferenceOffset"]`);
+			% if(instance["ppb"+ppbNumber+"EnableTwosComplement"]){
+	/* Enables two's complement capability in the PPB. */
+	ADC_enablePPBTwosComplement(`baseName`, `ppbNumber-1`);
+			% }
+			% else {
+	/* Disables two's complement capability in the PPB. */
+	ADC_disablePPBTwosComplement(`baseName`, `ppbNumber-1`);
+			% }
+	/* Sets the windowed trip limits for a PPB. */
+	ADC_setPPBTripLimits(`baseName`, `ppbNumber-1`, `instance["ppb"+ppbNumber+"HighTripLimit"]`, `instance["ppb"+ppbNumber+"LowTripLimit"]`);
+            % if(instance["ppb"+ppbNumber+"EnablePPBEventCBCClear"]){
+    /* Enables cycle by cycle clear of ADC PPB event flags. */
+    ADC_enablePPBEventCBCClear(`baseName`, `ppbNumber-1`);
+            % }
+            % else {
+    /* Disables cycle by cycle clear of ADC PPB event flags. */
+    ADC_disablePPBEventCBCClear(`baseName`, `ppbNumber-1`);
+            % }
+		% }
+
+	/* Set SOC burst mode. */
+	ADC_setBurstModeConfig(`baseName`, `instance.burstTrigger`, `instance.burstSize`);
+		% if(instance.enableBurstMode){
+	/* Enables SOC burst mode. */
+	ADC_enableBurstMode(`baseName`);
+		% }
+		% else{
+	/* Disables SOC burst mode. */
+	ADC_disableBurstMode(`baseName`);
+		% }
+	%}
+%}
+}

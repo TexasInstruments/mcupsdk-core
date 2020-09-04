@@ -1,0 +1,67 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("firewall");
+    let module = system.modules['/drivers/firewall/firewall'];
+%%}
+/*
+ * Firewall
+ */
+
+/* Firewall Driver handles */
+Firewall_Handle gFirewallHandle[CONFIG_FWL_NUM_INSTANCES];
+
+void Drivers_firewallOpen(void)
+{
+    uint32_t            instCnt;
+    int32_t             status = SystemP_SUCCESS;
+    Firewall_Object    *obj = NULL;
+
+    /* Init each driver instance object */
+    for(instCnt = 0U; instCnt < CONFIG_FWL_NUM_INSTANCES; instCnt++)
+    {
+        /* Init object variables */
+        obj = gFirewallConfig[instCnt].object;
+        DebugP_assert(NULL != obj);
+        memset(obj, 0, sizeof(Firewall_Object));
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_FWL_NUM_INSTANCES; instCnt++)
+    {
+        /* Init Firewall handles */
+        gFirewallHandle[instCnt] = (Firewall_Handle)&gFirewallConfig[instCnt];
+
+        status = Firewall_open(gFirewallHandle[instCnt]);
+        if(status == SystemP_FAILURE)
+        {
+            DebugP_logError("Firewall open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_firewallClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_firewallClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_FWL_NUM_INSTANCES; instCnt++)
+    {
+        if(gFirewallHandle[instCnt] != NULL)
+        {
+            Firewall_close(gFirewallHandle[instCnt]);
+            gFirewallHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

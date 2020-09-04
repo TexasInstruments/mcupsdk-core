@@ -1,0 +1,64 @@
+%%{
+    let module = system.modules['/drivers/qspi/qspi'];
+    
+    function getLines(proto, dataLines) {
+        let lines = "SINGLE";
+        if(proto == "1s_1s_2s") {
+            lines = "DUAL";
+        } else if (proto == "1s_1s_4s") {
+            lines = "QUAD";
+        } else if (proto == "custom") {
+            if(dataLines == "2") {
+                lines = "DUAL";
+            } else if(dataLines == "4") {
+                lines = "QUAD";
+            }
+        }
+        return lines;
+    }
+%%}
+/*
+ * QSPI
+ */
+
+
+/* QSPI attributes */
+static QSPI_Attrs gQspiAttrs[CONFIG_QSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .baseAddr             = `config.baseAddr`,
+        .memMapBaseAddr       = `config.memMapBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .intrNum              = `config.intrNum`U,
+        .intrEnable           = `config.intrEnable.toString(10).toUpperCase()`,
+        .dmaEnable            = `config.dmaEnable.toString(10).toUpperCase()`,
+        .intrPriority         = `config.intrPriority`U,
+        .rxLines              = QSPI_RX_LINES_`getLines(config.protocol, config.dataLines)`,
+        .chipSelect           = QSPI_`config.chipSelect`,
+        .csPol                = QSPI_CS_POL_`config.csPol`,
+        .dataDelay            = QSPI_DATA_`config.dataDelay`,
+        .frmFmt               = QSPI_FF_`config.frmFmt`,
+        .wrdLen               = `config.wrdLen`,
+        .baudRateDiv          = `config.baudRateDiv`,
+    },
+% }
+};
+/* QSPI objects - initialized by the driver */
+static QSPI_Object gQspiObjects[CONFIG_QSPI_NUM_INSTANCES];
+/* QSPI driver configuration */
+QSPI_Config gQspiConfig[CONFIG_QSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gQspiAttrs[`instance.$name.toUpperCase()`],
+        &gQspiObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gQspiConfigNum = CONFIG_QSPI_NUM_INSTANCES;

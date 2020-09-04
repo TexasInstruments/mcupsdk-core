@@ -1,0 +1,38 @@
+%%{
+    productName = args.utils.getProductNameProjectSpec(args.device);
+    isDevelopmentMode = args.common.isDevelopmentMode();
+    deviceName = args.utils.getProjectSpecDevice(args.device);
+    if(args.device == "am273x")
+        deviceName = "AM273x"
+    if(args.device == "am62x")
+        deviceName = "AM62x"
+    if(isDevelopmentMode)
+        deviceName = "AMXXX";
+%%}
+[
+    {
+        "metadataVersion": "3.01.00",
+        "id": "com.ti.`productName`",
+        "name": "MCU+ SDK for `deviceName`",
+        "rootCategory": [ "MCU+ SDK", "MCU+ SDK for `deviceName`" ],
+        "version": "07.03.00.01",
+        "type": "software",
+        "image": "./mcu_plus_sdk.png",
+        % if ((args.device == "am64x") || (args.device == "am243x") || (isDevelopmentMode)) {
+        "license": "../../license.txt",
+        % }
+        "devices": ["`deviceName`"],
+        "tags": ["SDK", "Baremetal", "FreeRTOS"],
+        "description": "Welcome to MCU+ SDK for `deviceName`. This SDK contains examples, libraries and tools to develop RTOS and no-RTOS based applications for ARM R5F, ARM M4F CPUs and related peripherals.",
+        "dependencies": [
+            { "packageId": "sysconfig", "version": "`args.utils.getSysCfgVersionProjectSpec()`", "require": "mandatory" },
+            % if (args.device == "am64x" || (isDevelopmentMode)) {
+            { "packageId": "ti_cgt_tiarmclang", "version": "`args.utils.getTiClangVersionProjectSpec()`", "require": "mandatory" },
+            { "packageId": "arm.gnu.aarch64-none", "version": "`args.utils.getGCCAarch64NoneVersionProjectSpec()`", "require": "mandatory" }
+            % }
+            % else {
+            { "packageId": "ti_cgt_tiarmclang", "version": "`args.utils.getTiClangVersionProjectSpec()`", "require": "mandatory" }
+            % }
+        ]
+    }
+]

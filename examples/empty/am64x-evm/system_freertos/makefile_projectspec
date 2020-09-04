@@ -1,0 +1,26 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+export PROFILE?=Release
+
+PROJECT_NAME=empty_am64x-evm_system_freertos
+
+all:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
+
+clean:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE) -ccs.clean
+	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../r5fss0-1_freertos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ -f makefile_projectspec clean
+	$(MAKE) -C ../a53ss0-0_freertos/gcc-aarch64/ -f makefile_projectspec clean
+
+export:
+	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectCreate -ccs.projectSpec system.projectspec -ccs.overwrite full

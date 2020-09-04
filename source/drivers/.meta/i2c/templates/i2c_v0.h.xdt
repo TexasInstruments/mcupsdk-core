@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/i2c/i2c'];
+%%}
+/*
+ * I2C
+ */
+#include <drivers/i2c.h>
+
+/* I2C Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_I2C_NUM_INSTANCES (`module.$instances.length`U)

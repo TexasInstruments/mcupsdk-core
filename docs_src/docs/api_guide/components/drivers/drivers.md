@@ -1,0 +1,122 @@
+# SOC Peripheral Drivers {#DRIVERS_PAGE}
+
+[TOC]
+
+# Introduction
+
+This module contains APIs for different device drivers for peripherals on the SOC that are supported on @VAR_SOC_NAME.
+
+It consists of below sub-modules
+
+\cond SOC_AM64X || SOC_AM243X
+- \subpage DRIVERS_ADC_PAGE
+- \subpage DRIVERS_BOOTLOADER_PAGE
+- \subpage DRIVERS_CRC_PAGE
+- \subpage DRIVERS_DDR_PAGE
+- \subpage DRIVERS_ECAP_PAGE
+- \subpage DRIVERS_EQEP_PAGE
+- \subpage DRIVERS_EPWM_PAGE
+- \subpage DRIVERS_ESM_PAGE
+- \subpage DRIVERS_FIREWALL_PAGE
+- \subpage DRIVERS_FSI_PAGE
+- \subpage DRIVERS_GPIO_PAGE
+- \subpage DRIVERS_GTC_PAGE
+- \subpage DRIVERS_I2C_PAGE
+- \subpage DRIVERS_IPC_NOTIFY_PAGE
+- \subpage DRIVERS_IPC_RPMESSAGE_PAGE
+- \subpage DRIVERS_MCAN_PAGE
+- \subpage DRIVERS_MCSPI_PAGE
+- \subpage DRIVERS_MDIO_PAGE
+- \subpage DRIVERS_MMCSD_PAGE
+- \subpage DRIVERS_OSPI_PAGE
+- \subpage DRIVERS_PCIE_PAGE
+- \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_PRUICSS_PAGE
+- \subpage DRIVERS_SCICLIENT_PAGE
+- \subpage DRIVERS_SPINLOCK_PAGE
+- \subpage DRIVERS_UART_PAGE
+- \subpage DRIVERS_UDMA_PAGE
+- \subpage DRIVERS_SOC_PAGE
+- \subpage DRIVERS_WATCHDOG_PAGE
+\endcond
+
+\cond SOC_AM273X || SOC_AWR294X
+\cond SOC_AWR294X
+- \subpage DRIVERS_ADCBUF_PAGE
+\endcond
+- \subpage DRIVERS_BOOTLOADER_PAGE
+\cond SOC_AM273X
+- \subpage DRIVERS_CBUFF_PAGE
+\endcond
+- \subpage DRIVERS_CRC_PAGE
+- \subpage DRIVERS_CSIRX_PAGE
+\cond SOC_AM273X
+- \subpage DRIVERS_ECAP_PAGE
+\endcond
+- \subpage DRIVERS_EDMA_PAGE
+- \subpage DRIVERS_EPWM_PAGE
+- \subpage DRIVERS_ESM_PAGE
+- \subpage DRIVERS_GPADC_PAGE
+- \subpage DRIVERS_GPIO_PAGE
+- \subpage DRIVERS_HWA_PAGE
+- \subpage DRIVERS_I2C_PAGE
+- \subpage DRIVERS_IPC_NOTIFY_PAGE
+- \subpage DRIVERS_IPC_RPMESSAGE_PAGE
+\cond SOC_AWR294X
+- \subpage DRIVERS_MAILBOX_PAGE
+\endcond
+\cond SOC_AM273X
+- \subpage DRIVERS_MCASP_PAGE
+\endcond
+- \subpage DRIVERS_MCAN_PAGE
+- \subpage DRIVERS_MIBSPI_PAGE
+- \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_QSPI_PAGE
+- \subpage DRIVERS_RTI_PAGE
+- \subpage DRIVERS_UART_PAGE
+- \subpage DRIVERS_WATCHDOG_PAGE
+- \subpage DRIVERS_SOC_PAGE
+\endcond
+
+\cond SOC_AM263X
+- \subpage DRIVERS_ADC_PAGE
+- \subpage DRIVERS_BOOTLOADER_PAGE
+- \subpage DRIVERS_CMPSS_PAGE
+- \subpage DRIVERS_DAC_PAGE
+- \subpage DRIVERS_ECAP_PAGE
+- \subpage DRIVERS_EDMA_PAGE
+- \subpage DRIVERS_EPWM_PAGE
+- \subpage DRIVERS_EQEP_PAGE
+- \subpage DRIVERS_FSI_PAGE
+- \subpage DRIVERS_GPIO_PAGE
+- \subpage DRIVERS_HSMCLIENT_PAGE
+- \subpage DRIVERS_I2C_PAGE
+- \subpage DRIVERS_IPC_NOTIFY_PAGE
+- \subpage DRIVERS_IPC_RPMESSAGE_PAGE
+- \subpage DRIVERS_LIN_PAGE
+- \subpage DRIVERS_MCAN_PAGE
+- \subpage DRIVERS_MCSPI_PAGE
+- \subpage DRIVERS_MDIO_PAGE
+- \subpage DRIVERS_MMCSD_PAGE
+- \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_PRUICSS_PAGE
+- \subpage DRIVERS_QSPI_PAGE
+- \subpage DRIVERS_RTI_PAGE
+- \subpage DRIVERS_SDFM_PAGE
+- \subpage DRIVERS_SIPC_NOTIFY_PAGE
+- \subpage DRIVERS_SOC_PAGE
+- \subpage DRIVERS_SPINLOCK_PAGE
+- \subpage DRIVERS_UART_PAGE
+- \subpage DRIVERS_WATCHDOG_PAGE
+\endcond
+
+\cond SOC_AM62X
+- \subpage DRIVERS_GPIO_PAGE
+- \subpage DRIVERS_I2C_PAGE
+- \subpage DRIVERS_IPC_RPMESSAGE_PAGE
+- \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_SCICLIENT_PAGE
+- \subpage DRIVERS_MCSPI_PAGE
+- \subpage DRIVERS_MCAN_PAGE
+- \subpage DRIVERS_UART_PAGE
+\endcond

@@ -1,0 +1,35 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2061"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma      = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1     = edma.addInstance();
+const hwa       = scripting.addModule("/drivers/hwa/hwa", {}, false);
+const hwa1      = hwa.addInstance();
+const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+edma1.$name = "CONFIG_EDMA0";
+
+hwa1.$name = "CONFIG_HWA0";
+
+cache_c6x.marRegionConfig.create(2);
+cache_c6x.marRegionConfig[0].$name    = "kernel_dpl_cache_c6x_mar0";
+cache_c6x.marRegionConfig[0].baseAddr = 0xC5000000;
+cache_c6x.marRegionConfig[1].$name    = "kernel_dpl_cache_c6x_mar1";
+cache_c6x.marRegionConfig[1].baseAddr = 0x83000000;
+
+debug_log.enableUartLog               = true;
+debug_log.uartLog.$name               = "CONFIG_UART0";
+debug_log.uartLog.DSS_UART.$assign    = "DSS_UARTA";
+debug_log.uartLog.DSS_UART.RX.$assign = "PAD_DD";
+debug_log.uartLog.DSS_UART.TX.$assign = "PAD_DC";

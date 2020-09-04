@@ -1,0 +1,18 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+/*
+ * GPIO
+ */
+#include <drivers/gpio.h>
+
+/* GPIO PIN Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name.toUpperCase()`_PIN (`config.pinIndex`)
+#define `instance.$name.toUpperCase()`_DIR (GPIO_DIRECTION_`config.pinDir`)
+#define `instance.$name.toUpperCase()`_TRIG_TYPE (GPIO_TRIG_TYPE_`config.trigType`)
+% }
+#define CONFIG_GPIO_NUM_INSTANCES (`module.$instances.length`U)

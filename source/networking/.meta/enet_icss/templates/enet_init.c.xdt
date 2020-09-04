@@ -1,0 +1,567 @@
+%%{
+    let module = system.modules["/networking/enet_icss/enet_icss"];
+%%}
+% let instance = module.$instances[0];
+% let enetutilsScript = system.getScript("./../../common/enet_cpsw_utils");
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <string.h>
+#include <stdint.h>
+#include <stdarg.h>
+
+#include <enet.h>
+#include "enet_appmemutils.h"
+#include "enet_appmemutils_cfg.h"
+#include "enet_apputils.h"
+#include <enet_cfg.h>
+#include <include/core/enet_per.h>
+#include <include/core/enet_utils.h>
+#include <include/core/enet_dma.h>
+#include <include/common/enet_utils_dflt.h>
+#include <include/per/icssg.h>
+#include <priv/per/icssg_priv.h>
+#include <drivers/udma/udma_priv.h>
+#include <soc/k3/icssg_soc.h>
+% if(instance.McmEnable == true){
+#include "enet_mcm.h"
+% }
+#include <kernel/dpl/SemaphoreP.h>
+#include <kernel/dpl/TaskP.h>
+#include <kernel/dpl/ClockP.h>
+#include <kernel/dpl/QueueP.h>
+
+#include "ti_enet_config.h"
+#include "ti_drivers_config.h"
+#include "ti_enet_open_close.h"
+
+#define ENETAPP_PHY_STATEHANDLER_TASK_PRIORITY        (7U)
+#define ENETAPP_PHY_STATEHANDLER_TASK_STACK     (3 * 1024)
+
+`system.getTemplate('./enet_init_udma.h.xdt')()`
+
+typedef struct EnetAppDmaSysCfg_Obj_s
+{
+    EnetAppTxDmaSysCfg_Obj tx[ENET_SYSCFG_TX_CHANNELS_NUM];
+    EnetAppRxDmaSysCfg_Obj rx[ENET_SYSCFG_RX_FLOWS_NUM];
+} EnetAppDmaSysCfg_Obj;
+
+
+typedef struct EnetAppSysCfg_Obj_s
+{
+
+    Enet_Handle hEnet;
+    EnetAppDmaSysCfg_Obj dma;
+% if((instance.McmEnable == false) && (instance.ExternalPhyMgmtEnable == false)){
+    ClockP_Object timerObj;
+
+    TaskP_Object task_phyStateHandlerObj;
+
+    SemaphoreP_Object timerSemObj;
+
+    volatile bool timerTaskShutDownFlag;
+
+    volatile bool timerTaskShutDownDoneFlag;
+
+    uint8_t appPhyStateHandlerTaskStack[ENETAPP_PHY_STATEHANDLER_TASK_STACK] __attribute__ ((aligned(32)));
+%}
+}EnetAppSysCfg_Obj;
+
+static EnetAppSysCfg_Obj gEnetAppSysCfgObj;
+
+static int32_t EnetApp_enablePorts(Enet_Handle hEnet,
+                                   Enet_Type enetType,
+                                   uint32_t instId,
+                                   uint32_t coreId,
+                                   Enet_MacPort macPortList[ENET_MAC_PORT_NUM],
+                                   uint8_t numMacPorts);
+
+
+static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
+                                    Enet_Type enetType, 
+                                    uint32_t instId,
+                                    Enet_Handle hEnet, 
+                                    uint32_t coreKey,
+                                    uint32_t coreId);
+
+static void EnetApp_openAllRxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
+                                         Enet_Handle hEnet, 
+                                         uint32_t coreKey,
+                                         uint32_t coreId);
+
+static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
+                                         Enet_Handle hEnet, 
+                                         uint32_t coreKey,
+                                         uint32_t coreId);
+
+static void EnetApp_getIcssgInitCfg(Enet_Type enetType,
+                                    uint32_t instId,
+                                    Icssg_Cfg *pIcssgCfg);
+                                    
+static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, const Icssg_Cfg *icssgCfg)
+{
+    int32_t status = ENET_SOK;
+    EnetOsal_Cfg osalPrms;
+    EnetUtils_Cfg utilsPrms;
+    void *perCfg = NULL_PTR;
+    uint32_t cfgSize;
+    Enet_Handle hEnet;
+
+    EnetAppUtils_assert(true == Enet_isIcssFamily(enetType));
+
+    perCfg = (void *)icssgCfg;
+    cfgSize = sizeof(*icssgCfg);
+
+    /* Initialize Enet driver with default OSAL, utils */
+    Enet_initOsalCfg(&osalPrms);
+    Enet_initUtilsCfg(&utilsPrms);
+
+    Enet_init(&osalPrms, &utilsPrms);
+
+    hEnet = Enet_open(enetType, instId, perCfg, cfgSize);
+    if(hEnet == NULL_PTR)
+    {
+        EnetAppUtils_print("Enet_open failed\r\n");
+        EnetAppUtils_assert(hEnet != NULL_PTR);
+    }
+
+    status = EnetMem_init();
+    EnetAppUtils_assert(ENET_SOK == status);
+
+    return hEnet;
+}
+
+% if((instance.McmEnable == false) && (instance.ExternalPhyMgmtEnable == false)){
+static void EnetApp_phyStateHandler(void * appHandle)
+{
+    SemaphoreP_Object *timerSem;
+    EnetAppSysCfg_Obj *hEnetAppObj       = (EnetAppSysCfg_Obj *)appHandle;
+
+    timerSem = &hEnetAppObj->timerSemObj;
+    hEnetAppObj->timerTaskShutDownDoneFlag = false;
+    while (hEnetAppObj->timerTaskShutDownFlag != true)
+    {
+        SemaphoreP_pend(timerSem, SystemP_WAIT_FOREVER);
+        /* Enet_periodicTick should be called from only task context */
+        Enet_periodicTick(hEnetAppObj->hEnet);
+    }
+    hEnetAppObj->timerTaskShutDownDoneFlag = true;
+    TaskP_destruct(&hEnetAppObj->task_phyStateHandlerObj);
+    TaskP_exit();
+}
+
+static void EnetApp_timerCb(ClockP_Object *clkInst, void * arg)
+{
+    SemaphoreP_Object * pTimerSem = (SemaphoreP_Object *)arg;
+
+    /* Tick! */
+    SemaphoreP_post(pTimerSem);
+}
+
+static int32_t EnetApp_createPhyStateHandlerTask(EnetAppSysCfg_Obj *hEnetAppObj)
+{
+    TaskP_Params tskParams;
+    int32_t status;
+
+    status = SemaphoreP_constructCounting(&hEnetAppObj->timerSemObj, 0, 128);
+    EnetAppUtils_assert(status == SystemP_SUCCESS);
+    {
+        ClockP_Params clkParams;
+        const uint32_t timPeriodTicks = ClockP_usecToTicks((ENETPHY_FSM_TICK_PERIOD_MS)*1000U);  // Set timer expiry time in OS ticks
+
+        ClockP_Params_init(&clkParams);
+        clkParams.start     = TRUE;
+        clkParams.timeout   = timPeriodTicks;
+        clkParams.period    = timPeriodTicks;
+        clkParams.args      = &hEnetAppObj->timerSemObj;
+        clkParams.callback  = &EnetApp_timerCb;
+
+        /* Creating timer and setting timer callback function*/
+        status = ClockP_construct(&hEnetAppObj->timerObj ,
+                                  &clkParams);
+        if (status == SystemP_SUCCESS)
+        {
+            hEnetAppObj->timerTaskShutDownFlag = false;
+        }
+        else
+        {
+            EnetAppUtils_print("EnetApp_createClock() failed to create clock\r\n");
+        }
+    }
+    /* Initialize the taskperiodicTick params. Set the task priority higher than the
+     * default priority (1) */
+    TaskP_Params_init(&tskParams);
+    tskParams.priority       = ENETAPP_PHY_STATEHANDLER_TASK_PRIORITY;
+    tskParams.stack          = &hEnetAppObj->appPhyStateHandlerTaskStack[0];
+    tskParams.stackSize      = sizeof(hEnetAppObj->appPhyStateHandlerTaskStack);
+    tskParams.args           = hEnetAppObj;
+    tskParams.name           = "EnetApp_PhyStateHandlerTask";
+    tskParams.taskMain       =  &EnetApp_phyStateHandler;
+
+    status = TaskP_construct(&hEnetAppObj->task_phyStateHandlerObj, &tskParams);
+    EnetAppUtils_assert(status == SystemP_SUCCESS);
+
+    return status;
+
+}
+% }
+
+
+int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
+{
+    int32_t status = ENET_SOK;
+    Icssg_Cfg icssgCfg;
+    Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
+    uint8_t numMacPorts;
+    uint32_t selfCoreId;
+    EnetRm_ResCfg *resCfg = &icssgCfg.resCfg;
+    EnetPer_AttachCoreOutArgs attachInfo;
+    EnetApp_HandleInfo handleInfo;
+    EnetUdma_Cfg dmaCfg;
+% if(instance.McmEnable == true){
+    EnetMcm_InitConfig enetMcmCfg;
+% }
+    EnetAppUtils_assert(Enet_isIcssFamily(enetType) == true);
+    EnetApp_getEnetInstMacInfo(enetType, instId, macPortList, &numMacPorts);
+
+    /* Open UDMA */
+    dmaCfg.rxChInitPrms.dmaPriority = UDMA_DEFAULT_RX_CH_DMA_PRIORITY;
+    dmaCfg.hUdmaDrv = EnetApp_getUdmaInstanceHandle();
+    selfCoreId   = EnetSoc_getCoreId();
+    icssgCfg.dmaCfg = (void *)&dmaCfg;
+
+    Enet_initCfg(enetType, instId, &icssgCfg, sizeof(icssgCfg));
+    icssgCfg.dmaCfg = (void *)&dmaCfg;
+
+    EnetApp_getIcssgInitCfg(enetType, instId, &icssgCfg);
+    
+    resCfg = &icssgCfg.resCfg;
+    EnetAppUtils_initResourceConfig(enetType, selfCoreId, resCfg);
+    EnetApp_updateIcssgInitCfg(enetType, instId, &icssgCfg);
+
+%if(instance.ExternalPhyMgmtEnable == true){
+    icssgCfg.mdioCfg.disableStateMachineOnInit = true;
+    icssgCfg.disablePhyDriver = true;
+%}
+    icssgCfg.qosLevels = `Number(instance.QoS)`U;
+    icssgCfg.isPremQueEnable = `instance.PremptionEnable`;
+    gEnetAppSysCfgObj.hEnet = EnetApp_doIcssgOpen(enetType, instId, &icssgCfg);
+    EnetAppUtils_assert(NULL != gEnetAppSysCfgObj.hEnet);
+    
+    EnetApp_enablePorts(gEnetAppSysCfgObj.hEnet, enetType, instId, selfCoreId, macPortList, numMacPorts);
+
+% if(instance.McmEnable == true){
+    enetMcmCfg.enetType           = enetType;
+    enetMcmCfg.instId             = instId;
+    enetMcmCfg.periodicTaskPeriod = ENETPHY_FSM_TICK_PERIOD_MS; /* msecs */
+    enetMcmCfg.print              = EnetAppUtils_print;
+    enetMcmCfg.hUdmaDrv           = EnetApp_getUdmaInstanceHandle();
+    enetMcmCfg.selfCoreId         = selfCoreId;
+    /* disable Enet_periodicTick function if ExternalPhyMgmtEnable is enabled */
+    enetMcmCfg.disablePeriodicFxn = `(instance.ExternalPhyMgmtEnable === true)`;
+
+    status = EnetMcm_init(&enetMcmCfg);
+% }
+% else {
+%if(instance.ExternalPhyMgmtEnable == false){
+    status = EnetApp_createPhyStateHandlerTask(&gEnetAppSysCfgObj);
+    EnetAppUtils_assert(status == SystemP_SUCCESS);
+% }
+% }
+    /* Open all DMA channels */
+    EnetApp_acquireHandleInfo(enetType, 
+                              instId,
+                              &handleInfo);
+
+    (void)handleInfo; /* Handle info not used. Kill warning */
+    EnetApp_coreAttach(enetType, 
+                       instId,
+                       selfCoreId,
+                       &attachInfo);
+    EnetApp_openDmaChannels(&gEnetAppSysCfgObj.dma,
+                            enetType, 
+                            instId,
+                            gEnetAppSysCfgObj.hEnet, 
+                            attachInfo.coreKey,
+                            selfCoreId);
+    return status;
+}
+
+static void EnetApp_asyncIoctlCb(Enet_Event evt,
+                                uint32_t evtNum,
+                                void *evtCbArgs,
+                                void *arg1,
+                                void *arg2)
+{
+    SemaphoreP_Object *pAsyncSem = (SemaphoreP_Object *)evtCbArgs;
+    SemaphoreP_post(pAsyncSem);
+}
+
+static int32_t EnetApp_enablePorts(Enet_Handle hEnet,
+                                   Enet_Type enetType,
+                                   uint32_t instId,
+                                   uint32_t coreId,
+                                   Enet_MacPort macPortList[ENET_MAC_PORT_NUM],
+                                   uint8_t numMacPorts)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    uint8_t i;
+    SemaphoreP_Object ayncIoctlSemObj;
+
+    status = SemaphoreP_constructBinary(&ayncIoctlSemObj, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    Enet_registerEventCb(hEnet,
+                        ENET_EVT_ASYNC_CMD_RESP,
+                        0U,
+                        EnetApp_asyncIoctlCb,
+                        (void *)&ayncIoctlSemObj);
+
+    for (i = 0U; i < numMacPorts; i++)
+    {
+        EnetPer_PortLinkCfg linkArgs;
+        IcssgMacPort_Cfg icssgMacCfg;
+        linkArgs.macCfg = &icssgMacCfg;
+        EnetPhy_initCfg(&linkArgs.phyCfg);
+        linkArgs.macPort = macPortList[i];
+        EnetApp_initLinkArgs(enetType, instId, &linkArgs, macPortList[i]);
+%if (instance.GigabitSupportEnable == false) {
+        {
+            /* If gigabit support is disabled at instance level, update the phy userCaps to
+             * not advertise Gigabit capability so that link is not established at gigabit speed
+             */
+            EnetPhy_Cfg *phyCfg = &linkArgs.phyCfg;
+            EnetMacPort_LinkCfg *linkCfg = &linkArgs.linkCfg;
+
+            if ((linkCfg->speed == ENETPHY_SPEED_AUTO) ||
+                (linkCfg->duplexity == ENETPHY_DUPLEX_AUTO))
+            {
+                if (phyCfg->nwayCaps == 0u)
+                {
+                    phyCfg->nwayCaps = ENETPHY_LINK_CAP_ALL;
+                }
+                phyCfg->nwayCaps &= ~(ENETPHY_LINK_CAP_1000);
+            }
+            else
+            {
+                /* Application has disabled Gigabit support in syscfg but
+                 * is configuring link speed expliticly to gigabit.
+                 * This is wrong configuration. Fix sysconfig to enable
+                 * gigabit support
+                 */
+                EnetAppUtils_assert(linkCfg->speed != ENETPHY_SPEED_1GBIT);
+            }
+        }
+%}
+        ENET_IOCTL_SET_IN_ARGS(&prms, &linkArgs);
+        ENET_IOCTL(hEnet,
+                   coreId,
+                   ENET_PER_IOCTL_OPEN_PORT_LINK,
+                   &prms,
+                   status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("EnetApp_enablePorts() failed to open MAC port: %d\r\n", status);
+        }
+
+        if (status == ENET_SOK)
+        {
+            IcssgMacPort_SetPortStateInArgs setPortStateInArgs;
+
+            setPortStateInArgs.macPort   = macPortList[i];
+            setPortStateInArgs.portState = ICSSG_PORT_STATE_FORWARD;
+            ENET_IOCTL_SET_IN_ARGS(&prms, &setPortStateInArgs);
+            prms.outArgs = NULL_PTR;
+
+            ENET_IOCTL(hEnet, coreId, ICSSG_PER_IOCTL_SET_PORT_STATE, &prms, status);
+            if (status == ENET_SINPROGRESS)
+            {
+                /* Wait for asyc ioctl to complete */
+                do
+                {
+                    Enet_poll(hEnet, ENET_EVT_ASYNC_CMD_RESP, NULL, 0U);
+                    status = SemaphoreP_pend(&ayncIoctlSemObj, SystemP_WAIT_FOREVER);
+                    if (SystemP_SUCCESS == status)
+                    {
+                        break;
+                    }
+                } while (1);
+
+                status = ENET_SOK;
+            }
+            else
+            {
+                EnetAppUtils_print("Failed to set port state: %d\n", status);
+            }
+        }
+    }
+
+    /* Show alive PHYs */
+    if (status == ENET_SOK)
+    {
+        Enet_IoctlPrms prms;
+        bool alive;
+        int32_t i;
+
+        for (i = 0U; i < ENET_MDIO_PHY_CNT_MAX; i++)
+        {
+            ENET_IOCTL_SET_INOUT_ARGS(&prms, &i, &alive);
+            ENET_IOCTL(hEnet,
+                       coreId,
+                       ENET_MDIO_IOCTL_IS_ALIVE,
+                       &prms,
+                       status);
+            if (status == ENET_SOK)
+            {
+                if (alive == true)
+                {
+                    EnetAppUtils_print("PHY %d is alive\r\n", i);
+                }
+            }
+            else
+            {
+                EnetAppUtils_print("Failed to get PHY %d alive status: %d\r\n", i, status);
+            }
+        }
+    }
+
+    SemaphoreP_destruct(&ayncIoctlSemObj);
+    Enet_unregisterEventCb(hEnet, ENET_EVT_ASYNC_CMD_RESP, 0U);
+
+    return status;
+}
+
+% if(instance.McmEnable == false){
+%if(instance.ExternalPhyMgmtEnable == false){
+static void EnetApp_deleteClock(EnetAppSysCfg_Obj *hEnetAppObj)
+{
+
+    hEnetAppObj->timerTaskShutDownFlag = true;
+
+    ClockP_stop(&hEnetAppObj->timerObj);
+
+    /* Post Timer Sem once to get the Periodic Tick task terminated */
+    SemaphoreP_post(&hEnetAppObj->timerSemObj);
+
+    do
+    {
+        ClockP_usleep(ClockP_ticksToUsec(1));
+    } while (hEnetAppObj->timerTaskShutDownDoneFlag != true);
+
+    ClockP_destruct(&hEnetAppObj->timerObj);
+    SemaphoreP_destruct(&hEnetAppObj->timerSemObj);
+
+}
+%}
+void EnetApp_driverClose(Enet_Type enetType, uint32_t instId)
+{
+    Enet_IoctlPrms prms;
+    int32_t status;
+    uint32_t selfCoreId;
+    uint32_t i;
+    Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
+    uint8_t numMacPorts;
+    Enet_Handle hEnet = Enet_getHandle(enetType, instId);
+
+    EnetAppUtils_assert(Enet_isIcssFamily(enetType) == true);
+    selfCoreId   = EnetSoc_getCoreId();
+    EnetApp_getEnetInstMacInfo(enetType, instId, macPortList, &numMacPorts);
+%if(instance.ExternalPhyMgmtEnable == false){
+    EnetApp_deleteClock(&gEnetAppSysCfgObj);
+%}
+    Enet_unregisterEventCb(hEnet,
+                            ENET_EVT_ASYNC_CMD_RESP,
+                            0U);
+
+    EnetAppUtils_print("Unregister TX timestamp callback\r\n");
+    Enet_unregisterEventCb(hEnet,
+                            ENET_EVT_TIMESTAMP_TX,
+                            0U);
+    for (i = 0U; i < numMacPorts; i++)
+    {
+        Enet_MacPort macPort = macPortList[i];
+
+        ENET_IOCTL_SET_IN_ARGS(&prms, &macPort);
+        ENET_IOCTL(hEnet,
+                   selfCoreId,
+                   ENET_PER_IOCTL_CLOSE_PORT_LINK,
+                   &prms,
+                   status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("close() failed to close MAC port: %d\r\n", status);
+        }
+    }
+
+    Enet_close(hEnet);
+
+    EnetMem_deInit();
+
+    Enet_deinit();
+}
+
+% }
+
+
+
+static uint32_t EnetApp_retrieveFreeTxPkts(EnetDma_TxChHandle hTxCh, EnetDma_PktQ *txPktInfoQ)
+{
+    EnetDma_PktQ txFreeQ;
+    EnetDma_Pkt *pktInfo;
+    uint32_t txFreeQCnt = 0U;
+    int32_t status;
+
+    EnetQueue_initQ(&txFreeQ);
+
+    /* Retrieve any packets that may be free now */
+    status = EnetDma_retrieveTxPktQ(hTxCh, &txFreeQ);
+    if (status == ENET_SOK)
+    {
+        txFreeQCnt = EnetQueue_getQCount(&txFreeQ);
+
+        pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
+        while (NULL != pktInfo)
+        {
+            EnetDma_checkPktState(&pktInfo->pktState,
+                                    ENET_PKTSTATE_MODULE_APP,
+                                    ENET_PKTSTATE_APP_WITH_DRIVER,
+                                    ENET_PKTSTATE_APP_WITH_FREEQ);
+
+            EnetQueue_enq(txPktInfoQ, &pktInfo->node);
+            pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
+        }
+    }
+    else
+    {
+        EnetAppUtils_print("retrieveFreeTxPkts() failed to retrieve pkts: %d\r\n", status);
+    }
+
+    return txFreeQCnt;
+}
+
+
+
+static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
+                                    Enet_Type enetType,
+                                    uint32_t instId,
+                                    Enet_Handle hEnet, 
+                                    uint32_t coreKey,
+                                    uint32_t coreId)
+{
+    EnetApp_openAllTxDmaChannels(dma,
+                                 hEnet, 
+                                 coreKey,
+                                 coreId);
+    EnetApp_openAllRxDmaChannels(dma,
+                                 hEnet, 
+                                 coreKey,
+                                 coreId);
+}
+
+
+`system.getTemplate('./enet_init_udma.c.xdt')()`
+
+

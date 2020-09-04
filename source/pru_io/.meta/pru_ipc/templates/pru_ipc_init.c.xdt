@@ -1,0 +1,23 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+
+    /* PruIpc */
+    % let init_icss0handle = true;
+    % let init_icss1handle = true;
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % if(instance.icssInstance === "ICSSG0" && init_icss0handle) {
+    PRUICSS_Handle PruIpc_icss0handle = PRUICSS_open(CONFIG_PRU_ICSS0);
+        % init_icss0handle = false;
+        % }
+        % if(instance.icssInstance === "ICSSG1" && init_icss1handle) {
+    PRUICSS_Handle PruIpc_icss1handle = PRUICSS_open(CONFIG_PRU_ICSS1);
+        % init_icss1handle = false;
+        % }
+    % }
+
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+    gPruIpcConfig[`i`].pruicssHandle = PruIpc_icss`instance.icssInstance === "ICSSG0" ? 0 : 1`handle;
+    % }

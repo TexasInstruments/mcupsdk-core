@@ -1,0 +1,83 @@
+{
+    "name": "MCU_PLUS_SDK",
+    "displayName": "MCU+ SDK",
+    "version": "07.03.01",
+    "documentationPath": "../docs",
+    "includePaths": [
+        "../source",
+    ],
+    "components": [
+        "/kernel/dpl",
+        "/drivers/drivers",
+        "/board/board",
+        "/fs/fs",
+        "/networking/networking",
+        "/industrial_comms/industrial_comms",
+        "/security/security",
+        "/usb/usb",
+        "/motor_control/motor_control",
+        "/pru_io/pru_io",
+    ],
+    "devices": [
+        "AM64x_beta",
+        "AM243x_ALV_beta",
+        "AM243x_ALX_beta",
+        "AM273x",
+        "AWR294X",
+        "AM263x_beta",
+        "AM62x",
+    ],
+    "contexts": {
+        "AM64x_beta": [
+            "r5fss0-0",
+            "r5fss0-1",
+            "r5fss1-0",
+            "r5fss1-1",
+            "m4fss0-0",
+            "a53ss0-0",
+        ],
+        "AM243x_ALV_beta": [
+            "r5fss0-0",
+            "r5fss0-1",
+            "r5fss1-0",
+            "r5fss1-1",
+            "m4fss0-0",
+        ],
+        "AM243x_ALX_beta": [
+            "r5fss0-0",
+            "r5fss0-1",
+            "r5fss1-0",
+            "r5fss1-1",
+            "m4fss0-0",
+        ],
+        "AM273x": [
+            "r5fss0-0",
+            "r5fss0-1",
+            "c66ss0",
+            "hsm0-0",
+        ],
+        "AWR294X": [
+            "r5fss0-0",
+            "r5fss0-1",
+            "c66ss0"
+        ],
+        "AM263x_beta": [
+            "r5fss0-0",
+            "r5fss0-1",
+            "r5fss1-0",
+            "r5fss1-1",
+            "hsm0-0",
+        ],
+        "AM62x": [
+            "m4fss0-0",
+        ],
+    },
+    "pinmuxUIOptions": {
+        "group": "merged",
+        "hidePeripheralTab": false,
+        "showPinTable": true,
+        "showSignals": true,
+        "showUsed": true
+    },
+    "minToolVersion" : "1.14.0"
+}

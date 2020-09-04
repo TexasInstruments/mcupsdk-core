@@ -1,0 +1,40 @@
+%%{
+    let module = system.modules['/drivers/uart/uart'];
+%%}
+/*
+ * UART
+ */
+
+/* UART atrributes */
+static UART_Attrs gUartAttrs[CONFIG_UART_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name.replace('USART', 'UART');
+    {
+        .baseAddr           = `config.baseAddr`,
+        .inputClkFreq       = `config.inputClkFreq`U,
+    },
+% }
+};
+/* UART objects - initialized by the driver */
+static UART_Object gUartObjects[CONFIG_UART_NUM_INSTANCES];
+/* UART driver configuration */
+UART_Config gUartConfig[CONFIG_UART_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gUartAttrs[`instance.$name.toUpperCase()`],
+        &gUartObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gUartConfigNum = CONFIG_UART_NUM_INSTANCES;
+
+void Drivers_uartInit(void)
+{
+    UART_init();
+}

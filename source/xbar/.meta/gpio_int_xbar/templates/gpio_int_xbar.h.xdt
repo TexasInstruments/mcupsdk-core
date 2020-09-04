@@ -1,0 +1,19 @@
+%%{
+    let module = system.modules['/xbar/gpio_int_xbar/gpio_int_xbar'];
+%%}
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let masterInstance = "";
+    % let masterXbar = "";
+    % if(instance.$ownedBy)
+    % {
+    %     masterInstance = instance.$ownedBy.instance;
+    %     let masterPath = instance.$ownedBy.$module.$name;
+    %     masterXbar = masterPath.substring(masterPath.lastIndexOf("/") + 1).toUpperCase();
+    % }
+    % let config = module.getInstanceConfig(instance);
+    % if( masterInstance != "" && masterInstance.search("XBAR") != -1)
+    % {
+#define `masterInstance`_INPUT   `masterXbar`_GPIO_INT_XBAR_OUT_`config.name.replace("GPIO_INT_XBAR_","").replace(masterXbar + "_","")`
+    % }
+% }

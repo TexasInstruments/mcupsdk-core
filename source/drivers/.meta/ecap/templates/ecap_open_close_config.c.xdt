@@ -1,0 +1,197 @@
+void Drivers_ecapOpen()
+{
+% let module = system.modules['/drivers/ecap/ecap'];
+% let common   = system.getScript("/common");
+% let nameOfModule = "ecap";
+% let nameOfPeripheral = module.peripheralName;
+%if (module != null)
+%{
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+		% if(instance.useInterrupts && instance.enableInterrupt){
+    /* Disable ,clear all capture flags and interrupts */
+    ECAP_disableInterrupt(`baseName`,
+		(ECAP_ISR_SOURCE_CAPTURE_EVENT_1  |
+		 ECAP_ISR_SOURCE_CAPTURE_EVENT_2  |
+		 ECAP_ISR_SOURCE_CAPTURE_EVENT_3  |
+		 ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |
+		 ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
+		 ECAP_ISR_SOURCE_COUNTER_PERIOD   |
+		 ECAP_ISR_SOURCE_COUNTER_COMPARE  |
+         ECAP_ISR_SOURCE_HR_ERROR));
+	ECAP_clearInterrupt(`baseName`,
+	  	(ECAP_ISR_SOURCE_CAPTURE_EVENT_1 |
+		ECAP_ISR_SOURCE_CAPTURE_EVENT_2  |
+		ECAP_ISR_SOURCE_CAPTURE_EVENT_3  |
+		ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |
+		ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
+		ECAP_ISR_SOURCE_COUNTER_PERIOD   |
+		ECAP_ISR_SOURCE_COUNTER_COMPARE  |
+        ECAP_ISR_SOURCE_HR_ERROR));
+		% }
+		% if(instance.ecapMode == "CAPTURE"){
+	/* Disables time stamp capture */
+	ECAP_disableTimeStampCapture(`baseName`);
+		% }
+	/* Stops Time stamp counter */
+	ECAP_stopCounter(`baseName`);
+		% if(instance.ecapMode == "CAPTURE"){
+	/* Sets eCAP in Capture mode. */
+	ECAP_enableCaptureMode(`baseName`);
+	/* Sets the capture mode */
+	ECAP_setCaptureMode(`baseName`,`instance.captureMode`,`instance.eventStop`);
+		% }
+		% else if(instance.ecapMode == "APWM") {
+	/* Sets eCAP in APWM mode */
+	ECAP_enableAPWMMode(`baseName`);
+		% }
+		% if(instance.ecapMode == "CAPTURE"){
+	/* Sets the Capture event polarity */
+	ECAP_setEventPrescaler(`baseName`, `instance.eventPrescaler`);
+	/* Sets the Capture event polarity */
+	ECAP_setEventPolarity(`baseName`,ECAP_EVENT_1,`instance.eventOnePolarity`);
+	ECAP_setEventPolarity(`baseName`,ECAP_EVENT_2,`instance.eventTwoPolarity`);
+	ECAP_setEventPolarity(`baseName`,ECAP_EVENT_3,`instance.eventThreePolarity`);
+	ECAP_setEventPolarity(`baseName`,ECAP_EVENT_4,`instance.eventFourPolarity`);
+	/* Configure counter reset on events */
+% 		let allEcapEvents = ["ECAP_EVENT_1","ECAP_EVENT_2","ECAP_EVENT_3","ECAP_EVENT_4"]
+%			let eventCount = 0
+%			let eventStr = ""
+%			for(let anEvent in allEcapEvents){
+%				eventStr = ""+allEcapEvents[eventCount]
+%				if(instance.counterResetOnEvent.includes(eventStr)){
+	ECAP_enableCounterResetOnEvent(`baseName`,`eventStr`);
+%				}
+%				else{
+	ECAP_disableCounterResetOnEvent(`baseName`,`eventStr`);
+%				}
+%				eventCount++
+%			}
+	/* Select eCAP input */
+	ECAP_selectECAPInput(`baseName`,`instance.ecapInput`);
+		% }
+		% if(instance.ecapMode == "APWM"){
+	/* Set eCAP APWM period */
+	ECAP_setAPWMPeriod(`baseName`,`instance.apwmPeriod`);
+	/* Set eCAP APWM on or off time count */
+	ECAP_setAPWMCompare(`baseName`,`instance.apwmCompare`);
+	/* Set eCAP APWM polarity */
+	ECAP_setAPWMPolarity(`baseName`,`instance.apwmPolarity`);
+		% }
+	/* Sets a phase shift value count */
+	ECAP_setPhaseShiftCount(`baseName`,`instance.phaseShiftCount`);
+		% if(instance.enableLoadCounter){
+	/* Enable counter loading with phase shift value */
+	ECAP_enableLoadCounter(`baseName`);
+			% if(instance.loadCounter){
+	/* Load time stamp counter */
+	ECAP_loadCounter(`baseName`);
+			% }
+		% }
+		% else{
+	/* Disable counter loading with phase shift value */
+	ECAP_disableLoadCounter(`baseName`);
+		% }
+	/* Configures Sync out signal mode */
+	ECAP_setSyncOutMode(`baseName`,`instance.syncOutMode`);
+		% if(instance.ecapMode == "CAPTURE"){
+			% if(instance.resetCounters){
+	/* Resets eCAP counters and flags */
+	ECAP_resetCounters(`baseName`);
+			% }
+			% if (instance.useDMA){
+	/* Sets the eCAP DMA source */
+	ECAP_setDMASource(`baseName`,`instance.dmaSource`);
+			% }
+		% }
+	/* Configures emulation mode */
+	ECAP_setEmulationMode(`baseName`,`instance.emulationMode`);
+	/* Set up the source for sync-in pulse */
+	ECAP_setSyncInPulseSource(`baseName`,`instance.syncInPulseSource`);
+
+	% }
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+	/* Starts Time stamp counter for `instance.$name` */
+	ECAP_startCounter(`baseName`);
+	% }
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+		% if(instance.ecapMode == "CAPTURE"){
+	/* Enables time stamp capture for `instance.$name` */
+	ECAP_enableTimeStampCapture(`baseName`);
+		% }
+	% }
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+		% if(instance.ecapMode == "CAPTURE"){
+			% if(instance.reArm){
+	/* Re-arms the eCAP module for `instance.$name` */
+	ECAP_reArm(`baseName`);
+			% }
+		% }
+	% }
+
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+		% if(instance.useInterrupts && instance.enableInterrupt){
+			% if(instance.ecapMode == "CAPTURE"){
+				% if (instance.interruptSourceCapture.length>0)
+				%{
+%%{
+				let sourceCount = 0
+				let sourcesToEnableOR = "("
+				for (let sourceToEnable in instance.interruptSourceCapture)
+				{
+					if (sourceCount == 0)
+					{
+						sourcesToEnableOR += instance.interruptSourceCapture[sourceCount]
+					}
+					else
+					{
+						sourcesToEnableOR += "\n\t\t"
+						sourcesToEnableOR += " | " + instance.interruptSourceCapture[sourceCount]
+					}
+					sourceCount++
+				}
+				sourcesToEnableOR += ")"
+%%}
+	/* Enables interrupt source for `instance.$name` */
+	ECAP_enableInterrupt(`baseName`,`sourcesToEnableOR`);
+				% }
+			% }
+			% else if(instance.ecapMode == "APWM") {
+				% if (instance.interruptSourceAPWM.length>0)
+				%{
+%%{
+				let sourceCount = 0
+				let sourcesToEnableOR = "("
+				for (let sourceToEnable in instance.interruptSourceAPWM)
+				{
+					if (sourceCount == 0)
+					{
+						sourcesToEnableOR += instance.interruptSourceAPWM[sourceCount]
+					}
+					else
+					{
+						sourcesToEnableOR += "\n\t\t"
+						sourcesToEnableOR += " | " + instance.interruptSourceAPWM[sourceCount]
+					}
+					sourceCount++
+				}
+				sourcesToEnableOR += ")"
+%%}
+	/* Enables interrupt source for `instance.$name` */
+	ECAP_enableInterrupt(`baseName`,`sourcesToEnableOR`);
+				% }
+			% }
+		% }
+	% }
+
+%}
+}

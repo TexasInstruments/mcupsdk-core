@@ -1,0 +1,16 @@
+void Drivers_socTimeSyncXbar0Open()
+{
+%%{
+    let module = system.modules['/xbar/soc_timesync_xbar0/soc_timesync_xbar0'];
+%%}
+% let base = "CSL_SOC_TIMESYNC_XBAR0_U_BASE";
+    /*
+    * TIME SYNC 0 XBAR
+    */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let xbarOutput = config.xbarOutput;
+    SOC_xbarSelectTimesyncXbar0InputSource(`base`, `config.name`, `xbarOutput`);
+    % }
+}

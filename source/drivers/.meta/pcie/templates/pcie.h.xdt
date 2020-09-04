@@ -1,0 +1,57 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/pcie/pcie'];
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("pcie");
+
+    let obAtuModule = system.modules[`/drivers/pcie/${driverVer}/pcieObAtu`];
+    let ibAtuModule = system.modules[`/drivers/pcie/${driverVer}/pcieIbAtu`];
+%%}
+/*
+ * PCIe
+ */
+#include <drivers/pcie.h>
+
+/* PCIe Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_PCIE_NUM_INSTANCES (`module.$instances.length`U)
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let ibAtu = instance.ibAtu;
+    % if (ibAtu.length > 0) {
+    % for (let j = 0; j < ibAtu.length; j++) {
+    % let ib_inst = ibAtu[j];
+    % let ib_cfg = ibAtuModule.getInstanceConfig(ib_inst);
+#define `instance.$name.toUpperCase()`_IB_REGION`j` (`j`U)
+    % }
+    % }
+% }
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let obAtu = instance.obAtu;
+    % if (obAtu.length > 0) {
+    % for (let j = 0; j < obAtu.length; j++) {
+    % let ob_inst = obAtu[j];
+    % let ob_cfg = obAtuModule.getInstanceConfig(ob_inst);
+#define `instance.$name.toUpperCase()`_OB_REGION`j` (`j`U)
+    % }
+    % }
+% }
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let obAtu = instance.obAtu;
+    % if (obAtu.length > 0) {
+    % for (let j = 0; j < obAtu.length; j++) {
+    % let ob_inst = obAtu[j];
+    % let ob_cfg = obAtuModule.getInstanceConfig(ob_inst);
+#define `instance.$name.toUpperCase()`_OB_REGION`j`_LOWER (`ob_cfg.lowerBase`)
+#define `instance.$name.toUpperCase()`_OB_REGION`j`_UPPER (`ob_cfg.upperBase`)
+    % }
+    % }
+% }

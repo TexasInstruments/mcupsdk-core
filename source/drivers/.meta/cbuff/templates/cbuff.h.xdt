@@ -1,0 +1,15 @@
+%%{
+    let module = system.modules['/drivers/cbuff/cbuff'];
+%%}
+/*
+ * CBUFF
+ */
+#include <drivers/cbuff.h>
+
+/* CBUFF Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_CBUFF_NUM_INSTANCES (`module.$instances.length`U)
+

@@ -1,0 +1,77 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.12.1+2446"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma           = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1          = edma.addInstance();
+const lin            = scripting.addModule("/drivers/lin/lin", {}, false);
+const lin1           = lin.addInstance();
+const debug_log      = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7      = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71     = mpu_armv7.addInstance();
+const mpu_armv72     = mpu_armv7.addInstance();
+const mpu_armv73     = mpu_armv7.addInstance();
+const mpu_armv74     = mpu_armv7.addInstance();
+const dma_trig_xbar  = scripting.addModule("/xbar/dma_trig_xbar/dma_trig_xbar", {}, false);
+const dma_trig_xbar1 = dma_trig_xbar.addInstance();
+const dma_trig_xbar2 = dma_trig_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+edma1.$name                 = "CONFIG_EDMA0";
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
+lin1.$name          = "CONFIG_LIN1";
+lin1.enableLoopback = true;
+lin1.LIN.$assign    = "LIN1";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+dma_trig_xbar1.$name      = "CONFIG_DMA_TRIG_XBAR0";
+dma_trig_xbar1.xbarOutput = "DMA_TRIG_XBAR_LIN1_RXDMA";
+
+dma_trig_xbar2.$name      = "CONFIG_DMA_TRIG_XBAR1";
+dma_trig_xbar2.xbarOutput = "DMA_TRIG_XBAR_LIN1_TXDMA";
+dma_trig_xbar2.instance   = "DMA_TRIG_XBAR_EDMA_MODULE_1";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+lin1.LIN.RXD.$suggestSolution = "ball.A9";
+lin1.LIN.TXD.$suggestSolution = "ball.B9";

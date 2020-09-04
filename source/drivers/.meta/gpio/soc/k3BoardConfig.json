@@ -1,0 +1,258 @@
+{
+    "am64x_am243x": {
+        "m4fss0-0": {
+            "outPinCfg": [
+                {
+                    "name": "4",
+                    "displayName": "ROUTER 4"
+                },
+                {
+                    "name": "5",
+                    "displayName": "ROUTER 5"
+                },
+                {
+                    "name": "6",
+                    "displayName": "ROUTER 6"
+                },
+                {
+                    "name": "7",
+                    "displayName": "ROUTER 7"
+                }
+            ]
+        },
+        "r5fss0-0": {
+            "outPinCfg": [
+                {
+                    "name": "8",
+                    "displayName": "ROUTER 8"
+                },
+                {
+                    "name": "9",
+                    "displayName": "ROUTER 9"
+                }
+            ]
+        },
+        "r5fss0-1": {
+            "outPinCfg": [
+                {
+                    "name": "10",
+                    "displayName": "ROUTER 10"
+                },
+                {
+                    "name": "11",
+                    "displayName": "ROUTER 11"
+                }
+            ]
+        },
+        "r5fss1-0": {
+            "outPinCfg": [
+                {
+                    "name": "12",
+                    "displayName": "ROUTER 12"
+                },
+                {
+                    "name": "13",
+                    "displayName": "ROUTER 13"
+                }
+            ]
+        },
+        "r5fss1-1": {
+            "outPinCfg": [
+                {
+                    "name": "14",
+                    "displayName": "ROUTER 14"
+                },
+                {
+                    "name": "15",
+                    "displayName": "ROUTER 15"
+                }
+            ]
+        },
+        "a53ss0-0": {
+            "outPinCfg": [
+                {
+                    "name": "0",
+                    "displayName": "ROUTER 0"
+                },
+                {
+                    "name": "1",
+                    "displayName": "ROUTER 1"
+                },
+                {
+                    "name": "2",
+                    "displayName": "ROUTER 2"
+                },
+                {
+                    "name": "3",
+                    "displayName": "ROUTER 3"
+                },
+                {
+                    "name": "4",
+                    "displayName": "ROUTER 4"
+                },
+                {
+                    "name": "5",
+                    "displayName": "ROUTER 5"
+                },
+                {
+                    "name": "6",
+                    "displayName": "ROUTER 6"
+                },
+                {
+                    "name": "7",
+                    "displayName": "ROUTER 7"
+                }
+            ]
+        }
+    },
+    "am62x": {
+        "r5fss0-0": {
+            "outPinCfg": [
+                {
+                    "name": "0",
+                    "displayName": "ROUTER 0"
+                },
+                {
+                    "name": "1",
+                    "displayName": "ROUTER 1"
+                },
+                {
+                    "name": "2",
+                    "displayName": "ROUTER 2"
+                },
+                {
+                    "name": "3",
+                    "displayName": "ROUTER 3"
+                },
+                {
+                    "name": "4",
+                    "displayName": "ROUTER 4"
+                },
+                {
+                    "name": "5",
+                    "displayName": "ROUTER 5"
+                },
+                {
+                    "name": "6",
+                    "displayName": "ROUTER 6"
+                },
+                {
+                    "name": "7",
+                    "displayName": "ROUTER 7"
+                },
+                {
+                    "name": "8",
+                    "displayName": "ROUTER 8"
+                },
+                {
+                    "name": "9",
+                    "displayName": "ROUTER 9"
+                },
+                {
+                    "name": "10",
+                    "displayName": "ROUTER 10"
+                },
+                {
+                    "name": "11",
+                    "displayName": "ROUTER 11"
+                },
+                {
+                    "name": "12",
+                    "displayName": "ROUTER 12"
+                },
+                {
+                    "name": "13",
+                    "displayName": "ROUTER 13"
+                },
+                {
+                    "name": "14",
+                    "displayName": "ROUTER 14"
+                },
+                {
+                    "name": "15",
+                    "displayName": "ROUTER 15"
+                },
+                {
+                    "name": "16",
+                    "displayName": "ROUTER 16"
+                },
+                {
+                    "name": "17",
+                    "displayName": "ROUTER 17"
+                },
+                {
+                    "name": "18",
+                    "displayName": "ROUTER 18"
+                },
+                {
+                    "name": "19",
+                    "displayName": "ROUTER 19"
+                },
+                {
+                    "name": "20",
+                    "displayName": "ROUTER 20"
+                },
+                {
+                    "name": "21",
+                    "displayName": "ROUTER 21"
+                },
+                {
+                    "name": "22",
+                    "displayName": "ROUTER 22"
+                },
+                {
+                    "name": "23",
+                    "displayName": "ROUTER 23"
+                },
+                {
+                    "name": "24",
+                    "displayName": "ROUTER 24"
+                },
+                {
+                    "name": "25",
+                    "displayName": "ROUTER 25"
+                },
+                {
+                    "name": "26",
+                    "displayName": "ROUTER 26"
+                },
+                {
+                    "name": "27",
+                    "displayName": "ROUTER 27"
+                },
+                {
+                    "name": "28",
+                    "displayName": "ROUTER 28"
+                },
+                {
+                    "name": "29",
+                    "displayName": "ROUTER 29"
+                },
+                {
+                    "name": "30",
+                    "displayName": "ROUTER 30"
+                },
+                {
+                    "name": "31",
+                    "displayName": "ROUTER 31"
+                },
+                {
+                    "name": "32",
+                    "displayName": "ROUTER 32"
+                },
+                {
+                    "name": "33",
+                    "displayName": "ROUTER 33"
+                },
+                {
+                    "name": "34",
+                    "displayName": "ROUTER 34"
+                },
+                {
+                    "name": "35",
+                    "displayName": "ROUTER 35"
+                }
+            ]
+        }
+    }
+}

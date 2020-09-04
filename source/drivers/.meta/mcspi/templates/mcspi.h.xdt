@@ -1,0 +1,22 @@
+%%{
+    let module = system.modules['/drivers/mcspi/mcspi'];
+    let mcspiUdmaInstanceCount = 0;
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.intrEnable == "DMA") {
+            mcspiUdmaInstanceCount++;
+        }
+    }
+%%}
+/*
+ * MCSPI
+ */
+#include <drivers/mcspi.h>
+
+/* MCSPI Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_MCSPI_NUM_INSTANCES (`module.$instances.length`U)
+#define CONFIG_MCSPI_NUM_DMA_INSTANCES (`mcspiUdmaInstanceCount`U)

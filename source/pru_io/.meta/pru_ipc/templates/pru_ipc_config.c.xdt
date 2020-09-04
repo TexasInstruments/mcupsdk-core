@@ -1,0 +1,234 @@
+%%{
+    let module     = system.modules['/pru_io/pru_ipc/pru_ipc'];
+    let icss0_intc = system.modules['/drivers/pruicss/icss_intc/icss0_intc_mapping'];
+    let icss1_intc = system.modules['/drivers/pruicss/icss_intc/icss1_intc_mapping'];
+
+    let instancesOffsets = {
+        ICSSG0: {
+            PRU0: {
+                memOffset: 0,
+            },
+            PRU1: {
+                memOffset: 0,
+            },
+            RTU_PRU0: {
+                memOffset: 0,
+            },
+            RTU_PRU1: {
+                memOffset: 0,
+            },
+            TX_PRU0: {
+                memOffset: 0,
+            },
+            TX_PRU1: {
+                memOffset: 0,
+            },
+        },
+        ICSSG1: {
+            PRU0: {
+                memOffset: 0,
+            },
+            PRU1: {
+                memOffset: 0,
+            },
+            RTU_PRU0: {
+                memOffset: 0,
+            },
+            RTU_PRU1: {
+                memOffset: 0,
+            },
+            TX_PRU0: {
+                memOffset: 0,
+            },
+            TX_PRU1: {
+                memOffset: 0,
+            },
+        },
+    };
+
+    const RTU_OFFSET = "0x00001000 + ";
+    const TX_OFFSET  = "0x00001800 + ";
+
+// maybe an advanced mode option to provide user options to select memName and memOffset
+    function getPruConfigMemAddr (instance) {
+        let offset = (instancesOffsets[instance.icssInstance][instance.pruCore].memOffset).toString(10);
+        let memAddr = "NULL";
+        if (instance.icssInstance === "ICSSG0") {
+            switch(instance.pruCore) {
+                case "PRU0":
+                    memAddr = "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + offset;
+                    break;
+                case "PRU1":
+                    memAddr = "CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + offset;
+                    break;
+                case "RTU_PRU0":
+                    memAddr = "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    break;
+                case "RTU_PRU1":
+                    memAddr = "CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    break;
+                case "TX_PRU0":
+                    memAddr = "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    break;
+                case "TX_PRU1":
+                    memAddr = "CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    break;
+                default:
+                    // Nothing
+            }
+        }
+        if (instance.icssInstance === "ICSSG1") {
+            switch(instance.pruCore) {
+                case "PRU0":
+                    memAddr = "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + offset;
+                    break;
+                case "PRU1":
+                    memAddr = "CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + offset;
+                    break;
+                case "RTU_PRU0":
+                    memAddr = "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    break;
+                case "RTU_PRU1":
+                    memAddr = "CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    break;
+                case "TX_PRU0":
+                    memAddr = "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    break;
+                case "TX_PRU1":
+                    memAddr = "CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    break;
+                default:
+                    // Nothing
+            }
+        }
+        instancesOffsets[instance.icssInstance][instance.pruCore].memOffset += 8 + 4*instance.noOfBuffers;
+        return  memAddr;
+    }
+
+    function getR5fIntrNum (instance) {
+        return instance.icssInstance === "ICSSG0" ?
+            "120" + ` + ICSS_INTC_HOST_INTR_${instance.rxIntcMapping?.host} - ICSS_INTC_HOST_INTR_2`:
+            "248" + ` + ICSS_INTC_HOST_INTR_${instance.rxIntcMapping?.host} - ICSS_INTC_HOST_INTR_2`;
+    }
+
+    function getBufferMemNameApp (instance, buffer) {
+        return "gPruIpc" + instance + "BufMem" + buffer;
+    }
+
+    function getBufferMemSize (instance) {
+        // This size is in terms of number of data elements
+        return instance.blockSize*instance.noOfBlocks;
+    }
+
+    function getInstSharedMemSize (instance) {
+        // This size is in terms of Bytes
+        return instance.dataSize*instance.blockSize*instance.noOfBlocks*instance.noOfBuffers;
+    }
+
+    function getTotalSharedMemSize () {
+        // This size is in terms of Bytes
+        let total_size = 0;
+        for(let i = 0; i < module.$instances.length; i++) {
+            let instance = module.$instances[i];
+            total_size += getInstSharedMemSize(instance);
+        }
+        return total_size;
+    }
+
+    function getBufferMemSizeMacro (instance) {
+        return "PRU_IPC_" + instance + "_BUF_MEM_SIZE";
+    }
+
+    function getBufferMemNameLinker (instance, buffer) {
+        return ".bss.pru_ipc_" + instance + "buf_mem" + buffer;
+    }
+%%}
+/*
+ * PRU_IPC
+ */
+/* Shared Memory Buffers */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `getBufferMemSizeMacro(i+1)` (`getBufferMemSize(instance)`)
+    % // TODO: For other Data Sizes uint32_t will change
+    % if(instance.dataSize == "4") {
+        % for(let id = 0; id < instance.noOfBuffers; id++) {
+uint32_t `getBufferMemNameApp(i+1, id+1)`[`getBufferMemSizeMacro(i+1)`] __attribute__((aligned(4), section("`getBufferMemNameLinker(i+1, id+1)`")));
+        % }
+    % }
+/* Shared Memory Array of Buffers */
+uint32_t PruIpc_bufferAddrs`i+1`[`instance.noOfBuffers`] = {
+        % for(let id = 0; id < instance.noOfBuffers; id++) {
+            (uint32_t) `getBufferMemNameApp(i+1, id+1)`,
+        % }
+};
+% }
+
+/*
+    // Sample Reference code for Linker:
+    // Transfer this code to Linker file as required.
+
+SECTIONS
+{
+    // Buffer memory used by PRU_IPC
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % for(let id = 0; id < instance.noOfBuffers; id++) {
+    `getBufferMemNameLinker(i+1, id+1)` (NOLOAD): {} > PRU_IPC_BUF_MEM
+    % }
+% }
+}
+
+MEMORY
+{
+    // shared memory segments
+    // - make sure there is an MPU entry which maps below regions as non-cache
+    // shared memory that is used between ICCS and this core. MARK as cache+sharable
+    // make sure the LENGTH fits in the specified memory
+    // ORIGIN is the start address of the memory you want to use as shared memory. 0x78000040 = TCM
+    PRU_IPC_BUF_MEM         : ORIGIN = 0x78000040, LENGTH = 0x`getTotalSharedMemSize().toString(16)`
+}
+
+*/
+
+/* PRU_IPC objects - initialized by the driver */
+static PRU_IPC_Object gPruIpcObjects[CONFIG_PRU_IPC_NUM_INSTANCES];
+/* PRU_IPC Attrs - initialized by sysconfig */
+static PRU_IPC_Attrs  gPruIpcAttrs[CONFIG_PRU_IPC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        .dataSize      = `instance.dataSize`,
+        .blockSize     = `instance.blockSize`,
+        .noOfBlocks    = `instance.noOfBlocks`,
+        .noOfBuffers   = `instance.noOfBuffers`,
+        .bufferAddrs   = PruIpc_bufferAddrs`i+1`,
+        .config        = `getPruConfigMemAddr(instance)`,
+        % if(instance.interruptRx) {
+        .pruEvtoutNum  = ICSS_INTC_HOST_INTR_`instance.rxIntcMapping?.host` - ICSS_INTC_HOST_INTR_2,
+        .sysEventNum   = ICSS_INTC_EVENT_`instance.rxIntcMapping?.event`,
+        .r5fIntrNum    = `getR5fIntrNum(instance)`,
+        % }
+        .blockSizeBytes = `instance.dataSize * instance.blockSize`,
+        .enableRxInt   = `instance.interruptRx ? 1 : 0`,
+        .enableTxInt   = `instance.interruptTx ? 1 : 0`,
+        % if(instance.interruptTx) {
+        .txEventNum    = ICSS_INTC_EVENT_`instance.txIntcMapping?.event`
+        % }
+    },
+% }
+};
+
+/* PruIpc driver configuration */
+PRU_IPC_Config gPruIpcConfig[CONFIG_PRU_IPC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    {
+        .attrs  = &gPruIpcAttrs[`i`],
+        .object = &gPruIpcObjects[`i`],
+    },
+% }
+};
+
+uint32_t gPruIpcConfigNum = CONFIG_PRU_IPC_NUM_INSTANCES;

@@ -1,0 +1,121 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.12.0+2406"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma      = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1     = edma.addInstance();
+const mcasp     = scripting.addModule("/drivers/mcasp/mcasp", {}, false);
+const mcasp1    = mcasp.addInstance();
+const mcasp2    = mcasp.addInstance();
+const mcasp3    = mcasp.addInstance();
+const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mcasp1.$name               = "CONFIG_MCASP0";
+mcasp1.txCallbackFxn       = "mcasp_loopback_txcb";
+mcasp1.rxCallbackFxn       = "mcasp_loopback_rxcb";
+mcasp1.txDataMask          = 0xFFFFFFFF;
+mcasp1.txActiveSlotMask    = 0x3;
+mcasp1.fsx                 = 48;
+mcasp1.rxDataMask          = 0xFFFFFFFF;
+mcasp1.rxActiveSlotMask    = 0x3;
+mcasp1.fsr                 = 48;
+mcasp1.RCSS_MCASP.$assign  = "RCSS_MCASPB";
+mcasp1.mcaspSer.create(2);
+mcasp1.mcaspSer[0].$name   = "CONFIG_MCASP_SER0";
+mcasp1.mcaspSer[1].$name   = "CONFIG_MCASP_SER1";
+mcasp1.mcaspSer[1].serNum  = 1;
+mcasp1.mcaspSer[1].dataDir = "Receive";
+
+mcasp2.$name               = "CONFIG_MCASP1";
+mcasp2.txCallbackFxn       = "mcasp_loopback_txcb";
+mcasp2.rxCallbackFxn       = "mcasp_loopback_rxcb";
+mcasp2.txDataMask          = 0xFFFFFFFF;
+mcasp2.txActiveSlotMask    = 0x3;
+mcasp2.rxDataMask          = 0xFFFFFFFF;
+mcasp2.rxActiveSlotMask    = 0x3;
+mcasp2.fsr                 = 48;
+mcasp2.fsx                 = 48;
+mcasp2.txLoopjobBuf        = "txLoopjobBuf1";
+mcasp2.rxLoopjobBuf        = "rxLoopjobBuf1";
+mcasp2.RCSS_MCASP.$assign  = "RCSS_MCASPA";
+mcasp2.mcaspSer.create(2);
+mcasp2.mcaspSer[0].$name   = "CONFIG_MCASP_SER2";
+mcasp2.mcaspSer[1].$name   = "CONFIG_MCASP_SER3";
+mcasp2.mcaspSer[1].serNum  = 1;
+mcasp2.mcaspSer[1].dataDir = "Receive";
+
+mcasp3.$name               = "CONFIG_MCASP2";
+mcasp3.txCallbackFxn       = "mcasp_loopback_txcb";
+mcasp3.rxCallbackFxn       = "mcasp_loopback_rxcb";
+mcasp3.txDataMask          = 0xFFFFFFFF;
+mcasp3.txActiveSlotMask    = 0x3;
+mcasp3.rxDataMask          = 0xFFFFFFFF;
+mcasp3.rxActiveSlotMask    = 0x3;
+mcasp3.fsr                 = 48;
+mcasp3.fsx                 = 48;
+mcasp3.txLoopjobBuf        = "txLoopjobBuf2";
+mcasp3.rxLoopjobBuf        = "rxLoopjobBuf2";
+mcasp3.RCSS_MCASP.$assign  = "RCSS_MCASPC";
+mcasp3.mcaspSer.create(2);
+mcasp3.mcaspSer[0].$name   = "CONFIG_MCASP_SER4";
+mcasp3.mcaspSer[1].$name   = "CONFIG_MCASP_SER5";
+mcasp3.mcaspSer[1].serNum  = 1;
+mcasp3.mcaspSer[1].dataDir = "Receive";
+
+debug_log.enableUartLog               = true;
+debug_log.uartLog.$name               = "CONFIG_UART0";
+debug_log.uartLog.DSS_UART.RX.$assign = "ball.H19";
+debug_log.uartLog.DSS_UART.TX.$assign = "ball.J19";
+
+edma1.$name                             = "CONFIG_EDMA0";
+mcasp1.edmaConfig                       = edma1;
+mcasp2.edmaConfig                       = edma1;
+mcasp3.edmaConfig                       = edma1;
+debug_log.uartLog.edmaConfig            = edma1;
+edma1.edmaRmDmaCh[0].$name              = "CONFIG_EDMA_RM0";
+edma1.edmaRmDmaCh[0].endIndex           = 63;
+edma1.edmaRmQdmaCh[0].$name             = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name                = "CONFIG_EDMA_RM2";
+edma1.edmaRmTcc[0].endIndex             = 63;
+edma1.edmaRmParam[0].$name              = "CONFIG_EDMA_RM3";
+edma1.edmaRmReservedDmaCh[0].$name      = "CONFIG_EDMA_RM4";
+edma1.edmaRmReservedDmaCh[0].startIndex = 48;
+edma1.edmaRmReservedDmaCh[0].endIndex   = 54;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mcasp1.RCSS_MCASP.FSX.$suggestSolution      = "ball.V13";
+mcasp1.RCSS_MCASP.ACLKX.$suggestSolution    = "ball.W14";
+mcasp1.RCSS_MCASP.AHCLKX.$suggestSolution   = "ball.V12";
+mcasp1.RCSS_MCASP.FSR.$suggestSolution      = "ball.U11";
+mcasp1.RCSS_MCASP.ACLKR.$suggestSolution    = "ball.W13";
+mcasp1.mcaspSer[0].DAT0.$suggestSolution    = "ball.V11";
+mcasp1.mcaspSer[1].DAT1.$suggestSolution    = "ball.W11";
+mcasp2.RCSS_MCASP.FSX.$suggestSolution      = "ball.K16";
+mcasp2.RCSS_MCASP.ACLKX.$suggestSolution    = "ball.L17";
+mcasp2.RCSS_MCASP.AHCLKX.$suggestSolution   = "ball.L18";
+mcasp2.RCSS_MCASP.FSR.$suggestSolution      = "ball.J17";
+mcasp2.RCSS_MCASP.ACLKR.$suggestSolution    = "ball.K18";
+mcasp2.mcaspSer[0].DAT0.$suggestSolution    = "ball.J18";
+mcasp2.mcaspSer[1].DAT1.$suggestSolution    = "ball.F18";
+mcasp3.RCSS_MCASP.FSX.$suggestSolution      = "ball.W15";
+mcasp3.RCSS_MCASP.ACLKX.$suggestSolution    = "ball.V14";
+mcasp3.RCSS_MCASP.AHCLKX.$suggestSolution   = "ball.U13";
+mcasp3.RCSS_MCASP.FSR.$suggestSolution      = "ball.W16";
+mcasp3.RCSS_MCASP.ACLKR.$suggestSolution    = "ball.V15";
+mcasp3.mcaspSer[0].DAT0.$suggestSolution    = "ball.U15";
+mcasp3.mcaspSer[1].DAT1.$suggestSolution    = "ball.V16";
+debug_log.uartLog.DSS_UART.$suggestSolution = "DSS_UARTA";

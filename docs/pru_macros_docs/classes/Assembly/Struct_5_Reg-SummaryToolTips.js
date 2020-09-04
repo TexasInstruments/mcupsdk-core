@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("AssemblyClass:Struct_5_Reg",{46:"<div class=\"NDToolTip TStruct LAssembly\"><div class=\"TTSummary\">Struct to expose 5 registers as dword, words and bytes</div></div>"});

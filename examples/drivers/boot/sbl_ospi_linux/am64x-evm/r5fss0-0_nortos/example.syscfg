@@ -1,0 +1,102 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2163"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const flash       = scripting.addModule("/board/flash/flash", {}, false);
+const flash1      = flash.addInstance();
+const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
+const bootloader1 = bootloader.addInstance();
+const bootloader2 = bootloader.addInstance();
+const ddr         = scripting.addModule("/drivers/ddr/ddr", {}, false);
+const ddr1        = ddr.addInstance();
+const gtc         = scripting.addModule("/drivers/gtc/gtc");
+const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
+const mpu_armv75  = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+bootloader1.appImageOffset      = "0x80000";
+bootloader1.$name               = "CONFIG_BOOTLOADER_FLASH0";
+bootloader1.appImageBaseAddress = "0x60080000";
+
+bootloader2.$name          = "CONFIG_BOOTLOADER_FLASH_LINUX";
+bootloader2.appImageOffset = "0x300000";
+
+flash1.$name                         = "CONFIG_FLASH0";
+bootloader1.flashDriver              = flash1;
+bootloader2.flashDriver              = flash1;
+flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
+flash1.peripheralDriver.phyEnable    = true;
+flash1.peripheralDriver.dmaEnable    = true;
+flash1.peripheralDriver.inputClkFreq = 166666666;
+flash1.peripheralDriver.advanced     = true;
+
+ddr1.$name = "CONFIG_DDR0";
+
+const udma                         = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1                        = udma.addInstance({}, false);
+udma1.$name                        = "CONFIG_UDMA0";
+flash1.peripheralDriver.udmaDriver = udma1;
+
+debug_log.enableUartLog        = true;
+debug_log.enableCssLog         = false;
+debug_log.uartLog.$name        = "CONFIG_UART0";
+debug_log.uartLog.clkFreq      = 48000000;
+debug_log.uartLog.intrEnable   = "DISABLE";
+debug_log.uartLog.UART.$assign = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name    = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr = 0x80000000;
+mpu_armv75.size     = 31;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "ball.N20";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "ball.L19";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "ball.N19";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "ball.M17";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "ball.N18";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "ball.P20";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "ball.P21";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "ball.M21";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "ball.M20";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "ball.M18";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "ball.M19";
+debug_log.uartLog.UART.RXD.$suggestSolution        = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution        = "ball.C16";

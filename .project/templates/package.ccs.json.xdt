@@ -1,0 +1,21 @@
+%%{
+    productName = args.utils.getProductNameProjectSpec(args.device);
+%%}
+[
+    {
+        "rootMacroName": "COM_TI_`productName`_INSTALL_DIR",
+        "compilerIncludePath": [ ],
+        "compilerSymbols": [ ],
+        "linkerSearchPath": [ ],
+        "properties": {
+            "rtsc.repositories": [
+                "source",
+                "."
+            ]
+        },
+        "helpTocs": [
+        ],
+        "docs": [
+        ]
+    }
+]

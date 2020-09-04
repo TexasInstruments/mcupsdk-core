@@ -1,0 +1,15 @@
+%%{
+    let module = system.modules['/drivers/pruicss/pruicss'];
+%%}
+/*
+ * PRUICSS
+ */
+#include <drivers/pruicss.h>
+
+/* PRUICSS Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+#define `instance.$name.toUpperCase()`_CORE_CLK_FREQ_HZ (`instance.coreClk`U)
+% }
+#define CONFIG_PRUICSS_NUM_INSTANCES (`module.$instances.length`U)

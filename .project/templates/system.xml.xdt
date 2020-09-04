@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+% let num = 0;
+% for (let project of args.project.projects) {
+    <project configuration="@match" id="project_`num`" name="`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`">
+    </project>
+    <core id="`args.device.getProjectSpecCpu(project.cpu)`" project="project_`num`"/>
+    % num = num + 1;
+% }
+	<preBuildSteps>
+	</preBuildSteps>
+    <postBuildSteps>
+        <step command="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_system_ccs_bootimage_gen OUTNAME=`args.project.name`_system PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"/>
+    </postBuildSteps>
+
+</system>

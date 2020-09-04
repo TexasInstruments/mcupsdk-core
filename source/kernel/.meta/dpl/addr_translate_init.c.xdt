@@ -1,0 +1,11 @@
+    /* initialize Address Translate (RAT) Module */
+    {
+        AddrTranslateP_Params addrTranslateParams;
+
+        AddrTranslateP_Params_init(&addrTranslateParams);
+        addrTranslateParams.numRegions = CONFIG_ADDR_TRANSLATE_REGIONS;
+        addrTranslateParams.ratBaseAddr = CONFIG_ADDR_TRANSLATE_RAT_BASE_ADDR;
+        addrTranslateParams.regionConfig = &gAddrTranslateRegionConfig[0];
+
+        AddrTranslateP_init(&addrTranslateParams);
+    }

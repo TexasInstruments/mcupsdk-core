@@ -1,0 +1,35 @@
+%%{
+    let module = system.modules['/drivers/cbuff/cbuff'];
+%%}
+/*
+ * CBUFF
+ */
+/* CBUFF atrributes */
+CBUFF_Attrs gCbuffAttrs[CONFIG_CBUFF_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .baseAddr                   = `config.baseAddr`,
+        .fifoBaseAddr               = `config.fifoBaseAddr`,
+        .maxLVDSLanesSupported      = `config.maxLVDSLanesSupported`,
+        .errorIntrNum               = `config.errorIntrNum`,
+        .intrNum                    = `config.intrNum`,
+        .cbuffChannelId[0]             = `config.cbuffChannelId[0]`,
+        .cbuffChannelId[1]             = `config.cbuffChannelId[1]`,
+        .cbuffChannelId[2]             = `config.cbuffChannelId[2]`,
+        .cbuffChannelId[3]             = `config.cbuffChannelId[3]`,
+        .cbuffChannelId[4]             = `config.cbuffChannelId[4]`,
+        .cbuffChannelId[5]             = `config.cbuffChannelId[5]`,
+        .cbuffChannelId[6]             = `config.cbuffChannelId[6]`,
+    },
+% }
+};
+
+/* CBUFF objects - initialized by the driver */
+CBUFF_Object gCbuffObject[CONFIG_CBUFF_NUM_INSTANCES];
+/* CBUFF objects - storage for CBUFF driver object handles */
+CBUFF_Object *gCbuffObjectPtr[CONFIG_CBUFF_NUM_INSTANCES] = { NULL };
+/* CBUFF objects count */
+uint32_t gCbuffConfigNum = CONFIG_CBUFF_NUM_INSTANCES;

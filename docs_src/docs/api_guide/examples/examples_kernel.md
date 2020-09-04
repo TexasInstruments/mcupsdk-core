@@ -1,0 +1,29 @@
+#  OS Kernel and Driver Porting Layer (DPL) {#EXAMPLES_KERNEL}
+
+This page lists all the examples related to usage of RTOS and no-RTOS APIs,
+including driver porting layer examples.
+
+\cond SOC_AM263X
+-# \subpage EXAMPLES_KERNEL_DPL_DEMO
+-# \subpage EXAMPLES_KERNEL_DPL_INTERRUPT_PRIORITIZATION
+-# \subpage EXAMPLES_KERNEL_FREERTOS_POSIX
+-# \subpage EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH
+\endcond
+\cond SOC_AM64X || SOC_AM243X
+-# \subpage EXAMPLES_KERNEL_DPL_DEMO
+-# \subpage EXAMPLES_KERNEL_FREERTOS_POSIX
+-# \subpage EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH
+-# \subpage EXAMPLES_KERNEL_DPL_XIP_BENCHMARK
+\endcond
+\cond SOC_AM64X
+-# \subpage EXAMPLES_KERNEL_FREERTOS_SMP_TASK_SWITCH
+-# \subpage EXAMPLES_KERNEL_FREERTOS_DHRYSTONE_BENCHMARK
+\endcond
+\cond SOC_AM273X || SOC_AWR294X
+-# \subpage EXAMPLES_KERNEL_DPL_DEMO
+-# \subpage EXAMPLES_KERNEL_FREERTOS_POSIX
+-# \subpage EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH
+\endcond
+\cond SOC_AM62X
+-# \subpage EXAMPLES_KERNEL_DPL_DEMO
+\endcond

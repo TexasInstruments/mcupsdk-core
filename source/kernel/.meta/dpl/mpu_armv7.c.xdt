@@ -1,0 +1,43 @@
+%%{
+    let module = system.modules['/kernel/dpl/mpu_armv7'];
+%%}
+% if (module.$instances.length > 0) {
+% if (module.isCacheAvailable()) {
+/* ----------- CacheP ----------- */
+const CacheP_Config gCacheConfig = {
+    .enable = 1,
+    .enableForceWrThru = 0,
+};
+% }
+
+/* ----------- MpuP_armv7 ----------- */
+#define CONFIG_MPU_NUM_REGIONS  (`module.$instances.length`u)
+
+const MpuP_Config gMpuConfig = {
+    .numRegions = CONFIG_MPU_NUM_REGIONS,
+    .enableBackgroundRegion = 0,
+    .enableMpu = 1,
+};
+
+const MpuP_RegionConfig gMpuRegionConfig[CONFIG_MPU_NUM_REGIONS] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let attributes = module.getRegionAttributes(instance);
+    {
+        .baseAddr = 0x`instance.baseAddr.toString(16).toUpperCase()`u,
+        .size = MpuP_RegionSize_`module.getSizeString(instance.size)`,
+        .attrs = {
+            .isEnable = 1,
+            .isCacheable = `attributes.isCacheable`,
+            .isBufferable = `attributes.isBufferable`,
+            .isSharable = `attributes.isSharable`,
+            .isExecuteNever = `Number(attributes.isExecuteNever)`,
+            .tex = `attributes.tex`,
+            .accessPerm = `attributes.accessPerm`,
+            .subregionDisableMask = 0x`attributes.subregionDisableMask.toString(16).toUpperCase()`u
+        },
+    },
+% }
+};
+% }

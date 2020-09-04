@@ -1,0 +1,201 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1    = eeprom.addInstance();
+const ethphy     = scripting.addModule("/board/ethphy/ethphy", {}, false);
+const ethphy1    = ethphy.addInstance();
+const flash      = scripting.addModule("/board/flash/flash", {}, false);
+const flash1     = flash.addInstance();
+const led        = scripting.addModule("/board/led/led", {}, false);
+const led1       = led.addInstance();
+const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
+const adc1       = adc.addInstance();
+const fsi_rx     = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
+const fsi_rx1    = fsi_rx.addInstance();
+const fsi_rx2    = fsi_rx.addInstance();
+const fsi_tx     = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
+const fsi_tx1    = fsi_tx.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const mcan       = scripting.addModule("/drivers/mcan/mcan", {}, false);
+const mcan1      = mcan.addInstance();
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
+const mcspi2     = mcspi.addInstance();
+const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1   = pruicss.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+const timer2     = timer.addInstance();
+const timer3     = timer.addInstance();
+const timer4     = timer.addInstance();
+const timer5     = timer.addInstance();
+const timer6     = timer.addInstance();
+const timer7     = timer.addInstance();
+const timer8     = timer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+eeprom1.$name = "CONFIG_EEPROM0";
+
+ethphy1.$name = "CONFIG_ETHPHY0";
+
+flash1.$name                              = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
+flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+
+led1.$name = "CONFIG_LED0";
+
+adc1.$name                    = "CONFIG_ADC0";
+adc1.ADC.$assign              = "ADC0";
+adc1.ADC.AIN0.$assign         = "ADC0_AIN0";
+adc1.ADC.AIN1.$assign         = "ADC0_AIN1";
+adc1.ADC.AIN2.$assign         = "ADC0_AIN2";
+adc1.ADC.AIN3.$assign         = "ADC0_AIN3";
+adc1.ADC.AIN4.$assign         = "ADC0_AIN4";
+adc1.ADC.AIN5.$assign         = "ADC0_AIN5";
+adc1.ADC.AIN6.$assign         = "ADC0_AIN6";
+adc1.ADC.AIN7.$assign         = "ADC0_AIN7";
+adc1.ADC.EXT_TRIGGER0.$assign = "UART0_CTSn";
+adc1.ADC.EXT_TRIGGER1.$assign = "UART1_CTSn";
+
+fsi_rx1.$name              = "CONFIG_FSI_RX0";
+fsi_rx1.FSI_RX.$assign     = "FSI_RX0";
+fsi_rx1.FSI_RX.CLK.$assign = "GPMC0_AD8";
+fsi_rx1.FSI_RX.D0.$assign  = "GPMC0_AD9";
+fsi_rx1.FSI_RX.D1.$assign  = "GPMC0_AD10";
+
+fsi_rx2.$name              = "CONFIG_FSI_RX1";
+fsi_rx2.FSI_RX.$assign     = "FSI_RX1";
+fsi_rx2.FSI_RX.CLK.$assign = "GPMC0_AD11";
+fsi_rx2.FSI_RX.D0.$assign  = "GPMC0_AD12";
+fsi_rx2.FSI_RX.D1.$assign  = "GPMC0_AD13";
+
+fsi_tx1.$name              = "CONFIG_FSI_TX0";
+fsi_tx1.FSI_TX.$assign     = "FSI_TX0";
+fsi_tx1.FSI_TX.CLK.$assign = "GPMC0_BE1n";
+fsi_tx1.FSI_TX.D0.$assign  = "GPMC0_AD14";
+fsi_tx1.FSI_TX.D1.$assign  = "GPMC0_AD15";
+
+gpio1.$name                = "CONFIG_GPIO0";
+led1.peripheralDriver      = gpio1;
+gpio1.GPIO.$assign         = "GPIO0";
+gpio1.GPIO.gpioPin.$assign = "GPMC0_AD7";
+
+i2c1.$name               = "CONFIG_I2C0";
+eeprom1.peripheralDriver = i2c1;
+i2c1.I2C.$assign         = "I2C0";
+i2c1.I2C.SCL.$assign     = "I2C0_SCL";
+i2c1.I2C.SDA.$assign     = "I2C0_SDA";
+
+ipc.m4fss0_0 = "notify";
+ipc.r5fss1_0 = "NONE";
+ipc.r5fss1_1 = "NONE";
+ipc.r5fss0_1 = "notify";
+
+mcan1.$name           = "CONFIG_MCAN0";
+mcan1.MCAN.$assign    = "MCAN0";
+mcan1.MCAN.RX.$assign = "MCAN0_RX";
+mcan1.MCAN.TX.$assign = "MCAN0_TX";
+
+mcspi1.$name                       = "CONFIG_MCSPI0";
+mcspi1.SPI.$assign                 = "SPI0";
+mcspi1.SPI.CLK.$assign             = "SPI0_CLK";
+mcspi1.SPI.D0.$assign              = "SPI0_D0";
+mcspi1.SPI.D1.$assign              = "SPI0_D1";
+mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].CSn.$assign = "SPI0_CS1";
+
+mcspi2.$name                       = "CONFIG_MCSPI2";
+mcspi2.SPI.$assign                 = "SPI3";
+mcspi2.SPI.CLK.$assign             = "PRG0_PRU0_GPO16";
+mcspi2.SPI.D0.$assign              = "PRG0_PRU0_GPO13";
+mcspi2.SPI.D1.$assign              = "PRG0_PRU0_GPO14";
+mcspi2.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH2";
+mcspi2.mcspiChannel[0].CSn.$assign = "PRG0_PRU0_GPO17";
+
+pruicss1.$name = "CONFIG_PRU_ICSS0";
+
+debug_log.enableUartLog            = true;
+debug_log.enableSharedMemLogReader = true;
+debug_log.enableSharedMemLog       = true;
+debug_log.enableCssLog             = false;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "USART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;
+mpu_armv75.baseAddr     = 0x701D0000;
+mpu_armv75.size         = 16;
+
+timer1.$name         = "CONFIG_TIMER0";
+timer1.TIMER.$assign = "DMTIMER0";
+
+timer2.$name         = "CONFIG_TIMER1";
+timer2.TIMER.$assign = "DMTIMER1";
+
+timer3.$name         = "CONFIG_TIMER2";
+timer3.TIMER.$assign = "DMTIMER2";
+
+timer4.$name         = "CONFIG_TIMER3";
+timer4.TIMER.$assign = "DMTIMER3";
+
+timer5.$name         = "CONFIG_TIMER4";
+timer5.TIMER.$assign = "DMTIMER4";
+
+timer6.$name         = "CONFIG_TIMER5";
+timer6.TIMER.$assign = "DMTIMER5";
+
+timer7.$name         = "CONFIG_TIMER6";
+timer7.TIMER.$assign = "DMTIMER6";
+
+timer8.$name         = "CONFIG_TIMER7";
+timer8.TIMER.$assign = "DMTIMER7";

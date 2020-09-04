@@ -1,0 +1,45 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/firewall/firewall'];
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("firewall");
+
+    let regionModule = system.modules[`/drivers/firewall/${driverVer}/firewallRegionCfg`];
+%%}
+/*
+ * FIREWALL
+ */
+#include <drivers/firewall.h>
+
+/* Firewall Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_FWL_NUM_INSTANCES (`module.$instances.length`U)
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let regCfg = instance.regCfg;
+    % if (regCfg.length > 0) {
+    % for (let j = 0; j < regCfg.length; j++) {
+    % let reg_inst = regCfg[j];
+    % let reg_cfg = regionModule.getInstanceConfig(reg_inst);
+#define `instance.$name.toUpperCase()`_REGION`j` (`j`U)
+    % }
+    % }
+% }
+
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let regCfg = instance.regCfg;
+    % if (regCfg.length > 0) {
+    % for (let j = 0; j < regCfg.length; j++) {
+    % let reg_inst = regCfg[j];
+    % let reg_cfg = regionModule.getInstanceConfig(reg_inst);
+#define `instance.$name.toUpperCase()`_REGION`j`_LOWER (0x`reg_cfg.startAddr.toString(16).toUpperCase()`)
+#define `instance.$name.toUpperCase()`_REGION`j`_UPPER (0x`reg_cfg.endAddr.toString(16).toUpperCase()`)
+    % }
+    % }
+% }

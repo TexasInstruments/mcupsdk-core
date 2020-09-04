@@ -1,0 +1,97 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+
+
+typedef struct EnetAppTxDmaSysCfg_Obj_s
+{
+    /* TX channel handle */
+    EnetDma_TxChHandle hTxCh;
+    /* TX channel number */
+    uint32_t txChNum;
+} EnetAppTxDmaSysCfg_Obj;
+
+typedef struct EnetAppRxDmaSysCfg_Obj_s
+{
+    /* RX channel handle */
+    EnetDma_RxChHandle hRxCh;
+    /* RX channel number */
+    uint32_t rxChNum;
+    /* mac Address valid */
+    bool macAddressValid;
+    /* MAC address. It's port's MAC address in Dual-MAC or
+     * host port's MAC addres in Switch */
+    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+} EnetAppRxDmaSysCfg_Obj;
+
+
+static void EnetAppUtils_openTxCh(Enet_Handle hEnet,
+                                  uint32_t coreKey,
+                                  uint32_t coreId,
+                                  uint32_t *pTxChNum,
+                                  EnetDma_TxChHandle *pTxChHandle,
+                                  EnetCpdma_OpenTxChPrms *pCpswTxChCfg);
+
+static void EnetAppUtils_openRxCh(Enet_Handle hEnet,
+                                  uint32_t coreKey,
+                                  uint32_t coreId,
+                                  uint32_t *pRxChNum,
+                                  EnetDma_RxChHandle *pRxChHandle,
+                                  EnetCpdma_OpenRxChPrms *pCpswRxChCfg,
+                                  bool allocHostMacAddr,
+                                  uint8_t macAddr[]);
+
+static void EnetAppUtils_setCommonRxChPrms(EnetCpdma_OpenRxChPrms *pRxChPrms);
+
+static void EnetAppUtils_setCommonTxChPrms(EnetCpdma_OpenTxChPrms *pTxChPrms);
+
+static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
+                              uint32_t numRxPkts,
+                              Enet_Handle hEnet, 
+                              uint32_t coreKey,
+                              uint32_t coreId,
+                              bool allocMacAddr);
+
+static void EnetApp_openTxDma(EnetAppTxDmaSysCfg_Obj *tx,
+                              uint32_t numTxPkts,
+                              Enet_Handle hEnet, 
+                              uint32_t coreKey,
+                              uint32_t coreId);
+
+static void EnetAppUtils_closeTxCh(Enet_Handle hEnet,
+                                   uint32_t coreKey,
+                                   uint32_t coreId,
+                                   EnetDma_PktQ *pFqPktInfoQ,
+                                   EnetDma_PktQ *pCqPktInfoQ,
+                                   EnetDma_TxChHandle hTxChHandle,
+                                   uint32_t txChNum);
+
+static void EnetAppUtils_closeRxCh(Enet_Handle hEnet,
+                                   uint32_t coreKey,
+                                   uint32_t coreId,
+                                   EnetDma_PktQ *pFqPktInfoQ,
+                                   EnetDma_PktQ *pCqPktInfoQ,
+                                   EnetDma_RxChHandle hRxChHandle,
+                                   uint32_t rxChNum,
+                                   bool freeHostMacAddr,
+                                   uint8_t macAddr[]);
+
+static int32_t EnetAppUtils_allocRxFlow(Enet_Handle hEnet,
+                                        uint32_t coreKey,
+                                        uint32_t coreId,
+                                        uint32_t *rxFlowStartIdx,
+                                        uint32_t *flowIdx);
+static int32_t EnetAppUtils_allocTxCh(Enet_Handle hEnet,
+                                      uint32_t coreKey,
+                                      uint32_t coreId,
+                                      uint32_t *txPSILThreadId);
+static int32_t EnetAppUtils_freeRxFlow(Enet_Handle hEnet,
+                                       uint32_t coreKey,
+                                       uint32_t coreId,
+                                       uint32_t rxFlowIdx);
+static int32_t EnetAppUtils_freeTxCh(Enet_Handle hEnet,
+                                     uint32_t coreKey,
+                                     uint32_t coreId,
+                                     uint32_t txChNum);
+

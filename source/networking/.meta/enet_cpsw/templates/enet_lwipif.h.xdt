@@ -1,0 +1,93 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+
+%if(module.getNetifCount(instance) >= 1)
+%{
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <string.h>
+#include <stdint.h>
+#include <stdarg.h>
+
+#include <lwip/netif.h>
+#include <lwip/tcpip.h>
+%if(instance.RtosVariant == "NoRTOS"){
+#include "kernel/dpl/EventP.h"
+%}
+
+#include <networking/enet/core/lwipif/inc/lwip2lwipif.h>
+#include <networking/enet/core/lwipif/inc/lwipif2enet_AppIf.h>
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+
+#define ENET_SYSCFG_NETIF_COUNT                     (`module.getNetifCount(instance)`U)
+
+#define ENET_SYSCFG_DEFAULT_NETIF_IDX              (`module.getDefaultNetifIdx(instance)`U)
+
+% for(let i = 0; i < module.getNetifCount(instance); i++) {
+#define `module.getNetifConfig(instance, i).$name.toUpperCase()`           (`i`U)
+% }
+/* ========================================================================== */
+/*                         Structure Declarations                             */
+/* ========================================================================== */
+typedef enum NetifName_e
+{
+    NetifName_CPSW_SWITCH = 0,
+//    NetifName_CPSW_DUAL_MAC_PORT1,
+//    NetifName_CPSW_DUAL_MAC_PORT2,
+    NetifName_NUM_NETIFS,
+}NetifName_e;
+
+%if(instance.RtosVariant == "NoRTOS"){
+typedef enum AppEventId_e
+{
+    AppEventId_NONE = 0,
+    AppEventId_NETIFMNGR_POLL  = (1 << 0),
+    AppEventId_NETIFMNGR_RXPKT = (1 << 1),
+    AppEventId_NETIFMNGR_TXPKT = (1 << 2),
+    AppEventId_CPSW_PERIODIC_POLL = (1 << 3),
+    AppEventId_ANY_EVENT = (AppEventId_NETIFMNGR_POLL |
+                            AppEventId_NETIFMNGR_RXPKT |
+                            AppEventId_NETIFMNGR_TXPKT |
+                            AppEventId_CPSW_PERIODIC_POLL),
+} AppEventId_t;
+%}
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const ip4_addr_t *netmask, const ip4_addr_t *gw);
+void LwipifEnetApp_netifClose(uint32_t netifIdx);
+struct netif * LwipifEnetApp_getNetifFromId(uint32_t netifIdx);
+
+void LwipifEnetAppCb_getEnetLwipIfInstInfo(LwipifEnetAppIf_GetEnetLwipIfInstInfo *outArgs);
+void LwipifEnetAppCb_getNetifInfo(struct netif *netif,
+                                  LwipifEnetAppIf_GetHandleNetifInfo *outArgs);
+void LwipifEnetAppCb_getTxHandleInfo(LwipifEnetAppIf_GetTxHandleInArgs *inArgs,
+                                     LwipifEnetAppIf_TxHandleInfo *outArgs);
+void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
+                                     LwipifEnetAppIf_RxHandleInfo *outArgs);
+void LwipifEnetAppCb_releaseTxHandle(LwipifEnetAppIf_ReleaseTxHandleInfo *releaseInfo);
+void LwipifEnetAppCb_releaseRxHandle(LwipifEnetAppIf_ReleaseRxHandleInfo *releaseInfo);
+void LwipifEnetAppCb_pbuf_free_custom(struct pbuf *p);
+
+%}
+
+/*
+ *  Functions provided by enet_netif_manager.c to initialize a new netif, create tx & rx tasks, and start a scheduler OS agnostically.
+ */
+void LwipifEnetApp_startSchedule(struct netif *netif
+%if(instance.RtosVariant == "NoRTOS"){
+    ,EventP_Object* p_hEvent
+%}
+);
+
+void LwipifEnetApp_createRxPktHandlerTask(struct netif *netif);
+
+void LwipifEnetApp_createTxPktHandlerTask(struct netif *netif);
+
+struct netif * LwipifEnetApp_getNetifFromName(NetifName_e name);

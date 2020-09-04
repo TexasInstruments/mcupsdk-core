@@ -1,0 +1,309 @@
+%%{
+    let profile_list = ["debug", "release"];
+
+    products = "";
+    if("syscfgfile" in args.project) {
+        products+=`sysconfig;`
+    }
+    products+=`com.ti.${args.utils.getProductNameProjectSpec(args.project.device)}`
+    productName = args.utils.getProductNameProjectSpec(args.project.device);
+    if(args.project.projecspecFileAction)  // should be renamed to projectspecFileAction
+    {
+        defaultAction = args.project.projecspecFileAction;
+    }
+    else
+    {
+        defaultAction = args.utils.getDefaultActionProjectSpec();
+    }
+    indCommRequired = 0
+    obj = args.project.libdirs;
+    for (prop in obj) {
+        if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+            for(let val of obj[prop]) {
+                if (val.includes("MCU_PLUS_SDK_IND_COMMS_LIBS_PATH")) {
+                      indCommRequired = 1;
+                }
+            }
+        }
+    }
+    if (indCommRequired == 1) {
+        products+=";com.ti.MCU_PLUS_IND_COMMS_LIBS";
+    }
+%%}
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                % obj = args.project
+                deviceFamily="`args.utils.getDeviceFamilyProjectSpec(obj.cpu)`"
+                deviceId="`args.utils.getDeviceIdProjectSpec(obj.device, obj.cpu, obj.board)`"
+            />
+        </when>
+    </applicability>
+
+    % if("importOtherProject" in args.project) {
+    <import spec="`args.project.importOtherProject`"/>
+
+    % }
+    <project
+        % obj = args.project
+        title="`args.utils.getTitleProjectSpec(args.project.name)`"
+        name = "`obj.name`_`obj.board`_`obj.cpu`_`obj.os`_`obj.cgt`"
+        products="`products`"
+        configurations="
+        % for (profile of profile_list) {
+            `args.utils.capitalize(profile)`,
+        % }
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="`args.utils.getToolChainProjectSpec(obj.cgt)`"
+        % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
+        toolVersion="`args.utils.getToolChainVersionProjectSpec(obj.cgt)`"
+        % }
+        % else {
+        cgtVersion="`args.utils.getToolChainVersionProjectSpec(obj.cgt)`"
+        % }
+        device="`args.utils.getDeviceIdProjectSpec(obj.device, obj.cpu, obj.board)`"
+        deviceCore="`args.utils.getProjectSpecCpu(obj.device, obj.cpu)`"
+        ignoreDefaultDeviceSettings="true"
+        % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) { /* we need to make this as false to that --start-group ... --end-group is used with libraries */
+        ignoreDefaultCCSSettings="false"
+        % } else {
+        ignoreDefaultCCSSettings="true"
+        % }
+        endianness="little"
+        outputFormat="ELF"
+        outputType="`args.utils.getOutputTypeProjectSpec(obj.type)`"
+
+        compilerBuildOptions="
+        % obj = args.project.includes;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+            -I`val`
+                % }
+            % }
+        % }
+        % obj = args.project.cflags;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+            `val`
+                % }
+            % }
+        % }
+        % obj = args.project.defines;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+            -D`val`
+                % }
+            % }
+        % }
+        "
+        linkerBuildOptions="
+        % obj = args.project.libdirs;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+                    % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
+            -L`val`
+                    % } else {
+            -i`val`
+                    % }
+                % }
+            % }
+        % }
+        % obj = args.project
+        % if (obj.hasOwnProperty('projectspecLnkPath')) {
+        % obj = args.project.projectspecLnkPath;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+            -i`val`
+                % }
+            % }
+        % }
+        % }
+        % if ((args.project.cgt == 'gcc-aarch64') || (args.project.cgt == 'gcc-armv7')) {
+            -Wl,-Map=`args.project.name`.${ConfigName}.map
+        % } else {
+            -m=`args.project.name`.${ConfigName}.map
+        % }
+        % obj = args.project.lflags;
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+            `val`
+                % }
+            % }
+        % }
+        "
+
+        % if("preBuildSteps" in args.project) {
+        preBuildStep="
+        % steps = args.project.preBuildSteps;
+        % for (let step of steps) {
+            `step`
+        % }
+        "
+
+        % }
+        % if(args.project["enableHexTool"]) {
+        enableHexTool="true"
+        hexBuildOptions="
+        % let options = args.project.hexBuildOptions;
+        % for (let option of options) {
+            `option`
+        % }
+        "
+        % }
+        % obj = args.project;
+        % let projectName = `${obj.name}_${obj.board}_${obj.cpu}_${obj.os}_${obj.cgt}`;
+        % let projectPath = `${obj.relpath}/${obj.board}/${obj.cpu}_${obj.os}/${obj.cgt}`;
+        % if(args.project["defaultPruPostBuildSteps"]) {
+        postBuildStep="
+            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/`projectPath`/hexpru.cmd `projectName`.out;
+            ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe `projectName`.b00 pru_load_bin.h PRUFirmware 4;
+        "
+        % }
+        % if("postBuildSteps" in args.project) {
+        postBuildStep="
+        % steps = args.project.postBuildSteps;
+        % for (let step of steps) {
+            `step`
+        % }
+        "
+        % } else if (args.project.cpu.includes("pru")) {
+        % } else {
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"
+        % }
+
+        % if("syscfgfile" in args.project) {
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg`
+        "
+
+        % }
+        description="A `args.utils.getTitleProjectSpec(args.project.name)` `args.project.os.toUpperCase()` project">
+
+        % for (profile of profile_list ) {
+        <configuration name="`args.utils.capitalize(profile)`"
+            compilerBuildOptions="
+            % obj = args.project.includes;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop] && prop == profile) ) {
+                    % for(let val of obj[prop]) {
+                -I`val`
+                    % }
+                % }
+            % }
+            % obj = args.project.cflags;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == profile) {
+                    % for(let val of obj[prop]) {
+                `val`
+                    % }
+                % }
+            % }
+            % obj = args.project.defines;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == profile) {
+                    % for(let val of obj[prop]) {
+                `val`
+                    % }
+                % }
+            % }
+            "
+            linkerBuildOptions="
+            % obj = args.project.libdirs;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop] && prop == profile) ) {
+                    % for(let val of obj[prop]) {
+                -i`val`
+                    % }
+                % }
+            % }
+            % obj = args.project.libs;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                    % for(let val of obj[prop]) {
+                -l`args.utils.replace(val, '${ConfigName}',profile)`
+                    % }
+                % }
+            % }
+            % obj = args.project.libs;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == profile) {
+                    % for(let val of obj[prop]) {
+                -l`val`
+                    % }
+                % }
+            % }
+            % obj = args.project.lflags;
+            % for (prop in obj) {
+                % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop] && prop == profile) ) {
+                    % for(let val of obj[prop]) {
+                `val`
+                    % }
+                % }
+            % }
+            "
+        ></configuration>
+        % }
+        % if(args.project.device == "am273x") {
+        <pathVariable name="DSPLIB_PATH" path="${COM_TI_`productName`_INSTALL_DIR}/source/dsplib_c66x_3_4_0_0" scope="project" />
+        % }
+        <pathVariable name="`args.sdkName`" path="${COM_TI_`productName`_INSTALL_DIR}" scope="project" />
+        % if (indCommRequired == 1) {
+        <pathVariable name="MCU_PLUS_SDK_IND_COMMS_LIBS_PATH" path="${COM_TI_MCU_PLUS_IND_COMMS_LIBS}" scope="project" />
+        % }
+        % filelist = args.utils.getFileListProjectSpec(args.project.files, args.project.filedirs, args.project.dirPath)
+        % for (file of filelist) {
+        <file path="`file`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
+        </file>
+        % }
+        % filelist = args.utils.getFileListProjectSpec(args.project.projectspecfiles, args.project.filedirs, args.project.dirPath)
+        % for (file of filelist) {
+        <file path="`file`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
+        </file>
+        % }
+        % obj = args.project.lnkfiles
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+        <file path="`val`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
+        </file>
+                % }
+            % }
+        % }
+        % if("syscfgfile" in args.project) {
+        <file path="`args.project.syscfgfile`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
+        </file>
+        % }
+        % if("readmeDoxygenPageTag" in args.project) {
+        <file path="${`args.sdkName`}/docs/api_guide_`args.project.device`/`args.project.readmeDoxygenPageTag`.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+        % }
+        % obj = args.project.projectspec_files
+        % for (prop in obj) {
+            % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
+                % for(let val of obj[prop]) {
+        <file path="`val`" openOnCreation="false" excludeFromBuild="true" action="`defaultAction`">
+        </file>
+                % }
+            % }
+        % }
+        % if("syscfgfile" in args.project) {
+        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        % }
+        % if(args.project.skipMakefileCcsBootimageGen) {} else {
+        <file path="makefile_ccs_bootimage_gen" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        % }
+    </project>
+</projectSpec>

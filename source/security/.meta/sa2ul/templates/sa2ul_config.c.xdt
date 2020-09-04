@@ -1,0 +1,89 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/security/sa2ul/sa2ul'];
+%%}
+/*
+ * SA2UL
+ */
+/* SA2UL Instance Macros */
+#define CONFIG_SA2UL_CONSOLE            (0U)
+#define CONFIG_SA2UL_NUM_INSTANCES      (1U)
+
+#define SA2UL_HOST_DESCR_SIZE           (128U)
+#define SA2UL_RING_ELSIZE_BYTES         (sizeof(uint64_t))
+#define SA2UL_RING_CNT                  (2U)
+
+#define SA2UL_RING_MEM_SIZE             (SA2UL_RING_ELSIZE_BYTES * SA2UL_RING_N_ELEMS)
+#define SA2UL_RING_BACKING_MEM_SIZE     ((SA2UL_NUMBER_OF_RINGS + 1U) * SA2UL_RING_MEM_SIZE)
+#define SA2UL_UDMA_DESCRITPOR_MEM_SIZE  (SA2UL_HOST_DESCR_SIZE * SA2UL_RING_N_ELEMS * 2U)
+
+#define SA2UL_ENGINE_ENC                (1U)
+#define SA2UL_ENGINE_AUTH               (1U)
+#define SA2UL_ENGINE_TRNG               (0U)
+#define SA2UL_ENGINE_PKA                (0U)
+#define SA2UL_ENGINE_ENABLE             (SA2UL_ENGINE_ENC | (SA2UL_ENGINE_AUTH << 1) | \
+                                            (SA2UL_ENGINE_TRNG << 3) | (SA2UL_ENGINE_PKA << 4))
+
+static uint8_t gMemTxRing[SA2UL_RING_ELSIZE_BYTES * SA2UL_RING_CNT * 2] __attribute__ ((aligned (UDMA_CACHELINE_ALIGNMENT)));
+static uint8_t gMemRxRing[SA2UL_RING_ELSIZE_BYTES * SA2UL_RING_CNT * 2] __attribute__ ((aligned (UDMA_CACHELINE_ALIGNMENT)));
+static uint8_t gMemDescr[SA2UL_UDMA_DESCRITPOR_MEM_SIZE] __attribute__ ((aligned (UDMA_CACHELINE_ALIGNMENT)));
+
+/* SA2UL atrributes */
+SA2UL_Attrs gSA2ULAttrs[CONFIG_SA2UL_NUM_INSTANCES] =
+{
+    {
+        .saBaseAddr         = CSL_SA2_UL0_BASE,
+        .txPsilThreadId     = 0x4001,
+        .rxPsil0ThreadId    = 0x4002,
+        .rxPsil1ThreadId    = 0x4003,
+        .rxRingMemAddr      = (uint32_t)&gMemRxRing[0],
+        .txRingMemAddr      = (uint32_t)&gMemTxRing[0],
+        .numDesc            = 0,
+        .descSize           = SA2UL_HOST_DESCR_SIZE,
+        .descMemAddr        = (uint32_t)&gMemDescr[0],
+        .descMemSize        = SA2UL_UDMA_DESCRITPOR_MEM_SIZE,
+        .udmaSaTxGroupNum   = UDMA_MAPPED_TX_GROUP_SAUL,
+        .udmaSaRxGroupNum   = UDMA_MAPPED_RX_GROUP_SAUL,
+        .ringCnt            = SA2UL_RING_CNT,
+        .udmaHandle         = (uint32_t)&gUdmaDrvObj[0],
+        .contextIdStart     = 0x80,
+        .contextIdMaxNum    = 16,
+        .txRingNumInt       = 0,
+        .rxRingNumInt       = 1,
+        .swRingNumInt       = 2,
+        .privId             = 0xc3,
+        .priv               = 0,
+        .secure             = 0,
+    },
+};
+
+PKA_Attrs gPKA_Attrs[CONFIG_SA2UL_NUM_INSTANCES] =
+{
+    {
+        .caBaseAddr         = CSL_SA2_UL0_BASE,
+        .pkaBaseAddr        = CSL_SA2_UL0_EIP_29T2_BASE,
+        .isOpen             = FALSE,
+    },
+};
+
+/* SA2UL objects - initialized by the driver */
+static SA2UL_Object gSA2ULObjects[CONFIG_SA2UL_NUM_INSTANCES];
+
+/* SA2UL driver configuration */
+SA2UL_Config gSa2ulConfig[CONFIG_SA2UL_NUM_INSTANCES] =
+{
+    {
+        &gSA2ULAttrs[CONFIG_SA2UL_CONSOLE],
+        &gSA2ULObjects[CONFIG_SA2UL_CONSOLE],
+    },
+};
+
+PKA_Config gPkaConfig[CONFIG_SA2UL_NUM_INSTANCES] =
+{
+    {
+        &gPKA_Attrs[CONFIG_SA2UL_CONSOLE],
+    },
+};
+
+uint32_t gSa2ulConfigNum = CONFIG_SA2UL_NUM_INSTANCES;
+uint32_t gPkaConfigNum   = CONFIG_SA2UL_NUM_INSTANCES;

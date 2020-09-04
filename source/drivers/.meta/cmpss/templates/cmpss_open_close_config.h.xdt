@@ -1,0 +1,4 @@
+#include <drivers/cmpss.h>
+#include <kernel/dpl/ClockP.h>
+
+void Drivers_cmpssOpen(void);

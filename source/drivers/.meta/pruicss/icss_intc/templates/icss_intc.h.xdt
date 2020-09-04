@@ -1,0 +1,13 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+/*
+ *  ICSS_INTC
+ */
+#include <pru_io/driver/icss_intc_defines.h>
+% if (module.$instances[0].icssInstance === "ICSSG0") {
+extern PRUICSS_IntcInitData icss0_intc_initdata;
+% }
+% if (module.$instances[0].icssInstance === "ICSSG1") {
+extern PRUICSS_IntcInitData icss1_intc_initdata;
+% }

@@ -1,0 +1,95 @@
+%%{
+
+    let options = args.options;
+
+    let stackSize = 16*1024;
+    let heapSize =  32*1024;
+    /* DSS L2 */
+    let codeDataAddr = 0x00800000;
+    let codeDataSize = 0x00060000;
+    /* MSS mailbox memory */
+    let ipcShmAddrBase = 0xC5000000 + 512;
+    /* bottom of MMS_L2 */
+    let shmAddrBase = 0xC0200000 + 928*1024;
+
+    /* if no options given use defaults */
+    if(options && options.stackSize)
+        stackSize = options.stackSize;
+    if(options && options.heapSize)
+        heapSize = options.heapSize;
+    if(options && options.codeDataAddr)
+        codeDataAddr = options.codeDataAddr;
+    if(options && options.codeDataSize)
+        codeDataSize = options.codeDataSize;
+
+%%}
+/* This is the stack that is used by code running within main()
+ * In case of NORTOS,
+ * - This means all the code outside of ISR uses this stack
+ * In case of FreeRTOS
+ * - This means all the code until vTaskStartScheduler() is called in main()
+ *   uses this stack.
+ * - After vTaskStartScheduler() each task created in FreeRTOS has its own stack
+ */
+--stack_size=`stackSize`
+/* This is the heap size for malloc() API in NORTOS and FreeRTOS
+ * This is also the heap used by pvPortMalloc in FreeRTOS
+ */
+--heap_size=`heapSize`
+--retain=_vectors
+
+SECTIONS
+{
+    /* hard addresses forces vecs to be allocated there */
+    .text:vectors: {. = align(1024); } > 0x00800000
+    .text:      {} > DSS_L2
+    .const:     {} > DSS_L2
+    .cinit:     {} > DSS_L2
+    .data:      {} > DSS_L2
+    .stack:     {} > DSS_L2
+    .switch:    {} > DSS_L2
+    .cio:       {} > DSS_L2
+    .sysmem:    {} > DSS_L2
+    .fardata:   {} > DSS_L2
+    .far:       {} > DSS_L2
+
+    /* These should be grouped together to avoid STATIC_BASE relative relocation linker error */
+    GROUP {
+        .rodata:    {}
+        .bss:       {}
+        .neardata:  {}
+    } > DSS_L2
+
+    /* Sections needed for C++ projects */
+    GROUP {
+        .c6xabi.exidx:  {} palign(8)   /* Needed for C++ exception handling */
+        .init_array:    {} palign(8)   /* Contains function pointers called before main */
+        .fini_array:    {} palign(8)   /* Contains function pointers called after main */
+    } > DSS_L2
+
+    /* any data buffer needed to be put in L3 can be assigned this section name */
+    .bss.dss_l3 {} > DSS_L3
+
+    /* General purpose user shared memory, used in some examples */
+    .bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM
+    /* this is used when Debug log's to shared memory are enabled, else this is not used */
+    .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
+    /* this is used only when IPC RPMessage is enabled, else this is not used */
+    .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
+}
+
+MEMORY
+{
+    DSS_L2:   ORIGIN = 0x`codeDataAddr.toString(16).toUpperCase()`, LENGTH = 0x`codeDataSize.toString(16).toUpperCase()`
+    DSS_L3:   ORIGIN = 0x88000000, LENGTH = 0x00200000
+
+    /* shared memories that are used by RTOS/NORTOS cores */
+    /* On C66,
+     * - make sure these are which mapped as non-cache in MAR bits
+     */
+    USER_SHM_MEM            : ORIGIN = 0x`shmAddrBase.toString(16).toUpperCase()`, LENGTH = 0x00004000
+    LOG_SHM_MEM             : ORIGIN = 0x`(shmAddrBase + 0x4000).toString(16).toUpperCase()`, LENGTH = 0x00004000
+    /* 1st 512 B of DSS mailbox memory and MSS mailbox memory is used for IPC with R4 and should not be used by application */
+    /* MSS mailbox memory is used as shared memory, we dont use bottom 32*6 bytes, since its used as SW queue by ipc_notify */
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x`ipcShmAddrBase.toString(16).toUpperCase()`, LENGTH = 0x1D40
+}

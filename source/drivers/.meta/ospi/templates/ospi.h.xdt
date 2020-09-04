@@ -1,0 +1,22 @@
+%%{
+    let module = system.modules['/drivers/ospi/ospi'];
+    let ospiUdmaInstanceCount = 0;
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.dmaEnable == true) {
+            ospiUdmaInstanceCount++;
+        }
+    }
+%%}
+/*
+ * OSPI
+ */
+#include <drivers/ospi.h>
+
+/* OSPI Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_OSPI_NUM_INSTANCES (`module.$instances.length`U)
+#define CONFIG_OSPI_NUM_DMA_INSTANCES (`ospiUdmaInstanceCount`U)

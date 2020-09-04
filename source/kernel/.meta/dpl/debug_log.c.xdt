@@ -1,0 +1,55 @@
+%%{
+    let module = system.modules['/kernel/dpl/debug_log'];
+    let instance = module.$static;
+    let ipc_module = system.modules['/drivers/ipc/ipc'];
+    let ipc_instance = undefined;
+    if(ipc_module)
+    {
+        ipc_instance = ipc_module.$static;
+    }
+%%}
+/* ----------- DebugP ----------- */
+void putchar_(char character)
+{
+% if(instance.enableCssLog) {
+    /* Output to CCS console */
+    putchar(character);
+% }
+% if( (ipc_instance && ipc_instance.enableLinuxIpc === true) || instance.enableMemLog) {
+    /* Output to memory trace buffer */
+    DebugP_memLogWriterPutChar(character);
+% }
+% if(instance.enableUartLog) {
+    /* Output to UART console */
+    DebugP_uartLogWriterPutChar(character);
+% }
+% if(instance.enableSharedMemLog && instance.enableSharedMemLogReader) {
+    /* Shared memory reader is enabled on this core, in this case, logs go straight to
+     * to the enabled console (e.g CCS or UART), instead of shared memory
+     */
+% }
+% if(instance.enableSharedMemLog && !instance.enableSharedMemLogReader) {
+    /* Output to shared memory */
+    DebugP_shmLogWriterPutChar(character);
+% }
+}
+
+% if( (ipc_instance && ipc_instance.enableLinuxIpc === true) || instance.enableMemLog) {
+/* DebugP log buffer memory and size
+ * - This log can be viewed via ROV in CCS
+ * - When linux is enabled, this log can also be viewed via linux debugfs
+ */
+char gDebugMemLog[DebugP_MEM_LOG_SIZE] __attribute__ ((section (".bss.debug_mem_trace_buf"), aligned (128)));
+uint32_t gDebugMemLogSize = DebugP_MEM_LOG_SIZE;
+
+% }
+% if(instance.enableSharedMemLog || instance.enableSharedMemLogReader) {
+/* Shared memory log base address, logs of each CPUs are put one after other in the below region.
+ *
+ * IMPORTANT: Make sure of below,
+ * - The section defined below should be placed at the exact same location in memory for all the CPUs
+ * - The memory should be marked as non-cached for all the CPUs
+ * - The section should be marked as NOLOAD in all the CPUs linker command file
+ */
+DebugP_ShmLog gDebugShmLog[CSL_CORE_ID_MAX] __attribute__((aligned(128), section(".bss.log_shared_mem")));
+% }

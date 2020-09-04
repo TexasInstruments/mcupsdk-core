@@ -1,0 +1,6 @@
+%%{
+    let module = system.modules['/board/ethphy/ethphy'];
+%%}
+% if( module.getNumValidInstances(module) > 0 ) {
+    Board_ethPhyClose();
+% }

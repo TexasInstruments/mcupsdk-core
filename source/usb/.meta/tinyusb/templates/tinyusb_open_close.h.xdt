@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/usb/usb'];
+%%}
+/*
+ * USB
+ */
+#include <usb/cdn/include/usb_init.h>
+#include "tusb.h"
+
+/* USB Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_usbOpen(void);
+void Drivers_usbClose(void);

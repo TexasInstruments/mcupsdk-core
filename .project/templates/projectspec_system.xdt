@@ -1,0 +1,36 @@
+%%{
+    products = "";
+    products+=`com.ti.${args.utils.getProductNameProjectSpec(args.project.projects[0].device)}`
+    productName = args.utils.getProductNameProjectSpec(args.project.projects[0].device);
+%%}
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+% for (let project of args.project.projects) {
+    <import spec="../`project.cpu`_`project.os`/`project.cgt`/example.projectspec"/>
+% }
+    <project
+        name="`args.project.name`_`args.project.board`_system_`args.project.tag`"
+        products="`products`"
+        configurations="
+            Debug,
+            Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        device="Cortex R.`args.device.getProjectSpecDevice(args.project.board)`"
+        outputType="system"
+        toolChain="TICLANG"
+        >
+        <pathVariable name="`args.sdkName`" path="${COM_TI_`productName`_INSTALL_DIR}" scope="project" />
+        % if("readmeDoxygenPageTag" in args.project) {
+        <file path="${`args.sdkName`}/docs/api_guide_`args.project.device`/`args.project.readmeDoxygenPageTag`.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+        % }
+        <file path="system.xml" action="copy" openOnCreation="true"/>
+        <file path="makefile_system_ccs_bootimage_gen" action="copy" openOnCreation="false"/>
+        <configuration name="Debug"
+        ></configuration>
+        <configuration name="Release"
+        ></configuration>
+    </project>
+</projectSpec>

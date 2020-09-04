@@ -1,0 +1,392 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+% let enetutilsScript = system.getScript("./../../common/enet_cpsw_utils");
+
+%%{
+function getAleModeFlags(module, instance) {
+    let aleModeFlag = "(";        
+
+    aleModeFlag += "CPSW_ALE_CFG_MODULE_EN";
+    
+    aleModeFlag += (instance.BypassEnable === true) ? " | CPSW_ALE_CFG_BYPASS_EN" : "";
+    aleModeFlag += (instance.UnknownUnicastFloodToHost === true) ? " | CPSW_ALE_CFG_UNKNOWN_UCAST_FLOOD2HOST" : "";
+    
+    aleModeFlag += ")";
+    return aleModeFlag;
+}
+
+function getAlePortMask(instance, property) {
+    let alePortMask = "(";
+    let portAry = new Array();
+    let hostPort = instance[property + "HostPortEn"];
+    let macPort1 = instance[property + "MacPort1En"];
+    let macPortRest = new Array();
+    const maxMacPorts = 8;
+
+    alePortMask += "0";
+
+    for (var i = 2; i <= maxMacPorts; i++)
+    {
+        if (instance.hasOwnProperty(property + "MacPort" + i.toString() + "En"))
+        {
+            macPortRest.push(instance[property + "MacPort" + i.toString() + "En"]);
+        }
+    }
+    portAry.push(hostPort);
+    portAry.push(macPort1);
+    for (var macPort of macPortRest) {
+        portAry.push(macPort);
+    }
+
+    for (var i in portAry) {
+        if (portAry[i] === true)
+        {
+            if (i.toString() === "0")
+            {
+                alePortMask += " | CPSW_ALE_HOST_PORT_MASK";
+            }
+            else
+            {
+                alePortMask += " | CPSW_ALE_MACPORT_TO_PORTMASK(ENET_MAC_PORT_" + i.toString() + ")";
+            }
+        }
+    }
+
+    alePortMask += ")";
+    return alePortMask;
+}
+
+function getIpNxtWhitelistCount(instance) {
+    return instance.IpNxtWhitelist.length;
+}
+
+function getIpNxtWhitelistInitArray(instance) {
+    let whiteListInitArray;
+    let whiteListInitArrayMapFunction = function(currentValue, index, arr)
+                                        {
+                                            return ("[" + index + "]" + " = " + currentValue);
+                                        };
+    whiteListInitArray = instance.IpNxtWhitelist.map(whiteListInitArrayMapFunction);
+
+    return whiteListInitArray;
+}
+
+%%}
+
+#include <string.h>
+
+#include <enet.h>
+#include <include/core/enet_utils.h>
+
+#include <include/core/enet_dma.h>
+#include <include/per/cpsw.h>
+
+#include "enet_appmemutils.h"
+#include "enet_appmemutils_cfg.h"
+#include "enet_apputils.h"
+
+
+
+
+static void EnetApp_initEnetLinkCbPrms(Cpsw_Cfg *cpswCfg)
+{
+    cpswCfg->mdioLinkStateChangeCb     = NULL;
+    cpswCfg->mdioLinkStateChangeCbArg  = NULL;
+
+    cpswCfg->portLinkStatusChangeCb    = NULL;
+    cpswCfg->portLinkStatusChangeCbArg = NULL;
+}
+
+static const CpswAle_Cfg enetAppCpswAleCfg = 
+{
+    .modeFlags = `getAleModeFlags(module,instance)`,
+    .policerGlobalCfg = 
+    {
+        .policingEn         = `instance.policingEn`,
+        .yellowDropEn       = `instance.yellowDropEn`,
+        .redDropEn          = `instance.redDropEn`,
+        .yellowThresh       = CPSW_ALE_POLICER_YELLOWTHRESH_`instance.yellowThresh`,
+        .policerNoMatchMode = CPSW_ALE_POLICER_NOMATCH_MODE_`instance.policerNoMatchMode`,
+        .noMatchPolicer     = {
+                                  .peakRateInBitsPerSec   = `instance.UnregulatedTrafficPeakRateInBitsPerSec`,
+                                  .commitRateInBitsPerSec = `instance.UnregulatedTrafficCommitedRateInBitsPerSec`,
+                              }
+    },
+    .agingCfg = 
+    {
+        .autoAgingEn        = `instance.autoAgingEn`,
+        .agingPeriodInMs    = `instance.agingPeriodInMs`,
+    },
+    .vlanCfg =
+    {
+        .aleVlanAwareMode   = `instance.aleVlanAwareMode`,
+        .cpswVlanAwareMode  = `instance.cpswVlanAwareMode`,
+        .autoLearnWithVlan  = `instance.autoLearnWithVlan`,
+        .unknownVlanNoLearn = `instance.unknownVlanNoLearn`,
+        .unknownForceUntaggedEgressMask = `getAlePortMask(instance,"unknownVlanForceUntaggedEgress")`,
+        .unknownRegMcastFloodMask       = `getAlePortMask(instance,"unknownRegMcast")`,
+        .unknownUnregMcastFloodMask     = `getAlePortMask(instance,"unknownUnregMcast")`,
+        .unknownVlanMemberListMask      = `getAlePortMask(instance,"unknownVlanMembership")`,
+    },
+    .nwSecCfg = 
+    {
+        .hostOuiNoMatchDeny  = `instance.hostOuiNoMatchDeny`,
+        .vid0ModeEn          = `instance.vid0ModeEn`,
+        .malformedPktCfg     = {
+                                   .srcMcastDropDis = `instance.srcMcastDropDis`,
+                                   .badLenPktDropEn = `instance.badLenPktDropEn`,                          
+                               },
+        .ipPktCfg            = {
+                                   .dfltNoFragEn          = `instance.dfltNoFragEn`,
+                                   .dfltNxtHdrWhitelistEn = `instance.dfltNxtHdrWhitelistEn`,
+                                   .ipNxtHdrWhitelistCnt  =  `getIpNxtWhitelistCount(instance)`,
+                                   .ipNxtHdrWhitelist     = {
+                                                              `getIpNxtWhitelistInitArray(instance)`
+                                                            },
+                               },
+    
+    
+        .macAuthCfg          = {
+                                   .authModeEn           = `instance.authModeEn`,
+                                   .macAuthDisMask       = `getAlePortMask(instance, "disableMacAuth")`,
+                               },
+    },
+    .portCfg = 
+    {
+        [CPSW_ALE_HOST_PORT_NUM] =
+        {
+            .learningCfg = 
+            {
+                .noLearn         = `instance.nolearn_hostPort`,
+                .noSaUpdateEn    = `instance.noSaUpdteEn_hostPort`,
+            },
+            .vlanCfg =
+            {
+                .vidIngressCheck = `instance.vidIngressCheck_hostPort`,
+                .dropUntagged    = `instance.dropUntagged_hostPort`,
+                .dropDualVlan    = `instance.dropDualVlan_hostPort`,
+                .dropDoubleVlan  = `instance.dropDoubleVlan_hostPort`,
+            },
+            .macModeCfg =
+            {
+                .macOnlyCafEn    = `instance.macOnlyCafEn_hostPort`,
+                .macOnlyEn       = `instance.macOnlyEn_hostPort`,
+            },
+            .pvidCfg = 
+            {
+                .vlanIdInfo      = 
+                {
+                    .vlanId   = `instance.vlanId_hostPort`,
+                    .tagType  = `instance.tagType_hostPort`,
+                },
+                .vlanMemberList          = `getAlePortMask(instance,"vlanMemberList_hostPort_")`,
+                .unregMcastFloodMask     = `getAlePortMask(instance,"unregMcastFloodMask_hostPort_")`,
+                .regMcastFloodMask       = `getAlePortMask(instance,"regMcastFloodMask_hostPort_")`,
+                .forceUntaggedEgressMask = `getAlePortMask(instance,"forceUntaggedEgressMask_hostPort_")`,
+                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_hostPort_")`, 
+                .vidIngressCheck         = `instance.vidIngressCheck_hostPort`,
+                .limitIPNxtHdr           = `instance.limitIPNxtHdr_hostPort`,
+                .disallowIPFrag          = `instance.disallowIPFrag_hostPort`,
+            },
+        },
+        [CPSW_ALE_MACPORT_TO_ALEPORT(ENET_MAC_PORT_1)] =
+        {
+            .learningCfg = 
+            {
+                .noLearn         = `instance.nolearn_macPort1`,
+                .noSaUpdateEn    = `instance.noSaUpdteEn_macPort1`,
+            },
+            .vlanCfg =
+            {
+                .vidIngressCheck = `instance.vidIngressCheck_macPort1`,
+                .dropUntagged    = `instance.dropUntagged_macPort1`,
+                .dropDualVlan    = `instance.dropDualVlan_macPort1`,
+                .dropDoubleVlan  = `instance.dropDoubleVlan_macPort1`,
+            },
+            .macModeCfg =
+            {
+                .macOnlyCafEn    = `instance.macOnlyCafEn_macPort1`,
+                .macOnlyEn       = `instance.macOnlyEn_macPort1`,
+            },
+            .pvidCfg = 
+            {
+                .vlanIdInfo      = 
+                {
+                    .vlanId   = `instance.vlanId_macPort1`,
+                    .tagType  = `instance.tagType_macPort1`,
+                },
+                .vlanMemberList          = `getAlePortMask(instance,"vlanMemberList_macPort1_")`,
+                .unregMcastFloodMask     = `getAlePortMask(instance,"unregMcastFloodMask_macPort1_")`,
+                .regMcastFloodMask       = `getAlePortMask(instance,"regMcastFloodMask_macPort1_")`,
+                .forceUntaggedEgressMask = `getAlePortMask(instance,"forceUntaggedEgressMask_macPort1_")`,
+                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_macPort1_")`, 
+                .vidIngressCheck         = `instance.vidIngressCheck_macPort1`,
+                .limitIPNxtHdr           = `instance.limitIPNxtHdr_macPort1`,
+                .disallowIPFrag          = `instance.disallowIPFrag_macPort1`,
+            },
+        },
+%if (instance.hasOwnProperty(`nolearn_macPort2`)) {
+        [CPSW_ALE_MACPORT_TO_ALEPORT(ENET_MAC_PORT_2)] =
+        {
+            .learningCfg = 
+            {
+                .noLearn         = `instance.nolearn_macPort2`,
+                .noSaUpdateEn    = `instance.noSaUpdteEn_macPort2`,
+            },
+            .vlanCfg =
+            {
+                .vidIngressCheck = `instance.vidIngressCheck_macPort2`,
+                .dropUntagged    = `instance.dropUntagged_macPort2`,
+                .dropDualVlan    = `instance.dropDualVlan_macPort2`,
+                .dropDoubleVlan  = `instance.dropDoubleVlan_macPort2`,
+            },
+            .macModeCfg =
+            {
+                .macOnlyCafEn    = `instance.macOnlyCafEn_macPort2`,
+                .macOnlyEn       = `instance.macOnlyEn_macPort2`,
+            },
+            .pvidCfg = 
+            {
+                .vlanIdInfo      = 
+                {
+                    .vlanId   = `instance.vlanId_macPort2`,
+                    .tagType  = `instance.tagType_macPort2`,
+                },
+                .vlanMemberList          = `getAlePortMask(instance,"vlanMemberList_macPort2_")`,
+                .unregMcastFloodMask     = `getAlePortMask(instance,"unregMcastFloodMask_macPort2_")`,
+                .regMcastFloodMask       = `getAlePortMask(instance,"regMcastFloodMask_macPort2_")`,
+                .forceUntaggedEgressMask = `getAlePortMask(instance,"forceUntaggedEgressMask_macPort2_")`,
+                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_macPort2_")`, 
+                .vidIngressCheck         = `instance.vidIngressCheck_macPort2`,
+                .limitIPNxtHdr           = `instance.limitIPNxtHdr_macPort2`,
+                .disallowIPFrag          = `instance.disallowIPFrag_macPort2`,
+            },
+        },
+%}
+    }
+
+};
+
+static const Mdio_Cfg enetAppCpswMdioCfg =
+{
+    .mode               = `instance.mdioMode`,
+    .mdioBusFreqHz      = `instance.mdioBusFreqHz`,
+    .phyStatePollFreqHz = `instance.mdioPhyStatePollFreqHz`,
+    .pollEnMask         = `enetutilsScript.getArraytoBitMask(instance.mdioPollEnMask)`,
+    .c45EnMask          = `enetutilsScript.getArraytoBitMask(instance.mdioC45EnMask)`,
+    .isMaster           = `instance.mdioIsMaster`,
+    .disableStateMachineOnInit = `instance.mdioDisableStateMachineOnInit`,
+};
+
+
+static const CpswCpts_Cfg enetAppCpswCptsCfg =
+{
+    .hostRxTsEn     = `instance.cptsHostRxTsEn`,
+    .tsCompPolarity = `(instance.cptsTsCompPolarity === "ASSERT_HIGH") ? true : false`,
+    .tsRxEventsDis  = `instance.cptsTsRxEventsDis`,
+    .tsGenfClrEn    = `instance.cptstsGenfClrEn`,
+    .cptsRftClkFreq = `instance.cptsRftClkFreq`,
+};
+
+static const CpswHostPort_Cfg enetAppCpswHostPortCfg =
+{
+    .crcType           = `instance.hostportCrcType`,
+    .removeCrc         = `instance.hostportRemoveCrc`,
+    .padShortPacket    = `instance.hostportPadShortPacket`,
+    .passCrcErrors     = `instance.hostpostPassCrcErrors`,
+    .rxMtu             = `instance.hostportRxMtu`,
+    .passPriorityTaggedUnchanged = `instance.hostportPassPriorityTaggedUnchanged`,
+    .csumOffloadEn     = `instance.hostportcsumOffloadEn`,
+    .rxVlanRemapEn     = `instance.hostportRxVlanRemapEn`,
+    .rxDscpIPv4RemapEn = `instance.hostporRxDscpIPv4RemapEn`,
+    .rxDscpIPv6RemapEn = `instance.hostporRxDscpIPv6RemapEn`,
+    .vlanCfg           =
+    {
+        .portPri = `instance.hostportPortPri`,
+        .portCfi = `instance.hostportCfi`,
+        .portVID = `instance.hostportPortVID`,
+    },
+    .rxPriorityType    = `instance.hostportRxPriorityType`,
+    .txPriorityType    = `instance.hostportTxPriorityType`,
+};
+
+static const CpswMacPort_Cfg enetAppCpswMacPortCfg[] =
+{
+    [ENET_MAC_PORT_1] =
+    {
+        .loopbackEn = `instance.macport1LoopbackEn`,
+        .crcType    = `instance.macport1CrcType`,
+        .rxMtu      = `instance.macport1RxMtu`,
+        .passPriorityTaggedUnchanged = `instance.macport1PassPriorityTaggedUnchanged`,
+        .vlanCfg = 
+        {
+            .portPri = `instance.macport1PortPri`,
+            .portCfi = `instance.macport1PortCfi`,
+            .portVID = `instance.macport1PortVID`,
+        },
+        .txPriorityType = `instance.macport1TxPriorityType`,
+        .sgmiiMode      = ENET_MAC_SGMIIMODE_INVALID, // INVALID as SGMII is not supported in MCU+ devices
+    
+    },
+% if (instance.hasOwnProperty(`macport2LoopbackEn`))  {
+    [ENET_MAC_PORT_2] =
+    {
+        .loopbackEn = `instance.macport2LoopbackEn`,
+        .crcType    = `instance.macport2CrcType`,
+        .rxMtu      = `instance.macport2RxMtu`,
+        .passPriorityTaggedUnchanged = `instance.macport2PassPriorityTaggedUnchanged`,
+        .vlanCfg = 
+        {
+            .portPri = `instance.macport2PortPri`,
+            .portCfi = `instance.macport2PortCfi`,
+            .portVID = `instance.macport2PortVID`,
+        },
+        .txPriorityType = `instance.macport2TxPriorityType`,
+        .sgmiiMode      = ENET_MAC_SGMIIMODE_INVALID, // INVALID as SGMII is not supported in MCU+ devices
+    
+    },
+% }
+};
+
+static void EnetApp_initAleConfig(CpswAle_Cfg *pAleCfg)
+{
+    *pAleCfg = enetAppCpswAleCfg;
+}
+
+static void EnetApp_initMdioConfig(Mdio_Cfg *pMdioCfg)
+{
+    *pMdioCfg = enetAppCpswMdioCfg;
+}
+
+static void EnetApp_initCptsConfig(CpswCpts_Cfg *pCptsCfg)
+{
+    *pCptsCfg = enetAppCpswCptsCfg;
+}
+
+static void EnetApp_initHostPortConfig(CpswHostPort_Cfg *pHostPortCfg)
+{
+    *pHostPortCfg = enetAppCpswHostPortCfg;
+}
+
+static void EnetApp_getCpswInitCfg(Enet_Type enetType,
+                                   uint32_t instId,
+                                   Cpsw_Cfg *cpswCfg)
+{
+    cpswCfg->vlanCfg.vlanAware          = false;
+    cpswCfg->hostPortCfg.removeCrc      = true;
+    cpswCfg->hostPortCfg.padShortPacket = true;
+    cpswCfg->hostPortCfg.passCrcErrors  = true;
+    EnetApp_initEnetLinkCbPrms(cpswCfg);
+    EnetApp_initAleConfig(&cpswCfg->aleCfg);
+    EnetApp_initMdioConfig(&cpswCfg->mdioCfg);
+    EnetApp_initCptsConfig(&cpswCfg->cptsCfg);
+    EnetApp_initHostPortConfig(&cpswCfg->hostPortCfg);
+}
+
+static void EnetApp_getMacPortInitConfig(CpswMacPort_Cfg *pMacPortCfg, const Enet_MacPort portIdx)
+{
+    EnetAppUtils_assert(portIdx < ENET_SYSCFG_MAX_MAC_PORTS);
+    *pMacPortCfg = enetAppCpswMacPortCfg[portIdx];
+}

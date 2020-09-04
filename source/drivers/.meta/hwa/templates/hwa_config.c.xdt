@@ -1,0 +1,52 @@
+%%{
+    let module = system.modules['/drivers/hwa/hwa'];
+%%}
+/*
+ * HWA
+ */
+/* HWA atrributes */
+HWA_Attrs gHwaAttrs[CONFIG_HWA_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .instanceNum                = `i`U,
+        .ctrlBaseAddr               = `config.ctrlBaseAddr`,
+        .paramBaseAddr              = `config.paramBaseAddr`,
+        .ramBaseAddr                = `config.ramBaseAddr`,
+        .dssBaseAddr                = `config.dssBaseAddr`,
+        .numHwaParamSets            = `config.numHwaParamSets`,
+        .intNum1ParamSet            = `config.intNum1ParamSet`,
+        .intNum2ParamSet            = `config.intNum2ParamSet`,
+        .intNumDone                 = `config.intNumDone`,
+        .intNumDoneALT              = `config.intNumDoneALT`,
+        .intNumLocalRamErr          = `config.intNumLocalRamErr`,
+        .numDmaChannels             = `config.numDmaChannels`,
+        .accelMemBaseAddr           = `config.accelMemBaseAddr`,
+        .accelMemSize               = `config.accelMemSize`,
+        .isConcurrentAccessAllowed  = `config.isConcurrentAccessAllowed`,
+    },
+% }
+};
+/* HWA RAM atrributes */
+HWA_RAMAttrs gHwaRamCfg[HWA_NUM_RAMS] =
+{
+    {CSL_DSS_HWA_WINDOW_RAM_U_BASE, CSL_DSS_HWA_WINDOW_RAM_U_SIZE},
+    {CSL_DSS_HWA_MULT_RAM_U_BASE, CSL_DSS_HWA_MULT_RAM_U_SIZE},
+    {CSL_DSS_HWA_DEROT_RAM_U_BASE, CSL_DSS_HWA_DEROT_RAM_U_SIZE},
+    {CSL_DSS_HWA_SHUFFLE_RAM_U_BASE,CSL_DSS_HWA_SHUFFLE_RAM_U_SIZE},
+    {CSL_DSS_HWA_HIST_THRESH_RAM_U_BASE, CSL_DSS_HWA_HIST_THRESH_RAM_U_SIZE},
+    {CSL_DSS_HWA_2DSTAT_ITER_VAL_RAM_U_BASE, CSL_DSS_HWA_2DSTAT_ITER_VAL_RAM_U_SIZE},
+    {CSL_DSS_HWA_2DSTAT_ITER_IDX_RAM_U_BASE, CSL_DSS_HWA_2DSTAT_ITER_IDX_RAM_U_SIZE},
+    {CSL_DSS_HWA_2DSTAT_SMPL_VAL_RAM_U_BASE, CSL_DSS_HWA_2DSTAT_SMPL_VAL_RAM_U_SIZE},
+    {CSL_DSS_HWA_2DSTAT_SMPL_IDX_RAM_U_BASE, CSL_DSS_HWA_2DSTAT_SMPL_IDX_RAM_U_SIZE},
+    {CSL_DSS_HWA_HIST_RAM_U_BASE, CSL_DSS_HWA_HIST_RAM_U_SIZE}
+};
+
+/* HWA objects - initialized by the driver */
+HWA_Object gHwaObject[CONFIG_HWA_NUM_INSTANCES];
+/* HWA objects - storage for HWA driver object handles */
+HWA_Object *gHwaObjectPtr[CONFIG_HWA_NUM_INSTANCES] = { NULL };
+/* HWA objects count */
+uint32_t gHwaConfigNum = CONFIG_HWA_NUM_INSTANCES;

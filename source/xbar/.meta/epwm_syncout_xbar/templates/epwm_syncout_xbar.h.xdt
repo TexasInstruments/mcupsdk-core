@@ -1,0 +1,16 @@
+%%{
+    let module = system.modules['/xbar/epwm_syncout_xbar/epwm_syncout_xbar'];
+%%}
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let masterInstance = "";
+    % if(instance.$ownedBy)
+    % {
+    %     masterInstance = instance.$ownedBy.$name;
+    % }
+    % let config = module.getInstanceConfig(instance);
+    % if( masterInstance != "" && masterInstance.search("XBAR") != -1)
+    % {
+#define `masterInstance` (OUTPUT_XBAR_`config.name.replace("EPWM_SYNCOUT_XBAR_", "EPWM_SYNCOUT_XBAR")`)
+    % }
+% }

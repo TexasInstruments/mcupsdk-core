@@ -1,0 +1,97 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2163"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1      = epwm.addInstance();
+const eqep       = scripting.addModule("/drivers/eqep/eqep", {}, false);
+const eqep1      = eqep.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const int_xbar   = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1  = int_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+epwm1.$name                                                      = "CONFIG_EPWM0";
+epwm1.epwmCounterCompare_enableShadowLoadModeCMPA                = false;
+epwm1.epwmCounterCompare_enableShadowLoadModeCMPB                = false;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmEventTrigger_enableInterrupt                           = true;
+epwm1.epwmEventTrigger_interruptEventCount                       = "1";
+epwm1.epwmTimebase_periodLoadMode                                = "EPWM_PERIOD_DIRECT_LOAD";
+epwm1.epwmTimebase_period                                        = 10000;
+epwm1.epwmCounterCompare_cmpA                                    = 5000;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmDeadband_enableRED                                     = true;
+epwm1.epwmDeadband_enableFED                                     = true;
+epwm1.EPWM.$assign                                               = "EPWM0";
+epwm1.EPWM.A.$assign                                             = "ball.B2";
+epwm1.EPWM.B.$assign                                             = "ball.B1";
+
+eqep1.$name                = "CONFIG_EQEP0";
+eqep1.eqepOperationMode    = "EQEP_CONFIG_UP_COUNT";
+eqep1.positionCounterMax   = 4294967295;
+eqep1.emulationMode        = "EQEP_EMULATIONMODE_RUNFREE";
+eqep1.enableUnitTimer      = true;
+eqep1.unitTimerPeriod      = 2000000;
+eqep1.latchPositionCounter = "EQEP_LATCH_UNIT_TIME_OUT";
+eqep1.swPositionInit       = true;
+eqep1.enableModule         = true;
+eqep1.evntPrescale         = "EQEP_UNIT_POS_EVNT_DIV_8";
+eqep1.capPrescale          = "EQEP_CAPTURE_CLK_DIV_128";
+eqep1.enableCapture        = true;
+eqep1.captureConfig        = true;
+eqep1.EQEP.$assign         = "EQEP0";
+eqep1.EQEP.A.$assign       = "ball.B14";
+eqep1.EQEP.B.$assign       = "ball.A14";
+eqep1.EQEP.STROBE.$assign  = "ball.C12";
+eqep1.EQEP.INDEX.$assign   = "ball.D11";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["EPWM0_INT"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.$suggestSolution = "UART0";

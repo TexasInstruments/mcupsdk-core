@@ -1,0 +1,56 @@
+%%{
+    let module = system.modules['/drivers/rti/rti'];
+%%}
+
+/* ----------- TimerP ----------- */
+#include <drivers/rti/v0/rti.h>
+#include <drivers/soc.h>
+#include <kernel/dpl/AddrTranslateP.h>
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `config.$name`                        (`i`u)
+#define `config.$name`_BASE_ADDR              (0x`config.baseAddr.toString(16).toUpperCase()`u)
+#define `config.$name`_INPUT_CLK_HZ           (`config.inputClkHz`u)
+    % if(config.counter0Enable) {
+#define `config.$name`_CNTR0_OUTPUT_CLK_HZ    (`config.cntr0OpFreq`u)
+    % }
+    % if(config.counter1Enable) {
+#define `config.$name`_CNTR1_OUTPUT_CLK_HZ    (`config.cntr1OpFreq`u)
+    % }
+    % if(config.compare0Enable) {
+#define `config.$name`_COMP0_SRC              (RTI_TMR_CNT_BLK_INDEX_`config.compareSource0`)
+#define `config.$name`_COMP0_INPUT_CLK_HZ     (`config.compInputClkHz0`u)
+#define `config.$name`_USEC_PER_TICK_COMP0    (`config.usecPerTick0`u)
+#define `config.$name`_NSEC_PER_TICK_COMP0    (`config.nsecPerTick0`u)
+    % }
+    % if(config.compare1Enable) {
+#define `config.$name`_COMP1_SRC              (RTI_TMR_CNT_BLK_INDEX_`config.compareSource1`)
+#define `config.$name`_COMP1_INPUT_CLK_HZ     (`config.compInputClkHz1`u)
+#define `config.$name`_USEC_PER_TICK_COMP1    (`config.usecPerTick1`u)
+#define `config.$name`_NSEC_PER_TICK_COMP1    (`config.nsecPerTick1`u)
+    % }
+    % if(config.compare2Enable) {
+#define `config.$name`_COMP2_SRC              (RTI_TMR_CNT_BLK_INDEX_`config.compareSource2`)
+#define `config.$name`_COMP2_INPUT_CLK_HZ     (`config.compInputClkHz2`u)
+#define `config.$name`_USEC_PER_TICK_COMP2    (`config.usecPerTick2`u)
+#define `config.$name`_NSEC_PER_TICK_COMP2    (`config.nsecPerTick2`u)
+    % }
+    % if(config.compare3Enable) {
+#define `config.$name`_COMP3_SRC              (RTI_TMR_CNT_BLK_INDEX_`config.compareSource3`)
+#define `config.$name`_COMP3_INPUT_CLK_HZ     (`config.compInputClkHz3`u)
+#define `config.$name`_USEC_PER_TICK_COMP3    (`config.usecPerTick3`u)
+#define `config.$name`_NSEC_PER_TICK_COMP3    (`config.nsecPerTick3`u)
+    % }
+#define `config.$name`_INT_NUM_EVENT0         (`config.hwiIntNum`u)
+#define `config.$name`_INT_NUM_EVENT1         (`config.hwiIntNum + 1`u)
+#define `config.$name`_INT_NUM_EVENT2         (`config.hwiIntNum + 2`u)
+#define `config.$name`_INT_NUM_EVENT3         (`config.hwiIntNum + 3`u)
+#define `config.$name`_LOCK_UNLOCK_DOMAIN     (`config.lockUnlockDomain`)
+#define `config.$name`_LOCK_UNLOCK_PARTITION  (`config.lockUnlockPartition`)
+#define `config.$name`_CLOCK_SRC_MUX_ADDR     (0x`config.clkSelMuxAddr.toString(16).toUpperCase()`u)
+#define `config.$name`_CLOCK_SRC_VALUE        (0x`config.clkSelMuxValue.toString(16).toUpperCase()`u)
+#define `config.$name`_CLOCK_SRC_`config.clkSource` (0x`config.clkSelMuxValue.toString(16).toUpperCase()`u)
+% }
+#define RTI_NUM_INSTANCES                     (`module.$instances.length`u)

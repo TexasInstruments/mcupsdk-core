@@ -1,0 +1,85 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let module = system.modules['/fs/freertos_fat/freertos_fat'];
+%%}
+/*
+ * FreeRTOS+FAT
+ */
+/* FreeRTOS+FAT disk */
+FF_Disk_t gFFDisks[CONFIG_FF_NUM_INSTANCES];
+
+/* FreeRTOS+FAT MMCSD Configs */
+FF_MMCSD_Config gFFMmcsdConfig[CONFIG_FF_NUM_INSTANCES] = 
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let peripheralDriver = instance.peripheralDriver;
+    {
+        .mediaType         = MMCSD_CARD_TYPE_`peripheralDriver.cardType`,
+        .mmcsdInstance     = `peripheralDriver.$name.toUpperCase()`,
+    },
+% }	
+};
+
+/* FreeRTOS+FAT partitions */
+% let sdPartitionCount = 0;
+% let emmcPartitionCount = 0;
+FF_MMCSD_PartitionId gFFPartitionIds[CONFIG_FF_NUM_INSTANCES] = 
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let peripheralDriver = instance.peripheralDriver;
+    % if(peripheralDriver.cardType == "EMMC") {
+    {
+    	.partitionNumber = `emmcPartitionCount`,
+    	.partitionName   = "/emmc`emmcPartitionCount`",
+    },
+    % emmcPartitionCount += 1;
+    % } else if(peripheralDriver.cardType == "SD") {
+    {
+    	.partitionNumber = `sdPartitionCount`,
+    	.partitionName   = "/sd`sdPartitionCount`",
+    },
+    % sdPartitionCount += 1;
+    % }
+% }	
+};
+
+void Drivers_ffOpen(void)
+{
+	uint32_t instCnt;
+	int32_t status = SystemP_SUCCESS;
+	FF_Disk_t *diskStatus;
+
+	/* Initialize all instances */
+	for(instCnt = 0U; instCnt < CONFIG_FF_NUM_INSTANCES; instCnt++)
+	{
+		diskStatus = FF_MMCSDDiskInit(gFFPartitionIds[instCnt].partitionName,
+		                             &gFFDisks[instCnt],
+		                             &gFFMmcsdConfig[instCnt],
+		                             gFFPartitionIds[instCnt].partitionNumber);
+		if(NULL == diskStatus)
+		{
+		    DebugP_logError("FF Disk Init failed for instance %d !!!\r\n", instCnt);
+		    status = SystemP_FAILURE;
+		    break;
+		}
+	}
+
+	if(SystemP_FAILURE == status)
+	{
+		Drivers_ffClose(); /* Exit gracefully */
+	}
+}
+
+void Drivers_ffClose(void)
+{
+	uint32_t instCnt;
+
+	/* Close all instances that are open */
+	for(instCnt = 0U; instCnt < CONFIG_FF_NUM_INSTANCES; instCnt++)
+	{
+	    FF_MMCSDDiskDelete(&gFFDisks[instCnt]);
+	}
+}

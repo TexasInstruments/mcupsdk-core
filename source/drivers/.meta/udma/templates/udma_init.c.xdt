@@ -1,0 +1,11 @@
+    /* UDMA */
+    {
+        uint32_t        instId;
+        int32_t         retVal = UDMA_SOK;
+
+        for(instId = 0U; instId < CONFIG_UDMA_NUM_INSTANCES; instId++)
+        {
+            retVal += Udma_init(&gUdmaDrvObj[instId], &gUdmaInitPrms[instId]);
+            DebugP_assert(UDMA_SOK == retVal);
+        }
+    }

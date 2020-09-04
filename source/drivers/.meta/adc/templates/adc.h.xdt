@@ -1,0 +1,25 @@
+%%{
+    let module = system.modules['/drivers/adc/adc'];
+    let common   = system.getScript("/common");
+%%}
+/*
+ * ADC
+ */
+#include <drivers/adc.h>
+#include <drivers/soc.h>
+
+/* ADC Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (["am263x"].includes(common.getSocName())) {
+#define `instance.$name`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name`_RESULT_BASE_ADDR (`config.resultBaseAddr`)
+    % }
+    % else {
+#define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+#define `instance.$name.toUpperCase()`_INTR (`config.intrNum`U)
+#define `instance.$name.toUpperCase()`_NUM_BITS (`config.numBits`U)
+    % }
+% }
+#define CONFIG_ADC_NUM_INSTANCES (`module.$instances.length`U)

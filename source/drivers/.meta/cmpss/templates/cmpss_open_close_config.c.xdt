@@ -1,0 +1,121 @@
+void Drivers_cmpssOpen(void)
+{
+% let module = system.modules['/drivers/cmpss/cmpss'];
+% let Common   = system.getScript("/common");
+% let nameOfModule = "cmpss";
+% let nameOfPeripheral = module.peripheralName;
+% let powerUpTime = 10;
+%if (module != null)
+% {
+	% for(let i = 0; i < module.$instances.length; i++) {
+		% let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+	/* `instance.$name` initialization */
+%%{
+	let configHighString = "("
+	configHighString += instance.highCompNegative
+	if (instance.highCompInvert){
+		configHighString += " | CMPSS_INV_INVERTED"
+	}
+	if (instance.highCompAsynch){
+		configHighString += " | CMPSS_OR_ASYNC_OUT_W_FILT"
+	}
+	configHighString += ")"
+%%}
+	/* Sets the configuration for the high comparator */
+	CMPSS_configHighComparator(`baseName`,`configHighString`);
+%%{
+	let configLowString = "("
+	configLowString += instance.lowCompPositive
+	if (instance.lowCompInvert){
+		configLowString += " | CMPSS_INV_INVERTED"
+	}
+	if (instance.lowCompAsynch){
+		configLowString += " | CMPSS_OR_ASYNC_OUT_W_FILT"
+	}
+	configLowString += ")"
+%%}
+	/* Sets the configuration for the low comparator */
+	CMPSS_configLowComparator(`baseName`,`configLowString`);
+	/* Sets the configuration for the internal comparator DACs */
+		% if(instance.dacValLoad == "CMPSS_DACVAL_PWMSYNC"){
+	/* ePWM module must be configured before using here */
+		% }
+	CMPSS_configDAC(`baseName`,(`instance.dacValLoad` | `instance.dacRefVoltage` | `instance.dacValSource`));
+	/*  Configures the digital filter of the high comparator */
+	CMPSS_configFilterHigh(`baseName`, `instance.samplePrescaleHigh`, `instance.sampleWindowHigh`, `instance.thresholdHigh`);
+	/* Configures the digital filter of the low comparator */
+	CMPSS_configFilterLow(`baseName`, `instance.samplePrescaleLow`, `instance.sampleWindowLow`, `instance.thresholdLow`);
+		% if(instance.initFilterHigh){
+	/* Initializes the digital filter of the high comparator */
+	CMPSS_initFilterHigh(`baseName`);
+		% }
+		% if(instance.initFilterLow){
+	/* Initializes the digital filter of the low comparator */
+	CMPSS_initFilterLow(`baseName`);
+		% }
+	/* Sets the output signal configuration for the high comparator */
+	CMPSS_configOutputsHigh(`baseName`,(`instance.highCTRIPOUT` | `instance.highCTRIP`));
+	/* Sets the output signal configuration for the low comparator */
+	CMPSS_configOutputsLow(`baseName`,(`instance.lowCTRIPOUT` | `instance.lowCTRIP`));
+	/* Sets the comparator hysteresis settings. */
+	CMPSS_setComparatorHighHysteresis(`baseName`,`instance.hysteresisValCompH`);
+	CMPSS_setComparatorLowHysteresis(`baseName`,`instance.hysteresisValCompL`);
+	/* Configures the comparator subsystem's ramp generator */
+	CMPSS_configRamp(`baseName`,`instance.maxRampVal`,`instance.ramDecVal`,`instance.rampDelayVal`,`instance.pwmSyncSrc`,`instance.useRampValShdw`);
+	/* Sets the value of the internal DAC of the high comparator */
+	CMPSS_setDACValueHigh(`baseName`,`instance.dacValHigh`);
+	/* Sets the value of the internal DAC of the low comparator */
+	CMPSS_setDACValueLow(`baseName`,`instance.dacValLow`);
+	/* Sets the ePWM module blanking signal that holds trip in reset */
+	CMPSS_configBlanking(`baseName`,`instance.configBlanking`);
+			% if(instance.enableBlanking){
+	/* Enables an ePWM blanking signal to hold trip in reset */
+	CMPSS_enableBlanking(`baseName`);
+			% }
+			% else{
+	/* Disables an ePWM blanking signal from holding trip in reset */
+	CMPSS_disableBlanking(`baseName`);
+			% }
+			% if(instance.enableDiodeEmulation){
+	/* Sets the ePWM module DEACTIVE signal */
+	CMPSS_selectDEACTIVESource(`baseName`, `instance.selectDiodeEmulationSrc`);
+	/* Sets the value2 of the internal DAC of the high comparator */
+	CMPSS_configHighDACShadowValue2(`baseName`, `instance.dacVal2High`);
+	/* Sets the value2 of the internal DAC of the low comparator */
+	CMPSS_configLowDACShadowValue2(`baseName`, `instance.dacVal2Low`);
+	/* Enables diode emulation mode */
+	CMPSS_enableDEmode(`baseName`);
+			% }
+			% else{
+	/* Disables diode emulation mode */
+	CMPSS_disableDEmode(`baseName`);
+			% }
+	/* Configures whether or not the digital filter latches are reset by PWMSYNC */
+	CMPSS_configLatchOnPWMSYNC(`baseName`,`instance.configLatchHigh`,`instance.configLatchLow`);
+		% if(instance.enableModule){
+	/* Enables the CMPSS module */
+	CMPSS_enableModule(`baseName`);
+		% }
+		% else{
+	/* Disables the CMPSS module */
+	CMPSS_disableModule(`baseName`);
+
+		% }
+	% }
+	/* Delay for CMPSS DAC to power up */
+	ClockP_usleep(`powerUpTime`);
+	% for(let i = 0; i < module.$instances.length; i++) {
+		% let instance = module.$instances[i];
+		% let baseName = instance.$name + "_BASE_ADDR";
+		% if(instance.clearFilterLatchHigh){
+	/* Causes a software reset of the high comparator digital filter output latch */
+	CMPSS_clearFilterLatchHigh(`baseName`);
+	% }
+		% if(instance.clearFilterLatchLow){
+	/* Causes a software reset of the low comparator digital filter output latch */
+	CMPSS_clearFilterLatchLow(`baseName`);
+	% }
+	% }
+% }
+}

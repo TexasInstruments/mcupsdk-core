@@ -1,0 +1,206 @@
+#
+# Auto generated makefile
+#
+
+export `args.sdkPath`?=$(abspath `args.relPath`)
+include $(`args.sdkPath`)/imports.mak
+
+CG_TOOL_ROOT=$(`args.cgtOptions.path`)
+
+CC=$(`args.cgtOptions.path`)/bin/`args.cgtOptions.cc`
+AR=$(`args.cgtOptions.path`)/bin/`args.cgtOptions.ar`
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+% if (args.project.name == "drivers" && (args.project.device == "am243x" || args.project.device == "am64x")) {
+DEVICE_TYPE?=GP
+% }
+LIBNAME:=`args.project.name`.`args.project.device`.`args.project.cpu`.`args.project.cgt`.$(PROFILE).lib
+
+% let obj = {}
+% obj = args.project.files;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+FILES_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
+% obj = args.project.asmfiles;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+ASMFILES_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
+% if (args.project.device == "awr294x") {
+% obj = args.project.asmextnfiles;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+ASMEXTNFILES_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
+% }
+% obj = args.project.filedirs;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+FILES_PATH_`prop` = \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
+% obj = args.project.includes;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+INCLUDES_`prop` := \
+            % for(let val of obj[prop]) {
+    -I`val` \
+            % }
+
+    % }
+% }
+% obj = args.project.defines;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+DEFINES_`prop` := \
+            % for(let val of obj[prop]) {
+    -D`val` \
+            % }
+
+    % }
+% }
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == "common" && args.project.name == "drivers" && (args.project.device == "am243x" || args.project.device == "am64x") ) {
+# Remove later with combined boot
+ifeq ($(DEVICE_TYPE),$(filter $(DEVICE_TYPE), HS))
+DEFINES_`prop` += -DBUILD_HS
+endif
+
+    % }
+% }
+% obj = args.project.cflags;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+CFLAGS_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
+% obj = args.project.arflags;
+% for (prop in obj) {
+    % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+ARFLAGS_`prop` := \
+            % for(let val of obj[prop]) {
+    `val` \
+            % }
+
+    % }
+% }
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+% if (args.project.device == "awr294x") {
+ASMEXTNFILES := $(ASMEXTNFILES_common) $(ASMEXTNFILES_$(PROFILE))
+% }
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/`args.project.device`/`args.project.cgt`/$(PROFILE)/`args.project.cpu`/`args.project.name`/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+% if (args.project.device == "awr294x") {
+OBJS += $(ASMEXTNFILES:%.asm=%.obj)
+% }
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+% if (args.project.device == "awr294x") {
+vpath %.asm $(FILES_PATH)
+% }
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+% if (args.project.cgt == "ti-arm" || args.project.cgt == "ti-c6000") {
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fc=$<
+% }
+% if (args.project.cgt == "ti-arm-clang") {
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+% }
+% if ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) {
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -MT $@ -o $(OBJDIR)/$@ $<
+% }
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+% if (args.project.cgt == "ti-arm" || args.project.cgt == "ti-c6000") {
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fa=$<
+% }
+% if (args.project.cgt == "ti-arm-clang") {
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+% }
+% if ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) {
+	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
+% }
+% if (args.project.device == "awr294x") {
+
+$(OBJDIR)/%.obj %.obj: %.asm
+	@echo  Compiling: $(LIBNAME): $<
+% if (args.project.cgt == "ti-arm" || args.project.cgt == "ti-c6000") {
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fa=$<
+% }
+% if (args.project.cgt == "ti-arm-clang") {
+	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
+% }
+% if ((args.project.cgt == "gcc-aarch64") || (args.project.cgt == "gcc-armv7")) {
+	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
+% }
+% }
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

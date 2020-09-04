@@ -1,0 +1,106 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/board/eeprom/eeprom'];
+%%}
+/*
+ * EEPROM
+ */
+#include <board/eeprom.h>
+/* EEPROM specific includes */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (!module.$instances.includes (module.$instances[i], i) ||
+    %    (i == (module.$instances.length -1))) {
+#include <board/eeprom/eeprom_`config.name.toLowerCase()`.h>
+    % }
+% }
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (!module.$instances.includes (module.$instances[i], i) ||
+    %    (i == (module.$instances.length -1))) {
+/* EEPROM Object - initalized during EEPROM_open() */
+EEPROM_Object gEepromObject_`config.name`;
+    % }
+% }
+
+/* EEPROM Driver handles - opened during Board_eepromOpen() */
+EEPROM_Handle gEepromHandle[CONFIG_EEPROM_NUM_INSTANCES];
+
+/* EEPROM Config */
+EEPROM_Config gEepromConfig[CONFIG_EEPROM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .attrs = &gEepromAttrs_`config.name`,
+        .fxns = &gEepromFxns_`config.name`,
+        .object = (void *)&gEepromObject_`config.name`,
+    },
+% }
+};
+uint32_t gEepromConfigNum = CONFIG_EEPROM_NUM_INSTANCES;
+
+/* EEPROM params */
+EEPROM_Params gEepromParams[CONFIG_EEPROM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let peripheralDriver = instance.peripheralDriver;
+    {
+        .driverInstance = `peripheralDriver.$name.toUpperCase()`,
+        .i2cAddress     = 0x`config.i2cAddress.toString(16).toUpperCase()`,
+    },
+% }
+};
+
+int32_t Board_eepromOpen()
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_EEPROM_NUM_INSTANCES; instCnt++)
+    {
+        gEepromHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_EEPROM_NUM_INSTANCES; instCnt++)
+    {
+        gEepromHandle[instCnt] = EEPROM_open(instCnt, &gEepromParams[instCnt]);
+        if(NULL == gEepromHandle[instCnt])
+        {
+            DebugP_logError("EEPROM open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Board_eepromClose();   /* Exit gracefully */
+    }
+
+    return status;
+}
+
+void Board_eepromClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_EEPROM_NUM_INSTANCES; instCnt++)
+    {
+        if(gEepromHandle[instCnt] != NULL)
+        {
+            EEPROM_close(gEepromHandle[instCnt]);
+            gEepromHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

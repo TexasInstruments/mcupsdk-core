@@ -1,0 +1,82 @@
+%%{
+    let module = system.modules[args[0]];
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/pinmux/pinmux_${common.getSocName()}`);
+%%}
+% for(let i = 0; i < module.$instances.length; i++) {
+    % if (module.getInterfaceName) {
+        %%{
+            /* This generates pinmux for modules which have peripheral interfaces and then
+            peripheral pins */
+            let instance = module.$instances[i];
+            let interfaceName = module.getInterfaceName(instance);
+            let isMcuDomainPeripheral = interfaceName.includes("MCU_");
+            let doGenerateCode = false;
+            if ( args[1] == "mcu" && isMcuDomainPeripheral)
+                doGenerateCode = true;
+            if ( args[1] == "main" && !isMcuDomainPeripheral)
+                doGenerateCode = true;
+        %%}
+        % if(doGenerateCode) {
+            % let peripheral = (module.defaultInstanceName === "CONFIG_ENET_CPSW") ? (instance.pinmux[0])[interfaceName] :instance[interfaceName];
+    /* `peripheral.$solution.peripheralName` pin config */
+            % let pinNames = module.getPeripheralPinNames(instance);
+            % for (let pinName of pinNames) {
+                % let peripheralPin = peripheral[pinName];
+                % if (peripheralPin && peripheralPin.$solution.peripheralPinName) {
+    `soc.getPinConfigCStruct(peripheralPin, interfaceName)`
+                % }
+            % }
+        % }
+    % }
+    % if (module.getInterfaceNameList) {
+        %%{
+            /* This generates pinmux for modules which have multiple peripheral interfaces and then
+            peripheral pins */
+            let instance = module.$instances[i];
+            let interfaceNameList = module.getInterfaceNameList(instance);
+        %%}
+        % for(let interfaceName of interfaceNameList) {
+        %    let isMcuDomainPeripheral = interfaceName.includes("MCU_");
+        %    let doGenerateCode = false;
+        %    if ( args[1] == "mcu" && isMcuDomainPeripheral)
+        %        doGenerateCode = true;
+        %    if ( args[1] == "main" && !isMcuDomainPeripheral)
+        %        doGenerateCode = true;
+        %    if(doGenerateCode) {
+        %        let peripheral = (module.defaultInstanceName === "CONFIG_ENET_CPSW") ? (instance.pinmux[0])[interfaceName] :instance[interfaceName];
+    /* `peripheral.$solution.peripheralName` pin config */
+        %        let pinNames = module.getPeripheralPinNames(instance);
+        %        for (let pinName of pinNames) {
+        %             let peripheralPin = peripheral[pinName];
+        %             if (peripheralPin && peripheralPin.$solution.peripheralPinName) {
+    `soc.getPinConfigCStruct(peripheralPin, interfaceName)`
+        %             }
+        %        }
+        %    }
+        % }
+    % }
+    % if (module.getPinName) {
+        %%{
+            /* This generates pinmux for modules which only have peripheral pins */
+            let instance = module.$instances[i];
+            let interfaceName = module.getInterfaceName ? module.getInterfaceName(instance) : "";
+            let pinName = module.getPinName(instance);
+            let isMcuDomainPeripheral = pinName.includes("MCU_");
+            let doGenerateCode = false;
+            if ( args[1] == "mcu" && isMcuDomainPeripheral)
+                doGenerateCode = true;
+            if ( args[1] == "main" && !isMcuDomainPeripheral)
+                doGenerateCode = true;
+            if (pinName == "")
+                doGenerateCode = false;
+        %%}
+        % if(doGenerateCode) {
+            % let peripheralPin = instance[pinName];
+            % if (peripheralPin && peripheralPin.$solution.peripheralPinName) {
+    /* `peripheralPin.$solution.peripheralPinName` pin config */
+    `soc.getPinConfigCStruct(peripheralPin, interfaceName)`
+            % }
+        % }
+    % }
+% }

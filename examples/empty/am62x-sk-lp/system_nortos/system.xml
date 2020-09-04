@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <project configuration="@match" id="project_0" name="empty_am62x-sk-lp_m4fss0-0_nortos_ti-arm-clang">
+    </project>
+    <core id="Cortex_M4F_0" project="project_0"/>
+	<preBuildSteps>
+	</preBuildSteps>
+    <postBuildSteps>
+        <step command="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_system_ccs_bootimage_gen OUTNAME=empty_system PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"/>
+    </postBuildSteps>
+
+</system>

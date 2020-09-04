@@ -1,0 +1,426 @@
+%%{
+    let module = system.modules["/networking/enet_icss/enet_icss"];
+%%}
+% let instance = module.$instances[0];
+% let common = system.getScript("/common");
+% let device = common.getDeviceName();
+% if (instance.customBoardEnable === false) {
+
+#include <stdint.h>
+#include <enet.h>
+#include <networking/enet/core/include/phy/enetphy.h>
+#include <networking/enet/core/include/phy/dp83867.h>
+#include <networking/enet/core/include/phy/dp83869.h>
+
+#include <networking/enet/utils/include/enet_apputils.h>
+#include <kernel/dpl/SystemP.h>
+#include <networking/enet/core/src/phy/enetphy_priv.h>
+#include <board/eeprom.h>
+#include "ti_board_open_close.h"
+
+/* PHY drivers */
+extern EnetPhy_Drv gEnetPhyDrvGeneric;
+extern EnetPhy_Drv gEnetPhyDrvDp83822;
+extern EnetPhy_Drv gEnetPhyDrvDp83867;
+extern EnetPhy_Drv gEnetPhyDrvDp83869;
+extern EnetPhy_Drv gEnetPhyDrvVsc8514;
+
+/*! \brief All the registered PHY specific drivers. */
+static const EnetPhyDrv_Handle gEnetPhyDrvs[] =
+{
+    &gEnetPhyDrvDp83869,   /* DP83869 */
+    &gEnetPhyDrvGeneric,   /* Generic PHY - must be last */
+};
+
+const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl =
+{
+    .numHandles = ENET_ARRAYSIZE(gEnetPhyDrvs),
+    .hPhyDrvList = gEnetPhyDrvs,
+};
+
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+
+static const EnetBoard_PortCfg *EnetBoard_getPortCfg(const EnetBoard_EthPort *ethPort);
+
+static const EnetBoard_PortCfg *EnetBoard_findPortCfg(const EnetBoard_EthPort *ethPort,
+                                                      const EnetBoard_PortCfg *ethPortCfgs,
+                                                      uint32_t numEthPorts);
+
+static void EnetBoard_setEnetControl(Enet_Type enetType,
+                                     Enet_MacPort macPort,
+                                     EnetMacPort_Interface *mii);
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+%if (device === "am243x-lp"){
+#define ENET_BOARD_NUM_MACADDR_MAX (3U)
+#define I2C_EEPROM_MAC_DATA_OFFSET (0x3D)
+#define I2C_EEPROM_MAC_CTRL_OFFSET (0x3B)
+%}
+
+%if (device === "am64x-evm" || device === "am243x-evm"){
+#define ENET_BOARD_NUM_MACADDR_MAX (4U)
+#define I2C_EEPROM_MAC_CTRL_OFFSET (0x40)
+#define I2C_EEPROM_MAC_DATA_OFFSET (0x42)
+%}
+
+#define ENET_GET_NUM_MAC_ADDR(num) ((num>>3)+1)
+
+%%{
+function getBoardPhydelayInfo() {
+    const enetBoardPhyDelayInfoMap = new Map(
+                        [
+                            ['am64x-evm',{txDelay: "750U" , rxDelay: "2000U"}],
+                            ['am243x-evm',{txDelay: "750U" , rxDelay: "2000U"}],
+                            ['am243x-lp',{txDelay: "500U" , rxDelay: "500U"}],
+                        ],
+                        );
+    return enetBoardPhyDelayInfoMap.get(device);;
+}
+%%}
+
+/*!
+ * \brief Common Processor Board (CPB) board's DP83869 PHY configuration.
+ */
+static const Dp83869_Cfg gEnetCpbBoard_dp83869PhyCfg =
+{
+    .txClkShiftEn         = true,
+    .rxClkShiftEn         = true,
+    .rxDelayInPs          = `getBoardPhydelayInfo().rxDelay`,
+    .txDelayInPs          = `getBoardPhydelayInfo().txDelay`,
+    .txFifoDepth          = 4U,
+    .impedanceInMilliOhms = 35000,  /* 35 ohms */
+    .idleCntThresh        = 4U,     /* Improves short cable performance */
+    .gpio0Mode            = DP83869_GPIO0_LED3,
+    .gpio1Mode            = DP83869_GPIO1_COL, /* Unused */
+    .ledMode              =
+    {
+        DP83869_LED_LINKED,         /* Unused */
+        DP83869_LED_LINKED_100BTX,
+        DP83869_LED_RXTXACT,
+        DP83869_LED_LINKED_1000BT,
+    },
+};
+
+/*
+ * `device` board configuration.
+ *
+ * 1 x RGMII PHY connected to `device` ICSSG
+ */
+static const EnetBoard_PortCfg gEnetCpbBoard_`device.replace('-','_')`_EthPort[] =
+{
+    {    /* "ETH0" (ICSSG0 Dual-MAC port 1) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = true,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH1" (ICSSG0 Dual-MAC port 2) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 1U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = true,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH2" (ICSSG1 Dual-MAC port 1) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 2U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH3" (ICSSG1 Dual-MAC port 2) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 3U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH0" (ICSSG0 Switch port 1) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = true,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH1" (ICSSG0 Switch port 2) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = true,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH2" (ICSSG1 Switch port 1) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 1U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH3" (ICSSG1 Switch port 2) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 1U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+};
+
+/*
+ * `device` MII board configuration.
+ *
+ * 2 x MII PHY connected to `device` ICSSG1 MAC ports.
+ */
+static const EnetBoard_PortCfg gEnetMiiBoard_`device.replace('-','_')`_EthPort[] =
+{
+    {    /* "ETH2" (ICSSG1 Dual-MAC port 1) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 2U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH3" (ICSSG1 Dual-MAC port 2) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 3U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH2" (ICSSG1 Switch port 1) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 1U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH3" (ICSSG1 Switch port 2) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 1U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+};
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
+const EnetBoard_PhyCfg *EnetBoard_getPhyCfg(const EnetBoard_EthPort *ethPort)
+{
+    const EnetBoard_PortCfg *portCfg;
+
+    portCfg = EnetBoard_getPortCfg(ethPort);
+
+    return (portCfg != NULL) ? &portCfg->phyCfg : NULL;
+}
+
+static const EnetBoard_PortCfg *EnetBoard_getPortCfg(const EnetBoard_EthPort *ethPort)
+{
+    const EnetBoard_PortCfg *portCfg = NULL;
+
+    if (ENET_NOT_ZERO(ethPort->boardId & ENETBOARD_CPB_ID))
+    {
+        portCfg = EnetBoard_findPortCfg(ethPort,
+                                        gEnetCpbBoard_`device.replace('-','_')`_EthPort,
+                                        ENETPHY_ARRAYSIZE(gEnetCpbBoard_`device.replace('-','_')`_EthPort));
+    }
+    if (ENET_NOT_ZERO(ethPort->boardId & ENETBOARD_MII_ID))
+    {
+        portCfg = EnetBoard_findPortCfg(ethPort,
+                                        gEnetMiiBoard_`device.replace('-','_')`_EthPort,
+                                        ENETPHY_ARRAYSIZE(gEnetMiiBoard_`device.replace('-','_')`_EthPort));
+    }
+    return portCfg;
+}
+
+static const EnetBoard_PortCfg *EnetBoard_findPortCfg(const EnetBoard_EthPort *ethPort,
+                                                      const EnetBoard_PortCfg *ethPortCfgs,
+                                                      uint32_t numEthPorts)
+{
+    const EnetBoard_PortCfg *ethPortCfg = NULL;
+    bool found = false;
+    uint32_t i;
+
+    for (i = 0U; i < numEthPorts; i++)
+    {
+        ethPortCfg = &ethPortCfgs[i];
+
+        if ((ethPortCfg->enetType == ethPort->enetType) &&
+            (ethPortCfg->instId == ethPort->instId) &&
+            (ethPortCfg->macPort == ethPort->macPort) &&
+            (ethPortCfg->mii.layerType == ethPort->mii.layerType) &&
+            (ethPortCfg->mii.sublayerType == ethPort->mii.sublayerType))
+        {
+            found = true;
+            break;
+        }
+    }
+
+    return found ? ethPortCfg : NULL;
+}
+
+int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
+                             uint32_t numEthPorts)
+{
+    uint32_t i;
+
+    /* Nothing else to do */
+    for (i = 0U; i < numEthPorts; i++)
+    {
+        EnetBoard_EthPort *ethPort = &ethPorts[i];
+        /* Override the ENET control set by board lib */
+        EnetBoard_setEnetControl(ethPort->enetType, ethPort->macPort, &ethPort->mii);
+
+    }
+    return ENET_SOK;
+}
+
+//Board_STATUS Board_unlockMMR(void);
+static void EnetBoard_setEnetControl(Enet_Type enetType,
+                                     Enet_MacPort macPort,
+                                     EnetMacPort_Interface *mii)
+{
+
+}
+
+void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
+                              uint32_t maxMacEntries,
+                              uint32_t *pAvailMacEntries)
+{
+    int32_t status = ENET_SOK;
+    uint32_t macAddrCnt;
+    uint32_t i;
+    uint8_t macAddrBuf[ENET_BOARD_NUM_MACADDR_MAX * ENET_MAC_ADDR_LEN];
+    uint8_t numMacMax;
+
+    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0],  I2C_EEPROM_MAC_CTRL_OFFSET, &numMacMax, sizeof(uint8_t));
+    EnetAppUtils_assert(status == ENET_SOK);
+    EnetAppUtils_assert(ENET_GET_NUM_MAC_ADDR(numMacMax) <= ENET_BOARD_NUM_MACADDR_MAX);
+    macAddrCnt = EnetUtils_min(ENET_GET_NUM_MAC_ADDR(numMacMax), maxMacEntries);
+
+    EnetAppUtils_assert(pAvailMacEntries != NULL);
+
+    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], I2C_EEPROM_MAC_DATA_OFFSET, macAddrBuf, (macAddrCnt * ENET_MAC_ADDR_LEN));
+    EnetAppUtils_assert(status == ENET_SOK);
+
+    /* Save only those required to meet the max number of MAC entries */
+    /* TODO Read number of mac addresses from the board eeprom */
+    for (i = 0U; i < macAddrCnt; i++)
+    {
+        memcpy(macAddr[i], &macAddrBuf[i * ENET_MAC_ADDR_LEN], ENET_MAC_ADDR_LEN);
+    }
+
+    *pAvailMacEntries = macAddrCnt;
+
+    if (macAddrCnt == 0U)
+    {
+        EnetAppUtils_print("EnetBoard_getMacAddrList Failed - IDK not present\n");
+        EnetAppUtils_assert(false);
+    }
+}
+
+% }
+

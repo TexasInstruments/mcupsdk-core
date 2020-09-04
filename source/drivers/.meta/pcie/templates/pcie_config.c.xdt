@@ -1,0 +1,165 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/pcie/pcie'];
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("pcie");
+
+    let obAtuModule = system.modules[`/drivers/pcie/${driverVer}/pcieObAtu`];
+    let ibAtuModule = system.modules[`/drivers/pcie/${driverVer}/pcieIbAtu`];
+%%}
+/*
+ * PCIe
+ */
+
+/* Extern variable declarations */
+%for(let i = 0; i < module.$instances.length; i++) {
+%    let instance = module.$instances[i];
+%    let obAtu = instance.obAtu;
+%    if (obAtu.length > 0) {
+%        for (let j = 0; j < obAtu.length; j++) {
+%            let ob_inst = obAtu[j];
+%            let ob_cfg = obAtuModule.getInstanceConfig(ob_inst);
+%            if (ob_cfg.externs) {
+`ob_cfg.externs`
+%            }
+%        }
+%    }
+%    let ibAtu = instance.ibAtu;
+%    if (ibAtu.length > 0) {
+%        for (let j = 0; j < ibAtu.length; j++) {
+%            let ib_inst = ibAtu[j];
+%            let ib_cfg = ibAtuModule.getInstanceConfig(ib_inst);
+%            if (ib_cfg.externs) {
+`ib_cfg.externs`
+%            }
+%        }
+%    }
+%}
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+Pcie_MsiIsrCtrl gPcieMsiIsrCtrl`common.camelSentence(instance.$name.toLowerCase())`;
+uint8_t gPcieMsiRingMem`common.camelSentence(instance.$name.toLowerCase())`[128] __attribute__((aligned(128)));
+
+% }
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+Pcie_MsixIsrCtrl gPcieMsixIsrCtrl`common.camelSentence(instance.$name.toLowerCase())`;
+uint8_t gPcieMsixRingMem`common.camelSentence(instance.$name.toLowerCase())`[128] __attribute__((aligned(128)));
+Pcie_MsixTbl gPcieMsixTbl`common.camelSentence(instance.$name.toLowerCase())` __attribute__((aligned(128)));
+% }
+
+
+/* Outbound region settings */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+Pcie_ObAtuCfg obAtu`common.camelSentence(instance.$name.toLowerCase())`[] =
+{
+    % let obAtu = instance.obAtu;
+    % if (obAtu.length > 0) {
+    % for (let j = 0; j < obAtu.length; j++) {
+    % let ob_inst = obAtu[j];
+    % let ob_cfg = obAtuModule.getInstanceConfig(ob_inst);
+    {
+        .regionIndex = `ob_cfg.regIndex`,
+        .tlpType = `ob_cfg.tlpType`,
+        .lowerBaseAddr = `ob_cfg.lowerBase`,
+        .upperBaseAddr = `ob_cfg.upperBase`,
+        .regionWindowSize = `ob_cfg.windowSize`,
+        .lowerTargetAddr = `ob_cfg.lowerTarget`,
+        .upperTargetAddr = `ob_cfg.upperTarget`,
+    },
+    % }
+    % }
+};
+% }
+
+/* Inbound region settings */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+Pcie_IbAtuCfg ibAtu`common.camelSentence(instance.$name.toLowerCase())`[] =
+{
+    % let ibAtu = instance.ibAtu;
+    % if (ibAtu.length > 0) {
+    % for (let j = 0; j < ibAtu.length; j++) {
+    % let ib_inst = ibAtu[j];
+    % let ib_cfg = ibAtuModule.getInstanceConfig(ib_inst);
+    {
+        .regionIndex = `ib_cfg.regIndex`,
+        .tlpType = `ib_cfg.tlpType`,
+        .lowerBaseAddr = `ib_cfg.lowerBase`,
+        .upperBaseAddr = `ib_cfg.upperBase`,
+        .regionWindowSize = `ib_cfg.windowSize`,
+        .lowerTargetAddr = `ib_cfg.lowerTarget`,
+        .upperTargetAddr = `ib_cfg.upperTarget`,
+        % if(instance.operMode == "PCIE_RC_MODE") {
+        .barAperture = PCIE_RCBARA_`ib_cfg.barAperture`,
+        % } else if (instance.operMode == "PCIE_EP_MODE") {
+        .barAperture = PCIE_EPBARA_`ib_cfg.barAperture`,
+        % }
+        .barCfg = `ib_cfg.barConfig`,
+    },
+    % }
+    % }
+};
+% }
+
+/* PCIe Driver Attributes */
+Pcie_Attrs gPcieAttrs[CONFIG_PCIE_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .deviceNum = `config.deviceNum`,
+        .operationMode = `config.operMode`,
+        .gen = `config.gen`,
+        .numLanes = `config.numLanes`,
+        .obAtu = obAtu`common.camelSentence(instance.$name.toLowerCase())`,
+        % let ob_cfg = instance.obAtu;
+        .obAtuNum = `ob_cfg.length`,
+        .ibAtu = ibAtu`common.camelSentence(instance.$name.toLowerCase())`,
+        % let ib_cfg = instance.ibAtu;
+        .ibAtuNum = `ib_cfg.length`,
+        .msiGlobalEventNum = 0,
+        .msiRingNum = 0,
+        .msiIntNum = 0,
+        .msiIrqEnableFlag = 0,
+        .msiIsrCtrl = &gPcieMsiIsrCtrl`common.camelSentence(instance.$name.toLowerCase())`,
+        .msiRingMem = &gPcieMsiRingMem`common.camelSentence(instance.$name.toLowerCase())`[0],
+
+        .msixGlobalEventNum = 0,
+        .msixRingNum = 0,
+        .msixIntNum = 0,
+        .msixIrqEnableFlag = 0,
+        .epMsixTbl = &gPcieMsixTbl`common.camelSentence(instance.$name.toLowerCase())`,
+        .msixIsrCtrl = &gPcieMsixIsrCtrl`common.camelSentence(instance.$name.toLowerCase())`,
+        .msixRingMem = &gPcieMsixRingMem`common.camelSentence(instance.$name.toLowerCase())`[0],
+    },
+% }
+};
+
+/* Pcie objects - initialized by the driver */
+static Pcie_Object gPcieObjects[CONFIG_PCIE_NUM_INSTANCES];
+
+/* Pcie driver configuration */
+Pcie_Config gPcieConfig[CONFIG_PCIE_NUM_INSTANCES] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gPcieObjects[`instance.$name.toUpperCase()`],
+        &gPcieAttrs[`instance.$name.toUpperCase()`],
+    },
+    % }
+};
+
+uint32_t gPcieConfigNum = CONFIG_PCIE_NUM_INSTANCES;
+
+void Drivers_pcieInit(void)
+{
+    Pcie_init();
+}

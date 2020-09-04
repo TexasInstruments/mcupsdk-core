@@ -1,0 +1,18 @@
+[
+    {
+        "rootMacroName": "COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR",
+        "compilerIncludePath": [ ],
+        "compilerSymbols": [ ],
+        "linkerSearchPath": [ ],
+        "properties": {
+            "rtsc.repositories": [
+                "source",
+                "."
+            ]
+        },
+        "helpTocs": [
+        ],
+        "docs": [
+        ]
+    }
+]

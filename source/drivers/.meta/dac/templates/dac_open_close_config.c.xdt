@@ -1,0 +1,63 @@
+void Drivers_dacOpen()
+{
+%%{
+let module = system.modules['/drivers/dac/dac'];
+let common   = system.getScript("/common");
+let nameOfModule = "dac";
+let nameOfPeripheral = module.peripheralName;
+let varDelay = 10
+%%}
+%{
+%if (module != null)
+%{
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let baseName = instance.$name + "_BASE_ADDR";
+    /* `instance.$name` initialization */
+    /* Set DAC reference voltage. */
+    DAC_setReferenceVoltage(`baseName`, `instance.referenceVoltage`);
+    /* Set DAC load mode. */
+    DAC_setLoadMode(`baseName`, `instance.loadMode`);
+            % if (instance.loadMode == "DAC_LOAD_PWMSYNC") {
+    /* Set DAC ePWMSYNC signal. */
+    /*  - ePWM module must be configured before using here. */
+    DAC_setPWMSyncSignal(`baseName`, `instance.ePWMSyncSignal`);
+            %}
+            % if (instance.enableOutput) {
+    /* Enable the DAC output */
+    DAC_enableOutput(`baseName`);
+            % } else {
+    /* Disable the DAC output */
+    DAC_disableOutput(`baseName`);
+            %}
+    /* Set the DAC shadow output */
+    DAC_setShadowValue(`baseName`, `instance.shadowValue`);
+            % /* preparing `registersToLockOR` for DAC_lockRegister() */
+            % if (instance.lockedRegisters.length>0)
+            %{
+%%{
+            let regCount = 0
+            let registersToLockOR = "("
+            for (let registerToLock in instance.lockedRegisters)
+            {
+                if (regCount == 0)
+                {
+                    registersToLockOR += instance.lockedRegisters[regCount]
+                }
+                else
+                {
+                    registersToLockOR += " | " + instance.lockedRegisters[regCount]
+                }
+                regCount++
+            }
+            registersToLockOR += ")"
+%%}
+    /* Lock write-access to DAC Register */
+    DAC_lockRegister(`baseName`, `registersToLockOR`);
+            %}
+    %}
+    /* Delay for buffered DAC to power up. */
+    ClockP_usleep(`varDelay`);
+%}
+%}
+}

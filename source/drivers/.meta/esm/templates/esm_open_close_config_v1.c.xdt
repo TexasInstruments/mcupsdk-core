@@ -1,0 +1,145 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("esm");
+    let module = system.modules['/drivers/esm/esm'];
+    let module_notify = system.modules[`/drivers/esm/${driverVer}/esm_${driverVer}_notifier`];
+%%}
+
+/*
+ * ESM
+ */
+% for(let i = 0; i < module_notify.$instances.length; i++) {
+    % let instance = module_notify.$instances[i];
+    % let config = module_notify.getInstanceConfig(instance);
+    % if(config.notify != "NULL") {
+/* ESM Transfer Callback */
+void `config.notify`(void* arg);
+    % }
+% }
+
+/* ESM Driver handles */
+ESM_Handle gEsmHandle[CONFIG_ESM_NUM_INSTANCES];
+/* ESM Driver Open Parameters */
+ESM_OpenParams gEsmOpenParams[CONFIG_ESM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .bClearErrors  = `config.bClearErrors.toString(10).toUpperCase()`,
+    },
+   %}
+};
+
+/* ESM Driver Notifier Configurations */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+ESM_NotifyParams g`instNameCamelCase`Params[`instance.$name.toUpperCase()`_NOTIFIER] =
+{
+    % let notify_instances = instance.esmNotifier;
+    % for(let index = 0; index < notify_instances.length; index++) {
+        % let notify_instance = notify_instances[index];
+        % let notify_config = module_notify.getInstanceConfig(notify_instance);
+    {
+        .errorNumber                = `notify_config.errorNumber`U,
+        .notify                     = `notify_config.notify`,
+        % if (notify_config.enableInfluenceOnErrPin == true) {
+        .enableInfluenceOnErrPin    = 1,
+        % } else {
+        .enableInfluenceOnErrPin    = 0,
+        % }
+        % if (notify_config.setIntrPriorityLvl == "HIGH") {
+        .setIntrPriorityLvl = ESM_INTR_PRIORITY_LEVEL_HIGH,
+        % } else {
+        .setIntrPriorityLvl = ESM_INTR_PRIORITY_LEVEL_LOW,
+        % }
+    },
+    %}
+};
+% }
+
+
+void Drivers_esmOpen(void)
+{
+    uint32_t instCnt, index;
+    int32_t errorCode = 0;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_ESM_NUM_INSTANCES; instCnt++)
+    {
+        gEsmHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_ESM_NUM_INSTANCES; instCnt++)
+    {
+        gEsmHandle[instCnt] = ESM_open(instCnt, &gEsmOpenParams[instCnt]);
+        if(NULL == gEsmHandle[instCnt])
+        {
+            DebugP_logError("ESM open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+        /* Register Notifier configuration */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+        for(index = 0U; index < `instance.$name.toUpperCase()`_NOTIFIER; index++)
+        {
+            status = ESM_registerNotifier(
+                         gEsmHandle[`instance.$name.toUpperCase()`],
+                         &g`instNameCamelCase`Params[index]);
+            if(status != SystemP_SUCCESS)
+            {
+                DebugP_logError("`instance.$name.toUpperCase()` notifier register for %d config with error code %d failed !!!\r\n", index, errorCode);
+                break;
+            }
+        }
+% }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_esmClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_esmClose(void)
+{
+    uint32_t instCnt, index;
+    int32_t  errorCode = 0;
+    int32_t  status = SystemP_SUCCESS;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_ESM_NUM_INSTANCES; instCnt++)
+    {
+        if(gEsmHandle[instCnt] != NULL)
+        {
+            /* De Register Notifier configuration */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+            for(index = 0U; index < `instance.$name.toUpperCase()`_NOTIFIER; index++)
+            {
+                status = ESM_deregisterNotifier(
+                             gEsmHandle[`instance.$name.toUpperCase()`],
+                             index);
+                if(status != SystemP_SUCCESS)
+                {
+                    DebugP_logError("`instance.$name.toUpperCase()` notifier de register for %d config with error code %d failed !!!\r\n", index, errorCode);
+                    break;
+                }
+            }
+% }
+            ESM_close(gEsmHandle[instCnt]);
+            gEsmHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

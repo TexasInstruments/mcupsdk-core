@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/esm/esm'];
+%%}
+/*
+ * ESM
+ */
+#include <drivers/esm.h>
+
+/* ESM Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_ESM_NUM_INSTANCES (`module.$instances.length`U)

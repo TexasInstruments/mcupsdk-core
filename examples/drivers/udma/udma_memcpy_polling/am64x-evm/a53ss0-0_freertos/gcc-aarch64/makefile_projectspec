@@ -1,0 +1,20 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+PROFILE?=Release
+
+PROJECT_NAME=udma_memcpy_polling_am64x-evm_a53ss0-0_freertos_gcc-aarch64
+
+all:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)
+
+clean:
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE) -ccs.clean
+
+export:
+	$(MKDIR) $(MCU_PLUS_SDK_PATH)/ccs_projects
+	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectCreate -ccs.projectSpec example.projectspec -ccs.overwrite full

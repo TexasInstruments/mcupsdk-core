@@ -1,0 +1,137 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2127"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
+const mcspi2     = mcspi.addInstance();
+const mcspi3     = mcspi.addInstance();
+const mcspi4     = mcspi.addInstance();
+const mcspi5     = mcspi.addInstance();
+const mcspi6     = mcspi.addInstance();
+const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1      = udma.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mcspi1.$name                       = "CONFIG_MCSPI0";
+mcspi1.inputSelect                 = "0";
+mcspi1.SPI.$assign                 = "SPI0";
+mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].CSn.$assign = "ball.D12";
+
+mcspi2.$name                          = "CONFIG_MCSPI1";
+mcspi2.inputSelect                    = "0";
+mcspi2.advanced                       = true;
+mcspi2.mode                           = "MULTI_MASTER";
+mcspi2.mcspiChannel.create(4);
+mcspi2.mcspiChannel[0].$name          = "CONFIG_MCSPI_CH1";
+mcspi2.mcspiChannel[0].CSn.$assign    = "ball.D14";
+mcspi2.mcspiChannel[1].$name          = "CONFIG_MCSPI_CH7";
+mcspi2.mcspiChannel[1].advanced       = true;
+mcspi2.mcspiChannel[1].startBitEnable = true;
+mcspi2.mcspiChannel[1].CSn.$assign    = "ball.B14";
+mcspi2.mcspiChannel[2].$name          = "CONFIG_MCSPI_CH6";
+mcspi2.mcspiChannel[2].CSn.$assign    = "ball.E16";
+mcspi2.mcspiChannel[3].$name          = "CONFIG_MCSPI_CH11";
+
+mcspi3.$name                 = "CONFIG_MCSPI3";
+mcspi3.inputSelect           = "0";
+mcspi3.mode                  = "MULTI_MASTER";
+mcspi3.intrEnable            = "DMA";
+mcspi3.SPI.$assign           = "SPI3";
+mcspi3.mcspiChannel.create(3);
+mcspi3.mcspiChannel[0].$name = "CONFIG_MCSPI_CH3";
+mcspi3.mcspiChannel[1].$name = "CONFIG_MCSPI_CH8";
+mcspi3.mcspiChannel[2].$name = "CONFIG_MCSPI_CH9";
+
+mcspi4.$name                 = "CONFIG_MCSPI4";
+mcspi4.inputSelect           = "0";
+mcspi4.SPI.$assign           = "SPI4";
+mcspi4.SPI.D1.$used          = false;
+mcspi4.mcspiChannel[0].$name = "CONFIG_MCSPI_CH4";
+
+mcspi5.$name                   = "CONFIG_MCSPI5";
+mcspi5.useMcuDomainPeripherals = true;
+mcspi5.inputSelect             = "0";
+mcspi5.mcspiChannel[0].$name   = "CONFIG_MCSPI_CH5";
+mcspi5.MCU_SPI.$assign         = "MCU_SPI0";
+
+mcspi6.$name                   = "CONFIG_MCSPI2";
+mcspi6.useMcuDomainPeripherals = true;
+mcspi6.mcspiChannel[0].$name   = "CONFIG_MCSPI_CH2";
+mcspi6.MCU_SPI.$assign         = "MCU_SPI1";
+
+udma1.$name       = "CONFIG_UDMA0";
+mcspi3.udmaDriver = udma1;
+udma1.instance    = "PKTDMA_0";
+
+debug_log.enableUartLog = true;
+debug_log.uartLog.$name = "CONFIG_UART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mcspi1.SPI.CLK.$suggestSolution                 = "ball.D13";
+mcspi1.SPI.D0.$suggestSolution                  = "ball.A13";
+mcspi1.SPI.D1.$suggestSolution                  = "ball.A14";
+mcspi2.SPI.$suggestSolution                     = "SPI1";
+mcspi2.SPI.CLK.$suggestSolution                 = "ball.C14";
+mcspi2.SPI.D0.$suggestSolution                  = "ball.B15";
+mcspi2.SPI.D1.$suggestSolution                  = "ball.A15";
+mcspi2.mcspiChannel[3].CSn.$suggestSolution     = "ball.D16";
+mcspi3.SPI.CLK.$suggestSolution                 = "ball.U4";
+mcspi3.SPI.D0.$suggestSolution                  = "ball.R6";
+mcspi3.SPI.D1.$suggestSolution                  = "ball.V4";
+mcspi3.mcspiChannel[0].CSn.$suggestSolution     = "ball.V12";
+mcspi3.mcspiChannel[1].CSn.$suggestSolution     = "ball.T5";
+mcspi3.mcspiChannel[2].CSn.$suggestSolution     = "ball.U1";
+mcspi4.SPI.CLK.$suggestSolution                 = "ball.B16";
+mcspi4.SPI.D0.$suggestSolution                  = "ball.A16";
+mcspi4.mcspiChannel[0].CSn.$suggestSolution     = "ball.A17";
+mcspi5.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.D6";
+mcspi5.MCU_SPI.CLK.$suggestSolution             = "ball.E6";
+mcspi5.MCU_SPI.D0.$suggestSolution              = "ball.E7";
+mcspi5.MCU_SPI.D1.$suggestSolution              = "ball.B6";
+mcspi6.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.A7";
+mcspi6.MCU_SPI.CLK.$suggestSolution             = "ball.D7";
+mcspi6.MCU_SPI.D0.$suggestSolution              = "ball.C7";
+mcspi6.MCU_SPI.D1.$suggestSolution              = "ball.C8";
+debug_log.uartLog.UART.$suggestSolution         = "USART0";
+debug_log.uartLog.UART.RXD.$suggestSolution     = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution     = "ball.C16";

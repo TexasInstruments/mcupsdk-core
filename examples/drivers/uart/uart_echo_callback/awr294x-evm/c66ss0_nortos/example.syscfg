@@ -1,0 +1,32 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2127"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const uart      = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1     = uart.addInstance();
+const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+uart1.$name               = "CONFIG_UART_CONSOLE";
+uart1.readMode            = "CALLBACK";
+uart1.writeMode           = "CALLBACK";
+uart1.readCallbackFxn     = "uart_echo_read_callback";
+uart1.writeCallbackFxn    = "uart_echo_write_callback";
+uart1.DSS_UART.RX.$assign = "ball.B14";
+uart1.DSS_UART.TX.$assign = "ball.A15";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+uart1.DSS_UART.$suggestSolution = "DSS_UARTA";

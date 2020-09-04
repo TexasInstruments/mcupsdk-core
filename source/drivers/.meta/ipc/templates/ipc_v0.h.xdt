@@ -1,0 +1,27 @@
+%%{
+    let module = system.modules['/drivers/ipc/ipc'];
+    let instance = module.$static;
+    let selfCpuName = module.getSelfIpcCoreName();
+    let enabledCpus = module.getEnabledCpus(instance);
+    let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
+    let enableMailboxIpc = instance.enableMailboxIpc;
+%%}
+% if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || enableMailboxIpc === true) {
+/*
+ * IPC Notify
+ */
+#include <drivers/ipc_notify.h>
+% if ( enableMailboxIpc === true) {
+/*
+ * Mailbox communication
+ */
+#include <drivers/mailbox.h>
+% }
+% }
+
+% if ( enabledRPMessageCpus.length > 0 || instance.enableLinuxIpc === true ) {
+/*
+ * IPC RPMessage
+ */
+#include <drivers/ipc_rpmsg.h>
+% }

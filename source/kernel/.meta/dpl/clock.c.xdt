@@ -1,0 +1,19 @@
+%%{
+    let module = system.modules['/kernel/dpl/clock'];
+    let instance = module.$static;
+    let config = module.getInstanceConfig(instance);
+%%}
+/* ----------- ClockP ----------- */
+% if (! config.disableClkSourceConfig) {
+#define `config.name`_CLOCK_SRC_MUX_ADDR (0x`config.clkSelMuxAddr.toString(16).toUpperCase()`u)
+#define `config.name`_CLOCK_SRC_`config.clkSource` (0x`config.clkSelMuxValue.toString(16).toUpperCase()`u)
+% }
+#define `config.name`_BASE_ADDR     (0x`config.timerBaseAddr.toString(16).toUpperCase()`u)
+
+ClockP_Config gClockConfig = {
+    .timerBaseAddr = `config.name`_BASE_ADDR, 
+    .timerHwiIntNum = `config.timerHwiIntNum`,
+    .timerInputClkHz = `config.timerInputClkHz`,
+    .timerInputPreScaler = `config.timerInputPreScaler`,
+    .usecPerTick = `config.usecPerTick`,
+};

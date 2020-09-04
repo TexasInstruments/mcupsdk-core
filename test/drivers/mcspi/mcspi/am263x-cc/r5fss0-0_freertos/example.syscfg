@@ -1,0 +1,125 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
+const mcspi2     = mcspi.addInstance();
+const mcspi3     = mcspi.addInstance();
+const mcspi4     = mcspi.addInstance();
+const mcspi5     = mcspi.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mcspi1.$name                       = "CONFIG_MCSPI0";
+mcspi1.inputSelect                 = "0";
+mcspi1.SPI.$assign                 = "SPI1";
+mcspi1.SPI.CLK.$assign             = "SPI1_CLK";
+mcspi1.SPI.D0.$assign              = "SPI1_D0";
+mcspi1.SPI.D1.$assign              = "SPI1_D1";
+mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].CSn.$assign = "SPI1_CS0";
+
+mcspi2.$name                          = "CONFIG_MCSPI1";
+mcspi2.inputSelect                    = "0";
+mcspi2.advanced                       = true;
+mcspi2.mode                           = "MULTI_MASTER";
+mcspi2.SPI.$assign                    = "SPI0";
+mcspi2.mcspiChannel.create(2);
+mcspi2.mcspiChannel[0].$name          = "CONFIG_MCSPI_CH6";
+mcspi2.mcspiChannel[0].startBitEnable = true;
+mcspi2.mcspiChannel[0].CSn.$assign    = "SPI0_CS0";
+mcspi2.mcspiChannel[1].$name          = "CONFIG_MCSPI_CH1";
+mcspi2.mcspiChannel[1].CSn.$assign    = "EPWM12_A";
+
+mcspi3.$name                 = "CONFIG_MCSPI2";
+mcspi3.inputSelect           = "0";
+mcspi3.SPI.$assign           = "SPI2";
+mcspi3.mcspiChannel[0].$name = "CONFIG_MCSPI_CH3";
+
+mcspi4.$name                                      = "CONFIG_MCSPI3";
+mcspi4.inputSelect                                = "0";
+mcspi4.mode                                       = "MULTI_MASTER";
+mcspi4.intrEnable                                 = "DMA";
+mcspi4.SPI.$assign                                = "SPI3";
+mcspi4.mcspiChannel[0].$name                      = "CONFIG_MCSPI_CH2";
+mcspi4.mcspiChannel[0].mcspiRxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR0";
+mcspi4.mcspiChannel[0].mcspiTxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR1";
+mcspi4.mcspiChannel[0].mcspiTxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_1";
+
+mcspi5.$name                 = "CONFIG_MCSPI4";
+mcspi5.SPI.$assign           = "SPI4";
+mcspi5.mcspiChannel[0].$name = "CONFIG_MCSPI_CH5";
+
+const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                 = edma.addInstance({}, false);
+edma1.$name                 = "CONFIG_EDMA0";
+mcspi1.edmaDriver           = edma1;
+mcspi2.edmaDriver           = edma1;
+mcspi3.edmaDriver           = edma1;
+mcspi4.edmaDriver           = edma1;
+mcspi5.edmaDriver           = edma1;
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mcspi2.SPI.CLK.$suggestSolution             = "SPI0_CLK";
+mcspi2.SPI.D0.$suggestSolution              = "SPI0_D0";
+mcspi2.SPI.D1.$suggestSolution              = "SPI0_D1";
+mcspi3.SPI.CLK.$suggestSolution             = "LIN1_TXD";
+mcspi3.SPI.D0.$suggestSolution              = "LIN2_RXD";
+mcspi3.SPI.D1.$suggestSolution              = "LIN2_TXD";
+mcspi3.mcspiChannel[0].CSn.$suggestSolution = "LIN1_RXD";
+mcspi4.SPI.CLK.$suggestSolution             = "I2C1_SDA";
+mcspi4.SPI.D0.$suggestSolution              = "UART0_RTSn";
+mcspi4.SPI.D1.$suggestSolution              = "UART0_CTSn";
+mcspi4.mcspiChannel[0].CSn.$suggestSolution = "I2C1_SCL";
+mcspi5.SPI.CLK.$suggestSolution             = "EQEP0_A";
+mcspi5.SPI.D0.$suggestSolution              = "EQEP0_STROBE";
+mcspi5.SPI.D1.$suggestSolution              = "EQEP0_INDEX";
+mcspi5.mcspiChannel[0].CSn.$suggestSolution = "EQEP0_B";

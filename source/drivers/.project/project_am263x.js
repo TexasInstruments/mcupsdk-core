@@ -1,0 +1,149 @@
+let path = require('path');
+
+let device = "am263x";
+
+const files_r5f = {
+    common: [
+        "adc.c",
+        "bootloader.c",
+        "bootloader_buf_io.c",
+        "bootloader_flash.c",
+        "bootloader_mem.c",
+        "bootloader_soc.c",
+        "bootloader_hsmRt_load.c",
+        "bootloader_xmodem.c",
+        "bootloader_uniflash.c",
+        "bootloader_profile.c",
+        "xmodem.c",
+        "crc16.c",
+        "cmpss.c",
+        "dac.c",
+        "ecap.c",
+        "edma.c",
+        "eqep.c",
+        "etpwm.c",
+        "fsi_rx.c",
+        "fsi_tx.c",
+        "gpio.c",
+        "hsmclient.c",
+        "hsmclient_loadhsmrt.c",
+        "hsmclient_utils.c",
+        "i2c_v1.c",
+        "ipc_notify_v1.c",
+        "ipc_notify_v1_cfg.c",
+        "ipc_rpmsg.c",
+        "ipc_rpmsg_vring.c",
+        "lin.c",
+        "mcan.c",
+        "mcspi_v0.c",
+        "mcspi_dma.c",
+        "mcspi_dma_edma.c",
+        "mdio_v0.c",
+        "mmcsd_v1.c",
+        "pinmux.c",
+        "pruicss_m_v0.c",
+        "pruicss_m_v0_cfg.c",
+        "qspi.c",
+        "qspi_edma.c",
+        "rti.c",
+        "sdfm.c",
+        "sipc_notify_src.c",
+        "sipc_notify_cfg.c",
+        "spinlock.c",
+        "soc.c",
+        "soc_rcm.c",
+        "uart_v0.c",
+        "uart_dma.c",
+        "uart_dma_edma.c",
+        "watchdog_rti.c",
+        "watchdog_soc.c",
+    ],
+};
+
+
+const filedirs = {
+    common: [
+        "adc/v1",
+        "bootloader",
+        "bootloader/soc/am263x",
+        "cmpss/v0",
+        "dac/v0",
+        "ecap/v1",
+        "edma/v0",
+        "eqep/v1",
+        "epwm/v1",
+        "fsi/v1",
+        "gpio/v0",
+        "hsmclient",
+        "hsmclient/soc/am263x",
+        "hsmclient/utils",
+        "i2c/v1",
+        "ipc_notify/v1",
+        "ipc_notify/v1/soc/am263x",
+        "ipc_rpmsg/",
+        "lin/v0",
+        "mcan/v0",
+        "mcspi/v0",
+        "mcspi/v0/dma",
+        "mcspi/v0/dma/edma",
+        "mdio/v0",
+        "mmcsd/v1",
+        `pinmux/am263x`,
+        `pruicss/m_v0`,
+        `pruicss/soc/am263x`,
+        "qspi/v0",
+        "qspi/v0/edma",
+        "rti/v0",
+        "spinlock/v0",
+        "sdfm/v0",
+        "secure_ipc_notify/",
+        "secure_ipc_notify/soc/am263x",
+        "secure_ipc_notify/soc/",
+        "soc/am263x",
+        "uart/v0",
+        "uart/v0/dma",
+        "uart/v0/dma/edma",
+        "watchdog/v0",
+        `watchdog/v0/soc/${device}`,
+    ],
+};
+
+const cflags_r5f = {
+    release: [
+        "-Oz",
+        "-flto",
+    ],
+};
+
+const buildOptionCombos = [
+    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+];
+
+function getComponentProperty() {
+    let property = {};
+
+    property.dirPath = path.resolve(__dirname, "..");
+    property.type = "library";
+    property.name = "drivers";
+    property.isInternal = false;
+    property.buildOptionCombos = buildOptionCombos;
+
+    return property;
+}
+
+function getComponentBuildProperty(buildOption) {
+    let build_property = {};
+
+    build_property.filedirs = filedirs;
+    if(buildOption.cpu.match(/r5f*/)) {
+        build_property.cflags = cflags_r5f;
+        build_property.files = files_r5f;
+    }
+
+    return build_property;
+}
+
+module.exports = {
+    getComponentProperty,
+    getComponentBuildProperty,
+};

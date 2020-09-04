@@ -1,0 +1,371 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const dac        = scripting.addModule("/drivers/dac/dac", {}, false);
+const dac1       = dac.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const gpio3      = gpio.addInstance();
+const gpio4      = gpio.addInstance();
+const gpio5      = gpio.addInstance();
+const gpio6      = gpio.addInstance();
+const gpio7      = gpio.addInstance();
+const gpio8      = gpio.addInstance();
+const gpio9      = gpio.addInstance();
+const gpio10     = gpio.addInstance();
+const gpio11     = gpio.addInstance();
+const gpio12     = gpio.addInstance();
+const gpio13     = gpio.addInstance();
+const gpio14     = gpio.addInstance();
+const gpio15     = gpio.addInstance();
+const gpio16     = gpio.addInstance();
+const gpio17     = gpio.addInstance();
+const gpio18     = gpio.addInstance();
+const gpio19     = gpio.addInstance();
+const gpio20     = gpio.addInstance();
+const gpio21     = gpio.addInstance();
+const gpio22     = gpio.addInstance();
+const gpio23     = gpio.addInstance();
+const gpio24     = gpio.addInstance();
+const gpio25     = gpio.addInstance();
+const gpio26     = gpio.addInstance();
+const gpio27     = gpio.addInstance();
+const gpio28     = gpio.addInstance();
+const gpio29     = gpio.addInstance();
+const gpio30     = gpio.addInstance();
+const gpio31     = gpio.addInstance();
+const gpio32     = gpio.addInstance();
+const gpio33     = gpio.addInstance();
+const gpio34     = gpio.addInstance();
+const gpio35     = gpio.addInstance();
+const gpio36     = gpio.addInstance();
+const gpio37     = gpio.addInstance();
+const gpio38     = gpio.addInstance();
+const gpio39     = gpio.addInstance();
+const gpio40     = gpio.addInstance();
+const gpio41     = gpio.addInstance();
+const gpio42     = gpio.addInstance();
+const gpio43     = gpio.addInstance();
+const gpio44     = gpio.addInstance();
+const gpio45     = gpio.addInstance();
+const gpio46     = gpio.addInstance();
+const gpio47     = gpio.addInstance();
+const gpio48     = gpio.addInstance();
+const gpio49     = gpio.addInstance();
+const gpio50     = gpio.addInstance();
+const gpio51     = gpio.addInstance();
+const gpio52     = gpio.addInstance();
+const gpio53     = gpio.addInstance();
+const gpio54     = gpio.addInstance();
+const gpio55     = gpio.addInstance();
+const gpio56     = gpio.addInstance();
+const gpio57     = gpio.addInstance();
+const gpio58     = gpio.addInstance();
+const gpio59     = gpio.addInstance();
+const gpio60     = gpio.addInstance();
+const gpio61     = gpio.addInstance();
+const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1      = uart.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+dac1.$name        = "CONFIG_DAC0";
+dac1.enableOutput = true;
+
+gpio1.$name                = "CAPTURE_EPWM0A";
+gpio1.GPIO.gpioPin.$assign = "EPWM0_A";
+
+gpio2.$name                = "CAPTURE_EPWM0B";
+gpio2.GPIO.gpioPin.$assign = "EPWM0_B";
+
+gpio3.$name                = "CAPTURE_EPWM1A";
+gpio3.GPIO.gpioPin.$assign = "EPWM1_A";
+
+gpio4.$name                = "CAPTURE_EPWM1B";
+gpio4.GPIO.gpioPin.$assign = "EPWM1_B";
+
+gpio5.$name                = "CAPTURE_EPWM2A";
+gpio5.GPIO.gpioPin.$assign = "EPWM2_A";
+
+gpio6.$name                = "CAPTURE_EPWM2B";
+gpio6.GPIO.gpioPin.$assign = "EPWM2_B";
+
+gpio7.$name                = "CAPTURE_EPWM3A";
+gpio7.GPIO.gpioPin.$assign = "EPWM3_A";
+
+gpio8.$name                = "CAPTURE_EPWM3B";
+gpio8.GPIO.gpioPin.$assign = "EPWM3_B";
+
+gpio9.$name                = "CAPTURE_EPWM4A";
+gpio9.GPIO.gpioPin.$assign = "EPWM4_A";
+
+gpio10.$name                = "SYNC_EPWM0";
+gpio10.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO18";
+
+gpio11.$name                = "CAPTURE_EPWM4B";
+gpio11.GPIO.gpioPin.$assign = "EPWM4_B";
+
+gpio12.$name                = "CAPTURE_EPWM5A";
+gpio12.GPIO.gpioPin.$assign = "EPWM5_A";
+
+gpio13.$name                = "CAPTURE_EPWM5B";
+gpio13.GPIO.gpioPin.$assign = "EPWM5_B";
+
+gpio14.$name                = "CAPTURE_EPWM6A";
+gpio14.GPIO.gpioPin.$assign = "EPWM6_A";
+
+gpio15.$name                = "CAPTURE_EPWM6B";
+gpio15.GPIO.gpioPin.$assign = "EPWM6_B";
+
+gpio16.$name                = "CAPTURE_EPWM7A";
+gpio16.GPIO.gpioPin.$assign = "EPWM7_A";
+
+gpio17.$name                = "CAPTURE_EPWM7B";
+gpio17.GPIO.gpioPin.$assign = "EPWM7_B";
+
+gpio18.$name                = "CAPTURE_EPWM13A";
+gpio18.GPIO.gpioPin.$assign = "EPWM13_A";
+
+gpio19.$name                = "CAPTURE_EPWM13B";
+gpio19.GPIO.gpioPin.$assign = "EPWM13_B";
+
+gpio20.$name                = "CAPTURE_EPWM14A";
+gpio20.GPIO.gpioPin.$assign = "EPWM14_A";
+
+gpio21.$name                = "CAPTURE_EPWM14B";
+gpio21.GPIO.gpioPin.$assign = "EPWM14_B";
+
+gpio22.$name                = "CAPTURE_EPWM15A";
+gpio22.GPIO.gpioPin.$assign = "EPWM15_A";
+
+gpio23.$name                = "CAPTURE_EPWM15B";
+gpio23.GPIO.gpioPin.$assign = "EPWM15_B";
+
+gpio24.$name                = "CAPTURE_EPWM21A";
+gpio24.GPIO.gpioPin.$assign = "PR0_MDIO_MDIO";
+
+gpio25.$name                = "CAPTURE_EPWM21B";
+gpio25.GPIO.gpioPin.$assign = "PR0_MDIO_MDC";
+
+gpio26.$name                = "CAPTURE_EPWM17A";
+gpio26.GPIO.gpioPin.$assign = "MMC_CLK";
+
+gpio27.$name                = "CAPTURE_EPWM17B";
+gpio27.GPIO.gpioPin.$assign = "MMC_CMD";
+
+gpio28.$name                = "CAPTURE_EPWM18A";
+gpio28.GPIO.gpioPin.$assign = "MMC_DAT0";
+
+gpio29.$name                = "CAPTURE_EPWM18B";
+gpio29.GPIO.gpioPin.$assign = "MMC_DAT1";
+
+gpio30.$name                = "CAPTURE_EPWM19A";
+gpio30.GPIO.gpioPin.$assign = "MMC_DAT2";
+
+gpio31.$name                = "CAPTURE_EPWM19B";
+gpio31.GPIO.gpioPin.$assign = "MMC_DAT3";
+
+gpio32.$name                = "CAPTURE_EPWM20A";
+gpio32.GPIO.gpioPin.$assign = "MMC_SDWP";
+
+gpio33.$name                = "CAPTURE_EPWM20B";
+gpio33.GPIO.gpioPin.$assign = "MMC_SDCD";
+
+gpio34.$name                = "CAPTURE_EPWM22A";
+gpio34.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO5";
+
+gpio35.$name                = "CAPTURE_EPWM22B";
+gpio35.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO9";
+
+gpio36.$name                = "CAPTURE_EPWM23A";
+gpio36.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO10";
+
+gpio37.$name                = "CAPTURE_EPWM23B";
+gpio37.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO8";
+
+gpio38.$name                = "CAPTURE_EPWM24A";
+gpio38.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO6";
+
+gpio39.$name                = "CAPTURE_EPWM24B";
+gpio39.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO4";
+
+gpio40.$name                = "CAPTURE_EPWM25A";
+gpio40.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO0";
+
+gpio41.$name                = "CAPTURE_EPWM25B";
+gpio41.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO1";
+
+gpio42.$name                = "CAPTURE_EPWM26A";
+gpio42.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO2";
+
+gpio43.$name                = "CAPTURE_EPWM26B";
+gpio43.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO3";
+
+gpio44.$name                = "CAPTURE_EPWM27A";
+gpio44.GPIO.gpioPin.$assign = "RGMII1_TX_CTL";
+
+gpio45.$name                = "CAPTURE_EPWM27B";
+gpio45.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO15";
+
+gpio46.$name                = "CAPTURE_EPWM28A";
+gpio46.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO11";
+
+gpio47.$name                = "CAPTURE_EPWM28B";
+gpio47.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO12";
+
+gpio48.$name                = "CAPTURE_EPWM29A";
+gpio48.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO13";
+
+gpio49.$name                = "CAPTURE_EPWM29B";
+gpio49.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO14";
+
+gpio50.$name                = "CAPTURE_EPWM30A";
+gpio50.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO5";
+
+gpio51.$name                = "CAPTURE_EPWM30B";
+gpio51.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO9";
+
+gpio52.$name                = "CAPTURE_EPWM31A";
+gpio52.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO10";
+
+gpio53.$name                = "CAPTURE_EPWM31B";
+gpio53.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO8";
+
+gpio54.$name                = "GPIO_17";
+gpio54.GPIO.gpioPin.$assign = "SPI1_D0";
+
+gpio55.$name                = "GPIO_18";
+gpio55.GPIO.gpioPin.$assign = "SPI1_D1";
+
+gpio56.$name                = "GPIO_16";
+gpio56.GPIO.gpioPin.$assign = "SPI1_CLK";
+
+gpio57.$name                = "GPIO_24_LOOPBACK1";
+gpio57.GPIO.gpioPin.$assign = "I2C1_SDA";
+
+gpio58.$name                = "GPIO_23_LOOPBACK1";
+gpio58.GPIO.gpioPin.$assign = "I2C1_SCL";
+
+gpio59.$name                = "CAPTURE_EPWM16A";
+gpio59.GPIO.$assign         = "GPIO0";
+gpio59.GPIO.gpioPin.$assign = "UART1_RXD";
+
+gpio60.$name                = "CAPTURE_EPWM16B";
+gpio60.GPIO.gpioPin.$assign = "UART1_TXD";
+
+gpio61.$name                = "CAPTURE_EPWM11A";
+gpio61.GPIO.gpioPin.$assign = "EPWM11_A";
+
+uart1.$name            = "TESTER_UART";
+uart1.UART.$assign     = "UART3";
+uart1.UART.RXD.$assign = "SPI0_CS0";
+uart1.UART.TXD.$assign = "SPI0_CLK";
+
+debug_log.enableUartLog            = true;
+debug_log.enableCssLog             = false;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+gpio1.GPIO.$suggestSolution             = "GPIO0";
+gpio2.GPIO.$suggestSolution             = "GPIO0";
+gpio3.GPIO.$suggestSolution             = "GPIO0";
+gpio4.GPIO.$suggestSolution             = "GPIO0";
+gpio5.GPIO.$suggestSolution             = "GPIO0";
+gpio6.GPIO.$suggestSolution             = "GPIO0";
+gpio7.GPIO.$suggestSolution             = "GPIO0";
+gpio8.GPIO.$suggestSolution             = "GPIO0";
+gpio9.GPIO.$suggestSolution             = "GPIO0";
+gpio10.GPIO.$suggestSolution            = "GPIO0";
+gpio11.GPIO.$suggestSolution            = "GPIO0";
+gpio12.GPIO.$suggestSolution            = "GPIO0";
+gpio13.GPIO.$suggestSolution            = "GPIO0";
+gpio14.GPIO.$suggestSolution            = "GPIO0";
+gpio15.GPIO.$suggestSolution            = "GPIO0";
+gpio16.GPIO.$suggestSolution            = "GPIO0";
+gpio17.GPIO.$suggestSolution            = "GPIO0";
+gpio18.GPIO.$suggestSolution            = "GPIO0";
+gpio19.GPIO.$suggestSolution            = "GPIO0";
+gpio20.GPIO.$suggestSolution            = "GPIO0";
+gpio21.GPIO.$suggestSolution            = "GPIO0";
+gpio22.GPIO.$suggestSolution            = "GPIO0";
+gpio23.GPIO.$suggestSolution            = "GPIO0";
+gpio24.GPIO.$suggestSolution            = "GPIO0";
+gpio25.GPIO.$suggestSolution            = "GPIO0";
+gpio26.GPIO.$suggestSolution            = "GPIO0";
+gpio27.GPIO.$suggestSolution            = "GPIO0";
+gpio28.GPIO.$suggestSolution            = "GPIO0";
+gpio29.GPIO.$suggestSolution            = "GPIO0";
+gpio30.GPIO.$suggestSolution            = "GPIO0";
+gpio31.GPIO.$suggestSolution            = "GPIO0";
+gpio32.GPIO.$suggestSolution            = "GPIO0";
+gpio33.GPIO.$suggestSolution            = "GPIO0";
+gpio34.GPIO.$suggestSolution            = "GPIO0";
+gpio35.GPIO.$suggestSolution            = "GPIO0";
+gpio36.GPIO.$suggestSolution            = "GPIO0";
+gpio37.GPIO.$suggestSolution            = "GPIO0";
+gpio38.GPIO.$suggestSolution            = "GPIO0";
+gpio39.GPIO.$suggestSolution            = "GPIO0";
+gpio40.GPIO.$suggestSolution            = "GPIO0";
+gpio41.GPIO.$suggestSolution            = "GPIO0";
+gpio42.GPIO.$suggestSolution            = "GPIO0";
+gpio43.GPIO.$suggestSolution            = "GPIO0";
+gpio44.GPIO.$suggestSolution            = "GPIO0";
+gpio45.GPIO.$suggestSolution            = "GPIO0";
+gpio46.GPIO.$suggestSolution            = "GPIO0";
+gpio47.GPIO.$suggestSolution            = "GPIO0";
+gpio48.GPIO.$suggestSolution            = "GPIO0";
+gpio49.GPIO.$suggestSolution            = "GPIO0";
+gpio50.GPIO.$suggestSolution            = "GPIO0";
+gpio51.GPIO.$suggestSolution            = "GPIO0";
+gpio52.GPIO.$suggestSolution            = "GPIO0";
+gpio53.GPIO.$suggestSolution            = "GPIO0";
+gpio54.GPIO.$suggestSolution            = "GPIO0";
+gpio55.GPIO.$suggestSolution            = "GPIO0";
+gpio56.GPIO.$suggestSolution            = "GPIO0";
+gpio57.GPIO.$suggestSolution            = "GPIO0";
+gpio58.GPIO.$suggestSolution            = "GPIO0";
+gpio60.GPIO.$suggestSolution            = "GPIO0";
+gpio61.GPIO.$suggestSolution            = "GPIO0";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -1,0 +1,9 @@
+%%{
+    let module = system.modules['/kernel/dpl/mmu_armv8'];
+%%}
+/* This function is called by __system_start */
+void __mmu_init()
+{
+    MmuP_init();
+    CacheP_enable(CacheP_TYPE_ALL);
+}

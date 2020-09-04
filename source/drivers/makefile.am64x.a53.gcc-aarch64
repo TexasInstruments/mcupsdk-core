@@ -1,0 +1,174 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_GCC_AARCH64_PATH)
+
+CC=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-gcc
+AR=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-gcc-ar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+DEVICE_TYPE?=GP
+LIBNAME:=drivers.am64x.a53.gcc-aarch64.$(PROFILE).lib
+
+FILES_common := \
+    csl_bcdma.c \
+    csl_intaggr.c \
+    csl_lcdma_ringacc.c \
+    csl_pktdma.c \
+    csl_sec_proxy.c \
+    gpio.c \
+    gtc.c \
+    i2c_v0.c \
+    ipc_notify_v0.c \
+    ipc_notify_v0_cfg.c \
+    ipc_rpmsg.c \
+    ipc_rpmsg_vring.c \
+    pinmux.c \
+    sciclient.c \
+    sciclient_pm.c \
+    sciclient_rm.c \
+    sciclient_rm_irq.c \
+    sciclient_procboot.c \
+    sciclient_firewall.c \
+    sciclient_irq_rm.c \
+    sciclient_fmwSecureProxyMap.c \
+    sciclient_boardcfg.c \
+    sciclient_soc_priv.c \
+    soc.c \
+    spinlock.c \
+    uart_v0.c \
+    uart_dma.c \
+    uart_dma_udma.c \
+    udma.c \
+    udma_ch.c \
+    udma_event.c \
+    udma_flow.c \
+    udma_ring_common.c \
+    udma_ring_lcdma.c \
+    udma_rm.c \
+    udma_rmcfg.c \
+    udma_rmcfg_common.c \
+    udma_soc.c \
+    udma_utils.c \
+    watchdog_rti.c \
+    watchdog_soc.c \
+
+FILES_PATH_common = \
+    gpio/v0 \
+    gtc/v0 \
+    pinmux/am64x_am243x \
+    i2c/v0 \
+    ipc_notify/v0 \
+    ipc_notify/v0/soc/am64x \
+    ipc_rpmsg/ \
+    sciclient \
+    sciclient/soc/am64x_am243x \
+    soc/am64x_am243x \
+    spinlock/v0 \
+    uart/v0 \
+    uart/v0/dma \
+    uart/v0/dma/udma \
+    udma \
+    udma/hw_include \
+    udma/soc \
+    udma/soc/am64x_am243x \
+    watchdog/v1 \
+    watchdog/v1/soc/am64x_am243x \
+
+INCLUDES_common := \
+    -I${MCU_PLUS_SDK_PATH}/source \
+
+DEFINES_common := \
+    -DSOC_AM64X \
+
+# Remove later with combined boot
+ifeq ($(DEVICE_TYPE),$(filter $(DEVICE_TYPE), HS))
+DEFINES_common += -DBUILD_HS
+endif
+
+CFLAGS_common := \
+    -mcpu=cortex-a53+fp+simd \
+    -mabi=lp64 \
+    -mcmodel=large \
+    -mstrict-align \
+    -mfix-cortex-a53-835769 \
+    -mfix-cortex-a53-843419 \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-int-to-pointer-cast \
+    -Wno-pointer-to-int-cast \
+    -Wno-unused-but-set-variable \
+    -fdata-sections \
+    -ffunction-sections \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+CFLAGS_release := \
+    -O2 \
+
+ARFLAGS_common := \
+    cr \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am64x/gcc-aarch64/$(PROFILE)/a53/drivers/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -MT $@ -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

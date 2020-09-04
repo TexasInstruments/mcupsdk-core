@@ -1,0 +1,44 @@
+%%{
+    let module = system.modules['/drivers/mmcsd/mmcsd'];
+%%}
+/*
+ * MMCSD
+ */
+
+/* MMCSD attributes */
+static MMCSD_Attrs gMmcsdAttrs[CONFIG_MMCSD_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .ctrlBaseAddr         = `config.ctrlBaseAddr`,
+        .ssBaseAddr           = `config.ssBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .intrNum              = `config.intrNum`U,
+        .intrEnable           = `config.intrEnable.toString(10).toUpperCase()`,
+        .enableDma            = `config.dmaEnable.toString(10).toUpperCase()`,
+        .phyType              = MMCSD_PHY_TYPE_`config.phyType`,
+        .cardType             = MMCSD_CARD_TYPE_`config.cardType`,
+        .busWidth             = `config.busWidth`,
+        .supportedModes       = `config.modes`,
+        .tuningType           = `config.tuningType`,
+    },
+% }
+};
+/* MMCSD objects - initialized by the driver */
+static MMCSD_Object gMmcsdObjects[CONFIG_MMCSD_NUM_INSTANCES];
+/* MMCSD driver configuration */
+MMCSD_Config gMmcsdConfig[CONFIG_MMCSD_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gMmcsdAttrs[`instance.$name.toUpperCase()`],
+        &gMmcsdObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gMmcsdConfigNum = CONFIG_MMCSD_NUM_INSTANCES;

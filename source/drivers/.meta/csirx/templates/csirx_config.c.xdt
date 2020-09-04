@@ -1,0 +1,27 @@
+%%{
+    let module = system.modules['/drivers/csirx/csirx'];
+%%}
+/*
+ * CSIRX
+ */
+/* CSIRX atrributes */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+extern  CSIRX_HwAttrs  gCsirxHwAttrs_`module.getInstanceHwAttrs(instance)`;
+% }
+
+/* CSIRX objects - initialized by the driver */
+static CSIRX_Object gCsirxObjects[CONFIG_CSIRX_NUM_INSTANCES];
+/* CSIRX driver configuration */
+CSIRX_Config gCsirxConfig[CONFIG_CSIRX_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        .hwAttrs = &gCsirxHwAttrs_`module.getInstanceHwAttrs(instance)`,
+        .object  = &gCsirxObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gCsirxConfigNum = CONFIG_CSIRX_NUM_INSTANCES;

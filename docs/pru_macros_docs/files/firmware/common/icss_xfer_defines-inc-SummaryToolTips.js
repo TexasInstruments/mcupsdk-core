@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:firmware/common/icss_xfer_defines.inc",{13:"<div class=\"NDToolTip TFile LAssembly\"><div class=\"TTSummary\">brief:&nbsp; XFER ID defines Includes: 1.</div></div>"});

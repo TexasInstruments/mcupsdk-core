@@ -1,0 +1,70 @@
+#
+# Auto generated makefile 
+#
+
+# Below variables need to be defined outside this file or via command line
+# - MCU_PLUS_SDK_PATH
+# - PROFILE
+# - CG_TOOL_ROOT
+# - OUTNAME
+
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+STRIP=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.strip`
+OBJCOPY=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.objcopy`
+
+OUTFILE=$(PROFILE)/$(OUTNAME).out 
+BOOTIMAGE_PATH=$(abspath ${PROFILE})
+BOOTIMAGE_NAME:=$(PROFILE)/$(OUTNAME).appimage
+BOOTIMAGE_NAME_SIGNED:=$(PROFILE)/$(OUTNAME).appimage.signed
+BOOTIMAGE_RPRC_NAME:=$(PROFILE)/$(OUTNAME).rprc
+
+#
+# Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
+#
+ifeq ($(OS),Windows_NT)
+EXE_EXT=.exe
+endif
+ifeq ($(OS),Windows_NT)
+  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/tools/boot/x509CertificateGen.ps1
+else
+  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/x509CertificateGen.sh
+endif
+BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
+
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_r5fss0-1 = 5
+BOOTIMAGE_CORE_ID_r5fss1-0 = 6
+BOOTIMAGE_CORE_ID_r5fss1-1 = 7
+BOOTIMAGE_CORE_ID_m4fss0-0 = 14
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+
+BOOTIMAGE_CERT_KEY=$(MCU_PLUS_SDK_PATH)/tools/boot/k3_dev_mpk.pem
+
+MULTI_CORE_IMAGE_GEN=$(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/MulticoreImageGen$(EXE_EXT)
+OUTRPRC_PATH=$(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/out2rprc.exe
+ifeq ($(OS),Windows_NT)
+  OUTRPRC_CMD=$(OUTRPRC_PATH)
+else
+  OUTRPRC_CMD=mono $(OUTRPRC_PATH)
+endif
+
+MULTI_CORE_IMAGE_PARAMS = \
+    $(BOOTIMAGE_CORE_ID_r5fss0-0) $(BOOTIMAGE_RPRC_NAME) \
+
+all: $(BOOTIMAGE_NAME)
+
+$(BOOTIMAGE_RPRC_NAME):
+	$(OUTRPRC_CMD) $(OUTFILE) $(BOOTIMAGE_RPRC_NAME) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+
+$(BOOTIMAGE_NAME): $(BOOTIMAGE_RPRC_NAME)
+	@ echo \# Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+ifneq ($(OS),Windows_NT)
+	$(CHMOD) a+x $(MULTI_CORE_IMAGE_GEN)
+	$(CHMOD) a+x $(BOOTIMAGE_CERT_GEN_CMD)
+endif
+	$(MULTI_CORE_IMAGE_GEN) LE $(SBL_DEV_ID) $(BOOTIMAGE_NAME) $(MULTI_CORE_IMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(BOOTIMAGE_CERT_GEN_CMD) -b $(BOOTIMAGE_NAME) -o $(BOOTIMAGE_NAME_SIGNED) -c R5 -l $(SBL_RUN_ADDRESS) -k $(BOOTIMAGE_CERT_KEY) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	@ echo \# Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@ echo \#

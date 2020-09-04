@@ -1,0 +1,3 @@
+%%{
+    let module = system.modules['/xbar/icss_xbar/icss_xbar'];
+%%}

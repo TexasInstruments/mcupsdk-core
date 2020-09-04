@@ -1,0 +1,14 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/gpio/gpio'];
+%%}
+/*
+ * GPIO
+ */
+#include <drivers/gpio.h>
+
+/* GPIO Driver open/close - can be used by application when Driver_open() and
+ * is not used directly and app wants to control the various driver
+ * open sequences */
+void Drivers_gpioOpen(void);
+

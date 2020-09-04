@@ -1,0 +1,150 @@
+/********************************************************************
+*
+* MCU_ESM0 INTERRUPT MAP. header file
+*
+* Copyright (C) 2015-2019 Texas Instruments Incorporated.
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
+*  are met:
+*
+*    Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+*
+*    Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
+*    distribution.
+*
+*    Neither the name of Texas Instruments Incorporated nor the names of
+*    its contributors may be used to endorse or promote products derived
+*    from this software without specific prior written permission.
+*
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+*  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+*  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+*  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+*  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+#ifndef CSLR_MCU_ESM0_INTERRUPT_MAP_H_
+#define CSLR_MCU_ESM0_INTERRUPT_MAP_H_
+
+#include <drivers/hw_include/cslr.h>
+#include <drivers/hw_include/tistdtypes.h>
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+/*
+* List of intr sources for receiver: MCU_ESM0
+*/
+
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_ESM0_ESM_INT_CFG_LVL_0                                         (0U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_ESM0_ESM_INT_HI_LVL_0                                          (1U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_ESM0_ESM_INT_LOW_LVL_0                                         (2U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_M4FSS0_RAT_0_EXP_INTR_0                                    (3U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_M4FSS0_ECC_AGGR_0_ECC_CORRECTED_ERR_LEVEL_0                (4U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_M4FSS0_ECC_AGGR_0_ECC_UNCORRECTED_ERR_LEVEL_0              (5U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_GLUELOGIC_EFUSE_SCAN_GLUE_CRC_ERR_0                            (6U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_GT_TH1_INTR_0                                   (8U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_LT_TH0_INTR_0                                   (9U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_GT_TH2_INTR_0                                   (10U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_CORR_LEVEL_0                                              (11U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_UNCORR_LEVEL_0                                            (12U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_GLUELOGIC_HFOSC0_CLKLOSS_GLUE_REF_CLK_LOSS_DETECT_OUT_0        (13U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_ECC_AGGR0_CORR_LEVEL_0                                     (14U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_ECC_AGGR0_UNCORR_LEVEL_0                                   (15U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_DCC0_INTR_DONE_LEVEL_0                                     (36U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_DCC0_INTR_ERR_LEVEL_0                                      (37U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_MCU_PLLFRACF_SSMOD0_LOCKLOSS_IPCFG_0                           (47U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_PLLFRACF_SSMOD0_LOCKLOSS_IPCFG_0                               (54U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_PLLFRACF_SSMOD1_LOCKLOSS_IPCFG_0                               (55U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_PLLFRACF_SSMOD2_LOCKLOSS_IPCFG_0                               (56U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_PLLFRACF_SSMOD8_LOCKLOSS_IPCFG_0                               (57U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_PLLFRACF_SSMOD12_LOCKLOSS_IPCFG_0                              (58U)
+#define CSLR_MCU_ESM0_ESM_LVL_EVENT_PLLFRACF_SSMOD14_LOCKLOSS_IPCFG_0                              (59U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_0                (64U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_0                (64U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_0                (64U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_1                (65U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_1                (65U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_1                (65U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_2                (66U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_2                (66U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_2                (66U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_3                (67U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_3                (67U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_3                (67U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_4                (68U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_4                (68U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_4                (68U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_5                (69U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_5                (69U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_5                (69U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_6                (70U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_6                (70U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_OV_OUT_N_TO_ESM_6                (70U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_0                (71U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_0                (71U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_0                (71U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_1                (72U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_1                (72U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_1                (72U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_2                (73U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_2                (73U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_2                (73U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_3                (74U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_3                (74U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_3                (74U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_4                (75U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_4                (75U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_4                (75U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_5                (76U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_5                (76U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_5                (76U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_6                (77U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_6                (77U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU_7POKS0_POK_PGOOD_UV_OUT_N_TO_ESM_6                (77U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_0                      (78U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_0                      (78U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_0                      (78U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_1                      (79U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_1                      (79U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_1                      (79U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_2                      (80U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_2                      (80U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_2                      (80U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_3                      (81U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_3                      (81U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_3                      (81U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_4                      (82U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_4                      (82U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_PRG_MCU0_POK_PGOOD_UV_OUT_N_TO_ESM_4                      (82U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_RTI0_INTR_WWD_0                                           (85U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_RTI0_INTR_WWD_0                                           (85U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_RTI0_INTR_WWD_0                                           (85U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_8                             (88U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_8                             (88U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_8                             (88U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_9                             (89U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_9                             (89U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_9                             (89U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_10                            (90U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_10                            (90U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_10                            (90U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT0_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_11                            (91U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT1_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_11                            (91U)
+#define CSLR_MCU_ESM0_ESM_PLS_EVENT2_MCU_MCU_GPIOMUX_INTROUTER0_OUTP_11                            (91U)
+
+#ifdef __cplusplus
+}
+#endif
+#endif /* CSLR_MCU_ESM0_INTERRUPT_MAP_H_ */
+

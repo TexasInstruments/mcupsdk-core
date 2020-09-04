@@ -1,0 +1,29 @@
+%%{
+    let module = system.modules['/kernel/dpl/timer'];
+%%}
+
+/* ----------- TimerP ----------- */
+#include <kernel/dpl/TimerP.h>
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `config.$name`                  (`i`u)
+#define `config.$name`_BASE_ADDR        (0x`config.timerBaseAddr.toString(16).toUpperCase()`u)
+#define `config.$name`_INT_NUM          (`config.timerHwiIntNum`u)
+#define `config.$name`_INPUT_CLK_HZ     (`config.timerInputClkHz`u)
+#define `config.$name`_INPUT_PRE_SCALER (`config.timerInputPreScaler`u)
+/* This represents the required time period 'floored' to nearest usec */
+#define `config.$name`_USEC_PER_TICK    (`config.usecPerTick`u)
+/* This represents the required time period 'floored' to nearest nsec */
+#define `config.$name`_NSEC_PER_TICK    (`config.nsecPerTick`u)
+/* This represents the actual time period 'floored' to nearest nsec */
+#define `config.$name`_NSEC_PER_TICK_ACTUAL  (`config.actualNsecPerTick`u)
+/* NOTE: nsec per tick is used as input to the timer API */
+/* NOTE: The actual nsec per tick that will be achieved depends on timer input clock hz precision */
+
+% }
+#define TIMER_NUM_INSTANCES  (`module.$instances.length`u)
+
+extern HwiP_Object gTimerHwiObj[TIMER_NUM_INSTANCES];
+extern uint32_t gTimerBaseAddr[TIMER_NUM_INSTANCES];

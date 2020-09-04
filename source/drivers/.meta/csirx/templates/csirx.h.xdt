@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/csirx/csirx'];
+%%}
+/*
+ * CSIRX
+ */
+#include <drivers/csirx.h>
+
+/* CSIRX Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_CSIRX_NUM_INSTANCES (`module.$instances.length`U)

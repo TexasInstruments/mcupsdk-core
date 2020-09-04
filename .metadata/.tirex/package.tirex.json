@@ -1,0 +1,20 @@
+[
+    {
+        "metadataVersion": "3.01.00",
+        "id": "com.ti.MCU_PLUS_SDK_AMXXX",
+        "name": "MCU+ SDK for AMXXX",
+        "rootCategory": [ "MCU+ SDK", "MCU+ SDK for AMXXX" ],
+        "version": "07.03.00.01",
+        "type": "software",
+        "image": "./mcu_plus_sdk.png",
+        "license": "../../license.txt",
+        "devices": ["AMXXX"],
+        "tags": ["SDK", "Baremetal", "FreeRTOS"],
+        "description": "Welcome to MCU+ SDK for AMXXX. This SDK contains examples, libraries and tools to develop RTOS and no-RTOS based applications for ARM R5F, ARM M4F CPUs and related peripherals.",
+        "dependencies": [
+            { "packageId": "sysconfig", "version": "1.14.0", "require": "mandatory" },
+            { "packageId": "ti_cgt_tiarmclang", "version": "2.1.2", "require": "mandatory" },
+            { "packageId": "arm.gnu.aarch64-none", "version": "9.2.1", "require": "mandatory" }
+        ]
+    }
+]

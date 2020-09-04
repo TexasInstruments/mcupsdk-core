@@ -1,0 +1,85 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.11.0+2225"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const pcie       = scripting.addModule("/drivers/pcie/pcie", {}, false);
+const pcie1      = pcie.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+const mpu_armv77 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+pcie1.$name                = "CONFIG_PCIE0";
+pcie1.operMode             = "PCIE_EP_MODE";
+pcie1.gen                  = "PCIE_GEN2";
+pcie1.ibAtu.create(1);
+pcie1.ibAtu[0].$name       = "IB_ATU_CFG0";
+pcie1.ibAtu[0].lowerBase   = "0x70000000";
+pcie1.ibAtu[0].externs     = "extern uint32_t dst_buf[];";
+pcie1.ibAtu[0].lowerTarget = "(uint32_t)dst_buf";
+pcie1.obAtu.create(1);
+pcie1.obAtu[0].$name       = "OB_ATU_CFG0";
+pcie1.obAtu[0].lowerBase   = "0x68000000UL + 0x01000000U";
+pcie1.obAtu[0].lowerTarget = "0x90000000";
+pcie1.obAtu[0].regIndex    = 0;
+
+debug_log.enableUartLog        = true;
+debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+
+mpu_armv77.$name        = "CONFIG_MPU_REGION6";
+mpu_armv77.size         = 27;
+mpu_armv77.baseAddr     = 0x68000000;
+mpu_armv77.allowExecute = false;
+mpu_armv77.attributes   = "Device";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.RXD.$suggestSolution = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution = "ball.C16";

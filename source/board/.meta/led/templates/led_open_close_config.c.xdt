@@ -1,0 +1,106 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/board/led/led'];
+%%}
+/*
+ * LED
+ */
+/* LED specific includes */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#include <board/led/led_`config.name.toLowerCase()`.h>
+% }
+
+/* LED Object - initalized during LED_open() */
+LED_Object gLedObject[CONFIG_LED_NUM_INSTANCES];
+/* LED Driver handles - opened during Board_ledOpen() */
+LED_Handle gLedHandle[CONFIG_LED_NUM_INSTANCES];
+
+/* LED Config */
+LED_Config gLedConfig[CONFIG_LED_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .attrs = &gLedAttrs_`config.name`,
+        .fxns = &gLedFxns_`config.name`,
+        .object = (void *)&gLedObject[`i`],
+    },
+% }
+};
+uint32_t gLedConfigNum = CONFIG_LED_NUM_INSTANCES;
+
+/* LED params */
+LED_Params gLedParams[CONFIG_LED_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let peripheralDriver = instance.peripheralDriver;
+    {
+    % if(config.type == "GPIO") {
+        .gpioBaseAddr   = `peripheralDriver.$name.toUpperCase()`_BASE_ADDR,
+        .gpioPinNum     = `peripheralDriver.$name.toUpperCase()`_PIN,
+        .i2cInstance    = 0U,
+        .i2cAddress     = 0U,
+        .ioIndex        = 0U,
+    % }
+    % if(config.type == "I2C") {
+        .gpioBaseAddr   = 0U,
+        .gpioPinNum     = 0U,
+        .i2cInstance    = `peripheralDriver.$name.toUpperCase()`,
+        .i2cAddress     = 0x`config.i2cAddress.toString(16).toUpperCase()`,
+        .ioIndex        = `config.ioIndex`U,
+    % }
+    },
+% }
+};
+
+int32_t Board_ledOpen()
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_LED_NUM_INSTANCES; instCnt++)
+    {
+        gLedHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_LED_NUM_INSTANCES; instCnt++)
+    {
+        gLedHandle[instCnt] = LED_open(instCnt, &gLedParams[instCnt]);
+        if(NULL == gLedHandle[instCnt])
+        {
+            DebugP_logError("LED open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Board_ledClose();   /* Exit gracefully */
+    }
+
+    return status;
+}
+
+void Board_ledClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_LED_NUM_INSTANCES; instCnt++)
+    {
+        if(gLedHandle[instCnt] != NULL)
+        {
+            LED_close(gLedHandle[instCnt]);
+            gLedHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

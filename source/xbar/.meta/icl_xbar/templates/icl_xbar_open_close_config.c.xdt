@@ -1,0 +1,51 @@
+void Drivers_iclXbarOpen()
+{
+    %%{
+        let common = system.getScript("/common");
+        let soc = system.getScript(`/xbar/icl_xbar/soc/icl_xbar_${common.getSocName()}`);
+        let module = system.modules['/xbar/icl_xbar/icl_xbar'];
+    %%}
+    % let base = "CSL_CONTROLSS_ICLXBAR_U_BASE";
+/* ICL XBAR */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let grp0mask = "(";
+        % let grp1mask = "(";
+        % let grp2mask = "(";
+        % for(let i=0; i<config.xbarOutput.length; i++) {
+            % let group = soc.getOptionList("INTERNAL").find(o => o.name == config.xbarOutput[i]).group;
+            % if(group == 0) {
+                % grp0mask += (" ICL_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 1) {
+                % grp1mask += (" ICL_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else {
+                % grp2mask += (" ICL_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+        % }
+        % if(grp0mask.length > 1) {
+            % grp0mask = grp0mask.slice(0, -1);
+            % grp0mask += ")";
+        % }
+        % else {
+            % grp0mask = 0;
+        % }
+        % if(grp1mask.length > 1) {
+            % grp1mask = grp1mask.slice(0, -1);
+            % grp1mask += ")";
+        % }
+        % else {
+            % grp1mask = 0;
+        % }
+        % if(grp2mask.length > 1) {
+            % grp2mask = grp2mask.slice(0, -1);
+            % grp2mask += ")";
+        % }
+        % else {
+            % grp2mask = 0;
+        % }
+    SOC_xbarSelectIllegalComboLogicXBarInputSource(`base`, `config.name.substr(9)`, `grp0mask`, `grp1mask`, `grp2mask`);
+    % }
+}

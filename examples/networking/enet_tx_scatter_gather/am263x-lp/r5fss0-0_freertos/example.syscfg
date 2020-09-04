@@ -1,0 +1,133 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1    = eeprom.addInstance();
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const enet_cpsw  = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
+const enet_cpsw1 = enet_cpsw.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+eeprom1.$name      = "CONFIG_EEPROM0";
+eeprom1.i2cAddress = 0x53;
+
+edma1.$name                 = "CONFIG_EDMA0";
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
+gpio1.$name                = "CONFIG_GPIO1";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.$assign         = "GPIO0";
+gpio1.GPIO.gpioPin.$assign = "ball.R3";
+
+gpio2.$name                = "CONFIG_GPIO58";
+gpio2.pinDir               = "OUTPUT";
+gpio2.GPIO.$assign         = "GPIO0";
+gpio2.GPIO.gpioPin.$assign = "ball.F1";
+
+i2c1.$name               = "CONFIG_I2C0";
+eeprom1.peripheralDriver = i2c1;
+i2c1.I2C.$assign         = "I2C1";
+i2c1.I2C.SCL.$assign     = "ball.D7";
+i2c1.I2C.SDA.$assign     = "ball.C8";
+
+debug_log.enableUartLog            = true;
+debug_log.enableCssLog             = false;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name      = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr   = 0x70080000;
+mpu_armv75.size       = 14;
+mpu_armv75.attributes = "NonCached";
+
+enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
+enet_cpsw1.LargePoolPktCount               = 128;
+enet_cpsw1.BoardType                       = "am263x-lp";
+enet_cpsw1.DisableMacPort2                 = true;
+enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
+enet_cpsw1.txDmaChannel[0].PacketsCount    = 64;
+enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
+enet_cpsw1.rxDmaChannel[0].PacketsCount    = 64;
+enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
+enet_cpsw1.pinmux[0].MDIO.$assign           = "MDIO";
+enet_cpsw1.pinmux[0].MDIO.MDIO_MDIO.$assign = "ball.N16";
+enet_cpsw1.pinmux[0].MDIO.MDIO_MDC.$assign  = "ball.M17";
+enet_cpsw1.pinmux[0].RGMII1.$assign         = "RGMII1";
+enet_cpsw1.pinmux[0].RGMII2.$assign         = "RGMII2";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "ball.U17";
+enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "ball.T17";
+enet_cpsw1.pinmux[0].RGMII1.RD2.$suggestSolution    = "ball.U18";
+enet_cpsw1.pinmux[0].RGMII1.RD3.$suggestSolution    = "ball.T18";
+enet_cpsw1.pinmux[0].RGMII1.RX_CTL.$suggestSolution = "ball.R18";
+enet_cpsw1.pinmux[0].RGMII1.RXC.$suggestSolution    = "ball.R17";
+enet_cpsw1.pinmux[0].RGMII1.TD0.$suggestSolution    = "ball.P16";
+enet_cpsw1.pinmux[0].RGMII1.TD1.$suggestSolution    = "ball.P17";
+enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "ball.P18";
+enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "ball.N17";
+enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "ball.M18";
+enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "ball.N18";
+enet_cpsw1.pinmux[0].RGMII2.RD0.$suggestSolution    = "ball.K17";
+enet_cpsw1.pinmux[0].RGMII2.RD1.$suggestSolution    = "ball.K18";
+enet_cpsw1.pinmux[0].RGMII2.RD2.$suggestSolution    = "ball.J18";
+enet_cpsw1.pinmux[0].RGMII2.RD3.$suggestSolution    = "ball.J17";
+enet_cpsw1.pinmux[0].RGMII2.RX_CTL.$suggestSolution = "ball.K16";
+enet_cpsw1.pinmux[0].RGMII2.RXC.$suggestSolution    = "ball.K15";
+enet_cpsw1.pinmux[0].RGMII2.TD0.$suggestSolution    = "ball.M16";
+enet_cpsw1.pinmux[0].RGMII2.TD1.$suggestSolution    = "ball.M15";
+enet_cpsw1.pinmux[0].RGMII2.TD2.$suggestSolution    = "ball.H17";
+enet_cpsw1.pinmux[0].RGMII2.TD3.$suggestSolution    = "ball.H16";
+enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$suggestSolution = "ball.L16";
+enet_cpsw1.pinmux[0].RGMII2.TXC.$suggestSolution    = "ball.H18";

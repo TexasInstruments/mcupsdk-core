@@ -1,0 +1,86 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("gpadc");
+    let module = system.modules['/drivers/gpadc/gpadc'];
+    let module_ch = system.modules[`/drivers/gpadc/${driverVer}/gpadc_${driverVer}_channel`];
+%%}
+
+GPADC_ConfigType gCfgPtr[CONFIG_GPADC_NUM_INSTANCES]=
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let ch_instances = instance.gpadcChannel;
+    {
+        .triggSrc       = `config.triggerSource`,
+        .convMode       = `config.conversionMode`,
+
+        %if(config.readMode  == "GROUP") {
+            % for(let ch = 0; ch < ch_instances.length; ch++) {
+                % let ch_instance = ch_instances[ch];
+                % let ch_config = module_ch.getInstanceConfig(ch_instance);
+            .channelConfig[`ch`] =
+             {
+                % if( `config.ChannelBitmap` | (0x01 << `ch` )) {
+                    .channelID            = `ch_config.ChannelIndex` - 1,
+                    .isConfigured         = `ch_config.isConfigured`,
+                    .isBufferedMode       = `ch_config.isBufferedMode`,
+                    .useLuTable           = `ch_config.useLuTable`,
+                %}
+             },
+            %}
+        % }
+        % else if(config.readMode  == "SINGLE") {
+            % for(let ch = 0; ch < ch_instances.length; ch++) {
+               % let ch_instance = ch_instances[ch];
+               % let ch_config = module_ch.getInstanceConfig(ch_instance);
+               .channelConfig[`ch`] =
+               {
+                    .channelID            = `ch_config.ChannelIndex` - 1,
+                    .isConfigured         = `ch_config.isConfigured`,
+                    .isBufferedMode       = `ch_config.isBufferedMode`,
+                    .useLuTable           = `ch_config.useLuTable`,
+               },
+            %}
+        %}
+       % else {
+            % for(let ch = 0; ch < ch_instances.length; ch++) {
+                % let ch_instance = ch_instances[ch];
+                % let ch_config = module_ch.getInstanceConfig(ch_instance);
+            .channelConfig[`ch`] =
+             {
+                .channelID            = `ch`,
+                .isConfigured         = `ch_config.isConfigured`,
+                .isBufferedMode       = `ch_config.isBufferedMode`,
+                .useLuTable           = `ch_config.useLuTable`,
+             },
+            %}
+       %}
+    },
+   %}
+};
+
+void Drivers_gpadcOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_GPADC_NUM_INSTANCES; instCnt++)
+    {
+        status = GPADC_open(&gCfgPtr[instCnt]);
+        if(SystemP_FAILURE == status)
+        {
+            Drivers_gpadcClose();   /* Exit gracefully */
+        }
+    }
+
+    return;
+}
+
+void Drivers_gpadcClose(void)
+{
+    GPADC_close();
+
+    return;
+}

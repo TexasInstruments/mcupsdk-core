@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/networking/icss_emac/icss_emac'];
+%%}
+/*
+ * ICSS EMAC
+ */
+#include <networking/icss_emac/icss_emac.h>
+
+/* ICSS EMAC Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_ICSS_EMAC_INSTANCES (`module.$instances.length`U)

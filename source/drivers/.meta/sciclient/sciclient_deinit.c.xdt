@@ -1,0 +1,7 @@
+    /* SCICLIENT deinit */
+    {
+        int32_t         retVal = SystemP_SUCCESS;
+
+        retVal = Sciclient_deinit();
+        DebugP_assertNoLog(SystemP_SUCCESS == retVal);
+    }

@@ -1,0 +1,76 @@
+
+ [ req ]
+ distinguished_name     = req_distinguished_name
+ x509_extensions        = v3_ca
+ prompt                 = no
+
+ dirstring_type = nobmp
+
+ [ req_distinguished_name ]
+ C                      = US
+ ST                     = SC
+ L                      = New York
+ O                      = Texas Instruments., Inc.
+ OU                     = DSP
+ CN                     = Albert
+ emailAddress           = Albert@gt.ti.com
+
+ [ v3_ca ]
+
+  basicConstraints = CA:true
+  1.3.6.1.4.1.294.1.1=ASN1:SEQUENCE:boot_seq
+  1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
+  1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+  1.3.6.1.4.1.294.1.34=ASN1:SEQUENCE:sysfw_image_integrity
+  1.3.6.1.4.1.294.1.35=ASN1:SEQUENCE:sysfw_image_load
+#  1.3.6.1.4.1.294.1.4=ASN1:SEQUENCE:encryption
+#  1.3.6.1.4.1.294.1.6=ASN1:SEQUENCE:firewall
+#  1.3.6.1.4.1.294.1.7=ASN1:SEQUENCE:pll
+  1.3.6.1.4.1.294.1.8=ASN1:SEQUENCE:debug
+
+
+ [ boot_seq ]
+
+ certType =        INTEGER:TEST_CERT_TYPE
+ bootCore =        INTEGER:TEST_BOOT_CORE_ID
+ bootCoreOpts =    INTEGER:TEST_BOOT_CORE_OPTS
+ destAddr =        FORMAT:HEX,OCT:TEST_BOOT_ADDR
+ imageSize =       INTEGER:TEST_IMAGE_LENGTH
+
+ [ image_integrity ]
+
+ shaType = OID:TEST_IMAGE_SHA_OID
+ shaValue= FORMAT:HEX,OCT:TEST_IMAGE_SHA_VAL
+
+
+ [ swrv ]
+ swrv = INTEGER:1
+
+ [ sysfw_image_integrity ]
+ shaType = OID:TEST_IMAGE_SHA_OID
+ shaValue = FORMAT:HEX,OCT:TEST_IMAGE_SHA_VAL
+ imageSize = INTEGER:TEST_IMAGE_LENGTH
+
+ [ sysfw_image_load ]
+ destAddr = FORMAT:HEX,OCT:TEST_BOOT_ADDR
+ authInPlace = INTEGER:1
+
+# [ encryption ]
+# initalVector = FORMAT:HEX,OCT:00000000000000000000000000000000
+# randomString = FORMAT:HEX,OCT:0000000000000000000000000000000000000000000000000000000000000000
+# iterationCnt =INTEGER:0
+# salt= FORMAT:HEX,OCT:0000000000000000000000000000000000000000000000000000000000000000
+
+# [ firewall ]
+# fwall0Index = INTEGER:2049
+# fwall0Cfg = FORMAT:HEX,OCT:00001100003300000044000000000000
+
+# [ pll ]
+# pll0Index = INTEGER:4
+# pll0Cfg = FORMAT:HEX,OCT:0000000000000000000000000000000000000000000000000000000000000000
+
+ [ debug ]
+ debugUID = FORMAT:HEX,OCT:0000000000000000000000000000000000000000000000000000000000000000
+ debugType = INTEGER:0x4
+ coreDbgEn = INTEGER:0
+ coreDbgSecEn = INTEGER:0

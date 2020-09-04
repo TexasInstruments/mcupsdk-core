@@ -1,0 +1,93 @@
+%%{
+    let module = system.modules['/drivers/ipc/ipc'];
+    let instance = module.$static;
+    let selfCpuName = module.getSelfIpcCoreName();
+    let enabledCpus = module.getEnabledCpus(instance);
+    let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
+    let vringRxTxMap = module.getRPMessageVringRxTxMap(instance);
+%%}
+% if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
+    /* IPC Notify */
+    {
+        IpcNotify_Params notifyParams;
+        int32_t status;
+
+        /* initialize parameters to default */
+        IpcNotify_Params_init(&notifyParams);
+
+        /* specify the core on which this API is called */
+        notifyParams.selfCoreId = CSL_CORE_ID_`selfCpuName.toUpperCase()`;
+
+        /* list the cores that will do IPC Notify with this core
+        * Make sure to NOT list 'self' core in the list below
+        */
+        % if( instance.enableLinuxIpc === true ) {
+        notifyParams.numCores = `enabledCpus.length+1`;
+        % } else {
+        notifyParams.numCores = `enabledCpus.length`;
+        % }
+        % let i = 0;
+        % for( let cpuName of enabledCpus) {
+        notifyParams.coreIdList[`i`] = CSL_CORE_ID_`cpuName.toUpperCase()`;
+            % i++;
+        % }
+        % if( instance.enableLinuxIpc === true ) {
+        notifyParams.coreIdList[`i`] = CSL_CORE_ID_A53SS0_0;
+        notifyParams.linuxCoreId = CSL_CORE_ID_A53SS0_0;
+        % }
+
+        /* initialize the IPC Notify module */
+        status = IpcNotify_init(&notifyParams);
+        DebugP_assert(status==SystemP_SUCCESS);
+
+        % if(instance.enableMailboxIpc === true) {
+        { /* Mailbox driver MUST be initialized after IPC Notify init */
+            Mailbox_Params mailboxInitParams;
+
+            Mailbox_Params_init(&mailboxInitParams);
+            status = Mailbox_init(&mailboxInitParams);
+            DebugP_assert(status == SystemP_SUCCESS);
+        }
+        % }
+    }
+% }
+% if ( enabledRPMessageCpus.length > 0 || instance.enableLinuxIpc === true ) {
+    /* IPC RPMessage */
+    {
+        RPMessage_Params rpmsgParams;
+        int32_t status;
+
+        /* initialize parameters to default */
+        RPMessage_Params_init(&rpmsgParams);
+
+        % if ( enabledRPMessageCpus.length > 0 ) {
+        /* VRING mapping from source core to destination core, '-1' means NO VRING,
+        % for ( let prop in vringRxTxMap) {
+            `prop` => `JSON.stringify(vringRxTxMap[prop])`
+        % }
+         */
+        /* TX VRINGs */
+        % for( let cpuName of enabledRPMessageCpus) {
+            % let vringId = vringRxTxMap[selfCpuName][cpuName];
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = (uintptr_t)gRPMessageVringMem[`vringId`];
+        % }
+        /* RX VRINGs */
+        % for( let cpuName of enabledRPMessageCpus) {
+            % let vringId = vringRxTxMap[cpuName][selfCpuName];
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = (uintptr_t)gRPMessageVringMem[`vringId`];
+        % }
+        /* Other VRING properties */
+        rpmsgParams.vringSize = IPC_RPMESSAGE_VRING_SIZE;
+        rpmsgParams.vringNumBuf = IPC_RPMESSAGE_NUM_VRING_BUF;
+        rpmsgParams.vringMsgSize = IPC_RPMESSAGE_MAX_VRING_BUF_SIZE;
+        % }
+        % if ( instance.enableLinuxIpc === true ) {
+        rpmsgParams.linuxResourceTable = &gRPMessage_linuxResourceTable;
+        rpmsgParams.linuxCoreId = CSL_CORE_ID_A53SS0_0;
+        % }
+
+        /* initialize the IPC RP Message module */
+        status = RPMessage_init(&rpmsgParams);
+        DebugP_assert(status==SystemP_SUCCESS);
+    }
+% }

@@ -1,0 +1,14 @@
+# Release Notes {#RELEASE_NOTES_PAGE}
+
+[TOC]
+
+Refer the below pages for release specific information,
+
+- \subpage RELEASE_NOTES_08_05_00_PAGE
+- \subpage RELEASE_NOTES_08_04_00_PAGE
+- \subpage RELEASE_NOTES_08_03_00_PAGE
+- \subpage RELEASE_NOTES_08_02_00_PAGE
+- \subpage RELEASE_NOTES_08_01_01_PAGE
+- \subpage RELEASE_NOTES_08_01_00_PAGE
+- \subpage RELEASE_NOTES_08_00_02_PAGE
+- \subpage RELEASE_NOTES_08_00_01_PAGE

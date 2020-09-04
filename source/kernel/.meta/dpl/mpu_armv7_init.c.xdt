@@ -1,0 +1,15 @@
+%%{
+    let module = system.modules['/kernel/dpl/mpu_armv7'];
+%%}
+
+#define BOOT_SECTION __attribute__((section(".text.boot")))
+
+/* This function is called by _c_int00 */
+void BOOT_SECTION __mpu_init() 
+{
+    MpuP_init();
+    
+% if (module.isCacheAvailable()) {
+    CacheP_init();
+% }
+}

@@ -1,0 +1,21 @@
+void Drivers_epwmSyncoutXbarOpen()
+{
+    %%{
+        let common = system.getScript("/common");
+        let soc = system.getScript(`/xbar/epwm_syncout_xbar/soc/epwm_syncout_xbar_${common.getSocName()}`);
+        let module = system.modules['/xbar/epwm_syncout_xbar/epwm_syncout_xbar'];
+    %%}
+    % let base = "CSL_CONTROLSS_PWMSYNCOUTXBAR_U_BASE";
+/* PWM SYNCOUT XBAR */
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let config = module.getInstanceConfig(instance);
+        % let grp0mask = "(";
+        % for(let i=0; i<config.xbarOutput.length; i++) {
+            % grp0mask += (" EPWM_SYNCOUT_XBAR_" + config.xbarOutput[i] + " |");
+        % }
+        % grp0mask = grp0mask.slice(0, -1);
+        % grp0mask += ")";
+    SOC_xbarSelectPWMSyncOutXBarInput(`base`, `config.name.substr(18)`, `grp0mask`);
+    % }
+}

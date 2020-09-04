@@ -1,0 +1,9 @@
+% let module = system.modules['/drivers/cmpss/cmpss'];
+%if (module != null)
+%{
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+#define `instance.$name`_BASE_ADDR (`instance.cmpssBase`)
+    % }
+%}
+%

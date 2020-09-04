@@ -1,0 +1,62 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const esm        = scripting.addModule("/drivers/esm/esm", {}, false);
+const esm1       = esm.addInstance();
+const watchdog   = scripting.addModule("/drivers/watchdog/watchdog", {}, false);
+const watchdog1  = watchdog.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+esm1.$name                      = "CONFIG_ESM0";
+esm1.esmNotifier[0].$name       = "CONFIG_ESM_NOTIFY0";
+esm1.esmNotifier[0].notify      = "watchdogCallback";
+esm1.esmNotifier[0].groupNumber = 2;
+esm1.esmNotifier[0].errorNumber = 11;
+
+watchdog1.$name          = "CONFIG_WDT0";
+watchdog1.resetMode      = "Watchdog_RESET_OFF";
+watchdog1.expirationTime = 3000;
+
+debug_log.enableUartLog               = true;
+debug_log.uartLog.$name               = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.MSS_UART.$assign    = "MSS_UARTA";
+debug_log.uartLog.MSS_UART.RX.$assign = "ball.U3";
+debug_log.uartLog.MSS_UART.TX.$assign = "ball.W2";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 14;
+
+mpu_armv73.$name    = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr = 0x80000;
+mpu_armv73.size     = 14;
+
+mpu_armv74.$name    = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr = 0x10200000;
+mpu_armv74.size     = 20;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x102E0000;
+mpu_armv75.size         = 16;
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;

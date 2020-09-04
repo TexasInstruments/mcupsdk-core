@@ -1,0 +1,827 @@
+%%{
+    let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+%%}
+% let instance = module.$instances[0];
+
+%%{
+function getTxNumPkts(module, instance) {
+    let txPktAry = new Array();
+
+    for (var i = 0; i < module.getTxChannelCount(instance); i++)
+    {
+        txPktAry.push((module.getChannelConfig(instance, "TX", i)).PacketsCount);
+    }
+    return txPktAry;
+}
+
+function getRxNumPkts(module, instance) {
+    let rxPktAry = new Array();
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        rxPktAry.push((module.getChannelConfig(instance, "RX", i)).PacketsCount);
+    }
+    return rxPktAry;
+}
+
+function getRxAllocMacInfo(module, instance) {
+    let rxPktAry = new Array();
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        rxPktAry.push((module.getChannelConfig(instance, "RX", i)).AllocMacAddr);
+    }
+    return rxPktAry;
+}
+
+function getTxDmaGlobalEvtCfg(module, instance) {
+    let txDmaCfgAry = new Array();
+
+    for (var i = 0; i < module.getTxChannelCount(instance); i++)
+    {
+        txDmaCfgAry.push((module.getChannelConfig(instance, "TX", i)).useGlobalEvt);
+    }
+    return txDmaCfgAry;
+}
+
+function getRxDmaGlobalEvtCfg(module, instance) {
+    let rxDmaCfgAry = new Array();
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        rxDmaCfgAry.push((module.getChannelConfig(instance, "RX", i)).useGlobalEvt);
+    }
+    return rxDmaCfgAry;
+}
+
+function getRxDmaSizeThreshEn(module, instance) {
+    let rxDmaCfgAry = new Array();
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        rxDmaCfgAry.push((module.getChannelConfig(instance, "RX", i)).sizeThreshEn);
+    }
+    return rxDmaCfgAry;
+}
+
+function getRxDmaIsDefaultFlow(module, instance) {
+    let rxDmaCfgAry = new Array();
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        rxDmaCfgAry.push((module.getChannelConfig(instance, "RX", i)).useDefaultFlow);
+    }
+    return rxDmaCfgAry;
+}
+
+function getDmaCfgInitArray(module, instance, indent) {
+    let rxDmaCfgAry = new Array();
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        let rxChCfg = module.getChannelConfig(instance, "RX", i);
+        let rxChCfgInitStr = "\n\t[" + i + "] = " +
+                             "\n\t{"              +
+                                "\n\t\t.maxNumRxPkts =    " + rxChCfg.PacketsCount + "," +
+                                "\n\t\t.macAddressValid = " + rxChCfg.AllocMacAddr + "," +
+                                "\n\t\t.useGlobalEvt    = " + rxChCfg.useGlobalEvt + "," +
+                                "\n\t\t.useDefaultFlow  = " + rxChCfg.useDefaultFlow + "," +
+                                "\n\t\t.sizeThreshEn    = " + rxChCfg.sizeThreshEn + "," +
+                             "\n\t}";
+        const numSpaces = 4 + indent;
+        let rxChCfgInitStrFormat = rxChCfgInitStr.replace(/\t/g, ' '.repeat(numSpaces));
+        rxDmaCfgAry.push(rxChCfgInitStrFormat);
+    }
+    return rxDmaCfgAry;
+}
+
+
+%%}
+
+
+static int32_t EnetAppUtils_allocRxFlowForChIdx(Enet_Handle hEnet,
+                                                uint32_t coreKey,
+                                                uint32_t coreId,
+                                                uint32_t chIdx,
+                                                uint32_t *rxFlowStartIdx,
+                                                uint32_t *flowIdx)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    EnetRm_AllocRxFlowInArgs inArgs;
+    EnetRm_AllocRxFlow rxFlowPrms;
+
+    inArgs.coreKey = coreKey;
+    inArgs.chIdx   = chIdx;
+
+    ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &rxFlowPrms);
+    ENET_IOCTL(hEnet,
+               coreId,
+               ENET_RM_IOCTL_ALLOC_RX_FLOW,
+               &prms,
+               status);
+
+    if (status == ENET_SOK)
+    {
+        *rxFlowStartIdx = rxFlowPrms.startIdx;
+        *flowIdx        = rxFlowPrms.flowIdx;
+    }
+    else
+    {
+        EnetAppUtils_print("EnetAppUtils_allocRxFlowForChIdx() failed : %d\n", status);
+    }
+
+    return status;
+}
+
+static int32_t EnetAppUtils_allocTxCh(Enet_Handle hEnet,
+                                      uint32_t coreKey,
+                                      uint32_t coreId,
+                                      uint32_t *txPSILThreadId)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+
+    /* Allocate Tx Ch */
+    ENET_IOCTL_SET_INOUT_ARGS(&prms, &coreKey, txPSILThreadId);
+    ENET_IOCTL(hEnet,
+               coreId,
+               ENET_RM_IOCTL_ALLOC_TX_CH_PEERID,
+               &prms,
+               status);
+    if (status != ENET_SOK)
+    {
+        *txPSILThreadId = ENET_RM_TXCHNUM_INVALID;
+        EnetAppUtils_print("EnetAppUtils_allocTxCh() failed: %d\n", status);
+    }
+
+    return status;
+}
+
+static int32_t EnetAppUtils_freeRxFlow(Enet_Handle hEnet,
+                                       uint32_t coreKey,
+                                       uint32_t coreId,
+                                       uint32_t rxFlowIdx)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    EnetRm_FreeRxFlowInArgs freeRxFlowInArgs;
+
+    /*Free Rx Flow*/
+    freeRxFlowInArgs.coreKey = coreKey;
+    freeRxFlowInArgs.flowIdx = rxFlowIdx;
+    freeRxFlowInArgs.chIdx   = 0U;
+
+    ENET_IOCTL_SET_IN_ARGS(&prms, &freeRxFlowInArgs);
+    ENET_IOCTL(hEnet,
+               coreId,
+               ENET_RM_IOCTL_FREE_RX_FLOW,
+               &prms,
+               status);
+
+    return status;
+}
+
+static int32_t EnetAppUtils_freeRxFlowForChIdx(Enet_Handle hEnet,
+                                               uint32_t coreKey,
+                                               uint32_t coreId,
+                                               uint32_t chIdx,
+                                               uint32_t rxFlowIdx)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    EnetRm_FreeRxFlowInArgs freeRxFlowInArgs;
+
+    /*Free Rx Flow*/
+    freeRxFlowInArgs.coreKey = coreKey;
+    freeRxFlowInArgs.flowIdx = rxFlowIdx;
+    freeRxFlowInArgs.chIdx   = chIdx;
+
+    ENET_IOCTL_SET_IN_ARGS(&prms, &freeRxFlowInArgs);
+    ENET_IOCTL(hEnet,
+               coreId,
+               ENET_RM_IOCTL_FREE_RX_FLOW,
+               &prms,
+               status);
+
+    return status;
+}
+
+static int32_t EnetAppUtils_freeTxCh(Enet_Handle hEnet,
+                                     uint32_t coreKey,
+                                     uint32_t coreId,
+                                     uint32_t txChNum)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    EnetRm_FreeTxChInArgs freeTxChInArgs;
+
+    /* Release Tx Ch */
+    freeTxChInArgs.coreKey = coreKey;
+    freeTxChInArgs.txChNum = txChNum;
+
+    ENET_IOCTL_SET_IN_ARGS(&prms, &freeTxChInArgs);
+    ENET_IOCTL(hEnet,
+               coreId,
+               ENET_RM_IOCTL_FREE_TX_CH_PEERID,
+               &prms,
+               status);
+
+    return status;
+}
+
+
+static uint32_t EnetAppUtils_getStartFlowIdx(Enet_Handle hEnet,
+                                             uint32_t coreId)
+{
+    Enet_IoctlPrms prms;
+    uint32_t p0FlowIdOffset;
+    int32_t status;
+
+    ENET_IOCTL_SET_OUT_ARGS(&prms, &p0FlowIdOffset);
+    ENET_IOCTL(hEnet,
+               coreId,
+               CPSW_HOSTPORT_GET_FLOW_ID_OFFSET,
+               &prms,
+               status);
+
+    EnetAppUtils_assert(status == ENET_SOK);
+    return p0FlowIdOffset;
+}
+
+static void EnetAppUtils_absFlowIdx2FlowIdxOffset(Enet_Handle hEnet,
+                                                  uint32_t coreId,
+                                                  uint32_t absRxFlowId,
+                                                  uint32_t *pStartFlowIdx,
+                                                  uint32_t *pFlowIdxOffset)
+{
+    uint32_t p0FlowIdOffset;
+
+    p0FlowIdOffset = EnetAppUtils_getStartFlowIdx(hEnet, coreId);
+    EnetAppUtils_assert(absRxFlowId >= p0FlowIdOffset);
+    *pStartFlowIdx  = p0FlowIdOffset;
+    *pFlowIdxOffset = (absRxFlowId - p0FlowIdOffset);
+}
+
+static void EnetAppUtils_openTxCh(Enet_Handle hEnet,
+                                  uint32_t coreKey,
+                                  uint32_t coreId,
+                                  uint32_t *pTxChNum,
+                                  EnetDma_TxChHandle *pTxChHandle,
+                                  EnetUdma_OpenTxChPrms *pCpswTxChCfg)
+{
+    EnetDma_Handle hDma = Enet_getDmaHandle(hEnet);
+    int32_t status;
+
+    EnetAppUtils_assert(hDma != NULL);
+
+    status = EnetAppUtils_allocTxCh(hEnet,
+                                    coreKey,
+                                    coreId,
+                                    pTxChNum);
+    EnetAppUtils_assert(ENET_SOK == status);
+
+    pCpswTxChCfg->chNum = *pTxChNum;
+
+    *pTxChHandle = EnetDma_openTxCh(hDma, pCpswTxChCfg);
+    EnetAppUtils_assert(NULL != *pTxChHandle);
+}
+
+static void EnetAppUtils_closeTxCh(Enet_Handle hEnet,
+                                   uint32_t coreKey,
+                                   uint32_t coreId,
+                                   EnetDma_PktQ *pFqPktInfoQ,
+                                   EnetDma_PktQ *pCqPktInfoQ,
+                                   EnetDma_TxChHandle hTxChHandle,
+                                   uint32_t txChNum)
+{
+    int32_t status;
+
+    EnetQueue_initQ(pFqPktInfoQ);
+    EnetQueue_initQ(pCqPktInfoQ);
+
+    EnetDma_disableTxEvent(hTxChHandle);
+    status = EnetDma_closeTxCh(hTxChHandle, pFqPktInfoQ, pCqPktInfoQ);
+    EnetAppUtils_assert(ENET_SOK == status);
+
+    status = EnetAppUtils_freeTxCh(hEnet,
+                                   coreKey,
+                                   coreId,
+                                   txChNum);
+    EnetAppUtils_assert(ENET_SOK == status);
+}
+
+
+static void EnetAppUtils_openRxFlowForChIdx(Enet_Type enetType,
+                                            Enet_Handle hEnet,
+                                            uint32_t coreKey,
+                                            uint32_t coreId,
+                                            bool useDefaultFlow,
+                                            bool allocMacAddr,
+                                            uint32_t chIdx,
+                                            uint32_t *pRxFlowStartIdx,
+                                            uint32_t *pRxFlowIdx,
+                                            uint8_t macAddr[ENET_MAC_ADDR_LEN],
+                                            EnetDma_RxChHandle *pRxFlowHandle,
+                                            EnetUdma_OpenRxFlowPrms *pRxFlowPrms)
+{
+    EnetDma_Handle hDma = Enet_getDmaHandle(hEnet);
+    int32_t status = ENET_SOK;
+
+    EnetAppUtils_assert(hDma != NULL);
+
+    status = EnetAppUtils_allocRxFlowForChIdx(hEnet,
+                                              coreKey,
+                                              coreId,
+                                              chIdx,
+                                              pRxFlowStartIdx,
+                                              pRxFlowIdx);
+    EnetAppUtils_assert(status == ENET_SOK);
+
+    pRxFlowPrms->startIdx = *pRxFlowStartIdx;
+    pRxFlowPrms->flowIdx  = *pRxFlowIdx;
+    pRxFlowPrms->chIdx    = chIdx;
+
+    *pRxFlowHandle = EnetDma_openRxCh(hDma, pRxFlowPrms);
+    EnetAppUtils_assert(*pRxFlowHandle != NULL);
+
+    if (useDefaultFlow)
+    {
+        if (chIdx == 0U)
+        {
+            status = EnetAppUtils_allocMac(hEnet, coreKey, coreId, macAddr);
+            EnetAppUtils_assert(status == ENET_SOK);
+
+            if (Enet_isCpswFamily(enetType))
+            {
+                EnetAppUtils_addHostPortEntry(hEnet, coreId, macAddr);
+            }
+            else
+            {
+                // Should we add this entry to ICSSG FDB?
+            }
+        }
+
+        status = EnetAppUtils_regDfltRxFlowForChIdx(hEnet,
+                                                    coreKey,
+                                                    coreId,
+                                                    chIdx,
+                                                    *pRxFlowStartIdx,
+                                                    *pRxFlowIdx);
+    }
+    else
+    {
+        if (allocMacAddr)
+        {
+            if (Enet_isCpswFamily(enetType))
+            {
+                EnetAppUtils_assert(chIdx == 0U);
+
+                status = EnetAppUtils_allocMac(hEnet, coreKey, coreId, macAddr);
+                EnetAppUtils_assert(status == ENET_SOK);
+                status = EnetAppUtils_regDstMacRxFlow(hEnet,
+                                                      coreKey,
+                                                      coreId,
+                                                      *pRxFlowStartIdx,
+                                                      *pRxFlowIdx,
+                                                      macAddr);
+            }
+        }
+    }
+
+    EnetAppUtils_assert(status == ENET_SOK);
+}
+
+static void EnetAppUtils_closeRxFlowForChIdx(Enet_Type enetType,
+                                            Enet_Handle hEnet,
+                                            uint32_t coreKey,
+                                            uint32_t coreId,
+                                            bool useDefaultFlow,
+                                            EnetDma_PktQ *pFqPktInfoQ,
+                                            EnetDma_PktQ *pCqPktInfoQ,
+                                            uint32_t chIdx,
+                                            uint32_t rxFlowStartIdx,
+                                            uint32_t rxFlowIdx,
+                                            bool macAddressValid,
+                                            uint8_t macAddr[ENET_MAC_ADDR_LEN],
+                                            EnetDma_RxChHandle hRxFlow)
+{
+    int32_t status = ENET_SOK;
+
+    EnetQueue_initQ(pFqPktInfoQ);
+    EnetQueue_initQ(pCqPktInfoQ);
+
+    EnetDma_disableRxEvent(hRxFlow);
+
+    if (useDefaultFlow)
+    {
+        status = EnetAppUtils_unregDfltRxFlowForChIdx(hEnet,
+                                                      coreKey,
+                                                      coreId,
+                                                      chIdx,
+                                                      rxFlowStartIdx,
+                                                      rxFlowIdx);
+        EnetAppUtils_assert(status == ENET_SOK);
+
+        if (macAddressValid)
+        {
+            status = EnetAppUtils_freeMac(hEnet,
+                                          coreKey,
+                                          coreId,
+                                          macAddr);
+            EnetAppUtils_assert(status == ENET_SOK);
+
+            if (Enet_isCpswFamily(enetType))
+            {
+                EnetAppUtils_delAddrEntry(hEnet, coreId, macAddr);
+            }
+        }
+    }
+    else
+    {
+        if (Enet_isCpswFamily(enetType))
+        {
+            EnetAppUtils_assert(macAddressValid == true);
+
+            status = EnetAppUtils_unregDstMacRxFlow(hEnet,
+                                                    coreKey,
+                                                    coreId,
+                                                    rxFlowStartIdx,
+                                                    rxFlowIdx,
+                                                    macAddr);
+            EnetAppUtils_assert(status == ENET_SOK);
+
+            EnetAppUtils_delAddrEntry(hEnet, coreId, macAddr);
+
+            status = EnetAppUtils_freeMac(hEnet,
+                                          coreKey,
+                                          coreId,
+                                          macAddr);
+            EnetAppUtils_assert(status == ENET_SOK);
+        }
+    }
+
+    status = EnetDma_closeRxCh(hRxFlow, pFqPktInfoQ, pCqPktInfoQ);
+    EnetAppUtils_assert(status == ENET_SOK);
+
+
+    status = EnetAppUtils_freeRxFlowForChIdx(hEnet,
+                                             coreKey,
+                                             coreId,
+                                             chIdx,
+                                             rxFlowIdx);
+    EnetAppUtils_assert(status == ENET_SOK);
+}
+
+
+static void EnetApp_txPktNotifyCb(void *cbArg)
+{
+
+
+}
+
+static void EnetApp_rxPktNotifyCb(void *cbArg)
+{
+
+
+}
+
+static void EnetApp_openTxDma(EnetAppTxDmaSysCfg_Obj *tx,
+                              uint32_t numTxPkts,
+                              Enet_Handle hEnet,
+                              uint32_t coreKey,
+                              uint32_t coreId,
+                              EnetAppTxDmaCfg_Info *txCfg)
+{
+    EnetUdma_OpenTxChPrms enetTxChCfg;
+
+    EnetDma_initTxChParams(&enetTxChCfg);
+    EnetAppUtils_setCommonTxChPrms(&enetTxChCfg);
+    enetTxChCfg.hUdmaDrv  = txCfg->hUdmaDrv;
+    /* This param is dont care for UDMA LCDMA variant */
+    enetTxChCfg.useProxy  = false;
+    enetTxChCfg.numTxPkts = numTxPkts;
+    enetTxChCfg.cbArg     = tx;
+    enetTxChCfg.notifyCb  = EnetApp_txPktNotifyCb;
+    enetTxChCfg.useGlobalEvt = txCfg->useGlobalEvt;
+
+
+    EnetAppUtils_openTxCh(hEnet,
+                          coreKey,
+                          coreId,
+                          &tx->txChNum,
+                          &tx->hTxCh,
+                          &enetTxChCfg);
+}
+
+#define ENET_CPSW_RX_CH_ID  (0U)
+
+static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
+                              uint32_t numRxPkts,
+                              Enet_Handle hEnet,
+                              uint32_t coreKey,
+                              uint32_t coreId,
+                              bool allocMacAddr,
+                              EnetAppRxDmaCfg_Info *rxCfg)
+{
+    EnetUdma_OpenRxFlowPrms enetRxFlowCfg;
+    int32_t status;
+    Enet_Type enetType;
+    uint32_t instId;
+    const  uint32_t chIdx = ENET_CPSW_RX_CH_ID;
+
+    status = Enet_getHandleInfo(hEnet,
+                                &enetType,
+                                &instId);
+    EnetAppUtils_assert(status == ENET_SOK);
+    (void)instId; /* Instd id not used */
+
+    EnetDma_initRxChParams(&enetRxFlowCfg);
+    EnetAppUtils_setCommonRxFlowPrms(&enetRxFlowCfg);
+    enetRxFlowCfg.notifyCb  = EnetApp_rxPktNotifyCb;
+    enetRxFlowCfg.numRxPkts = numRxPkts;
+    enetRxFlowCfg.cbArg     = rx;
+    enetRxFlowCfg.hUdmaDrv  = rxCfg->hUdmaDrv;
+    /* This param is dont care for UDMA LCDMA variant */
+    enetRxFlowCfg.useProxy  = false;
+    enetRxFlowCfg.useGlobalEvt = rxCfg->useGlobalEvt;
+    enetRxFlowCfg.flowPrms.sizeThreshEn = rxCfg->sizeThreshEn;
+
+#if (UDMA_SOC_CFG_UDMAP_PRESENT == 1)
+    {
+        /* Use ring monitor for the CQ ring of RX flow */
+        EnetUdma_UdmaRingPrms *pFqRingPrms = &enetRxFlowCfg.udmaChPrms.fqRingPrms;
+        pFqRingPrms->useRingMon = rxCfg->useRingMon;
+        pFqRingPrms->ringMonCfg.mode = TISCI_MSG_VALUE_RM_MON_MODE_THRESHOLD;
+        /* Ring mon low threshold */
+
+#if defined _DEBUG_
+        /* In debug mode as CPU is processing lesser packets per event, keep threshold more */
+        pFqRingPrms->ringMonCfg.data0 = (numRxPkts - 10U);
+#else
+        pFqRingPrms->ringMonCfg.data0 = (numRxPkts - 20U);
+#endif
+        /* Ring mon high threshold - to get only low  threshold event, setting high threshold as more than ring depth*/
+        pFqRingPrms->ringMonCfg.data1 = numRxPkts;
+    }
+#endif
+
+
+    EnetAppUtils_openRxFlowForChIdx(enetType,
+                            hEnet,
+                            coreKey,
+                            coreId,
+                            rxCfg->useDefaultFlow,
+                            allocMacAddr,
+                            chIdx,
+                            &rx->rxFlowStartIdx,
+                            &rx->rxFlowIdx,
+                            &rx->macAddr[0U],
+                            &rx->hRxCh,
+                            &enetRxFlowCfg);
+
+}
+
+void EnetApp_closeTxDma(uint32_t enetTxDmaChId,
+                        Enet_Handle hEnet,
+                        uint32_t coreKey,
+                        uint32_t coreId,
+                        EnetDma_PktQ *fqPktInfoQ,
+                        EnetDma_PktQ *cqPktInfoQ)
+{
+    EnetAppTxDmaSysCfg_Obj *tx;
+
+    EnetAppUtils_assert(enetTxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma.tx));
+    tx = &gEnetAppSysCfgObj.dma.tx[enetTxDmaChId];
+    EnetQueue_initQ(fqPktInfoQ);
+    EnetQueue_initQ(cqPktInfoQ);
+    EnetApp_retrieveFreeTxPkts(tx->hTxCh, cqPktInfoQ);
+    EnetAppUtils_closeTxCh(hEnet,
+                           coreKey,
+                           coreId,
+                           fqPktInfoQ,
+                           cqPktInfoQ,
+                           tx->hTxCh,
+                           tx->txChNum);
+    memset(tx, 0, sizeof(*tx));
+}
+
+void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
+                        Enet_Handle hEnet,
+                        uint32_t coreKey,
+                        uint32_t coreId,
+                        EnetDma_PktQ *fqPktInfoQ,
+                        EnetDma_PktQ *cqPktInfoQ)
+{
+    EnetAppRxDmaSysCfg_Obj *rx;
+    Enet_Type enetType;
+    uint32_t instId;
+    const  uint32_t chIdx = ENET_CPSW_RX_CH_ID;
+    int32_t status;
+    const EnetApp_GetRxDmaHandleOutArgs rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] =
+    {
+        `getDmaCfgInitArray(module, instance, 4)`
+
+    };
+
+    status = Enet_getHandleInfo(hEnet,
+                                &enetType,
+                                &instId);
+    EnetAppUtils_assert(status == ENET_SOK);
+    (void)instId; /* Instd id not used */
+
+    EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma.rx));
+    rx = &gEnetAppSysCfgObj.dma.rx[enetRxDmaChId];
+    /* Close RX channel */
+    EnetQueue_initQ(fqPktInfoQ);
+    EnetQueue_initQ(cqPktInfoQ);
+
+	EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(rxDmaInfo));
+    EnetAppUtils_closeRxFlowForChIdx(enetType,
+                                     hEnet,
+                                     coreKey,
+                                     coreId,
+                                     rxDmaInfo[enetRxDmaChId].useDefaultFlow,
+                                     fqPktInfoQ,
+                                     cqPktInfoQ,
+                                     chIdx,
+                                     rx->rxFlowStartIdx,
+                                     rx->rxFlowIdx,
+                                     rxDmaInfo[enetRxDmaChId].macAddressValid,
+                                     rx->macAddr,
+                                     rx->hRxCh);
+    memset(rx, 0, sizeof(*rx));
+}
+
+void EnetApp_getTxDmaHandle(uint32_t enetTxDmaChId,
+                            const EnetApp_GetDmaHandleInArgs *inArgs,
+                            EnetApp_GetTxDmaHandleOutArgs *outArgs)
+{
+    int32_t status;
+    EnetAppTxDmaSysCfg_Obj *tx;
+    const uint32_t txNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] =
+                           {
+                            `getTxNumPkts(module, instance)`
+                           };
+    const uint32_t useGlobalEvt[ENET_SYSCFG_TX_CHANNELS_NUM] =
+                           {
+                             `getTxDmaGlobalEvtCfg(module, instance)`
+                           };
+
+    EnetAppUtils_assert(enetTxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma.tx));
+    tx = &gEnetAppSysCfgObj.dma.tx[enetTxDmaChId];
+
+    EnetAppUtils_assert(tx->hTxCh != NULL);
+    status = EnetDma_registerTxEventCb(tx->hTxCh, inArgs->notifyCb, inArgs->cbArg);
+    EnetAppUtils_assert(status == ENET_SOK);
+
+    outArgs->hTxCh = tx->hTxCh;
+    outArgs->txChNum = tx->txChNum;
+    EnetAppUtils_assert(enetTxDmaChId < ENET_ARRAYSIZE(txNumPkts));
+    outArgs->maxNumTxPkts = txNumPkts[enetTxDmaChId];
+    outArgs->useGlobalEvt = useGlobalEvt[enetTxDmaChId];
+    return;
+}
+
+
+void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
+                            const EnetApp_GetDmaHandleInArgs *inArgs,
+                            EnetApp_GetRxDmaHandleOutArgs *outArgs)
+{
+    int32_t status;
+    EnetAppRxDmaSysCfg_Obj *rx;
+    const EnetApp_GetRxDmaHandleOutArgs rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] =
+    {
+        `getDmaCfgInitArray(module, instance, 4)`
+
+    };
+
+    EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma.rx));
+    rx = &gEnetAppSysCfgObj.dma.rx[enetRxDmaChId];
+
+    EnetAppUtils_assert(rx->hRxCh != NULL);
+    status = EnetDma_registerRxEventCb(rx->hRxCh, inArgs->notifyCb, inArgs->cbArg);
+    EnetAppUtils_assert(status == ENET_SOK);
+
+    outArgs->hRxCh = rx->hRxCh;
+    outArgs->rxFlowIdx = rx->rxFlowIdx;
+    outArgs->rxFlowStartIdx = rx->rxFlowStartIdx;
+    EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(rxDmaInfo));
+    outArgs->macAddressValid = rxDmaInfo[enetRxDmaChId].macAddressValid;
+    if (rxDmaInfo[enetRxDmaChId].macAddressValid)
+    {
+        EnetUtils_copyMacAddr(outArgs->macAddr, rx->macAddr);
+    }
+    outArgs->maxNumRxPkts = rxDmaInfo[enetRxDmaChId].maxNumRxPkts;
+    outArgs->sizeThreshEn = rxDmaInfo[enetRxDmaChId].sizeThreshEn;
+    outArgs->useDefaultFlow = rxDmaInfo[enetRxDmaChId].useDefaultFlow;
+    outArgs->useGlobalEvt   = rxDmaInfo[enetRxDmaChId].useGlobalEvt;
+    return;
+}
+
+static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
+                                         Enet_Handle hEnet,
+                                         uint32_t coreKey,
+                                         uint32_t coreId)
+{
+    const uint32_t txNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] =
+                           {
+                            `getTxNumPkts(module, instance)`
+                           };
+    uint32_t i;
+    const uint32_t useGlobalEvt[ENET_SYSCFG_TX_CHANNELS_NUM] =
+                           {
+                             `getTxDmaGlobalEvtCfg(module, instance)`
+
+                           };
+
+    for (i = 0; i < ENET_SYSCFG_TX_CHANNELS_NUM;i++)
+    {
+        EnetAppTxDmaCfg_Info txDmaCfg;
+
+        txDmaCfg.useGlobalEvt = useGlobalEvt[i];
+        txDmaCfg.hUdmaDrv     = EnetApp_getUdmaInstanceHandle();
+        EnetApp_openTxDma(&dma->tx[i], txNumPkts[i], hEnet, coreKey, coreId, &txDmaCfg);
+    }
+}
+
+static void EnetApp_openAllRxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
+                                         Enet_Handle hEnet,
+                                         uint32_t coreKey,
+                                         uint32_t coreId)
+{
+    const uint32_t rxNumPkts[ENET_SYSCFG_RX_FLOWS_NUM] =
+                           {
+                            `getRxNumPkts(module, instance)`
+                           };
+    const bool     rxAllocMac[ENET_SYSCFG_RX_FLOWS_NUM] =
+                           {
+                            `getRxAllocMacInfo(module, instance)`
+                           };
+    const uint32_t useGlobalEvt[ENET_SYSCFG_RX_FLOWS_NUM] =
+                           {
+                             `getRxDmaGlobalEvtCfg(module, instance)`
+
+                           };
+    const uint8_t  sizeThreshEn[ENET_SYSCFG_RX_FLOWS_NUM] =
+                           {
+                             `getRxDmaSizeThreshEn(module, instance)`
+
+                           };
+    const bool     isDefaultFlow[ENET_SYSCFG_RX_FLOWS_NUM] =
+                           {
+                            `getRxDmaIsDefaultFlow(module, instance)`
+                           };
+
+    uint32_t i;
+
+    for (i = 0; i < ENET_SYSCFG_RX_FLOWS_NUM;i++)
+    {
+        EnetAppRxDmaCfg_Info rxDmaCfg;
+
+        rxDmaCfg.useGlobalEvt = useGlobalEvt[i];
+        rxDmaCfg.hUdmaDrv     = EnetApp_getUdmaInstanceHandle();
+        rxDmaCfg.sizeThreshEn = sizeThreshEn[i];
+        rxDmaCfg.useDefaultFlow = isDefaultFlow[i];
+
+        EnetApp_openRxDma(&dma->rx[i], rxNumPkts[i], hEnet, coreKey, coreId,rxAllocMac[i],&rxDmaCfg);
+    }
+}
+
+#define ENET_SYSCFG_DEFAULT_NUM_TX_PKT                                     (`module.getDefaultPacketCount("TX")`U)
+#define ENET_SYSCFG_DEFAULT_NUM_RX_PKT                                     (`module.getDefaultPacketCount("RX")`U)
+
+void EnetAppUtils_setCommonRxFlowPrms(EnetUdma_OpenRxFlowPrms *pRxFlowPrms)
+{
+    pRxFlowPrms->numRxPkts           = ENET_SYSCFG_DEFAULT_NUM_RX_PKT;
+    pRxFlowPrms->disableCacheOpsFlag = false;
+    pRxFlowPrms->rxFlowMtu           = ENET_MEM_LARGE_POOL_PKT_SIZE;
+
+    pRxFlowPrms->ringMemAllocFxn = &EnetMem_allocRingMem;
+    pRxFlowPrms->ringMemFreeFxn  = &EnetMem_freeRingMem;
+
+    pRxFlowPrms->dmaDescAllocFxn = &EnetMem_allocDmaDesc;
+    pRxFlowPrms->dmaDescFreeFxn  = &EnetMem_freeDmaDesc;
+}
+
+void EnetAppUtils_setCommonTxChPrms(EnetUdma_OpenTxChPrms *pTxChPrms)
+{
+    pTxChPrms->numTxPkts           = ENET_SYSCFG_DEFAULT_NUM_TX_PKT;
+    pTxChPrms->disableCacheOpsFlag = false;
+
+    pTxChPrms->ringMemAllocFxn = &EnetMem_allocRingMem;
+    pTxChPrms->ringMemFreeFxn  = &EnetMem_freeRingMem;
+
+    pTxChPrms->dmaDescAllocFxn = &EnetMem_allocDmaDesc;
+    pTxChPrms->dmaDescFreeFxn  = &EnetMem_freeDmaDesc;
+}
+
+
+Udma_DrvHandle EnetApp_getUdmaInstanceHandle(void)
+{
+    Udma_DrvHandle hUdmaDrv;
+
+    hUdmaDrv = &gUdmaDrvObj[CONFIG_UDMA_PKTDMA_0];
+    return hUdmaDrv;
+}
+

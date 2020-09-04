@@ -1,0 +1,19 @@
+%%{
+    let module = system.modules['/xbar/soc_timesync_xbar1/soc_timesync_xbar1'];
+%%}
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let masterInstance = "";
+    % let masterXbar = "";
+    % if(instance.$ownedBy)
+    % {
+    %     masterInstance = instance.$ownedBy.instance;
+    %     let masterPath = instance.$ownedBy.$module.$name;
+    %     masterXbar = masterPath.substring(masterPath.lastIndexOf("/") + 1).toUpperCase();
+    % }
+    % let config = module.getInstanceConfig(instance);
+    % if( masterInstance != "" && masterInstance.search("XBAR") != -1)
+    % {
+#define `masterInstance`_INPUT   `masterXbar`_SOC_TIMESYNC_XBAR1_OUT_`config.name.replace("SOC_TIMESYNC_XBAR1_","").replace(masterXbar + "_","")`
+    % }
+% }

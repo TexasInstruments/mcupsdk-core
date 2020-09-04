@@ -1,0 +1,438 @@
+void Drivers_epwmOpen(void)
+{
+% let module = system.modules["/drivers/epwm/epwm"];
+% let Common   = system.getScript("/common");
+% let nameOfModule = "epwm";
+% let nameOfPeripheral = module.peripheralName;
+% let epwm_json_resolver = system.getScript("/drivers/epwm/v1/epwm_json_resolver.syscfg.js");
+%if (module != null)
+%{
+	% for(let i = 0; i < module.$instances.length; i++) {
+	    % let instance = module.$instances[i];
+	/* `instance.$name` initialization */
+
+	/* Time Base */
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_emulationMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_clockDiv")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_period")`
+	% if (instance["epwmTimebase_periodLink"] != "EPWM_LINK_WITH_DISABLE") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_periodLink")`
+	% }
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_periodGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_periodLoadMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_counterValue")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_counterMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_counterModeAfterSync")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_phaseEnable")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_phaseShift")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_syncOutPulseMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_syncInPulseSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_oneShotSyncOutTrigger")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_forceSyncPulse")`
+
+	/* Counter Compare */
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpAGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_enableShadowLoadModeCMPA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_shadowLoadModeCMPA")`
+	% if (instance["epwmCounterCompare_cmpALink"] != "EPWM_LINK_WITH_DISABLE") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpALink")`
+	% }
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpBGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_enableShadowLoadModeCMPB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_shadowLoadModeCMPB")`
+	% if (instance["epwmCounterCompare_cmpBLink"] != "EPWM_LINK_WITH_DISABLE") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpBLink")`
+	% }
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpC")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpCGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_enableShadowLoadModeCMPC")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_shadowLoadModeCMPC")`
+	% if (instance["epwmCounterCompare_cmpCLink"] != "EPWM_LINK_WITH_DISABLE") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpCLink")`
+	% }
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpD")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpDGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_enableShadowLoadModeCMPD")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_shadowLoadModeCMPD")`
+	% if (instance["epwmCounterCompare_cmpDLink"] != "EPWM_LINK_WITH_DISABLE") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpDLink")`
+	% }
+
+	/* Action Qualifier */
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_continousSwForceReloadModeGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_continousSwForceReloadMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_gld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_t1Source")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_t2Source")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_onetimeSwForceAction")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_continuousSwForceAction")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_gld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_shadowMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_shadowEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_onetimeSwForceAction")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_continuousSwForceAction")`
+
+	/* Events */
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_T1_COUNT_UP")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_T1_COUNT_DOWN")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_T2_COUNT_UP")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_T2_COUNT_DOWN")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_T1_COUNT_UP")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_T1_COUNT_DOWN")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_T2_COUNT_UP")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_T2_COUNT_DOWN")`
+
+	/* Trip Zone */
+    % if (!instance["epwmTripZone_useAdvancedEPWMTripZoneActions"]) {
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ACTION_EVENT_DCBEVT1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ACTION_EVENT_DCBEVT2")`
+    % }
+    % else {
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_TZB_D")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_TZB_U")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_TZA_D")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_TZA_U")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT1_U_A")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT1_D_A")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT2_U_A")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT2_D_A")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT1_U_B")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT1_D_B")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT2_U_B")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_EPWM_TZ_ADV_ACTION_EVENT_DCxEVT2_D_B")`
+    % }
+    `epwm_json_resolver.getCode(instance, instance,"epwmTripZone_useAdvancedEPWMTripZoneActions")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_oneShotSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_cbcSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_cbcPulse")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_tzInterruptSource")`
+
+	/* Digital Compare */
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_dcFilterInput")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_useBlankingWindow")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowOffset")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowLength")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_invertBlankingWindow")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_useDCCounterCapture")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_dCCounterCaptureShadow")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_useEdgeFilter")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_edgeFilterMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_edgeFilterEdgeCount")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_enableValleyCapture")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_valleyCaptureSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_startValleyCapture")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_startValleyCaptureTriggerCount")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_enableEdgeFilterDelay")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_SWVDELVAL")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_valleyDelayDivider")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCAH_combinationInputConfig")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCAH")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCAL_combinationInputConfig")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCAL")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A1")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A2")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_1_adcTrig")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_1_syncTrig")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_1_eventSync")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_1_eventSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_2_eventSync")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_2_eventSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCBH_combinationInputConfig")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCBH")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCBL_combinationInputConfig")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_TYPE_DCBL")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_B1")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_B2")`
+
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_adcTrig")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_syncTrig")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_eventSync")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_eventSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_2_eventSync")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_2_eventSource")`
+
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_1_latchMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_1_latchClearEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_2_latchMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_A_EPWM_DC_EVENT_2_latchClearEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_latchMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_latchClearEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_2_latchMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_2_latchClearEvent")`
+
+	/* Deadband */
+    `epwm_json_resolver.getCode(instance, instance,"epwmDeadband_controlShadowMode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDeadband_controlShadowLoadEvent")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_inputRED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_inputFED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_polarityRED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_polarityFED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_enableRED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_enableFED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_outputSwapOutA")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_outputSwapOutB")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_dbControlGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_redGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_redShadowMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_redShadowLoadEvent")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDeadband_delayRED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_fedGld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_fedShadowMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_fedShadowLoadEvent")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDeadband_delayFED")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDeadband_deadbandCounterClockRate")`
+
+	/* Chopper */
+	`epwm_json_resolver.getCode(instance, instance,"epwmChopper_useChopper")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmChopper_chopperDuty")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmChopper_chopperFreq")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmChopper_chopperFirstPulseWidth")`
+
+	/* Event Trigger */
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_enableInterrupt")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCount")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCountInitEnable")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCountInitValue")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCountInitForce")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEnable")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitEnable")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitValue")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitForce")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEnable")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerSource")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventPrescalar")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventCountInitEnable")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventCountInitValue")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventCountInitForce")`
+
+    /* XCMP Mode */
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP_enableMode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP_SplitCheck")`
+    % if (!instance["epwmXCMP_SplitCheck"]) {
+	`epwm_json_resolver.getCode(instance, instance,"epwmXCMP_No_Split")`
+	% }
+    % if (instance["epwmXCMP_SplitCheck"]) {
+	 `epwm_json_resolver.getCode(instance, instance,"epwmXCMP_Split_A")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP_Split_B")`
+    % }
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Loadmode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Shadowlevel")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Loadonce")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf3")`
+
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Loadmode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Shadowlevel")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Loadonce")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf3")`
+
+    /* Write values to Reg */
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP1_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP2_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP3_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP4_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP5_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP6_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP7_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP8_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP1_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP2_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP3_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP4_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP5_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP6_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP7_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP8_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP1_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP2_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP3_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP4_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP5_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP6_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP7_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP8_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP1_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP2_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP3_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP4_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP5_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP6_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP7_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXCMP8_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Shdw3")`
+
+    /* Events */
+
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP1_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP2_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP3_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP4_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP5_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP6_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP7_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP8_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP5_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP6_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP7_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP8_ACTIVE")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP1_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP2_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP3_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP4_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP5_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP6_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP7_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP8_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP5_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP6_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP7_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP8_SHADOW_1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP1_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP2_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP3_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP4_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP5_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP6_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP7_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP8_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP5_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP6_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP7_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP8_SHADOW_2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP1_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP2_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP3_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP4_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP5_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP6_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP7_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP8_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP5_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP6_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP7_SHADOW_3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP8_SHADOW_3")`
+
+    /* Diode Emulation */
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_enableMode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_selectMode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_reEntryDelay")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_TripL")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_TripH")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_PWMA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_TripSelA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_PWMB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_TripSelB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_TripEnable")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_Frc")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_TripMonitorMode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_Threshold")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_DecrementStep")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmDE_IncrementStep")`
+
+    /* HRPWM */
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_autoConv")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_controlModeA")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_controlModeB")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_tbphsHR")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_syncSource")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_phaseLoadEnable")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_edgeModeA")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_edgeModeB")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_cmpaHR")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_cmpbHR")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_HRLoadA")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_HRLoadB")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_periodEnable")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_tbprdHR")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_edgeModeDB")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_DBredHR")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_controlModeDBA")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_DBfedHR")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_controlModeDBB")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_swapDBOutputs")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_DBBOutput")`
+
+    /* ICL */
+    `epwm_json_resolver.getCode(instance, instance,"epwmICL_useICLA")`
+    % if (instance["epwmICL_useICLA"] == true) {
+    `epwm_json_resolver.getCode(instance, instance,"epwmICLA_IN3source")`
+     % for(let i = 0;i<8;i++) {
+        % let inst_name = "epwmICLA_LUTDEC_"+i;
+    `epwm_json_resolver.getCode(instance, instance,inst_name)`
+     %}
+    %}
+    `epwm_json_resolver.getCode(instance, instance,"epwmICL_useICLB")`
+    % if (instance["epwmICL_useICLB"]) {
+    `epwm_json_resolver.getCode(instance, instance,"epwmICLB_IN3source")`
+     % for(let i = 0;i<8;i++){
+        % let inst_name = "epwmICLB_LUTDEC_"+i;
+    `epwm_json_resolver.getCode(instance, instance,inst_name)`
+     %}
+    %}
+
+    /* MDL */
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_useMDLA")`
+    % if (instance["epwmMDB_useMDLA"]) {
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_refSignalMDLA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_invertMDLA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_delayMDLA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_blocksignalMDLA")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_polMDLA")`
+    %}
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_useMDLB")`
+    % if (instance["epwmMDB_useMDLB"]) {
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_refSignalMDLB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_invertMDLB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_delayMDLB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_blocksignalMDLB")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmMDB_polMDLB")`
+
+    %}
+	/* Global Load */
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_gld")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_gldMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_gldPeriod")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_enableOneShot")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_oneShotMode")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_oneShotForce")`
+	% if (instance["epwmGlobalLoad_globalePWMLoadLink"] != "EPWM_LINK_WITH_DISABLE") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmGlobalLoad_globalePWMLoadLink")`
+	% }
+
+	/* EPWM Module */
+	`epwm_json_resolver.getCode(instance, instance,"epwmLock")`
+	%}
+%}
+}

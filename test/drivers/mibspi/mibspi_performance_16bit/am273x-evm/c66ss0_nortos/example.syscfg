@@ -1,0 +1,49 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.9.0+2015","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma      = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1     = edma.addInstance();
+const mibspi    = scripting.addModule("/drivers/mibspi/mibspi", {}, false);
+const mibspi1   = mibspi.addInstance();
+const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mibspi1.$name                             = "CONFIG_MIBSPI0";
+mibspi1.iCountSupport                     = true;
+mibspi1.bitRate                           = 40000000;
+mibspi1.RCSS_MIBSPI.$assign               = "RCSS_MIBSPIA";
+mibspi1.RCSS_MIBSPI.CLK.$assign           = "ball.T18";
+mibspi1.RCSS_MIBSPI.MOSI.$assign          = "ball.R18";
+mibspi1.RCSS_MIBSPI.MISO.$assign          = "ball.R17";
+mibspi1.mibspiChannel[0].$name            = "CONFIG_MIBSPI_CH0";
+mibspi1.mibspiChannel[0].RCSS_CSn.$assign = "ball.T19";
+
+edma1.$name                        = "CONFIG_EDMA0";
+mibspi1.edmaConfig                 = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
+
+debug_log.enableUartLog               = true;
+debug_log.uartLog.$name               = "CONFIG_UART0";
+debug_log.uartLog.DSS_UART.RX.$assign = "ball.H19";
+debug_log.uartLog.DSS_UART.TX.$assign = "ball.J19";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.DSS_UART.$suggestSolution = "DSS_UARTA";

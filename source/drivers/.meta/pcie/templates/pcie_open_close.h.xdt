@@ -1,0 +1,18 @@
+
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/pcie/pcie'];
+%%}
+/*
+ * PCIe
+ */
+#include <drivers/pcie.h>
+
+/* PCIe Driver handles */
+extern Pcie_Handle gPcieHandle[CONFIG_PCIE_NUM_INSTANCES];
+
+/* PCIe Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_pcieOpen(void);
+void Drivers_pcieClose(void);
