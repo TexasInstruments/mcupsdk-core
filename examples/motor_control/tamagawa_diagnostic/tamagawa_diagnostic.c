@@ -1,7 +1,7 @@
 /**
- * tamagawa_app.c
+ * tamagawa_diagnostic.c
  *
- * Copyright (c) 2017, Texas Instruments Incorporated
+ * Copyright (c) 2022, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,255 +49,247 @@
 #include <drivers/pinmux.h>
 #include <drivers/hw_include/hw_types.h>
 #include "ti_drivers_open_close.h"
+#include "ti_drivers_config.h"
 #include "ti_board_open_close.h"
+#include <motor_control/position_sense/tamagawa/include/tamagawa_drv.h>
+#if ((CONFIG_TAMAGAWA0_CHANNEL0 + CONFIG_TAMAGAWA0_CHANNEL1 + CONFIG_TAMAGAWA0_CHANNEL2) == 1)
+#include <motor_control/position_sense/tamagawa/firmware/tamagawa_master_single_channel_bin.h>
+#endif
+#if ((CONFIG_TAMAGAWA0_CHANNEL0 + CONFIG_TAMAGAWA0_CHANNEL1 + CONFIG_TAMAGAWA0_CHANNEL2) > 1)
+#include <motor_control/position_sense/tamagawa/firmware/tamagawa_master_multi_channel_bin.h>
+#endif
 
-#include <motor_control/position_sense/tamagawa/firmware/tamagawa_interface.h>
-#include <motor_control/position_sense/tamagawa/firmware/tamagawa_receiver_bin.h>
+static uint8_t gTamagawa_multi_ch_mask;
+static uint32_t gTamagawa_is_multi_ch;
+struct tamagawa_priv *priv;
 
-#include <board/ioexp/ioexp_tca6424.h>
-
-static TCA6424_Config  gTCA6424_Config;
-
-#define PRUICSS_PRUx  PRUICSS_PRU1
-
-static void tamagawa_i2c_io_expander(void *args)
-{
-    int32_t             status = SystemP_SUCCESS;
-    /* P20 = LED 3 bits, pin, 2 bits port.*/
-    uint32_t            ioIndex = 0x10;
-    TCA6424_Params      tca6424Params;
-
-    TCA6424_Params_init(&tca6424Params);
-
-    status = TCA6424_open(&gTCA6424_Config, &tca6424Params);
-
-    if(status == SystemP_SUCCESS)
-    {
-        /* Set output to HIGH before config so that LED start with On state */
-        status = TCA6424_setOutput(
-                     &gTCA6424_Config,
-                     ioIndex,
-                     TCA6424_OUT_STATE_HIGH);
-
-        /* Configure as output  */
-        status += TCA6424_config(
-                      &gTCA6424_Config,
-                      ioIndex,
-                      TCA6424_MODE_OUTPUT);
-        /* set P12 high which controls CPSW_FET_SEL -> enable PRU1 and PRU0 GPIOs */
-        ioIndex = 0x0a;
-        status = TCA6424_setOutput(
-                     &gTCA6424_Config,
-                     ioIndex,
-                     TCA6424_OUT_STATE_HIGH);
-
-        /* Configure as output  */
-        status += TCA6424_config(
-                      &gTCA6424_Config,
-                      ioIndex,
-                      TCA6424_MODE_OUTPUT);
-
-
-    }
-    TCA6424_close(&gTCA6424_Config);
-}
-
-/** \brief Global Structure pointer holding PRUSS1 memory Map. */
-PRUICSS_Handle gPruIcss0Handle;
-
+/** \brief Global Structure pointer holding PRU-ICSSx memory Map. */
+PRUICSS_Handle gPruIcssXHandle;
 void *gPru_dramx;
 
-void tamagawa_pruss_init(void)
+void tamagawa_pruicss_init(void)
 {
-    gPruIcss0Handle = PRUICSS_open(CONFIG_PRU_ICSS0);
-
-    /* Set in constant table C30 to shared RAM 0x40300000 */
-    PRUICSS_setConstantTblEntry(gPruIcss0Handle, PRUICSS_PRUx, PRUICSS_CONST_TBL_ENTRY_C30, ((0x40300000 & 0x00FFFF00) >> 8));
-
-    /* clear ICSS0 PRU1 data RAM */
-    PRUICSS_initMemory(gPruIcss0Handle, PRUICSS_DATARAM(PRUICSS_PRUx));
-    gPru_dramx = (void *)((((PRUICSS_HwAttrs *)(gPruIcss0Handle->hwAttrs))->baseAddr) + PRUICSS_DATARAM(PRUICSS_PRUx));
-
-    PRUICSS_disableCore(gPruIcss0Handle, PRUICSS_PRUx);
+    gPruIcssXHandle = PRUICSS_open(CONFIG_PRU_ICSS0);
+    /* PRUICSS_PRUx holds value 0 or 1 depending on whether we are using PRU0 or PRU1 slice */
+    PRUICSS_initMemory(gPruIcssXHandle, PRUICSS_DATARAM(PRUICSS_PRUx));
+    PRUICSS_disableCore(gPruIcssXHandle, PRUICSS_PRUx);
+    PRUICSS_setSaMuxMode(gPruIcssXHandle, PRUICSS_SA_MUX_MODE_SD_ENDAT);
 }
 
-void tamagawa_pruss_load_run_fw(void)
+void tamagawa_pruicss_load_run_fw(void)
 {
-    PRUICSS_disableCore(gPruIcss0Handle, PRUICSS_PRUx);
-
+    PRUICSS_disableCore(gPruIcssXHandle, PRUICSS_PRUx);
     /*Load firmware. Set buffer = write to Pru memory */
-
-    PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx),
-                        0, (uint32_t *) TamagawaFirmware,
-                        sizeof(TamagawaFirmware));
-
-
-    PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);
+    PRUICSS_writeMemory(gPruIcssXHandle, PRUICSS_IRAM_PRU(PRUICSS_PRUx),0, (uint32_t *) TamagawaFirmware,sizeof(TamagawaFirmware));
+    PRUICSS_resetCore(gPruIcssXHandle, PRUICSS_PRUx);
     /*Run firmware */
-    PRUICSS_enableCore(gPruIcss0Handle, PRUICSS_PRUx);
+    PRUICSS_enableCore(gPruIcssXHandle, PRUICSS_PRUx);
 }
 
-static void tamagawa_display_result(volatile struct TamagawaInterface *p)
+void tamagawa_display_result(struct tamagawa_priv *priv, int32_t cmd)
 {
-    switch(p->data_id)
+    /* Prints the position value returned by the encoder for a particular command ID */
+    switch(cmd)
     {
-        case DATA_ID_0:
         case DATA_ID_7:
+            /* Reset */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nABS: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abs, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
+            break;
+
         case DATA_ID_8:
+            /* Reset */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nABS: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abs, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
+            break;
+
         case DATA_ID_C:
-            DebugP_log("\r| ");
-            DebugP_log("ABS: 0x%x\t", p->rx.abs);
-            DebugP_log("SF: 0x%x\t", p->rx.sf);
-            DebugP_logInfo("CF: 0x%x\t", p->rx.cf);
-            DebugP_logInfo("CRC: 0x%x\t", p->rx.crc);
-            DebugP_log("\n");
+            /* Reset */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nABS: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abs, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
+            break;
+
+        case DATA_ID_0:
+            /* Data readout: data in one revolution */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nABS: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abs, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
             break;
 
         case DATA_ID_1:
-            DebugP_log("\r| ");
-            DebugP_log("ABM: 0x%x\t", p->rx.abm);
-            DebugP_log("SF: 0x%x\t", p->rx.sf);
-            DebugP_logInfo("CF: 0x%x\t", p->rx.cf);
-            DebugP_logInfo("CRC: 0x%x\t", p->rx.crc);
-            DebugP_log("\n");
+            /* Data readout: multi-turn data */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nABM: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abm, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
             break;
 
         case DATA_ID_2:
-            DebugP_log("\r| ");
-            DebugP_log("ENID: 0x%x\t", p->rx.enid);
-            DebugP_log("SF: 0x%x\t", p->rx.sf);
-            DebugP_logInfo("CF: 0x%x\t", p->rx.cf);
-            DebugP_logInfo("CRC: 0x%x\t", p->rx.crc);
-            DebugP_log("\n");
+            /*  Data readout: encoder ID */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nENID: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.enid, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
             break;
 
         case DATA_ID_3:
-            DebugP_log("\r| ");
-            DebugP_log("ABS: 0x%x\t", p->rx.abs);
-            DebugP_log("ENID: 0x%x\t", p->rx.enid);
-            DebugP_log("ABM: 0x%x\t", p->rx.abm);
-            DebugP_log("ALMC: 0x%x\t", p->rx.almc);
-            DebugP_log("SF: 0x%x\t", p->rx.sf);
-            DebugP_logInfo("CF: 0x%x\t", p->rx.cf);
-            DebugP_logInfo("CRC: 0x%x\t", p->rx.crc);
-            DebugP_log("\n");
+            /* Data readout: data in one revolution, encoder ID, multi-turn, encoder error */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nABS: 0x%x\tENID: 0x%x\tABM: 0x%x\tALMC: 0x%x\tSF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abs, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.enid, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.abm, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.almc, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.sf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
             break;
 
         case DATA_ID_6:
-            DebugP_logInfo("\r| ");
-            DebugP_logInfo("ADF: 0x%x\t", p->rx.adf);
-            DebugP_logInfo("CF: 0x%x\t", p->rx.cf);
-            DebugP_logInfo("CRC: 0x%x\t", p->rx.crc);
-            DebugP_logInfo("\n");
+            /* EEPROM Write */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nEDF: 0x%x\tADF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.edf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.adf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
             break;
 
         case DATA_ID_D:
-            DebugP_log("\r| ");
-            DebugP_log("EDF: 0x%x\t", p->rx.edf);
-            DebugP_logInfo("ADF: 0x%x\t", p->rx.adf);
-            DebugP_logInfo("CF: 0x%x\t", p->rx.cf);
-            DebugP_logInfo("CRC: 0x%x\t", p->rx.crc);
-            DebugP_log("\n");
+            /* EEPROM Read */
+            DebugP_log("\r\n| ");
+            DebugP_log("\r\nEDF: 0x%x\tADF: 0x%x\tCF: 0x%x\tCRC: 0x%x\t\n", priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.edf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.adf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.cf, priv->tamagawa_xchg->tamagawa_interface.rx_frames_received.crc);
             break;
 
         default:
-            DebugP_log("\r| ERROR: unknown Data ID\n");
+            DebugP_log("\r\n| ERROR: unknown Data ID\n");
             break;
     }
+}
+
+
+static void tamagawa_handle_rx(struct tamagawa_priv *priv, int32_t cmd)
+{
+    DebugP_log("\r\n Parsing process started\n");
+    /* Case of parsing failure */
+    if (tamagawa_parse(cmd, priv) == -1)
+    {
+        DebugP_log("\r\n ERROR: Parsing failure\n");
+        return;
+    }
+    /* Case of successful parsing, display the results after CRC check*/
+    DebugP_log("\r\n Channel is  is %x \n",priv->channel);
+    DebugP_log("\r\n data id is %x \n",cmd);
+    if (tamagawa_crc_verify(priv) == 1)
+    {
+        DebugP_log("\r\n CRC success \n");
+        tamagawa_display_result(priv, cmd);
+        return;
+    }
+    else
+    {
+        DebugP_log("\r\n CRC Failure \n");
+    }
+
+    return;
 }
 
 static enum data_id tamagawa_get_command(uint8_t *adf, uint8_t *edf)
 {
-    int cmd;
-#ifdef ENABLE_TAMAGAWA_EEPROM_OPS
-    int val;
-#endif
-
+    int32_t cmd;
+    uint32_t val;
+    /* Check to make sure that the command issued is correct */
     if(DebugP_scanf("%d\n", &cmd) < 0)
     {
         cmd = DATA_ID_0;
-        DebugP_log("\r| WARNING: invalid Data ID, Data readout Data ID 0 will be sent\n");
+        DebugP_log("\r\n| WARNING: invalid Data ID, Data readout Data ID 0 will be sent\n");
     }
-
+    /* Check to make sure that the command issued is correct */
     if(cmd >= DATA_ID_NUM)
     {
         cmd = DATA_ID_0;
-        DebugP_log("\r| WARNING: invalid Data ID, Data readout Data ID 0 will be sent\n");
+        DebugP_log("\r\n| WARNING: invalid Data ID, Data readout Data ID 0 will be sent\n");
     }
-
-#ifdef ENABLE_TAMAGAWA_EEPROM_OPS
+    /* In case of EEPROM commands, take input for Address field for different channels selected*/
     if((cmd == DATA_ID_D) || (cmd == DATA_ID_6))
     {
-        DebugP_log("\r| enter EEPROM address (hex value): ");
-
-        if(DebugP_scanf("%x\n", &val) < 0)
+        uint32_t ch = 0;
+        for(ch = 0 ; ch < MAX_CHANNELS ; ch++)
         {
-            cmd = DATA_ID_NUM;
-            DebugP_log("\r| ERROR: invalid EEPROM address\n|\n");
-        }
+            if(gTamagawa_multi_ch_mask & 1 << ch)
+            {
+                if(gTamagawa_is_multi_ch != 1)
+                {
+                    DebugP_log("\r\n| Enter EEPROM address (hex value) : ");
+                }
+                else
+                {
+                    DebugP_log("\r\n| Enter EEPROM address (hex value) for ch %d : ", ch);
+                }
+                if(DebugP_scanf("%x\n", &val) < 0)
+                {
+                    cmd = DATA_ID_NUM;
+                    DebugP_log("\r\n| ERROR: invalid EEPROM address\n|\n");
+                    break;
+                }
 
-        if(val > 126)
-        {
-            cmd = DATA_ID_NUM;
-            DebugP_log("\r| ERROR: invalid EEPROM address\n|\n");
-        }
+                if(val > MAX_EEPROM_ADDRESS)
+                {
+                    cmd = DATA_ID_NUM;
+                    DebugP_log("\r\n| ERROR: invalid EEPROM address\n|\n");
+                    break;
+                }
 
-        *adf = (uint8_t)val;
+                *adf = (uint8_t)val;
+                tamagawa_update_adf(priv, val, ch);
+            }
+        }
     }
-
+    /* In case of EEPROM Write, take input for Address field for different channels selected*/
     if(cmd == DATA_ID_6)
     {
-        DebugP_log("\r| enter EEPROM data (hex value): ");
-
-        if(DebugP_scanf("%x\n", &val) < 0)
+        uint32_t ch = 0;
+        for(ch = 0 ; ch < MAX_CHANNELS ; ch++)
         {
-            cmd = DATA_ID_NUM;
-            DebugP_log("\r| ERROR: invalid EEPROM address\n|\n");
+            if(gTamagawa_multi_ch_mask & 1 << ch)
+            {
+                if(gTamagawa_is_multi_ch != 1)
+                {
+                    DebugP_log("\r\n| Enter EEPROM data (hex value) : ");
+                }
+                else
+                {
+                    DebugP_log("\r\n| Enter EEPROM data (hex value) for ch %d : ", ch);
+                }
+                if(DebugP_scanf("%x\n", &val) < 0)
+                {
+                    cmd = DATA_ID_NUM;
+                    DebugP_log("\r\n| ERROR: invalid EEPROM data\n|\n");
+                    break;
+                }
+
+                if(val > MAX_EEPROM_WRITE_DATA)
+                {
+                    cmd = DATA_ID_NUM;
+                    DebugP_log("\r\n| ERROR: invalid EEPROM data\n|\n");
+                    break;
+                }
+
+                *edf = (uint8_t)val;
+                tamagawa_update_edf(priv, val, ch);
+            }
         }
-
-        if(val > 255)
-        {
-            cmd = DATA_ID_NUM;
-            DebugP_log("\r| ERROR: invalid EEPROM address\n|\n");
-        }
-
-        *edf = (uint8_t)val;
     }
-#else
-    if((cmd == DATA_ID_D) || (cmd == DATA_ID_6))
-    {
-        cmd = DATA_ID_0;
-        DebugP_log("\r| WARNING: unsupported Data ID, Data readout Data ID 0 will be sent\n");
-    }
-#endif
-
     return cmd;
 }
 
 static void tamagawa_display_menu(void)
 {
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r|                             Select DATA ID Code                              |\n");
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r| 0 : Data readout, Absolute (Data ID 0)                                       |\n");
-    DebugP_log("\r| 1 : Data readout, Multi-turn (Data ID 1)                                     |\n");
-    DebugP_log("\r| 2 : Data readout, Encoder-ID (Data ID 2)                                     |\n");
-    DebugP_log("\r| 3 : Data readout, Absolute & Multi-turn (Data ID 3)                          |\n");
+    DebugP_log("\r\n|------------------------------------------------------------------------------|");
+    DebugP_log("\r\n|                             Select DATA ID Code                              |");
+    DebugP_log("\r\n|------------------------------------------------------------------------------|");
+    DebugP_log("\r\n| 0 : Data readout, Absolute (Data ID 0)                                       |");
+    DebugP_log("\r\n| 1 : Data readout, Multi-turn (Data ID 1)                                     |");
+    DebugP_log("\r\n| 2 : Data readout, Encoder-ID (Data ID 2)                                     |");
+    DebugP_log("\r\n| 3 : Data readout, Absolute & Multi-turn (Data ID 3)                          |");
+    DebugP_log("\r\n| 4 : Writing to EEPROM (Data ID 6)                                            |");
+    DebugP_log("\r\n| 5 : Reset (Data ID 7)                                                        |");
+    DebugP_log("\r\n| 6 : Reset (Data ID 8)                                                        |");
+    DebugP_log("\r\n| 7 : Reset (Data ID C)                                                        |");
+    DebugP_log("\r\n| 8 : Readout from EEPROM (Data ID D)                                          |");
+    DebugP_log("\r\n|------------------------------------------------------------------------------|\n|\n");
+    DebugP_log("\r\n| enter value: ");
+}
 
-#ifdef ENABLE_TAMAGAWA_EEPROM_OPS
-    DebugP_log("\r| 4 : Writing to EEPROM (Data ID 6)                                            |\n");
-#endif
 
-    DebugP_log("\r| 5 : Reset (Data ID 7)                                                        |\n");
-    DebugP_log("\r| 6 : Reset (Data ID 8)                                                        |\n");
-    DebugP_log("\r| 7 : Reset (Data ID C)                                                        |\n");
-
-#ifdef ENABLE_TAMAGAWA_EEPROM_OPS
-    DebugP_log("\r| 8 : Readout from EEPROM (Data ID D)                                          |\n");
-#endif
-
-    DebugP_log("\r|------------------------------------------------------------------------------|\n|\n");
-    DebugP_log("\r| enter value: ");
+uint32_t tamagawa_get_fw_version(void)
+{
+    /* Returns the firmware version, depending on Single or Multi-channel configuration */
+    return *((uint32_t *)TamagawaFirmware + 1);
 }
 
 
@@ -307,27 +299,83 @@ void tamagawa_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    /* Configure g_mux_en to 0 in ICSSG_SA_MX_REG Register. */
-     HW_WR_REG32((CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE+0x40), (0x00));
-     /* Configure IO Expander to get PRU GPIO's on HSEC */
-     tamagawa_i2c_io_expander(NULL);
+    void *pruicss_cfg;
+    uint32_t slice_value = 1;
+    uint32_t selected_ch;
 
-    tamagawa_pruss_init();
+    tamagawa_pruicss_init();
 
-    DebugP_log("\n\nTamagawa pruss init done");
+    pruicss_cfg = (void *)(((PRUICSS_HwAttrs *)(gPruIcssXHandle->hwAttrs))->cfgRegBase);
 
-    tamagawa_pruss_load_run_fw();
+    if(PRUICSS_PRUx == 0)
+    {
+        slice_value = 0;
+    }
 
-    DebugP_log("\r\nTamagawa pruss firmware loaded and running");
+    /* Initialize the priv structure according to the PRUx slice selected */
+    priv = tamagawa_init((struct tamagawa_xchg *)((PRUICSS_HwAttrs *)(
+                          gPruIcssXHandle->hwAttrs))->pru1DramBase, pruicss_cfg, slice_value);
 
-    DebugP_log("\r\n\n");
+
+    tamagawa_set_baudrate(priv, CONFIG_TAMAGAWA0_BAUDRATE);
+
+    DebugP_log("\r\n\nTamagawa PRU-ICSS init done\n\n");
+
+    /* Set the value of gTamagawa_multi_ch_mask based on the channels selected */
+    gTamagawa_multi_ch_mask = (CONFIG_TAMAGAWA0_CHANNEL0<<0|CONFIG_TAMAGAWA0_CHANNEL1<<1|CONFIG_TAMAGAWA0_CHANNEL2<<2);
+
+    if (CONFIG_TAMAGAWA0_CHANNEL0 + CONFIG_TAMAGAWA0_CHANNEL1 + CONFIG_TAMAGAWA0_CHANNEL2 > 1)
+    {
+        gTamagawa_is_multi_ch = 1;
+    }
+
+    if(gTamagawa_is_multi_ch)
+    {
+        tamagawa_config_multi_channel_mask(priv, gTamagawa_multi_ch_mask);
+    }
+
+    else
+    {
+        if (CONFIG_TAMAGAWA0_CHANNEL0 == 1)
+        {
+            selected_ch = 0;
+        }
+
+        if (CONFIG_TAMAGAWA0_CHANNEL1 == 1)
+        {
+            selected_ch = 1;
+        }
+
+        if (CONFIG_TAMAGAWA0_CHANNEL2 == 1)
+        {
+            selected_ch = 2;
+        }
+        tamagawa_config_channel(priv, selected_ch);
+    }
+
+    uint32_t firmware_ver;
+    firmware_ver = tamagawa_get_fw_version();
+
+    DebugP_log("\r\nTamagawa firmware \t: %x.%x.%x (%s)\n\n", (firmware_ver >> 24) & 0x7F,
+                (firmware_ver >> 16) & 0xFF, firmware_ver & 0xFFFF, firmware_ver & (1 << 31) ? "internal" : "release");
+
+    DebugP_log("\r\nChannel(s) selected: %s %s %s \n\n\n",
+                gTamagawa_multi_ch_mask & TAMAGAWA_MULTI_CH0 ? "0" : "",
+                gTamagawa_multi_ch_mask & TAMAGAWA_MULTI_CH1 ? "1" : "",
+                gTamagawa_multi_ch_mask & TAMAGAWA_MULTI_CH2 ? "2" : "");
+
+    /*Updating the channel mask in interface*/
+    priv->tamagawa_xchg->tamagawa_interface.ch_mask =gTamagawa_multi_ch_mask;
+
+    tamagawa_config_host_trigger(priv);
+
+    tamagawa_pruicss_load_run_fw();
+    DebugP_log("\r\nTamagawa PRU-ICSS firmware loaded and running\n\n\n");
 
     while(1)
     {
-        volatile struct TamagawaInterface *p = gPru_dramx;
         /*
-         * initialized to zero as compiler unable to detect that the
-         * variable will not be used uninitialized, giving a warning
+         * Initialized to zero to remove the compiler warning about the variable being uninitialized.
          */
         uint8_t adf = 0, edf = 0;
         enum data_id cmd;
@@ -340,38 +388,46 @@ void tamagawa_main(void *args)
             continue;
         }
 
-        p->data_id = cmd;
+        tamagawa_update_data_id(priv, cmd);
 
+        /* In case of EEPROM commands, calculate the CRC for the different channels selected */
         if((cmd == DATA_ID_6) || (cmd == DATA_ID_D))
         {
-            p->tx.adf = adf;
+            uint32_t ch = 0;
+            for(ch = 0 ; ch < MAX_CHANNELS ; ch++)
+            {
+                if(gTamagawa_multi_ch_mask & 1 << ch)
+                {
+                    tamagawa_update_crc(priv, cmd, ch);
+                }
+            }
+
         }
 
-        if(cmd == DATA_ID_6)
+        tamagawa_command_process(priv, cmd, gTamagawa_multi_ch_mask);
+
+        if(gTamagawa_is_multi_ch)
         {
-            p->tx.edf = edf;
+            DebugP_log("\r\n Multi-channel mode is enabled\n\n");
+
+            uint32_t ch;
+            for(ch = 0; ch < MAX_CHANNELS; ch++)
+            {
+                if(gTamagawa_multi_ch_mask & 1 << ch)
+                {
+                    tamagawa_multi_channel_set_cur(priv, ch);
+                    DebugP_log("\r\n\r|\n|\t\t\t\tCHANNEL %d\n", ch);
+                    tamagawa_handle_rx(priv, cmd);
+                }
+            }
         }
-
-        p->config |= CONFIG_CMD_PROCESS;
-
-        while(p->config & CONFIG_CMD_PROCESS)
-            ;
-
-        DebugP_log("\r|\n");
-
-        if(p->config & CONFIG_CMD_STATUS)
-        {
-            tamagawa_display_result(p);
-        }
-
         else
         {
-            DebugP_log("ERROR: CRC failure\n");
+            DebugP_log("\r\n Single-channel mode is enabled\n\n");
+            tamagawa_handle_rx(priv, cmd);
         }
 
-        DebugP_log("\r|\n\r|\n");
-    }
-
+}
     Board_driversClose();
     Drivers_close();
 }

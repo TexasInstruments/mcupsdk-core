@@ -4,9 +4,9 @@
 
 ## Introduction
 
-This document presents the firmware implementation details of the Tamagawa encoder on the AM64x/AM243x EVM.
+This document presents the firmware implementation details of the Tamagawa receiver protocol.
 
-## Tamagawa Encoder
+## Tamagawa encoder receiver
 
 It is an encoder technology used for obtaining high-precision position information in machine tools, robotics, and so forth. Tamagawa rotary encoders consist broadly of two types: incremental or absolute. Incremental encoders provide a train of pulses, while the absolute-type provides digital values. The absolute encoder group contains the single-turn types that provide outputs which can be open collector or emitter follower. The absolute encoder types include the pure digital encoder types, which provide a digital word output through a line driver such as an RS485, or a semi-absolute encoder, which provides both digital word and pulse train outputs. Of the RS485 line-driver output absolute encoders that provide only digital output, another classification is the full absolute encoder. A full absolute encoder provides multi-turn digital data, which is known as SmartAbs, and is compatible with the Tamagawa Smartceiver AU5561N1. Another type of encoders, known as SmartInc, provide single-turn information in digital format with an RS485 line driver output. The AM64x/AM243x Tamagawa receiver implementation is equivalent to the Smartceiver AU5561N1, which can communicate with Tamagawa SmartAbs as well as SmartInc encoders.
 
@@ -26,27 +26,35 @@ Refer PRU-ICSS chapter of AM64x/AM243x Technical Reference Manual
 
 ## Software Description
 
-At start-up, the application running on the ARM Cortex-A9 initializes the module clocks and configures the pinmux. The PRU is initialized and the PRU firmware is loaded on PRU0 of PRU-ICSS0. After the PRU0 starts executing, the Tamagawa interface is operational and the application can use it to communicate with an encoder. Use the Tamagawa diagnostic example in the PRU-ICSS-INDUSTRIAL-DRIVES package to learn more about initialization and communication with the Tamagawa interface. This Tamagawa diagnostic example in the PRU-ICSS-INDUSTRIAL-DRIVES package (available at the path "examples/tamagawa_diagnostic" in the installed directory), also provides an easy way to validate the Tamagawa transactions. The diagnostic example provides menu options on the host PC in a serial terminal application (like TeraTerm), where the user can select the data ID code to be sent. Based on the data ID code, the application updates the Tamagwa interface with the data ID code and trigger transaction. The application then waits until it receives an indication of complete transaction by the firmware through the interface before displaying the result
+At start-up, the application running on the ARM Cortex-R5 initializes the module clocks and configures the pinmux. The PRU is initialized and the PRU firmware is loaded on PRU slice of choice for a chosen ICSS instance (tested on PRU1 on ICSSG0). After the PRU1 starts executing, the Tamagawa interface is operational and the application can use it to communicate with an encoder. Use the Tamagawa diagnostic example to learn more about initialization and communication with the Tamagawa interface. This Tamagawa diagnostic example (available at the path "examples/motor_control/tamagawa_diagnostic" in the directory where MCU PLUS SDK is installed), also provides an easy way to validate the Tamagawa transactions. The diagnostic example provides menu options on the host PC in a serial terminal application, where the user can select the data ID code to be sent. Based on the data ID code, the application updates the Tamagwa interface with the data ID code and trigger transaction. The application then waits until it receives an indication of complete transaction by the firmware through the interface before displaying the result.
 
 ### PRU Firmware Design
 The firmware first initializes the PRU hardware, after which it waits until a command has been triggered through the interface. Upon triggering, the transmit data is set up based on the data ID code and the data is transmitted. The data ID code then waits until receiving all the data that depends on the data ID. The parsing over the received data then commences, which is again based on the data ID, and the interface is updated with the result. The CRC verification occurs next and the interface indicates command completion. The firmware then waits for the next command trigger from the interface.
 
-\image html Tamagawa_flow_chart.png "Overview Flow Chart"
+\image html Tamagawa_flowchart.JPG "Overview Flow Chart"
 
 ### Initialization
-The ARM application (Tamagawa diagnostic from PRU-ICSS-INDUSTRIAL-DRIVES package) performs SoC-specific initializations like pinmux, module clock enabling , and PRU-ICSS initialization before executing the PRU firmware. After enabling the open core protocol (OCP) main ports, the transmit is disabled (a GPO is used to enable and disable transmit). Set up the UART for a 2.5-Mbps baud rate by setting the divisors appropriately. First-in-first-out (FIFO) control is enabled and the transmit and receive FIFO are cleared as well. The next step is setting the protocol for 8-bit data, 1 stop bit, and no parity.
+PRU is set to EnDat mode first. The entire EnDat configuration MMR’s are cleared(CFG registers). Tx global reinit bit in R31 is set to put all channels in default mode. The clock source is selected (ICSSG clock is selected with 200MHZ frequency). In Tx mode, the output data is read from the Tx FIFO at this 1x clock rate. In Rx mode, the input data is sampled at the Oversampling (OS) clock rate. Hence, Tx clock(1x clock) and Rx clock(Oversampling (OS) clock) are setup by selecting oversampling factor(x8). At the end of the initialization status is updated and wait until trigger from user occurs for tamagawa commands.
 
-\image html Tamagawa_initialization_flow_chart.png "Initialization Flow Chart"
+\image html Tamagawa_initialization_flow_chart.JPG "Initialization Flow Chart"
 
 ### Setup Transmit Data
-The transmit and receive sizes are determined based on the data ID in the interface. Then copy the transmit data from the interface to the local buffer
+The transmit and receive sizes are determined based on the data ID in the interface.
 
 \image html Tamagawa_setup_tx_data.png "Setup Transmit Data Flow Chart"
 
 ### Transmit and Receive
-The GPO initially enables the transmit. Write one byte at the beginning of the buffer from the local transmit buffer that has the data to be transmitted. The firmware then waits until the transmitted data returns (note that the receive is always enabled, so transmitted data always reflects back). The firmware then copies the reflected data to the receive buffer from the receive FIFO and continues until all of the data has been transmitted, after which it disables transmit. At this point, the encoder starts sending the data and the firmware copies the receive FIFO contents onto the receive buffer, individually, until all the data has been received.
+In the current implementation, the Transmit data is loaded into the Tx FIFO byte wise. For data readout and reset commands, the requirement is to send 1 frame of 10 bits. So, 2 bytes of data is first loaded into the Tx FIFO and Tx frame size is set to 10 bits to send right data to Encoder. Similarly, for EEPROM Read command, the requirement is to send 3 frames of 10 bits each, so 30 bits in total. For this, 4 byes of data is first loaded into the Tx FIFO and then Tx frame size is set to 30 bits to send right data to Encoder. This is done by using the Tx - Single Shot mode.
 
-\image html Tamagawa_tx_rx_flow_chart.png "Transmit and Receive Flow Chart"
+\image html Tamagawa_tx_flow_chart.png "Transmit Flow Chart for data readout, reset and EEPROM Read commands"
+
+In case of EEPROM Write command, the requirement is to send 4 frames of 10 bits each - 40 bits in total. For this, 4 bytes of data is first loaded into the Tx FIFO and then transmission is started in Tx - Continuous FIFO loading mode. FIFO byte level is constantly monitored and the FIFO is reloaded with the last byte when the FIFO level reaches 3 bytes.
+
+\image html Tamagawa_eeprom_write_flow_chart.png "Transmit Flow Chart for EEPROM Write command"
+
+Once the Transmission is complete, the encoder starts sending the data and the firmware copies the receive FIFO contents onto the receive buffer, individually, until all the data has been received.
+
+\image html Tamagawa_rx_flow_chart.png "Receive Flow Chart"
 
 ### Receive Data Parse
 Depending on the data ID used for initiating the transfer, the firmware parses the received data and copies it onto relevant fields in the interface, accordingly.

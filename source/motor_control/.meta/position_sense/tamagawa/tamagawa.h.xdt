@@ -1,0 +1,36 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+/*
+ * Tamagawa
+ */
+
+/* Tamagawa Instance Macros */
+#define CONFIG_TAMAGAWA_NUM_INSTANCES               `module.$instances.length`
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let sliceVal = 1;
+    % let icssValue = 0;
+    % if(instance.instance === "ICSSG0")
+    % {
+        % if(instance.PRU_ICSSG0_PRU.$assign === "PRU_ICSSG0_PRU0")
+        % {
+            % sliceVal = 0;
+        % }
+    % }
+    % else if(instance.instance === "ICSSG1")
+    % {
+        % icssValue = 1;
+        % if(instance.PRU_ICSSG1_PRU.$assign === "PRU_ICSSG1_PRU0")
+        % {
+            % sliceVal = 0;
+        % }
+    % }
+#define `instance.$name`                  (`i`)
+#define `instance.$name`_CHANNEL0         (`instance.channel_0 & 1`)
+#define `instance.$name`_CHANNEL1         (`instance.channel_1 & 1`)
+#define `instance.$name`_CHANNEL2         (`instance.channel_2 & 1`)
+#define `instance.$name`_BAUDRATE         (`instance.baudrate`)
+#define PRUICSS_PRUx                      (`sliceVal`)
+#define PRUICSSx                          (`icssValue`)
+% }

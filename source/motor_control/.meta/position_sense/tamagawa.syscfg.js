@@ -1,92 +1,36 @@
 
 let common = system.getScript("/common");
-let pinmux = system.getScript("/drivers/pinmux/pinmux");
+let tamagawa_pins = system.getScript("/motor_control/position_sense/tamagawa_pins.js");
+let device = common.getDeviceName();
+let is_am243x_lp_device = (device === "am243x-lp") ? true : false;
+
 let tamagawa_module_name = "/motor_control/position_sense/tamagawa";
-let soc = system.getScript(`/drivers/pruicss/soc/pruicss_${common.getSocName()}`);
 
-function getConfigArr() {
-    return soc.getConfigArr();
-}
-
-function getInterfaceName(inst, peripheralName)
-{
-    return `PRU_${inst.instance}_${peripheralName}`;
-}
-
-function getInterfacePinList(inst, peripheralName)
-{
-    let interfaceName = getInterfaceName(inst, peripheralName);
-    let pinList = [];
- 
-    pinList = pinmux.getInterfacePinList(interfaceName);
-
-
-    return pinList;
-}
-
-function getPeripheralRequirements(inst, peripheralName)
-{
-    let interfaceName = getInterfaceName(inst, peripheralName);
-    let pinList = getInterfacePinList(inst, peripheralName);
-    let resources = [];
-    let device = common.getDeviceName();
-
-    for(let pin of pinList)
+function onValidate(inst, validation) {
+    for (let instance_index in inst.$module.$instances)
     {
-        let pinResource = pinmux.getPinRequirements(interfaceName, pin);
+       let instance = inst.$module.$instances[instance_index];
+        if ((!instance.channel_0)&&(!instance.channel_1)&&(!instance.channel_2))
+            validation.logError(
+               "Select atleast one channel",inst,"channel_0"
+        );
 
-        /* make all pins as "rx" and then override to make "rx" as false as needed  */
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
-
-        /* Disable all the pins. */
-        pinResource.used=false;
-        
-        resources.push( pinResource );
+        if(is_am243x_lp_device && (instance.channel_1 || instance.channel_2))
+            validation.logError(
+                "On AM243x-LP, only Channel 0 is supported",inst,"channel_0"
+        );
     }
-
-    let peripheralRequirements = {
-        name: interfaceName,
-        displayName: interfaceName,
-        interfaceName: interfaceName,
-        resources: resources,
-    };
-
-    return peripheralRequirements;
-}
-
-function pinmuxRequirements(inst) {
-    
-    let uart = getPeripheralRequirements(inst, "UART");    
-
-    /* set default values for "rx" for different pins, based on use case */
-    pinmux.setPeripheralPinConfigurableDefault( uart, "CTSn", "rx", true);
-    pinmux.setPeripheralPinConfigurableDefault( uart, "RTSn", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( uart, "RXD", "rx", true);
-    pinmux.setPeripheralPinConfigurableDefault( uart, "TXD", "rx", false);   
-
-    return [uart];
-}
-
-function getInterfaceNameList(inst) {
-
-    return [        
-        getInterfaceName(inst, "UART"),
-    ];
-}
-
-function getPeripheralPinNames(inst)
-{
-    let pinList = [];
-
-    pinList = pinList.concat( getInterfacePinList(inst, "UART"),
-    );
-    return pinList;
 }
 
 let tamagawa_module = {
 
     displayName: "Tamagawa Position Encoder",
     templates: {
+        "/drivers/system/system_config.h.xdt": {
+            driver_config: "/motor_control/position_sense/tamagawa/tamagawa.h.xdt",
+            moduleName: tamagawa_module_name,
+        },
+
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: tamagawa_module_name,
         },
@@ -106,6 +50,41 @@ let tamagawa_module = {
                 }
             ],
         },
+        {
+            name: "channel_0",
+            displayName: "Select Channel 0",
+            description: "Channel 0 Selection ",
+            default: true,
+
+        },
+        {
+            name: "channel_1",
+            displayName: "Select Channel 1",
+            description: "Channel 1 Selection ",
+            default: false,
+
+        },
+        {
+            name: "channel_2",
+            displayName: "Select Channel 2",
+            description: "Channel 2 Selection ",
+            default: false,
+
+        },
+        {
+            name: "baudrate",
+            displayName: "Select Baud Rate(in Mbps)",
+            description: "Data Speed Selection ",
+            default: 2.5,
+            options: [
+                {
+                    name: 2.5,
+                },
+                {
+                    name: 5,
+                },
+            ],
+        },
     ],
     moduleStatic: {
         modules: function(inst) {
@@ -115,10 +94,11 @@ let tamagawa_module = {
             }]
         },
     },
-    pinmuxRequirements,
-    getInterfaceNameList,
-    getPeripheralPinNames,
+    pinmuxRequirements: tamagawa_pins.pinmuxRequirements,
+    getInterfaceName: tamagawa_pins.getInterfaceName,
+    getPeripheralPinNames: tamagawa_pins.getPeripheralPinNames,
     sharedModuleInstances: sharedModuleInstances,
+    validate: onValidate,
 };
 
 function sharedModuleInstances(instance) {
