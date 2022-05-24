@@ -5,9 +5,14 @@ MCU_PLUS_SDK_PATH=$(abspath ../../../)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
+K3_RESPART_REPO=$(abspath .)/k3-resource-partitioning
+K3_RESPART_PRODUCT=$(K3_RESPART_REPO)/.metadata/product.json
+
 SOC?=am64x
+SOC_RES=
 ifeq ($(SOC),$(filter $(SOC), am64x am243x))
   SOC_FOLDER=am64x_am243x
+  SOC_RES=am64x
 endif
 
 # Certificate Generation script and other commands
@@ -124,6 +129,14 @@ $(APP_NAME): $(HEXFILES)
 sysfw_hex_header:
 	cat $(SYSFW_PATH)/sysfw-hs-fs-enc-cert.bin $(SYSFW_PATH)/sysfw-hs-fs-enc.bin > $(SYSFW_PATH)/$(SYSFW_BIN_NAME)
 	$(PYTHON) $(BIN2C_GEN) $(SYSFW_PATH)/$(SYSFW_BIN_NAME) $(SYSFW_PATH)/$(SYSFW_HEADER_NAME) $(SYSFW_ARRAY_NAME)
+
+configure:
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(K3_RESPART_PRODUCT) --output generated/ $(K3_RESPART_REPO)/out/$(SOC_RES)-evm.syscfg
+
+configure-gen:
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(K3_RESPART_PRODUCT) --output generated/ $(K3_RESPART_REPO)/out/$(SOC_RES)-evm.syscfg
+	$(COPY) generated/sciclient_defaultBoardcfg_rm_mcusdk.c $(CFG_DIR)/sciclient_defaultBoardcfg_rm.c
+	$(RMDIR) generated/
 
 define CREATE_HEX_GEN
 
