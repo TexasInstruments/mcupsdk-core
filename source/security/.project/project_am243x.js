@@ -9,7 +9,8 @@ const files = {
         "crypto.c",
         "pka.c",
         "eip29t2_firmware.c",
-        "crypto_util.c"
+        "crypto_util.c",
+        "rng.c",
     ],
 };
 
@@ -18,6 +19,7 @@ const filedirs = {
         "crypto",
         "crypto/sa2ul",
         "crypto/pka",
+        "crypto/rng",
     ],
 };
 

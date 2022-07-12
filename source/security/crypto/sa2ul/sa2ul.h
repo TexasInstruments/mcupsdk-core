@@ -550,27 +550,6 @@ int32_t SA2UL_contextProcess(SA2UL_ContextObject *ctxObj, const uint8_t *input, 
  */
 static inline void SA2UL_Params_init(SA2UL_Params *prms);
 
-/**
- * \brief setup the SA2UL RNG module.
- * 
- * \param  handle  #SA2UL_Handle returned from #SA2UL_open()
- *
- * \return #SystemP_SUCCESS if successful
- */
-int32_t SA2UL_rngSetup(SA2UL_Handle handle);
-
-/**
- * \brief Read random numbers into the output buffer.
- * 
- * \param  handle  #SA2UL_Handle returned from #SA2UL_open()
- *
- * \param out pointer to the buffer for the 128 bit random data.
- *
- * \return returns #SystemP_SUCCESS if requested data is available.
- *                 #SystemP_FAILURE if RNG is not initialized.
- */
-int32_t SA2UL_rngRead(SA2UL_Handle handle, uint32_t *out);
-
 static inline void SA2UL_ContextParams_init(SA2UL_ContextParams *ctxPrms);
 
 /* ========================================================================== */

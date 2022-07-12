@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,63 +41,61 @@
 /* SA2UL RNG Output words length */
 #define APP_SA2ULRNG_OUTPUT_WORDS_LENGTH    (4U)
 
-/* Context memory */
-static Crypto_Context gCryptoRngContext __attribute__ ((aligned (SA2UL_CACHELINE_ALIGNMENT)));
-
 void sa2ul_rng(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-    SA2UL_Handle     handle   = NULL;
-    uint32_t num_words = APP_SA2ULRNG_OUTPUT_WORDS_LENGTH, out[APP_SA2ULRNG_OUTPUT_WORDS_LENGTH], status = 0;
+    RNG_Handle     handle   = NULL;
+    uint32_t num_words = APP_SA2ULRNG_OUTPUT_WORDS_LENGTH, out[APP_SA2ULRNG_OUTPUT_WORDS_LENGTH]; 
+    RNG_Return_t status;
 
     DebugP_log("[SA2UL] Sa2ul Rng example started ...\r\n");
 
     /* Open Sa2ul instance */
-    handle = Crypto_open(&gCryptoRngContext);
+    handle = RNG_open(0);
     DebugP_assert(handle != NULL);
 
-    status = SA2UL_rngSetup(gCryptoRngContext.drvHandle);
-    DebugP_assert(SystemP_SUCCESS == status);
+    status = RNG_setup(handle);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
 
-    status = SA2UL_rngRead(gCryptoRngContext.drvHandle, out);
-    DebugP_assert(SystemP_SUCCESS == status);
+    status = RNG_read(handle, out);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
     for(int i = 0; i<num_words; i++)
     {
         DebugP_log("[SA2UL] Sa2ul Rng output word %d -- 0x%X\r\n",i+1,out[i]);
     }
 
-    status = SA2UL_rngRead(gCryptoRngContext.drvHandle, out);
-    DebugP_assert(SystemP_SUCCESS == status);
+    status = RNG_read(handle, out);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
     for(int i = 0; i<num_words; i++)
     {
         DebugP_log("[SA2UL] Sa2ul Rng output word %d -- 0x%X\r\n",i+1,out[i]);
     }
 
-    status = SA2UL_rngRead(gCryptoRngContext.drvHandle, out);
-    DebugP_assert(SystemP_SUCCESS == status);
+    status = RNG_read(handle, out);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
     for(int i = 0; i<num_words; i++)
     {
         DebugP_log("[SA2UL] Sa2ul Rng output word %d -- 0x%X\r\n",i+1,out[i]);
     }
 
-    status = SA2UL_rngRead(gCryptoRngContext.drvHandle, out);
-    DebugP_assert(SystemP_SUCCESS == status);
+    status = RNG_read(handle, out);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
     for(int i = 0; i<num_words; i++)
     {
         DebugP_log("[SA2UL] Sa2ul Rng output word %d -- 0x%X\r\n",i+1,out[i]);
     }
 
-    status = SA2UL_rngRead(gCryptoRngContext.drvHandle, out);
-    DebugP_assert(SystemP_SUCCESS == status);
+    status = RNG_read(handle, out);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
     for(int i = 0; i<num_words; i++)
     {
         DebugP_log("[SA2UL] Sa2ul Rng output word %d -- 0x%X\r\n",i+1,out[i]);
     }
-
-    /* Close SHA instance */
-    status = Crypto_close(handle);
-    DebugP_assert(SystemP_SUCCESS == status);
+    
+    /* Close RNG instance */
+    status = RNG_close(handle);
+    DebugP_assert(RNG_RETURN_SUCCESS == status);
 
     DebugP_log("[SA2UL] Sa2ul Rng example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");

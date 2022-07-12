@@ -143,8 +143,6 @@ The SA2_UL subsystem is designed to provide a generic cryptographic acceleration
 - #SA2UL_contextAlloc()         : Function to configure secure context.
 - #SA2UL_contextFree()          : Function to free secure context configuration.
 - #SA2UL_contextProcess()       : Function to transfer and receive data buffer.
-- #SA2UL_rngSetup()             : setup the SA2UL RNG module.
-- #SA2UL_rngRead()              : Read random numbers into the output buffer.
 - #SA2UL_close()                : De-initialize the SA2UL instance, disable Sa2ul hw engines and de-initialize dma.
 - #SA2UL_deinit()               : De-Initialize the SA2UL module.
 
@@ -191,15 +189,6 @@ This sequence performs AES CMAC-128 and CMAC-256.
 - #SA2UL_contextFree()          : Function to free secure context configuration.
 - #Crypto_close()               : De-initialize the SA2UL instance, disable Sa2ul hw engines and de-initialize dma and clears context.
 
-### API Sequence for RNG (Random number generation)
-
-This sequence to get RNG (Random number generation).
-
-- #Crypto_open()                : Initializes a Crypto context and Open an instance of the SA2UL module, enable Sa2ul hw engines and initialize dma.
-- #SA2UL_rngSetup()             : setup the SA2UL RNG module.
-- #SA2UL_rngRead()              : Read random numbers into the output buffer.
-- #Crypto_close()               : De-initialize the SA2UL instance, disable Sa2ul hw engines and de-initialize dma and clears context.
-
 ### Opening the SA2UL Driver
 
 -   The application can open a SA2UL instance by calling #Crypto_open(). Please note that opening SA2UL driver is taken care by the SysConfig generated code.
@@ -222,9 +211,6 @@ Re-use the index if the instance is closed via #Crypto_close().
 
 ### AES-CMAC (Cipher-based Message Authentication Code)
 -   For enabling Sa2ul Aes engine use #Crypto_open() and it also do initialize Crypto context, set the ctx parameters using #SA2UL_ContextParams structure, all necessary parameters set to #SA2UL_ContextParams variables and allocate sa2ul context by calling #SA2UL_contextAlloc(), for key1 and key2 call #Crypto_cmacGenSubKeys(), to get expected result by calling #SA2UL_contextProcess() with input buffer and output buffer as parameters, final output will stored in output buffer. Close sa2ul context by calling #SA2UL_contextFree(). For closing sa2ul Sha engine use #Crypto_close().
-
-### RNG (Random number generation)
--   For enabling SA2UL RNG use #Crypto_open(), Setup rng module by calling #SA2UL_rngSetup(), to get 128 bit random number by calling #SA2UL_rngRead() with output buffer as parameters, final 128 bit random number will stored in output buffer. For disabling SA2UL RNG use #Crypto_close().
 
 ### Closing the SA2UL Driver
 

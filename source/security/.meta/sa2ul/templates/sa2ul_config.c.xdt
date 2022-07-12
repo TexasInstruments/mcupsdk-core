@@ -66,6 +66,15 @@ PKA_Attrs gPKA_Attrs[CONFIG_SA2UL_NUM_INSTANCES] =
     },
 };
 
+RNG_Attrs gRNG_Attrs[CONFIG_SA2UL_NUM_INSTANCES] =
+{
+    {
+	.caBaseAddr         = CSL_SA2_UL0_BASE,
+	.rngBaseAddr        = CSL_SA2_UL0_EIP_76_BASE,
+	.isOpen             = FALSE,
+    }
+};
+
 /* SA2UL objects - initialized by the driver */
 static SA2UL_Object gSA2ULObjects[CONFIG_SA2UL_NUM_INSTANCES];
 
@@ -84,6 +93,13 @@ PKA_Config gPkaConfig[CONFIG_SA2UL_NUM_INSTANCES] =
         &gPKA_Attrs[CONFIG_SA2UL_CONSOLE],
     },
 };
+RNG_Config gRngConfig[CONFIG_SA2UL_NUM_INSTANCES] =
+{
+    {
+        &gRNG_Attrs[CONFIG_SA2UL_CONSOLE],
+    },
+};
 
 uint32_t gSa2ulConfigNum = CONFIG_SA2UL_NUM_INSTANCES;
 uint32_t gPkaConfigNum   = CONFIG_SA2UL_NUM_INSTANCES;
+uint32_t gRngConfigNum   = CONFIG_SA2UL_NUM_INSTANCES;

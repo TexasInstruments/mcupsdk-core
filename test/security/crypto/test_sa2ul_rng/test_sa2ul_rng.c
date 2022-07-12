@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -51,8 +51,6 @@ uint32_t gSa2ulRngOutBuf[TEST_SA2ULRNG_TOTAL_OUT_LENGTH];
 
 static void test_sa2ulRng(void *args);
 static int32_t test_sa2ulRngOutPutCheck(uint32_t *outArray, uint32_t arrayLength);
-/* Context memory */
-static Crypto_Context gCryptoRngContext __attribute__ ((aligned (SA2UL_CACHELINE_ALIGNMENT)));
 
 void test_main(void *args)
 {
@@ -63,25 +61,27 @@ void test_sa2ulRng(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-    Crypto_Handle     handle   = NULL;
-    uint32_t i = 0, status = SystemP_SUCCESS;
+    RNG_Handle    handle   = NULL;
+    uint32_t i = 0; 
+    RNG_Return_t status = RNG_RETURN_SUCCESS;
 
     DebugP_log("[SA2UL] Sa2ul Rng test started ...\r\n");
 
-    handle = Crypto_open(&gCryptoRngContext);
+    handle = RNG_open(0);
     DebugP_assert(handle != NULL);
 
-    status = SA2UL_rngSetup(gCryptoRngContext.drvHandle);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
+    status = RNG_setup(handle);
+    TEST_ASSERT_EQUAL_UINT32(RNG_RETURN_SUCCESS, status);
 
     for(i = 0; i< TEST_SA2ULRNG_NUM_OF_TEST_CASES; i++)
     {
-        status = SA2UL_rngRead(gCryptoRngContext.drvHandle, &gSa2ulRngOutBuf[i*TEST_SA2ULRNG_OUTPUT_WORDS_LENGTH]);
-        TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
+        status = RNG_read(handle, &gSa2ulRngOutBuf[i*TEST_SA2ULRNG_OUTPUT_WORDS_LENGTH]);
+        TEST_ASSERT_EQUAL_UINT32(RNG_RETURN_SUCCESS, status);
     }
     test_sa2ulRngOutPutCheck((uint32_t *)&gSa2ulRngOutBuf, TEST_SA2ULRNG_TOTAL_OUT_LENGTH);
     
-    Crypto_close(handle);
+    /* Close RNG instance */
+    status = RNG_close(handle);
 
     DebugP_log("[SA2UL] Sa2ul Rng example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
@@ -101,7 +101,7 @@ void tearDown(void)
 
 int32_t test_sa2ulRngOutPutCheck(uint32_t *outArray, uint32_t arrayLength)
 {
-    uint32_t i = 0, j = 0, status = SystemP_SUCCESS;
+    uint32_t i = 0, j = 0, status = RNG_RETURN_SUCCESS;
     for(i=0; i<arrayLength; i++)
     {
         for(j=i+1; j<arrayLength; j++)
@@ -112,6 +112,6 @@ int32_t test_sa2ulRngOutPutCheck(uint32_t *outArray, uint32_t arrayLength)
             }
         }
     }
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
+    TEST_ASSERT_EQUAL_UINT32(RNG_RETURN_SUCCESS, status);
     return (status);
 }

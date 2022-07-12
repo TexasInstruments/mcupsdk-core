@@ -7,6 +7,7 @@
  */
 #include <security/crypto/sa2ul/sa2ul.h>
 #include <security/crypto/pka/pka.h>
+#include <security/crypto/rng/rng.h>
 
 /* sa2ul Instance Macros */
 % for(let i = 0; i < module.$instances.length; i++) {
