@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -67,7 +67,7 @@
 static inline uint32_t CRCGetRegsOffset(uint32_t channel);
 static inline uint32_t CRCGetRegsOffset(uint32_t channel)
 {
-    return (channel * 0x40U);
+    return (channel * CRC_REG_OFFSET);
 }
 
 /* ========================================================================== */
@@ -423,7 +423,7 @@ int32_t CRC_setPSASeedSig(uint32_t              baseAddr,
     return (status);
 }
 
-int32_t CRCGetPSASectorSig(uint32_t        baseAddr,
+int32_t CRC_getPSASectorSig(uint32_t        baseAddr,
                            CRC_Channel_t    channel,
                            CRC_Signature *pCRCSectorSign)
 {
@@ -494,7 +494,7 @@ int32_t CRC_getIntrStatus(uint32_t      baseAddr,
                 intVal = intVal & (CRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL << 0x00U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = intVal & (CRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL << 0x08U);
+                intVal = intVal & (CRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL << SHIFT_BY_EIGHT);
                 break;
             default:
                 /* Invalid input */
@@ -531,7 +531,7 @@ int32_t CRC_enableIntr(uint32_t     baseAddr,
                 intVal = (intrMask << 0x00U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = (intrMask << 0x08U);
+                intVal = (intrMask << SHIFT_BY_EIGHT);
                 break;
             default:
                 status = CSL_EBADARGS;
@@ -567,7 +567,7 @@ int32_t CRC_disableIntr(uint32_t     baseAddr,
                 intVal = (intrMask << 0x00U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = (intrMask << 0x08U);
+                intVal = (intrMask << SHIFT_BY_EIGHT);
                 break;
             default:
                 status = CSL_EBADARGS;
@@ -603,7 +603,7 @@ int32_t CRC_clearIntr(uint32_t     baseAddr,
                 intVal = (intrMask << 0x0U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = (intrMask << 0x08U);
+                intVal = (intrMask << SHIFT_BY_EIGHT);
                 break;
             default:
                 status = CSL_EBADARGS;

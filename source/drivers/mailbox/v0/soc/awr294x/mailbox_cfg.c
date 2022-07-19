@@ -62,6 +62,8 @@
 
 #define RIGHT_SHIFT_BY_TWO    (2U)
 
+#define RIGHT_SHIFT_BY_TWO    (2)
+
 Mailbox_RemoteCoreObj gMailboxRemoteCoreObj_r5ss0_0_to_rss_r4 =
 {
     .maxBufferSize = MAX_BUFFER_SIZE,

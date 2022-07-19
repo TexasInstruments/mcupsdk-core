@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -114,6 +114,17 @@ extern "C" {
  * \brief  Max number of channels supported in CRC.
  */
 #define CRC_MAX_NUM_OF_CHANNELS         (2U)
+
+/**
+ * \brief  Macro defines the CRC Reg Offset value.
+ */
+
+#define CRC_REG_OFFSET                  (0x40U)
+
+/**
+ * \brief  Macro defines the shift value.
+ */
+#define SHIFT_BY_EIGHT                   (0x08U)
 
 /**
  *  \anchor CRC_OperationMode_t
