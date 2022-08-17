@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -51,7 +51,7 @@ int32_t DebugP_readLine(char *lineBuf, uint32_t bufSize)
         int32_t  transferOK;
         uint32_t numCharRead = 0;
 
-        while(!done)
+        while(done == 0U)
         {
             UART_Transaction_init(&trans);
 
@@ -69,7 +69,7 @@ int32_t DebugP_readLine(char *lineBuf, uint32_t bufSize)
             {
                 if(numCharRead < bufSize)
                 {
-                    lineBuf[numCharRead] = readByte;
+                    lineBuf[numCharRead] = (char)readByte;
                     numCharRead++;
                 }
 
@@ -84,10 +84,10 @@ int32_t DebugP_readLine(char *lineBuf, uint32_t bufSize)
             }
             if(status == SystemP_SUCCESS)
             {
-                if(readByte == 13) /* "Carriage return" entered, (ASCII: 13) */
+                if(readByte == CARRIAGE_RETURN_ASCII) /* "Carriage return" entered, (ASCII: 13) */
                 {
                     /* terminate the string, reset numCharRead  */
-                    lineBuf[numCharRead-1] = 0;
+                    lineBuf[numCharRead-1U] =(char)0;
 
                     done = 1;
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,6 +36,12 @@
 
 static volatile uint32_t gdummy;
 
+static void assembly(void)
+{
+    __asm__ __volatile__ (" isb"   "\n\t": : : "memory");
+    __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
+}
+
 typedef struct HwiP_Struct_s {
 
     uint32_t intNum;
@@ -49,13 +55,12 @@ void HWI_SECTION HwiP_enableInt(uint32_t intNum)
     volatile uint32_t *addr;
     uint32_t bitPos;
 
-    __asm__ __volatile__ (" isb"   "\n\t": : : "memory");
-    __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
+    assembly();
 
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_EN(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    *addr = (0x1u << bitPos);
+    *addr = ((uint32_t)0x1 << bitPos);
 }
 
 uint32_t HWI_SECTION HwiP_disableInt(uint32_t intNum)
@@ -67,27 +72,28 @@ uint32_t HWI_SECTION HwiP_disableInt(uint32_t intNum)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_DIS(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    if( (*addr & (0x1u << bitPos)))
+    if( (*addr & ((uint32_t)0x1 << bitPos))!=0U)
     {
         isEnable = 1;
     }
-    *addr = (0x1u << bitPos);
+    *addr = ((uint32_t)0x1 << bitPos);
 
-    __asm__ __volatile__ (" isb"  "\n\t": : : "memory");
-    __asm__ __volatile__ (" dsb"  "\n\t": : : "memory");
+
+    assembly();
+
 
     return isEnable;
 }
 
 void HWI_SECTION HwiP_restoreInt(uint32_t intNum, uint32_t oldIntState)
 {
-    if(oldIntState)
+    if(oldIntState!=0U)
     {
         HwiP_enableInt(intNum);
     }
     else
     {
-        HwiP_disableInt(intNum);
+       (void) HwiP_disableInt(intNum);
     }
 }
 
@@ -99,7 +105,7 @@ void HWI_SECTION HwiP_clearInt(uint32_t intNum)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_STS(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    *addr = ( 0x1u << bitPos);
+    *addr = ((uint32_t)0x1 << bitPos);
 }
 
 void HWI_SECTION HwiP_post(uint32_t intNum)
@@ -110,14 +116,15 @@ void HWI_SECTION HwiP_post(uint32_t intNum)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_RAW(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    *addr = ( 0x1u << bitPos);
+    *addr = ((uint32_t)0x1 << bitPos);
 
     /*
      * Add delay to insure posted interrupt are triggered before function
      * returns.
      */
-    __asm__  __volatile__ (" dsb" "\n\t": : : "memory");
-    __asm__  __volatile__ (" isb" "\n\t": : : "memory");
+
+    assembly();
+
 
 }
 
@@ -127,7 +134,7 @@ void HWI_SECTION HwiP_Params_init(HwiP_Params *params)
     params->callback = NULL;
     params->args = NULL;
     params->eventId = 0; /* NOT USED */
-    params->priority = (HwiP_MAX_PRIORITY-1);
+    params->priority = (HwiP_MAX_PRIORITY-1U);
     params->isFIQ = 0;
     params->isPulse = 0;
 }
@@ -141,14 +148,15 @@ int32_t HWI_SECTION HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
     DebugP_assertNoLog( params->intNum < HwiP_MAX_INTERRUPTS );
     DebugP_assertNoLog( params->priority < HwiP_MAX_PRIORITY );
 
-    HwiP_disableInt(params->intNum);
+    (void) HwiP_disableInt(params->intNum);
     HwiP_clearInt(params->intNum);
 
     HwiP_setAsFIQ(params->intNum, params->isFIQ);
     HwiP_setPri(params->intNum, params->priority);
     HwiP_setAsPulse(params->intNum, params->isPulse);
-    if(params->isFIQ)
+    if(params->isFIQ != 0U)
     {
+
         HwiP_setVecAddr(params->intNum, (uintptr_t)HwiP_fiq_handler);
     }
     else
@@ -184,10 +192,10 @@ void HWI_SECTION HwiP_destruct(HwiP_Object *handle)
     /* disable interrupt, clear pending if any, make as pulse, ISR, lowest priority
      * set valid default vector address
      */
-    HwiP_disableInt(obj->intNum);
+   (void) HwiP_disableInt(obj->intNum);
     HwiP_clearInt(obj->intNum);
     HwiP_setAsFIQ(obj->intNum, 0);
-    HwiP_setPri(obj->intNum, HwiP_MAX_PRIORITY-1);
+    HwiP_setPri(obj->intNum, HwiP_MAX_PRIORITY-1U);
     HwiP_setAsPulse(obj->intNum, 0);
     HwiP_setVecAddr(obj->intNum, (uintptr_t)HwiP_irq_handler);
 
@@ -196,16 +204,16 @@ void HWI_SECTION HwiP_destruct(HwiP_Object *handle)
     gHwiCtrl.isrArgs[obj->intNum] = NULL;
 }
 
-void HWI_SECTION HwiP_init()
+void HWI_SECTION HwiP_init(void)
 {
     uint32_t i;
 
     /* disable IRQ */
-    HwiP_disable();
+    (void) HwiP_disable();
     /* disable FIQ */
-    HwiP_disableFIQ();
+    (void) HwiP_disableFIQ();
 
-    DebugP_assertNoLog(gHwiConfig.intcBaseAddr != 0);
+    DebugP_assertNoLog(gHwiConfig.intcBaseAddr != 0U);
 
     gHwiCtrl.spuriousIRQCount = 0;
     gHwiCtrl.spuriousFIQCount = 0;
@@ -223,24 +231,24 @@ void HWI_SECTION HwiP_init()
     }
 
     /* disable, clear, set as IRQ and level, all interrupts */
-    for(i=0; i<HwiP_MAX_INTERRUPTS/32; i++)
+    for(i=0; i<(HwiP_MAX_INTERRUPTS/INTERRUPT_VALUE); i++)
     {
         volatile uint32_t *addr;
 
         /* disable all interrupts */
-        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_INT_DIS(i*32));
+        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_INT_DIS(i*INTERRUPT_VALUE));
         *addr = 0xFFFFFFFFu;
 
         /* clear all pending interrupts */
-        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_STS(i*32));
+        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_STS(i*INTERRUPT_VALUE));
         *addr = 0xFFFFFFFFu;
 
         /* make all as level */
-        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_INT_TYPE(i*32));
+        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_INT_TYPE(i*INTERRUPT_VALUE));
         *addr = 0x0u;
 
         /* make all as IRQ */
-        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_INT_MAP(i*32));
+        addr = (uint32_t*)(gHwiConfig.intcBaseAddr + VIM_INT_MAP(i*INTERRUPT_VALUE));
         *addr = 0x0u;
     }
 
@@ -265,11 +273,15 @@ void HWI_SECTION HwiP_init()
     /* HwiP_enable(); */
 }
 
-uint32_t HwiP_getCPSR();
+uint32_t HwiP_getCPSR(void);
 
 uint32_t HWI_SECTION HwiP_inISR(void)
 {
-    uint32_t mode = (HwiP_getCPSR() & 0x1F);
-
-    return (uint32_t)(mode != ARMV7R_SYSTEM_MODE);
+    uint32_t mode = (HwiP_getCPSR() & 0x1FU);
+    uint32_t result =0;
+    if(mode != ARMV7R_SYSTEM_MODE)
+    {
+         result= 1;
+    }
+    return result;
 }

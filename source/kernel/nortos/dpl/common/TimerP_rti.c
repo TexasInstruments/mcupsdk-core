@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,29 +62,29 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     uint32_t reloadVal;
     uint64_t timeInNsec, timerCycles;
 
-    DebugP_assert( baseAddr!=0);
+    DebugP_assert( baseAddr!=0U);
     /* pre scaler MUST be 1 for RTI when used as tick timer */
-    DebugP_assert( params->inputPreScaler == 1);
-    DebugP_assert( params->inputClkHz != 0);
-    DebugP_assert( params->periodInUsec != 0 || params->periodInNsec != 0 );
+    DebugP_assert( params->inputPreScaler == 1U);
+    DebugP_assert( params->inputClkHz != 0U);
+    DebugP_assert( (params->periodInUsec != 0U) || (params->periodInNsec != 0U) );
 
     /* stop timer and clear pending interrupts */
     TimerP_stop(baseAddr);
     TimerP_clearOverflowInt(baseAddr);
 
     timeInNsec = (uint64_t)params->periodInNsec;
-    if(timeInNsec == 0)
+    if(timeInNsec == 0U)
     {
-        timeInNsec = params->periodInUsec*1000U;
+        timeInNsec =((uint64_t)params->periodInUsec*TIME_IN_MILLI_SECONDS);
     }
 
-    timerCycles =  ( (uint64_t)params->inputClkHz * timeInNsec ) / 1000000000U;
+    timerCycles =  ( (uint64_t)params->inputClkHz * timeInNsec ) / TIME_IN_NANO_SECONDS;
 
     /* if timerCycles > 32b then we cannot give accurate timing */
-    DebugP_assert( timerCycles <= 0xFFFFFFFFU );
+    DebugP_assert( timerCycles <= (0xFFFFFFFFU) );
 
     /* calculate count and reload value register value */
-    reloadVal = timerCycles;
+    reloadVal = (uint32_t)timerCycles;
 
     /* reset up counter (UC) value  0 */
     addr = (volatile uint32_t *)(baseAddr + RTI_RTIUC0);
@@ -111,7 +111,7 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     *addr = 0;
 
     /* enable/disable interrupts */
-    if(params->enableOverflowInt)
+    if(params->enableOverflowInt!=0U)
     {
         /* enable interrupt */
         addr = (volatile uint32_t *)(baseAddr + RTI_RTISETINT);
@@ -125,17 +125,17 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     }
 
     /* enable/disable interrupts */
-    if(params->enableDmaTrigger)
+    if(params->enableDmaTrigger!=0U)
     {
         /* enable interrupt */
         addr = (volatile uint32_t *)(baseAddr + RTI_RTISETINT);
-        *addr = (0x1 << 8);
+        *addr = ((uint32_t)0x1 << SHIFT_BY_EIGHT);
     }
     else
     {
         /* disable interrupt */
         addr = (volatile uint32_t *)(baseAddr + RTI_RTICLEARINT);
-        *addr = (0x1 << 8);;
+        *addr = ((uint32_t)0x1 << SHIFT_BY_EIGHT );
     }
 }
 
@@ -144,7 +144,7 @@ void TimerP_start(uint32_t baseAddr)
     volatile uint32_t *addr = (uint32_t *)(baseAddr + RTI_RTIGCTRL);
 
     /* start timer */
-    *addr |= (0x1 << 0);
+    *addr |= ((uint32_t)0x1 << 0U);
 }
 
 void TimerP_stop(uint32_t baseAddr)
@@ -152,7 +152,7 @@ void TimerP_stop(uint32_t baseAddr)
     volatile uint32_t *addr = (volatile uint32_t *)(baseAddr + RTI_RTIGCTRL);
 
     /* stop timer */
-    *addr &= ~(0x1 << 0);
+    *addr &= ~((uint32_t)0x1 << 0U);
 }
 
 uint32_t TimerP_getCount(uint32_t baseAddr)
@@ -170,10 +170,10 @@ uint32_t TimerP_getCount(uint32_t baseAddr)
      */
 
     frc = *frc_addr;
-    frc++; /* dummy increment so that compipler does not optimized this out */
+    frc = frc + 1U; /* dummy increment so that compipler does not optimized this out */
 
     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
-    return 0xFFFFFFFFu - (*cpuc_addr - *uc_addr) - 1UL;
+    return MAX_NUMBER_OF_COUNT - (*cpuc_addr - *uc_addr) - 1UL;
 }
 
 uint32_t TimerP_getReloadCount(uint32_t baseAddr)
@@ -181,7 +181,7 @@ uint32_t TimerP_getReloadCount(uint32_t baseAddr)
     volatile uint32_t *cpuc_addr = (volatile uint32_t *)(baseAddr + RTI_RTICPUC0);
 
     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
-    return 0xFFFFFFFFu - (*cpuc_addr) - 1UL;
+    return MAX_NUMBER_OF_COUNT - (*cpuc_addr) - 1UL;
 }
 
 void TimerP_clearOverflowInt(uint32_t baseAddr)
@@ -201,5 +201,5 @@ uint32_t TimerP_isOverflowed(uint32_t baseAddr)
     /* get status for interrupt */
     val = *(volatile uint32_t *)(baseAddr + RTI_RTIINTFLAG);
 
-    return ((val) & 0x1);
+    return ((val) & 0x1U);
 }

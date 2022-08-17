@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -185,7 +185,7 @@ void HwiP_post(uint32_t intNum);
  *
  * \return interrupt state before disable, typically used by \ref HwiP_restore later
  */
-uintptr_t HwiP_disable();
+uintptr_t HwiP_disable(void);
 
 /**
  * \brief Enable all interrupts
@@ -193,7 +193,7 @@ uintptr_t HwiP_disable();
  * \note In case of ARM R5F, ARM M4F, this only enables IRQ. \n
  *       FIQ is not enabled.
  */
-void HwiP_enable();
+void HwiP_enable(void);
 
 /**
  * \brief Restores all interrupts to a given state
@@ -234,7 +234,7 @@ uint32_t HwiP_inISR(void);
  * \note MUST be called during system intialization before any \ref HwiP_construct API calls.
  * \note In case of ARM R5F, ARM M4F, this initializes and enables both FIQ and IRQ
  */
-void HwiP_init();
+void HwiP_init(void);
 
 /**
  * \brief This API registers the NMI handler

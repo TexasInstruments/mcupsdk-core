@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,6 +33,7 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/HwiP.h>
+#include <kernel/dpl/TimerP.h>
 
 /* This is needed in r5f since assert can be called before MPU init */
 #if defined(__ARM_ARCH_7R__)
@@ -40,6 +41,8 @@
 #else
 #define BOOT_SECTION
 #endif
+
+void DebugP_logChar(char a);
 
 volatile uint32_t gDebugLogZone = DebugP_LOG_ZONE_ALWAYS_ON;
 
@@ -84,7 +87,7 @@ void DebugP_logZoneRestore(uint32_t logZoneMask)
     HwiP_restore(oldIntState);
 }
 
-void _DebugP_assert(int expression, const char *file, const char *function, int line, const char *expressionString)
+void _DebugP_assert(int32_t expression, const char *file, const char *function, int32_t line, const char *expressionString)
 {
     if(expression==0)
     {
@@ -92,28 +95,28 @@ void _DebugP_assert(int expression, const char *file, const char *function, int 
         uint64_t curTime = ClockP_getTimeUsec();
 
         DebugP_log("ASSERT: %d.%ds: %s:%s:%d: %s failed !!!\r\n",
-            (uint32_t)(curTime/1000000U),
-            (uint32_t)(curTime%1000000U),
+            (uint32_t)(curTime/TIME_IN_MICRO_SECONDS),
+            (uint32_t)(curTime%TIME_IN_MICRO_SECONDS),
             file, function, line,
             expressionString
             );
 
-        HwiP_disable();
-        while(assert_loop)
+        (void) HwiP_disable();
+        while(assert_loop!= 0U)
         {
             /* loop forver */
         }
     }
 }
 
-void BOOT_SECTION _DebugP_assertNoLog(int expression)
+void BOOT_SECTION _DebugP_assertNoLog(int32_t expression)
 {
     if(expression==0)
     {
         volatile uint32_t assert_loop = 1;
 
-        HwiP_disable();
-        while(assert_loop)
+        (void) HwiP_disable();
+        while(assert_loop!= 0U)
         {
             /* loop forver */
         }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,19 +60,24 @@ extern "C" {
 #define CacheP_CACHELINE_ALIGNMENT   (128U)
 
 /**
- * \brief Cache type
+ *  \anchor CacheP_Type
+ *  \name Cache Type
+ *
+ *  Values defined for CacheP types
+ *
+ *  @{
  */
-typedef enum CacheP_Type_ {
-    CacheP_TYPE_L1P  = (0x0001u), /**< L1 program cache */
-    CacheP_TYPE_L1D  = (0x0002u), /**< L1 data cache */
-    CacheP_TYPE_L2P  = (0x0004u), /**< L2 program cache */
-    CacheP_TYPE_L2D  = (0x0008u), /**< L2 data cache */
-    CacheP_TYPE_L1   = (CacheP_TYPE_L1P|CacheP_TYPE_L1D), /**< All L1 cache's */
-    CacheP_TYPE_L2   = (CacheP_TYPE_L2P|CacheP_TYPE_L2D), /**< All L2 cache's */
-    CacheP_TYPE_ALLP = (CacheP_TYPE_L1P|CacheP_TYPE_L2P), /**< All program cache's */
-    CacheP_TYPE_ALLD = (CacheP_TYPE_L1D|CacheP_TYPE_L2D), /**< All data cache's */
-    CacheP_TYPE_ALL  = (CacheP_TYPE_L1|CacheP_TYPE_L2)    /**< All cache's */
-} CacheP_Type;
+ #define CacheP_TYPE_L1P  (0x0001u) /**< L1 program cache */
+ #define CacheP_TYPE_L1D  (0x0002u) /**< L1 data cache */
+ #define CacheP_TYPE_L2P  (0x0004u) /**< L2 program cache */
+ #define CacheP_TYPE_L2D  (0x0008u) /**< L2 data cache */
+ #define CacheP_TYPE_L1   ((CacheP_TYPE_L1P)|(CacheP_TYPE_L1D)) /**< All L1 cache's */
+ #define CacheP_TYPE_L2   ((CacheP_TYPE_L2P)|(CacheP_TYPE_L2D)) /**< All L2 cache's */
+ #define CacheP_TYPE_ALLP ((CacheP_TYPE_L1P)|(CacheP_TYPE_L2P)) /**< All program cache's */
+ #define CacheP_TYPE_ALLD ((CacheP_TYPE_L1D)|(CacheP_TYPE_L2D)) /**< All data cache's */
+ #define CacheP_TYPE_ALL  (((CacheP_TYPE_L1P)|(CacheP_TYPE_L1D))|((CacheP_TYPE_L2P)|(CacheP_TYPE_L2D)))  /**< All cache's */
+/** @} */
+
 
 /**
  * \brief Cache config structure, this used by SysConfig and not to be used by end-users directly
@@ -90,7 +95,7 @@ extern const CacheP_Config  gCacheConfig;
 /**
  * \brief Cache enable
  *
- * \param type [in] cache type's to enable, refer #CacheP_Type \n
+ * \param type [in] cache type's to enable \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -101,7 +106,7 @@ void CacheP_enable(uint32_t type);
 /**
  * \brief Cache disable
  *
- * \param type [in] cache type's to disable, refer #CacheP_Type \n
+ * \param type [in] cache type's to disable  \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -114,12 +119,12 @@ void CacheP_disable(uint32_t type);
  *
  * \return cache type's that are enabled
  */
-uint32_t CacheP_getEnabled();
+uint32_t CacheP_getEnabled(void);
 
 /**
  * \brief Cache writeback for full cache
  *
- * \param type [in] cache type's to writeback, refer #CacheP_Type \n
+ * \param type [in] cache type's to writeback \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -130,7 +135,7 @@ void CacheP_wbAll(uint32_t type);
 /**
  * \brief Cache writeback and invalidate for full cache
  *
- * \param type [in] cache type's to writeback and invalidate, refer #CacheP_Type \n
+ * \param type [in] cache type's to writeback and invalidate \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -143,7 +148,7 @@ void CacheP_wbInvAll(uint32_t type);
  *
  * \param addr [in] region address. Recommend to specify address that is cache line aligned
  * \param size [in] region size in bytes. Recommend to specify size that is multiple of cache line size
- * \param type [in] cache type's to writeback, refer #CacheP_Type \n
+ * \param type [in] cache type's to writeback \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -156,7 +161,7 @@ void CacheP_wb(void *addr, uint32_t size, uint32_t type);
  *
  * \param addr [in] region address. Recommend to specify address that is cache line aligned
  * \param size [in] region size in bytes. Recommend to specify size that is multiple of cache line size
- * \param type [in] cache type's to invalidate, refer #CacheP_Type \n
+ * \param type [in] cache type's to invalidate \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -169,7 +174,7 @@ void CacheP_inv(void *addr, uint32_t size, uint32_t type);
  *
  * \param addr [in] region address. Recommend to specify address that is cache line aligned
  * \param size [in] region size in bytes. Recommend to specify size that is multiple of cache line size
- * \param type [in] cache type's to writeback and invalidate, refer #CacheP_Type \n
+ * \param type [in] cache type's to writeback and invalidate \n
  *                  R5: Supports CacheP_TYPE_L1P, CacheP_TYPE_L1D,
  *                  A53: Supports CacheP_TYPE_L1P , CacheP_TYPE_L2P, CacheP_TYPE_L1D and CacheP_TYPE_L2D,
  *                  C66x: Not used assumes CacheP_TYPE_ALL,
@@ -181,7 +186,7 @@ void CacheP_wbInv(void *addr, uint32_t size, uint32_t type);
  * \brief Initialize Cache sub-system, called by SysConfig, not to be called by end users
  *
  */
-void CacheP_init();
+void CacheP_init(void);
 
 /** @} */
 

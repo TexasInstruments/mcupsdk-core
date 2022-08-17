@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,12 +55,12 @@ extern "C"
 #define VIM_FIQVEC       (0x1Cu)
 #define VIM_ACTIRQ       (0x20u)
 #define VIM_ACTFIQ       (0x24u)
-#define VIM_RAW(j)       (0x400u + (((j)>> 5) & 0xFu) * 0x20u)
-#define VIM_STS(j)       (0x404u + (((j)>> 5) & 0xFu) * 0x20u)
-#define VIM_INT_EN(j)    (0x408u + (((j)>> 5) & 0xFu) * 0x20u)
-#define VIM_INT_DIS(j)   (0x40Cu + (((j)>> 5) & 0xFu) * 0x20u)
-#define VIM_INT_MAP(j)   (0x418u + (((j)>> 5) & 0xFu) * 0x20u)
-#define VIM_INT_TYPE(j)  (0x41Cu + (((j)>> 5) & 0xFu) * 0x20u)
+#define VIM_RAW(j)       (0x400U + ((((j) >> 5) & 0xFU) * 0x20U))
+#define VIM_STS(j)       (0x404U + ((((j) >> 5) & 0xFU) * 0x20U))
+#define VIM_INT_EN(j)    (0x408U + ((((j) >> 5) & 0xFU) * 0x20U))
+#define VIM_INT_DIS(j)   (0x40CU + ((((j) >> 5) & 0xFU) * 0x20U))
+#define VIM_INT_MAP(j)   (0x418U + ((((j) >> 5) & 0xFU) * 0x20U))
+#define VIM_INT_TYPE(j)  (0x41CU + ((((j) >> 5) & 0xFU) * 0x20U))
 #define VIM_INT_PRI(j)   (0x1000u + ((j) * 0x4u))
 #define VIM_INT_VEC(j)   (0x2000u + ((j) * 0x4u))
 
@@ -69,6 +69,8 @@ extern "C"
 #define ARMV7R_SVC_MODE       (0x13u)
 #define ARMV7R_SYSTEM_MODE    (0x1Fu)
 
+#define INTERRUPT_VALUE        (32U)
+
 typedef struct HwiP_Ctrl_s {
 
     HwiP_FxnCallback isr[HwiP_MAX_INTERRUPTS];
@@ -76,20 +78,22 @@ typedef struct HwiP_Ctrl_s {
 
     uint32_t spuriousIRQCount;
     uint32_t spuriousFIQCount;
-
 } HwiP_Ctrl;
 
 extern HwiP_Ctrl gHwiCtrl;
 extern HwiP_Config gHwiConfig;
-
 /* APIs defined in HwiP_armv7r_asm.S */
-uint32_t HwiP_disableFIQ();
-void HwiP_enableFIQ();
-void HwiP_enableVIC();
+uint32_t HwiP_disableFIQ(void);
+void HwiP_enableFIQ(void);
+void HwiP_enableVIC(void);
 
 void HwiP_fiq_handler(void);
 void HwiP_irq_handler(void);
-
+void HwiP_reserved_handler(void);
+void HwiP_undefined_handler(void);
+void HwiP_prefetch_abort_handler(void);
+void HwiP_data_abort_handler(void);
+void HwiP_irq_handler_c(void);
 
 static inline void  HWI_SECTION HwiP_setAsFIQ(uint32_t intNum, uint32_t isFIQ)
 {
@@ -99,7 +103,7 @@ static inline void  HWI_SECTION HwiP_setAsFIQ(uint32_t intNum, uint32_t isFIQ)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_MAP(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    if(isFIQ)
+    if(isFIQ != 0U)
     {
         *addr |= (0x1u << bitPos);
     }
@@ -117,7 +121,7 @@ static inline uint32_t  HWI_SECTION HwiP_isPulse(uint32_t intNum)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_TYPE(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    return ((*addr >> bitPos) & 0x1 );
+    return ((*addr >> bitPos) & 0x1u );
 }
 
 
@@ -129,7 +133,7 @@ static inline void  HWI_SECTION HwiP_setAsPulse(uint32_t intNum, uint32_t isPuls
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_TYPE(intNum));
     bitPos = VIM_BIT_POS(intNum);
 
-    if(isPulse)
+    if(isPulse != 0U)
     {
         *addr |= (0x1u << bitPos);
     }
@@ -145,7 +149,7 @@ static inline void  HWI_SECTION HwiP_setPri(uint32_t intNum, uint32_t priority)
 
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_PRI(intNum));
 
-    *addr = (priority & 0xF);
+    *addr = (priority & 0xFu);
 }
 
 static inline void HWI_SECTION HwiP_setVecAddr(uint32_t intNum, uintptr_t vecAddr)
@@ -154,10 +158,10 @@ static inline void HWI_SECTION HwiP_setVecAddr(uint32_t intNum, uintptr_t vecAdd
 
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_VEC(intNum));
 
-    *addr = ((uint32_t)vecAddr & 0xFFFFFFFC);
+    *addr = ((uint32_t)vecAddr & 0xFFFFFFFCU);
 }
 
-static inline uint32_t HWI_SECTION HwiP_getIRQVecAddr()
+static inline uint32_t HWI_SECTION HwiP_getIRQVecAddr(void)
 {
     volatile uint32_t *addr;
 
@@ -166,7 +170,7 @@ static inline uint32_t HWI_SECTION HwiP_getIRQVecAddr()
     return *addr;
 }
 
-static inline uint32_t HWI_SECTION HwiP_getFIQVecAddr()
+static inline uint32_t HWI_SECTION HwiP_getFIQVecAddr(void)
 {
     volatile uint32_t *addr;
 
@@ -186,9 +190,9 @@ static inline int32_t HWI_SECTION HwiP_getIRQ(uint32_t *intNum)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_ACTIRQ);
     value = *addr;
 
-    if(value & 0x80000000)
+    if((value & 0x80000000U) != 0U)
     {
-        *intNum = (value & (HwiP_MAX_INTERRUPTS-1));
+        *intNum = (value & (HwiP_MAX_INTERRUPTS-1U));
         status = SystemP_SUCCESS;
     }
     return status;
@@ -205,9 +209,9 @@ static inline int32_t HWI_SECTION HwiP_getFIQ(uint32_t *intNum)
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_ACTFIQ);
     value = *addr;
 
-    if(value & 0x80000000)
+    if((value & 0x80000000U) != 0U)
     {
-        *intNum = (value & 0x3FF);
+        *intNum = (value & 0x3FFU);
         status = SystemP_SUCCESS;
     }
     return status;

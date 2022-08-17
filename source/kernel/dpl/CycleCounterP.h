@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,7 +62,7 @@ void CycleCounterP_init(const uint64_t cpuFreqHz);
  *
  * \return 32b cycle counter value
  */
-uint32_t CycleCounterP_getCount32();
+uint32_t CycleCounterP_getCount32(void);
 
 /**
  * \brief Enable, reset, clear overflow for CPU cycle counter
@@ -70,7 +70,7 @@ uint32_t CycleCounterP_getCount32();
  * - Call this API atleast once before using CycleCounterP_getCount32() to reset and enable the counter
  * - Call this API to reset counter to zero.
  */
-void CycleCounterP_reset();
+void CycleCounterP_reset(void);
 
 /**
  * \brief Get 64b CPU cycle counter value
@@ -80,7 +80,7 @@ void CycleCounterP_reset();
  *
  * \return 64b cycle counter value
  */
-uint64_t CycleCounterP_getCount64();
+uint64_t CycleCounterP_getCount64(void);
 
 /**
  * \brief API function to convert nanosecs to PMU counter ticks

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +32,7 @@
 
 #include <kernel/dpl/TaskP.h>
 
-void TaskP_yield()
+void TaskP_yield(void)
 {
     /* Empty Function */
 }

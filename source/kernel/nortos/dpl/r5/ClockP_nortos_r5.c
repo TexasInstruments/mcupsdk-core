@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,11 +49,11 @@ void ClockP_init(void)
     HwiP_Params timerHwiParams;
 
     /* These MUST not be 0 */
-    DebugP_assert( gClockConfig.timerInputPreScaler != 0);
-    DebugP_assert( gClockConfig.timerInputClkHz != 0);
-    DebugP_assert( gClockConfig.usecPerTick != 0);
-    DebugP_assert( gClockConfig.timerBaseAddr != 0);
-    
+    DebugP_assert(gClockConfig.timerInputPreScaler != 0U);
+    DebugP_assert(gClockConfig.timerInputClkHz != 0U);
+    DebugP_assert(gClockConfig.usecPerTick != 0U);
+    DebugP_assert(gClockConfig.timerBaseAddr != 0U);
+
     /* init internal data structure */
     gClockCtrl.ticks = 0;
     gClockCtrl.list = NULL;
@@ -65,7 +65,7 @@ void ClockP_init(void)
     timerParams.inputPreScaler    = gClockConfig.timerInputPreScaler;
     timerParams.inputClkHz        = gClockConfig.timerInputClkHz;
     timerParams.periodInUsec      = gClockConfig.usecPerTick;
-    timerParams.oneshotMode       = 0;        
+    timerParams.oneshotMode       = 0;
     timerParams.enableOverflowInt = 1;
     TimerP_setup(gClockCtrl.timerBaseAddr, &timerParams);
 
@@ -77,7 +77,7 @@ void ClockP_init(void)
     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
     timerHwiParams.callback = ClockP_timerTickIsr;
     timerHwiParams.isPulse = 0;
-    HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+    (void) HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
 
     /* start the tick timer */
     TimerP_start(gClockCtrl.timerBaseAddr);

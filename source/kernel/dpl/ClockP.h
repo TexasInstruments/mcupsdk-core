@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -103,7 +103,11 @@ typedef struct ClockP_Params_ {
         */
     void *args; /**< User argument that is available inside the callback */
 
-    char *name; /**< Name to associate with this object */
+
+
+  const char *name; /**< Name to associate with this object */
+
+
 
 } ClockP_Params;
 
@@ -120,7 +124,7 @@ typedef struct ClockP_Params_ {
  * Using this single timer, the clock API can be used to start multiple 'clock's in units of
  * clock ticks.
  */
-void ClockP_init();
+void ClockP_init(void);
 
 /**
  * \brief Set default values to ClockP_Params
@@ -201,7 +205,7 @@ uint32_t ClockP_getTimeout(ClockP_Object *obj);
  *
  * \return number of clock ticks that have elasped since ClockP_init()
  */
-uint32_t ClockP_getTicks();
+uint32_t ClockP_getTicks(void);
 
 /**
  * \brief Convert usecs to clock ticks
@@ -225,7 +229,7 @@ uint64_t ClockP_ticksToUsec(uint32_t ticks);
 /**
  * \brief Get current time in units of usecs
  */
-uint64_t ClockP_getTimeUsec();
+uint64_t ClockP_getTimeUsec(void);
 
 /**
  * \brief Sleep for user specified usecs

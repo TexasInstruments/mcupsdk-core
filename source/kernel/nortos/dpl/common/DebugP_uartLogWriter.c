@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,7 +35,10 @@
 #include <kernel/dpl/DebugP.h>
 #include "printf.h"
 
-uint32_t gDebugP_uartDrvIndex = 0xFFFFFFFF;
+void DebugP_uartLogWriterPutLine(uint8_t *buf, uint16_t num_bytes);
+void DebugP_uartLogWriterPutCharBuffered(char character);
+
+uint32_t gDebugP_uartDrvIndex = 0xFFFFFFFFU;
 
 void DebugP_uartSetDrvIndex(uint32_t uartDrvIndex)
 {
@@ -51,54 +54,60 @@ void DebugP_uartLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
         UART_Transaction_init(&trans);
         trans.buf   = buf;
         trans.count = num_bytes;
-        UART_write(uartHandle, &trans);
+        (void) UART_write(uartHandle, &trans);
     }
 }
 
 void DebugP_uartLogWriterPutChar(char character)
 {
+    char value = character;
     UART_Handle uartHandle = UART_getHandle(gDebugP_uartDrvIndex);
     if(uartHandle!=NULL)
     {
         UART_Transaction trans;
         UART_Transaction_init(&trans);
-        trans.buf   = &character;
+        trans.buf   = &value;
         trans.count = 1;
-        UART_write(uartHandle, &trans);
+        (void) UART_write(uartHandle, &trans);
     }
 }
 
 void DebugP_uartLogWriterPutCharBuffered(char character)
 {
 #define DebugP_UART_LOG_WRITER_LINE_BUF_SIZE (128u)
-static uint8_t lineBuf[DebugP_UART_LOG_WRITER_LINE_BUF_SIZE+2]; /* +2 to add \r\n char at end of string in worst case */
+static uint8_t lineBuf[DebugP_UART_LOG_WRITER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_TWO]; /* +2 to add \r\n char at end of string in worst case */
 static uint32_t lineBufIndex = 0;
 
-    lineBuf[lineBufIndex++]=character;
+    lineBuf[lineBufIndex] = (uint8_t)character;
+	lineBufIndex = lineBufIndex + 1U;
     if( (character == '\n') ||
         (lineBufIndex >= (DebugP_UART_LOG_WRITER_LINE_BUF_SIZE)))
     {
         if(lineBufIndex >= (DebugP_UART_LOG_WRITER_LINE_BUF_SIZE))
         {
             /* add EOL */
-            lineBuf[lineBufIndex++]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex]=(uint8_t)'\r';
+			lineBufIndex = lineBufIndex + 1U;
+            lineBuf[lineBufIndex]=(uint8_t)'\n';
+			lineBufIndex = lineBufIndex + 1U;
         }
-        if(lineBufIndex < 2)
+        if(lineBufIndex < UNSIGNED_INTEGERVAL_TWO)
         {
             /* only \n in buffer */
             /* if line did not terminate with \r followed by \n, then add the \r */
-            lineBuf[lineBufIndex-1]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex-1U]=(uint8_t)'\r';
+            lineBuf[lineBufIndex]=(uint8_t)'\n';
+			lineBufIndex = lineBufIndex + 1U;
         }
-        if(lineBuf[lineBufIndex-2]!='\r')
+        if(lineBuf[lineBufIndex-UNSIGNED_INTEGERVAL_TWO]!=(uint8_t)'\r')
         {
             /* if line did not terminate with \r followed by \n, then add the \r */
-            lineBuf[lineBufIndex-1]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex-1U] = (uint8_t)'\r';
+            lineBuf[lineBufIndex] = (uint8_t)'\n';
+			lineBufIndex = lineBufIndex + 1U;
         }
         /* flush line to UART */
-        DebugP_uartLogWriterPutLine(lineBuf, lineBufIndex);
+        DebugP_uartLogWriterPutLine(lineBuf,(uint16_t)lineBufIndex);
         lineBufIndex = 0;
     }
 }

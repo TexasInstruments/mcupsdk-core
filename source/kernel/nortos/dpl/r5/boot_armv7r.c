@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,13 +32,15 @@
 #include <stdint.h>
 #include <string.h>
 
+int32_t _system_pre_init(void);
+
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
 
-int _system_pre_init()
+int32_t _system_pre_init(void)
 {
     uint32_t bss_size = ((uintptr_t)&__BSS_END - (uintptr_t)&__BSS_START);
-    memset((void*)&__BSS_START, 0x00, bss_size);
+    (void) memset((void*)&__BSS_START, 0x00, bss_size);
     return 1;
 }
 

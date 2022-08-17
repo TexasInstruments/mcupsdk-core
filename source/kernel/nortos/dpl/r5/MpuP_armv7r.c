@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -47,23 +47,23 @@ void MpuP_enableAsm(void);
 uint32_t MpuP_isEnableAsm(void);
 void MpuP_disableBRAsm(void);
 void MpuP_enableBRAsm(void);
-void MpuP_setRegionAsm(uint32_t regionId, uint32_t regionBaseAddr, 
+void MpuP_setRegionAsm(uint32_t regionId, uint32_t regionBaseAddr,
               uint32_t sizeAndEnble, uint32_t regionAttrs);
 
 /* these are defined as part of SysConfig */
 extern MpuP_Config gMpuConfig;
-extern MpuP_RegionConfig gMpuRegionConfig[];
+extern MpuP_RegionConfig gMpuRegionConfig[4u];
 
 
 static uint32_t MPU_SECTION MpuP_getAttrs(MpuP_RegionAttrs *region)
 {
-    uint32_t regionAttrs = 
-          ((uint32_t)(region->isExecuteNever & 0x1) << 12) 
-        | ((uint32_t)(region->accessPerm     & 0x7) <<  8)
-        | ((uint32_t)(region->tex            & 0x7) <<  3) 
-        | ((uint32_t)(region->isSharable     & 0x1) <<  2) 
-        | ((uint32_t)(region->isCacheable    & 0x1) <<  1) 
-        | ((uint32_t)(region->isBufferable   & 0x1) <<  0); 
+    uint32_t regionAttrs =
+          ((uint32_t)(region->isExecuteNever & (uint32_t)0x1) << (uint32_t)12)
+        | ((uint32_t)(region->accessPerm     & (uint32_t)0x7) << (uint32_t)8)
+        | ((uint32_t)(region->tex            & (uint32_t)0x7) << (uint32_t)3)
+        | ((uint32_t)(region->isSharable     & (uint32_t)0x1) << (uint32_t)2)
+        | ((uint32_t)(region->isCacheable    & (uint32_t)0x1) << (uint32_t)1)
+        | ((uint32_t)(region->isBufferable   & (uint32_t)0x1) << (uint32_t)0);
 
     return regionAttrs;
 }
@@ -71,7 +71,7 @@ static uint32_t MPU_SECTION MpuP_getAttrs(MpuP_RegionAttrs *region)
 void MPU_SECTION MpuP_RegionAttrs_init(MpuP_RegionAttrs *region)
 {
     region->isExecuteNever = 0;
-    region->accessPerm     = MpuP_AP_S_RW_U_R;
+    region->accessPerm     = (uint8_t)MpuP_AP_S_RW_U_R;
     region->tex            = 0;
     region->isSharable     = 1;
     region->isCacheable    = 0;
@@ -85,19 +85,20 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size, 
     uint32_t baseAddress, sizeAndEnable, regionAttrs;
     uint32_t enabled;
     uintptr_t key;
+    uint32_t value = size;
 
     DebugP_assertNoLog( regionNum < MpuP_MAX_REGIONS);
 
     /* size 5b field */
-    size = (size & 0x1F);
+    value = (value & (uint32_t)0x1F);
 
     /* If N is the value in size field, the region size is 2N+1 bytes. */
-    sizeAndEnable = ((uint32_t)(attrs->subregionDisableMask & 0xFF) << 8)
-                  | ((uint32_t)(size            & 0x1F) << 1) 
-                  | ((uint32_t)(attrs->isEnable &  0x1) << 0);
+    sizeAndEnable = ((uint32_t)(attrs->subregionDisableMask & (uint32_t)0xFF) << (uint32_t)8)
+                  | ((uint32_t)(value            & (uint32_t)0x1F) << (uint32_t)1)
+                  | ((uint32_t)(attrs->isEnable &  (uint32_t)0x1) << (uint32_t)0);
 
     /* align base address to region size */
-    baseAddress = ((uint32_t)addr & ~( (1<<((uint64_t)size+1))-1 ));
+    baseAddress = ((uint32_t)addr & ~( (1U <<((uint64_t)value+1U))-1U ));
 
     /* get region attribute mask */
     regionAttrs = MpuP_getAttrs(attrs);
@@ -113,14 +114,14 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size, 
 
     HwiP_restore(key);
 
-    if (enabled) {
+    if (enabled != 0U) {
         MpuP_enable();
     }
 }
 
-void MPU_SECTION MpuP_enable()
+void MPU_SECTION MpuP_enable(void)
 {
-    if(!MpuP_isEnable())
+    if(MpuP_isEnable()==0U)
     {
         uint32_t type;
         uintptr_t key;
@@ -141,9 +142,9 @@ void MPU_SECTION MpuP_enable()
     }
 }
 
-void MPU_SECTION MpuP_disable()
+void MPU_SECTION MpuP_disable(void)
 {
-    if(MpuP_isEnable())
+    if(MpuP_isEnable()!=0U)
     {
         uint32_t type;
         uintptr_t key;
@@ -167,16 +168,16 @@ void MPU_SECTION MpuP_disable()
     }
 }
 
-uint32_t MPU_SECTION MpuP_isEnable()
+uint32_t MPU_SECTION MpuP_isEnable(void)
 {
     return MpuP_isEnableAsm();
 }
 
-void MPU_SECTION MpuP_init()
+void MPU_SECTION MpuP_init(void)
 {
     uint32_t i;
 
-    if (MpuP_isEnable()) {
+    if (MpuP_isEnable()!=0U) {
         MpuP_disable();
     }
 
@@ -187,20 +188,20 @@ void MPU_SECTION MpuP_init()
     /*
      * Initialize MPU regions
      */
-    for (i = 0; i < gMpuConfig.numRegions; i++) 
+    for (i = 0; i < gMpuConfig.numRegions; i++)
     {
-        MpuP_setRegion(i, 
+        MpuP_setRegion(i,
                 (void*)gMpuRegionConfig[i].baseAddr,
                 gMpuRegionConfig[i].size,
                 &gMpuRegionConfig[i].attrs
         );
     }
 
-    if (gMpuConfig.enableBackgroundRegion) {
+    if (gMpuConfig.enableBackgroundRegion!=0U) {
         MpuP_enableBRAsm();
     }
 
-    if (gMpuConfig.enableMpu) {
+    if (gMpuConfig.enableMpu!=0U) {
         MpuP_enable();
     }
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,7 +63,7 @@ extern ClockP_Config gClockConfig;
 void ClockP_timerClearOverflowInt(uint32_t timerBaseAddr);
 uint32_t ClockP_getTimerCount(uint32_t timerBaseAddr);
 void ClockP_timerTickIsr(void *args);
-
+void ClockP_timerCallbackFunction( TimerHandle_t xTimer );
 
 #ifdef __cplusplus
 }

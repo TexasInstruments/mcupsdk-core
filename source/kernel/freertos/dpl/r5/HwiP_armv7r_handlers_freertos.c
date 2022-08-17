@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,8 +36,15 @@
 
 static volatile uint32_t gdummy;
 
+
 /* compile flag to enable or disable interrupt nesting */
 #define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
+
+void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void);
+void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void);
+void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler(void);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void);
 
 /* IRQ handler starts execution in HwiP_irq_handler, defined in portASM.S
  * After some initial assembly logic it then branches to this function.
@@ -63,7 +70,7 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
         HwiP_FxnCallback isr;
         void *args;
 
-        if(isPulse)
+        if(isPulse != 0U)
         {
             HwiP_clearInt(intNum);
         }
@@ -82,9 +89,9 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
         }
 
         /* disallow nesting of interrupts */
-        HwiP_disable();
+        (void)HwiP_disable();
 
-        if(!isPulse)
+        if(isPulse == 0U)
         {
             HwiP_clearInt(intNum);
         }
@@ -113,7 +120,7 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
         HwiP_FxnCallback isr;
         void *args;
 
-        if(isPulse)
+        if(isPulse != 0U)
         {
             HwiP_clearInt(intNum);
         }
@@ -132,9 +139,9 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
         }
 
         /* disallow nesting of interrupts */
-        HwiP_disableFIQ();
+        (void)HwiP_disableFIQ();
 
-        if(!isPulse)
+        if(isPulse == 0U)
         {
             HwiP_clearInt(intNum);
         }
@@ -151,27 +158,26 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) { ; }
+
 }
 
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U){  ; }
+
 }
 
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U)  { ;}
 }
 
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U){ ; }
+
 }

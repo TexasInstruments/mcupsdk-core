@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -59,10 +59,10 @@ int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
     {
         vQueueAddToRegistry(pSemaphore->semHndl, "Binary Sem (DPL)");
 
-        if(initCount == 1)
+        if(initCount == 1U)
         {
             /* post a semaphore to increment initial count to 1 */
-            xSemaphoreGive(pSemaphore->semHndl);
+            (void)xSemaphoreGive(pSemaphore->semHndl);
         }
         status = SystemP_SUCCESS;
     }
@@ -128,14 +128,14 @@ void SemaphoreP_destruct(SemaphoreP_Object *obj)
 int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
 {
     SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
-    uint32_t isSemTaken = 0;
+    uint32_t isSemTaken = 0U;
     int32_t status;
 
-    if(pSemaphore->isRecursiveMutex)
+    if(pSemaphore->isRecursiveMutex != 0U)
     {
-        if( ! HwiP_inISR() )
+        if(HwiP_inISR() == 0U )
         {
-            isSemTaken = xSemaphoreTakeRecursive(pSemaphore->semHndl, timeout);
+            isSemTaken =(uint32_t) xSemaphoreTakeRecursive(pSemaphore->semHndl, timeout);
         }
         else
         {
@@ -145,20 +145,20 @@ int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
     }
     else
     {
-        if( HwiP_inISR() )
+        if( HwiP_inISR() != 0U )
         {
             BaseType_t xHigherPriorityTaskWoken = 0;
 
             /* timeout is ignored when in ISR mode */
-            isSemTaken = xSemaphoreTakeFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
-            portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+            isSemTaken = (uint32_t) xSemaphoreTakeFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
+            portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
         }
         else
         {
-            isSemTaken = xSemaphoreTake(pSemaphore->semHndl, timeout);
+            isSemTaken = (uint32_t) xSemaphoreTake(pSemaphore->semHndl, timeout);
         }
     }
-    if(isSemTaken)
+    if(isSemTaken != 0U)
     {
         status = SystemP_SUCCESS;
     }
@@ -174,11 +174,11 @@ void SemaphoreP_post(SemaphoreP_Object *obj)
 {
     SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
 
-    if(pSemaphore->isRecursiveMutex)
+    if(pSemaphore->isRecursiveMutex != 0U)
     {
-        if( ! HwiP_inISR() )
+        if( HwiP_inISR() == 0U)
         {
-            xSemaphoreGiveRecursive(pSemaphore->semHndl);
+            (void)xSemaphoreGiveRecursive(pSemaphore->semHndl);
         }
         else
         {
@@ -188,16 +188,16 @@ void SemaphoreP_post(SemaphoreP_Object *obj)
     }
     else
     {
-        if( HwiP_inISR() )
+        if( HwiP_inISR() != 0U)
         {
             BaseType_t xHigherPriorityTaskWoken = 0;
 
-            xSemaphoreGiveFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
-            portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+            (void)xSemaphoreGiveFromISR(pSemaphore->semHndl, &xHigherPriorityTaskWoken);
+            portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
         }
         else
         {
-            xSemaphoreGive(pSemaphore->semHndl);
+            (void)xSemaphoreGive(pSemaphore->semHndl);
         }
     }
 }

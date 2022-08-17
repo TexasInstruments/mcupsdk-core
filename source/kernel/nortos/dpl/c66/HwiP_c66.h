@@ -164,6 +164,25 @@ int32_t HwiP_intcGlobalExcepEnable(void);
 int32_t HwiP_intcGlobalExtExcepEnable(void);
 int32_t HwiP_intcGlobalExcepClear(HwiP_IntcExcep exc);
 
+/**
+ * \brief Set Priority to Interrupt
+ *
+ * \param intNum [in]   Interrupt number
+ * \param priority [in] Priority
+ */
+void HwiP_setPri(uint32_t intNum, uint32_t priority);
+
+/**
+ * \brief App callback invoked at end of ISR handler.
+ *
+ * - Application must implement this function.
+ *
+ * \note Invoked from ISR context so callback should return ASAP
+ * \note Currently enabled only for C66x SafeRTOS port
+ */
+void HwiP_appInterruptHandlerHook(uint32_t interruptVectorNum );
+
+
 #ifdef __cplusplus
 }
 #endif

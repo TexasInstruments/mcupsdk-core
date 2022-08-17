@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,7 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "ClockP_freertos_priv.h"
+#include <kernel/freertos/dpl/common/ClockP_freertos_priv.h>
+#include <kernel/dpl/TimerP.h>
 
 typedef struct ClockP_Struct_
 {
@@ -48,7 +49,7 @@ ClockP_Control gClockCtrl;
 
 void ClockP_timerTickIsr(void *args)
 {
-    void vPortTimerTickHandler();
+    void vPortTimerTickHandler(void);
 
     /* increment the systick counter */
     gClockCtrl.ticks++;
@@ -62,7 +63,7 @@ void ClockP_timerCallbackFunction( TimerHandle_t xTimer )
 {
     ClockP_Struct *pTimer = (ClockP_Struct *) pvTimerGetTimerID(xTimer);
 
-    if(pTimer != NULL && pTimer->callback )
+    if((pTimer != NULL) && (pTimer->callback) )
     {
         pTimer->callback((ClockP_Object*)pTimer, pTimer->args);
     }
@@ -76,7 +77,7 @@ int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
 
     DebugP_assert(sizeof(ClockP_Struct) <= sizeof(ClockP_Object));
 
-    if(params->period == 0)
+    if(params->period == 0U)
     {
         uxAutoReload = pdFALSE;
     }
@@ -99,15 +100,15 @@ int32_t ClockP_construct(ClockP_Object *handle, ClockP_Params *params)
                             ClockP_timerCallbackFunction,
                             &pTimer->timerObj
                             );
-    if(pTimer->timerHndl==NULL)
+    if(pTimer->timerHndl == NULL)
     {
         status = SystemP_FAILURE;
     }
     else
     {
-        if(params->start)
+        if(params->start != 0U)
         {
-            xTimerStart(pTimer->timerHndl, portMAX_DELAY);
+            (void)xTimerStart(pTimer->timerHndl, portMAX_DELAY);
         }
         status = SystemP_SUCCESS;
     }
@@ -118,7 +119,7 @@ void ClockP_destruct(ClockP_Object *handle)
 {
     ClockP_Struct *pTimer = (ClockP_Struct*)handle;
 
-    xTimerDelete(pTimer->timerHndl, portMAX_DELAY);
+    (void)xTimerDelete(pTimer->timerHndl, portMAX_DELAY);
 }
 
 uint32_t ClockP_usecToTicks(uint64_t usecs)
@@ -131,7 +132,7 @@ uint64_t ClockP_ticksToUsec(uint32_t ticks)
     return ((uint64_t)ticks * gClockCtrl.usecPerTick);
 }
 
-uint32_t ClockP_getTicks()
+uint32_t ClockP_getTicks(void)
 {
     return ((uint32_t)xTaskGetTickCount());
 }
@@ -141,7 +142,7 @@ uint32_t ClockP_getTimeout(ClockP_Object *handle)
     ClockP_Struct *pTimer = (ClockP_Struct*)handle;
     uint32_t value = 0;
 
-    if(xTimerIsTimerActive(pTimer->timerHndl))
+    if(xTimerIsTimerActive(pTimer->timerHndl) != 0)
     {
         value = xTimerGetExpiryTime( pTimer->timerHndl ) - xTaskGetTickCount();
     }
@@ -152,33 +153,34 @@ uint32_t ClockP_isActive(ClockP_Object *handle)
 {
     ClockP_Struct *pTimer = (ClockP_Struct*)handle;
 
-    return xTimerIsTimerActive(pTimer->timerHndl);
+    return (uint32_t)xTimerIsTimerActive(pTimer->timerHndl);
 }
 
 void ClockP_Params_init(ClockP_Params *params)
 {
-    params->start = 0;
+	params->start = 0;
     params->timeout = 0;
     params->period = 0;
     params->callback = NULL;
     params->args = NULL;
-    params->name = "Clock (DPL)";
+	params->name = "Clock (DPL)";
+
 }
 
 void ClockP_setTimeout(ClockP_Object *handle, uint32_t timeout)
 {
     ClockP_Struct *pTimer = (ClockP_Struct*)handle;
 
-    if(HwiP_inISR())
+    if(HwiP_inISR() != 0U)
     {
         BaseType_t xHigherPriorityTaskWoken = 0;
 
-        xTimerChangePeriodFromISR(pTimer->timerHndl, timeout, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        (void)xTimerChangePeriodFromISR(pTimer->timerHndl, timeout, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
     }
     else
     {
-        xTimerChangePeriod( pTimer->timerHndl, timeout, portMAX_DELAY);
+        (void)xTimerChangePeriod( pTimer->timerHndl, timeout, portMAX_DELAY);
     }
 }
 
@@ -186,16 +188,16 @@ void ClockP_start(ClockP_Object *handle)
 {
     ClockP_Struct *pTimer = (ClockP_Struct*)handle;
 
-    if(HwiP_inISR())
+    if(HwiP_inISR() != 0U)
     {
         BaseType_t xHigherPriorityTaskWoken = 0;
 
-        xTimerStartFromISR(pTimer->timerHndl, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        (void)xTimerStartFromISR(pTimer->timerHndl, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
     }
     else
     {
-        xTimerStart(pTimer->timerHndl, portMAX_DELAY);
+        (void)xTimerStart(pTimer->timerHndl, portMAX_DELAY);
     }
 }
 
@@ -203,22 +205,22 @@ void ClockP_stop(ClockP_Object *handle)
 {
     ClockP_Struct *pTimer = (ClockP_Struct*)handle;
 
-    if(HwiP_inISR())
+    if(HwiP_inISR() != 0U)
     {
         BaseType_t xHigherPriorityTaskWoken = 0;
 
-        xTimerStopFromISR(pTimer->timerHndl, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        (void)xTimerStopFromISR(pTimer->timerHndl, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
     }
     else
     {
-        xTimerStop(pTimer->timerHndl, portMAX_DELAY);
+        (void)xTimerStop(pTimer->timerHndl, portMAX_DELAY);
     }
 }
 
 void ClockP_sleep(uint32_t sec)
 {
-    uint64_t ticks = (uint64_t)sec * 1000000 / (uint64_t)gClockCtrl.usecPerTick;
+    uint64_t ticks = (uint64_t)sec * TIME_IN_MICRO_SECONDS / (uint64_t)gClockCtrl.usecPerTick;
 
     ClockP_sleepTicks((uint32_t)ticks);
 }
@@ -247,9 +249,9 @@ void ClockP_usleep(uint32_t usec)
 /*
  *  Get the current time in microseconds.
  */
-uint64_t ClockP_getTimeUsec()
+uint64_t ClockP_getTimeUsec(void)
 {
-    uint64_t ts;
+    uint64_t ts = 0U;
     uint32_t timerCount;
     uint64_t ticks1;
     uint64_t ticks2;
@@ -261,9 +263,9 @@ uint64_t ClockP_getTimeUsec()
     } while (ticks1 != ticks2);
 
     /* Get the current time in microseconds */
-    ts = ticks2 * (uint64_t)gClockCtrl.usecPerTick
+    ts = (ticks2 * (uint64_t)gClockCtrl.usecPerTick)
              + (uint64_t) ( /* convert timer count to usecs */
-                (uint64_t)(timerCount - gClockCtrl.timerReloadCount)*gClockCtrl.usecPerTick/(0xFFFFFFFFu - gClockCtrl.timerReloadCount)
+                (uint64_t)(((timerCount - gClockCtrl.timerReloadCount)*gClockCtrl.usecPerTick)/(MAX_TIMER_COUNT_VALUE - gClockCtrl.timerReloadCount))
                 );
 
     return (ts);

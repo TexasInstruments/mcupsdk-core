@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,28 +39,28 @@ extern uint32_t gDebugLogZone;
 void _DebugP_logZone(uint32_t logZone, char *format, ...)
 {
     /* cannot be used in ISR */
-    if(! HwiP_inISR() )
+    if((HwiP_inISR())== 0U )
     {
         if( ( gDebugLogZone & logZone ) == logZone )
         {
             va_list va;
-            va_start(va, format);
-            vprintf_(format, va);
-            va_end(va);
+            (void) va_start(va, format);
+            (void) vprintf_(format, va);
+            (void) va_end(va);
         }
     }
 }
 
-int _DebugP_log(char *format, ...)
+int32_t _DebugP_log(char *format, ...)
 {
     /* cannot be used in ISR */
-    if(! HwiP_inISR() )
+    if(( HwiP_inISR())==0U )
     {
         {
             va_list va;
-            va_start(va, format);
-            vprintf_(format, va);
-            va_end(va);
+            (void) va_start(va, format);
+            (void) vprintf_(format, va);
+            (void) va_end(va);
         }
     }
     return 0;

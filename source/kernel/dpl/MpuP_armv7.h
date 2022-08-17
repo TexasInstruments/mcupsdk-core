@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -163,25 +163,25 @@ void MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size, MpuP_RegionA
 /**
  * \brief Enable MPU sub-system using the region that are setup using \ref MpuP_setRegion
  */
-void MpuP_enable();
+void MpuP_enable(void);
 
 /**
  * \brief Disable MPU sub-system
  */
-void MpuP_disable();
+void MpuP_disable(void);
 
 /**
  * \brief Check if MPU sub-system is enabled
  *
  * \return 0: MPU sub-system is disabled, 1: MPU sub-system is enabled
  */
-uint32_t MpuP_isEnable();
+uint32_t MpuP_isEnable(void);
 
 /**
  * \brief Initialize MPU sub-system, called by SysConfig, not to be called by end users
  *
  */
-void MpuP_init();
+void MpuP_init(void);
 
 /** @} */
 

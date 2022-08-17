@@ -75,7 +75,8 @@ extern "C" {
 /**
  * \brief size of shared memory log for a CPU
  */
-#define DebugP_SHM_LOG_SIZE         ( (2*1024U) - 16U)
+
+#define DebugP_SHM_LOG_SIZE         ((2U*1024U) - 16U)
 
 /**
  * \brief size of memory log for a CPU
@@ -90,6 +91,23 @@ extern "C" {
  * after reader has initialized
  */
 #define DebugP_SHM_LOG_IS_VALID     (0x12345678U)
+
+/**
+ * Macro defines the value of two
+ */
+
+#define UNSIGNED_INTEGERVAL_TWO    (2U)
+
+/**
+ * Macro defines the value of three
+ */
+
+#define UNSIGNED_INTEGERVAL_THREE    (3U)
+
+/**
+ * Macro defines the ascii value of carriage return
+ */
+#define CARRIAGE_RETURN_ASCII        (13U)
 
 /**
  * \brief Data structure describing log in shared memory
@@ -133,12 +151,12 @@ typedef struct {
 /**
  * \brief Actual function that is called for assert's by \ref DebugP_assert
  */
-void _DebugP_assert(int expression, const char *file, const char *function, int line, const char *expressionString);
+void _DebugP_assert(int32_t expression, const char *file, const char *function, int32_t line, const char *expressionString);
 
 /**
  * \brief Actual function that is called for assert's by \ref DebugP_assertNoLog
  */
-void _DebugP_assertNoLog(int expression);
+void _DebugP_assertNoLog(int32_t expression);
 
 /**
  * \name Debug assert APIs
@@ -156,11 +174,7 @@ void _DebugP_assertNoLog(int expression);
  *
  * \param expression [in] expression to check for.
  */
-#define DebugP_assert(expression)  \
-    do { \
-        _DebugP_assert(expression, \
-            __FILE__, __FUNCTION__, __LINE__, #expression); \
-    } while(0)
+#define DebugP_assert(expression) _DebugP_assert(expression, __FILE__, __FUNCTION__, __LINE__, #expression)
 
 /**
  * \brief Function to call for assert check, no logs are printed
@@ -208,10 +222,7 @@ void _DebugP_logZone(uint32_t logZone, char *format, ...);
  *
  * \param format [in] String to log
  */
-#define DebugP_log(format, ...)     \
-    do { \
-        _DebugP_logZone(DebugP_LOG_ZONE_ALWAYS_ON, format, ##__VA_ARGS__); \
-    } while(0)
+#define DebugP_log(format, ...)    _DebugP_logZone(DebugP_LOG_ZONE_ALWAYS_ON, format, ##__VA_ARGS__)
 
 /**
  * \brief Function to log a string to the enabled console, for error zone.
@@ -220,10 +231,7 @@ void _DebugP_logZone(uint32_t logZone, char *format, ...);
  *
  * \param format [in] String to log
  */
-#define DebugP_logError(format, ...)     \
-    do { \
-        _DebugP_logZone(DebugP_LOG_ZONE_ERROR, "ERROR: %s:%d: " format, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-    } while(0)
+#define DebugP_logError(format, ...)     _DebugP_logZone(DebugP_LOG_ZONE_ERROR, "ERROR: %s:%d: " format, __FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 /**
  * \brief Function to log a string to the enabled console, for warning zone.
@@ -232,10 +240,7 @@ void _DebugP_logZone(uint32_t logZone, char *format, ...);
  *
  * \param format [in] String to log
  */
-#define DebugP_logWarn(format, ...)     \
-    do { \
-        _DebugP_logZone(DebugP_LOG_ZONE_WARN, "WARNING: %s:%d: " format, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-    } while(0)
+#define DebugP_logWarn(format, ...)      _DebugP_logZone(DebugP_LOG_ZONE_WARN, "WARNING: %s:%d: " format, __FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 /**
  * \brief Function to log a string to the enabled console, for info zone.
@@ -244,10 +249,7 @@ void _DebugP_logZone(uint32_t logZone, char *format, ...);
  *
  * \param format [in] String to log
  */
-#define DebugP_logInfo(format, ...)     \
-    do { \
-        _DebugP_logZone(DebugP_LOG_ZONE_INFO, "INFO: %s:%d: " format, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-    } while(0)
+#define DebugP_logInfo(format, ...)      _DebugP_logZone(DebugP_LOG_ZONE_INFO, "INFO: %s:%d: " format, __FUNCTION__, __LINE__, ##__VA_ARGS__)
 
  /** @} */
 

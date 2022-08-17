@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,7 +39,7 @@
 
 void   HeapP_construct( HeapP_Object *heap, void *heapAddr, size_t heapSize )
 {
-    DebugP_assert( sizeof(StaticHeap_t) < sizeof(HeapP_Object) );    
+    DebugP_assert( sizeof(StaticHeap_t) < sizeof(HeapP_Object) );
 
     vHeapCreateStatic((StaticHeap_t*)heap, heapAddr, heapSize);
 }
@@ -48,7 +48,7 @@ void   HeapP_destruct(HeapP_Object *heap)
 {
     vTaskSuspendAll();
     vHeapDelete((StaticHeap_t*)heap);
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 }
 
 void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
@@ -57,7 +57,7 @@ void  *HeapP_alloc( HeapP_Object *heap, size_t allocSize )
 
     vTaskSuspendAll();
     ptr = pvHeapMalloc((StaticHeap_t*)heap, allocSize);
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 
     return ptr;
 }
@@ -66,7 +66,7 @@ void   HeapP_free( HeapP_Object *heap, void * ptr )
 {
     vTaskSuspendAll();
     vHeapFree((StaticHeap_t*)heap, ptr);
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 }
 
 size_t HeapP_getFreeHeapSize( HeapP_Object *heap )
@@ -83,6 +83,6 @@ void   HeapP_getHeapStats( HeapP_Object *heap, HeapP_MemStats * pHeapStats )
 {
     vTaskSuspendAll();
     vHeapGetHeapStats((StaticHeap_t*)heap, pHeapStats);
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 }
 

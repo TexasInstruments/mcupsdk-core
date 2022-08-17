@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,10 +34,13 @@
 #include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
+#include <kernel/dpl/TimerP.h>
 #include "printf.h"
 
 static DebugP_ShmLog *gDebugShmLogWriter = NULL;
 static const char *gDebugShmLogWriterSelfCoreName = "unknown";
+
+void DebugP_shmLogWriterPutLine(const uint8_t *buf, uint16_t num_bytes);
 
 void DebugP_shmLogWriterInit(DebugP_ShmLog *shmLog, uint16_t selfCoreId)
 {
@@ -48,7 +51,7 @@ void DebugP_shmLogWriterInit(DebugP_ShmLog *shmLog, uint16_t selfCoreId)
     gDebugShmLogWriter->isValid = DebugP_SHM_LOG_IS_VALID;
 }
 
-void DebugP_shmLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
+void DebugP_shmLogWriterPutLine(const uint8_t *buf, uint16_t num_bytes)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t max_bytes;
@@ -96,7 +99,7 @@ void DebugP_shmLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
         for (copy_bytes = 0; copy_bytes < num_bytes; copy_bytes++)
         {
             dst[wr_idx] = buf[idx];
-            wr_idx ++;
+            wr_idx = wr_idx + 1U;
             if (wr_idx >= DebugP_SHM_LOG_SIZE)
             {
                 wr_idx = 0;
@@ -112,37 +115,41 @@ void DebugP_shmLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
 void DebugP_shmLogWriterPutChar(char character)
 {
 #define DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE (120u)
-static uint8_t lineBuf[DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE+2]; /* +2 to add \r\n char at end of string in worst case */
+static uint8_t lineBuf[DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_TWO]; /* +2 to add \r\n char at end of string in worst case */
 static uint32_t lineBufIndex = 0;
 
-    if(lineBufIndex==0)
+    if(lineBufIndex==0U)
     {
         uint64_t curTime = ClockP_getTimeUsec();
 
         lineBufIndex = snprintf_((char*)lineBuf, DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE, "[%6s] %5d.%06ds : ",
                             gDebugShmLogWriterSelfCoreName,
-                            (uint32_t)(curTime/1000000U),
-                            (uint32_t)(curTime%1000000U)
+                            (uint32_t)(curTime/TIME_IN_MICRO_SECONDS),
+                            (uint32_t)(curTime%TIME_IN_MICRO_SECONDS)
                             );
     }
-    lineBuf[lineBufIndex++]=character;
+    lineBuf[lineBufIndex]=(uint8_t)character;
+	lineBufIndex = lineBufIndex + 1U;
     if( (character == '\n') ||
         (lineBufIndex >= (DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE)))
     {
         if(lineBufIndex >= (DebugP_SHM_LOG_WRITER_LINE_BUF_SIZE))
         {
             /* add EOL */
-            lineBuf[lineBufIndex++]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex]=(uint8_t)'\r';
+			lineBufIndex = lineBufIndex + 1U;
+            lineBuf[lineBufIndex]=(uint8_t)'\n';
+			lineBufIndex = lineBufIndex + 1U;
         }
-        if(lineBuf[lineBufIndex-2]!='\r')
+        if(lineBuf[lineBufIndex-UNSIGNED_INTEGERVAL_TWO] != (uint8_t)'\r')
         {
             /* if line did not terminate with \r followed by \n, then add the \r */
-            lineBuf[lineBufIndex-1]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex-1U]=(uint8_t)'\r';
+            lineBuf[lineBufIndex]=(uint8_t)'\n';
+			lineBufIndex=lineBufIndex+1U;
         }
         /* flush line to shared memory */
-        DebugP_shmLogWriterPutLine(lineBuf, lineBufIndex);
+        DebugP_shmLogWriterPutLine(lineBuf, (uint16_t)lineBufIndex);
         lineBufIndex = 0;
     }
 }

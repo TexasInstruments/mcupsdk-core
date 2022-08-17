@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,9 +35,12 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+void vApplicationLoadHook(void);
+
 #define TaskP_LOAD_CPU_LOAD_SCALE   (10000U)
 #define TaskP_REGISTRY_MAX_ENTRIES  (32u)
 #define TaskP_STACK_SIZE_MIN        (128U)
+
 
 typedef struct TaskP_Struct_ {
     StaticTask_t taskObj;
@@ -135,7 +138,7 @@ static uint32_t TaskP_calcCounterDiff(uint32_t cur, uint32_t last)
     }
     else
     {
-        delta = ( 0xFFFFFFFF - last ) + cur;
+        delta = (  0xFFFFFFFFU - last ) + cur;
     }
     return delta;
 }
@@ -158,7 +161,7 @@ void TaskP_Params_init(TaskP_Params *params)
     params->name = "Task (DPL)";
     params->stackSize = 0;
     params->stack = NULL;
-    params->priority = (TaskP_PRIORITY_HIGHEST - TaskP_PRIORITY_LOWEST) / 2;
+    params->priority = ((TaskP_PRIORITY_HIGHEST - TaskP_PRIORITY_LOWEST) /(uint32_t) 2);
     params->args = NULL;
     params->taskMain = NULL;
 #ifdef SMP_FREERTOS
@@ -174,10 +177,12 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
     DebugP_assert(sizeof(TaskP_Struct) <= sizeof(TaskP_Object));
     DebugP_assert(params != NULL);
     DebugP_assert(taskObj != NULL);
+
     DebugP_assert(params->stackSize >= TaskP_STACK_SIZE_MIN);
-    DebugP_assert( (params->stackSize & (sizeof(configSTACK_DEPTH_TYPE) - 1)) == 0);
-    DebugP_assert(params->stack != NULL );
-    DebugP_assert( ((uintptr_t)params->stack & (sizeof(configSTACK_DEPTH_TYPE) - 1)) == 0);
+    DebugP_assert( (params->stackSize & (sizeof(configSTACK_DEPTH_TYPE) - 1U)) == 0U);
+    DebugP_assert(params->stack != NULL);
+    DebugP_assert( ((uintptr_t)params->stack & (sizeof(configSTACK_DEPTH_TYPE) - 1U)) == 0U);
+
     DebugP_assert(params->taskMain != NULL );
 
     /* if prority is out of range, adjust to bring it in range */
@@ -224,7 +229,7 @@ void TaskP_destruct(TaskP_Object *obj)
         vTaskDelete(taskObj->taskHndl);
         taskObj->taskHndl = NULL;
     }
-    if(taskObj)
+    if(taskObj != NULL)
     {
         TaskP_removeFromRegistry(taskObj);
     }
@@ -234,15 +239,15 @@ void* TaskP_getHndl(TaskP_Object *obj)
 {
     TaskP_Struct *taskObj = (TaskP_Struct *)obj;
 
-    return (void*)taskObj->taskHndl;
+    return  (void*)taskObj->taskHndl;
 }
 
-void TaskP_yield()
+void TaskP_yield(void)
 {
     taskYIELD();
 }
 
-void TaskP_exit()
+void TaskP_exit(void)
 {
     vTaskDelete(NULL);
 }
@@ -261,10 +266,10 @@ void TaskP_loadGet(TaskP_Object *obj, TaskP_Load *taskLoad)
     taskLoad->cpuLoad = TaskP_calcCpuLoad(taskObj->accRunTime, gTaskP_ctrl.accTotalTime);
     taskLoad->name = taskStatus.pcTaskName;
 
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 }
 
-uint32_t TaskP_loadGetTotalCpuLoad()
+uint32_t TaskP_loadGetTotalCpuLoad(void)
 {
     uint32_t cpuLoad;
 
@@ -279,12 +284,12 @@ uint32_t TaskP_loadGetTotalCpuLoad()
     cpuLoad = TaskP_LOAD_CPU_LOAD_SCALE - TaskP_calcCpuLoad(gTaskP_ctrl.idleTskAccRunTime, gTaskP_ctrl.accTotalTime);
     #endif
 
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 
     return cpuLoad;
 }
 
-void TaskP_loadResetAll()
+void TaskP_loadResetAll(void)
 {
     TaskP_Struct *taskObj;
     uint32_t i;
@@ -310,10 +315,10 @@ void TaskP_loadResetAll()
     gTaskP_ctrl.accTotalTime = 0;
 #endif
 
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 }
 
-void TaskP_loadUpdateAll()
+void TaskP_loadUpdateAll(void)
 {
     TaskP_Struct *taskObj;
     TaskStatus_t taskStatus;
@@ -377,15 +382,15 @@ void TaskP_loadUpdateAll()
     gTaskP_ctrl.accTotalTime += delta;
     gTaskP_ctrl.lastTotalTime = curTotalTime;
 
-    xTaskResumeAll();
+    (void)xTaskResumeAll();
 }
 
-void vApplicationLoadHook()
+void vApplicationLoadHook(void)
 {
     static uint64_t lastUpdateTime = 0;
     uint64_t curUpdateTime = ClockP_getTimeUsec();
 
-    if( (curUpdateTime > lastUpdateTime) && (curUpdateTime - lastUpdateTime) > TaskP_LOAD_UPDATE_WINDOW_MSEC*1000u )
+    if( (curUpdateTime > lastUpdateTime) && ((curUpdateTime - lastUpdateTime) > (TaskP_LOAD_UPDATE_WINDOW_MSEC*1000u )) )
     {
         TaskP_loadUpdateAll();
         lastUpdateTime = curUpdateTime;

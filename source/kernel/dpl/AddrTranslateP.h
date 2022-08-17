@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -58,7 +58,7 @@ extern "C" {
  * \brief Enum's to represent different possible region size for the address translate module
  */
 typedef enum AddrTranslateP_RegionSize_e {
-    AddrTranslateP_RegionSize_1 = 0x0,
+    AddrTranslateP_RegionSize_1 = 0x0U,
     AddrTranslateP_RegionSize_2,
     AddrTranslateP_RegionSize_4,
     AddrTranslateP_RegionSize_8,

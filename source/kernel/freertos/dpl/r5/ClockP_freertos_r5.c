@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,10 +49,10 @@ void ClockP_init(void)
     HwiP_Params timerHwiParams;
 
     /* These MUST not be 0 */
-    DebugP_assert( gClockConfig.timerInputPreScaler != 0);
-    DebugP_assert( gClockConfig.timerInputClkHz != 0);
-    DebugP_assert( gClockConfig.usecPerTick != 0);
-    DebugP_assert( gClockConfig.timerBaseAddr != 0);
+    DebugP_assert( gClockConfig.timerInputPreScaler != 0U);
+    DebugP_assert( gClockConfig.timerInputClkHz != 0U);
+    DebugP_assert( gClockConfig.usecPerTick != 0U);
+    DebugP_assert( gClockConfig.timerBaseAddr != 0U);
 
     /* init internal data structure */
     gClockCtrl.ticks = 0;
@@ -62,11 +62,11 @@ void ClockP_init(void)
     /* Check if tick period set in FreeRTOS config matches the value that is passed to this function
      * A mistmatch will affect when pdMS_TO_TICKS to calculate delays
      */
-    if( pdMS_TO_TICKS( 1000 ) != ClockP_usecToTicks( 1000000 ) )
+    if( pdMS_TO_TICKS( TIME_IN_MILLI_SECONDS ) != ClockP_usecToTicks( TIME_IN_MICRO_SECONDS ) )
     {
         DebugP_logWarn("FreeRTOS configTICK_RATE_HZ (%d), does not match ClockP tick rate Hz (%d)\r\n",
             configTICK_RATE_HZ,
-            1000000U / gClockConfig.usecPerTick
+            TIME_IN_MICRO_SECONDS / (gClockConfig.usecPerTick)
             );
     }
 
@@ -87,7 +87,7 @@ void ClockP_init(void)
     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
     timerHwiParams.callback = ClockP_timerTickIsr;
     timerHwiParams.isPulse = 0;
-    HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+    (void)HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
 
     /* start the tick timer */
     TimerP_start(gClockCtrl.timerBaseAddr);

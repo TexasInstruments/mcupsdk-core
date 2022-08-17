@@ -33,13 +33,13 @@
 #include <kernel/dpl/CycleCounterP.h>
 #include <c6x.h>
 
-void CycleCounterP_reset()
+void CycleCounterP_reset(void)
 {
     /* counter is enabled by writing to TSCL - value written is ignored */
     TSCL = 0;
 }
 
-uint32_t CycleCounterP_getCount32()
+uint32_t CycleCounterP_getCount32(void)
 {
     return (TSCL);
 }

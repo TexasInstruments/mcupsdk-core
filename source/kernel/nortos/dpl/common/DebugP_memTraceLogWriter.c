@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,16 +35,19 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/CacheP.h>
+#include <kernel/dpl/TimerP.h>
 #include "printf.h"
 
 /* This globals are defined in SysConfig when Linux IPC is enabled, else these will remain undefined */
-extern char gDebugMemLog[];
+extern char gDebugMemLog[1U];
 extern uint32_t gDebugMemLogSize;
 
 static uint32_t gDebugMemLogWriteIndex = 0;
 static volatile uint32_t gDebugMemLogIsWrapAround = 0;
 
 static const char *gDebugP_memTraceLogWriterSelfCoreName = "unknown";
+
+void DebugP_memTraceLogWriterPutLine(uint8_t *buf, uint16_t num_bytes);
 
 void DebugP_memLogWriterInit(uint16_t selfCoreId)
 {
@@ -56,7 +59,7 @@ void DebugP_memTraceLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
     int32_t status = SystemP_SUCCESS;
     volatile uint32_t wr_idx;
 
-    if (gDebugMemLogSize == 0)
+    if (gDebugMemLogSize == 0U)
     {
         status = SystemP_FAILURE;
     }
@@ -71,14 +74,14 @@ void DebugP_memTraceLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
         for (copy_bytes = 0; copy_bytes < num_bytes; copy_bytes++)
         {
             dst[wr_idx] = buf[idx];
-            wr_idx ++;
+            wr_idx = wr_idx + 1U;
             if (wr_idx >= gDebugMemLogSize)
             {
                 /* flush to memory for linux to see */
                 CacheP_wbInv(
                         &dst[gDebugMemLogWriteIndex],
                         (wr_idx - gDebugMemLogWriteIndex),
-                        CacheP_TYPE_ALL);
+                        (uint32_t)CacheP_TYPE_ALL);
                 wr_idx = 0;
                 gDebugMemLogWriteIndex = 0;
                 gDebugMemLogIsWrapAround = 1;
@@ -89,7 +92,7 @@ void DebugP_memTraceLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
         CacheP_wbInv(
                 &dst[gDebugMemLogWriteIndex],
                 (wr_idx - gDebugMemLogWriteIndex),
-                CacheP_TYPE_ALL);
+                (uint32_t)CacheP_TYPE_ALL);
 
         gDebugMemLogWriteIndex = wr_idx;
     }
@@ -98,37 +101,41 @@ void DebugP_memTraceLogWriterPutLine(uint8_t *buf, uint16_t num_bytes)
 void DebugP_memLogWriterPutChar(char character)
 {
 #define DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE (120u)
-static uint8_t lineBuf[DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE+2]; /* +2 to add \r\n char at end of string in worst case */
+static uint8_t lineBuf[DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_TWO]; /* +2 to add \r\n char at end of string in worst case */
 static uint32_t lineBufIndex = 0;
 
-    if(lineBufIndex==0)
+    if(lineBufIndex==0U)
     {
         uint64_t curTime = ClockP_getTimeUsec();
 
-        lineBufIndex = snprintf_((char*)lineBuf, DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE, "[%6s] %5d.%06ds : ",
+        lineBufIndex = (uint32_t)snprintf_((char*)lineBuf, DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE, "[%6s] %5d.%06ds : ",
                             gDebugP_memTraceLogWriterSelfCoreName,
-                            (uint32_t)(curTime/1000000U),
-                            (uint32_t)(curTime%1000000U)
+                            (uint32_t)(curTime/TIME_IN_MICRO_SECONDS),
+                            (uint32_t)(curTime%TIME_IN_MICRO_SECONDS)
                             );
     }
-    lineBuf[lineBufIndex++]=character;
+    lineBuf[lineBufIndex]=(uint8_t)character;
+	lineBufIndex = lineBufIndex + 1U;
     if( (character == '\n') ||
         (lineBufIndex >= (DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE)))
     {
         if(lineBufIndex >= (DEBUGP_MEM_TRACE_LOG_WRITER_LINE_BUF_SIZE))
         {
             /* add EOL */
-            lineBuf[lineBufIndex++]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex]=(uint8_t)'\r';
+			lineBufIndex = lineBufIndex + 1U;
+            lineBuf[lineBufIndex]=(uint8_t)'\n';
+			lineBufIndex = lineBufIndex + 1U;
         }
-        if(lineBuf[lineBufIndex-2]!='\r')
+        if(lineBuf[lineBufIndex-UNSIGNED_INTEGERVAL_TWO]!=(uint8_t)'\r')
         {
             /* if line did not terminate with \r followed by \n, then add the \r */
-            lineBuf[lineBufIndex-1]='\r';
-            lineBuf[lineBufIndex++]='\n';
+            lineBuf[lineBufIndex-1U]=(uint8_t)'\r';
+            lineBuf[lineBufIndex]=(uint8_t)'\n';
+			lineBufIndex = lineBufIndex + 1U;
         }
         /* flush line to shared memory */
-        DebugP_memTraceLogWriterPutLine(lineBuf, lineBufIndex);
+        DebugP_memTraceLogWriterPutLine(lineBuf, (uint16_t)lineBufIndex);
         lineBufIndex = 0;
     }
 }

@@ -113,18 +113,18 @@ void HwiP_init(void)
         /* Note: Event ID 0-3 are reserved for ECM!! */
         HwiP_intcMapEventVector(pIntcRegs, i, vectId);
         HwiP_intcInterruptClear(vectId);
-        HwiP_intcInterruptEnable(vectId);
+        (void) HwiP_intcInterruptEnable(vectId);
     }
 
     /*
      * Enable Global interrupts - NMIE and GIE to enable maskable interrupts
      */
     /* Set NMIE bit in the interrupt enable register (IER) */
-    HwiP_intcGlobalNmiEnable();
+    (void) HwiP_intcGlobalNmiEnable();
     /* Set global interrupt enable bit (GIE) bit in the control status register (CSR) */
-    HwiP_intcGlobalEnable(NULL);
+    (void) HwiP_intcGlobalEnable(NULL);
 
-    _restore_interrupts(key);
+    (void) _restore_interrupts(key);
 
     return;
 }
@@ -156,7 +156,7 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
         eventId = params->intNum & 0x1FU;
         pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
 
-    _restore_interrupts(key);
+   (void) _restore_interrupts(key);
 
     return SystemP_SUCCESS;
 }
@@ -187,7 +187,7 @@ void HwiP_destruct(HwiP_Object *handle)
     gHwiCtrl.isr[obj->intNum] = NULL;
     gHwiCtrl.isrArgs[obj->intNum] = NULL;
 
-    _restore_interrupts(key);
+    (void) _restore_interrupts(key);
 
     return;
 }
@@ -252,7 +252,7 @@ void HwiP_enableInt(uint32_t intNum)
         eventId = intNum & 0x1FU;
         key = _disable_interrupts();
         pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
-        _restore_interrupts(key);
+        (void) _restore_interrupts(key);
     }
     // else block here
 
@@ -278,12 +278,12 @@ uint32_t HwiP_disableInt(uint32_t intNum)
         ecmId = intNum >> 5U;
         eventId = intNum & 0x1FU;
         key = _disable_interrupts();
-        if(!(pIntcRegs->EVTMASK[ecmId] & ((uint32_t) 1U << eventId)))
+        if ((pIntcRegs->EVTMASK[ecmId] & ((uint32_t) 1U << eventId)) == 0U)
         {
             isEnable = 1U;
             pIntcRegs->EVTMASK[ecmId] |= ((uint32_t) 1U << eventId);
         }
-        _restore_interrupts(key);
+        (void) _restore_interrupts(key);
     }
     // else block here
 
@@ -292,13 +292,13 @@ uint32_t HwiP_disableInt(uint32_t intNum)
 
 void HwiP_restoreInt(uint32_t intNum, uint32_t oldIntState)
 {
-    if(oldIntState)
+    if(oldIntState!=0U)
     {
         HwiP_enableInt(intNum);
     }
     else
     {
-        HwiP_disableInt(intNum);
+       (void) HwiP_disableInt(intNum);
     }
 
     return;
@@ -363,7 +363,7 @@ uintptr_t HwiP_disable(void)
 
 void HwiP_enable(void)
 {
-    _enable_interrupts();
+	(void) _enable_interrupts();
     return;
 }
 
@@ -392,9 +392,11 @@ void HwiP_intcEcmDispatcher(uint32_t ecmId)
     HwiP_IntcRegsOvly   pIntcRegs = gHwiCtrl.pIntcRegs;
     uint32_t            i, evtMask;
     volatile uint32_t   mevtFlag;
-
+	uint32_t flag = 0U;
+    uint32_t loop = 1U;
+	
     isrStartIdx = HwiP_EVENTS_PER_ECM * ecmId;
-    while(1)
+    while(loop != 0U)
     {
         /* Get current pending ECM interrupts */
         mevtFlag = pIntcRegs->MEVTFLAG[ecmId];
@@ -410,9 +412,10 @@ void HwiP_intcEcmDispatcher(uint32_t ecmId)
         for(i = 0U; i < HwiP_EVENTS_PER_ECM; i++)
         {
             evtMask = ((uint32_t) 1U << i);
+            flag = (mevtFlag & evtMask);
             isrIdx = isrStartIdx + i;
             if((gHwiCtrl.isr[isrIdx] != NULL) &&
-               (mevtFlag & evtMask))
+               (flag != 0U))
             {
                 /* Call user callback */
                 gHwiCtrl.isr[isrIdx](gHwiCtrl.isrArgs[isrIdx]);

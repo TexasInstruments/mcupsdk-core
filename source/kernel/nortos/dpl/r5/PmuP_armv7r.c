@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,8 +54,7 @@
 #define PmuP_SETUP_FLAG_EVENT_COUNTER_RESET     (1u<<1u)
 #define PmuP_SETUP_FLAG_ENABLE_ALL_COUNTERS     (1u<<0u)
 
-
-#define PmuP_COUNTER_MASK_CYCLE_COUNTER         (1u<<31u)
+#define PmuP_COUNTER_MASK_CYCLE_COUNTER         ((uint32_t)1<<(uint32_t)31)
 #define PmuP_COUNTER_MASK_ALL_COUNTERS          (0xFFFFFFFFu)
 #define PmuP_SEC_TO_NANOSEC                     (1000000000ULL)
 
@@ -78,7 +77,7 @@ uint64_t PMU_TEXT_SECTION CycleCounterP_nsToTicks(const uint64_t nanosecs)
     return (((uint64_t)nanosecs*gCounterFreqHz)/PmuP_SEC_TO_NANOSEC);
 }
 
-void PMU_TEXT_SECTION CycleCounterP_reset()
+void PMU_TEXT_SECTION CycleCounterP_reset(void)
 {
     uint32_t setupFlags = 0;
 

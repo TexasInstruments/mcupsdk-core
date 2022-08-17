@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,11 +42,15 @@ typedef struct {
     uint8_t isCoreShmLogInialized[CSL_CORE_ID_MAX];
     DebugP_ShmLog *shmLog;
     uint8_t numCores;
-    char lineBuf[DEBUG_SHM_LOG_READER_LINE_BUF_SIZE+3]; /* +3 to add \r\n and null char at end of string in worst case */
+    char lineBuf[DEBUG_SHM_LOG_READER_LINE_BUF_SIZE+UNSIGNED_INTEGERVAL_THREE]; /* +3 to add \r\n and null char at end of string in worst case */
 
 } DebugP_ShmLogReaderCtrl;
 
 DebugP_ShmLogReaderCtrl gDebugShmLogReaderCtrl;
+
+uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,char *buf, uint32_t buf_size);
+
+void DebugP_shmLogReaderTaskMain(void *args);
 
 extern void DebugP_shmLogReaderTaskCreate(void);
 
@@ -61,7 +65,7 @@ void DebugP_shmLogReaderInit(DebugP_ShmLog *shmLog, uint16_t numCores)
         gDebugShmLogReaderCtrl.isCoreShmLogInialized[i] = 0;
     }
     gDebugShmLogReaderCtrl.shmLog = shmLog;
-    gDebugShmLogReaderCtrl.numCores = numCores;
+    gDebugShmLogReaderCtrl.numCores = (uint8_t)numCores;
 
     DebugP_shmLogReaderTaskCreate();
 }
@@ -75,7 +79,7 @@ uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
     num_bytes = 0;
     wr_idx = shmLog->wrIndex;
     rd_idx = shmLog->rdIndex;
-    if(wr_idx >= DebugP_SHM_LOG_SIZE || rd_idx >= DebugP_SHM_LOG_SIZE)
+    if((wr_idx >= DebugP_SHM_LOG_SIZE )|| (rd_idx >= DebugP_SHM_LOG_SIZE))
     {
         status = SystemP_FAILURE;
     }
@@ -102,7 +106,7 @@ uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
                 cur_char = src[rd_idx];
 
                 rd_idx++;
-                if(rd_idx >= DebugP_SHM_LOG_SIZE)
+                if(rd_idx >=  DebugP_SHM_LOG_SIZE)
                 {
                     rd_idx = 0;
                 }
@@ -110,34 +114,40 @@ uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
                 break_loop = 0;
 
                 /* pick only user viewable characters */
-                if(    (cur_char >= ' ' && cur_char <= '~') /* all alphabets, numbers, special char's like .,- etc */
-                    || (cur_char == '\r') /* other valid char's */
-                    || (cur_char == '\n')
-                    || (cur_char == '\t')
+                if(    ((cur_char >= (uint8_t)' ' )&& (cur_char <= (uint8_t)'~'))/* all alphabets, numbers, special char's like .,- etc */
+                    || (cur_char == (uint8_t)'\r') /* other valid char's */
+                    || (cur_char == (uint8_t)'\n')
+                    || (cur_char == (uint8_t)'\t')
                     )
                 {
                     buf[idx] = (char)cur_char;
                     idx ++;
                 }
-                if(cur_char=='\n')
+                if(cur_char==(uint8_t)'\n')
                 {
                     /* add null termination for string and break, we have +3 additional bytes of \r\n null for worst case */
-                    buf[idx++] = 0;
+                    buf[idx] = (char)0;
+					idx = idx + 1U;
                     break_loop = 1;
                 }
                 else
                 if (idx >= buf_size)
                 {
                     /* buffer size exceeded, we have +3 additional bytes of \r\n null, add these and break */
-                    buf[idx++] = '\r';
-                    buf[idx++] = '\n';
-                    buf[idx++] = 0;
+                    buf[idx] = (char)'\r';
+					idx = idx + 1U;
+                    buf[idx] = (char)'\n';
+					idx = idx + 1U;
+                    buf[idx] = (char)0;
+					idx = idx + 1U;
                     break_loop = 1;
                 }
-                if ( 1 == break_loop)
+				else { /*MISRAC */}
+                if ( 1U == break_loop)
                 {
                     break;
                 }
+				else { /*MISRAC */}
             }
             num_bytes = idx;
 
@@ -188,9 +198,9 @@ void DebugP_shmLogReaderTaskMain(void *args)
 {
     uint32_t pollingTicks = ClockP_usecToTicks(DEBUG_SHM_LOG_READER_TASK_POLLING_TIME_IN_MSEC*1000U);
     uint32_t elaspedTicks, sleepTicks;
-
+    uint32_t loop = 1;
     sleepTicks = pollingTicks;
-    while(1)
+    while(loop!=0U)
     {
         uint32_t i;
 
@@ -201,7 +211,7 @@ void DebugP_shmLogReaderTaskMain(void *args)
         {
             DebugP_ShmLog *shmLog = &gDebugShmLogReaderCtrl.shmLog[i];
 
-            if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0)
+            if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0U)
             {
                 if(shmLog->isValid == DebugP_SHM_LOG_IS_VALID)
                 {
@@ -210,7 +220,7 @@ void DebugP_shmLogReaderTaskMain(void *args)
                     shmLog->isValid = 0;
                 }
             }
-            if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i])
+            if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]!=0U)
             {
                 uint32_t strLen;
 
@@ -219,11 +229,11 @@ void DebugP_shmLogReaderTaskMain(void *args)
                     strLen = DebugP_shmLogReaderGetString(shmLog,
                                     gDebugShmLogReaderCtrl.lineBuf,
                                     DEBUG_SHM_LOG_READER_LINE_BUF_SIZE);
-                    if(strLen > 0)
+                    if(strLen > 0U)
                     {
                         DebugP_log(gDebugShmLogReaderCtrl.lineBuf);
                     }
-                } while(strLen);
+                } while(strLen!=0U);
             }
         }
 

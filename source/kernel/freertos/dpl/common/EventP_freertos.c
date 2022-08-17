@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -79,7 +79,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
     EventP_Struct   *pEvent = (EventP_Struct *)obj;
     int32_t         status;
 
-    if((pEvent == NULL) || (clearOnExit > 2) || (waitForAll > 2) || (eventBits == NULL))
+    if((pEvent == NULL) || (clearOnExit > 2U) || (waitForAll > 2U) || (eventBits == NULL))
     {
         status = SystemP_FAILURE;
     }
@@ -107,7 +107,7 @@ int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
     }
     else
     {
-        if(HwiP_inISR())
+        if(HwiP_inISR() != 0U)
         {
             BaseType_t xHigherPriorityTaskWoken = pdFALSE;
             BaseType_t xResult;
@@ -118,7 +118,7 @@ int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
 
             if(xResult != pdFAIL)
             {
-                portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+                portYIELD_FROM_ISR((uint32_t)xHigherPriorityTaskWoken);
                 status = SystemP_SUCCESS;
             }
             else
@@ -128,7 +128,7 @@ int32_t EventP_setBits(EventP_Object *obj, uint32_t bitsToSet)
         }
         else
         {
-            xEventGroupSetBits(pEvent->eventHndl, (EventBits_t)bitsToSet);
+            (void)xEventGroupSetBits(pEvent->eventHndl, (EventBits_t)bitsToSet);
             status  = SystemP_SUCCESS;
         }
     }
@@ -146,7 +146,7 @@ int32_t EventP_clearBits(EventP_Object *obj, uint32_t bitsToClear)
     }
     else
     {
-        if(HwiP_inISR())
+        if(HwiP_inISR() != 0U)
         {
             BaseType_t xResult;
 
@@ -163,7 +163,7 @@ int32_t EventP_clearBits(EventP_Object *obj, uint32_t bitsToClear)
         }
         else
         {
-            xEventGroupClearBits(pEvent->eventHndl, (EventBits_t)bitsToClear);
+            (void)xEventGroupClearBits(pEvent->eventHndl, (EventBits_t)bitsToClear);
             status  = SystemP_SUCCESS;
         }
     }
@@ -181,7 +181,7 @@ int32_t EventP_getBits(EventP_Object *obj, uint32_t *eventBits)
     }
     else
     {
-        if(HwiP_inISR())
+        if(HwiP_inISR() != 0U)
         {
             *eventBits = (uint32_t)xEventGroupGetBitsFromISR(pEvent->eventHndl);
         }

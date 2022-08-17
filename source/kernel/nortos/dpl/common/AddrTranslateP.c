@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,10 +32,10 @@
 #include <kernel/dpl/AddrTranslateP.h>
 #include <drivers/hw_include/csl_types.h>
 
-#define RAT_CTRL(baseAddr, i)       (volatile uint32_t*)(baseAddr + 0x20 + 0x10*(i))
-#define RAT_BASE(baseAddr, i)       (volatile uint32_t*)(baseAddr + 0x24 + 0x10*(i))
-#define RAT_TRANS_L(baseAddr, i)    (volatile uint32_t*)(baseAddr + 0x28 + 0x10*(i))
-#define RAT_TRANS_H(baseAddr, i)    (volatile uint32_t*)(baseAddr + 0x2C + 0x10*(i))
+#define RAT_CTRL(baseAddr, i)       (volatile uint32_t*)(baseAddr + (0x20U + (0x10U * (uint32_t)(i))))
+#define RAT_BASE(baseAddr, i)       (volatile uint32_t*)(baseAddr + (0x24U + (0x10U*(uint32_t)(i))))
+#define RAT_TRANS_L(baseAddr, i)    (volatile uint32_t*)(baseAddr + (0x28U + (0x10U*(uint32_t)(i))))
+#define RAT_TRANS_H(baseAddr, i)    (volatile uint32_t*)(baseAddr + (0x2CU + (0x10U*(uint32_t)(i))))
 
 AddrTranslateP_Params gAddrTranslateConfig = {
     .numRegions = 0,
@@ -48,21 +48,24 @@ static void AddrTranslateP_setRegion(uint32_t ratBaseAddr, uint16_t regionNum,
         uint32_t size, uint32_t enable)
 {
     uint32_t systemAddrL, systemAddrH;
-    if(size > AddrTranslateP_RegionSize_4G)
+    uint32_t value = size;
+    uint32_t localAddress = localAddr;
+	
+    if(value > (uint32_t)AddrTranslateP_RegionSize_4G)
     {
-        size = AddrTranslateP_RegionSize_4G;
+        value = AddrTranslateP_RegionSize_4G;
     }
-    systemAddrL = (uint32_t)(systemAddr & ~( (uint32_t)( ((uint64_t)1 << size) - 1) ));
-    systemAddrH = (uint32_t)((systemAddr >> 32 ) & 0xFFFF);
-    localAddr = localAddr   & ~( (uint32_t)( ((uint64_t)1 << size) - 1) );
+    systemAddrL = (uint32_t)(systemAddr & ~( (uint32_t)( ((uint64_t)1U << value) - 1U) ));
+    systemAddrH = (uint32_t)((systemAddr >> 32U ) & 0xFFFFU);
+    localAddress = localAddress   & ~( (uint32_t)( ((uint64_t)1U << value) - 1U) );
 
     /* disable RAT region first */
-    *RAT_CTRL(ratBaseAddr, regionNum) = 0;
-    *RAT_BASE(ratBaseAddr, regionNum) = localAddr;
+    *RAT_CTRL(ratBaseAddr, regionNum) = 0U;
+    *RAT_BASE(ratBaseAddr, regionNum) = localAddress;
     *RAT_TRANS_L(ratBaseAddr, regionNum) = systemAddrL;
     *RAT_TRANS_H(ratBaseAddr, regionNum) = systemAddrH;
     /* set size and enable the region */
-    *RAT_CTRL(ratBaseAddr, regionNum) = ((enable & 0x1) << 31u) | (size & 0x3F);
+    *RAT_CTRL(ratBaseAddr, regionNum) = ((enable & 0x1U) << 31U) | (value & 0x3FU);
 }
 
 void AddrTranslateP_Params_init(AddrTranslateP_Params *params)
@@ -85,7 +88,7 @@ void AddrTranslateP_init(AddrTranslateP_Params *params)
 
     for(i=0; i<gAddrTranslateConfig.numRegions; i++)
     {
-        DebugP_assertNoLog(gAddrTranslateConfig.ratBaseAddr!=0);
+        DebugP_assertNoLog(gAddrTranslateConfig.ratBaseAddr!=0U);
         DebugP_assertNoLog(gAddrTranslateConfig.regionConfig!=NULL);
 
         /* enable regions setup by user */
@@ -114,7 +117,7 @@ void *AddrTranslateP_getLocalAddr(uint64_t systemAddr)
         uint32_t sizeMask;
 
         /* we assume gAddrTranslateConfig.regionConfig[] address and size is aligned */
-        sizeMask = ( (uint32_t)( ((uint64_t)1 << gAddrTranslateConfig.regionConfig[regionId].size) - 1) );
+        sizeMask = ( (uint32_t)( ((uint64_t)1U << gAddrTranslateConfig.regionConfig[regionId].size) - 1U) );
 
         startAddr = gAddrTranslateConfig.regionConfig[regionId].systemAddr;
 
@@ -122,14 +125,14 @@ void *AddrTranslateP_getLocalAddr(uint64_t systemAddr)
         endAddr = startAddr + sizeMask;
 
         /* see if input address falls in this region */
-        if(systemAddr >= startAddr && systemAddr <= endAddr)
+        if((systemAddr >= startAddr) && (systemAddr <= endAddr))
         {
             /* yes, input address falls in this region, break from loop */
             found = 1;
             break;
         }
     }
-    if(found)
+    if(found != 0U)
     {
         /* translate input address to output address */
         uint32_t offset = systemAddr - gAddrTranslateConfig.regionConfig[regionId].systemAddr;

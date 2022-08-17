@@ -130,15 +130,16 @@ static interrupt void HwiP_intcEcm3Dispatcher(void)
 
 static interrupt void HwiP_intcReservedDispatcher(void)
 {
-    while(1);
+   uint32_t loop = 1;
+   while(loop != 0U) {;}
 }
 
 uint32_t HwiP_inISR(void)
 {
     uint32_t stat = 0U, tsr;
 
-    tsr = TSR;
-    if(tsr & 0x200U)    /* TSR.INT - bit 9 */
+    tsr = (uint32_t)TSR;
+    if((tsr & 0x200U)!=0U)    /* TSR.INT - bit 9 */
     {
         stat = 1U;
     }

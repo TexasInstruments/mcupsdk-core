@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,13 +43,14 @@ typedef struct EventP_Struct_
 
 static inline uint32_t EventP_ffs(uint32_t num)
 {
-    uint32_t pos = 0;
-    if (num != 0)
+    uint32_t pos = 0U;
+    uint32_t numValue = num;
+    if (numValue != 0U)
     {
-        num = (num ^ (num & (num - 1)));
-        while (num)
+        numValue = (numValue ^ (numValue & (numValue - 1U)));
+        while (numValue != 0U)
         {
-            num >>= 1;
+            numValue >>= 1;
             pos++;
         }
     }
@@ -93,21 +94,21 @@ int32_t EventP_waitBits(EventP_Object  *obj,
     clockParams.timeout = SystemP_WAIT_FOREVER;
     ClockP_construct(&clockObj, &clockParams);
 
-    if ((timeout != 0) && (timeout != SystemP_WAIT_FOREVER))
+    if ((timeout != 0U) && (timeout != SystemP_WAIT_FOREVER))
     {
         ClockP_start(&clockObj);
     }
 
     key = HwiP_disable();
 
-    while ((waitForAll && ((pEvent->eventMask &  bitsToWaitFor) != bitsToWaitFor)) ||
-            (!waitForAll && ((pEvent->eventMask &  bitsToWaitFor) == 0)))
+    while (((waitForAll!=0U) && ((pEvent->eventMask &  bitsToWaitFor) != bitsToWaitFor)) ||
+            ((waitForAll==0U) && ((pEvent->eventMask &  bitsToWaitFor) == 0U)))
     {
         HwiP_restore(key);
 
         key = HwiP_disable();
 
-        if ((timeout != SystemP_WAIT_FOREVER) && ClockP_isActive(&clockObj))
+        if ((timeout != SystemP_WAIT_FOREVER) && (ClockP_isActive(&clockObj)!=0U))
         {
             break;
             status = SystemP_TIMEOUT;
@@ -115,7 +116,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
     }
     *eventBits = (pEvent->eventMask &  bitsToWaitFor);
 
-    if (clearOnExit)
+    if (clearOnExit != 0U)
     {
         pEvent->eventMask &= ~bitsToWaitFor;
     }

@@ -129,7 +129,8 @@ static void HwiP_intcEcm3Dispatcher(void)
 
 static void HwiP_intcReservedDispatcher(void)
 {
-    while(1);
+     uint32_t loop = 1U;
+     while(loop == 1U) {;}
 }
 
 #ifdef __cplusplus

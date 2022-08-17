@@ -129,7 +129,7 @@ static void CacheP_invPrefetchBuffer(void);
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void CacheP_init()
+void CacheP_init(void)
 {
     uint32_t            i;
     CacheP_MarRegion   *mar;
@@ -152,17 +152,17 @@ void CacheP_enable(uint32_t type)
     volatile uint32_t   regVal;
     CacheP_Size        *size = &gCacheSize;
 
-    if(type & CacheP_TYPE_L1P)
+    if((type & CacheP_TYPE_L1P)!=0U)
     {
         CacheP_setSize(size);
     }
 
-    if(type & CacheP_TYPE_L1D)
+    if((type & CacheP_TYPE_L1D)!=0U)
     {
         CacheP_setSize(size);
     }
 
-    if(type & CacheP_TYPE_L2)
+    if((type & CacheP_TYPE_L2)!=0U)
     {
         /* set the L2 mode to normal */
         regVal = *L2CFG;
@@ -179,17 +179,17 @@ void CacheP_disable(uint32_t type)
 
     /* Only L1 is supported, reject any other type
      * To disable L2 use CacheP_setSize() and/or CacheP_setMar() */
-    DebugP_assertNoLog((type & ~CacheP_TYPE_L1) == 0);
+    DebugP_assertNoLog((type & ~CacheP_TYPE_L1) == 0U);
 
     CacheP_getSize(&size);
 
-    if(type & CacheP_TYPE_L1P)
+    if((type & CacheP_TYPE_L1P)!=0U)
     {
         size.l1pSize = CacheP_L1Size_0K;
         CacheP_setSize(&size);
     }
 
-    if(type & CacheP_TYPE_L1D)
+    if((type & CacheP_TYPE_L1D)!=0U)
     {
         size.l1dSize = CacheP_L1Size_0K;
         CacheP_setSize(&size);
@@ -198,7 +198,7 @@ void CacheP_disable(uint32_t type)
     return;
 }
 
-uint32_t CacheP_getEnabled()
+uint32_t CacheP_getEnabled(void)
 {
     uint32_t        type = 0;
     CacheP_Size     size;
@@ -222,7 +222,7 @@ uint32_t CacheP_getEnabled()
 
 void CacheP_wbAll(uint32_t type)
 {
-    if(type & CacheP_TYPE_L2D)
+    if((type & CacheP_TYPE_L2D)!=0U)
     {
         /* Perform a global write back. There is no effect on L1P cache. All cache
          * lines are left valid in L1D cache and the data in L1D cache is written
@@ -232,7 +232,7 @@ void CacheP_wbAll(uint32_t type)
     }
     else
     {
-        if(type & CacheP_TYPE_L1D)
+        if((type & CacheP_TYPE_L1D)!=0U)
         {
             /* L1D alone set without L2 */
             CacheP_all(L1DWB);
@@ -248,7 +248,7 @@ void CacheP_wbAll(uint32_t type)
 
 void CacheP_wbInvAll(uint32_t type)
 {
-    if(type & CacheP_TYPE_L2D)
+    if((type & CacheP_TYPE_L2D)!=0U)
     {
         /* Performs a global write back and invalidate. All cache lines are
          * invalidated in L1P cache. All cache lines are written back to L2 or
@@ -258,12 +258,12 @@ void CacheP_wbInvAll(uint32_t type)
     }
     else
     {
-        if(type & CacheP_TYPE_L1D)
+        if((type & CacheP_TYPE_L1D)!=0U)
         {
             /* L1D set without L2 */
             CacheP_all(L1DWBINV);
         }
-        if(type & CacheP_TYPE_L1P)
+        if((type & CacheP_TYPE_L1P)!=0U)
         {
             /* L1P set without L2 - L1P has only invalidate */
             CacheP_all(L1PINV);
@@ -411,7 +411,7 @@ static void CacheP_all(volatile uint32_t *cacheReg)
     key = HwiP_disable();
 
     /* wait for any previous cache operation to complete */
-    while(*L2WWC != 0)
+    while(*L2WWC != 0U)
     {
         /* open a window for interrupts */
         HwiP_restore(key);
@@ -424,7 +424,7 @@ static void CacheP_all(volatile uint32_t *cacheReg)
     HwiP_restore(key);
 
     /* wait until cache operation completes */
-    while(*cacheReg)
+    while((*cacheReg)!=0U)
     {
         /* Wait */
     }
@@ -474,7 +474,7 @@ static void CacheP_block(void *addr, uint32_t size, volatile uint32_t *barReg)
     wordCnt = (size + 3U + ((uint32_t) addr - alignAddr)) >> 2U;
 
     /* determine the increment count */
-    if(CacheP_ATOMIC_BLOCKSIZE)
+    if(CacheP_ATOMIC_BLOCKSIZE!=0U)
     {
         incCnt = CacheP_ATOMIC_BLOCKSIZE;
     }
@@ -484,12 +484,12 @@ static void CacheP_block(void *addr, uint32_t size, volatile uint32_t *barReg)
     }
 
     /* loop until word count is zero or less */
-    while(wordCnt > 0)
+    while(wordCnt > 0U)
     {
         key = HwiP_disable();
 
         /* wait for any previous cache operation to complete */
-        while(*L2WWC != 0)
+        while(*L2WWC != 0U)
         {
             /* open a window for interrupts */
             HwiP_restore(key);
@@ -507,7 +507,7 @@ static void CacheP_block(void *addr, uint32_t size, volatile uint32_t *barReg)
          *  interrupts disabled here if atomicBlockSize != 0.
          *  CacheP_wait() is doing 2 mfences so no need to spin for 16 NOPs
          */
-        if(CacheP_ATOMIC_BLOCKSIZE)
+        if(CacheP_ATOMIC_BLOCKSIZE != 0U)
         {
             CacheP_wait();
         }
@@ -539,7 +539,7 @@ static void CacheP_block(void *addr, uint32_t size, volatile uint32_t *barReg)
         for(marNum = firstMar; marNum <= lastMar; marNum++)
         {
             /* if prefetch bit enabled, invalidate prefetch buffer */
-            if(marBase[marNum] & MAR_PFX_MASK)
+            if((marBase[marNum] & MAR_PFX_MASK)!=0U)
             {
                 CacheP_invPrefetchBuffer();
                 break;
@@ -549,7 +549,7 @@ static void CacheP_block(void *addr, uint32_t size, volatile uint32_t *barReg)
 
     /* Only wait here if atomicBlockSize is 0.
      * When atomicBlockSize != 0, the wait already happens above */
-    if(CacheP_ATOMIC_BLOCKSIZE == 0)
+    if(CacheP_ATOMIC_BLOCKSIZE == 0U)
     {
         CacheP_wait();
     }
