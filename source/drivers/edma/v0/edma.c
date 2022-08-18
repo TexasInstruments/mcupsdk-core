@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Texas Instruments Incorporated
+ * Copyright (C) 2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -252,7 +252,7 @@ void EDMA_enableChInShadowRegRegion(uint32_t baseAddr,
         {
             draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId));
             /* Enable the DMA channel in the DRAE registers */
-            draeValue |= (uint32_t) 0x01U << chNum;
+            draeValue |= (uint32_t) 0x01 << chNum;
             HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId), draeValue);
         }
         else
@@ -260,7 +260,7 @@ void EDMA_enableChInShadowRegRegion(uint32_t baseAddr,
             draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId));
 
             /* Enable the DMA channel in the DRAEH registers */
-            draeValue |= (uint32_t) 0x01U << (chNum - 32U);
+            draeValue |= (uint32_t) 0x01 << (chNum - 32U);
             HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId), draeValue);
         }
     }
@@ -269,7 +269,7 @@ void EDMA_enableChInShadowRegRegion(uint32_t baseAddr,
         /* FOR TYPE QDMA */
         /* Enable the QDMA channel in the DRAE/DRAEH registers */
         draeValue  = HW_RD_REG32(baseAddr + EDMA_TPCC_QRAEN(regionId));
-        draeValue |= (uint32_t) 0x01U << chNum;
+        draeValue |= (uint32_t) 0x01 << chNum;
         HW_WR_REG32(baseAddr + EDMA_TPCC_QRAEN(regionId), draeValue);
     }
     else
@@ -292,14 +292,14 @@ void EDMA_disableChInShadowRegRegion(uint32_t baseAddr,
         {
             draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId));
             /* Disable the DMA channel in the DRAE registers */
-            draeValue &= ~((uint32_t) 0x01U << chNum);
+            draeValue &= ~((uint32_t) 0x01 << chNum);
             HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId), draeValue);
         }
         else
         {
             draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId));
             /* Disable the DMA channel in the DRAEH registers */
-            draeValue &= ~((uint32_t) 0x01U << (chNum - 32U));
+            draeValue &= ~((uint32_t) 0x01 << (chNum - 32U));
             HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId), draeValue);
         }
     }
@@ -308,7 +308,7 @@ void EDMA_disableChInShadowRegRegion(uint32_t baseAddr,
         /* FOR TYPE QDMA */
         draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_QRAEN(regionId));
         /* Disable the QDMA channel in the DRAE/DRAEH registers */
-        draeValue &= ~((uint32_t) 0x01U) << chNum;
+        draeValue &= ~((uint32_t) 0x01) << chNum;
         HW_WR_REG32(baseAddr + EDMA_TPCC_QRAEN(regionId), draeValue);
     }
     else
@@ -317,7 +317,7 @@ void EDMA_disableChInShadowRegRegion(uint32_t baseAddr,
     }
 }
 
-void EDMA_enableTccInShadowRegRegion(uint32_t baseAddr,
+static void EDMA_enableTccInShadowRegRegion(uint32_t baseAddr,
                                     uint32_t regionId,
                                     uint32_t tccNum)
 {
@@ -327,7 +327,7 @@ void EDMA_enableTccInShadowRegRegion(uint32_t baseAddr,
     {
         draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId));
         /* Enable the DMA channel in the DRAE registers */
-        draeValue |= (uint32_t) 0x01U << tccNum;
+        draeValue |= (uint32_t) 0x01 << tccNum;
         HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId), draeValue);
     }
     else
@@ -335,12 +335,12 @@ void EDMA_enableTccInShadowRegRegion(uint32_t baseAddr,
         draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId));
 
         /* Enable the DMA channel in the DRAEH registers */
-        draeValue |= (uint32_t) 0x01U << (tccNum - 32U);
+        draeValue |= (uint32_t) 0x01 << (tccNum - 32U);
         HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId), draeValue);
     }
 }
 
-void EDMA_disableTccInShadowRegRegion(uint32_t baseAddr,
+static void EDMA_disableTccInShadowRegRegion(uint32_t baseAddr,
                                      uint32_t regionId,
                                      uint32_t tccNum)
 {
@@ -350,14 +350,14 @@ void EDMA_disableTccInShadowRegRegion(uint32_t baseAddr,
     {
         draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId));
         /* Enable the DMA channel in the DRAE registers */
-        draeValue &= ~((uint32_t) 0x01U << tccNum);
+        draeValue &= ~((uint32_t) 0x01 << tccNum);
         HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEM(regionId), draeValue);
     }
     else
     {
         draeValue = HW_RD_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId));
         /* Enable the DMA channel in the DRAEH registers */
-        draeValue &= ~((uint32_t) 0x01U << (tccNum - 32U));
+        draeValue &= ~((uint32_t) 0x01 << (tccNum - 32U));
         HW_WR_REG32(baseAddr + EDMA_TPCC_DRAEHM(regionId), draeValue);
     }
 }
@@ -493,17 +493,17 @@ void EDMA_clrMissEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chNum)
     {
         /*clear SECR to clean any previous NULL request */
         HW_WR_REG32(baseAddr + EDMA_TPCC_SECR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
 
         /*clear EMCR to clean any previous NULL request */
-        HW_WR_REG32(baseAddr + EDMA_TPCC_EMCR, (uint32_t) 0x01U << chNum);
+        HW_WR_REG32(baseAddr + EDMA_TPCC_EMCR, (uint32_t) 0x01 << chNum);
     }
     else
     {
         HW_WR_REG32(baseAddr + EDMA_TPCC_SECRH_RN(regionId),
-                    (uint32_t) 0x01U << (chNum - 32U));
+                    (uint32_t) 0x01 << (chNum - 32U));
         /*clear EMCRH to clean any previous NULL request */
-        HW_WR_REG32(baseAddr + EDMA_TPCC_EMCRH, (uint32_t) 0x01U << (chNum - 32U));
+        HW_WR_REG32(baseAddr + EDMA_TPCC_EMCRH, (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -511,10 +511,10 @@ void EDMA_qdmaClrMissEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t ch
 {
     /*clear SECR to clean any previous NULL request  */
     HW_WR_REG32(baseAddr + EDMA_TPCC_QSECR_RN(
-                    regionId), (uint32_t) 0x01U << chNum);
+                    regionId), (uint32_t) 0x01 << chNum);
 
     /*clear EMCR to clean any previous NULL request  */
-    HW_WR_REG32(baseAddr + EDMA_TPCC_QEMCR, (uint32_t) 0x01U << chNum);
+    HW_WR_REG32(baseAddr + EDMA_TPCC_QEMCR, (uint32_t) 0x01 << chNum);
 }
 
 void EDMA_clrCCErr(uint32_t baseAddr, uint32_t flags)
@@ -529,13 +529,13 @@ void EDMA_setEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chNum)
     {
         /* (ESR) - set corresponding bit to set a event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_ESR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
     }
     else
     {
         /* (ESRH) - set corresponding bit to set a event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_ESRH_RN(regionId),
-                    (uint32_t) 0x01U << (chNum - 32U));
+                    (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -545,13 +545,13 @@ void EDMA_clrEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chNum)
     {
         /* (ECR) - set corresponding bit to clear a event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_ECR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
     }
     else
     {
         /* (ECRH) - set corresponding bit to clear a event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_ECRH_RN(regionId),
-                    (uint32_t) 0x01U << (chNum - 32U));
+                    (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -561,13 +561,13 @@ void EDMA_enableDmaEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chNu
     {
         /* (EESR) - set corresponding bit to enable DMA event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_EESR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
     }
     else
     {
         /* (EESRH) - set corresponding bit to enable DMA event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_EESRH_RN(regionId),
-                    (uint32_t) 0x01U << (chNum - 32U));
+                    (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -577,13 +577,13 @@ void EDMA_disableDmaEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chN
     {
         /* (EECR) - set corresponding bit to disable event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_EECR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
     }
     else
     {
         /* (EECRH) - set corresponding bit to disable event */
         HW_WR_REG32(baseAddr + EDMA_TPCC_EECRH_RN(
-                        regionId), (uint32_t) 0x01U << (chNum - 32U));
+                        regionId), (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -591,14 +591,14 @@ void EDMA_enableQdmaEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chN
 {
     /* (QEESR) - set corresponding bit to enable QDMA event                 */
     HW_WR_REG32(baseAddr + EDMA_TPCC_QEESR_RN(
-                    regionId), (uint32_t) 0x01U << chNum);
+                    regionId), (uint32_t) 0x01 << chNum);
 }
 
 void EDMA_disableQdmaEvtRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chNum)
 {
     /* (QEESR) - set corresponding bit to disable QDMA event                 */
     HW_WR_REG32(baseAddr + EDMA_TPCC_QEECR_RN(
-                    regionId), (uint32_t) 0x01U << chNum);
+                    regionId), (uint32_t) 0x01 << chNum);
 }
 
 uint32_t EDMA_getCCErrStatus(uint32_t baseAddr)
@@ -631,10 +631,10 @@ uint32_t EDMA_readIntrStatusRegion(uint32_t baseAddr, uint32_t regionId, uint32_
 {
     uint32_t intrStatus = 0;
 
-    if(tccNum < 32)
+    if(tccNum < 32U)
     {
-        if ((EDMA_getIntrStatusRegion(baseAddr, regionId) & (0x1 << tccNum)) ==
-            (0x1 << tccNum))
+        if ((EDMA_getIntrStatusRegion(baseAddr, regionId) & ((uint32_t)0x1 << tccNum)) ==
+            ((uint32_t)0x1 << tccNum))
         {
             intrStatus = 1;
         }
@@ -642,8 +642,8 @@ uint32_t EDMA_readIntrStatusRegion(uint32_t baseAddr, uint32_t regionId, uint32_
     else
     {
         if ((EDMA_intrStatusHighGetRegion(baseAddr, regionId) &
-               (0x1 << (tccNum - 32))) ==
-               (0x1 << (tccNum - 32)))
+               ((uint32_t)0x1 << (tccNum - 32U))) ==
+               ((uint32_t)0x1 << (tccNum - 32U)))
         {
             intrStatus = 1;
         }
@@ -673,18 +673,18 @@ uint32_t EDMA_readEventStatusRegion(uint32_t baseAddr, uint32_t chNum)
 {
     uint32_t eventStatus = 0;
 
-    if(chNum < 32)
+    if(chNum < 32U)
     {
-        if ((EDMA_getEventStatus(baseAddr) & (0x1 << chNum)) ==
-            (0x1 << chNum))
+        if ((EDMA_getEventStatus(baseAddr) & ((uint32_t)0x1 << chNum)) ==
+            ((uint32_t)0x1 << chNum))
         {
             eventStatus = 1;
         }
     }
     else
     {
-        if ((EDMA_getEventStatusHigh(baseAddr) & (0x1 << (chNum - 32))) ==
-            (0x1 << (chNum - 32)))
+        if ((EDMA_getEventStatusHigh(baseAddr) & ((uint32_t)0x1 << (chNum - 32U))) ==
+            ((uint32_t)0x1 << (chNum - 32U)))
         {
             eventStatus = 1;
         }
@@ -724,13 +724,13 @@ void EDMA_enableEvtIntrRegion(uint32_t baseAddr, uint32_t regionId, uint32_t chN
     {
         /*  Interrupt Enable Set Register (IESR) */
         HW_WR_REG32(baseAddr + EDMA_TPCC_IESR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
     }
     else
     {
         /*  Interrupt Enable Set Register (IESRH) */
         HW_WR_REG32(baseAddr + EDMA_TPCC_IESRH_RN(regionId),
-                    (uint32_t) 0x01U << (chNum - 32U));
+                    (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -740,13 +740,13 @@ void EDMA_disableEvtIntrRegion(uint32_t baseAddr, uint32_t regionId, uint32_t ch
     {
         /* Interrupt Enable Clear Register (IECR) */
         HW_WR_REG32(baseAddr + EDMA_TPCC_IECR_RN(
-                        regionId), (uint32_t) 0x01U << chNum);
+                        regionId), (uint32_t) 0x01 << chNum);
     }
     else
     {
         /* Interrupt Enable Clear Register (IECRH) */
         HW_WR_REG32(baseAddr + EDMA_TPCC_IECRH_RN(regionId),
-                    (uint32_t) 0x01U << (chNum - 32U));
+                    (uint32_t) 0x01 << (chNum - 32U));
     }
 }
 
@@ -755,11 +755,11 @@ void EDMA_clrIntrRegion(uint32_t baseAddr, uint32_t regionId, uint32_t value)
     if (value < 32U)
     {
         HW_WR_REG32(baseAddr + EDMA_TPCC_ICR_RN(
-                        regionId), (uint32_t) 1U << value);
+                        regionId), (uint32_t) 1 << value);
     }
     else
     {
-        HW_WR_REG32(baseAddr + EDMA_TPCC_ICRH_RN(regionId), (uint32_t) 1U <<
+        HW_WR_REG32(baseAddr + EDMA_TPCC_ICRH_RN(regionId), (uint32_t) 1 <<
                     (value - 32U));
     }
 }
@@ -953,7 +953,7 @@ uint32_t EDMA_freeChannelRegion(uint32_t baseAddr,
     if ((chNum < SOC_EDMA_NUM_DMACH) &&
         ((EDMA_CHANNEL_TYPE_DMA == chType) || (EDMA_CHANNEL_TYPE_QDMA == chType)))
     {
-        EDMA_disableTransferRegion(baseAddr, regionId, chNum, trigMode);
+        (void) EDMA_disableTransferRegion(baseAddr, regionId, chNum, trigMode);
 
         /*
          * Loop throught the list of EDMA handles to find the one with current
@@ -1089,24 +1089,24 @@ void EDMA_clearErrorBitsRegion(uint32_t baseAddr,
         if (chNum < 32U)
         {
             HW_WR_REG32(baseAddr + EDMA_TPCC_EECR_RN(
-                            regionId), (uint32_t) 0x01U << chNum);
+                            regionId),(uint32_t) 0x01 << chNum);
             /* Write to EMCR to clear the corresponding EMR bit */
-            HW_WR_REG32(baseAddr + EDMA_TPCC_EMCR, (uint32_t) 0x01U << chNum);
+            HW_WR_REG32(baseAddr + EDMA_TPCC_EMCR, (uint32_t) 0x01 << chNum);
             /* Clears the SER */
             HW_WR_REG32(baseAddr + EDMA_TPCC_SECR_RN(
-                            regionId), (uint32_t) 0x01U << chNum);
+                            regionId), (uint32_t) 0x01 << chNum);
         }
         else
         {
             HW_WR_REG32(baseAddr +
-                        EDMA_TPCC_EECRH_RN(regionId), (uint32_t) 0x01U <<
+                        EDMA_TPCC_EECRH_RN(regionId), (uint32_t) 0x01 <<
                         (chNum - 32U));
             /* Write to EMCR to clear the corresponding EMR bit */
-            HW_WR_REG32(baseAddr + EDMA_TPCC_EMCRH, (uint32_t) 0x01U <<
+            HW_WR_REG32(baseAddr + EDMA_TPCC_EMCRH, (uint32_t) 0x01 <<
                         (chNum - 32U));
             /* Clears the SER */
             HW_WR_REG32(baseAddr +
-                        EDMA_TPCC_SECRH_RN(regionId), (uint32_t) 0x01U <<
+                        EDMA_TPCC_SECRH_RN(regionId), (uint32_t) 0x01 <<
                         (chNum - 32U));
         }
     }
@@ -1146,7 +1146,7 @@ void EDMA_clearErrorBitsRegion(uint32_t baseAddr,
     }
 }
 
-int32_t EDMA_deinitialize (uint32_t baseAddr, const EDMA_InitParams *initParam)
+static int32_t EDMA_deinitialize (uint32_t baseAddr, const EDMA_InitParams *initParam)
 {
     int32_t retVal = SystemP_SUCCESS;
     uint32_t count = 0;
@@ -1282,11 +1282,11 @@ void EDMA_init(void)
         /* initialize object varibles */
         object = gEdmaConfig[cnt].object;
         DebugP_assert(NULL != object);
-        memset(object, 0, sizeof(EDMA_Object));
+        (void) memset(object, 0, sizeof(EDMA_Object));
         /* Get the edma base address. */
         baseAddr = gEdmaConfig[cnt].attrs->baseAddr;
         /* Initialize the EDMA hardware. */
-        EDMA_initialize(baseAddr, &gEdmaConfig[cnt].attrs->initPrms);
+        (void) EDMA_initialize(baseAddr, &gEdmaConfig[cnt].attrs->initPrms);
     }
 
     return;
@@ -1304,11 +1304,11 @@ void EDMA_deinit(void)
         /* initialize object varibles */
         object = gEdmaConfig[cnt].object;
         DebugP_assert(NULL != object);
-        memset(object, 0, sizeof(EDMA_Object));
+        (void) memset(object, 0, sizeof(EDMA_Object));
         /* Get the edma base address. */
         baseAddr = gEdmaConfig[cnt].attrs->baseAddr;
         /* Initialize the EDMA hardware. */
-        EDMA_deinitialize(baseAddr, &gEdmaConfig[cnt].attrs->initPrms);
+        (void) EDMA_deinitialize(baseAddr, &gEdmaConfig[cnt].attrs->initPrms);
     }
     return;
 }
@@ -1351,7 +1351,7 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
         DebugP_assert(NULL != prms);
 
         /* Store the open params in driver object. */
-        memcpy(&object->openPrms, prms, sizeof(EDMA_Params));
+        (void) memcpy(&object->openPrms, prms, sizeof(EDMA_Params));
 
         if (prms->intrEnable == TRUE)
         {
@@ -1589,7 +1589,7 @@ uint32_t EDMA_getBaseAddr(EDMA_Handle handle)
         config = (EDMA_Config *) handle;
 
         if((config->object != NULL) &&
-           (config->object->isOpen != (uint32_t)FALSE))
+           (config->object->isOpen != FALSE))
         {
              attrs = config->attrs;
              DebugP_assert(NULL != attrs);
@@ -1698,7 +1698,7 @@ static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint
             allocPtr = &object->allocResource.dmaCh[0];
             ownPtr = &attrs->initPrms.ownResource.dmaCh[0];
             reservedPtr = &attrs->initPrms.reservedDmaCh[0];
-            resPtrLen = SOC_EDMA_NUM_DMACH/32;
+            resPtrLen = SOC_EDMA_NUM_DMACH/32U;
             maxRes = SOC_EDMA_NUM_DMACH;
             break;
         case EDMA_RESOURCE_TYPE_QDMA:
@@ -1710,13 +1710,13 @@ static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint
         case EDMA_RESOURCE_TYPE_TCC:
             allocPtr = &object->allocResource.tcc[0];
             ownPtr = &attrs->initPrms.ownResource.tcc[0];
-            resPtrLen = SOC_EDMA_NUM_DMACH/32;
+            resPtrLen = SOC_EDMA_NUM_DMACH/32U;
             maxRes = SOC_EDMA_NUM_DMACH;
             break;
         case EDMA_RESOURCE_TYPE_PARAM:
             allocPtr = &object->allocResource.paramSet[0];
             ownPtr = &attrs->initPrms.ownResource.paramSet[0];
-            resPtrLen = SOC_EDMA_NUM_PARAMSETS/32;
+            resPtrLen = SOC_EDMA_NUM_PARAMSETS/32U;
             maxRes = SOC_EDMA_NUM_PARAMSETS;
             break;
         default:
@@ -1729,37 +1729,38 @@ static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint
         /* set the status to failure.
            If allocation is successful status will be updated. */
         status = SystemP_FAILURE;
+        uint32_t resAllocated = 0U;
         intrState = HwiP_disable();
         if (*resId == EDMA_RESOURCE_ALLOC_ANY)
         {
             /* Find available resource. */
-            for (i=0; i < resPtrLen; i++)
+            for (i=0; i < resPtrLen ; i++)
             {
-                for (j=0; j<32; j++)
+                for (j=0; ((j<32U)&&(resAllocated==0U)); j++)
                 {
                     if (resType == EDMA_RESOURCE_TYPE_DMA)
                     {
                         /* Check if the dma channel is owned and available and not reserved. */
-                        if (((ownPtr[i] & (1 << j)) != 0) &&
-                            ((reservedPtr[i] & (1 << j)) == 0) &&
-                            ((allocPtr[i] & (1 << j)) == 0))
+                        if (((ownPtr[i] & (1U << j)) != 0U) &&
+                            ((reservedPtr[i] & (1U << j)) == 0U) &&
+                            ((allocPtr[i] & (1U << j)) == 0U))
                         {
-                            *resId = (i * 32) + j;
-                            allocPtr[i] |= 1 << (j%32);
+                            *resId = (i * 32U) + j;
+                            allocPtr[i] |= (uint32_t)1 << (j%32U);
                             status = SystemP_SUCCESS;
-                            break;
+                            resAllocated = 1u;
                         }
                     }
                     else
                     {
                         /* Check if the resource is owned and available. */
-                        if (((ownPtr[i] & (1 << j)) != 0) &&
-                            ((allocPtr[i] & (1 << j)) == 0))
+                        if (((ownPtr[i] & (1U << j)) != 0U) &&
+                            ((allocPtr[i] & (1U << j)) == 0U))
                         {
-                            *resId = (i * 32) + j;
-                            allocPtr[i] |= 1 << (j%32);
+                            *resId = (i * 32U) + j;
+                            allocPtr[i] |= (uint32_t)1 << (j%32U);
                             status = SystemP_SUCCESS;
-                            break;
+                            resAllocated = 1u;
                         }
                     }
                 }
@@ -1773,10 +1774,10 @@ static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint
         {
             /* Check if the resource is already allocated. */
             if ((*resId < maxRes) &&
-                ((ownPtr[*resId/32] & (1 << (*resId%32))) != 0U) &&
-                ((allocPtr[*resId/32] & (1 << (*resId%32))) == 0U))
+                ((ownPtr[*resId/32U] & (1U << (*resId%32U))) != 0U) &&
+                ((allocPtr[*resId/32U] & (1U << (*resId%32U))) == 0U))
             {
-                allocPtr[*resId/32] |= 1 << (*resId%32);
+                allocPtr[*resId/32U] |= (uint32_t)1 << (*resId%32U);
                 status = SystemP_SUCCESS;
             }
         }
@@ -1838,8 +1839,8 @@ static uint32_t EDMA_isResourceAllocated(EDMA_Handle handle, uint32_t resType, c
     isAllocated = TRUE;
     /* Check if the resource is already allocated. */
     if ((*resId < maxRes) &&
-        ((ownPtr[*resId/32] & (1 << (*resId%32))) != 0U) &&
-        ((allocPtr[*resId/32] & (1 << (*resId%32))) == 0U))
+        ((ownPtr[*resId/32U] & ((uint32_t)1 << (*resId%32U))) != 0U) &&
+        ((allocPtr[*resId/32U] & ((uint32_t)1 << (*resId%32U))) == 0U))
     {
         isAllocated = FALSE;
     }
@@ -1904,16 +1905,16 @@ static int32_t EDMA_freeResource(EDMA_Handle handle, uint32_t resType, uint32_t 
             switch (resType)
             {
                 case EDMA_RESOURCE_TYPE_DMA:
-                    object->allocResource.dmaCh[*resId/32] &= ~(1U << *resId%32);
+                    object->allocResource.dmaCh[*resId/32U] &= ~((1U << *resId)%32U);
                     break;
                 case EDMA_RESOURCE_TYPE_QDMA:
-                    object->allocResource.qdmaCh &= ~(1U << *resId%32);
+                    object->allocResource.qdmaCh &= ~((1U << *resId)%32U);
                     break;
                 case EDMA_RESOURCE_TYPE_TCC:
-                    object->allocResource.tcc[*resId/32] &= ~(1U << *resId%32);
+                    object->allocResource.tcc[*resId/32U] &= ~((1U << *resId)%32U);
                     break;
                 case EDMA_RESOURCE_TYPE_PARAM:
-                    object->allocResource.paramSet[*resId/32] &= ~(1U << *resId%32);
+                    object->allocResource.paramSet[*resId/32U] &= ~((1U << *resId)%32U);
                     break;
                 default:
                     status = SystemP_FAILURE;
@@ -1927,6 +1928,8 @@ static int32_t EDMA_freeResource(EDMA_Handle handle, uint32_t resType, uint32_t 
 
 static void EDMA_transferCompletionMasterIsrFxn(void *args)
 {
+
+
     EDMA_Handle         handle = (EDMA_Handle) args;
     EDMA_Config        *config;
     EDMA_Object        *object;
@@ -1950,7 +1953,8 @@ static void EDMA_transferCompletionMasterIsrFxn(void *args)
     intrHigh = EDMA_intrStatusHighGetRegion(baseAddr, regionId);
 
     intrObj = object->firstIntr;
-    while ((intrObj != NULL) && ((intrLow != 0) || (intrHigh != 0)))
+
+    while ((intrObj != NULL) && ((intrLow != 0U) || (intrHigh != 0U)))
     {
         if ((intrObj->tccNum < 32U) && ((intrLow & (1U << intrObj->tccNum)) != 0U))
         {
