@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,12 +60,11 @@ typedef struct
 
 IpcNotify_Ctrl gIpcNotifyCtrl;
 
-
 static inline void IpcNotify_getWriteMailbox(uint32_t remoteCoreId, uint32_t *mailboxBaseAddr, uint32_t *intrBitPos, IpcNotify_SwQueue **swQ)
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if(gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX && remoteCoreId < CSL_CORE_ID_MAX)
+    if((gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX) && (remoteCoreId < CSL_CORE_ID_MAX))
     {
         pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][remoteCoreId];
 
@@ -101,7 +100,7 @@ static inline void IpcNotify_getReadSwQ(uint32_t remoteCoreId, IpcNotify_SwQueue
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if(gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX && remoteCoreId < CSL_CORE_ID_MAX)
+    if((gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX) && (remoteCoreId < CSL_CORE_ID_MAX))
     {
         pMailboxConfig = &gIpcNotifyMailboxConfig[remoteCoreId][gIpcNotifyCtrl.selfCoreId];
 
@@ -115,8 +114,8 @@ static inline void IpcNotify_getReadSwQ(uint32_t remoteCoreId, IpcNotify_SwQueue
 
 static inline uint32_t IpcNotify_makeMsg(uint16_t clientId, uint32_t msgValue)
 {
-    return ((clientId & (IPC_NOTIFY_CLIENT_ID_MAX-1)) << IPC_NOTIFY_CLIENT_ID_SHIFT) |
-            (msgValue & (IPC_NOTIFY_MSG_VALUE_MAX-1))
+    return ((clientId & (IPC_NOTIFY_CLIENT_ID_MAX-1U)) << IPC_NOTIFY_CLIENT_ID_SHIFT) |
+            (msgValue & (IPC_NOTIFY_MSG_VALUE_MAX-1U))
             ;
 }
 
@@ -131,7 +130,7 @@ void IpcNotify_isr(void *args)
     uint32_t pendingIntr;
 
     IpcNotify_getReadMailbox(&mailboxBaseAddr);
-    DebugP_assertNoLog(mailboxBaseAddr!=NULL);
+    DebugP_assertNoLog(mailboxBaseAddr!=0U);
 
     pendingIntr = IpcNotify_mailboxGetPendingIntr(mailboxBaseAddr);
     do
@@ -144,7 +143,7 @@ void IpcNotify_isr(void *args)
             /* handle non notify interrupts, if any */
             for(core=0; core<gIpcNotifyCtrl.nonNotifyNumCores; core++)
             {
-                if( IpcNotify_mailboxIsPendingIntr(pendingIntr, gIpcNotifyCtrl.nonNotifyCoreList[core]) )
+                if( (IpcNotify_mailboxIsPendingIntr(pendingIntr, gIpcNotifyCtrl.nonNotifyCoreList[core])) != 0U)
                 {
                     gIpcNotifyCtrl.nonNotifyCallback(gIpcNotifyCtrl.nonNotifyCoreList[core]);
                 }
@@ -161,14 +160,14 @@ void IpcNotify_isr(void *args)
                 status = IpcNotify_mailboxReadSwQ(swQ, &value);
                 if(status == SystemP_SUCCESS)
                 {
-                    clientId = (value >> IPC_NOTIFY_CLIENT_ID_SHIFT) & (IPC_NOTIFY_CLIENT_ID_MAX-1);
+                    clientId = (value >> IPC_NOTIFY_CLIENT_ID_SHIFT) & (IPC_NOTIFY_CLIENT_ID_MAX-1U);
 
                     if(gIpcNotifyCtrl.callback[clientId]!=NULL)
                     {
                         gIpcNotifyCtrl.callback[clientId](
                                 pInterruptConfig->coreIdList[core],
                                 clientId,
-                                (value & (IPC_NOTIFY_MSG_VALUE_MAX-1)),
+                                (value & (IPC_NOTIFY_MSG_VALUE_MAX-1U)),
                                 gIpcNotifyCtrl.callbackArgs[clientId]
                                 );
                     }
@@ -178,7 +177,7 @@ void IpcNotify_isr(void *args)
 
         /* we need to keeping doing this until all status bits are 0, else we dont get new interrupt at R5F */
         pendingIntr = IpcNotify_mailboxGetPendingIntr(mailboxBaseAddr);
-    } while ( pendingIntr != 0 );
+    } while ( pendingIntr != 0U );
 
 }
 
@@ -189,25 +188,26 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
     IpcNotify_SwQueue *swQ;
     int32_t status = SystemP_FAILURE;
 
-    if(remoteCoreId < CSL_CORE_ID_MAX && gIpcNotifyCtrl.isCoreEnabled[remoteCoreId])
+
+    if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcNotifyCtrl.isCoreEnabled[remoteCoreId] != 0U))
     {
         uint32_t value = IpcNotify_makeMsg(remoteClientId, msgValue);
 
         IpcNotify_getWriteMailbox(remoteCoreId, &mailboxBaseAddr, &intrBitPos, &swQ);
-        DebugP_assert(mailboxBaseAddr!=NULL);
+        DebugP_assert(mailboxBaseAddr!=0U);
         DebugP_assert(swQ!=NULL);
 
         oldIntState = HwiP_disable();
         do
         {
             status = IpcNotify_mailboxWrite(mailboxBaseAddr, intrBitPos, swQ, value);
-            if(status != SystemP_SUCCESS && waitForFifoNotFull)
+            if((status != SystemP_SUCCESS) && (waitForFifoNotFull != 0U))
             {
                 /* allow interrupt enable and check again */
                 HwiP_restore(oldIntState);
                 oldIntState = HwiP_disable();
             }
-        } while(status != SystemP_SUCCESS  && waitForFifoNotFull);
+        } while((status != SystemP_SUCCESS)  && (waitForFifoNotFull != 0U));
 
         HwiP_restore(oldIntState);
 
@@ -283,11 +283,12 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     uint32_t i, core, oldIntState;
     int32_t status = SystemP_SUCCESS;
     uint32_t mailboxBaseAddr;
-
+    uint32_t coreIDlist_InterruptCheck;
+    uint32_t coreID_Check = (params->selfCoreId < CSL_CORE_ID_MAX)?1U:0U;
     IpcNotify_getConfig(&gIpcNotifyCtrl.interruptConfig, &gIpcNotifyCtrl.interruptConfigNum);
 
     DebugP_assert(params->numCores != 0U);
-    DebugP_assert(params->selfCoreId < CSL_CORE_ID_MAX);
+    DebugP_assert(coreID_Check!=0U);
 
     gIpcNotifyCtrl.selfCoreId = params->selfCoreId;
     for(i=0; i<IPC_NOTIFY_CLIENT_ID_MAX; i++)
@@ -306,7 +307,8 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     /* check parameters and config and assert if invalid */
     for(core=0; core<params->numCores; core++)
     {
-        DebugP_assert(params->coreIdList[core] < CSL_CORE_ID_MAX);
+        uint32_t coreIDlist_Check = (params->coreIdList[core] < CSL_CORE_ID_MAX)?1U:0U;
+        DebugP_assert(coreIDlist_Check!=0U);
         DebugP_assert(params->coreIdList[core] != params->selfCoreId);
         /* mark core as enabled for IPC */
         gIpcNotifyCtrl.isCoreEnabled[params->coreIdList[core]] = 1;
@@ -314,7 +316,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     /* fill list of non notify cores */
     for(core=0; core<CSL_CORE_ID_MAX; core++)
     {
-        if(gIpcNotifyCtrl.isCoreEnabled[core]==0 && core != gIpcNotifyCtrl.selfCoreId)
+        if((gIpcNotifyCtrl.isCoreEnabled[core]==0U) && (core != gIpcNotifyCtrl.selfCoreId))
         {
             gIpcNotifyCtrl.nonNotifyCoreList[gIpcNotifyCtrl.nonNotifyNumCores] = core;
             gIpcNotifyCtrl.nonNotifyNumCores++;
@@ -326,15 +328,16 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
 
         pInterruptConfig = &gIpcNotifyCtrl.interruptConfig[i];
 
-        DebugP_assert(pInterruptConfig->numCores > 0 );
+        DebugP_assert(pInterruptConfig->numCores > 0U );
         for(core=0; core<pInterruptConfig->numCores; core++)
         {
-            DebugP_assert(pInterruptConfig->coreIdList[core] < CSL_CORE_ID_MAX);
+            coreIDlist_InterruptCheck = (pInterruptConfig->coreIdList[core] < CSL_CORE_ID_MAX)?1U:0U;
+            DebugP_assert(coreIDlist_InterruptCheck!=0U);
             DebugP_assert(pInterruptConfig->coreIdList[core] != gIpcNotifyCtrl.selfCoreId);
         }
         /* check if mailbox info is valid for this core */
         IpcNotify_getReadMailbox(&mailboxBaseAddr);
-        DebugP_assert(mailboxBaseAddr!=NULL);
+        DebugP_assert(mailboxBaseAddr!=0U);
     }
 
     IpcNotify_registerClient(IPC_NOTIFY_CLIENT_ID_SYNC, IpcNotify_syncCallback, NULL);
@@ -350,7 +353,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
 
         IpcNotify_getReadMailbox(&mailboxBaseAddr);
 
-        if(pInterruptConfig->clearIntOnInit)
+        if((pInterruptConfig->clearIntOnInit) != 0U)
         {
             IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
         }
@@ -362,7 +365,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
         hwiParams.eventId = pInterruptConfig->eventId;
         hwiParams.isPulse = 0;
 
-        status |= HwiP_construct(
+        status += HwiP_construct(
             &pInterruptConfig->hwiObj,
             &hwiParams);
     }
@@ -430,13 +433,14 @@ int32_t IpcNotify_waitSync(uint32_t remoteCoreId, uint32_t timeout)
     int32_t status = SystemP_FAILURE;
     uint32_t startTicks, eslapedTicks, isDone;
 
-    if(remoteCoreId < CSL_CORE_ID_MAX && gIpcNotifyCtrl.isCoreEnabled[remoteCoreId])
+
+    if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcNotifyCtrl.isCoreEnabled[remoteCoreId] != 0U))
     {
         startTicks = ClockP_getTicks();
         isDone = 0;
-        while(!isDone)
+        while(isDone == 0U)
         {
-            if(gIpcNotifyCtrl.syncMsgPend[remoteCoreId] ==  0)
+            if(gIpcNotifyCtrl.syncMsgPend[remoteCoreId] ==  0U)
             {
                 eslapedTicks = ClockP_getTicks() - startTicks;
                 if(eslapedTicks>=timeout)
@@ -473,7 +477,7 @@ int32_t IpcNotify_syncAll(uint32_t timeout)
 
     for(remoteCoreId=0; remoteCoreId<CSL_CORE_ID_MAX; remoteCoreId++)
     {
-        if(gIpcNotifyCtrl.isCoreEnabled[remoteCoreId])
+        if((gIpcNotifyCtrl.isCoreEnabled[remoteCoreId]) != 0U)
         {
             /* no need to check return status, this will always pass */
             IpcNotify_sendSync(remoteCoreId);
@@ -481,7 +485,7 @@ int32_t IpcNotify_syncAll(uint32_t timeout)
     }
     for(remoteCoreId=0; remoteCoreId<CSL_CORE_ID_MAX; remoteCoreId++)
     {
-        if(gIpcNotifyCtrl.isCoreEnabled[remoteCoreId])
+        if((gIpcNotifyCtrl.isCoreEnabled[remoteCoreId]) != 0U)
         {
             status = IpcNotify_waitSync(remoteCoreId, timeout);
             if(status != SystemP_SUCCESS)

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -97,7 +97,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg, 
             {
                 done = 1;
             }
-            if(status == SystemP_SUCCESS && obj->doRecvUnblock)
+            if((status == SystemP_SUCCESS) && ((obj->doRecvUnblock)!=0U))
             {
                 status = SystemP_TIMEOUT;
                 done = 1;
@@ -108,7 +108,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg, 
             status = SystemP_SUCCESS;
             done = 1;
         }
-    } while( ! done );
+    } while(done!=1U);
 
     return status;
 }
@@ -194,17 +194,17 @@ void RPMessage_recvHandler(uint32_t remoteCoreId)
 
 void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
 {
-    if(gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] && gIpcRpmsgCtrl.isCoreInitialized[remoteCoreId])
+    if((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId]!=0U) && (gIpcRpmsgCtrl.isCoreInitialized[remoteCoreId]!=0U))
     {
         uint16_t rxMsgValue = RPMESSAGE_MSG_VRING_NEW_FULL;
 
-        if(RPMessage_isLinuxCore(remoteCoreId))
+        if((RPMessage_isLinuxCore(remoteCoreId)!=0U))
         {
             rxMsgValue = RPMESSAGE_LINUX_RX_VRING_ID; /* In linux, we get RX VRING ID, which is 1 in linux */
         }
         if(msgValue == rxMsgValue)
         {   /* check full ring */
-            while(RPMessage_vringIsFullRxBuf(remoteCoreId))
+            while((RPMessage_vringIsFullRxBuf(remoteCoreId)!=0U))
             {
                 RPMessage_recvHandler(remoteCoreId);
             }
@@ -226,10 +226,11 @@ int32_t RPMessage_send( void*    data,
                         uint32_t timeout
                       )
 {
+    uint16_t dataLength = dataLen;
     int32_t status = SystemP_FAILURE;
 
-    if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcRpmsgCtrl.isCoreEnable[remoteCoreId])
-        && (data != NULL) && (dataLen != 0) && (remoteEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
+    if(((remoteCoreId < CSL_CORE_ID_MAX)) && ((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] != 0U))
+        && ((data != NULL)) && ((dataLength != 0U)) && (remoteEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
         )
     {
         uint16_t vringBufId;
@@ -241,9 +242,9 @@ int32_t RPMessage_send( void*    data,
             uint16_t vringBufLen = RPMessage_vringGetTxBufLen(remoteCoreId, vringBufId);
             RPMessage_Header *header = (RPMessage_Header *)vringBufAddr;
 
-            if(dataLen > (vringBufLen - sizeof(RPMessage_Header)) )
+            if(dataLength > (vringBufLen - sizeof(RPMessage_Header)) )
             {
-                dataLen = vringBufLen - sizeof(RPMessage_Header);
+                dataLength = vringBufLen - sizeof(RPMessage_Header);
 
                 DebugP_logWarn("[IPC RPMSG] Message send to remote core %d @ %d end point truncated due to lack of space in vring buffer !!!\r\n",
                     remoteCoreId, remoteEndPt);
@@ -253,11 +254,11 @@ int32_t RPMessage_send( void*    data,
             header->dstEndPt = remoteEndPt;
             header->srcCoreId = gIpcRpmsgCtrl.selfCoreId;
             header->flags = 0;
-            header->dataLen = dataLen;
+            header->dataLen = dataLength;
 
-            memcpy( &vringBufAddr[sizeof(RPMessage_Header)], data, dataLen);
+            memcpy((void *) &vringBufAddr[sizeof(RPMessage_Header)], (const void *) data, (size_t)dataLength);
 
-            RPMessage_vringPutFullTxBuf(remoteCoreId, vringBufId, dataLen + sizeof(RPMessage_Header));
+            RPMessage_vringPutFullTxBuf(remoteCoreId, vringBufId, dataLength + sizeof(RPMessage_Header));
         }
         else
         {
@@ -280,14 +281,14 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
     int32_t status = SystemP_FAILURE;
     RPMessage_Struct *obj = (RPMessage_Struct *)handle;
 
-    if( data != NULL && dataLen != NULL && remoteCoreId != NULL && remoteEndPt != NULL
-        && obj->recvCallback == NULL /* i.e non-callback mode */
+   if( (data != NULL) && (dataLen != NULL) && (remoteCoreId != NULL) && (remoteEndPt != NULL)
+        && (obj->recvCallback == NULL) /* i.e non-callback mode */
       )
     {
         RPMessage_LocalMsg *pMsg;
 
         status = RPMessage_getEndPtMsg(obj, &pMsg, timeout);
-        if(status == SystemP_SUCCESS && pMsg != NULL)
+        if((status == SystemP_SUCCESS) && (pMsg != NULL))
         {
             uint32_t isAllocPending = 0;
             uint16_t vringBufId = pMsg->vringBufId;
@@ -308,11 +309,11 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
                 *dataLen = header->dataLen;
             }
 
-            memcpy( data, &vringBufAddr[sizeof(RPMessage_Header)], *dataLen);
+            memcpy((void *) data,(const void *) &vringBufAddr[sizeof(RPMessage_Header)],(size_t) *dataLen);
 
             RPMessage_vringPutEmptyRxBuf(*remoteCoreId, vringBufId);
             isAllocPending = RPMessage_freeEndPtMsg(*remoteCoreId, pMsg);
-            if(isAllocPending)
+            if(isAllocPending!=0U)
             {   /* if any messages are pending message pointer due to free Q being empty,
                  * now there will be atleast one element to handle any pending vring requests.
                  * So check vring and handle pending messages if any
@@ -372,8 +373,8 @@ int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreatePara
     if((handle != NULL) && (createParams != NULL))
     {
     obj = (RPMessage_Struct *)handle;
-    if(createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT
-        && gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL)
+    if((createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
+        && (gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL))
     {
         obj->localEndPt = createParams->localEndPt;
         obj->recvCallback = createParams->recvCallback;
@@ -399,8 +400,8 @@ void RPMessage_destruct(RPMessage_Object *handle)
     if(handle != NULL)
     {
     obj = (RPMessage_Struct *)handle;
-    if(obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT &&
-        gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL)
+    if((obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) &&
+        (gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL))
     {
         gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] = NULL;
 
@@ -438,7 +439,7 @@ void RPMessage_Params_init(RPMessage_Params *params)
     }
     params->vringNumBuf = 8;
     params->vringMsgSize = 128;
-    params->vringSize = RPMESSAGE_VRING_SIZE(params->vringNumBuf, params->vringMsgSize);
+    params->vringSize = RPMESSAGE_VRING_SIZE((uint32_t)params->vringNumBuf, params->vringMsgSize);
     params->linuxCoreId = CSL_CORE_ID_MAX;
     params->linuxResourceTable = NULL;
     }
@@ -458,7 +459,7 @@ int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *param
         RPMessage_queuePut(&coreObj->freeQ, &coreObj->localMsgObj[elemId].elem);
     }
     /* Linux VRINGs we will init later inside RPMessage_waitForLinuxReady() */
-    if(gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] && !RPMessage_isLinuxCore(remoteCoreId))
+    if((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] != 0U) && (RPMessage_isLinuxCore(remoteCoreId) == 0U))
     {
         /* reset RX ring */
         RPMessage_vringReset(remoteCoreId, 0, params);
@@ -497,7 +498,7 @@ void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg,
         void *data, uint16_t dataLen,
         uint16_t remoteCoreId, uint16_t remoteEndPt)
 {
-    if(gIpcRpmsgCtrl.controlEndPtCallback)
+    if(gIpcRpmsgCtrl.controlEndPtCallback!=NULL)
     {
         /* check if message is of correct size */
         if(dataLen == sizeof(RPMessage_AnnounceMsg))
@@ -542,8 +543,8 @@ int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const ch
     {
     msg.type = 0;
     msg.remoteEndPt = localEndPt; /* local end point will be remote end point for the other side */
-    strncpy(msg.name, name, RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1);
-    msg.name[RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1] = '\0';
+    strncpy(msg.name, name, RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1U);
+    msg.name[RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1U] = '\0';
 
     status = RPMessage_send(
                 &msg,
@@ -560,18 +561,15 @@ int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const ch
 void RPMessage_controlEndPtCallback(RPMessage_ControlEndPtCallback controlEndPtCallback,
     void  *controlEndPtCallbackArgs)
 {
-    if(controlEndPtCallback != NULL)
-    {
     uint32_t oldIntState;
 
     if(controlEndPtCallback != NULL)
     {
-    oldIntState = HwiP_disable();
+        oldIntState = HwiP_disable();
+        gIpcRpmsgCtrl.controlEndPtCallback = controlEndPtCallback;
+        gIpcRpmsgCtrl.controlEndPtCallbackArgs = controlEndPtCallbackArgs;
 
-    gIpcRpmsgCtrl.controlEndPtCallback = controlEndPtCallback;
-    gIpcRpmsgCtrl.controlEndPtCallbackArgs = controlEndPtCallbackArgs;
-
-    HwiP_restore(oldIntState);
+        HwiP_restore(oldIntState);
     }
 }
 
@@ -579,7 +577,7 @@ uint32_t RPMessage_isLinuxCore(uint16_t coreId)
 {
     uint32_t isLinuxCore = 0;
 
-    if(coreId == gIpcRpmsgCtrl.linuxCoreId && gIpcRpmsgCtrl.linuxResourceTable)
+    if((coreId == gIpcRpmsgCtrl.linuxCoreId) && (gIpcRpmsgCtrl.linuxResourceTable))
     {
         isLinuxCore = 1;
     }
@@ -591,7 +589,7 @@ int32_t  RPMessage_waitForLinuxReady(uint32_t timeout)
     int32_t status = SystemP_FAILURE;
     volatile RPMessage_ResourceTable *rscTable = (RPMessage_ResourceTable *)gIpcRpmsgCtrl.linuxResourceTable;
 
-    if(rscTable)
+    if(rscTable!=NULL)
     {
         uint32_t elaspedTicks, startTicks = ClockP_getTicks();
         do
@@ -666,19 +664,19 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
          */
         gIpcRpmsgCtrl.isCoreEnable[coreId] = 0;
         gIpcRpmsgCtrl.isCoreInitialized[coreId] = 0;
-        if(params->vringTxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID
+       if((params->vringTxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID)
             &&
-            params->vringRxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID
+            (params->vringRxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID)
             &&
-            coreId != gIpcRpmsgCtrl.selfCoreId
+            (coreId != gIpcRpmsgCtrl.selfCoreId)
             &&
-            IpcNotify_isCoreEnabled(coreId)
+            ((IpcNotify_isCoreEnabled(coreId))!=0U)
           )
         {
             gIpcRpmsgCtrl.isCoreEnable[coreId] = 1;
         }
-        if(RPMessage_isLinuxCore(coreId)
-            && IpcNotify_isCoreEnabled(coreId)
+        if((RPMessage_isLinuxCore(coreId)!=0U)
+            && (IpcNotify_isCoreEnabled(coreId)!=0U)
             )
         {
             gIpcRpmsgCtrl.isCoreEnable[coreId] = 1;
@@ -687,11 +685,11 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
     }
     for(coreId=0; coreId<CSL_CORE_ID_MAX; coreId++)
     {
-        status |= RPMessage_coreInit(coreId, params);
+        status += RPMessage_coreInit(coreId, params);
     }
 
     /* create control end point */
-    status |= RPMessage_controlEndPtInit();
+    status += RPMessage_controlEndPtInit();
 
     IpcNotify_registerClient(IPC_NOTIFY_CLIENT_ID_RPMSG,
         RPMessage_notifyCallback, NULL

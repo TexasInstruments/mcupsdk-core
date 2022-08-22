@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,30 +63,37 @@ typedef struct {
 
 } IpcNotify_SwQueue;
 
+#if defined(__aarch64__) || defined(__arm__)
+static inline void IpcNotify_dataAndInstructionBarrier(void)
+{
+    __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
+    __asm__ __volatile__ ( "isb"     "\n\t": : : "memory");
+}
+#endif
+
 /* read from SW fifo within a mailbox  */
 static inline int32_t IpcNotify_mailboxReadSwQ(IpcNotify_SwQueue *swQ, uint32_t *value)
 {
     int32_t status = SystemP_FAILURE;
 
-    volatile uint32_t rdIdx = swQ->rdIdx;
-    volatile uint32_t wrIdx = swQ->wrIdx;
+    uint32_t rdIdx = swQ->rdIdx;
+    uint32_t wrIdx = swQ->wrIdx;
 
-    if(rdIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO && wrIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO)
+    if((rdIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO) && (wrIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO))
     {
         if( rdIdx != wrIdx)
         {
             /* there is something in the FIFO */
             *value = swQ->fifo[rdIdx];
 
-            rdIdx = (rdIdx+1)%MAILBOX_MAX_MSGS_IN_SW_FIFO;
+            rdIdx = (rdIdx+1U)%MAILBOX_MAX_MSGS_IN_SW_FIFO;
 
             swQ->rdIdx = rdIdx;
 
             rdIdx = swQ->rdIdx; /* read back to ensure the update has reached the memory */
 
             #if defined(__aarch64__) || defined(__arm__)
-            __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
-            __asm__ __volatile__ ( "isb"     "\n\t": : : "memory");
+            IpcNotify_dataAndInstructionBarrier();
             #endif
             #if defined(_TMS320C6X)
             _mfence();
@@ -105,27 +112,26 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t 
 {
     int32_t status = SystemP_FAILURE;
 
-    volatile uint32_t rdIdx = swQ->rdIdx;
-    volatile uint32_t wrIdx = swQ->wrIdx;
+    uint32_t rdIdx = swQ->rdIdx;
+    uint32_t wrIdx = swQ->wrIdx;
 
-    if(rdIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO && wrIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO)
+    if((rdIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO) && (wrIdx < MAILBOX_MAX_MSGS_IN_SW_FIFO))
     {
-        if( ( (wrIdx+1)%MAILBOX_MAX_MSGS_IN_SW_FIFO ) != rdIdx )
+        if( ( (wrIdx+1U)%MAILBOX_MAX_MSGS_IN_SW_FIFO ) != rdIdx )
         {
             volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
 
             /* there is some space in the FIFO */
             swQ->fifo[wrIdx] = value;
 
-            wrIdx = (wrIdx+1)%MAILBOX_MAX_MSGS_IN_SW_FIFO;
+            wrIdx = (wrIdx+1U)%MAILBOX_MAX_MSGS_IN_SW_FIFO;
 
             swQ->wrIdx = wrIdx;
 
             wrIdx = swQ->wrIdx; /* read back to ensure the update has reached the memory */
 
             #if defined(__aarch64__) || defined(__arm__)
-            __asm__ __volatile__ ( "dsb sy" "\n\t": : : "memory");
-            __asm__ __volatile__ ( "isb"    "\n\t": : : "memory");
+            IpcNotify_dataAndInstructionBarrier();
             #endif
             #if defined(_TMS320C6X)
             _mfence();
@@ -133,7 +139,7 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t 
             #endif
 
             /* trigger interrupt to other core */
-            *addr = (1U << intrBitPos);
+            *addr = ((uint32_t)1 << intrBitPos);
 
             status = SystemP_SUCCESS;
         }
@@ -168,7 +174,7 @@ static inline uint32_t IpcNotify_mailboxIsPendingIntr(uint32_t pendingIntr, uint
     uint32_t isPending = 0;
     if(coreId<CSL_CORE_ID_MAX)
     {
-        isPending = pendingIntr & (1 << gIpcNotifyCoreIntrBitPos[coreId]);
+        isPending = pendingIntr & ((uint32_t)1 << gIpcNotifyCoreIntrBitPos[coreId]);
     }
     return isPending;
 }

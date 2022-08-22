@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -81,7 +81,7 @@ extern "C" {
  *
  * \return VRING size in bytes
  */
-#define RPMESSAGE_VRING_SIZE(numBuf, bufSize)       (((numBuf)*((bufSize)+32U))+32)
+#define RPMESSAGE_VRING_SIZE(numBuf, bufSize)       (((numBuf)*(uint16_t)((bufSize)+32U))+32U)
 
 /**
  * \brief Size of \ref RPMessage_Object

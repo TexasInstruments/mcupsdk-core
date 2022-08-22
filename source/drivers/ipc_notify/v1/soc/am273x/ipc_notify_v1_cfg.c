@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -68,12 +68,12 @@
  *
  * Rest of the mailbox memory cna be used for ipc_rpmessage or custom message passing
  */
-#define C66SS0_TO_R5FSS0_0_SW_QUEUE        (IpcNotify_SwQueue*)(MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE - MAILBOX_MAX_SW_QUEUE_SIZE*6)
-#define C66SS0_TO_R5FSS0_1_SW_QUEUE        (IpcNotify_SwQueue*)(MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE - MAILBOX_MAX_SW_QUEUE_SIZE*5)
-#define R5FSS0_1_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)(MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE - MAILBOX_MAX_SW_QUEUE_SIZE*4)
-#define R5FSS0_1_TO_C66SS0_SW_QUEUE        (IpcNotify_SwQueue*)(MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE - MAILBOX_MAX_SW_QUEUE_SIZE*3)
-#define R5FSS0_0_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)(MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE - MAILBOX_MAX_SW_QUEUE_SIZE*2)
-#define R5FSS0_0_TO_C66SS0_SW_QUEUE        (IpcNotify_SwQueue*)(MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE - MAILBOX_MAX_SW_QUEUE_SIZE*1)
+#define C66SS0_TO_R5FSS0_0_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*6U))
+#define C66SS0_TO_R5FSS0_1_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*5U))
+#define R5FSS0_1_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*4U))
+#define R5FSS0_1_TO_C66SS0_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*3U))
+#define R5FSS0_0_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*2U))
+#define R5FSS0_0_TO_C66SS0_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*1U))
 
 /* shift to apply in mailbox addr to get to core specific status */
 uint32_t gIpcNotifyCoreIntrBitPos[] =
@@ -168,6 +168,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUP
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_1,
             CSL_CORE_ID_C66SS0,
+			CSL_CORE_ID_MAX,
         },
         .clearIntOnInit = 0,
     }
@@ -184,6 +185,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_0,
             CSL_CORE_ID_C66SS0,
+			CSL_CORE_ID_MAX,
         },
         .clearIntOnInit = 0,
     }
@@ -200,6 +202,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_c66ss0[IPC_NOFTIY_INTERRUPT_
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_R5FSS0_0,
             CSL_CORE_ID_R5FSS0_1,
+			CSL_CORE_ID_MAX,
         },
         .clearIntOnInit = 1,
     }

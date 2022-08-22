@@ -64,6 +64,14 @@ static inline void Mailbox_sendReadAckIntr(const Mailbox_RemoteCoreObj *obj)
     *addr = (uint32_t)(1UL << obj->readAckIntrBitPos);
 }
 
+ #if defined(__aarch64__) || defined(__arm__)
+static inline void Mailbox_dataAndInstructionBarrier(void)
+{
+ __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
+ __asm__ __volatile__ ( "isb sy"     "\n\t": : : "memory");
+}
+#endif
+
 static int32_t Mailbox_waitWriteAckIntr(const Mailbox_RemoteCoreObj *obj, uint32_t timeToWaitInTicks)
 {
     int32_t status = SystemP_FAILURE;
@@ -190,8 +198,7 @@ int32_t Mailbox_write(uint32_t remoteCoreId, const uint8_t *buffer, uint32_t siz
             (void)memcpy(obj->writeShmBuffer, buffer, size);
 
             #if defined(__aarch64__) || defined(__arm__)
-            __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
-            __asm__ __volatile__ ( "isb sy"     "\n\t": : : "memory");
+            Mailbox_dataAndInstructionBarrier();
             #endif
             #if defined(_TMS320C6X)
             _mfence();
