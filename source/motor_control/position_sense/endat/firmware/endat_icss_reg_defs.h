@@ -1,6 +1,6 @@
 
 ;
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-23 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -31,8 +31,8 @@
 ; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ;
 
-	.include "icss_regs.h"
-	.include "icss_cfg_regs.h"
+	.include "../../../../pru_io/firmware/common/icss_regs.inc"
+	.include "../../../../pru_io/firmware/common/icss_cfg_regs.inc"
 
 	.asg	R30.t24,	ENDAT_CH0_RX_EN
 	.asg	R31.t27,	ENDAT_CH0_RX_CLR_OVF

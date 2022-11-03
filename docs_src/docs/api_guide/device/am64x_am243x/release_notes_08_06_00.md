@@ -21,6 +21,7 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Tamagawa Multi Channel                                                                          | Position Sense Tamagawa
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
+Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
 \endcond
 
 \cond SOC_AM243X
@@ -28,6 +29,7 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Tamagawa Multi Channel                                                                          | Position Sense Tamagawa
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
+Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
 \endcond
 
 ## Device and Validation Information
@@ -205,11 +207,12 @@ HSR-PRP FWHAL                         | R5F            | YES               | Fre
 
 ### Motor Control
 
-Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                      | Key features not tested
-----------------------------|----------------|-------------------|-------------------|------------------------------------------------------------------------------------------|------------------------
+Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                                             | Key features not tested
+----------------------------|----------------|-------------------|-------------------|-----------------------------------------------------------------------------------------------------------------|------------------------
 Position Sense HDSL         | R5F            | YES               | FreeRTOS, NORTOS  | Freerun mode(300MHz,225MHz), Sync mode(225MHz), Short Message Read & Write, Long Message Read & Write           |  Long cables
-Position Sense EnDAT        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode                                           |  16 MHz Baud Rate
-Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support                                                     |  -
+Position Sense EnDat        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode for single channel, Load share mode                              |  16 MHz Baud Rate, Different cable lengths, Continuous clock mode for multi channel
+Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support            |  -
+
 
 ### Networking
 
@@ -408,7 +411,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 <tr>
     <td> MCUSDK-8106
     <td> 8MHZ endat encoder showing CRC failure
-    <td> ENDAT
+    <td> Position Sense EnDat
     <td> 8.4.0
     <td> AM64x
     <td> -
@@ -612,6 +615,47 @@ earlier SDKs.
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+</table>
+
+### Motor Control
+
+<table>
+<tr>
+    <th> Module
+    <th> Affected API
+    <th> Change
+    <th> Additional Remarks
+</tr>
+<tr>
+    <td> Position Sense EnDat
+    <td> \ref endat_wait_initialization
+    <td> Added one argument `mask`
+    <td> It is used to pass the value of channel mask
+</tr>
+<tr>
+    <td> Position Sense EnDat
+    <td> \ref endat_init
+    <td> Added one argument `slice`
+    <td> It is used to pass the PRU-ICSSG Slice value
+</tr>
+<tr>
+    <td> Position Sense EnDat
+    <td> \ref endat_config_multi_channel_mask
+    <td> Add one argument `loadshare`
+    <td> It is used to enable/disable load share mode
+</tr>
+<tr>
+    <td> Position Sense EnDat
+    <td> `endat_pruss_xchg` structure
+    <td> Added `endat_pruss_config` per channel, `endat_pruss_cmd` per channel, `endat_delay_125ns`, `endat_delay_5us`, `endat_delay_51us`, `endat_delay_1ms`, `endat_delay_380ms`, `endat_delay_900ms`, `endat_primary_core_mask`, `endat_ch0_syn_bit`, `endat_ch1_syn_bit`, `endat_ch2_syn_bit`
+    <td> These changes are required to support multi-channel using load share mode
+</tr>
+<tr>
+    <td> Position Sense EnDat
+    <td> `endat_priv` structure
+    <td> Added `pruicss_slicex`, `load_share`, `pos_rx_bits_21_RTUPRU`, `pos_rx_bits_21_PRU`, `pos_rx_bits_21_TXPRU`, `pos_rx_bits_22_RTUPRU`, `pos_rx_bits_22_PRU`, `pos_rx_bits_22_TXPRU`
+    <td> These changes are required to support multi-channel using load share mode
 </tr>
 </table>
 

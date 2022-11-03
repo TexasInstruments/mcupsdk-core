@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -218,7 +218,7 @@ extern "C" {
  *  \retval     0 for success, -EINVAL for failure
  *
  */
-int endat_recvd_process(struct endat_priv *priv, int cmd,
+int32_t endat_recvd_process(struct endat_priv *priv, int32_t cmd,
                         union endat_format_data *u);
 
 /**
@@ -237,7 +237,7 @@ int endat_recvd_process(struct endat_priv *priv, int cmd,
  *  \retval     status  position/address/params/test CRC status
  *
  */
-unsigned endat_recvd_validate(struct endat_priv *priv, int cmd,
+uint32_t endat_recvd_validate(struct endat_priv *priv, int32_t cmd,
                               union endat_format_data *u);
 
 /**
@@ -250,7 +250,7 @@ unsigned endat_recvd_validate(struct endat_priv *priv, int cmd,
  *  \retval     0 for success, -EINVAL for failure
  *
  */
-int endat_command_process(struct endat_priv *priv, int cmd,
+int32_t endat_command_process(struct endat_priv *priv, int32_t cmd,
                           struct cmd_supplement *cmd_supplement);
 
 /**
@@ -263,7 +263,7 @@ int endat_command_process(struct endat_priv *priv, int cmd,
  *  \retval     0 for success, -EINVAL for failure
  *
  */
-int endat_command_build(struct endat_priv *priv, int cmd,
+int32_t endat_command_build(struct endat_priv *priv, int32_t cmd,
                         struct cmd_supplement *cmd_supplement);
 
 /**
@@ -293,7 +293,7 @@ void endat_command_wait(struct endat_priv *priv);
  *  \retval      0 for success, -EINVAL for failure
  *
  */
-int endat_get_encoder_info(struct endat_priv *priv);
+int32_t endat_get_encoder_info(struct endat_priv *priv);
 
 /**
  *  \brief  get propagation delay automatically estimated by the firmware
@@ -303,7 +303,7 @@ int endat_get_encoder_info(struct endat_priv *priv);
  *  \retval     delay   estimated propogation delay
  *
  */
-unsigned int endat_get_prop_delay(struct endat_priv *priv);
+uint32_t endat_get_prop_delay(struct endat_priv *priv);
 
 /**
  *  \brief  track presence of additional information in priv
@@ -314,7 +314,7 @@ unsigned int endat_get_prop_delay(struct endat_priv *priv);
  *
  *
  */
-void endat_addinfo_track(struct endat_priv *priv, int cmd,
+void endat_addinfo_track(struct endat_priv *priv, int32_t cmd,
                          struct cmd_supplement *cmd_supplement);
 
 /**
@@ -336,7 +336,7 @@ void endat_config_clock(struct endat_priv *priv,
  *
  *
  */
-void endat_config_tst_delay(struct endat_priv *priv, unsigned short delay);
+void endat_config_tst_delay(struct endat_priv *priv, uint16_t delay);
 
 /**
  *  \brief  configure rx arm counter
@@ -346,7 +346,7 @@ void endat_config_tst_delay(struct endat_priv *priv, unsigned short delay);
  *
  *
  */
-void endat_config_rx_arm_cnt(struct endat_priv *priv, unsigned short val);
+void endat_config_rx_arm_cnt(struct endat_priv *priv, uint16_t val);
 
 /**
  *  \brief  configure wire delay for the selected channel
@@ -356,7 +356,7 @@ void endat_config_rx_arm_cnt(struct endat_priv *priv, unsigned short val);
  *
  *
  */
-void endat_config_wire_delay(struct endat_priv *priv, unsigned short val);
+void endat_config_wire_delay(struct endat_priv *priv, uint16_t val);
 
 /**
  *  \brief  configure clocks to be disabled at the end of rx to account for tD
@@ -367,7 +367,7 @@ void endat_config_wire_delay(struct endat_priv *priv, unsigned short val);
  *
  */
 void endat_config_rx_clock_disable(struct endat_priv *priv,
-                                   unsigned short val);
+                                   uint16_t val);
 
 /**
  *  \brief       start continuous mode
@@ -377,7 +377,7 @@ void endat_config_rx_clock_disable(struct endat_priv *priv,
  *  \retval      0       success, -EINVAL for failure
  *
  */
-int endat_start_continuous_mode(struct endat_priv *priv);
+int32_t endat_start_continuous_mode(struct endat_priv *priv);
 
 /**
  *  \brief       stop continuous mode
@@ -405,7 +405,29 @@ void endat_config_host_trigger(struct endat_priv *priv);
  *
  */
 void endat_config_periodic_trigger(struct endat_priv *priv);
-
+/*  brief     set syn_bits of all connected channels for synchronization before global_TX_init
+ *
+ *  \param[in]  priv    cookie returned by endat_init
+ * \param[in]   mask    channels mask
+ *
+ */
+void endat_config_syn_bits(struct endat_priv *priv, uint8_t mask);
+/**
+ *  \brief     set a core as primay core for global configuration, clk configuration and TX_GLOBAL_INIT
+ *
+ *  \param[in]  priv    cookie returned by endat_init
+ *  \param[in]   mask    channels mask
+ *
+ *
+ */
+void endat_config_primary_core_mask(struct endat_priv *priv, uint8_t mask);
+/**
+ *  \brief     enable load share mode if encoders has diffent make
+ *
+ *  \param[in]  priv    cookie returned by endat_init
+ *
+ */
+void endat_enable_load_share_mode(struct endat_priv *priv);
 /**
  *  \brief      select channel to be used by EnDat master
  *
@@ -414,19 +436,18 @@ void endat_config_periodic_trigger(struct endat_priv *priv);
  *
  *
  */
-void endat_config_channel(struct endat_priv *priv, int ch);
-
+void endat_config_channel(struct endat_priv *priv, int32_t ch);
 /**
  *  \brief      select mask of channels to be used in multi channel configuration by EnDat master
  *
  *  \param[in]  priv    cookie returned by endat_init
  *  \param[in]  mask    channel mask
- *
+ *  \param[in]  loadshare  value for loadshare mode enable.
  *
  */
 void endat_config_multi_channel_mask(struct endat_priv *priv,
-                                     unsigned char mask);
-
+                                     uint8_t mask,
+                                     uint8_t loadshare);
 /**
  *  \brief      select channels detected in multi channel configuration by EnDat master.    <br>
  *              required to be invoked only if firmware indicates initialization failure    <br>
@@ -438,7 +459,7 @@ void endat_config_multi_channel_mask(struct endat_priv *priv,
  *  \retval     mask    mask of the detected channels
  *
  */
-unsigned char endat_multi_channel_detected(struct endat_priv *priv);
+uint8_t endat_multi_channel_detected(struct endat_priv *priv);
 
 /**
  *  \brief      In multi channel configuration, select channel before receive processing in <br>
@@ -450,18 +471,17 @@ unsigned char endat_multi_channel_detected(struct endat_priv *priv);
  *
  *
  */
-void endat_multi_channel_set_cur(struct endat_priv *priv, int ch);
-
+void endat_multi_channel_set_cur(struct endat_priv *priv, int32_t ch);
 /**
  *  \brief      wait for EnDat master firmware to initialize
  *
  *  \param[in]  priv    cookie returned by endat_init
  *  \param[in]  timeout timeout to wait for initialization
- *
+ *  \param[in]  mask    channel mask
  *  \retval     0 for success, -EINVAL for failure
  *
  */
-int endat_wait_initialization(struct endat_priv *priv, unsigned timeout);
+int32_t endat_wait_initialization(struct endat_priv *priv, uint32_t timeout, uint8_t mask);
 
 /**
  *  \brief      Initialize EnDat firmware interface address and get the pointer
@@ -469,12 +489,13 @@ int endat_wait_initialization(struct endat_priv *priv, unsigned timeout);
  *
  *  \param[in]  pruss_xchg      EnDat firmware interface address
  *  \param[in]  pruss_cfg       ICSS PRU config base address
+ *  \param[in]  slice           ICSS PRU SLICE
  *
  *  \retval     priv            pointer to struct endat_priv instance
  *
  */
 struct endat_priv *endat_init(struct endat_pruss_xchg *pruss_xchg,
-                              void *pruss_cfg);
+                              void *pruss_cfg, int32_t slice);
 
 /**
  *  \brief      Read EnDat 2.2 angular position in steps for rotary encoders      <br>
@@ -492,7 +513,7 @@ struct endat_priv *endat_init(struct endat_pruss_xchg *pruss_xchg,
  *  \retval     angle for angular position in steps on success, -1 for failure
  *
  */
-int endat_get_2_2_angle(struct endat_priv *priv);
+int32_t endat_get_2_2_angle(struct endat_priv *priv);
 
 /** @} */
 

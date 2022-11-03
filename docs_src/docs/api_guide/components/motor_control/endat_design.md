@@ -1,4 +1,4 @@
-# ENDAT Protocol Design {#ENDAT_DESIGN}
+# EnDat Protocol Design {#ENDAT_DESIGN}
 
 [TOC]
 
@@ -13,33 +13,22 @@ Transfer between receiver and encoder at the physical layer is in accordance wit
 ## System Overview
 
 Position feedback system consists of a position encoder attached to a motor, up to 100 meter of cable which provides power and serial communication and the receiver interface for position encoder.
-In case of Sitara™ AM64x processor the receiver interface for position encoder is just one function of a connected drive controller.
-The AM64x provides in addition to the resources for Industrial Ethernet and motor control application including on-chip ADCs, Delta Sigma demodulator for current measurement.
-EnDat Receiver on Sitara™AM64x processor uses one (among the quad core) Programmable Real-time Units (PRU).
-Three EnDat channels are available per PRU core.
+In case of Sitara™ AM64x/AM243x processor the receiver interface for position encoder is just one function of a connected drive controller.
+The AM64x/AM243x provides in addition to the resources for Industrial Ethernet and motor control application including on-chip ADCs, Delta Sigma demodulator for current measurement.
+EnDat Receiver on Sitara™AM64x/AM243x processor uses one ICSSGx Slice.
 Clock, data transmit, data receive and receive enable signals from PRU1 of ICSS_G is available in AM64x/AM243x EVM.
-For channel 0, signal lines are connected to an onboard RS485 transceiver, output from RS485 along with power lines are available on M12 connector.
-Encoder is to be connected to M12 connector. All three EnDat channel signals from PRU are also available via J16 jumper – in this case, external transceiver has to be used.
 
-### Sitara™ AM64x/AM243x processor
+## Implementation
 
-Refer TRM for details
-
-#### PRU-ICSS
-
-Refer PRU-ICSS chapter of AM64x/AM243x Technical Reference Manual
-
-## System Implementation
-
-The EnDat receiver function is implemented on TI Sitara™ AM64x/AM243x EVM.
+The EnDat receiver function is implemented on TI Sitara™ Devices.
 Encoder is connected to IDK via universal Digital Interface TIDA-00179(https://www.ti.com/tool/TIDA-00179), TIDEP-01015(3-axis board) and 3 Axis Interface card.
 Design is split into three parts – EnDat hardware support in PRU, firmware running in PRU and driver running in ARM.
-Application is supposed to use the EnDat driver API’s to leverage EnDat functionality.
-EnDat hardware capability in PRU1 of ICSS_G is used, and so the firmware.
+Application is supposed to use the EnDat driver APIs to leverage EnDat functionality.
+SDK examples used the EnDat hardware capability in Slice 1 (either 1 core or 3 cores based ont the confiuration) of PRU-ICSSG0.
 Remaining PRUs in the AM64x/AM243x EVM are available for Industrial Ethernet communication and/or motor control interfaces.
 
 
-### System Specifications
+###  Specifications
 
 <table>
 <tr>
@@ -64,7 +53,7 @@ Remaining PRUs in the AM64x/AM243x EVM are available for Industrial Ethernet com
 </tr>
 <tr>
     <td>Frequencies supported
-    <td>Upto 16 MHz
+    <td>Upto 8 MHz
 	<td>Changeable at run-time
 </tr>
 <tr>
@@ -86,17 +75,30 @@ Refer TRM for details
 ### EnDat Firmware Implementation
 
 Following section describes the firmware implementation of EnDat receiver on PRU-ICSS.
-Deterministic behavior of the 32 bit RISC core running at 200MHz provides 5 ns resolution on sampling external signals and generating external signals.
+Deterministic behavior of the 32 bit RISC core running upto 333MHz provides resolution on sampling external signals and generating external signals.
 It makes uses of EnDat hardware support in PRU for data transmission.
 
-\image html endat_module_integration.png "ARM, PRU, EnDat module Integration"
+There are three different variations of PRU-ICSS firmware.
+1. Single Channel
+2. Multi Channel with Encoders of Same Make
+3. Multi Channel with Encoders of Different Make
+#### Implementation for Single Channel and Multi Channel with Encoders of Same Make
+Single core of PRU-ICSSG slice used in this configuration.
+
+\image html endat_module_integration.png "ARM, PRU, EnDat module Integration for for "Single Channel" or "Multi Channel with Encoders of Same Make" configuration"
+
+#### Implementation for Multi Channel with Encoders of Different Make
+Each of PRU, TX-PRU and RTU-PRU handle one channel in this configuration
+Enbale load share mode in case of multi make encoders.
+
+\image html Endat_load_share_mode.png "PRU, EnDat module Integration for "Multi Channel with Encoders of Different Make" configuration"
 
 
 ####	Firmware Architecture
 
-\image html endat_overall_block_diagram.png "Overall block diagram"
+\image html endat_overall_block_diagram.png "Overall Block Diagram"
 
-Firmware first does initialization of PRU EnDat hardware and EnDat encoder.
+Firmware first does initialization of PRU-ICSSG's EnDat hardware interface and EnDat encoder.
 Then it waits for the user to provide command (user after setting up the command, sets command trigger bit), upon detecting trigger, first it checks whether the command requested is a continuous mode or a normal command.
 
 If it is a normal command, reads command, it’s attribute like transmit bits, receive bits etc., then it transmits the data and collected the data sent by the encoder stored onto a buffer with one byte representing a bit (since oversample ration of 8 is used).
@@ -109,18 +111,26 @@ At the end of transaction as requested by the user, trigger bit that is set by t
 User can wait on this bit to know that the command has been completed.
 EnDat driver provides API to achieve this.
 
-
 #####	 Initialization
+######  Initialization for "Single Channel" and "Multi Channel with Encoders of Same Make" configurations
+\image html endat_initialization.png "Initilization for Single PRU mode"
 
-\image html endat_initialization.png "Initilization"
+###### Initialization for "Single Channel" and "Multi Channel with Encoders of Different Make" configuration
+\image html endat_load_share_mode_initialization.png "Initilization for Load share mode"
 
-PRU is set to EnDat mode first, clock is configured to 200KHz, with oversample ration of 8, hence receive clock would be 200 * 8 KHz.
-The entire EnDat configuration MMR’s are cleared. Through the defined interface (PRU RAM location), user requested channel is determined.
-ECAP timer is initialized (used during propagation delay estimation).
+Before executing the firmware, the ARM (R5) core needs to enable EnDat mode in PRU-ICSSG first, then configure the clock to 200KHz, with oversample ratio of 8 (hence receive clock would be 200 * 8 KHz).
+The entire EnDat configuration MMRs are cleared. Through the defined interface (PRU RAM location), user requested channel is determined in Single pru configuration.
 Then power-on-init as per specification is implemented, after which encoder is reset by sending reset command.
 Firmware setups the command and it’s attribute for all the commands that are sent during initialization. Alarms, errors and warning are cleared.
 Firmware then determines number of clock pulses for position and whether encoder supports EnDat 2.2. Propagation delay is then estimated.
 If user has required for clock to be configured, it is obeyed, else it defaults to 8MHz. At the end of the initialization status is updated.
+
+###### Synchronization among PRU cores for "Multi Channel with Encoders of Different Make" configuration
+
+If using "Multi Channel with Encoders of Different Make" configuration where load share mode is enabled, one of the cores among enabled cores will be set as the primary core for performing global configurations of PRU-ICSSG's EnDat interface. These global configurations include clock frequency configuration and TX global re-initialization.
+
+There needs to be a synchronization between PRUs before changing any global configuration. For this purpose, each active PRU core sets synchronization bit before any operation needing synchronization and clears the synchronization bit when it is ready. The assigned primary core will wait for all active channel's synchronization bits to be cleared and then perform the global configuration.
+
 
 #####	Send and Receive
 
@@ -147,6 +157,9 @@ Receive bits obtained via command attribute is stored as header (initial 2 bytes
 Then wait’s till receive valid flag has been set, once set, 1 byte corresponding 1 bit (because of oversampling of 8) is read and stored in receive buffer and the flags are cleared.
 Receive buffer pointer is incremented & receive bit count decremented. This continues till count is zero, once zero, it extracts receive data one more time to take care of SB (receive count excludes SB).
 If 2.2 command supplement is not present, transmit re-init is done.
+If using "Multi Channel with Encoders of Different Make" configuration where load share mode is enabled, the primary core waits for synchronization bits for active channels to be cleared before performing TX Global Init.
+
+\image html Endat_Load_share_receive.png "Receive In load share mode"
 
 ###### EnDat 2.2 Command Supplement Send
 

@@ -11135,9 +11135,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Endat Diagnostic Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "endat_diagnostic",
-        "location": "../../examples/motor_control/endat_diagnostic/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Endat Diagnostic Single Channel Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "endat_diagnostic_single_channel",
+        "location": "../../examples/motor_control/endat_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -11150,6 +11150,73 @@
         "subCategories": [
             "motor_control",
             "endat_diagnostic",
+            "single_channel",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Endat Diagnostic Multi Channel Load Share Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "endat_diagnostic_multi_channel_load_share",
+        "location": "../../examples/motor_control/endat_diagnostic/multi_channel_load_share/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "motor_control",
+            "endat_diagnostic",
+            "multi_channel_load_share",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Endat Diagnostic Multi Channel Single Pru Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "endat_diagnostic_multi_channel_single_pru",
+        "location": "../../examples/motor_control/endat_diagnostic/multi_channel_single_pru/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "motor_control",
+            "endat_diagnostic",
+            "multi_channel_single_pru",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

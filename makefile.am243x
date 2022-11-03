@@ -330,7 +330,9 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am243x-lp/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/single_channel/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/motor_control/hdsl_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/motor_control/hdsl_diagnostic_with_traces/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/motor_control/tamagawa_diagnostic/multi_channel/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -355,12 +357,17 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-rtupru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-txpru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_loopback/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_https/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1166,7 +1173,9 @@ BUILD_COMBO_EXAMPLE_ALL += task_switch_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += task_switch_am243x-lp_m4fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += endat_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += endat_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += endat_diagnostic_multi_channel_load_share_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += endat_diagnostic_multi_channel_single_pru_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hdsl_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hdsl_diagnostic_ddr_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tamagawa_diagnostic_multi_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -1250,12 +1259,17 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += ethercat_slave_beckhoff_ssc_demo_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += ethercat_slave_beckhoff_ssc_demo_am243x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-rtupru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-txpru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += endat_peripheral_interface_single_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += endat_peripheral_interface_multi_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += hdsl_master_freerun_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += hdsl_master_freerun_300_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += hdsl_master_sync_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
@@ -1888,8 +1902,14 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- endat_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ endat_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/single_channel/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ endat_diagnostic_multi_channel_load_share_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ endat_diagnostic_multi_channel_single_pru_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  hdsl_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/motor_control/hdsl_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1963,14 +1983,20 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
 
- tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-rtupru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile all
 
- tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-txpru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile all
+
+ endat_peripheral_interface_single_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+
+ endat_peripheral_interface_multi_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
 
  hdsl_master_freerun_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
 	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
@@ -1980,6 +2006,15 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  hdsl_master_sync_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
 	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+
+ tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+
+ tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile all
+
+ tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt -f makefile all
 
  enet_loopback_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/enet_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -2350,7 +2385,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am243x-lp_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am243x-lp_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += endat_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += endat_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += endat_diagnostic_multi_channel_load_share_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += endat_diagnostic_multi_channel_single_pru_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hdsl_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hdsl_diagnostic_ddr_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tamagawa_diagnostic_multi_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2434,12 +2471,17 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += ethercat_slave_beckhoff_ssc_demo_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += ethercat_slave_beckhoff_ssc_demo_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-rtupru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-txpru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += endat_peripheral_interface_single_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += endat_peripheral_interface_multi_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += hdsl_master_freerun_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += hdsl_master_freerun_300_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += hdsl_master_sync_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
@@ -3072,8 +3114,14 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- endat_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ endat_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/single_channel/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ endat_diagnostic_multi_channel_load_share_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ endat_diagnostic_multi_channel_single_pru_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  hdsl_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/motor_control/hdsl_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -3147,14 +3195,20 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
 
- tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-rtupru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile clean
 
- tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-txpru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile clean
+
+ endat_peripheral_interface_single_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+
+ endat_peripheral_interface_multi_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
 
  hdsl_master_freerun_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
@@ -3164,6 +3218,15 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  hdsl_master_sync_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+
+ tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+
+ tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
+
+ tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt -f makefile clean
 
  enet_loopback_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -3534,7 +3597,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am243x-lp_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am243x-lp_m4fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += endat_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += endat_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += endat_diagnostic_multi_channel_load_share_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += endat_diagnostic_multi_channel_single_pru_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hdsl_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hdsl_diagnostic_ddr_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tamagawa_diagnostic_multi_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -3618,12 +3683,17 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += ethercat_slave_beckhoff_ssc_demo_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += ethercat_slave_beckhoff_ssc_demo_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-rtupru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-txpru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += endat_peripheral_interface_single_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += endat_peripheral_interface_multi_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += hdsl_master_freerun_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += hdsl_master_freerun_300_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += hdsl_master_sync_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
@@ -4256,8 +4326,14 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- endat_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ endat_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/single_channel/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ endat_diagnostic_multi_channel_load_share_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ endat_diagnostic_multi_channel_single_pru_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  hdsl_diagnostic_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/motor_control/hdsl_diagnostic/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
@@ -4331,14 +4407,20 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
 
- tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-rtupru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile scrub
 
- tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_scrub:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+ endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-txpru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile scrub
+
+ endat_peripheral_interface_single_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+
+ endat_peripheral_interface_multi_ch_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
 
  hdsl_master_freerun_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
@@ -4348,6 +4430,15 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  hdsl_master_sync_225_mhz_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+
+ tamagawa_multi_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+
+ tamagawa_single_channel_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
+
+ tamagawa_single_channel_am243x-lp_icssg0-pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am243x-lp/icssg0-pru1_fw/ti-pru-cgt -f makefile scrub
 
  enet_loopback_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/enet_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

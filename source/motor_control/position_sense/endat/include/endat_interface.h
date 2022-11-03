@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,7 +29,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 #ifndef ENDAT_INTERFACE_H_
 #define ENDAT_INTERFACE_H_
 
@@ -101,16 +101,16 @@ extern "C" {
  */
 struct crc
 {
-    volatile unsigned char  status;
+    volatile uint8_t  status;
     /**< CRC status,
          bit0: 1 - position/data success, 0 - position/data failure       <br>
          bit1: 1 - additional info1 success, 0 - additioanl info1 failure <br>
          bit2: 1 - additional info2 success, 0 - additioanl info2 failure */
-    volatile unsigned char  err_cnt_data;
+    volatile uint8_t  err_cnt_data;
     /**< CRC position/data error count (will wraparound after 255) */
-    volatile unsigned char  err_cnt_addinfox;
+    volatile uint8_t  err_cnt_addinfox;
     /**< CRC additional info1/2 error count (will wraparound after 255) */
-    volatile unsigned char  err_cnt_addinfo1;
+    volatile uint8_t  err_cnt_addinfo1;
     /**< CRC additional info1 error count (will wraparound after 255)     <br>
          applicable only when both additional info's are present */
 };
@@ -122,26 +122,26 @@ struct crc
  */
 struct endat_pruss_ch_info
 {
-    volatile unsigned int   pos_word0;
+    volatile uint32_t   pos_word0;
     /**< Initial (<=32) position bits received including error bits */
-    volatile unsigned int   pos_word1;
+    volatile uint32_t   pos_word1;
     /**< position bits received after the initial 32 bits (if applicable) */
-    volatile unsigned int   pos_word2;
+    volatile uint32_t   pos_word2;
     /**< additional info 1/2 (will be additional info 2 if both present) */
-    volatile unsigned int   pos_word3;
+    volatile uint32_t   pos_word3;
     /**< additional info 1 (if both additional 1 & 2 present) */
     struct crc      crc;
     /**< crc information */
-    volatile unsigned char  num_clk_pulse;
+    volatile uint8_t  num_clk_pulse;
     /**< position bits excluding SB, error, CRC (updated upon initialization) */
-    volatile unsigned char  endat22_stat;
+    volatile uint8_t  endat22_stat;
     /**< encoder command set type, 1 - 2.2 supported, 0 - 2.2 not supported  */
-    volatile unsigned short rx_clk_less;
+    volatile uint16_t rx_clk_less;
     /**< receive clocks to be reduced to handle propagation delay (to be  <br>
          updated by host, if applicable) */
-    volatile unsigned int   prop_delay;
+    volatile uint32_t   prop_delay;
     /**< automatically estimated propagation delay */
-    volatile unsigned int   resvd_int0;
+    volatile uint32_t   resvd_int0;
     /**< reserved */
 };
 
@@ -152,15 +152,15 @@ struct endat_pruss_ch_info
  */
 struct endat_pruss_cmd
 {
-    volatile unsigned int   word0;
+    volatile uint32_t   word0;
     /**< command,                                                         <br>
          [Byte 0] bit 7: 0(dummy), bit 6-1: command, bit 0: address bit 7 <br>
          [Byte 1] bit 7-1: address bit 6-0, bit 0: parameter bit 15       <br>
          [Byte 2] bit 7-0: parameter bit 14-7                             <br>
          [Byte 2] bit 7-1: parameter bit 6-0, bit 0: 0(dummy) */
-    volatile unsigned int   word1;
+    volatile uint32_t   word1;
     /**< command parameters,                                              <br>
-         [Byte 0] receive bits, includes SB & dummy (for additional info) <br>
+         [Byte 0] receive bits, includes SB & dummy (for additional info) for PRU <br>
          [Byte 1] transmit bit                                            <br>
          [Byte 2] attributes,                                             <br>
           bit0: 1 - no command supplement, 0 - command supplement present <br>
@@ -169,12 +169,13 @@ struct endat_pruss_cmd
           bit3: 1 - additional info1 present, 0 - no additional info1     <br>
           bit4: 1 - additional info2 present, 0 - no additional info2     <br>
          [Byte 3] 1 - block address selected, 0 - block address not selected */
-    volatile unsigned int   word2;
+    volatile uint32_t   word2;
     /**< command supplement,                                              <br>
          [Byte 0] address                                                 <br>
          [Byte 1] parameter MSByte                                        <br>
          [Byte 2] parameter LSByte                                        <br>
          [Byte 3] block address */
+
 };
 
 /**
@@ -184,19 +185,19 @@ struct endat_pruss_cmd
  */
 struct endat_pruss_config
 {
-    volatile unsigned char  opmode;
+    volatile uint8_t  opmode;
     /**< operation mode selection: 0 - periodic trigger, 1 - host trigger */
-    volatile unsigned char  channel;
+    volatile uint8_t  channel;
     /**< channel mask (1 << channel), 0 < channel < 3. This has to be      <br>
          selected before running firmware. Once initialization is complete,<br>
          it will reflect the detected channels in the selected mask.       <br>
          Multichannel can have upto 3 selected, while single channel only one */
-    volatile unsigned char  trigger;
+    volatile uint8_t  trigger;
     /**< command trigger. Set LSB to send cmd, will be cleared upon cmd    <br>
          completion. Set/clear MSB to start/stop continuous clock mode.    <br>
          To start continuous mode LSB also has to be set. Note that cmd    <br>
          has to be setup before trigger */
-    volatile unsigned char  status;
+    volatile uint8_t  status;
     /**< initialization status: 1 - upon successful. Wait around 5 seconds <br>
          after firmware has started running to confirm status */
 };
@@ -209,18 +210,29 @@ struct endat_pruss_config
  */
 struct endat_pruss_xchg
 {
-    struct endat_pruss_config   config;
+    struct endat_pruss_config   config[3];
     /**< config interface */
-    struct endat_pruss_cmd      cmd;
+    struct endat_pruss_cmd      cmd[3];
     /**< command interface */
     struct endat_pruss_ch_info  ch[3];
     /**< per channel interface */
     uint16_t endat_rx_clk_config;
     uint16_t endat_tx_clk_config;
     uint32_t endat_rx_clk_cnten;
+    uint32_t endat_delay_125ns;
+    uint32_t endat_delay_5us;
+    uint32_t endat_delay_51us;
+    uint32_t endat_delay_1ms;
     uint32_t endat_delay_2ms;
     uint32_t endat_delay_12ms;
     uint32_t endat_delay_50ms;
+    uint32_t endat_delay_380ms;
+    uint32_t endat_delay_900ms;
+    volatile uint8_t endat_primary_core_mask;
+    volatile uint8_t endat_ch0_syn_bit;
+    volatile uint8_t endat_ch1_syn_bit;
+    volatile uint8_t endat_ch2_syn_bit;
+
 };
 
 #ifdef __cplusplus

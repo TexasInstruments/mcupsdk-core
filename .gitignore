@@ -60,3 +60,7 @@ source/motor_control/position_sense/hdsl/firmware/*.obj
 source/motor_control/position_sense/hdsl/firmware/*.b00
 source/motor_control/position_sense/hdsl/firmware/*.xml
 source/networking/mbedtls_library/mbedtls
+source/motor_control/position_sense/endat/firmware/*.lst
+source/motor_control/position_sense/endat/firmware/*.obj
+source/motor_control/position_sense/endat/firmware/*.b00
+source/motor_control/position_sense/endat/firmware/*.xml

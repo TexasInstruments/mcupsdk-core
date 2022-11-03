@@ -5,36 +5,55 @@
 The EnDat diagnostic application, described here,
 demonstrates the EnDat receiver operation.
 
-The EnDat driver provides a well defined set of API's to expose EnDat
+The EnDat driver provides a well defined set of APIs to expose EnDat
 receiver interface.
 
-The diagnostic invokes these API's to
+
+
+The diagnostic invokes these APIs to
 - initialize EnDat,
+- select one configuration among concurrent multi channel with Encoders of Same make, multi channel with Encoders of Different Make and single channel configuration based on SysConfig.
+- select the channel (channels in the case of concurrent multi channel with encoders of same make or multi channel with Encoders of Different Make),
 - configure the host trigger mode,
-- select between concurrent multi channel or single channel configuration,
-- select the channel (channels in the case of concurrent multi channel configuration)
 - and run the firmware.
+- If using "Multi Channel with Encoders of Different Make" configuration is selected" :
+    - enable load share mode.
+    - select primary core for global configuration.
+    - configuration of synchronization bits.
+
 
 Once these steps are executed,
 - the driver waits for the EnDat to be initialized.
 - It then sets clock frequency to 200KHz (as propagation delay is not yet compensated)
-- and obtains the encoder details including serial number, position resolution etc, and displays on the console.
+- and obtains the encoder details including serial number, position resolution etc, and displays on the console/UART.
 - Based on the whether encoder is 2.2 or 2.1 type, it sets clock to either 8MHz or 1MHz respectively.
 - While configuring clock, propagation delay is taken care using the automatically estimated propagation delay (user can override it too).
-- In the case of concurrent multi channel configuration, if propagation delay between various channels are different, that too is automatically taken care.
+- In the case of concurrent Multi Channel with Encoders of Same Make or Multi Channel with Encoders of Different Make, if propagation delay between various channels are different, that too is automatically taken care.
 
 Once initial setup is over,
-- the diagnostic provides the user with a
-self explanatory menu.
+- the diagnostic provides the user with a self explanatory menu.
 - Two types of menu options are presented. One type (1-14) will send an EnDat command as per EnDat 2.2 specification.
 - The other type (100-108) allows the user to configure clock frequency, various timing parameters, simulate motor control loop using 2.1 command as well as 2.2 command with safety (redundant position information), switch to continuous clock mode and monitor raw data.
-- Concurrent multi channel configuration can work simultaneously for up-to three encoders with identical part number, all variants of 2.2 position commands as well as the 2.1 position command is supported and an additional option (109) to configure wire delay (useful when propagation delay in each channel is different) is available.
+- Concurrent multi channel with Encoder of Same Make configuration can work simultaneously for up-to three encoders with identical part number, all variants of 2.2 position commands as well as the 2.1 position command is supported and an additional option (109) to configure wire delay (useful when propagation delay in each channel is different) is available.
+- Single PRU core handles enabled channels in single channel and Multi Channel with Encoders of Same Make configuration.
 - Application by default, handles wire delay as required, the menu option provides a way to override it.
 
 After the user selects an EnDat command,
 - the diagnostic asks for more details to frame the command and performs a basic sanity check on the user entered values.
-- Then the EnDat API is invoked to process the command.
-- The received EnDat is processed & validated using the defined API's. The result is then presented to the user.
+- Then the EnDat APIs are invoked to process the command set, set the host trigger bit and waiting until the host trigger bit cleared, If multi-channel with Encoders of Different make is used, these operations are done for each channel".
+- The received EnDat is processed & validated using the defined APIs. The result is then presented to the user.
+
+### Channel Selection In Sysconfig
+
+\image html EnDat_channel_selection_In_sysconfig.PNG      "Channel Selection In Sysconfig"
+
+
+\image html Endat_channel_selection_configuration.png     "EnDAT configuration seletion between Single/Multi channel "
+
+### Endat Example Implementation
+
+Following section describes the Example implementation of EnDat on ARM(R5F).
+\image html Endat_Example_Implementation.png "Endat Example"
 
 ## Important files and directory structure
 
@@ -102,8 +121,8 @@ Other than the basic EVM setup mentioned in \ref EVM_SETUP_PAGE, below additiona
 
 Shown below is a sample output when the application is run:
 
-\imageStyle{EnDAT_1.png,width:60%}
-\image html EnDAT_1.png "EnDAT Usage"
+\imageStyle{EnDAT_Initialization_UART_PRINT.png,width:60%}
+\image html EnDAT_Initialization_UART_PRINT.png "EnDAT Usage"
 
 ### Test Case Description
 
@@ -115,7 +134,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To check position value</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -130,7 +149,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To receive encoder's operating parameters(error messege)</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -160,7 +179,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To receive encoder's manufacture parameters for Endat 2.2</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -190,7 +209,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To set values to encoder's operating parameters (error message)</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -225,7 +244,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To set values to encoder's manufacturing parameters for Endat 2.2(Status of additional info)</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -260,7 +279,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To reset encoder</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -275,7 +294,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To receive test values from encoder with port address "0"</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -300,7 +319,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To receive test values from encoder with port address "E" </td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -325,7 +344,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To check position value with aditional info.</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -342,7 +361,7 @@ Shown below is a sample output when the application is run:
         <td>To receive encoder's operating parameters(error messege)
 		+receive position value with  additional info
 		</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -358,7 +377,7 @@ Shown below is a sample output when the application is run:
     <tr>
         <td></td>
         <td>4. Enter "B9"  in MRS code to select "Operating parameters"</td>
-        <td>some time MRS code selection Failure </td>
+        <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
@@ -374,7 +393,7 @@ Shown below is a sample output when the application is run:
         <td>To receive encoder's manufacture parameters
 		for Endat 2.2 +receive position value with  additional info
 		</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -390,7 +409,7 @@ Shown below is a sample output when the application is run:
     <tr>
         <td></td>
         <td>4. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
-        <td>some time MRS code selection Failure </td>
+        <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
@@ -406,7 +425,7 @@ Shown below is a sample output when the application is run:
         <td>To set values to encoder's operating parameters (error message)
 		+receive position value with additional info
 		</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -422,7 +441,7 @@ Shown below is a sample output when the application is run:
     <tr>
         <td></td>
         <td>4. Enter "B9"  in MRS code to select "Operating parameters"</td>
-        <td>some time MRS code selection Failure </td>
+        <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
@@ -443,7 +462,7 @@ Shown below is a sample output when the application is run:
         <td>To set values to encoder's manufacturing parameters for Endat 2.2(Status of additional info)
 		+receive position value with additional info
 		</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -459,7 +478,7 @@ Shown below is a sample output when the application is run:
     <tr>
         <td></td>
         <td>4. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
-        <td>some time MRS code selection Failure </td>
+        <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
@@ -478,7 +497,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To reset encoder +receive position value with additional info</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -493,7 +512,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td></td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -518,7 +537,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td></td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -543,7 +562,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Configure Clock </td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -554,7 +573,7 @@ Shown below is a sample output when the application is run:
     <tr>
         <td></td>
         <td>3. Enter 100 to select "configure clock"</td>
-        <td>Failure for 16Mhz and Success for 12Mhz </td>
+        <td>Crc success(Tested up to 8MHz)</td>
     </tr>
     <tr>
         <td></td>
@@ -562,8 +581,8 @@ Shown below is a sample output when the application is run:
         <td> </td>
     </tr>
     <tr>
-        <td>Simulate motor control 1.1 position loop</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>Simulate motor control 2.1 position loop</td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -588,7 +607,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Toggle raw data display</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -613,7 +632,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Start continous mode</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -633,7 +652,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Configure rx arm counter</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -653,7 +672,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>configure rx clock disable time</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -673,7 +692,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Simulate motor control 2.2 position loop(safety)</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>
@@ -698,7 +717,7 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Configure propogation delay(td)</td>
-        <td>1. Selct Single channel mode from UART menu </td>
+        <td>1. Select Single channel mode from UART menu </td>
         <td> </td>
     </tr>
     <tr>

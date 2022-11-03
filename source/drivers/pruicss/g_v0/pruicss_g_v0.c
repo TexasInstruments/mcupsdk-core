@@ -677,6 +677,22 @@ int32_t PRUICSS_setConstantTblEntry(PRUICSS_Handle  handle,
         {
             baseaddr = hwAttrs->pru1CtrlRegBase;
         }
+        else if(PRUICSS_RTU_PRU0 == pruNum)
+        {
+            baseaddr = hwAttrs->rtu0CtrlRegBase;
+        }
+        else if (PRUICSS_TX_PRU0 == pruNum)
+        {
+             baseaddr = hwAttrs->txPru0CtrlRegBase;;
+        }
+        else if(PRUICSS_RTU_PRU1 == pruNum)
+        {
+            baseaddr = hwAttrs->rtu1CtrlRegBase;
+        }
+        else if (PRUICSS_TX_PRU1 == pruNum)
+        {
+             baseaddr = hwAttrs->txPru1CtrlRegBase;;
+        }
         else
         {
             retVal = SystemP_FAILURE;

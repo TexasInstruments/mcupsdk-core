@@ -1,6 +1,6 @@
 
 ;
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-23 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -59,7 +59,7 @@ FIRMWARE_VERSION_REVISION	.set		0x00
 ;  bit23..16		major number
 FIRMWARE_VERSION_MAJOR	.set			0x02
 ;  bit15..0		minor number
-FIRMWARE_VERSION_MINOR	.set			0x0000
+FIRMWARE_VERSION_MINOR	.set			0x0001
 
 ICSS_FIRMWARE_RELEASE_1	.set	((FIRMWARE_DEVICE_AM64x << 8) | (FIRMWARE_PROTOCOL_TYPE_ENDAT_MASTER << 0))
 ICSS_FIRMWARE_RELEASE_2	.set ((FIRMWARE_VERSION_RELEASE << 31) | (FIRMWARE_VERSION_REVISION << 24) | (FIRMWARE_VERSION_MAJOR << 16) | (FIRMWARE_VERSION_MINOR << 0))

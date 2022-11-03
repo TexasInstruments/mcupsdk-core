@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,11 +41,11 @@ extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-
 #include <drivers/pruicss.h>
 #include <motor_control/position_sense/endat/include/endat_interface.h>
-
-#define PRUICSS_PRUx  PRUICSS_PRU1
+#define ENDAT_MODE_SINGLE_CHANNEL_SINGLE_PRU (0U)
+#define ENDAT_MODE_MULTI_CHANNEL_SINGLE_PRU (1U)
+#define ENDAT_MODE_MULTI_CHANNEL_MULTI_PRU (2U)
 
 #define HWREG(x)                                                               \
         (*((volatile uint32_t *)(x)))
@@ -101,93 +101,98 @@ extern "C" {
 
 struct endat_clk_cfg
 {
-    unsigned short  rx_div;
-    unsigned short  tx_div;
-    unsigned short  rx_en_cnt;
-    unsigned short  rx_div_attr;
+    uint16_t  rx_div;
+    uint16_t  tx_div;
+    uint16_t  rx_en_cnt;
+    uint16_t  rx_div_attr;
 };
 
 struct flags
 {
-    unsigned info1 : 1;
-    unsigned info2 : 1;
+    uint32_t info1 : 1;
+    uint32_t info2 : 1;
 };
 
 struct id
 {
-    unsigned ascii;
-    unsigned binary;
+    uint32_t ascii;
+    uint32_t binary;
 };
 
 struct sn
 {
-    unsigned ascii_msb;
-    unsigned binary;
-    unsigned ascii_lsb;
+    uint32_t ascii_msb;
+    uint32_t binary;
+    uint32_t ascii_lsb;
 };
 
 enum { linear, rotary };
 
 struct endat_priv
-{
-    int pos_res;
-    int single_turn_res;
-    int multi_turn_res;
-    int step;
-    unsigned pos_rx_bits_21;
-    unsigned pos_rx_bits_22;
+{   int32_t pruicss_slicex;
+    int32_t load_share;
+    int32_t pos_res;
+    int32_t single_turn_res;
+    int32_t multi_turn_res;
+    int32_t step;
+    uint32_t pos_rx_bits_21_RTUPRU;
+    uint32_t pos_rx_bits_21_PRU;
+    uint32_t pos_rx_bits_21_TXPRU;
+    uint32_t pos_rx_bits_22_RTUPRU;
+    uint32_t pos_rx_bits_22_PRU;
+    uint32_t pos_rx_bits_22_TXPRU;
     struct flags flags;
     struct id id;
     struct sn sn;
-    unsigned cmd_set_2_2;
-    int type;
-    int raw_data;
-    int channel;
-    unsigned short rx_en_cnt;
+    uint32_t cmd_set_2_2;
+    int32_t type;
+    int32_t raw_data;
+    int32_t channel;
+    uint16_t rx_en_cnt;
     struct endat_pruss_xchg *pruss_xchg;
-    int has_safety;
+    int32_t has_safety;
     void *pruss_cfg;
 };
 
 struct cmd_supplement
 {
     /*
-     * unsigned char is ideal for address, but as scanf(%x) is done,
+     * uint8_t is ideal for address, but as scanf(%x) is done,
      * there could be side effects as other fields may get corrupted,
      * though it is not much of an issue as address is ensured to be
      * less than 0xff. But to be on safer side keep it unsigned,
      * same applies to block also
      */
-    unsigned address;
-    unsigned data;
-    unsigned block;
-    unsigned char has_block_address;
-    unsigned frequency;
+    uint32_t address;
+    uint32_t data;
+    uint32_t block;
+    uint8_t has_block_address;
+    uint32_t frequency;
 };
 
 struct endat_data
 {
     /* position */
-    unsigned long long  recvd1;
+    uint64_t recvd1;
     /* addinfo 1/2 */
-    unsigned        recvd2;
+    uint32_t recvd2;
     /* addinfo 1 */
-    unsigned        recvd3;
+    uint32_t recvd3;
 };
 
 struct endat_position
 {
-    unsigned long long      position;
-    unsigned long long      revolution;
-    unsigned char           f1;
-    unsigned char           f2;
-    unsigned char           crc;
+    uint64_t                position;
+    uint64_t                revolution;
+    uint8_t           f1;
+    uint8_t           f2;
+    uint8_t           crc;
 };
 
 struct endat_addinfo
 {
-    unsigned            addinfo;
-    unsigned char           crc;
+    uint32_t            addinfo;
+    uint8_t           crc;
 };
 
 struct endat_position_addinfo
@@ -198,16 +203,16 @@ struct endat_position_addinfo
 
 struct endat_addr_params
 {
-    unsigned char           address;
-    unsigned short          params;
-    unsigned char           crc;
+    uint8_t           address;
+    uint16_t          params;
+    uint8_t           crc;
 };
 
 struct endat_test_values
 {
-    unsigned long long      value;
-    unsigned char           f1;
-    unsigned char           crc;
+    uint64_t      value;
+    uint8_t           f1;
+    uint8_t           crc;
 };
 
 union endat_format_data

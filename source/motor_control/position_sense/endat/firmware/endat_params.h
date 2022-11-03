@@ -1,6 +1,6 @@
 
 ;
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-23 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions

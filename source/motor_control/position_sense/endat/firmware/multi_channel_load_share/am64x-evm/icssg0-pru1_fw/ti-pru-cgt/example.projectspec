@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="PRU"
+                deviceId="AM64x_GP_EVM"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Endat Peripheral Interface Multi Ch Load Share"
+        name = "endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt"
+        products="com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+            Debug,
+            Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TI"
+        cgtVersion="2.3.3"
+        device="AM64x_GP_EVM"
+        deviceCore="ICSS_G0_PRU_1"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/endat/firmware
+            -DICSSG0
+            -DPRU1
+            -DSLICE1
+            -v4
+            -DSOC_AM64X
+            -DENABLE_MULTI_MAKE_PRU
+        "
+        linkerBuildOptions="
+            -m=endat_peripheral_interface_multi_ch_load_share.${ConfigName}.map
+            --entry_point=ENDAT_INIT
+            --disable_auto_rts
+        "
+
+        postBuildStep="
+            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/endat/firmware/endat_master_hexpru.cmd endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 endat_master_multi_PRU_bin.h EnDatFirmwareMultiMakePRU 4;  move  endat_master_multi_PRU_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/endat/firmware/endat_master_multi_PRU_bin.h ;
+        "
+
+        description="A Endat Peripheral Interface Multi Ch Load Share FW project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../../endat_main.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../endat_diagnostic.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../endat_master_hexpru.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am64x/ENDAT_DESIGN.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+    </project>
+</projectSpec>

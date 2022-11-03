@@ -603,8 +603,7 @@ uint32_t PRUICSS_getVersion(PRUICSS_Handle handle);
  *          entry which have write permissions
  *
  * \param   handle              #PRUICSS_Handle returned from #PRUICSS_open()
- * \param   pruNum              PRU number[0 or 1] for which constant table is
- *                              being updated
+ * \param   pruNum              PRU core number from \ref PRUICSS_Cores
  * \param   constantTblEntry    contant table entry being updated
  * \param   constantTblVal      contant table value to be written
  *
