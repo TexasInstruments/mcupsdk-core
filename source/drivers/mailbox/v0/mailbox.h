@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -130,7 +130,7 @@ uint32_t Mailbox_isCoreEnabled(uint32_t remoteCoreId);
  * \return SystemP_TIMEOUT if ACK is not received in specified timeout
  * \return SystemP_FAILURE on any other failure
  */
-int32_t Mailbox_write(uint32_t remoteCoreId, uint8_t *buffer, uint32_t size, uint32_t timeToWaitInTicks);
+int32_t Mailbox_write(uint32_t remoteCoreId, const uint8_t *buffer, uint32_t size, uint32_t timeToWaitInTicks);
 
 /**
  * \brief Read data to sent from remote core in shared memory

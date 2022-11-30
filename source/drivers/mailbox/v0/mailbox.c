@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,35 +36,38 @@
 /* global state of mailbox communication */
 Mailbox_Ctrl gMailbox_ctrl;
 
-static inline uint32_t Mailbox_isWriteAckIntr(Mailbox_RemoteCoreObj *obj)
+
+
+
+static inline uint32_t Mailbox_isWriteAckIntr(const Mailbox_RemoteCoreObj *obj)
 {
     volatile uint32_t *addr = (uint32_t*)obj->writeAckIntrRegAddr;
 
-    return *addr & (1 << obj->writeAckIntrBitPos);
+    return (uint32_t) (((uint32_t) *addr) & ((uint32_t) (1UL << (obj->writeAckIntrBitPos))));
 }
 
-static inline void Mailbox_clearWriteAckIntr(Mailbox_RemoteCoreObj *obj)
+static inline void Mailbox_clearWriteAckIntr(const Mailbox_RemoteCoreObj *obj)
 {
     volatile uint32_t *addr = (uint32_t*)obj->writeAckIntrRegAddr;
 
-    *addr = (1 << obj->writeAckIntrBitPos);
+    *addr =(uint32_t) (1UL << obj->writeAckIntrBitPos);
 }
 
-static inline void Mailbox_sendWriteIntr(Mailbox_RemoteCoreObj *obj)
+static inline void Mailbox_sendWriteIntr(const Mailbox_RemoteCoreObj *obj)
 {
     volatile uint32_t *addr = (uint32_t*)obj->writeIntrRegAddr;
 
-    *addr = (1 << obj->writeIntrBitPos);
+    *addr =(uint32_t) (1UL << obj->writeIntrBitPos);
 }
 
-static inline void Mailbox_sendReadAckIntr(Mailbox_RemoteCoreObj *obj)
+static inline void Mailbox_sendReadAckIntr(const Mailbox_RemoteCoreObj *obj)
 {
     volatile uint32_t *addr = (uint32_t*)obj->readAckIntrRegAddr;
 
-    *addr = (1 << obj->readAckIntrBitPos);
+    *addr = (uint32_t)(1UL << obj->readAckIntrBitPos);
 }
 
-static int32_t Mailbox_waitWriteAckIntr(Mailbox_RemoteCoreObj *obj, uint32_t timeToWaitInTicks)
+static int32_t Mailbox_waitWriteAckIntr(const Mailbox_RemoteCoreObj *obj, uint32_t timeToWaitInTicks)
 {
     int32_t status = SystemP_FAILURE;
     uint32_t done = 0, isAck;
@@ -72,13 +75,13 @@ static int32_t Mailbox_waitWriteAckIntr(Mailbox_RemoteCoreObj *obj, uint32_t tim
 
     do {
         isAck = Mailbox_isWriteAckIntr(obj);
-        if(isAck)
+        if(isAck != 0U)
         {
             Mailbox_clearWriteAckIntr(obj);
             status = SystemP_SUCCESS;
             done = 1;
         }
-        if(!done)
+        if(done == 0U)
         {
             elaspedTicks =  ClockP_getTicks() - curTicks;
 
@@ -88,14 +91,14 @@ static int32_t Mailbox_waitWriteAckIntr(Mailbox_RemoteCoreObj *obj, uint32_t tim
                 done = 1;
             }
         }
-    } while(!done);
+    } while(done == 0U);
 
     return status;
 }
 
 void Mailbox_readCallback(uint32_t remoteCoreId)
 {
-    if( Mailbox_isCoreEnabled(remoteCoreId) )
+    if( Mailbox_isCoreEnabled(remoteCoreId) != 0U )
     {
         Mailbox_RemoteCoreObj *obj = gMailbox_ctrl.pRemoteCoreObj[remoteCoreId];
 
@@ -110,14 +113,14 @@ void Mailbox_readCallback(uint32_t remoteCoreId)
 
 void Mailbox_Params_init(Mailbox_Params *params)
 {
-    params->rsv = 0;
+    params->rsv = 0U;
 }
 
 /* we assume IpcNotify_init() is called before calling mailbox init */
 int32_t Mailbox_init(Mailbox_Params *params)
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t core, numCores = 0;
+    uint32_t core, numCores = 0U;
 
     gMailbox_ctrl.readCallback = NULL;
     gMailbox_ctrl.readCallbackArgs = NULL;
@@ -126,7 +129,7 @@ int32_t Mailbox_init(Mailbox_Params *params)
     {
         gMailbox_ctrl.pRemoteCoreObj[core] = NULL;
 
-        if( ! IpcNotify_isCoreEnabled(core) && core != IpcNotify_getSelfCoreId())
+        if( (IpcNotify_isCoreEnabled(core)==0U) && (core != IpcNotify_getSelfCoreId()))
         {
             Mailbox_RemoteCoreObj *obj;
 
@@ -140,17 +143,17 @@ int32_t Mailbox_init(Mailbox_Params *params)
                 numCores++;
 
                 /* we then initialize the SOC independant state */
-                status = SemaphoreP_constructBinary( &obj->readSem, 0 );
+                status = SemaphoreP_constructBinary( &obj->readSem, 0U );
                 DebugP_assert(status == SystemP_SUCCESS);
 
-                obj->curReadSize = 0;
+                obj->curReadSize = 0U;
 
                 gMailbox_ctrl.pRemoteCoreObj[core] = obj;
             }
         }
     }
 
-    if(numCores > 0)
+    if(numCores > 0U)
     {
         IpcNotify_registerNonNotifyCallback(Mailbox_readCallback);
     }
@@ -166,32 +169,32 @@ void Mailbox_setReadCallback(Mailbox_ReadCallback readCallback, void *readCallba
 
 uint32_t Mailbox_isCoreEnabled(uint32_t coreId)
 {
-    uint32_t isEnabled = 0;
+    uint32_t isEnabled = 0U;
 
-    if(coreId < CSL_CORE_ID_MAX && gMailbox_ctrl.pRemoteCoreObj[coreId] != NULL)
+    if((coreId < CSL_CORE_ID_MAX) && (gMailbox_ctrl.pRemoteCoreObj[coreId] != NULL))
     {
-        isEnabled = 1;
+        isEnabled = 1U;
     }
     return isEnabled;
 }
 
-int32_t Mailbox_write(uint32_t remoteCoreId, uint8_t *buffer, uint32_t size, uint32_t timeToWaitInTicks)
+int32_t Mailbox_write(uint32_t remoteCoreId, const uint8_t *buffer, uint32_t size, uint32_t timeToWaitInTicks)
 {
     int32_t status = SystemP_FAILURE;
 
-    if(    buffer != NULL
-        && size > 0
-        && Mailbox_isCoreEnabled(remoteCoreId) )
+    if(    (buffer != NULL)
+        && (size > 0U)
+        && (Mailbox_isCoreEnabled(remoteCoreId)!= 0U) )
     {
         Mailbox_RemoteCoreObj *obj = gMailbox_ctrl.pRemoteCoreObj[remoteCoreId];
 
         if(size < obj->maxBufferSize)
         {
-            memcpy(obj->writeShmBuffer, buffer, size);
+            (void)memcpy(obj->writeShmBuffer, buffer, size);
 
             #if defined(__aarch64__) || defined(__arm__)
             __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
-            __asm__ __volatile__ ( "isb sy"  "\n\t": : : "memory");
+            __asm__ __volatile__ ( "isb sy"     "\n\t": : : "memory");
             #endif
             #if defined(_TMS320C6X)
             _mfence();
@@ -203,7 +206,7 @@ int32_t Mailbox_write(uint32_t remoteCoreId, uint8_t *buffer, uint32_t size, uin
 
             status = SystemP_SUCCESS;
 
-            if(timeToWaitInTicks > 0 )
+            if(timeToWaitInTicks > 0U )
             {
                 status = Mailbox_waitWriteAckIntr(obj, timeToWaitInTicks);
             }
@@ -215,30 +218,30 @@ int32_t Mailbox_write(uint32_t remoteCoreId, uint8_t *buffer, uint32_t size, uin
 int32_t Mailbox_read(uint32_t remoteCoreId, uint8_t *buffer, uint32_t size, uint32_t timeToWaitInTicks)
 {
     int32_t status = SystemP_FAILURE;
-
-    if(    buffer != NULL
-        && size > 0
-        && Mailbox_isCoreEnabled(remoteCoreId) )
+    uint32_t maxSize = size;
+    if(    (buffer !=  NULL)
+        && (maxSize > 0U)
+        && (Mailbox_isCoreEnabled(remoteCoreId) != 0U) )
     {
         Mailbox_RemoteCoreObj *obj = gMailbox_ctrl.pRemoteCoreObj[remoteCoreId];
 
-        if( (obj->curReadSize + size) > obj->maxBufferSize)
+        if( (obj->curReadSize + maxSize) > obj->maxBufferSize)
         {
-            size = obj->maxBufferSize - obj->curReadSize;
+            maxSize = obj->maxBufferSize - obj->curReadSize;
         }
-        if(size > 0)
+        if(maxSize > 0U)
         {
             status = SystemP_SUCCESS;
 
-            if(obj->curReadSize == 0)
+            if(obj->curReadSize == 0U)
             {
                 status = SemaphoreP_pend(&obj->readSem, timeToWaitInTicks);
             }
             if(status == SystemP_SUCCESS)
             {
-                memcpy(buffer, &obj->readShmBuffer[obj->curReadSize], size);
+                (void)memcpy(buffer, &obj->readShmBuffer[obj->curReadSize], maxSize);
 
-                obj->curReadSize += size;
+                obj->curReadSize += maxSize;
             }
         }
     }
@@ -249,11 +252,11 @@ int32_t Mailbox_readDone(uint32_t remoteCoreId)
 {
     int32_t status = SystemP_FAILURE;
 
-    if(  Mailbox_isCoreEnabled(remoteCoreId) )
+    if(  Mailbox_isCoreEnabled(remoteCoreId) != 0U )
     {
         Mailbox_RemoteCoreObj *obj = gMailbox_ctrl.pRemoteCoreObj[remoteCoreId];
 
-        obj->curReadSize = 0;
+        obj->curReadSize = 0U;
 
         Mailbox_sendReadAckIntr(obj);
 

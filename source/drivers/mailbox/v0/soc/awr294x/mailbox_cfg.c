@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2022 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,15 +38,15 @@
  */
 
 /* max size of read and write buffer */
-#define MAX_BUFFER_SIZE             (512)
+#define MAX_BUFFER_SIZE             (512U)
 
 /* memory used to send messages to RSS R4 */
-#define R5FSS0_0_TO_RSS_R4_MEM  (CSL_RSS_CR4_MBOX_U_BASE + 0x0000 )
-#define C66SS0_TO_RSS_R4_MEM    (CSL_RSS_CR4_MBOX_U_BASE + 0x0800 )
+#define R5FSS0_0_TO_RSS_R4_MEM  (CSL_RSS_CR4_MBOX_U_BASE + 0x0000U )
+#define C66SS0_TO_RSS_R4_MEM    (CSL_RSS_CR4_MBOX_U_BASE + 0x0800U )
 
 /* memory used to receive messages from RSS R4 */
-#define RSS_R4_TO_R5FSS0_0_MEM  (CSL_MSS_MBOX_U_BASE    + 0x0000)
-#define RSS_R4_TO_C66SS0_0_MEM  (CSL_DSS_MAILBOX_U_BASE + 0x0000)
+#define RSS_R4_TO_R5FSS0_0_MEM  (CSL_MSS_MBOX_U_BASE    + 0x0000U)
+#define RSS_R4_TO_C66SS0_0_MEM  (CSL_DSS_MAILBOX_U_BASE + 0x0000U)
 
 /* mailbox registers */
 #define R5FSS0_0_MBOX_WRITE_DONE    (CSL_MSS_CTRL_U_BASE + 0x5FCU)
@@ -58,7 +58,9 @@
 #define C66SS0_MBOX_READ_DONE_ACK   (CSL_DSS_CTRL_U_BASE + 0xFF0U)
 
 /* CPU bit positions within the mailbox registers */
-#define RSS_R4_MBOX_PROC_BIT_POS    (12u)
+#define RSS_R4_MBOX_PROC_BIT_POS    (12U)
+
+#define RIGHT_SHIFT_BY_TWO    (2U)
 
 Mailbox_RemoteCoreObj gMailboxRemoteCoreObj_r5ss0_0_to_rss_r4 =
 {
@@ -70,7 +72,7 @@ Mailbox_RemoteCoreObj gMailboxRemoteCoreObj_r5ss0_0_to_rss_r4 =
     .readAckIntrRegAddr = R5FSS0_0_MBOX_READ_DONE_ACK,
     .writeIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS,
     .writeAckIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS,
-    .readAckIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS >> 2, /* here we need to /4 to get to the bit pos vs other mailbox regs */
+    .readAckIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS >> RIGHT_SHIFT_BY_TWO, /* here we need to /4 to get to the bit pos vs other mailbox regs */
 };
 
 Mailbox_RemoteCoreObj gMailboxRemoteCoreObj_c66ss0_to_rss_r4 =
@@ -83,7 +85,7 @@ Mailbox_RemoteCoreObj gMailboxRemoteCoreObj_c66ss0_to_rss_r4 =
     .readAckIntrRegAddr = C66SS0_MBOX_READ_DONE_ACK,
     .writeIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS,
     .writeAckIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS,
-    .readAckIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS >> 2, /* here we need to /4 to get to the bit pos vs other mailbox regs */
+    .readAckIntrBitPos = RSS_R4_MBOX_PROC_BIT_POS >> RIGHT_SHIFT_BY_TWO, /* here we need to /4 to get to the bit pos vs other mailbox regs */
 };
 
 Mailbox_RemoteCoreObj *Mailbox_getRemoteCoreObj(uint32_t selfCoreId, uint32_t remoteCoreId)
@@ -101,6 +103,15 @@ Mailbox_RemoteCoreObj *Mailbox_getRemoteCoreObj(uint32_t selfCoreId, uint32_t re
         {
             obj = &gMailboxRemoteCoreObj_c66ss0_to_rss_r4;
         }
+        else
+        {
+            /*MISRAC*/
+        }
+
+    }
+    else
+    {
+        /*MISRAC*/
     }
     return obj;
 }
