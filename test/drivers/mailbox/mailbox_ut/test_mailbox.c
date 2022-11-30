@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -72,6 +72,10 @@ static const uint16_t gMessage1_c66ss0[22] =
 };
 
 static uint32_t gMessageResponse[32];
+
+void test_pos_main(void *args);
+void test_neg_main(void *args);
+
 void Mailbox_Callback(uint32_t remoteCoreId,void * args)
 {
     int32_t status;
@@ -273,4 +277,7 @@ void test_main(void *args)
     UNITY_END();
 
     Drivers_close();
+
+    test_pos_main(NULL);
+    test_neg_main(NULL);
 }
