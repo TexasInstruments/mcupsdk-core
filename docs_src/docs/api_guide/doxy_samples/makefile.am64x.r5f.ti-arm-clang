@@ -50,6 +50,7 @@ FILES_common := \
     Ospi_sample.c \
     Pinmux_sample.c \
     Pruicss_sample_g_v0.c \
+    Pmu_sample.c \
     Sciclient_sample.c \
     SemaphoreP_sample.c \
     Spinlock_sample.c \

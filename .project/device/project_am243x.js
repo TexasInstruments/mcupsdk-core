@@ -113,6 +113,7 @@ const example_file_list = [
     "examples/drivers/pcie/pcie_msi_irq/pcie_msi_irq_rc/.project/project.js",
     "examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_ep/.project/project.js",
     "examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_rc/.project/project.js",
+    "examples/drivers/pmu/pmu_multievent/.project/project.js",
     "examples/drivers/safety/reset_isolation/.project/project.js",
     "examples/drivers/safety/reset_isolation_ipc/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",

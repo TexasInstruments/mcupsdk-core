@@ -62,6 +62,7 @@ const example_file_list = [
     "examples/drivers/mibspi/mibspi_loopback/.project/project.js",
     "examples/drivers/mibspi/mibspi_loopback_icount/.project/project.js",
     "examples/drivers/mibspi/mibspi_loopback_dma/.project/project.js",
+    "examples/drivers/pmu/pmu_multievent/.project/project.js",
     "examples/drivers/qspi/qspi_flash_dma_transfer/.project/project.js",
     "examples/drivers/qspi/qspi_flash_diag/.project/project.js",
     "examples/drivers/qspi/qspi_flash_transfer/.project/project.js",

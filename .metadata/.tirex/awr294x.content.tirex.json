@@ -1756,6 +1756,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": " pmu_multievent",
+        "location": "../../examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmu",
+            "pmu_multievent",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": " pmu_multievent",
+        "location": "../../examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmu",
+            "pmu_multievent",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A QSPI Flash transfer example. This example demonstrates transfer using QSPI. CPU is R5FSS0-0 running NORTOS.",
         "name": "qspi_flash_dma_transfer",
         "location": "../../examples/drivers/qspi/qspi_flash_dma_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

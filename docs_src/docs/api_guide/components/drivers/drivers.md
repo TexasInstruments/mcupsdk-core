@@ -31,6 +31,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_OSPI_PAGE
 - \subpage DRIVERS_PCIE_PAGE
 - \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_PMU_PAGE
 - \subpage DRIVERS_PRUICSS_PAGE
 - \subpage DRIVERS_SCICLIENT_PAGE
 - \subpage DRIVERS_SPINLOCK_PAGE
@@ -71,6 +72,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_MCAN_PAGE
 - \subpage DRIVERS_MIBSPI_PAGE
 - \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_PMU_PAGE
 - \subpage DRIVERS_QSPI_PAGE
 - \subpage DRIVERS_RTI_PAGE
 - \subpage DRIVERS_UART_PAGE
@@ -99,6 +101,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_MDIO_PAGE
 - \subpage DRIVERS_MMCSD_PAGE
 - \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_PMU_PAGE
 - \subpage DRIVERS_PRUICSS_PAGE
 - \subpage DRIVERS_QSPI_PAGE
 - \subpage DRIVERS_RTI_PAGE

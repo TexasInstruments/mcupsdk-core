@@ -44,6 +44,7 @@ const files_r5f = {
         "mibspi_edma.c",
         "mibspi_soc.c",
         "pinmux.c",
+        "pmu.c",
         "qspi.c",
         "qspi_edma.c",
         "rti.c",
@@ -140,6 +141,19 @@ const filedirs = {
     ],
 };
 
+const filedirs_r5f =  {
+    common: [
+        "pmu",
+        "pmu/r5f",
+    ]
+};
+
+const asmfiles_r5f = {
+    common: [
+        "csl_arm_r5_pmu.S",
+    ]
+};
+
 const cflags_r5f = {
     release: [
         "-Oz",
@@ -169,8 +183,10 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
         build_property.cflags = cflags_r5f;
         build_property.files = files_r5f;
+        build_property.asmfiles = asmfiles_r5f;
     }
     if(buildOption.cpu.match(/c66*/)) {
         build_property.files = files_c66;

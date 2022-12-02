@@ -60,6 +60,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
+\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X
+-# PMU
+   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
+\endcond
 \cond SOC_AM64X || SOC_AM243X
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_RC
@@ -72,6 +76,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_PCIE_MSI_IRQ_EP
    -# \subpage EXAMPLES_DRIVERS_PCIE_MSIX_IRQ_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_MSIX_IRQ_EP
+-# PMU
+   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
 -# RESET ISOLATION
    -# \subpage EXAMPLES_DRIVERS_RESET_ISOLATION
    -# \subpage EXAMPLES_DRIVERS_RESET_ISOLATION_IPC

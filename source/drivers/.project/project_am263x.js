@@ -42,6 +42,7 @@ const files_r5f = {
         "mdio_v0.c",
         "mmcsd_v1.c",
         "pinmux.c",
+        "pmu.c",
         "pruicss_m_v0.c",
         "pruicss_m_v0_cfg.c",
         "qspi.c",
@@ -90,6 +91,8 @@ const filedirs = {
         "mdio/v0",
         "mmcsd/v1",
         `pinmux/am263x`,
+        "pmu",
+        "pmu/r5f",
         `pruicss/m_v0`,
         `pruicss/soc/am263x`,
         "qspi/v0",
@@ -107,6 +110,19 @@ const filedirs = {
         "watchdog/v0",
         `watchdog/v0/soc/${device}`,
     ],
+};
+
+const filedirs_r5f =  {
+    common: [
+        "pmu",
+        "pmu/r5f",
+    ]
+};
+
+const asmfiles_r5f = {
+    common: [
+        "csl_arm_r5_pmu.S",
+    ]
 };
 
 const cflags_r5f = {
@@ -137,8 +153,10 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
         build_property.cflags = cflags_r5f;
         build_property.files = files_r5f;
+        build_property.asmfiles = asmfiles_r5f;
     }
 
     return build_property;

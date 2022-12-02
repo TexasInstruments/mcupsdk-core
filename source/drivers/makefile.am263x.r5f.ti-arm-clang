@@ -54,6 +54,7 @@ FILES_common := \
     mdio_v0.c \
     mmcsd_v1.c \
     pinmux.c \
+    pmu.c \
     pruicss_m_v0.c \
     pruicss_m_v0_cfg.c \
     qspi.c \
@@ -70,6 +71,9 @@ FILES_common := \
     uart_dma_edma.c \
     watchdog_rti.c \
     watchdog_soc.c \
+
+ASMFILES_common := \
+    csl_arm_r5_pmu.S \
 
 FILES_PATH_common = \
     adc/v1 \
@@ -98,6 +102,8 @@ FILES_PATH_common = \
     mdio/v0 \
     mmcsd/v1 \
     pinmux/am263x \
+    pmu \
+    pmu/r5f \
     pruicss/m_v0 \
     pruicss/soc/am263x \
     qspi/v0 \
@@ -114,6 +120,8 @@ FILES_PATH_common = \
     uart/v0/dma/edma \
     watchdog/v0 \
     watchdog/v0/soc/am263x \
+    pmu \
+    pmu/r5f \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

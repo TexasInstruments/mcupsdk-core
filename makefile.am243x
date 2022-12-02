@@ -242,6 +242,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_msi_irq/pcie_msi_irq_rc/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_ep/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_rc/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1204,6 +1212,14 @@ BUILD_COMBO_EXAMPLE_ALL += pcie_msi_irq_ep_am243x-evm_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_ALL += pcie_msi_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_msix_irq_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_msix_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-evm_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-evm_r5fss1-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-lp_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-lp_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am243x-lp_r5fss1-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-evm_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-evm_r5fss1-0_nortos_ti-arm-clang
@@ -1748,6 +1764,30 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  pcie_msix_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_rc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-evm_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-evm_r5fss1-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-0_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-evm_r5fss1-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-1_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-lp_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-lp_r5fss1-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile all
+
+  pmu_multievent_am243x-lp_r5fss1-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile all
 
  sciclient_get_version_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2515,6 +2555,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_msi_irq_ep_am243x-evm_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_msi_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_msix_irq_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_msix_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-evm_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-evm_r5fss1-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-lp_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-lp_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am243x-lp_r5fss1-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-evm_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-evm_r5fss1-0_nortos_ti-arm-clang_clean
@@ -3059,6 +3107,30 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  pcie_msix_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_rc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-evm_r5fss1-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-0_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-evm_r5fss1-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-1_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-lp_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-lp_r5fss1-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile clean
+
+  pmu_multievent_am243x-lp_r5fss1-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile clean
 
  sciclient_get_version_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3826,6 +3898,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_msi_irq_ep_am243x-evm_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_msi_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_msix_irq_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_msix_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-evm_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-evm_r5fss1-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-lp_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-lp_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am243x-lp_r5fss1-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-evm_r5fss1-0_nortos_ti-arm-clang_scrub
@@ -4370,6 +4450,30 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  pcie_msix_irq_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pcie/pcie_msix_irq/pcie_msix_irq_rc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-evm_r5fss1-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-evm_r5fss1-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-evm/r5fss1-1_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-lp_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-lp_r5fss1-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
+
+  pmu_multievent_am243x-lp_r5fss1-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am243x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile scrub
 
  sciclient_get_version_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

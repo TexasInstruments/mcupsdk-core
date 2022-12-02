@@ -54,6 +54,7 @@ FILES_common := \
     mibspi_edma.c \
     mibspi_soc.c \
     pinmux.c \
+    pmu.c \
     qspi.c \
     qspi_edma.c \
     rti.c \
@@ -63,6 +64,9 @@ FILES_common := \
     uart_sci_edma.c \
     watchdog_rti.c \
     watchdog_soc.c \
+
+ASMFILES_common := \
+    csl_arm_r5_pmu.S \
 
 FILES_PATH_common = \
     bootloader \
@@ -97,6 +101,8 @@ FILES_PATH_common = \
     uart/v1 \
     watchdog/v0 \
     watchdog/v0/soc/awr294x \
+    pmu \
+    pmu/r5f \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

@@ -70,6 +70,7 @@ const files_r5f = {
         "pcie_serdes.c",
         "pcie_soc.c",
         "pinmux.c",
+        "pmu.c",
         "pruicss_g_v0.c",
         "pruicss_g_v0_cfg.c",
         "sciclient.c",
@@ -251,6 +252,19 @@ const filedirs = {
     ],
 };
 
+const filedirs_r5f =  {
+    common: [
+        "pmu",
+        "pmu/r5f",
+    ]
+};
+
+const asmfiles_r5f = {
+    common: [
+        "csl_arm_r5_pmu.S",
+    ]
+};
+
 const filedirs_a53 =  {
     common: [
         "gpio/v0",
@@ -300,7 +314,9 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.filedirs = {common: [...filedirs.common, ...filedirs_r5f.common]};
         build_property.files = files_r5f;
+        build_property.asmfiles = asmfiles_r5f;
     }
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.files = files_m4f;

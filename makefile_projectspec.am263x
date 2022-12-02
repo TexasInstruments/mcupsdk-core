@@ -172,6 +172,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am263x-cc_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -836,6 +844,30 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec all
+
  qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1458,6 +1490,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am263x-cc_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2122,6 +2162,30 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
  qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2744,6 +2808,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am263x-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -3408,6 +3480,30 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec export
+
  qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4046,6 +4142,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_transfer/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

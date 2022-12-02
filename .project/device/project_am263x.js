@@ -109,6 +109,7 @@ const example_file_list = [
     "examples/drivers/mcspi/mcspi_performance_32bit/.project/project.js",
     "examples/drivers/mmcsd/mmcsd_file_io/.project/project.js",
     "examples/drivers/mmcsd/mmcsd_raw_io/.project/project.js",
+    "examples/drivers/pmu/pmu_multievent/.project/project.js",
     "examples/drivers/qspi/qspi_flash_dma_transfer/.project/project.js",
     "examples/drivers/qspi/qspi_flash_diag/.project/project.js",
     "examples/drivers/qspi/qspi_flash_transfer/.project/project.js",
