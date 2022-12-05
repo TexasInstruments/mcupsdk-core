@@ -45,7 +45,8 @@
 #include <sdl/include/sdl_types.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_mcrc.h>
-
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
@@ -299,6 +300,8 @@ void mcrc_full_cpu_main(void *args)
     int32_t    i;
 
     /* Init Dpl */
+	Drivers_open();
+	Board_driversOpen();
     result = SDL_TEST_dplInit();
     if (result != SDL_PASS)
     {
@@ -336,6 +339,8 @@ void mcrc_full_cpu_main(void *args)
     {
         DebugP_log("\n Few/all tests Failed \n");
     }
+	Board_driversClose();
+	Drivers_close();
 }
 
 /* Nothing past this point */

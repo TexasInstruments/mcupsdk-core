@@ -46,6 +46,14 @@ const libs_m4f = {
         "sdl.am64x.m4f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
+const libs_r5f = {
+    common: [
+        "nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
 
 const lnkfiles = {
     common: [
@@ -70,8 +78,24 @@ const templates_nortos_m4f =
     }
 ];
 
+const templates_nortos_r5f =
+[
+    {
+        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -100,6 +124,10 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;
         build_property.templates = templates_nortos_m4f;
+    }
+	if(buildOption.cpu.match(/r5f*/)) {
+        build_property.libs = libs_r5f;
+        build_property.templates = templates_nortos_r5f;
     }
 
     return build_property;

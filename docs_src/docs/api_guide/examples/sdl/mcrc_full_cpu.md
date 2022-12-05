@@ -23,6 +23,7 @@ Use Cases
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | m4fss0-0 nortos
+ ^				| r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/mcrc/mcrc_full_cpu/
@@ -49,6 +50,7 @@ Use Cases
  Example folder | examples/sdl/mcrc/mcrc_auto_cpu/
 
 \endcond
+
 
 # Steps to Run the Example
 

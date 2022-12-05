@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 Texas Instruments Incorporated
+/* Copyright (c) 2022 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,7 +43,8 @@
 /*===========================================================================*/
 #include "mcrc_main.h"
 #include <dpl_interface.h>
-
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
@@ -174,7 +175,11 @@ void test_sdl_mcrc_baremetal_test_app_runner(void)
 
 void test_main(void *args)
 {
+	Drivers_open();
+	Board_driversOpen();
     test_sdl_mcrc_baremetal_test_app_runner();
+	Board_driversClose();
+	Drivers_close();
 }
 
 /* Nothing past this point */

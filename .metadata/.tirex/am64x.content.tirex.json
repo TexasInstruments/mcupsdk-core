@@ -12727,6 +12727,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies CRC in full CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcrc_full_cpu",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_full_cpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example demonstrates error injecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
         "name": "sdl_tog",
         "location": "../../examples/sdl/stog/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
