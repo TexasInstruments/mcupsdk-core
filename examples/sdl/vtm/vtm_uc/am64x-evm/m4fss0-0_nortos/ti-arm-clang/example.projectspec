@@ -4,14 +4,14 @@
         <when>
             <context
                 deviceFamily="ARM"
-                deviceId="Cortex R.AM64x"
+                deviceId="Cortex M.AM64x"
             />
         </when>
     </applicability>
 
     <project
         title="Vtm Example"
-        name = "vtm_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang"
+        name = "vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -20,8 +20,8 @@
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
         cgtVersion="2.1.2"
-        device="Cortex R.AM64x"
-        deviceCore="MAIN_PULSAR_Cortex_R5_0_0"
+        device="Cortex M.AM64x"
+        deviceCore="Cortex_M4F_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -33,9 +33,8 @@
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/
             -I${MCU_PLUS_SDK_PATH}/examples/sdl/vtm/vtm_uc/
-            -mcpu=cortex-r5
+            -mcpu=cortex-m4
             -mfloat-abi=hard
-            -mfpu=vfpv3-d16
             -mthumb
             -Wall
             -Werror
@@ -43,7 +42,7 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM64X
-            -DR5F_CORE
+            -DM4F_CORE
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -52,7 +51,6 @@
             -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${CG_TOOL_ROOT}/lib
             -m=vtm_example.${ConfigName}.map
-            --diag_suppress=10063
             --ram_model
             --reread_libs
         "
@@ -61,7 +59,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part Default --package ALV
+            --context m4fss0-0 --part Default --package ALV
         "
 
         description="A Vtm Example NORTOS project">
@@ -71,10 +69,10 @@
                 -D_DEBUG_=1
             "
             linkerBuildOptions="
-                -lnortos.am64x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am64x.r5f.ti-arm-clang.debug.lib
-                -lboard.am64x.r5f.ti-arm-clang.debug.lib
-                -lsdl.am64x.r5f.ti-arm-clang.debug.lib
+                -lnortos.am64x.m4f.ti-arm-clang.debug.lib
+                -ldrivers.am64x.m4f.ti-arm-clang.debug.lib
+                -lboard.am64x.m4f.ti-arm-clang.debug.lib
+                -lsdl.am64x.m4f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -84,10 +82,10 @@
                 -Os
             "
             linkerBuildOptions="
-                -lnortos.am64x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am64x.r5f.ti-arm-clang.release.lib
-                -lboard.am64x.r5f.ti-arm-clang.release.lib
-                -lsdl.am64x.r5f.ti-arm-clang.release.lib
+                -lnortos.am64x.m4f.ti-arm-clang.release.lib
+                -ldrivers.am64x.m4f.ti-arm-clang.release.lib
+                -lboard.am64x.m4f.ti-arm-clang.release.lib
+                -lsdl.am64x.m4f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

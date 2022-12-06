@@ -96,15 +96,15 @@ int32_t sdlVTM_apiTest(void)
     tsConfig.tsCtrl_cfg                            =    ctrlCfg;
     tsConfig.high_temp_in_milli_degree_celsius    =    68000;
     tsConfig.low_temp_in_milli_degree_celsius    =    64000;
-	
+
 	uint32_t baseAddr,baseAddr1;
-	
+
 	SDL_VTM_getBaseAddr(SDL_VTM_CONFIG_REG_1, &baseAddr);
     p_cfg1 = (SDL_VTM_cfg1Regs *) baseAddr;
-	
+
 	SDL_VTM_getBaseAddr(SDL_VTM_CONFIG_REG_2, &baseAddr1);
     p_cfg2 = (SDL_VTM_cfg2Regs *) baseAddr1;
-	
+
 	SDL_VTM_getBaseAddr(3, &baseAddr1);
     p_cfg2 = (SDL_VTM_cfg2Regs *) baseAddr1;
 
@@ -138,7 +138,7 @@ int32_t sdlVTM_apiTest(void)
         for (vdIns = SDL_VTM_INSTANCE_VD_DOMAIN_1; vdIns < gNumCoreVoltageDomains; vdIns++ )
         {
             sdlResult = SDL_VTM_initVd(vdIns, &vdConfig);
-    
+
             if (sdlResult != SDL_PASS)
             {
                 DebugP_log("\n  SDL_VTM_initVd API test failed on line no: %d \n", __LINE__);
@@ -156,14 +156,14 @@ int32_t sdlVTM_apiTest(void)
         vdConfig.vid_opp         = SDL_VTM_VID_OPP_1_CODE;
         vdConfig.configVdCtrl = SDL_VTM_VD_CONFIG_CTRL_VID_OPP;
         sdlResult = SDL_VTM_initVd(SDL_VTM_INSTANCE_VD_DOMAIN_0, &vdConfig);
-    
+
         if (sdlResult != SDL_PASS)
         {
             DebugP_log("\n  SDL_VTM_initVd API test failed on line no: %d \n", __LINE__);
             testResult = -1;
         }
     }
-	
+
 	if(testResult == 0)
     {
         SDL_VTM_vdGetOppVid (p_cfg1, SDL_VTM_INSTANCE_VD_DOMAIN_0, \
@@ -172,14 +172,14 @@ int32_t sdlVTM_apiTest(void)
         vdConfig.vid_opp         = SDL_VTM_VID_OPP_0_CODE;
         vdConfig.configVdCtrl = SDL_VTM_VD_CONFIG_CTRL_VID_OPP;
         sdlResult = SDL_VTM_initVd(SDL_VTM_INSTANCE_VD_DOMAIN_0, &vdConfig);
-    
+
         if (sdlResult != SDL_PASS)
         {
             DebugP_log("\n  SDL_VTM_initVd API test failed on line no: %d \n", __LINE__);
             testResult = -1;
         }
     }
-	
+
 	if(testResult == 0)
     {
         SDL_VTM_vdGetOppVid (p_cfg1, SDL_VTM_INSTANCE_VD_DOMAIN_0, \
@@ -188,14 +188,14 @@ int32_t sdlVTM_apiTest(void)
         vdConfig.vid_opp         = SDL_VTM_VID_OPP_2_CODE;
         vdConfig.configVdCtrl = SDL_VTM_VD_CONFIG_CTRL_VID_OPP;
         sdlResult = SDL_VTM_initVd(SDL_VTM_INSTANCE_VD_DOMAIN_0, &vdConfig);
-    
+
         if (sdlResult != SDL_PASS)
         {
             DebugP_log("\n  SDL_VTM_initVd API test failed on line no: %d \n", __LINE__);
             testResult = -1;
         }
     }
-	
+
 	if(testResult == 0)
     {
         SDL_VTM_vdGetOppVid (p_cfg1, SDL_VTM_INSTANCE_VD_DOMAIN_0, \
@@ -204,7 +204,7 @@ int32_t sdlVTM_apiTest(void)
         vdConfig.vid_opp         = SDL_VTM_VID_OPP_3_CODE ;
         vdConfig.configVdCtrl = SDL_VTM_VD_CONFIG_CTRL_VID_OPP;
         sdlResult = SDL_VTM_initVd(SDL_VTM_INSTANCE_VD_DOMAIN_0, &vdConfig);
-    
+
         if (sdlResult != SDL_PASS)
         {
             DebugP_log("\n  SDL_VTM_initVd API test failed on line no: %d \n", __LINE__);
@@ -1339,7 +1339,7 @@ int32_t sdlVTM_apiTest(void)
             testResult = -1;
         }
    }
-   
+
     if (testResult == 0)
     {
         vdIns = SDL_VTM_INSTANCE_VD_DOMAIN_0;
@@ -1351,7 +1351,7 @@ int32_t sdlVTM_apiTest(void)
             testResult = -1;
         }
     }
-	
+
 	if (testResult == 0)
     {
         vdIns = SDL_VTM_INSTANCE_VD_DOMAIN_0;

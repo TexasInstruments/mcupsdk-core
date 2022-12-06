@@ -108,13 +108,33 @@ void test_sdl_vtm_test_app_runner(void);
 void VTM_test_printSummary(void);
 int32_t VTM_ESM_init (void);
 
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
+SDL_ESM_config VTM_Test_esmInitConfig_MCU =
+{
+    .esmErrorConfig = {0u, 3u}, /* Self test error config */
+    .enableBitmap = {0x00000700u, 0x00000000u, 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks */
+    .priorityBitmap = {0x00000400u, 0x00000000u, 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks */
+
+    .errorpinBitmap = {0x00000700u, 0x00000000u, 0x00000000,
+                      },
+    /**< All events high priority: except clkstop for unused clocks */
+};
+#endif
+#endif
 /* Initialization structure for main ESM instance */
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
 static SDL_ESM_config VTM_esmInitConfig_MAIN =
 {
- .esmErrorConfig = {0u, 3u}, /* Self test error config */				 				 
+ .esmErrorConfig = {0u, 3u}, /* Self test error config */
  .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
                   0x00000700u, 0x00000000u,
-                 },             
+                 },
       /**< All events enable: except timer and self test  events, */
      /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
  .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
@@ -126,6 +146,8 @@ static SDL_ESM_config VTM_esmInitConfig_MAIN =
                     },
     /**< All events high priority:  */
 };
+#endif
+#endif
 
 static const char *printEsmIntType(SDL_ESM_IntType esmIntType)
 {
@@ -204,10 +226,18 @@ int32_t VTM_ESM_init (void)
 {
     int32_t retValue=0;
     int32_t result;
-
-    /* Initialize Main ESM module */ 
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
+     result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &VTM_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, &apparg);
+#endif
+#endif
+    /* Initialize Main ESM module */
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
 	result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &VTM_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, &apparg);
-	
+#endif
+#endif
+
     if (result != SDL_PASS) {
         /* print error and quit */
         DebugP_log("VTM_ESM_init: Error initializing Main ESM: result = %d\n", result);
@@ -219,8 +249,90 @@ int32_t VTM_ESM_init (void)
 
     return retValue;
 }
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
+static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
+                                 SDL_ESM_IntType esmIntType,
+                                 uint32_t intEsmSrc)
+{
+    int32_t retVal = 0;
+	uint32_t esmInstBaseAddr;
+	SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, &esmInstBaseAddr);
+    if ((esmInstType == SDL_ESM_INST_MCU_ESM0) && (esmIntType == SDL_ESM_INT_TYPE_LO)) {
+        /* TC-1: Low Priority interrupt on Mcu ESM -
+         * VTM greater than THR1 */
+        if (intEsmSrc ==
+                SDLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_GT_TH1_INTR_0)
+        {
+            if (currTestCase == 0)
+            {
+                if (thresholdsReset == 0)
+                {
+                    /* Simulate thresholds as if temperature is going to be reduced
+                     * below lt_Thr0 */
+                    vtm_setNormalThresholds();
 
+                    thresholdsReset = 1;
+                }
+                vtm_GtThr1CrossedUpdateInt();
+            } else if ((currTestCase == 1) || (currTestCase == 2))
+            {
+                if (thresholdsReset == 0)
+                {
+                    /* Simulate thresholds as if temperature continues to increase
+                     * toward gt_Thr2 */
+                    vtm_setThresholdsForCriticalTrigger();
 
+                    thresholdsReset = 1;
+                }
+                vtm_GtThr1CrossedUpdateInt();
+            }
+        } else if (intEsmSrc ==
+                SDLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_LT_TH0_INTR_0)
+        {
+            vtm_LtThr0CrossedUpdateInt();
+
+            thresholdsReset = 0;
+            esmOutputResult[currTestCase] = TEST_CASE_STATUS_COMPLETED_SUCCESS;
+            if (currTestCase == 1) {
+                /* At end of this test case, clear the Pin that was left on
+                 * throughout the test case*/
+            }
+        }
+    } else if ((esmInstType == SDL_ESM_INST_MCU_ESM0) &&
+               (esmIntType == SDL_ESM_INT_TYPE_HI)) {
+        if ((currTestCase == 1) || (currTestCase == 2)) {
+            /* TC-2: High Priority interrupt on MCU ESM -
+             * VTM greater than THR2 */
+            /* TC-3: High Priority interrupt on MCU ESM */
+            if (thresholdsReset == 1)
+            {
+                /* Simulate thresholds as if temperature is going to be reduced
+                 * below lt_Thr0 */
+                vtm_setNormalThresholds();
+
+                thresholdsReset = 2;
+            }
+            if (currTestCase == 2) {
+
+            }
+            vtm_GtThr2CrossedUpdateInt();
+        } else {
+            retVal = -1;
+        }
+    } else {
+        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \n",
+                    esmInstType, esmIntType);
+        retVal = -1;
+    }
+
+   return (retVal);
+}
+#endif
+#endif
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
 static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
                                  SDL_ESM_IntType esmIntType,
                                  uint32_t intEsmSrc)
@@ -298,8 +410,10 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
         retVal = -1;
     }
 
-   return (retVal); 
+   return (retVal);
 }
+#endif
+#endif
 
 
 
@@ -490,7 +604,7 @@ int32_t test_main(void)
     (void)test_sdl_vtm_test_app_runner();
 	Board_driversClose();
 	Drivers_close();
-    
+
 	return 0;
 }
 

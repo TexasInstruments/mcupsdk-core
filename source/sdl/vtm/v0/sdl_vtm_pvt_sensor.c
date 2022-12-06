@@ -82,7 +82,7 @@
 #include "sdl_pvt_sensor_lut.h"
 #include <sdl/include/sdl_types.h>
 #include <stdint.h>
-#include <sdl/vtm/v0/sdl_ip_vtm.h>	
+#include <sdl/vtm/v0/sdl_ip_vtm.h>
 
 extern int32_t gNumTempSensors;
 extern int32_t gNumCoreVoltageDomains;
@@ -124,7 +124,7 @@ static void SDL_vtmPrepLookupTable(void)
 
  /**
  * Design: PROC_SDL-1322,PROC_SDL-1323
- */	
+ */
 int32_t SDL_VTM_tsConvADCToTemp (SDL_VTM_adc_code       adc_code,
                                  SDL_VTM_InstTs		instance,
                                  int32_t                *p_milli_degree_temp_val)
@@ -169,7 +169,7 @@ int32_t SDL_VTM_tsConvADCToTemp (SDL_VTM_adc_code       adc_code,
 
  /**
  * Design: PROC_SDL-1320,PROC_SDL-1321
- */		
+ */
 int32_t SDL_VTM_tsConvTempToAdc (int32_t             milli_degree_temp_val,
 								SDL_VTM_InstTs 		instance,
                                 SDL_VTM_adc_code    *p_adc_code)

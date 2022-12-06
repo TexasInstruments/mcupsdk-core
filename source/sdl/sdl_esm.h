@@ -52,10 +52,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/include/soc_config.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
 
+#if defined (IP_VERSION_ESM_V0)
+#include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
+#endif
 /** ============================================================================
  *
  * \brief   SDL ESM API to get the status of the nError pin for the specified

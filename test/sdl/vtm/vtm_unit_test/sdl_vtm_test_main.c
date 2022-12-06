@@ -160,7 +160,7 @@ void test_sdl_vtm_baremetal_app (void)
 void  test_sdl_vtm_baremetal_app_runner (void)
 {
         /* @description:Test runner for R5 Core tests */
-    
+
 #if defined(UNITY_INCLUDE_CONFIG_H)
         UNITY_BEGIN();
         RUN_TEST (test_sdl_vtm_baremetal_app);
@@ -183,6 +183,6 @@ int test_main (void)
 	Drivers_close();
 
     return (0);
-			  
+
 }
 

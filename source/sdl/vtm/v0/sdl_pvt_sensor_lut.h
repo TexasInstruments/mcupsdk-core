@@ -278,4 +278,4 @@ extern const int32_t gSDL_pvt_poly[SDL_VTM_NUM_OF_ADC_CODES];
 
 
 /* Nothing past this point */
- 
+

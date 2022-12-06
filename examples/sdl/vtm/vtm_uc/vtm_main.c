@@ -97,13 +97,36 @@ static const char *printTestCaseStepResult(uint32_t result);
 void vtm_example_test_app_runner(void);
 void VTM_test_printSummary(void);
 int32_t VTM_ESM_init (void);
-/* Initialization structure for MAIN ESM instance */
+/* Initialization structure for MCU ESM instance */
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
+SDL_ESM_config VTM_Test_esmInitConfig_MCU =
+{
+    .esmErrorConfig = {0u, 3u}, /* Self test error config */
+    .enableBitmap = {0x00000700u, 0x00000000u, 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks */
+    .priorityBitmap = {0x00000400u, 0x00000000u, 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks */
+
+    .errorpinBitmap = {0x00000700u, 0x00000000u, 0x00000000,
+                      },
+    /**< All events high priority: except clkstop for unused clocks */
+};
+#endif
+#endif
+
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
 static SDL_ESM_config VTM_esmInitConfig_MAIN =
 {
- .esmErrorConfig = {0u, 3u}, /* Self test error config */				 				 
+ .esmErrorConfig = {0u, 3u}, /* Self test error config */
  .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
                   0x00000700u, 0x00000000u,
-                 },             
+                 },
       /**< All events enable: except timer and self test  events, */
      /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
  .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
@@ -115,6 +138,8 @@ static SDL_ESM_config VTM_esmInitConfig_MAIN =
                     },
     /**< All events high priority:  */
 };
+#endif
+#endif
 
 static const char *printEsmIntType(SDL_ESM_IntType esmIntType)
 {
@@ -197,8 +222,16 @@ int32_t VTM_ESM_init (void)
     int32_t retValue=0;
     int32_t result;
         /* Initialize MAIN ESM module */
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
+     result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &VTM_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, &apparg);
+#endif
+
+#if defined (R5F_CORE)
         result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &VTM_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, &apparg);
-        if (result != SDL_PASS) {
+#endif
+#endif
+		if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("VTM_ESM_init: Error initializing MAIN ESM: result = %d\n", result);
 
@@ -208,7 +241,92 @@ int32_t VTM_ESM_init (void)
         }
     return retValue;
 }
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
+static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
+                                 SDL_ESM_IntType esmIntType,
+                                 uint32_t intEsmSrc)
+{
+    int32_t retVal = 0;
+	uint32_t esmInstBaseAddr;
+	SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, &esmInstBaseAddr);
+    if ((esmInstType == SDL_ESM_INST_MCU_ESM0) && (esmIntType == SDL_ESM_INT_TYPE_LO)) {
+        /* UC-1: Low Priority interrupt on MAIN ESM -
+         * VTM greater than THR1 */
+        if (intEsmSrc ==
+            SDLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_GT_TH1_INTR_0)
+        {
+            if (currTestCase == 0)
+            {
+                if (thresholdsReset == 0)
+                {
+                    /* Simulate thresholds as if temperature is going to be reduced
+                     * below lt_Thr0 */
+                    vtm_setNormalThresholds();
 
+                    thresholdsReset = 1;
+                }
+                SDL_VTM_IntrruptGtThr1();
+            } else if (currTestCase == 1)
+            {
+                if (thresholdsReset == 0)
+                {
+                    /* Simulate thresholds as if temperature continues to increase
+                     * toward gt_Thr2 */
+                    vtm_setThresholdsForCriticalTrigger();
+
+                    thresholdsReset = 1;
+                }
+                SDL_VTM_IntrruptGtThr1();
+            }
+        } else if (intEsmSrc ==
+                   SDLR_MCU_ESM0_ESM_LVL_EVENT_VTM0_THERM_LVL_LT_TH0_INTR_0)
+        {
+            SDL_VTM_IntrruptLtThr0();
+
+            thresholdsReset = 0;
+            if (currTestCase == 0) {
+                /* At end of this test case, clear the Pin that was left on
+                 * throughout the test case*/
+
+            }
+        }
+    } else if ((esmInstType == SDL_ESM_INST_MCU_ESM0) &&
+               (esmIntType == SDL_ESM_INT_TYPE_HI)) {
+
+        if (currTestCase == 1) {
+            /* UC-2 High Priority interrupt on MAIN ESM -
+             * VTM greater than THR2 with clearing
+             * of MCU_SAFETY_ERRORn pin */
+            if (thresholdsReset == 1)
+            {
+                /* Simulate thresholds as if temperature is going to be reduced
+                 * below lt_Thr0 */
+                vtm_setNormalThresholds();
+
+                thresholdsReset = 2;
+            }
+            if (currTestCase == 1) {
+                SDL_ESM_resetErrPin(esmInstBaseAddr);
+            }
+            SDL_VTM_IntrruptGtThr2();
+        } else {
+            retVal = -1;
+        }
+    } else {
+        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \n",
+                    esmInstType, esmIntType);
+        retVal = -1;
+    }
+
+   return (retVal);
+}
+#endif
+#endif
+
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
 static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
                                  SDL_ESM_IntType esmIntType,
                                  uint32_t intEsmSrc)
@@ -254,7 +372,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
             if (currTestCase == 0) {
                 /* At end of this test case, clear the Pin that was left on
                  * throughout the test case*/
-                
+
             }
         }
     } else if ((esmInstType == SDL_ESM_INST_MAIN_ESM0) &&
@@ -287,7 +405,8 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
 
    return (retVal);
 }
-
+#endif
+#endif
 /*********************************************************************
 * @fn      VTM_app_printSummary
 *
@@ -448,7 +567,7 @@ void vtm_example_test_app_runner(void)
 }
 
 int32_t test_main(void)
-{   
+{
     Drivers_open();
 	Board_driversOpen();
     VTM_dplInit();
@@ -457,7 +576,7 @@ int32_t test_main(void)
     (void)vtm_example_test_app_runner();
 	Board_driversClose();
 	Drivers_close();
-	
+
     return 0;
 }
 

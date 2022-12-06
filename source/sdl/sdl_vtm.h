@@ -49,7 +49,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-#include <sdl/include/soc_config.h> 
+#include <sdl/include/soc_config.h>
 
 #if defined (IP_VERSION_VTM_V0)
 #include <sdl/vtm/v0/sdlr_vtm.h>

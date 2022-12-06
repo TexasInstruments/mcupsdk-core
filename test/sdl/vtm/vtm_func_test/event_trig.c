@@ -64,6 +64,10 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 /* #define DEBUG */
+#define PIN_TIMING_TIMER_ID      (1)
+#define HIGH_PRIO_TRIG_TIMER_ID  (2)
+#define LOW_PRIO_TRIG_TIMER_ID   (3)
+
 #define LT_THR0_DEFAULT          (95000)
 #define GT_THR1_DEFAULT          (105000)
 #define GT_THR2_DEFAULT          (115000)
@@ -100,7 +104,7 @@ extern volatile uint32_t    esmEventInputTrig[5];
 /* Completion of Test Case from Output Pin clearing perspective updates these flags */
 /* Current test case being run */
 extern volatile uint8_t     currTestCase;
-uint32_t pStatus;	
+uint32_t pStatus;
 static SDL_ESM_Inst currEsmInstance;
 
 /* ========================================================================== */
@@ -440,9 +444,20 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
     switch(useCaseId)
     {
         case 0:
+            /* TC-1: Low Priority interrupt on mcu ESM -
+             * VTM greater than THR1 */
+            #if defined (SOC_AM64X)
+            #if defined (M4F_CORE)
+            currEsmInstance = SDL_ESM_INST_MCU_ESM0;
+            #endif
+            #endif
             /* TC-1: Low Priority interrupt on Main ESM -
              * VTM greater than THR1 */
+            #if defined (SOC_AM64X) || defined (SOC_AM243X)
+            #if defined (R5F_CORE)
             currEsmInstance = SDL_ESM_INST_MAIN_ESM0;
+            #endif
+            #endif
             retVal = vtmTriggerTh1();
             if (retVal == 0) {
                 DebugP_log("case 0 success\n");
@@ -456,10 +471,20 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             break;
 
         case 1:
+             /* TC-2: High Priority interrupt on mcu ESM */
+            #if defined (SOC_AM64X)
+            #if defined (M4F_CORE)
+            currEsmInstance = SDL_ESM_INST_MCU_ESM0;
+            #endif
+            #endif
             /* TC-2: High Priority interrupt on Main ESM -
              * VTM greater than THR2, no clearing of
              * MCU_SAFETY_ERRORn pin */
+            #if defined (SOC_AM64X) || defined (SOC_AM243X)
+            #if defined (R5F_CORE)
             currEsmInstance = SDL_ESM_INST_MAIN_ESM0;
+            #endif
+            #endif
             retVal = vtmTriggerTh1();
             if (retVal == 0) {
                 DebugP_log("case 1 success\n");
@@ -471,12 +496,22 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             break;
 
         case 2:
+            /* TC-3: High Priority interrupt on mcu ESM */
+            #if defined (SOC_AM64X)
+            #if defined (M4F_CORE)
+            currEsmInstance = SDL_ESM_INST_MCU_ESM0;
+            #endif
+            #endif
             /* TC-3: High Priority interrupt on Main ESM -
              * VTM greater than THR2 with clearing
              * of MCU_SAFETY_ERRORn pin */
 
             /* Start the Pin Control and Measurement Timer */
+            #if defined (SOC_AM64X) || defined (SOC_AM243X)
+            #if defined (R5F_CORE)
             currEsmInstance = SDL_ESM_INST_MAIN_ESM0;
+            #endif
+            #endif
             retVal = vtmTriggerTh1();
             if (retVal == 0) {
                 esmEventInputTrig[useCaseId] = TEST_CASE_STATUS_COMPLETED_SUCCESS;

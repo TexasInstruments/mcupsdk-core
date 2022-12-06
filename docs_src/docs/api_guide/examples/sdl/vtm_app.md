@@ -67,31 +67,31 @@ Shown below is a sample output when the application is run,
 
 VTM Example Application
 
-VTM_ESM_init: Init MAIN ESM complete 
+VTM_ESM_init: Init MAIN ESM complete
 
  VTM_ESM_init complete
-Starting Use Case 0 
-sensor id                       : 0 
-adc_code                        : 348 
-temp in milli degree celcius    : 53261 
+Starting Use Case 0
+sensor id                       : 0
+adc_code                        : 348
+temp in milli degree celcius    : 53261
 vtmTriggerTh: Setting lt_thr0_val temp to 49261 millidegrees Celsius, and adc_code_lt_thr0 = 330
 vtmTriggerTh: Setting gt_thr1_val temp to 51261 millidegrees Celsius, and adc_code_gt_thr1 = 340
 vtmTriggerTh: Setting gt_thr2_val temp to 58261 millidegrees Celsius, and adc_code_gt_thr2 = 370
 Finished VTM threshold setting
 case 0 success
 
- Use Case 0 completed: Input Event Trigger = Step completed successfully, 
+ Use Case 0 completed: Input Event Trigger = Step completed successfully,
 
-Starting Use Case 1 
-sensor id                       : 0 
-adc_code                        : 349 
-temp in milli degree celcius    : 53493 
+Starting Use Case 1
+sensor id                       : 0
+adc_code                        : 349
+temp in milli degree celcius    : 53493
 vtmTriggerTh: Setting lt_thr0_val temp to 49493 millidegrees Celsius, and adc_code_lt_thr0 = 332
 vtmTriggerTh: Setting gt_thr1_val temp to 51493 millidegrees Celsius, and adc_code_gt_thr1 = 340
 vtmTriggerTh: Setting gt_thr2_val temp to 58493 millidegrees Celsius, and adc_code_gt_thr2 = 370
 Finished VTM threshold setting
 
- Use Case 1 completed: Input Event Trigger = Step completed successfully, 
+ Use Case 1 completed: Input Event Trigger = Step completed successfully,
 
 
 ESM Example Application summary
@@ -103,25 +103,25 @@ Received 5 Low Priority Interrupts
 Test Case Event Log
 ------------------
 
-Test Case 0: ESM Call back function called : grpChannel 0x4, index 0x9, intSrc 0x89 
+Test Case 0: ESM Call back function called : grpChannel 0x4, index 0x9, intSrc 0x89
   ESM instance #2, ESM interrupt type = Low Priority ESM event
 
-Test Case 0: ESM Call back function called : grpChannel 0x4, index 0x8, intSrc 0x88 
+Test Case 0: ESM Call back function called : grpChannel 0x4, index 0x8, intSrc 0x88
   ESM instance #2, ESM interrupt type = Low Priority ESM event
 
-Test Case 1: ESM Call back function called : grpChannel 0x4, index 0x9, intSrc 0x89 
+Test Case 1: ESM Call back function called : grpChannel 0x4, index 0x9, intSrc 0x89
   ESM instance #2, ESM interrupt type = Low Priority ESM event
 
-Test Case 1: ESM Call back function called : grpChannel 0x4, index 0xa, intSrc 0x8a 
+Test Case 1: ESM Call back function called : grpChannel 0x4, index 0xa, intSrc 0x8a
   ESM instance #2, ESM interrupt type = High Priority ESM event
 
-Test Case 1: ESM Call back function called : grpChannel 0x4, index 0x9, intSrc 0x89 
+Test Case 1: ESM Call back function called : grpChannel 0x4, index 0x9, intSrc 0x89
   ESM instance #2, ESM interrupt type = Low Priority ESM event
 
-Test Case 1: ESM Call back function called : grpChannel 0x4, index 0x8, intSrc 0x88 
+Test Case 1: ESM Call back function called : grpChannel 0x4, index 0x8, intSrc 0x88
   ESM instance #2, ESM interrupt type = Low Priority ESM event
 
  VTM Example Application: Complete
- All Use cases have passed.  
+ All Use cases have passed.
 
 \endcode

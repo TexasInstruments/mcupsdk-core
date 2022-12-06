@@ -48,7 +48,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <sdl/vtm/v0/sdl_ip_vtm.h>								 
+#include <sdl/vtm/v0/sdl_ip_vtm.h>
 
 /* Macros */
 #define SDL_VTM_NUM_OF_SENSOR_WA_COMP                       (1)

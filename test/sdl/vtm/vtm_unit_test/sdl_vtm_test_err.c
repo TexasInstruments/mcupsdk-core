@@ -64,10 +64,10 @@ int32_t sdlVTM_errTest(void)
     const SDL_VTM_cfg1Regs              *p_cfg1;
     const SDL_VTM_cfg2Regs              *p_cfg2;
     uint32_t baseAddr,baseAddr1;
-	
+
 	SDL_VTM_getBaseAddr(SDL_VTM_CONFIG_REG_1, &baseAddr);
     p_cfg1 = (SDL_VTM_cfg1Regs *) baseAddr;
-	
+
 	SDL_VTM_getBaseAddr(SDL_VTM_CONFIG_REG_2, &baseAddr1);
     p_cfg2 = (SDL_VTM_cfg2Regs *) baseAddr1;
     SDL_VTM_tsGlobal_cfg             tsGlobal_cfg;
@@ -99,7 +99,7 @@ int32_t sdlVTM_errTest(void)
             }
         }
     }
-	
+
     if(testResult == 0)
     {
         sdlResult = SDL_VTM_initVd(SDL_VTM_INSTANCE_VD_DOMAIN_CNT, NULL);
@@ -110,7 +110,7 @@ int32_t sdlVTM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if(testResult == 0)
     {
         sdlResult = SDL_VTM_initVd(SDL_VTM_INSTANCE_VD_DOMAIN_CNT, &vdConfig);
@@ -121,7 +121,7 @@ int32_t sdlVTM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if(testResult == 0)
     {
         sdlResult = SDL_VTM_initTs(SDL_VTM_INSTANCE_TS_MAX_NUM, NULL);
@@ -147,7 +147,7 @@ int32_t sdlVTM_errTest(void)
             }
         }
     }
-	
+
     if(testResult == 0)
     {
         sdlResult = SDL_VTM_initTs(SDL_VTM_INSTANCE_TS_MAX_NUM, &tsConfig);
@@ -158,7 +158,7 @@ int32_t sdlVTM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if(testResult == 0)
     {
         sdlResult = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_MAX_NUM, NULL);
@@ -169,7 +169,7 @@ int32_t sdlVTM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if(testResult == 0)
     {
         for (i = SDL_VTM_INSTANCE_TS_0; i < gNumTempSensors; i++ )
@@ -184,7 +184,7 @@ int32_t sdlVTM_errTest(void)
             }
         }
     }
-	
+
     if(testResult == 0)
     {
         sdlResult = SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_MAX_NUM, &tempVal);

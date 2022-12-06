@@ -177,7 +177,7 @@ int32_t SDL_VTM_vdSetOppVid (const SDL_VTM_cfg1Regs  *p_cfg1,
 
     /* argument checks */
     if(((int32_t)instance  >= gNumCoreVoltageDomains)  ||
-														 
+
        (p_cfg1             == NULL_PTR))
     {
         retVal = SDL_EBADARGS;
@@ -231,7 +231,7 @@ int32_t SDL_VTM_vdGetOppVid (const SDL_VTM_cfg1Regs  *p_cfg1,
 
     /* argument checks */
     if(((int32_t)instance >= gNumCoreVoltageDomains)  ||
-														
+
        (p_cfg1            == NULL_PTR)                ||
        (p_vid_opp_val     == NULL_PTR))
     {

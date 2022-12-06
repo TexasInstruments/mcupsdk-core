@@ -45,7 +45,6 @@
 /* ========================================================================== */
 
 #include <dpl_interface.h>
-
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/TimerP.h>
 #include <drivers/sciclient.h>

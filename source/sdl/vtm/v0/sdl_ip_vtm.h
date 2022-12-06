@@ -73,7 +73,7 @@ extern "C" {
  * ============================================================================
  */
 
-/** 
+/**
  * \brief This enumerator define forVTM VD configuration valid map
  */
 
@@ -83,7 +83,7 @@ typedef uint8_t SDL_VTM_configVdCtrl;
 #define SDL_VTM_VD_CONFIG_CTRL_GLB_CFG			      (4U)
 
 
-/** 
+/**
  * \brief This enumerator define for VTM TS configuration valid map
  *
  *  \anchor SDL_VTM_configTsCtrl
@@ -96,8 +96,8 @@ typedef uint8_t SDL_VTM_configTsCtrl;
 #define SDL_VTM_VD_CONFIG_CTRL_SET_THR			      (4U)
 
 
-/** 
- * \brief This enumerator defines the possible VID Codes to set various 
+/**
+ * \brief This enumerator defines the possible VID Codes to set various
  *        voltage domain supply voltages
  *
  *  \anchor SDL_VTM_vid_opp
@@ -118,7 +118,7 @@ typedef  uint8_t SDL_VTM_vid_opp;
 #define SDL_VTM_VID_OPP_0_CODE                    ((uint8_t) 0U)
 
 
-/** 
+/**
  * \brief This enumerator defines the core voltage domain mapping of VTM VD
  *
  *  \anchor SDL_VTM_ts_stat_vd_map
@@ -137,7 +137,7 @@ typedef  uint8_t SDL_VTM_ts_stat_vd_map;
 #define SDL_VTM_TSTAT_VD_MAP_NOT_IMPLEMENTED             ((uint32) 15U)
 
 
-/** 
+/**
  * \brief This enumerator define for VTM Voltage domain threshold interrupt control
  *
  *  \anchor SDL_VTM_intrCtrl
@@ -162,7 +162,7 @@ typedef uint16_t SDL_VTM_intrCtrl;
 														 SDL_VTM_VD_LT_THR0_INTR_RAW_CLR)
 
 
-/** 
+/**
  * \brief This enumerator define for VTM Voltage domain Event selection set
  *
  *  \anchor SDL_VTM_vdEvtSel_set
@@ -199,7 +199,7 @@ typedef uint32_t SDL_VTM_tsGlobal_ctrl_valid_map;
 #define SDL_VTM_TSGLOBAL_SAMPLES_PER_CNT_VALID           (32u)
 
 
-/** 
+/**
  * \brief This enumerator define for VTM Temperature sensor global control Clock
  *        select options
  *
@@ -336,7 +336,7 @@ typedef uint8_t SDL_VTM_tsCtrl_valid_map;
  *        maximum temperature out of range alert control
  *
  *  \anchor SDL_VTM_tsCtrl_max_outrg_alert
- *  \name   VTM temperature sensor band gap maximum temperature 
+ *  \name   VTM temperature sensor band gap maximum temperature
  *          out of range alert control
  *
  */
@@ -346,8 +346,8 @@ typedef uint8_t  SDL_VTM_tsCtrl_max_outrg_alert;
 #define SDL_VTM_TS_CTRL_MAXT_OUTRG_NO_ALERT          (0u)
 
 
-/** 
- * \brief This enumerator define for 
+/**
+ * \brief This enumerator define for
  *        VTM temperature sensor band gap reset  control bits
  *
  *  \anchor SDL_VTM_tsCtrl_resetCtrl
@@ -361,7 +361,7 @@ typedef  uint8_t SDL_VTM_tsCtrl_resetCtrl;
 
 
 /**
- * \brief This enumerator define for 
+ * \brief This enumerator define for
  *        VTM temperature sensor mode control bits
  *
  *  \anchor SDL_VTM_tsCtrl_mode
@@ -376,28 +376,28 @@ typedef  uint8_t    SDL_VTM_tsCtrl_mode;
 
 
 /**
- * \brief This enumerator define for 
+ * \brief This enumerator define for
  *        VTM temperature sensor band gap single shot mode start of conversion trigger
  *
  *  \anchor SDL_VTM_tsCtrl_singleshot_conv_stat
  *  \name   VTM temperature sensor band gap single shot mode start of conversion trigger
  *
  */
- 
+
 typedef  uint8_t SDL_VTM_tsCtrl_singleshot_conv_stat;
 #define SDL_VTM_TS_CTRL_SINGLESHOT_ADC_CONV_IN_PROGRESS    (1u)
 #define SDL_VTM_TS_CTRL_SINGLESHOT_ADC_CONV_COMPLETE       (0u)
 
 
 /**
- * \brief This enumerator define for 
+ * \brief This enumerator define for
  *        VTM Temperature Sensor thresholds valid bit map
  *
  *  \anchor SDL_VTM_thr_valid_map
  *  \name   VTM Temperature Sensor thresholds valid bit map
  *
  */
- 
+
 typedef uint8_t  SDL_VTM_thr_valid_map;
 #define SDL_VTM_GT_TH1_VALID                (1u)
 #define SDL_VTM_GT_TH2_VALID                (2u)
@@ -405,7 +405,7 @@ typedef uint8_t  SDL_VTM_thr_valid_map;
 
 
 /**
- * \brief This enumerator define for 
+ * \brief This enumerator define for
  *        VTM temperature sensor STAT read valid map
  *
  *  \anchor SDL_VTM_Stat_read_ctrl
@@ -421,8 +421,8 @@ typedef uint8_t SDL_VTM_Stat_read_ctrl;
 #define SDL_VTM_TS_READ_DATA_OUT_VAL             (16U)
 
 
-/** 
- * \brief This enumerator define for 
+/**
+ * \brief This enumerator define for
  *        VTM temperature sensor ADC code
  *        This is the data_out value of the temperature sensor stat register
  *
@@ -432,15 +432,15 @@ typedef uint8_t SDL_VTM_Stat_read_ctrl;
 
 typedef  int16_t SDL_VTM_adc_code;
 
-    
-/** 
+
+/**
  * \brief This enumerator define for VTM Voltage domain event status
  *
  *  \anchor SDL_VTM_vdEvt_status
  *  \name VTM Voltage domain event status
  *
  */
-  
+
 typedef uint8_t SDL_VTM_vdEvt_status;
 
 #define SDL_VTM_VD_EVT_STAT_THR_ALERTS_MASK               (7u)
@@ -478,7 +478,7 @@ typedef struct {
         the VTM’s output therm_maxtemp_outrange_alert to be driven high,
         if any of the sources for the MAXT_OUTRG_ALERT, is set high. */
     SDL_VTM_tsGlobal_any_maxt_outrg_alert_en    any_maxt_outrg_alert_en;
-    /** ADC code programmed in VTM_MISC_CTRL2 for the global max temperature 
+    /** ADC code programmed in VTM_MISC_CTRL2 for the global max temperature
     out of range safe sample value. If the alert is enabled globally
     for the sensor, and the sensor reads a value <= this value, then the alert
     is cleared after being triggered */
@@ -487,7 +487,7 @@ typedef struct {
     out of range sample value. If the alert is enabled globally for the
     sensor, and the sensor reads a value >= this value, then
     the alert is triggered */
-    SDL_VTM_adc_code                            maxt_outrg_alert_thr; 
+    SDL_VTM_adc_code                            maxt_outrg_alert_thr;
     /** Temperature sensor sample period count selector,
         programmed in VTM_SAMPLE_CTRL reg */
     SDL_VTM_tsGlobal_samples_per_count          samplesPerCnt;
@@ -515,7 +515,7 @@ typedef struct {
     This mode is not valid when already in continuous mode. */
     SDL_VTM_tsCtrl_singleshot_conv_stat adc_stat;
     /** Temp-Monitor control: ADC Continuous mode.
-    Setting this mode enables the VTM to continuously monitor 
+    Setting this mode enables the VTM to continuously monitor
     the sensor automatically */
     SDL_VTM_tsCtrl_mode              mode;
 } SDL_VTM_Ctrlcfg;
@@ -573,7 +573,7 @@ typedef struct {
     uint8_t                    data_valid;
     /** Data_out signal value from sensor: Temperature data from the ADC in monitor. */
     SDL_VTM_adc_code           data_out;
-} SDL_VTM_Stat_val; 
+} SDL_VTM_Stat_val;
 
 
 /** ============================================================================
@@ -591,32 +591,32 @@ typedef struct {
 void SDL_VTM_getSensorVDCount(const SDL_VTM_cfg1Regs       *p_cfg1);
 
 /**
- *  \brief select best ADC code 
+ *  \brief select best ADC code
  *
  *  \param c0            [IN]    ADC code 0
  *  \param c1            [IN]    ADC code 1
  *  \param c2            [IN]    ADC code 2
- 
- *  \return The SDL SDL_VTM_adc_code 
+
+ *  \return The SDL SDL_VTM_adc_code
  */
 SDL_VTM_adc_code SDL_VTM_getBestValue(SDL_VTM_adc_code c0,
                                             SDL_VTM_adc_code c1,
                                             SDL_VTM_adc_code c2);
-											
+
 /**
  *  \brief read Temperature sensor ADC code
  *
  *  \param p_sensor            [IN]    Pointer to the sensor code
- 
- *  \return The SDL SDL_VTM_adc_code 
+
+ *  \return The SDL SDL_VTM_adc_code
  */
 SDL_VTM_adc_code SDL_VTM_getAdcCode(const SDL_VTM_cfg1Regs_TMPSENS    *p_sensor);
 
 /**
  *  \brief set the VID OPP Code for VID OPP register
  *
- *            Reset defaults are sourced from efuse for each OPP. 
- *            The default reset values will not be necessarily overwritten. 
+ *            Reset defaults are sourced from efuse for each OPP.
+ *            The default reset values will not be necessarily overwritten.
  *            The write capability in the MMR is for having the option to
  *            debug and have software driven adjustments if necessary
  *
@@ -630,11 +630,11 @@ SDL_VTM_adc_code SDL_VTM_getAdcCode(const SDL_VTM_cfg1Regs_TMPSENS    *p_sensor)
  *                                 Fail         : SDL_EFAIL
  *                                 Invalid Args : SDL_EBADARGS
  */
-int32_t SDL_VTM_vdSetOppVid (const SDL_VTM_cfg1Regs  		*p_cfg1, 
+int32_t SDL_VTM_vdSetOppVid (const SDL_VTM_cfg1Regs  		*p_cfg1,
 									SDL_VTM_InstVd 			instance,
-									SDL_VTM_vid_opp         vid_opp, 
+									SDL_VTM_vid_opp         vid_opp,
 									uint8_t                 vid_opp_val);
-									
+
 /**
  *  \brief get VTM VID OPP Code from VID OPP register
  *
@@ -648,15 +648,15 @@ int32_t SDL_VTM_vdSetOppVid (const SDL_VTM_cfg1Regs  		*p_cfg1,
  *                                 Fail         : SDL_EFAIL
  *                                 Invalid Args : SDL_EBADARGS
  */
-int32_t SDL_VTM_vdGetOppVid (const SDL_VTM_cfg1Regs  *p_cfg1, 
+int32_t SDL_VTM_vdGetOppVid (const SDL_VTM_cfg1Regs  *p_cfg1,
 							SDL_VTM_InstVd 			instance,
-                            SDL_VTM_vid_opp         vid_opp, 
+                            SDL_VTM_vid_opp         vid_opp,
                             uint8_t                 *p_vid_opp_val);
-							
+
 /**
  *  \brief set Voltage domain a event select and control set register.
  *         In this API, select which of the event contributions of the
- *         temp-monitors controlled by this VTM will contribute to generate the 
+ *         temp-monitors controlled by this VTM will contribute to generate the
  *         merged event/alerts of this VD. Any combination of them could be selected
  *
  *
@@ -672,13 +672,13 @@ int32_t SDL_VTM_vdGetOppVid (const SDL_VTM_cfg1Regs  *p_cfg1,
 int32_t SDL_VTM_vdEvtSelSet (const SDL_VTM_cfg1Regs  *p_cfg1,
 							SDL_VTM_InstVd instance,
                             SDL_VTM_vdEvtSel_set   vd_temp_evts);
-							
+
 /**
  *  \brief VTM Temperature Sensor Set Global configuration values
  *
  *  \param p_cfg2             [IN]    Pointer to the VTM configuration2 structure
  *  \param p_tsGlobal_cfg    [IN]    Pointer to temperature global configuration
- 
+
  *  \return The SDL error code for the API.
  *                                 Success      : SDL_PASS
  *                                 Fail         : SDL_EFAIL
@@ -686,7 +686,7 @@ int32_t SDL_VTM_vdEvtSelSet (const SDL_VTM_cfg1Regs  *p_cfg1,
  */
 int32_t SDL_VTM_tsSetGlobalCfg (const SDL_VTM_cfg2Regs       *p_cfg2,
                                const SDL_VTM_tsGlobal_cfg   *p_tsGlobal_cfg);
-							   
+
 /**
  *  \brief VTM Temperature Sensor Get Global configuration values
  *
@@ -699,7 +699,7 @@ int32_t SDL_VTM_tsSetGlobalCfg (const SDL_VTM_cfg2Regs       *p_cfg2,
  */
 int32_t SDL_VTM_tsGetGlobalCfg (const SDL_VTM_cfg2Regs       *p_cfg2,
                                SDL_VTM_tsGlobal_cfg         *p_tsGlobal_cfg);
-							   
+
 /**
  *  \brief VTM Temperature Sensor Control
  *
@@ -715,7 +715,7 @@ int32_t SDL_VTM_tsGetGlobalCfg (const SDL_VTM_cfg2Regs       *p_cfg2,
 int32_t SDL_VTM_tsSetCtrl (const SDL_VTM_cfg2Regs  		*p_cfg2,
 							SDL_VTM_InstTs 				instance,
 							const SDL_VTM_Ctrlcfg   *p_tsCtrl_cfg);
-							
+
 /**
  *  \brief Read VTM Temperature Sensor Control
  *
@@ -729,9 +729,9 @@ int32_t SDL_VTM_tsSetCtrl (const SDL_VTM_cfg2Regs  		*p_cfg2,
  *                                 Invalid Args : SDL_EBADARGS
  */
 int32_t SDL_VTM_tsGetCtrl (const SDL_VTM_cfg2Regs      *p_cfg2,
-							SDL_VTM_InstTs 				instance,   
+							SDL_VTM_InstTs 				instance,
                           SDL_VTM_Ctrlcfg         *p_tsCtrl_cfg);
-						  
+
 /**
  *  \brief VTM Temperature sensor set, clear threshold values and
  *         enable, disable threshold events
@@ -748,7 +748,7 @@ int32_t SDL_VTM_tsGetCtrl (const SDL_VTM_cfg2Regs      *p_cfg2,
 int32_t SDL_VTM_tsSetThresholds (const SDL_VTM_cfg1Regs		*p_cfg1,
                                 SDL_VTM_InstTs 				instance,
                                 const SDL_VTM_tsThrVal   	*p_thr_val);
-								
+
 /**
  *  \brief VTM Temperature Sensor get threshold values and threshold enable/disable status
  *
@@ -776,7 +776,7 @@ int32_t SDL_VTM_tsGetThresholds (const SDL_VTM_cfg1Regs   *p_cfg1,
  *                                 Invalid Args : SDL_EBADARGS
  */
 int32_t SDL_VTM_tsConvADCToTemp (SDL_VTM_adc_code        adc_code,
-                                SDL_VTM_InstTs 				instance,  
+                                SDL_VTM_InstTs 				instance,
                                 int32_t                 *p_milli_degree_temp_val);
 
 /**
@@ -801,7 +801,7 @@ int32_t SDL_VTM_tsConvTempToAdc (int32_t milli_degree_temp_val,
  *  alert thresholds for the VTM hardware to use in determining when to apply the device
  *  reset (and when to release it). When the temperatures are above the high threshold,
  *  a SoC reset would be done and gets released after the temperature falls below
- *  the low temperature threshold. 
+ *  the low temperature threshold.
  *  There should not be any ISR (Interrupt Service Routine) need to program for
  *  maximum temperature out of range programming.
  *  The caller should have actively taken necessary cooling actions, prior to
@@ -817,7 +817,7 @@ int32_t SDL_VTM_tsConvTempToAdc (int32_t milli_degree_temp_val,
  *                                 Invalid Args : CSL_EBADARGS
  */
 int32_t SDL_VTM_tsSetMaxTOutRgAlertThr(const SDL_VTM_cfg2Regs    	*p_cfg2,
-                                      SDL_VTM_InstTs 				instance, 
+                                      SDL_VTM_InstTs 				instance,
                                       int32_t               high_temp_in_milli_degree_celcius,
                                       int32_t               low_temp_in_milli_degree_celcius);
 

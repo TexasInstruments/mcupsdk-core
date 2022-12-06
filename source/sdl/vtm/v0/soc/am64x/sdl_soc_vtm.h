@@ -47,7 +47,7 @@ extern "C"
  * @ingroup  SDL_MODULE
  * @defgroup SDL_VTM_API Voltage and Thermal Monitor(VTM)
  *
- * 
+ *
  */
 
 /**
@@ -140,4 +140,3 @@ bool SDL_VTM_getBaseAddr(SDL_VTM_cfgReg cfgReg, uint32_t *vtmBaseAddr);
 }
 #endif
 #endif /* SDL_SOC_VTM_H_ */
-
