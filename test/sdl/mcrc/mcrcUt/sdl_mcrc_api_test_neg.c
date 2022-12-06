@@ -46,6 +46,10 @@ int32_t sdl_mcrc_negTest(void)
 #if defined (SOC_AM64X)
 	SDL_MCRC_InstType             instance = MCRC_MCU_NAVSS;
 #endif
+	
+#if defined(SOC_AM243X)
+	SDL_MCRC_InstType             instance = MCU_MCRC64_0;
+#endif
 #if defined (SOC_AM263X)
     SDL_MCRC_InstType             instance = MCRC0;
 #endif

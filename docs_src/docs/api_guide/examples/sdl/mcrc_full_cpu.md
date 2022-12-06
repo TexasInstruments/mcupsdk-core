@@ -51,6 +51,16 @@ Use Cases
 
 \endcond
 
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/mcrc/mcrc_full_cpu/
+
+\endcond
 
 # Steps to Run the Example
 
@@ -63,8 +73,9 @@ Use Cases
 # See Also
 
 \ref SDL_MCRC_PAGE
-\cond SOC_AM64X
-# Sample Output SOC_AM64X
+
+\cond SOC_AM64X || SOC_AM243X
+# Sample Output
 
 Shown below is a sample output when the application is run,
 
@@ -72,11 +83,11 @@ Shown below is a sample output when the application is run,
  MCRC Application
 
  MCRC FULL CPU mode : starting
- Full_CPU mode MCRC signature verification done successfully for the instance MCRC_MCU_NAVSS
+ Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0
 
 
  MCRC FULL CPU mode : starting
- Full_CPU mode MCRC signature verification done successfully for the instance MCRC_MCU_NAVSS
+ Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0
 
  Applications Name: MCRC_fullCPU_mode  PASSED
 

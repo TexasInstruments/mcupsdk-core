@@ -1,9 +1,5 @@
 /*
- * SDL MCRC
- *
- * SDL SoC Header file for MCRC
- *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,32 +31,57 @@
  *
  */
 
-#ifndef INCLUDE_SDL_MCRC_SOC_H_
-#define INCLUDE_SDL_MCRC_SOC_H_
+/**
+ *  @addtogroup SDL_MCRC_API MCRC API
+    @{
+ */
 
-#ifdef __cplusplus
+#ifndef SDL_MCRC_SOC_H_
+#define SDL_MCRC_SOC_H_
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
+
+#ifdef _cplusplus
 extern "C" {
 #endif
 
-#if defined (SOC_AM263X)
-#include <sdl/mcrc/v0/soc/am263x/sdl_mcrc_soc.h>
-#endif /* SOC_AM263X */
-#if defined (SOC_AM64X)
-#include <sdl/mcrc/v0/soc/am64x/sdl_mcrc_soc.h>
-#endif /* SOC_AM64X */
-#if defined (SOC_AM273X)
-#include <sdl/mcrc/v0/soc/am273x/sdl_mcrc_soc.h>
-#endif /* SOC_AM273X */
-#if defined (SOC_AWR294X)
-#include <sdl/mcrc/v0/soc/awr294x/sdl_mcrc_soc.h>
-#endif /* SOC_AWR294X */
+/* ========================================================================== */
+/*                            Macros & Typedefs                               */
+/* ========================================================================== */
 
-#if defined (SOC_AM243X)
-#include <sdl/mcrc/v0/soc/am243x/sdl_mcrc_soc.h>
-#endif /* SOC_AM243X */
+/**
+ * \brief  MCRC Instance supported.
+ */
 
-#ifdef __cplusplus
+typedef enum {
+   MCU_MCRC64_0 = 1,
+    /**< MCU_MCRC64_0 Instance */
+   SDL_MCRC_INVALID = 0xffff,
+    /**< Invalid instance  */
+} SDL_MCRC_InstType;
+
+/**
+ * \brief   This API is used to get the base address of the instance.
+ *
+ * \param   instance          MCRC instance either MCU or Main.
+ * \param   baseAddr          Dbase address of the instance.
+ *
+ * \return  status            return the base address of th instance.
+ *                            SDL_PASS:     success
+ *                            SDL_EBADARGS: failure, indicate the bad input arguments
+ *                            SDL_EFAIL:    failure, indicate verify failed
+ */
+int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance, uint32_t *baseAddr);
+
+
+#ifdef _cplusplus
 }
-#endif  /* extern "C" */
 
-#endif /* INCLUDE_SDL_MCRC_SOC_H_ */
+#endif /*extern "C" */
+
+#endif
+ /** @} */

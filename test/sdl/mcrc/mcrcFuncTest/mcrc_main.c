@@ -120,7 +120,7 @@ void test_sdl_mcrc_baremetal_test_app (void)
     int32_t    i;
 
     /* Init Dpl */
-    sdlApp_dplInit();    
+    sdlApp_dplInit();
 
     DebugP_log("\n MCRC Test Application\r\n");
 

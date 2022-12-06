@@ -73,6 +73,11 @@ static SDL_MCRC_ConfigParams_t testParams[2] =
 #if defined(SOC_AM64X)
 		MCRC_MCU_NAVSS,
 #endif
+#if defined(SOC_AM243X)
+		MCU_MCRC64_0,
+#endif
+
+
 #if defined(SOC_AM263X)
 		MCRC0,
 #endif
@@ -94,6 +99,9 @@ static SDL_MCRC_ConfigParams_t testParams[2] =
    {
 #if defined(SOC_AM64X)
 		MCRC_MCU_NAVSS,
+#endif
+#if defined(SOC_AM243X)
+		MCU_MCRC64_0,
 #endif
 #if defined(SOC_AM263X)
 		MCRC0,
@@ -193,9 +201,16 @@ int32_t sdl_mcrcFullCPU_main(void)
 #if defined (SOC_AM64X)
             if (testParams[testCase].instance == MCRC_MCU_NAVSS )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC_MCU_NAVSS \n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_NAVSS \n\n");
             }
 #endif
+#if defined (SOC_AM243X)
+            if (testParams[testCase].instance ==  MCU_MCRC64_0  )
+            {
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \n\n");
+            }
+#endif
+
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
             if (testParams[testCase].instance == MCRC_INSTANCE )
             {
@@ -214,9 +229,17 @@ int32_t sdl_mcrcFullCPU_main(void)
 #if defined (SOC_AM64X)
             if (testParams[testCase].instance == MCRC_MCU_NAVSS )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC_MCU_NAVSS \n\n ");
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_NAVSS \n\n ");
             }
 #endif
+
+#if defined (SOC_AM243X)
+            if (testParams[testCase].instance == MCU_MCRC64_0 )
+            {
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0 \n\n ");
+            }
+#endif
+
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
             if (testParams[testCase].instance == MCRC_INSTANCE )
             {

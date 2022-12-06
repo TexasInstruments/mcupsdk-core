@@ -45,9 +45,9 @@ Include the below file to access the APIs
 
 Initialize an MCRC instance and channel
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 \code{.c}
-SDL_MCRC_InstType instance = MCRC_MCU_NAVSS;
+SDL_MCRC_InstType instance = MCU_MCRC64_0;
 \endcode
 \endcond
 

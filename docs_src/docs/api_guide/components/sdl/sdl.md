@@ -76,4 +76,5 @@ SDL consists of below sub-modules
 - \subpage SDL_POK_PAGE
 - \subpage SDL_DCC_PAGE
 - \subpage SDL_ECC_PAGE
+- \subpage SDL_MCRC_PAGE
 \endcond

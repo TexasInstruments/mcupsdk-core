@@ -38,7 +38,7 @@
  *            device abstraction layer file of MCRC.
  *            This also contains some related macros.
  */
- 
+
  /**
  * @brief MCRC-64 polynomial: x^64 + x^4 + x^3 + x + 1
  */
@@ -127,7 +127,7 @@ int32_t SDL_MCRC_init(SDL_MCRC_InstType instance,
                               SDL_MCRC_BCTOPLD2,
                               blockPreload);
                 break;
-#if defined(SOC_AM263X)||defined(SOC_AM64X)
+#if defined(SOC_AM263X)||defined(SOC_AM64X)||defined(SOC_AM243X)
             case SDL_MCRC_CHANNEL_3:
                 /* Configure watchdog pre-load value */
                 HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3,
@@ -316,7 +316,7 @@ int32_t SDL_MCRC_config(SDL_MCRC_InstType instance,
 }
 
 /**
- *  Design: PROC_SDL-2082 
+ *  Design: PROC_SDL-2082
  */
 int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                               SDL_MCRC_Channel_t channel,
@@ -396,7 +396,7 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
 }
 
 /**
- *  Design: PROC_SDL-2086 
+ *  Design: PROC_SDL-2086
  */
 int32_t SDL_MCRC_channelReset(SDL_MCRC_InstType instance,
                               SDL_MCRC_Channel_t channel)
@@ -456,7 +456,7 @@ int32_t SDL_MCRC_channelReset(SDL_MCRC_InstType instance,
 }
 
 /**
- *  Design: PROC_SDL-2090 
+ *  Design: PROC_SDL-2090
  */
 int32_t SDL_MCRC_getPSASig(SDL_MCRC_InstType     instance,
                            SDL_MCRC_Channel_t    channel,
@@ -564,7 +564,7 @@ int32_t SDL_MCRC_setPSASeedSig(SDL_MCRC_InstType           instance,
 }
 
 /**
- *  Design: PROC_SDL-2094 
+ *  Design: PROC_SDL-2094
  */
 int32_t SDL_MCRC_getPSASectorSig(SDL_MCRC_InstType     instance,
                                  SDL_MCRC_Channel_t    channel,
@@ -610,7 +610,7 @@ int32_t SDL_MCRC_getPSASectorSig(SDL_MCRC_InstType     instance,
 }
 
 /**
- *  Design: PROC_SDL-2084 
+ *  Design: PROC_SDL-2084
  */
 int32_t SDL_MCRC_getIntrStatus(SDL_MCRC_InstType     instance,
                                SDL_MCRC_Channel_t    channel,
@@ -664,7 +664,7 @@ int32_t SDL_MCRC_getIntrStatus(SDL_MCRC_InstType     instance,
 }
 
 /**
- *  Design: PROC_SDL-2088 
+ *  Design: PROC_SDL-2088
  */
 int32_t SDL_MCRC_enableIntr(SDL_MCRC_InstType  instance,
                             SDL_MCRC_Channel_t channel,
@@ -760,7 +760,7 @@ int32_t SDL_MCRC_disableIntr(SDL_MCRC_InstType  instance,
 }
 
 /**
- *  Design: PROC_SDL-2087 
+ *  Design: PROC_SDL-2087
  */
 int32_t SDL_MCRC_clearIntr(SDL_MCRC_InstType  instance,
                            SDL_MCRC_Channel_t channel,
@@ -808,7 +808,7 @@ int32_t SDL_MCRC_clearIntr(SDL_MCRC_InstType  instance,
 }
 
 /**
- *  Design: PROC_SDL-2092 
+ *  Design: PROC_SDL-2092
  */
 int32_t SDL_MCRC_isBusy(SDL_MCRC_InstType   instance,
                         SDL_MCRC_Channel_t  channel,
@@ -862,7 +862,7 @@ int32_t SDL_MCRC_isBusy(SDL_MCRC_InstType   instance,
 }
 
 /**
- *  Design: PROC_SDL-2095 
+ *  Design: PROC_SDL-2095
  */
 int32_t SDL_MCRC_getCurSecNum(SDL_MCRC_InstType  instance,
                              SDL_MCRC_Channel_t  channel,
@@ -909,7 +909,7 @@ int32_t SDL_MCRC_getCurSecNum(SDL_MCRC_InstType  instance,
 }
 
 /**
- *  Design: PROC_SDL-2096 
+ *  Design: PROC_SDL-2096
  */
 int32_t SDL_MCRC_getCurPSASig(SDL_MCRC_InstType     instance,
                               SDL_MCRC_Channel_t    channel,
@@ -964,7 +964,7 @@ int32_t SDL_MCRC_getCurPSASig(SDL_MCRC_InstType     instance,
 }
 
 /**
- *  Design: PROC_SDL-2083 
+ *  Design: PROC_SDL-2083
  */
 int32_t SDL_MCRC_readStaticReg(SDL_MCRC_InstType instance,
                                SDL_MCRC_StaticRegs_t *pStaticRegs)
@@ -997,7 +997,7 @@ int32_t SDL_MCRC_readStaticReg(SDL_MCRC_InstType instance,
 }
 
 /**
- *  Design: PROC_SDL-2091 
+ *  Design: PROC_SDL-2091
  */
 int32_t SDL_MCRC_getPSASigRegAddr(SDL_MCRC_InstType instance, SDL_MCRC_Channel_t channel,
                                   SDL_MCRC_SignatureRegAddr_t *pMCRCregAddr)
@@ -1086,7 +1086,7 @@ static int32_t SDL_MCRC_dataWrite(const SDL_MCRC_DataConfig_t *pDataConfig,
 }
 
 /**
- *  Design: PROC_SDL-2097 
+ *  Design: PROC_SDL-2097
  */
 int32_t SDL_MCRC_computeSignCPUmode (SDL_MCRC_InstType instance,
                                      SDL_MCRC_Channel_t channel,
@@ -1173,7 +1173,7 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
 {
 	int32_t status = SDL_PASS;
 	uint32_t baseAddr;
-	
+
 	if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)))
 	{
 		status = SDL_EBADARGS;
@@ -1203,4 +1203,4 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
 	}
     return (status);
 }
-						 
+

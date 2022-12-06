@@ -29,6 +29,9 @@ const files_r5f = {
     		"sdl_interrupt_register.c",
          "sdl_dcc.c",
             "sdl_soc_dcc.c",
+        "sdl_mcrc.c",
+        "sdl_ip_mcrc.c",
+        "sdl_mcrc_soc.c",
     ],
 };
 const filedirs = {
@@ -58,6 +61,9 @@ const filedirs = {
         "dcc/v0",
         "dcc/v0/soc",
         "dcc/v0/soc/am243x",
+        "mcrc",
+        "mcrc/v0",
+        "mcrc/v0/soc/am243x",
     ],
 };
 
@@ -84,6 +90,7 @@ common: [
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
+
 
 function getComponentProperty() {
     let property = {};

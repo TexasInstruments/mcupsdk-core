@@ -39,6 +39,11 @@ FILES_common := \
     sdl_exception.c \
     sdl_interrupt_handlers.c \
     sdl_interrupt_register.c \
+    sdl_dcc.c \
+    sdl_soc_dcc.c \
+    sdl_mcrc.c \
+    sdl_ip_mcrc.c \
+    sdl_mcrc_soc.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -66,6 +71,13 @@ FILES_PATH_common = \
     ecc/V0 \
     r5 \
     r5/v0 \
+    dcc \
+    dcc/v0 \
+    dcc/v0/soc \
+    dcc/v0/soc/am243x \
+    mcrc \
+    mcrc/v0 \
+    mcrc/v0/soc/am243x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

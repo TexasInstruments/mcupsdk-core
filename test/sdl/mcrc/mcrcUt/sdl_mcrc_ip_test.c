@@ -52,6 +52,9 @@ int32_t sdl_ip_mcrcNegTest(void)
 #if defined (SOC_AM64X)
     SDL_MCRC_InstType     instance = MCRC_MCU_NAVSS;
 #endif
+#if defined (SOC_AM243X)
+    SDL_MCRC_InstType     instance = MCU_MCRC64_0;
+#endif
     uint32_t              baseAddr;
     uint32_t              ctrlFlag = 1U;
     SDL_MCRC_DataBusMask_t dataBusMask = SDL_MCRC_DATA_BUS_MASK_ALL;
@@ -424,6 +427,10 @@ int32_t sdl_ip_mcrcPosTest(void)
 #if defined(SOC_AM64X)
 	SDL_MCRC_InstType 	  startInstance = MCRC_MCU_NAVSS;
 	SDL_MCRC_InstType     endInstance = MCRC_MCU_NAVSS;
+#endif
+#if defined (SOC_AM243X)
+	SDL_MCRC_InstType 	  startInstance = MCU_MCRC64_0;
+	SDL_MCRC_InstType     endInstance = MCU_MCRC64_0;
 #endif
 #if defined(SOC_AM263X)
 	SDL_MCRC_InstType     startInstance = MCRC0;

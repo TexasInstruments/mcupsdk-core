@@ -1,9 +1,5 @@
 /*
- * SDL MCRC
- *
- * SDL SoC Header file for MCRC
- *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (C) 2018-2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,35 +28,23 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-#ifndef INCLUDE_SDL_MCRC_SOC_H_
-#define INCLUDE_SDL_MCRC_SOC_H_
+#include <stdlib.h>
+#include "ti_drivers_config.h"
+#include "ti_board_config.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+void mcrc_full_cpu_main(void *args);
 
-#if defined (SOC_AM263X)
-#include <sdl/mcrc/v0/soc/am263x/sdl_mcrc_soc.h>
-#endif /* SOC_AM263X */
-#if defined (SOC_AM64X)
-#include <sdl/mcrc/v0/soc/am64x/sdl_mcrc_soc.h>
-#endif /* SOC_AM64X */
-#if defined (SOC_AM273X)
-#include <sdl/mcrc/v0/soc/am273x/sdl_mcrc_soc.h>
-#endif /* SOC_AM273X */
-#if defined (SOC_AWR294X)
-#include <sdl/mcrc/v0/soc/awr294x/sdl_mcrc_soc.h>
-#endif /* SOC_AWR294X */
+int main(void)
+{
+    System_init();
+    Board_init();
 
-#if defined (SOC_AM243X)
-#include <sdl/mcrc/v0/soc/am243x/sdl_mcrc_soc.h>
-#endif /* SOC_AM243X */
+    mcrc_full_cpu_main(NULL);
 
-#ifdef __cplusplus
+    Board_deinit();
+    System_deinit();
+
+    return 0;
 }
-#endif  /* extern "C" */
-
-#endif /* INCLUDE_SDL_MCRC_SOC_H_ */
