@@ -1042,7 +1042,7 @@ RED_STATUS RedLifeCheckTaskCreate(hsrPrpHandle *hsrPrphandle,
         goto exit;
     }
 
-    status_nodesTableSemaphore = SemaphoreP_constructBinary(&(hsrPrphandle->nodesTableSemaphore), 0);
+    status_nodesTableSemaphore = SemaphoreP_constructBinary(&(hsrPrphandle->nodesTableSemaphore), 1);
 
     if(status_nodesTableSemaphore != SystemP_SUCCESS)
     {

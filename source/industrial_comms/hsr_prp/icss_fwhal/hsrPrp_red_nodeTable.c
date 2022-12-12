@@ -602,8 +602,6 @@ void RedNodetableRefresh(void *args)
         (nodeTableBase + i)->state = 0x10 ;
     }
 
-    SemaphoreP_post(&(hsrPrphandle->nodesTableSemaphore));
-
     while(1)
     {
 
