@@ -260,13 +260,13 @@ let config = [
     {
         name        : "linMode",
         displayName : "LIN Mode",
-        description : 'Whether to use LIN as a Master or a Slave',
+        description : 'Whether to use LIN as a Commander or a Responder',
         hidden      : true,
-        default     : "LIN_MODE_LIN_MASTER",
+        default     : "LIN_MODE_LIN_COMMANDER",
         options     :
         [
-            { name: "LIN_MODE_LIN_MASTER", displayName: "The node is in master mode" },
-            { name: "LIN_MODE_LIN_SLAVE", displayName: "The node is in slave mode" },
+            { name: "LIN_MODE_LIN_COMMANDER", displayName: "The node is in commander mode" },
+            { name: "LIN_MODE_LIN_RESPONDER", displayName: "The node is in responder mode" },
         ]
     },
     {
@@ -314,7 +314,7 @@ let config = [
         options     :
         [
             { name: "LIN_MSG_FILTER_IDBYTE", displayName: "LIN Message ID Byte Filtering" },
-            { name: "LIN_MSG_FILTER_IDSLAVE", displayName: "Slave Task ID Byte Filtering" },
+            { name: "LIN_MSG_FILTER_IDRESPONDER", displayName: "Responder Task ID Byte Filtering" },
         ]
     },
     {

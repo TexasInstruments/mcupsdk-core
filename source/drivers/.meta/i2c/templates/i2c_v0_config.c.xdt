@@ -16,12 +16,12 @@ static I2C_HwAttrs gI2cHwAttrs[CONFIG_I2C_NUM_INSTANCES] =
         .eventId        = `config.eventId`,
         .funcClk        = `config.funcClk`U,
         .enableIntr     = `Number(config.enableIntr)`,
-        .ownSlaveAddr   =
+        .ownTargetAddr   =
         {
-            0x`config.ownSlaveAddr1.toString(16).toUpperCase()`,
-            0x`config.ownSlaveAddr2.toString(16).toUpperCase()`,
-            0x`config.ownSlaveAddr3.toString(16).toUpperCase()`,
-            0x`config.ownSlaveAddr4.toString(16).toUpperCase()`,
+            0x`config.ownTargetAddr1.toString(16).toUpperCase()`,
+            0x`config.ownTargetAddr2.toString(16).toUpperCase()`,
+            0x`config.ownTargetAddr3.toString(16).toUpperCase()`,
+            0x`config.ownTargetAddr4.toString(16).toUpperCase()`,
         },
     },
 % }

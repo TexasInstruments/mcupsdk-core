@@ -44,24 +44,24 @@ extern "C"
  *  \name Instances
  *
  *  Definitions for  MIBSPI instances available. These instances are used to
- *  initialize the memory for a given Instance.  
+ *  initialize the memory for a given Instance.
  *
  *  @{
  */
-/** \brief MSS instance ID A */ 
+/** \brief MSS instance ID A */
 #define  MIBSPI_INST_ID_MSS_SPIA   (0U)
-/** \brief MSS instance ID B */ 
+/** \brief MSS instance ID B */
 #define  MIBSPI_INST_ID_MSS_SPIB   (1U)
-/** \brief RCSS instance ID A */ 
+/** \brief RCSS instance ID A */
 #define  MIBSPI_INST_ID_RCSS_SPIA  (2U)
-/** \brief RCSS instance ID B */ 
+/** \brief RCSS instance ID B */
 #define  MIBSPI_INST_ID_RCSS_SPIB  (3U)
 /** @} */
 
 /**
  *  \brief  Function to initialize memory
  *
- *  Function invoked during MIBSPI_initMaster and MIBSPI_initSlave inside 
+ *  Function invoked during MIBSPI_initController and MIBSPI_initPeripheral inside
  *  the driver to initialize the memory.
  *
  *  @param  index       MIBSPI instance ID

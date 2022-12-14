@@ -16,7 +16,7 @@ static I2C_HwAttrs gI2cHwAttrs[CONFIG_I2C_NUM_INSTANCES] =
         .eventId        = `config.eventId`,
         .funcClk        = `config.funcClk`U,
         .enableIntr     = `Number(config.enableIntr)`,
-        .ownSlaveAddr   = 0x`config.ownSlaveAddr.toString(16).toUpperCase()`,
+        .ownTargetAddr   = 0x`config.ownTargetAddr.toString(16).toUpperCase()`,
     },
 % }
 };

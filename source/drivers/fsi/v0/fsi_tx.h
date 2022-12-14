@@ -130,7 +130,7 @@ typedef uint32_t FSI_TxEnumType;
  */
 typedef uint32_t FSI_TxSubmoduleInReset;
 
-#define FSI_TX_MASTER_CORE_RESET             ((uint32_t)0x0U)
+#define FSI_TX_MAIN_CORE_RESET             ((uint32_t)0x0U)
 /**< Reset entire TX Module */
 #define FSI_TX_CLOCK_RESET                   ((uint32_t)0x1U)
 /**< Reset only TX clock */

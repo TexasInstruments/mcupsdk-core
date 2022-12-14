@@ -37,9 +37,9 @@
 /*
  * Board info
  */
-#define I2C_READ_SLAVE_ADDR             (0x50U)
+#define I2C_READ_TARGET_ADDR             (0x50U)
 
 uint32_t Board_i2cGetEepromDeviceAddr()
 {
-    return I2C_READ_SLAVE_ADDR;
+    return I2C_READ_TARGET_ADDR;
 }

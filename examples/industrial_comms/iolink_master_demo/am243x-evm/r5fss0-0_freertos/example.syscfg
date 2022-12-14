@@ -277,7 +277,7 @@ i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
 
 mcspi1.$name                       = "CONFIG_MCSPI_IOL";
-mcspi1.mode                        = "MULTI_MASTER";
+mcspi1.mode                        = "MULTI_CONTROLLER";
 mcspi1.intrEnable                  = "POLLED";
 mcspi1.SPI.$assign                 = "SPI1";
 mcspi1.SPI.CLK.$assign             = "ball.C14";

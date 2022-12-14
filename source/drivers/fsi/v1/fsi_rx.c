@@ -713,7 +713,7 @@ int32_t FSI_resetRxModule(uint32_t base, FSI_RxSubmoduleInReset submodule)
 
     switch(submodule)
     {
-        case FSI_RX_MASTER_CORE_RESET:
+        case FSI_RX_MAIN_CORE_RESET:
             regVal  = HW_RD_REG16(base + CSL_FSI_RX_CFG_RX_MASTER_CTRL_ALTB_);
             regVal |= (uint16_t)CSL_FSI_RX_CFG_RX_MASTER_CTRL_ALTB__CORE_RST_MASK |
                       (FSI_CTRL_REG_KEY << CSL_FSI_RX_CFG_RX_MASTER_CTRL_ALTB__KEY_SHIFT);
@@ -747,7 +747,7 @@ int32_t FSI_clearRxModuleReset(uint32_t base, FSI_RxSubmoduleInReset submodule)
 
     switch(submodule)
     {
-        case FSI_RX_MASTER_CORE_RESET:
+        case FSI_RX_MAIN_CORE_RESET:
             regVal = HW_RD_REG16(base + CSL_FSI_RX_CFG_RX_MASTER_CTRL_ALTB_);
             regVal = (regVal & (uint16_t)(~CSL_FSI_RX_CFG_RX_MASTER_CTRL_ALTB__CORE_RST_MASK)) |
                      (FSI_CTRL_REG_KEY << CSL_FSI_RX_CFG_RX_MASTER_CTRL_ALTB__KEY_SHIFT);
@@ -867,7 +867,7 @@ int32_t FSI_performRxInitialization(uint32_t base)
 {
     int32_t  retVal;
 
-    retVal = FSI_resetRxModule(base, FSI_RX_MASTER_CORE_RESET);
+    retVal = FSI_resetRxModule(base, FSI_RX_MAIN_CORE_RESET);
 
     if (retVal == CSL_PASS)
     {
@@ -884,7 +884,7 @@ int32_t FSI_performRxInitialization(uint32_t base)
          * FSI Rx module will come out of reset only when the receive clock is sent
          * in or by sending a Flush pattern from FSI RX.
          */
-        retVal = FSI_clearRxModuleReset(base, FSI_RX_MASTER_CORE_RESET);
+        retVal = FSI_clearRxModuleReset(base, FSI_RX_MAIN_CORE_RESET);
     }
 
     return (retVal);

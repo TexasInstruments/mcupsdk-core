@@ -95,7 +95,7 @@ typedef struct inaCfgObj
 {
     char deviceID[20];
     calParams_t inaCalParams;
-    uint8_t slaveAddr;
+    uint8_t targetAddr;
 } inaCfgObj_t;
 
 inaCfgObj_t inaDevice[NUM_OF_INA_DEVICES] =
@@ -107,7 +107,7 @@ inaCfgObj_t inaDevice[NUM_OF_INA_DEVICES] =
           { "SoC_AVDD1V8", { 10, 20 }, 0x4E }
         };
 
-static int32_t INA_read_register(I2C_Handle handle, uint8_t slaveAddress,
+static int32_t INA_read_register(I2C_Handle handle, uint8_t targetAddress,
                                 uint8_t regAddr, uint16_t *regData);
 static int32_t INA_set_default_config(I2C_Handle handle, inaCfgObj_t *inaDevice);
 static int32_t INA_set_calibration(I2C_Handle handle, inaCfgObj_t *inaDevice);
@@ -193,7 +193,7 @@ int32_t current_monitor_init()
     return SystemP_SUCCESS;
 }
 
-static int32_t INA_read_register(I2C_Handle handle, uint8_t slaveAddress,
+static int32_t INA_read_register(I2C_Handle handle, uint8_t targetAddress,
                                 uint8_t regAddr, uint16_t *regData)
 {
     int32_t ret = SystemP_SUCCESS;
@@ -203,7 +203,7 @@ static int32_t INA_read_register(I2C_Handle handle, uint8_t slaveAddress,
     /* Initializes the I2C transaction structure with default values */
     I2C_Transaction_init(&transaction);
 
-    transaction.slaveAddress = slaveAddress;
+    transaction.targetAddress = targetAddress;
     transaction.writeBuf = &regAddr;
     transaction.writeCount = 1;
     transaction.readBuf = NULL;
@@ -232,13 +232,13 @@ static int32_t INA_read_register(I2C_Handle handle, uint8_t slaveAddress,
         ret = SystemP_SUCCESS;
     }
 
-    /* Note:- Slave device responds with MSB first for the read sequence sent */
+    /* Note:- target device responds with MSB first for the read sequence sent */
     *regData = ((((uint16_t) rx[0]) << 8) | ((uint16_t) rx[1]));
 
     return ret;
 }
 
-static int32_t INA_write_register(I2C_Handle handle, uint8_t slaveAddress,
+static int32_t INA_write_register(I2C_Handle handle, uint8_t targetAddress,
                                  uint8_t regAddr, uint16_t regData)
 {
     int32_t ret = SystemP_SUCCESS;
@@ -248,7 +248,7 @@ static int32_t INA_write_register(I2C_Handle handle, uint8_t slaveAddress,
     /* Set default transaction parameters */
     I2C_Transaction_init(&transaction);
 
-    transaction.slaveAddress = slaveAddress;
+    transaction.targetAddress = targetAddress;
     transaction.writeBuf = &tx[0];
     transaction.writeCount = 3;
     transaction.readBuf = NULL;
@@ -277,7 +277,7 @@ static int32_t INA_set_default_config(I2C_Handle handle, inaCfgObj_t *inaDevice)
 {
     int32_t ret = SystemP_SUCCESS;
 
-    ret = INA_write_register(handle, inaDevice->slaveAddr,
+    ret = INA_write_register(handle, inaDevice->targetAddr,
                              CONFIGURATION_REG_ADDR_OFFSET,
                              INA_DEFAULT_CONFIG_VAL);
 
@@ -297,7 +297,7 @@ static int32_t INA_set_calibration(I2C_Handle handle, inaCfgObj_t *inaDevice)
     }
     else
     {
-        ret = INA_write_register(handle, inaDevice->slaveAddr,
+        ret = INA_write_register(handle, inaDevice->targetAddr,
                                  CALIBRATION_REG_ADDR_OFFSET,
                                  (uint16_t) calibration);
     }
@@ -312,7 +312,7 @@ static int32_t INA_read_bus_microwatts(I2C_Handle handle, inaCfgObj_t *inaDevice
     uint16_t readRegData = 0;
     calParams_t *calParams = &inaDevice->inaCalParams;
 
-    ret = INA_read_register(handle, inaDevice->slaveAddr, POWER_REG_ADDR_OFFSET,
+    ret = INA_read_register(handle, inaDevice->targetAddr, POWER_REG_ADDR_OFFSET,
                             &readRegData);
     if (ret != SystemP_SUCCESS)
     {
@@ -335,7 +335,7 @@ static int32_t INA_read_shunt_microvolts(I2C_Handle handle,
     float sign = 1;
     uint16_t readRegData = 0;
 
-    ret = INA_read_register(handle, inaDevice->slaveAddr,
+    ret = INA_read_register(handle, inaDevice->targetAddr,
                             SHUNT_VOLTAGE_REG_ADDR_OFFSET,
                             &readRegData);
     if (ret == SystemP_SUCCESS)
@@ -361,7 +361,7 @@ static int32_t INA_read_bus_milivolts(I2C_Handle handle, inaCfgObj_t *inaDevice,
     int32_t ret = SystemP_SUCCESS;
     uint16_t readRegData = 0;
 
-    ret = INA_read_register(handle, inaDevice->slaveAddr,
+    ret = INA_read_register(handle, inaDevice->targetAddr,
                             BUS_VOLTAGE_REG_ADDR_OFFSET,
                             &readRegData);
     if (ret == SystemP_SUCCESS)
@@ -381,7 +381,7 @@ static int32_t INA_read_bus_microamps(I2C_Handle handle, inaCfgObj_t *inaDevice,
     uint16_t readRegData = 0;
     calParams_t *calParams = &inaDevice->inaCalParams;
 
-    ret = INA_read_register(handle, inaDevice->slaveAddr,
+    ret = INA_read_register(handle, inaDevice->targetAddr,
                             CURRENT_REG_ADDR_OFFSET,
                             &readRegData);
     if (ret == SystemP_SUCCESS)

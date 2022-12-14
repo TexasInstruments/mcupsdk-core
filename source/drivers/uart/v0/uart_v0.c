@@ -129,7 +129,7 @@ static void UART_resetModule(uint32_t baseAddr);
 static int32_t UART_checkOpenParams(const UART_Params *prms);
 static int32_t UART_checkTransaction(const UART_Object *object,
                                      UART_Transaction *trans);
-static void UART_masterIsr(void *arg);
+static void UART_controllerIsr(void *arg);
 static inline void UART_procLineStatusErr(UART_Config *config);
 static inline uint32_t UART_writeData(UART_Object *object,
                                       UART_Attrs const *attrs,
@@ -342,7 +342,7 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
             DebugP_assert(object->prms.intrNum != 0xFFFF);
             HwiP_Params_init(&hwiPrms);
             hwiPrms.intNum      = object->prms.intrNum;
-            hwiPrms.callback    = &UART_masterIsr;
+            hwiPrms.callback    = &UART_controllerIsr;
             hwiPrms.priority    = object->prms.intrPriority;
             hwiPrms.args        = (void *) config;
             status += HwiP_construct(&object->hwiObj, &hwiPrms);
@@ -1787,7 +1787,7 @@ static uint32_t UART_regConfigModeEnable(uint32_t baseAddr, uint32_t modeFlag)
 }
 
 /*
- *  ======== UART_masterIsr ========
+ *  ======== UART_controllerIsr ========
  *  Hwi function that processes UART interrupts.
  *
  *  In non-DMA mode, three UART interrupts are enabled:
@@ -1819,7 +1819,7 @@ static uint32_t UART_regConfigModeEnable(uint32_t baseAddr, uint32_t modeFlag)
  *
  *  @param(arg)         The UART_Handle for this Hwi.
  */
-static void UART_masterIsr(void *arg)
+static void UART_controllerIsr(void *arg)
 {
     UART_Config        *config;
     UART_Object        *object;

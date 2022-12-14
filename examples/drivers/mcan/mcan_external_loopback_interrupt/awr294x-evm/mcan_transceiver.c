@@ -74,7 +74,7 @@ static uint8_t BoardDiag_mcanReadPmicReg(MIBSPI_Handle handle, uint8_t regOffset
     transaction.count = APP_MSGSIZE;
     transaction.txBuf = tx;
     transaction.rxBuf = rx;
-    transaction.slaveIndex = 0;
+    transaction.peripheralIndex = 0;
     /* Single read transmissions consists of 24bit:
      * Bits 0-7  : Register Address
      * Bits 8-10 : Page address for the register
@@ -109,7 +109,7 @@ static void BoardDiag_mcanWritePmicReg(MIBSPI_Handle handle, uint8_t regAddr, ui
     transaction.count = APP_MSGSIZE;
     transaction.txBuf = tx;
     transaction.rxBuf = NULL;
-    transaction.slaveIndex = 0;
+    transaction.peripheralIndex = 0;
     /* Single write transmissions consists of 24bit:
      * Bits 0-7  : Register Address
      * Bits 8-10 : Page address for the register

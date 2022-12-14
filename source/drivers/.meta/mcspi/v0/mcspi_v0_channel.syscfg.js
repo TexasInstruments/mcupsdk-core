@@ -142,11 +142,11 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
         },
         {
             name: "slvCsSelect",
-            displayName: "Slave Chip-select",
+            displayName: "Peripheral Chip-select",
             default: 0,
             hidden: true,
-            description: "Slave select signal detection. Applicable for Channel 0 and in slave mode only",
-            //TODO: Hide for master mode
+            description: "Peripheral select signal detection. Applicable for Channel 0 and in peripheral mode only",
+            //TODO: Hide for controller mode
         },
         {
             name: "startBitEnable",

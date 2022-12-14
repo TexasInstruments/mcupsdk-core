@@ -33,8 +33,8 @@
  /**
  *  \file   mibspi_performance_16bit.c
  *
- *  \brief This file contains the Master application which demonstrates
- *         data transfer in master mode with performance measurment.
+ *  \brief This file contains the Controller application which demonstrates
+ *         data transfer in controller mode with performance measurment.
  *
  *         MibSPI is configured in Digital loopback mode.
  *         Word Length tested is 16 bits.
@@ -107,12 +107,12 @@ void test_mibspi_performance_16bit(void *args)
     spiTransaction.count        = APP_MIBSPI_MSGSIZE;
     spiTransaction.txBuf        = (void *)gMibspiTxBuffer;
     spiTransaction.rxBuf        = (void *)gMibspiRxBuffer;
-    spiTransaction.slaveIndex   = 0U;
+    spiTransaction.peripheralIndex   = 0U;
     spiTransaction.arg          = NULL;
     
      /* Number of Word Count */
     dataWidth  = gMibspiConfig[0U].object->params.dataSize;
-    bitRate    = gMibspiConfig[0U].object->params.u.masterParams.bitRate;
+    bitRate    = gMibspiConfig[0U].object->params.u.controllerParams.bitRate;
     dataLength = APP_MIBSPI_MSGSIZE;
   
     status = MIBSPI_enableLoopback(gMibspiHandle[CONFIG_MIBSPI0],loopback);

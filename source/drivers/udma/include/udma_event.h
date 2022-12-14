@@ -135,7 +135,7 @@ extern "C" {
  *  source type like ring, DMA etc... This event type can be used to register
  *  the master event which reserves the IA and IR interrupt to a core
  *  without reserving global event ID and IMAP programming.
- *  Post this, the handle can be passed to masterEventHandle for other event
+ *  Post this, the handle can be passed to controllerEventHandle for other event
  *  registeration to share the same IA and IR.
  */
 #define UDMA_EVENT_TYPE_MASTER                  ((uint32_t) 0x0005U)
@@ -203,7 +203,7 @@ typedef struct
     /**< [IN] Ring handle when the event type is one of below
      *          - #UDMA_EVENT_TYPE_RING
      *   This parameter can be NULL for other types. */
-    Udma_EventHandle        masterEventHandle;
+    Udma_EventHandle        controllerEventHandle;
     /**< [IN] Master event handle used to share the IA register when the event
      *   mode is set to #UDMA_EVENT_MODE_SHARED.
      *   This is typically used to share multiple events from same source

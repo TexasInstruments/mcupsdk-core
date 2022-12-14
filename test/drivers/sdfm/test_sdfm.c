@@ -103,7 +103,7 @@ void test_main(void *args)
 
     RUN_TEST(SDFM_setCompFilterHighThresholdApiCheck, 1, NULL);
 
-    
+
     RUN_TEST(SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel , 3210, NULL);
     RUN_TEST(SDFM_configure_manchester_decoding_mode , 3211, NULL);
     RUN_TEST(SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled , 3212, NULL);
@@ -122,8 +122,8 @@ void test_main(void *args)
     RUN_TEST(SDFM_sdfm_connectivity_to_pwm_xbar , 3225, NULL);
     RUN_TEST(SDFM_sdfm_connectivity_to_output_xbar , 3226, NULL);
     RUN_TEST(SDFM_r5_to_sdfm_access_latency , 3227, NULL);
-    
-    
+
+
     UNITY_END();
 
     /* Close drivers */
@@ -316,7 +316,7 @@ void util_deinit_sdfm(uint32_t base)
 
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK0 ,0x01234567);
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK1 ,0xFEDCBA8);
-    
+
     if(base==CSL_CONTROLSS_SDFM0_U_BASE)
     {
         HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_SDFM0_RST ,0x07);
@@ -351,7 +351,7 @@ void util_deinit_epwms()
 
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK0 ,0x01234567);
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK1 ,0xFEDCBA8);
-    
+
     uint8_t i;
 
     for(i=0;i<32;i++)
@@ -626,7 +626,7 @@ static void sdfmISR(void *handle)
                 filter3Result[loopCounter1] = (int16_t)(SDFM_getFilterData(g_current_base, SDFM_FILTER_3) >> 16U);
                 filter4Result[loopCounter1] = (int16_t)(SDFM_getFilterData(g_current_base, SDFM_FILTER_4) >> 16U);
 
-                SDFM_clearInterruptFlag(g_current_base, SDFM_MASTER_INTERRUPT_FLAG | 0xFFFF);
+                SDFM_clearInterruptFlag(g_current_base, SDFM_MAIN_INTERRUPT_FLAG | 0xFFFF);
             }
         }
         if(gFlagenableFifo==1)
@@ -643,7 +643,7 @@ static void sdfmISR(void *handle)
                     filter4Result[loopCounter1] = (int16_t)(SDFM_getFIFOData(g_current_base, SDFM_FILTER_4) >> 16U);
                 }
 
-                SDFM_clearInterruptFlag(g_current_base, SDFM_MASTER_INTERRUPT_FLAG | 0xFFFFFF);
+                SDFM_clearInterruptFlag(g_current_base, SDFM_MAIN_INTERRUPT_FLAG | 0xFFFFFF);
             }
 
         }
@@ -658,7 +658,7 @@ static void sdfmISR(void *handle)
             compFilter4Result[loopCounter1] = (int16_t)(SDFM_getComparatorSincData(g_current_base, SDFM_FILTER_4));
         }
 
-        SDFM_clearInterruptFlag(g_current_base, SDFM_MASTER_INTERRUPT_FLAG | 0xFFFFFF);
+        SDFM_clearInterruptFlag(g_current_base, SDFM_MAIN_INTERRUPT_FLAG | 0xFFFFFF);
     }
 
     //Notify test
@@ -948,7 +948,7 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
         //DebugP_log("\nInit: Setup interrupt");
 
         intnum = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_0 + g_intxbar_num;
-        
+
         /* Register & enable interrupt */
         HwiP_Params         hwiPrms;
         int32_t             status;
@@ -961,8 +961,8 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
         hwiPrms.isPulse     = 1;
         status              = HwiP_construct(&gSdfmHwiObject, &hwiPrms);
         DebugP_assert(status == SystemP_SUCCESS);
-    
-    
+
+
 
         //DebugP_log("\nInit: Route interrupt");
 
@@ -1144,7 +1144,7 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
             SDFM_configCompEventLowFilter(base, SDFM_FILTER_2, &config);
             SDFM_configCompEventLowFilter(base, SDFM_FILTER_3, &config);
             SDFM_configCompEventLowFilter(base, SDFM_FILTER_4, &config);
-            
+
             SDFM_initCompEventHighFilter(base, SDFM_FILTER_1);
             SDFM_initCompEventLowFilter(base, SDFM_FILTER_1);
             SDFM_initCompEventHighFilter(base, SDFM_FILTER_2);
@@ -1153,7 +1153,7 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
             SDFM_initCompEventLowFilter(base, SDFM_FILTER_3);
             SDFM_initCompEventHighFilter(base, SDFM_FILTER_4);
             SDFM_initCompEventLowFilter(base, SDFM_FILTER_4);
-    
+
         }
 
 
@@ -1208,8 +1208,8 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
     SDFM_configDataFilter(base, (SDFM_FILTER_4 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(dosr)), (SDFM_DATA_FORMAT_16_BIT | SDFM_FILTER_ENABLE | SDFM_SHIFT_VALUE(shift)));
 
     //Writes to CSL_SDFM_SDMFILEN
-    //Sets Master Filter Enable bit. Bit 11 (CSL_SDFM_SDMFILEN_MFE_MASK)
-    SDFM_enableMasterFilter(base);
+    //Sets Main Filter Enable bit. Bit 11 (CSL_SDFM_SDMFILEN_MFE_MASK)
+    SDFM_enableMainFilter(base);
 
     //Writes to CSL_SDFM_SDDFPARM1/2/3/4
     //Clears SDSYNCEN bit. Bit 12 CSL_SDFM_SDDFPARM1_SDSYNCEN_MASK
@@ -1364,8 +1364,8 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
     }
 
     //Writes to CSL_SDFM_SDCTL, sets MIE bit. Bit 13 (CSL_SDFM_SDCTL_MIE_MASK)
-    //Master SDy_ERR interrupt enable
-    SDFM_enableMasterInterrupt(base);
+    //Main SDy_ERR interrupt enable
+    SDFM_enableMainInterrupt(base);
 
 
 
@@ -1532,7 +1532,7 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
         }
 
 
-        SDFM_disableMasterInterrupt(base);
+        SDFM_disableMainInterrupt(base);
 
         if(g_isr_count==0)
         {
@@ -1740,13 +1740,13 @@ int32_t util_sdfm_test(uint32_t base, uint32_t testMode, uint32_t enablePwmSync,
     if(error==0)
     {
         //DebugP_log("\nPass");
-        
+
         return 0;
     }
     else
     {
         //DebugP_log("\nFail");
-        
+
         return 1;
     }
 
@@ -1836,21 +1836,21 @@ int32_t sdfm_latency(uint32_t base)
     if(error==0)
     {
         //DebugP_log("\nPass");
-        
+
         return 0;
     }
     else
     {
         //DebugP_log("\nFail");
-        
+
         return 1;
     }
 }
 
 int32_t AM263x_SDFM_BTR_0001(uint32_t base)
 {
-    //Configure SDFM input control unit for an SDFM channel	
-    //Configure the input control unit by configuring the modulator clock mode for SDFM channels. Select the channel clock source, enable/disable synchronizer for data or clock	
+    //Configure SDFM input control unit for an SDFM channel
+    //Configure the input control unit by configuring the modulator clock mode for SDFM channels. Select the channel clock source, enable/disable synchronizer for data or clock
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_setupModulatorClock
     //SDFM_enableSynchronizer
@@ -1865,8 +1865,8 @@ int32_t AM263x_SDFM_BTR_0001(uint32_t base)
 
 int32_t AM263x_SDFM_BTR_0002(uint32_t base)
 {
-    //Configure manchester decoding mode.	
-    //Select clock source for manchestor decoding mode. Read mannchestor clock period.	
+    //Configure manchester decoding mode.
+    //Select clock source for manchestor decoding mode. Read mannchestor clock period.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_selectManchesterClockSource
     //SDFM_setupModulatorClock
@@ -1883,20 +1883,20 @@ int32_t AM263x_SDFM_BTR_0002(uint32_t base)
     if(error==0)
     {
         //DebugP_log("\nPass");
-        
+
         return 0;
     }
     else
     {
         //DebugP_log("\nFail");
-        
+
         return 1;
     }
 }
 int32_t AM263x_SDFM_BTR_0003(uint32_t base)
 {
-    //Configure Data filter for each channel with PWM Sync disabled.	
-    //Configure oversampling ratio, filter structure, enable data ack flag, disable pwm sync & enable the data filter. Configure o/p data format & shift value for 16-bit data. Configure source of drint as ack flag & read the data register value in ISR.	
+    //Configure Data filter for each channel with PWM Sync disabled.
+    //Configure oversampling ratio, filter structure, enable data ack flag, disable pwm sync & enable the data filter. Configure o/p data format & shift value for 16-bit data. Configure source of drint as ack flag & read the data register value in ISR.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_setupModulatorClock
     //SDFM_setFilterType
@@ -1913,8 +1913,8 @@ int32_t AM263x_SDFM_BTR_0003(uint32_t base)
 
 int32_t AM263x_SDFM_BTR_0004(uint32_t base)
 {
-    //Configure Data Filter with  FIFO enabled & PWM sync disabled.	
-    //Configure fifo level which can generate interrupt, select source of drint as fifo data ready interrupt, enable FIFO, enable FIFO interrupt. Read the data items present in FIFO, read FIFO data in ISR.	
+    //Configure Data Filter with  FIFO enabled & PWM sync disabled.
+    //Configure fifo level which can generate interrupt, select source of drint as fifo data ready interrupt, enable FIFO, enable FIFO interrupt. Read the data items present in FIFO, read FIFO data in ISR.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_enableFIFOBuffer
     //SDFM_disableFIFOBuffer
@@ -1933,10 +1933,10 @@ int32_t AM263x_SDFM_BTR_0004(uint32_t base)
 
 int32_t AM263x_SDFM_BTR_0005(uint32_t base)
 {
-    //Configure Data Filter with  FIFO enabled & PWM sync enabled.	
-    //"Configure fifo level which can generate interrupt, select source of drint as fifo data ready interrupt, enable FIFO, enable FIFO interrupt. 
+    //Configure Data Filter with  FIFO enabled & PWM sync enabled.
+    //"Configure fifo level which can generate interrupt, select source of drint as fifo data ready interrupt, enable FIFO, enable FIFO interrupt.
     //Select source of sync, enable/disable wait for sync event to write data to FIFO, enable/disable FIFO clear on sync event.
-    //Read the data items present in FIFO, read FIFO data in ISR."	
+    //Read the data items present in FIFO, read FIFO data in ISR."
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_setPWMSyncSource
     //SDFM_setFIFOClearOnSyncMode
@@ -1952,8 +1952,8 @@ int32_t AM263x_SDFM_BTR_0005(uint32_t base)
 
 int32_t AM263x_SDFM_BTR_0006(uint32_t base)
 {
-    //Configure Comparator Filter	
-    //Configure oversampling ratio, filter structure,  high/level threshold 1 & 2 values, z threshold value, enable the high/low interrupts. Select source event for CEVT1/CEVT2 events. Enable in CPU & see if interupt is reaching to CPU. Check if the flag is getting set for z threshold.	
+    //Configure Comparator Filter
+    //Configure oversampling ratio, filter structure,  high/level threshold 1 & 2 values, z threshold value, enable the high/low interrupts. Select source event for CEVT1/CEVT2 events. Enable in CPU & see if interupt is reaching to CPU. Check if the flag is getting set for z threshold.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_setComparatorFilterType
     //SDFM_setCompFilterOverSamplingRatio
@@ -1965,7 +1965,7 @@ int32_t AM263x_SDFM_BTR_0006(uint32_t base)
     //SDFM_selectCompEventSource
     //SDFM_selectCompEventSource
     //SDFM_enableInterrupt
-    //SDFM_enableMasterInterrupt
+    //SDFM_enableMainInterrupt
     //SDFM_getZeroCrossTripStatus
     //SDFM_clearZeroCrossTripStatus
     //SDFM_getComparatorSincData"
@@ -1978,8 +1978,8 @@ int32_t AM263x_SDFM_BTR_0006(uint32_t base)
 
 int32_t AM263x_SDFM_BTR_0007(uint32_t base)
 {
-    //Configure event filters for high/low threshold events	
-    //Configure sample window size, threshold & clock prescale for high/low event filters for a channel. Initialize low/high event filter. Initialize high/low event filters.	
+    //Configure event filters for high/low threshold events
+    //Configure sample window size, threshold & clock prescale for high/low event filters for a channel. Initialize low/high event filter. Initialize high/low event filters.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SDFM_configCompEventHighFilter
     //SDFM_configCompEventLowFilter
@@ -2123,21 +2123,21 @@ int32_t AM263x_SDFM_BTR_0008(uint32_t base)
     if(error==0)
     {
         //DebugP_log("\nPass");
-        
+
         return 0;
     }
     else
     {
         //DebugP_log("\nFail");
-        
+
         return 1;
     }
 }
 
 int32_t AM263x_SDFM_BTR_0009(uint32_t base)
 {
-    //Configure Data Ack Event as trigger for data ready(DRINT) interrupt	
-    //Configure SDM type to 1, enable data ack interrupt, configure data ack as DRINT trigger. Check if DRINT is getting triggered on data ack.	
+    //Configure Data Ack Event as trigger for data ready(DRINT) interrupt
+    //Configure SDM type to 1, enable data ack interrupt, configure data ack as DRINT trigger. Check if DRINT is getting triggered on data ack.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SysCtl_configureType
     //SDFM_setDataReadyInterruptSource
@@ -2153,21 +2153,21 @@ int32_t AM263x_SDFM_BTR_0009(uint32_t base)
     if(error==0)
     {
         //DebugP_log("\nPass");
-        
+
         return 0;
     }
     else
     {
         //DebugP_log("\nFail");
-        
+
         return 1;
     }
 }
 
 int32_t AM263x_SDFM_BTR_0010(uint32_t base)
 {
-    //Configure Data Ack Event as trigger for SDINT interrupt	
-    //Configure SDM type to 0, enable data ack interrupt, configure data ack as DRINT trigger. Check if SDINT is getting triggered on data ack.	
+    //Configure Data Ack Event as trigger for SDINT interrupt
+    //Configure SDM type to 0, enable data ack interrupt, configure data ack as DRINT trigger. Check if SDINT is getting triggered on data ack.
     //Check SD modulator data-filter output values and check if it corresponds to analog input given to SD ADC.
     //"SysCtl_configureType
     //SDFM_setDataReadyInterruptSource
@@ -2183,13 +2183,13 @@ int32_t AM263x_SDFM_BTR_0010(uint32_t base)
     if(error==0)
     {
         //DebugP_log("\nPass");
-        
+
         return 0;
     }
     else
     {
         //DebugP_log("\nFail");
-        
+
         return 1;
     }
 }
@@ -2197,8 +2197,8 @@ int32_t AM263x_SDFM_BTR_0010(uint32_t base)
 
 int32_t AM263x_SDFM_ITR_0001(uint32_t base)
 {
-    //PWM sync sources	
-    //Test additional PWM sync sources. Sync sources are programmed in SDSYNCx.SYNCSEL	
+    //PWM sync sources
+    //Test additional PWM sync sources. Sync sources are programmed in SDSYNCx.SYNCSEL
     //Functional Pass/Fail
 
     //DebugP_log("\n\nSDFM[%d] AM263x_SDFM_ITR_0001", util_getsdfminstancefrombase(base));
@@ -2344,8 +2344,8 @@ int32_t AM263x_SDFM_ITR_0006(uint32_t base)
     {
         return 0;
     }
-    
-    
+
+
 
 }
 
@@ -2378,10 +2378,10 @@ int32_t AM263x_SDFM_ITR_0007(uint32_t base)
 
 int32_t AM263x_SDFM_TTR_0001(uint32_t base)
 {
-    //R5 to SDFM access latency	
-    //Measure latency of R5F reading 18 bytes of data from SDFM interface into TCM or OCRAM	
+    //R5 to SDFM access latency
+    //Measure latency of R5F reading 18 bytes of data from SDFM interface into TCM or OCRAM
     //<450ns
-    
+
     //DebugP_log("\n\nSDFM[%d] AM263x_SDFM_TTR_0001", util_getsdfminstancefrombase(base));
 
     return sdfm_latency(base);
@@ -2390,9 +2390,9 @@ int32_t AM263x_SDFM_TTR_0001(uint32_t base)
 int32_t util_sdfm_api_write_test(uint32_t base)
 {
     uint32_t errorcount=0;
-    
+
     util_deinit_sdfm(base);
-    
+
     return errorcount;
 }
 
@@ -2406,7 +2406,7 @@ int32_t test_sdfm_cases(uint8_t in)
 
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK0 ,0x01234567);
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK1 ,0xFEDCBA8);
-    
+
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_EPWM_CLKSYNC, 0xFFFFFFFF);
 
     for(sdfm_offset=0;sdfm_offset<=0; sdfm_offset=sdfm_offset+0x1000)
@@ -2415,7 +2415,7 @@ int32_t test_sdfm_cases(uint8_t in)
         base = CSL_CONTROLSS_SDFM0_U_BASE + sdfm_offset;
 
         failcount += util_sdfm_api_write_test(base);
-        
+
         switch(in)
         {
             case 1:

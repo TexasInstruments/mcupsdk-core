@@ -52,7 +52,7 @@ typedef struct
 
 } OSPI_PhyTuneWindowParams;
 
-OSPI_PhyTuneWindowParams gPhyTuneWindowParamsGTE133 = { 
+OSPI_PhyTuneWindowParams gPhyTuneWindowParamsGTE133 = {
     .txDllLowWindowStart  = 18,
     .txDllLowWindowEnd    = 24,
     .txDllHighWindowStart = 48,
@@ -65,17 +65,17 @@ OSPI_PhyTuneWindowParams gPhyTuneWindowParamsGTE133 = {
     .txDllMax             = 63,
 };
 
-OSPI_PhyTuneWindowParams gPhyTuneWindowParamsLT133  = { 
-    .txDllLowWindowStart  = 20, 
-    .txDllLowWindowEnd    = 30, 
-    .txDllHighWindowStart = 110, 
-    .txDllHighWindowEnd   = 55, 
-    .rxLowLimit           = 10, 
-    .rxHighLimit          = 80, 
-    .txLowLimit           = 110, 
+OSPI_PhyTuneWindowParams gPhyTuneWindowParamsLT133  = {
+    .txDllLowWindowStart  = 20,
+    .txDllLowWindowEnd    = 30,
+    .txDllHighWindowStart = 110,
+    .txDllHighWindowEnd   = 55,
+    .rxLowLimit           = 10,
+    .rxHighLimit          = 80,
+    .txLowLimit           = 110,
     .txHighLimit          = 30,
     .rxDllMax             = 127,
-    .txDllMax             = 127, 
+    .txDllMax             = 127,
 };
 
 OSPI_PhyTuneWindowParams *gPhyTuneWindowParams = &gPhyTuneWindowParamsGTE133;
@@ -264,12 +264,12 @@ void OSPI_phyResyncDLL(OSPI_Handle handle)
                    OSPI_FLASH_CFG_PHY_CONFIGURATION_REG_PHY_CONFIG_RESYNC_FLD,
                    0U);
 
-    /* Reset DLL in master mode */
+    /* Reset DLL in controller mode */
     CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
                    OSPI_FLASH_CFG_PHY_CONFIGURATION_REG_PHY_CONFIG_RESET_FLD,
                    0U);
 
-    /* Set Initial delay for the master DLL */
+    /* Set Initial delay for the controller DLL */
     CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_INITIAL_DELAY_FLD,
                    0x10U);
@@ -287,7 +287,7 @@ void OSPI_phyResyncDLL(OSPI_Handle handle)
     while (CSL_REG32_FEXT(&pReg->DLL_OBSERVABLE_LOWER_REG,
            OSPI_FLASH_CFG_DLL_OBSERVABLE_LOWER_REG_DLL_OBSERVABLE_LOWER_LOOPBACK_LOCK_FLD) == 0U);
 
-    /* Resync the Slave DLLs */
+    /* Resync the Peripheral DLLs */
     CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
                    OSPI_FLASH_CFG_PHY_CONFIGURATION_REG_PHY_CONFIG_RESYNC_FLD,
                    1U);
@@ -507,7 +507,7 @@ void OSPI_phyGetTuningData(uint32_t *tuningData, uint32_t *tuningDataSize)
 
   The grapher function blindly sweeps through all the tx and rx DLL values for rdDelays 0,1,2,3 and writes this
   data to the array passed into this function. This has to be a [4][128][128] array.
-  
+
   This data can be then saved by reading the SOC memory region and saving it as binary data. Python script can be
   written to process this to give the PHY scatter graph of the particular flash.
 
@@ -549,7 +549,7 @@ int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t ar
     /* keep phy pipeline disabled */
     OSPI_disablePhyPipeline(handle);
 
-    /* PHY DLL master operational mode */
+    /* PHY DLL controller operational mode */
 
     if(attrs->inputClkFreq < 133333333)
     {
@@ -578,7 +578,7 @@ int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t ar
                 searchPoint.txDLL = txDll;
 
                 OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
-                
+
                 status = OSPI_phyReadAttackVector(handle, flashOffset);
 
                 if(status == SystemP_SUCCESS)
@@ -1095,7 +1095,7 @@ int32_t OSPI_phyFindOTP2(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
     searchPoint.txDLL -= 1U;
     searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
     gapHigh = searchPoint;
-    
+
     /* If there's only one segment, put tuning point in the middle and adjust for temperature */
     if(bottomRight.rdDelay == topLeft.rdDelay)
     {
@@ -1186,7 +1186,7 @@ int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset)
     /* keep phy pipeline disabled */
     OSPI_disablePhyPipeline(handle);
 
-    /* PHY DLL master operational mode */
+    /* PHY DLL controller operational mode */
 
     if(attrs->inputClkFreq >= 133333333)
     {
@@ -1196,7 +1196,7 @@ int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset)
         gPhyTuneWindowParams = &gPhyTuneWindowParamsGTE133;
 
         /* Use the normal algorithm */
-        
+
         status = OSPI_phyFindOTP1(handle, flashOffset, &otp);
     }
     else
@@ -1208,7 +1208,7 @@ int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset)
         gPhyTuneWindowParams = &gPhyTuneWindowParamsLT133;
 
         /* Use the second algorithm */
-        
+
         status = OSPI_phyFindOTP2(handle, flashOffset, &otp);
     }
 

@@ -61,7 +61,7 @@
 #define LIN_PASS            (0xABCD)
 #define LIN_FAIL            (0xFFFF)
 
-#define I2C_SLAVE_ADDRESS   (0x20U)
+#define I2C_TARGET_ADDRESS   (0x20U)
 #define I2C_POLARITY_INV    (0x5U)
 
 #define APP_LIN_BASE_ADDR   (CONFIG_LIN1_BASE_ADDR)
@@ -112,7 +112,7 @@ void lin_external_main(void)
     I2C_Transaction_init(&i2cTransaction);
     i2cTransaction.writeBuf   = txBuffer;
     i2cTransaction.writeCount = 1;
-    i2cTransaction.slaveAddress = I2C_SLAVE_ADDRESS;
+    i2cTransaction.targetAddress = I2C_TARGET_ADDRESS;
     txBuffer[0] = I2C_POLARITY_INV;
     status = I2C_transfer(i2cHandle, &i2cTransaction);
     DebugP_assert(status == SystemP_SUCCESS);

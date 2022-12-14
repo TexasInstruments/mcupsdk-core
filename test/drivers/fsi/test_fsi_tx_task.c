@@ -387,8 +387,8 @@ static int32_t Fsi_appTxConfig(uint32_t txBaseAddr,  FSI_TxTestParams *txTestPar
 
     /* TX init and reset */
     status = FSI_performTxInitialization(txBaseAddr, txTestParams->prescaleVal);
-    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MASTER_CORE_RESET);
-    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MASTER_CORE_RESET);
+    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
+    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setTxSoftwareFrameSize(txBaseAddr, txTestParams->frameDataSize);

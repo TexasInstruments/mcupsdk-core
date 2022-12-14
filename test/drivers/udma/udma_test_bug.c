@@ -109,7 +109,7 @@ int32_t udmaTestBugTcPDK_4654(UdmaTestTaskObj *taskObj)
                 UdmaEventPrms_init(&eventPrms);
                 eventPrms.eventType         = UDMA_EVENT_TYPE_MASTER;
                 eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
-                eventPrms.masterEventHandle = NULL;
+                eventPrms.controllerEventHandle = NULL;
                 retVal = Udma_eventRegister(drvHandle, eventHandle, &eventPrms);
                 if(UDMA_SOK != retVal)
                 {

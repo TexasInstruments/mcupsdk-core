@@ -135,7 +135,7 @@ static void Drivers_udma`instNameCamelCase`BlkCopyOpen(void)
             cqEventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
             cqEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
             cqEventPrms.chHandle          = chHandle;
-            cqEventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+            cqEventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
             cqEventPrms.eventCb           = g`instNameCamelCase`BlkCopyCqEventCb[chCnt];
             retVal = Udma_eventRegister(drvHandle, cqEventHandle, &cqEventPrms);
             DebugP_assert(UDMA_SOK == retVal);

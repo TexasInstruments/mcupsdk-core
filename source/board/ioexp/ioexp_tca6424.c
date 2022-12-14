@@ -159,14 +159,14 @@ int32_t TCA6424_config(TCA6424_Config *config, uint32_t ioIndex, uint32_t mode)
         buffer[0] = TCA6424_REG_CONFIG_PORT_0 + port;
         i2cTransaction.writeBuf     = buffer;
         i2cTransaction.writeCount   = 1U;
-        i2cTransaction.slaveAddress = i2cAddress;
+        i2cTransaction.targetAddress = i2cAddress;
         status += I2C_transfer(config->i2cHandle, &i2cTransaction);
 
         /* Read config register value */
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.readBuf      = buffer;
         i2cTransaction.readCount    = 1;
-        i2cTransaction.slaveAddress = i2cAddress;
+        i2cTransaction.targetAddress = i2cAddress;
         status += I2C_transfer(config->i2cHandle, &i2cTransaction);
 
         /* Set output or input mode to particular IO pin - read/modify/write */
@@ -182,7 +182,7 @@ int32_t TCA6424_config(TCA6424_Config *config, uint32_t ioIndex, uint32_t mode)
         buffer[0] = TCA6424_REG_CONFIG_PORT_0 + port;
         i2cTransaction.writeBuf     = buffer;
         i2cTransaction.writeCount   = 2;
-        i2cTransaction.slaveAddress = i2cAddress;
+        i2cTransaction.targetAddress = i2cAddress;
         status += I2C_transfer(config->i2cHandle, &i2cTransaction);
 
         SemaphoreP_post(&config->lockObj);
@@ -225,14 +225,14 @@ int32_t TCA6424_setOutput(TCA6424_Config *config, uint32_t ioIndex, uint32_t sta
         buffer[0] = TCA6424_REG_OUTPUT_PORT_0 + port;
         i2cTransaction.writeBuf     = buffer;
         i2cTransaction.writeCount   = 1U;
-        i2cTransaction.slaveAddress = i2cAddress;
+        i2cTransaction.targetAddress = i2cAddress;
         status += I2C_transfer(config->i2cHandle, &i2cTransaction);
 
         /* Read config register value */
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.readBuf      = buffer;
         i2cTransaction.readCount    = 1;
-        i2cTransaction.slaveAddress = i2cAddress;
+        i2cTransaction.targetAddress = i2cAddress;
         status += I2C_transfer(config->i2cHandle, &i2cTransaction);
 
         /* Set output or input mode to particular IO pin - read/modify/write */
@@ -248,7 +248,7 @@ int32_t TCA6424_setOutput(TCA6424_Config *config, uint32_t ioIndex, uint32_t sta
         buffer[0] = TCA6424_REG_OUTPUT_PORT_0 + port;
         i2cTransaction.writeBuf     = buffer;
         i2cTransaction.writeCount   = 2;
-        i2cTransaction.slaveAddress = i2cAddress;
+        i2cTransaction.targetAddress = i2cAddress;
         status += I2C_transfer(config->i2cHandle, &i2cTransaction);
 
         SemaphoreP_post(&config->lockObj);

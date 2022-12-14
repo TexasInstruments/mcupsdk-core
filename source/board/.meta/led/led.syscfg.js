@@ -50,7 +50,7 @@ function getConfigurables() {
         {
             name: "i2cAddress",
             displayName: "I2C Address",
-            description: `I2C slave address of LED controller`,
+            description: `I2C target address of LED controller`,
             default: staticConfig[0].i2cAddress,
             hidden: true,
             displayFormat: "hex",

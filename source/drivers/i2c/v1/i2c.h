@@ -42,7 +42,7 @@
  *  \endcode
  *
  *  # Operation #
- *  The I2C driver operates as a master or a slave on a single-master I2C bus,
+ *  The I2C driver operates as a controller or a target on a single-controller I2C bus,
  *  in either I2C_MODE_BLOCKING or I2C_MODE_CALLBACK.
  *  In blocking mode, the task's execution is blocked during the I2C
  *  transaction. When the transfer has completed, code execution will resume.
@@ -76,7 +76,7 @@
  *  I2C_transfer(). The details of the I2C transaction is specified with a
  *  I2C_Transaction data structure. This structure allows for any of the three
  *  types of transactions: Write, Read, or Write/Read. Each transfer is
- *  performed atomically with the I2C master or slave peripheral.
+ *  performed atomically with the I2C controller or target peripheral.
  *
  *  \code
  *  I2C_Transaction i2cTransaction;
@@ -88,7 +88,7 @@
  *  i2cTransaction.readBuf = someReadBuffer;
  *  i2cTransaction.readCount = numOfBytesToRead;
  *
- *  i2cTransaction.slaveAddress = some7BitI2CSlaveAddress;
+ *  i2cTransaction.targetAddress = some7BitI2CTargetAddress;
  *
  *  ret = I2C_transfer(handle, &i2cTransaction);
  *  if (!ret) {
@@ -186,8 +186,8 @@ typedef struct I2C_HwAttrs_s {
     uint32_t            funcClk;
 /** enable Interrupt */
     bool                enableIntr;
-/** I2C own slave addresses */
-    uint32_t ownSlaveAddr;
+/** I2C own target addresses */
+    uint32_t ownTargetAddr;
 } I2C_HwAttrs;
 
 /**
@@ -195,13 +195,13 @@ typedef struct I2C_HwAttrs_s {
  *
  *  This structure defines the nature of the I2C transaction.
  *
- *  I2C master mode:
+ *  I2C controller mode:
  *  This structure specifies the buffer and buffer's size that is to be
- *  written to or read from the I2C slave peripheral.
+ *  written to or read from the I2C target peripheral.
  *
- *  I2C slave mode:
+ *  I2C target mode:
  *  This structure specifies the buffer and buffer's size that is to be
- *  read from or written to the I2C master. In restart condition,
+ *  read from or written to the I2C controller. In restart condition,
  *  readBuf/writeBuf and readCount/writeCount are used repeatedly for
  *  every start in one transfer. When each restart happens, driver will
  *  call back to application with the restart transfer status, and
@@ -214,32 +214,32 @@ typedef struct I2C_HwAttrs_s {
  */
 typedef struct I2C_Transaction_s {
 
-/** master mode: buffer containing data to be written to slave
- *  slave mode: buffer containing data to be written to master
+/** controller mode: buffer containing data to be written to target
+ *  target mode: buffer containing data to be written to controller
  */
     const void          *writeBuf;
 
-/** master mode: number of bytes to be written to the slave
- *  slave mode: number of bytes to be written to the master
+/** controller mode: number of bytes to be written to the target
+ *  target mode: number of bytes to be written to the controller
  */
     size_t              writeCount;
 
-/** master mode: buffer to which data from slave is to be read into
- *  slave mode: buffer to which data from master is to be read into
+/** controller mode: buffer to which data from target is to be read into
+ *  target mode: buffer to which data from controller is to be read into
  */
     void                *readBuf;
 
-/** master mode: number of bytes to be read from the slave
- *  slave mode: number of bytes to be read to the master
+/** controller mode: number of bytes to be read from the target
+ *  target mode: number of bytes to be read to the controller
  */
     size_t              readCount;
 
-/** master mode: input field from user to set the address of I2C slave
- *  slave mode: output field from driver to report the address of a
- *  slave channel when multi-slave channels are supported, if only one
+/** controller mode: input field from user to set the address of I2C target
+ *  target mode: output field from driver to report the address of a
+ *  target channel when multi-target channels are supported, if only one
  *  channel is supported, this field is ignored
  */
-    uint32_t            slaveAddress;
+    uint32_t            targetAddress;
 
 /** used for queuing in I2C_MODE_CALLBACK mode */
     void                *nextPtr;
@@ -250,10 +250,10 @@ typedef struct I2C_Transaction_s {
 /** Timeout value for i2c transaction */
     uint32_t            timeout;
 
-/** I2C master or slave mode */
-    bool                masterMode;
+/** I2C controller or target mode */
+    bool                controllerMode;
 
-/** Expand slave address: true: 10-bit address mode, false: 7-bit address mode */
+/** Expand target address: true: 10-bit address mode, false: 7-bit address mode */
     bool                expandSA;
 } I2C_Transaction;
 
@@ -353,7 +353,7 @@ typedef struct I2C_Config_s {
  *  defined function and pass in the I2C driver's handle, the pointer to the I2C
  *  transaction that just completed, and the return value of I2C_transfer.
  *
- *  In slave mode, when there is a restart condtion,the driver calls back
+ *  In target mode, when there is a restart condtion,the driver calls back
  *  to the application with received data and I2C_STS_RESTART transfer status,
  *  application needs to provide the restart transmit data in I2C_Transaction
  *  rsWrToMstBuf. Restart condition only works in callback mode.
@@ -418,11 +418,11 @@ int32_t     I2C_transfer(I2C_Handle handle,
  *  \brief Function to probe I2C
  *
  *  \param handle      [IN] handle to the I2C
- *  \param slaveAddr   [IN] address of the slave to probe
+ *  \param targetAddr   [IN] address of the target to probe
  *
  *  \return \ref I2C_StatusCode
  */
-int32_t     I2C_probe(I2C_Handle handle, uint32_t slaveAddr);
+int32_t     I2C_probe(I2C_Handle handle, uint32_t targetAddr);
 
 /**
  *  \brief Function to set the bus frequency

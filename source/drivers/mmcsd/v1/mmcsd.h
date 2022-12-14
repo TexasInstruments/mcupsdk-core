@@ -524,7 +524,7 @@ typedef struct
  *
  *  This structure defines the nature of the MMCSD transaction. This structure
  *  specifies the buffer and buffer's size that is to be written to or read from
- *  the MMC slave peripheral.
+ *  the MMC peripheral.
  */
 typedef struct
 {

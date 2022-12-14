@@ -45,7 +45,7 @@ void i2c_read_main(void *arg0)
 {
     uint16_t        sample;
     int32_t         status;
-    uint32_t        i2cReadSlaveAddr;
+    uint32_t        i2cReadTargetAddr;
     uint8_t         rxBuffer[I2C_READ_LEN];
     I2C_Handle      i2cHandle;
     I2C_Transaction i2cTransaction;
@@ -53,7 +53,7 @@ void i2c_read_main(void *arg0)
     Drivers_open();
     Board_driversOpen();
 
-    i2cReadSlaveAddr     = Board_i2cGetEepromDeviceAddr();
+    i2cReadTargetAddr     = Board_i2cGetEepromDeviceAddr();
     i2cHandle = gI2cHandle[CONFIG_I2C0];
 
     DebugP_log("[I2C] Read data ... !!!\r\n");
@@ -64,7 +64,7 @@ void i2c_read_main(void *arg0)
     /* Override with required transaction parameters */
     i2cTransaction.readBuf      = rxBuffer;
     i2cTransaction.readCount    = I2C_READ_LEN;
-    i2cTransaction.slaveAddress = i2cReadSlaveAddr;
+    i2cTransaction.targetAddress = i2cReadTargetAddr;
 
     /* Read 20 samples and log them */
     for(sample = 0; sample < 20; sample++)

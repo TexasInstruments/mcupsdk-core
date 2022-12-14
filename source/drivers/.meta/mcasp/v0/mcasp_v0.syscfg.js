@@ -171,7 +171,7 @@ let mcasp_module = {
                             ui.txAclkSource.hidden = false;
                             ui.txHclkSource.hidden = false;
                             ui.afsx.hidden = false;
-                            ui.masterClkx.hidden = false;
+                            ui.controllerClkx.hidden = false;
                             ui.txCallbackFxn.hidden = false;
                             ui.txAfifoEnable.hidden = false;
                             ui.txAfifoNumEvt.hidden = false;
@@ -196,7 +196,7 @@ let mcasp_module = {
                             ui.txAclkSource.hidden = true;
                             ui.txHclkSource.hidden = true;
                             ui.afsx.hidden = true;
-                            ui.masterClkx.hidden = true;
+                            ui.controllerClkx.hidden = true;
                             ui.txCallbackFxn.hidden = true;
                             ui.txAfifoEnable.hidden = true;
                             ui.txAfifoNumEvt.hidden = true;
@@ -443,7 +443,7 @@ let mcasp_module = {
                             ],
                         },
                         {
-                            name: "masterClkx",
+                            name: "controllerClkx",
                             displayName: "Transmit Master Clock Rate",
                             default: 512,
                             displayFormat: "dec",
@@ -495,7 +495,7 @@ let mcasp_module = {
                             ui.rxAclkSource.hidden = false;
                             ui.rxHclkSource.hidden = false;
                             ui.afsr.hidden = false;
-                            ui.masterClkr.hidden = false;
+                            ui.controllerClkr.hidden = false;
                             ui.rxCallbackFxn.hidden = false;
                             ui.rxAfifoEnable.hidden = false;
                             ui.rxAfifoNumEvt.hidden = false;
@@ -520,7 +520,7 @@ let mcasp_module = {
                             ui.rxAclkSource.hidden = true;
                             ui.rxHclkSource.hidden = true;
                             ui.afsr.hidden = true;
-                            ui.masterClkr.hidden = true;
+                            ui.controllerClkr.hidden = true;
                             ui.rxCallbackFxn.hidden = true;
                             ui.rxAfifoEnable.hidden = true;
                             ui.rxAfifoNumEvt.hidden = true;
@@ -768,7 +768,7 @@ let mcasp_module = {
                                 ],
                             },
                             {
-                                name: "masterClkr",
+                                name: "controllerClkr",
                                 displayName: "Receive Master Clock Rate",
                                 default: 512,
                                 displayFormat: "dec",
@@ -825,9 +825,9 @@ function addModuleInstances(inst) {
  *  ======== validate ========
  */
 function validate(inst, report) {
-    if (inst.NumTxSlots * inst.TxSlotSize > inst.masterClkx)
+    if (inst.NumTxSlots * inst.TxSlotSize > inst.controllerClkx)
     {
-        report.logError(`masterClkx not supported. Master Clk Multiplier should greater than Slot width * num slots`, inst,  "masterClkx");
+        report.logError(`controllerClkx not supported. Master Clk Multiplier should greater than Slot width * num slots`, inst,  "controllerClkx");
     }
     if(inst.clkSyncMode == "SYNC")
     {
@@ -994,9 +994,9 @@ function validatePinmux(inst, report) {
     }
 
     let aclkr_ext = inst.NumRxSlots * inst.RxSlotSize * inst.fsr * 1000;
-    let ahclkr_ext = inst.masterClkr * inst.fsr * 1000;
+    let ahclkr_ext = inst.controllerClkr * inst.fsr * 1000;
     let aclkx_ext = inst.NumTxSlots * inst.TxSlotSize * inst.fsx * 1000;
-    let ahclkx_ext = inst.masterClkx * inst.fsx * 1000;
+    let ahclkx_ext = inst.controllerClkx * inst.fsx * 1000;
     let ahclkr = 0, ahclkx = 0, aclkr = 0, aclkx = 0;
 
     if (inst.rxHclkSource == 0)
@@ -1008,7 +1008,7 @@ function validatePinmux(inst, report) {
     {
         if ((ahclkr_ext > instConfig.inputClkFreq))
         {
-            report.logError(`AHCLKR outside scope`, inst,  "masterClkr");
+            report.logError(`AHCLKR outside scope`, inst,  "controllerClkr");
         }
         else
         {
@@ -1030,7 +1030,7 @@ function validatePinmux(inst, report) {
 
     if ((ahclkr % aclkr) != 0)
     {
-        report.logError(`AHCLKR is not multiple of ACLKR`, inst,  "masterClkr");
+        report.logError(`AHCLKR is not multiple of ACLKR`, inst,  "controllerClkr");
     }
 
     let afsr_int = aclkr / (inst.NumRxSlots * inst.RxSlotSize * 1000);
@@ -1048,7 +1048,7 @@ function validatePinmux(inst, report) {
     {
         if ((ahclkx_ext > instConfig.inputClkFreq))
         {
-            report.logError(`AHCLKX outside scope`, inst,  "masterClkx");
+            report.logError(`AHCLKX outside scope`, inst,  "controllerClkx");
         }
         else
         {
@@ -1070,7 +1070,7 @@ function validatePinmux(inst, report) {
 
     if ((ahclkx % aclkx) != 0)
     {
-        report.logError(`AHCLKX is not multiple of ACLKX`, inst,  "masterClkx");
+        report.logError(`AHCLKX is not multiple of ACLKX`, inst,  "controllerClkx");
     }
 
     let afsx_int = aclkx / (inst.NumTxSlots * inst.TxSlotSize * 1000);

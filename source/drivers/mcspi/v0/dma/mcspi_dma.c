@@ -150,9 +150,9 @@ int32_t MCSPI_dmaTransfer(MCSPI_Object *obj,
 	{
 		MCSPI_DmaConfig *dmaConfig = (MCSPI_DmaConfig *)dmaHandle;
 
-		if((dmaConfig->fxns) && (dmaConfig->fxns->dmaTransferMasterFxn))
+		if((dmaConfig->fxns) && (dmaConfig->fxns->dmaTransferControllerFxn))
 		{
-			status = dmaConfig->fxns->dmaTransferMasterFxn(obj, chObj, attrs, transaction);
+			status = dmaConfig->fxns->dmaTransferControllerFxn(obj, chObj, attrs, transaction);
 		}
 	}
 	else

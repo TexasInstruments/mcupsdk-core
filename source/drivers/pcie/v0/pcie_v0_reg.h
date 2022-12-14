@@ -127,9 +127,9 @@ typedef struct pcieCmdStatusReg_s {
     /**
      * [rw] Posted Write Enable
      *
-     * Default is 0 with all internal bus master writes defaulting to non-posted.
+     * Default is 0 with all internal bus controller writes defaulting to non-posted.
      *
-     * 1 = Enable the internal bus master to use posted write commands.
+     * 1 = Enable the internal bus controller to use posted write commands.
      * Field size: 1 bit
      */
     uint8_t postedWrEn;
@@ -435,20 +435,20 @@ typedef struct pciePriorityReg_s {
     /**  [ro] Raw image of register on read; actual value on write */
     uint32_t raw;
     /**
-     * [rw] Master PRIV value on master transactions
+     * [rw] Controller PRIV value on controller transactions
      *
      * Field size: 1 bit
      */
     uint8_t mstPriv;
     /**
-     * [rw] Master PRIVID value on master transactions
+     * [rw] Controller PRIVID value on controller transactions
      *
      * Field size: 4 bits
      */
     uint8_t mstPrivID;
     /**
      * [rw] Priority level for each inbound transaction on the
-     * internal master port
+     * internal controller port
      *
      * Field size: 3 bits
      */
@@ -1265,7 +1265,7 @@ typedef struct pcieSerdesCfg0Reg_s {
      */
     uint8_t txLoopback;
     /**
-     * [rw] Master mode for synchronization.
+     * [rw] Controller mode for synchronization.
      *
      * Field size: 1 bit
      */
@@ -1339,7 +1339,7 @@ typedef struct pcieSerdesCfg1Reg_s {
      */
     uint8_t txLoopback;
     /**
-     * [rw] Master mode for synchronization.
+     * [rw] Controller mode for synchronization.
      *
      * Field size: 1 bit
      */
@@ -1589,7 +1589,7 @@ typedef struct pcieStatusCmdReg_s {
      */
     uint8_t specCycleEn;
     /**
-     * [rw] enables mastership of the bus
+     * [rw] enables control of the bus
      *
      * Field size: 1 bit
      */
@@ -2135,7 +2135,7 @@ typedef struct pcieType1SecStatReg_s {
      */
     uint8_t rxSysError;
     /**
-     * [rw] Received Master Abort.
+     * [rw] Received Controller Abort.
      *
      * Read 1 if received a completion with unsupported request completion status.
      * Write 1 to clear; write 0 has no effect.
@@ -2168,7 +2168,7 @@ typedef struct pcieType1SecStatReg_s {
      */
     uint8_t devselTiming;
     /**
-     * [rw] Master Data Parity Error.
+     * [rw] Controller Data Parity Error.
      *
      * Read 1 if the parity error enable bit
      * @ref pcieType1BridgeIntReg_s::pErrRespEn is set and either the condition
@@ -2439,7 +2439,7 @@ typedef struct pcieType1BridgeIntReg_s {
      */
     uint8_t secBusRst;
     /**
-     * [ro] Master Abort Mode.
+     * [ro] Controller Abort Mode.
      *
      * Not applicable to PCI Express. Hardwired to 0.
      *
@@ -5103,7 +5103,7 @@ typedef struct pcieLaneSkewReg_s {
      * 0111b: 8 lanes
      * 1111b: 16 lanes
      * The number of lanes to be used when in Loopback
-     * Master The number of lanes programmed must be equal to or less
+     * Controller The number of lanes programmed must be equal to or less
      * than the valid number of lanes set in LINK_CAPABLE field You must
      * configure this field before initiating Loopback by writing in the
      * LOOPBACK_ENABLE field The controller will transition from
@@ -6312,7 +6312,7 @@ typedef struct  pciePlconfDbiRoWrEnReg_s {
 } Pcie_PlconfDbiRoWrEnReg;
 
 /**
- * \brief Specification of the AXI Slave Error Response Register (Sticky)
+ * \brief Specification of the AXI Peripheral Error Response Register (Sticky)
  *
  * This register may be used for both endpoint and root complex modes.
  */
@@ -6320,33 +6320,33 @@ typedef struct  pciePlconfAxiSlvErrRespReg_s {
     /** [ro] Raw image of register on read; actual value on write */
     uint32_t raw;
     /**
-     * [rw] Global Slave Error Response Mapping
+     * [rw] Global Peripheral Error Response Mapping
      *
      * Field size: 1 bit
      */
-    uint8_t slaveErrMap;
+    uint8_t peripheralErrMap;
     /**
-     * [rw] DIF Slave Error Response Mapping
+     * [rw] DIF Peripheral Error Response Mapping
      *
      * Field size: 1 bit
      */
     uint8_t dbiErrMap;
     /**
-     * [rw] Vendor ID Non-existent Slave Error Response Mapping
+     * [rw] Vendor ID Non-existent Peripheral Error Response Mapping
      *
      * Field size: 1 bit
      */
     uint8_t noVidErrMap;
     /**
-     * [rw] Graceful Reset and Link Timeout Slave Error Response Mapping
+     * [rw] Graceful Reset and Link Timeout Peripheral Error Response Mapping
      *
      * Field size: 1 bit
      */
     uint8_t resetTimeoutErrMap;
     /**
-     * [rw] CRS Slave Error Response Mapping
+     * [rw] CRS Peripheral Error Response Mapping
      *
-     * CRS Slave Error Response Mapping Determines the AXI slave
+     * CRS Peripheral Error Response Mapping Determines the AXI peripheral
      * response for CRS completions AHB: - always returns OKAY AXI: -
      * 00: OKAY
      * 01: OKAY with all FFFF_FFFF data for all CRS completions
@@ -6354,7 +6354,7 @@ typedef struct  pciePlconfAxiSlvErrRespReg_s {
      *     read requests, OKAY with FFFF_FFFF data for all other CRS
      *     completions
      * 11: SLVERR/DECERR [the AXI_ERROR_RESPONSE_MAP field
-     *     determines the PCIe-to-AXI Slave error response mapping]
+     *     determines the PCIe-to-AXI Peripheral error response mapping]
      *
      * This register field is sticky
      *
@@ -6362,11 +6362,11 @@ typedef struct  pciePlconfAxiSlvErrRespReg_s {
      */
     uint8_t errorResponseCrs;
     /**
-     * [rw] AXI Slave Response Error Map
+     * [rw] AXI Peripheral Response Error Map
      *
-     * AXI Slave Response Error Map Allows you to selectively map the
+     * AXI Peripheral Response Error Map Allows you to selectively map the
      * errors received from the PCIe completion [for non-posted requests]
-     * to the AXI slave responses, slv_rresp or slv_bresp The
+     * to the AXI peripheral responses, slv_rresp or slv_bresp The
      * recommended setting is SLVERR CRS is always mapped to OKAY -
      * [bit 0] 0: UR [unsupported request] -> DECERR
      *         1: UR [unsupported request] -> SLVERR
@@ -6381,9 +6381,9 @@ typedef struct  pciePlconfAxiSlvErrRespReg_s {
      * The AXI bridge internally drops
      * [processes internally but not passed to your application] a
      * completion that has been marked by the Rx filter as UC or MLF, and
-     * does not pass its status directly down to the slave interface It waits
-     * for a timeout and then signals "Completion Timeout" to the slave
-     * interface The controller sets the AXI slave read databus to 0xFFFF
+     * does not pass its status directly down to the peripheral interface It waits
+     * for a timeout and then signals "Completion Timeout" to the peripheral
+     * interface The controller sets the AXI peripheral read databus to 0xFFFF
      * for all error responses
      *
      * Note: This register field is sticky
@@ -6394,7 +6394,7 @@ typedef struct  pciePlconfAxiSlvErrRespReg_s {
 } Pcie_PlconfAxiSlvErrRespReg;
 
 /**
- * \brief Specification of the Link Down AXI Slave Timeout Register (Sticky)
+ * \brief Specification of the Link Down AXI Peripheral Timeout Register (Sticky)
  *
  * This register may be used for both endpoint and root complex modes.
  */
@@ -6888,9 +6888,9 @@ typedef struct pcieTiConfSysConfigReg_s {
     /** [ro] Raw image of register on read; actual value on write */
     uint32_t raw;
     /**
-     * [rw] PM mode of local target (slave)
+     * [rw] PM mode of local target (peripheral)
      *
-     * PM mode of local target (slave); Target shall be capable
+     * PM mode of local target (peripheral); Target shall be capable
      * RW 0x2 of handling read/write transaction as long as it is
      * out of IDLE state.
      *
@@ -6920,7 +6920,7 @@ typedef struct pcieTiConfSysConfigReg_s {
     /**
      * [rw] number of fast training sequences
      *
-     * PM mode of local initiator (master); Initiator may generate read/write
+     * PM mode of local initiator (controller); Initiator may generate read/write
      * transaction as long as it is out of STANDBY state.
      *
      * <table>
@@ -6946,7 +6946,7 @@ typedef struct pcieTiConfSysConfigReg_s {
      * [rw] no-snoop to coherent mapping
      *
      * Allows the no-snoop (NS) attribute of inbound PCIe TLPs to be passed
-     * to SoC system bus (AXI) master as a 'coherent' inband flag.
+     * to SoC system bus (AXI) controller as a 'coherent' inband flag.
      *
      * <table>
      * <tr><th>Value</th><th>Mode</th><th>description</th></tr>
@@ -7006,7 +7006,7 @@ typedef struct pcieTiConfIrqMain_s {
     uint8_t pmPme;       /** PM Power Management Event message received IRQ */
     uint8_t linkReqRst;  /** Link Request Reset IRQ */
     uint8_t linkUpEvt;   /** Link-up state change IRQ */
-    uint8_t cfgBmeEvt;   /** CFG "Bus Master Enable" change IRQ */
+    uint8_t cfgBmeEvt;   /** CFG "Bus Controller Enable" change IRQ */
     uint8_t cfgMseEvt;   /** CFG "Memory Space Enable" change IRQ */
 } Pcie_TiConfIrqMain;
 

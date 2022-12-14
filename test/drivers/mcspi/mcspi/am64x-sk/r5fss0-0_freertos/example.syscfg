@@ -36,7 +36,7 @@ mcspi1.mcspiChannel[0].CSn.$assign = "ball.D12";
 mcspi2.$name                          = "CONFIG_MCSPI1";
 mcspi2.inputSelect                    = "0";
 mcspi2.advanced                       = true;
-mcspi2.mode                           = "MULTI_MASTER";
+mcspi2.mode                           = "MULTI_CONTROLLER";
 mcspi2.mcspiChannel.create(4);
 mcspi2.mcspiChannel[0].$name          = "CONFIG_MCSPI_CH1";
 mcspi2.mcspiChannel[0].CSn.$assign    = "ball.D14";
@@ -50,7 +50,7 @@ mcspi2.mcspiChannel[3].$name          = "CONFIG_MCSPI_CH11";
 
 mcspi3.$name                 = "CONFIG_MCSPI3";
 mcspi3.inputSelect           = "0";
-mcspi3.mode                  = "MULTI_MASTER";
+mcspi3.mode                  = "MULTI_CONTROLLER";
 mcspi3.intrEnable            = "DMA";
 mcspi3.SPI.$assign           = "SPI3";
 mcspi3.mcspiChannel.create(3);

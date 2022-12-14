@@ -415,8 +415,8 @@ typedef struct
 // Values that can be passed to SDFM_clearInterruptFlag flags parameter
 //
 //*****************************************************************************
-//! Master interrupt flag
-#define SDFM_MASTER_INTERRUPT_FLAG    (0x80000000U)
+//! Main interrupt flag
+#define SDFM_MAIN_INTERRUPT_FLAG    (0x80000000U)
 //! Filter 1 high -level threshold flag
 #define SDFM_FILTER_1_HIGH_THRESHOLD_FLAG    (0x1U)
 //! Filter 1 low -level threshold flag
@@ -1465,7 +1465,7 @@ SDFM_getIsrStatus(uint32_t base)
 //!
 //! This function clears the specified pending interrupt flag.
 //! Valid values are
-//! SDFM_MASTER_INTERRUPT_FLAG,SDFM_FILTER_1_NEW_DATA_FLAG,
+//! SDFM_MAIN_INTERRUPT_FLAG,SDFM_FILTER_1_NEW_DATA_FLAG,
 //! SDFM_FILTER_2_NEW_DATA_FLAG,SDFM_FILTER_3_NEW_DATA_FLAG,
 //! SDFM_FILTER_4_NEW_DATA_FLAG,SDFM_FILTER_1_MOD_FAILED_FLAG,
 //! SDFM_FILTER_2_MOD_FAILED_FLAG,SDFM_FILTER_3_MOD_FAILED_FLAG,
@@ -1496,17 +1496,17 @@ SDFM_clearInterruptFlag(uint32_t base, uint32_t flag)
 
 //*****************************************************************************
 //
-//! Enable master interrupt.
+//! Enable main interrupt.
 //!
 //! \param base is the base address of the SDFM module
 //!
-//! This function enables the master SDFM interrupt.
+//! This function enables the main SDFM interrupt.
 //!
 //! \return None
 //!
 //*****************************************************************************
 static inline void
-SDFM_enableMasterInterrupt(uint32_t base)
+SDFM_enableMainInterrupt(uint32_t base)
 {
     //
     // Set SDCTL MIE bit
@@ -1517,17 +1517,17 @@ SDFM_enableMasterInterrupt(uint32_t base)
 
 //*****************************************************************************
 //
-//! Disable master interrupt.
+//! Disable main interrupt.
 //!
 //! \param base is the base address of the SDFM module
 //!
-//! This function disables the master SDFM interrupt.
+//! This function disables the main SDFM interrupt.
 //!
 //! \return None
 //!
 //*****************************************************************************
 static inline void
-SDFM_disableMasterInterrupt(uint32_t base)
+SDFM_disableMainInterrupt(uint32_t base)
 {
     //
     // Clear SDCTL MIE bit
@@ -1538,17 +1538,17 @@ SDFM_disableMasterInterrupt(uint32_t base)
 
 //*****************************************************************************
 //
-//! Enable master filter.
+//! Enable main filter.
 //!
 //! \param base is the base address of the SDFM module
 //!
-//! This function enables master filter.
+//! This function enables main filter.
 //!
 //! \return None
 //!
 //*****************************************************************************
 static inline void
-SDFM_enableMasterFilter(uint32_t base)
+SDFM_enableMainFilter(uint32_t base)
 {
     //
     // Set SDMFILEN MFE bit
@@ -1559,17 +1559,17 @@ SDFM_enableMasterFilter(uint32_t base)
 
 //*****************************************************************************
 //
-//! Disable master filter.
+//! Disable main filter.
 //!
 //! \param base is the base address of the SDFM module
 //!
-//! This function disables master filter.
+//! This function disables main filter.
 //!
 //! \return None
 //!
 //*****************************************************************************
 static inline void
-SDFM_disableMasterFilter(uint32_t base)
+SDFM_disableMainFilter(uint32_t base)
 {
     //
     // Clear SDMFILEN MFE bit

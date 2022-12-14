@@ -94,7 +94,7 @@ static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
 
     /* Enable Transceiver */
     I2C_Transaction_init(&i2cTransaction);
-    i2cTransaction.slaveAddress = slaveAddr;
+    i2cTransaction.targetAddress = slaveAddr;
     i2cTransaction.writeBuf = (uint8_t *)&writeData[0];
     i2cTransaction.writeCount = numWriteBytes;
     i2cTransaction.readBuf = (uint8_t *)&readData[0];

@@ -170,10 +170,10 @@ static void initSDFM(uint32_t sdfmInstance)
            SDFM_SET_OSR(256)), (SDFM_DATA_FORMAT_16_BIT | SDFM_FILTER_ENABLE |
            SDFM_SHIFT_VALUE(0x000A)));
 
-    /* Enable Master filter bit: Unless this bit is set none of the filter modules
-       can be enabled. All the filter modules are synchronized when master filter
+    /* Enable Main filter bit: Unless this bit is set none of the filter modules
+       can be enabled. All the filter modules are synchronized when main filter
        bit is enabled after individual filter modules are enabled. */
-    SDFM_enableMasterFilter(sdfmInstance);
+    SDFM_enableMainFilter(sdfmInstance);
 
     /* Enable data filter to be reset on EPWM sync */
     SDFM_enableExternalReset(sdfmInstance, SDFM_FILTER_1);
@@ -227,7 +227,7 @@ static void initSDFM(uint32_t sdfmInstance)
             (SDFM_CEVT2_INTERRUPT |
              SDFM_CEVT1_INTERRUPT));
 
-    /* Enable master interrupt so that any of the filter interrupts can trigger
+    /* Enable main interrupt so that any of the filter interrupts can trigger
        by SDFM interrupt to CPU */
-    SDFM_enableMasterInterrupt(sdfmInstance);
+    SDFM_enableMainInterrupt(sdfmInstance);
 }

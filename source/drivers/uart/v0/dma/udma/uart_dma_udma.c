@@ -139,7 +139,7 @@ static int32_t UART_udmaInitRxCh(UART_Handle uartHandle, UartDma_UdmaArgs *udmaA
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     eventPrms.chHandle          = rxChHandle;
-    eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+    eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
     eventPrms.eventCb           = &UART_udmaIsrRx;
     eventPrms.appData           = (void *) uartHandle;
     retVal = Udma_eventRegister(drvHandle, eventHandle, &eventPrms);
@@ -192,7 +192,7 @@ static int32_t UART_udmaInitTxCh(UART_Handle uartHandle, UartDma_UdmaArgs *udmaA
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     eventPrms.chHandle          = txChHandle;
-    eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+    eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
     eventPrms.eventCb           = &UART_udmaIsrTx;
     eventPrms.appData           = (void *) uartHandle;
     retVal = Udma_eventRegister(drvHandle, eventHandle, &eventPrms);

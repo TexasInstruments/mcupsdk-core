@@ -202,7 +202,7 @@ void *fsi_loopback_dma_main(void *args)
     edmaStatus = EDMA_allocTcc(gEdmaHandle[0], &tccAlloc0);
     DebugP_assert(edmaStatus == SystemP_SUCCESS);
 
-    /* In case of Frame Tag and User Data, bCnt is 1 as its a 16 bit field */   
+    /* In case of Frame Tag and User Data, bCnt is 1 as its a 16 bit field */
     Fsi_appDmaConfigure(gEdmaHandle[0], &dmaCh1, (void *)&gTxBufTagAndUserData,
                         (void *)(CONFIG_FSI_TX0_BASE_ADDR + CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA),
                         NULL, &param1, regionId, sizeof(uint16_t), 1U, 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_MANUAL);
@@ -241,7 +241,7 @@ void *fsi_loopback_dma_main(void *args)
     edmaStatus = EDMA_allocTcc(gEdmaHandle[0], &tccAlloc1);
     DebugP_assert(edmaStatus == SystemP_SUCCESS);
 
-    /* In case of Frame Tag and User Data, bCnt is 1 as its a 16 bit field */   
+    /* In case of Frame Tag and User Data, bCnt is 1 as its a 16 bit field */
     Fsi_appDmaConfigure(gEdmaHandle[0], &dmaCh3, (void *)(CONFIG_FSI_RX0_BASE_ADDR + CSL_FSI_RX_CFG_RX_FRAME_TAG_UDATA),
                        (void *)&gRxBufTagAndUserData, &tccAlloc1, &param3, regionId, sizeof(uint16_t), 1U, FSI_APP_LOOP_COUNT,
                         0U, 0U, 0U, sizeof(uint16_t), EDMA_TRIG_MODE_EVENT);
@@ -351,8 +351,8 @@ static int32_t Fsi_appDmaTxConfig(uint32_t txBaseAddr)
 
     /* TX init and reset */
     status = FSI_performTxInitialization(txBaseAddr, FSI_APP_TX_PRESCALER_VAL);
-    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MASTER_CORE_RESET);
-    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MASTER_CORE_RESET);
+    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
+    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setTxSoftwareFrameSize(txBaseAddr, FSI_APP_FRAME_DATA_WORD_COUNT);
@@ -368,8 +368,8 @@ static int32_t Fsi_appDmaRxConfig(uint32_t rxBaseAddr)
 
     /* RX init and reset */
     status  = FSI_performRxInitialization(rxBaseAddr);
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
+    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
+    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setRxSoftwareFrameSize(rxBaseAddr, FSI_APP_FRAME_DATA_WORD_COUNT);

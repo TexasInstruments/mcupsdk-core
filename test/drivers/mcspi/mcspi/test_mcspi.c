@@ -1952,7 +1952,7 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
     openParams->transferMode           = MCSPI_TRANSFER_MODE_BLOCKING;
     openParams->transferTimeout        = SystemP_WAIT_FOREVER;
     openParams->transferCallbackFxn    = NULL;
-    openParams->msMode                 = MCSPI_MS_MODE_MASTER;
+    openParams->msMode                 = MCSPI_MS_MODE_CONTROLLER;
     openParams->mcspiDmaIndex          = -1;
 
     /* Default Channel Config Parameters */

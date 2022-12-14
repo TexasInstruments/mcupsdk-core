@@ -132,7 +132,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am64x-sk/system_freertos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -295,7 +295,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am64x-sk_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am64x-sk_system_freertos
-BUILD_COMBO_EXAMPLE_ALL += test_mcspi_master_slave_am64x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += test_mcspi_controller_peripheral_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos
@@ -566,8 +566,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_ipc_rpmsg_am64x-sk_system_freertos:
 	$(MAKE) -C drivers/ipc_rpmsg/am64x-sk/system_freertos -f makefile all
 
- test_mcspi_master_slave_am64x-evm_system_freertos:
-	$(MAKE) -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos -f makefile all
+ test_mcspi_controller_peripheral_am64x-evm_system_freertos:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am64x-evm/system_freertos -f makefile all
 
  test_soc_r5f_am64x-evm_system_freertos:
 	$(MAKE) -C drivers/soc/soc_r5f/am64x-evm/system_freertos -f makefile all
@@ -668,7 +668,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am64x-evm_system_freertos_norto
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am64x-sk_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am64x-sk_system_freertos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_master_slave_am64x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_controller_peripheral_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean
@@ -939,8 +939,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_ipc_rpmsg_am64x-sk_system_freertos_clean:
 	$(MAKE) -C drivers/ipc_rpmsg/am64x-sk/system_freertos -f makefile clean
 
- test_mcspi_master_slave_am64x-evm_system_freertos_clean:
-	$(MAKE) -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos -f makefile clean
+ test_mcspi_controller_peripheral_am64x-evm_system_freertos_clean:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am64x-evm/system_freertos -f makefile clean
 
  test_soc_r5f_am64x-evm_system_freertos_clean:
 	$(MAKE) -C drivers/soc/soc_r5f/am64x-evm/system_freertos -f makefile clean
@@ -1041,7 +1041,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am64x-evm_system_freertos_norto
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am64x-sk_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am64x-sk_system_freertos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_master_slave_am64x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_controller_peripheral_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub
@@ -1312,8 +1312,8 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_ipc_rpmsg_am64x-sk_system_freertos_scrub:
 	$(MAKE) -C drivers/ipc_rpmsg/am64x-sk/system_freertos -f makefile scrub
 
- test_mcspi_master_slave_am64x-evm_system_freertos_scrub:
-	$(MAKE) -C drivers/mcspi/mcspi_master_slave/am64x-evm/system_freertos -f makefile scrub
+ test_mcspi_controller_peripheral_am64x-evm_system_freertos_scrub:
+	$(MAKE) -C drivers/mcspi/mcspi_controller_peripheral/am64x-evm/system_freertos -f makefile scrub
 
  test_soc_r5f_am64x-evm_system_freertos_scrub:
 	$(MAKE) -C drivers/soc/soc_r5f/am64x-evm/system_freertos -f makefile scrub

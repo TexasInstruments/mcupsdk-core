@@ -53,7 +53,7 @@ static uint8_t BoardDiag_mcanReadPmicReg(MIBSPI_Handle handle, uint8_t regOffset
     spiTransaction.count = APP_MSGSIZE-1;
     spiTransaction.txBuf = txBuffer;
     spiTransaction.rxBuf = rxBuffer;
-    spiTransaction.slaveIndex = 0;
+    spiTransaction.peripheralIndex = 0;
     txBuffer[0] = regOffset;
     // Indicate PMIC a read sequence */
     txBuffer[1] = 0x10;
@@ -76,7 +76,7 @@ static void BoardDiag_mcanWritePmicReg(MIBSPI_Handle handle, uint8_t regAddr, ui
     spiTransaction.count = APP_MSGSIZE-1;
     spiTransaction.txBuf = txBuffer;
     spiTransaction.rxBuf = NULL;
-    spiTransaction.slaveIndex = 0;
+    spiTransaction.peripheralIndex = 0;
     txBuffer[0] = regAddr;
     /* Indicate PMIC a write sequence */
     txBuffer[1] = 0;

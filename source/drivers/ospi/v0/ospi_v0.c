@@ -77,8 +77,8 @@
 #define CSL_OSPI_CHIP_SELECT(x)   ((~((1U) << (x))) & 0xFU)
 
 /**
- * \brief   OSPI controller master mode baud rate divisor.
- *          OSPI baud rate = master_ref_clk/BD, where BD is:
+ * \brief   OSPI controller controller mode baud rate divisor.
+ *          OSPI baud rate = controller_ref_clk/BD, where BD is:
  *          0000 = /2
  *          0001 = /4
  *          0010 = /6
@@ -93,10 +93,10 @@
  */
 #define CSL_OSPI_DEV_DELAY_ARRAY_SIZE  (4U)
 
-/** \brief   OSPI device delays in cycles of OSPI master ref clock */
+/** \brief   OSPI device delays in cycles of OSPI controller ref clock */
 #define CSL_OSPI_DEV_DELAY_CSSOT     (46U)  /* Chip Select Start of Transfer Delay */
 #define CSL_OSPI_DEV_DELAY_CSEOT     (46U)  /* Chip Select End of Transfer Delay */
-#define CSL_OSPI_DEV_DELAY_CSDADS    (192U) /* Chip Select De-Assert Different Slaves Delay */
+#define CSL_OSPI_DEV_DELAY_CSDADS    (192U) /* Chip Select De-Assert Different Peripheral Delay */
 #define CSL_OSPI_DEV_DELAY_CSDA      (192U) /* Chip Select De-Assert Delay */
 
 /** \brief  SRAM partition configuration definitions */

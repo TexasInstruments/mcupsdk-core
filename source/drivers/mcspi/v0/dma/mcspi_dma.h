@@ -116,7 +116,7 @@ typedef int32_t (*MCSPI_dmaChInitFxn)(MCSPI_Handle handle,
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-typedef int32_t (*MCSPI_dmaTransferMasterFxn)(MCSPI_Object *obj,
+typedef int32_t (*MCSPI_dmaTransferControllerFxn)(MCSPI_Object *obj,
                                 MCSPI_ChObject *chObj,
                                 const MCSPI_Attrs *attrs,
                                 MCSPI_Transaction *transaction);
@@ -146,7 +146,7 @@ typedef struct MCSPI_DmaFxns_s
 	MCSPI_dmaOpenFxn                dmaOpenFxn;
 	MCSPI_dmaCloseFxn               dmaCloseFxn;
 	MCSPI_dmaChInitFxn              dmaChInitFxn;
-    MCSPI_dmaTransferMasterFxn      dmaTransferMasterFxn;
+    MCSPI_dmaTransferControllerFxn      dmaTransferControllerFxn;
     MCSPI_dmaStopFxn                dmaStopFxn;
 
 } MCSPI_DmaFxns;

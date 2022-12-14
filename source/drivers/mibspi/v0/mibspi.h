@@ -79,8 +79,8 @@ typedef void *MIBSPI_Handle;
 /** \brief MibSPI RAM buffer mode */
 #define MIBSPI_RAM_BUFFER_MODE              (7U)
 
-/** \brief Transfer group used in slave mode */
-#define MIBSPI_SLAVEMODE_TRANS_GROUP        (0U)
+/** \brief Transfer group used in peripheral mode */
+#define MIBSPI_PERIPHERALMODE_TRANS_GROUP        (0U)
 
 /** \brief MIBSPI interrupt level */
 #define MIBSPI_INT_LEVEL                    (1U)
@@ -113,14 +113,14 @@ typedef void *MIBSPI_Handle;
  */
 #define MIBSPI_RAM_MAX_ELEM          (128U)
 
-/** \brief Max number of slaves supported when MibSPI is configured as master */
-#define MIBSPI_SLAVE_MAX             (3U)
+/** \brief Max number of peripherals supported when MibSPI is configured as controller */
+#define MIBSPI_PERIPHERAL_MAX             (3U)
 
 /** \brief Max number of DMA REQ lines supported by MIBSPI */
 #define MIBSPI_DMA_REQLINE_MAX       (3U)
 
 /** \brief Maximum CS supported for the device */
-#define MIBSPI_MAX_CS                (MIBSPI_SLAVE_MAX)
+#define MIBSPI_MAX_CS                (MIBSPI_PERIPHERAL_MAX)
 
 /** \brief Max number of transport group */
 #define MIBSPI_NUM_TRANS_GROUP       (8U)
@@ -185,8 +185,8 @@ typedef enum {
 
 /** \brief Definitions for various SPI modes of operation. */
 typedef enum {
-    MIBSPI_MASTER      = 0,    /**< SPI in master mode */
-    MIBSPI_SLAVE       = 1     /**< SPI in slave mode */
+    MIBSPI_CONTROLLER      = 0,    /**< SPI in controller mode */
+    MIBSPI_PERIPHERAL       = 1     /**< SPI in peripheral mode */
 } MIBSPI_Mode;
 
 /**  \brief Definitions for various SPI data frame formats. */
@@ -245,7 +245,7 @@ typedef struct
     uint32_t    timeout;
     /** \brief   Number of Parity Error interrupts */
     uint32_t    parErr;
-    /** \brief   Number of De-synchronization of slave device interrupts */
+    /** \brief   Number of De-synchronization of peripheral device interrupts */
     uint32_t    desync;
     /** \brief   Number of mismatch of internal transmit data and transmittted data error interrupts */
     uint32_t    bitErr;
@@ -265,44 +265,44 @@ typedef struct
     uint32_t   dlenErr;     /**<Number of data length error */
     uint32_t   timeout;     /**<Number of timeout */
     uint32_t   parErr;      /**<Number of Parity error */
-    uint32_t   desync;      /**<Number of De-synchronization of slave device - master only */
-    uint32_t   bitErr;      /**<Number of data mismatch transmit data error - master only */
+    uint32_t   desync;      /**<Number of De-synchronization of peripheral device - controller only */
+    uint32_t   bitErr;      /**<Number of data mismatch transmit data error - controller only */
     uint32_t   rxOvrnErr;   /**<Number of RX Overrun Error */
 } MIBSPI_Stats;
 
 /**
- *  \brief MIBSPI slave profile Parameters
+ *  \brief MIBSPI peripheral profile Parameters
  *
- *  When MIBSPI is configured as master mode, it may connect to multiple slaves. This data structure captures
- *  the the configurations for remote slaves.
+ *  When MIBSPI is configured as controller mode, it may connect to multiple peripherals. This data structure captures
+ *  the the configurations for remote peripherals.
  */
 typedef struct
 {
     uint8_t             chipSelect;   /**< CS0-CS7 signal number from 0 -7 */
-    uint8_t             ramBufLen;    /**< RAM Length in bytes that used by the slave */
-    uint32_t            dmaReqLine;   /**< DMA request line to be used for slave */
-} MIBSPI_SlaveProfile;
+    uint8_t             ramBufLen;    /**< RAM Length in bytes that used by the peripheral */
+    uint32_t            dmaReqLine;   /**< DMA request line to be used for peripheral */
+} MIBSPI_PeripheralProfile;
 
 /**
- *  \brief MIBSPI slave mode Parameters
+ *  \brief MIBSPI peripheral mode Parameters
  *
- *  MIBSPI slave Parameters are used with the MIBSPI_open() call when mode is set to MIBSPI_SLAVE.
+ *  MIBSPI peripheral Parameters are used with the MIBSPI_open() call when mode is set to MIBSPI_PERIPHERAL.
  *  Default values for these parameters are set using MIBSPI_Params_init().
  *
  *  @sa         MIBSPI_Params_init()
  */
 typedef struct
 {
-    uint32_t            dmaReqLine;    /**< DMA request line to be used for Slave */
+    uint32_t            dmaReqLine;    /**< DMA request line to be used for Peripheral */
     uint8_t             chipSelect;    /**< CS0-CS7 signal number from 0 -7 */
-} MIBSPI_SlaveModeParams;
+} MIBSPI_PeripheralModeParams;
 
 /**
  * \brief
- *  SPI Driver Info for Master
+ *  SPI Driver Info for Controller
  *
  * @details
- *  The structure is used to store the driver info for Master.
+ *  The structure is used to store the driver info for Controller.
  */
 typedef struct
 {
@@ -386,7 +386,7 @@ typedef struct
     void      *arg;        /**< Argument to be passed to the callback function */
     /* User output (read-only) fields */
     MIBSPI_Status status;     /**< Status code set by SPI_transfer */
-    uint8_t   slaveIndex; /**< Index of the slave enabled for this transfer */
+    uint8_t   peripheralIndex; /**< Index of the peripheral enabled for this transfer */
 } MIBSPI_Transaction;
 
 /**
@@ -423,9 +423,9 @@ typedef void        (*MIBSPI_CallbackFxn) (MIBSPI_Handle handle,
 /* ========================================================================== */
 
 /**
- *  \brief MIBSPI master Parameters
+ *  \brief MIBSPI controller Parameters
  *
- *  MIBSPI master Parameters are used  with the MIBSPI_open() call when mode is set to SPI_MASTER.
+ *  MIBSPI controller Parameters are used  with the MIBSPI_open() call when mode is set to SPI_CONTROLLER.
  *  Default values for these parameters are set using MIBSPI_Params_init().
  *
  *  @sa         MIBSPI_Params_init()
@@ -433,12 +433,12 @@ typedef void        (*MIBSPI_CallbackFxn) (MIBSPI_Handle handle,
 typedef struct
 {
     uint32_t            bitRate;                        /**< SPI bit rate in Hz */
-    uint8_t             numSlaves;                      /**< Number of slaves connected to SPI master */
+    uint8_t             numPeripherals;                      /**< Number of peripherals connected to SPI controller */
     uint8_t             t2cDelay;                       /**< Transmit end to chip select inactive delay */
     uint8_t             c2tDelay;                       /**< Chip select active to transmit start delay */
     uint8_t             wDelay;                         /**< Delay in between transmissions */
-    MIBSPI_SlaveProfile    slaveProf[MIBSPI_SLAVE_MAX]; /**< Slave profile for each slave */
-} MIBSPI_MasterModeParams;
+    MIBSPI_PeripheralProfile    peripheralProf[MIBSPI_PERIPHERAL_MAX]; /**< Peripheral profile for each peripheral */
+} MIBSPI_ControllerModeParams;
 
 /**
  *  \brief MIBSPI EDMA Parameters
@@ -466,7 +466,7 @@ typedef struct
  */
 typedef struct
 {
-    MIBSPI_Mode            mode;                /**< Master or Slave mode */
+    MIBSPI_Mode            mode;                /**< Controller or Peripheral mode */
     MIBSPI_TransferMode    transferMode;        /**< Blocking or Callback mode */
     Bool                   iCountSupport;       /**< Support for multi icount in one transfer
                                                      to achieve high throughput, this
@@ -476,12 +476,12 @@ typedef struct
     MIBSPI_FrameFormat     frameFormat;         /**< SPI frame format */
     union
     {
-        MIBSPI_MasterModeParams  masterParams;  /**< Configuration dedicated to master mode,
-                                                     refer to #MIBSPI_MasterModeParams */
-        MIBSPI_SlaveModeParams   slaveParams;   /**< Configuration dedicated to slave mode,
-                                                     refer to #MIBSPI_SlaveModeParams */
-    }u;                                         /**< union to hold either master mode or
-                                                     slave mode params */
+        MIBSPI_ControllerModeParams  controllerParams;  /**< Configuration dedicated to controller mode,
+                                                     refer to #MIBSPI_ControllerModeParams */
+        MIBSPI_PeripheralModeParams   peripheralParams;   /**< Configuration dedicated to peripheral mode,
+                                                     refer to #MIBSPI_PeripheralModeParams */
+    }u;                                         /**< union to hold either controller mode or
+                                                     peripheral mode params */
     MIBSPI_PinMode         pinMode;             /**< Pin operation Mode, refer to
                                                      #MIBSPI_PinMode */
     MIBSPI_DataShiftFmt    shiftFormat;         /**< SPI Data shift format, refer to
@@ -520,7 +520,7 @@ typedef struct
     CSL_mss_spiRegs         *ptrSpiRegBase;
     /** \brief   Base address of the MibSpi ram address space to be used. */
     CSL_mibspiRam           *ptrMibSpiRam;
-    /** \brief   MIBSPI clock source frequency in Hz, It will be used to calculate prescaler for Master mode */
+    /** \brief   MIBSPI clock source frequency in Hz, It will be used to calculate prescaler for Controller mode */
     uint32_t                 clockSrcFreq;
     /** \brief   Interrupt Number for INT0 */
     uint32_t                 interrupt0Num;
@@ -566,11 +566,11 @@ typedef struct
     /** \brief   MibSpi driver parameters */
     MIBSPI_OpenParams          params;
     /** \brief   DMA information used in transfer for remote peers */
-    MIBSPI_DriverDmaInfo       dmaInfo[MIBSPI_SLAVE_MAX];
+    MIBSPI_DriverDmaInfo       dmaInfo[MIBSPI_PERIPHERAL_MAX];
     /** \brief   MibSPI mode RAM offset start settings for remote peers */
-    uint8_t                    rambufStart[MIBSPI_SLAVE_MAX];
+    uint8_t                    rambufStart[MIBSPI_PERIPHERAL_MAX];
     /** \brief   MibSPI mode RAM offset end settings for remote peers */
-    uint8_t                    rambufEnd[MIBSPI_SLAVE_MAX];
+    uint8_t                    rambufEnd[MIBSPI_PERIPHERAL_MAX];
     /**
      * \brief   Rx Scratch buffer, used as scratch buffer to dump received
      *          data from SPI transfer when application does not provide
@@ -593,7 +593,7 @@ typedef struct
     SemaphoreP_Object          transferSemObj;
     /**< Transfer Sync Sempahore object */
     void                      *hwiHandle;
-    /**< Interrupt handle for master ISR */
+    /**< Interrupt handle for controller ISR */
     HwiP_Object                hwiObj;
     /**< Interrupt object */
 
@@ -684,11 +684,11 @@ void MIBSPI_close(MIBSPI_Handle handle);
 
 /**
  *  \brief  Function to perform MIBSPI transactions on a instance of
- *          a MIBSPI peripheral specified by the MIBSPI handle for a specific slave.
+ *          a MIBSPI peripheral specified by the MIBSPI handle for a specific peripheral.
  *
- *  If the MIBSPI is in #MIBSPI_MASTER mode, it will immediately start the
- *  transaction. If the MIBSPI is in #MIBSPI_SLAVE mode, it prepares itself for a
- *  transaction with a SPI master.
+ *  If the MIBSPI is in #MIBSPI_CONTROLLER mode, it will immediately start the
+ *  transaction. If the MIBSPI is in #MIBSPI_PERIPHERAL mode, it prepares itself for a
+ *  transaction with a SPI controller.
  *
  *  In #MIBSPI_MODE_BLOCKING, MIBSPI_transfer will block task execution until the
  *  transaction has completed.
@@ -736,7 +736,7 @@ int32_t MIBSPI_transfer(MIBSPI_Handle handle, MIBSPI_Transaction *transaction);
 void MIBSPI_transferCancel(MIBSPI_Handle handle);
 
 /**
- *  \brief  This function enables the Loopback mode for self test. Loopback is SPI master only feature.
+ *  \brief  This function enables the Loopback mode for self test. Loopback is SPI controller only feature.
  *
  *   @param[in] handle          #MIBSPI_Handle
  *   @param[in] loopbacktype     Digital or Analog
@@ -809,7 +809,7 @@ static inline void MIBSPI_Params_init(MIBSPI_OpenParams *openPrms)
 {
     if (openPrms != NULL)
     {
-        openPrms->mode                  = MIBSPI_MASTER;
+        openPrms->mode                  = MIBSPI_CONTROLLER;
         openPrms->dataSize              = 16U;
         openPrms->frameFormat           = MIBSPI_POL0_PHA0;
         openPrms->transferMode          = MIBSPI_MODE_BLOCKING;
@@ -824,15 +824,15 @@ static inline void MIBSPI_Params_init(MIBSPI_OpenParams *openPrms)
         openPrms->transferTimeout       = 0xFFFFFFFFU;
         openPrms->compatibilityMode     = FALSE;
 
-        /* Initlaize master mode params */
-        openPrms->u.masterParams.bitRate   = 5000000U;
-        openPrms->u.masterParams.numSlaves = 1;
-        openPrms->u.masterParams.t2cDelay  = 0;
-        openPrms->u.masterParams.c2tDelay  = 0;
-        openPrms->u.masterParams.wDelay    = 0;
-        openPrms->u.masterParams.slaveProf[0].chipSelect = (uint8_t)0U;
-        openPrms->u.masterParams.slaveProf[0].ramBufLen = (uint8_t)MIBSPI_RAM_MAX_ELEM;
-        openPrms->u.masterParams.slaveProf[0].dmaReqLine = 0U;
+        /* Initlaize controller mode params */
+        openPrms->u.controllerParams.bitRate   = 5000000U;
+        openPrms->u.controllerParams.numPeripherals = 1;
+        openPrms->u.controllerParams.t2cDelay  = 0;
+        openPrms->u.controllerParams.c2tDelay  = 0;
+        openPrms->u.controllerParams.wDelay    = 0;
+        openPrms->u.controllerParams.peripheralProf[0].chipSelect = (uint8_t)0U;
+        openPrms->u.controllerParams.peripheralProf[0].ramBufLen = (uint8_t)MIBSPI_RAM_MAX_ELEM;
+        openPrms->u.controllerParams.peripheralProf[0].dmaReqLine = 0U;
     }
 }
 

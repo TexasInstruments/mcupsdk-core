@@ -1,4 +1,4 @@
-# LIN External Commander Transmit {#EXAMPLES_DRIVERS_LIN_EXTERNAL_MASTER}
+# LIN External Commander Transmit {#EXAMPLES_DRIVERS_LIN_EXTERNAL_COMMANDER}
 
 [TOC]
 
@@ -13,7 +13,7 @@ The LIN1 instance initiates the transmission by sending LINID followed by messag
 The size of the message is also increased with increasing id.
 \endcond
 
-# Supported Combinations {#EXAMPLES_DRIVERS_LIN_EXTERNAL_MASTER_COMBOS}
+# Supported Combinations {#EXAMPLES_DRIVERS_LIN_EXTERNAL_COMMANDER_COMBOS}
 
 \cond SOC_AM263X
 

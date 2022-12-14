@@ -809,7 +809,7 @@ int32_t FSI_resetTxModule(uint32_t base, FSI_TxSubmoduleInReset submodule)
 
     switch(submodule)
     {
-        case FSI_TX_MASTER_CORE_RESET:
+        case FSI_TX_MAIN_CORE_RESET:
             regVal = (uint16_t)CSL_FSI_TX_CFG_TX_MASTER_CTRL_CORE_RST_MASK |
                      (FSI_CTRL_REG_KEY << CSL_FSI_TX_CFG_TX_MASTER_CTRL_KEY_SHIFT);
             HW_WR_REG16(base + CSL_FSI_TX_CFG_TX_MASTER_CTRL, regVal);
@@ -843,10 +843,10 @@ int32_t FSI_clearTxModuleReset(uint32_t base, FSI_TxSubmoduleInReset submodule)
     switch(submodule)
     {
         /*
-         * Key value must be written into master control register and ensure
+         * Key value must be written into controller control register and ensure
          * that FLUSH pattern is not sent while doing Tx core reset
          */
-        case FSI_TX_MASTER_CORE_RESET:
+        case FSI_TX_MAIN_CORE_RESET:
             regVal = HW_RD_REG16(base + CSL_FSI_TX_CFG_TX_MASTER_CTRL);
             regVal = (regVal & (uint16_t)(~CSL_FSI_TX_CFG_TX_MASTER_CTRL_CORE_RST_MASK)) |
                      (FSI_CTRL_REG_KEY << CSL_FSI_TX_CFG_TX_MASTER_CTRL_KEY_SHIFT);
@@ -994,7 +994,7 @@ int32_t FSI_performTxInitialization(uint32_t base, uint16_t prescalar)
         /*
          * Now reset Tx core and wait sufficient time before releasing it
          */
-        retVal = FSI_resetTxModule(base, FSI_TX_MASTER_CORE_RESET);
+        retVal = FSI_resetTxModule(base, FSI_TX_MAIN_CORE_RESET);
     }
 
     if (retVal == CSL_PASS)
@@ -1006,7 +1006,7 @@ int32_t FSI_performTxInitialization(uint32_t base, uint16_t prescalar)
 
     if (retVal == CSL_PASS)
     {
-        retVal = FSI_clearTxModuleReset(base, FSI_TX_MASTER_CORE_RESET);
+        retVal = FSI_clearTxModuleReset(base, FSI_TX_MAIN_CORE_RESET);
     }
 
     return (retVal);
@@ -1080,7 +1080,7 @@ int32_t FSI_enableAndConfigTxTDMMode(uint32_t base, uint8_t tdmInputSrc)
         {
             regVal &= (uint16_t)(~CSL_FSI_TX_CFG_TX_OPER_CTRL_LO_ALT1__SEL_TDM_IN_MASK);
         }
-        HW_WR_REG16(base + CSL_FSI_TX_CFG_TX_OPER_CTRL_LO_ALT1_, regVal); 
+        HW_WR_REG16(base + CSL_FSI_TX_CFG_TX_OPER_CTRL_LO_ALT1_, regVal);
     }
 
     return retVal;

@@ -77,7 +77,7 @@ void i2c_temperature_main(void *arg0)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 1;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = TMP10X_RESULT_REG;
         status = I2C_transfer(i2cHandle, &i2cTransaction);
         if(status == SystemP_SUCCESS)
@@ -86,7 +86,7 @@ void i2c_temperature_main(void *arg0)
             I2C_Transaction_init(&i2cTransaction);
             i2cTransaction.readBuf = rxBuffer;
             i2cTransaction.readCount = 2;
-            i2cTransaction.slaveAddress = deviceAddress;
+            i2cTransaction.targetAddress = deviceAddress;
 
             /* Take 20 samples and print them out onto the console */
             for(sample = 0; sample < 20; sample++)

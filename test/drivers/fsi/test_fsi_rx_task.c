@@ -94,8 +94,8 @@ void fsi_rx_main(void *args)
     DebugP_log("[FSI] Loopback RX application test started ...\r\n");
 
     /* RX init and reset */
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
+    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
+    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
     status = FSI_performRxInitialization(rxBaseAddr);
 
 #if defined (SOC_AM263X)
@@ -248,8 +248,8 @@ void fsi_rx_hwPingTest(void *args)
     DebugP_log("[FSI] Loopback RX application test started ...\r\n");
 
     /* RX init and reset */
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
+    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
+    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
     status = FSI_performRxInitialization(rxBaseAddr);
 
     status += FSI_setRxDataWidth(rxBaseAddr, rxTestParams->numLane);
@@ -296,7 +296,7 @@ void fsi_rx_hwPingTest(void *args)
         DebugP_assert(gRxPingWdTest == TRUE);
         gRxPingWdTest = FALSE;
     }
-    
+
     Fsi_appRxIntrDeInit(rxBaseAddr, rxTestParams);
     FSI_disableRxInternalLoopback(rxBaseAddr);
 
@@ -467,8 +467,8 @@ static int32_t Fsi_appRxConfig(uint32_t rxBaseAddr, FSI_RxTestParams *rxTestPara
 
     /* RX init and reset */
     status = FSI_performRxInitialization(rxBaseAddr);
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
+    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
+    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setRxSoftwareFrameSize(rxBaseAddr, rxTestParams->frameDataSize);

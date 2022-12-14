@@ -149,9 +149,9 @@ typedef void *MCASP_Handle;
  *  @{
  */
 /** \brief I/O completed successfully */
-#define MCASP_OPMODE_MASTER             (0U)
+#define MCASP_OPMODE_CONTROLLER             (0U)
 /** \brief I/O queued and pending */
-#define MCASP_OPMODE_SLAVE              (1U)
+#define MCASP_OPMODE_PERIPHERAL              (1U)
 /** @} */
 
 /**

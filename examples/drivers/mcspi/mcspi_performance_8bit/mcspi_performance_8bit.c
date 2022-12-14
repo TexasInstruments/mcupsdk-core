@@ -33,8 +33,8 @@
  /**
  *  \file   mcspi_performance.c
  *
- *  \brief This file contains the Master application which demonstrates
- *         data transfer in master mode with performance measurment.
+ *  \brief This file contains the Controller application which demonstrates
+ *         data transfer in controller mode with performance measurment.
  *
  *         McSPI is configured in Tx Only mode with FIFO enabled for Tx.
  *         Word Length tested is 8 bits.

@@ -33,9 +33,9 @@ MCSPI_OpenParams gMcspiOpenParams[CONFIG_MCSPI_NUM_INSTANCES] =
     % if(transferTimeout == 0xFFFFFFFF) {
     %   transferTimeout = "SystemP_WAIT_FOREVER";
     % }
-    % let msMode = "MASTER";
-    % if(config.mode == "SLAVE") {
-    %   msMode = "SLAVE";
+    % let msMode = "CONTROLLER";
+    % if(config.mode == "PERIPHERAL") {
+    %   msMode = "PERIPHERAL";
     % }
     {
         .transferMode           = MCSPI_TRANSFER_MODE_`config.transferMode`,
@@ -62,7 +62,7 @@ MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH] 
     % for(let ch = 0; ch < ch_instances.length; ch++) {
         % let ch_instance = ch_instances[ch];
         % let ch_config = module_ch.getInstanceConfig(ch_instance);
-        % if(config.mode == "SLAVE") {
+        % if(config.mode == "PERIPHERAL") {
         %   ch_config.cs = 0;
         % }
     {

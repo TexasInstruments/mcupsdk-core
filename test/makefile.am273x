@@ -64,7 +64,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_performance_16bit/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_performance_16bit/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_slave/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_peripheral/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mibspi/mibspi_analog_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/uart/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/uart/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -223,7 +223,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_mibspi_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mibspi_performance_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mibspi_slave_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mibspi_peripheral_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_analog_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_uart_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_uart_am273x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -363,8 +363,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_mibspi_performance_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
- test_mibspi_slave_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/mibspi/mibspi_slave/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+ test_mibspi_peripheral_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/mibspi/mibspi_peripheral/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_analog_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mibspi/mibspi_analog_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -577,7 +577,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mibspi_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mibspi_performance_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mibspi_slave_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mibspi_peripheral_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_analog_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -717,8 +717,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_mibspi_performance_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
- test_mibspi_slave_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/mibspi/mibspi_slave/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+ test_mibspi_peripheral_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mibspi/mibspi_peripheral/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_analog_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mibspi/mibspi_analog_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -931,7 +931,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mibspi_performance_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mibspi_performance_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mibspi_slave_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mibspi_peripheral_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_analog_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1071,8 +1071,8 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_mibspi_performance_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C drivers/mibspi/mibspi_performance_16bit/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
- test_mibspi_slave_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/mibspi/mibspi_slave/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+ test_mibspi_peripheral_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mibspi/mibspi_peripheral/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_analog_loopback_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mibspi/mibspi_analog_loopback/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

@@ -70,7 +70,7 @@ static void LIN_setMessageFilteringCheck(void *args);
 static void LIN_enableParityCheck(void *args);
 static void LIN_disableParityCheck(void *args);
 static void LIN_setIDByteCheck(void *args);
-static void LIN_setIDSlaveTaskCheck(void *args);
+static void LIN_setIDResponderTaskCheck(void *args);
 static void LIN_sendWakeupSignalCheck(void *args);
 static void LIN_enterSleepCheck(void *args);
 static void LIN_sendChecksumCheck(void *args);
@@ -171,7 +171,7 @@ void test_main(void *args)
     RUN_TEST(LIN_enableParityCheck,  8038, NULL);
     RUN_TEST(LIN_disableParityCheck,  8038, NULL);
     RUN_TEST(LIN_setIDByteCheck,  8038, NULL);
-    RUN_TEST(LIN_setIDSlaveTaskCheck,  8038, NULL);
+    RUN_TEST(LIN_setIDResponderTaskCheck,  8038, NULL);
     RUN_TEST(LIN_sendWakeupSignalCheck,  8038, NULL);
     RUN_TEST(LIN_enterSleepCheck,  8038, NULL);
     RUN_TEST(LIN_sendChecksumCheck,  8038, NULL);
@@ -245,18 +245,18 @@ void tearDown(void)
 /* Testcase 1 - Check the LIN_setLINMode API */
 static void LIN_setLINModeCheck(void *args)
 {
-    LIN_setLINMode(CONFIG_LIN1_BASE_ADDR, LIN_MODE_LIN_SLAVE);
+    LIN_setLINMode(CONFIG_LIN1_BASE_ADDR, LIN_MODE_LIN_RESPONDER);
 
     /* Check if the value was written correctly */
     TEST_ASSERT_NOT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1)
-        & CSL_LIN_SCIGCR1_CLK_MASTER_MASK), CSL_LIN_SCIGCR1_CLK_MASTER_MASK, "Slave Mode Check failed.");
+        & CSL_LIN_SCIGCR1_CLK_MASTER_MASK), CSL_LIN_SCIGCR1_CLK_MASTER_MASK, "Responder Mode Check failed.");
 
-    LIN_setLINMode(CONFIG_LIN1_BASE_ADDR, LIN_MODE_LIN_MASTER);
+    LIN_setLINMode(CONFIG_LIN1_BASE_ADDR, LIN_MODE_LIN_COMMANDER);
 
     /* Check if the value was written correctly */
     /* (HWREGH(base + LIN_O_SCIGCR1) & LIN_SCIGCR1_CLK_MASTER) */
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1)
-        & CSL_LIN_SCIGCR1_CLK_MASTER_MASK), CSL_LIN_SCIGCR1_CLK_MASTER_MASK, "Master Mode Check failed.");
+        & CSL_LIN_SCIGCR1_CLK_MASTER_MASK), CSL_LIN_SCIGCR1_CLK_MASTER_MASK, "Commander Mode Check failed.");
 }
 
 /* Testcase 2 - Check the LIN_setMaximumBaudRate API */
@@ -280,7 +280,7 @@ static void LIN_setMessageFilteringCheck(void *args)
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1)
         & CSL_LIN_SCIGCR1_HGENCTRL_MASK), 0U, "MSG Filter check failed.");
 
-    LIN_setMessageFiltering(CONFIG_LIN1_BASE_ADDR, LIN_MSG_FILTER_IDSLAVE);
+    LIN_setMessageFiltering(CONFIG_LIN1_BASE_ADDR, LIN_MSG_FILTER_IDRESPONDER);
 
     /* Check if the value was written correctly */
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1)
@@ -327,22 +327,22 @@ static void LIN_setIDByteCheck(void *args)
 
 }
 
-/* Testcase 7 - Check the LIN_setIDSlaveTask API */
-static void LIN_setIDSlaveTaskCheck(void *args)
+/* Testcase 7 - Check the LIN_setIDResponderTask API */
+static void LIN_setIDResponderTaskCheck(void *args)
 {
-    LIN_setIDSlaveTask(CONFIG_LIN1_BASE_ADDR, 0xAAU);
+    LIN_setIDResponderTask(CONFIG_LIN1_BASE_ADDR, 0xAAU);
 
     /* Check if the value was written correctly */
-    /*((HWREGH(base + LIN_O_ID) & LIN_ID_IDSLAVETASKBYTE_M) >> LIN_ID_IDSLAVETASKBYTE_S)*/
+    /*((HWREGH(base + LIN_O_ID) & LIN_ID_IDRESPONDERTASKBYTE_M) >> LIN_ID_IDRESPONDERTASKBYTE_S)*/
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_LINID)
-                                        & CSL_LIN_LINID_IDSLAVETASKBYTE_MASK)>>CSL_LIN_LINID_IDSLAVETASKBYTE_SHIFT, 0xAAU, "Set ID Slave check failed.");
+                                        & CSL_LIN_LINID_IDSLAVETASKBYTE_MASK)>>CSL_LIN_LINID_IDSLAVETASKBYTE_SHIFT, 0xAAU, "Set ID Responder check failed.");
 
-    LIN_setIDSlaveTask(CONFIG_LIN1_BASE_ADDR, 0x05U);
+    LIN_setIDResponderTask(CONFIG_LIN1_BASE_ADDR, 0x05U);
 
     /* Check if the value was written correctly */
-    /*((HWREGH(base + LIN_O_ID) & LIN_ID_IDSLAVETASKBYTE_M) >> LIN_ID_IDSLAVETASKBYTE_S)*/
+    /*((HWREGH(base + LIN_O_ID) & LIN_ID_IDRESPONDERTASKBYTE_M) >> LIN_ID_IDTASKBYTE_S)*/
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_LINID)
-                                        & CSL_LIN_LINID_IDSLAVETASKBYTE_MASK)>>CSL_LIN_LINID_IDSLAVETASKBYTE_SHIFT, 0x05U, "Set ID Slave check failed.");
+                                        & CSL_LIN_LINID_IDSLAVETASKBYTE_MASK)>>CSL_LIN_LINID_IDSLAVETASKBYTE_SHIFT, 0x05U, "Set ID Responder check failed.");
 }
 
 /* Testcase 8 - Check the LIN_sendWakeupSignal API */

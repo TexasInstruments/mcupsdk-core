@@ -183,8 +183,8 @@ static int32_t Fsi_appTxConfig(uint32_t txBaseAddr)
 
     /* TX init and reset */
     status = FSI_performTxInitialization(txBaseAddr, FSI_APP_TX_PRESCALER_VAL);
-    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MASTER_CORE_RESET);
-    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MASTER_CORE_RESET);
+    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
+    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setTxSoftwareFrameSize(txBaseAddr, FSI_APP_FRAME_DATA_WORD_SIZE);
@@ -204,8 +204,8 @@ static int32_t Fsi_appRxConfig(uint32_t rxBaseAddr)
 
     /* RX init and reset */
     status  = FSI_performRxInitialization(rxBaseAddr);
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MASTER_CORE_RESET);
+    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
+    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setRxSoftwareFrameSize(rxBaseAddr, FSI_APP_FRAME_DATA_WORD_SIZE);

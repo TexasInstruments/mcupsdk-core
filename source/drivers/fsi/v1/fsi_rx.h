@@ -139,14 +139,14 @@ typedef uint32_t FSI_RxEnumType;
  * \brief  List of RX modules that can be reset, can be used with reset APIs
  *
  * @n Three submodules can be reset-
- *      1) RX master core
+ *      1) RX controller core
  *      2) frame watchdog counter
  *      3) ping watchdog counter
  */
 typedef uint32_t FSI_RxSubmoduleInReset;
 
-#define FSI_RX_MASTER_CORE_RESET    ((uint32_t)0x0U)
-/**< RX master core reset */
+#define FSI_RX_MAIN_CORE_RESET    ((uint32_t)0x0U)
+/**< RX controller core reset */
 #define FSI_RX_FRAME_WD_CNT_RESET   ((uint32_t)0x1U)
 /**< RX frame watchdog counter reset*/
 #define FSI_RX_PING_WD_CNT_RESET    ((uint32_t)0x2U)

@@ -31,7 +31,7 @@
  */
 
 /*
- *   This example configures the LIN module in master mode for internal
+ *   This example configures the LIN module in controller mode for internal
  *   loopback with interrupts. The module is setup to perform 8 data
  *   transmissions with different transmit IDs and varying transmit data.
  *   Upon reception of an ID header, an interrupt is triggered on line 0

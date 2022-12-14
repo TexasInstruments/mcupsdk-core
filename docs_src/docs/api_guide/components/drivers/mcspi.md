@@ -185,7 +185,7 @@ determining whether the data received is meaningful.
 Specifics about MCSPI frame formatting and data sizes are provided in
 device-specific data sheets and technical reference manuals.
 
-In case of MCSPI operating in #MCSPI_MS_MODE_SLAVE mode if Rx overflow or
+In case of MCSPI operating in #MCSPI_MS_MODE_PERIPHERAL mode if Rx overflow or
 Tx underflow occurs, driver cancels the current transfer and return status
 MCSPI_TRANSFER_CANCELLED to the application. Application need to check the
 status and reinitiate transfers again.
@@ -194,7 +194,7 @@ status and reinitiate transfers again.
 
 - The MCSPI protocol does not account for a built-in handshaking mechanism
   and neither does this driver. Therefore, when operating in
-  #MCSPI_MS_MODE_SLAVE mode, the application must provide such a mechanism to
+  #MCSPI_MS_MODE_PERIPHERAL mode, the application must provide such a mechanism to
   ensure that the MCSPI peripheral is ready for the MCSPI controller. The MCSPI peripheral
   must call #MCSPI_transfer() *before* the controller starts transmitting.
   Some example application mechanisms could include:

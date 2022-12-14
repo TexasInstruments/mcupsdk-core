@@ -277,7 +277,7 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void)
     I2C_Transaction_init(&i2cTransaction);
     i2cTransaction.writeBuf     = buffer;
     i2cTransaction.writeCount   = 2U;
-    i2cTransaction.slaveAddress = IO_EXPANDER_I2C_ADDR;
+    i2cTransaction.targetAddress = IO_EXPANDER_I2C_ADDR;
 
     /* Configure MDIO sel pin */
     /* Set output to high */

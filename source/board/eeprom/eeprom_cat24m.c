@@ -178,7 +178,7 @@ int32_t EEPROM_CAT24M_read(EEPROM_Config *config,
             i2cTransaction.writeCount   = 2U;
             i2cTransaction.readBuf      = buf;
             i2cTransaction.readCount    = readLen;
-            i2cTransaction.slaveAddress = i2cAddress;
+            i2cTransaction.targetAddress = i2cAddress;
             status += I2C_transfer(object->i2cHandle, &i2cTransaction);
         }
 
@@ -250,7 +250,7 @@ int32_t EEPROM_CAT24M_write(EEPROM_Config *config,
             I2C_Transaction_init(&i2cTransaction);
             i2cTransaction.writeBuf     = pageWrBuf;
             i2cTransaction.writeCount   = 2U + curWriteLen;
-            i2cTransaction.slaveAddress = i2cAddress;
+            i2cTransaction.targetAddress = i2cAddress;
             /* Perform write operation */
             status += I2C_transfer(object->i2cHandle, &i2cTransaction);
             if(SystemP_SUCCESS != status)
@@ -269,7 +269,7 @@ int32_t EEPROM_CAT24M_write(EEPROM_Config *config,
             i2cTransaction.writeCount   = 2U;
             i2cTransaction.readBuf      = &dummyRead;
             i2cTransaction.readCount    = 1U;
-            i2cTransaction.slaveAddress = i2cAddress;
+            i2cTransaction.targetAddress = i2cAddress;
             while(1U)
             {
                 writeStatus = I2C_transfer(object->i2cHandle, &i2cTransaction);

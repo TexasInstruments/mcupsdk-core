@@ -57,7 +57,7 @@ extern "C"
 /**
  *  \brief  Function to initialize memory
  *
- *  Function invoked during MIBSPI_initMaster and MIBSPI_initSlave inside
+ *  Function invoked during MIBSPI_initController and MIBSPI_initPeripheral inside
  *  the driver to initialize the memory.
  *
  *  @param  index       MIBSPI instance ID

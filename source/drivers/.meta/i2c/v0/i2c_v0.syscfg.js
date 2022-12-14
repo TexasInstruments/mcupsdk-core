@@ -167,36 +167,36 @@ let i2c_module = {
                 if(inst.advanced == true) {
                     hideConfigs = false;
                 }
-                ui.ownSlaveAddr1.hidden = hideConfigs;
-                ui.ownSlaveAddr2.hidden = hideConfigs;
-                ui.ownSlaveAddr3.hidden = hideConfigs;
-                ui.ownSlaveAddr4.hidden = hideConfigs;
+                ui.ownTargetAddr1.hidden = hideConfigs;
+                ui.ownTargetAddr2.hidden = hideConfigs;
+                ui.ownTargetAddr3.hidden = hideConfigs;
+                ui.ownTargetAddr4.hidden = hideConfigs;
             },
         },
         {
-            name: "ownSlaveAddr1",
-            displayName: "Own Slave Address 1 (0x00 - 0x7F)",
+            name: "ownTargetAddr1",
+            displayName: "Own Target Address 1 (0x00 - 0x7F)",
             default: 0x1C,
             hidden: true,
             displayFormat: "hex"
         },
         {
-            name: "ownSlaveAddr2",
-            displayName: "Own Slave Address 2 (0x00 - 0x7F)",
+            name: "ownTargetAddr2",
+            displayName: "Own Target Address 2 (0x00 - 0x7F)",
             default: 0x1C,
             hidden: true,
             displayFormat: "hex"
         },
         {
-            name: "ownSlaveAddr3",
-            displayName: "Own Slave Address 3 (0x00 - 0x7F)",
+            name: "ownTargetAddr3",
+            displayName: "Own Target Address 3 (0x00 - 0x7F)",
             default: 0x1C,
             hidden: true,
             displayFormat: "hex"
         },
         {
-            name: "ownSlaveAddr4",
-            displayName: "Own Slave Address 4 (0x00 - 0x7F)",
+            name: "ownTargetAddr4",
+            displayName: "Own Target Address 4 (0x00 - 0x7F)",
             default: 0x1C,
             hidden: true,
             displayFormat: "hex"
@@ -219,10 +219,10 @@ let i2c_module = {
 };
 
 function validate(instance, report) {
-    common.validate.checkNumberRange(instance, report, "ownSlaveAddr1", 0x0, 0x7F, "hex");
-    common.validate.checkNumberRange(instance, report, "ownSlaveAddr2", 0x0, 0x7F, "hex");
-    common.validate.checkNumberRange(instance, report, "ownSlaveAddr3", 0x0, 0x7F, "hex");
-    common.validate.checkNumberRange(instance, report, "ownSlaveAddr4", 0x0, 0x7F, "hex");
+    common.validate.checkNumberRange(instance, report, "ownTargetAddr1", 0x0, 0x7F, "hex");
+    common.validate.checkNumberRange(instance, report, "ownTargetAddr2", 0x0, 0x7F, "hex");
+    common.validate.checkNumberRange(instance, report, "ownTargetAddr3", 0x0, 0x7F, "hex");
+    common.validate.checkNumberRange(instance, report, "ownTargetAddr4", 0x0, 0x7F, "hex");
     common.validate.checkValidCName(instance, report, "transferCallbackFxn");
     if((instance.transferMode == "CALLBACK") &&
         ((instance.transferCallbackFxn == "NULL") ||

@@ -20,7 +20,7 @@ function getInstanceConfig(moduleInstance) {
 
 function getMaxChannels(inst) {
 
-    if(inst.mode == "SLAVE") {
+    if(inst.mode == "PERIPHERAL") {
         return 1;
     }
     else {
@@ -141,20 +141,20 @@ let mibspi_module = {
         {
             name: "mode",
             displayName: "Mode of Operation",
-            default: "MASTER",
+            default: "CONTROLLER",
             options: [
                 {
-                    name: "MASTER",
-                    displayName: "Master"
+                    name: "CONTROLLER",
+                    displayName: "Controller"
                 },
                 {
-                    name: "SLAVE",
-                    displayName: "Slave"
+                    name: "PERIPHERAL",
+                    displayName: "Peripheral"
                 },
             ],
-            description: "Master/Slave mode of operation",
+            description: "Controller/Peripheral mode of operation",
             onChange: function (inst, ui) {
-                if(inst.mode == "MASTER") {
+                if(inst.mode == "CONTROLLER") {
                     ui.bitRate.hidden = false;
                     ui.t2cDelay.hidden = false;
                     ui.c2tDelay.hidden = false;
@@ -168,7 +168,7 @@ let mibspi_module = {
                 }
             },
         },
-        /* Master mode params */
+        /* Controller mode params */
         {
             name: "bitRate",
             displayName: "Clock Frequency (Hz)",

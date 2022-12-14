@@ -92,11 +92,11 @@ const I2C_Transaction I2C_defaultTransaction = {
     0,                            /* writeCount */
     NULL,                         /* readBuf */
     0,                            /* readCount */
-    0,                            /* slaveAddress */
+    0,                            /* targetAddress */
     NULL,                         /* nextPtr */
     NULL,                         /* arg */
     SystemP_WAIT_FOREVER,         /* timeout */
-    (bool)true,                   /* masterMode */
+    (bool)true,                   /* controllerMode */
     (bool)false                   /* expandSA */
 };
 
@@ -106,8 +106,8 @@ const I2C_Transaction I2C_defaultTransaction = {
 
 bool        I2C_checkTimeout(uint32_t *pUsecCnt);
 void        I2C_hwiFxn(void* arg);
-void        I2C_hwiFxnSlave(I2C_Handle handle);
-void        I2C_hwiFxnMaster(I2C_Handle handle);
+void        I2C_hwiFxnTarget(I2C_Handle handle);
+void        I2C_hwiFxnController(I2C_Handle handle);
 void        I2C_completeCurrTransfer(I2C_Handle handle, int32_t xferStatus);
 int32_t     I2C_primeTransfer(I2C_Handle handle,
                               I2C_Transaction *transaction);
@@ -140,7 +140,7 @@ static I2C_DrvObj gI2cDrvObj =
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void I2CMasterInitExpClk(uint32_t baseAddr,
+void I2CControllerInitExpClk(uint32_t baseAddr,
                          uint32_t sysClk,
                          uint32_t internalClk,
                          uint32_t outputClk)
@@ -205,26 +205,26 @@ void I2CMasterInitExpClk(uint32_t baseAddr,
     }
 }
 
-void I2CMasterEnable(uint32_t baseAddr)
+void I2CControllerEnable(uint32_t baseAddr)
 {
     /* Bring the I2C module out of reset */
     HW_WR_FIELD32(baseAddr + I2C_CON, I2C_CON_I2C_EN,
                   I2C_CON_I2C_EN_ENABLE);
 }
 
-void I2CMasterEnableFreeRun(uint32_t baseAddr)
+void I2CControllerEnableFreeRun(uint32_t baseAddr)
 {
     /* Set the I2C module in free running mode */
     HW_WR_FIELD32(baseAddr + I2C_SYSTEST, I2C_SYSTEST_FREE,
                   I2C_SYSTEST_FREE_FREE);
 }
 
-void I2CMasterSetSysTest(uint32_t baseAddr, uint32_t sysTest)
+void I2CControllerSetSysTest(uint32_t baseAddr, uint32_t sysTest)
 {
     HW_WR_REG32(baseAddr + I2C_SYSTEST, sysTest);
 }
 
-uint32_t I2CMasterGetSysTest(uint32_t baseAddr)
+uint32_t I2CControllerGetSysTest(uint32_t baseAddr)
 {
     uint32_t sysTest;
 
@@ -233,14 +233,14 @@ uint32_t I2CMasterGetSysTest(uint32_t baseAddr)
     return (sysTest);
 }
 
-void I2CMasterDisable(uint32_t baseAddr)
+void I2CControllerDisable(uint32_t baseAddr)
 {
     /* Put I2C module in reset */
     HW_WR_FIELD32(baseAddr + I2C_CON, I2C_CON_I2C_EN,
                   I2C_CON_I2C_EN_DISABLE);
 }
 
-int32_t I2CMasterBusBusy(uint32_t baseAddr)
+int32_t I2CControllerBusBusy(uint32_t baseAddr)
 {
     uint32_t status;
 
@@ -257,71 +257,71 @@ int32_t I2CMasterBusBusy(uint32_t baseAddr)
     return (int32_t) status;
 }
 
-void I2CMasterControl(uint32_t baseAddr, uint32_t cmd)
+void I2CControllerControl(uint32_t baseAddr, uint32_t cmd)
 {
     HW_WR_REG32(baseAddr + I2C_CON, cmd | I2C_CON_I2C_EN_MASK);
 }
 
-void I2CMasterStart(uint32_t baseAddr)
+void I2CControllerStart(uint32_t baseAddr)
 {
     HW_WR_FIELD32(baseAddr + I2C_CON, I2C_CON_STT, I2C_CON_STT_STT);
 }
 
-void I2CMasterStop(uint32_t baseAddr)
+void I2CControllerStop(uint32_t baseAddr)
 {
     HW_WR_FIELD32(baseAddr + I2C_CON, I2C_CON_STP, I2C_CON_STP_STP);
 }
 
-void I2CMasterIntEnableEx(uint32_t baseAddr, uint32_t intFlag)
+void I2CControllerIntEnableEx(uint32_t baseAddr, uint32_t intFlag)
 {
     uint32_t i2cRegValue = HW_RD_REG32(baseAddr + I2C_IRQENABLE_SET);
     i2cRegValue |= intFlag;
     HW_WR_REG32(baseAddr + I2C_IRQENABLE_SET, i2cRegValue);
 }
 
-void I2CSlaveIntEnableEx(uint32_t baseAddr, uint32_t intFlag)
+void I2CTargetIntEnableEx(uint32_t baseAddr, uint32_t intFlag)
 {
     uint32_t i2cRegValue = HW_RD_REG32(baseAddr + I2C_IRQENABLE_SET);
     i2cRegValue |= intFlag;
     HW_WR_REG32(baseAddr + I2C_IRQENABLE_SET, i2cRegValue);
 }
 
-void I2CMasterIntDisableEx(uint32_t baseAddr, uint32_t intFlag)
+void I2CControllerIntDisableEx(uint32_t baseAddr, uint32_t intFlag)
 {
     HW_WR_REG32(baseAddr + I2C_IRQENABLE_CLR, intFlag);
 }
 
-void I2CSlaveIntDisableEx(uint32_t baseAddr, uint32_t intFlag)
+void I2CTargetIntDisableEx(uint32_t baseAddr, uint32_t intFlag)
 {
     HW_WR_REG32(baseAddr + I2C_IRQENABLE_CLR, intFlag);
 }
 
-uint32_t I2CMasterIntStatus(uint32_t baseAddr)
+uint32_t I2CControllerIntStatus(uint32_t baseAddr)
 {
     return HW_RD_REG32(baseAddr + I2C_IRQSTATUS);
 }
 
-uint32_t I2CMasterIntRawStatus(uint32_t baseAddr)
+uint32_t I2CControllerIntRawStatus(uint32_t baseAddr)
 {
     return HW_RD_REG32(baseAddr + I2C_IRQSTATUS_RAW);
 }
 
-uint32_t I2CSlaveIntRawStatus(uint32_t baseAddr)
+uint32_t I2CTargetIntRawStatus(uint32_t baseAddr)
 {
     return HW_RD_REG32(baseAddr + I2C_IRQSTATUS_RAW);
 }
 
-uint32_t I2CMasterIntRawStatusEx(uint32_t baseAddr, uint32_t intFlag)
+uint32_t I2CControllerIntRawStatusEx(uint32_t baseAddr, uint32_t intFlag)
 {
     return (HW_RD_REG32(baseAddr + I2C_IRQSTATUS_RAW) & intFlag);
 }
 
-void I2CMasterIntClearEx(uint32_t baseAddr, uint32_t intFlag)
+void I2CControllerIntClearEx(uint32_t baseAddr, uint32_t intFlag)
 {
     HW_WR_REG32(baseAddr + I2C_IRQSTATUS, intFlag);
 }
 
-void I2CSlaveIntClearEx(uint32_t baseAddr, uint32_t intFlag)
+void I2CTargetIntClearEx(uint32_t baseAddr, uint32_t intFlag)
 {
     HW_WR_REG32(baseAddr + I2C_IRQSTATUS, intFlag);
 }
@@ -331,10 +331,10 @@ uint32_t I2CGetEnabledIntStatus(uint32_t baseAddr, uint32_t intFlag)
     return (HW_RD_REG32(baseAddr + I2C_IRQENABLE_SET) & intFlag);
 }
 
-void I2CMasterSlaveAddrSet(uint32_t baseAddr, uint32_t slaveAdd)
+void I2CControllerTargetAddrSet(uint32_t baseAddr, uint32_t targetAdd)
 {
-    /*Set the address of the slave with which the master will communicate.*/
-    HW_WR_REG32(baseAddr + I2C_SA, slaveAdd);
+    /*Set the address of the target with which the controller will communicate.*/
+    HW_WR_REG32(baseAddr + I2C_SA, targetAdd);
 }
 
 void I2CSetDataCount(uint32_t baseAddr, uint32_t count)
@@ -435,13 +435,13 @@ uint32_t I2CSystemStatusGet(uint32_t baseAddr)
     return (HW_RD_REG32(baseAddr + I2C_SYSS) & I2C_SYSS_RDONE_MASK);
 }
 
-void I2CMasterDataPut(uint32_t baseAddr, uint8_t data)
+void I2CControllerDataPut(uint32_t baseAddr, uint8_t data)
 {
     /*write data to be transmitted to Data transmit register */
     HW_WR_REG32(baseAddr + I2C_DATA, (uint32_t) data);
 }
 
-uint8_t I2CMasterDataGet(uint32_t baseAddr)
+uint8_t I2CControllerDataGet(uint32_t baseAddr)
 {
     uint8_t rData;
 
@@ -449,7 +449,7 @@ uint8_t I2CMasterDataGet(uint32_t baseAddr)
     return rData;
 }
 
-uint8_t I2CSlaveDataGet(uint32_t baseAddr)
+uint8_t I2CTargetDataGet(uint32_t baseAddr)
 {
     uint8_t rData;
 
@@ -505,10 +505,10 @@ void I2C_close(I2C_Handle handle)
         if (object->headPtr == NULL)
         {
             /* Mask I2C interrupts */
-            I2CMasterIntDisableEx(object->baseAddr, I2C_INT_ALL);
+            I2CControllerIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
-            /* Disable the I2C Master */
-            I2CMasterDisable(object->baseAddr);
+            /* Disable the I2C Controller */
+            I2CControllerDisable(object->baseAddr);
 
             if (TRUE == hwAttrs->enableIntr)
             {
@@ -587,9 +587,9 @@ void I2C_completeCurrTransfer(I2C_Handle handle, int32_t xferStatus)
 }
 
 /*
- *  Hwi interrupt handler to service the I2C peripheral in master mode
+ *  Hwi interrupt handler to service the I2C peripheral in controller mode
  */
-void I2C_hwiFxnMaster(I2C_Handle handle)
+void I2C_hwiFxnController(I2C_Handle handle)
 {
     I2C_Object        *object = NULL;
     int32_t            xferStatus = I2C_STS_SUCCESS;
@@ -612,7 +612,7 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
      */
 
     /*
-     * The Master ISR handling is based on AM5 TRM HS I2C Programming Guide
+     * The Controller ISR handling is based on AM5 TRM HS I2C Programming Guide
      * Section 24.1.5. The driver only enables [R/X]RDY and ARDY interrupts, and
      * ISR checks the raw interrupt status register to handle any fatal errors
      * (No Ack, arbitration lost, etc.). It also logs non fatal errors (TX underflow
@@ -628,7 +628,7 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
 
     while (loopFlag == TRUE)
     {
-        stat = I2CMasterIntStatus(object->baseAddr);
+        stat = I2CControllerIntStatus(object->baseAddr);
         if ((0U == stat) || (isrLoopCount > I2C_MAX_CONSECUTIVE_ISRS))
         {
             loopFlag = FALSE;
@@ -637,13 +637,13 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
         {
             isrLoopCount++;
 
-            rawStat = I2CMasterIntRawStatus(object->baseAddr);
+            rawStat = I2CControllerIntRawStatus(object->baseAddr);
 
             if ((rawStat & I2C_INT_NO_ACK) != 0U)
             {
                 intErr   |= I2C_INT_NO_ACK;
                 xferStatus = I2C_STS_ERR_NO_ACK;
-                I2CMasterIntClearEx(object->baseAddr, I2C_INT_NO_ACK);
+                I2CControllerIntClearEx(object->baseAddr, I2C_INT_NO_ACK);
                 fatalError=1U;
             }
 
@@ -651,7 +651,7 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
             {
                 intErr   |= I2C_INT_ARBITRATION_LOST;
                 xferStatus = I2C_STS_ERR_ARBITRATION_LOST;
-                I2CMasterIntClearEx(object->baseAddr,I2C_INT_ARBITRATION_LOST);
+                I2CControllerIntClearEx(object->baseAddr,I2C_INT_ARBITRATION_LOST);
                 fatalError=1U;
             }
 
@@ -659,16 +659,16 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
             {
                 intErr   |= I2C_INT_ACCESS_ERROR;
                 xferStatus = I2C_STS_ERR_ACCESS_ERROR;
-                I2CMasterIntClearEx(object->baseAddr,I2C_INT_ACCESS_ERROR);
+                I2CControllerIntClearEx(object->baseAddr,I2C_INT_ACCESS_ERROR);
                 fatalError=1U;
             }
 
             if(fatalError != 0U)
             {
                /* ISsue the stop condition*/
-               I2CMasterStop(object->baseAddr);
-               I2CMasterIntDisableEx(object->baseAddr, I2C_INT_ALL);
-               I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+               I2CControllerStop(object->baseAddr);
+               I2CControllerIntDisableEx(object->baseAddr, I2C_INT_ALL);
+               I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
                I2CFIFOClear(object->baseAddr, I2C_TX_MODE);
                I2CFIFOClear(object->baseAddr, I2C_RX_MODE);
                I2CSetDataCount(object->baseAddr, 0);
@@ -678,13 +678,13 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
             }
 
             w = stat & ~(I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY);
-            I2CMasterIntClearEx(object->baseAddr, w);
+            I2CControllerIntClearEx(object->baseAddr, w);
 
             if (((stat & I2C_INT_ADRR_READY_ACESS) == I2C_INT_ADRR_READY_ACESS) ||
                 ((stat & I2C_INT_BUS_FREE) == I2C_INT_BUS_FREE))
             {
                 w = stat & (I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY);
-                I2CMasterIntClearEx(object->baseAddr, w);
+                I2CControllerIntClearEx(object->baseAddr, w);
 
                 if (((object->writeCountIdx) == 0U) && ((object->readCountIdx) != 0U))
                 {
@@ -698,37 +698,37 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
                     if (object->currentTransaction->expandSA == (bool)true)
                     {
                         /* enable the 10-bit address mode */
-                        xsa = I2C_CFG_10BIT_SLAVE_ADDR;
+                        xsa = I2C_CFG_10BIT_TARGET_ADDR;
                     }
                     else
                     {
                         /* enable the 7-bit address mode */
-                        xsa = I2C_CFG_7BIT_SLAVE_ADDR;
+                        xsa = I2C_CFG_7BIT_TARGET_ADDR;
                     }
                     regVal = I2C_CFG_MST_RX | xsa;
                     if ((object->i2cParams.bitRate == I2C_1P0MHZ) || (object->i2cParams.bitRate == I2C_3P4MHZ))
                     {
                         regVal |= I2C_CFG_HS_MOD;
                     }
-                    I2CMasterControl(object->baseAddr, regVal);
+                    I2CControllerControl(object->baseAddr, regVal);
 
                     /* Enable RX interrupt to handle data received */
-                    I2CMasterIntEnableEx(object->baseAddr, I2C_INT_RECV_READY);
+                    I2CControllerIntEnableEx(object->baseAddr, I2C_INT_RECV_READY);
 
                     /* Start I2C peripheral in RX mode */
-                    I2CMasterStart(object->baseAddr);
+                    I2CControllerStart(object->baseAddr);
                 }
                 else
                 {
                     if ((rawStat & I2C_INT_BUS_BUSY) != 0U)
                     {
-                        I2CMasterStop(object->baseAddr);
+                        I2CControllerStop(object->baseAddr);
                         /* if bus still busy, enable bus free interrupt to wait for bus released */
-                        I2CMasterIntEnableEx(object->baseAddr, I2C_INT_BUS_FREE);
+                        I2CControllerIntEnableEx(object->baseAddr, I2C_INT_BUS_FREE);
                     }
                     else
                     {
-                        I2CMasterIntDisableEx(object->baseAddr, I2C_INT_ALL);
+                        I2CControllerIntDisableEx(object->baseAddr, I2C_INT_ALL);
                         I2C_completeCurrTransfer(handle,xferStatus);
                     }
                     loopFlag = FALSE;
@@ -742,12 +742,12 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
                     /* Save the received data */
                     if (object->readBufIdx != NULL)
                     {
-                        *(object->readBufIdx) = I2CMasterDataGet(object->baseAddr);
+                        *(object->readBufIdx) = I2CControllerDataGet(object->baseAddr);
                         object->readBufIdx++;
                         object->readCountIdx--;
                     }
 
-                    I2CMasterIntClearEx(object->baseAddr,
+                    I2CControllerIntClearEx(object->baseAddr,
                                         (stat & I2C_INT_RECV_READY));
                 }
 
@@ -766,7 +766,7 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
                             I2CBufferStatus(object->baseAddr,I2C_FIFO_DEPTH)))) {
 
                             /* Write data into transmit FIFO */
-                            I2CMasterDataPut(object->baseAddr,
+                            I2CControllerDataPut(object->baseAddr,
                                              *(object->writeBufIdx));
                             (object->writeBufIdx)++;
                             object->writeCountIdx--;
@@ -774,10 +774,10 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
                     }
                     else
                     {
-                        I2CMasterIntDisableEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
+                        I2CControllerIntDisableEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
                     }
 
-                    I2CMasterIntClearEx(object->baseAddr,
+                    I2CControllerIntClearEx(object->baseAddr,
                                         (stat & I2C_INT_TRANSMIT_READY));
                 }
             }
@@ -801,9 +801,9 @@ void I2C_hwiFxnMaster(I2C_Handle handle)
 }
 
 /*
- *  Hwi interrupt handler to service the I2C peripheral in slave mode
+ *  Hwi interrupt handler to service the I2C peripheral in target mode
  */
-void I2C_hwiFxnSlave(I2C_Handle handle)
+void I2C_hwiFxnTarget(I2C_Handle handle)
 {
     I2C_Object     *object = NULL;
     uint32_t        rawStat;
@@ -818,7 +818,7 @@ void I2C_hwiFxnSlave(I2C_Handle handle)
      *      the data should be read first.
      *  2.  ARDY: In case of stop condition bus busy will be reset. If it is a
      *      restart condition bus busy will still be set.
-     *  3.  AAS: In case of addressed as slave after transfer is initiated, it
+     *  3.  AAS: In case of addressed as target after transfer is initiated, it
      *      is a restart condition. Give the restart callback.
      *  4.  XRDY: Read application tx buffer and send data.
      *
@@ -826,28 +826,28 @@ void I2C_hwiFxnSlave(I2C_Handle handle)
      *  If the Buffers are overflowing or underflowing return error code
      *  accordingly. Application should call the abort transfer explicitly.
      */
-    rawStat = I2CSlaveIntRawStatus(object->baseAddr);
+    rawStat = I2CTargetIntRawStatus(object->baseAddr);
 
     if ((rawStat & I2C_INT_RECV_READY) != 0U)
     {
         /* Read from Rx register only when current transaction is ongoing */
         if (object->readCountIdx != 0U)
         {
-            *(object->readBufIdx) = I2CMasterDataGet(object->baseAddr);
+            *(object->readBufIdx) = I2CControllerDataGet(object->baseAddr);
             object->readBufIdx++;
             object->readCountIdx--;
-            I2CMasterIntClearEx(object->baseAddr, I2C_INT_RECV_READY);
+            I2CControllerIntClearEx(object->baseAddr, I2C_INT_RECV_READY);
         }
         else
         {
             /* Clear the RX data fifo */
-            (void)I2CSlaveDataGet(object->baseAddr);
+            (void)I2CTargetDataGet(object->baseAddr);
 
             /* Clear all interrupts */
-            I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ALL);
+            I2CTargetIntClearEx(object->baseAddr, I2C_INT_ALL);
 
             /* Disable STOP condition interrupt */
-            I2CSlaveIntDisableEx(object->baseAddr, I2C_INT_ALL);
+            I2CTargetIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
             /* Finish the current transfer */
             I2C_completeCurrTransfer(handle,I2C_STS_ERR);
@@ -858,13 +858,13 @@ void I2C_hwiFxnSlave(I2C_Handle handle)
     {
         if ((rawStat & I2C_INT_BUS_BUSY) != 0U)
         {
-            /* Clear Interrupt, Callback will be handled in ADDR_SLAVE */
-            I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ADRR_READY_ACESS);
+            /* Clear Interrupt, Callback will be handled in ADDR_TARGET */
+            I2CTargetIntClearEx(object->baseAddr, I2C_INT_ADRR_READY_ACESS);
         }
         else
         {
             /* This is end of current transfer */
-            I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ALL);
+            I2CTargetIntClearEx(object->baseAddr, I2C_INT_ALL);
             object->state = I2C_IDLE_STATE;
 
             /* Finish the current transfer */
@@ -872,21 +872,21 @@ void I2C_hwiFxnSlave(I2C_Handle handle)
         }
     }
 
-    if ((rawStat & I2C_INT_ADRR_SLAVE) != 0U)
+    if ((rawStat & I2C_INT_ADRR_TARGET) != 0U)
     {
         if (object->state == I2C_IDLE_STATE)
         {
-            /* This is the first transfer initiation from master */
+            /* This is the first transfer initiation from controller */
             /* Update the state to transfer started and Clear the Interrupt */
-            object->state = I2C_SLAVE_XFER_STATE;
-            I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ADRR_SLAVE);
+            object->state = I2C_TARGET_XFER_STATE;
+            I2CTargetIntClearEx(object->baseAddr, I2C_INT_ADRR_TARGET);
         }
-        else if (object->state == I2C_SLAVE_XFER_STATE)
+        else if (object->state == I2C_TARGET_XFER_STATE)
         {
             if ((object->writeCountIdx == 0U) && ((rawStat & I2C_INT_TRANSMIT_UNDER_FLOW) != 0U))
             {
                 /*
-                 * This is a restart condition, slave write count should be provided by
+                 * This is a restart condition, target write count should be provided by
                  * application in the callback function
                  */
 
@@ -904,34 +904,34 @@ void I2C_hwiFxnSlave(I2C_Handle handle)
             {
             }
 
-            object->state = I2C_SLAVE_RESTART_STATE;
-            I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ADRR_SLAVE);
+            object->state = I2C_TARGET_RESTART_STATE;
+            I2CTargetIntClearEx(object->baseAddr, I2C_INT_ADRR_TARGET);
         }
         else
         {
             /* Control should not come here. Sphurious interrupt clear it. */
-            I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ADRR_SLAVE);
+            I2CTargetIntClearEx(object->baseAddr, I2C_INT_ADRR_TARGET);
         }
     }
 
     if ((rawStat & I2C_INT_TRANSMIT_READY) != 0U)
     {
-        if (object->state == I2C_SLAVE_XFER_STATE)
+        if (object->state == I2C_TARGET_XFER_STATE)
         {
             if (object->writeCountIdx != 0U)
             {
-                I2CMasterDataPut(object->baseAddr, *(object->writeBufIdx));
+                I2CControllerDataPut(object->baseAddr, *(object->writeBufIdx));
                 object->writeCountIdx--;
                 object->writeBufIdx++;
-                I2CSlaveIntClearEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
+                I2CTargetIntClearEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
             }
             else
             {
                 /* Clear all interrupts */
-                I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ALL);
+                I2CTargetIntClearEx(object->baseAddr, I2C_INT_ALL);
 
                 /* Disable STOP condition interrupt */
-                I2CSlaveIntDisableEx(object->baseAddr, I2C_INT_ALL);
+                I2CTargetIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
 
 
@@ -965,18 +965,18 @@ void I2C_hwiFxnSlave(I2C_Handle handle)
         {
             if (object->writeCountIdx != 0U)
             {
-                I2CMasterDataPut(object->baseAddr, *(object->writeBufIdx));
+                I2CControllerDataPut(object->baseAddr, *(object->writeBufIdx));
                 object->writeCountIdx--;
                 object->writeBufIdx++;
-                I2CSlaveIntClearEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
+                I2CTargetIntClearEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
             }
             else
             {
                 /* Clear all interrupts */
-                I2CSlaveIntClearEx(object->baseAddr, I2C_INT_ALL);
+                I2CTargetIntClearEx(object->baseAddr, I2C_INT_ALL);
 
                 /* Disable STOP condition interrupt */
-                I2CSlaveIntDisableEx(object->baseAddr, I2C_INT_ALL);
+                I2CTargetIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
                 object->readBufIdx = (uint8_t*)(object->currentTransaction->readBuf);
                 object->readCountIdx = (uint32_t)object->currentTransaction->readCount;
@@ -1023,13 +1023,13 @@ void I2C_hwiFxn(void* arg)
         /* Get the pointer to the object */
         object = (I2C_Object *)handle->object;
 
-        if (object->currentTransaction->masterMode)
+        if (object->currentTransaction->controllerMode)
         {
-            I2C_hwiFxnMaster(handle);
+            I2C_hwiFxnController(handle);
         }
         else
         {
-            I2C_hwiFxnSlave(handle);
+            I2C_hwiFxnTarget(handle);
         }
     }
     return;
@@ -1183,7 +1183,7 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params)
             object->tailPtr = NULL;
 
             /* Put i2c in reset/disabled state */
-            I2CMasterDisable(object->baseAddr);
+            I2CControllerDisable(object->baseAddr);
 
             /* Disable Auto Idle functionality */
             I2CAutoIdleDisable(object->baseAddr);
@@ -1229,22 +1229,22 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params)
             }
 
             /* Set the I2C configuration */
-            I2CMasterInitExpClk(object->baseAddr,
+            I2CControllerInitExpClk(object->baseAddr,
                               hwAttrs->funcClk,
                               internalClk,
                               outputClk);
 
             /* Clear any pending interrupts */
-            I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+            I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
 
             /* Mask off all interrupts */
-            I2CMasterIntDisableEx(object->baseAddr, I2C_INT_ALL);
+            I2CControllerIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
-            /* Enable the I2C Master for operation */
-            I2CMasterEnable(object->baseAddr);
+            /* Enable the I2C Controller for operation */
+            I2CControllerEnable(object->baseAddr);
 
             /* Enable free run mode */
-            I2CMasterEnableFreeRun(object->baseAddr);
+            I2CControllerEnableFreeRun(object->baseAddr);
 
             /* Return the address of the i2cObjectArray[i] configuration struct */
         }
@@ -1298,24 +1298,24 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
     object->state = I2C_IDLE_STATE;
 
     /* clear all interrupts */
-    I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+    I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
 
-    if (transaction->masterMode)
+    if (transaction->controllerMode)
     {
         if (object->currentTransaction->expandSA == (bool)true)
         {
             /* enable the 10-bit address mode */
-            xsa = I2C_CFG_10BIT_SLAVE_ADDR;
+            xsa = I2C_CFG_10BIT_TARGET_ADDR;
         }
         else
         {
             /* enable the 7-bit address mode */
-            xsa = I2C_CFG_7BIT_SLAVE_ADDR;
+            xsa = I2C_CFG_7BIT_TARGET_ADDR;
         }
 
-        /* In master mode, set the I2C slave address */
-        I2CMasterSlaveAddrSet(object->baseAddr,
-                              object->currentTransaction->slaveAddress);
+        /* In controller mode, set the I2C target address */
+        I2CControllerTargetAddrSet(object->baseAddr,
+                              object->currentTransaction->targetAddress);
 
         if (TRUE == hwAttrs->enableIntr)
         {
@@ -1326,7 +1326,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 I2CSetDataCount(object->baseAddr, object->writeCountIdx);
 
                 /*
-                 * Configure the I2C transfer to be in master transmitter mode
+                 * Configure the I2C transfer to be in controller transmitter mode
                  */
                 regVal = I2C_CFG_MST_TX | xsa;
                 if ((object->readCountIdx) == 0U)
@@ -1342,13 +1342,13 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 {
                     regVal |= I2C_CFG_HS_MOD;
                 }
-                I2CMasterControl(object->baseAddr, regVal);
+                I2CControllerControl(object->baseAddr, regVal);
 
                 regVal = I2C_INT_TRANSMIT_READY | I2C_INT_ADRR_READY_ACESS | I2C_INT_NO_ACK | I2C_INT_ARBITRATION_LOST;
-                I2CMasterIntEnableEx(object->baseAddr, regVal);
+                I2CControllerIntEnableEx(object->baseAddr, regVal);
 
-                /* Start the I2C transfer in master transmit mode */
-                I2CMasterStart(object->baseAddr);
+                /* Start the I2C transfer in controller transmit mode */
+                I2CControllerStart(object->baseAddr);
 
             }
             else
@@ -1357,7 +1357,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 I2CSetDataCount(object->baseAddr, object->readCountIdx);
 
                 /*
-                 * Start the I2C transfer in master receive mode,
+                 * Start the I2C transfer in controller receive mode,
                  * and automatically send stop when done
                  */
                 regVal = I2C_CFG_MST_RX | I2C_CFG_STOP | xsa;
@@ -1365,14 +1365,14 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 {
                     regVal |= I2C_CFG_HS_MOD;
                 }
-                I2CMasterControl(object->baseAddr, regVal);
+                I2CControllerControl(object->baseAddr, regVal);
 
                 /* Enable RX interrupts */
-                I2CMasterIntEnableEx(object->baseAddr,
+                I2CControllerIntEnableEx(object->baseAddr,
                                      I2C_INT_RECV_READY | I2C_INT_ADRR_READY_ACESS | I2C_INT_NO_ACK | I2C_INT_ARBITRATION_LOST);
 
                 /* Send start bit */
-                I2CMasterStart(object->baseAddr);
+                I2CControllerStart(object->baseAddr);
 
             }
         }
@@ -1383,7 +1383,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 /* set number of bytes to write */
                 I2CSetDataCount(object->baseAddr, object->writeCountIdx);
 
-                /* set to master transmitter mode */
+                /* set to controller transmitter mode */
                 regVal = I2C_CFG_MST_TX | xsa;
                 if ((object->i2cParams.bitRate == I2C_1P0MHZ) || (object->i2cParams.bitRate == I2C_3P4MHZ))
                 {
@@ -1391,7 +1391,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 }
 
                 /* wait for bus busy */
-                while ((I2CMasterBusBusy(object->baseAddr) == 1) && (timeout != 0))
+                while ((I2CControllerBusBusy(object->baseAddr) == 1) && (timeout != 0))
                 {
                     I2C_udelay(I2C_DELAY_USEC);
                     if (I2C_checkTimeout(&uSecTimeout))
@@ -1400,16 +1400,16 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                     }
                 }
 
-                I2CMasterControl(object->baseAddr, regVal);
+                I2CControllerControl(object->baseAddr, regVal);
 
                 /* generate start */
-                I2CMasterStart(object->baseAddr);
+                I2CControllerStart(object->baseAddr);
 
                 while ((object->writeCountIdx != 0U) && (timeout != 0))
                 {
                     /* wait for transmit ready or error */
-                    while(((I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_TRANSMIT_READY) == 0U) && \
-                           (I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
+                    while(((I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_TRANSMIT_READY) == 0U) && \
+                           (I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
                                                                        I2C_INT_NO_ACK | \
                                                                        I2C_INT_ACCESS_ERROR | \
                                                                        I2C_INT_STOP_CONDITION ) == 0U)) && \
@@ -1422,7 +1422,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                         }
                     }
 
-                    errStat = I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
+                    errStat = I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
                                                                          I2C_INT_NO_ACK | \
                                                                          I2C_INT_ACCESS_ERROR);
 
@@ -1434,11 +1434,11 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                        break;
                     }
                     /* write byte and increase data pointer to next byte */
-                    I2CMasterDataPut(object->baseAddr, *(object->writeBufIdx));
+                    I2CControllerDataPut(object->baseAddr, *(object->writeBufIdx));
                     (object->writeBufIdx)++;
 
                     /* clear transmit ready interrupt */
-                    I2CMasterIntClearEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
+                    I2CControllerIntClearEx(object->baseAddr, I2C_INT_TRANSMIT_READY);
 
                     /* update number of bytes written */
                     object->writeCountIdx--;
@@ -1476,7 +1476,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 if (object->readCountIdx == 0U)
                 {
                     /* generate stop when there is no read following by write */
-                    I2CMasterStop(object->baseAddr);
+                    I2CControllerStop(object->baseAddr);
 
                     if ((fatalError == 0U) && (timeout != 0U))
                     {
@@ -1502,12 +1502,12 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
             if ((object->readCountIdx != 0U) && (status == I2C_STS_SUCCESS))
             {
                 /* clear all interrupts */
-                I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+                I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
 
                 /* set number of bytes to read */
                 I2CSetDataCount(object->baseAddr, object->readCountIdx);
 
-                /* set to master receiver mode */
+                /* set to controller receiver mode */
                 regVal = I2C_CFG_MST_RX | xsa;
                 if ((object->i2cParams.bitRate == I2C_1P0MHZ) || (object->i2cParams.bitRate == I2C_3P4MHZ))
                 {
@@ -1520,7 +1520,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                  */
                 if((object->writeBufIdx) == NULL)
                 {
-                    while ((I2CMasterBusBusy(object->baseAddr) == 1) && (timeout != 0U))
+                    while ((I2CControllerBusBusy(object->baseAddr) == 1) && (timeout != 0U))
                     {
                         I2C_udelay(I2C_DELAY_USEC);
                         if (I2C_checkTimeout(&uSecTimeout))
@@ -1530,16 +1530,16 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                     }
                 }
 
-                I2CMasterControl(object->baseAddr, regVal);
+                I2CControllerControl(object->baseAddr, regVal);
 
                 /* generate start */
-                I2CMasterStart(object->baseAddr);
+                I2CControllerStart(object->baseAddr);
 
                 while ((object->readCountIdx != 0U) && (timeout != 0U))
                 {
                     /* wait for receive ready or error */
-                    while(((I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_RECV_READY) == 0U) && \
-                           (I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
+                    while(((I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_RECV_READY) == 0U) && \
+                           (I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
                                                                        I2C_INT_NO_ACK | \
                                                                        I2C_INT_ACCESS_ERROR ) == 0U)) && \
                           (timeout != 0U))
@@ -1551,7 +1551,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                         }
                     }
 
-                    errStat = I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
+                    errStat = I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_ARBITRATION_LOST | \
                                                                          I2C_INT_NO_ACK | \
                                                                          I2C_INT_ACCESS_ERROR);
 
@@ -1564,10 +1564,10 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
 
                     /* read byte and increase data pointer to next byte */
                     *(object->readBufIdx) =
-                        (uint8_t)I2CMasterDataGet(object->baseAddr);
+                        (uint8_t)I2CControllerDataGet(object->baseAddr);
 
                     /* clear receive ready interrupt */
-                    I2CMasterIntClearEx(object->baseAddr, I2C_INT_RECV_READY);
+                    I2CControllerIntClearEx(object->baseAddr, I2C_INT_RECV_READY);
 
                     object->readBufIdx++;
                     object->readCountIdx--;   /* update number of bytes read */
@@ -1603,7 +1603,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
                 }
 
                 /* generate stop when requested */
-                I2CMasterStop(object->baseAddr);
+                I2CControllerStop(object->baseAddr);
 
                 if ((fatalError == 0U) && (timeout != 0U))
                 {
@@ -1625,7 +1625,7 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
             }
         }
     }
-    /* In slave mode */
+    /* In target mode */
     else
     {
         if (object->currentTransaction->expandSA == (bool)true)
@@ -1639,30 +1639,30 @@ int32_t I2C_primeTransfer(I2C_Handle handle,
             xsa = I2C_CFG_7BIT_OWN_ADDR_0;
         }
 
-        /* Currently slave mode is supported only when interrupt is enabled */
+        /* Currently target mode is supported only when interrupt is enabled */
         if (TRUE == hwAttrs->enableIntr)
         {
-            /* In slave mode, set the I2C own address */
+            /* In target mode, set the I2C own address */
             I2COwnAddressSet(object->baseAddr,
-                             hwAttrs->ownSlaveAddr[0],
+                             hwAttrs->ownTargetAddr[0],
                              I2C_OWN_ADDR_0);
 
             /* Configure data buffer length to 0 as the actual number of bytes to
-               transmit/receive is dependant on external master. */
+               transmit/receive is dependant on external controller. */
             I2CSetDataCount(object->baseAddr, 0U);
 
-            /* Enable interrupts in slave mode */
-            I2CSlaveIntEnableEx(object->baseAddr,
+            /* Enable interrupts in target mode */
+            I2CTargetIntEnableEx(object->baseAddr,
                                 I2C_INT_TRANSMIT_READY | I2C_INT_RECV_READY |
-                                I2C_INT_ADRR_READY_ACESS | I2C_INT_ADRR_SLAVE);
+                                I2C_INT_ADRR_READY_ACESS | I2C_INT_ADRR_TARGET);
 
-            /* Start the I2C transfer in slave mode */
+            /* Start the I2C transfer in target mode */
             regVal = I2C_CFG_MST_ENABLE | xsa;
             if ((object->i2cParams.bitRate == I2C_1P0MHZ) || (object->i2cParams.bitRate == I2C_3P4MHZ))
             {
                 regVal |= I2C_CFG_HS_MOD;
             }
-            I2CMasterControl(object->baseAddr, regVal);
+            I2CControllerControl(object->baseAddr, regVal);
         }
     }
 
@@ -1819,7 +1819,7 @@ void I2C_transferCallback(I2C_Handle handle,
     }
 }
 
-int32_t I2C_probe(I2C_Handle handle, uint32_t slaveAddr)
+int32_t I2C_probe(I2C_Handle handle, uint32_t targetAddr)
 {
     int32_t             retVal  = I2C_STS_ERR;
     uint32_t            regVal;
@@ -1833,7 +1833,7 @@ int32_t I2C_probe(I2C_Handle handle, uint32_t slaveAddr)
         /* Disable interrupts first */
         regVal = I2CGetEnabledIntStatus(object->baseAddr, I2C_INT_ALL);
 
-        I2CMasterIntDisableEx(object->baseAddr, I2C_INT_ALL);
+        I2CControllerIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
         /* wait until bus not busy */
         if (I2C_waitForBb(object->baseAddr, I2C_DELAY_MED) != I2C_STS_SUCCESS)
@@ -1842,11 +1842,11 @@ int32_t I2C_probe(I2C_Handle handle, uint32_t slaveAddr)
         }
         else
         {
-            /* set slave address */
-            I2CMasterSlaveAddrSet(object->baseAddr, (uint32_t) slaveAddr);
+            /* set target address */
+            I2CControllerTargetAddrSet(object->baseAddr, (uint32_t) targetAddr);
 
             /* try to write one byte */
-            I2CMasterDataPut(object->baseAddr, (uint8_t) 0U);
+            I2CControllerDataPut(object->baseAddr, (uint8_t) 0U);
             I2CSetDataCount(object->baseAddr, (uint32_t) 1U);
 
             /* stop bit needed here */
@@ -1857,17 +1857,17 @@ int32_t I2C_probe(I2C_Handle handle, uint32_t slaveAddr)
             /* enough delay for the NACK bit set */
             I2C_udelay(I2C_DELAY_BIG);
 
-            if (0U == I2CMasterIntRawStatusEx(object->baseAddr, I2C_INT_NO_ACK))
+            if (0U == I2CControllerIntRawStatusEx(object->baseAddr, I2C_INT_NO_ACK))
             {
                 retVal = I2C_STS_SUCCESS;        /* success case */
             }
             else
             {
                 /* Clear sources*/
-                I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+                I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
 
                 /* finish up xfer */
-                I2CMasterStop(object->baseAddr);
+                I2CControllerStop(object->baseAddr);
                 (void)I2C_waitForBb(object->baseAddr, I2C_DELAY_MED);
 
                 retVal = I2C_STS_ERR;         /* Error case */
@@ -1876,7 +1876,7 @@ int32_t I2C_probe(I2C_Handle handle, uint32_t slaveAddr)
             I2CFIFOClear(object->baseAddr, I2C_TX_MODE);
             I2CFIFOClear(object->baseAddr, I2C_RX_MODE);
             I2CSetDataCount(object->baseAddr, 0);
-            I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+            I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
         }
 
         /* wait for bus free */
@@ -1886,7 +1886,7 @@ int32_t I2C_probe(I2C_Handle handle, uint32_t slaveAddr)
         }
 
         /* Enable interrupts now */
-        I2CMasterIntEnableEx(object->baseAddr, regVal);
+        I2CControllerIntEnableEx(object->baseAddr, regVal);
     }
     return (retVal);
 }
@@ -1900,17 +1900,17 @@ int32_t I2C_waitForBb(uint32_t baseAddr, uint32_t timeout)
     if(bbtimeout > 0U)
     {
         /* Clear current interrupts...*/
-        I2CMasterIntClearEx(baseAddr, I2C_INT_ALL);
+        I2CControllerIntClearEx(baseAddr, I2C_INT_ALL);
 
     while (bbtimeout > 0U)
     {
-        stat = I2CMasterIntRawStatusEx(baseAddr, I2C_INT_BUS_BUSY);
+        stat = I2CControllerIntRawStatusEx(baseAddr, I2C_INT_BUS_BUSY);
         if (stat == 0U)
         {
             break;
         }
         bbtimeout = bbtimeout - 1U;
-        I2CMasterIntClearEx(baseAddr, stat);
+        I2CControllerIntClearEx(baseAddr, stat);
     }
 
     if (timeout > 0U)
@@ -1922,11 +1922,11 @@ int32_t I2C_waitForBb(uint32_t baseAddr, uint32_t timeout)
     }
 
         /* clear delayed stuff*/
-        I2CMasterIntClearEx(baseAddr, I2C_INT_ALL);
+        I2CControllerIntClearEx(baseAddr, I2C_INT_ALL);
     }
     else
     {
-        while(I2CMasterBusBusy(baseAddr) == 1)
+        while(I2CControllerBusBusy(baseAddr) == 1)
         {
         }
     }
@@ -1963,7 +1963,7 @@ int32_t I2C_setBusFrequency(I2C_Handle handle, uint32_t busFrequency)
         (void)SemaphoreP_pend(&object->mutex, SystemP_WAIT_FOREVER);
 
         /* Put i2c in reset/disabled state */
-        I2CMasterDisable(object->baseAddr);
+        I2CControllerDisable(object->baseAddr);
 
         /* Extract bit rate from the input parameter */
         switch(busFrequency)
@@ -1990,20 +1990,20 @@ int32_t I2C_setBusFrequency(I2C_Handle handle, uint32_t busFrequency)
         }
 
         /* Set the I2C configuration */
-        I2CMasterInitExpClk(object->baseAddr, hwAttrs->funcClk, internalClk,
+        I2CControllerInitExpClk(object->baseAddr, hwAttrs->funcClk, internalClk,
             outputClk);
 
         /* Clear any pending interrupts */
-        I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+        I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
 
         /* Mask off all interrupts */
-        I2CMasterIntDisableEx(object->baseAddr, I2C_INT_ALL);
+        I2CControllerIntDisableEx(object->baseAddr, I2C_INT_ALL);
 
-        /* Enable the I2C Master for operation */
-        I2CMasterEnable(object->baseAddr);
+        /* Enable the I2C Controller for operation */
+        I2CControllerEnable(object->baseAddr);
 
         /* Enable free run mode */
-        I2CMasterEnableFreeRun(object->baseAddr);
+        I2CControllerEnableFreeRun(object->baseAddr);
 
         retVal = I2C_STS_SUCCESS;
 
@@ -2045,10 +2045,10 @@ int32_t I2C_recoverBus(I2C_Handle handle, uint32_t i2cDelay)
         /* Check if SDA or SCL is stuck low based on the SYSTEST.
          * If SCL is stuck low we reset the IP.
          * If SDA is stuck low drive 9 clock pulses on SCL and check if the
-         * slave has released the SDA. If not we reset the I2C controller.
+         * target has released the SDA. If not we reset the I2C controller.
          */
 
-        sysTest = I2CMasterGetSysTest(object->baseAddr);
+        sysTest = I2CControllerGetSysTest(object->baseAddr);
         if ((sysTest & I2C_SYSTEST_SCL_I_FUNC_MASK) == 0U)
         {
             /* SCL is stuck low reset the I2C IP */
@@ -2061,16 +2061,16 @@ int32_t I2C_recoverBus(I2C_Handle handle, uint32_t i2cDelay)
             HW_SET_FIELD32(sysTest, I2C_SYSTEST_ST_EN, I2C_SYSTEST_ST_EN_ENABLE);
             HW_SET_FIELD32(sysTest, I2C_SYSTEST_TMODE,
                            I2C_SYSTEST_TMODE_LOOPBACK);
-            I2CMasterSetSysTest(object->baseAddr, sysTest);
+            I2CControllerSetSysTest(object->baseAddr, sysTest);
             for (i = 0; i < 9U; i++)
             {
                 HW_SET_FIELD32(sysTest, I2C_SYSTEST_SCL_O,
                                I2C_SYSTEST_SCL_O_SCLOH);
-                I2CMasterSetSysTest(object->baseAddr, sysTest);
+                I2CControllerSetSysTest(object->baseAddr, sysTest);
                 I2C_udelay(i2cDelay);
                 HW_SET_FIELD32(sysTest, I2C_SYSTEST_SCL_O,
                                I2C_SYSTEST_SCL_O_SCLOL);
-                I2CMasterSetSysTest(object->baseAddr, sysTest);
+                I2CControllerSetSysTest(object->baseAddr, sysTest);
                 I2C_udelay(i2cDelay);
             }
             /* Switch back to functional mode */
@@ -2078,11 +2078,11 @@ int32_t I2C_recoverBus(I2C_Handle handle, uint32_t i2cDelay)
                            I2C_SYSTEST_ST_EN_DISABLE);
             HW_SET_FIELD32(sysTest, I2C_SYSTEST_TMODE,
                            I2C_SYSTEST_TMODE_FUNCTIONAL);
-            I2CMasterSetSysTest(object->baseAddr, sysTest);
+            I2CControllerSetSysTest(object->baseAddr, sysTest);
             /* Now check if the SDA is releases. If its still stuck low,
              * There is nothing that can be done. We still try to reset our IP.
              */
-            sysTest = I2CMasterGetSysTest(object->baseAddr);
+            sysTest = I2CControllerGetSysTest(object->baseAddr);
             if ((sysTest & I2C_SYSTEST_SDA_I_FUNC_MASK) == 0U)
             {
                 status = I2C_resetCtrl(handle);
@@ -2140,13 +2140,13 @@ int32_t I2C_ctrlInit(I2C_Handle handle)
     hwAttrs = (I2C_HwAttrs const *)handle->hwAttrs;
 
     /* Put i2c in reset/disabled state */
-    I2CMasterDisable(object->baseAddr);
+    I2CControllerDisable(object->baseAddr);
 
     /* Do a software reset */
     I2CSoftReset(object->baseAddr);
 
     /* Enable i2c module */
-    I2CMasterEnable(object->baseAddr);
+    I2CControllerEnable(object->baseAddr);
 
     /* Wait for the reset to get complete  -- constant delay - 50ms */
     while ((I2CSystemStatusGet(object->baseAddr) == 0U) && (delay != 0U))
@@ -2163,7 +2163,7 @@ int32_t I2C_ctrlInit(I2C_Handle handle)
     else
     {
         /* Put i2c in reset/disabled state */
-        I2CMasterDisable(object->baseAddr);
+        I2CControllerDisable(object->baseAddr);
 
         /* Configure i2c bus speed*/
         switch(object->i2cParams.bitRate)
@@ -2199,7 +2199,7 @@ int32_t I2C_ctrlInit(I2C_Handle handle)
         }
 
         /* Set the I2C configuration */
-        I2CMasterInitExpClk(object->baseAddr,
+        I2CControllerInitExpClk(object->baseAddr,
                   hwAttrs->funcClk,
                   internalClk,
                   outputClk);
@@ -2221,14 +2221,14 @@ int32_t I2C_ctrlInit(I2C_Handle handle)
         I2CConfig(object->baseAddr, regVal);
 
         /* Take the I2C module out of reset: */
-        I2CMasterEnable(object->baseAddr);
+        I2CControllerEnable(object->baseAddr);
 
         /* Enable free run mode */
-        I2CMasterEnableFreeRun(object->baseAddr);
+        I2CControllerEnableFreeRun(object->baseAddr);
     }
 
     /*Clear status register */
-    I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+    I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
 
     return retVal;
 }
@@ -2245,7 +2245,7 @@ uint32_t I2C_waitForPin(I2C_Handle  handle,
     object = (I2C_Object*)handle->object;
     if(timeout > 0U)
     {
-        status = I2CMasterIntRawStatus(object->baseAddr);
+        status = I2CControllerIntRawStatus(object->baseAddr);
         while ((uint32_t) 0U == (status & flag))
         {
             if ((uint32_t) 0U != timeout)
@@ -2255,7 +2255,7 @@ uint32_t I2C_waitForPin(I2C_Handle  handle,
                 {
                     timeout--;
                 }
-                status = I2CMasterIntRawStatus(object->baseAddr);
+                status = I2CControllerIntRawStatus(object->baseAddr);
             }
             else
             {
@@ -2265,7 +2265,7 @@ uint32_t I2C_waitForPin(I2C_Handle  handle,
 
         if (timeout == 0U)
         {
-            I2CMasterIntClearEx(object->baseAddr, I2C_INT_ALL);
+            I2CControllerIntClearEx(object->baseAddr, I2C_INT_ALL);
         }
     }
 

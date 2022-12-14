@@ -447,7 +447,7 @@ int32_t Pcie_cfgRC (Pcie_Handle handle)
 
     status = Pcie_LtssmCtrl(handle, FALSE);
 
-    /* Enable memory access and mastership of the bus */
+    /* Enable memory access and control of the bus */
     memset (&setRegs, 0, sizeof(setRegs));
     memset (&getRegs, 0, sizeof(getRegs));
 
@@ -546,7 +546,7 @@ int32_t Pcie_cfgEP (Pcie_Handle handle)
 
     if (SystemP_SUCCESS == status)
     {
-        /* Enable memory access and mastership of the bus */
+        /* Enable memory access and control of the bus */
         memset (&setRegs, 0, sizeof(setRegs));
         memset (&getRegs, 0, sizeof(getRegs));
 

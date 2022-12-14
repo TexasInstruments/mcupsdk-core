@@ -60,36 +60,36 @@
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
-static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
+static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
                       uint8_t *writeData, uint32_t numWriteBytes,
                       uint8_t *readData,  uint32_t numReadBytes);
 
 void mcan_enableTransceiver(void)
 {
     I2C_Handle      i2cHandle;
-    uint8_t         dataToSlave[4];
+    uint8_t         dataToResponder[4];
 
     i2cHandle = gI2cHandle[CONFIG_I2C0];
-    dataToSlave[0] = TCA6424_REG_CONFIG1 | TCA6424_CMD_AUTO_INC;
-    dataToSlave[1] = 0x0U;
-    SetupI2CTransfer(i2cHandle, 0x22, &dataToSlave[0], 1, &dataToSlave[1], 1);
+    dataToResponder[0] = TCA6424_REG_CONFIG1 | TCA6424_CMD_AUTO_INC;
+    dataToResponder[1] = 0x0U;
+    SetupI2CTransfer(i2cHandle, 0x22, &dataToResponder[0], 1, &dataToResponder[1], 1);
     /* set the P10 and P11 to 0 make them output ports. */
-    dataToSlave[1] &= ~(0x3U);
-    SetupI2CTransfer(i2cHandle, 0x22, &dataToSlave[0], 2, NULL, 0);
+    dataToResponder[1] &= ~(0x3U);
+    SetupI2CTransfer(i2cHandle, 0x22, &dataToResponder[0], 2, NULL, 0);
 
     /* Get the port values. */
-    dataToSlave[0] = TCA6424_REG_INPUT1 | TCA6424_CMD_AUTO_INC;
-    dataToSlave[1] = 0x0U;
-    SetupI2CTransfer(i2cHandle, 0x22, &dataToSlave[0], 1, &dataToSlave[1], 1);
+    dataToResponder[0] = TCA6424_REG_INPUT1 | TCA6424_CMD_AUTO_INC;
+    dataToResponder[1] = 0x0U;
+    SetupI2CTransfer(i2cHandle, 0x22, &dataToResponder[0], 1, &dataToResponder[1], 1);
 
     /* Set P10 and P11 to 0.
      */
-    dataToSlave[0] = TCA6424_REG_OUTPUT1 | TCA6424_CMD_AUTO_INC;
-    dataToSlave[1] &= ~(0x3);
-    SetupI2CTransfer(i2cHandle, 0x22, &dataToSlave[0], 2, NULL, 0);
+    dataToResponder[0] = TCA6424_REG_OUTPUT1 | TCA6424_CMD_AUTO_INC;
+    dataToResponder[1] &= ~(0x3);
+    SetupI2CTransfer(i2cHandle, 0x22, &dataToResponder[0], 2, NULL, 0);
 }
 
-static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
+static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
                       uint8_t *writeData, uint32_t numWriteBytes,
                       uint8_t *readData,  uint32_t numReadBytes)
 {
@@ -98,7 +98,7 @@ static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
 
     /* Enable Transceiver */
     I2C_Transaction_init(&i2cTransaction);
-    i2cTransaction.slaveAddress = slaveAddr;
+    i2cTransaction.targetAddress = targetAddr;
     i2cTransaction.writeBuf = (uint8_t *)&writeData[0];
     i2cTransaction.writeCount = numWriteBytes;
     i2cTransaction.readBuf = (uint8_t *)&readData[0];

@@ -103,9 +103,9 @@ static MCASP_Attrs gMcaspAttrs[CONFIG_MCASP_NUM_INSTANCES] =
                 {
 %{
 % let bitClkrHz = instance.NumRxSlots * instance.RxSlotSize * instance.fsr * 1000;
-% let masterClkrHz = instance.masterClkr * instance.fsr * 1000;
-% let hiClkr = Math.round(config.inputClkFreq / masterClkrHz) - 1;
-% let aclkr = Math.round(masterClkrHz/bitClkrHz) - 1;
+% let controllerClkrHz = instance.controllerClkr * instance.fsr * 1000;
+% let hiClkr = Math.round(config.inputClkFreq / controllerClkrHz) - 1;
+% let aclkr = Math.round(controllerClkrHz/bitClkrHz) - 1;
 % if (instance.rxAclkSource == 0)
 % {
 %      aclkr = (instance.rxAclkSource << 5);
@@ -153,9 +153,9 @@ static MCASP_Attrs gMcaspAttrs[CONFIG_MCASP_NUM_INSTANCES] =
                 {
 %{
 % let bitClkxHz = instance.NumTxSlots * instance.TxSlotSize * instance.fsx * 1000;
-% let masterClkxHz = instance.masterClkx * instance.fsx * 1000;
-% let hiClkx = Math.round(config.inputClkFreq / masterClkxHz) - 1;
-% let aclkx = Math.round(masterClkxHz/bitClkxHz) - 1;
+% let controllerClkxHz = instance.controllerClkx * instance.fsx * 1000;
+% let hiClkx = Math.round(config.inputClkFreq / controllerClkxHz) - 1;
+% let aclkx = Math.round(controllerClkxHz/bitClkxHz) - 1;
 % if (instance.txAclkSource == 0)
 % {
 %      aclkx = (instance.txAclkSource << 5);

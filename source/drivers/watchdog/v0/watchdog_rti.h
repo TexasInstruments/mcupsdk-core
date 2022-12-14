@@ -212,7 +212,7 @@ typedef enum Watchdog_DriverState_e
 
 /**
  * @brief
- *  Watchdog Driver Master Control Block
+ *  Watchdog Driver Controller Control Block
  *
  * @details
  *  The structure is used to hold all the pertinent information with respect

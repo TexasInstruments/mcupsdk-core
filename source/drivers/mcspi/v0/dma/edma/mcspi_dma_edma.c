@@ -79,7 +79,7 @@ MCSPI_DmaFxns gMcspiDmaEdmaFxns =
     .dmaOpenFxn = MCSPI_edmaOpen,
     .dmaCloseFxn = MCSPI_edmaClose,
     .dmaChInitFxn = MCSPI_edmaChInit,
-    .dmaTransferMasterFxn = MCSPI_edmaTransfer,
+    .dmaTransferControllerFxn = MCSPI_edmaTransfer,
     .dmaStopFxn = MCSPI_edmaStop,
 };
 
@@ -444,7 +444,7 @@ static int32_t MCSPI_edmaStop(MCSPI_Object *obj, const MCSPI_Attrs *attrs,
     int32_t status = SystemP_SUCCESS;
 
     baseAddr = obj->baseAddr;
-    if(MCSPI_MS_MODE_MASTER == obj->openPrms.msMode)
+    if(MCSPI_MS_MODE_CONTROLLER == obj->openPrms.msMode)
     {
         /* Manual CS de-assert */
         if(MCSPI_CH_MODE_SINGLE == attrs->chMode)

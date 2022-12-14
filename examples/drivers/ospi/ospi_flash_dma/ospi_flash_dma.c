@@ -313,10 +313,10 @@ int32_t App_OspiFlashDmaTrEventRegister(App_OspiFlashDmaObj *appObj)
         appObj->trEventParams.eventType = UDMA_EVENT_TYPE_TR;
         appObj->trEventParams.eventMode = UDMA_EVENT_MODE_SHARED;
         appObj->trEventParams.chHandle  = appObj->udmaChHandle;
-        /* For polling mode we can't use the existing master event as that is meant only for interrupt event -
-         *  we can't mix interrupt and poll mode in same master handle. Set the parameter to NULL
-         *  so that the driver creates a new master event. */
-        appObj->trEventParams.masterEventHandle = NULL;
+        /* For polling mode we can't use the existing controller event as that is meant only for interrupt event -
+         *  we can't mix interrupt and poll mode in same controller handle. Set the parameter to NULL
+         *  so that the driver creates a new controller event. */
+        appObj->trEventParams.controllerEventHandle = NULL;
         appObj->trEventParams.eventCb           = NULL;
         appObj->trEventParams.appData           = NULL; /* No callback */
         udmaStatus = Udma_eventRegister(appObj->udmaDrvHandle, eventHandle, &appObj->trEventParams);

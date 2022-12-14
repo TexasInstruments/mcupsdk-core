@@ -87,8 +87,8 @@ void LIN_initModule(uint32_t base)
     /* Enable LIN Mode */
     LIN_disableSCIMode(base);
 
-    /* Set LIN mode to Master */
-    LIN_setLINMode(base, LIN_MODE_LIN_MASTER);
+    /* Set LIN mode to Commander */
+    LIN_setLINMode(base, LIN_MODE_LIN_COMMANDER);
 
     /* Enable Fixed baud rate mode */
     LIN_disableAutomaticBaudrate(base);
@@ -102,8 +102,8 @@ void LIN_initModule(uint32_t base)
     /* Use Enhanced Checksum */
     LIN_setChecksumType(base, LIN_CHECKSUM_ENHANCED);
 
-    /* Message filtering uses slave task ID byte */
-    LIN_setMessageFiltering(base, LIN_MSG_FILTER_IDSLAVE);
+    /* Message filtering uses responder task ID byte */
+    LIN_setMessageFiltering(base, LIN_MSG_FILTER_IDRESPONDER);
 
     /* Disable Internal loopback for external communication */
     LIN_disableIntLoopback(base);

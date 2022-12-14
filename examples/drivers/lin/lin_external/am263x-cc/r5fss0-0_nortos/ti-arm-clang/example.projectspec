@@ -95,7 +95,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_LIN_EXTERNAL_MASTER.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_LIN_EXTERNAL_COMMANDER.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

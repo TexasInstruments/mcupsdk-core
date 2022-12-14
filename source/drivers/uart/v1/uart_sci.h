@@ -371,7 +371,7 @@ typedef struct
     SemaphoreP_Object       writeTransferSemObj;
     /**< Write Transfer Sync Sempahore object */
     void                   *hwiHandle;
-    /**< Interrupt handle for master ISR */
+    /**< Interrupt handle for controller ISR */
     HwiP_Object             hwiObj;
     /**< Interrupt object */
     UART_EdmaParams         rxEdmaParams;

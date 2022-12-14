@@ -227,10 +227,10 @@ static void App_udmaTriggerInit(Udma_ChHandle ch0Handle, Udma_ChHandle ch1Handle
     gCh0TrEventPrms.eventType         = UDMA_EVENT_TYPE_TR;
     gCh0TrEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     gCh0TrEventPrms.chHandle          = ch0Handle;
-    /* For polling mode we can't use the existing master event as that is meant only for interrupt event -
-     * we can't mix interrupt and poll mode in same master handle. Set the parameter to NULL
-     * so that the driver creates a new master event. */
-    gCh0TrEventPrms.masterEventHandle = NULL;
+    /* For polling mode we can't use the existing controller event as that is meant only for interrupt event -
+     * we can't mix interrupt and poll mode in same controller handle. Set the parameter to NULL
+     * so that the driver creates a new controller event. */
+    gCh0TrEventPrms.controllerEventHandle = NULL;
     gCh0TrEventPrms.eventCb           = NULL;
     gCh0TrEventPrms.appData           = NULL;
     retVal = Udma_eventRegister(drvHandle, gCh0TrEventHandle, &gCh0TrEventPrms);
@@ -242,8 +242,8 @@ static void App_udmaTriggerInit(Udma_ChHandle ch0Handle, Udma_ChHandle ch1Handle
     gCh1TrEventPrms.eventType         = UDMA_EVENT_TYPE_TR;
     gCh1TrEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     gCh1TrEventPrms.chHandle          = ch1Handle;
-    /* Reuse previous event as master handle so that we share the same IA */
-    gCh1TrEventPrms.masterEventHandle = gCh0TrEventHandle;
+    /* Reuse previous event as controller handle so that we share the same IA */
+    gCh1TrEventPrms.controllerEventHandle = gCh0TrEventHandle;
     gCh1TrEventPrms.eventCb           = NULL;
     gCh1TrEventPrms.appData           = NULL;
     retVal = Udma_eventRegister(drvHandle, gCh1TrEventHandle, &gCh1TrEventPrms);
@@ -268,7 +268,7 @@ static void App_udmaTriggerDeInit(Udma_ChHandle ch0Handle, Udma_ChHandle ch1Hand
     retVal = Udma_chDisable(ch1Handle, UDMA_DEFAULT_CH_DISABLE_TIMEOUT);
     DebugP_assert(UDMA_SOK == retVal);
 
-    /* Unregister TR event - unregister master event at the end */
+    /* Unregister TR event - unregister controller event at the end */
     retVal = Udma_eventUnRegister(gCh1TrEventHandle);
     DebugP_assert(UDMA_SOK == retVal);
     retVal = Udma_eventUnRegister(gCh0TrEventHandle);

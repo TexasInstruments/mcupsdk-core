@@ -153,7 +153,7 @@ typedef uint32_t FSI_TxDelayTapType;
  */
 typedef uint32_t FSI_TxSubmoduleInReset;
 
-#define FSI_TX_MASTER_CORE_RESET             ((uint32_t)0x0U)
+#define FSI_TX_MAIN_CORE_RESET             ((uint32_t)0x0U)
 /**< Reset entire TX Module */
 #define FSI_TX_CLOCK_RESET                   ((uint32_t)0x1U)
 /**< Reset only TX clock */
@@ -853,7 +853,7 @@ void FSI_enableTxDMAEvent(uint32_t base);
 void FSI_disableTxDMAEvent(uint32_t base);
 
 /**
- * \brief   This API enables and configures the TDM Mode for multi-slave TDM operation.
+ * \brief   This API enables and configures the TDM Mode for multi-peripheral TDM operation.
  *
  * \param   base            [IN]  Base address of the FSI TX module.
  * \param   tdmInputSrc     [IN]  Input TDM port Select bit refer #FSI_TxTDMPortInputSrc
@@ -864,7 +864,7 @@ void FSI_disableTxDMAEvent(uint32_t base);
 int32_t FSI_enableAndConfigTxTDMMode(uint32_t base, uint8_t tdmInputSrc);
 
 /**
- * \brief   This API disables the TDM Mode for multi-slave TDM operation.
+ * \brief   This API disables the TDM Mode for multi-peripheral TDM operation.
  *
  * \param   base            [IN]  Base address of the FSI TX module.
  */

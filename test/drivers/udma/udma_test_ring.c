@@ -797,10 +797,10 @@ static int32_t udmaTestRingEventTestLoop(UdmaTestTaskObj *taskObj)
                     eventPrms.eventType         = UDMA_EVENT_TYPE_RING;
                     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
                     eventPrms.ringHandle        = ringHandle;
-                    eventPrms.masterEventHandle = NULL;
+                    eventPrms.controllerEventHandle = NULL;
                     if(UDMA_TEST_EVENT_INTR == taskObj->ringPrms->eventMode)
                     {
-                        eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+                        eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
                         eventPrms.eventCb           = &udmaTestRingEventCb;
                         eventPrms.appData           = &transferDoneSem;
                     }

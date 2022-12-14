@@ -45,7 +45,7 @@ void transfer_blocking(void)
     spiTransaction.count        = APP_MIBSPI_MSGSIZE;
     spiTransaction.txBuf        = (void *)transmitBuffer;
     spiTransaction.rxBuf        = (void *)receiveBuffer;
-    spiTransaction.slaveIndex   = 0U;
+    spiTransaction.peripheralIndex   = 0U;
     spiTransaction.arg          = NULL;
 
     /* Initiate transfer */
@@ -95,7 +95,7 @@ void transfer_nonblocking(void)
     spiTransaction.count        = APP_MIBSPI_MSGSIZE;
     spiTransaction.txBuf        = (void *)transmitBuffer;
     spiTransaction.rxBuf        = (void *)receiveBuffer;
-    spiTransaction.slaveIndex   = 0U;
+    spiTransaction.peripheralIndex   = 0U;
     spiTransaction.arg          = &gMibspiISRDoneSem;;
 
     /* Initiate transfer */

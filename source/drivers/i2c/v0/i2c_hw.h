@@ -81,10 +81,10 @@ extern "C" {
 #define I2C_IDLE_STATE                  ((uint8_t) 0U)
 #define I2C_WRITE_STATE                 ((uint8_t) 1U)
 #define I2C_READ_STATE                  ((uint8_t) 2U)
-/** \brief  I2C is trasferring in slave mode */
-#define I2C_SLAVE_XFER_STATE            ((uint8_t) 3U)
-/** \brief  I2C is restarting trasfer in slave mode */
-#define I2C_SLAVE_RESTART_STATE         ((uint8_t) 4U)
+/** \brief  I2C is trasferring in target mode */
+#define I2C_TARGET_XFER_STATE            ((uint8_t) 3U)
+/** \brief  I2C is restarting trasfer in target mode */
+#define I2C_TARGET_RESTART_STATE         ((uint8_t) 4U)
 #define I2C_ERROR                       ((uint8_t) 255U)
 /** @} */
 
@@ -100,8 +100,8 @@ extern "C" {
 /** @} */
 
 /**
- *  \anchor I2CMasterIntStatus/I2CSlaveIntStatus/I2CMasterIntStatusEx/I2CSlaveIntStatusEx
- *  \name I2CMasterIntStatus/I2CSlaveIntStatus/I2CMasterIntStatusEx/I2CSlaveIntStatusEx API Values
+ *  \anchor I2CControllerIntStatus/I2CTargetIntStatus/I2CControllerIntStatusEx/I2CTargetIntStatusEx
+ *  \name I2CControllerIntStatus/I2CTargetIntStatus/I2CControllerIntStatusEx/I2CTargetIntStatusEx API Values
  *  @{
  */
 /** \brief  RAW IRQ status */
@@ -202,8 +202,8 @@ extern "C" {
 /** @} */
 
 /**
- *  \anchor I2CMasterIntEnableEx
- *  \name I2CMasterIntEnableEx API Values
+ *  \anchor I2CControllerIntEnableEx
+ *  \name I2CControllerIntEnableEx API Values
  *  @{
  */
 /** \brief Arbitration lost interrupt */
@@ -224,8 +224,8 @@ extern "C" {
 #define I2C_INT_ACCESS_ERROR        ((uint32_t) I2C_IRQSTATUS_AERR_MASK)
 /** \brief Bus Free interrupt */
 #define I2C_INT_STOP_CONDITION      ((uint32_t) I2C_IRQSTATUS_BF_MASK)
-/** \brief Addressed as Slave interrupt */
-#define I2C_INT_ADRR_SLAVE          ((uint32_t) I2C_IRQSTATUS_AAS_MASK)
+/** \brief Addressed as Target interrupt */
+#define I2C_INT_ADRR_TARGET          ((uint32_t) I2C_IRQSTATUS_AAS_MASK)
 /** \brief Transmit underflow interrupt */
 #define I2C_INT_TRANSMIT_UNDER_FLOW ((uint32_t) I2C_IRQSTATUS_XUDF_MASK)
 /** \brief Receive overrun interrupt */
@@ -272,9 +272,9 @@ extern "C" {
  */
 #define     I2C_WAKE_UP_STOP_CONDITION    (I2C_WE_BF_MASK)
 /**
- * \brief I2C_WAKE_UP_ADRR_SLAVE          - Address as slave IRQ wakeup set
+ * \brief I2C_WAKE_UP_ADRR_TARGET          - Address as target IRQ wakeup set
  */
-#define     I2C_WAKE_UP_ADRR_SLAVE        (I2C_WE_AAS_MASK)
+#define     I2C_WAKE_UP_ADRR_TARGET        (I2C_WE_AAS_MASK)
 /**
  * \brief I2C_WAKE_UP_TX_UNDER_FLOW       - Transmit underflow wakeup set
  */
@@ -317,28 +317,28 @@ extern "C" {
 /** @} */
 
 /**
- *  \name MACROS used to slave address 7 or 10 bit mode of I2C.
+ *  \name MACROS used to target address 7 or 10 bit mode of I2C.
  *  @{
  */
 /**
- * \brief I2C_XSA_7BIT        Slave address 7  bit mode.
+ * \brief I2C_XSA_7BIT        Target address 7  bit mode.
  */
 #define    I2C_XSA_7BIT     (I2C_CON_XSA_B07)
 /**
- * \brief I2C_XSA_10BIT       Slave address 10 bit mode
+ * \brief I2C_XSA_10BIT       Target address 10 bit mode
  */
 #define    I2C_XSA_10BIT    ((uint32_t) I2C_CON_XSA_B10 << I2C_CON_XSA_SHIFT)
 /** @} */
 
 /**
- *  \anchor I2CMasterControl
- *  \name I2CMasterControl API Values
+ *  \anchor I2CControllerControl
+ *  \name I2CControllerControl API Values
  *  @{
  */
-/** \brief Master transmit mode. */
+/** \brief Controller transmit mode. */
 #define I2C_CFG_MST_TX              (((uint32_t) I2C_CON_TRX_MASK) | \
                                              (uint32_t) (I2C_CON_MST_MASK))
-/** \brief Master receive mode. */
+/** \brief Controller receive mode. */
 #define I2C_CFG_MST_RX              ((uint32_t) I2C_CON_MST_MASK)
 /** \brief Stop condition. */
 #define I2C_CFG_STOP                ((uint32_t) I2C_CON_STP_MASK)
@@ -346,31 +346,31 @@ extern "C" {
 #define I2C_CFG_N0RMAL_MODE         ((uint32_t) 0 << I2C_CON_STB_SHIFT)
 /** \brief Start byte mode. */
 #define I2C_CFG_SRT_BYTE_MODE       ((uint32_t) I2C_CON_STB_MASK)
-/** \brief 7 bit slave address. */
-#define I2C_CFG_7BIT_SLAVE_ADDR     ((uint32_t) 0 << I2C_CON_XSA_SHIFT)
-/** \brief 10 bit slave address. */
-#define I2C_CFG_10BIT_SLAVE_ADDR    ((uint32_t) I2C_CON_XSA_MASK)
-/** \brief Master mode 10 bit own address 0 */
+/** \brief 7 bit target address. */
+#define I2C_CFG_7BIT_TARGET_ADDR     ((uint32_t) 0 << I2C_CON_XSA_SHIFT)
+/** \brief 10 bit target address. */
+#define I2C_CFG_10BIT_TARGET_ADDR    ((uint32_t) I2C_CON_XSA_MASK)
+/** \brief Controller mode 10 bit own address 0 */
 #define I2C_CFG_10BIT_OWN_ADDR_0    ((uint32_t) I2C_CON_XOA0_MASK)
-/** \brief Master mode 10 bit own address 1 */
+/** \brief Controller mode 10 bit own address 1 */
 #define I2C_CFG_10BIT_OWN_ADDR_1    ((uint32_t) I2C_CON_XOA1_MASK)
-/** \brief Master mode 10 bit own address 2 */
+/** \brief Controller mode 10 bit own address 2 */
 #define I2C_CFG_10BIT_OWN_ADDR_2    ((uint32_t) I2C_CON_XOA2_MASK)
-/** \brief Master mode 10 bit own address 3 */
+/** \brief Controller mode 10 bit own address 3 */
 #define I2C_CFG_10BIT_OWN_ADDR_3    ((uint32_t) I2C_CON_XOA3_MASK)
-/** \brief Master mode 7 bit own address 0 */
+/** \brief Controller mode 7 bit own address 0 */
 #define I2C_CFG_7BIT_OWN_ADDR_0     ((uint32_t) 0 << I2C_CON_XOA0_SHIFT)
-/** \brief Master mode 7 bit own address 1 */
+/** \brief Controller mode 7 bit own address 1 */
 #define I2C_CFG_7BIT_OWN_ADDR_1     ((uint32_t) 0 << I2C_CON_XOA1_SHIFT)
-/** \brief Master mode 7 bit own address 2 */
+/** \brief Controller mode 7 bit own address 2 */
 #define I2C_CFG_7BIT_OWN_ADDR_2     ((uint32_t) 0 << I2C_CON_XOA2_SHIFT)
-/** \brief Master mode 7 bit own address 3 */
+/** \brief Controller mode 7 bit own address 3 */
 #define I2C_CFG_7BIT_OWN_ADDR_3     ((uint32_t) 0 << I2C_CON_XOA3_SHIFT)
 /** \brief I2C module enable */
 #define I2C_CFG_MST_ENABLE          ((uint32_t) I2C_CON_I2C_EN_MASK)
 /** \brief Start condition, initiate I2C transfer */
 #define I2C_CFG_START               ((uint32_t) I2C_CON_STT_MASK)
-/** \brief I2C configure master mode. */
+/** \brief I2C configure controller mode. */
 #define I2C_CFG_MST                 ((uint32_t) I2C_CON_MST_MASK)
 /** \brief High speed operation mode */
 #define I2C_CFG_HS_MOD              ((uint32_t) CSL_I2C_CON_OPMODE_HSI2C << CSL_I2C_CON_OPMODE_SHIFT)
@@ -396,7 +396,7 @@ extern "C" {
  *                      obtained by scaling System clock fed to I2C module.
  * \param   outputClk   It is the required I2C bus speed or frequency.
  */
-void I2CMasterInitExpClk(uint32_t baseAddr,
+void I2CControllerInitExpClk(uint32_t baseAddr,
                          uint32_t sysClk,
                          uint32_t internalClk,
                          uint32_t outputClk);
@@ -407,14 +407,14 @@ void I2CMasterInitExpClk(uint32_t baseAddr,
  *
  * \param   baseAddr     I2C base address.
  */
-void I2CMasterEnable(uint32_t baseAddr);
+void I2CControllerEnable(uint32_t baseAddr);
 
 /**
  * \brief   Enables the I2C free run module.
  *
  * \param   baseAddr     I2C base address.
  */
-void I2CMasterEnableFreeRun(uint32_t baseAddr);
+void I2CControllerEnableFreeRun(uint32_t baseAddr);
 
 /**
  * \brief   Set the I2C systest register.
@@ -423,7 +423,7 @@ void I2CMasterEnableFreeRun(uint32_t baseAddr);
  *
  * \param   sysTest   The system test register value to be set.
  */
-void I2CMasterSetSysTest(uint32_t baseAddr, uint32_t sysTest);
+void I2CControllerSetSysTest(uint32_t baseAddr, uint32_t sysTest);
 
 /**
  * \brief   Get the I2C systest register.
@@ -433,7 +433,7 @@ void I2CMasterSetSysTest(uint32_t baseAddr, uint32_t sysTest);
  * \return  sysTest   The system test register value to be set.
  *
  **/
-uint32_t I2CMasterGetSysTest(uint32_t baseAddr);
+uint32_t I2CControllerGetSysTest(uint32_t baseAddr);
 
 /**
  * \brief   Disables the I2C Module.This will put the I2C
@@ -443,7 +443,7 @@ uint32_t I2CMasterGetSysTest(uint32_t baseAddr);
  *
  * \param   baseAddr     I2C base address.
  */
-void I2CMasterDisable(uint32_t baseAddr);
+void I2CControllerDisable(uint32_t baseAddr);
 
 /**
  * \brief   This API determines whether bus is busy or not.
@@ -454,10 +454,10 @@ void I2CMasterDisable(uint32_t baseAddr);
  *          returns 0 if bus is free.
  *
  */
-int32_t I2CMasterBusBusy(uint32_t baseAddr);
+int32_t I2CControllerBusBusy(uint32_t baseAddr);
 
 /**
- * \brief   This API determines whether Master is busy or not.
+ * \brief   This API determines whether Controller is busy or not.
  *
  * \param   baseAddr  I2C base address.
  *
@@ -465,7 +465,7 @@ int32_t I2CMasterBusBusy(uint32_t baseAddr);
  *          returns 0 if bus is free.
  *
  */
-uint32_t I2CMasterBusy(uint32_t baseAddr);
+uint32_t I2CControllerBusy(uint32_t baseAddr);
 
 /**
  * \brief   This API configure I2C in different modes of
@@ -477,17 +477,17 @@ uint32_t I2CMasterBusy(uint32_t baseAddr);
  *
  *          cmd can take following macros.\n
  *
- *         I2C_CFG_MST_TX            - Configure'sI2C as Master-Transmitter.\n
- *         I2C_CFG_MST_RX             - Configurers I2C as Master-Receiver.\n
+ *         I2C_CFG_MST_TX            - Configure'sI2C as Controller-Transmitter.\n
+ *         I2C_CFG_MST_RX             - Configurers I2C as Controller-Receiver.\n
  *         I2C_CFG_STOP               - Configurers I2C to generate stop
  *                                       condition when DCOUNT counts down to
  *                                       zero.\n
  *         I2C_CFG_N0RMAL_MODE        - Configurers I2C in normal mode.\n
  *         I2C_CFG_SRT_BYTE_MODE      - Configurers I2C in start byte mode.\n
- *         I2C_CFG_7BIT_SLAVE_ADDR    - Configurers I2C to address seven bit
- *                                       addressed slave.\n
- *         I2C_CFG_10BIT_SLAVE_ADDR   - Configurers I2C to address ten bit
- *                                       addressed slave.\n
+ *         I2C_CFG_7BIT_TARGET_ADDR    - Configurers I2C to address seven bit
+ *                                       addressed target.\n
+ *         I2C_CFG_10BIT_TARGET_ADDR   - Configurers I2C to address ten bit
+ *                                       addressed target.\n
  *         I2C_CFG_10BIT_OWN_ADDR_0   - Enable 10bit addressing mode for own
  *                                       address 0.\n
  *         I2C_CFG_10BIT_OWN_ADDR_1   - Enable 10bit addressing mode for own
@@ -505,7 +505,7 @@ uint32_t I2CMasterBusy(uint32_t baseAddr);
  *         I2C_CFG_7BIT_OWN_ADDR_3   -  Enable 7bit addressing mode for own
  *                                       address 3.\n
  */
-void I2CMasterControl(uint32_t baseAddr, uint32_t cmd);
+void I2CControllerControl(uint32_t baseAddr, uint32_t cmd);
 
 /**
  * \brief   This API starts a I2C transaction on the bus.
@@ -514,7 +514,7 @@ void I2CMasterControl(uint32_t baseAddr, uint32_t cmd);
  *
  * \param   baseAddr     I2C base address.
  */
-void I2CMasterStart(uint32_t baseAddr);
+void I2CControllerStart(uint32_t baseAddr);
 
 /**
  * \brief   This API stops a I2C transaction on the bus.
@@ -523,11 +523,11 @@ void I2CMasterStart(uint32_t baseAddr);
  *
  * \param   baseAddr     I2C base address.
  */
-void I2CMasterStop(uint32_t baseAddr);
+void I2CControllerStop(uint32_t baseAddr);
 
 /**
  * \brief   This API enables only specified I2C interrupts
- *          in master mode.
+ *          in controller mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts that are required to be
@@ -544,17 +544,17 @@ void I2CMasterStop(uint32_t baseAddr);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_OVER_RUN        - Receive overrun interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
  *         I2C_INT_TRANSMIT_DRAIN       - Transmit drain interrupt.\n
  */
-void I2CMasterIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CControllerIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API enables only specified I2C interrupts
- *          in Slave mode.
+ *          in Target mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts that are required to be
@@ -571,17 +571,17 @@ void I2CMasterIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_OVER_RUN        - Receive overrun interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
  *         I2C_INT_TRANSMIT_DRAIN       - Transmit drain interrupt.\n
  */
-void I2CSlaveIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CTargetIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API disables only specified I2C interrupts
- *          in master mode.
+ *          in controller mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts that are required to be
@@ -598,17 +598,17 @@ void I2CSlaveIntEnableEx(uint32_t baseAddr, uint32_t intFlag);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_OVER_RUN        - Receive overrun interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
  *         I2C_INT_TRANSMIT_DRAIN       - Transmit drain interrupt.\n
  */
-void I2CMasterIntDisableEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CControllerIntDisableEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API disables only specified I2C interrupts
- *          in Slave mode.
+ *          in Target mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts that are required to be
@@ -625,50 +625,50 @@ void I2CMasterIntDisableEx(uint32_t baseAddr, uint32_t intFlag);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_OVER_RUN        - Receive overrun interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
  *         I2C_INT_TRANSMIT_DRAIN       - Transmit drain interrupt.\n
  */
-void I2CSlaveIntDisableEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CTargetIntDisableEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API returns the status of  interrupts in
- *          master mode.
+ *          controller mode.
  *
  * \param   baseAddr     I2C base address.
  *
  * \return status of interrupts.
  *
  */
-uint32_t I2CMasterIntStatus(uint32_t baseAddr);
+uint32_t I2CControllerIntStatus(uint32_t baseAddr);
 
 /**
  * \brief   This API returns the raw status of interrupts in
- *          master mode.
+ *          controller mode.
  *
  * \param   baseAddr     I2C base address.
  *
  * \return Raw status of interrupts.
  *
  */
-uint32_t I2CMasterIntRawStatus(uint32_t baseAddr);
+uint32_t I2CControllerIntRawStatus(uint32_t baseAddr);
 
 /**
  * \brief   This API returns the raw status of interrupts in
- *          slave mode.
+ *          target mode.
  *
  * \param   baseAddr     I2C base address.
  *
  * \return Raw status of interrupts.
  *
  */
-uint32_t I2CSlaveIntRawStatus(uint32_t baseAddr);
+uint32_t I2CTargetIntRawStatus(uint32_t baseAddr);
 
 /**
  * \brief   This API returns the raw status of specified
- *          interrupts in master mode.
+ *          interrupts in controller mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts whose raw status needs to
@@ -685,7 +685,7 @@ uint32_t I2CSlaveIntRawStatus(uint32_t baseAddr);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_OVER_RUN        - Receive overrun interrupt.\n
  *         I2C_INT_BUS_BUSY             - Bus busy.\n
@@ -695,11 +695,11 @@ uint32_t I2CSlaveIntRawStatus(uint32_t baseAddr);
  * \return status of specified interrupts.
  *
  */
-uint32_t I2CMasterIntRawStatusEx(uint32_t baseAddr, uint32_t intFlag);
+uint32_t I2CControllerIntRawStatusEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API Clears the status of specified interrupts
- *          in master mode.
+ *          in controller mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts whose status needs to be
@@ -716,16 +716,16 @@ uint32_t I2CMasterIntRawStatusEx(uint32_t baseAddr, uint32_t intFlag);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
  *         I2C_INT_TRANSMIT_DRAIN       - Transmit drain interrupt.\n
  */
-void I2CMasterIntClearEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CControllerIntClearEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API Clears the status of specified interrupts
- *          in Slave mode.
+ *          in Target mode.
  *
  * \param   baseAddr    I2C base address.
  * \param   intFlag     It specifies the interrupts whose status needs to be
@@ -742,12 +742,12 @@ void I2CMasterIntClearEx(uint32_t baseAddr, uint32_t intFlag);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
  *         I2C_INT_TRANSMIT_DRAIN       - Transmit drain interrupt.\n
  */
-void I2CSlaveIntClearEx(uint32_t baseAddr, uint32_t intFlag);
+void I2CTargetIntClearEx(uint32_t baseAddr, uint32_t intFlag);
 
 /**
  * \brief   This API gets the status of enabled
@@ -768,7 +768,7 @@ void I2CSlaveIntClearEx(uint32_t baseAddr, uint32_t intFlag);
  *         I2C_INT_START                - Start condition interrupt.\n
  *         I2C_INT_ACCESS_ERROR         - Access error interrupt.\n
  *         I2C_INT_STOP_CONDITION       - Stop condition interrupt.\n
- *         I2C_INT_ADRR_SLAVE           - Address-as-slave interrupt.\n
+ *         I2C_INT_ADRR_TARGET           - Address-as-target interrupt.\n
  *         I2C_INT_TRANSMIT_UNDER_FLOW  - Transmit under flow interrupt.\n
  *         I2C_INT_RECV_OVER_RUN        - Receive overrun interrupt.\n
  *         I2C_INT_RECV_DRAIN           - Receive drain interrupt.\n
@@ -780,19 +780,19 @@ void I2CSlaveIntClearEx(uint32_t baseAddr, uint32_t intFlag);
 uint32_t I2CGetEnabledIntStatus(uint32_t baseAddr, uint32_t intFlag);
 
 /**
- * \brief   This API sets the address of the slave device
+ * \brief   This API sets the address of the target device
  *          with which I2C wants to communicate.
  *
  * \param   baseAddr   I2C base address.
- * \param   slaveAdd   slave address.
+ * \param   targetAdd   target address.
  */
-void I2CMasterSlaveAddrSet(uint32_t baseAddr, uint32_t slaveAdd);
+void I2CControllerTargetAddrSet(uint32_t baseAddr, uint32_t targetAdd);
 
 /**
  * \brief   This API configure I2C data count register with a
  *          value. The value in the I2C data count register indicate how many
  *          data words to transfer when the I2C is configured as a
- *          master-transmitter and repeat mode is off.
+ *          controller-transmitter and repeat mode is off.
  *
  * \param   baseAddr     I2C base address.
  * \param   count        It is value which is set to I2C data count register.
@@ -803,7 +803,7 @@ void I2CSetDataCount(uint32_t baseAddr, uint32_t count);
  * \brief   This API gets the number of bytes transferred over the
  *          I2C bus. The value in the I2C data count register indicate how many
  *          data words to transfer when the I2C is configured as a
- *          master-transmitter and repeat mode is off.
+ *          controller-transmitter and repeat mode is off.
  *
  * \param   baseAddr   I2C base address.
  *
@@ -900,23 +900,23 @@ void I2CAutoIdleDisable(uint32_t baseAddr);
 uint32_t I2CSystemStatusGet(uint32_t baseAddr);
 
 /**
- * \brief   This API transmits a byte from the I2C in Master mode.
+ * \brief   This API transmits a byte from the I2C in Controller mode.
  *
  * \param   baseAddr    I2C base address.
- * \param   data       data to be transmitted from the I2C Master.
+ * \param   data       data to be transmitted from the I2C Controller.
  */
-void I2CMasterDataPut(uint32_t baseAddr, uint8_t data);
+void I2CControllerDataPut(uint32_t baseAddr, uint8_t data);
 
 /**
  * \brief   This API Receives a byte that has been sent to the
- *         I2C in Master mode.
+ *         I2C in Controller mode.
  *
  * \param   baseAddr     I2C base address.
  *
- * \return Returns the byte received from by the I2C in Master mode.
+ * \return Returns the byte received from by the I2C in Controller mode.
  *
  */
-uint8_t I2CMasterDataGet(uint32_t baseAddr);
+uint8_t I2CControllerDataGet(uint32_t baseAddr);
 
 /**
  * \brief  This function configures SYSC register
@@ -929,7 +929,7 @@ void I2CSyscInit(uint32_t baseAddr, uint32_t syscFlag);
 
 /**
  * \brief   This API configures the I2C operation mode(F/S or HS),
- *          slave address 7bit or 10bit, own address 7bit or 10bit and
+ *          target address 7bit or 10bit, own address 7bit or 10bit and
  *          start byte mode or normal mode of operation
  *
  * \param   baseAddr     I2C base address.

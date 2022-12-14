@@ -2202,7 +2202,7 @@ static int32_t MMCSD_tuningProcedure(MMCSD_Handle handle)
         /*
 		Set MMCHS_DLL[12] FORCE_VAL to 1
 		Set MMCHS_DLL[19:13] FORCE_SR_C to 0x0 ( in increments of 4)
-		Set MMCHS_DLL[1] DLL_CALIB to 0x1. This transfers the FORCE_SR_C value to the slave delay line.
+		Set MMCHS_DLL[1] DLL_CALIB to 0x1. This transfers the FORCE_SR_C value to the peripheral delay line.
 		Set MMCHS_DLL[12] DLL_CALIB to 0
 	    */
         MMCSD_setDLL(attrs->baseAddr, phaseDelay);
@@ -2608,7 +2608,7 @@ static void MMCSD_setDLL(uint32_t baseAddr, uint32_t count)
 	int i;
 	/*
  	       Set MMCHS_DLL[12] FORCE_VAL to 1
-		   Set MMCHS_DLL[1] DLL_CALIB to 0x1. This transfers the FORCE_SR_C value to the slave delay line.
+		   Set MMCHS_DLL[1] DLL_CALIB to 0x1. This transfers the FORCE_SR_C value to the peripheral delay line.
 		   Set MMCHS_DLL[12] DLL_CALIB to 0
     */
 	regVal=HW_RD_REG32(baseAddr + CSL_MMC_DLL);

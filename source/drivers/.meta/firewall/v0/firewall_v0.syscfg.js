@@ -57,7 +57,7 @@ function getConfigurables() {
         name: "fwlId",
         displayName: "Firewall ID",
         default: firewallIdList[0].name,
-        description: "The Slave name of the Firewall region",
+        description: "The Target name of the Firewall region",
         options: firewallIdList,
     }
     )

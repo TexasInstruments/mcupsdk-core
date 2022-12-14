@@ -62,8 +62,8 @@ function getConfigurables()
 
     config.push(/* Channel attributes */
         {
-            name: "slaveCS",
-            displayName: "Slave Chip-select",
+            name: "peripheralCS",
+            displayName: "Peripheral Chip-select",
             default: 0,
             options: [
                 {
@@ -76,7 +76,7 @@ function getConfigurables()
                     name: 2,
                 },
             ],
-            description: "Chipselect in slave mode of operation",
+            description: "Chipselect in peripheral mode of operation",
         },
         {
             name: "dmaReqLine",

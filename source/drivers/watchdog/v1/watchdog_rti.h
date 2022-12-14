@@ -91,7 +91,7 @@ typedef struct Watchdog_HwAttrs_s
     /**
      * @brief   Base address of the Watchdog address space to be used.
      */
-    uintptr_t           baseAddr; 
+    uintptr_t           baseAddr;
 
     /**
      * @brief   WDT clock frequency.
@@ -212,7 +212,7 @@ typedef enum Watchdog_DriverState_e
 
 /**
  * @brief
- *  Watchdog Driver Master Control Block
+ *  Watchdog Driver Controller Control Block
  *
  * @details
  *  The structure is used to hold all the pertinent information with respect

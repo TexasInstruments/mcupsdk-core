@@ -161,19 +161,19 @@ typedef void *MCSPI_Handle;
  *
  *  Definitions for various MCSPI modes of operation
  *
- *  The MCSPI driver operates in both master and SPI slave modes.
+ *  The MCSPI driver operates in both controller and SPI peripheral modes.
  *  Logically, the implementation is identical, however the difference
  *  between these two modes is driven by hardware. The default mode is
- *  #MCSPI_MS_MODE_MASTER, but can be set to slave mode by setting
- *  #MCSPI_OpenParams.msMode to #MCSPI_MS_MODE_SLAVE in the parameters passed to
+ *  #MCSPI_MS_MODE_CONTROLLER, but can be set to peripheral mode by setting
+ *  #MCSPI_OpenParams.msMode to #MCSPI_MS_MODE_PERIPHERAL in the parameters passed to
  *  #MCSPI_open().
  *
  *  @{
  */
 /** \brief The module generates the clock and CS */
-#define MCSPI_MS_MODE_MASTER            (CSL_MCSPI_MODULCTRL_MS_MASTER)
+#define MCSPI_MS_MODE_CONTROLLER            (CSL_MCSPI_MODULCTRL_MS_MASTER)
 /** \brief The module receives the clock and CS */
-#define MCSPI_MS_MODE_SLAVE             (CSL_MCSPI_MODULCTRL_MS_SLAVE)
+#define MCSPI_MS_MODE_PERIPHERAL             (CSL_MCSPI_MODULCTRL_MS_SLAVE)
 /** @} */
 
 /**
@@ -247,7 +247,7 @@ typedef void *MCSPI_Handle;
 
 /**
  *  \anchor MCSPI_SlvCsSelect
- *  \name Slave Chip-select Signal Select
+ *  \name Peripheral Chip-select Signal Select
  *
  *  @{
  */
@@ -294,11 +294,11 @@ typedef void *MCSPI_Handle;
  *  @{
  */
 /**
- *  \brief Only one channel will be used in master mode. This should be used
+ *  \brief Only one channel will be used in controller mode. This should be used
  *  when CS is used in forced enable mode.
  */
 #define MCSPI_CH_MODE_SINGLE            (CSL_MCSPI_MODULCTRL_SINGLE_SINGLE)
-/** \brief More than one channel will be used in master mode */
+/** \brief More than one channel will be used in controller mode */
 #define MCSPI_CH_MODE_MULTI             (CSL_MCSPI_MODULCTRL_SINGLE_MULTI)
 /** @} */
 
@@ -426,7 +426,7 @@ typedef struct
     MCSPI_CallbackFxn       transferCallbackFxn;
     /**< Callback function pointer */
     uint32_t                msMode;
-    /**< Master or Slave mode. Refer \ref MCSPI_MsMode */
+    /**< Controller or Peripheral mode. Refer \ref MCSPI_MsMode */
     int32_t                 mcspiDmaIndex;
     /**< Index of DMA instance used by MCSPI Driver. This index will be set by SysCfg according to the DMA driver chosen.
      * The MCSPI driver uses this index to do an \ref MCSPI_dmaOpen inside the \ref MCSPI_open if the DMA mode is enabled
@@ -463,8 +463,8 @@ typedef struct
     uint32_t                dpe1;
     /**< Transmission enable/disable for D1. Refer \ref MCSPI_TxEnable */
     uint32_t                slvCsSelect;
-    /**< MCSPI slave select signal detection. Applicable for Channel 0 and
-     *   in slave mode only. Refer \ref MCSPI_SlvCsSelect */
+    /**< MCSPI peripheral select signal detection. Applicable for Channel 0 and
+     *   in peripheral mode only. Refer \ref MCSPI_SlvCsSelect */
     uint32_t                startBitEnable;
     /**< Start bit D/CX added before SPI transfer. Polarity is defined by
      *   start bit level (below) */
@@ -473,7 +473,7 @@ typedef struct
      *   Refer \ref MCSPI_SbPolarity */
     uint32_t                csIdleTime;
     /**< Chip select time control. Refer \ref MCSPI_CsIdleTime.
-     *   This is applicable only in master mode */
+     *   This is applicable only in controller mode */
     uint32_t                defaultTxData;
     /**< Default TX data to use when NULL pointer is provided for TX buffer.
      *   The actual data that is transmitted depends on the dataSize field */
@@ -604,7 +604,7 @@ typedef struct
     SemaphoreP_Object       transferSemObj;
     /**< Transfer Sync Sempahore object */
     void                   *hwiHandle;
-    /**< Interrupt handle for master ISR */
+    /**< Interrupt handle for controller ISR */
     HwiP_Object             hwiObj;
     /**< Interrupt object */
 
@@ -710,10 +710,10 @@ int32_t MCSPI_dmaChConfig(MCSPI_Handle handle,
 /**
  *  \brief  Function to perform MCSPI transactions
  *
- *  If the MCSPI is in #MCSPI_MS_MODE_MASTER mode, it will immediately start the
- *  transaction. If the MCSPI is in #MCSPI_MS_MODE_SLAVE mode, it prepares the
- *  driver for a transaction with a MCSPI master device. The device will then
- *  wait until the master begins the transfer.
+ *  If the MCSPI is in #MCSPI_MS_MODE_CONTROLLER mode, it will immediately start the
+ *  transaction. If the MCSPI is in #MCSPI_MS_MODE_PERIPHERAL mode, it prepares the
+ *  driver for a transaction with a MCSPI controller device. The device will then
+ *  wait until the controller begins the transfer.
  *
  *  In #MCSPI_TRANSFER_MODE_BLOCKING, #MCSPI_transfer() will block task
  *  execution until the transaction has completed or a timeout has occurred.
@@ -729,7 +729,7 @@ int32_t MCSPI_dmaChConfig(MCSPI_Handle handle,
  *  It is also forbidden to modify the content of the #MCSPI_Transaction.txBuf
  *  during a transaction, even though the physical transfer might not have
  *  started yet. Doing this can result in data corruption. This is especially
- *  important for slave operations where #MCSPI_transfer() might be called a
+ *  important for peripheral operations where #MCSPI_transfer() might be called a
  *  long time before the actual data transfer begins.
  *
  *  \param  handle      #MCSPI_Handle returned from #MCSPI_open()
@@ -806,7 +806,7 @@ static inline void MCSPI_OpenParams_init(MCSPI_OpenParams *openPrms)
         openPrms->transferMode        = MCSPI_TRANSFER_MODE_BLOCKING;
         openPrms->transferTimeout     = SystemP_WAIT_FOREVER;
         openPrms->transferCallbackFxn = NULL;
-        openPrms->msMode              = MCSPI_MS_MODE_MASTER;
+        openPrms->msMode              = MCSPI_MS_MODE_CONTROLLER;
     }
 }
 

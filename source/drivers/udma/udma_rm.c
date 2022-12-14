@@ -1392,16 +1392,16 @@ uint32_t Udma_rmAllocVintrBit(Udma_EventHandleInt eventHandle)
     uint32_t                i;
     uint32_t                vintrBitNum = UDMA_EVENT_INVALID;
     uint64_t                bitMask;
-    Udma_EventHandleInt     masterEventHandle;
+    Udma_EventHandleInt     controllerEventHandle;
     const Udma_EventPrms   *eventPrms;
     Udma_DrvHandleInt       drvHandle = eventHandle->drvHandle;
 
-    masterEventHandle = eventHandle;
+    controllerEventHandle = eventHandle;
     eventPrms = &eventHandle->eventPrms;
-    if(NULL_PTR != eventPrms->masterEventHandle)
+    if(NULL_PTR != eventPrms->controllerEventHandle)
     {
         /* Shared event. Get the master handle */
-        masterEventHandle = (Udma_EventHandleInt) eventPrms->masterEventHandle;
+        controllerEventHandle = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
     }
 
     SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);
@@ -1409,9 +1409,9 @@ uint32_t Udma_rmAllocVintrBit(Udma_EventHandleInt eventHandle)
     for(i = 0U; i < UDMA_MAX_EVENTS_PER_VINTR; i++)
     {
         bitMask = ((uint64_t) 1U << i);
-        if((masterEventHandle->vintrBitAllocFlag & bitMask) == 0U)
+        if((controllerEventHandle->vintrBitAllocFlag & bitMask) == 0U)
         {
-            masterEventHandle->vintrBitAllocFlag |= bitMask;
+            controllerEventHandle->vintrBitAllocFlag |= bitMask;
             vintrBitNum = i;
             break;
         }
@@ -1427,23 +1427,23 @@ void Udma_rmFreeVintrBit(uint32_t vintrBitNum,
                          Udma_EventHandleInt eventHandle)
 {
     uint64_t                bitMask;
-    Udma_EventHandleInt     masterEventHandle;
+    Udma_EventHandleInt     controllerEventHandle;
     const Udma_EventPrms   *eventPrms;
 
-    masterEventHandle = eventHandle;
+    controllerEventHandle = eventHandle;
     eventPrms = &eventHandle->eventPrms;
-    if(NULL_PTR != eventPrms->masterEventHandle)
+    if(NULL_PTR != eventPrms->controllerEventHandle)
     {
         /* Shared event. Get the master handle */
-        masterEventHandle = (Udma_EventHandleInt) eventPrms->masterEventHandle;
+        controllerEventHandle = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
     }
 
     SemaphoreP_pend(&drvHandle->rmLockObj, SystemP_WAIT_FOREVER);
 
     DebugP_assert(vintrBitNum < UDMA_MAX_EVENTS_PER_VINTR);
     bitMask = ((uint64_t) 1U << vintrBitNum);
-    DebugP_assert((masterEventHandle->vintrBitAllocFlag & bitMask) == bitMask);
-    masterEventHandle->vintrBitAllocFlag &= ~bitMask;
+    DebugP_assert((controllerEventHandle->vintrBitAllocFlag & bitMask) == bitMask);
+    controllerEventHandle->vintrBitAllocFlag &= ~bitMask;
 
     SemaphoreP_post(&drvHandle->rmLockObj);
 

@@ -275,8 +275,8 @@ typedef enum
  *          function. */
 typedef enum
 {
-    LIN_MODE_LIN_SLAVE        = 0x0U,
-    LIN_MODE_LIN_MASTER       = 0x1U
+    LIN_MODE_LIN_RESPONDER        = 0x0U,
+    LIN_MODE_LIN_COMMANDER       = 0x1U
 } LIN_LINMode;
 
 /** \brief  The following are defines for the \e line parameter of the
@@ -294,7 +294,7 @@ typedef enum
 typedef enum
 {
     LIN_MSG_FILTER_IDBYTE  = 0x0U,
-    LIN_MSG_FILTER_IDSLAVE = 0x1U
+    LIN_MSG_FILTER_IDRESPONDER = 0x1U
 } LIN_MessageFilter;
 
 /** \brief  The following are defines for the \e type parameter of the
@@ -399,9 +399,9 @@ void LIN_sendData(uint32_t base, uint16_t *data);
 /**
  *  \brief  Checks a LIN base address.
  *
- *  \param  base is the base address of the LIN controller.
+ *  \param  base is the base address of the LIN commander.
  *
- *  \note   This function determines if a LIN controller base address is valid.
+ *  \note   This function determines if a LIN commander base address is valid.
  *
  *  \return Returns \b true if the base address is valid and \b false
  *          otherwise.
@@ -426,12 +426,12 @@ LIN_isBaseValid(uint32_t base)
 /**
  *  \brief  Sets the LIN mode.
  *
- *  \param  base is the base address of the LIN controller.
- *  \param  mode is the desired mode (slave or master).
+ *  \param  base is the base address of the LIN commander.
+ *  \param  mode is the desired mode (responder or commander).
  *
  *  \note   In LIN mode only, this function sets the mode of the
- *          LIN mode to either slave or master. The \e mode parameter
- *          should be passed a value of \b LIN_MODE_LIN_SLAVE or \b LIN_MODE_LIN_MASTER
+ *          LIN mode to either responder or commander. The \e mode parameter
+ *          should be passed a value of \b LIN_MODE_LIN_RESPONDER or \b LIN_MODE_LIN_COMMANDER
  *          to configure the mode of the LIN module specified by \e base.
  *
  */
@@ -448,11 +448,11 @@ LIN_setLINMode(uint32_t base, LIN_LINMode mode)
 /**
  *  \brief  Set Maximum Baud Rate Prescaler.
  *
- *  \param  base is the base address of the LIN controller.
+ *  \param  base is the base address of the LIN commander.
  *  \param  clock is the device system clock (Hz).
  *
  *  In LIN mode only, this function is used to set the maximum baud rate
- *  prescaler used during synchronization phase of a slave module if the
+ *  prescaler used during synchronization phase of a responder module if the
  *  ADAPT bit is set. The maximum baud rate prescaler is used by the wakeup
  *  and idle timer counters for a constant 4 second expiration time relative
  *  to a 20kHz rate.
@@ -480,7 +480,7 @@ LIN_setMaximumBaudRate(uint32_t base, uint32_t clock)
  *  In LIN mode only, this function sets the message filtering type. The \e
  *  type parameter can be one of the following values:
  *  - \b LIN_MSG_FILTER_IDBYTE   - Filtering uses LIN message ID Byte
- *  - \b LIN_MSG_FILTER_IDSLAVE  - Filtering uses the Slave Task ID Byte
+ *  - \b LIN_MSG_FILTER_IDRESPONDER  - Filtering uses the Responder Task ID Byte
  *
  */
 static inline void
@@ -538,7 +538,7 @@ LIN_disableParity(uint32_t base)
  *  appends them to the identifier.
  *
  *  \note An ID must be generated with parity before header generation in
- *  LIN master mode when parity is enabled using the function
+ *  LIN commander mode when parity is enabled using the function
  *  LIN_enableParity().
  *
  *  \return Returns the identifier appended with parity bits.
@@ -565,8 +565,8 @@ LIN_generateParityID(uint16_t identifier)
  *  \param  base is the LIN module base address
  *  \param  identifier is the LIN header ID byte
  *
- *  In LIN mode only, this function sets the message ID byte. In master mode,
- *  writing to this ID initiates a header transmission. In slave task, this
+ *  In LIN mode only, this function sets the message ID byte. In commander mode,
+ *  writing to this ID initiates a header transmission. In responder task, this
  *  ID is used for message filtering when HGENCTRL is 0.
  *
  */
@@ -580,7 +580,7 @@ LIN_setIDByte(uint32_t base, uint16_t identifier)
 }
 
 /**
- *  \brief  Set ID-SlaveTask.
+ *  \brief  Set ID-ResponderTask.
  *
  *  \param  base is the LIN module base address
  *  \param  identifier is the Received ID comparison ID
@@ -591,7 +591,7 @@ LIN_setIDByte(uint32_t base, uint16_t identifier)
  *
  */
 static inline void
-LIN_setIDSlaveTask(uint32_t base, uint16_t identifier)
+LIN_setIDResponderTask(uint32_t base, uint16_t identifier)
 {
     /* Parameter Validation */
     DebugP_assert(LIN_isBaseValid(base));
@@ -1202,7 +1202,7 @@ LIN_disableModuleErrors(uint32_t base, uint32_t errors)
  *  mode during the detection of the Synch Field.
  *
  *  \note The baudrate selection register will be updated automatically by a
- *  slave node if this mode is enabled.
+ *  responder node if this mode is enabled.
  *
  */
 static inline void

@@ -713,12 +713,12 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
     Udma_ChPrms         chPrms;
     Udma_ChTxPrms       txPrms;
     Udma_ChRxPrms       rxPrms;
-    Udma_EventHandle    eventHandle, masterEventHandle;
+    Udma_EventHandle    eventHandle, controllerEventHandle;
     Udma_EventPrms      eventPrms;
     uint32_t           *buf;
     uint32_t            i;
 
-    masterEventHandle = NULL;
+    controllerEventHandle = NULL;
     for(chCnt = 0U ; chCnt < taskObj->numCh; chCnt++)
     {
         chObj = taskObj->chObj[chCnt];
@@ -823,10 +823,10 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
                 eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
                 eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
                 eventPrms.chHandle          = chObj->chHandle;
-                eventPrms.masterEventHandle = masterEventHandle;
+                eventPrms.controllerEventHandle = controllerEventHandle;
                 if(UDMA_TEST_EVENT_INTR == chObj->chPrms->eventMode)
                 {
-                    eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(chObj->drvHandle);
+                    eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(chObj->drvHandle);
                     eventPrms.eventCb           = &udmaTestBlkcpyEventDmaCb;
                     eventPrms.appData           = chObj;
                 }
@@ -840,10 +840,10 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
                 {
                     chObj->cqEventHandle = eventHandle;
                 }
-                if(NULL == masterEventHandle)
+                if(NULL == controllerEventHandle)
                 {
                     /* Which ever event gets registered first is the master event */
-                    masterEventHandle = eventHandle;
+                    controllerEventHandle = eventHandle;
                 }
             }
         }
@@ -856,7 +856,7 @@ static int32_t udmaTestBlkcpyCreate(UdmaTestTaskObj *taskObj, uint32_t chainTest
             chObj->trEventPrms.eventType         = UDMA_EVENT_TYPE_TR;
             chObj->trEventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
             chObj->trEventPrms.chHandle          = chObj->chHandle;
-            chObj->trEventPrms.masterEventHandle = masterEventHandle;
+            chObj->trEventPrms.controllerEventHandle = controllerEventHandle;
             chObj->trEventPrms.eventCb           = NULL;
             chObj->trEventPrms.appData           = NULL;
             retVal = Udma_eventRegister(chObj->drvHandle, eventHandle, &chObj->trEventPrms);

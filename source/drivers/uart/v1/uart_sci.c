@@ -88,7 +88,7 @@ typedef struct
 /* ========================================================================== */
 
 /* Driver internal functions */
-static void UART_masterIsr(void *arg);
+static void UART_controllerIsr(void *arg);
 
 static Bool UART_writeCancelNoCB(UART_Object *object, UART_Attrs const *attrs);
 static Bool UART_readCancelNoCB(UART_Object *object, UART_Attrs const *attrs);
@@ -257,7 +257,7 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
         {
             HwiP_Params_init(&hwiPrms);
             hwiPrms.intNum      = object->prms.intrNum;
-            hwiPrms.callback    = &UART_masterIsr;
+            hwiPrms.callback    = &UART_controllerIsr;
             hwiPrms.priority    = object->prms.intrPriority;
             hwiPrms.args        = (void *) config;
             status += HwiP_construct(&object->hwiObj, &hwiPrms);
@@ -733,7 +733,7 @@ void UART_flushTxFifo(UART_Handle handle)
     return;
 }
 
-static void UART_masterIsr(void *arg)
+static void UART_controllerIsr(void *arg)
 {
     UART_Config        *config;
     UART_Object        *object;

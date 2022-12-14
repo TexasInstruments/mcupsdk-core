@@ -197,7 +197,7 @@ const example_file_list = [
     "test/drivers/mcspi/mcspi/.project/project.js",
     "test/drivers/mcspi/mcspi_eeprom/.project/project.js",
     "test/drivers/mcspi/mcspi_eeprom_dma/.project/project.js",
-    "test/drivers/mcspi/mcspi_master_slave/.project/project.js",
+    "test/drivers/mcspi/mcspi_controller_peripheral/.project/project.js",
     "test/drivers/mmcsd/.project/project.js",
     "test/drivers/ospi/.project/project.js",
     "test/drivers/sciclient/.project/project.js",

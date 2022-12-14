@@ -204,7 +204,7 @@ int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
                     /* No VINT bit for global master event */
                     eventPrms->intrMask     = 0U;
                 }
-                if(NULL_PTR == eventHandleInt->eventPrms.masterEventHandle)
+                if(NULL_PTR == eventHandleInt->eventPrms.controllerEventHandle)
                 {
                     /* This is master handle - copy directly from here itself */
                     eventPrms->vintrNum     = eventHandleInt->vintrNum;
@@ -215,9 +215,9 @@ int32_t Udma_eventRegister(Udma_DrvHandle drvHandle,
                     /* Copy core number from master handle */
                     /* Copy from master handle */
                     eventPrms->vintrNum       =
-                       ((Udma_EventHandleInt) (eventHandleInt->eventPrms.masterEventHandle))->vintrNum;
+                       ((Udma_EventHandleInt) (eventHandleInt->eventPrms.controllerEventHandle))->vintrNum;
                     eventPrms->coreIntrNum    =
-                        ((Udma_EventHandleInt) (eventHandleInt->eventPrms.masterEventHandle))->coreIntrNum;
+                        ((Udma_EventHandleInt) (eventHandleInt->eventPrms.controllerEventHandle))->coreIntrNum;
                 }
                 /* Copy the same info to eventHandleInt->eventPrms*/
                 eventHandleInt->eventPrms.intrStatusReg   = eventPrms->intrStatusReg;
@@ -410,7 +410,7 @@ void UdmaEventPrms_init(Udma_EventPrms *eventPrms)
         eventPrms->eventMode            = UDMA_EVENT_MODE_SHARED;
         eventPrms->chHandle             = (Udma_ChHandle) NULL_PTR;
         eventPrms->ringHandle           = (Udma_RingHandle) NULL_PTR;
-        eventPrms->masterEventHandle    = (Udma_EventHandle) NULL_PTR;
+        eventPrms->controllerEventHandle    = (Udma_EventHandle) NULL_PTR;
         eventPrms->eventCb              = (Udma_EventCallback) NULL_PTR;
         eventPrms->intrPriority         = 1U;
         eventPrms->appData              = NULL_PTR;
@@ -504,14 +504,14 @@ static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
                                      const Udma_EventPrms *eventPrms)
 {
     int32_t             retVal = UDMA_SOK;
-    Udma_EventHandleInt masterEventHandle;
+    Udma_EventHandleInt controllerEventHandle;
 
     DebugP_assert(eventPrms != NULL_PTR);
 
     /* Exclusive event checks */
     if(UDMA_EVENT_MODE_EXCLUSIVE == eventPrms->eventMode)
     {
-        if(NULL_PTR != eventPrms->masterEventHandle)
+        if(NULL_PTR != eventPrms->controllerEventHandle)
         {
             retVal = UDMA_EINVALID_PARAMS;
             DebugP_logError("[UDMA] Master event handle should be NULL_PTR for exclusive event!!!\r\n");
@@ -522,15 +522,15 @@ static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
     if(UDMA_EVENT_MODE_SHARED == eventPrms->eventMode)
     {
         /* Shared event slave checks */
-        if(NULL_PTR != eventPrms->masterEventHandle)
+        if(NULL_PTR != eventPrms->controllerEventHandle)
         {
             /* Check if callback is non-null for slave shared events when
              * master has callback set - This is becasuse once the master has
              * interrupt registered, all slaves should have a callback as IA
              * is same and there is no individual control to disable
              * interrupt */
-            masterEventHandle = (Udma_EventHandleInt) eventPrms->masterEventHandle;
-            if(((Udma_EventCallback) NULL_PTR != masterEventHandle->eventPrms.eventCb) &&
+            controllerEventHandle = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
+            if(((Udma_EventCallback) NULL_PTR != controllerEventHandle->eventPrms.eventCb) &&
                ((Udma_EventCallback) NULL_PTR == eventPrms->eventCb))
             {
                 retVal = UDMA_EINVALID_PARAMS;
@@ -538,9 +538,9 @@ static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
             }
             /* Check if master has not registered a callback, the slave should not
              * expect a callback either!! */
-            if(((Udma_EventCallback) NULL_PTR == masterEventHandle->eventPrms.eventCb) &&
+            if(((Udma_EventCallback) NULL_PTR == controllerEventHandle->eventPrms.eventCb) &&
                ((Udma_EventCallback) NULL_PTR != eventPrms->eventCb) &&
-               (UDMA_EVENT_TYPE_MASTER != masterEventHandle->eventPrms.eventType))
+               (UDMA_EVENT_TYPE_MASTER != controllerEventHandle->eventPrms.eventType))
             {
                 retVal = UDMA_EINVALID_PARAMS;
                 DebugP_logError("[UDMA] Callback set for slave shared events when master event didnot set a callback!!!\r\n");
@@ -579,7 +579,7 @@ static int32_t Udma_eventCheckParams(Udma_DrvHandleInt drvHandle,
             DebugP_logError("[UDMA] Event should be shareable for global master event type!!!\r\n");
         }
 
-        if(NULL_PTR != eventPrms->masterEventHandle)
+        if(NULL_PTR != eventPrms->controllerEventHandle)
         {
             retVal = UDMA_EINVALID_PARAMS;
             DebugP_logError("[UDMA] Master handle should be NULL_PTR for master event type!!!\r\n");
@@ -609,7 +609,7 @@ static int32_t Udma_eventCheckUnRegister(Udma_DrvHandleInt drvHandle,
     {
         /* Can't free-up master event when shared events are still not yet
         * unregistered */
-        if((NULL_PTR == eventPrms->masterEventHandle) &&
+        if((NULL_PTR == eventPrms->controllerEventHandle) &&
            (NULL_PTR != eventHandle->nextEvent))
         {
             retVal = UDMA_EFAIL;
@@ -686,7 +686,7 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
         /* Allocate IA register for master and exclusive events */
         if((UDMA_EVENT_MODE_EXCLUSIVE == eventPrms->eventMode) ||
             ((UDMA_EVENT_MODE_SHARED == eventPrms->eventMode) &&
-                (NULL_PTR == eventPrms->masterEventHandle)))
+                (NULL_PTR == eventPrms->controllerEventHandle)))
         {
             eventHandle->vintrNum = Udma_rmAllocVintr(drvHandle);
             if(UDMA_EVENT_INVALID == eventHandle->vintrNum)
@@ -716,7 +716,7 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
         /* Allocate interrupt when callback is requested and only for
          * exclusive and master shared events (master handle is NULL_PTR) */
         if((((Udma_EventCallback) NULL_PTR != eventPrms->eventCb) &&
-                (NULL_PTR == eventPrms->masterEventHandle)) ||
+                (NULL_PTR == eventPrms->controllerEventHandle)) ||
             (UDMA_EVENT_TYPE_MASTER == eventPrms->eventType))
         {
             if(UDMA_CORE_INTR_ANY != eventPrms->preferredCoreIntrNum)
@@ -753,10 +753,10 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
         /* Link shared events to master event */
         eventHandle->prevEvent = (Udma_EventHandleInt) NULL_PTR;
         eventHandle->nextEvent = (Udma_EventHandleInt) NULL_PTR;
-        if(NULL_PTR != eventPrms->masterEventHandle)
+        if(NULL_PTR != eventPrms->controllerEventHandle)
         {
             /* Go to the last node - insert node at the end */
-            lastEvent = (Udma_EventHandleInt) eventPrms->masterEventHandle;
+            lastEvent = (Udma_EventHandleInt) eventPrms->controllerEventHandle;
             while(NULL_PTR != lastEvent->nextEvent)
             {
                 /* Move to next node */
@@ -791,14 +791,14 @@ static int32_t Udma_eventAllocResource(Udma_DrvHandleInt drvHandle,
     }
     else
     {
-        if(NULL_PTR == eventPrms->masterEventHandle)
+        if(NULL_PTR == eventPrms->controllerEventHandle)
         {
             vintrNum = eventHandle->vintrNum;
         }
         else
         {
             /* Use master event's info */
-            vintrNum = ((Udma_EventHandleInt) (eventPrms->masterEventHandle))->vintrNum;
+            vintrNum = ((Udma_EventHandleInt) (eventPrms->controllerEventHandle))->vintrNum;
         }
         DebugP_assert(drvHandle->iaRegs.pIntrRegs != NULL_PTR);
         eventHandle->pIaVintrRegs = &drvHandle->iaRegs.pIntrRegs->VINT[vintrNum];
@@ -912,9 +912,9 @@ static int32_t Udma_eventConfig(Udma_DrvHandleInt drvHandle,
     }
 
     /* Get master IA register number for slaves */
-    if(NULL_PTR != eventHandle->eventPrms.masterEventHandle)
+    if(NULL_PTR != eventHandle->eventPrms.controllerEventHandle)
     {
-        vintrNum = ((Udma_EventHandleInt) (eventHandle->eventPrms.masterEventHandle))->vintrNum;
+        vintrNum = ((Udma_EventHandleInt) (eventHandle->eventPrms.controllerEventHandle))->vintrNum;
     }
     else
     {
@@ -1130,9 +1130,9 @@ static int32_t Udma_eventReset(Udma_DrvHandleInt drvHandle,
     }
 
     /* Get master IA register number for slaves */
-    if(NULL_PTR != eventHandle->eventPrms.masterEventHandle)
+    if(NULL_PTR != eventHandle->eventPrms.controllerEventHandle)
     {
-        vintrNum = ((Udma_EventHandleInt) (eventHandle->eventPrms.masterEventHandle))->vintrNum;
+        vintrNum = ((Udma_EventHandleInt) (eventHandle->eventPrms.controllerEventHandle))->vintrNum;
     }
     else
     {

@@ -70,30 +70,30 @@ typedef struct
 /* ========================================================================== */
 
 /* Driver internal functions */
-static void MCSPI_masterIsr(void *args);
+static void MCSPI_controllerIsr(void *args);
 static void MCSPI_initiateLastChunkTransfer(MCSPI_Object *obj,
                                             MCSPI_ChObject *chObj,
                                             MCSPI_Transaction *transaction);
 static uint32_t MCSPI_continueTxRx(MCSPI_Object *obj,
                                    MCSPI_ChObject *chObj,
                                    MCSPI_Transaction *transaction);
-static int32_t MCSPI_transferMasterPoll(MCSPI_Object *obj,
+static int32_t MCSPI_transferControllerPoll(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction);
-static int32_t MCSPI_transferMasterIntr(MCSPI_Object *obj,
+static int32_t MCSPI_transferControllerIntr(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction);
-static void MCSPI_slaveIsr(void *args);
-static uint32_t MCSPI_continueSlaveTxRx(MCSPI_Object *obj,
+static void MCSPI_peripheralIsr(void *args);
+static uint32_t MCSPI_continuePeripheralTxRx(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         MCSPI_Transaction *transaction);
-static int32_t MCSPI_transferSlavePoll(MCSPI_Object *obj,
+static int32_t MCSPI_transferPeripheralPoll(MCSPI_Object *obj,
                                        MCSPI_ChObject *chObj,
                                        const MCSPI_Attrs *attrs,
                                        MCSPI_Transaction *transaction);
-static int32_t MCSPI_transferSlaveIntr(MCSPI_Object *obj,
+static int32_t MCSPI_transferPeripheralIntr(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction);
@@ -118,7 +118,7 @@ static void MCSPI_setFifoConfig(MCSPI_ChObject *chObj,
                                 const MCSPI_Attrs  *attrs,
                                 uint32_t baseAddr,
                                 uint32_t numWordsTxRx);
-static void MCSPI_setSlaveFifoConfig(MCSPI_ChObject *chObj,
+static void MCSPI_setPeripheralFifoConfig(MCSPI_ChObject *chObj,
                                      uint32_t baseAddr,
                                      uint32_t numWordsTxRx);
 static inline const uint8_t *MCSPI_fifoWrite8(uint32_t        baseAddr,
@@ -297,13 +297,13 @@ MCSPI_Handle MCSPI_open(uint32_t index, const MCSPI_OpenParams *openPrms)
             HwiP_Params_init(&hwiPrms);
             hwiPrms.intNum      = attrs->intrNum;
             hwiPrms.priority    = attrs->intrPriority;
-            if(MCSPI_MS_MODE_MASTER == obj->openPrms.msMode)
+            if(MCSPI_MS_MODE_CONTROLLER == obj->openPrms.msMode)
             {
-                hwiPrms.callback    = &MCSPI_masterIsr;
+                hwiPrms.callback    = &MCSPI_controllerIsr;
             }
             else
             {
-                hwiPrms.callback    = &MCSPI_slaveIsr;
+                hwiPrms.callback    = &MCSPI_peripheralIsr;
             }
 
             hwiPrms.priority    = attrs->intrPriority;
@@ -513,7 +513,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
             MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
                                 transaction->csDisable);
 
-            if(MCSPI_MS_MODE_MASTER == obj->openPrms.msMode)
+            if(MCSPI_MS_MODE_CONTROLLER == obj->openPrms.msMode)
             {
                 /*
                  * Enable FIFO only in case of Interrupt or Polling.
@@ -530,7 +530,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
 
                     if (MCSPI_OPER_MODE_INTERRUPT == attrs->operMode)
                     {
-                        status = MCSPI_transferMasterIntr(obj, chObj, attrs, transaction);
+                        status = MCSPI_transferControllerIntr(obj, chObj, attrs, transaction);
                     }
                     else
                     {
@@ -560,7 +560,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
                 }
                 else
                 {
-                    status = MCSPI_transferMasterPoll(obj, chObj, attrs, transaction);
+                    status = MCSPI_transferControllerPoll(obj, chObj, attrs, transaction);
                     if (status == SystemP_SUCCESS)
                     {
                         /* transfer completed */
@@ -578,7 +578,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
                  */
                 if(MCSPI_OPER_MODE_DMA != attrs->operMode)
                 {
-                    MCSPI_setSlaveFifoConfig(chObj, baseAddr, transaction->count);
+                    MCSPI_setPeripheralFifoConfig(chObj, baseAddr, transaction->count);
                     MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
                 }
                 if ((MCSPI_OPER_MODE_INTERRUPT == attrs->operMode) ||
@@ -586,7 +586,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
                 {
                     if (MCSPI_OPER_MODE_INTERRUPT == attrs->operMode)
                     {
-                        status = MCSPI_transferSlaveIntr(obj, chObj, attrs, transaction);
+                        status = MCSPI_transferPeripheralIntr(obj, chObj, attrs, transaction);
                     }
                     else
                     {
@@ -616,7 +616,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
                 }
                 else
                 {
-                    status = MCSPI_transferSlavePoll(obj, chObj, attrs, transaction);
+                    status = MCSPI_transferPeripheralPoll(obj, chObj, attrs, transaction);
                     if (status == SystemP_SUCCESS)
                     {
                         /* transfer completed */
@@ -700,7 +700,7 @@ int32_t MCSPI_transferCancel(MCSPI_Handle handle)
     return (status);
 }
 
-static void MCSPI_masterIsr(void *args)
+static void MCSPI_controllerIsr(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            transferStatus;
@@ -867,7 +867,7 @@ static uint32_t MCSPI_continueTxRx(MCSPI_Object *obj,
             }
 
             /* Write the data in TX FIFO.Even in RX only mode, dummy data has to
-               be written to receive data from Slave */
+               be written to receive data from Peripheral */
             MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
         }
         if ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) == CSL_MCSPI_IRQSTATUS_EOW_MASK)
@@ -924,7 +924,7 @@ static uint32_t MCSPI_continueTxRx(MCSPI_Object *obj,
     return retVal;
 }
 
-static int32_t MCSPI_transferMasterPoll(MCSPI_Object *obj,
+static int32_t MCSPI_transferControllerPoll(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction)
@@ -967,7 +967,7 @@ static int32_t MCSPI_transferMasterPoll(MCSPI_Object *obj,
         numWordsToWrite = transaction->count;
     }
     /* Write the data in TX FIFO.Even in RX only mode, dummy data has to
-        be written to receive data from Slave */
+        be written to receive data from Peripheral */
     MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
 
     if(MCSPI_TR_MODE_TX_ONLY != chObj->chCfg.trMode)
@@ -977,7 +977,7 @@ static int32_t MCSPI_transferMasterPoll(MCSPI_Object *obj,
         {
             /* Now keep polling the CH_STAT register, if RXs bit is set, at least 1 word is available.
             Read the data from Rx register, also write the same number of bytes in Tx register.
-            In case of master mode only when 1 word is sent out, 1 word will be received. */
+            In case of controller mode only when 1 word is sent out, 1 word will be received. */
             if ((MCSPI_readChStatusReg(baseAddr, chNum) & CSL_MCSPI_CH0STAT_RXS_MASK) != 0)
             {
                 MCSPI_fifoRead(baseAddr, chObj, 1);
@@ -1008,7 +1008,7 @@ static int32_t MCSPI_transferMasterPoll(MCSPI_Object *obj,
                     }
 
                     /* Write the data in TX FIFO.Even in RX only mode, dummy data has to
-                    be written to receive data from Slave */
+                    be written to receive data from Peripheral */
                     MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
                 }
             }
@@ -1037,7 +1037,7 @@ static int32_t MCSPI_transferMasterPoll(MCSPI_Object *obj,
     return (status);
 }
 
-static int32_t MCSPI_transferMasterIntr(MCSPI_Object *obj,
+static int32_t MCSPI_transferControllerIntr(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction)
@@ -1072,7 +1072,7 @@ static int32_t MCSPI_transferMasterIntr(MCSPI_Object *obj,
     return (status);
 }
 
-static void MCSPI_slaveIsr(void *args)
+static void MCSPI_peripheralIsr(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            transferStatus;
@@ -1103,7 +1103,7 @@ static void MCSPI_slaveIsr(void *args)
         {
             chNum = transaction->channel;
             chObj = &obj->chObj[chNum];
-            transferStatus = MCSPI_continueSlaveTxRx(obj, chObj, transaction);
+            transferStatus = MCSPI_continuePeripheralTxRx(obj, chObj, transaction);
             if ((MCSPI_TRANSFER_COMPLETED == transferStatus) ||
                     (MCSPI_TRANSFER_CANCELLED == transferStatus))
             {
@@ -1154,7 +1154,7 @@ static void MCSPI_slaveIsr(void *args)
     return;
 }
 
-static uint32_t MCSPI_continueSlaveTxRx(MCSPI_Object *obj,
+static uint32_t MCSPI_continuePeripheralTxRx(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         MCSPI_Transaction *transaction)
 {
@@ -1234,7 +1234,7 @@ static uint32_t MCSPI_continueSlaveTxRx(MCSPI_Object *obj,
     return retVal;
 }
 
-static int32_t MCSPI_transferSlavePoll(MCSPI_Object *obj,
+static int32_t MCSPI_transferPeripheralPoll(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction)
@@ -1253,7 +1253,7 @@ static int32_t MCSPI_transferSlavePoll(MCSPI_Object *obj,
     /* Busy loop till channel transfer is completed */
     do
     {
-        transferStatus = MCSPI_continueSlaveTxRx(obj, chObj, transaction);
+        transferStatus = MCSPI_continuePeripheralTxRx(obj, chObj, transaction);
     } while (transferStatus != MCSPI_TRANSFER_COMPLETED);
 
     /* Stop MCSPI Channel */
@@ -1262,7 +1262,7 @@ static int32_t MCSPI_transferSlavePoll(MCSPI_Object *obj,
     return (status);
 }
 
-static int32_t MCSPI_transferSlaveIntr(MCSPI_Object *obj,
+static int32_t MCSPI_transferPeripheralIntr(MCSPI_Object *obj,
                                         MCSPI_ChObject *chObj,
                                         const MCSPI_Attrs *attrs,
                                         MCSPI_Transaction *transaction)
@@ -1404,8 +1404,8 @@ static void MCSPI_configInstance(MCSPI_Config *config)
 
     /* Set module control */
     regVal = (openPrms->msMode << CSL_MCSPI_MODULCTRL_MS_SHIFT);
-    /* Configure Single/Multi Channel in master mode only */
-    if(MCSPI_MS_MODE_MASTER == openPrms->msMode)
+    /* Configure Single/Multi Channel in controller mode only */
+    if(MCSPI_MS_MODE_CONTROLLER == openPrms->msMode)
     {
         regVal |= (attrs->chMode << CSL_MCSPI_MODULCTRL_SINGLE_SHIFT);
     }
@@ -1414,9 +1414,9 @@ static void MCSPI_configInstance(MCSPI_Config *config)
         /* 3/4 pin mode applicable only in single channel mode.
          * For  multi-ch mode, CS is always controlled by HW during transfer */
         regVal |= (attrs->pinMode << CSL_MCSPI_MODULCTRL_PIN34_SHIFT);
-        if(MCSPI_MS_MODE_MASTER == openPrms->msMode)
+        if(MCSPI_MS_MODE_CONTROLLER == openPrms->msMode)
         {
-            /* Init delay applicable only for single master mode */
+            /* Init delay applicable only for single controller mode */
             regVal |= (attrs->initDelay << CSL_MCSPI_MODULCTRL_INITDLY_SHIFT);
         }
     }
@@ -1462,7 +1462,7 @@ static void MCSPI_setChConfig(MCSPI_Config *config,
     /* Set clock dividers */
     MCSPI_setClkConfig(baseAddr, chNum, attrs->inputClkFreq, chCfg->bitRate);
 
-    if (config->object->openPrms.msMode == MCSPI_MS_MODE_SLAVE)
+    if (config->object->openPrms.msMode == MCSPI_MS_MODE_PERIPHERAL)
     {
         if(MCSPI_TR_MODE_TX_RX == chObj->chCfg.trMode)
         {
@@ -1529,9 +1529,9 @@ static int32_t MCSPI_checkChConfig(MCSPI_Object   *obj, const MCSPI_ChConfig *ch
 {
     int32_t     status = SystemP_SUCCESS;
 
-    if((obj->openPrms.msMode == MCSPI_MS_MODE_SLAVE) && (chCfg->chNum != 0))
+    if((obj->openPrms.msMode == MCSPI_MS_MODE_PERIPHERAL) && (chCfg->chNum != 0))
     {
-        DebugP_logError("[MCSPI] Only channel 0 supported in slave mode !!!\r\n");
+        DebugP_logError("[MCSPI] Only channel 0 supported in peripheral mode !!!\r\n");
         status = SystemP_FAILURE;
     }
 
@@ -1628,7 +1628,7 @@ static void MCSPI_setClkConfig(uint32_t baseAddr,
         /* use a higher divider value in case the ratio
          * is fractional so that we get a lower SPI clock
          * than requested. This ensures we don't go beyond
-         * recommended clock speed for the SPI slave */
+         * recommended clock speed for the SPI peripheral */
         fRatio++;
     }
 
@@ -1776,7 +1776,7 @@ static uint32_t MCSPI_getFifoTrigLvl(uint32_t numWords, uint32_t fifoDepth)
     return fifoTrigLvl;
 }
 
-static void MCSPI_setSlaveFifoConfig(MCSPI_ChObject *chObj,
+static void MCSPI_setPeripheralFifoConfig(MCSPI_ChObject *chObj,
                                      uint32_t baseAddr,
                                      uint32_t numWordsTxRx)
 {
@@ -2042,7 +2042,7 @@ static void MCSPI_stop(MCSPI_Object *obj, const MCSPI_Attrs *attrs,
     }
     MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
 
-    if(MCSPI_MS_MODE_MASTER == obj->openPrms.msMode)
+    if(MCSPI_MS_MODE_CONTROLLER == obj->openPrms.msMode)
     {
         /* Manual CS de-assert */
         if(MCSPI_CH_MODE_SINGLE == attrs->chMode)

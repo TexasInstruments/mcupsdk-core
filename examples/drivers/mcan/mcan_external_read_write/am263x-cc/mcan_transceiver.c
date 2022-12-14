@@ -56,7 +56,7 @@
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
-static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
+static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
                       uint8_t *writeData, uint32_t numWriteBytes,
                       uint8_t *readData,  uint32_t numReadBytes);
 
@@ -85,7 +85,7 @@ void mcanEnableTransceiver(void)
     SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 2, NULL, 0);
 }
 
-static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
+static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
                       uint8_t *writeData, uint32_t numWriteBytes,
                       uint8_t *readData,  uint32_t numReadBytes)
 {
@@ -94,7 +94,7 @@ static void SetupI2CTransfer(I2C_Handle handle,  uint32_t slaveAddr,
 
     /* Enable Transceiver */
     I2C_Transaction_init(&i2cTransaction);
-    i2cTransaction.slaveAddress = slaveAddr;
+    i2cTransaction.targetAddress = targetAddr;
     i2cTransaction.writeBuf = (uint8_t *)&writeData[0];
     i2cTransaction.writeCount = numWriteBytes;
     i2cTransaction.readBuf = (uint8_t *)&readData[0];

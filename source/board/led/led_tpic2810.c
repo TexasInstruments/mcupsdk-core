@@ -160,7 +160,7 @@ int32_t LED_tpic2810On(LED_Config *config, uint32_t index)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf     = &wrData[0U];
         i2cTransaction.writeCount   = 1U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 
@@ -170,7 +170,7 @@ int32_t LED_tpic2810On(LED_Config *config, uint32_t index)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.readBuf      = &rdData;
         i2cTransaction.readCount    = 1U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 
@@ -182,7 +182,7 @@ int32_t LED_tpic2810On(LED_Config *config, uint32_t index)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf     = &wrData[0U];
         i2cTransaction.writeCount   = 2U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 
@@ -219,7 +219,7 @@ int32_t LED_tpic2810Off(LED_Config *config, uint32_t index)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf     = &wrData[0U];
         i2cTransaction.writeCount   = 1U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 
@@ -229,7 +229,7 @@ int32_t LED_tpic2810Off(LED_Config *config, uint32_t index)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.readBuf      = &rdData;
         i2cTransaction.readCount    = 1U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 
@@ -241,7 +241,7 @@ int32_t LED_tpic2810Off(LED_Config *config, uint32_t index)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf     = &wrData[0U];
         i2cTransaction.writeCount   = 2U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 
@@ -271,7 +271,7 @@ int32_t LED_tpic2810SetMask(LED_Config *config, uint32_t mask)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf     = &wrData[0U];
         i2cTransaction.writeCount   = 2U;
-        i2cTransaction.slaveAddress = object->i2cAddress;
+        i2cTransaction.targetAddress = object->i2cAddress;
         status = I2C_transfer(object->i2cHandle, &i2cTransaction);
     }
 

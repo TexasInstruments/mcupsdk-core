@@ -60,7 +60,7 @@ static HwiP_Object       gSdfmHwiObject;
 
 /*
  * A SDFM example that reads filter data from CPU
- 
+
  * In this example, SDFM filter data is read by CPU in SDFM ISR routine. The
  * SDFM configuration is shown below:
  *  -  SDFM used in this example - SDFM0
@@ -75,7 +75,7 @@ static HwiP_Object       gSdfmHwiObject;
  *      - Sinc3 filter selected
  *      - OSR = 128
  *      - All the 4 filters are synchronized by using MFE
- *       (Master Filter enable bit)
+ *       (Main Filter enable bit)
  *      - Filter output represented in 16 bit format
  *      - In order to convert 25 bit Data filter
  *        into 16 bit format user needs to right shift by 7 bits for
@@ -91,7 +91,7 @@ static HwiP_Object       gSdfmHwiObject;
  *   -  Connect Sigma-Delta streams to
  *     SDFM0_CLK0, SDFM0_D0, SDFM0_CLK1, SDFM0_D1, SDFM0_CLK2, SDFM0_D2, SDFM0_CLK3, SDFM0_D3
  *
- * Watch  Variables 
+ * Watch  Variables
  * -   filter1Result - Output of filter 1
  * -   filter2Result - Output of filter 2
  * -   filter3Result - Output of filter 3
@@ -183,11 +183,11 @@ void sdfm_filter_sync_cpuread(void *args)
            SDFM_SET_OSR(128)), (SDFM_DATA_FORMAT_16_BIT | SDFM_FILTER_ENABLE |
            SDFM_SHIFT_VALUE(0x0007)));
 
-    /* Enable Master filter bit: Unless this bit is set none of the filter modules
-       can be enabled. All the filter modules are synchronized when master filter
+    /* Enable Main filter bit: Unless this bit is set none of the filter modules
+       can be enabled. All the filter modules are synchronized when main filter
        bit is enabled after individual filter modules are enabled.*/
 
-    SDFM_enableMasterFilter(CONFIG_SDFM0_BASE_ADDR);
+    SDFM_enableMainFilter(CONFIG_SDFM0_BASE_ADDR);
 
     /* PWM11.CMPC, PWM11.CMPD, PWM12.CMPC and PWM12.CMPD signals cannot synchronize
      the filters. This option is not being used in this example.*/
@@ -237,10 +237,10 @@ void sdfm_filter_sync_cpuread(void *args)
             (SDFM_CEVT2_INTERRUPT |
              SDFM_CEVT1_INTERRUPT));
 
-    /* Enable master interrupt so that any of the filter interrupts can trigger
+    /* Enable main interrupt so that any of the filter interrupts can trigger
        by SDFM interrupt to CPU*/
 
-    SDFM_enableMasterInterrupt(CONFIG_SDFM0_BASE_ADDR);
+    SDFM_enableMainInterrupt(CONFIG_SDFM0_BASE_ADDR);
 
     /* Wait for interrupt*/
 
@@ -278,10 +278,10 @@ static void sdfmISR(void *handle)
 
     if(loopCounter1 < MAX_SAMPLES)
     {
-    
+
         /* Read each SDFM filter output and store it in respective filter
            result array*/
-    
+
         filter1Result[loopCounter1] =
               (int16_t)(SDFM_getFilterData(CONFIG_SDFM0_BASE_ADDR, SDFM_FILTER_1) >> 16U);
 
@@ -295,12 +295,12 @@ static void sdfmISR(void *handle)
               (int16_t)(SDFM_getFilterData(CONFIG_SDFM0_BASE_ADDR, SDFM_FILTER_4) >> 16U);
 
         /* Clear SDFM flag register (SDIFLG)*/
-    
-        SDFM_clearInterruptFlag(CONFIG_SDFM0_BASE_ADDR, SDFM_MASTER_INTERRUPT_FLAG |
+
+        SDFM_clearInterruptFlag(CONFIG_SDFM0_BASE_ADDR, SDFM_MAIN_INTERRUPT_FLAG |
                                             0xFFFF);
 
         /* Read SDFM flag register (SDIFLG)*/
-    
+
         HW_RD_REG32(CONFIG_SDFM0_BASE_ADDR + CSL_SDFM_SDIFLG);
     }
     else

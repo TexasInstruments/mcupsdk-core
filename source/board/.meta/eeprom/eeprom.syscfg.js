@@ -35,7 +35,7 @@ function getConfigurables() {
         {
             name: "i2cAddress",
             displayName: "I2C Address",
-            description: `I2C slave address of EEPROM`,
+            description: `I2C target address of EEPROM`,
             default: staticConfig[0].i2cAddress,
             displayFormat: "hex",
         },

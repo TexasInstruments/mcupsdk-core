@@ -80,7 +80,7 @@ MCSPI_DmaFxns gMcspiDmaUdmaFxns =
     .dmaOpenFxn = MCSPI_udmaOpen,
     .dmaCloseFxn = MCSPI_udmaClose,
     .dmaChInitFxn = MCSPI_udmaChInit,
-    .dmaTransferMasterFxn = MCSPI_udmaTransfer,
+    .dmaTransferControllerFxn = MCSPI_udmaTransfer,
     .dmaStopFxn = MCSPI_udmaStop,
 };
 
@@ -302,7 +302,7 @@ static int32_t MCSPI_udmaInitRxCh(MCSPI_Handle handle, MCSPI_ChObject *chObj)
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     eventPrms.chHandle          = rxChHandle;
-    eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+    eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
     eventPrms.eventCb           = &MCSPI_udmaIsrRx;
     eventPrms.appData           = (void *) config;
     retVal = Udma_eventRegister(drvHandle, eventHandle, &eventPrms);
@@ -356,7 +356,7 @@ static int32_t MCSPI_udmaInitTxCh(MCSPI_Handle handle, MCSPI_ChObject *chObj)
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     eventPrms.chHandle          = txChHandle;
-    eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+    eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
     eventPrms.eventCb           = &MCSPI_udmaIsrTx;
     eventPrms.appData           = (void *) config;
     retVal = Udma_eventRegister(drvHandle, eventHandle, &eventPrms);
@@ -502,7 +502,7 @@ static int32_t MCSPI_udmaStop(MCSPI_Object *obj, const MCSPI_Attrs *attrs,
     int32_t status = SystemP_SUCCESS;
 
     baseAddr = obj->baseAddr;
-    if(MCSPI_MS_MODE_MASTER == obj->openPrms.msMode)
+    if(MCSPI_MS_MODE_CONTROLLER == obj->openPrms.msMode)
     {
         /* Manual CS de-assert */
         if(MCSPI_CH_MODE_SINGLE == attrs->chMode)

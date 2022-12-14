@@ -69,7 +69,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_LIN_EXTERNAL_MASTER";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_LIN_EXTERNAL_COMMANDER";
 
 const templates_nortos_r5f =
 [

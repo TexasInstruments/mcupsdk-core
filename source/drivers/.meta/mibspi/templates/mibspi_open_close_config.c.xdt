@@ -39,13 +39,13 @@ MIBSPI_OpenParams gMibspiOpenParams[CONFIG_MIBSPI_NUM_INSTANCES] =
         .iCountSupport               = `config.iCountSupport.toString(10).toUpperCase()`,
         .dataSize                    = `config.dataSize`U,
         .frameFormat                 = MIBSPI_`config.frameFormat`,
-        % if(config.mode == "MASTER") {
-        .u.masterParams.bitRate      = `config.bitRate`,
-        .u.masterParams.t2cDelay     = 0x`config.t2cDelay.toString(16).toUpperCase()`U,
-        .u.masterParams.c2tDelay     = 0x`config.c2tDelay.toString(16).toUpperCase()`U,
-        .u.masterParams.wDelay       = 0x`config.wDelay.toString(16).toUpperCase()`U,
-        .u.masterParams.numSlaves    = `ch_instances.length`,
-        .u.masterParams.slaveProf    =
+        % if(config.mode == "CONTROLLER") {
+        .u.controllerParams.bitRate      = `config.bitRate`,
+        .u.controllerParams.t2cDelay     = 0x`config.t2cDelay.toString(16).toUpperCase()`U,
+        .u.controllerParams.c2tDelay     = 0x`config.c2tDelay.toString(16).toUpperCase()`U,
+        .u.controllerParams.wDelay       = 0x`config.wDelay.toString(16).toUpperCase()`U,
+        .u.controllerParams.numPeripherals    = `ch_instances.length`,
+        .u.controllerParams.peripheralProf    =
         {
             
             % for(let ch = 0; ch < ch_instances.length; ch++) {
@@ -53,7 +53,7 @@ MIBSPI_OpenParams gMibspiOpenParams[CONFIG_MIBSPI_NUM_INSTANCES] =
                 % let ch_config = module_ch.getInstanceConfig(ch_instance);
             [`ch`] =    
             {
-                .chipSelect         = `ch_config.slaveCS`,
+                .chipSelect         = `ch_config.peripheralCS`,
                 .dmaReqLine         = `ch_config.dmaReqLine`,
             % if(ch_instances.length == `1`) {        
                 .ramBufLen          = (uint8_t)MIBSPI_RAM_MAX_ELEM, 
@@ -74,8 +74,8 @@ MIBSPI_OpenParams gMibspiOpenParams[CONFIG_MIBSPI_NUM_INSTANCES] =
        %{
          % let ch_instance = ch_instances[0];
          % let ch_config = module_ch.getInstanceConfig(ch_instance);
-        .u.slaveParams.chipSelect    = `ch_config.slaveCS`U,    
-        .u.slaveParams.dmaReqLine    = `ch_config.dmaReqLine`U,
+        .u.peripheralParams.chipSelect    = `ch_config.peripheralCS`U,    
+        .u.peripheralParams.dmaReqLine    = `ch_config.dmaReqLine`U,
        %}
         .pinMode                    = MIBSPI_PINMODE_`config.pinMode`,
         .shiftFormat                = MIBSPI_`config.shiftFormat`,

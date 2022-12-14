@@ -31,7 +31,7 @@
  */
 
 /*
- *   This example configures the LIN module in master mode for internal
+ *   This example configures the LIN module in controller mode for internal
  *   loopback without interrupts. The module is setup to perform 8 data
  *   transmissions with different transmit IDs and varying transmit data.
  *   Waits for reception of an ID header. The received data is then checked

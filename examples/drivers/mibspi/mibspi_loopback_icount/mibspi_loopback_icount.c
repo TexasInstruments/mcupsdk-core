@@ -91,7 +91,7 @@ void mibspi_loopback_icount_main(void *args)
     spiTransaction.count        = APP_MIBSPI_MSGSIZE;
     spiTransaction.txBuf        = (void *)gMibspiTxBuffer;
     spiTransaction.rxBuf        = (void *)gMibspiRxBuffer;
-    spiTransaction.slaveIndex   = 0U;
+    spiTransaction.peripheralIndex   = 0U;
     spiTransaction.arg          = NULL;
 
     status = MIBSPI_enableLoopback(gMibspiHandle[CONFIG_MIBSPI0],loopback);

@@ -179,7 +179,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x2; /* sleep reg */
         txBuffer[1] = 0x81; /* active mode */
         I2C_transfer(i2cHandle, &i2cTransaction);
@@ -188,7 +188,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x28; /* sleep reg */
         txBuffer[1] = 0x10; /* active mode */
         I2C_transfer(i2cHandle, &i2cTransaction);
@@ -197,7 +197,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x7; /* ASI_CFG0 reg */
         txBuffer[1] = 0x70; /* 32-bit I2S mode */
         I2C_transfer(i2cHandle, &i2cTransaction);
@@ -206,7 +206,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x3C; /* CH1_CFG0 reg */
         txBuffer[1] = 0xB0; /* Line-in dc-coupled input */
         I2C_transfer(i2cHandle, &i2cTransaction);
@@ -215,7 +215,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x73; /* IN_CH_EN reg */
         txBuffer[1] = 0x80; /* input channel 1 enable only */
         I2C_transfer(i2cHandle, &i2cTransaction);
@@ -224,7 +224,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x74; /* ASI_OUT_CH_EN reg */
         txBuffer[1] = 0x80; /* output channel 1 enable only */
         I2C_transfer(i2cHandle, &i2cTransaction);
@@ -233,7 +233,7 @@ void mcasp_codec_config(void)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = txBuffer;
         i2cTransaction.writeCount = 2;
-        i2cTransaction.slaveAddress = deviceAddress;
+        i2cTransaction.targetAddress = deviceAddress;
         txBuffer[0] = 0x75; /* PWR_CFG reg */
         txBuffer[1] = 0xE0; /* power up ADC ch and PLL and BIAS */
         I2C_transfer(i2cHandle, &i2cTransaction);

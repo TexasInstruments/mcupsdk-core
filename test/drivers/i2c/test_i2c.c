@@ -219,7 +219,7 @@ static void test_i2c_write_read(void* args)
         I2C_Transaction_init(&i2cTransaction);
         i2cTransaction.writeBuf   = gI2cTxBuffer;
         i2cTransaction.writeCount = Board_i2cGetEepromAddrSize() + testParams->numBytes;
-        i2cTransaction.slaveAddress = testParams->deviceAddress;
+        i2cTransaction.targetAddress = testParams->deviceAddress;
 		
         if(Board_i2cGetEepromAddrSize()==0x01U)
         {
@@ -247,7 +247,7 @@ static void test_i2c_write_read(void* args)
         i2cTransaction.writeCount = Board_i2cGetEepromAddrSize();
         i2cTransaction.readBuf    = gI2cRxBuffer;
         i2cTransaction.readCount  = 1;
-        i2cTransaction.slaveAddress = testParams->deviceAddress;
+        i2cTransaction.targetAddress = testParams->deviceAddress;
 
         /* wait for previous write to complete */
         do
@@ -268,7 +268,7 @@ static void test_i2c_write_read(void* args)
         i2cTransaction.writeCount = Board_i2cGetEepromAddrSize();
         i2cTransaction.readBuf   = gI2cRxBuffer;
         i2cTransaction.readCount = testParams->numBytes;
-        i2cTransaction.slaveAddress = testParams->deviceAddress;
+        i2cTransaction.targetAddress = testParams->deviceAddress;
 
         status = I2C_transfer(i2cHandle, &i2cTransaction);
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
@@ -333,7 +333,7 @@ static void test_i2c_callback_mode(void* args)
     I2C_Transaction_init(&i2cTransaction);
     i2cTransaction.writeBuf   = txBuffer1;
     i2cTransaction.writeCount = 3;
-    i2cTransaction.slaveAddress = Board_i2cGetEepromDeviceAddr();
+    i2cTransaction.targetAddress = Board_i2cGetEepromDeviceAddr();
     i2cTransaction.arg = NULL;
 	
     if (Board_i2cGetEepromAddrSize()==0x01U)
@@ -356,7 +356,7 @@ static void test_i2c_callback_mode(void* args)
     I2C_Transaction_init(&i2cTransaction);
     i2cTransaction.writeBuf   = txBuffer2;
     i2cTransaction.writeCount = 2;
-    i2cTransaction.slaveAddress = Board_i2cGetEepromDeviceAddr();
+    i2cTransaction.targetAddress = Board_i2cGetEepromDeviceAddr();
     i2cTransaction.arg = &gTestI2cCallbackDoneSemObj;
 	
     if(Board_i2cGetEepromAddrSize()==0x01)
@@ -400,7 +400,7 @@ static void test_i2c_timeout(void* args)
     transaction.timeout = 50;
     transaction.writeBuf   = &txBuffer;
     transaction.writeCount = 1;
-    transaction.slaveAddress = NON_EXISTENT_DEVICE_ADDRESS;
+    transaction.targetAddress = NON_EXISTENT_DEVICE_ADDRESS;
     txBuffer = 0xFE;
 
     status = I2C_transfer(i2cHandle, &transaction);
@@ -426,7 +426,7 @@ static void test_i2c_open_close(void* args)
     I2C_Transaction_init(&transaction);
     transaction.readBuf   = &rxBuffer;
     transaction.readCount = 1;
-    transaction.slaveAddress = Board_i2cGetEepromDeviceAddr();
+    transaction.targetAddress = Board_i2cGetEepromDeviceAddr();
 
     for (i=0; i<100; i++)
     {

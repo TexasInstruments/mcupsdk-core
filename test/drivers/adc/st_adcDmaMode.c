@@ -248,7 +248,7 @@ static int32_t App_create(Udma_DrvHandle drvHandle, Udma_ChHandle rxChHandle, st
     eventPrms.eventType         = UDMA_EVENT_TYPE_DMA_COMPLETION;
     eventPrms.eventMode         = UDMA_EVENT_MODE_SHARED;
     eventPrms.chHandle          = rxChHandle;
-    eventPrms.masterEventHandle = Udma_eventGetGlobalHandle(drvHandle);
+    eventPrms.controllerEventHandle = Udma_eventGetGlobalHandle(drvHandle);
     eventPrms.eventCb           = &App_udmaEventDmaCb;
     retVal = Udma_eventRegister(drvHandle, eventHandle, &eventPrms);
     DebugP_assert(UDMA_SOK == retVal);

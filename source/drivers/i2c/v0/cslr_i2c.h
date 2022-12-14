@@ -48,7 +48,7 @@ extern "C"
 #endif
 
 /**************************************************************************
-*                        Register Overlay Structure 
+*                        Register Overlay Structure
 **************************************************************************/
 typedef struct {
     volatile Uint16 REVNB_LO;
@@ -193,7 +193,7 @@ typedef struct {
 /* Own address register */
 #define CSL_I2C_OA                                              (0xA8U)
 
-/* Slave address register */
+/* Target address register */
 #define CSL_I2C_SA                                              (0xACU)
 
 /* I2C Clock Prescaler Register */

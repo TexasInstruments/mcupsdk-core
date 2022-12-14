@@ -20,7 +20,7 @@ function getInstanceConfig(moduleInstance) {
 };
 
 function getMaxChannels(inst) {
-    if((inst.mode == "SINGLE_MASTER") || (inst.mode == "SLAVE")) {
+    if((inst.mode == "SINGLE_CONTROLLER") || (inst.mode == "PERIPHERAL")) {
         return 1;
     }
     else {
@@ -43,7 +43,7 @@ function pinmuxRequirements(inst) {
             mosiRequired = true;
             break;
         case "TX_ONLY":
-            if(inst.mode == "SLAVE") {
+            if(inst.mode == "PERIPHERAL") {
                 misoRequired = true;
                 mosiRequired = false;
             }
@@ -54,7 +54,7 @@ function pinmuxRequirements(inst) {
             rxRequired = false;
             break;
         case "RX_ONLY":
-            if(inst.mode == "SLAVE") {
+            if(inst.mode == "PERIPHERAL") {
                 misoRequired = false;
                 mosiRequired = true;
             }
@@ -173,33 +173,33 @@ function getConfigurables()
         {
             name: "mode",
             displayName: "Mode of Operation",
-            default: "SINGLE_MASTER",
+            default: "SINGLE_CONTROLLER",
             options: [
                 {
-                    name: "SINGLE_MASTER",
-                    displayName: "Single Master"
+                    name: "SINGLE_CONTROLLER",
+                    displayName: "Single Controller"
                 },
                 {
-                    name: "MULTI_MASTER",
-                    displayName: "Multi Master"
+                    name: "MULTI_CONTROLLER",
+                    displayName: "Multi Controller"
                 },
                 {
-                    name: "SLAVE",
-                    displayName: "Single Slave"
+                    name: "PERIPHERAL",
+                    displayName: "Single Peripheral"
                 },
             ],
-            description: "Master/Slave or Single/Multi channel mode of operation",
+            description: "Controller/Peripheral or Single/Multi channel mode of operation",
             onChange: function (inst, ui) {
-                /* Init delay applicable only for single master mode */
+                /* Init delay applicable only for single controller mode */
                 if((inst.advanced == true) &&
-                   (inst.mode == "SINGLE_MASTER")) {
+                   (inst.mode == "SINGLE_CONTROLLER")) {
                     ui.initDelay.hidden = false;
                 }
                 else {
                     ui.initDelay.hidden = true;
                 }
                 /* 3/4 pin mode applicable only in single channel mode */
-                if(inst.mode == "SINGLE_MASTER") {
+                if(inst.mode == "SINGLE_CONTROLLER") {
                     ui.pinMode.hidden = false;
                 }
                 else {
@@ -424,9 +424,9 @@ function getConfigurables()
             displayName: "Show Advanced Config",
             default: false,
             onChange: function (inst, ui) {
-                /* Init delay applicable only for single master mode */
+                /* Init delay applicable only for single controller mode */
                 if((inst.advanced == true) &&
-                   (inst.mode == "SINGLE_MASTER")) {
+                   (inst.mode == "SINGLE_CONTROLLER")) {
                     ui.initDelay.hidden = false;
                 }
                 else {
@@ -457,7 +457,7 @@ function getConfigurables()
                     name: "32",
                 },
             ],
-            description: "Initial delay for first transfer in bus clock cycles. Applicable only for single master mode",
+            description: "Initial delay for first transfer in bus clock cycles. Applicable only for single controller mode",
         },
     )
 
