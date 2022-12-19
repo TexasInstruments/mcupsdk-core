@@ -630,21 +630,26 @@ int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
          retval = ESM_init(instance,pConfig,applicationCallback,appArg);
      }
 
-     if (retval == SDL_PASS) {
-#if defined(SOC_AM64X)
-       SDL_ESM_Inst instances_name[] = {SDL_ESM_INST_MCU_ESM0};
-       uint32_t instances_name_size = sizeof(instances_name)/sizeof(SDL_ESM_Inst);
-       for (int i = 0; i < instances_name_size; i++) {
-
-         if (instances_name[i] ==instance) {
-           retval = Esmhandlerinit(instance);
-         }
-     }
-   }
+    if (retval == SDL_PASS) {
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+		#if defined (M4F_CORE)
+		SDL_ESM_Inst instances_name[] = {SDL_ESM_INST_MCU_ESM0};
+		#endif
+		#if defined (R5F_CORE)
+		SDL_ESM_Inst instances_name[] = {SDL_ESM_INST_MAIN_ESM0};
+		#endif
+		uint32_t instances_name_size = sizeof(instances_name)/sizeof(SDL_ESM_Inst);
+		for (uint32_t i = 0; i < instances_name_size; i++) {
+			
+			if (instances_name[i] ==instance) {
+				retval = Esmhandlerinit(instance);
+			}
+		}
+	}
 #endif
 #if defined (SOC_AM263X)		
         retval = Esmhandlerinit(instance);
     }
 #endif
      return retval;
- }
+}

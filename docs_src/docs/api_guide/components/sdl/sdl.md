@@ -64,3 +64,8 @@ SDL consists of below sub-modules
 - \subpage SDL_HWA_PAGE
 - \subpage SDL_RESET_PAGE
 \endcond
+
+\cond SOC_AM243X
+- \subpage SDL_DPL_PAGE
+- \subpage SDL_ESM_PAGE
+\endcond

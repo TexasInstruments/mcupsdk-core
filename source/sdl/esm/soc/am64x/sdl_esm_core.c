@@ -177,7 +177,7 @@ int32_t SDL_ESM_getIntNumber(const SDL_ESM_Inst esmInstType,
                               SDL_ESM_IntType esmIntType)
 {
     uint32_t intNum = SDL_ESM_INST_INVALID;
-
+#if defined (M4F_CORE)
     if (esmInstType == SDL_ESM_INST_MCU_ESM0) {
         switch(esmIntType)
         {
@@ -202,6 +202,33 @@ int32_t SDL_ESM_getIntNumber(const SDL_ESM_Inst esmInstType,
     {
         intNum = SDL_ESM_INTNUMBER_INVALID;
     }
+#endif
+#if defined (R5F_CORE)
+    if (esmInstType == SDL_ESM_INST_MAIN_ESM0) {
+        switch(esmIntType)
+        {
+            case SDL_ESM_INT_TYPE_HI:
+                intNum = SDL_MAIN_ESM_HI_INTNO;
+                break;
+
+            case SDL_ESM_INT_TYPE_CFG:
+                intNum = SDL_MAIN_ESM_CFG_INTNO;
+                break;
+
+            case SDL_ESM_INT_TYPE_LO:
+                intNum = SDL_MAIN_ESM_LO_INTNO;
+                break;
+
+            default:
+                intNum = SDL_ESM_INTNUMBER_INVALID;
+                break;
+        }
+    }
+    else
+    {
+        intNum = SDL_ESM_INTNUMBER_INVALID;
+    }
+#endif
     return (int32_t)intNum;
 }
 
@@ -221,7 +248,7 @@ bool SDL_ESM_checkSpecialEvent(uint32_t esm_base_addr, uint32_t priority, uint32
     esmGroupIntrStatus_t localEsmGroupIntrStatus;
 
     *isCfgEvt = (bool)false;
-
+      #if defined (M4F_CORE)
     SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, base_addr);
     if (*base_addr != esm_base_addr)
     {
@@ -240,5 +267,27 @@ bool SDL_ESM_checkSpecialEvent(uint32_t esm_base_addr, uint32_t priority, uint32
             ret = (bool)true;
         }
     }
+    #endif
+
+    #if defined (R5F_CORE)
+    SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, base_addr);
+    if (*base_addr != esm_base_addr)
+    {
+        (void)SDL_ESM_getGroupIntrStatus(esm_base_addr, priority, &localEsmGroupIntrStatus);
+        intSrc = localEsmGroupIntrStatus.highestPendLvlIntNum;
+        if ((intSrc == SDLR_ESM0_ESM_LVL_EVENT_MCU_ESM0_ESM_INT_HI_LVL_0) ||
+            (intSrc == SDLR_ESM0_ESM_LVL_EVENT_MCU_ESM0_ESM_INT_LOW_LVL_0) ||
+            (intSrc == SDLR_ESM0_ESM_LVL_EVENT_MCU_ESM0_ESM_INT_CFG_LVL_0))
+        {
+            SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, base_addr);
+            *esmInst = SDL_ESM_INST_MCU_ESM0;
+            if (intSrc == SDLR_ESM0_ESM_LVL_EVENT_MCU_ESM0_ESM_INT_CFG_LVL_0)
+            {
+                *isCfgEvt = (bool)true;
+            }
+            ret = (bool)true;
+        }
+    }
+    #endif
     return ret;
 }

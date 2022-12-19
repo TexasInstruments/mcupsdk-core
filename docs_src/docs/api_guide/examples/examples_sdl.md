@@ -76,4 +76,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_DMA_PARITY
 \endcond
 
-
+\cond SOC_AM243X
+-# ESM
+   -# \subpage EXAMPLES_SDL_MCU_ESM
+\endcond

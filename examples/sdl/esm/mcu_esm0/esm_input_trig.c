@@ -51,6 +51,8 @@
 #include <sdl/include/sdl_types.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 #define USE_CASES_RUN         (3)
 #define USE_CASES             (3)
@@ -106,7 +108,7 @@ volatile uint8_t gcurrTestCase = START_USE_CASE;
 static const char *printTestCaseStepResult(uint32_t result);
 void ESM_example_printSummary(void);
 int32_t ESM_example_init (void);
-
+#if defined (M4F_CORE)
 /* Initialization structure for MCU ESM instance */
 static SDL_ESM_config ESM_Example_esmInitConfig_MCU =
 {
@@ -142,7 +144,47 @@ static SDL_ESM_config ESM_Example_esmInitConfig_MCU =
                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
                       },
 };
+#endif
 
+#if defined (R5F_CORE)
+static SDL_ESM_config ESM_Example_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000380u, 0xfffffffbu, 0x7fffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0xffffffffu,0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000380u, 0xfffffffbu, 0x7fffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0xffffffffu,0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000380u, 0xfffffffbu, 0x7fffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0xffffffffu,0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+};
+#endif
 static const char *printEsmIntType(SDL_ESM_IntType esmIntType)
 {
     char *pStr;
@@ -224,6 +266,7 @@ int32_t ESM_example_init (void)
 {
     int32_t retValue=0;
     int32_t result;
+#if defined (M4F_CORE)
 
     result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &ESM_Example_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, &apparg);
     if (result != SDL_PASS) {
@@ -234,7 +277,19 @@ int32_t ESM_example_init (void)
     } else {
         DebugP_log("\nTIMER_ESM_init: Init MCU ESM complete \n");
     }
+#endif
+#if defined (R5F_CORE)
+	result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ESM_Example_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, &apparg);
 
+	if (result != SDL_PASS) {
+        /* print error and quit */
+        DebugP_log("TIMER_ESM_init: Error initializing MAIN ESM: result = %d\n", result);
+
+        retValue = -1;
+    } else {
+        DebugP_log("\nTIMER_ESM_init: Init MAIN ESM complete \n");
+    }
+#endif
     return retValue;
 }
 
@@ -244,13 +299,22 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
                                  uint32_t intEsmSrc)
 {
     int32_t retVal = SDL_PASS;
-
+#if defined (M4F_CORE)
     if (esmInstType == SDL_ESM_INST_MCU_ESM0) {
         if (gcurrTestCase == 5) {
             /* UC-6: Configuration interrupt on MCU ESM */
             /* Re-initialize the ESM with the correct values: */
             SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &ESM_Example_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, &apparg);
         }
+#endif
+#if defined (R5F_CORE)
+if (esmInstType == SDL_ESM_INST_MAIN_ESM0) {
+        if (gcurrTestCase == 5) {
+            /* UC-6: Configuration interrupt on MCU ESM */
+            /* Re-initialize the ESM with the correct values: */
+            SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ESM_Example_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, &apparg);
+        }
+#endif
     } else {
         DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \n",
                     esmInstType, esmIntType);
@@ -422,7 +486,11 @@ int32_t mcu_esm0_main(void)
     sdlApp_dplInit();
 
     DebugP_log("\n ESM Example Application\r\n");
+	Drivers_open();
+	Board_driversOpen();
     (void)esm_example_app(NULL);
+	Board_driversClose();
+	Drivers_close();
     while (true)
     {
     }

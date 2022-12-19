@@ -51,11 +51,9 @@
 #define STATUS_NUM (1u)
 #define SDL_ESM_EN_KEY_ENBALE_VAL (0xFU)
 
-#if defined (SOC_AM64X)
-#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
-#include <sdl/esm/soc/am64x/sdl_esm_core.h>
+
+#include <sdl/esm/soc/sdl_esm_soc.h>
 #define SDL_TEST_ESM_BASE  SDL_MCU_ESM0_CFG_BASE
-#endif
 
 SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
@@ -578,29 +576,58 @@ int32_t sdl_Esm_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+#if defined (M4F_CORE)
         if (SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_HI) != SDL_MCU_ESM_HI_INTNO)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
+#endif
+
+#if defined (R5F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MAIN_ESM0, SDL_ESM_INT_TYPE_HI) != SDL_MAIN_ESM_HI_INTNO)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_CFG) != SDL_MCU_ESM_CFG_INTNO)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
-        }
+#if defined (M4F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_CFG) != SDL_MCU_ESM_CFG_INTNO)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
+#if defined (R5F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MAIN_ESM0, SDL_ESM_INT_TYPE_CFG) != SDL_MAIN_ESM_CFG_INTNO)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_LO) != SDL_MCU_ESM_LO_INTNO)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
-        }
+#if defined (M4F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_LO) != SDL_MCU_ESM_LO_INTNO)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
+
+#if defined (R5F_CORE)
+          if (SDL_ESM_getIntNumber(SDL_ESM_INST_MAIN_ESM0, SDL_ESM_INT_TYPE_LO) != SDL_MAIN_ESM_LO_INTNO)
+          {
+              testStatus = SDL_APP_TEST_FAILED;
+              DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+          }
+#endif
     }
 
 

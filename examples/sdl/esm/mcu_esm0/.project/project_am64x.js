@@ -22,6 +22,20 @@ const filedirs = {
     ],
 };
 
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
+};
+
+const r5_macro = {
+    common: [
+        "R5F_CORE",
+    ],
+
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -41,6 +55,14 @@ const libs_m4f = {
         "nortos.am64x.m4f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am64x.m4f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am64x.m4f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_r5f = {
+    common: [
+        "nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -78,8 +100,27 @@ const templates_nortos_m4f =
     }
 ];
 
+const templates_nortos_r5f =
+[
+    {
+        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+        options: {
+            isSingleCore: true,
+        },
+    },
+    {
+        input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "mcu_esm0_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
 ];
 
 function getComponentProperty(device) {
@@ -109,6 +150,12 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;
         build_property.templates = templates_nortos_m4f;
+        build_property.defines = m4_macro;
+    }
+	if(buildOption.cpu.match(/r5f*/)) {
+        build_property.libs = libs_r5f;
+        build_property.templates = templates_nortos_r5f;
+    	build_property.defines = r5_macro;
     }
 
     return build_property;

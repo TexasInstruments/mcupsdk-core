@@ -10682,6 +10682,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates the ESM operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcu_esm0",
+        "location": "../../examples/sdl/esm/mcu_esm0/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "esm",
+            "mcu_esm0",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_loopback",
         "location": "../../examples/networking/enet_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

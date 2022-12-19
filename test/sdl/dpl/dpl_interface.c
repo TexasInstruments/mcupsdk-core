@@ -97,10 +97,15 @@ pSDL_DPL_HwipHandle SDL_TEST_registerInterrupt(SDL_DPL_HwipParams *pParams)
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
      */
-    hwipParams.intNum = pParams->intNum + 16;
+#if defined (R5F_CORE)
+	hwipParams.intNum = pParams->intNum;
+#else 
+	hwipParams.intNum = pParams->intNum + 16;
+#endif
 #else
     hwipParams.intNum = pParams->intNum;
 #endif
+
     hwipParams.callback = pParams->callback;
 
     objNum = SDL_TEST_findAvailObj();
@@ -132,7 +137,13 @@ int32_t SDL_TEST_enableInterrupt(uint32_t intNum)
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
      */
-	 HwiP_enableInt(intNum + 16);
+
+	#if defined (M4F_CORE)
+    HwiP_enableInt(intNum + 16);
+	#endif
+	#if defined (R5F_CORE)
+	HwiP_enableInt(intNum);
+	#endif
 #else
 	 HwiP_enableInt(intNum);
 #endif
@@ -146,10 +157,16 @@ int32_t SDL_TEST_disableInterrupt(uint32_t intNum)
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
      */
-	HwiP_disableInt(intNum + 16);
+	#if defined (M4F_CORE)
+    HwiP_disableInt(intNum + 16);
+	#endif
+	#if defined (R5F_CORE)
+	HwiP_disableInt(intNum);
+	#endif
 #else
 	HwiP_disableInt(intNum);
 #endif
+
     return SDL_PASS;
 }
 

@@ -53,7 +53,7 @@
 #include <sdl/esm/v0/esm.h>
 #include "esm0_main.h"
 #include <sdl/include/sdl_types.h>
-#include <sdl/esm/soc/am64x/sdl_esm_soc.h>
+#include <sdl/esm/soc/sdl_esm_soc.h>
 #include "ti_dpl_config.h"
 #include <drivers/sciclient.h>
 #include <sdl/dpl/sdl_dpl.h>
@@ -220,9 +220,12 @@ void timerExpPinDisable(uintptr_t arg)
     int32_t retVal = SDL_PASS;
     bool pinStatus;
     SDL_Result sdrStatus;
-
+#if defined (M4F_CORE)
     volatile SDL_ESM_Inst instance = SDL_ESM_INST_MCU_ESM0;
-
+#endif
+#if defined (R5F_CORE)
+	volatile SDL_ESM_Inst instance = SDL_ESM_INST_MAIN_ESM0;
+#endif
     pinStatus = SDL_ESM_getNErrorStatus(instance,&gpStatus);
     if (gpStatus != 0) {
         DebugP_log("\n  timerExpPinDisable: Incorrect pin value before clearing\n");
@@ -279,7 +282,12 @@ int32_t cfgIntrTrigger(uint32_t group)
 {
     int32_t retVal = SDL_PASS;
     uint32_t esm_base_addr;
+#if defined (M4F_CORE)
     esm_base_addr = (uint32_t) AddrTranslateP_getLocalAddr(SDL_MCU_ESM0_CFG_BASE);
+#endif
+#if defined (R5F_CORE)
+    esm_base_addr = (uint32_t) AddrTranslateP_getLocalAddr(SDL_ESM0_CFG_BASE);
+#endif
     retVal = SDL_ESM_setCfgIntrStatusRAW (esm_base_addr, group);
 
     return retVal;
@@ -302,7 +310,12 @@ int32_t useCaseTrigger(uint8_t useCaseId)
             /* UC-2: Low Priority interrupt on MCU ESM*/
             esmErrorConfig.groupNumber = 1;
             esmErrorConfig.bitNumber = 3;
+#if defined (M4F_CORE)
             gcurrEsmInstance = SDL_ESM_INST_MCU_ESM0;
+#endif
+#if defined (R5F_CORE)
+            gcurrEsmInstance = SDL_ESM_INST_MAIN_ESM0;
+#endif
             gesmEventInputTrig[2] = USE_CASE_STATUS_COMPLETED_SUCCESS;
             SDR_ESM_errorInsert (gcurrEsmInstance,&esmErrorConfig);
             /* This use case only has low priority interrupts not routed to
@@ -314,7 +327,12 @@ int32_t useCaseTrigger(uint8_t useCaseId)
             /* UC-0: High Priority interrupt on MCU ESM */
             esmErrorConfig.groupNumber = 2;
             esmErrorConfig.bitNumber = 1;
+#if defined (M4F_CORE)
             gcurrEsmInstance = SDL_ESM_INST_MCU_ESM0;
+#endif
+#if defined (R5F_CORE)
+            gcurrEsmInstance = SDL_ESM_INST_MAIN_ESM0;
+#endif
             gesmEventInputTrig[0] = USE_CASE_STATUS_COMPLETED_SUCCESS;
             /* Start Timer to control when external Pin is reset */
             TimerP_start(gTimerBaseAddr[CONFIG_TIMER_ESM_TEST_Pin]);
@@ -325,7 +343,12 @@ int32_t useCaseTrigger(uint8_t useCaseId)
 
         case 1:
             /* UC-1: Configuration interrupt on MCU ESM */
+#if defined (M4F_CORE)
             gcurrEsmInstance = SDL_ESM_INST_MCU_ESM0;
+#endif
+#if defined (R5F_CORE)
+            gcurrEsmInstance = SDL_ESM_INST_MAIN_ESM0;
+#endif
             retVal = cfgIntrTrigger(0x1);
             if (retVal == 0){
               gesmEventInputTrig[useCaseId] = USE_CASE_STATUS_COMPLETED_SUCCESS;

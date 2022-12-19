@@ -47,6 +47,7 @@
 volatile uint8_t cfg_triggered = 0x0u;
 
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 SDL_ESM_config SDTF_esmInitConfig_MCU_appcallback =
 {
     .esmErrorConfig = {0u, 3u}, /* Self test error config */
@@ -93,7 +94,65 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
 };
-#elif defined (SOC_AM263X)
+#endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+SDL_ESM_config SDTF_esmInitConfig_MCU_appcallback =
+{
+    .esmErrorConfig = {0u, 3u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
+                },
+     /**< All events enable: except timer and self test  events, and Main ESM output */
+    /* Temporarily disabling vim compare error as well*/
+    .priorityBitmap = {0x0000000u, 0xff0ffffeu, 0x7fffffffu, 0x00000007u,
+                        },
+    /**< All events high priority: except timer, selftest error events, and Main ESM output */
+    .errorpinBitmap = {0x00000000u, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
+                      },
+    /**< All events high priority: except timer, selftest error events, and Main ESM output */
+};
+
+SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000380u, 0xfffffffbu, 0x7fffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0xffffffffu,0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000380u, 0xfffffffbu, 0x7fffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0xffffffffu,0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000380u, 0xfffffffbu, 0x7fffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu,
+                 0xffffffffu, 0xffffffffu, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0xffffffffu,0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+						},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+};
+#endif
+#endif
+#if defined (SOC_AM263X)
 SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -107,9 +166,9 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
     .errorpinBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
-                      },
-    /**< All events high priority: except clkstop for unused clocks
-     *   and PCIE events */
+						},
+	/**< All events high priority: except clkstop for unused clocks
+	 *   and PCIE events */
 };
 #endif
 
@@ -131,7 +190,7 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
     {
         result = SDL_ESM_init(esmType, &SDTF_esmInitConfig_MAIN_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
     }
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X)|| defined (SOC_AM243X)
     else
     {
         result = SDL_ESM_init(esmType, &SDTF_esmInitConfig_MCU_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
@@ -144,7 +203,7 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
         {
             DebugP_log("ESM_ECC_Example_init: Error initializing MAIN ESM: result = %d\n", result);
 		}
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
         else {
             DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\n", result);
         }
@@ -156,7 +215,7 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
             DebugP_log("\nESM_ECC_Example_init: Init MAIN ESM complete \n");
 
         } 
-#if defined (SOC_AM64X)		
+#if defined (SOC_AM64X)	|| defined (SOC_AM243X)
 		else {
             DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
         }
@@ -212,13 +271,15 @@ static int32_t SDTF_runESMInjectCfgInstance(SDL_ESM_Inst esmType,
     return retVal;
 }
 
-#if defined (SOC_AM64X)	
+#if defined (SOC_AM64X)	|| defined (SOC_AM243X)
 int32_t SDTF_runESMInjectCfg_MCU(void)
 {
     int32_t retVal = 0x0;
 
     cfg_triggered = 0x0;
-
+#if defined (R5F_CORE)
+    esm_init_appcb(SDL_ESM_INST_MAIN_ESM0);
+#endif
     esm_init_appcb(SDL_ESM_INST_MCU_ESM0);
     SDTF_runESMInjectCfgInstance(SDL_ESM_INST_MCU_ESM0, 0x1);
 
@@ -243,7 +304,7 @@ int32_t SDTF_runESMInjectCfg_MAIN(void)
     return retVal;
 }
 
-#if defined (SOC_AM64X)	
+#if defined (SOC_AM64X)	|| defined (SOC_AM243X)
 /*********************************************************************
  * @fn      SDTF_runESMInjectHigh_MCU
  *
@@ -322,7 +383,7 @@ int32_t ESMIntNumberTest(void)
     int32_t retVal=0;
     uint32_t intNum;
     intNum = SDL_ESM_getIntNumber(SDL_ESM_INST_MAIN_ESM0, SDL_ESM_INT_TYPE_MAX);
-#if defined(SOC_AM64X)
+#if defined(SOC_AM64X)|| defined (SOC_AM243X)
     if(intNum == 0xffffffffu)
     {
        intNum = SDL_ESM_getIntNumber(SDL_ESM_INST_MCU_ESM0, SDL_ESM_INT_TYPE_MAX);
@@ -350,7 +411,7 @@ int32_t Negative_test_priv_file(void)
     SDL_ErrType_t result;
 #if defined(SOC_AM263X)	
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &SDTF_esmInitConfig_MAIN_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
-#elif defined(SOC_AM64X)
+#elif defined(SOC_AM64X)|| defined (SOC_AM243X)
 result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &SDTF_esmInitConfig_MCU_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
 #endif
     if(result != SDL_PASS)
@@ -359,7 +420,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &SDTF_esmInitConfig_MCU_appcallback
     }
 #if defined(SOC_AM263X)
     SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, &esmInstBaseAddr);
-#elif defined(SOC_AM64X)
+#elif defined(SOC_AM64X) || defined (SOC_AM243X)
     SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, &esmInstBaseAddr);
 #endif
     if (SDL_ESM_enableIntr(esmInstBaseAddr, 40U) != SDL_PASS)
@@ -388,7 +449,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &SDTF_esmInitConfig_MCU_appcallback
     }
 #if defined(SOC_AM263X)
     retVal =SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 1, 8);
-#elif defined(SOC_AM64X)
+#elif defined(SOC_AM64X)|| defined (SOC_AM243X)
     retVal =SDTF_runESMInjectInstance(SDL_ESM_INST_MCU_ESM0, 1, 8);
 #endif 
     return retVal;
@@ -409,7 +470,7 @@ typedef struct SDTF_commandList_s
 /* Full list of commands */
 SDTF_commandList_t SDTF_commandList[SDTF_MAX_COMMANDS] =
 {
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
     { "esm_injectHigh_MCU",             SDTF_runESMInjectHigh_MCU },
     { "esm_injectLow1_MCU",              SDTF_runESMInjectLow1_MCU },
     { "esm_injectLow2_MCU",              SDTF_runESMInjectLow2_MCU },

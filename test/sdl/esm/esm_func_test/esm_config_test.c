@@ -4,7 +4,7 @@
 #include <kernel/dpl/DebugP.h>
 
 #define SDTF_NUM_RUNALL_TEST_COMMANDS 4
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 
 SDL_ESM_config SDTF_esmInitConfig_MCU_config =
 {
@@ -20,7 +20,9 @@ SDL_ESM_config SDTF_esmInitConfig_MCU_config =
                       },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
 };
-
+#endif
+#if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 SDL_ESM_config SDTF_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {0u, 8u}, /* Self test error config */
@@ -52,8 +54,45 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN =
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
 };
+#endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+SDL_ESM_config SDTF_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {0u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                         0x00000000u, 0x00000000u,0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                       0x00000000u, 0x00000000u, 0xffffffffu, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                 0x00000000u,
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+};
+#endif
+#endif
 
-#elif defined (SOC_AM263X)
+#if defined (SOC_AM263X)
 SDL_ESM_config SDTF_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -67,11 +106,12 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN =
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
     .errorpinBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
-                      },
-    /**< All events high priority: except clkstop for unused clocks
+						},
+	/**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
 };
 #endif
+
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                          SDL_ESM_IntType esmIntType,
                                          uint32_t grpChannel,
@@ -89,7 +129,7 @@ void  esm_init(SDL_ESM_Inst esmType)
     {
         result = SDL_ESM_init(esmType, &SDTF_esmInitConfig_MAIN,SDL_ESM_applicationCallbackFunction,ptr);
     }
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
     else
     {
         result = SDL_ESM_init(esmType, &SDTF_esmInitConfig_MCU_config,SDL_ESM_applicationCallbackFunction,ptr);
@@ -100,7 +140,7 @@ void  esm_init(SDL_ESM_Inst esmType)
         if(esmType == SDL_ESM_INST_MAIN_ESM0){
 			DebugP_log("ESM_ECC_Example_init: Error initializing MAIN ESM: result = %d\n", result);
         }
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X)||defined (SOC_AM243X)
 		else{
             DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\n", result);
         }
@@ -109,7 +149,7 @@ void  esm_init(SDL_ESM_Inst esmType)
         if(esmType == SDL_ESM_INST_MAIN_ESM0){
 			DebugP_log("\nESM_ECC_Example_init: Init MAIN ESM complete \n");
         }
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X)|| defined (SOC_AM243X)
 		else{
 			DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
             
@@ -121,7 +161,7 @@ void  esm_init(SDL_ESM_Inst esmType)
 uint8_t config_param = 1;
 int32_t retVal=0;
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 /*********************************************************************
  * @fn      SDTF_runESMInject_MCU
  *
@@ -199,7 +239,7 @@ typedef struct SDTF_commandList_s
 /* Full list of commands */
 SDTF_commandList_t SDTF_commandList_config[SDTF_MAX_COMMANDS] =
 {
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X)|| defined (SOC_AM243X)
     { "esm_config_MCU",              sdl_config_MCU },
     { "esm_configGrp_MCU",           sdl_configGrp_MCU },
 #endif

@@ -2,7 +2,7 @@ let path = require('path');
 
 let device = "am64x";
 
-const files_m4f = {
+const files = {
     common: [
         "sdl_dpl.c",
         "sdl_mcrc.c",
@@ -41,8 +41,23 @@ const filedirs = {
     ],
 };
 
+const r5_macro = {
+    common: [
+        "R5F_CORE",
+    ],
+
+};
+
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "m4f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty() {
@@ -61,8 +76,12 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
+    build_property.files = files;
     if(buildOption.cpu.match(/m4f*/)) {
-        build_property.files = files_m4f;
+        build_property.defines = m4_macro;
+    }
+    if(buildOption.cpu.match(/r5f*/)) {
+        build_property.defines = r5_macro;
     }
 
     return build_property;

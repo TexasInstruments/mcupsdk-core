@@ -41,9 +41,8 @@
 #include <sdl/sdl_esm.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/AddrTranslateP.h>
-#if defined (SOC_AM64X)
-#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
-#include <sdl/esm/soc/am64x/sdl_esm_core.h>
+
+#include <sdl/esm/soc/sdl_esm_soc.h>
 #define SDL_TEST_ESM_BASE  SDL_MCU_ESM0_CFG_BASE
 
 static SDL_ESM_config ESM_esmInitConfig_MCU =
@@ -80,9 +79,6 @@ static SDL_ESM_config ESM_esmInitConfig_MCU =
                       },
 };
 
-#endif
-
-
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                          SDL_ESM_IntType esmIntType,
                                          uint32_t grpChannel,
@@ -115,7 +111,7 @@ int32_t sdl_Esm_negTest(void)
 
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
-    SDL_ESM_config pCofnig;
+    SDL_ESM_config pConfig;
 
    /* ESMSetInfluenceOnErrPin negative test */
     if (testStatus == SDL_APP_TEST_PASS)
@@ -488,7 +484,7 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
-        if ((SDL_ESM_init(instance, &pCofnig, NULL, NULL)) != SDL_EBADARGS)
+        if ((SDL_ESM_init(instance, &pConfig, NULL, NULL)) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -548,8 +544,8 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
-        if (SDL_ESM_init((SDL_ESM_Inst)SDL_ESM_INSTANCE_INVLD, &pCofnig, SDL_ESM_applicationCallbackFunction, &apparg) != SDL_EBADARGS)
-        {
+        if (SDL_ESM_init((SDL_ESM_Inst)SDL_ESM_INSTANCE_INVLD, &pConfig, SDL_ESM_applicationCallbackFunction, &apparg) != SDL_EBADARGS)
+		{
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
@@ -562,7 +558,7 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ESM_verifyConfig((SDL_ESM_Inst)SDL_ESM_INSTANCE_INVLD, &pCofnig)!= SDL_EBADARGS)
+        if (SDL_ESM_verifyConfig((SDL_ESM_Inst)SDL_ESM_INSTANCE_INVLD, &pConfig)!= SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -577,7 +573,7 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
-        if (SDL_ESM_verifyConfig(instance, &pCofnig) != SDL_EBADARGS)
+        if (SDL_ESM_verifyConfig(instance, &pConfig) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
