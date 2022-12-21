@@ -133,6 +133,7 @@ help:
 	@echo  =============================
 	@echo  $(MAKE) -s -C drivers/esm/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am273x/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/ipc_rpmsg_test_am273x/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
@@ -252,10 +253,10 @@ BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_am273x-evm_r5fss0-0_freertos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_sha_entropy_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000
@@ -297,6 +298,7 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_dmaparity_functest_am273x-evm_c66ss0_nortos_ti-c6
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_esm_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_notify_ut_am273_am273x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am273x-evm_system_freertos
@@ -571,6 +573,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_ipc_notify_am273x-evm_system_freertos_nortos:
 	$(MAKE) -C drivers/ipc_notify/am273x-evm/system_freertos_nortos -f makefile all
 
+ ipc_notify_ut_am273_am273x-evm_system_nortos:
+	$(MAKE) -C drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am273x/am273x-evm/system_nortos -f makefile all
+
  test_ipc_rpmsg_am273x-evm_system_freertos:
 	$(MAKE) -C drivers/ipc_rpmsg/am273x-evm/system_freertos -f makefile all
 
@@ -628,6 +633,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_aes_am273x-evm_r5fss0-0_freertos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_sha_entropy_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -673,6 +679,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dmaparity_functest_am273x-evm_c66ss0_nortos
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_ut_am273_am273x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_am273x-evm_system_freertos_clean
@@ -947,6 +954,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_ipc_notify_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C drivers/ipc_notify/am273x-evm/system_freertos_nortos -f makefile clean
 
+ ipc_notify_ut_am273_am273x-evm_system_nortos_clean:
+	$(MAKE) -C drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am273x/am273x-evm/system_nortos -f makefile clean
+
  test_ipc_rpmsg_am273x-evm_system_freertos_clean:
 	$(MAKE) -C drivers/ipc_rpmsg/am273x-evm/system_freertos -f makefile clean
 
@@ -1005,10 +1015,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_am273x-evm_r5fss0-0_freertos_ti-ar
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_sha_entropy_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -1050,6 +1060,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dmaparity_functest_am273x-evm_c66ss0_nortos
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_am273x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_ut_am273_am273x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am273x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_am273x-evm_system_freertos_scrub
@@ -1323,6 +1334,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_ipc_notify_am273x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C drivers/ipc_notify/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ ipc_notify_ut_am273_am273x-evm_system_nortos_scrub:
+	$(MAKE) -C drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am273x/am273x-evm/system_nortos -f makefile scrub
 
  test_ipc_rpmsg_am273x-evm_system_freertos_scrub:
 	$(MAKE) -C drivers/ipc_rpmsg/am273x-evm/system_freertos -f makefile scrub

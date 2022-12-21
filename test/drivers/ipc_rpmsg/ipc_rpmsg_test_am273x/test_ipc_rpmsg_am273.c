@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -50,56 +50,11 @@ RPMessage_Object gRecvMsgObject;
 
 uint16_t gRemoteServiceEndPt = 15U;
 uint16_t gdataLenServiceEndPt = 17U;
-/* RPMessage_Object MUST be global or static */
-//static RPMessage_Object gRecvMsgObject;
 
 /* number of iterations of message exchange to do, this is only used by some tests */
 uint32_t gMsgEchoCount = 10000;
 uint32_t msg;
 
-#if defined(SOC_AM64X)
-/* main core that checks the test pass/fail */
-uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
-/* All cores that participate in the IPC */
-uint32_t gRemoteCoreId[] = {
-    CSL_CORE_ID_R5FSS0_0,
-    CSL_CORE_ID_R5FSS0_1,
-    CSL_CORE_ID_R5FSS1_0,
-    CSL_CORE_ID_R5FSS1_1,
-    CSL_CORE_ID_M4FSS0_0,
-    CSL_CORE_ID_A53SS0_0,
-    CSL_CORE_ID_MAX /* this value indicates the end of the array */
-};
-#endif
-
-#if defined(SOC_AM243X)
-/* main core that checks the test pass/fail */
-uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
-/* All cores that participate in the IPC */
-uint32_t gRemoteCoreId[] = {
-    CSL_CORE_ID_R5FSS0_0,
-    CSL_CORE_ID_R5FSS0_1,
-    CSL_CORE_ID_R5FSS1_0,
-    CSL_CORE_ID_R5FSS1_1,
-    CSL_CORE_ID_M4FSS0_0,
-    CSL_CORE_ID_MAX /* this value indicates the end of the array */
-};
-#endif
-
-#if defined(SOC_AM263X)
-/* main core that checks the test pass/fail */
-uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
-/* All cores that participate in the IPC */
-uint32_t gRemoteCoreId[] = {
-    CSL_CORE_ID_R5FSS0_0,
-    CSL_CORE_ID_R5FSS0_1,
-    CSL_CORE_ID_R5FSS1_0,
-    CSL_CORE_ID_R5FSS1_1,
-    CSL_CORE_ID_MAX /* this value indicates the end of the array */
-};
-#endif
-
-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
 /* main core that checks the test pass/fail */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
 /* All cores that participate in the IPC */
@@ -109,7 +64,6 @@ uint32_t gRemoteCoreId[] = {
     CSL_CORE_ID_C66SS0,
     CSL_CORE_ID_MAX /* this value indicates the end of the array */
 };
-#endif
 
 /* max size of message that will be ever sent */
 #define MAX_MSG_SIZE    (128u)
@@ -130,9 +84,6 @@ SemaphoreP_Object gSendNotifyAckDoneSem;
 /* server task related properties, like priority, stack size, stack memory, task object handles */
 #define SERVER_TASK_PRI (2u)
 #define SERVER_TASK_SIZE (16*1024/sizeof(StackType_t))
-//StackType_t  gServerTaskStack[SERVER_TASK_SIZE] __attribute__((aligned(32)));
-//StaticTask_t gServerTaskObj;
-//TaskHandle_t gServerTask;
 
 /* RPMessage objects to receive messages */
 RPMessage_Object gServerMsgObject;
@@ -247,11 +198,6 @@ void test_rpmsgCreateObjects()
     status = SemaphoreP_constructBinary(&gRxNotifyAckDoneSem, 0);
     DebugP_assert(status==SystemP_SUCCESS);
 
-   /* RPMessage_CreateParams_init(&createParams);
-    createParams.localEndPt = gServerEndPt;
-    status = RPMessage_construct(&gServerMsgObject, &createParams);
-    DebugP_assert(status==SystemP_SUCCESS); */
-
     RPMessage_CreateParams_init(&createParams);
     createParams.localEndPt = gServerEndPt;
     createParams.recvCallback = echocallback;
@@ -285,15 +231,6 @@ void test_rpmsgCreateObjects()
     memset(&gControlEndPt_info[0], 0, sizeof(ControlEndPt_Info));
     RPMessage_controlEndPtCallback(test_rpmsgControlEndPtCallback, &gControlEndPt_info[0]);
 
-    /*gServerTask = xTaskCreateStatic(test_rpmsgServerMain,
-                                  "test_rpmsgServerMain",
-                                  SERVER_TASK_SIZE,
-                                  NULL,
-                                  SERVER_TASK_PRI,
-                                  gServerTaskStack,
-                                  &gServerTaskObj);
-    configASSERT(gServerTask != NULL); */
-
     /* wait for all cores to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
@@ -305,7 +242,6 @@ void test_rpmsgCreateObjects()
  */
 void test_rpmsgDestructObjects()
 {
-    //vTaskDelete(gServerTask);
     RPMessage_destruct(&gServerMsgObject);
     RPMessage_destruct(&gAckMsgObject);
     RPMessage_destruct(&gRxNotifyAckMsgObject);
@@ -768,27 +704,8 @@ void test_ipc_main_core_start()
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;
     RUN_TEST(test_rpmsgOneToOne, 298, &testArgs);
 
-    #if defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263X)
-    testArgs.remoteCoreId = CSL_CORE_ID_R5FSS1_0;
-    RUN_TEST(test_rpmsgOneToOne, 300, &testArgs);
-    testArgs.remoteCoreId = CSL_CORE_ID_R5FSS1_1;
-    RUN_TEST(test_rpmsgOneToOne, 301, &testArgs);
-    #endif
-
-    #if defined(SOC_AM64X) || defined(SOC_AM243X)
-    testArgs.remoteCoreId = CSL_CORE_ID_M4FSS0_0;
-    RUN_TEST(test_rpmsgOneToOne, 1819, &testArgs);
-    #endif
-
-    #if defined(SOC_AM64X)
-    testArgs.remoteCoreId = CSL_CORE_ID_A53SS0_0;
-    RUN_TEST(test_rpmsgOneToOne, 1870, &testArgs);
-    #endif
-
-    #if defined(SOC_AM273X) || defined(SOC_AWR294X)
     testArgs.remoteCoreId = CSL_CORE_ID_C66SS0;
     RUN_TEST(test_rpmsgOneToOne, 300, &testArgs);
-    #endif
 
     /* performance test with varying payload size */
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;
@@ -801,50 +718,10 @@ void test_ipc_main_core_start()
     testArgs.msgSize = 112;
     RUN_TEST(test_rpmsgOneToOne, 304, &testArgs);
 
-    #if defined(SOC_AM64X) || defined(SOC_AM243X)
-    /* performance test with varying payload size */
-    testArgs.remoteCoreId = CSL_CORE_ID_M4FSS0_0;
-    testArgs.msgSize = 32;
-    RUN_TEST(test_rpmsgOneToOne, 1820, &testArgs);
-    testArgs.remoteCoreId = CSL_CORE_ID_M4FSS0_0;
-    testArgs.msgSize = 64;
-    RUN_TEST(test_rpmsgOneToOne, 1821, &testArgs);
-    testArgs.remoteCoreId = CSL_CORE_ID_M4FSS0_0;
-    testArgs.msgSize = 112;
-    RUN_TEST(test_rpmsgOneToOne, 1822, &testArgs);
-    #endif
-
-    #if defined(SOC_AM64X)
-    /* performance test with varying payload size */
-    testArgs.remoteCoreId = CSL_CORE_ID_A53SS0_0;
-    testArgs.msgSize = 32;
-    RUN_TEST(test_rpmsgOneToOne, 1871, &testArgs);
-    testArgs.remoteCoreId = CSL_CORE_ID_A53SS0_0;
-    testArgs.msgSize = 64;
-    RUN_TEST(test_rpmsgOneToOne, 1872, &testArgs);
-    testArgs.remoteCoreId = CSL_CORE_ID_A53SS0_0;
-    testArgs.msgSize = 112;
-    RUN_TEST(test_rpmsgOneToOne, 1873, &testArgs);
-    #endif
-
     /* back to back message send and handler mode rx tests */
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;
     testArgs.msgSize = 4;
     RUN_TEST(test_rpmsgOneToOneBackToBack, 305, &testArgs);
-
-    #if defined(SOC_AM64X) || defined(SOC_AM243X)
-    /* back to back message send and handler mode rx tests */
-    testArgs.remoteCoreId = CSL_CORE_ID_M4FSS0_0;
-    testArgs.msgSize = 4;
-    RUN_TEST(test_rpmsgOneToOneBackToBack, 1823, &testArgs);
-    #endif
-
-    #if defined(SOC_AM64X)
-    /* back to back message send and handler mode rx tests */
-    testArgs.remoteCoreId = CSL_CORE_ID_A53SS0_0;
-    testArgs.msgSize = 4;
-    RUN_TEST(test_rpmsgOneToOneBackToBack, 1874, &testArgs);
-    #endif
 
     /* rx notify callback tests */
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;

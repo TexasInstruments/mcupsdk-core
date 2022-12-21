@@ -205,6 +205,7 @@ const example_file_list = [
     "test/drivers/gpio/.project/project.js",
     "test/drivers/i2c/.project/project.js",
     "test/drivers/ipc_notify/.project/project.js",
+    "test/drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am263x/.project/project.js",
     "test/drivers/ipc_rpmsg/.project/project.js",
     "test/drivers/ipc_rpmsg/ipc_rpmsg_test_am263x/.project/project.js",
     "test/drivers/lin/.project/project.js",

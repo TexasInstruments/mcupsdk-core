@@ -47,7 +47,7 @@
 #include <drivers/ipc_rpmsg.h>
 #include <unity.h>
 #include "ti_drivers_open_close.h"
-#include <drivers\ipc_rpmsg\ipc_rpmsg_priv.h>
+#include <drivers/ipc_rpmsg/ipc_rpmsg_priv.h>
 
 void RPMessage_forceRecvMsgHandlers(void);
 void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);

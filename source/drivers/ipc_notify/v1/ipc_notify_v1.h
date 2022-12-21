@@ -58,7 +58,6 @@ typedef struct IpcNotify_InterruptConfig_s
                                            *
                                            *   See \ref CSL_CoreID for valid values for this field.
                                            */
-    uint32_t clearIntOnInit;            /* 0: do not clear pending interrupts during IpcNotify_init, 1: clear pending interrupts */
 } IpcNotify_InterruptConfig;
 
 /**

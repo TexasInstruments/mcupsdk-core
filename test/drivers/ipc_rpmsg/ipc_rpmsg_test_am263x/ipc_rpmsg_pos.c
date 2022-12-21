@@ -47,7 +47,7 @@
  #include <drivers/ipc_rpmsg.h>
  #include <unity.h>
  #include "ti_drivers_open_close.h"
- #include <drivers\ipc_rpmsg\ipc_rpmsg_priv.h>
+ #include <drivers/ipc_rpmsg/ipc_rpmsg_priv.h>
 
 /* max size of message that will be ever sent */
 #define MAX_MSG_SIZE    (128u)

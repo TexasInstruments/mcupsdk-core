@@ -64,52 +64,31 @@ static inline void IpcNotify_getWriteMailbox(uint32_t remoteCoreId, uint32_t *ma
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if((gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX) && (remoteCoreId < CSL_CORE_ID_MAX))
-    {
-        pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][remoteCoreId];
+    pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][remoteCoreId];
 
-        *mailboxBaseAddr = pMailboxConfig->writeDoneMailboxBaseAddr;
-        *intrBitPos = pMailboxConfig->intrBitPos;
-        *swQ = pMailboxConfig->swQ;
-    }
-    else
-    {
-        *mailboxBaseAddr = NULL;
-        *intrBitPos = 0;
-        *swQ = NULL;
-    }
+    *mailboxBaseAddr = pMailboxConfig->writeDoneMailboxBaseAddr;
+    *intrBitPos = pMailboxConfig->intrBitPos;
+    *swQ = pMailboxConfig->swQ;
+
 }
 
 static inline void IpcNotify_getReadMailbox(uint32_t *mailboxBaseAddr)
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if(gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX)
-    {
-        pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][gIpcNotifyCtrl.selfCoreId];
+    pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][gIpcNotifyCtrl.selfCoreId];
 
-        *mailboxBaseAddr = pMailboxConfig->readReqMailboxBaseAddr;
-    }
-    else
-    {
-        *mailboxBaseAddr = NULL;
-    }
+    *mailboxBaseAddr = pMailboxConfig->readReqMailboxBaseAddr;
+
 }
 
 static inline void IpcNotify_getReadSwQ(uint32_t remoteCoreId, IpcNotify_SwQueue **swQ)
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if((gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX) && (remoteCoreId < CSL_CORE_ID_MAX))
-    {
-        pMailboxConfig = &gIpcNotifyMailboxConfig[remoteCoreId][gIpcNotifyCtrl.selfCoreId];
+    pMailboxConfig = &gIpcNotifyMailboxConfig[remoteCoreId][gIpcNotifyCtrl.selfCoreId];
 
-        *swQ = pMailboxConfig->swQ;
-    }
-    else
-    {
-        *swQ = NULL;
-    }
+    *swQ = pMailboxConfig->swQ;
 }
 
 static inline uint32_t IpcNotify_makeMsg(uint16_t clientId, uint32_t msgValue)
@@ -353,10 +332,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
 
         IpcNotify_getReadMailbox(&mailboxBaseAddr);
 
-        if((pInterruptConfig->clearIntOnInit) != 0U)
-        {
-            IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
-        }
+        IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
 
         HwiP_Params_init(&hwiParams);
         hwiParams.intNum = pInterruptConfig->intNum;
