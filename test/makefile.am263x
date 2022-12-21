@@ -56,6 +56,8 @@ help:
 	@echo  $(MAKE) -s -C drivers/ecap/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/edma/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/edma/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/edma/edma_ut_am263x/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/edma/edma_ut_am263x/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/eqep/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/eqep/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -233,6 +235,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_dac_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ecap_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_edma_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_edma_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_ut_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += edma_ut_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eqep_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eqep_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -370,6 +374,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_edma_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/edma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ edma_ut_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/edma/edma_ut_am263x/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ edma_ut_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/edma/edma_ut_am263x/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -654,6 +664,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dac_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecap_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_ut_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_ut_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eqep_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eqep_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -791,6 +803,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_edma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/edma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ edma_ut_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/edma/edma_ut_am263x/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ edma_ut_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/edma/edma_ut_am263x/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1075,6 +1093,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dac_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecap_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_ut_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_ut_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eqep_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eqep_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1212,6 +1232,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_edma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/edma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ edma_ut_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/edma/edma_ut_am263x/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ edma_ut_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/edma/edma_ut_am263x/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

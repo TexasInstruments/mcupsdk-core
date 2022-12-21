@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1692,6 +1692,7 @@ static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint
     uint32_t    *allocPtr;
     const uint32_t *ownPtr, *reservedPtr;
     uint32_t    resPtrLen, maxRes;
+    uint32_t resAllocated = 0U;
     switch (resType)
     {
         case EDMA_RESOURCE_TYPE_DMA:
@@ -1729,7 +1730,6 @@ static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint
         /* set the status to failure.
            If allocation is successful status will be updated. */
         status = SystemP_FAILURE;
-        uint32_t resAllocated = 0U;
         intrState = HwiP_disable();
         if (*resId == EDMA_RESOURCE_ALLOC_ANY)
         {
@@ -1898,23 +1898,22 @@ static int32_t EDMA_freeResource(EDMA_Handle handle, uint32_t resType, uint32_t 
         {
             object = config->object;
             attrs = config->attrs;
-
             DebugP_assert(NULL != object);
             DebugP_assert(NULL != attrs);
             intrState = HwiP_disable();
             switch (resType)
             {
                 case EDMA_RESOURCE_TYPE_DMA:
-                    object->allocResource.dmaCh[*resId/32U] &= ~((1U << *resId)%32U);
+                    object->allocResource.dmaCh[*resId/32U] &= ~(1U << (*resId%32U));
                     break;
                 case EDMA_RESOURCE_TYPE_QDMA:
-                    object->allocResource.qdmaCh &= ~((1U << *resId)%32U);
+                    object->allocResource.qdmaCh &= ~(1U << (*resId%32U));
                     break;
                 case EDMA_RESOURCE_TYPE_TCC:
-                    object->allocResource.tcc[*resId/32U] &= ~((1U << *resId)%32U);
+                    object->allocResource.tcc[*resId/32U] &= ~(1U << (*resId%32U));
                     break;
                 case EDMA_RESOURCE_TYPE_PARAM:
-                    object->allocResource.paramSet[*resId/32U] &= ~((1U << *resId)%32U);
+                    object->allocResource.paramSet[*resId/32U] &= ~(1U << (*resId%32U));
                     break;
                 default:
                     status = SystemP_FAILURE;

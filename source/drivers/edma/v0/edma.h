@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -255,6 +255,14 @@ extern "C" {
     (((EDMA_TPCC_OPT_TCC_MASK >> EDMA_TPCC_OPT_TCC_SHIFT) & (tcc)) << \
      EDMA_TPCC_OPT_TCC_SHIFT)
 /**< OPT-TCC bitfield Set */
+#define EDMA_OPT_SAM_MASK         ((uint32_t) EDMA_TPCC_OPT_SAM_MASK)
+/**< Source Addressing Mode mask */
+#define EDMA_OPT_SAM_SHIFT        ((uint32_t) EDMA_TPCC_OPT_SAM_SHIFT)
+/**< Source Addressing Mode shift */
+#define EDMA_OPT_DAM_MASK         ((uint32_t) EDMA_TPCC_OPT_DAM_SHIFT)
+/**< Destination Addressing Mode mask */
+#define EDMA_OPT_DAM_SHIFT        ((uint32_t) EDMA_TPCC_OPT_DAM_SHIFT)
+/**< Destination Addressing Mode shift */
 /** @} */
 
 /** \anchor EDMA_PARAM_FIELD_DEFS
