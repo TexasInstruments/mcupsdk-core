@@ -108,6 +108,42 @@ extern "C"
 /** Endianess conversion flag. Value is 0 to disable it and 1 to enable it */
 #define CUSBD_ENDIANESS_CONV_FLAG 0U
 
+/* Checks set bit from LSB */
+#define CHECK_SET_BITS(raw) ((raw & (raw -1)) ^ raw)
+
+#define EP_0 (1U << 0U)
+#define EP_1 (1U << 1U)
+#define EP_2 (1U << 2U)
+#define EP_3 (1U << 3U)
+#define EP_4 (1U << 4U)
+#define EP_5 (1U << 5U)
+#define EP_6 (1U << 6U)
+#define EP_7 (1U << 7U)
+#define EP_8 (1U << 8U)
+#define EP_9 (1U << 9U)
+#define EP_10 (1U << 10U)
+#define EP_11 (1U << 11U)
+#define EP_12 (1U << 12U)
+#define EP_13 (1U << 13U)
+#define EP_14 (1U << 14U)
+#define EP_15 (1U << 15U)
+#define EP_16 (1U << 16U)
+#define EP_17 (1U << 17U)
+#define EP_18 (1U << 18U)
+#define EP_19 (1U << 19U)
+#define EP_20 (1U << 20U)
+#define EP_21 (1U << 21U)
+#define EP_22 (1U << 22U)
+#define EP_23 (1U << 23U)
+#define EP_24 (1U << 24U)
+#define EP_25 (1U << 25U)
+#define EP_26 (1U << 26U)
+#define EP_27 (1U << 27U)
+#define EP_28 (1U << 28U)
+#define EP_29 (1U << 29U)
+#define EP_30 (1U << 30U)
+#define EP_31 (1U << 31U)
+
 /**
  *  @}
  */
@@ -124,6 +160,8 @@ extern "C"
 * Forward declarations
 **********************************************************************/
 typedef struct CUSBD_EpAuxBufferConfig_s CUSBD_EpAuxBufferConfig;
+typedef struct CUSBD_DSREventQueue_s CUSBD_DSREventQueue;
+typedef struct CUSBD_ISRDSREvent_s CUSBD_ISRDSREvent;
 typedef struct CUSBD_EpAuxBuffer_s CUSBD_EpAuxBuffer;
 typedef struct CUSBD_EpConfig_s CUSBD_EpConfig;
 typedef struct CUSBD_Config_s CUSBD_Config;
@@ -157,6 +195,24 @@ typedef enum
     /** Endpoint stalled */
     CUSBD_EP_STALLED = 2U
 } CUSBD_epState;
+
+
+/** TYpes of device interrupts */
+typedef enum
+{
+    /** USBD interrupt none type */
+    CUSBD_INT_NONE_TYPE = 0U,
+    /** USBD interrupt device type */
+    CUSBD_INT_DEVICE_TYPE = 1U,
+    /** USBD interrupt endpoint type */
+    CUSBD_INT_ENDPT_TYPE = 2U,
+    /** USBD interrupt software issue type */
+    CUSBD_INT_SW_ISSUE_TYPE = (0xFFFFFFFF - 2U),
+    /** USBD interrupt spurious type */
+    CUSBD_INT_SPURIOUS_TYPE = (0xFFFFFFFF - 1U),
+    /** USBD interrupt invalid */
+    CUSBD_INT_MAX_INVALID_TYPE=0xFFFFFFFF,
+} CUSBD_IntType;
 
 /**********************************************************************
 * Callbacks

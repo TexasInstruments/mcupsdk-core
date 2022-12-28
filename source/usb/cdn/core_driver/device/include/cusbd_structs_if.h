@@ -64,6 +64,31 @@ struct CUSBD_EpAuxBufferConfig_s
     uint16_t bufferSize;
 };
 
+/** ISR-DSR queue element type. This structure is software related. */
+struct CUSBD_DSREventQueue_s
+{
+    /** type of interrupt */
+    CUSBD_IntType interrupt_type;
+    /** Device Interrupt status register for cadence ISR */
+    uint32_t DSTS;
+    /** Endpoint Interrupt status register for cadence ISR */
+    uint32_t EpiSTS;
+    /** Endpoint Interrupt status register per endpoint IN + OUT + CNTRL(2) */
+    uint32_t EpStatus[CUSBD_NUM_EP_OUT + CUSBD_NUM_EP_IN + 2];
+    /* Cadence priv data handle*/
+    CUSBD_PrivateData* dev;
+};
+/** Debug count struct for ISR-DSR synchronization. */
+struct CUSBD_ISRDSREvent_s
+{
+    uint32_t dev_int_isr; /* Device interrupt iSR count */
+    uint32_t dev_int_dsr; /* Device interrupt DSR count */
+    uint32_t epn_int_isr; /* non control EP interrupt ISR count */
+    uint32_t epn_int_dsr; /* non control EP interrupt DSR count */
+    uint32_t ep0_int_isr; /*  control EP interrupt ISR count */
+    uint32_t ep0_int_dsr; /*  control EP interrupt DSR count */
+};
+
 /** Auxiliary-overflow buffer structure for EP-OUT endpoints. */
 struct CUSBD_EpAuxBuffer_s
 {

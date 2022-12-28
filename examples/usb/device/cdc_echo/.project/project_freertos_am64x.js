@@ -22,6 +22,7 @@ const filedirs = {
 
 const defines = {
     common: [
+        "TINYUSB_INTEGRATION"
     ],
 };
 

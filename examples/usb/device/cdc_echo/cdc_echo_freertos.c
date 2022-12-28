@@ -1,29 +1,5 @@
 /*
- * The MIT License (MIT)
- *
- * Copyright (c) 2019 Ha Thach (tinyusb.org)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- */
-/*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -71,17 +47,33 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-#define TUD_TASK_PRI  (TaskP_PRIORITY_HIGHEST-2)
-#define TUD_TASK_SIZE (16384U)
+#ifdef TINYUSB_INTEGRATION
+
+#define DSR_TASK_PRI  (TaskP_PRIORITY_HIGHEST-2)
+#define DSR_TASK_SIZE (1024U)
+uint8_t gDsrTaskStack[DSR_TASK_SIZE] __attribute__((aligned(32)));
+TaskP_Object gDsrTaskObj;
+TaskP_Params gDsrTaskParams;
+
+#endif /* TINYUSB_INTEGRATION */
+
+
+#define TUD_TASK_PRI  (TaskP_PRIORITY_HIGHEST-3)
+#define TUD_TASK_SIZE (1024U)
 uint8_t gTudTaskStack[TUD_TASK_SIZE] __attribute__((aligned(32)));
 TaskP_Object gTudTaskObj;
 TaskP_Params gTudTaskParams;
 
-#define CDC_TASK_PRI  (TaskP_PRIORITY_HIGHEST-3)
-#define CDC_TASK_SIZE (16384U)
+
+#define CDC_TASK_PRI  (TaskP_PRIORITY_HIGHEST-4)
+#define CDC_TASK_SIZE (1024U)
 uint8_t gCdcTaskStack[CDC_TASK_SIZE] __attribute__((aligned(32)));
 TaskP_Object gCdcTaskObj;
 TaskP_Params gCdcTaskParams;
+
+#ifdef TINYUSB_INTEGRATION
+void dsr_task_loop(void *args);
+#endif /* TINYUSB_INTEGRATION */
 
 void tud_task_loop(void *args);
 void cdc_task_loop(void *args);
@@ -92,7 +84,20 @@ int cdc_echo_main(void)
 
     Drivers_open();
     Board_driversOpen();
+#ifdef TINYUSB_INTEGRATION
 
+    /* Cadence DSR task is to handle the USB device events */
+    TaskP_Params_init(&gDsrTaskParams);
+    gDsrTaskParams.name = "dsr_task";                /**< Pointer to task name */
+    gDsrTaskParams.stackSize = DSR_TASK_SIZE;        /**< Size of stack in units of bytes */
+    gDsrTaskParams.stack = gDsrTaskStack;            /**< Pointer to stack memory, MUST be aligned based on CPU architecture, typically atleast 32b on 32b systems */
+    gDsrTaskParams.priority = DSR_TASK_PRI;          /**< Task priority, MUST be between \ref TaskP_PRIORITY_LOWEST and TaskP_PRIORITY_HIGHEST */
+    gDsrTaskParams.args = NULL;                      /**< User arguments that are passed back as parater to task main */
+    gDsrTaskParams.taskMain = dsr_task_loop;         /**< Entry point function to the task */
+    /* create the task */
+    status = TaskP_construct(&gDsrTaskObj, &gDsrTaskParams);
+    DebugP_assert(status == SystemP_SUCCESS);
+#endif
     /* TUD task is to handle the USB device events */
     TaskP_Params_init(&gTudTaskParams);
     gTudTaskParams.name = "tud_task";                /**< Pointer to task name */
@@ -158,6 +163,7 @@ static void cdc_task(void)
         {
             if ( tud_cdc_n_available(itf) )
             {
+
                 uint8_t buf[64];
 
                 uint32_t count = tud_cdc_n_read(itf, buf, sizeof(buf));
@@ -169,7 +175,13 @@ static void cdc_task(void)
         }
     }
 }
-
+void dsr_task_loop(void *args)
+{
+    while (1)
+    {
+	    cusbd_dsr();
+    }
+}
 void tud_task_loop(void *args)
 {
     while (1)

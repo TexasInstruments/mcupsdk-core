@@ -70,6 +70,8 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM64X \
+    -DTINYUSB_INTEGRATION \
+    -DCFG_TUSB_OS=OPT_OS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

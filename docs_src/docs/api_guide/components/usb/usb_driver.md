@@ -66,6 +66,8 @@ and does the below,
 
 - USB device class driver should be operating as higher priority task if host driver is implemented as polling for device response with strict timeout.
 
+- If Cadence driver is used with TinyUSB, makefiles of both example and driver should define TINYUSB_INTEGRATION (like default cdc_echo example). This macro defined in driver and not in example or vice versa is an invalid combination.
+
 ## Important files and directory structure
 
 <table>

@@ -16,6 +16,7 @@ ConfigName:=$(PROFILE)
 LIBNAME:=usb_device_nortos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    cdn_osal_none.c \
     cdn_print.c \
     cps.c \
     usb_init.c \
@@ -52,6 +53,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I../drivers/hw_include \
     -I../drivers/hw_include/am64x_am243x \
+    -I../kernel/dpl \
     -I../drivers/soc/am64x_am243x \
     -Icdn/core_driver/common/src \
     -Icdn/core_driver/common/include \
@@ -67,6 +69,8 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM243X \
+    -DTINYUSB_INTEGRATION \
+    -DCFG_TUSB_OS=OPT_OS_NONE \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

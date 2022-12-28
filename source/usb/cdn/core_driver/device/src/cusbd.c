@@ -49,7 +49,7 @@
 #include "byteorder.h"              /* endian macros */
 #include "cusb_ch9_if.h"
 #include "cusbd_sanity.h"
-
+#include "cdn_osal.h"
 #if !(defined CUSBD_DEFAULT_TIMEOUT)
 #define CUSBD_DEFAULT_TIMEOUT 1000000U
 #endif
@@ -63,8 +63,40 @@
 #define CUSBSS_U2_DEV_EXIT_LAT   512
 #define USB_SS_MAX_PACKET_SIZE   1024
 
+/* TODO : check for optimal value of queue size*/
+#define CFG_CDNS_DSR_TASK_QUEUE_SZ (16U)
+
 static inline void reqListDeleteItem(CUSBD_Req **headReq, CUSBD_Req *item);
+static inline void handleIsrDev(CUSBD_PrivateData* dev, uint32_t usb_ists, uint8_t *exitFlag);
 static uint32_t startHwTransfer(CUSBD_PrivateData * dev, CUSBD_EpPrivate *epp, CUSBD_Req const *req);
+
+#ifndef TINYUSB_INTEGRATION
+static inline uint32_t isrHandleEp0(CUSBD_PrivateData* dev, uint32_t ep_ists, uint8_t *exitFlag);
+#else /* TINYUSB_INTEGRATION */
+static inline uint32_t isrHandleEp0(CUSBD_PrivateData* dev, uint32_t ep_ists, uint32_t * EpStatusBase);
+#endif  /* TINYUSB_INTEGRATION */
+
+/* Cadence DSR data structures */
+OSAL_QUEUE_DEF(1, cdns_dsr_qdef, CFG_CDNS_DSR_TASK_QUEUE_SZ, CUSBD_DSREventQueue);
+osal_queue_t cdns_dsr_q;
+
+const char * epstatus[5][16] ={
+    {"CH9_EP0_UNCONNECTED"},
+    {"CH9_EP0_SETUP_PHASE"},
+    {"CH9_EP0_DATA_PHASE"},
+    {"CH9_EP0_STATUS_PHASE"},
+    {"CH9_EP0_JUNK_PHASE"}};
+const char * functionid[10][16] =
+    {{"API_NONE"},
+    {"API_DCD_EDPT_XFER_1"},
+    {"API_DCD_EDPT_XFER_2"},
+    {"API_DCD_EDPT_XFER_3"},
+    {"API_HANDLEEP0REQ"},
+    {"API_INITEP0HW"},
+    {"API_HANDLEEP0IRQSTATUS"},
+    {"API_HANDLEEP0IRQIOC"},
+    {"API_CONNECT_FIRST_1"},
+    {"API_JUNK"}};
 
 /**
  * This function converts a virtual address pointer to uintptr_t type for DMA
@@ -98,6 +130,180 @@ static inline uint16_t getU16ValFromU8Ptr(const uint8_t* dataPtr) {
     value += byte1;
     return value;
 }
+#ifdef TINYUSB_INTEGRATION
+
+/**
+ * Save end point status register and clear interrupt
+ * @param regs (in) Dma regs value
+ * @param Epsts (out) ep_sts register value
+ * @param ep_sel (in) ep_sel regisger value
+ * @return :  CDN_EINVAL  : invalid input params
+ *         :  CDN_EOK     : valid return
+ */
+
+static inline uint32_t SaveEndptReg(DmaRegs * regs, uint32_t * Epsts, uint32_t ep_sel)
+{
+    if(( NULL == regs) || (NULL == Epsts))
+    {
+        return CDN_EINVAL;
+    }
+    CPS_UncachedWrite32(&regs->ep_sel, ep_sel);
+    *Epsts = CPS_UncachedRead32(&regs->ep_sts);
+    if(*Epsts == 0)
+    {
+        return CDN_EFAULT;
+    }
+    CPS_UncachedWrite32(&regs->ep_sts, *Epsts); /* Clear endpt STS interrupt */
+    return CDN_EOK;
+}
+/**
+ * Get EP number and EP_SEL configuration value for EP number
+ * @param ep_ists (in) ep status register value
+ * @param ep_no (out) ep number
+ * @param EPConfRaw (out) ep sel register config value
+ * @return :  CDN_EINVAL  : invalid input params
+ *         :  CDN_EOK     : valid return
+ */
+static inline uint32_t GetEPSelConfigValue(uint32_t ep_ists, uint8_t * ep_no, uint32_t * EPConfRaw)
+{
+    if(( NULL == ep_no) || (NULL == EPConfRaw))
+    {
+        return CDN_EINVAL;
+    }
+    switch(CHECK_SET_BITS(ep_ists))
+    {
+        case EP_0:
+           *ep_no = 0U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_1:
+           *ep_no = 1U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_2:
+           *ep_no = 2U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_3:
+           *ep_no = 3U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_4:
+           *ep_no = 4U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_5:
+           *ep_no = 5U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_6:
+           *ep_no = 6U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_7:
+           *ep_no = 7U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_8:
+           *ep_no = 8U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_9:
+           *ep_no = 9U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_10:
+           *ep_no = 10U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_11:
+           *ep_no = 11U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_12:
+           *ep_no = 12U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_13:
+           *ep_no = 13U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_14:
+           *ep_no = 14U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_15:
+           *ep_no = 15U;
+           *EPConfRaw = *ep_no | DMARD_EP_RX ;
+        break;
+        case EP_16:
+           *ep_no = 0U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_17:
+           *ep_no = 1U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_18:
+           *ep_no = 2U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_19:
+           *ep_no = 3U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_20:
+           *ep_no = 4U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_21:
+           *ep_no = 5U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_22:
+           *ep_no = 6U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_23:
+           *ep_no = 7U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_24:
+           *ep_no = 8U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_25:
+           *ep_no = 9U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_26:
+           *ep_no = 10U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_27:
+           *ep_no = 11U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_28:
+           *ep_no = 12U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_29:
+           *ep_no = 13U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_30:
+           *ep_no = 14U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+        case EP_31:
+           *ep_no = 15U;
+           *EPConfRaw = *ep_no | DMARD_EP_TX ;
+        break;
+    }
+    return CDN_EOK;
+}
+#endif /* TINYUSB_INTEGRATION */
 
 /**
  * Store uint16_t data in byte buffer
@@ -134,9 +340,9 @@ static void cusbdAuxBufferInit(CUSBD_PrivateData* dev) {
 }
 
 /**
- * Reset CUSBD Aux buffer for for the specified EP-out-index
+ * Reset CUSBD Aux buffer for the specified EP-out-index
  * @param dev: pointer to driver private data
- * @param epOutIdx
+ * @param epOutIdx epOut index
  */
 static void cusbdAuxBufferEpOutReset(CUSBD_PrivateData* dev, uint8_t epOutIdx) {
 
@@ -808,7 +1014,8 @@ static void isrHandle(CUSBD_PrivateData* dev, CUSBDMA_DmaChannel *channel, uint3
 
     isrHandleOther(dev, channel, epSts);
 }
-
+#ifndef TINYUSB_INTEGRATION
+/* Pure Cadence driver; no class driver  */
 /**
  * Interrupt handler
  * @param pD pointer to DMA controller object
@@ -867,7 +1074,53 @@ static void cusbdmaIsr(CUSBD_PrivateData* dev) {
     }
     return;
 }
+#else
+/**
+ * Interrupt handler
+ * @param pD pointer to DMA controller object
+ */
+static uint32_t cusbdmaIsr(CUSBD_PrivateData* dev,uint32_t ep_ists, uint32_t * EpStatusBase) {
 
+    CUSBDMA_DmaController * ctrl = &(dev->dmaController);
+    DmaRegs* regs = ctrl->regs;
+    CUSBDMA_DmaChannel *channel = NULL;
+    uint32_t ret = 0;
+    uint32_t EPSelBackup;
+
+    if (ep_ists != 0U) {
+        /* Save ep_sel value */
+        EPSelBackup = CPS_UncachedRead32(&regs->ep_sel);
+        vDbgMsg(USBSSP_DBG_CUSBD, 1, "DMAIRQ ep_ists SFR: %x\n", ep_ists);
+        /* check all endpoints interrupts */
+        while(ep_ists)
+        {
+            uint8_t EPNo;
+            uint32_t EPConfRaw;
+            ret = GetEPSelConfigValue(ep_ists, &EPNo, &EPConfRaw);
+            if(ret != CDN_EOK)
+            {
+                vDbgMsg(USBSSP_DBG_CUSBD, 1, "Invalid EPNo or EPConfRaw ret %d\n", ret);
+                break;
+            }
+            CPS_UncachedWrite32(&regs->ep_sel, EPConfRaw);
+
+            if ((EPConfRaw & 0x80U) > 0) /*transmit EP*/ {
+                channel = &ctrl->tx[EPNo];
+                isrHandle(dev, channel, EpStatusBase[EPNo + 16U]);
+            } else {
+                channel = &ctrl->rx[EPNo];
+                isrHandle(dev, channel, EpStatusBase[EPNo]);
+            }
+            ep_ists = ep_ists & (ep_ists - 1U);
+
+        }
+        /* Restore backup ep_sel*/
+        CPS_UncachedWrite32(&regs->ep_sel, EPSelBackup);
+
+    }
+    return ret;
+}
+#endif /*TINYUSB_INTEGRATION*/
 /**
  * wait until bit is cleared macro
  * @param reg register
@@ -2723,7 +2976,7 @@ static uint32_t handleEp0IrqSetup(CUSBD_PrivateData* dev, uint32_t * ep_sts, CUS
     /* clear flags */
     *ep_sts &= ~(EP_STS_SETUP | EP_STS_ISP | EP_STS_IOC);
 
-#define TINYUSB_INTEGRATION
+
 #ifdef TINYUSB_INTEGRATION /* Call the setup callback function for TinyUSB here */
     /* call the customer setup callback function */
     dev->callbacks.setup(dev, &ctrl);
@@ -2779,6 +3032,9 @@ static void handleEp0IrqIoc(CUSBD_PrivateData* dev, CUSBDMA_DmaChannel *channel)
     CPS_UncachedWrite32(&dev->reg->USBR_EP_CMD, EP_CMD_REQ_CMPL | EP_CMD_ERDY);
 }
 
+
+#ifndef TINYUSB_INTEGRATION
+/* Pure Cadence driver; no class driver  */
 /**
  * handle event generated on default endpoint
  * @param dev pointer to driver object
@@ -2835,6 +3091,56 @@ static uint32_t handleEp0Irq(CUSBD_PrivateData* dev, uint8_t dirFlag) {
     return ret;
 }
 
+#else
+/**
+ * handle event generated on default endpoint
+ * @param dev pointer to driver object
+ * @param dirFlag default endpoint direction: 0 for OUT endpoint, 1 for IN
+ * @return status
+ */
+static uint32_t handleEp0Irq(CUSBD_PrivateData* dev, uint8_t dirFlag, uint32_t ep_sts ) {
+
+    uint8_t dir = (dirFlag > 0U) ? 0x80U : 0x00U;
+    CUSBDMA_DmaChannel *channel = (dir > 0U) ? dev->ep0DmaChannelIn : dev->ep0DmaChannelOut;
+    uint32_t ret = CDN_EOK;
+
+
+    /* Setup packet completion */
+    if ((ep_sts & EP_STS_SETUP) > 0U) {
+        /* for ep0 setup IRQ overrides IOC and ISP */
+        ret = handleEp0IrqSetup(dev, &ep_sts, channel);
+        ep_sts &= ~(EP_STS_IOC | EP_STS_ISP | EP_STS_TRBERR);
+    } else {
+
+        /* should be called only when data phase exists */
+        if (((ep_sts & EP_STS_IOC) > 0U) || ((ep_sts & EP_STS_ISP) > 0U)) {
+            handleEp0IrqIoc(dev, channel);
+            ep_sts &= ~(EP_STS_IOC | EP_STS_ISP | EP_STS_TRBERR);
+        } else {
+            if ((ep_sts & EP_STS_DESCMIS) > 0U) {
+                /* check if setup packet came in */
+                /* setup always come on OUT direction */
+                if ((dir == 0U) && (dev->ep0NextState == CH9_EP0_SETUP_PHASE)) {
+                    CUSBD_Req ep0Req;
+                    ep0Req.dma = (uintptr_t) dev->setupPacketDma;
+                    ep0Req.length = (uint32_t) (sizeof (CH9_UsbSetup));
+                    ep0Req.zero = 0U;
+                    ret = ep0transfer(dev, 0U, &ep0Req, 0U);
+                    ep_sts &= ~(EP_STS_DESCMIS | EP_STS_TRBERR);
+                }
+            }
+        }
+
+        /* check TRB ERROR flag */
+        if ((ep_sts & EP_STS_TRBERR) > 0U) {
+            vDbgMsg(USBSSP_DBG_CUSBD, DBG_FYI, "Handle TRB error trb_addr: %x \n", CPS_UncachedRead32(&dev->reg->USBR_EP_TRADDR));
+            /* trigger channel, this will trigger only if valid trb is queued */
+        }
+
+    }
+    return ret;
+}
+#endif /* TINYUSB_INTEGRATION */
 /**********************************************************************
 * API methods
 **********************************************************************/
@@ -3189,7 +3495,55 @@ static inline uint32_t initHw(CUSBD_PrivateData* dev) {
     }
     return ret;
 }
+#ifdef TINYUSB_INTEGRATION
 
+/**
+ * DSR task running in loop/thread context, polls for any event reported by cusbd_isr function.
+ * sleeps when executed in thread contxt, polls in nortos case.
+ */
+void cusbd_dsr(void)
+{
+    CUSBD_DSREventQueue DevModeInt ;
+    uint8_t exitFlag=0;
+    uint32_t ret = CDN_EOK;
+
+    if (osal_queue_receive(cdns_dsr_q, &DevModeInt))
+    {
+        switch (DevModeInt.interrupt_type)
+        {
+            case CUSBD_INT_NONE_TYPE:
+                vDbgMsg(USBSSP_DBG_CUSBD, DBG_CRIT, "Error : Invalid interrupt_type set 0x%x",DevModeInt.interrupt_type);
+            break;
+            case CUSBD_INT_DEVICE_TYPE:
+                handleIsrDev(DevModeInt.dev, DevModeInt.DSTS, &exitFlag);
+            break;
+            case CUSBD_INT_ENDPT_TYPE:
+                if(((DevModeInt.EpiSTS & 0x1U) != 0) || ((DevModeInt.EpiSTS & 0x00010000U) != 0))
+                {
+                     /* Handle control EP*/
+                     ret = isrHandleEp0(DevModeInt.dev, DevModeInt.EpiSTS, &DevModeInt.EpStatus[0]);
+                }
+                else
+                {
+                     /* Handle non control EP*/
+                     ret = cusbdmaIsr(DevModeInt.dev, DevModeInt.EpiSTS, &DevModeInt.EpStatus[0]);
+                }
+            break;
+            case CUSBD_INT_SPURIOUS_TYPE:
+                vDbgMsg(USBSSP_DBG_CUSBD, DBG_CRIT, "Error : Received DSR with device or EP status not set Int type 0x%x",DevModeInt.interrupt_type);
+            case CUSBD_INT_SW_ISSUE_TYPE:
+                vDbgMsg(USBSSP_DBG_CUSBD, DBG_CRIT, "Error : Software Issue reported from  cusbd_isr 0x%x",DevModeInt.interrupt_type);
+            default:
+                vDbgMsg(USBSSP_DBG_CUSBD, DBG_CRIT, "Error : Invalid interrupt_type set 0x%x",DevModeInt.interrupt_type);
+            break;
+        }
+        if(ret != CDN_EOK)
+        {
+                vDbgMsg(USBSSP_DBG_CUSBD, DBG_CRIT, "Error : DSR Error  ret = %d\n",ret);
+        }
+    }
+}
+#endif /* TINYUSB_INTEGRATION */
 /**
  * Initialize the driver instance and state, configure the USB device
  * as specified in the 'config' settings, initialize locks used by the
@@ -3219,7 +3573,16 @@ uint32_t CUSBD_Init(CUSBD_PrivateData*     pD,
         /* parasoft-end-suppress MISRA2012-RULE-11_4 */
 
         vDbgMsg(USBSSP_DBG_CUSBD, DBG_FYI, "regBase %08X\n", pD->config.regBase);
-
+#ifdef TINYUSB_INTEGRATION
+        /* Create Cadence DSR queue*/
+        cdns_dsr_q = osal_queue_create(&cdns_dsr_qdef);
+        if(NULL == cdns_dsr_q)
+        {
+            ret = CDN_ENOMEM;
+        }
+#endif /* TINYUSB_INTEGRATION */
+	    if (ret == CDN_EOK)
+	    {
 #ifdef CUSBDSS_DMA_ACCESS_NON_SECURE
         setAXIAccessNonSecure(pD->reg);
 #endif
@@ -3236,12 +3599,12 @@ uint32_t CUSBD_Init(CUSBD_PrivateData*     pD,
             /* Init aux buffer for EP-OUT */
             cusbdAuxBufferInit(pD);
 
-            /* configure endpoints */
-            ret = initConfigEpHw(pD);
-
-            /* initialize hardware */
-            if (ret == CDN_EOK) {
-                ret = initHw(pD);
+                /* configure endpoints */
+                ret = initConfigEpHw(pD);
+                /* initialize hardware */
+                if (ret == CDN_EOK) {
+                    ret = initHw(pD);
+                }
             }
         }
     }
@@ -3274,10 +3637,6 @@ uint32_t CUSBD_Start(CUSBD_PrivateData* pD) {
 #ifndef VSP_SIM
         CUSBD_PrivateData * dev = pD;
         uint32_t reg;
-        /* clear USB_PWR.FAST_REG_ACCESS bit to restore initial value */
-        reg = CPS_UncachedRead32(&dev->reg->USBR_PWR);
-        reg &= ~USB_PWR_FAST_REG_ACCESS;
-        CPS_UncachedWrite32(&dev->reg->USBR_PWR, reg);
 
         /* Check the USBSS-DEV controller version number */
         if (dev->deviceVersion == DEV_VER_V1) {
@@ -3397,9 +3756,10 @@ static inline void handleIsrDevRS(CUSBD_PrivateData* dev, uint32_t usb_ists, uin
     /* Reset aux buffer pointers */
     cusbdAuxBufferReset(dev);
 
+#ifndef TINYUSB_INTEGRATION
     /* clear interrupt flags */
     CPS_UncachedWrite32(&dev->reg->USBR_ISTS, USB_ISTS_DISI | USB_ISTS_UWRESI | USB_ISTS_UHRESI | USB_ISTS_DIS2I | USB_ISTS_U2RESI);
-
+#endif /* TINYUSB_INTEGRATION */
     /* update device state */
     dev->device.state = CH9_USB_STATE_DEFAULT;
     dev->u1_value = 0U;
@@ -3521,6 +3881,8 @@ static inline void handleIsrDev(CUSBD_PrivateData* dev, uint32_t usb_ists, uint8
     /* USB Connect interrupt */
     if ((((usb_ists & USB_ISTS_CONI) > 0U) || ((usb_ists & USB_ISTS_CON2I) > 0U)) && (*exitFlag == 0U)) {
 
+        /* This is to avoid race condition; assume disconnect interrupt inbetween 1) check connection status 2) data transfer */
+        dev->ep0NextState = CH9_EP0_SETUP_PHASE;
         /* initialize endpoint 0 - software */
         CPS_UncachedWrite32(&dev->reg->USBR_ISTS, USB_ISTS_CONI | USB_ISTS_CON2I);
 
@@ -3540,6 +3902,9 @@ static inline void handleIsrDev(CUSBD_PrivateData* dev, uint32_t usb_ists, uint8
     }
     handleIsrDevOther(dev, usb_ists, exitFlag);
 }
+
+#ifndef TINYUSB_INTEGRATION
+/* Pure Cadence driver; no class driver  */
 
 /**
  * Handle other interrupts
@@ -3567,6 +3932,33 @@ static inline uint32_t isrHandleEp0(CUSBD_PrivateData* dev, uint32_t ep_ists, ui
     return ret;
 }
 
+#else /* TINYUSB_INTEGRATION */
+
+/**
+ * Handle other interrupts
+ * @param dev pointer to device driver object
+ * @param ep_ists ep_ists register value
+ * @param EpStatusBase Base pointer to EpStatusBase array
+ * @return CDN_EOK on success, error otherwise
+ */
+static inline uint32_t isrHandleEp0(CUSBD_PrivateData* dev, uint32_t ep_ists, uint32_t * EpStatusBase) {
+    uint32_t ret = CDN_EOK;
+
+    /* ep0out */
+    if ((ep_ists & 0x00000001U) > 0U) {
+        vDbgMsg(USBSSP_DBG_CUSBD, DBG_FYI, "Handle EP0-out IRQ %x\n", ep_ists);
+        ret = handleEp0Irq(dev, 0U, EpStatusBase[0]);
+    }
+
+    /* ep0in */
+    if ((ep_ists & 0x00010000U) > 0U) {
+        vDbgMsg(USBSSP_DBG_CUSBD, DBG_FYI, "Handle EP0-in IRQ %x\n", ep_ists);
+        ret = handleEp0Irq(dev, 1U, EpStatusBase[16]);
+    }
+    return ret;
+}
+#endif /* TINYUSB_INTEGRATION */
+
 /**
  * Driver ISR.  Platform-specific code is responsible for ensuring
  * this gets called when the corresponding hardware's interrupt is
@@ -3578,6 +3970,9 @@ static inline uint32_t isrHandleEp0(CUSBD_PrivateData* dev, uint32_t ep_ists, ui
  * @param[in] pD driver state info specific to this instance
  * @return CDN_EOK on success, error otherwise
  */
+#ifndef TINYUSB_INTEGRATION
+/* Pure Cadence driver; no class driver  */
+
 uint32_t CUSBD_Isr(CUSBD_PrivateData* pD) {
 
     uint32_t ret = CUSBD_IsrSF(pD);
@@ -3613,7 +4008,99 @@ uint32_t CUSBD_Isr(CUSBD_PrivateData* pD) {
     }
     return ret;
 }
+#else /* TINYUSB_INTEGRATION */
 
+uint32_t CUSBD_Isr(CUSBD_PrivateData* pD) {
+
+    uint32_t ret = CUSBD_IsrSF(pD);
+
+    if (ret == CDN_EOK) {
+
+        uint32_t usb_ists, ep_ists;
+        CUSBD_PrivateData* dev = pD;
+        CUSBDMA_DmaController * ctrl = &(dev->dmaController);
+        DmaRegs * regs = ctrl->regs;
+
+        /* check device interrupt */
+        usb_ists = CPS_UncachedRead32(&dev->reg->USBR_ISTS);
+        CUSBD_DSREventQueue DevModeInt ;
+        (void)memset((void *)&DevModeInt, 0U, sizeof(CUSBD_DSREventQueue));
+
+        if (usb_ists > 0U) {
+            DevModeInt.interrupt_type = CUSBD_INT_DEVICE_TYPE;
+            DevModeInt.DSTS = usb_ists;
+            DevModeInt.dev = dev;
+            osal_queue_send(cdns_dsr_q, (void const  *)&DevModeInt, true);
+            /* clear interrupt flags */
+            /* TODO : Clear only enabled interrupts check for L1/L2 U1/U2/U3 */
+            CPS_UncachedWrite32(&dev->reg->USBR_ISTS, 0xFFFFFFFFU);
+        }
+        else
+        {
+            /* check if interrupt generated by endpoint */
+            ep_ists = CPS_UncachedRead32(&dev->reg->USBR_EP_ISTS);
+            if(ep_ists != 0)
+            {
+                uint32_t epSel;
+                DevModeInt.interrupt_type = CUSBD_INT_ENDPT_TYPE;
+                DevModeInt.EpiSTS = ep_ists;
+                DevModeInt.dev = dev;
+                /* store ep_sel */
+                epSel = CPS_UncachedRead32(&regs->ep_sel);
+
+                while(ep_ists)
+                {
+                    uint8_t ep_no;
+                    uint32_t EPConfRaw;
+                    ret = GetEPSelConfigValue(ep_ists, &ep_no, &EPConfRaw);
+                    if(ret != CDN_EOK)
+                    {
+                        /*   Danger :: notify to Task */
+                        DevModeInt.interrupt_type = CUSBD_INT_SW_ISSUE_TYPE;
+                        osal_queue_send(cdns_dsr_q, (void const  *)&DevModeInt, true);
+                        break;
+                    }
+                    if((EPConfRaw & 0x80U) > 0) /* IN EP */
+                    {
+                        ret = SaveEndptReg(regs, &(DevModeInt.EpStatus[ep_no + 16U]), EPConfRaw);
+                    }
+                    else
+                    {
+                        ret = SaveEndptReg(regs, &(DevModeInt.EpStatus[ep_no]), EPConfRaw);
+                    }
+                    if(ret == CDN_EFAULT)
+                    {
+                        /*   Danger :: notify to Task */
+                        DevModeInt.interrupt_type = CUSBD_INT_SPURIOUS_TYPE;
+                        osal_queue_send(cdns_dsr_q, (void const  *)&DevModeInt, true);
+                        break;
+                    }
+                    if(ret == CDN_EINVAL)
+                    {
+                        /*   Danger :: notify to Task */
+                        DevModeInt.interrupt_type = CUSBD_INT_SW_ISSUE_TYPE;
+                        osal_queue_send(cdns_dsr_q, (void const  *)&DevModeInt, true);
+                        break;
+                    }
+                    ep_ists = ep_ists & (ep_ists - 1U);
+                }
+                /* Restore back ep_sel register */
+                CPS_UncachedWrite32(&regs->ep_sel, epSel);
+                osal_queue_send(cdns_dsr_q, (void const  *)&DevModeInt, true);
+                /* clear Endpt ISTS interrupt flag */
+                CPS_UncachedWrite32(&dev->reg->USBR_ISTS, 0xFFFFFFFFU);
+            }
+            else
+            {
+                /*   Danger :: notify to Task */
+                DevModeInt.interrupt_type = CUSBD_INT_SPURIOUS_TYPE;
+                osal_queue_send(cdns_dsr_q, (void const  *)&DevModeInt, true);
+            }
+        }
+    }
+    return ret;
+}
+#endif  /* TINYUSB_INTEGRATION */
 /**
  * Enable Endpoint.  This function should be called within
  * SET_CONFIGURATION(configNum > 0) request context. It configures

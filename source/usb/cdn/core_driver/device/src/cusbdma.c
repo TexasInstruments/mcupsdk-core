@@ -1132,7 +1132,8 @@ uint32_t CUSBDMA_ChannelRelease(CUSBDMA_DmaController * pD, CUSBDMA_DmaChannel *
         /* wait for ep reset */
         epCmd = CPS_UncachedRead32(&regs->ep_cmd);
         while ((epCmd & DMARF_EP_EPRST) == DMARF_EP_EPRST) {
-            CPS_DelayNs(1000);
+            /* changed delay from 1us to 1ms as recommended by CDNS */
+            CPS_DelayNs(1000000);
             epCmd = CPS_UncachedRead32(&regs->ep_cmd);
             counter++;
             if (counter >= CUSBDMA_DEFAULT_TIMEOUT) {

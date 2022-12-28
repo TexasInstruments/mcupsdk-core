@@ -200,6 +200,15 @@ typedef struct usb_init_param_s {
  */
 void usb_init(usb_init_param_t *usbInitParamPtr);
 
+
+/*
+ * \brief Task to handle triggered interrupt in NON interrupt CPU mode.
+ * Wait for signal from cusbd_isr (from interrupt context)
+ *  - check interrupt type (device, EP or invalid etc)
+ *      - invoke handler in user context.
+ **/
+void cusbd_dsr(void )  __attribute__((weak));
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

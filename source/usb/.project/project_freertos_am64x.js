@@ -69,6 +69,8 @@ const includes = {
 
 const defines = {
     common: [
+        "TINYUSB_INTEGRATION",
+        "CFG_TUSB_OS=OPT_OS_FREERTOS"
     ],
 };
 

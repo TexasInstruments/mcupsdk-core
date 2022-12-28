@@ -4,6 +4,7 @@ let device = "am64x";
 
 const files = {
     common: [
+        "cdn_osal_none.c",
         /* AM64x/AM243x porting layer (usb/cdn/soc)/am64x_am243x */
         "cdn_print.c",
         "cps.c",
@@ -50,6 +51,7 @@ const includes = {
         "../drivers/hw_include",
         "../drivers/hw_include/am64x_am243x",
         "../drivers/soc/am64x_am243x",
+        "../kernel/dpl",
         "cdn/core_driver/common/src",
         "cdn/core_driver/common/include",
         "cdn/core_driver/device/src",
@@ -66,6 +68,8 @@ const includes = {
 
 const defines = {
     common: [
+        "TINYUSB_INTEGRATION",
+        "CFG_TUSB_OS=OPT_OS_NONE"
     ],
 };
 
