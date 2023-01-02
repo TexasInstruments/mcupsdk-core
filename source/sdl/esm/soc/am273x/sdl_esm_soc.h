@@ -54,13 +54,13 @@ extern "C" {
  */
 typedef enum {
     /**< MSS_ESM instance  */
-   SDL_ESM_INST_MSS_ESM = 1,
+   SDL_ESM_INST_MSS_ESM = 1U,
        /**< MSS_ESM instance  */
-   SDL_ESM_INST_DSS_ESM = 2,
+   SDL_ESM_INST_DSS_ESM = 2U,
        /**< HSM_ESM instance  */
-   SDL_ESM_INST_HSM_ESM = 3,   
+   SDL_ESM_INST_HSM_ESM = 3U,   
 	/**< Invalid_ESM instance  */
-   SDL_ESM_INSTANCE_MAX=0xFFFF
+   SDL_ESM_INSTANCE_MAX=0xFFFFU
 } SDL_ESM_Inst;
 
 /* Enumerate Interrupt number for the different esm interrupts */

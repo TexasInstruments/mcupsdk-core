@@ -111,7 +111,7 @@ static void SDL_ESM_processInterruptSource(uint32_t esmInstBaseAddr,
                                            uint32_t intSrc, void *arg)
 {
     SDL_ESM_Instance_t *SDL_ESM_instance;
-    SDL_ESM_Inst esmInstType = (SDL_ESM_Inst)(uint32_t)arg;
+    SDL_ESM_Inst esmInstType = (uint32_t)arg;
     uint32_t groupNumber, intIndex;
     int32_t isHandled = (int32_t)FLAG_NO;
 
@@ -134,6 +134,12 @@ static void SDL_ESM_processInterruptSource(uint32_t esmInstBaseAddr,
                     isHandled = SDL_ESM_instance->eccCallBackFunction(esmInstType, esmIntType,
                                                                       groupNumber, intIndex,
                                                                       intSrc, SDL_ESM_instance->eccCallBackFunctionArg);
+                }
+                else if((SDL_ESM_instance->ccmenableBitmap[groupNumber]
+                        & (((uint32_t)MASK_BIT)<<intIndex)) != INVALID_BIT) {
+                    isHandled = SDL_ESM_instance->ccmCallBackFunction(esmInstType, esmIntType,
+                                                                      groupNumber, intIndex,
+                                                                      intSrc, SDL_ESM_instance->ccmCallBackFunctionArg);
                 }
                 else
                 {
@@ -246,7 +252,7 @@ void SDL_ESM_hiInterruptHandler (void *arg)
 {
     uint32_t esm_base_addr;
     /*Passing the instance and using that to get the base_addr*/
-    SDL_ESM_Inst instance = (SDL_ESM_Inst)(uint32_t)arg;
+    SDL_ESM_Inst instance = (uint32_t)arg;
     uint32_t base_addr = 0x0;
     SDL_ESM_Inst esm_inst;
     bool isCfgIntr = (bool)false;
@@ -289,7 +295,7 @@ void SDL_ESM_loInterruptHandler (void *arg)
 {
     uint32_t esm_base_addr;
     /*Passing the instance and using that to get the base_addr*/
-    SDL_ESM_Inst instance = (SDL_ESM_Inst)(uint32_t)arg;
+    SDL_ESM_Inst instance = (uint32_t)arg;
     uint32_t base_addr = 0x0;
     SDL_ESM_Inst esm_inst;
     bool isCfgIntr = (bool)false;
@@ -332,7 +338,7 @@ void SDL_ESM_configInterruptHandler(void *arg)
     SDL_ESM_Instance_t *SDL_ESM_instance;
     SDL_ESM_Inst esmInstType;
     uint32_t esm_base_addr;
-    esmInstType = (SDL_ESM_Inst)(uint32_t)arg;
+    esmInstType = (uint32_t)arg;
     esm_base_addr = 0x0;
     SDL_ESM_selectEsmInst(esmInstType,&SDL_ESM_instance);
     SDL_ESM_getBaseAddr(esmInstType, &esm_base_addr);

@@ -381,7 +381,7 @@ int32_t SDL_ESM_disableIntr(uint32_t baseAddr, uint32_t intrSrc)
     uint32_t regVal = 0x0U;
 
 
-    if(baseAddr == ((uint32_t) (0u)) ||
+    if((baseAddr == ((uint32_t) (0u))) ||
 	  (intrSrc  >= SDL_ESM_NUM_INTR_PER_GROUP))
     {
         retVal = SDL_EBADARGS;
@@ -512,7 +512,7 @@ int32_t SDL_ESM_clearIntrStatus(uint32_t baseAddr, uint32_t intrSrc)
 {
     int32_t  retVal = SDL_EBADARGS;
     uint32_t regVal = 0U;
-    if(baseAddr != ((uint32_t) (0u)) &&
+    if((baseAddr != ((uint32_t) (0u))) &&
 	  (intrSrc  <= SDL_ESM_NUM_INTR_PER_GROUP))
     {
 		regVal = ((uint32_t) 0x1U << (intrSrc % ESM_NUM_INTR_PER_GRP));			

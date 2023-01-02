@@ -344,7 +344,7 @@ extern "C"
 #define SDL_DCC2_U_BASE                                 (0x52B02000ul)
 #define SDL_DCC3_U_BASE                                 (0x52B03000ul)
 #define SDL_TOP_ESM_U_BASE                              (0x52D00000ul)
-#define SDL_ESM0_CFG_SIZE                               (0x1000UL)
+#define SDL_ESM0_CFG_SIZE                               (0x1000U)
 #define SDL_SOC_TIMESYNC_XBAR0_U_BASE                   (0x52E00000ul)
 #define SDL_EDMA_TRIG_XBAR_U_BASE                       (0x52E01000ul)
 #define SDL_GPIO_INTR_XBAR_U_BASE                       (0x52E02000ul)

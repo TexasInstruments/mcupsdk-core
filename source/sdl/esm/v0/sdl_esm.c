@@ -331,7 +331,7 @@ static SDL_Result Esmhandlerinit(SDL_ESM_Inst esmInstType)
 
     intrParams.intNum      = intNumHi;
     intrParams.callback    = (*pHiInterruptHandler);
-    intrParams.callbackArg = esmInstType;
+    intrParams.callbackArg = (uintptr_t)esmInstType;
 
     /* Register call back function for ESM Hi Interrupt */
     result = SDL_DPL_registerInterrupt(&intrParams, &SDL_ESM_HiHwiPHandle);
@@ -340,7 +340,7 @@ static SDL_Result Esmhandlerinit(SDL_ESM_Inst esmInstType)
     {
         intrParams.intNum = intNumLo;
         intrParams.callback = (*pLoInterruptHandler);
-        intrParams.callbackArg = esmInstType;
+        intrParams.callbackArg = (uintptr_t)esmInstType;
 
         /* Register call back function for ESM Lo Interrupt */
         result = SDL_DPL_registerInterrupt(&intrParams, &SDL_ESM_LoHwiPHandle);
@@ -349,7 +349,7 @@ static SDL_Result Esmhandlerinit(SDL_ESM_Inst esmInstType)
         {
             intrParams.intNum = intNumCfg;
             intrParams.callback = (*pConfigInterruptHandler);
-            intrParams.callbackArg = esmInstType;
+            intrParams.callbackArg = (uintptr_t)esmInstType;
 
             /* Register call back function for ESM Config Interrupt */
             result = SDL_DPL_registerInterrupt(&intrParams, &SDL_ESM_CfgHwiPHandle);
@@ -585,6 +585,31 @@ int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
     }
     SDL_ESM_Instance->eccCallBackFunction = callBack;
     SDL_ESM_Instance->eccCallBackFunctionArg = callbackArg;
+
+    return result;
+}
+/**
+ * Design: PROC_SDL-1066,PROC_SDL-1067
+ */
+int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitmap[],
+                                      SDL_ESM_applicationCallback callBack,
+                                      void *callbackArg)
+{
+    uint32_t i;
+    SDL_Result result = SDL_PASS;
+    SDL_ESM_Instance_t *SDL_ESM_Instance_CCM;
+
+    if(SDL_ESM_selectEsmInst(esmInstType, &SDL_ESM_Instance_CCM) == ((bool)false))
+    {
+        result = SDL_EFAIL;
+    }
+
+    for(i=0U;i<SDL_ESM_MAX_EVENT_MAP_NUM_WORDS;i++)
+    {
+        SDL_ESM_Instance_CCM->ccmenableBitmap[i] = eventBitmap[i];
+    }
+    SDL_ESM_Instance_CCM->ccmCallBackFunction = callBack;
+    SDL_ESM_Instance_CCM->ccmCallBackFunctionArg = callbackArg;
 
     return result;
 }

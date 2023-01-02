@@ -52,12 +52,17 @@ typedef struct {
      volatile bool selfTestFlag;
      /**< Store the ECC callback function arg */
      void *eccCallBackFunctionArg;
+     /**< Store the CCM callback function arg */
+     void *ccmCallBackFunctionArg;
      /**< Store application argument */
      void *arg;
      uint32_t eccenableBitmap[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS];
+     uint32_t ccmenableBitmap[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS];
      SDL_ESM_config esmInitConfig;
      /**< Store ECC callback function */
      SDL_ESM_applicationCallback eccCallBackFunction;
+     /**< Store the CCM callback function */
+     SDL_ESM_applicationCallback ccmCallBackFunction;
      /**< Store applicataion callback function */
      SDL_ESM_applicationCallback callback;
 }SDL_ESM_Instance_t;

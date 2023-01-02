@@ -280,10 +280,15 @@ typedef struct
     uint32_t                    numGroup1Err;
     /**<    The number of Group1 errors supported */
     void *eccCallBackFunctionArg[SDL_ESM_MAX_ISR_COUNT];
-    /**< Store the ecc callback function arg */
+     /**< Store the ECC callback function arg */
+     void *ccmCallBackFunctionArg[SDL_ESM_MAX_ISR_COUNT];
+    /**< Store the CCM callback function arg */
     SDL_ESM_CallBack eccCallBackFunction[SDL_ESM_MAX_ISR_COUNT];
-    /**< Store the ecc callback function  */
+    /**< Store the ECC callback function */
+    SDL_ESM_CallBack ccmCallBackFunction[SDL_ESM_MAX_ISR_COUNT];
+	/**< Store the CCM callback function */
     uint32_t eccenableEventBitmap[SDL_ESM_MAX_ISR_COUNT];
+    uint32_t ccmenableBitmap[SDL_ESM_MAX_ISR_COUNT];
     /**< Store ECC Event */
     uint32_t                    debugEsmISRCount[SDL_ESM_MAX_ISR_COUNT];
     /**<   DEBUG: to keep track of various ESM interrupts received by the system */
@@ -339,11 +344,11 @@ extern SDL_ESM_Handle gEsmHandle;
 static SDL_ESM_Config gEsmConfig[SDL_ESM_INST_DSS_ESM] =
 {
     {
-        &gEsmParams[SDL_ESM_INST_MSS_ESM -1U],
+        (&gEsmParams[SDL_ESM_INST_MSS_ESM -1U]),
         &gEsmObjects[CONFIG_ESM0],
     },
 	{
-        &gEsmParams[SDL_ESM_INST_DSS_ESM -1U],
+        (&gEsmParams[SDL_ESM_INST_DSS_ESM -1U]),
         &gEsmObjects[CONFIG_ESM0],
     },
 };
@@ -475,6 +480,32 @@ SDL_Result SDL_ESM_init (const SDL_ESM_Inst esmInstType,
 int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst esmInstType,uint32_t eccEvent,
                                     SDL_ESM_CallBack callBack,
                                     void *callbackArg);
+									
+/** ============================================================================
+ *
+ * \brief  There are modules within SDL which will generate ESM errors
+ *         intentionally in the course of running self-tests. The CCM module is
+ *         one such module. To allow these modules to get the notification when
+ *         the ESM error occurs, callback registration APIs are provided. The
+ *         following APIs allow registration of a callback for specific events.
+ *         This API is used by other SDL modules and not by the application
+ *
+ * \param   esmInstType	: ESM Instance Type
+ * \param   eccEvent	: Bitmap for ESM error event of interest for this callback.
+ *                       Array of uint32_t type with each bit representing one
+ *                       ESM error event.
+ * \param   callBack	: Pointer to the callback to be called by the ESM Handler
+ *                       to notify the CCM module of an ESM error event
+ * \param   callbackArg	: Argument that will be passed along with the callback.
+ *
+ * \return  SDL_PASS if success.
+ *          SDL_EBADARGS if invalid argument is passed.
+ *          SDL_EFAIL if other failure.
+ */
+int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eccEvent,
+                                    SDL_ESM_CallBack callBack,
+                                    void *callbackArg);
+
 /** ============================================================================
  *
  * \brief   SDL ESM API to verify the written configuration of the ESM module.

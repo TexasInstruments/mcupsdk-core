@@ -292,6 +292,31 @@ int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst instance, uint32_t eventBitMap[
 
 /** ============================================================================
  *
+ * \brief  There are modules within SDL which will generate ESM errors
+ *         intentionally in the course of running self-tests. The CCM module is
+ *         one such module. To allow these modules to get the notification when
+ *         the ESM error occurs, callback registration APIs are provided. The
+ *         following APIs allow registration of a callback for specific events.
+ *         This API is used by other SDL modules and not by the application
+ *
+ * \param   instance: ESM Instance
+ * \param   eventBitMap: Bitmap for ESM error event of interest for this callback.
+ *                       Array of uint32_t type with each bit representing one
+ *                       ESM error event.
+ * \param   ccmCallback: Pointer to the callback to be called by the ESM Handler
+ *                       to notify the ECC module of an ESM error event
+ * \param   callbackArg: Argument that will be passed along with the callback.
+ *
+ * \return  SDL_PASS if success.
+ *          SDL_EBADARGS if invalid argument is passed.
+ *          SDL_EFAIL if other failure.
+ */
+int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst instance, uint32_t eventBitMap[],
+                                    SDL_ESM_applicationCallback ccmCallback,
+                                    void *callbackArg);
+
+/** ============================================================================
+ *
  * \brief   SDL ESM API to initialize an ESM instance. The API initializes the
  *          specified ESM instance with the provided configuration. The
  *          configuration will allow the application to specify for each event

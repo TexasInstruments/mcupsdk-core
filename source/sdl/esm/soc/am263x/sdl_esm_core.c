@@ -73,7 +73,7 @@ bool SDL_ESM_getBaseAddr(const SDL_ESM_Inst esmInstType, uint32_t *esmBaseAddr)
         {
             case SDL_ESM_INST_MAIN_ESM0:
                 instValid = ((bool)true);
-                *esmBaseAddr = SOC_MAIN_ESM_BASE;
+                *esmBaseAddr = (uint32_t)SOC_MAIN_ESM_BASE;
                 size = SDL_ESM0_CFG_SIZE;
                 break;
 

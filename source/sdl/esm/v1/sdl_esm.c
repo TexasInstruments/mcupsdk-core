@@ -132,14 +132,14 @@ static int32_t SDL_ESM_configErrorGating(SDL_ESM_Handle gHandle, uint8_t groupNu
 
     if (SDL_PASS == retVal)
     {
-        regIndex = (errorNumber / ESM_NUM_EVTS_PER_GATING_REG) + ((groupNumber-2) * ESM_GATING_GROUP);
-        regAddr  = ((uint32_t)&ptrCtrlRegs->ESM_GATING0) + (regIndex * (sizeof(uint32_t)));
+        regIndex = (errorNumber / (uint8_t)ESM_NUM_EVTS_PER_GATING_REG) + ((groupNumber-2U) * (uint8_t)ESM_GATING_GROUP);
+        regAddr  = ((uint32_t)(&ptrCtrlRegs->ESM_GATING0)) + (regIndex * (sizeof(uint32_t)));
 
         regVal = HW_RD_REG32((volatile uint32_t *)regAddr);
-        regVal &= ~(ESM_GATING_MASK << (ESM_GATING_SHIFT*(errorNumber % ESM_NUM_EVTS_PER_GATING_REG)));
+        regVal &= (uint32_t)(~((uint8_t)ESM_GATING_MASK << ((uint8_t)ESM_GATING_SHIFT*(errorNumber % (uint8_t)ESM_NUM_EVTS_PER_GATING_REG))));
         if (gating !=0U)
         {
-            regVal |= (ESM_GATING_MASK << (ESM_GATING_SHIFT*(errorNumber % ESM_NUM_EVTS_PER_GATING_REG)));
+            regVal |= (uint32_t)((uint8_t)ESM_GATING_MASK << ((uint8_t)ESM_GATING_SHIFT*(errorNumber % (uint8_t)ESM_NUM_EVTS_PER_GATING_REG)));
         }
         HW_WR_REG32((volatile uint32_t *)regAddr, regVal);
     }
@@ -191,6 +191,7 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
     int32_t isHandled = (int32_t)FLAG_NO ;
     SDL_ESM_getBaseAddr(instance, &esm_base_addr);
     uint32_t index=0U;
+	bool  loopexit=(bool)false;
 
     /* Get the ESM Configuration: */
     ptrESMConfig = (SDL_ESM_Config*)gEsmHandle;
@@ -282,46 +283,57 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
         }
         for (index = 0u; index < SDL_ESM_MAX_NOTIFIERS; index++)
         {
-            if((object->eccenableEventBitmap[index] == *vecNum) && (object->eccenableEventBitmap[index] != 0U))
-           {
-               isHandled = object->eccCallBackFunction[index](instance, *groupNum,*vecNum,object->eccCallBackFunctionArg);
-               if (isHandled == (int32_t)FLAG_YES)
-               {
-                   break;
-               }
-           }
-             if ((*vecNum == object->notifyParams[index].errorNumber) &&
-               (*groupNum == object->notifyParams[index].groupNumber))
-               {
-                    /* Check if this is due to self test */
-                    if((*groupNum == object->notifyParams[index].esmErrorConfig.groupNumber) &&
-                       (*vecNum ==  object->notifyParams[index].esmErrorConfig.eventNumber))
-                    {
-                        SDL_ESM_selfTestCallback();
-                        break;
-                    }
-                    else if(isHandled == (int32_t)FLAG_NO)
-                    {
-                        object->notifyParams[index].callBackFunction(instance,*groupNum,*vecNum,arg);
-                        break;
-                    }
-                    else
-                    {
-                        /*Nothing*/
-                    }
-            }
+			if(loopexit == (bool)false)
+			{
+			   if((object->eccenableEventBitmap[index] == *vecNum) && (object->eccenableEventBitmap[index] != 0U))
+			   {
+				   isHandled = object->eccCallBackFunction[index](instance, *groupNum,*vecNum,object->eccCallBackFunctionArg);
+				   if (isHandled == (int32_t)FLAG_YES)
+				   {
+					   loopexit=(bool)true;
+				   }
+			   }
+			   if((object->ccmenableBitmap[index] == *vecNum) && (object->ccmenableBitmap[index] != 0U) && (loopexit == (bool)false))
+			   {
+				   isHandled = object->ccmCallBackFunction[index](instance, *groupNum,*vecNum,object->ccmCallBackFunctionArg);
+				   if (isHandled == (int32_t)FLAG_YES)
+				   {
+					   loopexit=(bool)true;
+				   }
+			   }
+			   if ((*vecNum == (int32_t)(object->notifyParams[index].errorNumber)) &&
+				  (*groupNum == (int32_t)(object->notifyParams[index].groupNumber)) &&
+				  (loopexit == (bool)false))
+			   {
+				   /* Check if this is due to self test */
+				   if((*groupNum == (int32_t)(object->notifyParams[index].esmErrorConfig.groupNumber)) &&
+					  (*vecNum ==  (int32_t)(object->notifyParams[index].esmErrorConfig.eventNumber)))
+				   {
+						SDL_ESM_selfTestCallback();
+						loopexit=(bool)true;
+				   }
+				   else if(isHandled == (int32_t)FLAG_NO)
+				   {
+						object->notifyParams[index].callBackFunction(instance,*groupNum,*vecNum,arg);
+						loopexit=(bool)true;
+				   }
+				   else
+				   {
+						/*Nothing*/
+				   }
+				}
+			}	
         }
     }
-
 }
 
-void SDL_ESM_memcpy(void *dest, void *src, size_t n) 
+static void SDL_ESM_memcpy(void *dest, void *src, size_t n) 
 {
     uint8_t *csrc = (uint8_t *)src; 
     uint8_t *cdest = (uint8_t *)dest; 
     uint32_t i=0U;
   
-    // Copy contents of src[] to dest[] 
+    /* Copy contents of src[] to dest[] */
     for(i=0U; i<n; i++)
     {
         cdest[i] = csrc[i]; 
@@ -357,7 +369,7 @@ static SDL_Result SDL_esmgHandlerInit(SDL_ESM_Inst esmInstType, const SDL_ESM_Pa
 
 	intrParams.intNum      = intNumHi;
 	intrParams.callback    = (*pHiInterruptHandler);
-	intrParams.callbackArg = esmInstType;
+	intrParams.callbackArg = (uintptr_t)esmInstType;
 
 	/* Register call back function for ESM Hi Interrupt */
 	result = SDL_DPL_registerInterrupt(&intrParams, &SDL_ESM_HiHwiPHandle);
@@ -366,7 +378,7 @@ static SDL_Result SDL_esmgHandlerInit(SDL_ESM_Inst esmInstType, const SDL_ESM_Pa
 	{
 		intrParams.intNum = intNumLo;
 		intrParams.callback = (*pLoInterruptHandler);
-		intrParams.callbackArg = esmInstType;
+		intrParams.callbackArg = (uintptr_t)esmInstType;
 
 		/* Register call back function for ESM Lo Interrupt */
 		result = SDL_DPL_registerInterrupt(&intrParams, &SDL_ESM_LoHwiPHandle);
@@ -386,7 +398,7 @@ static SDL_Result SDL_esmgHandlerInit(SDL_ESM_Inst esmInstType, const SDL_ESM_Pa
 		/* Clear ESM Group 1, 2, 3 errors */
 		for (count=INIT_VAL; count<SDL_ESM_NUM_GROUP_MAX; count++)
 		{
-			SDL_ESM_clearGroupIntrStatus(object->esmBaseAddr, count+1);
+			SDL_ESM_clearGroupIntrStatus(object->esmBaseAddr, count+(uint32_t)1U);
 		}
 	}
     return result;
@@ -400,7 +412,7 @@ SDL_Result SDL_ESM_init (const SDL_ESM_Inst esmInstType,
     SDL_ESM_Config          *ptrESMConfig;
     SDL_ESM_Object          *object;
     int32_t             	retVal = SDL_PASS;
-	bool 					result = false;
+	bool 					result = (bool)false;
 	uint32_t				esmBaseAddr;
     static uint16_t          notifierIndex=0u;
     const SDL_ESM_Params    *hwAttrs;
@@ -420,7 +432,7 @@ SDL_Result SDL_ESM_init (const SDL_ESM_Inst esmInstType,
     {
         gEsmHandle = NULL;   /* Init to NULL so that we can exit gracefully */
 
-        ptrESMConfig = &gEsmConfig[esmInstType-1U];
+        ptrESMConfig = (SDL_ESM_Config*)(&gEsmConfig[esmInstType-1U]);
         if (retVal == SDL_PASS)
         {
             hwAttrs = ptrESMConfig->esmConfig;
@@ -435,7 +447,7 @@ SDL_Result SDL_ESM_init (const SDL_ESM_Inst esmInstType,
             object->notifyParams[notifierIndex].esmErrorConfig.eventNumber = params->esmErrorConfig.eventNumber;
             object->notifyParams[notifierIndex].esmErrorConfig.groupNumber = params->esmErrorConfig.groupNumber;
             object->numGroup1Err = hwAttrs->numGroup1Err;
-            object->selfTestFlag = false;
+            object->selfTestFlag = (bool)false;
 
             if(NULL != esmOpenParams)
             {
@@ -470,7 +482,7 @@ SDL_Result SDL_ESM_init (const SDL_ESM_Inst esmInstType,
                 /* Unmask Group 2 ESM errors to enable the generation of NMI. */
                 if (params->groupNumber == GROUP_TWO)
                 {
-                    retVal = SDL_ESM_configErrorGating(gEsmHandle, params->groupNumber, params->errorNumber, 0);
+                    retVal = SDL_ESM_configErrorGating(gEsmHandle, params->groupNumber, params->errorNumber, 0U);
                 }
 
                 SDL_ESM_memcpy((void *)&object->notifyParams[notifierIndex], (void *)params, sizeof (SDL_ESM_NotifyParams));
@@ -531,7 +543,7 @@ int32_t SDL_ESM_verifyConfig(SDL_ESM_Inst instance, SDL_ESM_NotifyParams* params
         }
 		if (SDLRet == SDL_PASS)
         {
-            enableWr = params->enableInfluenceOnErrPin;
+            enableWr = (uint32_t)(params->enableInfluenceOnErrPin);
             SDLRet = SDL_ESM_getInfluenceOnErrPin(esmInstBaseAddr,
                                                           params->errorNumber,
                                                           &influence);
@@ -690,4 +702,29 @@ int32_t SDL_ESM_registerECCCallback(SDL_ESM_Inst esmInstType,uint32_t eccEvent,
     return result;
 }
 
+/**
+ * Design: PROC_SDL-1066,PROC_SDL-1067
+ */
+int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t ccmEvent,
+                                      SDL_ESM_CallBack callBack,
+                                      void *callbackArg)
+{
+    static uint8_t callbackcount1 = 0U;
+    SDL_Result result = SDL_PASS;
+	SDL_ESM_Object          *object;
+	
+	if(callbackcount1 <= 255U)
+	{		
+		object = &gEsmObjects[CONFIG_ESM0];		
+		object->ccmenableBitmap[callbackcount1] = ccmEvent;
+		object->ccmCallBackFunction[callbackcount1] = callBack;
+		object->ccmCallBackFunctionArg[callbackcount1] = callbackArg;
+		callbackcount1++;
+    }
+	else
+	{
+		result = SDL_EFAIL;
+	}
+    return result;
+}
 /* Nothing past from this point */
