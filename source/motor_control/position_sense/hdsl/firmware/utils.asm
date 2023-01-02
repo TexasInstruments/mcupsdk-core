@@ -1,5 +1,5 @@
 
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -61,31 +61,6 @@ update_events_no_int:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	RET1
-;--------------------------------------------------------------------------------------------------
-;Function: load_code (RET_ADDR)
-;Loads PRU Code to isntruction memory
-;input:
-;	REG_TMP0: src offset
-;	REG_TMP2: dst offset
-;	RG_TMP1: size in bytes
-;output:
-;modifies:
-;--------------------------------------------------------------------------------------------------
-	.if !$defined(ICSS_G_V_1_0)   
-load_code:
-	sbco			&REG_TMP0, MASTER_REGS_CONST, PIMEM_SRC, 12
-	ldi			REG_TMP0, 56
-	ldi			REG_TMP1, 16
-	ldi32			REG_TMP2, (0x00040000+0x00020000)
-	ldi			R31.b0, (0x20 | 0x00)
-	;reset INTCs
-	sbbo			&REG_TMP0, REG_TMP2, INTC_SICR, 4
-	sbco			&REG_TMP1, INTC_CONST, INTC_SICR, 4
-	lbco			&REG_TMP0, PRU_CTRL_CONST, 0x00, 4
-	clr			REG_TMP0, REG_TMP0, 1
-	sbco			&REG_TMP0, PRU_CTRL_CONST, 0x00, 4
-	RET
-	.endif
 ;--------------------------------------------------------------------------------------------------
 ;Function: calc_16bit_crc (RET_ADD1)
 ;This function checks the crc for the acceleration channel

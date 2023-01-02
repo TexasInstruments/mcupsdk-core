@@ -1,5 +1,5 @@
 
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -77,9 +77,6 @@ exit_transport_init:
 ;return back to datalink
 	RET
 
-	.if !$defined(ICSS_G_V_1_0)
-	.sect ".text_relocatable1"
-	.endif
 ;--------------------------------------------------
 ;v_frame calculations
 ;102+20=122 cycles
@@ -197,11 +194,7 @@ transport_on_v_frame_dont_update_dte:
 	qba		transport_on_v_frame_no_pos_mismatch
 ; estimate/correct
 transport_on_v_frame_estimate:
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(estimator_fpos-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		estimator_fpos
-	.endif
 transport_on_v_frame_no_pos_mismatch:
 ;store SAFE POS
 	mov		REG_TMP0.b0, VERT_H.b2
@@ -211,8 +204,7 @@ transport_on_v_frame_no_pos_mismatch:
 	mov		REG_TMP1.b0, VERT_L.b2
 	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, VPOS4, 5
 
-	.if $defined(ICSS_G_V_1_0)
-		;TSmod: store secondary
+	;TSmod: store secondary
 	xor			r21.b3, r21.b3, 0xe0  ;todo TSmod: this is a workaround; check if STATUS2 can be received correctly
 ; swap bytes in each 32 bit register r20 and r21
 	xin     160, &r20, 8
@@ -227,7 +219,6 @@ transport_on_v_frame_no_pos_mismatch:
 ; signal event mst_intr[0]
 	ldi     r31.w0, 32+0
 	;TSmod: end
-	.endif
 
 transport_on_v_frame_exit:
 ;we are in RX0
@@ -681,11 +672,7 @@ transport_on_h_frame:
 ;check for byte error in acceleeration channel
 	qbbs		transport_acc_err_inc, H_FRAME.flags, FLAG_ERR_ACC
 ;crc error verification
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_acc_crc-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_acc_crc
-	.endif
 	qbne		transport_acc_err_inc, REG_FNC.b0, 0
 ;check for special character: K29.7 is sent two times if slave error occured
 	ldi		REG_TMP0.w0, DOUBLE_K29_7
@@ -702,9 +689,6 @@ transport_acc_err_inc:
 transport_on_h_frame_no_reset:
 ;save return addr
 	mov		REG_TMP11.w0, RET_ADDR0
-	.if !$defined(ICSS_G_V_1_0)
-	CALL		(estimator_acc-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	;CALL		estimator_acc; Instead of calling the API, copy the code here to save PRU cycles.
 ;----------------------------------------------------
 ;Function: estimator_acc (RET_ADDR)
@@ -737,18 +721,9 @@ estimator_acc_sign_extend_dacc1:
 ;add estimated delta acc to LAST_ACC
 	add		REG_FNC.w0, LAST_ACC, REG_TMP0.w0
 ;check if estimated acc is neg. or pos.
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_speed-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_speed
-	.endif
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_fastpos-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_fastpos
-	.endif
 	RET
-	.endif
 ;restore return addr
 	mov		RET_ADDR0, REG_TMP11.w0
 ;set event
@@ -769,17 +744,8 @@ delta_delta_position:
 ;shift out crc bits
 	lsr		REG_FNC.w0, H_FRAME.acc, 5
 ; learn highest abs. acc
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_speed-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_speed
-	.endif
-
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_fastpos-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_fastpos
-	.endif
 transport_on_h_frame_exit:
 ;calculate rel. pos and store
 	lbco		&REG_TMP0, MASTER_REGS_CONST, REL_POS0, 4
@@ -829,16 +795,8 @@ estimator_acc_sign_extend_dacc:
 ;add estimated delta acc to LAST_ACC
 	add		REG_FNC.w0, LAST_ACC, REG_TMP0.w0
 ;check if estimated acc is neg. or pos.
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_speed-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_speed
-	.endif
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(calc_fastpos-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
 	CALL1		calc_fastpos
-	.endif
 	RET
 ;--------------------------------------------------------------------------------------------------
 ;Function: calc_fastpos (RET_ADDR1)

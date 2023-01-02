@@ -1,6 +1,6 @@
 
 ;
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -50,11 +50,8 @@
 	.global send_01
 	.global int_div
 
-	.if !$defined(ICSS_G_V_1_0)
-	.sect ".text_relocatable0"
-	.else
 	.sect	".text"
-	.endif
+
 relocatable0:
 datalink_init_start:
 ;State RESET
@@ -64,11 +61,7 @@ datalink_reset:
 ;debug
 	ldi			REG_TMP0.w2, SYNC_DIFF_HIST
 	sbco			&REG_TMP0.w2, MASTER_REGS_CONST, SYNC_DIFF_HIST_CNT, 2
-	.if !$defined(ICSS_G_V_1_0)
-	ldi32			R24, 0x40000+0x2E000+0x310
-	.else
 	ldi32			R24, 0x2E000+0x310 ;IEP0
-	.endif
 	lbbo			&R10.b0, R24, 0, 1
 	xor				R10.b0, R10.b0, (1<<6)
 ;	sbbo			&R10.b0, R24, 0, 1
@@ -115,56 +108,13 @@ datalink_reset_spol_rising_edge:
 
 
 ;*************************************************************************************************************************;
-	.if !$defined(ICSS_G_V_1_0) ;storing sync pulse length in cycles in R20 starts for AM4
-;synchronize with SYNC Pusle here
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1			(sync_pulse-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
+;synchronize with SYNC Pulse here
 	CALL1			sync_pulse
-	.endif
-;measure SYNC period
-;reset cycle count
-	RESET_CYCLCNT
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1			(sync_pulse-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
-	CALL1			sync_pulse
-	.endif
-	READ_CYCLCNT		r20
-	;storing sync pulse length in cycles in R20 ends for AM4
-;*************************************************************************************************************************;
-	.else  ;storing sync pulse length in cycles in R20 starts for AM6
-	CALL1			sync_pulse
-	.endif ;storing sync pulse length in cycles in R20 ends for AM6
 ;*************************************************************************************************************************;
 
 ;***************************************************************************************************/
 ;wait logic for aligning with sync pulse for the very first  time
 
-	.if !$defined(ICSS_G_V_1_0)
-;reset number of pulses
-	;ldi			NUM_PULSES, 1
-	add			NUM_PULSES, NUM_PULSES, 1
-;read timediff
-	;ldi			REG_TMP1.w0, (ECAP+ECAP_CAP1)
-	;lbco			&SYNC_PERIOD, PWMSS1_CONST, REG_TMP1.w0, 4
-;wait for next sync pulse -> wait
-	ldi			REG_TMP11, (20*CYCLES_BIT-16)
-	lsl			REG_TMP0, REG_TMP0, 3
-	add			REG_TMP0, REG_TMP0, TIME_REST
-	add			REG_TMP1, REG_TMP0, REG_TMP0
-	add			REG_TMP0, REG_TMP0, REG_TMP1
-	add			REG_TMP11, REG_TMP11, REG_TMP0
-	sub			REG_TMP2, r20, REG_TMP11
-;multiply EXTRA_SIZE by 8 and add it to TIME_REST to get total EXTRA window size in number of overclock cycles (x8)
-	lsl			REG_TMP0.b0, EXTRA_SIZE, 3
-	add			TIME_EXTRA_WINDOW, TIME_REST, REG_TMP0.b0
-	mov         EXTRA_EDGE_COMP, EXTRA_EDGE
-	mov         EXTRA_SIZE_COMP, EXTRA_SIZE
-	mov         TIME_REST_COMP, TIME_REST
-	qbne			sync_calc_time_rest_not_0, TIME_REST, 0
-	add			TIME_EXTRA_WINDOW, TIME_EXTRA_WINDOW, 8
-	.else
 ;pseudocode:
 	;/*idea is that we should wait here and start such that first time extra edge alignes with sync pulse rise edge */
 	;R20 has the pulse time in cycles. all the time here is i terms of pru cycles(4.44ns) unless specified
@@ -181,17 +131,11 @@ datalink_reset_spol_rising_edge:
 	mov         EXTRA_SIZE_COMP, EXTRA_SIZE
 	mov         TIME_REST_COMP, TIME_REST
 	mov         NUM_STUFFING_COMP, NUM_STUFFING
-	.endif
 ;***************************************************************************************************/
 
 
 sync_calc_time_rest_not_0:
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1			(sync_pulse-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	;SUB             REG_TMP2,REG_TMP2, 35  ;based on tests we are 35 cycle early and hence compensating here.
-	.else
 	CALL1			sync_pulse
-	.endif
 	WAIT			REG_TMP2
 datalink_no_sync:
 ;init state machine here
@@ -452,11 +396,7 @@ datalink_learn_delay:
 	lsl			r18, r18, 1
 
 ;check pattern
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1		(check_test_pattern-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
 	CALL1		check_test_pattern
-	.endif
 	qbeq		datalink_abort2, LOOP_CNT.b3, 14
 ;	qbeq		datalink_learn_end_test, LOOP_CNT.b3, 14
 	qbne		datalink_learn_delay, REG_FNC.b0, 1
@@ -523,11 +463,7 @@ datalink_learn2:
 ;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=0,vsync=0,reserved=0
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_LEARN)
 	CALL			send_header
-	.if !$defined(ICSS_G_V_1_0)
-	CALL			(receive-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
 	CALL			receive
-	.endif
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
 	lbco        &REG_TMP2, c25, 0, 4
 	add         REG_TMP2,REG_TMP2,12
@@ -536,11 +472,7 @@ datalink_learn2:
 	.endif
 
 	;check test pattern
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1			(check_test_pattern-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
 	CALL1			check_test_pattern
-	.endif
 	qbne			datalink_abort3, REG_FNC.b0, 1
 	sub			LOOP_CNT.b1, LOOP_CNT.b1, 1
 	qblt			datalink_learn2, LOOP_CNT.b1, 0
@@ -552,17 +484,9 @@ datalink_learn2_end:
 datalink_line_check:
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_CHECK)
 	CALL			send_header
-	.if !$defined(ICSS_G_V_1_0)
-	CALL			(receive-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
 	CALL			receive
-	.endif
 ;check test pattern
-	.if !$defined(ICSS_G_V_1_0)
-	CALL1			(check_test_pattern-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
-	.else
 	CALL1			check_test_pattern
-	.endif
 	qbne			datalink_abort2, REG_FNC.b0, 1
 	sub			LOOP_CNT.b1, LOOP_CNT.b1, 1
 	qblt			datalink_line_check, LOOP_CNT.b1, 0
@@ -623,12 +547,7 @@ datalink_id_compute:
 	sbco			&REG_TMP1, MASTER_REGS_CONST, MASK_POS, 4
 	;qba datalink_id_req
 	CALL1		send_stuffing
-	.if !$defined(ICSS_G_V_1_0)
-	jmp			datalink_loadfw
-	.else
 	jmp         datalink_wait_vsynch
-	.endif
-
 
 ;--------------------------------------------------------------------------------------------------
 
@@ -692,11 +611,7 @@ datalink_receive_signal_last_received_0_1:
 	READ_CYCLCNT		REG_TMP0
 	qble	    receive_skip_wait, REG_TMP0, REG_TMP1
 	sub			REG_TMP0, REG_TMP1, REG_TMP0
-	.if !$defined(ICSS_G_V_1_0)
-	add			r0,r0,0
-	.else
 	add			r0,r0,1
-	.endif
 	WAIT		REG_TMP0
 receive_skip_wait:
 
@@ -711,24 +626,7 @@ receive_skip_wait:
 ;input:
 ;modifies:
 ;--------------------------------------------------------------------------------------------------
-	.if !$defined(ICSS_G_V_1_0)
-sync_pulse:
-	lbco			&REG_TMP0, MASTER_REGS_CONST, ECAP_OFFSETS, 8
-	;ldi			REG_TMP1.w0, (ECAP+ECAP_ECCLR)
-	;ldi			REG_TMP1.w2, (INTC_SECR1)
-	;ldi			REG_TMP0.w0, 0xffff
-	;ldi			REG_TMP0.b2, INT_SYNC_PULSE
-;reset ecap interrupt
-	sbco			&REG_TMP0.w0, PWMSS1_CONST, REG_TMP1.w0, 2
-;reset intc int flag
-	sbco			&REG_TMP0.b2, INTC_CONST, INTC_SICR, 1
-sync_wait:
-	;qbbc			sync_wait, r31, 31
-	lbco			&REG_TMP0, INTC_CONST, REG_TMP1.w2, 4
-	qbbc			sync_wait, REG_TMP0, 3
-	RET1
-
-	.else ;stores sync pulse period in R20 in unit of cycles
+;stores sync pulse period in R20 in unit of cycles
 sync_pulse:
 	lbco        &REG_TMP1, c1, IEP_CAPR6_RISE, 4
 wait_next_pulse:
@@ -736,7 +634,6 @@ wait_next_pulse:
 	QBEQ		wait_next_pulse, R20, REG_TMP1
 	SUB         R20, R20, REG_TMP1
 	RET1
-	.endif
 ;--------------------------------------------------------------------------------------------------
 ;Function: int_div (RET_ADDR1)
 ;integer divides

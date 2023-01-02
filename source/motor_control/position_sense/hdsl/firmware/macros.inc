@@ -1,5 +1,5 @@
 
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -236,14 +236,14 @@ POP_FIFO .macro dst
 	.endif
 	.if $defined(ENDAT_CHANNEL_0)
 	mov			dst, r31.b0
-	
+
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
 	lbco        &REG_TMP2, c25, 0, 4
 	add         REG_TMP2,REG_TMP2,4
 	sbco        &dst, c25, REG_TMP2, 1
 	sbco        &REG_TMP2, c25, 0, 4
 	.endif
-	
+
 	.endif
 	.endm
 
@@ -338,12 +338,3 @@ NOP_2 .macro
 	loop			l?, 2
 l?:
 	.endm
-
-	.if !$defined(ICSS_G_V_1_0)   
-LOAD_CODE .macro section, src_offset, dst_offset, imem_size
-	ldi32			REG_TMP0, (CODE_BASE+section*CODE_SIZE+src_offset)
-	ldi32			REG_TMP1, (imem_size | (1<<16))
-	ldi32			REG_TMP2, (0x54400000+0x00040000+0x00034000+dst_offset)
-	CALL			load_code
-	.endm
-	.endif

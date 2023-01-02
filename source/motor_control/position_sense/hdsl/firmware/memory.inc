@@ -1,5 +1,5 @@
 
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -223,10 +223,10 @@ LONG_MSG_RECV .sassign r28, long_msg_recv_s
 	.asg							r24.w2, CRC_SEC
 	.asg							r24.b3, CRC_SEC_H
 	.asg							r24.b2, CRC_SEC_L
-	
-	.asg							r2.b0, EXTRA_SIZE_SELF ;take care! these are not persistent registers, r2 is actually temp reigister. these names are 
+
+	.asg							r2.b0, EXTRA_SIZE_SELF ;take care! these are not persistent registers, r2 is actually temp reigister. these names are
 	.asg							r2.b1, EXTRA_EDGE_SELF ;given to temp register for ease of reading. they are used as temp.
-	
+
 	.asg							r10.b0, EXTRA_EDGE_COMP
 	.asg							r10.b1, EXTRA_SIZE_COMP
 	.asg							r10.b2, TIME_REST_COMP
@@ -326,7 +326,7 @@ LAST_FAST_POS2	.set						0xa6
 LAST_FAST_POS3	.set						0xa7
 LAST_FAST_POS4	.set						0xa8
 NUM_RESETS	.set						0xa9
-EDMA_FLAG	.set						0xaa
+; 0xaa is unused
 TEST_PATTERN0	.set						0xac
 TEST_PATTERN1	.set						0xad
 TEST_PATTERN2	.set						0xae
@@ -344,17 +344,11 @@ SYNC_PULSE_PERIOD .set						0xbc
 LONG_MSG_BUFFER .set						0xc4
 SYNC_PULSE_ERROR .set						0xc0
 ECAP_OFFSETS	.set						0xce
-	.if !$defined(ICSS_G_V_1_0)                      ;don't need these here in am6 since no edma overlay, lets use it for ext sync pulse support
-PIMEM_SRC	.set						0xd8;4bytes
-PIMEM_SIZE	.set						0xdc;4bytes
-PIMEM_DST	.set						0xe0;4bytes
-	.else
 EXTRA_EDGE_TIMESTAMP    .set			    0xd8;4bytes
 SYNC_PARAM1	            .set				0xdc;4bytes
 SYNC_EXTRA_REMAINDER    .set				0xe0;1bytes
 SYNC_STUFFING_REMAINDER .set				0xe1;1bytes
 WAIT_BEFORE_START       .set				0xe2;2bytes ;free
-	.endif
 MASK_POS	.set						0xe4;4bytes
 SYNC_JITTER	.set						0xe8;2bytes
 SYNC_DIFF_HIST_CNT	.set						0xea;2bytes
@@ -363,12 +357,12 @@ DUMMY_END	.set						0xff
 ;--------------------------------------------------------------------------------------------------
 ;Memory offsets
 ;--------------------------------------------------------------------------------------------------
-PRU_CTRL_CONST	.set						C28  
+PRU_CTRL_CONST	.set						C28
 ;PRU_CTRL	.set						0x00022000
 PRU_CYCLCNT	.set						0x0c
-PWMSS1_CONST	.set						C19     ;AM437x specific for sync pule synchronization 
+PWMSS1_CONST	.set						C19     ;AM437x specific for sync pule synchronization
 PWMSS1_ECAP	.set						0x48302100  ;AM437x specific for sync pule synchronization
-PWMSS2_CONST	.set						C20     ;AM437x specific for sync pule synchronization   
+PWMSS2_CONST	.set						C20     ;AM437x specific for sync pule synchronization
 ECAP		.set						0x100       ;AM437x specific for sync pule synchronization
 ECAP_ECCLR	.set						0x30        ;AM437x specific for sync pule synchronization
 ECAP_ECEINT	.set						0x2c        ;AM437x specific for sync pule synchronization
@@ -378,16 +372,9 @@ INTC_SICR	.set						0x24        ;AM437x specific for sync pule synchronization
 INTC_SECR1	.set						0x284       ;AM437x specific for sync pule synchronization
 INTC_SECR0	.set						0x280       ;AM437x specific for sync pule synchronization
 INTC_CONST	.set						C0          ;AM437x specific for sync pule synchronization
-;EDMA_CONST	.set						C29         ;AM437x specific for sync pule synchronization
-EDMA_EESRH	.set						0x34        ;AM437x specific for sync pule synchronization
-EDMA_EECRH	.set						0x28        ;AM437x specific for sync pule synchronization
 IEP_CONST	.set						C26
 IEP1_CONST  .set                        0x2F000
-	.if !$defined(ICSS_G_V_1_0)
-IEP_CNT		.set						0x0c
-	.else
 IEP_CNT		.set						0x14 ;todo TSmod check as 64bit now (old0x0c)
-	.endif
 IEP_CAPR6_RISE .set                     0x50
 SHARED_MEM_CONST  .set                  0x0b010000;0x54442000+0x10000
 ;--------------------------------------------------------------------------------------------------
@@ -447,7 +434,7 @@ ENDAT_TX_OVERRUN                  .set                     16
 
 	.if $defined(ENDAT_CHANNEL_1)
 ENDAT_TX_GLOABL_REINIT_ACTIVE     .set                     13
-ENDAT_TX_UNDERRUN                 .set                      9 
+ENDAT_TX_UNDERRUN                 .set                      9
 ENDAT_TX_OVERRUN                  .set                      8
 	.endif
 

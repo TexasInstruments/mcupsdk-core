@@ -1,5 +1,5 @@
 
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -220,12 +220,6 @@ SYS_CTRL_PRDY .set						3
 SYS_CTRL_SPPE .set						2
 SYS_CTRL_SPOL .set						1
 SYS_CTRL_OEN .set						0
-
-
-;code section definitions
-CODE_DATALINK_INIT .set						0
-CODE_TRANSPORT_LAYER .set					1
-
 
 ;STUFFING is at max. 26*6 bits
 MAX_STUFFING .set						26

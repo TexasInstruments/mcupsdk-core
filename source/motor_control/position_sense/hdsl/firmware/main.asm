@@ -1,5 +1,5 @@
 
-; Copyright (C) 2021 Texas Instruments Incorporated
+; Copyright (C) 2021-2023 Texas Instruments Incorporated
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -53,10 +53,8 @@ main:
 	lbco		&REG_TMP2, PRU_CTRL_CONST, 0x00, 4
 	or		REG_TMP2, REG_TMP2, (1<<3)
 	sbco		&REG_TMP2, PRU_CTRL_CONST, 0x00, 4
-	.if $defined(ICSS_G_V_1_0)
 	;skip code loading since there is no edma overlay in ICSSG
 	jmp datalink_init_start
-	.endif
 ;--------------------------------------------------------------------------------------------------
 ;load init code
 
@@ -79,7 +77,7 @@ SWITCH3 .set					0x2
 GPIO_DATAIN .set				0x138
 
 
-	.if !$defined(ICSS_G_V_1_0)   
+	.if !$defined(ICSS_G_V_1_0)
 	LOAD_CODE	CODE_DATALINK_INIT, 0x00, 0x00, CODE_SIZE
 	.endif
 
