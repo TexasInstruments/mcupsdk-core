@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -80,6 +80,7 @@
 
 #define UNKNOW_MEMTYPE										(49783896u)
 
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -87,7 +88,7 @@ volatile bool   gMsmcMemParityInterrupt = false;
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
-
+void ecc_sdl_delay(void);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -109,7 +110,17 @@ void tearDown(void)
 }
 #endif
 
-
+/*
+ * ecc_sdl_delay() function is used  give delay
+ * */
+void ecc_sdl_delay(void)
+{
+    uint32_t u32delayCount = 0;
+    while(u32delayCount < SDL_DELAY)
+    {
+        u32delayCount++;
+    }
+}
 #if defined (SOC_AM263X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -321,14 +332,17 @@ static int32_t sdlApp_dplInit(void)
 
 static int32_t ECC_appTest(uint32_t testId)
 {
-    int32_t    testResult;
+    int32_t    testResult=0;
 
     switch (testId)
     {
         case ECC_ERROR_TEST_ID:
 #if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
-
+#if defined(R5F_INPUTS)
             testResult = ECC_ip_errTest();
+#elif defined(C66_INPUTS)
+            testResult = DSS_ECC_ip_errTest();
+#endif
             DebugP_log("\r\nECC Error ip Module Unit Test\r\n");
             if (testResult == SDL_PASS)
             {
@@ -338,6 +352,7 @@ static int32_t ECC_appTest(uint32_t testId)
             {
                 DebugP_log("\r\nip Module unit test Failed.\r\n");
             }
+#if defined(R5F_INPUTS)
             testResult = ECC_r5_errTest();
             DebugP_log("\nECC Error r5 Module Unit Test");
             if (testResult == SDL_PASS)
@@ -348,7 +363,12 @@ static int32_t ECC_appTest(uint32_t testId)
             {
                 DebugP_log("\r\nr5 Module unit test Failed.\r\n");
             }
+#endif
+#if defined(R5F_INPUTS)
             testResult = ECC_errTest();
+#elif defined(C66_INPUTS)
+            testResult = DSS_ECC_errTest();
+#endif
             DebugP_log("\r\nECC Error SDL Module Unit Test\r\n");
             if (testResult == SDL_PASS)
             {
@@ -363,8 +383,11 @@ static int32_t ECC_appTest(uint32_t testId)
 
         case ECC_FUNC_TEST_ID:
 #if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
-
+#if defined(R5F_INPUTS)
             testResult = ECC_ip_funcTest();
+#elif defined(C66_INPUTS)
+            testResult = DSS_ECC_ip_funcTest();
+#endif
             DebugP_log("\r\nECC ip func Test\r\n");
             if (testResult == SDL_PASS)
             {
@@ -374,6 +397,8 @@ static int32_t ECC_appTest(uint32_t testId)
             {
                 DebugP_log("\r\nSome ip tests failed. \r\n");
             }
+
+#if defined(R5F_INPUTS)
             testResult = ECC_r5_funcTest();
             DebugP_log("\r\nECC r5 func Test\r\n");
             if (testResult == SDL_PASS)
@@ -384,7 +409,12 @@ static int32_t ECC_appTest(uint32_t testId)
             {
                 DebugP_log("\r\nSome r5 tests failed. \r\n");
             }
+#endif
+#if defined(R5F_INPUTS)
             testResult = ECC_sdl_funcTest();
+#elif defined(C66_INPUTS)
+            testResult = DSS_ECC_sdl_funcTest();
+#endif
             DebugP_log("\r\nECC sdl func Test\r\n");
             if (testResult == SDL_PASS)
             {
@@ -394,9 +424,8 @@ static int32_t ECC_appTest(uint32_t testId)
             {
                 DebugP_log("\r\nSome sdl tests failed. \r\n");
             }
-#endif
             break;
-
+#endif
         default:
             DebugP_log("\r\n[Error] Invalid ECC test ID.\r\n");
             testResult = SDL_EFAIL;

@@ -2,7 +2,7 @@ let path = require('path');
 
 let device = "awr294x";
 
-const files = {
+const files_r5f = {
     common: [
 		"dpl_interface.c",
 		"main.c",
@@ -10,6 +10,16 @@ const files = {
         "ecc_ip_test_err.c",
         "ecc_r5_test_err.c",
         "ecc_test_err.c",
+    ],
+};
+
+const files_c66 = {
+    common: [
+		"dpl_interface.c",
+		"main.c",
+		"ecc_main.c",
+        "dss_ecc_ip_test_err.c",
+        "dss_ecc_test_err.c",
     ],
 };
 
@@ -22,7 +32,7 @@ const filedirs = {
         "../../..", /* Example base */
 		"../../../../common",
         "../../../../../dpl", /* SDL DPL base */
-		"../../../../ecc_sdl_unitTest/awr294x-evm",/* SDL UT base */
+		"../../../../ecc_sdl_unitTest/awr294x-evm",/* SDL FT base */
     ],
 };
 
@@ -40,7 +50,7 @@ const includes_nortos = {
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
 		"${MCU_PLUS_SDK_PATH}/test/sdl/ecc/common/",
-		"${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/awr294x-evm/",
+		"${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_unitTest/awr294x-evm/",
     ],
 };
 
@@ -51,6 +61,29 @@ const libs_r5f = {
         "unity.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
+};
+
+const libs_c66 = {
+    common: [
+        "nortos.awr294x.c66.ti-c6000.${ConfigName}.lib",
+        "drivers.awr294x.c66.ti-c6000.${ConfigName}.lib",
+        "unity.awr294x.c66.ti-c6000.${ConfigName}.lib",
+		"sdl.awr294x.c66.ti-c6000.${ConfigName}.lib",
+    ],
+};
+
+const r5_macro = {
+    common: [
+        "R5F_INPUTS",
+    ],
+
+};
+
+const c66_macro = {
+    common: [
+        "C66_INPUTS",
+    ],
+
 };
 
 const lnkfiles = {
@@ -76,9 +109,24 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_nortos_c66 =
+[
+    {
+        input: ".project/templates/awr294x/common/linker_c66.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/awr294x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
-    
-	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"}
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
+	{ device: device, cpu: "c66ss0", cgt: "ti-c6000", board: "awr294x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -97,7 +145,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;
@@ -105,8 +152,16 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match(/r5f*/)) {
+    	build_property.files = files_r5f;
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
+		build_property.defines = r5_macro;
+    }
+	if(buildOption.cpu.match(/c66*/)) {
+		build_property.files = files_c66;
+        build_property.libs = libs_c66;
+        build_property.templates = templates_nortos_c66;
+		build_property.defines = c66_macro;
     }
 
     return build_property;

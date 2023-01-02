@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -82,6 +82,7 @@
 /*                            Global Variables                                */
 /* ========================================================================== */
 extern uint32_t testCounter;
+volatile bool esmErrorFlag = false;
 
 static SDL_ECC_MemSubType ECC_Test_DSSsubMemTypeList[SDL_DSS_MAX_MEM_SECTIONS] =
 {
@@ -137,6 +138,24 @@ int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
     SDL_ErrType_t result;
+	int counter=0;
+
+    for(counter=0;counter<2;counter++)
+    {
+        result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[counter],NULL,NULL);
+        if (result != SDL_PASS) {
+           /* print error and quit */
+            DebugP_log("ESM_Test_init: Error initializing DSS ESM: result = %d\n", result);
+        }
+    }
+    if (result == SDL_PASS)
+    {
+        DebugP_log("\nESM_Test_init: Init DSS ESM complete \n");
+    }
+	
+    /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
+    esmErrorFlag = false;
+	
     if (retValue == 0) {
          /* Initialize ECC Memory */
          result = SDL_ECC_initMemory(SDL_DSS_ECC_AGG, SDL_DSS_ECC_AGG_DSS_HWA_PARAM_RAM_ECC_RAM_ID);
@@ -298,16 +317,7 @@ static int32_t ECC_sdlFuncTest(void)
 
     if (retVal == 0)
     {
-        result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
-        if (result != SDL_PASS) {
-           /* print error and quit */
-            DebugP_log("ESM_Test_init: Error initializing DSS ESM: result = %d\n", result);
-        }
-        else
-        {
-            DebugP_log("\nESM_Test_init: Init DSS ESM complete \n");
-        }
-        result = ECC_Test_run_DSS_HWA_PARAM_1BitInjectTest();
+        result = ECC_Test_run_DSS_HWA_PARAM_2BitInjectTest();
         if (result == SDL_PASS)
         {
             DebugP_log("\n\n Waiting for ESM Interrupt \n\n");
@@ -333,17 +343,7 @@ static int32_t ECC_sdlFuncTest(void)
         }
     }
     if (retVal == 0) {
-
-        result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[1],NULL,NULL);
-        if (result != SDL_PASS) {
-           /* print error and quit */
-            DebugP_log("ESM_Test_init: Error initializing DSS ESM: result = %d\n", result);
-        }
-        else
-        {
-            DebugP_log("\nESM_Test_init: Init DSS ESM complete \n");
-        }
-        result = ECC_Test_run_DSS_HWA_PARAM_2BitInjectTest();
+        result = ECC_Test_run_DSS_HWA_PARAM_1BitInjectTest();
         if (result == SDL_PASS)
         {
             DebugP_log("\n\n Waiting for ESM Interrupt \n\n");

@@ -92,10 +92,16 @@ volatile bool gMsmcMemParityInterrupt = false;
 /* ========================================================================== */
 /*                          EXternal Function Definitions                              */
 /* ========================================================================== */
+#if defined(R5F_INPUTS)
 extern int32_t ECC_funcTest(void);
 extern int32_t ECC_ip_funcTest(void);
 extern int32_t ECC_r5_funcTest(void);
 extern int32_t ECC_sdl_funcTest(void);
+#elif defined(C66_INPUTS)
+extern int32_t DSS_ECC_funcTest(void);
+extern int32_t DSS_ECC_ip_funcTest(void);
+extern int32_t DSS_ECC_sdl_funcTest(void);
+#endif
 /* ========================================================================== */
 /*                 Internal Function Definitions                              */
 /* ========================================================================== */
@@ -242,6 +248,8 @@ static int32_t sdlApp_dplInit(void)
 void ECC_func_app(void)
 {
     int32_t    testResult = 0;
+
+#if defined(R5F_INPUTS)
     testResult = ECC_ip_funcTest();
     DebugP_log("\r\nECC ip func Test\r\n");
     if (testResult == SDL_PASS)
@@ -272,6 +280,27 @@ void ECC_func_app(void)
     {
         DebugP_log("\r\nSome sdl tests failed. \r\n");
     }
+#elif defined(C66_INPUTS)
+	testResult = DSS_ECC_sdl_funcTest();
+	DebugP_log("\nDSS ECC sdl func Test");
+    if (testResult == SDL_PASS)
+    {
+        DebugP_log("\r\nAll sdl DSS ECC tests passed. \r\n");
+    }
+    else
+    {
+        DebugP_log("\r\nSome sdl DSS ECC tests failed. \r\n");
+    }
+	testResult = DSS_ECC_ip_funcTest();
+	if (testResult == SDL_PASS)
+    {
+        DebugP_log("\r\nAll ip DSS ECC tests passed. \r\n");
+    }
+    else
+    {
+        DebugP_log("\r\nSome ip DSS ECC tests failed. \r\n");
+    }
+#endif
 }
 
 void ecc_app_runner(void)
@@ -292,7 +321,7 @@ void ecc_syncup_delay(void)
 }
 
 
-int32_t test_main(void)
+void test_main(void *args)
 {
 	/* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -300,12 +329,12 @@ int32_t test_main(void)
 	
     sdlApp_dplInit();
     ecc_app_runner();
+
 	
 	/* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
 
-    return (0);
 }
 
 /* Nothing past this point */

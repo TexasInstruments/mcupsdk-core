@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -71,9 +71,14 @@ volatile bool esmError = false;
 /* ========================================================================== */
 /*                          EXternal Function Definitions                              */
 /* ========================================================================== */
+#if defined(R5F_INPUTS)
 extern int32_t ECC_ip_errTest(void);
 extern int32_t ECC_r5_errTest(void);
 extern int32_t ECC_errTest(void);
+#elif defined(C66_INPUTS)
+extern int32_t DSS_ECC_ip_errTest(void);
+extern int32_t DSS_ECC_errTest(void);
+#endif
 /* ========================================================================== */
 /*                 Internal Function Definitions                              */
 /* ========================================================================== */
@@ -159,7 +164,11 @@ static int32_t sdlApp_dplInit(void)
 void test_sdl_ecc_unit_test_app(void)
 {
     int32_t    testResult;
+#if defined(R5F_INPUTS)
     testResult = ECC_ip_errTest();
+#elif defined(C66_INPUTS)
+    testResult = DSS_ECC_ip_errTest();
+#endif
     DebugP_log("\n ECC Error ip Module Unit Test");
     if (testResult == SDL_PASS)
     {
@@ -168,8 +177,12 @@ void test_sdl_ecc_unit_test_app(void)
     else
     {
         DebugP_log(" ip Module unit test Failed.\r\n");
-    }
+    }    
+#if defined(R5F_INPUTS)
     testResult = ECC_errTest();
+#elif defined(C66_INPUTS)
+    testResult = DSS_ECC_errTest();
+#endif
     DebugP_log("\n ECC Error SDL Module Unit Test");
     if (testResult == SDL_PASS)
     {

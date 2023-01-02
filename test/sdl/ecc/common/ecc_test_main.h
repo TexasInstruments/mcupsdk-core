@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -72,6 +72,7 @@ extern volatile bool gMsmcMemParityInterrupt;
 /* ========================================================================== */
 
 #if defined(SOC_AM263X)|| defined(SOC_AM273X) || defined(SOC_AWR294X)
+#if defined(R5F_INPUTS)
 extern int32_t ECC_ip_funcTest(void);
 extern int32_t ECC_sdl_funcTest(void);
 extern int32_t ECC_funcTest(void);
@@ -79,6 +80,13 @@ extern int32_t ECC_ip_errTest(void);
 extern int32_t ECC_errTest(void);
 extern int32_t ECC_r5_funcTest(void);
 extern int32_t ECC_r5_errTest(void);
+#elif defined(C66_INPUTS)
+extern int32_t DSS_ECC_ip_funcTest(void);
+extern int32_t DSS_ECC_sdl_funcTest(void);
+extern int32_t DSS_ECC_funcTest(void);
+extern int32_t DSS_ECC_ip_errTest(void);
+extern int32_t DSS_ECC_errTest(void);
+#endif
 #endif
 
 #ifdef __cplusplus

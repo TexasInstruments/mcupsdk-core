@@ -2,7 +2,7 @@ let path = require('path');
 
 let device = "am273x";
 
-const files = {
+const files_r5f = {
     common: [
         "dpl_interface.c",
         "main.c",
@@ -16,6 +16,15 @@ const asmfiles_r5f = {
     common: [
 		"resetvecs.S",
 	],
+};
+const files_c66 = {
+    common: [
+        "dpl_interface.c",
+        "main.c",
+        "ecc_main.c",
+		"dss_ecc_ip_test_func.c",
+		"dss_ecc_sdl_test_func.c",
+    ],
 };
 
 /* Relative to where the makefile will be generated
@@ -58,6 +67,29 @@ const libs_r5f = {
     ],
 };
 
+const libs_c66 = {
+    common: [
+        "nortos.am273x.c66.ti-c6000.${ConfigName}.lib",
+        "drivers.am273x.c66.ti-c6000.${ConfigName}.lib",
+        "unity.am273x.c66.ti-c6000.${ConfigName}.lib",
+        "sdl.am273x.c66.ti-c6000.${ConfigName}.lib",
+    ],
+};
+
+const r5_macro = {
+    common: [
+        "R5F_INPUTS",
+    ],
+
+};
+
+const c66_macro = {
+    common: [
+        "C66_INPUTS",
+    ],
+
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -81,8 +113,24 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_nortos_c66 =
+[
+    {
+        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"}
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
+	{ device: device, cpu: "c66ss0", cgt: "ti-c6000", board: "am273x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -101,7 +149,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;
@@ -109,10 +156,19 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match(/r5f*/)) {
+		build_property.files = files_r5f;
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
 		build_property.asmfiles = asmfiles_r5f;
+		build_property.defines = r5_macro;
     }
+	if(buildOption.cpu.match(/c66*/)) {
+		build_property.files = files_c66;
+        build_property.libs = libs_c66;
+        build_property.templates = templates_nortos_c66;
+		build_property.defines = c66_macro;
+    }
+	
 
     return build_property;
 }
