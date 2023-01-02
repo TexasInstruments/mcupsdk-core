@@ -132,11 +132,12 @@ typedef struct SDL_CCM_ErrorStatus_s
  *
  * \param   instance                [IN] CCM Instance
  *
+ * \param   index                   [IN] bit map array index value
  * \return The SDL error code for the API
  *                                   SDL_PASS : Success;
  *                                   SDL_EFAIL : if error happened during initialization
  */
-int32_t SDL_CCM_init(SDL_CCM_Inst instance);
+int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
 
 /** 
  *

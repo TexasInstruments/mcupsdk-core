@@ -2,13 +2,13 @@ let path = require('path');
 
 let device = "awr294x";
 
-const files = {
+const files_r5f = {
     common: [
+		"dpl_interface.c",
+		"main.c",
         "ccm_ip_api_test.c",
         "ccm_ip_err_test.c",
-        "ccm_test_main.c",
-		"main.c",
-        "dpl_interface.c",
+        "ccm_ip_test_main.c",
     ],
 };
 
@@ -19,6 +19,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+		"../../../../common",
         "../../../../../dpl", /* SDL DPL base */
     ],
 };
@@ -36,7 +37,6 @@ const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
-		"${MCU_PLUS_SDK_PATH}/test/sdl/ccm/ccm_ip_test/",
     ],
 };
 
@@ -67,7 +67,7 @@ const templates_nortos_r5f =
         input: ".project/templates/awr294x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_main",
+            entryFunction: "ccm_test_main",
         },
     }
 ];
@@ -81,7 +81,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ccm_ip_test";
+    property.name = "ccm_test_app";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
@@ -92,7 +92,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;
@@ -100,6 +99,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match(/r5f*/)) {
+    	build_property.files = files_r5f;
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
     }

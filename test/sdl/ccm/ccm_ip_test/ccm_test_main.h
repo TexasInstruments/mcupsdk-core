@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,7 +63,6 @@ extern "C"
 #if defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -73,9 +72,11 @@ extern "C"
 #define  CCM_TOTAL_NUM_TESTS      (2U)
 #if defined (SOC_AM263X)
 #define  CCM_NUM_INSTANCE         (3U)
+#define INSTANCE 		SDL_R5SS0_CCM
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
 #define  CCM_NUM_INSTANCE         (2U)
+#define INSTANCE 		SDL_MSS_CCMR
 #endif
 /* ========================================================================== */
 /*                 External Function Declarations                             */

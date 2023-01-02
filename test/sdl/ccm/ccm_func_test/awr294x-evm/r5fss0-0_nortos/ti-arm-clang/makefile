@@ -21,22 +21,21 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ccm_func_test.$(PROFILE).out
+OUTNAME:=test_ccm_func.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=ccm_func_test.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=ccm_func_test.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_QSPI:=ccm_func_test.$(PROFILE).appimage_qspi
-BOOTIMAGE_NAME_SIGNED:=ccm_func_test.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=ccm_func_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ccm_func_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ccm_func_test.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=test_ccm_func.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=test_ccm_func.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_QSPI:=test_ccm_func.$(PROFILE).appimage_qspi
+BOOTIMAGE_NAME_SIGNED:=test_ccm_func.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=test_ccm_func.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=test_ccm_func.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=test_ccm_func.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	ccm_func_test.c \
-	ccm_func_main.c \
-	main.c \
 	dpl_interface.c \
+	main.c \
+	ccm_func_test.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -48,6 +47,7 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../../common \
 	../../../../../dpl \
 	generated \
 
@@ -56,7 +56,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
-	-I${MCU_PLUS_SDK_PATH}/test/sdl/ccm/ccm_func_test/ \
+	-I${MCU_PLUS_SDK_PATH}/test/sdl/ccm/common/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -190,7 +190,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang ccm_func_test ...
+	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang test_ccm_func ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

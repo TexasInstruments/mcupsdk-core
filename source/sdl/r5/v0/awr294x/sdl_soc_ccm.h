@@ -1,7 +1,8 @@
-/*
+/********************************************************************
 *
+* SOC CCM PROPERTIES. header file
 *
-*  Copyright (C) 2022 Texas Instruments Incorporated
+*  Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -40,21 +41,30 @@
  
 #ifndef SDL_SOC_CCM_H_
 #define SDL_SOC_CCM_H_
-
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <sdl/sdlr.h>
 #include <sdl/include/awr294x/sdlr_soc_baseaddress.h>
-
+#include <sdl/esm/v1/sdl_esm.h>
+#include <sdl/esm/soc/awr294x/sdl_esm_core.h>
+#include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
 #ifdef __cplusplus
-extern "C"{
+extern "C"
+{
 #endif
-
 /* ========================================================================== */
 /*                            Macros & Typedefs                               */
 /* ========================================================================== */
-#define SDL_ESM_INSTANCE_MSS          (SDL_ESMG1_CCMR5_ST_ERR)
+#define SDL_ESM_INSTANCE_MSS    (SDL_ESMG1_CCMR5_ST_ERR)
+#define SDL_INTR_GROUP_NUM      1U
+#define SDL_INTR_GROUP_NUMBER   2U
+#define BASEADDRESS 			SDL_MSS_CCMR_U_BASE
+#define ESM_INSTANCE 			SDL_ESM_INST_MSS_ESM
+
+#define SDL_INTR_PRIORITY_LVL             1U
+#define SDL_ENABLE_ERR_PIN                1U
+#define SDL_ESM_MAX_EVENT_MAP_NUM         2u
 
 /**
  * \brief  CCM Instance supported.
@@ -71,15 +81,19 @@ typedef uint32_t SDL_CCM_Inst;
  * \brief   This API is used to get the base address of the instance.
  * 
  */
+
 static uint32_t SDL_CCM_baseAddress[SDL_CCM_MAX_INSTANCE] =
 {
 	SDL_MSS_CCMR_U_BASE,
 };
 
-#ifdef _cplusplus
+extern int32_t SDL_ESM_CCMapplicationCallback(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg);
+										   
+#ifdef __cplusplus
 }
-
-#endif /*extern "C" */
-
 #endif
+#endif /* SDL_SOC_CCM_H_ */
  /** @} */

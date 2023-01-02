@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -58,12 +58,6 @@ extern "C"
 #include <sdl/sdl_ecc.h>
 #include <sdl/sdl_ccm.h>
 #include <dpl_interface.h>
-#if defined(SOC_AM273X)
-#include <sdl/include/am273x/sdlr_intr_esm_mss.h>
-#endif
-#if defined(SOC_AWR294X)
-#include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
-#endif
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -75,12 +69,11 @@ extern "C"
 
 #if defined (SOC_AM263X)
 #define SDL_INTR_GROUP_NUM      1U
-#define INSTANCE 				SDL_R5SS0_CCM
 #define ESM_INSTANCE 			SDL_ESM_INST_MAIN_ESM0
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
-#define SDL_INTR_GROUP_NUM      2U
-#define INSTANCE 				SDL_MSS_CCMR
+#define SDL_INTR_GROUP_NUM      1U
 #define ESM_INSTANCE 			SDL_ESM_INST_MSS_ESM
+#define SDL_ESM_MAX_EVENT_MAP   1U
 #endif
 /* ========================================================================== */
 /*                 External Function Declarations                             */

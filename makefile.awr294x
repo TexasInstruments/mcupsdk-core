@@ -186,6 +186,7 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_vim/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -517,6 +518,7 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c600
 BUILD_COMBO_EXAMPLE_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_vim_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += sbl_multicore_app_awr294x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos
@@ -899,6 +901,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
+ sdl_vim_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  sbl_multicore_app_awr294x-evm_system_nortos:
 	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile all
 
@@ -1042,6 +1047,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vim_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sbl_multicore_app_awr294x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_clean
@@ -1424,6 +1430,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
+ sdl_vim_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sbl_multicore_app_awr294x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile clean
 
@@ -1567,6 +1576,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_t
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vim_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sbl_multicore_app_awr294x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_scrub
@@ -1948,6 +1958,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_vim_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sbl_multicore_app_awr294x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile scrub

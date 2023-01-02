@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,7 +42,7 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-
+#include <stdio.h>
 #include "cpu_main.h"
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc.h>
@@ -76,11 +76,11 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
                                          uint64_t bitErrorOffset,
                                          uint32_t bitErrorGroup){
 
-    DebugP_log("\n  ECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+    printf("\n  ECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
                 "address 0x%x, ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\n",
                 eccMemType, errorSrc, address, ramId, (uint32_t)(bitErrorOffset >> 32),
                 (uint32_t)(bitErrorOffset & 0x00000000FFFFFFFF), bitErrorGroup);
-    DebugP_log("  Take action \n");
+    printf("  Take action \n");
 
     /* Any additional customer specific actions can be added here */
 

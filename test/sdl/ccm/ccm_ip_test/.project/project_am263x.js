@@ -4,11 +4,11 @@ let device = "am263x";
 
 const files = {
     common: [
+		"dpl_interface.c",
+		"main.c",
         "ccm_ip_api_test.c",
         "ccm_ip_err_test.c",
-        "ccm_test_main.c",
-		"main.c",
-        "dpl_interface.c",
+        "ccm_ip_test_main.c",
     ],
 };
 
@@ -19,6 +19,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+		"../../../../common",
         "../../../../../dpl", /* SDL DPL base */
     ],
 };
@@ -36,7 +37,6 @@ const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
-		"${MCU_PLUS_SDK_PATH}/test/sdl/ccm/ccm_ip_test/",
     ],
 };
 
@@ -67,14 +67,14 @@ const templates_nortos_r5f =
         input: ".project/templates/am263x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_main",
+            entryFunction: "ccm_test_main",
         },
     }
 ];
 
 const buildOptionCombos = [
-
-	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+    
+	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"}
 ];
 
 function getComponentProperty() {
@@ -82,7 +82,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ccm_ip_test";
+    property.name = "ccm_test_app";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;

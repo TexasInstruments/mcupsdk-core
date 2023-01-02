@@ -10456,6 +10456,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies the operation of VIM module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_vim_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_vim",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc2",
         "location": "../../examples/sdl/rti/UC2/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -10555,7 +10588,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "ECC BUS SAFETY Example. This example demonstrates all MSS and DSS Nodes ECC BUS Safety Diagnostics CPU is R5FSS0-0 running NORTOS.",
+        "description": "ECC BUS SAFETY Example This example demonstrates all MSS and DSS Nodes ECC BUS Safety Diagnostics CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_bus_safety_example",
         "location": "../../examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [

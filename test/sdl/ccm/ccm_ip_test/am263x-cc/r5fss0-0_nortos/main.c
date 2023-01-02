@@ -34,14 +34,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
-void test_main(void *args);
+void ccm_test_main(void *args);
 
 int main(void)
 {
     System_init();
     Board_init();
 
-    test_main(NULL);
+    ccm_test_main(NULL);
 
     Board_deinit();
     System_deinit();

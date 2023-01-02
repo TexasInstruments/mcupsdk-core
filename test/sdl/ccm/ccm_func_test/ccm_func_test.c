@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,10 +45,12 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <kernel/dpl/DebugP.h>
+#include <sdl/r5/v0/sdl_ip_ccm.h>
 #include <sdl/include/sdl_types.h>
-#include "ccm_func_main.h"
-#include "sdl/r5/v0/sdl_mcu_armss_ccmr5.h"
+#include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
 #include <dpl_interface.h>
+#include <sdl/sdl_ecc.h>
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
@@ -65,9 +67,17 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#if defined(SOC_AM263X)
+#define INSTANCE 		SDL_R5SS0_CCM
+#elif defined(SOC_AM273X) || defined(AWR294X)
+#define INSTANCE 		SDL_MSS_CCMR
+#endif
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/*                            Global Variables                                */
 /* ========================================================================== */
 #if defined (SOC_AM263X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -82,7 +92,7 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
 										   int32_t grpChannel,
 										   int32_t intSrc,
 										   void *arg);
-#endif
+#endif	
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -92,14 +102,14 @@ SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
 
-    .enableBitmap = {0x00000000u, 0x00000000u, 0x00004000u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00780880u, 0x00000000u,
                 },
      /**< All events enable: except timer and self test  events, and Main ESM output */
     /* Temporarily disabling vim compare error as well*/
-    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00004000u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00780880u, 0x00000000u,
                         },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
-    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00004000u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00780880u, 0x00000000u,
                       },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
 };
@@ -110,21 +120,28 @@ SDL_ESM_NotifyParams SDL_CCM_eventBitMap[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
     {
           /* Event BitMap for CCM ESM callback */
           .groupNumber = SDL_INTR_GROUP_NUM,
-          .errorNumber = SDL_ESMG2_CCMR5_COMPARE,//25
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,//1
+          .errorNumber = SDL_ESMG1_CCMR5_ST_ERR,
+          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
           .callBackFunction = &SDL_ESM_applicationCallback,
-     }
+    },
+	{
+          /* Event BitMap for CCM ESM callback */
+          .groupNumber = SDL_INTR_GROUP_NUMBER,
+          .errorNumber = SDL_ESMG2_VIM_LOCK_ERR,
+          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
+          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+          .callBackFunction = &SDL_ESM_applicationCallback,
+    },
 };
 #endif
-
+												   
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
 static uint32_t arg;
 volatile bool ESMError = false;
-
 /*********************************************************************
  * @fn      SDL_TEST_CCMSelfTest
  *
@@ -134,14 +151,14 @@ volatile bool ESMError = false;
  *
  * @return  0 : Success; < 0 for failures
  */
-int32_t SDL_TEST_CCMSelfTest(void)
+int32_t SDL_TEST_CCMSelfTest(uint32_t ccmcore)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM self test: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE,
+    result = SDL_CCM_selfTest(ccmcore,
 	                          SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK,
                               SDL_CCM_SELFTEST_TYPE_NORMAL, 0U,
                               10000000);
@@ -166,14 +183,14 @@ int32_t SDL_TEST_CCMSelfTest(void)
  *
  * @return  0 : Success; < 0 for failures
  */
-int32_t SDL_TEST_CCMSelfTestErrorForce(void)
+int32_t SDL_TEST_CCMSelfTestErrorForce(uint32_t INSTID)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM self test with error forcing: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE,
+    result = SDL_CCM_selfTest(INSTID,
 	                          SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK,
                               SDL_CCM_SELFTEST_TYPE_ERROR_FORCING, 0U,
                               10000000);
@@ -188,14 +205,14 @@ int32_t SDL_TEST_CCMSelfTestErrorForce(void)
     return retVal;
 }
 
-int32_t SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(void)
+int32_t SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(uint32_t CORE_INST)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM Inactivity self test with error forcing: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE,
+    result = SDL_CCM_selfTest(CORE_INST,
                               SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR,
                               SDL_CCM_SELFTEST_TYPE_ERROR_FORCING, 0U,
                               10000000);
@@ -210,14 +227,14 @@ int32_t SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(void)
     return retVal;
 }
 
-int32_t SDL_TEST_CCMSelfTest_VIM_ErrorForce(void)
+int32_t SDL_TEST_CCMSelfTest_VIM_ErrorForce(uint32_t Instance_CORE)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM VIM self test with error forcing: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE,
+    result = SDL_CCM_selfTest(Instance_CORE,
                               SDL_CCM_MONITOR_TYPE_VIM,
                               SDL_CCM_SELFTEST_TYPE_ERROR_FORCING, 0U,
                               10000000);
@@ -241,14 +258,14 @@ int32_t SDL_TEST_CCMSelfTest_VIM_ErrorForce(void)
  *
  * @return  0 : Success; < 0 for failures
  */
-int32_t SDL_TEST_CCMInjectError(void)
+int32_t SDL_TEST_CCMInjectError(uint32_t InstanceCCM)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM inject  error: test starting");
 
-    result = SDL_CCM_injectError(INSTANCE, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK);
+    result = SDL_CCM_injectError(InstanceCCM, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK);
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM inject failed");
@@ -260,14 +277,14 @@ int32_t SDL_TEST_CCMInjectError(void)
     return retVal;
 }
 
-int32_t SDL_TEST_CCMInjectVIMError(void)
+int32_t SDL_TEST_CCMInjectVIMError(uint32_t InstanceIDccm)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM inject VIM error: test starting");
 
-    result = SDL_CCM_injectError(INSTANCE, SDL_CCM_MONITOR_TYPE_VIM);
+    result = SDL_CCM_injectError(InstanceIDccm, SDL_CCM_MONITOR_TYPE_VIM);
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM inject VIM failed");
@@ -279,14 +296,14 @@ int32_t SDL_TEST_CCMInjectVIMError(void)
     return retVal;
 }
 
-int32_t SDL_TEST_CCMInjectInactivityError(void)
+int32_t SDL_TEST_CCMInjectInactivityError(uint32_t Instccm)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM inject inactivity monitor error: test starting");
 
-    result = SDL_CCM_injectError(INSTANCE, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR);
+    result = SDL_CCM_injectError(Instccm, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR);
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM inject failed");
@@ -307,14 +324,14 @@ int32_t SDL_TEST_CCMInjectInactivityError(void)
  *
  * @return  0 : Success; < 0 for failures
  */
-int32_t SDL_TEST_CCMSelftestPolarityInvert(void)
+int32_t SDL_TEST_CCMSelftestPolarityInvert(uint32_t ccmInst)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM polarity invert self test: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE,
+    result = SDL_CCM_selfTest(ccmInst,
 	                          SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK,
                               SDL_CCM_SELFTEST_POLARITY_INVERSION, 0xFFU,
                               10000000);
@@ -338,14 +355,14 @@ int32_t SDL_TEST_CCMSelftestPolarityInvert(void)
  *
  * @return  0 : Success; < 0 for failures
  */
-int32_t SDL_TEST_CCMVIMSelfTest(void)
+int32_t SDL_TEST_CCMVIMSelfTest(uint32_t ccmInstance)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM VIM self test: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_VIM,
+    result = SDL_CCM_selfTest(ccmInstance, SDL_CCM_MONITOR_TYPE_VIM,
                               SDL_CCM_SELFTEST_TYPE_NORMAL, 0U,
                               10000000);
 
@@ -368,14 +385,14 @@ int32_t SDL_TEST_CCMVIMSelfTest(void)
  *
  * @return  0 : Success; < 0 for failures
  */
-int32_t SDL_TEST_CCMInactivitySelfTest(void)
+int32_t SDL_TEST_CCMInactivitySelfTest(uint32_t ccmInstanceID)
 {
     int32_t result;
     int32_t retVal=0;
 
     DebugP_log("\n CCM inactivity monitor self test: starting");
 
-    result = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR,
+    result = SDL_CCM_selfTest(ccmInstanceID, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR,
                               SDL_CCM_SELFTEST_TYPE_NORMAL, 0U,
                               10000000);
 
@@ -389,14 +406,14 @@ int32_t SDL_TEST_CCMInactivitySelfTest(void)
     return retVal;
 }
 
-int32_t CCM_runTest(uint32_t instanceId)
+static int32_t CCM_runTest(uint32_t instanceId)
 {
     int32_t       testResult = 0;
     SDL_ErrType_t sdlResult;
 
     if(testResult == 0)
     {
-        sdlResult = SDL_TEST_CCMSelfTest();
+        sdlResult = SDL_TEST_CCMSelfTest(instanceId);
 	if (sdlResult != SDL_PASS)
 	{
 		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -405,7 +422,7 @@ int32_t CCM_runTest(uint32_t instanceId)
     }
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMSelfTestErrorForce();
+        sdlResult = SDL_TEST_CCMSelfTestErrorForce(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     	 	DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -414,7 +431,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMInjectError();
+        sdlResult = SDL_TEST_CCMInjectError(instanceId);
         if (sdlResult != SDL_PASS)
     	{
             DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -423,7 +440,7 @@ int32_t CCM_runTest(uint32_t instanceId)
     }
     if(testResult == 0)
     {
-        sdlResult = SDL_TEST_CCMInactivitySelfTest();
+        sdlResult = SDL_TEST_CCMInactivitySelfTest(instanceId);
 			if (sdlResult != SDL_PASS)
 			{
 				DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -432,7 +449,7 @@ int32_t CCM_runTest(uint32_t instanceId)
     	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMSelfTest_Inactivity_ErrorForce();
+        sdlResult = SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -441,7 +458,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMInjectInactivityError();
+        sdlResult = SDL_TEST_CCMInjectInactivityError(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -450,7 +467,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMSelftestPolarityInvert();
+        sdlResult = SDL_TEST_CCMSelftestPolarityInvert(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -459,7 +476,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMVIMSelfTest();
+        sdlResult = SDL_TEST_CCMVIMSelfTest(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -468,7 +485,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMSelfTest_VIM_ErrorForce();
+        sdlResult = SDL_TEST_CCMSelfTest_VIM_ErrorForce(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -477,7 +494,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        sdlResult = SDL_TEST_CCMInjectVIMError();
+        sdlResult = SDL_TEST_CCMInjectVIMError(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
     		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
@@ -498,7 +515,7 @@ int32_t CCM_runTest(uint32_t instanceId)
 }
 
 
-int32_t CCM_Test_init (void)
+int32_t CCM_Test_init (int32_t instNum, uint32_t indexNum)
 {
     int32_t result, retValue=0;
     void *ptr = (void *)&arg;
@@ -508,7 +525,7 @@ int32_t CCM_Test_init (void)
         result = SDL_ESM_init(ESM_INSTANCE, &CCM_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
-        result = SDL_ESM_init(ESM_INSTANCE, &SDL_CCM_eventBitMap[0], NULL, ptr);
+        result = SDL_ESM_init(ESM_INSTANCE, &SDL_CCM_eventBitMap[indexNum], NULL, ptr);
 #endif
         if (result != SDL_PASS) {
             /* print error and quit */
@@ -522,7 +539,7 @@ int32_t CCM_Test_init (void)
 
     if (retValue == 0) {
         /* Initialize CCM */
-        result = SDL_CCM_init(0);
+        result = SDL_CCM_init(instNum, indexNum);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("CCM_Test_init: Error result = %d\n", result);
@@ -532,7 +549,7 @@ int32_t CCM_Test_init (void)
             DebugP_log("\nCCM_Test_init: CCM Init complete \n");
         }
 		        /* Initialize CCM */
-        result = SDL_CCM_verifyConfig(0);
+        result = SDL_CCM_verifyConfig(instNum);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("CCM_Test_init: Error result = %d\n", result);
@@ -550,32 +567,78 @@ int32_t CCM_Test_init (void)
 int32_t CCM_funcTest(void)
 {
     int32_t    testResult = 0;
+	int32_t    loop= 0;
+#if defined (SOC_AM263X)
+	int32_t loopCnt=2;
+#endif
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+	int32_t loopCnt=1;
+#endif
+	for(loop=0; loop < loopCnt; loop++)
+	{
+		testResult = CCM_Test_init(loop, loop);
+		DebugP_log("CCM Example Test Started: R5F%d\r\n",loop);
 
-    testResult = CCM_Test_init();
+		if (testResult != 0)
+		{
+			DebugP_log("\n CCM SDL API tests: unsuccessful");
+			return SDL_EFAIL;
+		}
 
-    if (testResult != 0)
+		if (testResult == SDL_PASS)
+		{
+			DebugP_log("\nCCM Functional Test \r\n");
+			/* Run the test for diagnostics first */
+			testResult = CCM_runTest(loop);
+		}
+		else
+		{
+			DebugP_log("\r\nCCM Init failed. Exiting the app.\r\n");
+		}	
+	}
+		return (testResult);
+}
+
+void func_test_main(void *args)
+{
+	SDL_ErrType_t ret = SDL_PASS;
+
+    ret = SDL_TEST_dplInit();
+    if (ret != SDL_PASS)
     {
-        DebugP_log("\n CCM SDL API tests: unsuccessful");
-        return SDL_EFAIL;
+        DebugP_log("Error: DPL Init Failed\n");
     }
-
-	if (testResult == SDL_PASS)
-	{
-		DebugP_log("\nCCM Functional Test \r\n");
-	    /* Run the test for diagnostics first */
-		testResult = CCM_runTest(INSTANCE);
-	}
-	else
-	{
-		DebugP_log("\r\nCCM Init failed. Exiting the app.\r\n");
-	}
-
-
-    return (testResult);
+	ret = CCM_funcTest();
+	if (ret != SDL_PASS)
+    {
+        DebugP_log("Error: Function Test Failed\n");
+    }
 }
 /* ========================================================================== */
 /*                            Internal Function Definition                    */
 /* ========================================================================== */
+#if defined (SOC_AM263X)
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                                   SDL_ESM_IntType esmIntType,
+                                                   uint32_t grpChannel,
+                                                   uint32_t index,
+                                                   uint32_t intSrc,
+                                                   void *arg)
+{
+
+    int32_t retVal = 0;
+    SDL_CCM_MonitorType monitorType;
+    DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+                esmInstType, esmIntType, grpChannel, index, intSrc);
+    DebugP_log("  Take action \n");
+
+    SDL_CCM_getErrorType(INSTANCE, intSrc, &monitorType);
+    SDL_CCM_clearError(INSTANCE, monitorType);
+
+   return retVal;
+}
+#endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
 int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
 										   int32_t grpChannel,
@@ -587,13 +650,13 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
     SDL_Ecc_AggrIntrSrc eccIntrSrc;
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
-
+    
     retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
 
     /* Any additional customer specific actions can be added here */
     retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 
-
+    
     if (eccErrorInfo.injectBitErrCnt != 0)
     {
         SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);

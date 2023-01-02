@@ -2,7 +2,7 @@
 *
 * SOC CCM PROPERTIES. header file
 *
-*  Copyright (C) 2022 Texas Instruments Incorporated
+*  Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,26 +41,29 @@
  
 #ifndef SDL_SOC_CCM_H_
 #define SDL_SOC_CCM_H_
-
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <sdl/sdlr.h>
 #include <sdl/include/am263x/sdlr_soc_baseaddress.h>
+#include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/esm/soc/am263x/sdl_esm_core.h>
+#include <sdl/include/am263x/sdlr_intr_esm0.h>
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
 /* ========================================================================== */
 /*                            Macros & Typedefs                               */
 /* ========================================================================== */
-#define SDL_CCM_ESM_U_BASE          (SDL_ESM0_CCM_0_SELFTEST_ERR)
+#define SDL_CCM_ESM_U_BASE      (SDL_ESM0_CCM_0_SELFTEST_ERR)
+#define SDL_INTR_GROUP_NUM      1U
+#define BASEADDRESS 			SDL_R5SS0_CCMR_U_BASE
+#define ESM_INSTANCE 			SDL_ESM_INST_MAIN_ESM0
 
 /**
  * \brief  CCM Instance supported.
  */
-
 
 typedef uint32_t SDL_CCM_Inst;
 	/** CCM INSTANCE R5F0 */
@@ -75,16 +78,15 @@ typedef uint32_t SDL_CCM_Inst;
  * \brief   This API is used to get the base address of the instance.
  * 
  */
+
 static uint32_t SDL_CCM_baseAddress[SDL_CCM_MAX_INSTANCE] =
 {
 	SDL_R5SS0_CCMR_U_BASE,
     SDL_R5SS1_CCMR_U_BASE,
 };
 
-#ifdef _cplusplus
+#ifdef __cplusplus
 }
-
-#endif /*extern "C" */
-
 #endif
+#endif /* SDL_SOC_CCM_H_ */
  /** @} */

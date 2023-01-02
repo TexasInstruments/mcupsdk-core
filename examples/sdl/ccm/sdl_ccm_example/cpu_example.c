@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,7 +36,7 @@
  *
  *  \brief    This file contains R5F-CPU Safety Example showing usage of R5F Lockstep as a safety mechanism to detect errors in R5F execution. Example shows how to configure and use all 4 modes. Example also show how to configure PMU, MPU and illegal instruction trapping.
  *
- *  \details  R5F-CPU running in locksetpu mode
+ *  \details  R5F-CPU running in lockstep mode
  **/
 
 /* ========================================================================== */
@@ -45,6 +45,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
 #include <sdl/include/sdl_types.h>
 #include <kernel/dpl/DebugP.h>
 #include "cpu_main.h"
@@ -53,11 +54,6 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#if defined (SOC_AM263X)
-#define INSTANCE 	SDL_R5SS0_CCM
-#elif defined (SOC_AM273X) || defined (SOC_AWR294X)
-#define INSTANCE 	SDL_MSS_CCMR
-#endif
 /* ========================================================================== */
 /*                            Internal Function Declaration                    */
 /* ========================================================================== */
@@ -95,30 +91,30 @@ static uint32_t arg;
 volatile bool ESMError = false;
 int32_t loop=0;
 
-#if defined (SOC_AM263X)
+#if defined(SOC_AM263X)
 SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
 
-    .enableBitmap = {0x00000000u, 0x00000000u, 0x0000C000u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00780000u, 0x00000000u,
                 },
      /**< All events enable: except timer and self test  events, and Main ESM output */
     /* Temporarily disabling vim compare error as well*/
-    .priorityBitmap = {0x00000000u, 0x00000000u, 0x0000C000u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00780000u, 0x00000000u,
                         },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
-    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x0000C000u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00780000u, 0x00000000u,
                       },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
 };
 #endif
-#if defined (SOC_AM273X) || defined(SOC_AWR294X)
-SDL_ESM_NotifyParams SDL_CCM_eventBitMap[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
+#if defined(SOC_AM273X) || defined(SOC_AWR294X)
+SDL_ESM_NotifyParams SDL_CCM_EventBitMap[SDL_ESM_MAX_EVENT_MAP] =
 {
 	{
           /* Event BitMap for CCM ESM callback */
           .groupNumber = SDL_INTR_GROUP_NUM,
-          .errorNumber = SDL_ESMG2_CCMR5_COMPARE,
+          .errorNumber = SDL_ESMG1_CCMR5_ST_ERR,
           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
           .callBackFunction = &SDL_ESM_applicationCallback,
@@ -231,7 +227,7 @@ int32_t CCM_Test_init (int32_t instNum)
         result = SDL_ESM_init(ESM_INSTANCE, &CCM_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
-        result = SDL_ESM_init(ESM_INSTANCE, &SDL_CCM_eventBitMap[0], NULL, ptr);
+        result = SDL_ESM_init(ESM_INSTANCE, &SDL_CCM_EventBitMap[0], NULL, ptr);
 #endif		
         if (result != SDL_PASS) {
             /* print error and quit */
@@ -246,7 +242,7 @@ int32_t CCM_Test_init (int32_t instNum)
     if (retValue == 0) {
 
         /* Initialize CCM */
-        result = SDL_CCM_init(instNum);
+        result = SDL_CCM_init(instNum,0);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("CCM_Test_init: Error result = %d\n", result);
@@ -283,6 +279,7 @@ int32_t CCM_funcTest(void)
 
 	for(loop=0; loop < loopCnt; loop++)
 	{
+		DebugP_log("CCM Example Test Started: R5F%d\r\n",loop);
 		testResult = CCM_Test_init(loop);
 		if (testResult != 0)
 		{
@@ -345,16 +342,15 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             uint32_t grpChannel,
                                             uint32_t index,
                                             uint32_t intSrc,
-                                            //uintptr_t *arg,
 											void *arg)
 {
 
     int32_t retVal = 0;
     SDL_CCM_MonitorType monitorType;
-    DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
+    printf("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
+    printf("  Take action \n");
 
     SDL_CCM_getErrorType(SDL_R5SS0_CCM, intSrc, &monitorType);
     SDL_CCM_clearError(SDL_R5SS0_CCM, monitorType);

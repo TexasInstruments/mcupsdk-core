@@ -36,7 +36,7 @@
 
 void CCM_main(void *args);
 
-int main()
+int main(void)
 {
     System_init();
     Board_init();

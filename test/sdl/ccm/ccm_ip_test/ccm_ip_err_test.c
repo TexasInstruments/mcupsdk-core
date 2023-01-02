@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -99,7 +99,7 @@ static int32_t CCM_errTest(void)
 			testResult = -1;
 		}
 	}
-
+	
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5ConfigureCCMRegister((uintptr_t) NULL, (SDL_McuArmssCcmR5RegId)0U, valToBeRead, &metaInfo);
@@ -109,7 +109,7 @@ static int32_t CCM_errTest(void)
 			testResult = -1;
 		}
 	}
-
+	
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5CCMSetOperationModeKey((uintptr_t) NULL, (SDL_McuArmssCcmR5ModuleId)0U, (SDL_McuArmssCcmR5OpModeKey)0U, &metaInfo);
@@ -139,7 +139,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-
+	
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5CCMGetCompareError((uintptr_t) NULL, (SDL_McuArmssCcmR5ModuleId)0U, &cmpError, &metaInfo);
@@ -169,7 +169,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-
+	
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5CCMGetOperationModeKey((uintptr_t) NULL, (SDL_McuArmssCcmR5ModuleId)0U, &opModeKey, &metaInfo);

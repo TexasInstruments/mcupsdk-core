@@ -2,12 +2,11 @@ let path = require('path');
 
 let device = "am273x";
 
-const files = {
+const files_r5f = {
     common: [
-        "ccm_func_test.c",
-        "ccm_func_main.c",
-		"main.c",
         "dpl_interface.c",
+        "main.c",
+        "ccm_func_test.c",
     ],
 };
 
@@ -18,6 +17,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+		"../../../../common",
         "../../../../../dpl", /* SDL DPL base */
     ],
 };
@@ -35,7 +35,7 @@ const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
-		"${MCU_PLUS_SDK_PATH}/test/sdl/ccm/ccm_func_test/",
+		"${MCU_PLUS_SDK_PATH}/test/sdl/ccm/common/",
     ],
 };
 
@@ -66,7 +66,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_main",
+            entryFunction: "func_test_main",
         },
     }
 ];
@@ -80,7 +80,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ccm_func_test";
+    property.name = "test_ccm_func";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
@@ -91,7 +91,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;
@@ -99,6 +98,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match(/r5f*/)) {
+		build_property.files = files_r5f;
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
     }
