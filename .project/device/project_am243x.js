@@ -161,6 +161,8 @@ const example_file_list = [
     "examples/usb/device/cdc_echo/.project/project_freertos.js",
     "source/motor_control/position_sense/tamagawa/firmware/multi_channel/.project/project.js",
     "source/motor_control/position_sense/tamagawa/firmware/single_channel/.project/project.js",
+    "source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/.project/project.js",
+    "source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/.project/project.js",
     "test/board/eeprom/.project/project.js",
     "test/board/flash/.project/project.js",
     "test/board/led/.project/project.js",
