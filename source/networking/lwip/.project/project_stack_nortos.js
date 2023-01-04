@@ -194,6 +194,8 @@ const filedirs = {
 
        // FreRTOS lwip port
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/src",
+       "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library",
+       "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
 
     ],
 };
@@ -203,6 +205,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library",
     ],
 };
 

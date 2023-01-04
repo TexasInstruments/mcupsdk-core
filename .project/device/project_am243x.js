@@ -42,6 +42,7 @@ const component_file_list = [
     "source/networking/lwip/.project/project_stack_nortos.js",
     "source/networking/lwip/.project/project_contrib_freertos.js",
     "source/networking/lwip/.project/project_contrib_nortos.js",
+    "source/networking/mbedtls_library/.project/project.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
 ];

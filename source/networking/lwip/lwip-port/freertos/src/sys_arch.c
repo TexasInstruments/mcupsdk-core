@@ -41,6 +41,17 @@
 #include "semphr.h"
 #include "task.h"
 
+/* Find the length of S, but scan at most MAXLEN characters.  If no '\0'
+   terminator is found within the first MAXLEN characters, return MAXLEN. */
+size_t
+strnlen_ (register const char *s, size_t maxlen)
+{
+    register const char *e;
+    size_t n;
+    for (e = s, n = 0; *e && n < maxlen; e++, n++)
+    ;
+    return n;
+}
 
 /** Set this to 1 if you want the stack size passed to sys_thread_new() to be
  * interpreted as number of stack words (FreeRTOS-like).

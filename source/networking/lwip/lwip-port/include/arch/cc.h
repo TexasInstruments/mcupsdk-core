@@ -110,7 +110,8 @@ typedef struct sio_status_s sio_status_t;
 
 typedef uint32_t sys_prot_t;
 
-
+#define strnlen strnlen_
+size_t strnlen_ (register const char *s, size_t maxlen);
 #ifdef __cplusplus
 }
 #endif

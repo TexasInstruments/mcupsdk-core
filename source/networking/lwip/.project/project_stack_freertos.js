@@ -195,7 +195,8 @@ const filedirs = {
 
        // FreRTOS lwip port
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/src",
-
+       "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library",
+       "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
     ],
 };
 
@@ -204,9 +205,10 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
-
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library",
     ],
 };
 

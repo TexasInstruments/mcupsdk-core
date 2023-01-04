@@ -142,6 +142,7 @@ extern "C"
 
 #define LWIP_DBG_TYPES_ON         (LWIP_DBG_ON|LWIP_DBG_TRACE|LWIP_DBG_STATE|LWIP_DBG_FRESH|LWIP_DBG_HALT)
 
+#define LWIP_HAVE_MBEDTLS       1
 
 /* ---------- Memory options ---------- */
 /* MEM_ALIGNMENT: should be set to the alignment of the CPU for which
@@ -337,7 +338,7 @@ extern "C"
 #define LWIP_SNMP                  LWIP_UDP
 #define MIB2_STATS                 LWIP_SNMP
 #ifdef LWIP_HAVE_MBEDTLS
-#define LWIP_SNMP_V3               (LWIP_SNMP)
+#define LWIP_SNMP_V3               0
 #endif
 
 #endif /* LWIP_STATS */

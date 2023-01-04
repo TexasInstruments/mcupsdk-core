@@ -159,6 +159,8 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/core/ipv4 \
     ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/api \
     ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/src \
+    ${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library \
+    ${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -166,6 +168,8 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x \
 
 DEFINES_common := \
