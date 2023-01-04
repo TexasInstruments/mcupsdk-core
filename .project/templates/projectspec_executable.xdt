@@ -97,7 +97,7 @@
         % for (prop in obj) {
             % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
                 % for(let val of obj[prop]) {
-            -D`val`
+            -D`val.replace(/\"/g, '&quot;')`
                 % }
             % }
         % }

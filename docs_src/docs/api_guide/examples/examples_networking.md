@@ -14,6 +14,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_VLAN_ICSSG
 -# \subpage EXAMPLES_ENET_ICSSG_TAS
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
@@ -32,6 +33,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
@@ -55,6 +57,7 @@ This page lists all the examples related to Ethernet Communication.
 ### Layer 2 Examples on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_CPSW_EARLY_ETHERNET
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
