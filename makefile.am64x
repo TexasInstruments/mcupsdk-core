@@ -451,6 +451,7 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1374,6 +1375,7 @@ BUILD_COMBO_EXAMPLE_ALL += mcu_esm0_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -2403,6 +2405,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  enet_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/enet_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -2834,6 +2839,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcu_esm0_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -3863,6 +3869,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  enet_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -4294,6 +4303,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcu_esm0_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -5322,6 +5332,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  enet_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/enet_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ cpsw_lwip_https_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  enet_lwip_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

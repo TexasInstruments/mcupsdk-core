@@ -125,6 +125,7 @@ const example_file_list = [
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/mathlib/benchmark/.project/project.js",
     "examples/networking/enet_loopback/.project/project.js",
+    "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_tcpclient/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udpserver/.project/project.js",
