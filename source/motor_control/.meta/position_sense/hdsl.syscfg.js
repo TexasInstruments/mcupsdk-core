@@ -27,6 +27,21 @@ let hdsl_module = {
                 }
             ],
         },
+        {
+            name: "coreClk",
+            displayName: "PRU-ICSS Core Clk (Hz)",
+            default: 225*1000000,
+            options: [
+                {
+                    name: 225*1000000,
+                },
+
+                {
+                    name: 300*1000000,
+                },
+
+            ],
+        },
     ],
     moduleStatic: {
         modules: function(inst) {
@@ -51,7 +66,8 @@ function sharedModuleInstances(instance) {
         moduleName: '/drivers/pruicss/pruicss',
         requiredArgs: {
             instance: instance.instance,
-            coreClk: 225*1000000,
+            coreClk: instance.coreClk,
+            iepSyncMode: true,
         },
     });
 

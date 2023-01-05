@@ -55,8 +55,25 @@
 
 #include <motor_control/position_sense/hdsl/include/hdsl_drv.h>
 #include <motor_control/position_sense/hdsl/include/pruss_intc_mapping.h>
+
+#if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ==225000000)
 #include <motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_bin.h>
 #include <motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_sync_bin.h>
+/* Divide factor for normal clock (default value for 225 MHz=23) */
+#define DIV_FACTOR_NORMAL 23
+/* Divide factor for oversampled clock (default value for 225 MHz=2) */
+#define DIV_FACTOR_OVERSAMPLED 2
+#endif
+#if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ==300000000)
+#include <motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_bin.h>
+//#include <motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_sync_300_bin.h>
+
+/* Divide factor for normal clock (default value for 300 MHz=31) */
+#define DIV_FACTOR_NORMAL 31
+/* Divide factor for oversampled clock (default value for 300 MHz=3) */
+#define DIV_FACTOR_OVERSAMPLED 3
+#endif
+
 
 #ifdef HDSL_AM64xE1_TRANSCEIVER
 #include <board/ioexp/ioexp_tca6424.h>
@@ -64,11 +81,14 @@
 
 #define PRUICSS_PRUx  PRUICSS_PRU1
 
+/* Oversample rate 8*/
+#define OVERSAMPLE_RATE 7
+
 #define ENDAT_EN (0x1 << 26)
-/* OCP as clock, div 24 */
-#define ENDAT_TX_CFG (0x10 | (23 << 16))
-/* OCP as clock, div 3, 8x OSR */
-#define ENDAT_RX_CFG (0x10 | (2 << 16) | 7 | 0x08)
+/* OCP as clock, div 32 */
+#define ENDAT_TX_CFG (0x10 | (DIV_FACTOR_NORMAL << 16))
+/* OCP as clock, div 4, 8x OSR */
+#define ENDAT_RX_CFG (0x10 | (DIV_FACTOR_OVERSAMPLED << 16) | OVERSAMPLE_RATE | 0x08)
 #define CTR_EN (1 << 3)
 #define MAX_WAIT 20000
 
@@ -403,10 +423,12 @@ void hdsl_pruss_load_run_fw(void)
     }
     else
     {
+#if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ!=300000000)
         /*sync_mode*/
         PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx),
                         0, (uint32_t *) Hiperface_DSL_SYNC2_0,
                         sizeof(Hiperface_DSL_SYNC2_0));
+#endif
     }
 
     PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);
@@ -435,24 +457,27 @@ void hdsl_init()
     DebugP_log( "\r\nEnter ES(number of frames per sync period), note ES=0 for FREE RUN mode: \n");
     DebugP_scanf("%d", &ES);
     HDSL_set_sync_ctrl(ES);
-        if(ES != 0)
-        {
-            DebugP_log("\r\nEnter ES(number of frames per sync period), note ES=0 for FREE RUN mode: ");
-            DebugP_scanf("%d", &ES);
-            DebugP_log("\r\nEnter period for SYNC PULSE in unit of cycles(1 cycle = 4.44ns):");
-            DebugP_scanf("%d",&period);
+    if(ES != 0)
+    {
+#if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ==300000000)
+        DebugP_log("\r\n Sync mode with 300 MHz is not available");
+        while(1);
+#endif
+        DebugP_log( "\r\nSYNC MODE\n");
+        DebugP_log("\r\nEnter period for SYNC PULSE in unit of cycles(1 cycle = 4.44ns):");
+        DebugP_scanf("%d",&period);
 
-            HDSL_enable_sync_signal(ES,period);
-            HDSL_generate_memory_image();
-            sync_calculation();
-            hdsl_pruss_load_run_fw();
-        }
-
-        else{
-            DebugP_log( "\r\nFREE RUN MODE\n");
-            HDSL_generate_memory_image();
-            hdsl_pruss_load_run_fw();
-        }
+        HDSL_enable_sync_signal(ES,period);
+        HDSL_generate_memory_image();
+        sync_calculation();
+        hdsl_pruss_load_run_fw();
+    }
+    else
+    {
+        DebugP_log( "\r\nFREE RUN MODE\n");
+        HDSL_generate_memory_image();
+        hdsl_pruss_load_run_fw();
+    }
 }
 
 static void HDSL_IsrFxn()

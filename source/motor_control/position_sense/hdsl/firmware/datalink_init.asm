@@ -136,12 +136,12 @@ datalink_reset_spol_rising_edge:
 	.else  ;storing sync pulse length in cycles in R20 starts for AM6
 	CALL1			sync_pulse
 	.endif ;storing sync pulse length in cycles in R20 ends for AM6
-;*************************************************************************************************************************;	
+;*************************************************************************************************************************;
 
-;***************************************************************************************************/	
-;wait logic for aligning with sync pulse for the very first  time	
+;***************************************************************************************************/
+;wait logic for aligning with sync pulse for the very first  time
 
-	.if !$defined(ICSS_G_V_1_0)	
+	.if !$defined(ICSS_G_V_1_0)
 ;reset number of pulses
 	;ldi			NUM_PULSES, 1
 	add			NUM_PULSES, NUM_PULSES, 1
@@ -182,9 +182,9 @@ datalink_reset_spol_rising_edge:
 	mov         TIME_REST_COMP, TIME_REST
 	mov         NUM_STUFFING_COMP, NUM_STUFFING
 	.endif
-;***************************************************************************************************/		
-	
-	
+;***************************************************************************************************/
+
+
 sync_calc_time_rest_not_0:
 	.if !$defined(ICSS_G_V_1_0)
 	CALL1			(sync_pulse-DYNAMIC_CODE_OFFSET-CODE_DATALINK_INIT*CODE_SIZE)
@@ -200,8 +200,8 @@ datalink_no_sync:
 ;--------------------------------------------------------------------------------------------------
 datalink_reset2:
 	;push dummy values to TX FIFO to gain processing time
-	PUSH_FIFO_CONST		0x00 
-	PUSH_FIFO_CONST		0x00 
+	PUSH_FIFO_CONST		0x00
+	PUSH_FIFO_CONST		0x00
 	TX_CHANNEL
 	;debug starts
 ;debug_fun:
@@ -248,15 +248,25 @@ datalink_learn:
 	CALL			send_header
 ; indication of TX_DONE comes about 53ns after wire timing
 	WAIT_TX_DONE
-
+    .if $defined("FREERUN_300_MHZ")
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+    .endif
 ; measured starting point at 0 cable length
 ; first 8 bits will be all ones is delay from encoder and transceiver
 ; second 8 bits is oversampled DSL bit which is 0 on test pattern
 ; channel enable will always hit a high state which allows for save EDGE detection
 ; and SLAVE_DELAY determination
 ; the measured offset used below is 4 bits (OVS) * (13.333 / 4.444) + 4.444 ns.
-    loop	wait_on_rx_transtion_in_learn_state, 1 ; (4*7) for 100m
-    add		r0,r0,0
+        loop	wait_on_rx_transtion_in_learn_state, 1 ; (4*7) for 100m
+        add		r0,r0,0
 wait_on_rx_transtion_in_learn_state:
 ; now receive starts in save high state. First VAL comes after 180ns. Following ones in DSL
 ; bit times of 106.66 ns. Make sure code before next VAL is less than 106 ns!!!
@@ -294,8 +304,8 @@ datalink_learn_recv_loop:
 
 ; for each frame, detect the SAMPLE_EDGE,
 ; detect first falling edge which is received byte < 255
-    qbne			datalink_learn_recv_loop_not_first,REG_TMP11.b0, 0
-    qbeq			datalink_learn_recv_loop_not_first,REG_TMP0.b0,0xff
+    	qbne			datalink_learn_recv_loop_not_first,REG_TMP11.b0, 0
+    	qbeq			datalink_learn_recv_loop_not_first,REG_TMP0.b0,0xff
 ; result is in SAMPLE_EDGE and gives the sampling bit number
 	FIND_EDGE		REG_TMP0.b0, REG_TMP2
 ; bits are counted from LSB to MSB with SET cmd
@@ -305,7 +315,7 @@ datalink_learn_recv_loop:
 ; at the 100 meter boundary do not move to next sample with
 ; this is 10 bits delay, and SAMPLE_EDGE with wrap around
 	qbne			datalink_learn_recv_loop_100m, LOOP_CNT.b0, 64
-    qbne		    datalink_learn_recv_loop_100m, LOOP_CNT.b2, 6
+    	qbne		    datalink_learn_recv_loop_100m, LOOP_CNT.b2, 6
 	qbge			datalink_learn_recv_loop_100m, SAMPLE_EDGE, 3
 ; cap SAMPLE_EDGE to last bit position at 100 meter
 	ldi				SAMPLE_EDGE, 0
@@ -324,7 +334,7 @@ datalink_learn_recv_loop_0:
 ; on last byte do only 7 bits
 	qbne		datalink_learn_skip_one_bit, LOOP_CNT.b0, 8
 	qbne		datalink_learn_recv_loop, LOOP_CNT.b2, 1
-    qba 		datalink_learn_skip_one_bit_1
+    	qba 		datalink_learn_skip_one_bit_1
 datalink_learn_skip_one_bit:
 	qbne			datalink_learn_recv_loop, LOOP_CNT.b2, 0
 	mvib			*--r1.b0, REG_TMP1.b1
@@ -336,9 +346,11 @@ datalink_learn_skip_one_bit_1:
 
 ; pre-load register to save time on last bit
 ;	ldi			REG_TMP2, (74*CYCLES_BIT-9) ; 100 m
-	ldi			r3, (74*CYCLES_BIT+9)
-
-;    PUSH_FIFO_CONST		0x03
+    .if $defined("FREERUN_300_MHZ")
+	ldi			r3, (74*CYCLES_BIT+9-2)
+    .else
+    ldi			r3, (74*CYCLES_BIT+9)
+    .endif
 
 datalink_learn_recv_loop_last_bit:
 	qbbc			datalink_learn_recv_loop_last_bit, r31, ENDAT_RX_VALID_FLAG
@@ -350,7 +362,7 @@ datalink_learn_recv_loop_last_bit:
 	set			REG_TMP1.b1, REG_TMP1.b1, LOOP_CNT.b2
 datalink_learn_recv_loop_final:
 	mov			REG_TMP0.b1, REG_TMP0.b0
-    mvib		*--r1.b0, REG_TMP1.b1
+    	mvib		*--r1.b0, REG_TMP1.b1
 
 ; this delay code should handle the case where both values are equal
 ; WAIT macro takes n+2 cycles, which is 3 for n = 1
@@ -367,7 +379,6 @@ datalink_learn_recv_loop_final:
 ; avoid wrap around, need to skip on equal as wait does not work for 0.
 ;	qble	    datalink_learn_skip_wait, r25, r3
 	qble	    datalink_abort2, r25, r3
-
 	sub			REG_TMP11, r3, r25
 	MOV			r25.b0, REG_TMP11.b0
 ; WAIT subracts -1 from parameter before compare. On 0 it wraps around!!!
@@ -385,7 +396,13 @@ datalink_learn_skip_wait:
 	NOP_2
 	NOP_2
 	NOP_2
-
+    .if $defined("FREERUN_300_MHZ")
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+    .endif
 	TX_CLK_DIV		CLKDIV_SLOW, REG_TMP2
 ;reset DISPARITY
 	ldi			DISPARITY, 0
@@ -423,7 +440,7 @@ datalink_learn_delay:
 	sbco        &R18, c25, REG_TMP2, 12
 	sbco        &REG_TMP2, c25, 0, 4
 	.endif
-	
+
 ;shift data and remove first switch bit
 	add			LOOP_CNT.b3, LOOP_CNT.b3, 1
 	lsl			r20, r20, 1
@@ -445,7 +462,7 @@ datalink_learn_delay:
 	qbne		datalink_learn_delay, REG_FNC.b0, 1
 datalink_learn_end_test:
 ; SLAVE_DELAY has no switch bit
-    mov			SLAVE_DELAY, LOOP_CNT.b3
+    	mov			SLAVE_DELAY, LOOP_CNT.b3
 
 ;send STUFFING
 	.if $defined(EXT_SYNC_ENABLE)
@@ -453,7 +470,7 @@ datalink_learn_end_test:
 	.endif
 datalink_learn_end:
 ;write the slave answer sampled data into memory
-;    lsl         r24, LOOP_CNT.b1, 2
+;    	lsl         r24, LOOP_CNT.b1, 2
 ;	mov			r6.b1, r25.b0
 ;	sbco		&r6, c25, r24, 4
 
@@ -465,11 +482,22 @@ datalink_learn_end:
 	qba			datalink_learn2_before
 ;--------------------------------------------------------------------------------------------------
 datalink_abort2:
-    halt
+    	halt
 	qbbs			datalink_abort2_no_wait, r30, ENDAT_RX_ENABLE						;changed here from 24 to 26
 	WAIT_TX_DONE
+    .if $defined("FREERUN_300_MHZ")
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+    .endif
 datalink_abort3:
-    halt
+    	halt
 datalink_abort2_no_wait:
 	lbco			&REG_TMP0.b0, MASTER_REGS_CONST, NUM_RESETS, 1
 	add			REG_TMP0.b0, REG_TMP0.b0, 1
@@ -683,7 +711,7 @@ receive_skip_wait:
 ;input:
 ;modifies:
 ;--------------------------------------------------------------------------------------------------
-	.if !$defined(ICSS_G_V_1_0) 
+	.if !$defined(ICSS_G_V_1_0)
 sync_pulse:
 	lbco			&REG_TMP0, MASTER_REGS_CONST, ECAP_OFFSETS, 8
 	;ldi			REG_TMP1.w0, (ECAP+ECAP_ECCLR)
@@ -703,7 +731,7 @@ sync_wait:
 	.else ;stores sync pulse period in R20 in unit of cycles
 sync_pulse:
 	lbco        &REG_TMP1, c1, IEP_CAPR6_RISE, 4
-wait_next_pulse:	
+wait_next_pulse:
 	lbco        &R20, c1, IEP_CAPR6_RISE, 4
 	QBEQ		wait_next_pulse, R20, REG_TMP1
 	SUB         R20, R20, REG_TMP1
@@ -794,7 +822,11 @@ send_header_send_01_pattern_loop:
 	WAIT_TX_FIFO_FREE
 ;push TRAILER
 	PUSH_FIFO_CONST		0x03
-	ldi			REG_TMP0, (6*(CLKDIV_FAST+1)-8)
+    .if $defined("FREERUN_300_MHZ")
+	ldi			REG_TMP0, (6*(CLKDIV_FAST+1)-8+2)
+    .else
+    ldi			REG_TMP0, (6*(CLKDIV_FAST+1)-8)
+    .endif
 	WAIT			REG_TMP0
 	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
 ;wait to have same timing as send_trailer

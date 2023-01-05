@@ -15,6 +15,7 @@ The HDSL firmware running on ICSS-PRU provides a defined well interface to execu
 -  Register interface to be compatible with SICK HDSL FPGA IP Core.
    (except registers that have different functionality for read and
     write)
+-  Fast position, speed
 -  Parameter channel communication
 	short message write
 	Short message read
@@ -25,7 +26,6 @@ The HDSL firmware running on ICSS-PRU provides a defined well interface to execu
 
 In general, peripherals or features not mentioned as part of "Features Supported" section are not
 supported, including the below
- -  Fast position, speed
  -  Pipeline channel
  -  Safety
 

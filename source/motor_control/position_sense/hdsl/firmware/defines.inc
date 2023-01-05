@@ -31,17 +31,35 @@
 ;
 
 ;number of cycles for 1 bit
-CYCLES_BIT .set							24
-
+    .if $defined("FREERUN_300_MHZ")
+;number of cycles for 1 bit
+CYCLES_BIT .set							32
 ;clock divider
 CLKDIV_225MHZ .set						0
-CLKDIV_FAST .set						2
-CLKDIV_FASTER .set						16
-CLKDIV_DOUBLE .set						11
-CLKDIV_NORMAL .set						23
-CLKDIV_HALF .set						47
-CLKDIV_SLOWER .set						61;60
-CLKDIV_SLOW .set						47;50;47
+CLKDIV_FAST .set						3
+CLKDIV_FASTER .set						22
+CLKDIV_DOUBLE .set						15
+CLKDIV_NORMAL .set						31
+CLKDIV_HALF .set						63
+CLKDIV_SLOWER .set						82
+CLKDIV_SLOW .set						63
+
+    .else
+;number of cycles for 1 bit
+CYCLES_BIT .set                         24
+
+;clock divider
+CLKDIV_225MHZ .set                      0
+CLKDIV_FAST .set                        2
+CLKDIV_FASTER .set                      16
+CLKDIV_DOUBLE .set                      11
+CLKDIV_NORMAL .set                      23
+CLKDIV_HALF .set                        47
+CLKDIV_SLOWER .set                      61;60
+CLKDIV_SLOW .set                        47;50;47
+
+    .endif
+
 
 ;ENDAT CFG
 ENDAT_CH0CFG0 .set						(0<<16)

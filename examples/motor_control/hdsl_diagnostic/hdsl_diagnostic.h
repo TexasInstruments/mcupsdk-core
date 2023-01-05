@@ -56,12 +56,6 @@ extern "C" {
 /* UDMA TR packet descriptor memory size - with one TR */
 #define UDMA_TEST_TRPD_SIZE             (UDMA_GET_TRPD_TR15_SIZE(1U))
 
-#define ENDAT_EN (0x1 << 26)
-#define ENDAT_TX_CFG (0x10 | (23 << 16))
-#define ENDAT_RX_CFG (0x10 | (2 << 16) | 7 | 0x08)
-#define CTR_EN (1 << 3)
-#define MAX_WAIT 20000
-
 /* ISR for v-frame-reception */
 static void HDSL_IsrFxn(void);
 void TC_read_pc_short_msg();

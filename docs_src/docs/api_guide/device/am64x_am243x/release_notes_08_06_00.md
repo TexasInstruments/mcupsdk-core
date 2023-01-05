@@ -20,12 +20,14 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Tamagawa Multi Channel                                                                          | Position Sense Tamagawa
+HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Tamagawa Multi Channel                                                                          | Position Sense Tamagawa
+HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 \endcond
 
 ## Device and Validation Information
@@ -205,7 +207,7 @@ HSR-PRP FWHAL                         | R5F            | YES               | Fre
 
 Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                      | Key features not tested
 ----------------------------|----------------|-------------------|-------------------|------------------------------------------------------------------------------------------|------------------------
-Position Sense HDSL         | R5F            | YES               | FreeRTOS, NORTOS  | Freerun mode, Sync mode, Short Message Read & Write, Long Message Read & Write           |  -
+Position Sense HDSL         | R5F            | YES               | FreeRTOS, NORTOS  | Freerun mode(300MHz,225MHz), Sync mode(225MHz), Short Message Read & Write, Long Message Read & Write           |  Long cables
 Position Sense EnDAT        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode                                           |  16 MHz Baud Rate
 Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support                                                     |  -
 

@@ -162,6 +162,7 @@ const example_file_list = [
     "source/motor_control/position_sense/tamagawa/firmware/multi_channel/.project/project.js",
     "source/motor_control/position_sense/tamagawa/firmware/single_channel/.project/project.js",
     "source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/.project/project.js",
+    "source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/.project/project.js",
     "source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/.project/project.js",
     "test/board/eeprom/.project/project.js",
     "test/board/flash/.project/project.js",

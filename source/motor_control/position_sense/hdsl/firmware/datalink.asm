@@ -75,7 +75,6 @@
 ;Initialize connection and state machine here
 datalink_init:
 ;--------------------------------------------------------------------------------------------------
-
 	.sect ".text"
 	jmp	main
 	;reserve 0x600 space only if edma overlay os present to copy relocatable code sections
@@ -116,8 +115,11 @@ datalink_loadfw_loop:
 	qbeq			datalink_loadfw_no_wait, SLAVE_DELAY, 12
 ;wait 61+1sw+12delay bits - slave delay
 ;	ldi			REG_TMP1, (74*CYCLES_BIT-26+4-3)
-	ldi			REG_TMP1, (74*CYCLES_BIT+5)
-
+	.if $defined("FREERUN_300_MHZ")
+    ldi			REG_TMP1, (74*CYCLES_BIT+5-2)
+    .else
+    ldi			REG_TMP1, (74*CYCLES_BIT+5)
+    .endif
 	READ_IEPCNT		REG_TMP0
 	sub			REG_TMP0, REG_TMP0, SPEED
 	sub			REG_TMP0, REG_TMP1, REG_TMP0
@@ -176,7 +178,7 @@ datalink_wait_vsynch:
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int0:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2	
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	ldi			REG_FNC.w0, EVENT_FREL
 	;CALL1			update_events; Instead of calling the API, copy the code here to save PRU cycles.
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
@@ -186,7 +188,7 @@ update_events_no_int0:
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int1:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2	
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ;--------------------------------------------------------------------------------------------------
 ;State RX0-RX7
 	ldi			LOOP_CNT.w2, 8
@@ -420,7 +422,7 @@ recv_dec_10b_fghj_no_error:
 ;resotore RET1
 	mov			RET_ADDR1, REG_TMP2.w0
 	RET1
-	
+
 	.if $defined(ICSS_G_V_1_0)
 ;--------------------------------------------------------------------------------------------------
 ;Function: srecv_dec_10b (RET_ADDR1)
@@ -702,9 +704,8 @@ recv_dec_acc_no_special_character:
 	READ_CYCLCNT		REG_TMP0
 	qble	    datalink_receive_signal_no_delay_wait_0, REG_TMP0, REG_TMP1
 	sub			REG_TMP0, REG_TMP1, REG_TMP0
-;	mov			r28.w2,REG_TMP0.w0
-;	add			r0,r0,0
 	WAIT		REG_TMP0
+
 datalink_receive_signal_no_delay_wait_0:
 ;send TRAILER
 	CALL1			send_trailer
@@ -760,7 +761,7 @@ send_header:
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0xff
 	RESET_CYCLCNT
-send_header_modified:	
+send_header_modified:
 send_header_no_extra_wait:
 ;calculate EQUALIZATION
 	add			DISPARITY, DISPARITY, EXTRA_SIZE
@@ -808,13 +809,13 @@ send_header_end_disp:
 	.else
 	jmp			transport_on_v_frame
 	.endif
-	
+
 datalink_transport_on_v_frame_done:
 datalink_transport_no_v_frame:
 ;check if we have an EXTRA period
 	qbeq			send_header_no_extra, EXTRA_SIZE, 0
-	
-;********************************************************************************;	
+
+;********************************************************************************;
 	.if $defined(ICSS_G_V_1_0)
 
 	;extra value decide starts
@@ -827,14 +828,14 @@ num_pulses_is_one3:
 	mov EXTRA_EDGE_SELF, EXTRA_EDGE_COMP
 extra_value_decided:
 	;extra value decide ends
-	
+
 	;remainder increament logic starts
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYNC_EXTRA_REMAINDER, 1 ;reload ES
-	qbgt        remainder_increament_done1, REG_TMP0.b0, NUM_PULSES 
+	qbgt        remainder_increament_done1, REG_TMP0.b0, NUM_PULSES
 	add         EXTRA_SIZE_SELF, EXTRA_SIZE_SELF, 1
 remainder_increament_done1:
 	;remainder increament logic ends
-	
+
 	qbne        extra_edge_calculation_for_self_done1, EXTRA_EDGE_SELF, 0
 	sub         EXTRA_SIZE_SELF, EXTRA_SIZE_SELF, 1
 	ldi         EXTRA_EDGE_SELF, 0xFF
@@ -842,9 +843,9 @@ extra_edge_calculation_for_self_done1:
 	qba         send_header_extra_not_too_large
 	.endif
 	.if 0 ;this is the code for ext sync support in AM4, which is not supported. hence disabling to save space
-	
-	
-;********************************************************************************;	
+
+
+;********************************************************************************;
 ;we are already synchronized with TX FIFO and cyclecounter is running
 ;we have an extra period -> overclock
 send_header_extra_wait:
@@ -914,7 +915,7 @@ send_header_no_cap_stuffing:
 	sbco        &REG_TMP1, c25, REG_TMP0, 4
 	sbco        &REG_TMP0, c25, 0, 4
 	.endif
-	
+
 ;read cyclecount
 	READ_CYCLCNT		REG_TMP1
 	.if $defined(EXT_SYNC_ENABLE)
@@ -935,7 +936,7 @@ modified_header_wait_done:
 	ldi			REG_TMP0.w2, (ECAP+ECAP_ECCLR)
 	sbco			&REG_TMP0.w0, PWMSS2_CONST, REG_TMP0.w2, 2
 	.endif
-	
+
 send_header_extra_no_wait:
 	TX_CLK_DIV		CLKDIV_FAST, REG_TMP0
 	.if !$defined(ICSS_G_V_1_0)
@@ -964,7 +965,7 @@ send_header_extra_no_edge:
 	WAIT			REG_TMP0
 send_header_no_wait_after_synch:
 	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
-	
+
 	.if $defined(EXT_SYNC_ENABLE)
 ;**********************************************************************************************;
 ;pseudo code:
@@ -978,11 +979,11 @@ send_header_no_wait_after_synch:
 ;iep_time = iep_time + 12 ; //latency adjustment_done
 ;if(EXTRA_EDGE == 0xFF)
 ;{
-;	;do nothing 
+;	;do nothing
 ;}
 ;if(EXTRA_EDGE == 0xFE)
 ;{
-;	;each bit in extra edge is 3 pru cycle, simnce here 
+;	;each bit in extra edge is 3 pru cycle, simnce here
 ;	;extra edge came one bit early, so on from other possibilities.
 ;	iep_time = iep_time - 3;
 ;}
@@ -1014,10 +1015,10 @@ send_header_no_wait_after_synch:
 
 
 	qbne        num_pulses_is_not_one1, NUM_PULSES, 1 ;not the last frame of period
-	
+
 	lbco        &REG_TMP0, c1, 0x10, 4
 	add         REG_TMP0, REG_TMP0, 12 ;read offset
-	
+
 	qbeq        adjustment_done, EXTRA_EDGE_SELF, 0xFF
 is_val_FE:
 	qbne        is_val_FC, EXTRA_EDGE_SELF, 0xFE
@@ -1043,18 +1044,18 @@ is_val_C0:
 	qbne        is_val_80, EXTRA_EDGE_SELF, 0xC0
 	sub         REG_TMP0, REG_TMP0, 18
 	qba         adjustment_done
-is_val_80:	
+is_val_80:
 	qbne        adjustment_done,EXTRA_EDGE_SELF, 0x80
 	sub         REG_TMP0, REG_TMP0, 21
 	qba         adjustment_done
 adjustment_done:
 	sbco		&REG_TMP0, MASTER_REGS_CONST, EXTRA_EDGE_TIMESTAMP, 4
 num_pulses_is_not_one1:
-	qba             send_header_extra_drive_cycle_check_end	
+	qba             send_header_extra_drive_cycle_check_end
 ;**********************************************************************************************;
 	.endif
 
-	.if !$defined(ICSS_G_V_1_0)			
+	.if !$defined(ICSS_G_V_1_0)
 	;we do not want to lose drive cycle sync -> start counting from the beginning
 	sub			NUM_PULSES, NUM_PULSES, 1
 ;clear "first" bit if necessary
@@ -1168,7 +1169,7 @@ send_header_encode_sec_subblock_end:
 	lsr			REG_TMP0.b0, REG_FNC.b2, 2
 	or			REG_FNC.b3, REG_FNC.b3, REG_TMP0.b0
 	lsl			REG_FNC.b2, REG_FNC.b2, 6
-	
+
 	qbbc			transport_layer_send_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
 	.if !$defined(ICSS_G_V_1_0)
 	jmp			(transport_layer_send_msg-DYNAMIC_CODE_OFFSET-CODE_SIZE*CODE_TRANSPORT_LAYER)
@@ -1183,7 +1184,7 @@ transport_layer_send_msg_done:
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO		REG_FNC.b3
 	;.endif
-	
+
 	;check if we receive or send 01 pattern
 	qbeq			send_header_send_01_pattern, REG_FNC.b0, M_PAR_RESET
 	qbeq			send_header_send_01_pattern, REG_FNC.b0, M_PAR_SYNC
@@ -1216,22 +1217,22 @@ send_header_dont_send_01_send_next:
 	;lbco        &REG_TMP1, c1, 0x10, 4
 	sbco        &REG_FNC, c25, REG_TMP0, 4
 	sbco        &REG_TMP0, c25, 0, 4
-log_done1: 
+log_done1:
 	.endif
-	
+
 ;HINT: we have some processing time here (~74 cycles) ;6-19:sorry, not anymore, used for ext. sync suppport
 
-;***********************************************************************************************************;	
+;***********************************************************************************************************;
 ;pseudocode:
 ;This code takes care of two things
 ;1)overhead adjustment per frame
-;2)compensation for any diff between the sync pulse captured from latch and  extra 
+;2)compensation for any diff between the sync pulse captured from latch and  extra
 ;edge fall time computed by PRU
 
 ;/*push in fifo M_PAR data to get time for processing.
-;store the default values of extra and stuffing calculated in the beginning, to this we will 
+;store the default values of extra and stuffing calculated in the beginning, to this we will
 ;make adjustments as per need*/
-;EXTRA_EDGE_COMP = EXTRA_EDGE 
+;EXTRA_EDGE_COMP = EXTRA_EDGE
 ;EXTRA_SIZE_COMP = EXTRA_SIZE
 ;NUM_STUFFING_COMP = NUM_STUFFING
 
@@ -1260,7 +1261,7 @@ log_done1:
 comp_logic_starts:
 	.if $defined(EXT_SYNC_ENABLE)
 	;compensation logic for diff between sync signal and extra edge starts;
-	
+
 	qbne        num_pulses_is_not_one2, NUM_PULSES, 1 ;not the last frame of period
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
 	lbco        &REG_TMP0, c25, 0, 4
@@ -1269,13 +1270,13 @@ comp_logic_starts:
 	sbco        &REG_TMP1, c25, REG_TMP0, 4
 	sbco        &REG_TMP0, c25, 0, 4
 	.endif
-	
+
 	mov         EXTRA_EDGE_COMP, EXTRA_EDGE
 	mov         EXTRA_SIZE_COMP, EXTRA_SIZE
 	mov         NUM_STUFFING_COMP, NUM_STUFFING
-	
+
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EXTRA_EDGE_TIMESTAMP, 4
-	lbco        &REG_TMP1, IEP1_BASE_CONST, 0x50, 4   
+	lbco        &REG_TMP1, IEP1_BASE_CONST, 0x50, 4
 	qbge        extra_edge_ahead, REG_TMP1 ,REG_TMP0
 	mov         REG_TMP2, REG_TMP0
 	sub         REG_TMP0, REG_TMP1, REG_TMP0
@@ -1288,7 +1289,7 @@ comp_logic_starts:
 	sbco        &REG_TMP1, c25, 0, 4
 log_1_done:
 	.endif
-	
+
 	ldi         REG_TMP2, MAX_ALLOWED_CYCLE_DIFF
 	qble        cycle_diff_more_than_max_allowed, REG_TMP0 ,REG_TMP2
 	qbge        no_capping1, REG_TMP0 ,CAPPING_CYCLE_DIFF
@@ -1309,7 +1310,7 @@ no_reminder1:
 extra_edge_ahead:
 	mov         REG_TMP2, REG_TMP0
 	sub         REG_TMP0, REG_TMP0, REG_TMP1
-	
+
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
 	lbco        &REG_TMP1, c25, 0, 4
 	add         REG_TMP1,REG_TMP1,4
@@ -1322,7 +1323,7 @@ extra_edge_ahead:
 	qbge        no_capping2, REG_TMP0 ,CAPPING_CYCLE_DIFF
 	ldi         REG_TMP0 , CAPPING_CYCLE_DIFF
 	;qbge        compensation_not_needed_this_cycle, REG_TMP0 ,2
-	
+
 no_capping2:
 	mov         REG_TMP1, REG_FNC ;taking backup
 	mov			REG_FNC.w0, REG_TMP0
@@ -1340,32 +1341,32 @@ cycle_diff_more_than_max_allowed:
 	                   ;by taking care of wraparound calculation, let's just ignore this reading.
 
 child_overhead_more1:
-	ldi         REG_TMP1.b0, 8	
-	sub         REG_TMP1.b0, REG_TMP1.b0, TIME_REST_COMP 
+	ldi         REG_TMP1.b0, 8
+	sub         REG_TMP1.b0, REG_TMP1.b0, TIME_REST_COMP
 	qbne        time_rest_comp_not_8_1, REG_TMP1.b0, 8
-	ldi         REG_TMP1.b0, 0 
+	ldi         REG_TMP1.b0, 0
 time_rest_comp_not_8_1:
 	mov         TIME_REST_COMP, TIME_REST
-	
+
 	add         TIME_REST_COMP, TIME_REST_COMP, 16
 	sub         EXTRA_SIZE_COMP, EXTRA_SIZE_COMP, 2
-	sub         TIME_REST_COMP, TIME_REST_COMP, REG_TMP0.b0	
-	sub         TIME_REST_COMP, TIME_REST_COMP, REG_TMP1.b0	
-	qba         check_time_rest_size_violation1	
-self_overhead_more1:	
-	ldi         REG_TMP1.b0, 8	
-	sub         REG_TMP1.b0, REG_TMP1.b0, TIME_REST_COMP 
+	sub         TIME_REST_COMP, TIME_REST_COMP, REG_TMP0.b0
+	sub         TIME_REST_COMP, TIME_REST_COMP, REG_TMP1.b0
+	qba         check_time_rest_size_violation1
+self_overhead_more1:
+	ldi         REG_TMP1.b0, 8
+	sub         REG_TMP1.b0, REG_TMP1.b0, TIME_REST_COMP
 	qbne        time_rest_comp_not_8_2, REG_TMP1.b0, 8
-	ldi         REG_TMP1.b0, 0 
+	ldi         REG_TMP1.b0, 0
 time_rest_comp_not_8_2:
 	mov         TIME_REST_COMP, TIME_REST
-	
-	add         TIME_REST_COMP, TIME_REST_COMP, 8 
+
+	add         TIME_REST_COMP, TIME_REST_COMP, 8
 	sub         EXTRA_SIZE_COMP, EXTRA_SIZE_COMP, 1
 	add         TIME_REST_COMP, TIME_REST_COMP, REG_TMP0.b0
-	
-	sub         TIME_REST_COMP, TIME_REST_COMP, REG_TMP1.b0	
-	
+
+	sub         TIME_REST_COMP, TIME_REST_COMP, REG_TMP1.b0
+
 check_time_rest_size_violation1:
 	qbge        comp_done1, TIME_REST_COMP, 7
 	add         EXTRA_SIZE_COMP, EXTRA_SIZE_COMP, 1
@@ -1385,11 +1386,11 @@ extra_edge_bit_setting1:
 	qblt		extra_edge_bit_setting1, REG_TMP0.b1, 0
 extra_edge_bit_setting_loop_end1:
 	mov         REG_TMP0.b0, EXTRA_SIZE_COMP
-	qbeq      	check_if_extra_remainder, EXTRA_EDGE_COMP, 0   
+	qbeq      	check_if_extra_remainder, EXTRA_EDGE_COMP, 0
 	add         REG_TMP0.b0, REG_TMP0.b0, 1
 check_if_extra_remainder:
 	lbco		&REG_TMP0.b1, MASTER_REGS_CONST, SYNC_EXTRA_REMAINDER, 1 ;reload ES
-	qbeq      	send_header_extra_too_small1, REG_TMP0.b1, 0  
+	qbeq      	send_header_extra_too_small1, REG_TMP0.b1, 0
 	add         REG_TMP0.b0, REG_TMP0.b0, 1 ;there is an extra remainder
 send_header_extra_too_small1:
 	qble		send_header_extra_not_too_small1, REG_TMP0.b0, 4 ;too small extra window
@@ -1403,7 +1404,7 @@ extra_size_validation_done1:
 num_pulses_is_not_one2:
 	;compensation logic for diff between sync signal and extra edge ends;
 	.endif
-;***********************************************************************************************************; 
+;***********************************************************************************************************;
 comp_logic_ends:
 	qbeq			send_header_end, REG_FNC.b0, M_PAR_RESET
 	qbeq			send_header_end, REG_FNC.b0, M_PAR_SYNC
@@ -1458,7 +1459,7 @@ send_stuffing:
 	.if $defined(EXT_SYNC_ENABLE)
 	mov			REG_TMP11, RET_ADDR1
 	;do calc
-	
+
 	;stuffing value decide starts
 	qbeq        num_pulses_is_one, NUM_PULSES, 1
 	mov			REG_FNC.b3, NUM_STUFFING
@@ -1470,28 +1471,28 @@ stuffing_value_decided:
 
 	;remainder increament logic starts
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYNC_STUFFING_REMAINDER, 1 ;reload ES
-	qbgt        remainder_increament_done, REG_TMP0.b0, NUM_PULSES 
+	qbgt        remainder_increament_done, REG_TMP0.b0, NUM_PULSES
 	add			REG_FNC.b3, REG_FNC.b3, 1
 remainder_increament_done:
 	;remainder increament logic ends
-	
+
 	;ES reload starts
 	sub			NUM_PULSES, NUM_PULSES, 1
 	qbne        num_pulses_non_zero, NUM_PULSES, 0
 	lbco		&NUM_PULSES, MASTER_REGS_CONST, SYNC_CTRL, 1 ;reload ES
 num_pulses_non_zero:
 	;ES reload ends
-	
+
 	qbeq		send_stuffing_no_stuffing, REG_FNC.b3, 0
 ;check if we have stuffing
 	READ_CYCLCNT		REG_TMP0
-	qbeq        learn_state_started, LEARN_STATE_STARTED, 1   
+	qbeq        learn_state_started, LEARN_STATE_STARTED, 1
 	rsb			REG_TMP2, REG_TMP0, (5*(CLKDIV_NORMAL+1)+4);(6*(CLKDIV_NORMAL+1)+4)
 	qba calculation_for_wait_done
 learn_state_started:
 	;lbco        &REG_TMP1, c1, 0x10, 4
 	rsb			REG_TMP2, REG_TMP0, (4*(CLKDIV_NORMAL+1)+4);(6*(CLKDIV_NORMAL+1)+4)
-calculation_for_wait_done:	
+calculation_for_wait_done:
 	nop
 	.else
 	mov			REG_TMP11, RET_ADDR1
@@ -1501,7 +1502,7 @@ calculation_for_wait_done:
 	rsb			REG_TMP2, REG_TMP0, (5*(CLKDIV_NORMAL+1)+4);(6*(CLKDIV_NORMAL+1)+4)
 	mov			REG_FNC.b3, NUM_STUFFING
 	.endif;EXT_SYNC_ENABLE
-	PUSH_FIFO_CONST		0x0b	
+	PUSH_FIFO_CONST		0x0b
 	WAIT			REG_TMP2
 ;send first 4 zeroes with double frequency
 ;synchronize with clock
@@ -1565,7 +1566,13 @@ send_trailer:
 	NOP_2
 	NOP_2
 	NOP_2
-
+    .if $defined("FREERUN_300_MHZ")
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+    .endif
 ;   when to use slow (48) or slower (62)??
 ;	TX_CLK_DIV		CLKDIV_SLOWER, REG_TMP0
 	TX_CLK_DIV		CLKDIV_SLOW, REG_TMP0
@@ -1597,14 +1604,14 @@ datalink_abort_no_wait:
 	sbco			&REG_TMP0.b0, MASTER_REGS_CONST, NUM_RESETS, 1
 	ldi			REG_FNC.w0, EVENT_PRST
 	;CALL1			update_events; Instead of calling the API, copy the code here to save PRU cycles.
-	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4	
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
 	qbbc		update_events_no_int2, REG_TMP0.w2, REG_TMP0.w2
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int2:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2	
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	.if !$defined(ICSS_G_V_1_0)
 	LOAD_CODE		CODE_DATALINK_INIT, 0x00, 0x00, CODE_SIZE
 	jmp			(datalink_reset-DYNAMIC_CODE_OFFSET-CODE_SIZE*CODE_DATALINK_INIT)
@@ -1671,7 +1678,7 @@ qm_add_no_capping:
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int3:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2	
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ;restore return addr
 	mov	RET_ADDR1, REG_TMP1
 qm_add_below_not_14:
@@ -1695,7 +1702,17 @@ wait_delay:
 ;	sbbo			&R10.b0, R24, 0, 1
 ;	mov				REG_TMP0.b0,r31.b2
 	WAIT_TX_DONE
-
+    .if $defined("FREERUN_300_MHZ")
+    NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+    .endif
 ; same code as in learn
 ; with 4 or 3 bit encoder does not respond after time, starts working with 2 set it to 1
 	.if !$defined(ICSS_G_V_1_0)
@@ -1704,8 +1721,8 @@ wait_delay:
 	.endif
 
 wait_on_rx_transtion_in_wait_delay:
-    RX_EN
-	;measure passed time during receive and wait appropriately at the end -> reset cyclecount
+        RX_EN
+ 	;measure passed time during receive and wait appropriately at the end -> reset cyclecount
 	RESET_CYCLCNT
 
 ;reset RSSI
