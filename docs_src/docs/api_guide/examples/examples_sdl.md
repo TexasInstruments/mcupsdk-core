@@ -61,6 +61,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_STC
 -# CCM
    -# \subpage EXAMPLES_SDL_CCM
+-# RESET
+   -# \subpage EXAMPLES_SDL_RESET
 \endcond
 
 

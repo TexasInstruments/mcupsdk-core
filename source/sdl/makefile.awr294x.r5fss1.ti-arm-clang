@@ -57,6 +57,8 @@ FILES_PATH_common = \
     stc/v0/soc/awr294x \
     ecc_bus_safety/v0/soc \
     ecc_bus_safety/v0/soc/awr294x \
+    reset/soc/awr294x \
+    soc/awr294x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

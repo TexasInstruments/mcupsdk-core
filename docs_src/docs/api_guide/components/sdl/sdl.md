@@ -61,4 +61,5 @@ SDL consists of below sub-modules
 
 \cond SOC_AM273X || SOC_AWR294X
 - \subpage SDL_HWA_PAGE
+- \subpage SDL_RESET_PAGE
 \endcond

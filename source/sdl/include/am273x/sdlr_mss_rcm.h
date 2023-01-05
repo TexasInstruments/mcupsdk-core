@@ -34,8 +34,8 @@
 #ifndef SDLR_MSS_RCM_H_
 #define SDLR_MSS_RCM_H_
 
-#include <drivers/hw_include/cslr.h>
-#include <drivers/hw_include/tistdtypes.h>
+#include <sdl/include/sdlr.h>
+
 
 #ifdef __cplusplus
 extern "C"

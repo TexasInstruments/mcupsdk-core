@@ -41,6 +41,8 @@ FILES_common := \
     sdl_stc_soc.c \
     sdl_ccm.c \
     sdl_mcu_armss_ccmr5.c \
+    sdl_reset.c \
+    soc.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -78,6 +80,8 @@ FILES_PATH_common = \
     stc/v0/soc/awr294x \
     ecc_bus_safety/v0/soc \
     ecc_bus_safety/v0/soc/awr294x \
+    reset/soc/awr294x \
+    soc/awr294x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

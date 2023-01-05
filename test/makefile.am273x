@@ -108,6 +108,8 @@ help:
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/reset/reset_mcu/reset_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/reset/reset_mcu/reset_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -252,6 +254,8 @@ BUILD_COMBO_EXAMPLE_ALL += ccm_ip_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ccm_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += stc_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += stc_func_test_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += reset_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += reset_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_esm_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos
@@ -461,6 +465,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  stc_func_test_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
+ reset_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/reset/reset_mcu/reset_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ reset_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/reset/reset_mcu/reset_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_esm_am273x-evm_system_freertos:
 	$(MAKE) -C drivers/esm/am273x-evm/system_freertos -f makefile all
 
@@ -541,6 +551,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_ip_test_am273x-evm_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += reset_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += reset_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos_clean
@@ -750,6 +762,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  stc_func_test_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
+ reset_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/reset/reset_mcu/reset_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ reset_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/reset/reset_mcu/reset_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_esm_am273x-evm_system_freertos_clean:
 	$(MAKE) -C drivers/esm/am273x-evm/system_freertos -f makefile clean
 
@@ -830,6 +848,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_ip_test_am273x-evm_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += reset_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += reset_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_am273x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos_scrub
@@ -1038,6 +1058,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  stc_func_test_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ reset_func_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/reset/reset_mcu/reset_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ reset_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/reset/reset_mcu/reset_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_esm_am273x-evm_system_freertos_scrub:
 	$(MAKE) -C drivers/esm/am273x-evm/system_freertos -f makefile scrub
