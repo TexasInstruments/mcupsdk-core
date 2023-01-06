@@ -397,6 +397,7 @@ help:
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads127/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -1241,6 +1242,7 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt
 # Various Private System Example Targets
 
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
@@ -2075,6 +2077,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile all
 
+ empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile all
+
  ipc_notify_echo_am243x-evm_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos -f makefile all
 
@@ -2413,6 +2418,7 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_clean
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
@@ -3247,6 +3253,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile clean
 
+ empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile clean
+
  ipc_notify_echo_am243x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos -f makefile clean
 
@@ -3585,6 +3594,7 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_scrub
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
@@ -4418,6 +4428,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile scrub
+
+ empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile scrub
 
  ipc_notify_echo_am243x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos -f makefile scrub

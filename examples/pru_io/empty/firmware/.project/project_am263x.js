@@ -30,6 +30,12 @@ const lnkfiles = {
     ]
 };
 
+const lflags = {
+    common: [
+        "--disable_auto_rts",
+    ],
+};
+
 const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 
 const templates_pru =
@@ -80,6 +86,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.includes = includes;
     build_property.templates = templates_pru;
+    build_property.lflags = lflags;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;

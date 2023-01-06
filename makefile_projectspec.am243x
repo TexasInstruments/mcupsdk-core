@@ -301,6 +301,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += hdsl_master_sync_225_mhz_am
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_build
 # Various Private System Example Projectspec Build Targets
 
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
@@ -1126,6 +1127,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
+ empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
  ipc_notify_echo_am243x-evm_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos -f makefile_projectspec all
 
@@ -1475,6 +1479,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += hdsl_master_sync_225_mhz_am
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_clean
 # Various Private System Example Projectspec Clean Targets
 
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
@@ -2300,6 +2305,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
+ empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
  ipc_notify_echo_am243x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos -f makefile_projectspec clean
 
@@ -2649,6 +2657,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += hdsl_master_sync_225_mhz_a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_export
 # Various Private System Example Projectspec Export Targets
 
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
@@ -3474,6 +3483,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
+ empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
  ipc_notify_echo_am243x-evm_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos -f makefile_projectspec export
 
@@ -3827,6 +3839,7 @@ help:
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/adc/ads127/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

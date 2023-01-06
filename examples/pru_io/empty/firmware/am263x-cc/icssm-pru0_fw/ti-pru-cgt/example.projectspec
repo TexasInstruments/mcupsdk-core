@@ -41,6 +41,7 @@
             -i${CG_TOOL_ROOT}/lib
             -m=empty.${ConfigName}.map
             -llibc.a
+            --disable_auto_rts
         "
 
         enableHexTool="true"
