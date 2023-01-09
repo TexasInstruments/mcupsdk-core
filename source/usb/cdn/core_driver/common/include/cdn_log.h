@@ -41,14 +41,15 @@ extern "C"
 
 #include "cdn_assert.h"
 #include "cdn_inttypes.h"
+#include <kernel/dpl/DebugP.h>
+#include <kernel/nortos/dpl/common/printf.h>
 
 /* parasoft-begin-suppress MISRA2012-RULE-8_6-2 "An identifier with external linkage shall have exactly one external definition, DRV-4757" */
 /* parasoft-begin-suppress MISRA2012-DIR-4_9-4 "A function should be used in preference to a function-like macro where they are interchangeable, DRV-4759" */
 
-#ifdef DEBUG
- #if DEBUG
-  #define CFP_DBG_MSG 0
- #endif
+#ifdef CFG_CUSB_DEBUG 
+  #define DEBUG 
+  #define CFP_DBG_MSG 1
 #endif
 
 /**
@@ -109,10 +110,8 @@ extern uint32_t g_dbg_state;
 
 /* For DEBUG build, use custom logging with own implementation of DbgPrint */
 #ifdef DEBUG
-extern void DbgPrint(const char *fmt, ...);
-#define cDbgMsg( _t, _x, ...) ( ((_x) ==  0) || \
-                                (((_t) & g_dbg_enable_log) && ((_x) <= g_dbg_log_lvl)) ? \
-                                DbgPrint( __VA_ARGS__) : 0 )
+extern void DbgPrint(uint32_t module_id,uint32_t log_lvl ,const char *fmt, ...);
+#define cDbgMsg( _t, _x, ...) DbgPrint(_t,_x,__VA_ARGS__)
 #else
 #define cDbgMsg( _t, _x, ...)
 #endif /* DEBUG */
@@ -120,14 +119,14 @@ extern void DbgPrint(const char *fmt, ...);
 #ifdef CFP_DBG_MSG
 #define DbgMsg( t, x, ...)  cDbgMsg( (t), (x), __VA_ARGS__ )
 #else
-#define DbgMsg( t, x, ...)
+#define DbgMsg( t, x, ...)  
 #endif
 
-#define DEBUG_PREFIX "[%-20.20s %4d %4" PRId32 "]-"
+#define DEBUG_PREFIX "[ %s : %d ] "
 
 /* ******** Default vDbgMsg ******** */
-#  define vDbgMsg(log_lvl, module, msg, ...)    DbgMsg( (log_lvl), (module), (DEBUG_PREFIX msg), __func__, \
-                                                        __LINE__, g_dbg_log_cnt++, __VA_ARGS__)
+#  define vDbgMsg(log_lvl, module, msg, ...)    DbgMsg( (log_lvl), (module), (DEBUG_PREFIX msg),__func__, \
+														__LINE__,__VA_ARGS__)
 
 /* ******** Default cvDbgMsg ******** */
 #  define cvDbgMsg(log_lvl, module, msg, ...)   cDbgMsg( (log_lvl), (module), (DEBUG_PREFIX msg), __func__, \
@@ -138,17 +137,8 @@ extern void DbgPrint(const char *fmt, ...);
                                                            __LINE__, g_dbg_log_cnt++, __VA_ARGS__); \
                                                   assert(0); }
 
-#define DbgMsgSetLvl( x ) (g_dbg_log_lvl = (x))
-#define DbgMsgEnableModule( x ) (g_dbg_enable_log |= (x) )
-#define DbgMsgDisableModule( x ) (g_dbg_enable_log &= ~( (uint32_t) (x) ))
-#define DbgMsgClearAll( _x ) ( g_dbg_enable_log = (_x) )
-
-#define SetDbgState( _x ) (g_dbg_state = (_x) )
-#define GetDbgState       (g_dbg_state)
-
 /* parasoft-end-suppress MISRA2012-RULE-8_6-2 */
 /* parasoft-end-suppress MISRA2012-DIR-4_4-4 */
-
 
 #ifdef __cplusplus
 }

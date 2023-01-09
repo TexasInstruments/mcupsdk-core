@@ -53,6 +53,7 @@ INCLUDES_common := \
     -I../drivers/hw_include \
     -I../drivers/hw_include/am64x_am243x \
     -I../drivers/soc/am64x_am243x \
+    -I../kernel/dpl/ \
     -I../kernel/freertos/FreeRTOS-Kernel/include \
     -I../kernel/freertos/config/am64x/r5f \
     -I../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \

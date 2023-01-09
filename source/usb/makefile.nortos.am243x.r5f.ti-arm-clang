@@ -72,6 +72,10 @@ DEFINES_common := \
     -DTINYUSB_INTEGRATION \
     -DCFG_TUSB_OS=OPT_OS_NONE \
 
+DEFINES_debug := \
+    -DCFG_TUSB_DEBUG \
+    -DCFG_CUSB_DEBUG \
+
 CFLAGS_common := \
     -mcpu=cortex-r5 \
     -mfloat-abi=hard \

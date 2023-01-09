@@ -23,22 +23,53 @@
 #include "string.h"
 
 #include "cdn_log.h"
+#include "cdn_print.h"
+#include <kernel/nortos/dpl/common/printf.h>
 
-/* #ifdef DEBUG */
 /* parasoft-begin-suppress MISRA2012-RULE-17_1_a-2 "Example implementation of DbgPrint" */
 /* parasoft-begin-suppress MISRA2012-RULE-17_1_b-2 "Example implementation of DbgPrint" */
 
-uint32_t g_dbg_enable_log  = 0; /* DBG_GEN_MSG; */
-uint32_t g_dbg_log_lvl = DBG_CRIT; /* DBG_FYI; */  /* DBG_HIVERB; */
+uint32_t g_dbg_enable_log  = 0x00000000; /* DBG_GEN_MSG; */
+uint32_t g_dbg_log_lvl = 0; /* DBG_FYI; */  /* DBG_HIVERB; */
 uint32_t g_dbg_log_cnt = 0;
 uint32_t g_dbg_state = 0;
 
+#ifdef DEBUG
 /* DbgPrint is required for DEBUG build */
-void DbgPrint(const char *fmt, ...)
+inline void DbgPrint(uint32_t module_id, uint32_t log_lvl,const char *fmt, ...)
 {
+	if( (module_id & g_dbg_enable_log) &&(log_lvl <= g_dbg_log_lvl) )
+	{
+		va_list va; 
+		va_start(va,fmt); 
+		vprintf_(fmt,va);
+		va_end(va);
+	}
     return;
+}
+#endif
+
+inline void CUSBD_DbgMsgInit(void)
+{
+	DbgMsgEnableModule(DEFAULT_CDN_DBG_MODULE);
+	DbgMsgSetLvl(DEFAULT_CDN_LOG_LVL); 
+}
+
+inline void DbgMsgSetLvl(uint32_t log_lvl)
+{
+	g_dbg_log_lvl = log_lvl ; 
+	return ; 
+}
+
+void DbgMsgEnableModule(uint32_t module_id)
+{
+	g_dbg_enable_log |= module_id ; 
+}
+
+void DbgMsgDisableModule(uint32_t module_id)
+{
+	g_dbg_enable_log &= ~(module_id); 
 }
 
 /* parasoft-end-suppress MISRA2012-RULE-17_1_a-2 "Example implementation of DbgPrint" */
 /* parasoft-end-suppress MISRA2012-RULE-17_1_b-2 "Example implementation of DbgPrint" */
-/* #endif */

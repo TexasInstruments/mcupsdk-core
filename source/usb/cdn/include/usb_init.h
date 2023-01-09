@@ -51,6 +51,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <stdint.h>
+#include "cdn_print.h"
 
 #ifdef __cplusplus
 extern "C" {
