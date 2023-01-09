@@ -51,7 +51,7 @@
 
 /* Local defines */
 #define SDL_ECC_INVALID_ERROR_SOURCE      (0xffffffffu)
-#define SDL_ECC_BITS_PER_WORD                     (32U)
+#define SDL_ECC_BITS_PER_WORD             (32U)
 #define ECC_AGGR_LINE_SIZE                (4U)
 #define SDL_ECC_INVALID_SELF_TEST_RAM_ID  (0xffffffffu)
 #define SDL_ECC_INVALID_CHECKER_TYPE      (0xffffffffu)
@@ -749,6 +749,9 @@ int32_t SDL_ECC_initEsm (const SDL_ESM_Inst esmInstType)
  * \return  SDL_PASS : Success; SDL_EFAIL for failures
  *          NOTE: On failure the ECC peripheral registers may be initialized
  *          partially.
+ */
+ /**
+ * Design: PROC_SDL-1284,PROC_SDL-1283
  */
 int32_t SDL_ECC_init (SDL_ECC_MemType eccMemType,
                          const SDL_ECC_InitConfig_t *pECCInitConfig)

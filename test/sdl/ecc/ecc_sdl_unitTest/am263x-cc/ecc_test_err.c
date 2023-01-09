@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -2200,6 +2200,48 @@ static int32_t ECC_errNegativeTest(void)
             retVal = -1;
         }
     }
+	if (retVal == 0) {
+        /* Negative tests with invalid mem subtype 50U */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
+                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                  NULL);
+        if (result != SDL_EBADARGS) {
+            DebugP_log("\n  Negative test failed on line no: %d \n", __LINE__);
+            retVal = -1;
+        }
+    }
+    if (retVal == 0) {
+        /* Pass invalid error configuration. No bits set */
+        injectErrorConfig.flipBitMask = 0x80000000;
+        /* Set Error address */
+        injectErrorConfig.pErrMem = (uint32_t *)(0x510);
+        /* Negative tests with invalid mem subtype 50U */
+        result = SDL_ECC_selfTest(SDL_R5FSS0_CORE0_ECC_AGGR,
+                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
+                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                  &injectErrorConfig,
+                                  1000);
+        if (result == SDL_PASS) {
+            DebugP_log("\n  Negative test failed on line no: %d \n", __LINE__);
+            retVal = -1;
+        }
+    }
+    if (retVal == 0) {
+        /* Pass invalid error configuration. No bits set */
+        injectErrorConfig.flipBitMask = 0x80000000;
+        /* Set Error address */
+        injectErrorConfig.pErrMem = (uint32_t *)(0x510);
+        /* Negative tests with invalid mem subtype 50U */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+                                  SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
+                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                  &injectErrorConfig);
+        if (result == SDL_PASS) {
+            DebugP_log("\n  Negative test failed on line no: %d \n", __LINE__);
+            retVal = -1;
+        }
+    }
 	if (retVal == 0U) {
        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
        /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 2 bit error */
@@ -2215,7 +2257,7 @@ static int32_t ECC_errNegativeTest(void)
            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
            retVal = -1;
        }
-   }
+    }
    	if (retVal == 0U) {
        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
        /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 2 bit error */

@@ -16,6 +16,13 @@ const asmfiles_r5f = {
 		"resetvecs.S",
 	],
 };
+
+const projectspecfiles = {
+    common: [
+        "resetvecs.S",
+    ],
+};
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -99,6 +106,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
+	build_property.projectspecfiles = projectspecfiles;
     build_property.filedirs = filedirs;
     build_property.includes = includes_nortos;
     build_property.libdirs = libdirs_nortos;

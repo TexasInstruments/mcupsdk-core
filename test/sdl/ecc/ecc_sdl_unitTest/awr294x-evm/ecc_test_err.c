@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -2001,6 +2001,56 @@ static int32_t ECC_errNegativeTest(void)
            retVal = -1;
        }
     }
+   	if (retVal == 0U) {
+       SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+       /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 2 bit error */
+       /* Note the address is relative to start of ram */
+       injectErrorConfig.pErrMem = (uint32_t *)(0x00000510u);
+       injectErrorConfig.flipBitMask = 0x0u;
+       /* Negative tests without mask bit */
+       result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
+                                    SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID,
+                                    15U,
+                                    &injectErrorConfig);
+       if (result != SDL_EFAIL) {
+           DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+           retVal = -1;
+       }
+    }
+    if (retVal == 0U)
+    {
+        SDL_ECC_MemType *eccMemType = (SDL_ECC_MemType* )10U;
+        SDL_Ecc_AggrIntrSrc *intrSrcType = (SDL_ECC_MemType* )12U;
+        /* Negative tests  */
+        result = SDL_ECC_getESMErrorInfo(2U, 12U, eccMemType, intrSrcType);
+        if (result == SDL_PASS) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+	if (retVal == 0U)
+	{
+        /* Negative tests  */
+        result = SDL_ECC_getESMErrorInfo(2U, 12U, NULL, 0U);
+        if (result == SDL_PASS) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+	}
+	if (retVal == 0U)
+	{
+        /* Negative tests  */
+        result = SDL_ECC_getESMErrorInfo(5U, 12U, NULL, 0U);
+        if (result == SDL_PASS) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+	}
+	if (retVal == 0U)
+	{
+        /* Negative tests  */
+        SDL_ECC_initEsm(4U);
+	}
 	if ( retVal == 0) {
         DebugP_log("\n ECC negative tests: success");
     } else {
