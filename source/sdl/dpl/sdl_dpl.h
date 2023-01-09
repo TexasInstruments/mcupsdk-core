@@ -104,7 +104,17 @@ typedef int32_t (*pSDL_DPL_DelayFunction)(int32_t ndelay);
 typedef void* (*pSDL_DPL_AddrTranslateFunction)(uint64_t addr, uint32_t size);
 
 /**
- * \brief   This structure contains the pointers for the DPL interfaces 
+ * @brief   Prototype for the interrupt global disable function
+ */
+typedef int32_t (*pSDL_DPL_globalDisableInterruptsFunction)(uintptr_t *key);
+
+/**
+ * @brief   Prototype for the interrupt global restore function
+ */
+typedef int32_t (*pSDL_DPL_globalRestoreInterruptsFunction)(uintptr_t key);
+
+/**
+ * \brief   This structure contains the pointers for the DPL interfaces
  *          provided by the application to SDL_DPL_init.
  */
 typedef struct SDL_DPL_Interface_s
@@ -119,6 +129,10 @@ typedef struct SDL_DPL_Interface_s
     pSDL_DPL_DeregisterFunction deregisterInterrupt;
     /**< Pointer to delay function */
     pSDL_DPL_DelayFunction delay;
+    /**< Pointer to global interrupt disable function */
+    pSDL_DPL_globalDisableInterruptsFunction globalDisableInterrupts;
+    /**< Pointer to global interrupt enable function */
+    pSDL_DPL_globalRestoreInterruptsFunction globalRestoreInterrupts;
     /**< Pointer to address translation function */
     pSDL_DPL_AddrTranslateFunction addrTranslate;
 } SDL_DPL_Interface;
@@ -226,6 +240,43 @@ int32_t SDL_DPL_delay(int32_t ndelay);
  *  \return The translated address or (-1) for failure.
  */
 void *SDL_DPL_addrTranslate(uint64_t addr, uint32_t size);
+
+/**
+ *  \brief DPL globally disable interrupts
+ *
+ *  This function will disable interrupts globally. Interrupts can be
+ *  enabled with the globalRestoreInterrupts() function. Usually used for
+ *  critical sections.
+ *
+ *  The returned key is used to restore the context once interrupts are
+ *  restored.
+ *
+ *  \param key              [OUT] key to use when restoring interrupts
+ *
+ *  \return The SDL error code for the API.
+ *                                 If function pointer in interface is NULL: SDL_EBADARGS
+ *                                 If other error happened: SDL_EFAIL
+ *                                 Success: SDL_PASS
+ */
+
+int32_t SDL_DPL_globalDisableInterrupts(uintptr_t *key);
+
+/**
+ *  \brief DPL globally enable interrupts
+ *
+ *  This function will enable interrupts globally. Usually used for
+ *  critical sections.
+ *
+ *  The key is used to restore the context.
+ *
+ *  \param key              [IN] key to use when restoring interrupts
+ *
+ *  \return The SDL error code for the API.
+ *                                 If function pointer in interface is NULL: SDL_EBADARGS
+ *                                 If other error happened: SDL_EFAIL
+ *                                 Success: SDL_PASS
+ */
+int32_t SDL_DPL_globalRestoreInterrupts(uintptr_t key);
 
 /** @} */
 

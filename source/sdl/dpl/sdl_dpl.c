@@ -173,3 +173,47 @@ void* SDL_DPL_addrTranslate(uint64_t addr, uint32_t size)
 
     return ret;
 }
+
+/**
+ * Design: PROC_SDL-1143,PROC_SDL-1144
+ */
+int32_t SDL_DPL_globalDisableInterrupts(uintptr_t *key)
+{
+    SDL_ErrType_t ret = SDL_PASS;
+
+    if (key == NULL_PTR)
+    {
+        ret = SDL_EINVALID_PARAMS;
+    }
+    // Check HwiP function is valid
+    else if ((gSDL_DPL_Interface == NULL_PTR) || (gSDL_DPL_Interface->globalDisableInterrupts == NULL_PTR))
+    {
+        ret = SDL_EINVALID_PARAMS;
+    }
+    else
+    {
+        ret = gSDL_DPL_Interface->globalDisableInterrupts(key);
+    }
+
+    return ret;
+}
+
+/**
+ * Design: PROC_SDL-1141,PROC_SDL-1142
+ */
+int32_t SDL_DPL_globalRestoreInterrupts(uintptr_t key)
+{
+    SDL_ErrType_t ret = SDL_PASS;
+
+    // Check HwiP function is valid
+    if ((gSDL_DPL_Interface == NULL_PTR) || (gSDL_DPL_Interface->globalRestoreInterrupts == NULL_PTR))
+    {
+        ret = SDL_EINVALID_PARAMS;
+    }
+    else
+    {
+        ret = gSDL_DPL_Interface->globalRestoreInterrupts(key);
+    }
+
+    return ret;
+}

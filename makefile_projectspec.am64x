@@ -345,6 +345,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am64x-evm_m4fss0-0_nor
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecc_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += vtm_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -1427,6 +1431,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/mtog/mtog_example/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ ecc_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
 	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
 
@@ -1955,6 +1971,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am64x-evm_m4fss0-0_nor
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecc_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += vtm_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3037,6 +3057,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mtog/mtog_example/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ ecc_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
 
@@ -3565,6 +3597,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am64x-evm_m4fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecc_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += vtm_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcrc_full_cpu_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcrc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -4647,6 +4683,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/mtog/mtog_example/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ ecc_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
 	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
 
@@ -5199,6 +5247,10 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mtog/mtog_example/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]

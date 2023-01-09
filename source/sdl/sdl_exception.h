@@ -101,6 +101,15 @@ void SDL_EXCEPTION_init(const SDL_EXCEPTION_CallbackFunctions_t *callbackFunctio
 
 /** ============================================================================
  *
+ * \brief   Function to register ECC exception handler
+ *
+ * \param  ECCCallBackFunctionPtr: callback function to register
+ *
+ */
+void SDL_EXCEPTION_registerECCHandler(SDL_EXCEPTION_ECCCallback_t ECCCallBackFunctionPtr);
+
+/** ============================================================================
+ *
  * \brief  Undefined Instruction Exception Handler
  *
  * \param  param: Parameter pointer

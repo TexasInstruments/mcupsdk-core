@@ -2,7 +2,7 @@
 *
 * SOC BASEADDRESS. header file
 *
-* Copyright (C) 2015-2019 Texas Instruments Incorporated.
+* Copyright (C) 2015-2023 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -248,7 +248,11 @@ extern "C"
 #define SDL_MCU_M4FSS0_DRAM_SIZE                                                                   (0x10000UL)
 #define SDL_MCU_M4FSS0_RAT_BASE                                                                    (0x5ff0000UL)
 #define SDL_MCU_M4FSS0_RAT_SIZE                                                                    (0x1000UL)
+#if defined (M4F_CORE)
+#define SDL_MCU_M4FSS0_ECC_AGGR_BASE                                                               (0x44201000UL)
+#else
 #define SDL_MCU_M4FSS0_ECC_AGGR_BASE                                                               (0x5ff1000UL)
+#endif
 #define SDL_MCU_M4FSS0_ECC_AGGR_SIZE                                                               (0x400UL)
 #define SDL_CPSW0_NUSS_BASE                                                                        (0x8000000UL)
 #define SDL_CPSW0_NUSS_SIZE                                                                        (0x200000UL)

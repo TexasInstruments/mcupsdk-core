@@ -59,6 +59,8 @@ extern "C"
 #define IP_VERSION_ECC_BUS_SAFETY_V0
 #define IP_VERSION_STC_V0
 #define IP_VERSION_RESET_V0
+#define IP_VERSION_ECC_V1
+
 
 /* Driver versions */
 #define DRV_VERSION_ESM_V1

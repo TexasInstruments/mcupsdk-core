@@ -62,9 +62,15 @@ extern "C"
 #define SDL_APP_TEST_FAILED         (-(int32_t) (1))
 #define SDL_APP_TEST_PASS           ( (int32_t) (0))
 
+#if defined (SOC_AM64X)
+#define  ECC_FUNC_TEST_ID         (0U)
+#define  ECC_ERROR_TEST_ID        (1U)
+#define  ECC_TOTAL_NUM_TESTS      (2U)
+#else
 #define  ECC_ERROR_TEST_ID          (0U)
 #define  ECC_FUNC_TEST_ID           (1U)
 #define  ECC_TOTAL_NUM_TESTS        (2U)
+#endif
 
 extern volatile bool gMsmcMemParityInterrupt;
 /* ========================================================================== */
@@ -87,6 +93,9 @@ extern int32_t DSS_ECC_funcTest(void);
 extern int32_t DSS_ECC_ip_errTest(void);
 extern int32_t DSS_ECC_errTest(void);
 #endif
+#else
+extern int32_t ECC_funcTest(void);
+extern int32_t ECC_errTest(void);
 #endif
 
 #ifdef __cplusplus

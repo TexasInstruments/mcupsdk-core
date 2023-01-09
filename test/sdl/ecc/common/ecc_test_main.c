@@ -473,15 +473,15 @@ void ecc_syncup_delay(void)
 
 void test_main(void *args)
 {
-	/* Open drivers to open the UART driver for console */
+    /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-        
+
     sdlApp_dplInit();
-	
-	test_sdl_ecc_test_app_runner();
-	
-	/* Close drivers to close the UART driver for console */
+
+    test_sdl_ecc_test_app_runner();
+
+    /* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
 }

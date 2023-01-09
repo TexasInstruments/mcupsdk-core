@@ -47,6 +47,9 @@
 #if defined(SOC_AWR294X)
 #include <sdl/include/awr294x/sdlr_soc_ecc_aggr.h>
 #endif
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#include <sdl/include/am64x_am243x/sdlr_soc_ecc_aggr.h>
+#endif
 #include "sdl_r5_utils.h"
 #include <sdl/ecc/sdl_ecc_utils.h>
 #include <sdl/ecc/sdl_ecc_priv.h>
@@ -118,6 +121,7 @@ uint32_t SDL_ECC_pollErrorEvent(SDL_ECC_MemType eccMemType,
     uint32_t retValue = 0u;
     uint32_t regValue;
     /* Polling only for R5F core self test */
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
     if ((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR)
         || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)) {
         switch(errorType) {
@@ -157,5 +161,47 @@ uint32_t SDL_ECC_pollErrorEvent(SDL_ECC_MemType eccMemType,
                 break;
         }
     }
+#endif
+
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+    if ((eccMemType == SDL_R5FSS1_PULSAR_LITE_CPU0_ECC_AGGR) || (eccMemType == SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR)) {
+        switch(errorType) {
+            case SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE:
+                /* Only for single bit error do polling */
+                switch (memSubType) {
+                    case SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID:
+                    case SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK1_VECTOR_ID:
+                         /* Check CFLR register */
+                         regValue = SDL_UTILS_getCFLR();
+                         if((regValue & SDL_ECC_R5_CFLR_ATCM_DATA_ERROR_MASK)
+                             == SDL_ECC_R5_CFLR_ATCM_DATA_ERROR_MASK) {
+                            retValue = (uint32_t)(SDL_ECC_EVENT_FOUND);
+                         }
+                        break;
+
+                    case SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK0_VECTOR_ID:
+                    case SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK1_VECTOR_ID:
+                    case SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK0_VECTOR_ID:
+                    case SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK1_VECTOR_ID:
+                           /* Check CFLR register */
+                            regValue = SDL_UTILS_getCFLR();
+                            if( (regValue & SDL_ECC_R5_CFLR_BTCM_DATA_ERROR_MASK)
+                                == SDL_ECC_R5_CFLR_BTCM_DATA_ERROR_MASK) {
+                                retValue = (uint32_t)(SDL_ECC_EVENT_FOUND);
+                            }
+
+                        break;
+
+                    default:
+
+                        break;
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+#endif
     return retValue;
 }

@@ -179,6 +179,18 @@ void* SDL_TEST_addrTranslate(uint64_t addr, uint32_t size)
     return (void *)transAddr;
 }
 
+int32_t SDL_TEST_globalDisableInterrupts(uintptr_t *key)
+{
+    *key = HwiP_disable();
+    return SDL_PASS;
+}
+
+int32_t SDL_TEST_globalRestoreInterrupts(uintptr_t key)
+{
+    HwiP_restore(key);
+    return SDL_PASS;
+}
+
 SDL_DPL_Interface dpl_interface =
 {
     .enableInterrupt = (pSDL_DPL_InterruptFunction) SDL_TEST_enableInterrupt,
@@ -186,6 +198,8 @@ SDL_DPL_Interface dpl_interface =
     .registerInterrupt = (pSDL_DPL_RegisterFunction) SDL_TEST_registerInterrupt,
     .deregisterInterrupt = (pSDL_DPL_DeregisterFunction) SDL_TEST_deregisterInterrupt,
     .delay = (pSDL_DPL_DelayFunction) ClockP_sleep,
+    .globalDisableInterrupts = (pSDL_DPL_globalDisableInterruptsFunction) SDL_TEST_globalDisableInterrupts,
+    .globalRestoreInterrupts = (pSDL_DPL_globalRestoreInterruptsFunction) SDL_TEST_globalRestoreInterrupts,
     .addrTranslate = (pSDL_DPL_AddrTranslateFunction) SDL_TEST_addrTranslate
 };
 

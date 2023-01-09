@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,5 +41,5 @@
 void SDL_ECC_UTILS_enableECCATCM(void);
 void SDL_ECC_UTILS_enableECCB0TCM(void);
 void SDL_ECC_UTILS_enableECCB1TCM(void);
-
+void SDL_ECC_UTILS_configSecIntr( uint32_t eventCountInitValue,uint32_t eventTypeBitMap, uint32_t counterNumber);
 #endif /* INCLUDE_SDL_ECC_UTILS_H_ */

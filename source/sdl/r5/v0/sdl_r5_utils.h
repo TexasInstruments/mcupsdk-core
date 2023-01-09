@@ -34,7 +34,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+#include <stdint.h>
 #ifndef INCLUDE_SDL_UTILS_H_
 #define INCLUDE_SDL_UTILS_H_
 

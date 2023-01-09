@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+ * Copyright (C) 2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -44,6 +44,13 @@
 #ifndef SDL_IP_ECC_TOP_H_
 #define SDL_IP_ECC_TOP_H_
 
+#include <sdl/include/soc_config.h>
+
+#if defined (IP_VERSION_ECC_V1)
 #include <sdl/ecc/V1/sdl_ip_ecc.h>
+#endif
+#if defined (IP_VERSION_ECC_V0)
+#include <sdl/ecc/V0/sdl_ip_ecc.h>
+#endif
 
 #endif /* SDL_IP_ECC_TOP_H_ */

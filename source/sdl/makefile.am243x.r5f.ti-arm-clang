@@ -32,6 +32,17 @@ FILES_common := \
     sdl_ip_pok.c \
     sdl_soc_pok.c \
     sdl_ip_pok_defs.c \
+    sdl_ecc.c \
+    sdl_ip_ecc.c \
+    sdl_ecc_r5.c \
+    sdl_interrupt.c \
+    sdl_exception.c \
+    sdl_interrupt_handlers.c \
+    sdl_interrupt_register.c \
+
+ASMFILES_common := \
+    sdl_ecc_utils.S \
+    sdl_r5_utils.S \
 
 FILES_PATH_common = \
     dpl \
@@ -50,6 +61,11 @@ FILES_PATH_common = \
     pok/v1 \
     pok/v1/soc \
     pok/v1/soc/am243x \
+    ecc \
+    ecc/soc/am64x_am243x \
+    ecc/V0 \
+    r5 \
+    r5/v0 \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -69,6 +85,7 @@ CFLAGS_common := \
     -g \
     -Wno-gnu-variable-sized-type-not-at-end \
     -Wno-unused-function \
+    -Wno-extra \
 
 CFLAGS_cpp_common := \
     -Wno-c99-designator \

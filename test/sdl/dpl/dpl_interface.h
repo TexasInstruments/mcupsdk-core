@@ -55,6 +55,10 @@ extern "C"
 /* ========================================================================== */
 int32_t SDL_TEST_dplInit(void);
 
+int32_t SDL_TEST_globalDisableInterrupts(uintptr_t *key);
+
+int32_t SDL_TEST_globalRestoreInterrupts(uintptr_t key);
+
 #ifdef __cplusplus
 }
 #endif

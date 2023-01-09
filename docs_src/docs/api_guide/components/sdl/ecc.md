@@ -22,10 +22,14 @@ The mapping is expected to always be valid because it may be needed at runtime t
 
 \cond SOC_AM263X
 	There are over 13 ECC aggregators on the device each supporting multiple memories and interconnects.
-\endcond	
+\endcond
 
 \cond SOC_AM273X || SOC_AWR294X
 	There are over 8 ECC aggregators on the device each supporting multiple memories and interconnects.
+\endcond
+
+\cond SOC_AM64X || SOC_AWR243X
+	There are over 40 ECC aggregators on the device each supporting multiple memories and interconnects.
 \endcond
 
 ## Error Injection for Various RAM ID types
@@ -81,7 +85,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
@@ -211,7 +215,7 @@ void ECC_Test_fiqExptnCallback(void)
 }
 \endcode
 
-Initilize Exception handler 
+Initilize Exception handler
 \code{.c}
 void ECC_Test_exceptionInit(void)
 {
@@ -298,7 +302,7 @@ Enabling the Event bus
 \code{.c}
 SDL_UTILS_enable_event_bus();
 \endcode
-	
+
 Initialize ECC memory for the ECC aggregator
 \code{.c}
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
@@ -339,7 +343,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK0 Single bit error inject: starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
 
@@ -385,7 +389,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 2 bit error */
@@ -470,7 +474,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
@@ -600,7 +604,7 @@ void ECC_Test_fiqExptnCallback(void)
 }
 \endcode
 
-Initilize Exception handler 
+Initilize Exception handler
 \code{.c}
 void ECC_Test_exceptionInit(void)
 {
@@ -705,7 +709,7 @@ Enabling the Event bus
 \code{.c}
 SDL_UTILS_enable_event_bus();
 \endcode
-	
+
 Initialize ECC memory for the ECC aggregator
 \code{.c}
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
@@ -750,7 +754,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 BTCM Single bit error inject: starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
 
@@ -784,7 +788,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 BTCM Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 BTCM 2 bit error */
@@ -811,7 +815,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest(void)
 \endcode
 
 
-## Example Usage of MSS L2 
+## Example Usage of MSS L2
 
 The following shows an example of SDL MSS L2 API usage by the application for Error Injection Tests and Exception handling.
 
@@ -917,7 +921,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
@@ -1045,7 +1049,7 @@ Clearing any old interrupt presented
 \code{.c}
 SDL_REG32_WR(SDL_ECC_AGGR_ERROR_STATUS1_ADDR, 0xF0Fu);
 \endcode
-	
+
 Initialize ECC memory for the ECC aggregator
 \code{.c}
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
@@ -1083,7 +1087,7 @@ int32_t ECC_Test_run_MSS_L2RAMB_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nMSS L2 RAMB Single bit error inject: starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
 
@@ -1151,7 +1155,7 @@ int32_t ECC_Test_run_MSS_L2RAMB_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nMSS L2 RAMB Double bit error inject: starting \r\n");
-	
+
     /* Run one shot test for MSS L2 RAMB 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
@@ -1287,7 +1291,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
@@ -1407,7 +1411,7 @@ Initialize EDMA
     param = channelEvent;
     status = EDMA_allocParam(gEdmaHandle[edmaConfigNum], &param);
 
-\endcode	
+\endcode
 Initialize ECC memory for the ECC aggregator
 \code{.c}
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
@@ -1438,7 +1442,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
-		
+
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
     DebugP_log("\n MSS TPTC_A0 Single bit error inject: test starting");
@@ -1451,13 +1455,13 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
                                  SDL_EXAMPLE_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
-	
+
     if (result != SDL_PASS ) {
         DebugP_log("\n MSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed",
                     injectErrorConfig.pErrMem);
         retVal = -1;
     } else {
-        
+
         DebugP_log("\n MSS TPTC_A0 Single bit error inject at pErrMem 0x%p",
                    injectErrorConfig.pErrMem);
     }
@@ -1639,17 +1643,17 @@ int32_t ECC_Test_run_DSS_MAILBOX_1BitInjectTest(void)
     SDL_ErrType_t result;
     int32_t retVal=0;
     uint32_t ecc_ctrl = 0, ecc_sts = 0 ;
-		
+
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	SDL_edc_ctlRegs *pEccAggrRegs = ((SDL_edc_ctlRegs *)((uintptr_t)0x060A0000u));
 
     DebugP_log("\n DSS MAILBOX Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
-	
+
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	ecc_sts = SDL_REG32_RD(0x060A0040);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
@@ -1661,20 +1665,20 @@ int32_t ECC_Test_run_DSS_MAILBOX_1BitInjectTest(void)
                                  SDL_DSS_ECC_AGG_DSS_MAILBOX_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_REPEAT,
                                  &injectErrorConfig);
-								 
+
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
     ecc_sts = SDL_REG32_RD(0x060A0040);
-            
+
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
-					   
+
     if (result != SDL_PASS ) {
         DebugP_log("\n DSS MAILBOX Single bit error inject at pErrMem 0x%p test failed",
                     injectErrorConfig.pErrMem);
         retVal = -1;
     } else {
-        
+
         DebugP_log("\n DSS MAILBOX Single bit error inject at pErrMem 0x%p",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
@@ -1694,7 +1698,7 @@ int32_t ECC_Test_run_DSS_MAILBOX_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	SDL_edc_ctlRegs *pEccAggrRegs = ((SDL_edc_ctlRegs *)((uintptr_t)0x060A0000u));
 
     DebugP_log("\n DSS MAILBOX Double bit error inject: starting");
@@ -1702,7 +1706,7 @@ int32_t ECC_Test_run_DSS_MAILBOX_2BitInjectTest(void)
     /* Run one shot test for DSS MAILBOX 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
-	
+
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	ecc_sts = SDL_REG32_RD(0x060A0140);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
@@ -1713,12 +1717,12 @@ int32_t ECC_Test_run_DSS_MAILBOX_2BitInjectTest(void)
                                  SDL_DSS_ECC_AGG_DSS_MAILBOX_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_REPEAT,
                                  &injectErrorConfig);
-								 
+
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
     ecc_sts = SDL_REG32_RD(0x060A0140);
-            
+
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
 
@@ -1781,7 +1785,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
@@ -1850,7 +1854,7 @@ SDL_ESM_NotifyParams ECC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
 	   .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
 	   .callBackFunction = &SDL_ESM_applicationCallbackFunction,
     },
-	
+
 };
 \endcode
 
@@ -1877,7 +1881,7 @@ Initialize EDMA
     param = channelEvent;
     status = EDMA_allocParam(gEdmaHandle[edmaConfigNum], &param);
 
-\endcode	
+\endcode
 Initialize ECC memory for the ECC aggregator
 \code{.c}
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
@@ -1899,7 +1903,7 @@ int32_t ECC_Test_run_DSS_TPTC_A0_1Bit_InjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
-		
+
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
     DebugP_log("\r\nDSS TPTC_A0 Single bit error inject: test starting\r\n");
@@ -1912,13 +1916,13 @@ int32_t ECC_Test_run_DSS_TPTC_A0_1Bit_InjectTest(void)
                                  SDL_EXAMPLE_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
-	
+
     if (result != SDL_PASS ) {
         DebugP_log("\r\nDSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed\r\n",
                     injectErrorConfig.pErrMem);
         retVal = -1;
     } else {
-        
+
         DebugP_log("\r\nDSS TPTC_A0 Single bit error inject at pErrMem 0x%p\r\n",
                    injectErrorConfig.pErrMem);
     }
@@ -2187,7 +2191,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \n");
 
@@ -2291,7 +2295,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMCANA[0],NULL,NULL);
 \endcode
 \endcond
 
-Write some data to the RAM memory before injecting 
+Write some data to the RAM memory before injecting
 \code{.c}
 for(i=1;i<=num_of_iterations;i++){
   wr_data = (i)<<24 | (i)<<16 | (i)<<8 | i;
@@ -2308,7 +2312,7 @@ int32_t ECC_Test_run_MCANA_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANA Single bit error inject: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -2335,7 +2339,7 @@ int32_t ECC_Test_run_MCANA_1BitInjectTest(void)
 }
 \endcode
 
-Read data from the RAM memory after injecting 
+Read data from the RAM memory after injecting
 \code{.c}
 for(i=1;i<=num_of_iterations;i++){
   rd_data = SDL_REG32_RD(addr+i*16);
@@ -2350,7 +2354,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMCANA[1],NULL,NULL);
 \endcode
 \endcond
 
-Write some data to the RAM memory before injecting 
+Write some data to the RAM memory before injecting
 \code{.c}
 for(i=1;i<=num_of_iterations;i++){
   wr_data = (i)<<24 | (i)<<16 | (i)<<8 | i;
@@ -2369,7 +2373,7 @@ int32_t ECC_Test_run_MCANA_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nMCANA double bit error inject: starting \r\n");
-	
+
     /* Run one shot test for MCANA  2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
@@ -2394,7 +2398,7 @@ int32_t ECC_Test_run_MCANA_2BitInjectTest(void)
 }
 \endcode
 
-Read data from the RAM memory after injecting 
+Read data from the RAM memory after injecting
 \code{.c}
 for(i=1;i<=num_of_iterations;i++){
   rd_data = SDL_REG32_RD(addr+i*16);
@@ -2576,7 +2580,7 @@ int32_t ECC_Test_run_ICSSM_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nICSSM Single bit error inject: starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
 
@@ -2610,7 +2614,7 @@ int32_t ECC_Test_run_ICSSM_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nICSSM Double bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM 2 bit error */
@@ -2694,14 +2698,14 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 {
 
     int32_t retVal = 0;
-	
+
     printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
     printf("\r\nTake action \r\n");
 	/* Clears all the status registers */
 	SDL_clearStatusRegs(SetValue);
-	
+
 	esmError = true;
 
     return retVal;
@@ -2717,10 +2721,10 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 {
 
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
-	
+
 	esmError = true;
 
     return 0;
@@ -2822,7 +2826,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMSS[0],NULL,NULL);
 \endcode
 \endcond
 
-Execute TCM Parity Error injection for B0TCM0 for R5FSS0 core 0 
+Execute TCM Parity Error injection for B0TCM0 for R5FSS0 core 0
 \cond SOC_AM263X
 \code{.c}
 	if (retVal == 0)
@@ -2888,14 +2892,14 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 {
 
     int32_t retVal = 0;
-	
+
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInst, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 	/* Disable parity for TPCC0 */
 	SDL_REG32_WR(0x50D18180, 0x1000);
-	
+
 	esmError = true;
 
     return retVal;
@@ -2911,7 +2915,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 {
 
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
@@ -2926,7 +2930,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 	SDL_REG32_WR(0x060200C0, 0x4);
 	/* Disable parity for TPCCC */
 	SDL_REG32_WR(0x060200C4, 0x4);
-#endif	
+#endif
 	esmError = true;
 
     return 0;
@@ -2977,7 +2981,7 @@ SDL_ESM_NotifyParams ECC_Testparams[SDL_ESM_MSS_MAX_EXAMPLE] =
 		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
 		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
     },
-	
+
 
 };
 SDL_ESM_NotifyParams ECC_TestparamsDSS[SDL_ESM_DSS_MAX_EXAMPLE] =
@@ -3027,7 +3031,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_Testparams[0],NULL,NULL);
 \endcode
 \endcond
 
-Execute TPCC Parity Error injection 
+Execute TPCC Parity Error injection
 \cond SOC_AM263X
 \code{.c}
 	if (retVal == 0)
@@ -3036,13 +3040,13 @@ Execute TPCC Parity Error injection
         retVal = SDL_ECC_TPCCParity(SDL_TPCC0, \
 								 0x11);		
 		DebugP_log("\r\nParam Register = %x\r\n", retVal);
-		
+
 		/* wait for delay */
 		for (i =0 ; i < 200 ; i = i + 1 );
-		
+
 		/* Wait until ESM interrupt happens */
 		while(esmError !=true);
-		
+
 		if(esmError == true)
 		{
 			DebugP_log("\r\nTPCC PARITY : TPCC0 Completed\r\n");
@@ -3060,14 +3064,14 @@ Execute TPCC Parity Error injection
     {		
 		DebugP_log("\r\nMSS TPCCA Parity \r\n");
         paramstatus = SDL_ECC_TPCCParity(SDL_TPCC0A, \
-								 0x11);	
+								 0x11);
 		DebugP_log("\r\nParam Register = %x\r\n", paramstatus);
-		
+
 		/* Wait until ESM interrupt happens */
 		while(esmError !=true);
 		/*wait for delay */
 		for (i =0 ; i < 200 ; i = i + 1 );
-		
+
 		if(esmError == true)
 		{
 			DebugP_log("\r\nMSS TPCCA Parity : Completed\r\n");

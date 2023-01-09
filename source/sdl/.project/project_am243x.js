@@ -4,7 +4,7 @@ let device = "am243x";
 
 const files_r5f = {
     common: [
-        "sdl_dpl.c",
+      "sdl_dpl.c",
         "sdl_esm.c",
         "sdl_ip_esm.c",
         "sdl_esm_core.c",
@@ -20,6 +20,13 @@ const files_r5f = {
 		"sdl_ip_pok.c",
 		"sdl_soc_pok.c",
 		"sdl_ip_pok_defs.c",
+        "sdl_ecc.c",
+        "sdl_ip_ecc.c",
+        "sdl_ecc_r5.c",
+        "sdl_interrupt.c",
+        "sdl_exception.c",
+        "sdl_interrupt_handlers.c",
+    		"sdl_interrupt_register.c",
     ],
 };
 const filedirs = {
@@ -40,8 +47,33 @@ const filedirs = {
 	    "pok/v1",
 		"pok/v1/soc",
 	    "pok/v1/soc/am243x",
+      "dpl",
+      "esm",
+      "esm/soc",
+      "esm/soc/am243x",
+      "esm/v0",
+      "esm/v0/v0_0",
+      "vtm",
+      "vtm/v0",
+      "vtm/v0/soc/am243x",
+      "stog/v0",
+      "stog/v0/soc",
+      "stog/v0/soc/am243x",
+        "ecc",
+        "ecc/soc/am64x_am243x",
+        "ecc/V0",
+        "r5",
+        "r5/v0",
     ],
 };
+
+const asmfiles_r5f = {
+    common: [
+		"sdl_ecc_utils.S",
+		"sdl_r5_utils.S",
+	],
+};
+
 
 const r5_macro = {
     common: [
@@ -50,6 +82,11 @@ const r5_macro = {
 
 };
 
+const cflags_r5f = {
+common: [
+"-Wno-extra",
+],
+};
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
@@ -73,6 +110,8 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
         build_property.defines = r5_macro;
+        build_property.asmfiles = asmfiles_r5f;
+        build_property.cflags = cflags_r5f;
     }
 
     return build_property;

@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+ * Copyright (C) 2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -36,7 +36,16 @@
 
 #include <sdl/sdlr.h>
 #include <stdint.h>
+#include <sdl/include/soc_config.h>
+
+#if defined (IP_VERSION_ECC_V1)
 #include <sdl/ecc/V1/sdlr_ecc.h>
 #include <sdl/ecc/V1/sdlr_ecc_ram.h>
+#endif
+
+#if defined (IP_VERSION_ECC_V0)
+#include <sdl/ecc/V0/sdlr_ecc.h>
+#include <sdl/ecc/V0/sdlr_ecc_ram.h>
+#endif
 
 #endif /* SDLR_ECC_TOP_H_ */
