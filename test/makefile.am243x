@@ -92,6 +92,14 @@ help:
 	@echo  $(MAKE) -s -C kernel/freertos/am243x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am243x-lp/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_aes/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_aes/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_ssl_x509/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_ssl_x509/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_sha_entropy/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_sha_entropy/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_pka/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/mbedtls_test/test_pka/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_aes/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -241,6 +249,14 @@ BUILD_COMBO_EXAMPLE_ALL += test_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am243x-evm_m4fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am243x-lp_m4fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_aes_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_aes_am243x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_am243x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_sha_entropy_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_sha_entropy_am243x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_pka_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_pka_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_aes_am243x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -423,6 +439,30 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_freertos_am243x-lp_m4fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C kernel/freertos/am243x-lp/m4fss0-0_freertos/ti-arm-clang -f makefile all
 
+ test_mbedtls_aes_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_aes/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_aes_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_aes/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_sha_entropy_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_sha_entropy_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_pka_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_pka/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mbedtls_pka_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/mbedtls_test/test_pka/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  test_sa2ul_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -550,6 +590,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am243x-evm_r5fss0-0_freertos_ti-a
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am243x-evm_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am243x-lp_m4fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_aes_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_aes_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_sha_entropy_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_sha_entropy_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_pka_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_pka_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_aes_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -732,6 +780,30 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_freertos_am243x-lp_m4fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/freertos/am243x-lp/m4fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ test_mbedtls_aes_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_aes/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_aes_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_aes/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_sha_entropy_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_sha_entropy_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_pka_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_pka/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mbedtls_pka_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/mbedtls_test/test_pka/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  test_sa2ul_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -859,6 +931,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am243x-evm_r5fss0-0_freertos_ti-a
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am243x-evm_m4fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am243x-lp_m4fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_aes_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_aes_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_sha_entropy_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_sha_entropy_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_pka_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_pka_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_aes_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1040,6 +1120,30 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_freertos_am243x-lp_m4fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/freertos/am243x-lp/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_aes_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_aes/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_aes_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_aes/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_sha_entropy_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_sha_entropy_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_sha_entropy/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_pka_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_pka/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mbedtls_pka_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/mbedtls_test/test_pka/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_sa2ul_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
