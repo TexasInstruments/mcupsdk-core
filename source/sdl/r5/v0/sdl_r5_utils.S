@@ -3,7 +3,7 @@
 *
 * Software Diagnostics Library Utils module
 *
-*  (C) Copyright 2022 Texas Instruments, Inc.
+*  (C) Copyright 2022-2023 Texas Instruments, Inc.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
@@ -105,4 +105,20 @@ SDL_UTILS_enable_event_bus:
 	MRC P15,#0, R5, C9, C12,#0 		/* enable export of events to Eventbus for monitoring */
 	ORR R5, R5, #0x11
 	MCR P15,#0, R5, C9, C12,#0
+	BX      lr
+	
+/*****************************************************************************
+* Enable Cache Event Bus
+******************************************************************************/
+	.global SDL_UTILS_enable_cache_event_bus 
+SDL_UTILS_enable_cache_event_bus: 
+    MRC P15,#0, R5, C9, C12,#0      /* enable export of events to Eventbus for monitoring */
+    ORR R5, R5, #0x11
+    MCR P15,#0, R5, C9, C12,#0
+    MRC p15, #0, r1, c1, c0, #1     /* read ACTLR */
+    ORR r1,r1,#0x7 << 3 			/* do not generate ecc aborts for cache, enable hardware recovery */
+    BIC r1,r1,#0x1 << 4
+    MCR p15, #0, r1, c1, c0, #1 	/* ACTLR enable ECC for cache */
+    MRC p15, #0, r0, c1, c0, #0     /* Read System Control Register */
+    NOP
 	BX      lr

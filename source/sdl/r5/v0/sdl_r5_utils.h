@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library utilities
  *
- *  Copyright (c) Texas Instruments Incorporated 2018-2020
+ *  Copyright (c) Texas Instruments Incorporated 2020-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,5 +48,6 @@ uint32_t SDL_UTILS_getDFAR( void );
 uint32_t SDL_UTILS_getIFSR( void );
 uint32_t SDL_UTILS_getIFAR( void );
 void SDL_UTILS_enable_event_bus(void);
+void SDL_UTILS_enable_cache_event_bus(void);
 
 #endif /* INCLUDE_SDL_UTILS_H_ */

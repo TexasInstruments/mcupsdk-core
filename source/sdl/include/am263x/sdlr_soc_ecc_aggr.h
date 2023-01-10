@@ -2,7 +2,7 @@
 *
 * SOC ECC AGGREGATOR PROPERTIES. header file
 *
-* Copyright (C) 2022 Texas Instruments Incorporated.
+* Copyright (C) 2022-2023 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -63,7 +63,7 @@ extern "C"
 
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_RAM_ID                                                    (0U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_ECC_TYPE                                                  (0U)
-#define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_INJECT_TYPE                                               (1U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_INJECT_TYPE                                               (0U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_ACCESSIBLE                                                (1U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_ROW_WIDTH                                                 (64U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_RAM_SIZE                                                  (524288U)
@@ -71,7 +71,7 @@ extern "C"
 
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_RAM_ID                                                    (1U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_ECC_TYPE                                                  (0U)
-#define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_INJECT_TYPE                                               (1U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_INJECT_TYPE                                               (0U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_ACCESSIBLE                                                (1U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_ROW_WIDTH                                                 (64U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_RAM_SIZE                                                  (524288U)
@@ -79,7 +79,7 @@ extern "C"
 
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID                                                    (2U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_ECC_TYPE                                                  (0U)
-#define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_INJECT_TYPE                                               (1U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_INJECT_TYPE                                               (0U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_ACCESSIBLE                                                (1U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_ROW_WIDTH                                                 (64U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_SIZE                                                  (524288U)
@@ -87,7 +87,7 @@ extern "C"
 
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_RAM_ID                                                    (3U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_ECC_TYPE                                                  (0U)
-#define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_INJECT_TYPE                                               (1U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_INJECT_TYPE                                               (0U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_ACCESSIBLE                                                (1U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_ROW_WIDTH                                                 (64U)
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_RAM_SIZE                                                  (524288U)
@@ -95,7 +95,7 @@ extern "C"
 
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_RAM_ID                                                        (4U)
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_ECC_TYPE                                                      (0U)
-#define SDL_SOC_ECC_AGGR_MAILBOX_ECC_INJECT_TYPE                                                   (1U)
+#define SDL_SOC_ECC_AGGR_MAILBOX_ECC_INJECT_TYPE                                                   (0U)
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_ACCESSIBLE                                                    (1U)
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_ROW_WIDTH                                                     (64U)
 #define SDL_SOC_ECC_AGGR_MAILBOX_ECC_RAM_SIZE                                                      (524288U)
@@ -103,16 +103,16 @@ extern "C"
 
 #define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_ID                                                        (5U)
 #define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_ECC_TYPE                                                      (0U)
-#define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_INJECT_TYPE                                                   (1U)
-#define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_ACCESSIBLE                                                    (1U)
+#define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_INJECT_TYPE                                                   (0U)
+#define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_ACCESSIBLE                                                    (0U)
 #define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_ROW_WIDTH                                                     (64U)
 #define SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_SIZE                                                      (524288U)
 
 
 #define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_ID                                                        (6U)
 #define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_ECC_TYPE                                                      (0U)
-#define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_INJECT_TYPE                                                   (1U)
-#define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_ACCESSIBLE                                                    (1U)
+#define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_INJECT_TYPE                                                   (0U)
+#define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_ACCESSIBLE                                                    (0U)
 #define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_ROW_WIDTH                                                     (64U)
 #define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_SIZE                                                      (524288U)
 
@@ -1193,7 +1193,7 @@ extern "C"
 
 
 /* Properties of ECC Aggregator instance : MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR */
-#define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS                                             (2U)
+#define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS                                             (1U)
 
 
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID                 (0U)
@@ -1273,7 +1273,7 @@ extern "C"
 
 
 /* Summary of ECC aggregators */
-#define SDL_ECC_AGGR_NUM_ECC_AGGREGATORS                                                           (13U)
+#define SDL_ECC_AGGR_NUM_ECC_AGGREGATORS                                                           (12U)
 
 #ifdef __cplusplus
 }

@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -122,30 +122,31 @@ typedef uint32_t SDL_ECC_MemType;
 
 #if defined(SOC_AM263X)
 
-#define SDL_SOC_ECC_AGGR                                            (0)
-#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1)
-#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (2)
-#define SDL_R5FSS1_CORE0_ECC_AGGR                                   (3)
-#define SDL_R5FSS1_CORE1_ECC_AGGR                                   (4)
-#define SDL_HSM_ECC_AGGR                                            (5)
-#define SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR                         (6)
-#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (7)
-#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (8)
-#define SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (9)
-#define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (10)
-#define SDL_CPSW3GCSS_ECC_AGGR                                      (11)
+#define SDL_SOC_ECC_AGGR                                            (0U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (2U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR                                   (3U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR                                   (4U)
+#define SDL_HSM_ECC_AGGR                                            (5U)
+#define SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR                         (6U)
+#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (7U)
+#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (8U)
+#define SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (9U)
+#define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (10U)
+#define SDL_CPSW3GCSS_ECC_AGGR                                      (11U)
 #define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
 #endif
 
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
 
-#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (0)
-#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (1)
-#define SDL_MSS_ECC_AGG_MSS                                         (2)
-#define SDL_DSS_ECC_AGG                                             (3)
-#define SDL_MSS_MCANA_ECC                                           (4)
-#define SDL_MSS_MCANB_ECC                                           (5)
-#define SDL_ECC_MEMTYPE_MAX                                         (SDL_MSS_MCANB_ECC + 1U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (0U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (1U)
+#define SDL_MSS_ECC_AGG_MSS                                         (2U)
+#define SDL_DSS_ECC_AGG                                             (3U)
+#define SDL_MSS_MCANA_ECC                                           (4U)
+#define SDL_MSS_MCANB_ECC                                           (5U)
+#define SDL_CPSW3GCSS_ECC_AGGR                                      (6U)
+#define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
 
 #endif
 /* The following are the memory sub type for Memory type

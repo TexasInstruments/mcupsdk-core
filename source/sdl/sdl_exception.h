@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for Exception handling
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,25 +57,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/** ===========================================================================
- *
- * @defgroup SDL_EXCEPTION_API SDL EXCEPTION API
- *
- * ============================================================================
- */
-/**
-@defgroup SDL_EXCEPTION_DATASTRUCT  SDL EXCEPTION Data Structures
-@ingroup SDL_EXCEPTION_API
-*/
-/**
-@defgroup SDL_EXCEPTION_FUNCTION  SDL EXCEPTION Functions
-@ingroup SDL_EXCEPTION_API
-*/
-/**
-@defgroup SDL_EXCEPTION_MACROS SDL EXCEPTION Macro defines
-@ingroup SDL_EXCEPTION_API
-*/
 
 
 /** \brief Format of Call back function for ECC error events */

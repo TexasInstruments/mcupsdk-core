@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1186,11 +1186,17 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
                         errAddrOffset =  ((uintptr_t)pECCErrorConfig->pErrMem - memConfig.memStartAddr)
                                         / ((memConfig.stride)*2U);
                     }
-                    else if(memSubType > 0x16U)
+                    else if((memSubType > 0x16U) && (memSubType < 0x1BU))
                     {
                         /* Calculate error offset */
                         errAddrOffset =  ((uintptr_t)pECCErrorConfig->pErrMem - memConfig.memStartAddr)
-                                        / ((memConfig.stride)*4U);
+                                        / ((memConfig.stride)*4);
+                    }
+                    else
+                    {
+                        /* Calculate error offset */
+                        errAddrOffset =  ((uintptr_t)pECCErrorConfig->pErrMem - memConfig.memStartAddr)
+                                        / (memConfig.stride);
                     }
                 }
                 else
