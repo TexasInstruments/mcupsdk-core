@@ -1638,6 +1638,240 @@ for(i=1;i<=num_of_iterations;i++){
 }
 \endcode
 
+\cond SOC_AM263X
+## Example Usage of ICSSM
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the RAM address, ECC aggregator and ECC aggregator RAMID for inject the ECC error
+\cond SOC_AM263X
+\code{.c}
+#define SDL_ICSSM_DRAM0								(1U)
+#define	SDL_ICSSM_DRAM1								(0U)
+#define	SDL_ICSSM_PR1_PDSP0_IRAM					(0U)
+#define	SDL_ICSSM_PR1_PDSP1_IRAM					(0U)
+#define SDL_ICSSM_RAM								(0U)
+
+#define SDL_ICSSM_MAX_MEM_SECTIONS           		(1u)
+
+#if SDL_ICSSM_DRAM0
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48000000u) /* ICSSM DRAM0 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM_DRAM1
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48002000u) /* ICSSM DRAM1 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM_PR1_PDSP0_IRAM
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48034000u) /* ICSSM PR1 PDSP0 IRAM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM_PR1_PDSP1_IRAM
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48038000u) /* ICSSM PR1 PDSP1 IRAM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM_RAM
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48010000u) /* ICSSM RAM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID
+#endif
+\endcode
+\endcond
+
+This structure defines the elements of ECC  Init configuration
+\code{.c}
+static SDL_ECC_MemSubType ECC_Test_ICSSM_subMemTypeList[SDL_ICSSM_MAX_MEM_SECTIONS] =
+{
+    SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_ICSSM_ECCInitConfig =
+{
+    .numRams = SDL_ICSSM_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_ICSSM_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+\endcode
+
+ESM callback function
+\cond SOC_AM263X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+
+
+    printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x\r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    printf("\r\nTake action\r\n");
+    if(esmIntrType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+    }
+    retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Any additional customer specific actions can be added here */
+    retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+    printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+               "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
+               eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
+               (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);
+
+    if (eccErrorInfo.injectBitErrCnt != 0)
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+    }
+    else
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+    }
+
+    retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+
+    esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+
+Event BitMap for ECC ESM callback for ICSSM
+\cond SOC_AM263X
+\code{.c}
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x00000000u, 0x00000000u, 0x00006000u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+     .priorityBitmap = {0x00000000u, 0x00000000u, 0x00002000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00006000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+\endcode
+\endcond
+
+Initialize ECC memory for the ECC aggregator
+\code{.c}
+result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+\endcode
+
+\cond SOC_AM263X
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+\endcode
+\endcond
+
+Initialize ECC parameters for single and double bit error injection
+\code{.c}
+result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_ICSSM_ECCInitConfig);
+\endcode
+
+Execute ECC ICSSM single bit inject test
+\code{.c}
+int32_t ECC_Test_run_ICSSM_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+	DebugP_log("\r\nICSSM Single bit error inject: starting \r\n");
+	
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
+
+    /* Run one shot test for ICSSM 1 bit error */
+    injectErrorConfig.flipBitMask = 0x02;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+        retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+
+        DebugP_log("\r\nICSSM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete\r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}
+\endcode
+
+Execute ECC ICSSM double bit inject test
+\code{.c}
+int32_t ECC_Test_run_ICSSM_2BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+	
+	DebugP_log("\r\nICSSM Double bit error inject: starting \r\n");
+
+    /* Run one shot test for ICSSM 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+       retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+        DebugP_log("\r\nICSSM Double bit error inject: pErrMem fixed location = 0x%p once test complete: the value of pErrMem is 0x%p\r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}
+\endcode
+\endcond
 ## API
 
 \ref SDL_ECC_AGGR_API

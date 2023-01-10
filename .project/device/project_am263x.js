@@ -159,6 +159,7 @@ const example_file_list = [
 	"examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
+	"examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
     "examples/sdl/rti/UC1/.project/project.js",
     "examples/sdl/rti/UC2/.project/project.js",
     "examples/sdl/rti/UC3/.project/project.js",
