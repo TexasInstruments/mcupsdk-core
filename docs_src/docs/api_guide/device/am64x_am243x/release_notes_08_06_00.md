@@ -215,7 +215,6 @@ Position Sense HDSL         | R5F            | YES               | FreeRTOS, NOR
 Position Sense EnDat        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode for single channel, Load share mode, Recovery Time for 2.2 command set              |  16 MHz Baud Rate Different cable lengths, Continuous clock mode for multi channel
 Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support            |  -
 
-
 ### Networking
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                                                                                                    | Key features not tested
@@ -269,12 +268,84 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Resolution/Comments
 </tr>
 <tr>
+    <td> MCUSDK-9458
+    <td> Errata i2310 causes erroneous set of UART timeout interrut
+    <td> UART
+    <td> 8.0.0 onwards
+    <td> AM64x, AM243x
+    <td> Errata, Implemented the Workaround
+</tr>
+<tr>
+    <td> MCUSDK-9401
+    <td> AM243x LP: Bootloader: Uart uniflash setting incorrect QE bit
+    <td> SBL
+    <td> 8.5.0 onwards
+    <td> AM243x
+    <td> Updated the Sysconfig to set correct QE bit value
+</tr>
+<tr>
+    <td> MCUSDK-9398
+    <td> Change to GPIO interrupt router output allocation not working in Sysconfig
+    <td> GPIO
+    <td> 8.5.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-9044
+    <td> Strapping mode in phy is not giving correct link speed
+    <td> Ethernet
+    <td> 8.5.0 onwards
+    <td> AM64x, AM243x
+    <td> Phy configuration for strapped and forced mode was not correctly handled
+</tr>
+<tr>
+    <td> MCUSDK-9042
+    <td> Failure in Bootloader_loadSelfCpu for CORE_ID_R5FSS0_1 for AM2432 devices
+    <td> SBL
+    <td> 8.5.0 onwards
+    <td> AM243x
+    <td> Changes to check for dual core mode before doing init for second core
+</tr>
+<tr>
     <td> MCUSDK-8985
     <td> Potential Infinite loop in OSPI_utilLog2 defined in ospi_v0.c
     <td> OSPI
-    <td> 7.3.0 onwards
+    <td> 8.4.0 onwards
     <td> AM64x, AM243x
-    <td> Switched to a LUT based log2 calculation
+    <td> Incorrect condition for loop termination
+</tr>\
+<tr>
+    <td> MCUSDK-8383
+    <td> Load from JSON feature fails in SysConfig in Windows PC
+    <td> Flash
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Updated the sysconfig to use OS agnostic copy funtion
+</tr>
+<tr>
+    <td> MCUSDK-8106
+    <td> 8MHZ endat encoder showing CRC failure
+    <td> Position Sense EnDat
+    <td> 8.4.0 onwards
+    <td> AM64x
+    <td> Endat Initialization was incorrect
+</tr>
+<tr>
+    <td> MCUSDK-9304
+    <td> LWIP CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
+    <td> ENET
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed the udp examples and added udp client socket example
+</tr>
+<tr>
+    <td> MCUSDK-9185
+    <td> Enet Lwip CPSW example: Correct MAC address not available from EEPROM on custom board and Pg1.0 lp causes example crash
+    <td> ENET
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
 </tr>
 </table>
 
@@ -411,14 +482,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-8106
-    <td> 8MHZ endat encoder showing CRC failure
-    <td> Position Sense EnDat
-    <td> 8.4.0
-    <td> AM64x
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-8108
     <td> EtherNet/IP : PTP Device is unable to keep offset under 1000 ns
     <td> Ethernet/IP Adapter
@@ -471,14 +534,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> LWIP web server application crashes in server stress test
     <td> Enet, LWIP
     <td> 8.3.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8383
-    <td> Load from JSON feature fails in SysConfig in Windows PC
-    <td> Flash
-    <td> 8.4.0
     <td> AM64x, AM243x
     <td> -
 </tr>

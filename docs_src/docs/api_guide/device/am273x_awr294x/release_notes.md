@@ -4,6 +4,7 @@
 
 Refer the below pages for release specific information,
 
+- \subpage RELEASE_NOTES_08_06_00_PAGE
 - \subpage RELEASE_NOTES_08_05_00_PAGE
 - \subpage RELEASE_NOTES_08_04_00_PAGE
 - \subpage RELEASE_NOTES_08_03_00_PAGE
