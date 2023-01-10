@@ -232,7 +232,10 @@ struct endat_pruss_xchg
     volatile uint8_t endat_ch0_syn_bit;
     volatile uint8_t endat_ch1_syn_bit;
     volatile uint8_t endat_ch2_syn_bit;
-
+    uint32_t endat_ch0_rt;
+    uint32_t endat_ch1_rt;
+    uint32_t endat_ch2_rt;
+    uint64_t icssg_clk;
 };
 
 #ifdef __cplusplus

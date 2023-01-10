@@ -66,6 +66,20 @@ LOOP_WAIT_FOR_ENABLED_CHANNELS?:
 
     QBNE  LOOP_WAIT_FOR_ENABLED_CHANNELS?, R14.b1, 0
     .endm
+
+; macro for enable PRU cycle counter
+; USE: R14 register
+M_ENABLE_PRU_CYCLE_COUNTER .macro
+   .if $isdefed("ENABLE_MULTI_MAKE_TXPRU")
+	LBCO	&R14, c28, 0, 4
+	SET 	R14, R14, 3
+	SBCO	&R14, c28, 0, 4
+	.else
+	LBCO	&R14, c11, 0, 4
+	SET 	R14, R14, 3
+	SBCO	&R14, c11, 0, 4
+	.endif
+  .endm
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
 ; Assembler Directives Section
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;/
@@ -134,16 +148,9 @@ ENDAT_MAIN:
 	.asg    ICSS_CFG_PRU1_ENDAT_RXCFG,    ICSS_CFG_PRUx_ENDAT_RXCFG
 	.endif
 
-	; enable PRU0 cycle counter
-	.if $isdefed("ENABLE_MULTI_MAKE_TXPRU")
-	LBCO	&R0, c28, 0, 4
-	SET 	R0, R0, 3
-	SBCO	&R0, c28, 0, 4
-	.else
-	LBCO	&R0, c11, 0, 4
-	SET 	R0, R0, 3
-	SBCO	&R0, c11, 0, 4
-	.endif
+	; enable PRU cycle counter
+    M_ENABLE_PRU_CYCLE_COUNTER
+
 
 	.if	$isdefed("ENDAT_FW_HW_INIT")
 	; Initalize ENDAT mode
@@ -922,6 +929,55 @@ ENDAT_HOST_CMD_END:
 
 
 	.if	$isdefed("ENABLE_MULTI_CHANNEL")
+M_CALC_RECOV_TIME_MULTI_CH .macro
+    ;enable PRU cycle counter
+    M_ENABLE_PRU_CYCLE_COUNTER
+	ZERO		&R14,	4
+ ; waiting for raising edge of clock for all connected channels
+ENDAT_TD_LAST_RISING_CLOCK_MULTI_CH?:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_TXCFG  ;read clcok_status
+	LBCO	&R27.w0,	ICSS_CFG,	SCRATCH1.w0,	2
+    AND     R27.b2, R27.b1, ENDAT_ENABLE_CHx_IN_USE  ; doing  AND of 8th(ch0), 9th(ch1) and 10th(ch2) bits with channel mask
+    QBNE   ENDAT_TD_LAST_RISING_CLOCK_MULTI_CH?,  R27.b2, ENDAT_ENABLE_CHx_IN_USE ; check clock_status bits for all connected channels
+;set PRU counter to zero
+	SBCO 	&R14, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+;waiting for RX complete
+    LDI  R28.w0, 0
+W_RX_MULTI?:
+    QBBC    ENDAT_SKIP_MULTI_WRX_CH0?, ENDAT_ENABLE_CHx_IN_USE,	0
+    QBBS    ENDAT_SKIP_MULTI_WRX_CH0?, R28.b1,	0
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH0_CFG0
+	LBCO	&R27,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS	ENDAT_SKIP_MULTI_WRX_CH0?,	R27,	28
+    LBCO 	&R27, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    SBCO    &R27, PRUx_DMEM,  ENDAT_CH0_RT_OFFSET, 4
+    SET     R28.b1, R28.b1, 0
+ENDAT_SKIP_MULTI_WRX_CH0?:
+
+;ch1 waiting for RX complete
+    QBBC    ENDAT_SKIP_MULTI_WRX_CH1?, ENDAT_ENABLE_CHx_IN_USE,	1
+    QBBS    ENDAT_SKIP_MULTI_WRX_CH1?, R28.b1,	1
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH1_CFG0
+	LBCO	&R27,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS	ENDAT_SKIP_MULTI_WRX_CH1?,	R27,	28
+    LBCO 	&R27, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    SBCO    &R27, PRUx_DMEM,  ENDAT_CH1_RT_OFFSET, 4
+    SET     R28.b1, R28.b1, 1
+ENDAT_SKIP_MULTI_WRX_CH1?:
+;ch2 waiting for RX complete
+    QBBC    ENDAT_SKIP_MULTI_WRX_CH2?, ENDAT_ENABLE_CHx_IN_USE,	2
+    QBBS    ENDAT_SKIP_MULTI_WRX_CH2?, R28.b1,	2
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH2_CFG0
+	LBCO	&R27,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS	ENDAT_SKIP_MULTI_WRX_CH2?,	R27,	28
+    LBCO 	&R27, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    SBCO    &R27, PRUx_DMEM,  ENDAT_CH2_RT_OFFSET, 4
+    SET     R28.b1, R28.b1, 2
+ENDAT_SKIP_MULTI_WRX_CH2?:
+    AND     R28.b0, R28.b1, ENDAT_ENABLE_CHx_IN_USE
+    QBNE    W_RX_MULTI?,  R28.b0, ENDAT_ENABLE_CHx_IN_USE
+    .endm
+
 
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ; receive & down sample (invoked for non-CRC bits)
@@ -1056,7 +1112,7 @@ ENDAT_CRC_CH0_END?:
 ; Requires: rx_size (R2.w1)
 ; Uses: R6.b[0-2] (ff0), R7.b[0-2] (ff1), R8.b[0-2] (ff2), R9.b[0-2] (ff3), R10.b[0-2] (ff4), R11.b[0-2](ex,crc_recvd), R12.b[0-2](crc_calc), R2.b3(cnt)
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
-M_OTF_RECEIVE	.macro	Ra, Rb, Rc, Rd, Re, Rf, Ts
+M_OTF_RECEIVE	.macro	Ra, Rb, Rc, Rd, Re, Rf, Rt, Ts
 
 	; initialize CRC flip-flops, i.e. ff[0-4] = 1
 	LDI32		R6,	0x010101
@@ -1093,7 +1149,10 @@ ENDAT_RX_LE_32_BITS?:
 	RSB		R2.b3,	R2.b3,	5
 	M_OTF_RECEIVE_AND_DOWNSAMPLE	Rb, Rd, Rf, R11, R2.b3
 ENDAT_RX_CRC?:
-
+    QBEQ    ENDAT_MULTI_SKIP_CALCU_RT?, Rt,	0
+    QBBC    ENDAT_MULTI_SKIP_CALCU_RT?,  Rt,   Ts
+    M_CALC_RECOV_TIME_MULTI_CH
+ENDAT_MULTI_SKIP_CALCU_RT?:
 	; FN_FORMAT_CRC returns formatted CRC in R12, requires R6-R10 (ff0-4)
         CALL2		FN_FORMAT_CRC
 
@@ -1119,9 +1178,116 @@ ENDAT_CRC_CH2_SUCCESS?:
 	SET		R0.b2,	R0.b2,	Ts
 ENDAT_CRC_CH2_FAILURE?:
 	.endm
-
 	.else ; ENABLE_MULTI_CHANNEL
 
+
+
+; macro for ch0
+M_CALC_RECOV_TIME_CH0 .macro
+    ;enable PRU cycle counter
+    M_ENABLE_PRU_CYCLE_COUNTER
+	ZERO		&R14,	4
+ENDAT_TD_LAST_RISING_CLOCK_CH0?:
+	LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_TXCFG
+	LBCO	&R27.w0,	ICSS_CFG,	SCRATCH1.w0,	2
+    QBBC            ENDAT_TD_LAST_RISING_CLOCK_CH0?,  R27.w0,  8
+    ;set pru counter to zero
+	SBCO 	&R14, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    ; wait for rx complete
+WRXCH0?:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH0_CFG0
+	LBCO	&R27,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		WRXCH0?,	R27,	28
+
+    ; read pru counter at time when rx start
+
+	LBCO 	&R27, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    ; store in DMEM
+    SBCO    &R27, PRUx_DMEM,  ENDAT_CH0_RT_OFFSET, 4
+
+   .endm
+;macro for channel 1
+M_CALC_RECOV_TIME_CH1 .macro
+    ; enable PRU cycle counter
+    M_ENABLE_PRU_CYCLE_COUNTER
+	ZERO		&R14,	4
+ENDAT_TD_LAST_RISING_CLOCK_CH1?:
+	LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_TXCFG
+	LBCO	&R27.w0,	ICSS_CFG,	SCRATCH1.w0,	2
+    QBBC            ENDAT_TD_LAST_RISING_CLOCK_CH1?,  R27.w0,  9
+
+    ;set pru counter to zero
+	SBCO 	&R14, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+
+    ; wait for rx complete
+WRXCH1?:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH1_CFG0
+	LBCO	&R27,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		WRXCH1?,	R27,	28
+
+    ; read pru counter at time when rx start
+	LBCO 	&R27, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+
+    ; store in DMEM
+    SBCO    &R27, PRUx_DMEM,  ENDAT_CH1_RT_OFFSET, 4
+
+   .endm
+;macro for ch2
+M_CALC_RECOV_TIME_CH2 .macro
+    ;enable PRU counter
+    M_ENABLE_PRU_CYCLE_COUNTER
+	ZERO		&R14,	4
+ENDAT_TD_LAST_RISING_CLOCK_CH2?:
+	LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_TXCFG
+	LBCO	&R27.w0,	ICSS_CFG,	SCRATCH1.w0,	2
+    QBBC            ENDAT_TD_LAST_RISING_CLOCK_CH2?,  R27.w0,  10
+
+    ;set pru counter to zero
+    .if $isdefed("ENABLE_MULTI_MAKE_TXPRU")
+	    SBCO 	&R14, c28, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    .else
+	    SBCO 	&R14, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+	.endif
+
+
+        ; wait for rx complete
+WRXCH2?:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH2_CFG0
+	LBCO	&R27,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		WRXCH2?,	R27,	28
+
+
+    ; read pru counter at time when rx start
+    .if $isdefed("ENABLE_MULTI_MAKE_TXPRU")
+	    LBCO 	&R27, c28, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+    .else
+	    LBCO 	&R27, c11, PRUx_CNTL_CYCLE_COUNT_OFFSET, 4
+	.endif
+
+    ; store in DMEM
+    SBCO    &R27, PRUx_DMEM,  ENDAT_CH2_RT_OFFSET, 4
+   .endm
+
+   ;macro for RT
+M_RECOVERY_TIME_CALCU .macro
+    .if $isdefed("ENABLE_MULTI_MAKE_RTU")
+        M_CALC_RECOV_TIME_CH0
+	.elseif $isdefed("ENABLE_MULTI_MAKE_PRU")
+        M_CALC_RECOV_TIME_CH1
+	.elseif $isdefed("ENABLE_MULTI_MAKE_TXPRU")
+        M_CALC_RECOV_TIME_CH2
+	.else
+        QBBC            ENDAT_SKIP_RT_CH0?, ENDAT_ENABLE_CHx,	0
+        M_CALC_RECOV_TIME_CH0
+ENDAT_SKIP_RT_CH0?:
+        QBBC            ENDAT_SKIP_RT_CH1?, ENDAT_ENABLE_CHx,	1
+        M_CALC_RECOV_TIME_CH1
+ENDAT_SKIP_RT_CH1?:
+        QBBC            ENDAT_SKIP_RT_CH2?, ENDAT_ENABLE_CHx,	2
+        M_CALC_RECOV_TIME_CH2
+ENDAT_SKIP_RT_CH2?:
+    .endif
+    .endm
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ; receive & down sample (invoked for non-CRC bits)
 ; Returns: received data in Rx - caller has to zero or provide value to continue
@@ -1199,7 +1365,7 @@ ENDAT_CRC_END?:
 ; Uses: R12.b0 (ff0), R12.b1 (ff1), R12.b2 (ff2), R12.b3 (ff3), R3.b2 (ff4), R3.b3(ex,crc_recvd), R2.b3 (crc_calc,cnt)
 ; REVISIT: More optimization may be required or can be done at least in M_INIT_CRC_FLIP_FLOPS - defer those till a requirement comes
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
-M_OTF_RECEIVE	.macro	Ra, Rb, Ts
+M_OTF_RECEIVE	.macro	Ra, Rb, Rt, Ts
 
 	; initialize CRC flip-flops, i.e. ff[0-4] = 1
 	LDI32		R12,	0x01010101
@@ -1232,7 +1398,10 @@ ENDAT_RX_LE_32_BITS?:
 	RSB		R2.b3,	R2.b3,	5
 	M_OTF_RECEIVE_AND_DOWNSAMPLE	Rb, R3.b3, R2.b3, R3.b0, R3.b1
 ENDAT_RX_CRC?:
-
+    QBEQ    ENDAT_SKIP_CALCU_RT?, Rt,	0
+    QBBC    ENDAT_SKIP_CALCU_RT?,  Rt,   Ts
+    M_RECOVERY_TIME_CALCU
+ENDAT_SKIP_CALCU_RT?:
 	M_CALC_CRC	R2.b3, R12.b0, R12.b1, R12.b2, R12.b3, R3.b2
 
 	QBEQ		ENDAT_CRC_SUCCESS?,	R2.b3,	R3.b3	; crc: calculated - R2.b3, received - R3.b3
@@ -1288,11 +1457,19 @@ ENDAT_SKIP34_PRE_CH1:
 	LDI		R3.b0,	26
 	LDI		R3.b1,	4 + 16
 ENDAT_SKIP34_PRE_CH2:
+   ; set bit for calculation of RT
+    LDI  R27.b0,  0x1
+    QBBC	ENDAT_SKIP_RT_FOR_CD2_1, ENDAT_CMDTYP_NO_SUPPLEMENT_REG, 2
+    QBBS	ENDAT_RT_FOR_CD2_2, ENDAT_CMDTYP_NO_SUPPLEMENT_REG,	0
+ENDAT_SKIP_RT_FOR_CD2_1:
+   ; unset bit for calculation of RT
+    LDI  R27.b0,  0
+ENDAT_RT_FOR_CD2_2:
 
 	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-	M_OTF_RECEIVE	R15,	R16,	R19,	R20,	R23,	R24,	0
+	M_OTF_RECEIVE	R15,	R16,	R19,	R20,	R23,	R24,	R27.b0,   0
 	.else
-	M_OTF_RECEIVE	R15,	R16,	0
+	M_OTF_RECEIVE	R15,	R16,	R27.b0,   0
 	.endif
 
 	QBBC            ENDAT_SKIP35_CH0, ENDAT_ENABLE_CHx,	0
@@ -1582,38 +1759,108 @@ ENDAT_SKIP18_CH2:
 	; Check whether last bit is sent out
 
 	.if $isdefed("ENABLE_MULTI_MAKE_RTU")
-WBRTU17:
-	QBBS		WBRTU17,	R31,	5
+;waiting for Tx fifo complete
+WB_RTU_17:
+    AND R28.b0, R31.b0, 0x1C
+    QBNE   WB_RTU_17, R28.b0, 0
+;waiting for Rx start first time
+W_RX_RTU_CH0:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH0_CFG0
+	LBCO	&R28,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		W_RX_RTU_CH0,	R28,	28
+    ;RT claculation
+    M_CALC_RECOV_TIME_CH0
     .elseif $isdefed("ENABLE_MULTI_MAKE_PRU")
-WBPRU18:
-	QBBS		WBPRU18,	R31,	13
+;waiting for Tx fifo complete
+WB_PRU_17:
+    AND R28.b0, R31.b1, 0x1C
+    QBNE   WB_PRU_17, R28.b0, 0
+;waiting for Rx start first time
+W_RX_PRU_CH1:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH1_CFG0
+	LBCO	&R28,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		W_RX_PRU_CH1,	R28,	28
+    ;RT Calculation
+    M_CALC_RECOV_TIME_CH1
     .elseif $isdefed("ENABLE_MULTI_MAKE_TXPRU")
-WBTXPRU19:
-	QBBS		WBTXPRU19,	R31,	21
-    .else
-	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-        QBBC            ENDAT_SKIP19_CH0, ENDAT_ENABLE_CHx_IN_USE,	0
+;waiting for Tx fifo complete
+WB_TXPRU_17:
+    AND R28.b0, R31.b2, 0x1C
+    QBNE   WB_TXPRU_17, R28.b0, 0
+;waiting for Rx start first time
+W_RX_TXPRU_CH2:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH2_CFG0
+	LBCO	&R28,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		W_RX_TXPRU_CH2,	R28,	28
+    ;RT Calculation
+    M_CALC_RECOV_TIME_CH2
+    .elseif	$isdefed("ENABLE_MULTI_CHANNEL")
+    ;waiting for Tx fifo complete
+    ZERO &R28, 4
+WB_TX_FIFO_COM_MULTI_CH:
+    QBBC            ENDAT_SKIP100_MULTI_CH0, ENDAT_ENABLE_CHx_IN_USE,	0
+    AND R28.b0, R31.b0, 0x1C
+ENDAT_SKIP100_MULTI_CH0:
+    QBBC            ENDAT_SKIP100_MULTI_CH1, ENDAT_ENABLE_CHx_IN_USE,	1
+    AND R28.b1, R31.b1, 0x1C
+ENDAT_SKIP100_MULTI_CH1:
+    QBBC            ENDAT_SKIP100_MULTI_CH2, ENDAT_ENABLE_CHx_IN_USE,	2
+    AND R28.b2, R31.b2, 0x1C
+ENDAT_SKIP100_MULTI_CH2:
+    QBNE   WB_TX_FIFO_COM_MULTI_CH, R28, 0
+
+ ; waiting for TX complete for all three channels
+    ZERO &R28, 4
+WB_TX_COM_MULTI_CH:
+    QBBC            ENDAT_SKIP101_MULTI_CH0, ENDAT_ENABLE_CHx_IN_USE,	0
+    AND R28.b0, R31.b0, 0x20
+ENDAT_SKIP101_MULTI_CH0:
+    QBBC            ENDAT_SKIP101_MULTI_CH1, ENDAT_ENABLE_CHx_IN_USE,	1
+    AND R28.b1, R31.b1, 0x20
+ENDAT_SKIP101_MULTI_CH1:
+    QBBC            ENDAT_SKIP101_MULTI_CH2, ENDAT_ENABLE_CHx_IN_USE,	2
+    AND R28.b2, R31.b2, 0x20
+ENDAT_SKIP101_MULTI_CH2:
+    QBNE   WB_TX_COM_MULTI_CH, R28, 0
+    M_CALC_RECOV_TIME_MULTI_CH
 	.else
-        QBBC            ENDAT_SKIP19_CH0, ENDAT_ENABLE_CHx,	0
-	.endif
-WB17:
-	QBBS		WB17,	R31,	5 ; Ch0
+    QBBC            ENDAT_SKIP19_CH0, ENDAT_ENABLE_CHx,	0
+;waiting for Tx fifo complete
+WB_TX_FIFO_COM_CH0:
+    AND R28.b0, R31.b0, 0x1C
+    QBNE   WB_TX_FIFO_COM_CH0, R28.b0, 0
+;waiting for Rx start first time
+W_RX_LOW_CH0:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH0_CFG0
+	LBCO	&R28,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		W_RX_LOW_CH0,	R28,	28
+    M_CALC_RECOV_TIME_CH0
+
 ENDAT_SKIP19_CH0:
-	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-        QBBC            ENDAT_SKIP19_CH1, ENDAT_ENABLE_CHx_IN_USE,	1
-	.else
-        QBBC            ENDAT_SKIP19_CH1, ENDAT_ENABLE_CHx,	1
-	.endif
-WB18:
-	QBBS		WB18,	R31,	13 ; Ch1
+	QBBC            ENDAT_SKIP19_CH1, ENDAT_ENABLE_CHx,	1
+;waiting for Tx fifo complete
+WB_TX_FIFO_COM_CH1:
+    AND R28.b0, R31.b1, 0x1C
+    QBNE   WB_TX_FIFO_COM_CH1, R28.b0, 0
+;waiting for Rx start first time
+W_RX_LOW_CH1:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH1_CFG0
+	LBCO	&R28,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		W_RX_LOW_CH1,	R28,	28
+    M_CALC_RECOV_TIME_CH1
+
 ENDAT_SKIP19_CH1:
-	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-        QBBC            ENDAT_SKIP19_CH2, ENDAT_ENABLE_CHx_IN_USE,	2
-	.else
-        QBBC            ENDAT_SKIP19_CH2, ENDAT_ENABLE_CHx,	2
-	.endif
-WB19:
-	QBBS		WB19,	R31,	21 ; Ch2
+    QBBC            ENDAT_SKIP19_CH2, ENDAT_ENABLE_CHx,	2
+;waiting for Tx fifo complete
+WB_TX_FIFO_COM_CH2:
+    AND R28.b0, R31.b2, 0x1C
+    QBNE   WB_TX_FIFO_COM_CH2, R28.b0, 0
+;waiting for Rx start first time
+W_RX_LOW_CH2:
+    LDI     SCRATCH1.w0, ICSS_CFG_PRUx_ENDAT_CH2_CFG0
+	LBCO	&R28,	ICSS_CFG,	SCRATCH1.w0,	4
+	QBBS		W_RX_LOW_CH2,	R28,	28
+    M_CALC_RECOV_TIME_CH2
 ENDAT_SKIP19_CH2:
   .endif
 	RET2
@@ -1789,40 +2036,51 @@ ENDAT_SKIP41_CH1:
 	LDI		R3.b1,	4 + 16
 ENDAT_SKIP41_CH2:
     .endif
-
+    LDI R27.b0,  0x1
 	AND		R2.b0,	R1.b2,	(0x3 << 3)
 
 	QBEQ		ENDAT_START_OTF,	R2.b0,	0
 	SUB		R2.w1,	R2.w1,	30
+    ;RT after additional info 1
+    LDI  R27.b0,  0x2
 	QBNE		ENDAT_START_OTF,	R2.b0,	(0x3 << 3)
 	SUB		R2.w1,	R2.w1,	30
+    ;RT after additional info 2
+    LDI  R27.b0,   0x4
 ENDAT_START_OTF:
+   ;If it is 2.1 command  then skip RT calculation
+    QBBC	ENDAT_SKIP_RT_FOR_CMD2_1, ENDAT_CMDTYP_NO_SUPPLEMENT_REG,	2
+    QBBS	ENDAT_RT_FOR_NSP_CMD2_2, ENDAT_CMDTYP_NO_SUPPLEMENT_REG,	0
+    ;Skip RT calculation for supplement command
+ENDAT_SKIP_RT_FOR_CMD2_1:
+    LDI  R27.b0,  0
+ENDAT_RT_FOR_NSP_CMD2_2:
     LDI		R0.b0,	0
 	.if	$isdefed("ENABLE_MULTI_CHANNEL")
 	LDI		R0.b1,	0
 	LDI		R0.b2,	0
 	.endif
 	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-	M_OTF_RECEIVE	R15,	R16,	R19,	R20,	R23,	R24,	0
+	M_OTF_RECEIVE	R15,	R16,	R19,	R20,	R23,	R24,	R27.b0,  0
 	.else
-	M_OTF_RECEIVE	R15,	R16,	0
+	M_OTF_RECEIVE	R15,	R16,	R27.b0,  0
 	.endif
 
 	QBEQ		ENDAT_END_OF_RX,	R2.b0,	0
 	LDI		R2.w1,	29
 
 	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-	M_OTF_RECEIVE	R17,	SCRATCH,	R21,	SCRATCH,	R25,	SCRATCH,	1
+	M_OTF_RECEIVE	R17,	SCRATCH,	R21,	SCRATCH,	R25,	SCRATCH,	R27.b0,   1
 	.else
-	M_OTF_RECEIVE	R17,	SCRATCH,	1
+	M_OTF_RECEIVE	R17,	SCRATCH,	R27.b0,    1
 
 	.endif
 	QBNE		ENDAT_END_OF_RX,	R2.b0,	(0x3 << 3)
 
 	.if	$isdefed("ENABLE_MULTI_CHANNEL")
-	M_OTF_RECEIVE	R18,	SCRATCH,	R22,	SCRATCH,	R26,	SCRATCH,	2
+	M_OTF_RECEIVE	R18,	SCRATCH,	R22,	SCRATCH,	R26,	SCRATCH,   R27.b0,	 2
 	.else
-	M_OTF_RECEIVE	R18,	SCRATCH,	2
+	M_OTF_RECEIVE	R18,	SCRATCH,	R27.b0,   2
 	.endif
 
 ENDAT_END_OF_RX:

@@ -134,495 +134,303 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>To check position value</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 1 to select "Encoder send position values"</td>
+        <td>1. Enter 1 to select "Encoder send position values"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To receive encoder's operating parameters(error messege)</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
+        <td>1. Enter 2 to select "Selection of memory area"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 2 to select "Selection of memory area"</td>
+        <td>2. Enter "B9"  in MRS code to select "Operating parameters"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter "B9"  in MRS code to select "Operating parameters"</td>
-        <td>Crc success </td>
+        <td>3. Enter 4 to select "Encoder to send parameter"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 4 to select "Encoder to send parameter"</td>
-        <td>Crc success </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Error message"</td>
+        <td>4. Enter 0 in "parameter address" for selecting "Error message"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To receive encoder's manufacture parameters for Endat 2.2</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
+        <td>1. Enter 2 to select "Selection of memory area"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 2 to select "Selection of memory area"</td>
+        <td>2. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
+        <td>3. Enter 4 to select "Encoder to send parameter"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 4 to select "Encoder to send parameter"</td>
-        <td>Crc success </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
+        <td>4. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To set values to encoder's operating parameters (error message)</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 2 to select "Selection of memory area"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
+        <td>2. Enter "B9"  in MRS code to select "Operating parameters"</td>
+        <td>Crc success </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>3. Enter 3 to select "Encoder to receive parameter"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>3. Enter 2 to select "Selection of memory area"</td>
-        <td>Crc success </td>
+        <td>4. Enter 0 in "parameter address" for selecting "Error message"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter "B9"  in MRS code to select "Operating parameters"</td>
-        <td>Crc success </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>5. Enter 3 to select "Encoder to receive parameter"</td>
-        <td>Crc success </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Error message"</td>
-        <td>Crc success </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>7. Enter 0 in "parameter value"  for seting value in " Error message"</td>
+        <td>5. Enter 0 in "parameter value"  for seting value in " Error message"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To set values to encoder's manufacturing parameters for Endat 2.2(Status of additional info)</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
+        <td>1. Enter 2 to select "Selection of memory area"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 2 to select "Selection of memory area"</td>
+        <td>2. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
-        <td>Crc success </td>
+        <td>3. Enter 3 to select "Encoder to receive parameter"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 3 to select "Encoder to receive parameter"</td>
-        <td>Crc success </td>
+        <td>4. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
+        <td></td>
     </tr>
     <tr>
         <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
-        <td>Crc success </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>7. Enter 0 in "parameter value"  for seting value in " Status of additional info"</td>
+        <td>5. Enter 0 in "parameter value"  for seting value in " Status of additional info"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To reset encoder</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 5 to select "Encoder receive reset"</td>
+        <td>1. Enter 5 to select "Encoder receive reset"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To receive test values from encoder with port address "0"</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 7 to select "Encoder receive test command"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
+        <td>2. Enter 0 in "enter port address" </td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>3. Enter 7 to select "Encoder receive test command"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter 0 in "enter port address" </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>5. Enter 6 to select "Encoder send test values"</td>
+        <td>3. Enter 6 to select "Encoder send test values"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To receive test values from encoder with port address "E" </td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 7 to select "Encoder receive test command"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
+        <td>2. Enter "E" in "enter port address" </td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>3. Enter 7 to select "Encoder receive test command"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter "E" in "enter port address" </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>5. Enter 6 to select "Encoder send test values"</td>
+        <td>3. Enter 6 to select "Encoder send test values"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To check position value with aditional info.</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 8 to select "Encoder send position values + AI(s)"</td>
+        <td>1. Enter 8 to select "Encoder send position values + AI(s)"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>To receive encoder's operating parameters(error messege)
 		+receive position value with  additional info
 		</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter "B9"  in MRS code to select "Operating parameters"</td>
+        <td>2. Enter "B9"  in MRS code to select "Operating parameters"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 11 to select "Encoder send position values + AI(s) and  send parameter"</td>
+        <td>3. Enter 11 to select "Encoder send position values + AI(s) and  send parameter"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Error message"</td>
-        <td> </td>
+        <td>4. Enter 0 in "parameter address" for selecting "Error message"</td>
+        <td>Crc success</td>
     </tr>
     <tr>
         <td>To receive encoder's manufacture parameters
 		for Endat 2.2 +receive position value with  additional info
-		</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
+        <td>2. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 11 to select "Encoder send position values + AI(s) and send parameter"</td>
+        <td>3. Enter 11 to select "Encoder send position values + AI(s) and send parameter"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
-        <td> </td>
+        <td>4. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
+        <td>Crc success</td>
     </tr>
     <tr>
         <td>To set values to encoder's operating parameters (error message)
 		+receive position value with additional info
-		</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter "B9"  in MRS code to select "Operating parameters"</td>
+        <td>2. Enter "B9"  in MRS code to select "Operating parameters"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 10 to select "Encoder send position values + AI(s) and receive parameter"</td>
+        <td>3. Enter 10 to select "Encoder send position values + AI(s) and receive parameter"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Error message"</td>
+        <td>4. Enter 0 in "parameter address" for selecting "Error message"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>7. Enter 0 in "parameter value"  for seting value in " Error message"</td>
-        <td> </td>
+        <td>5. Enter 0 in "parameter value"  for seting value in " Error message"</td>
+        <td>Crc success</td>
     </tr>
     <tr>
         <td>To set values to encoder's manufacturing parameters for Endat 2.2(Status of additional info)
 		+receive position value with additional info
 		</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 9 to select "Encoder send position values + AI(s) and Selection of memory area"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
+        <td>2. Enter "BD"  in MRS code to select "Parameters of encoder manufacturer for Endat 2.2"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter 10 to select "Encoder send position values + AI(s) and receive parameter"</td>
+        <td>3. Enter 10 to select "Encoder send position values + AI(s) and receive parameter"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>6. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
+        <td>4. Enter 0 in "parameter address" for selecting "Status of additional info"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>7. Enter 0 in "parameter value"  for seting value in " Status of additional info"</td>
-        <td> </td>
+        <td>5. Enter 0 in "parameter value"  for seting value in " Status of additional info"</td>
+        <td>Crc success</td>
     </tr>
     <tr>
         <td>To reset encoder +receive position value with additional info</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>5. Enter 12 to select "Encoder send position values + AI(s) and receive error reset"</td>
+        <td>1. Enter 12 to select "Encoder send position values + AI(s) and receive error reset"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 14 to select "Encoder receive communication command"</td>
+        <td>1. Enter 14 to select "Encoder receive communication command"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter ______in "enter encoder address" </td>
+        <td>2. Enter ______in "enter encoder address" </td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter _____ in  "instruction hex value"</td>
+        <td>3. Enter _____ in  "instruction hex value"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 14 to select "Encoder receive communication command"</td>
+        <td>1. Enter 14 to select "Encoder receive communication command"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter ______in "enter encoder address" </td>
+        <td>2. Enter ______in "enter encoder address" </td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td></td>
-        <td>5. Enter _____ in  "instruction hex value"</td>
+        <td>3. Enter _____ in  "instruction hex value"</td>
         <td>Crc success </td>
     </tr>
     <tr>
         <td>Configure Clock </td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 100 to select "configure clock"</td>
+        <td>1. Enter 100 to select "configure clock"</td>
         <td>Crc success(Tested up to 8MHz)</td>
     </tr>
     <tr>
         <td></td>
-        <td>4. Enter ___ for clock frequency(in Hz)</td>
+        <td>2. Enter ___ for clock frequency(in Hz)</td>
         <td> </td>
     </tr>
     <tr>
         <td>Simulate motor control 2.1 position loop</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 101 to select "Simulate motor control 2.1 position loop"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
+        <td>2. Enter 10000 to select "clock frequency"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>3. Enter 101 to select "Simulate motor control 2.1 position loop"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter 10000 to select "clock frequency"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>5. Rotate the rotor of motor and see the changes in Position value on UART</td>
+        <td>3. Rotate the rotor of motor and see the changes in Position value on UART</td>
         <td>Position Values are changing when rotor moves </td>
     </tr>
     <tr>
         <td>Toggle raw data display</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 102 to select "Toggle raw data display"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 102 to select "Toggle raw data display"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter 1 to select "Encoder send position value"</td>
+        <td>2. Enter 1 to select "Encoder send position value"</td>
         <td>raw data can be displayed </td>
     </tr>
     <tr>
@@ -632,17 +440,52 @@ Shown below is a sample output when the application is run:
     </tr>
     <tr>
         <td>Start continous mode</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 104 to select "Start continous mode"</td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
+        <td>2. Rotate the rotor of motor and see the changes in Position value on UART</td>
+        <td>Position Values are changing when rotor moves </td>
+    </tr>
+    <tr>
+        <td>Configure rx arm counter</td>
+        <td>1. Enter 105 to select "Configure rx arm counter" </td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>3. Enter 104 to select "Start continous mode"</td>
+        <td>2. Enter 0 to select channel 0(only for multi channel configuration) </td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>3. Enter ___ to "select time in ns"</td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td>configure rx clock disable time</td>
+        <td>1. Enter 106 to select "configure rx clock disable time"</td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>2. Enter 0 to select channel 0(only for multi channel configuration)</td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>3. Enter ___ to "select time in ns"</td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td>Simulate motor control 2.2 position loop(safety)</td>
+        <td>1. Enter 107 to select "Simulate motor control 2.2 position loop"</td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>3. Enter 10000 to select "clock frequency"</td>
         <td> </td>
     </tr>
     <tr>
@@ -651,83 +494,23 @@ Shown below is a sample output when the application is run:
         <td>Position Values are changing when rotor moves </td>
     </tr>
     <tr>
-        <td>Configure rx arm counter</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 105 to select "Configure rx arm counter"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter ___ to "select time in ns"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td>configure rx clock disable time</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 106 to select "configure rx clock disable time"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter ___ to "select time in ns"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td>Simulate motor control 2.2 position loop(safety)</td>
-        <td>1. Select Single channel mode from UART menu </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>3. Enter 107 to select "Simulate motor control 2.2 position loop"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>4. Enter 10000 to select "clock frequency"</td>
-        <td> </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>5. Rotate the rotor of motor and see the changes in Position value on UART</td>
-        <td>Position Values are changing when rotor moves </td>
-    </tr>
-    <tr>
         <td>Configure propogation delay(td)</td>
-        <td>1. Select Single channel mode from UART menu </td>
+        <td>1. Enter 108 to select configure propagation delay </td>
         <td> </td>
     </tr>
     <tr>
         <td></td>
-        <td>2. Enter 0 to select channel 0 </td>
+        <td>2. Enter 0 to select channel 0(only for multi channel configuration)</td>
         <td> </td>
     </tr>
     <tr>
+        <td>To read Recovery Time</td>
+        <td>1. Enter 8 to select "Encoder send position values + AI(s)" </td>
+        <td>Crc Success </td>
+    </tr>
+    <tr>
         <td></td>
-        <td>3. Enter 108 to select "configure propagation delay"</td>
-        <td> </td>
+        <td>2. Enter 110 for read recovery time from DMEM </td>
+        <td> Recovery Time is set to 1.25 us <= RT <= 3.75us or  10 us <= RT <= 30 us</td>
     </tr>
 </table>

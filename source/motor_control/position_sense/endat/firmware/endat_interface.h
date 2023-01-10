@@ -156,4 +156,11 @@ MASK_FOR_PRIMARY_CORE        .set    0xBC
 ENDAT_CH0_CONFIG_SYN_BIT        .set    0xBD ;0th bit for ch0
 ENDAT_CH1_CONFIG_SYN_BIT        .set    0xBE ;0th bit for ch0
 ENDAT_CH2_CONFIG_SYN_BIT        .set    0xBF ;0th bit for ch0
+; Recovery Time
+ENDAT_CH0_RT_OFFSET .set 0xC0 ;
+ENDAT_CH1_RT_OFFSET .set 0xC4 ;
+ENDAT_CH2_RT_OFFSET .set 0xC8 ;
+
+;icssgclock
+PRUICSSG_CLOCK         .set  0xCD;
 

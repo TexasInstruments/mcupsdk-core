@@ -21,6 +21,7 @@ EnDat is a bidirectional interface for position encoders. During EnDat operation
    -  Channel select
    -  Concurrent multi channel support (up-to 3 encoders with identical part number @ 8MHz maximum)
    -  "Multi Channel with Encoders of Different Make" using load share mode (Each of PRU, RTU-PRU, and TX-PRU from one PRU-ICSSG slice handles one channel)
+   -  Safety Readiness: Recovery time
 
 ## Features Not Supported
 

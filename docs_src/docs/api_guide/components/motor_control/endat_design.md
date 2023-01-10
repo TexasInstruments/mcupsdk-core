@@ -203,6 +203,36 @@ Two registers (a word each) that hold the result are cleared initially. Upon rec
 Thereafter for every valid flag set, 4th bit in the received byte is checked to find the actual received bit and it stored, word crossing is also taken care.
 After all the bits for a position command is received, receive is disabled and is activated only after 2T clock cycles – this is to prevent falsely detecting SB immediately (upon calling this routine back-to-back as mentioned in previous section) after encoder has finished sending data as it can pull data line high for 2T more clock cycles.
 
+####  Recovery Time Measurement
+Recovery Time is measured only for Type 2.2 commands.
+The factory default settings for the Recovery Time is programmed to 10us <= RT <= 30us. It can only be changed to 1.25us <= RT <=3.75us for type 2.2 mode commands. For clock pulse frequence <= 1MHz, RT must be set to 10us <= RT <= 30us.
+The User can set the function parameters in word 3 at "0xB9" memory area for RT range. If bit 0th is unset and 1st bit is set of word3 then RT will belong to large range(10us-30us) and if 0th bit is set and 1st bit is unset of word3 then RT will belong to short range(1.25us to 3.75us).
+
+##### Method for measuring the recovery time for position command
+\image html Endat_Recovery_Time_For_Position.png "Endat Recovery time for Endat 2.2 position command "
+\image html Endat_RT_FlowChart_for_position.png "Endat Recovery time flow-chart for Endat 2.2 position command"
+1. After the CRC bits are received, there is a wait for rising clock edge.
+2. Start the measurement of Recovery Time using PRU cycle counter (The cycle counter is set to zero).
+3. Wait for falling edge of the data from encoder (RX).
+4. Read the PRU cycle counter which gives the value of Recovery Time in PRU Clock Cycle units and store it to DMEM.
+
+
+##### Method for measuring the recovery time for supplement command
+\image html Endat_Recovery_Time_For_Supplement.PNG "Endat Recovery time for Endat 2.2 supplement command "
+\image html Endat_RT_FlowChart_for_supplement.png "Endat Recovery time flow-chart for Endat 2.2 supplement command"
+1. After TX_GO bit is set which starts the TX, wait for TX FIFO level to reach 0
+2. In case of Single Channel or Multi Channel with Encoders of Different Make mode, wait for RX enable. But In case of Multi Channel with Encoders of Same Make mode, wait for TX complete.
+3. After the CRC bits are received, there is a wait for rising clock edge.
+4. Start the measurement of Recovery Time using PRU cycle counter (The cycle counter is set to zero).
+5. Wait for falling edge of the data from encoder (RX).
+6. Read the PRU cycle counter which gives the value of Recovery Time in PRU Clock Cycle units and store it to DMEM.
+
+##### NOTE for Multi-channel Single PRU Mode
+ We can not measure the recovery time as accurately as single channel or multi channel load share, because same PRU has to poll for 3 channels. So we are doing a sequential polling for each channel.
+1. Wait for rising edge in clock for all connected channels
+2. Start the measurement of Recovery Time using PRU cycle counter (The cycle counter is set to zero).
+3. Wait for RX completion on all connected channels. We start checking completion for all connected channels one by one. Whenever completion is detected for a channel, we save the PRU cycle counter value and continue the wait for remaining channels.
+
 ### EnDat Hardware interface
 
 The physical data transmission in EnDat is done using RS-485 standard. The data is transmitted as differential signals using the RS485 between the EnDat Receiver and the Encoder.

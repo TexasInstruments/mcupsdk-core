@@ -1117,6 +1117,14 @@ void endat_command_wait(struct endat_priv *priv)
            ;
     }
 }
+void endat_recovery_time_conversion(struct endat_priv *priv)
+{
+     /* RT: convert cycle to ns */
+    priv->pruss_xchg->endat_ch0_rt = priv->pruss_xchg->endat_ch0_rt * ((float)(1000000000)/priv->pruss_xchg->icssg_clk);
+    priv->pruss_xchg->endat_ch1_rt = priv->pruss_xchg->endat_ch1_rt * ((float)(1000000000)/priv->pruss_xchg->icssg_clk);
+    priv->pruss_xchg->endat_ch2_rt = priv->pruss_xchg->endat_ch2_rt * ((float)(1000000000)/priv->pruss_xchg->icssg_clk);
+
+}
 
 int32_t endat_command_process(struct endat_priv *priv, int32_t cmd,
                           struct cmd_supplement *cmd_supplement)
@@ -1130,6 +1138,11 @@ int32_t endat_command_process(struct endat_priv *priv, int32_t cmd,
 
     endat_command_send(priv);
     endat_command_wait(priv);
+    /* RT configuration(convert cycle to ns time ) for command 2.2*/
+    if( cmd > 7 && cmd < 15 )
+    {
+        endat_recovery_time_conversion(priv);
+    }
     return cmd;
 }
 
@@ -2028,4 +2041,20 @@ struct endat_priv *endat_init(struct endat_pruss_xchg *pruss_xchg,
     endat_priv.pruicss_slicex = slice;
     endat_hw_init(&endat_priv);
     return &endat_priv;
+}
+
+uint32_t endat_get_recovery_time(struct endat_priv *priv)
+{
+    if(priv->channel == 0)
+    {
+        return priv->pruss_xchg->endat_ch0_rt;
+    }
+    else if (priv->channel == 1)
+    {
+        return priv->pruss_xchg->endat_ch1_rt;
+    }
+    else
+    {
+        return priv->pruss_xchg->endat_ch2_rt;
+    }
 }

@@ -284,6 +284,17 @@ void endat_command_send(struct endat_priv *priv);
  */
 void endat_command_wait(struct endat_priv *priv);
 
+
+/**
+ *  \brief  read RT from DMEM
+ *
+ *  \param[in]  priv     cookie returned by endat_init
+ *
+ *   \retval  Value of Recovery Time in nanoseconds
+ *
+ */
+uint32_t endat_get_recovery_time(struct endat_priv *priv);
+
 /**
  *  \brief       update priv with position resolution, id, serial number, encoder
  *               type and supported command set

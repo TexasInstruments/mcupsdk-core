@@ -105,7 +105,7 @@ uint32_t gTaskFxnStack[TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(
 TaskP_Object gTaskObject;
 
 #define VALID_HOST_CMD(x) ((x == 100) || ((x) == 101) || ((x) == 102) || ((x) == 103) || ((x) == 104) || ((x) == 105) || \
-                           ((x) == 106) || ((x) == 107) || ((x) == 108) || ((x) == 109))
+                           ((x) == 106) || ((x) == 107) || ((x) == 108) || ((x) == 109) || ((x) == 110))
 
 #define HAVE_COMMAND_SUPPLEMENT(x) (((x) == 2) || ((x) == 3) || ((x) == 4) || ((x) == 7) || \
                                     ((x) == 9) || ((x) == 10) || ((x) == 11) || ((x) == 13) || ((x) == 14) || \
@@ -355,6 +355,8 @@ static void endat_print_menu(void)
     {
         DebugP_log("\r|109: Configure wire delay                                                     |\n");
     }
+
+    DebugP_log("\r|110: Recovery Time (RT)                                                    |\n");
 
     DebugP_log("\r|------------------------------------------------------------------------------|\n\r|\n");
     DebugP_log("\r| enter value: ");
@@ -1763,6 +1765,33 @@ static void endat_process_host_command(int32_t cmd,
                 }
             }
     }
+    else if(cmd == 110)
+    {
+        uint32_t recovery_time;
+        if(gEndat_is_multi_ch||gEndat_is_load_share_mode)
+        {
+            int32_t j;
+            for( j = 0; j < 3; j++)
+            {
+                if(gEndat_multi_ch_mask & 1 << j)
+                {
+                    endat_multi_channel_set_cur(priv, j);
+                    DebugP_log("channel: %d",priv->channel);
+                    DebugP_log("\t");
+                    recovery_time = endat_get_recovery_time(priv);
+                    DebugP_log("Recovery Time: %d ns", recovery_time);
+                    DebugP_log("\n");
+                }
+            }
+        }
+        else
+        {
+            recovery_time = endat_get_recovery_time(priv);
+            DebugP_log("Recovery Time: %d ns", recovery_time);
+            DebugP_log("\n");
+        }
+
+    }
     else
     {
         DebugP_log("\r| ERROR: non host command being requested to be handled as host command\n|\n|\n");
@@ -1855,17 +1884,11 @@ void endat_main(void *args)
     else
     {
 
-         i= CONFIG_ENDAT0_CHANNEL0;
-         if(i==1)
-             i=0;
+        i = CONFIG_ENDAT0_CHANNEL0 & 0;
 
-         i=CONFIG_ENDAT0_CHANNEL1;
-         if(i==1)
-             i=1;
+        i += CONFIG_ENDAT0_CHANNEL1;
 
-         i=CONFIG_ENDAT0_CHANNEL2;
-         if(i==1)
-             i=2;
+        i += CONFIG_ENDAT0_CHANNEL2<<1;
 
         if(i < 0 || i > 2)
         {
@@ -1921,7 +1944,7 @@ void endat_main(void *args)
     priv->pruss_xchg->endat_delay_50ms = ((icssgclk/1000) * 50);
     priv->pruss_xchg->endat_delay_380ms = ((icssgclk/1000) * 380);
     priv->pruss_xchg->endat_delay_900ms = ((icssgclk/1000) * 900);
-
+    priv->pruss_xchg->icssg_clk = icssgclk;
 
 
     i = endat_pruss_load_run_fw(priv);
