@@ -86,7 +86,7 @@ const enet_pkt_pool_config = {
             displayName: "Large Pool Packet Count",
             default: 48,
             isInteger: true,
-            range: [8, 192]
+            range: [0, 192]
 
         },
         {
@@ -120,12 +120,12 @@ const enet_pkt_pool_config = {
         },
         {
             name: "PktInfoOnlyEnable",
-            description: "Flag to enable packet Info from enet utils library. It should be disabled to avoid utils memory wastage, in case aplication allots packet via other mechanism. (Ex- Lwip pools)",
+            description: "Flag to enable packet Info from enet utils library. It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)",
             displayName: "Only Enable Packet Info Allocation",
             default: false,
             onChange: function (inst, ui) {
                 /* Init delay applicable only for single master mode */
-                if(inst.PktPoolEnable == true) {
+                if(inst.PktInfoOnlyEnable == true) {
                     ui.PktInfoOnlyCount.hidden = false;
                 }
                 else {
@@ -136,7 +136,9 @@ const enet_pkt_pool_config = {
         {
             name: "PktInfoOnlyCount",
             displayName: "PktInfoMem Only Count",
+            description: "DMA Pkt Info structures are only allocated, the buffer memory is not allocated here.",
             default: 16,
+            hidden: true,
             isInteger: true,
             range: [8, 192]
         },

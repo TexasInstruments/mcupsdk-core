@@ -232,7 +232,21 @@ void EnetMem_freeDmaDesc(void *appPriv,
                          EnetUdma_DmaDesc *dmaDescPtr);
 
 #endif
-/*! Ethernet packet allocation function  */
+/*!
+ * \brief Allocate Ethernet Packet
+ *
+ * This function gets a buffer of size greater than or equal to the total buffer size (sum of entries in scatterSegmentSize)
+ * And fills the sglist as per the segment sizes in scatterSegmentSize[]. LC-DMA Rx scatter-gather needs the buffer pointers
+ * to be pre-linked. In that case, these numScatterSegments,scatterSegmentSize[] would be useful to get a Eth Pkt initialized
+ * with multiple buffer pointers.
+ *
+ * \param      [IN] appPriv - appPriv of the Eth Packet
+ * \param      [IN] alignSize - Alignment of the buffer pointers
+ * \param      [IN] numScatterSegments - Number of scatter-segments
+ * \param      [IN] scatterSegmentSize[] - Array with sizes of each scattered segment
+ *
+ * \return EnetDma_Pkt * - Pointer to the EnetDma_Pkt with the buffer pointers in sglist filled.
+ */
 EnetDma_Pkt *EnetMem_allocEthPkt(void *appPriv,
                                  uint32_t alignSize,
                                  uint32_t numScatterSegments,

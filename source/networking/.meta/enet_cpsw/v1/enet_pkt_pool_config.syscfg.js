@@ -87,7 +87,7 @@ const enet_pkt_pool_config = {
             displayName: "Large Pool Packet Count",
             default: 48,
             isInteger: true,
-            range: [8, 192]
+            range: [0, 192]
 
         },
         {
@@ -121,12 +121,12 @@ const enet_pkt_pool_config = {
         },
         {
             name: "PktInfoOnlyEnable",
-            description: "Flag to enable packet Info from enet utils library. It should be disabled to avoid utils memory wastage, in case aplication allots packet via other mechanism. (Ex- Lwip pools)",
+            description: "Flag to enable packet Info from enet utils library. It should be disabled to avoid utils memory wastage, in case application allots packet via other mechanism. (Ex- Lwip pools)",
             displayName: "Only Enable Packet Info Allocation",
             default: false,
             onChange: function (inst, ui) {
                 /* Init delay applicable only for single master mode */
-                if(inst.PktPoolEnable == true) {
+                if(inst.PktInfoOnlyEnable == true) {
                     ui.PktInfoOnlyCount.hidden = false;
                 }
                 else {
@@ -137,9 +137,35 @@ const enet_pkt_pool_config = {
         {
             name: "PktInfoOnlyCount",
             displayName: "PktInfoMem Only Count",
+            description: "DMA Pkt Info structures are only allocated, the buffer memory is not allocated here.",
             default: 16,
+            hidden: true,
             isInteger: true,
             range: [8, 192]
+        },
+        {
+            name: "RxCustomSizeEnable",
+            description: "Flag to enable custom size for receive packet buffers, This option is only applicable for applications using LwIP stack. If disabled, buffer size of 1536 bytes is used for each Receive packet",
+            displayName: "Enable Custom Rx Buffer Size",
+            default: false,
+            onChange: function (inst, ui) {
+                /* Init delay applicable only for single master mode */
+                if(inst.RxCustomSizeEnable == true) {
+                    ui.RxCustomSize.hidden = false;
+                }
+                else {
+                    ui.RxCustomSize.hidden = true;
+                }
+            },
+        },
+        {
+            name: "RxCustomSize",
+            displayName: "Rx Packet Buffer Size",
+            description: "Size of each Receive Packet Buffer in Bytes, At maximum a Packet can be spanned across four buffers, so MTU/4 (1536/4 = 384) is the minimum size.",
+            default: 1536,
+            hidden: true,
+            isInteger: true,
+            range: [384, 1536]
         },
     ],
     collapsed:true,

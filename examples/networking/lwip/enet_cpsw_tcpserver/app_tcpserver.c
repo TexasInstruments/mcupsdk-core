@@ -78,16 +78,15 @@ static void AppTcp_echoPckt(struct netconn *pClientConn)
 
     while ((err = netconn_recv(pClientConn, &buf)) == ERR_OK)
     {
+        err = netconn_write(pClientConn, APP_CLIENT_TX_MSG1, sizeof(APP_CLIENT_TX_MSG1), NETCONN_COPY);
+        if (err != ERR_OK)
+        {
+            printf("tcpecho: netconn_write: error \"%s\"\r\n", lwip_strerr(err));
+            break;
+        }
         do
         {
             netbuf_data(buf, &data, &len);
-            err = netconn_write(pClientConn, APP_CLIENT_TX_MSG1, sizeof(APP_CLIENT_TX_MSG1), NETCONN_COPY);
-            if (err != ERR_OK)
-            {
-                printf("tcpecho: netconn_write: error \"%s\"\r\n", lwip_strerr(err));
-                break;
-            }
-
             err = netconn_write(pClientConn, data, len, NETCONN_COPY);
             if (err != ERR_OK)
             {

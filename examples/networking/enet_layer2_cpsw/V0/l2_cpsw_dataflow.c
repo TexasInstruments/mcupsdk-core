@@ -216,7 +216,11 @@ void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh)
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
     int32_t status;
-    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE/4,
+                                   ENET_MEM_LARGE_POOL_PKT_SIZE/4,
+                                   ENET_MEM_LARGE_POOL_PKT_SIZE/4,
+                                   ENET_MEM_LARGE_POOL_PKT_SIZE/4
+                                    };
 
     EnetQueue_initQ(&rxFreeQ);
 
@@ -327,6 +331,8 @@ void EnetApp_rxTask(void *args)
     EnetDma_Pkt *txPktInfo;
     EthFrame *rxFrame;
     EthFrame *txFrame;
+    uint32_t totalLenReceived = 0U;
+    uint32_t index = 0U,i = 0U;
     uint32_t totalRxCnt = 0U;
     int32_t status = ENET_SOK;
 
@@ -363,7 +369,12 @@ void EnetApp_rxTask(void *args)
                                     ENET_PKTSTATE_MODULE_APP,
                                     ENET_PKTSTATE_APP_WITH_DRIVER,
                                     ENET_PKTSTATE_APP_WITH_READYQ);
-
+            totalLenReceived = 0;
+            for (i = 0; i < rxPktInfo->sgList.numScatterSegments; i++)
+            {
+                totalLenReceived += rxPktInfo->sgList.list[i].segmentFilledLen;
+            }
+            EnetAppUtils_assert(totalLenReceived <= ENET_MEM_LARGE_POOL_PKT_SIZE);
             /* Retrieve TX packets from driver and recycle them */
             EnetApp_retrieveFreeTxPkts(perCtxt);
 
@@ -377,11 +388,20 @@ void EnetApp_rxTask(void *args)
                 memcpy(txFrame->hdr.srcMac, &perCtxt->macAddr[0U], ENET_MAC_ADDR_LEN);
                 txFrame->hdr.etherType = rxFrame->hdr.etherType;
 
-                txPktInfo->sgList.list[0].segmentFilledLen = rxPktInfo->sgList.list[0].segmentFilledLen;
+                txPktInfo->sgList.list[0].segmentFilledLen = totalLenReceived;
                 EnetAppUtils_assert(txPktInfo->sgList.list[0].segmentAllocLen >= txPktInfo->sgList.list[0].segmentFilledLen);
+
                 memcpy(&txFrame->payload[0U],
-                        &rxFrame->payload[0U],
-                        rxPktInfo->sgList.list[0].segmentFilledLen - sizeof(EthFrameHeader));
+                       &rxFrame->payload[0U],
+                       rxPktInfo->sgList.list[0].segmentFilledLen - sizeof(EthFrameHeader));
+                index = rxPktInfo->sgList.list[0].segmentFilledLen - sizeof(EthFrameHeader);
+                for (i = 1; i < rxPktInfo->sgList.numScatterSegments; i++)
+                {
+                    memcpy(&txFrame->payload[index],
+                           rxPktInfo->sgList.list[i].bufPtr,
+                           rxPktInfo->sgList.list[i].segmentFilledLen);
+                    index += rxPktInfo->sgList.list[i].segmentFilledLen;
+                }
 
                 txPktInfo->sgList.numScatterSegments = 1;
                 txPktInfo->chkSumInfo = 0U;

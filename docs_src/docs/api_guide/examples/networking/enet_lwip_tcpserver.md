@@ -6,7 +6,10 @@
 
 \note LwIP features are made available as is from public lwIP project. SDK configuration may only enable and exercise a subset of these features.
 
-This example shows about how to implement a simple TCP Server on LwIP networking stack using netconn API coupled with ethernet driver (ENET)
+This example shows about how to implement a simple TCP Server on LwIP networking stack using netconn API coupled with ethernet driver (ENET).
+\cond SOC_AM273X || SOC_AM263X
+This example also demonstrates Rx Scatter-Gather, the buffer size is kept to 384 bytes. Send packets greater than 384 bytes to exercise scatter-gather on Rx.
+\endcond
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW

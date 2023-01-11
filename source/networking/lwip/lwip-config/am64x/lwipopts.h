@@ -204,8 +204,8 @@ a lot of data that needs to be copied, this should be set high. */
 #define MEMP_SANITY_CHECK        (0)
 
 /* ---------- Pbuf options ---------- */
-/* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
-//#define PBUF_POOL_SIZE          (32U)
+/* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. Setting this to zero as Rx Custom Pbufs are used. */
+#define PBUF_POOL_SIZE          0U
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 #define PBUF_POOL_BUFSIZE       1536

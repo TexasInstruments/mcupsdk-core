@@ -39,6 +39,7 @@
 #include <networking/enet/core/lwipif/inc/pbufQ.h>
 
 #include <lwip2lwipif.h>
+#include <custom_pbuf.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -66,6 +67,13 @@
 #define LWIPIF_TX_PACKET_TASK_PRI      (OS_TASKPRIHIGH)
 
 #define LWIP_POLL_TASK_PRI             (OS_TASKPRIHIGH - 1U)
+
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
+/* \brief Enable LC-DMA statically linked Rx scatter-gather. Also need to update scatterSegments
+ * for EnetMem_allocEthPkt while allocating pkts to enable Rx scatter-gather */
+#define UDMA_STATIC_RX_SG_ENABLE        0U
+%}
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -113,9 +121,25 @@ volatile bool shutDownFlag;
     ClockP_Object pollLinkClkObj;
 
 static struct netif gNetif[ENET_SYSCFG_NETIF_COUNT];
-pbufNode gFreeTxArr[ENET_SYSCFG_TOTAL_NUM_TX_PKT];
 
-LWIP_MEMPOOL_DECLARE(RX_POOL, ENET_SYSCFG_TOTAL_NUM_RX_PKT, sizeof(LwipifEnetAppIf_custom_rx_pbuf), "Zero-copy RX PBUF pool");
+/* For Cpdma Rx scatter-gather implies that #rxpkts = #rxbuffers = #rxpbufs
+   For Udma's static Rx scatter-gather, #rxbuffers = #rxpbufs = 4 * #rxpkts */
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
+LWIP_MEMPOOL_DECLARE(RX_POOL, ENET_SYSCFG_TOTAL_NUM_RX_PKT, sizeof(Rx_CustomPbuf), "Rx Custom Pbuf pool");
+/* These must be sufficient for total number of rx pbufs and tx packets */
+pbufNode gFreePbufArr[ENET_SYSCFG_TOTAL_NUM_RX_PKT * 2];
+%}
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
+#if UDMA_STATIC_RX_SG_ENABLE
+LWIP_MEMPOOL_DECLARE(RX_POOL, ENET_SYSCFG_TOTAL_NUM_RX_PKT * 4, sizeof(Rx_CustomPbuf), "Rx Custom Pbuf pool");
+/* These must be sufficient for total number of rx pbufs and tx packets */
+pbufNode gFreePbufArr[ENET_SYSCFG_TOTAL_NUM_RX_PKT * 5];
+#else
+LWIP_MEMPOOL_DECLARE(RX_POOL, ENET_SYSCFG_TOTAL_NUM_RX_PKT, sizeof(Rx_CustomPbuf), "Rx Custom Pbuf pool");
+/* These must be sufficient for total number of rx pbufs and tx packets */
+pbufNode gFreePbufArr[ENET_SYSCFG_TOTAL_NUM_RX_PKT * 2];
+#endif
+%}
 /* ========================================================================== */
 /*                            Function Declaration                            */
 /* ========================================================================== */
@@ -238,14 +262,14 @@ void LwipifEnetAppCb_getEnetLwipIfInstInfo(LwipifEnetAppIf_GetEnetLwipIfInstInfo
     outArgs->hostPortRxMtu = attachInfo.rxMtu;
     ENET_UTILS_ARRAY_COPY(outArgs->txMtu, attachInfo.txMtu);
     outArgs->isPortLinkedFxn = &EnetApp_isPortLinked;
-	outArgs->timerPeriodUs   = ENETLWIP_PACKET_POLL_PERIOD_US;
+    outArgs->timerPeriodUs   = ENETLWIP_PACKET_POLL_PERIOD_US;
 
     outArgs->maxNumNetif = ENET_SYSCFG_NETIF_COUNT;
     outArgs->numRxChannels = ENET_SYSCFG_RX_FLOWS_NUM;
     outArgs->numTxChannels = ENET_SYSCFG_TX_CHANNELS_NUM;
 
-    outArgs->pFreeTx = gFreeTxArr;
-    outArgs->pFreeTxSize = ENET_SYSCFG_TOTAL_NUM_TX_PKT;
+    outArgs->pPbufInfo = gFreePbufArr;
+    outArgs->pPbufInfoSize = sizeof(gFreePbufArr)/sizeof(pbufNode);
     LWIP_MEMPOOL_INIT(RX_POOL);
 
 
@@ -319,8 +343,7 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
     Enet_Type enetType;
     uint32_t instId, i;
     EnetDma_Pkt *pPktInfo;
-    LwipifEnetAppIf_custom_rx_pbuf* cPbuf;
-    struct pbuf* hPbufPacket;
+    Rx_CustomPbuf *cPbuf;
     int32_t status;
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
     bool useRingMon = false;
@@ -330,7 +353,18 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
     uint32_t coreId          = EnetSoc_getCoreId();
     EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
     EnetApp_GetDmaHandleInArgs     rxInArgs;
-
+    uint32_t numCustomPbuf;
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
+    uint32_t scatterSegments[] =
+    {
+        ENET_UTILS_ALIGN(`instance.RxCustomSize`, ENETDMA_CACHELINE_ALIGNMENT) /* Keep this size aligned with R5F cacheline of 32B */
+    };
+% } else{
+    uint32_t scatterSegments[] =
+    {
+        ENET_MEM_LARGE_POOL_PKT_SIZE  /* Keep this size aligned with R5F cacheline of 32B */
+    };
+% }
     EnetApp_getEnetInstInfo(&enetType,
                             &instId);
     EnetApp_acquireHandleInfo(enetType, instId, &handleInfo);
@@ -343,7 +377,15 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
     EnetApp_getRxDmaHandle(inArgs->chId,
                           &rxInArgs,
                           &rxChInfo);
-
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
+    numCustomPbuf = rxChInfo.maxNumRxPkts;
+% } else{
+#if UDMA_STATIC_RX_SG_ENABLE
+    numCustomPbuf = rxChInfo.maxNumRxPkts * 4;
+#else
+    numCustomPbuf = rxChInfo.maxNumRxPkts;
+#endif
+ %}
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
     outArgs->rxFlowIdx = rxChInfo.rxChNum;
 % } else{
@@ -365,42 +407,39 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
     }
 
     /* Initialize the DMA free queue */
-    EnetQueue_initQ(inArgs->pktInfoQ);
+    EnetQueue_initQ(inArgs->pReadyRxPktQ);
+    EnetQueue_initQ(inArgs->pFreeRxPktInfoQ);
+    pbufQ_init(inArgs->pFreePbufInfoQ);
 
     for (i = 0U; i < rxChInfo.maxNumRxPkts; i++)
     {
 
         pPktInfo = EnetMem_allocEthPkt(&inArgs->cbArg,
-                           ENET_MEM_LARGE_POOL_PKT_SIZE,
-                           ENETDMA_CACHELINE_ALIGNMENT);
+                           ENETDMA_CACHELINE_ALIGNMENT,
+                           ENET_ARRAYSIZE(scatterSegments),
+                           scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
+        ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_READYQ);
 
-        ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
+        /* Put all the filled pPktInfo into readyRxPktQ and submit to driver */
+        EnetQueue_enq(inArgs->pReadyRxPktQ, &pPktInfo->node);
+    }
 
-        cPbuf = (LwipifEnetAppIf_custom_rx_pbuf*)LWIP_MEMPOOL_ALLOC(RX_POOL);
-
-        cPbuf->p.custom_free_function = LwipifEnetAppCb_pbuf_free_custom;
-        cPbuf->pktInfoMem         = pPktInfo;
-        cPbuf->freePktInfoQ         = inArgs->pktInfoQ;
-        cPbuf->p.pbuf.flags |= PBUF_FLAG_IS_CUSTOM;
-
-        hPbufPacket = pbuf_alloced_custom(PBUF_RAW, ENET_MEM_LARGE_POOL_PKT_SIZE, PBUF_POOL, &cPbuf->p, pPktInfo->sgList.list[0].bufPtr, pPktInfo->sgList.list[0].segmentAllocLen);
-
-        pPktInfo->appPriv = (void *)hPbufPacket;
-
-        if (hPbufPacket != NULL)
-        {
-            EnetAppUtils_assert(hPbufPacket->payload != NULL);
-            EnetAppUtils_assert(ENET_UTILS_IS_ALIGNED(hPbufPacket->payload, ENETDMA_CACHELINE_ALIGNMENT));
-
-            /* Enqueue to the free queue */
-			EnetQueue_enq(inArgs->pktInfoQ, &pPktInfo->node);
-        }
-        else
-        {
-            DebugP_log("ERROR: Pbuf_alloc() failure...exiting!\r\n");
-            EnetAppUtils_assert(FALSE);
-        }
+    EnetQueue_verifyQCount(inArgs->pReadyRxPktQ);
+    for (i = 0U; i < numCustomPbuf; i++)
+    {
+        /* Allocate the Custom Pbuf structures and put them in freePbufInfoQ */
+        cPbuf = NULL;
+        cPbuf = (Rx_CustomPbuf*)LWIP_MEMPOOL_ALLOC(RX_POOL);
+        EnetAppUtils_assert(cPbuf != NULL);
+        cPbuf->p.custom_free_function = custom_pbuf_free;
+        cPbuf->customPbufArgs         = (Rx_CustomPbuf_Args)inArgs->cbArg;
+        cPbuf->next                   = NULL;
+        cPbuf->alivePbufCount         = 0U;
+        cPbuf->orgBufLen              = 0U;
+        cPbuf->orgBufPtr              = NULL;
+        cPbuf->p.pbuf.flags          |= PBUF_FLAG_IS_CUSTOM;
+        pbufQ_enQ(inArgs->pFreePbufInfoQ, &(cPbuf->p.pbuf));
     }
 
     if(ENET_SYSCFG_NETIF_COUNT > 1U)
@@ -467,7 +506,7 @@ void LwipifEnetAppCb_releaseRxHandle(LwipifEnetAppIf_ReleaseRxHandleInfo *releas
     /* Close RX channel */
     EnetQueue_initQ(&fqPktInfoQ);
     EnetQueue_initQ(&cqPktInfoQ);
-    EnetApp_closeTxDma(releaseInfo->rxChNum,
+    EnetApp_closeRxDma(releaseInfo->rxChNum,
                        handleInfo.hEnet,
                        attachInfo.coreKey,
                        coreId,
@@ -477,16 +516,6 @@ void LwipifEnetAppCb_releaseRxHandle(LwipifEnetAppIf_ReleaseRxHandleInfo *releas
     releaseInfo->rxFreePktCb(releaseInfo->rxFreePktCbArg, &fqPktInfoQ, &cqPktInfoQ);
     EnetApp_coreDetach(enetType, instId, coreId, attachInfo.coreKey);
     EnetApp_releaseHandleInfo(enetType, instId);
-}
-
-void LwipifEnetAppCb_pbuf_free_custom(struct pbuf *p)
-{
-    LwipifEnetAppIf_custom_rx_pbuf* cPbuf = (LwipifEnetAppIf_custom_rx_pbuf*)p;
-    uint32_t key = HwiP_disable();
-
-    EnetQueue_enq(cPbuf->freePktInfoQ, &cPbuf->pktInfoMem->node);
-
-    HwiP_restore(key);
 }
 
 %if(instance.RtosVariant == "NoRTOS"){
@@ -683,7 +712,7 @@ void LwipifEnetApp_createRxPktHandlerTask(struct netif *netif)
 
     /* Create RX packet task */
     TaskP_Params_init(&params);
-    params.name = "LWIPIF_LWIP_rxPktHandler";
+    params.name = "LwipifEnetApp_RxPacketTask";
     params.priority       = LWIPIF_RX_PACKET_TASK_PRI;
     params.stack          = &gPktRxTaskStack[0U];
     params.stackSize      = sizeof(gPktRxTaskStack);

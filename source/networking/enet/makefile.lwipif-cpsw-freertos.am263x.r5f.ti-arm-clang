@@ -19,6 +19,7 @@ FILES_common := \
     lwip2enet.c \
     lwip2lwipif.c \
     pbufQ.c \
+    custom_pbuf.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/src \

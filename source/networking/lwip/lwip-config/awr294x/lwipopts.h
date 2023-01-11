@@ -214,7 +214,8 @@ extern "C"
  *   PBUF_POOL_SIZE = 64 + ((2 * 64) * 1)
  *   PBUF_POOL_SIZE = 192
  */
-//#define PBUF_POOL_SIZE          192
+/* Setting this to zero as Rx Custom Pbufs are used. */
+#define PBUF_POOL_SIZE          0U
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 #define PBUF_POOL_BUFSIZE       1536

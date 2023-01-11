@@ -351,6 +351,8 @@ int32_t EnetSoc_init(void)
                            &cpswDescMem,
                            &size);
     hDma->cppiRamBase = (void *)cpswDescMem;
+    Enet_devAssert((sizeof(EnetCpdma_cppiDesc) <= ENETDMA_CACHELINE_ALIGNMENT),
+                    "CPDMA desc size higher than expected: %d Bytes", sizeof(EnetCpdma_cppiDesc));
     hDma->maxBds = size/sizeof(EnetCpdma_cppiDesc);
     hDma->features = (ENET_FEAT_BASE | ENET_CPDMA_CHANNEL_OVERRIDE);
 

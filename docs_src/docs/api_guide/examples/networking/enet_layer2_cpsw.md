@@ -12,6 +12,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 
 - This is a standard ethernet switch + port HW
 
+This example also demonstrates Rx Scatter-Gather. Due to the Limitation with LC-DMA, We need to prelink the buffers before submitting to the DMA to exercise scatter-gather.
 \endcond
 
 \cond SOC_AM263X
@@ -21,6 +22,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechan
   - It uses ethernet driver underneath with LwIP TCP/IP networking stack
   - The appication as of now works with Port 1 only.
 
+This example also demonstrates Rx Scatter-Gather, the buffer size on Rx is kept to 512 bytes. Send packets greater than 512 bytes to exercise scatter-gather on Rx.
 \endcond
 
 This example do below:

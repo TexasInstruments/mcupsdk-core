@@ -7,6 +7,7 @@ const files = {
         "lwip2enet.c",
         "lwip2lwipif.c",
         "pbufQ.c",
+        "custom_pbuf.c",
     ],
 };
 
