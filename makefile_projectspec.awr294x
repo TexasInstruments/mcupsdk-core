@@ -92,11 +92,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_awr294x-evm_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -404,20 +400,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  dcc_awr294x-evm_c66ss0_nortos_ti-c6000_build:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
 
- sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
  sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
 	$(MAKE) -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_build:
 	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
@@ -610,11 +594,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_awr294x-evm_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -922,20 +902,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  dcc_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
 
- sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
  sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
@@ -1128,11 +1096,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_awr294x-evm_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_awr294x-evm_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dcc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -1440,20 +1404,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  dcc_awr294x-evm_c66ss0_nortos_ti-c6000_export:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
 
- sdl_adcbuf_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_dss_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
  sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
 	$(MAKE) -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_mbox_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_mbox_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_export:
 	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
@@ -1662,11 +1614,7 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/awr294x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/adcbuf/adcbuf_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/dss_l3/dss_l3_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/mbox/mbox_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/mbox/mbox_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

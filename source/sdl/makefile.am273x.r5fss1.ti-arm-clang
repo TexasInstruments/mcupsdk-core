@@ -33,13 +33,9 @@ FILES_PATH_common = \
     esm/v1/v1_0 \
     esm/soc \
     esm/soc/am273x \
-    dss_l3 \
-    dss_l3/v0 \
     hwa \
     hwa/v0 \
     hwa/v0/soc/am273x \
-    mbox \
-    mbox/v0 \
     rti \
     rti/v0 \
     rti/v0/soc/am273x \

@@ -35,12 +35,8 @@ This page lists all the examples related to usage of SDL.
 \cond SOC_AM273X || SOC_AWR294X
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
--# DSS L3
-   -# \subpage EXAMPLES_SDL_DSS_L3_MAIN
 -# HWA
    -# \subpage EXAMPLES_SDL_HWA_MAIN
--# MBOX
-   -# \subpage EXAMPLES_SDL_MBOX_MAIN
 -# RTI
    -# \subpage EXAMPLES_SDL_RTI
 -# MCRC
@@ -64,8 +60,4 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_CCM
 \endcond
 
-\cond SOC_AWR294X
--# ADCBUF
-   -# \subpage EXAMPLES_SDL_ADCBUF_MAIN
-\endcond
 

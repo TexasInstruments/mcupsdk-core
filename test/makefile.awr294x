@@ -84,16 +84,8 @@ help:
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiUt/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -233,16 +225,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -399,35 +383,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
- test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
  test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
  test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -542,16 +502,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -708,35 +660,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
- test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
  test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
  test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -851,16 +779,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_awr294x-evm_r5fss0-0_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1017,35 +937,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_eccBusSafetyUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBusSafetyUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
- test_adcbufFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/adcbuf/adcbufFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_adcbufUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/adcbuf/adcbufUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_dssl3FuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_dssl3Ut_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/dss_l3/dssl3Ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
  test_hwaFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C sdl/hwa/hwaFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
  test_hwaUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C sdl/hwa/hwaUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_mboxFuncTest_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_mboxFuncTest_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_mboxUt_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_mboxUt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mbox/mboxUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  rti_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/rti/rtiUt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

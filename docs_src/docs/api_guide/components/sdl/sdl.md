@@ -33,7 +33,7 @@ The Software Diagnostics Library provides the functionality for implementing har
 	- Notification of errors detected by the continuous diagnostics through the ESM handler
 	- SDL APIs to execute periodic diagnostics
 
-\cond SOC_AM273X	
+\cond SOC_AM273X
 **Note:** A document to show the SDL API mapping of Sitara MCU Recommended Safety Functions exists. Please contact FAE to get it.
 \endcond
 SDL consists of below sub-modules
@@ -44,6 +44,7 @@ SDL consists of below sub-modules
 - \subpage SDL_DPL_PAGE
 - \subpage SDL_ESM_PAGE
 \endcond
+
 \cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 - \subpage SDL_DPL_PAGE
 - \subpage SDL_ESM_PAGE
@@ -55,19 +56,7 @@ SDL consists of below sub-modules
 - \subpage SDL_CCM_PAGE
 - \subpage SDL_STC_PAGE
 - \subpage SDL_ECC_BUS_SAFETY_PAGE
+- \subpage SDL_HWA_PAGE
 \endcond
 
-\cond SOC_AWR294X
-- \subpage SDL_ADCBUF_PAGE
-- \subpage SDL_DSS_L3_PAGE
-- \subpage SDL_HWA_PAGE
-- \subpage SDL_MBOX_PAGE
-- \subpage SDL_ECC_BUS_SAFETY_PAGE
-\endcond
 
-\cond SOC_AM273X
-- \subpage SDL_DSS_L3_PAGE
-- \subpage SDL_HWA_PAGE
-- \subpage SDL_MBOX_PAGE
-- \subpage SDL_ECC_BUS_SAFETY_PAGE
-\endcond

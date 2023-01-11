@@ -21,12 +21,9 @@ FILES_common := \
     sdl_ip_esm.c \
     sdl_esm.c \
     sdl_esm_core.c \
-    sdl_adcbuf.c \
-    sdl_dss_l3.c \
     sdl_hwa.c \
     sdl_ip_hwa.c \
     sdl_hwa_soc.c \
-    sdl_mbox.c \
     sdl_mcrc.c \
     sdl_ip_mcrc.c \
     sdl_mcrc_soc.c \
@@ -46,15 +43,9 @@ FILES_PATH_common = \
     esm/v1/v1_0 \
     esm/soc \
     esm/soc/awr294x \
-    adcbuf \
-    adcbuf/v0 \
-    dss_l3 \
-    dss_l3/v0 \
     hwa \
     hwa/v0 \
     hwa/v0/soc/awr294x \
-    mbox \
-    mbox/v0 \
     rti \
     rti/v0 \
     rti/v0/soc/awr294x \

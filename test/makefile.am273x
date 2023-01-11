@@ -82,18 +82,12 @@ help:
 	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dss_l3/dssl3FuncTest/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dss_l3/dssl3Ut/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/hwa/hwaFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/hwa/hwaUt/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxUt/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mbox/mboxUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -232,18 +226,12 @@ BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_dssl3FuncTest_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_dssl3Ut_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_hwaFuncTest_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_hwaUt_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mboxFuncTest_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mboxFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_mboxUt_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += test_mboxUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -395,12 +383,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- test_dssl3FuncTest_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_dssl3Ut_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/dss_l3/dssl3Ut/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
  test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -418,18 +400,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_hwaUt_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C sdl/hwa/hwaUt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_mboxFuncTest_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_mboxFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_mboxUt_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/mbox/mboxUt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- test_mboxUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mbox/mboxUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/rti/rtiUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -545,18 +515,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dssl3FuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dssl3Ut_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwaFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwaUt_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxUt_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mboxUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -708,12 +672,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- test_dssl3FuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_dssl3Ut_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/dss_l3/dssl3Ut/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
  test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -731,18 +689,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_hwaUt_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C sdl/hwa/hwaUt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_mboxFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_mboxFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_mboxUt_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/mbox/mboxUt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- test_mboxUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mbox/mboxUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/rti/rtiUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -858,18 +804,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dssl3FuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dssl3Ut_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwaFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwaUt_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxUt_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mboxUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1021,12 +961,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- test_dssl3FuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/dss_l3/dssl3FuncTest/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_dssl3Ut_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/dss_l3/dssl3Ut/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
  test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -1044,18 +978,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_hwaUt_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C sdl/hwa/hwaUt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_mboxFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_mboxFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mbox/mboxFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_mboxUt_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/mbox/mboxUt/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- test_mboxUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mbox/mboxUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  rti_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/rti/rtiUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
