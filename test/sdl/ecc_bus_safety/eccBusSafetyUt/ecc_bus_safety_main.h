@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,7 +48,9 @@
 #include <sdl/include/hw_types.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc_bus_safety.h>
-
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 #if !defined(ECC_BUS_SAFETY_MAIN_H)
 #define ECC_BUS_SAFETY_MAIN_H
@@ -88,7 +90,7 @@ typedef struct sdldssl3Test_s
 /*                         External function declarations                    */
 /*===========================================================================*/
 extern int32_t sdl_ecc_bus_safety_negTest(void);
-
+extern int32_t sdl_ecc_bus_safety_posTest(void);
 /*===========================================================================*/
 /*                   Local Function definitions                              */
 /*===========================================================================*/

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +32,7 @@
  */
 
 /**
- *  @defgroup SDL_ECC_BUS_SAFETY_API API's for Ecc Bus Safety on MSS, DSS, and RSS
+ *  @defgroup SDL_ECC_BUS_SAFETY_API API's for Ecc Bus Safety on MSS and DSS
  *  @ingroup SDL_ECC_BUS_SAFETY_MODULE
  *  @section ECC_BUS_SAFETY Overview
  *
@@ -82,89 +82,6 @@ extern "C" {
 /* ========================================================================== */
 /*                            Macros & Typedefs                               */
 /* ========================================================================== */
-/**
-@addtogroup SDL_ECC_BUS_SAFETY_MACROS
-@{
-*/
-
-/* Macro defines Ecc Bus Safety Nodes in the DSS Subsystem */
-
-#define SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA        0U
-#define SDL_ECC_BUS_SAFETY_DSS_L3_BANKA        1U
-#define SDL_ECC_BUS_SAFETY_DSS_L3_BANKB        2U
-#define SDL_ECC_BUS_SAFETY_DSS_L3_BANKC        3U
-#define SDL_ECC_BUS_SAFETY_DSS_L3_BANKD        4U
-#define SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA        5U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD      6U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD      7U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD      8U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD      9U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD      10U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD      11U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD      12U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD      13U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD      14U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD      15U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR      16U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_WR      17U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_WR      18U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_WR      19U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_WR      20U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_WR      21U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_WR      22U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_WR      23U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_WR      24U
-#define SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_WR      25U
-#define SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO      26U
-#define SDL_ECC_BUS_SAFETY_DSS_MCRC            27U
-#define SDL_ECC_BUS_SAFETY_DSS_PCR             28U
-#define SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0        29U
-#define SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1        30U
-#define SDL_ECC_BUS_SAFETY_DSS_MBOX            31U
-#define SDL_ECC_BUS_SAFETY_RSS_TPTCA0_RD       32U
-#define SDL_ECC_BUS_SAFETY_RSS_TPTCA0_WR       33U
-#define SDL_ECC_BUS_SAFETY_RSS_CSI2A_MDMA      34U
-#define SDL_ECC_BUS_SAFETY_RSS_PCR             35U
-#define SDL_ECC_BUS_SAFETY_RSS_CQ_MEM_RD       36U
-#define SDL_ECC_BUS_SAFETY_RSS_CQ_MEM_WR       37U
-#define SDL_ECC_BUS_SAFETY_RSS_STATIC_MEM      38U
-#define SDL_ECC_BUS_SAFETY_RSS_BSS_MST         39U
-#define SDL_ECC_BUS_SAFETY_RSS_BSS_SLV         40U
-
-/* Node Sufforted only in AM273X */
-#define SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO        41U
-
-/* Node Sufforted only in AWR294X */
-#define SDL_ECC_BUS_SAFETY_RSS_MBOX            41U
-#define SDL_ECC_BUS_SAFETY_RSS_ADCBUF_RD       42U
-#define SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR       43U
-
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD      0U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD      1U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD      2U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD        3U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD        4U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD        5U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD        6U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S        7U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S        8U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S        9U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S        10U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR      11U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR      12U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR      13U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB        14U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB        15U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AHB        16U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AHB        17U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR        18U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR        19U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_WR        20U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR        21U
-
-#define SDL_ECC_BUS_SAFETY_MSS_MBOX            22U
-
-/** @} */
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -197,6 +114,18 @@ typedef struct
     /* offset of bus safety Err Stat Write Resp Register */
     uint32_t busSftyErrStatWrResp;
 }SDL_ECC_BUS_SAFETY_Base_Addr_Offset_S;
+
+
+typedef struct
+{
+    /*enable the bus safety for core(mss/dss) */
+    uint32_t coreSftyCtrl;
+    /* offset of bus safety Control Register */
+    uint32_t busSftyCtrl;
+    /* offset of bus safety FI Register */
+    uint32_t busSftyFi;
+    /* offset of bus safety Error Register */
+}SDL_ECC_BUS_SAFETY_staticRegs;
 
 /** @} */
 
@@ -359,6 +288,22 @@ int32_t SDL_ECC_BUS_SAFETY_DSS_redErrorClear(uint32_t busSftyNode);
  */
 int32_t SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t *status);
 
+/**
+ *  \brief   This API is used to get DSS static register values
+ *
+ * \param   busSftyNode Node identifier
+ *
+ * \param   pStaticRegs pointer to staic register
+ *
+ * \return  status    return the Test status.
+ *                    SDL_PASS:     success
+ *                    SDL_EBADARGS: failure, indicate the bad input arguments
+ */
+
+int32_t SDL_ECC_BUS_SAFETY_DSS_readStaticRegs(uint32_t busSftyNode ,\
+                                               SDL_ECC_BUS_SAFETY_staticRegs *pStaticRegs);
+
+
 int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, uint32_t wr_data);
 
 /**
@@ -467,6 +412,34 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode);
  *                    SDL_EBADARGS: failure, indicate the bad input arguments
  */
 int32_t SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t *status);
+
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode);
+
+/**
+ *  \brief   This API is used to get MSS static register values
+ *
+ * \param   busSftyNode Node identifier
+ *
+ * \param   pStaticRegs pointer to staic register
+ *
+ * \return  status    return the Test status.
+ *                    SDL_PASS:     success
+ *                    SDL_EBADARGS: failure, indicate the bad input arguments
+ */
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_readStaticRegs(uint32_t busSftyNode ,\
+                                               SDL_ECC_BUS_SAFETY_staticRegs *pStaticRegs);
+
+
+
+ /**
+ *  \brief   This API is used to detect the device AWR2944/ Awr2943
+ *
+ * \return  status    returns status to detect awr2943 or awr2944 soc
+ *
+  */
+uint32_t SDL_ECC_BUS_SAFETY_DSS_AWR2944_AWR2943_Detect(void);
 
 /** @} */
 

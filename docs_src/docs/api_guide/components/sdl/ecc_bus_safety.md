@@ -39,133 +39,122 @@ Include the below file to access the APIs
 
 Induce the error SEC in Interrupt Method for MSS Nodes
 \code{.c}
-static int32_t SDL_ECC_BUS_SAFETY_MSS_SEC_test(uint32_t busSftyNode ,uint32_t addr)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_ECC_BUS_SAFETY_TIMEOUT;
-    uint32_t writeData = 0x1234567U;
-    uint32_t dmaCh = 0U;
-    uint32_t tcc = 0U;
-    uint32_t param = 0U;
-    uint32_t queNum = 0U;
-    uint32_t edmaNum = 0U;
-        ret_val = SDL_ECC_BUS_SAFETY_MSS_secExecute(busSftyNode,addr,writeData);
-        if(ret_val !=SDL_PASS )
+    ret_val = SDL_ECC_BUS_SAFETY_MSS_secExecute(busSftyNode,addr,writeData);
+    if(ret_val !=SDL_PASS )
+    {
+        ret_val = SDL_EFAIL;
+    }
+    else
+    {
+        if(((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode)) ||
+            (SDL_ECC_BUS_SAFETY_MSS_PCR == busSftyNode) || (SDL_ECC_BUS_SAFETY_MSS_PCR2 == busSftyNode ))
         {
-            ret_val = SDL_EFAIL;
+            /* get EDMA parameter */
+            SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(busSftyNode,&dmaCh, &tcc, &param, &queNum, &edmaNum );
+            /* initiate the EDMA transfer */
+            test_edmaATransfer(busSftyNode,dmaCh,tcc,param,queNum,edmaNum );
+        }
+        else if (SDL_ECC_BUS_SAFETY_MSS_CPSW ==busSftyNode  )
+        {
+            /* CPSW SetUP */
+            setup_CPSW();
+            /* CPSW Transfer */
+            cpsw_transfer();
         }
         else
         {
-            if((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode))
-            {
-            SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(busSftyNode,&dmaCh, &tcc, &param, &queNum, &edmaNum );
-            test_edmaATransfer(dmaCh,tcc,param,queNum,edmaNum );
-            }
-            else
-            {
-                 /* Do Nothing */
-            }
-            /* wait for error notification from ESM, or for timeout */
-            /* fault injection gets deasserted in ISR */
-            while((MSSSecFlag!=TRUE) && (timeout!=0U))
-            {
-                timeout--;
-            }
-            if(MSSSecFlag==TRUE)
-            {
-                MSSSecFlag=FALSE;
-                ret_val = SDL_PASS;
-            }
-            else
-            {
-                ret_val = SDL_EFAIL;
-            }
+            /* do nothing */
         }
-        return ret_val;
-}
-
+        /* wait for error notification from ESM, or for timeout */
+        /* fault injection gets deasserted in ISR */
+        while((mssSecFlag!=TRUE) && (timeout!=0U))
+        {
+            timeout--;
+        }
+        if(mssSecFlag==TRUE)
+        {
+            mssSecFlag=FALSE;
+            ret_val = SDL_PASS;
+        }
+        else
+        {
+            ret_val = SDL_EFAIL;
+        }
+    }
 \endcode
 
 Induce the error DED in Interrupt Method for MSS Nodes
 \code{.c}
-static int32_t SDL_ECC_BUS_SAFETY_MSS_DED_test(uint32_t busSftyNode ,uint32_t addr)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_ECC_BUS_SAFETY_TIMEOUT;
-    uint32_t writeData = 0x1234567U;
-    uint32_t dmaCh = 0U;
-    uint32_t tcc = 0U;
-    uint32_t param = 0U;
-    uint32_t queNum = 0U;
-    uint32_t edmaNum = 0U;
-
-        ret_val = SDL_ECC_BUS_SAFETY_MSS_dedExecute(busSftyNode,addr,writeData);
-        if(ret_val !=SDL_PASS )
+    ret_val = SDL_ECC_BUS_SAFETY_MSS_dedExecute(busSftyNode,addr,writeData);
+    if(ret_val !=SDL_PASS )
+    {
+        ret_val = SDL_EFAIL;
+    }
+    else
+    {
+        if(((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode)) ||
+            (SDL_ECC_BUS_SAFETY_MSS_PCR == busSftyNode) || (SDL_ECC_BUS_SAFETY_MSS_PCR2 == busSftyNode ))
         {
-           ret_val = SDL_EFAIL;
+        SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(busSftyNode,&dmaCh, &tcc, &param, &queNum, &edmaNum );
+        test_edmaATransfer(busSftyNode,dmaCh,tcc,param,queNum,edmaNum );
+        }
+        else if (SDL_ECC_BUS_SAFETY_MSS_CPSW ==busSftyNode  )
+        {
+            /* CPSW SetUP */
+            setup_CPSW();
+            /* CPSW Transfer */
+            cpsw_transfer();
         }
         else
         {
-            if((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode))
-            {
-            SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(busSftyNode,&dmaCh, &tcc, &param, &queNum, &edmaNum );
-            test_edmaATransfer(busSftyNode,dmaCh,tcc,param,queNum,edmaNum );
-            }
-            else
-            {
-                 /* Do Nothing */
-            }
-            /* wait for error notification from ESM, or for timeout */
-            /* fault injection gets deasserted in ISR */
-            while((SDL_MSS_intrFlg[busSftyNode]!=TRUE) && (timeout!=0U))
-            {
-                timeout--;
-            }
-            if(SDL_MSS_intrFlg[busSftyNode]==TRUE)
-            {
-                SDL_MSS_intrFlg[busSftyNode]=FALSE;
-                ret_val = SDL_PASS;
-            }
-            else
-            {
-                ret_val = SDL_EFAIL;
-            }
+            /* do nothing */
         }
-    return ret_val;
-}
+        /* wait for error notification from ESM, or for timeout */
+        /* fault injection gets deasserted in ISR */
+        while((SDL_MSS_intrFlg[busSftyNode]!=TRUE) && (timeout!=0U))
+        {
+            timeout--;
+        }
+        if(SDL_MSS_intrFlg[busSftyNode]==TRUE)
+        {
+            SDL_MSS_intrFlg[busSftyNode]=FALSE;
+            ret_val = SDL_PASS;
+        }
+        else
+        {
+             ret_val = SDL_EFAIL;
+        }
+    }
+
 \endcode
 
 Induce the error RED in Interrupt Method for MSS Nodes
 \code{.c}
-static int32_t SDL_ECC_BUS_SAFETY_MSS_RED_test(uint32_t busSftyNode, SDL_ECC_BUS_SAFETY_busSftyFiType fiType, SDL_ECC_BUS_SAFETY_busSftyFiRedType redType)
-{
-  int32_t ret_val = SDL_EFAIL;
-  uint32_t timeout = SDL_ECC_BUS_SAFETY_TIMEOUT;
-      ret_val= SDL_ECC_BUS_SAFETY_MSS_redExecute(busSftyNode, fiType, redType);
-      if(ret_val !=SDL_PASS )
-      {
-          ret_val = SDL_EFAIL;
-      }
-      else
-      {
-          /* wait for error notification from ESM, or for timeout */
-          /* fault injection gets deasserted in ISR */
-          while((SDL_MSS_intrFlg[busSftyNode]!=TRUE) && (timeout!=0U))
-          {
-              timeout--;
-          }
-          if(SDL_MSS_intrFlg[busSftyNode]==TRUE)
-          {
-              SDL_MSS_intrFlg[busSftyNode]=FALSE;
-              ret_val = SDL_PASS;
-          }
-          else
-          {
-              ret_val = SDL_EFAIL;
-          }
-      }
-  return ret_val;
-}
+    int32_t ret_val = SDL_EFAIL;
+    uint32_t timeout = SDL_ECC_BUS_SAFETY_TIMEOUT;
+    ret_val= SDL_ECC_BUS_SAFETY_MSS_redExecute(busSftyNode, fiType, redType);
+    if(ret_val !=SDL_PASS )
+    {
+        ret_val = SDL_EFAIL;
+    }
+    else
+    {
+        /* wait for error notification from ESM, or for timeout */
+        /* fault injection gets deasserted in ISR */
+        while((SDL_MSS_intrFlg[busSftyNode]!=TRUE) && (timeout!=0U))
+        {
+            timeout--;
+        }
+        if(SDL_MSS_intrFlg[busSftyNode]==TRUE)
+        {
+            SDL_MSS_intrFlg[busSftyNode]=FALSE;
+            ret_val = SDL_PASS;
+        }
+        else
+        {
+            ret_val = SDL_EFAIL;
+        }
+    }
 
 \endcode
 
@@ -178,15 +167,6 @@ Induce the error SEC in Polling Method for DSS Nodes
     }
     else
     {
-            if(((SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD>=busSftyNode))||(SDL_ECC_BUS_SAFETY_DSS_PCR==busSftyNode))
-        {
-            SDL_ECC_BUS_SAFETY_DSS_getEDMAParameters(busSftyNode,&dmaCh, &tcc, &param, &queNum, &edmaNum );
-            test_edmaATransfer(dmaCh,tcc,param,queNum,edmaNum );
-        }
-        else
-        {
-             /* Do Nothing */
-        }
         /* Wait for test to complete/timeout. */
         while((status == 0U) && (timeout!=0U))
         {
@@ -223,15 +203,6 @@ Induce the error DED in Polling Method for DSS Nodes
     }
     else
     {
-            if(((SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD>=busSftyNode))||(SDL_ECC_BUS_SAFETY_DSS_PCR==busSftyNode))
-        {
-            SDL_ECC_BUS_SAFETY_DSS_getEDMAParameters(busSftyNode,&dmaCh, &tcc, &param, &queNum, &edmaNum );
-            test_edmaATransfer(dmaCh,tcc,param,queNum,edmaNum );
-        }
-        else
-        {
-            /* Do Nothing */
-        }
         /* Wait for test to complete/timeout. */
         while((status == 0U) && (timeout!=0U))
         {

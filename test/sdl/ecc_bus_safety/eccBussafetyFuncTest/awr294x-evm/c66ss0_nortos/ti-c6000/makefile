@@ -35,6 +35,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=test_eccBusSafetyFuncTest.$(PROFILE).rprc_tmp
 FILES_common := \
 	ecc_bus_safety_main.c \
 	sdl_ecc_bus_safety.c \
+	ecc_bus_safety_common.c \
 	dpl_interface.c \
 	main.c \
 	ti_drivers_config.c \

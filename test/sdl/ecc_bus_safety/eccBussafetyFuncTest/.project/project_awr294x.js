@@ -6,6 +6,7 @@ const files = {
     common: [
         "ecc_bus_safety_main.c",
         "sdl_ecc_bus_safety.c",
+        "ecc_bus_safety_common.c",
         "dpl_interface.c",
         "main.c",
     ],

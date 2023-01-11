@@ -34,6 +34,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=test_eccBusSafetyUt.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	ecc_bus_safety_main.c \
+	sdl_ecc_bus_safety_api_test_pos.c \
 	sdl_ecc_bus_safety_api_test_neg.c \
 	dpl_interface.c \
 	main.c \

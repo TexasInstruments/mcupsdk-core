@@ -7,6 +7,7 @@ const files = {
         "ecc_bus_safety_main.c",
         "ecc_bus_safety_polling.c",
         "ecc_bus_safety_Interrupt.c" ,
+        "ecc_bus_safety_common.c",
         "main.c",
         "dpl_interface.c",
     ],

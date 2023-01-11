@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,7 +35,7 @@
  *
  *  \brief    This file contains DSS L3 API unit test code..
  *
- *  \details  dss l3 unit tests
+ *  \details  Ecc Bus Safety unit tests
  **/
 
 #include "ecc_bus_safety_main.h"
@@ -43,11 +43,14 @@
 int32_t sdl_ecc_bus_safety_negTest(void)
 {
     int32_t  testStatus = SDL_APP_TEST_PASS;
-#if defined (SOC_AM273X) ||  (SOC_AWR294X)
+    SDL_ECC_BUS_SAFETY_staticRegs regs;
+#if defined (SOC_AWR294X) || defined (SOC_AM273X)
+#if defined (SUBSYS_DSS) || defined (SUBSYS_MSS)
     uint32_t status =0 ;
     uint32_t writeData = 0x1234567U;
 #endif
-#if defined (SOC_AM273X) ||  (SOC_AWR294X) || defined (SOC_AM263X)
+#endif
+#if defined (SOC_AM273X) ||  defined (SOC_AWR294X) || defined (SOC_AM263X)
 #if defined (SUBSYS_MSS)
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -58,7 +61,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -70,7 +73,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -82,7 +85,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -94,7 +97,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -106,7 +109,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -118,7 +121,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     /*SEC*/
@@ -131,31 +134,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     /* DED*/
@@ -168,31 +147,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     /* RED */
@@ -205,7 +160,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
 
@@ -218,7 +173,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
 
@@ -231,7 +186,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -243,96 +198,123 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
 #endif
+#endif
+#if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
+#if defined (SUBSYS_MSS)
+    /*SEC */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_DMM,0U,0U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* DED*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_DMM,0U,0U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* SDL_ECC_BUS_SAFETY_MSS_readStaticRegs test with invalid parameeter */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_readStaticRegs(SDL_ECC_BUS_SAFETY_MSS_SCRP+10U,&regs ) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+#endif
+#endif
+#if defined (SOC_AM263X)
+    /*SEC */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP,0U,0U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /*SEC */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP,0U,0U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* DED*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP,0U,0U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP,0U,0U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* SDL_ECC_BUS_SAFETY_MSS_readStaticRegs test with invalid parameeter */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_readStaticRegs(SDL_ECC_BUS_SAFETY_MSS_STM_STIM+10U,&regs ) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+#endif
+#if defined (SOC_AM273X) ||  (SOC_AWR294X)
 #if defined (SUBSYS_DSS)
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_secErrorClear(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_getSecErrorStatus(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U, &status) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_dedErrorClear(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_getDedErrorStatus(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U, &status) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_redErrorClear(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U, &status) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    /*SEC*/
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_secExecute(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_secExecute */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_DSS_secExecute(SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR,0U,writeData) != SDL_EBADARGS)
@@ -342,7 +324,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -354,7 +336,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -366,7 +348,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -378,22 +360,10 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-    /* DED*/
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_dedExecute(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_dedExecute */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_DSS_dedExecute(SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR,0U,writeData) != SDL_EBADARGS)
@@ -403,7 +373,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -415,9 +385,10 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DSS_HWA_DMA0 DED test with invalid parameeter */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_DSS_dedExecute(SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0,SDL_DSS_HWA_DMA0_U_BASE-100U ,writeData ) != SDL_EBADARGS)
@@ -427,7 +398,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -439,24 +410,10 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-
-    /* RED */
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_redExecute(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR+20U,SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE ) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_redExecute */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_DSS_redExecute(SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD,SDL_ECC_BUS_SAFETY_FI_INVALID, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE ) != SDL_EBADARGS)
@@ -466,7 +423,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
 
@@ -479,7 +436,7 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -491,41 +448,213 @@ int32_t sdl_ecc_bus_safety_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_redExecute(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U,SDL_ECC_BUS_SAFETY_FI_INVALID, SDL_ECC_BUS_SAFETY_FI_TYPE_INVALID ) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_secErrorClear */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if(SDL_ECC_BUS_SAFETY_DSS_secErrorClear(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_getSecErrorStatus */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getSecErrorStatus(SDL_ECC_BUS_SAFETY_DSS_L3_BANKA, NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getSecErrorStatus(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U, &status) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getSecErrorStatus(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U, NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_dedErrorClear*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_dedErrorClear(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_getDedErrorStatus */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getDedErrorStatus(SDL_ECC_BUS_SAFETY_DSS_L3_BANKA, NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getDedErrorStatus(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U, &status) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getDedErrorStatus(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U, NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_redErrorClear */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_redErrorClear(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* Test cases for SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_DSS_L3_BANKA, NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U, NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U, &status) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* SDL_ECC_BUS_SAFETY_DSS_readStaticRegs test with invalid parameeter */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_readStaticRegs(SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0,NULL_PTR ) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* SDL_ECC_BUS_SAFETY_DSS_readStaticRegs test with invalid parameeter */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_readStaticRegs(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U,&regs ) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /* SDL_ECC_BUS_SAFETY_DSS_readStaticRegs test with invalid parameeter */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_DSS_readStaticRegs(SDL_ECC_BUS_SAFETY_DSS_MBOX+10U,NULL_PTR ) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
 #endif
 #endif
-#if defined (SOC_AWR294X)
+#if defined (SOC_AWR294X) || defined (SOC_AM273X)
 #if defined (SUBSYS_DSS)
-    /* SEC */
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_secExecute(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_RD,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    /* DED */
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_BUS_SAFETY_DSS_dedExecute(SDL_ECC_BUS_SAFETY_RSS_ADCBUF_RD,0U,writeData) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
+    writeData = status;
+    status = testStatus;
 #endif
 #endif
     return (testStatus);
-
 }
+

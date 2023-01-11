@@ -5,6 +5,7 @@ let device = "awr294x";
 const files = {
     common: [
         "ecc_bus_safety_main.c",
+        "sdl_ecc_bus_safety_api_test_pos.c",
         "sdl_ecc_bus_safety_api_test_neg.c",
         "dpl_interface.c",
         "main.c",

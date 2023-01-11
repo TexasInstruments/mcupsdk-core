@@ -36,7 +36,7 @@
 
 void sdl_ecc_bus_safety_test_main(void *args);
 
-int main()
+int main(void)
 {
     System_init();
     Board_init();

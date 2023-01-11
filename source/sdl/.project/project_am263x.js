@@ -55,7 +55,7 @@ const filedirs = {
         "dpl",
 		"esm",
         "esm/v0",
-        "esm/v0/v0_0",        
+        "esm/v0/v0_0",
         "esm/soc",
         "esm/soc/am263x",
         "dcc/v1",
@@ -65,11 +65,11 @@ const filedirs = {
         "rti",
         "rti/v0",
         "rti/v0/soc/am263x",
-		"ecc",
-		"ecc/soc/am263x",
-		"ecc/V1",
-		"r5",
-		"r5/v0",
+        "ecc",
+        "ecc/soc/am263x",
+        "ecc/V1",
+        "r5",
+        "r5/v0",
         "r5/v0/am263x",
         "pbist",
         "pbist/v0",
@@ -99,7 +99,7 @@ const defines_r5fss1 = {
 
 const cflags_r5f = {
     common: [
-		"-Wno-extra",
+        "-Wno-extra",
     ],
 };
 
@@ -126,8 +126,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
-		build_property.asmfiles = asmfiles_r5f;
-		build_property.cflags = cflags_r5f;
+        build_property.asmfiles = asmfiles_r5f;
+        build_property.cflags = cflags_r5f;
       build_property.defines = defines_r5f;
     }
 

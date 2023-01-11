@@ -1,9 +1,5 @@
 /*
- * SDL MSS CR5
- *
- * SDL SoC Header file for MSS Cr5
- *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,6 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+
 
 #ifndef INCLUDE_SDL_ECC_BUS_SAFETY_SOC_H_
 #define INCLUDE_SDL_ECC_BUS_SAFETY_SOC_H_

@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -71,6 +71,7 @@ void test_sdl_ecc_bus_safety_baremetal_test_app (void);
 /*                         Global Variables                                  */
 /*===========================================================================*/
 sdldssl3Test_t  sdlEccBusSafetyTestList[] = {
+    {sdl_ecc_bus_safety_posTest,   "ecc_bus_safety API POSITIVE TEST",    SDL_APP_TEST_NOT_RUN },
     {sdl_ecc_bus_safety_negTest,   "ecc_bus_safety API NEGATIVE TEST",    SDL_APP_TEST_NOT_RUN },
     {NULL,                         "TERMINATING CONDITION",               SDL_APP_TEST_NOT_RUN }
 };
@@ -100,7 +101,7 @@ static int32_t sdlApp_dplInit(void)
     ret = SDL_TEST_dplInit();
     if (ret != SDL_PASS)
     {
-        DebugP_log("Error: Init Failed\n");
+        DebugP_log("\nError: Init Failed\r\n");
     }
 
     return ret;
@@ -115,11 +116,11 @@ void test_sdl_ecc_bus_safety_baremetal_test_app (void)
     /* Declarations of variables */
     int32_t    testResult = SDL_APP_TEST_PASS;
     int32_t    i;
-
+    Drivers_open();
     /* Init Dpl */
     sdlApp_dplInit();
 
-    DebugP_log("\n ECC BUS Safety Test Application\r\n");
+    DebugP_log("\nECC BUS Safety Test Application\r\n");
 
     for ( i = 0; sdlEccBusSafetyTestList[i].testFunction != NULL; i++)
     {
@@ -132,27 +133,28 @@ void test_sdl_ecc_bus_safety_baremetal_test_app (void)
     {
         if (sdlEccBusSafetyTestList[i].testStatus != SDL_APP_TEST_PASS)
         {
-            DebugP_log("Test Name: %s  FAILED \n", sdlEccBusSafetyTestList[i].name);
+            DebugP_log("\nTest Name: %s  FAILED \r\n", sdlEccBusSafetyTestList[i].name);
             testResult = SDL_APP_TEST_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Test Name: %s  PASSED \n", sdlEccBusSafetyTestList[i].name);
+            DebugP_log("\nTest Name: %s  PASSED \r\n", sdlEccBusSafetyTestList[i].name);
         }
     }
 
     if (testResult == SDL_APP_TEST_PASS)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\nAll tests have passed\r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\nFew/all tests Failed \r\n");
     }
 #if defined (UNITY_INCLUDE_CONFIG_H)
     TEST_ASSERT_EQUAL_INT32(SDL_APP_TEST_PASS, testResult);
 #endif
+    Drivers_close();
 }
 
 void test_sdl_ecc_bus_safety_baremetal_test_app_runner(void)

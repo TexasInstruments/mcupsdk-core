@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,9 +31,9 @@
  */
 
  /**
- *  \file     main.h
+ *  \file     ecc_bus_safety.h
  *
- *  \brief    This file contains DSS L3 test code defines.
+ *  \brief    This file contains ECC BUS SAFETY test code defines.
  *
  **/
 
@@ -44,6 +44,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <stddef.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/ClockP.h>
 #include <drivers/edma.h>
@@ -66,10 +68,13 @@
 #if defined (SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
+#include <drivers/hw_include/csl_types.h>
+#include <drivers/hw_include/cslr_soc.h>
+#include <drivers/hw_include/cslr.h>
 
 
-#if !defined(TEST_MAIN_H)
-#define TEST_MAIN_H
+#if !defined(ECC_BUS_SAFETY_MAIN_H)
+#define ECC_BUS_SAFETY_MAIN_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -141,7 +146,7 @@ typedef struct sdlECCBusSftyTest_s
 /* ========================================================================== */
 #if defined (SOC_AWR294X)
 #if defined (SUBSYS_DSS)
-extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsDSS[37U];
+extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsDSS[33U];
 #endif
 #endif
 
@@ -156,7 +161,7 @@ extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsDSS[33U];
 /*===========================================================================*/
 #if defined (SOC_AWR294X) || defined (SOC_AM273X)
 #if defined (SUBSYS_MSS)
-extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsMSS[16U];
+extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsMSS[24U];
 #endif
 #endif
 /*===========================================================================*/
@@ -166,10 +171,17 @@ extern void ecc_bus_safety_edma_boardInit(void);
 extern void ecc_bus_safety_edma_boardDeinit(void);
 extern void test_edmaATransfer(uint32_t busSftyNode, uint32_t dmaCh, uint32_t tcc,uint32_t param, uint32_t queNum,\
                                                                        uint32_t edmaNum );
+#if defined (SUBSYS_DSS)
+/* helper fuction to get the edma parameters on DSS */
 extern void SDL_ECC_BUS_SAFETY_DSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *dmaCh, uint32_t *tcc,\
                                                uint32_t *param, uint32_t *queNum, uint32_t *edmaNum );
+#endif
+
+#if defined (SUBSYS_MSS)
+/* helper fuction to get the edma parameters on MSS */
 extern void SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *dmaCh, uint32_t *tcc,\
-                                                  uint32_t *param, uint32_t *queNum, uint32_t *edmaNum );
+                                                      uint32_t *param, uint32_t *queNum, uint32_t *edmaNum );
+#endif
 
 
 #if defined (SOC_AM273X) ||  (SOC_AWR294X)
@@ -179,143 +191,277 @@ extern void SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(uint32_t busSftyNode , uint
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_1_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_2_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_3_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKA_RED_FI_Global_Main_Test(void);
+
 /* Node DSS_L3_BANKB */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_RED_Test(void);
-
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKB_RED_FI_Global_Main_Test(void);
 /* Node DSS_L3_BANKC */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKC_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_L3_BANKD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_L3_BANKD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_HWA_DMA0 */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA0_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_HWA_DMA1 */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_HWA_DMA1_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_DSP_SDMA */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_SDMA_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_DSP_MDMA */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_DSP_MDMA_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_PCR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_PCR_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_PCR_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_PCR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_PCR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_PCR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_PCR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_MBOX */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MBOX_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_MCRC */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_RED_Test(void);
-
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MCRC_RED_FI_Global_Main_Test(void);
 /* Node DSS_CBUFF_FIFO */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_CBUFF_FIFO_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_A0_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_A1_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_B0_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_B1_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C0_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C1_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C2_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C3_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C4_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C5_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_WR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_WR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_WR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_WR_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_A0_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A0_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_A1_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_A1_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_B0_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B0_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_B1_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_B1_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C0_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C0_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C1_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C1_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C2_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C2_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C3_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C3_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C4_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C4_RD_RED_FI_Global_Main_Test(void);
 
 /* Node DSS_TPTC_C5_RD */
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_RED_FI_Global_Main_Test(void);
 
 #endif
 #endif
@@ -327,33 +473,18 @@ extern int32_t SDL_ECC_BUS_SAFETY_DSS_TPTC_C5_RD_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_RED_Test_Polling(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_DED_Test_Polling(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_DED_End_Addr_Test_Polling(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_RED_FI_Main_Test_Polling(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_RED_FI_Safe_Test_Polling(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_RED_FI_Global_Main_Test_Polling(void);
 
 #endif
 #endif
 
-#if defined (SOC_AWR294X)
-#if defined (SUBSYS_DSS)
 
-/* Node RSS_MBOX */
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_MBOX_SEC_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_MBOX_DED_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_MBOX_RED_Test(void);
-
-/* Node RSS_ADCBUF_RD */
-
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_ADCBUF_RD_RED_Test(void);
-
-/* Node RSS_ADCBUF_WR */
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR_SEC_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR_DED_Test(void);
-extern int32_t SDL_ECC_BUS_SAFETY_RSS_ADCBUF_WR_RED_Test(void);
-
-
-#endif
-#endif
-
+#if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
 #if defined (SUBSYS_MSS)
-#if defined (SOC_AM273X) ||  (SOC_AWR294X)
 /* Node MSS_TPTC_A0_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_RED_Test_Polling(void);
@@ -433,7 +564,78 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_RED_Test(void);
 
+/* Node MSS_L2_A */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_L2_B */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_DMM_SLV */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_SLV_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_DMM */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_GPADC */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPADC_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_PCR */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_PCR2 */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR2_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR2_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR2_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR2_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR2_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PCR2_RED_FI_Global_Main_Test(void);
+
+/* Nodes MSS_CPSW */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Global_Main_Test(void);
 #endif
+#endif
+
 #if defined (SOC_AM263X)
 /* Node MSS_AHB_CR5A */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB_RED_Test(void);
@@ -529,16 +731,101 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_S_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_SEC_Test(void);
+/* Node MSS_MMC_S */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_GPMC */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_L2_A */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_L2_B */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_B_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_L2_C */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_L2_D */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_SEC_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_DED_End_Addr_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_FI_Global_Main_Test(void);
+
+/* Node MSS_CPSW */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Global_Main_Test(void);
+
+/* Node MAIN_VBUSP */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP_RED_FI_Global_Main_Test(void);
+
+/* Node PERI_VBUSP */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP_RED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP_RED_FI_Main_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP_RED_FI_Safe_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP_RED_FI_Global_Main_Test(void);
+#endif
+
+#if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
+#if defined (SUBSYS_MSS)
+/* CPSW setup */
+extern void setup_CPSW(void);
+/* CPSW transfer */
+extern void cpsw_transfer(void);
 #endif
 #endif
-/*===========================================================================*/
-/*                   Local Function definitions                              */
-/*===========================================================================*/
 
 #ifdef __cplusplus
 }
 
 #endif /*extern "C" */
 
-#endif /* TEST_MAIN_H */
+#endif /* ECC_BUS_SAFETY_MAIN_H */
 /* Nothing past this point */
