@@ -451,6 +451,65 @@ static uint32_t EnetApp_receivePkts(void)
     return rxReadyCnt;
 }
 
+static bool EnetLpbk_verifyRxFrame(EnetDma_Pkt *pktInfo, uint8_t rxCnt)
+{
+    uint8_t *rxPayload;
+    EthFrame *rxframe;
+    uint8_t verifyRxpkt = 0xA5+rxCnt;
+    bool retval = false;
+    uint32_t i,j;
+    uint32_t segmentLen, headerLen;
+    bool incorrectPayload = false;
+
+    rxframe = (EthFrame *)pktInfo->sgList.list[0U].bufPtr;
+    rxPayload = rxframe->payload;
+
+    if (pktInfo->sgList.numScatterSegments == 1)
+    {
+        for (i = 0; i < ENETLPBK_TEST_PKT_LEN; i++)
+        {
+            if((rxPayload[i] != verifyRxpkt))
+            {
+                retval = false;
+                break;
+            }
+            retval = true;
+        }
+    }
+    else
+    {
+        headerLen = rxPayload - pktInfo->sgList.list[0U].bufPtr;
+        for (i = 0; i < pktInfo->sgList.numScatterSegments; i++)
+        {
+            segmentLen = pktInfo->sgList.list[i].segmentFilledLen;
+            if(i == 0)
+            {
+                segmentLen -= headerLen;
+            }
+            else
+            {
+                rxPayload = pktInfo->sgList.list[i].bufPtr;
+            }
+            for (j = 0; j < segmentLen; j++)
+            {
+                if((rxPayload[j] != verifyRxpkt))
+                {
+                    retval = false;
+                    incorrectPayload = true;
+                    break;
+                }
+                retval = true;
+            }
+            if(incorrectPayload == true)
+            {
+                break;
+            }
+        }
+    }
+
+    return retval;
+}
+
 static void EnetApp_rxTask(void *args)
 {
     EnetDma_Pkt *pktInfo;
@@ -458,12 +517,14 @@ static void EnetApp_rxTask(void *args)
     uint32_t rxReadyCnt;
     uint32_t loopCnt, loopRxPktCnt;
     int32_t status = ENET_SOK;
+    uint32_t rxPktCnt;
 
     gEnetLpbk.totalRxCnt = 0U;
 
     for (loopCnt = 0U; loopCnt < ENETLPBK_NUM_ITERATION; loopCnt++)
     {
         loopRxPktCnt = 0U;
+        rxPktCnt     = 0U;
         /* Wait for packet reception */
         do
         {
@@ -476,6 +537,7 @@ static void EnetApp_rxTask(void *args)
                 pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gEnetLpbk.rxReadyQ);
                 while (NULL != pktInfo)
                 {
+                    rxPktCnt++;
                     EnetDma_checkPktState(&pktInfo->pktState,
                                           ENET_PKTSTATE_MODULE_APP,
                                           ENET_PKTSTATE_APP_WITH_READYQ,
@@ -492,7 +554,7 @@ static void EnetApp_rxTask(void *args)
                         EnetAppUtils_printFrame(frame,
                                                 packetPrintLen);
                     }
-
+                    EnetAppUtils_assert(EnetLpbk_verifyRxFrame(pktInfo, rxPktCnt) == true);
                     /* Release the received packet */
                     EnetQueue_enq(&gEnetLpbk.rxFreeQ, &pktInfo->node);
                     pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gEnetLpbk.rxReadyQ);
@@ -810,6 +872,10 @@ static void EnetApp_initTxFreePktQ(void)
 {
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
+    uint32_t scatterSegments[] =
+    {
+       ENET_MEM_LARGE_POOL_PKT_SIZE,
+    };
 
     /* Initialize all queues */
     EnetQueue_initQ(&gEnetLpbk.txFreePktInfoQ);
@@ -818,8 +884,9 @@ static void EnetApp_initTxFreePktQ(void)
     for (i = 0U; i < ENET_SYSCFG_TOTAL_NUM_TX_PKT; i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetLpbk,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
 
@@ -836,6 +903,10 @@ static void EnetApp_initRxReadyPktQ(void)
     EnetDma_Pkt *pPktInfo;
     int32_t status;
     uint32_t i;
+    uint32_t scatterSegments[] =
+    {
+       ENET_MEM_LARGE_POOL_PKT_SIZE,
+    };
 
     EnetQueue_initQ(&gEnetLpbk.rxFreeQ);
     EnetQueue_initQ(&gEnetLpbk.rxReadyQ);
@@ -844,8 +915,9 @@ static void EnetApp_initRxReadyPktQ(void)
     for (i = 0U; i < ENET_SYSCFG_TOTAL_NUM_RX_PKT; i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetLpbk,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                        ENETDMA_CACHELINE_ALIGNMENT,
+                                        ENET_ARRAYSIZE(scatterSegments),
+                                        scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
         EnetQueue_enq(&gEnetLpbk.rxFreeQ, &pPktInfo->node);

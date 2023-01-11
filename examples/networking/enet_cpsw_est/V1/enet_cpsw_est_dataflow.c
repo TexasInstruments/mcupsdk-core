@@ -227,6 +227,7 @@ static void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh)
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
     int32_t status;
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
 
     EnetQueue_initQ(&rxFreeQ);
     EnetQueue_initQ(&rxReadyQ);
@@ -235,8 +236,9 @@ static void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh)
     for (i = 0U; i < ENET_SYSCFG_TOTAL_NUM_RX_PKT; i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetApp,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
 
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
@@ -267,13 +269,15 @@ static void EnetApp_initTxFreePktQ(void)
 {
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
 
     /* Allocate TX packets from pool, save them in local queue (txFreePktInfoQ) */
     for (i = 0U; i < ENET_SYSCFG_TOTAL_NUM_TX_PKT; i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetApp,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
 

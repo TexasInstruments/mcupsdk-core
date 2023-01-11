@@ -121,7 +121,7 @@ void EnetMem_initMemObjs(const EnetMem_Cfg *cfg, EnetMem_MemAllocObj *obj)
         for (i = 0; i < cfg->pktBufPool[poolIdx].numPkts; i++)
         {
             appPktInfo[i].dmaPktPtr = pktInfo;
-            appPktInfo[i].dmaPktPtr->sgList.list[0].bufPtr = pktAddr;
+            appPktInfo[i].orgBufAddr = pktAddr;
             pktInfo++;
             EnetAppUtils_assert((uintptr_t)(&appPktInfo[i + 1]) <= ((uintptr_t)cfg->pktBufPool[poolIdx].pktInfoContainerMem) + cfg->pktBufPool[poolIdx].pktInfoContainerSize);
             EnetAppUtils_assert((uintptr_t)pktInfo <= ((uintptr_t)cfg->pktBufPool[poolIdx].pktInfoMem) + cfg->pktBufPool[poolIdx].pktInfoSize);
@@ -151,13 +151,21 @@ void EnetMem_initMemObjs(const EnetMem_Cfg *cfg, EnetMem_MemAllocObj *obj)
 
 /*! Ethernet packet allocation function  */
 EnetDma_Pkt *EnetMem_allocEthPkt(void *appPriv,
-                                 uint32_t pktSize,
-                                 uint32_t alignSize)
+                                 uint32_t alignSize,
+                                 uint32_t numScatterSegments,
+                                 uint32_t scatterSegmentSize[])
 {
     EnetDma_Pkt *pPktInfo                     = NULL;
     EnetMem_AppPktInfoMem *pAppPktInfoMem = NULL;
     EnetMem_EthPktMemQ *selectedQ         = NULL;
+    uint32_t i;
+    uint8_t *segmentBufAddr;
+    uint32_t pktSize = 0;
 
+    for (i = 0; i < numScatterSegments; i++)
+    {
+        pktSize += scatterSegmentSize[i];
+    }
     if (gEnetMemObj.memUtilsInitFlag == true)
     {
         if (gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_SMALL].pktSize  >= pktSize)
@@ -186,13 +194,25 @@ EnetDma_Pkt *EnetMem_allocEthPkt(void *appPriv,
         if (NULL != pAppPktInfoMem)
         {
             pPktInfo = pAppPktInfoMem->dmaPktPtr;
-            if (!ENET_UTILS_IS_ALIGNED(pPktInfo->sgList.list[0].bufPtr, alignSize))
+            EnetAppUtils_assert(numScatterSegments <= ENET_ARRAYSIZE(pPktInfo->sgList.list));
+            if (!ENET_UTILS_IS_ALIGNED(pAppPktInfoMem->orgBufAddr, alignSize))
             {
                 EnetQueue_enq(selectedQ, &pAppPktInfoMem->node);
                 pPktInfo = NULL;
+                EnetAppUtils_assert(0);
             }
             else
             {
+                segmentBufAddr = pAppPktInfoMem->orgBufAddr;
+                for (i = 0; i < numScatterSegments; i++)
+                {
+                    pPktInfo->sgList.list[i].bufPtr = (uint8_t*) segmentBufAddr ;
+                    pPktInfo->sgList.list[i].segmentAllocLen = scatterSegmentSize[i];
+                    segmentBufAddr = (uint8_t*) (pPktInfo->sgList.list[i].bufPtr) + scatterSegmentSize[i];
+                    EnetAppUtils_assert(segmentBufAddr <= (pAppPktInfoMem->orgBufAddr + pAppPktInfoMem->orgBufSize));
+                    EnetAppUtils_assert(ENET_UTILS_IS_ALIGNED(pPktInfo->sgList.list[i].bufPtr, alignSize));
+                }
+                pPktInfo->sgList.numScatterSegments = numScatterSegments;
                 pPktInfo->appPriv = (void *)appPriv;
                 EnetDma_checkPktState(&pPktInfo->pktState,
                                         ENET_PKTSTATE_MODULE_MEMMGR,
@@ -460,8 +480,6 @@ static int32_t EnetMem_initCore(const EnetMem_Cfg *cfg)
     int32_t retVal = ENET_SOK;
     EnetDma_Pkt *dmaPkt;
     EnetMem_AppPktInfoMem *pAppPktInfoMem;
-    uint32_t alignSize = ENETDMA_CACHELINE_ALIGNMENT;
-    uint8_t *bufPtr;
 
     if (gEnetMemObj.memUtilsInitFlag == false)
     {
@@ -481,7 +499,7 @@ static int32_t EnetMem_initCore(const EnetMem_Cfg *cfg)
             for (i = 0U; i < gEnetMemObj.cfg.dmaDescMem.numDesc; i++)
             {
                 gEnetMemObj.cfg.dmaDescMem.descInfoContainerMemBase[i].dmaDescState = 0;
-                if (!ENET_UTILS_IS_ALIGNED(gEnetMemObj.cfg.dmaDescMem.descInfoContainerMemBase[i].dmaDescPtr, alignSize))
+                if (!ENET_UTILS_IS_ALIGNED(gEnetMemObj.cfg.dmaDescMem.descInfoContainerMemBase[i].dmaDescPtr, ENETDMA_CACHELINE_ALIGNMENT))
                 {
                     retVal = ENET_EFAIL;
                     break;
@@ -499,7 +517,7 @@ static int32_t EnetMem_initCore(const EnetMem_Cfg *cfg)
             /* Enqueue ring memory element into free packet Q */
             for (i = 0U; i < gEnetMemObj.cfg.ringMem.numRings; i++)
             {
-                if (!ENET_UTILS_IS_ALIGNED(gEnetMemObj.cfg.ringMem.ringInfoContainerBase[i].ringElePtr, alignSize))
+                if (!ENET_UTILS_IS_ALIGNED(gEnetMemObj.cfg.ringMem.ringInfoContainerBase[i].ringElePtr, ENETDMA_CACHELINE_ALIGNMENT))
                 {
                     retVal = ENET_EFAIL;
                     break;
@@ -522,18 +540,8 @@ static int32_t EnetMem_initCore(const EnetMem_Cfg *cfg)
                             ((uintptr_t)(pAppPktInfoMem + 1) <= (((uintptr_t)gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].pktInfoContainerMem) + gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].pktInfoContainerSize)));
                 /* Keep record of allocated size - we use this in free */
                 pAppPktInfoMem->orgBufSize = gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].pktSize;
-                bufPtr = pAppPktInfoMem->dmaPktPtr->sgList.list[0].bufPtr;
                 dmaPkt                = pAppPktInfoMem->dmaPktPtr;
                 EnetDma_initPktInfo(dmaPkt);
-                dmaPkt->sgList.list[0].bufPtr     = bufPtr;
-                dmaPkt->sgList.list[0].segmentAllocLen  = gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].pktSize;
-                dmaPkt->sgList.numScatterSegments = 1;
-                EnetAppUtils_assert(dmaPkt->sgList.list[0].bufPtr != NULL);
-                if (!ENET_UTILS_IS_ALIGNED(dmaPkt->sgList.list[0].bufPtr, alignSize))
-                {
-                    retVal = ENET_EFAIL;
-                    break;
-                }
 
                 ENET_UTILS_SET_PKT_MEMMGR_STATE(&dmaPkt->pktState,
                                                   ENET_PKTSTATE_MEMMGR_FREE);
@@ -554,18 +562,8 @@ static int32_t EnetMem_initCore(const EnetMem_Cfg *cfg)
                             ((uintptr_t)(pAppPktInfoMem + 1) <= (((uintptr_t)gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_MEDIUM].pktInfoContainerMem) + gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_MEDIUM].pktInfoContainerSize)));
                 /* Keep record of allocated size - we use this in free */
                 pAppPktInfoMem->orgBufSize = gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_MEDIUM].pktSize;
-                bufPtr = pAppPktInfoMem->dmaPktPtr->sgList.list[0].bufPtr;
                 dmaPkt                = pAppPktInfoMem->dmaPktPtr;
                 EnetDma_initPktInfo(dmaPkt);
-                dmaPkt->sgList.list[0].bufPtr     = bufPtr;
-                dmaPkt->sgList.list[0].segmentAllocLen = gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_MEDIUM].pktSize;
-                dmaPkt->sgList.numScatterSegments = 1;
-                EnetAppUtils_assert(dmaPkt->sgList.list[0].bufPtr != NULL);
-                if (!ENET_UTILS_IS_ALIGNED(dmaPkt->sgList.list[0].bufPtr, alignSize))
-                {
-                    retVal = ENET_EFAIL;
-                    break;
-                }
 
                 ENET_UTILS_SET_PKT_MEMMGR_STATE(&dmaPkt->pktState, ENET_PKTSTATE_MEMMGR_FREE);
                 EnetQueue_enq(&gEnetMemObj.ethPktMem_MediumPoolQ, &pAppPktInfoMem->node);
@@ -586,18 +584,8 @@ static int32_t EnetMem_initCore(const EnetMem_Cfg *cfg)
 
                 /* Keep record of allocated size - we use this in free */
                 pAppPktInfoMem->orgBufSize = gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_SMALL].pktSize;
-                bufPtr = pAppPktInfoMem->dmaPktPtr->sgList.list[0].bufPtr;
                 dmaPkt                = pAppPktInfoMem->dmaPktPtr;
                 EnetDma_initPktInfo(dmaPkt);
-                dmaPkt->sgList.list[0].bufPtr     = bufPtr;
-                dmaPkt->sgList.list[0].segmentAllocLen  = gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_SMALL].pktSize;
-                dmaPkt->sgList.numScatterSegments = 1;
-                EnetAppUtils_assert(dmaPkt->sgList.list[0].bufPtr != NULL);
-                if (!ENET_UTILS_IS_ALIGNED(dmaPkt->sgList.list[0].bufPtr, alignSize))
-                {
-                    retVal = ENET_EFAIL;
-                    break;
-                }
 
                 ENET_UTILS_SET_PKT_MEMMGR_STATE(&dmaPkt->pktState, ENET_PKTSTATE_MEMMGR_FREE);
                 EnetQueue_enq(&gEnetMemObj.ethPktMem_SmallPoolQ, &pAppPktInfoMem->node);

@@ -166,6 +166,9 @@ typedef struct EnetMem_EthPktMem_s
 
     /*! Original packet size - we can't use this info from dmaPkt as app can change it */
     uint32_t orgBufSize;
+
+    /*! Original packet size - we can't use this info from dmaPkt as app can change it */
+    uint8_t *orgBufAddr;
 }EnetMem_AppPktInfoMem;
 
 
@@ -231,8 +234,9 @@ void EnetMem_freeDmaDesc(void *appPriv,
 #endif
 /*! Ethernet packet allocation function  */
 EnetDma_Pkt *EnetMem_allocEthPkt(void *appPriv,
-                                 uint32_t pktSize,
-                                 uint32_t alignSize);
+                                 uint32_t alignSize,
+                                 uint32_t numScatterSegments,
+                                 uint32_t scatterSegmentSize[]);
 
 /*! Ethernet packetInfoMem allocation function  */
 EnetDma_Pkt *EnetMem_allocEthPktInfoMem(void *appPriv,

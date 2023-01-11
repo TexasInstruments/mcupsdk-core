@@ -1211,13 +1211,15 @@ static void EnetTas_initTxFreePktQ(void)
 {
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
 
     /* Initialize TX EthPkts and queue them to txFreePktInfoQ */
     for (i = 0U; i < (ENET_SYSCFG_TOTAL_NUM_TX_PKT/2); i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetTas,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
 
@@ -1235,14 +1237,16 @@ static void EnetTas_initRxReadyPktQ(EnetDma_RxChHandle hRxCh)
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
     int32_t status;
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
 
     EnetQueue_initQ(&rxFreeQ);
 
     for (i = 0U; i < (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2); i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetTas,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
 
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);

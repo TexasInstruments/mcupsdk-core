@@ -389,6 +389,7 @@ void EnetApp_initTxFreePktQ(EnetDma_PktQ *freePktInfoQ, uint32_t txCh)
 {
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
     const uint32_t txChNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] = 
                               {
                                   [ENET_DMA_TX_CH0] = ENET_DMA_TX_CH0_NUM_PKTS, 
@@ -399,8 +400,9 @@ void EnetApp_initTxFreePktQ(EnetDma_PktQ *freePktInfoQ, uint32_t txCh)
     for (i = 0U; i < txChNumPkts[txCh]; i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetApp,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
 
@@ -418,6 +420,7 @@ void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh, uint32_t rxCh)
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
     int32_t status;
+    uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
     const uint32_t rxChNumPkts[ENET_SYSCFG_RX_FLOWS_NUM] = 
                               {
                                   [ENET_DMA_RX_CH0]    = ENET_DMA_RX_CH0_NUM_PKTS, 
@@ -430,8 +433,9 @@ void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh, uint32_t rxCh)
     for (i = 0U; i < rxChNumPkts[rxCh]; i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetApp,
-                                       ENET_MEM_LARGE_POOL_PKT_SIZE,
-                                       ENETDMA_CACHELINE_ALIGNMENT);
+                                       ENETDMA_CACHELINE_ALIGNMENT,
+                                       ENET_ARRAYSIZE(scatterSegments),
+                                       scatterSegments);
         EnetAppUtils_assert(pPktInfo != NULL);
 
         ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
