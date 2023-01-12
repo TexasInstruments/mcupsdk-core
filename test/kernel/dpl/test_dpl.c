@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-23 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -410,6 +410,7 @@ void test_clockMode(void *args)
 
     curTicks = ClockP_getTicks();
 
+
     ClockP_start(&gMyClock);
 
     if (oneShotMode)
@@ -497,6 +498,8 @@ void test_clock(void *args)
         clockParams.args = &gMyDoneSem;
         status = ClockP_construct(&gMyClock, &clockParams);
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+        status = ClockP_isActive(&gMyClock);
+        TEST_ASSERT_EQUAL_INT32(status, SystemP_SUCCESS);
 
         HwiP_Params_init(&hwiParams);
         hwiParams.intNum = TEST_INT_NUM;
