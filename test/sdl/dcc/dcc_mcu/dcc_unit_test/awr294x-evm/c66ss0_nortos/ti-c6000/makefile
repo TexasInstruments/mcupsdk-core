@@ -21,16 +21,16 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dcc_unit_test.$(PROFILE).out
+OUTNAME:=dcc_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dcc_unit_test.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dcc_unit_test.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_QSPI:=dcc_unit_test.$(PROFILE).appimage_qspi
-BOOTIMAGE_NAME_SIGNED:=dcc_unit_test.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=dcc_unit_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dcc_unit_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dcc_unit_test.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=dcc_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dcc_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_QSPI:=dcc_test_app.$(PROFILE).appimage_qspi
+BOOTIMAGE_NAME_SIGNED:=dcc_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dcc_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dcc_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dcc_test_app.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	dcc_test_main.c \
@@ -179,7 +179,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: awr294x:c66ss0:nortos:ti-c6000 dcc_unit_test ...
+	@echo  Scrubing: awr294x:c66ss0:nortos:ti-c6000 dcc_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

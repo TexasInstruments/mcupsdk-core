@@ -262,8 +262,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_rsa_signing_verification_am263x-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_am263x-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ip_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -471,10 +471,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ip_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/pbist/ip_pbist_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- dcc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+ dcc_func_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- dcc_unit_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+ dcc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  mcrc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
@@ -631,8 +631,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_signing_verification_am263x-cc_r5fss0-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ip_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -840,10 +840,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ip_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/pbist/ip_pbist_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- dcc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ dcc_func_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- dcc_unit_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ dcc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  mcrc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -1000,8 +1000,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_signing_verification_am263x-cc_r5fss0-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ip_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1209,10 +1209,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ip_pbist_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/pbist/ip_pbist_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- dcc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ dcc_func_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- dcc_unit_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ dcc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  mcrc_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
