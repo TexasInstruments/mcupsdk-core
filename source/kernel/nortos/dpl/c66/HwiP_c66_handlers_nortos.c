@@ -145,3 +145,18 @@ uint32_t HwiP_inISR(void)
 
     return (stat);
 }
+
+#ifdef __cplusplus
+#pragma NMI_INTERRUPT
+#else
+#pragma NMI_INTERRUPT( HwiP_intcNmiDispatcher )
+#endif
+void HwiP_intcNmiDispatcher(void)
+{
+    if(gHwiCtrl.nmiHandler != NULL)
+    {
+        /* Call nmi callback */
+        gHwiCtrl.nmiHandler(gHwiCtrl.nmiArgs);
+    }
+    return;
+}

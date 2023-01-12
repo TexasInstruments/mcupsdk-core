@@ -43,7 +43,7 @@ const libs_r5f = {
         "nortos.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
-		"sdl.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
+		"sdl.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 const libs_c66 = {
@@ -51,7 +51,7 @@ const libs_c66 = {
         "nortos.awr294x.c66.ti-c6000.${ConfigName}.lib",
         "drivers.awr294x.c66.ti-c6000.${ConfigName}.lib",
         "unity.awr294x.c66.ti-c6000.${ConfigName}.lib",
-		"sdl.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.awr294x.c66.ti-c6000.${ConfigName}.lib",
     ],
 };
 

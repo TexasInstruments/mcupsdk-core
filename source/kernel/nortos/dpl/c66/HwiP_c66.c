@@ -453,17 +453,3 @@ static inline void HwiP_intcMapEventVector(HwiP_IntcRegsOvly pIntcRegs,
     return;
 }
 
-#ifdef __cplusplus
-#pragma NMI_INTERRUPT
-#else
-#pragma NMI_INTERRUPT( HwiP_intcNmiDispatcher )
-#endif
-void HwiP_intcNmiDispatcher(void)
-{
-    if(gHwiCtrl.nmiHandler != NULL)
-    {
-        /* Call nmi callback */
-        gHwiCtrl.nmiHandler(gHwiCtrl.nmiArgs);
-    }
-    return;
-}

@@ -52,7 +52,7 @@
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
-#if defined(SOC_AWR294X)
+#if defined(SOC_AM273X)
 #include <sdl/esm/v1/sdl_esm.h>
 #include <sdl/esm/soc/am273x/sdl_esm_core.h>
 #include <sdl/include/am273x/sdlr_intr_esm_mss.h>
@@ -587,13 +587,13 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
     SDL_Ecc_AggrIntrSrc eccIntrSrc;
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
-    
+
     retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
 
     /* Any additional customer specific actions can be added here */
     retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 
-    
+
     if (eccErrorInfo.injectBitErrCnt != 0)
     {
         SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
