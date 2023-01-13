@@ -221,7 +221,7 @@ int main(void)
 
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
                 status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-                if(status == SystemP_SUCCESS)
+                if((status == SystemP_SUCCESS) && (TRUE == Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
                 {
                     status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
                 }
