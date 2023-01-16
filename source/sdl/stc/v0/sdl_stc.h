@@ -67,6 +67,7 @@ extern "C"
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdlr.h>
 #include <sdl/stc/v0/soc/sdl_soc_stc.h>
+#include <sdl/soc.h>
 
 
 /**
@@ -120,12 +121,12 @@ extern "C"
 * STC Parameters DSP
 */
 
-#define STC_DSS_INTERVAL_NUM                         (uint32_t)(2U)
+#define STC_DSS_INTERVAL_NUM                         (uint32_t)(1U)
 #define STC_DSS_LP_SCAN_MODE                         (uint32_t)(0U)
 #define STC_DSS_CODEC_SPREAD_MODE                    (uint32_t)(1U)
 #define STC_DSS_CAP_IDLE_CYCLE                       (uint32_t)(3U)
 #define STC_DSS_SCANEN_HIGH_CAP_IDLE_CYCLE           (uint32_t)(3U)
-#define STC_DSS_MAX_RUN_TIME                         (uint32_t)(0x13332U)
+#define STC_DSS_MAX_RUN_TIME                         (uint32_t)(0xFFFFFFFFU)
 #define STC_DSS_CLK_DIV                              (uint32_t)(1U)
 #define STC_ROM_START_ADDRESS                        (uint32_t)(0U)
 #define STC_pROM_START_ADDRESS                       (uint32_t)(1U)
@@ -200,9 +201,9 @@ typedef enum
     /** The STC completed and the test failed  */
     SDL_STC_COMPLETED_FAILURE,
     /**The STC was active but could not be completed.  */
-     SDL_STC_NOT_COMPLETED,
+    SDL_STC_NOT_COMPLETED,
     /** The STC was not performed on this device  */
-     SDL_STC_NOT_RUN,
+    SDL_STC_NOT_RUN,
     /** The STC was not performed on this device  */
     INVALID_RESULT
 
@@ -211,9 +212,11 @@ typedef enum
 typedef enum
 {
     /** The STC test should be  completed and the test passed for this testType  */
-     SDL_STC_TEST,
+    SDL_STC_TEST,
     /** The STC test should be completed and the test failed for this testType */
-     SDL_STC_NEG_TEST
+    SDL_STC_NEG_TEST,
+    /* Invalid test type */
+    INVALID_TEST
 
 }SDL_STC_TestType;
 
@@ -294,6 +297,22 @@ static int32_t   SDL_STC_runTest(SDL_STC_Inst instance );
  *
  */
 static void SDL_STC_delay(int32_t count);
+/**
+ *
+ *
+ * \brief   This API is used to execute asm nop operation.
+ *
+ *
+ */
+static void SDL_Delay(void);
+/**
+ *
+ *
+ * \brief   This API is used to initialize all the required configuration
+ *          in RCM & CTRL Module for performing DSP STC.
+ *
+ */
+void SDL_STC_dspInit(void);
 
 /** @} */
 
@@ -596,6 +615,11 @@ typedef struct
 /* DSS_RCM */
 #define SDL_DSS_STC_RESET_MASK                                         (0x00000020U)
 #define SDL_DSS_STC_RESET_SHIFT                                        (5U)
+
+
+/*DSS_ICFG*/
+#define SDL_DSS_DSP_ICFG_PDCCMD_GEMPD_MASK                             (0x00010000U)
+#define SDL_DSS_DSP_ICFG_PDCCMD_GEMPD_SHIFT                            (16U)
 
 #ifdef __cplusplus
 }

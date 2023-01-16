@@ -33,7 +33,7 @@ BOOTIMAGE_RPRC_NAME_XIP:=stc_func_test.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=stc_func_test.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	stc_test_main.c \
+	stc_dsp_main.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

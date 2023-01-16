@@ -52,25 +52,21 @@
 
 int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 {
-
-    unsigned long int  baseAddr;
+    uint32_t  baseAddr;
     uint32_t stcResultDone, stcResultFail, stcResultActive;
     uint32_t stcReset=0;
-    int32_t stcResult;
+    int32_t stcResult= (int32_t)INVALID_RESULT;
 
     if (instance < INVALID_INSTANCE)
     {
-
-
         if(instance == SDL_STC_INST_MAINR5F0)
         {
             stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_MSS_RST_STATUS, SDL_MSS_STC_RESET);
         }
-        else if(instance == SDL_STC_INST_DSP)
+        else
         {
             stcReset= (uint32_t)HW_RD_FIELD32(SDL_DSS_RCM_U_BASE  + SDL_DSS_RCM_DSP_RST_CAUSE, SDL_DSS_STC_RESET);
         }
-
             /* Getting base address */
         baseAddr = SDL_STC_baseAddress[instance];
 
@@ -80,44 +76,33 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 
         if(stcReset==(1U))
         {
-            if((stcResultDone==(1U))&&(stcResultFail==(1U)))
+          if((stcResultDone==(1U))&&(stcResultFail==(1U)))
             {
-                stcResult= SDL_STC_COMPLETED_FAILURE;
-                return stcResult;
+                stcResult= (int32_t)SDL_STC_COMPLETED_FAILURE;
             }
-            else
+
+            if ((stcResultDone==(1U))&&(stcResultFail==(0U)))
             {
-                if ((stcResultDone==(1U))&&(stcResultFail==(0U)))
-                {
-                    stcResult= SDL_STC_COMPLETED_SUCCESS;
-                    return stcResult;
-                }
-                else
-                {
-                    stcResult= INVALID_RESULT;
-                    return stcResult;
-                }
+                stcResult= (int32_t) SDL_STC_COMPLETED_SUCCESS;
             }
         }
         else
         {
             if (stcResultActive== (SDL_STC_ST_ACTIVE_ENABLE))
             {
-                stcResult= SDL_STC_NOT_COMPLETED;
-                return stcResult;
+                stcResult= (int32_t)SDL_STC_NOT_COMPLETED;
             }
             else
             {
-                stcResult= SDL_STC_NOT_RUN;
-                return stcResult;
+                stcResult= (int32_t)SDL_STC_NOT_RUN;
             }
         }
     }
     else
     {
-        stcResult= INVALID_RESULT;
-        return stcResult;
+        stcResult= (int32_t)INVALID_RESULT;
     }
+    return stcResult;
 }
 
 
@@ -128,7 +113,7 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig, SDL_STC_TestType testType)
 {
     int32_t sdlResult = SDL_EFAIL;
-    unsigned long int baseAddr;
+    uint32_t baseAddr;
     if((instance  <INVALID_INSTANCE) && (pConfig != NULL))
     {
         /* Getting base address */
@@ -200,7 +185,6 @@ static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig,
         sdlResult = SDL_EBADARGS;
     }
    return sdlResult;
-
 }
 
 /********************************************************************************************************
@@ -210,7 +194,7 @@ static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig,
 static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
 {
    int32_t sdlResult = SDL_EFAIL;
-   unsigned long int baseAddr;
+   uint32_t baseAddr;
    int32_t count =100;
 
     if(instance  <INVALID_INSTANCE)
@@ -233,10 +217,21 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
                     SDL_MSS_CTRL_MSS_STC_CONTROL_MSS_STC_CONTROL_CR5_WFI_OVERIDE_MAX);
         }
 
+        /* For DSP Core making to low power mode, it need to write this register,
+         it will genrate an event on DSP side, in which ISR, Low power DSP will be
+          configured.
+        */
+        if(instance ==SDL_STC_INST_DSP)
+        {
+            /*Write pulse bit field: Trigger pulse for the STC PBIST state machine.
+            write to this field will generate a pulse*/
+            HW_WR_FIELD32(DSS_RCM_BaseAddress + SDL_DSS_RCM_DSP_STC_PBIST_START , SDL_DSS_RCM_DSP_STC_PBIST_START_DSP_STC_PBIST_START_SM_TRIG,
+                1U);
+        }
+
         /* run asm( "nop") opration for delay*/
         (void)SDL_STC_delay(count);
         sdlResult = SDL_PASS;
-
     }
  else
     {
@@ -258,18 +253,21 @@ static void SDL_STC_resetCauseClear(void)
 /********************************************************************************************************
 * Helper  API for Performing Delay for STC test for specified STC instance
 *********************************************************************************************************/
-static void __attribute__((noinline)) SDL_STC_delay(int32_t count)
+static void SDL_STC_delay(int32_t count)
 {
     int32_t countVal=count;
 
     while((countVal)>=(0))
     {
-        asm("	nop");
+        SDL_Delay();
         countVal--;
     }
-
 }
 
+static void  __attribute__((noinline)) SDL_Delay(void)
+{
+    asm("	nop");
+}
 
 /********************************************************************************************************
 *   API for Performing STC test for specified STC instance
@@ -279,14 +277,12 @@ static void __attribute__((noinline)) SDL_STC_delay(int32_t count)
  */
 int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType,SDL_STC_Config *pConfig)
 {
-
     int32_t sdlResult= SDL_EFAIL;
 
     if(instance==SDL_STC_INST_MAINR5F0)
     {
         SDL_STC_resetCauseClear();
     }
-
 
     if(pConfig != NULL)
     {
@@ -296,10 +292,6 @@ int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType,SDL_
         {
             sdlResult =  SDL_STC_runTest(instance );
         }
-        else
-        {
-            return sdlResult;
-        }
     }
     else
     {
@@ -308,7 +300,42 @@ int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType,SDL_
     return sdlResult;
 }
 
+/********************************************************************************************************
+*   API for Performing DSP Init for STC test performing.
+*********************************************************************************************************/
 
+void SDL_STC_dspInit(void)
+{
+    SDL_SOC_controlModuleUnlockMMR(SDL_SOC_DOMAIN_ID_DSS_RCM);
+    SDL_SOC_controlModuleUnlockMMR(SDL_SOC_DOMAIN_ID_DSS_CTRL);
+
+    /* Enable GEM STC during GEM power UP */
+    HW_WR_FIELD32(DSS_RCM_BaseAddress + SDL_DSS_RCM_DSP_STC_PBIST_CTRL ,SDL_DSS_RCM_DSP_STC_PBIST_CTRL_DSP_STC_PBIST_CTRL_STC_BOOT_EN,
+        1U);
+
+    /* Write pulse bit field: Trigger Power Up of the DSP */
+    HW_WR_FIELD32(DSS_RCM_BaseAddress + SDL_DSS_RCM_DSP_PD_TRIGGER_WAKUP ,SDL_DSS_RCM_DSP_PD_TRIGGER_WAKUP_DSP_PD_TRIGGER_WAKUP_WAKEUP_TRIGGER,
+        1U);
+
+    /* Configuration to halt the state machine before the final de-assertion */
+    HW_WR_FIELD32(DSS_RCM_BaseAddress + SDL_DSS_RCM_DSP_STC_PBIST_CTRL, SDL_DSS_RCM_DSP_STC_PBIST_CTRL_DSP_STC_PBIST_CTRL_PROC_HALT,
+        1U);
+    /*Enable for PBIST and STC. 00 - Reserved, 01 --> STC only 10 -->  (DSS_RCM_DSP_STC_PBIST_CTRL_DSP_STC_PBIST_CTRL_MODE_ENABLE)
+    PBIST only 11 --> PBIST followed by STC*/
+    HW_WR_FIELD32(DSS_RCM_BaseAddress + SDL_DSS_RCM_DSP_STC_PBIST_CTRL, SDL_DSS_RCM_DSP_STC_PBIST_CTRL_DSP_STC_PBIST_CTRL_MODE_ENABLE,
+        1U);
+
+    /* DSP_PD_WAKEUP_MASK0_WAKEUP_MASK0 */
+    HW_WR_FIELD32(DSS_RCM_BaseAddress + SDL_DSS_RCM_DSP_PD_WAKEUP_MASK0 , SDL_DSS_RCM_DSP_PD_WAKEUP_MASK0_DSP_PD_WAKEUP_MASK0_WAKEUP_MASK0,
+        SDL_DSP_PD_WAKEUP_MASK0_WAKEUP_MASK0);
+
+     /* Write pulse bit field: DSS SW Interrupt Write 1 : Generate an interrupt on DSS_SW_INT0 */
+    HW_WR_FIELD32(DSS_CTRL_BaseAddress + SDL_DSS_CTRL_DSS_SW_INT , SDL_DSS_CTRL_DSS_SW_INT_DSS_SW_INT_DSS_SWINT,
+        1U);
+
+    SDL_SOC_controlModuleLockMMR(SDL_SOC_DOMAIN_ID_DSS_RCM);
+    SDL_SOC_controlModuleLockMMR(SDL_SOC_DOMAIN_ID_DSS_CTRL);
+}
 
 
 /* Nothing past this point */

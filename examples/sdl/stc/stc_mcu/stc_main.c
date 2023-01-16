@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -75,6 +75,7 @@
 /*                         Internal function declarations                    */
 /*===========================================================================*/
 void STC_test_main(void );
+void STC_DSP_test_main(void);
 
 
 /*===========================================================================*/
@@ -90,6 +91,86 @@ static  int32_t test_Result;
 /*                         Function definitions                              */
 /*===========================================================================*/
 
+void STC_DSP_test_main()
+{
+    int32_t sdlResult=SDL_PASS;
+    volatile int32_t wait_Time = 0;
+
+    /* Two type of test cases are supported\
+        1.SDL_STC_TEST       (STC should pass for this testType);
+        2.SDL_STC_NEG_TEST   (STC should deliberately fail for this tesType);
+    */
+
+    SDL_STC_Config configVal;
+    SDL_STC_Config *pConfig=&configVal;
+
+    /* for R5F core the default configuration */
+
+    pConfig->intervalNum=                              STC_DSS_INTERVAL_NUM;
+    pConfig->modeConfig.lpScanMode=                    STC_DSS_LP_SCAN_MODE;
+    pConfig->modeConfig.codecSpreadMode=               STC_DSS_CODEC_SPREAD_MODE;
+    pConfig->modeConfig.capIdleCycle=                  STC_DSS_CAP_IDLE_CYCLE;
+    pConfig->modeConfig.scanEnHighCap_idleCycle=       STC_DSS_SCANEN_HIGH_CAP_IDLE_CYCLE;
+    pConfig->maxRunTime=                               STC_DSS_MAX_RUN_TIME;
+    pConfig->clkDiv=                                   STC_DSS_CLK_DIV;
+    pConfig->romStartAddress=                          STC_ROM_START_ADDRESS;
+    pConfig->pRomStartAdd=                             STC_pROM_START_ADDRESS;
+
+    DebugP_log("DSP STC Test Application started.\r\n");
+    DebugP_log("If DSP STC test is successfull, DSP Core will be reset.\r\n");
+    sdlResult=   SDL_STC_selfTest(test_case[1], SDL_STC_TEST, pConfig);
+
+    /* Wait for completion of STC test from DSP side */
+    do {
+        wait_Time++;
+        if (wait_Time > 0x0FFFFFF)
+        {
+            /* Timeout for the wait */
+            break;
+        }
+    } while (1);
+
+    if (sdlResult!=SDL_PASS)
+    {
+        DebugP_log("For DSP Core STC Test Could not completed Successfully.\r\n");
+    }
+
+    test_Result=  SDL_STC_getStatus(test_case[1]);
+
+    switch (test_Result)
+    {
+        case SDL_STC_COMPLETED_SUCCESS:
+        {
+            DebugP_log("DSP Core is Reset.\r\n");
+            DebugP_log("DSP STC is done Successfully & Passed.\r\n");
+            break;
+        }
+        case SDL_STC_COMPLETED_FAILURE:
+        {
+            DebugP_log("DSP Core is Reset.\r\n");
+            DebugP_log("DSP STC Test is Completed & failing.\r\n");
+            break;
+        }
+        case SDL_STC_NOT_COMPLETED:
+        {
+            DebugP_log("DSP STC Test is Active but Not yet Completed. \r\n");
+            break;
+        }
+        case SDL_STC_NOT_RUN:
+        {
+             DebugP_log("DSP STC Test is not run. \r\n");
+            break;
+        }
+        case  INVALID_RESULT:
+        {
+            DebugP_log("Something Invaild Input. \r\n");
+            break;
+        }
+        default :
+            break;
+    }
+}
+
 void STC_test_main()
 {
     int32_t sdlResult=SDL_PASS;
@@ -98,7 +179,6 @@ void STC_test_main()
         1.SDL_STC_TEST       (STC should pass for this testType);
         2.SDL_STC_NEG_TEST   (STC should deliberately fail for this tesType);
     */
-
 
     SDL_STC_Config configVal;
     SDL_STC_Config *pConfig=&configVal;
@@ -115,17 +195,15 @@ void STC_test_main()
     pConfig->romStartAddress=                          STC_ROM_START_ADDRESS;
     pConfig->pRomStartAdd=                             STC_pROM_START_ADDRESS;
 
-
-    DebugP_log("STC Test Application started.\r\n");
-    DebugP_log("If STC test is successfull, Core will go in to Reset.\r\n");
+    DebugP_log("R5F STC Test Application started.\r\n");
+    DebugP_log("If R5F STC test is successfull,R5F Core will go in to Reset.\r\n");
     sdlResult=   SDL_STC_selfTest(test_case[0], SDL_STC_TEST,pConfig);
 
     if (sdlResult!=SDL_PASS)
     {
-        DebugP_log("STC Test Could not completed Successfully.\r\n");
+        DebugP_log("For R5F Core STC Test Could not completed Successfully.\r\n");
     }
 }
-
 
 
 
@@ -136,49 +214,71 @@ void STC_main(void *args)
      /* disable IRQ */
     HwiP_disable();
 
+    int32_t core_Instance, core_IndexMax = 1;
 
-    test_Result=  SDL_STC_getStatus(test_case[0]);
-
-    switch (test_Result)
+    for(core_Instance=core_IndexMax; core_Instance>=0; core_Instance--)
     {
-        case SDL_STC_COMPLETED_SUCCESS:
+        int32_t curr_Instance= (int32_t)(test_case[core_Instance]);
+        if(curr_Instance==(int32_t)SDL_STC_INST_DSP)
         {
-            DebugP_log("Core is Reset.\r\n");
-            DebugP_log("STC is done Successfully & Passed.\r\n");
-            break;
-        }
-        case SDL_STC_COMPLETED_FAILURE:
-        {
-            DebugP_log("Core is Reset.\r\n");
-            DebugP_log("STC Test is Completed & failing.\r\n");
-            break;
-        }
-        case SDL_STC_NOT_COMPLETED:
-        {
-            DebugP_log("STC Test is Active but Not yet Completed. \r\n");
-            break;
-        }
-        case SDL_STC_NOT_RUN:
-        {
-            STC_test_main();
-            break;
-        }
-        case  INVALID_RESULT:
-        {
-            DebugP_log("Something Invaild Input. \r\n");
-            break;
-        }
-        default :
-            break;
+            /* DO the required configuration for initialize DSP*/
+            SDL_STC_dspInit();
 
+            test_Result=  SDL_STC_getStatus(test_case[core_Instance]);
+            if(test_Result==SDL_STC_NOT_RUN)
+            {
+                /*DSP STC main function*/
+                STC_DSP_test_main();
+            }
+        }
+        else
+        {
+            if(curr_Instance==(int32_t)SDL_STC_INST_MAINR5F0)
+            {
+                test_Result=  SDL_STC_getStatus(test_case[core_Instance]);
+
+                switch (test_Result)
+                {
+                    case SDL_STC_COMPLETED_SUCCESS:
+                    {
+                        DebugP_log("R5F Core is Reset.\r\n");
+                        DebugP_log("R5F STC is done Successfully & Passed.\r\n");
+                        break;
+                    }
+                    case SDL_STC_COMPLETED_FAILURE:
+                    {
+                        DebugP_log("R5F Core is Reset.\r\n");
+                        DebugP_log("R5F STC Test is Completed & failing.\r\n");
+                        break;
+                    }
+                    case SDL_STC_NOT_COMPLETED:
+                    {
+                        DebugP_log("R5F STC Test is Active but Not yet Completed. \r\n");
+                        break;
+                    }
+                    case SDL_STC_NOT_RUN:
+                    {
+                        STC_test_main();
+                        break;
+                    }
+                    case  INVALID_RESULT:
+                    {
+                        DebugP_log("Something Invaild Input. \r\n");
+                        break;
+                    }
+                    default :
+                        break;
+                }
+            }
+        }
     }
+
     DebugP_log("Waiting in loop in STC_Main(). \r\n");
 
     Board_driversClose();
     Drivers_close();
 
     while(1);
-
 }
 
 

@@ -69,8 +69,22 @@ const templates_nortos_r5f =
 
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos",isPartOfSystemProject: true},
 
+];
+
+const systemProjects = [
+    {
+        name: "stc_func_test",
+        tag: "nortos_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am263x-cc",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+
+        ],
+    }
 ];
 
 function getComponentProperty() {
@@ -109,7 +123,13 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProjects;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+    getSystemProjects,
 };

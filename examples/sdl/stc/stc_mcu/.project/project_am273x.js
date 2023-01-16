@@ -2,9 +2,18 @@ let path = require('path');
 
 let device = "am273x";
 
-const files = {
+const files_r5f = {
     common: [
         "stc_main.c",
+        "main.c",
+        "dpl_interface.c",
+
+    ],
+};
+
+const files_c66 = {
+    common: [
+        "stc_dsp_main.c",
         "main.c",
         "dpl_interface.c",
 
@@ -115,8 +124,22 @@ const templates_nortos_c66 =
     }
 ];
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
-     { device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "am273x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos",isPartOfSystemProject: true},
+     { device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "am273x-evm", os: "nortos",isPartOfSystemProject: true},
+];
+
+const systemProjects = [
+    {
+        name: "sdl_stc",
+        tag: "nortos_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am273x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
+            { device: device, cpu: "c66ss0", cgt: "ti-c6000", board: "am273x-evm", os: "nortos"},
+        ],
+    }
 ];
 
 function getComponentProperty() {
@@ -126,7 +149,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "sdl_stc";
     property.isInternal = false;
-    property.description = "This example verifies STC in two modes of operation"
+    property.description = "This example verifies STC is Done for R5F core followed by DSP Core."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -135,7 +158,6 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
@@ -148,19 +170,27 @@ function getComponentBuildProperty(buildOption) {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
             build_property.defines = r5_macro;
+            build_property.files = files_r5f;
         }
     }
     if(buildOption.cpu.match(/c66*/)) {
         build_property.libs = libs_nortos_c66;
         build_property.templates = templates_nortos_c66;
         build_property.defines = c66_macro;
+        build_property.files = files_c66;
 
     }
 
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProjects;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+    getSystemProjects,
 };

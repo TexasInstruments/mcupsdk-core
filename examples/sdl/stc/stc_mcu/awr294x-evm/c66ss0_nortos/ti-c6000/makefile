@@ -33,7 +33,7 @@ BOOTIMAGE_RPRC_NAME_XIP:=sdl_stc.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=sdl_stc.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	stc_main.c \
+	stc_dsp_main.c \
 	main.c \
 	dpl_interface.c \
 	ti_drivers_config.c \

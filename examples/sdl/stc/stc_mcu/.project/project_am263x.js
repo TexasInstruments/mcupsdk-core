@@ -80,9 +80,24 @@ const templates_nortos_r5f =
 
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos",isPartOfSystemProject: true},
 
 ];
+
+const systemProjects = [
+    {
+        name: "sdl_stc",
+        tag: "nortos_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am263x-cc",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+
+        ],
+    }
+];
+
 
 function getComponentProperty() {
     let property = {};
@@ -91,7 +106,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "sdl_stc";
     property.isInternal = false;
-    property.description = "This example verifies STC in one modes of operation"
+    property.description = "This example verifies STC is Done for R5F0 core followed by R5F1."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -120,7 +135,13 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProjects;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+    getSystemProjects,
 };

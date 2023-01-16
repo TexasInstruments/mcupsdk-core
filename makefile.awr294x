@@ -157,8 +157,6 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/hwa/hwa_main/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/reset/reset_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -193,6 +191,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/awr294x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/awr294x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/awr294x-evm/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/awr294x-evm/system_nortos_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -484,8 +483,6 @@ BUILD_COMBO_EXAMPLE_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_reset_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000
@@ -518,6 +515,7 @@ BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_awr294x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_awr294x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_awr294x-evm_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += sdl_stc_awr294x-evm_system_nortos_nortos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
@@ -804,12 +802,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
  sdl_reset_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/reset/reset_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -903,6 +895,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_awr294x-evm_system_nortos:
 	$(MAKE) -C examples/empty/awr294x-evm/system_nortos -f makefile all
 
+ sdl_stc_awr294x-evm_system_nortos_nortos:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/system_nortos_nortos -f makefile all
+
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
@@ -993,8 +988,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_reset_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1027,6 +1020,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_awr294x-evm_system_freertos_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_awr294x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_awr294x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_awr294x-evm_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
@@ -1313,12 +1307,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
  sdl_reset_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/reset/reset_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -1412,6 +1400,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_awr294x-evm_system_nortos_clean:
 	$(MAKE) -C examples/empty/awr294x-evm/system_nortos -f makefile clean
 
+ sdl_stc_awr294x-evm_system_nortos_nortos_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/system_nortos_nortos -f makefile clean
+
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
@@ -1502,8 +1493,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_hwa_example_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_reset_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc1_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc1_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -1536,6 +1525,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_awr294x-evm_system_freertos_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_external_loopback_interrupt_awr294x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_awr294x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_awr294x-evm_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_awr294x-evm_system_nortos_nortos_scrub
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
@@ -1822,12 +1812,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sdl_ecc_bus_safety_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sdl_stc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_stc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
  sdl_reset_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/reset/reset_mcu/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -1920,6 +1904,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_awr294x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/empty/awr294x-evm/system_nortos -f makefile scrub
+
+ sdl_stc_awr294x-evm_system_nortos_nortos_scrub:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/awr294x-evm/system_nortos_nortos -f makefile scrub
 
 
 sbl: libs

@@ -4723,7 +4723,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "This example verifies STC in two modes of operation CPU is R5FSS0-0 running NORTOS.",
+        "description": "This example verifies STC is Done for R5F core followed by DSP Core. CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stc",
         "location": "../../examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -4756,7 +4756,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "This example verifies STC in two modes of operation CPU is C66SS0 running NORTOS.",
+        "description": "This example verifies STC is Done for R5F core followed by DSP Core. CPU is C66SS0 running NORTOS.",
         "name": "sdl_stc",
         "location": "../../examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
         "devtools": [
@@ -5451,6 +5451,36 @@
         "subCategories": [
             "empty",
             "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies STC is Done for R5F core followed by DSP Core. System project.",
+        "name": "sdl_stc",
+        "location": "../../examples/sdl/stc/stc_mcu/am273x-evm/system_nortos_nortos/system.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "sdl",
+            "stc",
+            "stc_mcu",
+            "system_nortos_nortos"
         ],
         "mainCategories": [
             [

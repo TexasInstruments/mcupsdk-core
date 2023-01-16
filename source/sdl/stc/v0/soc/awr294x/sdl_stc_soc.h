@@ -40,6 +40,7 @@
 #include <sdl/include/awr294x/sdlr_mss_ctrl.h>
 #include <sdl/include/awr294x/sdlr_dss_rcm.h>
 #include <sdl/include/awr294x/sdlr_dss_ctrl.h>
+#include  <drivers/soc/awr294x/soc.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -67,6 +68,8 @@ extern "C" {
 ======================================================================================================*/
 
 #define SDL_STC_NUM_INSTANCES 2U
+
+#define SDL_DSP_PD_WAKEUP_MASK0_WAKEUP_MASK0  (0xEFFFFFFFU)
 
 /** ===========================================================================
  *  @addtogroup SDL_STC_ENUM
@@ -121,6 +124,7 @@ static uint32_t SDL_STC_baseAddress[SDL_STC_NUM_INSTANCES] = {SDL_MSS_R5SS_STC_U
 
 #define DSS_RCM_BaseAddress         (SDL_DSS_RCM_U_BASE)
 #define DSS_CTRL_BaseAddress        (SDL_DSS_CTRL_U_BASE)
+#define DSS_DSP_ICFG_PDCCMD         (0x01810000U)
 
 #ifdef __cplusplus
 }

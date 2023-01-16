@@ -19,7 +19,7 @@ This example displays:
 \cond SOC_AM273X || AWR294X
 Use Cases
 ---------
-* STC run for R5F core.
+* STC run for DSP core after that it will run for R5F(Self Core).
 
 \endcond
 \cond SOC_AM263X
@@ -84,11 +84,22 @@ Shown below is a sample output when the application is run for R5F,
 
 \code
 
-STC Test Application started.
-If STC test is successfull, Core will go in to Reset.
-Core is Reset.
-STC is done Successfully & Passed.
-Waiting in loop in STC_Main().
+DSP STC Test Application started.
+DSP STC Test should Pass & Completed.
+If DSP STC test is successfull, DSP Core will be reset.
+DSP Core is Reset.
+DSP STC is done Successfully & Passed.
+R5F STC Test Application started.
+R5F STC Test should Pass & Completed.
+If R5F STC test is successfull, Core will go in to Reset.
+R5F Core is Reset.
+R5F STC is done Successfully & Passed.
+R5F STC Test Application started.
+R5F STC Test should Fail & Completed.
+If R5F STC test is successfull, Core will go in to Reset.
+R5F Core is Reset.
+R5F STC Test is Completed & failing.
+Waiting in loop in STC_func_test_Main().
 
 \endcode
 \endcond

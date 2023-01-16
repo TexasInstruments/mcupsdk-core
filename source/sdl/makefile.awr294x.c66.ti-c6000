@@ -32,7 +32,6 @@ FILES_common := \
     sdl_ecc_bus_safety.c \
     sdl_ecc.c \
     sdl_ip_ecc.c \
-    sdl_stc_soc.c \
 
 FILES_PATH_common = \
     dpl \

@@ -34,7 +34,13 @@ Errors detected by the STC module during operation are reported via ESM error (a
 
 ## Important Usage Guidelines
 
-- Once STC run is Done, Core will be reset and STC Reset cause will also be set. For again running STC, SOC will need power cycle.
+- Once R5F STC is Done, R5F Core will be reset and STC Reset cause will be set. For running the STC again on R5F, SOC will need power cycle.
+\cond SOC_AM273X || SOC_AWR294X
+- Once DSP STC is Done, DSP Core will be reset and STC Reset cause will be set. For running STC again for DSP, SOC will need power cycle..
+
+For DSP STC, before running STC from R5F, Interrupt register and ISR for that interrupt should be running in DSP core. ISR should have a flow to take DSP Core in to low power mode.
+
+\endcond
 
 ## Example Usage
 
@@ -48,7 +54,7 @@ Include the below file to access the APIs
 
 
 \code{.c}
-First of all, Need to check that STC has been Done or not, for this the below API will be used-
+First of all, Need to check that R5F STC has been Done or not, for this the below API will be used-
 
 SDL_STC_testResult test_Result;
 
@@ -70,7 +76,7 @@ typedef enum
 
 }SDL_STC_testResult;
 
-if return value is (SDL_STC_NOT_RUN), Then STC need to run, we should call below API.
+if return value is (SDL_STC_NOT_RUN), Then STC need to run, One should call below API.
 
 
 \endcode
@@ -88,15 +94,46 @@ typedef enum
      SDL_STC_NEG_TEST
 
 }SDL_STC_testType;
+\endcode
 
+
+\cond SOC_AM273X || SOC_AWR294X
+\code
+For Core specific STC, Core instance also need to put as input
+typedef enum {
+
+    SDL_STC_INST_MAINR5F0,
+    SDL_STC_INST_DSP,
+
+    INVALID_INSTANCE,
+
+} SDL_STC_Inst;
+
+For DSP STC, the below API need to be called before calling selfTest API-
+
+void SDL_STC_dspInit(void);
+\endcode
+\endcond
+
+\code
 int32_t sdlResult=SDL_PAAS;
 
 sdlResult=   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_testType testType);
 
 if STC will be Done Successfully, it will return nothing, beacuse core reset would have been done till now.
 if something will be going wrong, it will return something (!=SDL_PASS) value.
+\endcode
+
+\cond SOC_AM273X || SOC_AWR294X
+\code
+
+For DSP STC, it will return sdlResult= SDL_PASS
+Then need to check the status for DSP STC, call the below API
+test_Result= SDL_STC_getStatus(SDL_STC_Inst instance);
 
 \endcode
+\endcond
+
 
 
 ## API

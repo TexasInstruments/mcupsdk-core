@@ -67,9 +67,7 @@ const files_c66 = {
         "sdl_soc_rti.c",
         "sdl_ecc_bus_safety.c",
         "sdl_ecc.c",
-        "sdl_ip_ecc.c",
-        "sdl_stc_soc.c",
-
+		"sdl_ip_ecc.c",
     ],
 };
 const filedirs = {

@@ -51,12 +51,10 @@
 
 int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 {
-
-    unsigned long int  baseAddr;
+    uint32_t  baseAddr;
     uint32_t stcResultDone, stcResultFail, stcResultActive;
     uint32_t stcReset=0U;
-    int32_t stcResult;
-
+    int32_t stcResult= (int32_t)INVALID_RESULT;
 
     if (instance < INVALID_INSTANCE)
     {
@@ -64,14 +62,10 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
         {
             stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS0_RST_STATUS, SDL_MSS_STC_RESET);
         }
-        else if(instance == SDL_STC_INST_MAINR5F1)
+        else
         {
             stcReset= (uint32_t)HW_RD_FIELD32(SDL_MSS_RCM_U_BASE + SDL_MSS_RCM_R5SS1_RST_STATUS, SDL_MSS_STC_RESET);
         }
-        {
-            /* MISRA C Compliance */
-        }
-
             /* Getting base address */
         baseAddr = SDL_STC_baseAddress[instance];
 
@@ -83,18 +77,12 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
         {
             if((stcResultDone==(1U))&&(stcResultFail==(1U)))
             {
-                stcResult= (int32_t)SDL_STC_COMPLETED_FAILURE;                
+                stcResult= (int32_t)SDL_STC_COMPLETED_FAILURE;
             }
-            else
+
+            if ((stcResultDone==(1U))&&(stcResultFail==(0U)))
             {
-                if ((stcResultDone==(1U))&&(stcResultFail==(0U)))
-                {
-                    stcResult= (int32_t)SDL_STC_COMPLETED_SUCCESS;
-                }
-                else
-                {
-                    stcResult= (int32_t)INVALID_RESULT;
-                }
+                stcResult=(int32_t) SDL_STC_COMPLETED_SUCCESS;
             }
         }
         else
@@ -125,7 +113,7 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig, SDL_STC_TestType testType)
 {
     int32_t sdlResult = SDL_EFAIL;
-    unsigned long int baseAddr;
+    uint32_t baseAddr;
     if((instance  <INVALID_INSTANCE) && (pConfig != NULL))
     {
         /* Getting base address */
@@ -207,7 +195,7 @@ static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig,
 static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
 {
    int32_t sdlResult = SDL_EFAIL;
-   unsigned long int baseAddr;
+   uint32_t baseAddr;
    int32_t count =100;
 
     if(instance  <INVALID_INSTANCE)
@@ -239,7 +227,6 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
         /* run asm( "nop") opration for delay*/
         (void)SDL_STC_delay(count);
         sdlResult = SDL_PASS;
-
     }
  else
     {
@@ -265,18 +252,21 @@ static void SDL_STC_resetCauseClearR5F1(void)
 /********************************************************************************************************
 * Helper  API for Performing Delay for STC test for specified STC instance
 *********************************************************************************************************/
-static void __attribute__((noinline)) SDL_STC_delay(int32_t count)
+static void SDL_STC_delay(int32_t count)
 {
     int32_t countVal=count;
 
     while((countVal)>=(0))
     {
-        asm("	nop");
+        SDL_Delay();
         countVal--;
     }
-
 }
 
+static void  __attribute__((noinline)) SDL_Delay(void)
+{
+    asm("	nop");
+}
 
 /********************************************************************************************************
 *   API for Performing STC test for specified STC instance
@@ -286,9 +276,7 @@ static void __attribute__((noinline)) SDL_STC_delay(int32_t count)
  */
 int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType, SDL_STC_Config *pConfig )
 {
-
     int32_t sdlResult= SDL_EFAIL;
-
 
     if(instance==SDL_STC_INST_MAINR5F0)
     {
@@ -307,10 +295,6 @@ int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType, SDL
         {
             sdlResult =  SDL_STC_runTest(instance );
         }
-        else
-        {
-            return sdlResult;
-        }
     }
     else
     {
@@ -318,8 +302,5 @@ int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType, SDL
     }
     return sdlResult;
 }
-
-
-
 
 /* Nothing past this point */

@@ -130,8 +130,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_l3_example_am273x-evm_c
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -154,6 +152,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_am273x-evm_system_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am273x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am273x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_am273x-evm_system_nortos_nortos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -541,12 +540,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
 
- sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
  sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/reset/reset_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -609,6 +602,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  empty_am273x-evm_system_nortos_build:
 	$(MAKE) -C examples/empty/am273x-evm/system_nortos -f makefile_projectspec all
+
+ sdl_stc_am273x-evm_system_nortos_nortos_build:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/system_nortos_nortos -f makefile_projectspec all
 
 
 
@@ -740,8 +736,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_l3_example_am273x-evm_c
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -764,6 +758,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_am273x-evm_system_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am273x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_am273x-evm_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -1151,12 +1146,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
 
- sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
  sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/reset/reset_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -1219,6 +1208,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  empty_am273x-evm_system_nortos_clean:
 	$(MAKE) -C examples/empty/am273x-evm/system_nortos -f makefile_projectspec clean
+
+ sdl_stc_am273x-evm_system_nortos_nortos_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/system_nortos_nortos -f makefile_projectspec clean
 
 
 
@@ -1350,8 +1342,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_l3_example_am273x-evm_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -1374,6 +1364,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_am273x-evm_system_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am273x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am273x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_am273x-evm_system_nortos_nortos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -1761,12 +1752,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
 
- sdl_stc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
  sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/reset/reset_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -1829,6 +1814,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  empty_am273x-evm_system_nortos_export:
 	$(MAKE) -C examples/empty/am273x-evm/system_nortos -f makefile_projectspec export
+
+ sdl_stc_am273x-evm_system_nortos_nortos_export:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am273x-evm/system_nortos_nortos -f makefile_projectspec export
 
 
 
@@ -1976,8 +1964,6 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/reset/reset_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -2002,6 +1988,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am273x-evm/system_nortos_nortos -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

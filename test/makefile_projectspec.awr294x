@@ -7,6 +7,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_build
 # Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stc_func_test_awr294x-evm_system_nortos_nortos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -22,6 +23,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_build:
 	$(MAKE) -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec all
 
+ stc_func_test_awr294x-evm_system_nortos_nortos_build:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
@@ -29,6 +33,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_clean
 # Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stc_func_test_awr294x-evm_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -44,6 +49,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_clean:
 	$(MAKE) -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec clean
 
+ stc_func_test_awr294x-evm_system_nortos_nortos_clean:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
@@ -51,6 +59,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_rov_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_export
 # Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stc_func_test_awr294x-evm_system_nortos_nortos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -65,6 +74,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  test_rov_awr294x-evm_c66ss0_freertos_ti-c6000_export:
 	$(MAKE) -C kernel/rov/awr294x-evm/c66ss0_freertos/ti-c6000 -f makefile_projectspec export
+
+ stc_func_test_awr294x-evm_system_nortos_nortos_export:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile_projectspec export
 
 
 
@@ -91,6 +103,7 @@ help:
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
+	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -114,7 +114,6 @@ void STC_test_main(int32_t coreNumber)
     pConfig->romStartAddress=                          STC_ROM_START_ADDRESS;
     pConfig->pRomStartAdd=                             STC_pROM_START_ADDRESS;
 
-
     DebugP_log("STC Test Application started.\r\n");
     DebugP_log("If STC test is successfull, Core%d will go in to Reset.\r\n",coreNumber);
     sdlResult=   SDL_STC_selfTest(test_case[coreNumber], SDL_STC_TEST, pConfig);
@@ -171,7 +170,6 @@ void STC_main(void *args)
             }
             default :
             break;
-
         }
     }
     DebugP_log("Waiting in loop in STC_Main(). \r\n");
@@ -180,8 +178,6 @@ void STC_main(void *args)
     Drivers_close();
 
     while(1);
-
 }
-
 
 /* Nothing past this point */

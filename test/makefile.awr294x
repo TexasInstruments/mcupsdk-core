@@ -103,8 +103,6 @@ help:
 	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_ip_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/reset/reset_mcu/reset_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/reset/reset_mcu/reset_unit_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
@@ -114,6 +112,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/ipc_notify/awr294x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/awr294x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/awr294x-evm/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -246,8 +245,6 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += reset_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += reset_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
@@ -255,6 +252,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_esm_awr294x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_awr294x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_awr294x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_awr294x-evm_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += stc_func_test_awr294x-evm_system_nortos_nortos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
@@ -444,12 +442,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
  reset_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/reset/reset_mcu/reset_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -467,6 +459,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_soc_r5f_awr294x-evm_system_freertos:
 	$(MAKE) -C drivers/soc/soc_r5f/awr294x-evm/system_freertos -f makefile all
+
+ stc_func_test_awr294x-evm_system_nortos_nortos:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile all
 
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
@@ -531,8 +526,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-a
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += reset_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += reset_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
@@ -540,6 +533,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_awr294x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_awr294x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_awr294x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_awr294x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_awr294x-evm_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
@@ -729,12 +723,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
  reset_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/reset/reset_mcu/reset_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -752,6 +740,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_soc_r5f_awr294x-evm_system_freertos_clean:
 	$(MAKE) -C drivers/soc/soc_r5f/awr294x-evm/system_freertos -f makefile clean
+
+ stc_func_test_awr294x-evm_system_nortos_nortos_clean:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile clean
 
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
@@ -816,8 +807,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_awr294x-evm_r5fss0-1_nortos_ti-a
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_ip_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += reset_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += reset_unit_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
@@ -825,6 +814,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_awr294x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_awr294x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_awr294x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_awr294x-evm_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_awr294x-evm_system_nortos_nortos_scrub
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
@@ -1014,12 +1004,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ccm_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/ccm/ccm_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- stc_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stc_func_test_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
  reset_func_test_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/reset/reset_mcu/reset_func_test/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -1037,6 +1021,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_soc_r5f_awr294x-evm_system_freertos_scrub:
 	$(MAKE) -C drivers/soc/soc_r5f/awr294x-evm/system_freertos -f makefile scrub
+
+ stc_func_test_awr294x-evm_system_nortos_nortos_scrub:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/awr294x-evm/system_nortos_nortos -f makefile scrub
 
 
 sbl: libs
