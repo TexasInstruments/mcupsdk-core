@@ -72,8 +72,8 @@ const defines = {
         "CFG_TUSB_OS=OPT_OS_NONE"
     ],
     debug: [
-		"CFG_TUSB_DEBUG",
-		"CFG_CUSB_DEBUG"
+    ],
+    release: [
     ],
 };
 

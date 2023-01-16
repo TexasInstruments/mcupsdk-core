@@ -74,8 +74,8 @@ DEFINES_common := \
     -DCFG_TUSB_OS=OPT_OS_FREERTOS \
 
 DEFINES_debug := \
-    -DCFG_TUSB_DEBUG \
-    -DCFG_TUSB_DEBUG \
+
+DEFINES_release := \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

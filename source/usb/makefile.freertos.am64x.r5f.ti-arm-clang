@@ -53,7 +53,6 @@ INCLUDES_common := \
     -I../drivers/hw_include \
     -I../drivers/hw_include/am64x_am243x \
     -I../drivers/soc/am64x_am243x \
-    -I../kernel/dpl/ \
     -I../kernel/freertos/FreeRTOS-Kernel/include \
     -I../kernel/freertos/config/am64x/r5f \
     -I../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
@@ -73,6 +72,10 @@ DEFINES_common := \
     -DSOC_AM64X \
     -DTINYUSB_INTEGRATION \
     -DCFG_TUSB_OS=OPT_OS_FREERTOS \
+
+DEFINES_debug := \
+    -DCFG_TUSB_DEBUG \
+    -DCFG_CUSB_DEBUG \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

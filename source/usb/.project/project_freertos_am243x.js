@@ -72,6 +72,10 @@ const defines = {
         "TINYUSB_INTEGRATION",
         "CFG_TUSB_OS=OPT_OS_FREERTOS"
     ],
+    debug: [
+    ],
+    release: [
+    ],
 };
 
 const cflags = {

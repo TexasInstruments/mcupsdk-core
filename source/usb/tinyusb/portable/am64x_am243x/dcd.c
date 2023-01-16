@@ -58,9 +58,12 @@
 /* Adapted by TI for running on its platform and SDK */
 
 #include "tusb_option.h"
+#include <stdarg.h> 
 
 #include "usb_wrapper.h"
 #include "device/dcd.h"
+#include <kernel/dpl/DebugP.h> 
+#include <kernel/nortos/dpl/common/printf.h>
 
 void outEpXferCmplCb(CUSBD_Ep *ep, CUSBD_Req * req);
 
@@ -512,3 +515,16 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
   ep = (CUSBD_Ep *) getEpFromAddr(dev, ep_addr);
   usb_handle.drv->epSetHalt(usb_handle.pD, ep, 0);
 }
+
+#ifdef CFG_TUSB_DEBUG 
+
+int CFG_TUSB_DEBUG_PRINTF(const char *format, ...)
+{
+	va_list va; 
+	va_start(va,format); 
+	printf_("[TUSB MSG]");
+	vprintf_(format,va);
+	va_end(va);
+	return 0 ; 
+}
+#endif 
