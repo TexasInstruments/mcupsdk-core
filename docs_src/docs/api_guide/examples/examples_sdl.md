@@ -20,6 +20,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCRC_SEMI_CPU
 -# ECC
    -# \subpage EXAMPLES_SDL_R5F_ECC_ATCM0
+   -# \subpage EXAMPLES_SDL_R5F_ECC_BTCM
    -# \subpage EXAMPLES_SDL_ECC_MSS_L2
    -# \subpage EXAMPLES_SDL_ECC_MCAN
 -# PBIST
@@ -45,6 +46,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCRC_SEMI_CPU
 -# ECC
    -# \subpage EXAMPLES_SDL_R5F_ECC_ATCM0
+   -# \subpage EXAMPLES_SDL_R5F_ECC_BTCM
    -# \subpage EXAMPLES_SDL_ECC_MSS_L2
    -# \subpage EXAMPLES_SDL_ECC_MCAN
    -# \subpage EXAMPLES_SDL_DSS_ECC_HWA

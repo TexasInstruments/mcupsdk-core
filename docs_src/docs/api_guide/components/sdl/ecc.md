@@ -411,6 +411,405 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest(void)
 }
 \endcode
 
+## Example Usage of R5F BTCM
+
+The following shows an example of SDL R5F ECC API usage by the application for Error Injection Tests and Exception handling.
+
+Include the below file to access the APIs
+
+\code{.c}
+#include <sdl/sdl_ecc.h>
+#include <sdl/sdl_exception.h>
+#include <sdl/r5/v0/interrupt.h>
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the RAM address, ECC aggregator and ECC aggregator RAMID for inject the ECC error
+\code{.c}
+#if SDL_B0TCM0_BANK0
+#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080010u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID
+#endif
+
+#if SDL_B0TCM0_BANK1
+#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00081510u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID
+#endif
+
+#if SDL_B1TCM0_BANK0
+#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00082510u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID
+#endif
+
+#if SDL_B1TCM0_BANK1
+#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00083510u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID
+#endif
+\endcode
+
+ESM callback function
+
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                esmInstType, grpChannel, intSrc);
+    printf("\r\nTake action \r\n");
+
+    retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Any additional customer specific actions can be added here */
+    retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+    printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+               "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
+               eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
+               (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);
+
+    if (eccErrorInfo.injectBitErrCnt != 0)
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+    }
+    else
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+    }
+
+    retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+
+    esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+
+\cond SOC_AM263X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+
+    int32_t retVal = 0;
+    uint32_t rd_data = 0;
+
+
+    printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    printf("\r\nTake action \r\n");
+    if(esmIntrType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+        /* Clear DED MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18094u, 0x06);
+        rd_data = SDL_REG32_RD(0x50D18094u);
+        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+        /* Clear DED RAW MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18098u, 0x06);
+        rd_data = SDL_REG32_RD(0x50D18098u);
+        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+        /* Clear SEC MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18088u, 0x6);
+        rd_data = SDL_REG32_RD(0x50D18088u);
+        printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
+        /* Clear SEC RAW MSS_CTRL register*/
+        SDL_REG32_WR(0x50D18084u, 0x6);
+        rd_data = SDL_REG32_RD(0x50D18084u);
+        printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+    }
+
+    esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+
+This is the list of exception handle and the parameters
+\code{.c}
+const SDL_R5ExptnHandlers ECC_Test_R5ExptnHandlers =
+{
+    .udefExptnHandler = &SDL_EXCEPTION_undefInstructionExptnHandler,
+    .swiExptnHandler = &SDL_EXCEPTION_swIntrExptnHandler,
+    .pabtExptnHandler = &SDL_EXCEPTION_prefetchAbortExptnHandler,
+    .dabtExptnHandler = &SDL_EXCEPTION_dataAbortExptnHandler,
+    .irqExptnHandler = &SDL_EXCEPTION_irqExptnHandler,
+    .fiqExptnHandler = &SDL_EXCEPTION_fiqExptnHandler,
+    .udefExptnHandlerArgs = ((void *)0u),
+    .swiExptnHandlerArgs = ((void *)0u),
+    .pabtExptnHandlerArgs = ((void *)0u),
+    .dabtExptnHandlerArgs = ((void *)0u),
+    .irqExptnHandlerArgs = ((void *)0u),
+};
+\endcode
+
+Below are the functions used to print the which exception is occured
+\code{.c}
+void ECC_Test_undefInstructionExptnCallback(void)
+{
+    printf("\r\nUndefined Instruction exception\r\n");
+}
+
+void ECC_Test_swIntrExptnCallback(void)
+{
+    printf("\r\nSoftware interrupt exception\r\n");
+}
+
+void ECC_Test_prefetchAbortExptnCallback(void)
+{
+    printf("\r\nPrefetch Abort exception\r\n");
+}
+void ECC_Test_dataAbortExptnCallback(void)
+{
+    printf("\r\nData Abort exception\r\n");
+}
+void ECC_Test_irqExptnCallback(void)
+{
+    printf("\r\nIrq exception\r\n");
+}
+
+void ECC_Test_fiqExptnCallback(void)
+{
+    printf("\r\nFiq exception\r\n");
+}
+\endcode
+
+Initilize Exception handler 
+\code{.c}
+void ECC_Test_exceptionInit(void)
+{
+
+    SDL_EXCEPTION_CallbackFunctions_t exceptionCallbackFunctions =
+            {
+             .udefExptnCallback = ECC_Test_undefInstructionExptnCallback,
+             .swiExptnCallback = ECC_Test_swIntrExptnCallback,
+             .pabtExptnCallback = ECC_Test_prefetchAbortExptnCallback,
+             .dabtExptnCallback = ECC_Test_dataAbortExptnCallback,
+             .irqExptnCallback = ECC_Test_irqExptnCallback,
+             .fiqExptnCallback = ECC_Test_fiqExptnCallback,
+            };
+
+    /* Initialize SDL exception handler */
+    SDL_EXCEPTION_init(&exceptionCallbackFunctions);
+    /* Register SDL exception handler */
+    Intc_RegisterExptnHandlers(&ECC_Test_R5ExptnHandlers);
+
+    return;
+}
+\endcode
+
+This structure defines the elements of ECC  Init configuration
+\code{.c}
+static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
+{
+     SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
+{
+    .numRams = SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE0_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+\endcode
+
+\cond SOC_AM273X || SOC_AWR294X
+Event BitMap for ECC ESM callback for MSS
+\code{.c}
+/* Event BitMap for ECC ESM callback for MSS */
+SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
+{
+    {
+		/* Event BitMap for ECC ESM callback for R5FA Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_ESMG1_B0TCM0_SERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	{
+		/* Event BitMap for ECC ESM callback for R5FA Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_ESMG1_B1TCM0_SERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    }
+
+};
+\endcode
+\endcond
+
+\cond SOC_AM263X
+\code{.c}
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+\endcode
+\endcond
+
+Enabling the ECC module
+\code{.c}
+#if (SDL_B0TCM0_BANK0) || (SDL_B0TCM0_BANK1)
+    /*Enabling the B0TCM ECC module*/
+	SDL_ECC_UTILS_enableECCB0TCM();
+#endif
+#if (SDL_B1TCM0_BANK0) || (SDL_B1TCM0_BANK1)
+	    /*Enabling the B0TCM ECC module*/
+	SDL_ECC_UTILS_enableECCB1TCM();
+#endif
+\endcode
+
+Enabling the Event bus
+\code{.c}
+SDL_UTILS_enable_event_bus();
+\endcode
+	
+Initialize ECC memory for the ECC aggregator
+\code{.c}
+result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+\endcode
+
+\cond SOC_AM273X || SOC_AWR294X
+Initialize ESM module
+\code{.c}
+#if (SDL_B0TCM0_BANK0) || (SDL_B0TCM0_BANK1)
+        result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMSS[0],NULL,NULL);
+		/*Writing '000' will ungate the ESM_GRP3_ERROR_7 for dounle bit BTCM*/
+        SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0 << (((SDL_ESMG3_B0TCM0_UERR ) % 8)*4)));
+#endif
+#if (SDL_B1TCM0_BANK0) || (SDL_B1TCM0_BANK1)
+        result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMSS[1],NULL,NULL);
+		/*Writing '000' will ungate the ESM_GRP3_ERROR_7 for dounle bit BTCM*/
+        SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0 << (((SDL_ESMG3_B1TCM0_UERR ) % 8)*4)));
+#endif
+\endcode
+\endcond
+
+\cond SOC_AM263X
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+\endcode
+\endcond
+
+Initialize ECC parameters for single and double bit error injection
+\code{.c}
+result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
+\endcode
+
+Execute ECC R5F BTCM single bit inject test
+\code{.c}
+int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+	DebugP_log("\r\nR5FSS0 CORE0 BTCM Single bit error inject: starting \r\n");
+	
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
+
+    /* Run one shot test for R5FSS0 CORE0 BTCM 1 bit error */
+    injectErrorConfig.flipBitMask = 0x02;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+        retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+
+        DebugP_log("\r\nR5FSS0 CORE0 BTCM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete\r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}
+\endcode
+
+Execute ECC R5F BTCM double bit inject test
+\code{.c}
+int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+	
+	DebugP_log("\r\nR5FSS0 CORE0 BTCM Double bit error inject: starting \r\n");
+
+    /* Run one shot test for R5FSS0 CORE0 BTCM 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+       retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+        DebugP_log("\r\nR5FSS0 CORE0 BTCM Double bit error inject: pErrMem fixed location = 0x%p once test complete: the value of pErrMem is 0x%p\r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}
+\endcode
+
 
 ## Example Usage of MSS L2 
 
