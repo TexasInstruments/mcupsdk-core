@@ -95,6 +95,7 @@ const example_file_list = [
     "examples/drivers/lin/lin_sci_loopback/.project/project.js",
     "examples/drivers/lin/lin_sci_dma/.project/project.js",
     "examples/drivers/lin/lin_loopback_polling/.project/project.js",
+    "examples/drivers/mcan/mcan_external_read_write/.project/project.js",
     "examples/drivers/mcan/mcan_loopback_interrupt/.project/project.js",
     "examples/drivers/mcan/mcan_loopback_polling/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback/.project/project.js",
