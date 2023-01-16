@@ -97,6 +97,7 @@ const filedirs = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library",
         "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/dpl",
     ],
 };
 const cflags = {

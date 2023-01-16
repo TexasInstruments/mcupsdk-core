@@ -1,5 +1,5 @@
 /**
- * \file config.h
+ * \file alt_config.h
  *
  * \brief Configuration options (set of defines)
  *
@@ -7,6 +7,7 @@
  *  or disable features selectively, and reduce the global
  *  memory footprint.
  */
+ 
 /*
  *  Copyright (C) 2006-2018, ARM Limited, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
@@ -24,6 +25,38 @@
  *  limitations under the License.
  *
  *  This file is part of mbed TLS (https://tls.mbed.org)
+ */
+
+/*
+ *  Copyright (C) 2023 Texas Instruments Incorporated
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "DebugP.h"
@@ -306,7 +339,7 @@
  *            digests and ciphers instead.
  *
  */
-//#define MBEDTLS_AES_ALT
+// #define MBEDTLS_AES_ALT
 //#define MBEDTLS_ARC4_ALT
 //#define MBEDTLS_ARIA_ALT
 //#define MBEDTLS_BLOWFISH_ALT
@@ -314,7 +347,7 @@
 //#define MBEDTLS_CCM_ALT
 //#define MBEDTLS_CHACHA20_ALT
 //#define MBEDTLS_CHACHAPOLY_ALT
-//#define MBEDTLS_CMAC_ALT
+// #define MBEDTLS_CMAC_ALT
 //#define MBEDTLS_DES_ALT
 //#define MBEDTLS_DHM_ALT
 //#define MBEDTLS_ECJPAKE_ALT
@@ -325,10 +358,10 @@
 //#define MBEDTLS_MD5_ALT
 //#define MBEDTLS_POLY1305_ALT
 //#define MBEDTLS_RIPEMD160_ALT
-//#define MBEDTLS_RSA_ALT
+// #define MBEDTLS_RSA_ALT
 //#define MBEDTLS_SHA1_ALT
-//#define MBEDTLS_SHA256_ALT
-//#define MBEDTLS_SHA512_ALT
+// #define MBEDTLS_SHA256_ALT
+// #define MBEDTLS_SHA512_ALT
 //#define MBEDTLS_XTEA_ALT
 
 /*
@@ -393,8 +426,8 @@
 //#define MBEDTLS_AES_DECRYPT_ALT
 //#define MBEDTLS_ECDH_GEN_PUBLIC_ALT
 //#define MBEDTLS_ECDH_COMPUTE_SHARED_ALT
-//#define MBEDTLS_ECDSA_VERIFY_ALT
-//#define MBEDTLS_ECDSA_SIGN_ALT
+// #define MBEDTLS_ECDSA_VERIFY_ALT
+// #define MBEDTLS_ECDSA_SIGN_ALT
 //#define MBEDTLS_ECDSA_GENKEY_ALT
 
 /**
@@ -478,7 +511,7 @@
  *
  * Uncomment to use your own hardware entropy collector.
  */
-//#define MBEDTLS_ENTROPY_HARDWARE_ALT
+// #define MBEDTLS_ENTROPY_HARDWARE_ALT
 
 /**
  * \def MBEDTLS_AES_ROM_TABLES
@@ -550,7 +583,7 @@
  *
  * Enable Counter Block Cipher mode (CTR) for symmetric ciphers.
  */
-#define MBEDTLS_CIPHER_MODE_CTR
+// #define MBEDTLS_CIPHER_MODE_CTR
 
 /**
  * \def MBEDTLS_CIPHER_MODE_OFB
@@ -1780,7 +1813,7 @@
  *            it, and considering stronger ciphers instead.
  *
  */
-// #define MBEDTLS_ARC4_C
+#define MBEDTLS_ARC4_C
 
 /**
  * \def MBEDTLS_ASN1_PARSE_C
@@ -2081,7 +2114,7 @@
  * \warning   DES is considered a weak cipher and its use constitutes a
  *            security risk. We recommend considering stronger ciphers instead.
  */
-// #define MBEDTLS_DES_C
+#define MBEDTLS_DES_C
 
 /**
  * \def MBEDTLS_DHM_C
@@ -2229,7 +2262,7 @@
  *
  * Uncomment to enable the HAVEGE random generator.
  */
-//#define MBEDTLS_HAVEGE_C
+// #define MBEDTLS_HAVEGE_C
 
 /**
  * \def MBEDTLS_HKDF_C
@@ -2244,7 +2277,7 @@
  * This module adds support for the Hashed Message Authentication Code
  * (HMAC)-based key derivation function (HKDF).
  */
-#define MBEDTLS_HKDF_C
+// #define MBEDTLS_HKDF_C
 
 /**
  * \def MBEDTLS_HMAC_DRBG_C
@@ -2300,7 +2333,7 @@
  *            it, and considering stronger message digests instead.
  *
  */
-//#define MBEDTLS_MD2_C
+// #define MBEDTLS_MD2_C
 
 /**
  * \def MBEDTLS_MD4_C
@@ -2317,7 +2350,7 @@
  *            it, and considering stronger message digests instead.
  *
  */
-//#define MBEDTLS_MD4_C
+// #define MBEDTLS_MD4_C
 
 /**
  * \def MBEDTLS_MD5_C
@@ -2518,7 +2551,7 @@
  * This module enables SSL/TLS PKCS #11 smartcard support.
  * Requires the presence of the PKCS#11 helper library (libpkcs11-helper)
  */
-//#define MBEDTLS_PKCS11_C
+// #define MBEDTLS_PKCS11_C
 
 /**
  * \def MBEDTLS_PKCS12_C
@@ -2771,7 +2804,7 @@
  *
  * This module is used by the HAVEGE random number generator.
  */
-//#define MBEDTLS_TIMING_C
+#define MBEDTLS_TIMING_C
 
 /**
  * \def MBEDTLS_VERSION_C
@@ -2892,7 +2925,7 @@
  * Module:  library/xtea.c
  * Caller:
  */
-#define MBEDTLS_XTEA_C
+// #define MBEDTLS_XTEA_C
 
 /* \} name SECTION: mbed TLS modules */
 
@@ -2939,7 +2972,7 @@
 //#define MBEDTLS_ENTROPY_MIN_HARDWARE               32 /**< Default minimum number of bytes required for the hardware entropy source mbedtls_hardware_poll() before entropy is released */
 
 /* Memory buffer allocator options */
-//#define MBEDTLS_MEMORY_ALIGN_MULTIPLE      4 /**< Align on multiples of this value */
+// #define MBEDTLS_MEMORY_ALIGN_MULTIPLE                32 /**< Align on multiples of this value */
 
 /* Platform options */
 //#define MBEDTLS_PLATFORM_STD_MEM_HDR   <stdlib.h> /**< Header to include if MBEDTLS_PLATFORM_NO_STD_FUNCTIONS is defined. Don't define if no header is needed. */
@@ -2967,7 +3000,7 @@
 // #define MBEDTLS_PLATFORM_FPRINTF_MACRO      fprintf /**< Default fprintf macro to use, can be undefined */
 #define MBEDTLS_PLATFORM_PRINTF_MACRO        DebugP_log /**< Default printf macro to use, can be undefined */
 /* Note: your snprintf must correclty zero-terminate the buffer! */
-//#define MBEDTLS_PLATFORM_SNPRINTF_MACRO    snprintf /**< Default snprintf macro to use, can be undefined */
+#define MBEDTLS_PLATFORM_SNPRINTF_MACRO    snprintf /**< Default snprintf macro to use, can be undefined */
 //#define MBEDTLS_PLATFORM_NV_SEED_READ_MACRO   mbedtls_platform_std_nv_seed_read /**< Default nv_seed_read function to use, can be undefined */
 //#define MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO  mbedtls_platform_std_nv_seed_write /**< Default nv_seed_write function to use, can be undefined */
 
