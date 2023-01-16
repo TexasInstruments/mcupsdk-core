@@ -233,6 +233,7 @@ const example_file_list = [
     "test/networking/mbedtls_test/test_pka/.project/project.js",
     "test/networking/mbedtls_test/test_sha_entropy/.project/project.js",
     "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
+    "test/networking/mbedtls_benchmark/.project/project.js",
     "test/syscfg/syscfg_combo_1/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc/.project/project.js",

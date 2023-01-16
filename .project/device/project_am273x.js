@@ -160,6 +160,7 @@ const example_file_list = [
     "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
     "test/networking/mbedtls_test/test_sha_entropy/.project/project.js",
     "test/networking/mbedtls_test/test_pka/.project/project.js",
+    "test/networking/mbedtls_benchmark/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_func_test/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_unit_test/.project/project.js",
     "test/networking/cpsw_intervlan/.project/project.js",
