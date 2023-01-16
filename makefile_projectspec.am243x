@@ -251,9 +251,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_signing_verification_am243x-lp_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-evm_r5fss0-1_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-lp_r5fss0-1_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-lp_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_loopback_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cpsw_lwip_https_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
@@ -309,6 +313,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += xip_benchmark_am243x-evm_system_fre
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += xip_benchmark_am243x-lp_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += benchmark_demo_am243x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += benchmark_demo_am243x-lp_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-lp_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-evm_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-lp_system_freertos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -1065,14 +1073,26 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ cdc_echo_nortos_am243x-evm_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
  cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ cdc_echo_nortos_am243x-lp_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
 
  cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
  cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ cdc_echo_freertos_am243x-lp_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
 
  endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
 	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
@@ -1280,6 +1300,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  benchmark_demo_am243x-lp_system_nortos_build:
 	$(MAKE) -C examples/motor_control/benchmark_demo/am243x-lp/system_nortos -f makefile_projectspec all
+
+ cdc_echo_nortos_am243x-evm_system_nortos_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/system_nortos -f makefile_projectspec all
+
+ cdc_echo_nortos_am243x-lp_system_nortos_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_nortos -f makefile_projectspec all
+
+ cdc_echo_freertos_am243x-evm_system_freertos_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/system_freertos -f makefile_projectspec all
+
+ cdc_echo_freertos_am243x-lp_system_freertos_build:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec all
 
 
 
@@ -1529,9 +1561,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_signing_verification_am243x-lp_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-evm_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-lp_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-lp_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_loopback_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cpsw_lwip_https_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -1587,6 +1623,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += xip_benchmark_am243x-evm_system_fre
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += xip_benchmark_am243x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += benchmark_demo_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += benchmark_demo_am243x-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-lp_system_freertos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -2343,14 +2383,26 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ cdc_echo_nortos_am243x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
  cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ cdc_echo_nortos_am243x-lp_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
 
  cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
  cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ cdc_echo_freertos_am243x-lp_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
 
  endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
@@ -2558,6 +2610,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  benchmark_demo_am243x-lp_system_nortos_clean:
 	$(MAKE) -C examples/motor_control/benchmark_demo/am243x-lp/system_nortos -f makefile_projectspec clean
+
+ cdc_echo_nortos_am243x-evm_system_nortos_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/system_nortos -f makefile_projectspec clean
+
+ cdc_echo_nortos_am243x-lp_system_nortos_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_nortos -f makefile_projectspec clean
+
+ cdc_echo_freertos_am243x-evm_system_freertos_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/system_freertos -f makefile_projectspec clean
+
+ cdc_echo_freertos_am243x-lp_system_freertos_clean:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec clean
 
 
 
@@ -2807,9 +2871,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_signing_verification_am243x-lp
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-evm_r5fss0-1_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-lp_r5fss0-1_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-lp_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_loopback_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cpsw_lwip_https_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
@@ -2865,6 +2933,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += xip_benchmark_am243x-evm_system_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += xip_benchmark_am243x-lp_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += benchmark_demo_am243x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += benchmark_demo_am243x-lp_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-lp_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-evm_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-lp_system_freertos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -3621,14 +3693,26 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ cdc_echo_nortos_am243x-evm_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
  cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ cdc_echo_nortos_am243x-lp_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
 
  cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
  cdc_echo_freertos_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ cdc_echo_freertos_am243x-lp_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
 
  endat_peripheral_interface_multi_ch_load_share_am243x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
 	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
@@ -3836,6 +3920,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  benchmark_demo_am243x-lp_system_nortos_export:
 	$(MAKE) -C examples/motor_control/benchmark_demo/am243x-lp/system_nortos -f makefile_projectspec export
+
+ cdc_echo_nortos_am243x-evm_system_nortos_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/system_nortos -f makefile_projectspec export
+
+ cdc_echo_nortos_am243x-lp_system_nortos_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_nortos -f makefile_projectspec export
+
+ cdc_echo_freertos_am243x-evm_system_freertos_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/system_freertos -f makefile_projectspec export
+
+ cdc_echo_freertos_am243x-lp_system_freertos_export:
+	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec export
 
 
 # Import extra components into CCS workspace before creating a project
@@ -4110,9 +4206,13 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am243x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
@@ -4185,6 +4285,10 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am243x-lp/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/motor_control/benchmark_demo/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/motor_control/benchmark_demo/am243x-lp/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

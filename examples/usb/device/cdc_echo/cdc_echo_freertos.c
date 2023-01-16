@@ -84,6 +84,7 @@ int cdc_echo_main(void)
 
     Drivers_open();
     Board_driversOpen();
+
 #ifdef TINYUSB_INTEGRATION
 
     /* Cadence DSR task is to handle the USB device events */
@@ -98,6 +99,12 @@ int cdc_echo_main(void)
     status = TaskP_construct(&gDsrTaskObj, &gDsrTaskParams);
     DebugP_assert(status == SystemP_SUCCESS);
 #endif
+	
+	/* Enable debug for cdn module */ 
+	DbgMsgEnableModule(USBSSP_DBG_CUSBD);
+	DbgMsgEnableModule(USBSSP_DBG_CUSBD_ISR);
+	DbgMsgSetLvl(100); 
+	
     /* TUD task is to handle the USB device events */
     TaskP_Params_init(&gTudTaskParams);
     gTudTaskParams.name = "tud_task";                /**< Pointer to task name */

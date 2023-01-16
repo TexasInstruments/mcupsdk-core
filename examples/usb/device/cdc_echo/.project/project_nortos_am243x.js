@@ -28,17 +28,9 @@ const defines = {
 
 const includes_nortos_r5f = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x/cdc_config",
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src",
-    ],
-};
-
-const libdirs_nortos = {
-    common: [
-        "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
-        "${MCU_PLUS_SDK_PATH}/source/board/lib",
-        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/usb/lib",
+		"${MCU_PLUS_SDK_PATH}/source/kernel/dpl",
     ],
 };
 
@@ -47,7 +39,18 @@ const libs_nortos_r5f = {
         "nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "usb_device_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "usbd_cdn_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "usbd_tusb_cdc_nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libdirs_nortos = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib",
     ],
 };
 
@@ -67,19 +70,37 @@ const templates_nortos_r5f =
         input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
     },
-    {
-        input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "cdc_echo_main",
-        },
-    }
 ];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
 ];
+
+const systemProject = [
+    {
+        name: "cdc_echo_nortos",
+        tag: "nortos",
+        skipProjectSpec: false,
+        board: "am243x-evm",
+        projects: [
+			{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+			{ device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+        ],
+    },
+    {
+        name: "cdc_echo_nortos",
+        tag: "nortos",
+        skipProjectSpec: false,
+        board: "am243x-lp",
+        projects: [
+			{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+			{ device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+        ],
+    },
+]
 
 function getComponentProperty() {
     let property = {};
@@ -113,7 +134,13 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProject;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+	getSystemProjects,
 };

@@ -73,8 +73,8 @@ DEFINES_common := \
     -DCFG_TUSB_OS=OPT_OS_NONE \
 
 DEFINES_debug := \
-    -DCFG_TUSB_DEBUG \
-    -DCFG_CUSB_DEBUG \
+
+DEFINES_release := \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

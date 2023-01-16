@@ -26,9 +26,6 @@
 #include "cdn_print.h"
 #include <kernel/nortos/dpl/common/printf.h>
 
-/* parasoft-begin-suppress MISRA2012-RULE-17_1_a-2 "Example implementation of DbgPrint" */
-/* parasoft-begin-suppress MISRA2012-RULE-17_1_b-2 "Example implementation of DbgPrint" */
-
 uint32_t g_dbg_enable_log  = 0x00000000; /* DBG_GEN_MSG; */
 uint32_t g_dbg_log_lvl = 0; /* DBG_FYI; */  /* DBG_HIVERB; */
 uint32_t g_dbg_log_cnt = 0;
@@ -71,5 +68,3 @@ void DbgMsgDisableModule(uint32_t module_id)
 	g_dbg_enable_log &= ~(module_id); 
 }
 
-/* parasoft-end-suppress MISRA2012-RULE-17_1_a-2 "Example implementation of DbgPrint" */
-/* parasoft-end-suppress MISRA2012-RULE-17_1_b-2 "Example implementation of DbgPrint" */

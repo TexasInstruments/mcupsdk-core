@@ -104,7 +104,6 @@
 
 /* CFG_TUSB_DEBUG is defined by compiler in DEBUG build */
 #ifndef CFG_TUSB_DEBUG
-  #undef CFG_TUSB_DEBUG
   #define CFG_TUSB_DEBUG 0
 #else 
   #undef CFG_TUSB_DEBUG

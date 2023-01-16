@@ -38,6 +38,7 @@
 #include <ctype.h>
 
 #include <usb/cdn/include/usb_init.h>
+#include <usb/cdn/include/cdn_print.h>
 #include "tusb.h"
 
 #include "ti_drivers_config.h"
@@ -51,6 +52,11 @@ int cdc_echo_main(void)
 {
     Drivers_open();
     Board_driversOpen();
+
+	/* Enable debug for cdn module */ 
+	DbgMsgEnableModule(USBSSP_DBG_CUSBD);
+	DbgMsgEnableModule(USBSSP_DBG_CUSBD_ISR );
+	DbgMsgSetLvl(100); 
 
     while (1)
     {

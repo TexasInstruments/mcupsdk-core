@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x_beta" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -17,16 +17,16 @@ const mpu_armv74 = mpu_armv7.addInstance();
 const mpu_armv75 = mpu_armv7.addInstance();
 const mpu_armv76 = mpu_armv7.addInstance();
 const mpu_armv77 = mpu_armv7.addInstance();
+const mpu_armv78 = mpu_armv7.addInstance();
 const tinyusb    = scripting.addModule("/usb/tinyusb/tinyusb", {}, false);
 const tinyusb1   = tinyusb.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-debug_log.enableUartLog        = true;
-debug_log.enableCssLog         = false;
-debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
-debug_log.uartLog.UART.$assign = "USART0";
+debug_log.enableCssLog       = false;
+debug_log.enableLogZoneInfo  = true;
+debug_log.enableSharedMemLog = true;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -62,14 +62,11 @@ mpu_armv77.$name    = "CONFIG_MPU_REGION6";
 mpu_armv77.baseAddr = 0x80000000;
 mpu_armv77.size     = 31;
 
+mpu_armv78.$name      = "CONFIG_MPU_REGION7";
+mpu_armv78.baseAddr   = 0x701D0000;
+mpu_armv78.size       = 14;
+mpu_armv78.attributes = "NonCached";
+
 tinyusb1.$name               = "CONFIG_TINYUSB0";
 tinyusb1.USB.$assign         = "USB0";
-tinyusb1.USB.DRVVBUS.$assign = "USB0_DRVVBUS";
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";
+tinyusb1.USB.DRVVBUS.$assign = "ball.E19";

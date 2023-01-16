@@ -71,19 +71,25 @@ const templates_freertos_r5f =
         input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
     },
-    {
-        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "cdc_echo_main",
-        },
-    }
 ];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
 ];
 
+const systemProject = [
+    {
+        name: "cdc_echo_freertos",
+        tag: "freertos",
+        skipProjectSpec: false,
+        board: "am64x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+        ],
+    },
+]
 function getComponentProperty() {
     let property = {};
 
@@ -116,7 +122,13 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProject;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+	getSystemProjects,
 };

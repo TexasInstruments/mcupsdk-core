@@ -31,8 +31,9 @@
         compilerBuildOptions="
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
-            -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x
+            -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x/cdc_config
             -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/dpl
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -49,7 +50,8 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
-            -i${MCU_PLUS_SDK_PATH}/source/usb/lib
+            -i${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib
+            -i${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib
             -i${CG_TOOL_ROOT}/lib
             -m=cdc_echo_nortos.${ConfigName}.map
             --diag_suppress=10063
@@ -74,7 +76,8 @@
                 -lnortos.am243x.r5f.ti-arm-clang.debug.lib
                 -lboard.am243x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am243x.r5f.ti-arm-clang.debug.lib
-                -lusb_device_nortos.am243x.r5f.ti-arm-clang.debug.lib
+                -lusbd_cdn_nortos.am243x.r5f.ti-arm-clang.debug.lib
+                -lusbd_tusb_cdc_nortos.am243x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -87,7 +90,8 @@
                 -lnortos.am243x.r5f.ti-arm-clang.release.lib
                 -lboard.am243x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am243x.r5f.ti-arm-clang.release.lib
-                -lusb_device_nortos.am243x.r5f.ti-arm-clang.release.lib
+                -lusbd_cdn_nortos.am243x.r5f.ti-arm-clang.release.lib
+                -lusbd_tusb_cdc_nortos.am243x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

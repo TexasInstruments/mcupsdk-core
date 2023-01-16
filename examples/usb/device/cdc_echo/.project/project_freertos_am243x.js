@@ -30,10 +30,10 @@ const includes_freertos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/freertos/am64x_am243x",
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/dpl",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+		"${MCU_PLUS_SDK_PATH}/source/kernel/dpl",
+		"${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+		"${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
+		"${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
     ],
 };
 
@@ -71,20 +71,37 @@ const templates_freertos_r5f =
         input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
     },
-    {
-        input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "cdc_echo_main",
-        },
-    }
 ];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
+	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+	{ device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
 ];
 
+const systemProject = [
+    {
+        name: "cdc_echo_freertos",
+        tag: "freertos",
+        skipProjectSpec: false,
+        board: "am243x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
+        ],
+    },
+    {
+        name: "cdc_echo_freertos",
+        tag: "freertos",
+        skipProjectSpec: false,
+        board: "am243x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+        ],
+    },
+]
 function getComponentProperty() {
     let property = {};
 
@@ -117,7 +134,13 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProject;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+	getSystemProjects,
 };
