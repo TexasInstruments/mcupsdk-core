@@ -1,0 +1,1005 @@
+WARNING: ClockP_init:70: FreeRTOS configTICK_RATE_HZ (1000), does not match ClockP tick rate Hz (1)
+Benchmark Applicaiton BEGIN !!
+
+Current Data size is : 16 B
+
+  SHA-1                    :      16730 KiB/s,        223 cycles/byte
+  SHA-256                  :      10667 KiB/s,        350 cycles/byte
+  SHA-512                  :       3698 KiB/s,       1012 cycles/byte
+  AES-CBC-128              :      50985 KiB/s,         73 cycles/byte
+  AES-CBC-192              :      45611 KiB/s,         81 cycles/byte
+  AES-CBC-256              :      41443 KiB/s,         90 cycles/byte
+  AES-XTS-128              :      28356 KiB/s,        132 cycles/byte
+  AES-XTS-256              :      22596 KiB/s,        165 cycles/byte
+  AES-GCM-128              :      11551 KiB/s,        324 cycles/byte
+  AES-GCM-192              :      10977 KiB/s,        341 cycles/byte
+  AES-GCM-256              :      10455 KiB/s,        358 cycles/byte
+  AES-CCM-128              :      11798 KiB/s,        317 cycles/byte
+  AES-CCM-192              :      10658 KiB/s,        351 cycles/byte
+  AES-CCM-256              :       9714 KiB/s,        385 cycles/byte
+  AES-CMAC-128             :       4008 KiB/s,        934 cycles/byte
+  AES-CMAC-192             :       3920 KiB/s,        955 cycles/byte
+  AES-CMAC-256             :       3822 KiB/s,        979 cycles/byte
+  AES-CMAC-PRF-128         :       3912 KiB/s,        956 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      47 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      75 sign/s
+  ECDSA-secp256k1-SIGN     :      67 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     106 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     137 sign/s
+  ECDSA-secp192k1-SIGN     :     100 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      20 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      20 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      63 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      35 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 32 B
+
+  SHA-1                    :      33449 KiB/s,        111 cycles/byte
+  SHA-256                  :      21330 KiB/s,        175 cycles/byte
+  SHA-512                  :       7396 KiB/s,        506 cycles/byte
+  AES-CBC-128              :      52318 KiB/s,         71 cycles/byte
+  AES-CBC-192              :      46757 KiB/s,         80 cycles/byte
+  AES-CBC-256              :      42265 KiB/s,         88 cycles/byte
+  AES-XTS-128              :      35611 KiB/s,        105 cycles/byte
+  AES-XTS-256              :      28704 KiB/s,        130 cycles/byte
+  AES-GCM-128              :      16199 KiB/s,        231 cycles/byte
+  AES-GCM-192              :      15353 KiB/s,        243 cycles/byte
+  AES-GCM-256              :      14590 KiB/s,        256 cycles/byte
+  AES-CCM-128              :      16218 KiB/s,        230 cycles/byte
+  AES-CCM-192              :      14601 KiB/s,        256 cycles/byte
+  AES-CCM-256              :      13279 KiB/s,        282 cycles/byte
+  AES-CMAC-128             :       7493 KiB/s,        499 cycles/byte
+  AES-CMAC-192             :       7284 KiB/s,        514 cycles/byte
+  AES-CMAC-256             :       7053 KiB/s,        531 cycles/byte
+  AES-CMAC-PRF-128         :       7326 KiB/s,        511 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      75 sign/s
+  ECDSA-secp256k1-SIGN     :      66 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     105 sign/s
+  ECDSA-secp224k1-SIGN     :      76 sign/s
+  ECDSA-secp192r1-SIGN     :     135 sign/s
+  ECDSA-secp192k1-SIGN     :     101 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      20 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      32 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      60 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 64 B
+
+  SHA-1                    :      47699 KiB/s,         78 cycles/byte
+  SHA-256                  :      27113 KiB/s,        138 cycles/byte
+  SHA-512                  :      14793 KiB/s,        253 cycles/byte
+  AES-CBC-128              :      52939 KiB/s,         70 cycles/byte
+  AES-CBC-192              :      46859 KiB/s,         79 cycles/byte
+  AES-CBC-256              :      42669 KiB/s,         87 cycles/byte
+  AES-XTS-128              :      40850 KiB/s,         91 cycles/byte
+  AES-XTS-256              :      33189 KiB/s,        112 cycles/byte
+  AES-GCM-128              :      20275 KiB/s,        184 cycles/byte
+  AES-GCM-192              :      19175 KiB/s,        195 cycles/byte
+  AES-GCM-256              :      18184 KiB/s,        205 cycles/byte
+  AES-CCM-128              :      20014 KiB/s,        187 cycles/byte
+  AES-CCM-192              :      17970 KiB/s,        208 cycles/byte
+  AES-CCM-256              :      16305 KiB/s,        229 cycles/byte
+  AES-CMAC-128             :      13287 KiB/s,        281 cycles/byte
+  AES-CMAC-192             :      12768 KiB/s,        293 cycles/byte
+  AES-CMAC-256             :      12239 KiB/s,        306 cycles/byte
+  AES-CMAC-PRF-128         :      13022 KiB/s,        287 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      73 sign/s
+  ECDSA-secp256k1-SIGN     :      65 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     105 sign/s
+  ECDSA-secp224k1-SIGN     :      78 sign/s
+  ECDSA-secp192r1-SIGN     :     138 sign/s
+  ECDSA-secp192k1-SIGN     :     101 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       9 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      17 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      49 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      61 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 128 B
+
+  SHA-1                    :      73855 KiB/s,         50 cycles/byte
+  SHA-256                  :      39669 KiB/s,         94 cycles/byte
+  SHA-512                  :      17230 KiB/s,        217 cycles/byte
+  AES-CBC-128              :      53255 KiB/s,         70 cycles/byte
+  AES-CBC-192              :      47505 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      42875 KiB/s,         87 cycles/byte
+  AES-XTS-128              :      44102 KiB/s,         84 cycles/byte
+  AES-XTS-256              :      36002 KiB/s,        104 cycles/byte
+  AES-GCM-128              :      23201 KiB/s,        161 cycles/byte
+  AES-GCM-192              :      21899 KiB/s,        171 cycles/byte
+  AES-GCM-256              :      20740 KiB/s,        180 cycles/byte
+  AES-CCM-128              :      22667 KiB/s,        165 cycles/byte
+  AES-CCM-192              :      20312 KiB/s,        184 cycles/byte
+  AES-CCM-256              :      18401 KiB/s,        203 cycles/byte
+  AES-CMAC-128             :      21665 KiB/s,        172 cycles/byte
+  AES-CMAC-192             :      20482 KiB/s,        182 cycles/byte
+  AES-CMAC-256             :      19359 KiB/s,        193 cycles/byte
+  AES-CMAC-PRF-128         :      21312 KiB/s,        175 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      47 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      74 sign/s
+  ECDSA-secp256k1-SIGN     :      66 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     105 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     136 sign/s
+  ECDSA-secp192k1-SIGN     :     102 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      20 verify/s
+  ECDSA-secp256k1-VERIFY   :      21 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      24 handshake/s
+  ECDHE-secp192r1          :      44 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      32 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      62 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 256 B
+
+  SHA-1                    :     101751 KiB/s,         36 cycles/byte
+  SHA-256                  :      51695 KiB/s,         72 cycles/byte
+  SHA-512                  :      24302 KiB/s,        154 cycles/byte
+  AES-CBC-128              :      53415 KiB/s,         70 cycles/byte
+  AES-CBC-192              :      47632 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      42978 KiB/s,         87 cycles/byte
+  AES-XTS-128              :      45924 KiB/s,         81 cycles/byte
+  AES-XTS-256              :      37595 KiB/s,         99 cycles/byte
+  AES-GCM-128              :      25001 KiB/s,        149 cycles/byte
+  AES-GCM-192              :      23578 KiB/s,        158 cycles/byte
+  AES-GCM-256              :      22308 KiB/s,        167 cycles/byte
+  AES-CCM-128              :      24276 KiB/s,        154 cycles/byte
+  AES-CCM-192              :      21730 KiB/s,        172 cycles/byte
+  AES-CCM-256              :      19664 KiB/s,        190 cycles/byte
+  AES-CMAC-128             :      31636 KiB/s,        118 cycles/byte
+  AES-CMAC-192             :      29344 KiB/s,        127 cycles/byte
+  AES-CMAC-256             :      27299 KiB/s,        137 cycles/byte
+  AES-CMAC-PRF-128         :      31258 KiB/s,        119 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      74 sign/s
+  ECDSA-secp256k1-SIGN     :      66 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     104 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     137 sign/s
+  ECDSA-secp192k1-SIGN     :     102 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      20 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      33 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      34 handshake/s
+  ECDH-secp192r1           :      63 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 512 B
+
+  SHA-1                    :     125339 KiB/s,         29 cycles/byte
+  SHA-256                  :      60926 KiB/s,         61 cycles/byte
+  SHA-512                  :      30566 KiB/s,        122 cycles/byte
+  AES-CBC-128              :      53496 KiB/s,         70 cycles/byte
+  AES-CBC-192              :      47696 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      42951 KiB/s,         87 cycles/byte
+  AES-XTS-128              :      46886 KiB/s,         79 cycles/byte
+  AES-XTS-256              :      38446 KiB/s,         97 cycles/byte
+  AES-GCM-128              :      26011 KiB/s,        144 cycles/byte
+  AES-GCM-192              :      24517 KiB/s,        152 cycles/byte
+  AES-GCM-256              :      23185 KiB/s,        161 cycles/byte
+  AES-CCM-128              :      25171 KiB/s,        148 cycles/byte
+  AES-CCM-192              :      22513 KiB/s,        166 cycles/byte
+  AES-CCM-256              :      20365 KiB/s,        183 cycles/byte
+  AES-CMAC-128             :      41092 KiB/s,         91 cycles/byte
+  AES-CMAC-192             :      37444 KiB/s,        100 cycles/byte
+  AES-CMAC-256             :      34342 KiB/s,        109 cycles/byte
+  AES-CMAC-PRF-128         :      40775 KiB/s,         91 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      30 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      74 sign/s
+  ECDSA-secp256k1-SIGN     :      66 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     105 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     140 sign/s
+  ECDSA-secp192k1-SIGN     :     101 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      19 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       9 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      17 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      20 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      62 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 1024 B
+
+  SHA-1                    :     141971 KiB/s,         26 cycles/byte
+  SHA-256                  :      66900 KiB/s,         55 cycles/byte
+  SHA-512                  :      35119 KiB/s,        106 cycles/byte
+  AES-CBC-128              :      53537 KiB/s,         69 cycles/byte
+  AES-CBC-192              :      47729 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      43057 KiB/s,         87 cycles/byte
+  AES-XTS-128              :      47357 KiB/s,         79 cycles/byte
+  AES-XTS-256              :      38887 KiB/s,         96 cycles/byte
+  AES-GCM-128              :      26549 KiB/s,        141 cycles/byte
+  AES-GCM-192              :      25016 KiB/s,        149 cycles/byte
+  AES-GCM-256              :      23650 KiB/s,        158 cycles/byte
+  AES-CCM-128              :      25643 KiB/s,        146 cycles/byte
+  AES-CCM-192              :      22928 KiB/s,        163 cycles/byte
+  AES-CCM-256              :      20734 KiB/s,        180 cycles/byte
+  AES-CMAC-128             :      48317 KiB/s,         77 cycles/byte
+  AES-CMAC-192             :      43443 KiB/s,         86 cycles/byte
+  AES-CMAC-256             :      39429 KiB/s,         95 cycles/byte
+  AES-CMAC-PRF-128         :      48095 KiB/s,         77 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      30 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      74 sign/s
+  ECDSA-secp256k1-SIGN     :      67 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     106 sign/s
+  ECDSA-secp224k1-SIGN     :      79 sign/s
+  ECDSA-secp192r1-SIGN     :     135 sign/s
+  ECDSA-secp192k1-SIGN     :     101 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      41 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      44 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      20 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      63 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      35 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 2048 B
+
+  SHA-1                    :     151984 KiB/s,         24 cycles/byte
+  SHA-256                  :      70350 KiB/s,         53 cycles/byte
+  SHA-512                  :      37946 KiB/s,         98 cycles/byte
+  AES-CBC-128              :      53558 KiB/s,         69 cycles/byte
+  AES-CBC-192              :      47746 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      43072 KiB/s,         86 cycles/byte
+  AES-XTS-128              :      47642 KiB/s,         78 cycles/byte
+  AES-XTS-256              :      39112 KiB/s,         95 cycles/byte
+  AES-GCM-128              :      26826 KiB/s,        139 cycles/byte
+  AES-GCM-192              :      25274 KiB/s,        148 cycles/byte
+  AES-GCM-256              :      23890 KiB/s,        156 cycles/byte
+  AES-CCM-128              :      25886 KiB/s,        144 cycles/byte
+  AES-CCM-192              :      23142 KiB/s,        161 cycles/byte
+  AES-CCM-256              :      20924 KiB/s,        179 cycles/byte
+  AES-CMAC-128             :      52974 KiB/s,         70 cycles/byte
+  AES-CMAC-192             :      47226 KiB/s,         79 cycles/byte
+  AES-CMAC-256             :      42584 KiB/s,         87 cycles/byte
+  AES-CMAC-PRF-128         :      52840 KiB/s,         70 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      30 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      49 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      73 sign/s
+  ECDSA-secp256k1-SIGN     :      67 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     107 sign/s
+  ECDSA-secp224k1-SIGN     :      78 sign/s
+  ECDSA-secp192r1-SIGN     :     137 sign/s
+  ECDSA-secp192k1-SIGN     :     101 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      14 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      20 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      41 verify/s
+  ECDSA-secp192k1-VERIFY   :      28 verify/s
+  ECDHE-secp521r1          :       9 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      17 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      64 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 4096 B
+
+  SHA-1                    :     157520 KiB/s,         23 cycles/byte
+  SHA-256                  :      72212 KiB/s,         51 cycles/byte
+  SHA-512                  :      39536 KiB/s,         94 cycles/byte
+  AES-CBC-128              :      53572 KiB/s,         69 cycles/byte
+  AES-CBC-192              :      47756 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      43080 KiB/s,         86 cycles/byte
+  AES-XTS-128              :      47776 KiB/s,         78 cycles/byte
+  AES-XTS-256              :      39212 KiB/s,         95 cycles/byte
+  AES-GCM-128              :      26968 KiB/s,        138 cycles/byte
+  AES-GCM-192              :      25404 KiB/s,        147 cycles/byte
+  AES-GCM-256              :      24012 KiB/s,        156 cycles/byte
+  AES-CCM-128              :      26012 KiB/s,        144 cycles/byte
+  AES-CCM-192              :      23252 KiB/s,        161 cycles/byte
+  AES-CCM-256              :      21024 KiB/s,        178 cycles/byte
+  AES-CMAC-128             :      55656 KiB/s,         67 cycles/byte
+  AES-CMAC-192             :      49376 KiB/s,         75 cycles/byte
+  AES-CMAC-256             :      44360 KiB/s,         84 cycles/byte
+  AES-CMAC-PRF-128         :      55584 KiB/s,         67 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      75 sign/s
+  ECDSA-secp256k1-SIGN     :      67 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     105 sign/s
+  ECDSA-secp224k1-SIGN     :      74 sign/s
+  ECDSA-secp192r1-SIGN     :     139 sign/s
+  ECDSA-secp192k1-SIGN     :     101 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      28 verify/s
+  ECDHE-secp521r1          :       9 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      44 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      33 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      61 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 8192 B
+
+  SHA-1                    :     160472 KiB/s,         23 cycles/byte
+  SHA-256                  :      73184 KiB/s,         51 cycles/byte
+  SHA-512                  :      40312 KiB/s,         92 cycles/byte
+  AES-CBC-128              :      53584 KiB/s,         69 cycles/byte
+  AES-CBC-192              :      47768 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      43088 KiB/s,         86 cycles/byte
+  AES-XTS-128              :      47848 KiB/s,         78 cycles/byte
+  AES-XTS-256              :      39288 KiB/s,         95 cycles/byte
+  AES-GCM-128              :      27032 KiB/s,        138 cycles/byte
+  AES-GCM-192              :      25464 KiB/s,        147 cycles/byte
+  AES-GCM-256              :      24072 KiB/s,        155 cycles/byte
+  AES-CCM-128              :      26080 KiB/s,        143 cycles/byte
+  AES-CCM-192              :      23312 KiB/s,        160 cycles/byte
+  AES-CCM-256              :      21080 KiB/s,        177 cycles/byte
+  AES-CMAC-128             :      57112 KiB/s,         65 cycles/byte
+  AES-CMAC-192             :      50536 KiB/s,         74 cycles/byte
+  AES-CMAC-256             :      45312 KiB/s,         82 cycles/byte
+  AES-CMAC-PRF-128         :      57072 KiB/s,         65 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      30 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      75 sign/s
+  ECDSA-secp256k1-SIGN     :      66 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     104 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     137 sign/s
+  ECDSA-secp192k1-SIGN     :     102 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      39 verify/s
+  ECDSA-secp192k1-VERIFY   :      29 verify/s
+  ECDHE-secp521r1          :       9 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      44 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      18 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      13 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      61 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 16384 B
+
+  SHA-1                    :     162000 KiB/s,         23 cycles/byte
+  SHA-256                  :      73696 KiB/s,         50 cycles/byte
+  SHA-512                  :      40832 KiB/s,         91 cycles/byte
+  AES-CBC-128              :      53584 KiB/s,         69 cycles/byte
+  AES-CBC-192              :      47776 KiB/s,         78 cycles/byte
+  AES-CBC-256              :      43104 KiB/s,         86 cycles/byte
+  AES-XTS-128              :      47856 KiB/s,         78 cycles/byte
+  AES-XTS-256              :      39328 KiB/s,         95 cycles/byte
+  AES-GCM-128              :      27072 KiB/s,        138 cycles/byte
+  AES-GCM-192              :      25504 KiB/s,        147 cycles/byte
+  AES-GCM-256              :      24096 KiB/s,        155 cycles/byte
+  AES-CCM-128              :      26112 KiB/s,        143 cycles/byte
+  AES-CCM-192              :      23344 KiB/s,        160 cycles/byte
+  AES-CCM-256              :      21104 KiB/s,        177 cycles/byte
+  AES-CMAC-128             :      57840 KiB/s,         64 cycles/byte
+  AES-CMAC-192             :      51120 KiB/s,         73 cycles/byte
+  AES-CMAC-256             :      45776 KiB/s,         81 cycles/byte
+  AES-CMAC-PRF-128         :      57808 KiB/s,         64 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      30 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      49 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      74 sign/s
+  ECDSA-secp256k1-SIGN     :      65 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     105 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     138 sign/s
+  ECDSA-secp192k1-SIGN     :     102 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      21 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      30 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      41 verify/s
+  ECDSA-secp192k1-VERIFY   :      28 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      44 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      17 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      61 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      35 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 32768 B
+
+  SHA-1                    :     162080 KiB/s,         23 cycles/byte
+  SHA-256                  :      73728 KiB/s,         50 cycles/byte
+  SHA-512                  :      40960 KiB/s,         91 cycles/byte
+  AES-CBC-128              :      53056 KiB/s,         70 cycles/byte
+  AES-CBC-192              :      47360 KiB/s,         79 cycles/byte
+  AES-CBC-256              :      42752 KiB/s,         87 cycles/byte
+  AES-XTS-128              :      47424 KiB/s,         79 cycles/byte
+  AES-XTS-256              :      39040 KiB/s,         96 cycles/byte
+  AES-GCM-128              :      26944 KiB/s,         11 cycles/byte
+  AES-GCM-192              :      25376 KiB/s,         19 cycles/byte
+  AES-GCM-256              :      24000 KiB/s,         28 cycles/byte
+  AES-CCM-128              :      26016 KiB/s,         16 cycles/byte
+  AES-CCM-192              :      23296 KiB/s,         33 cycles/byte
+  AES-CCM-256              :      21056 KiB/s,         50 cycles/byte
+  AES-CMAC-128             :      57472 KiB/s,         65 cycles/byte
+  AES-CMAC-192             :      50848 KiB/s,         73 cycles/byte
+  AES-CMAC-256             :      45568 KiB/s,         82 cycles/byte
+  AES-CMAC-PRF-128         :      57440 KiB/s,         65 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      28 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      48 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      73 sign/s
+  ECDSA-secp256k1-SIGN     :      65 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     106 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     136 sign/s
+  ECDSA-secp192k1-SIGN     :     100 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      31 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      39 verify/s
+  ECDSA-secp192k1-VERIFY   :      28 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      31 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      29 handshake/s
+  ECDHE-Curve25519         :      17 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      32 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      48 handshake/s
+  ECDH-secp224k1           :      34 handshake/s
+  ECDH-secp192r1           :      61 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+Current Data size is : 65536 B
+
+  SHA-1                    :     152256 KiB/s,         24 cycles/byte
+  SHA-256                  :      71808 KiB/s,         52 cycles/byte
+  SHA-512                  :      40512 KiB/s,         28 cycles/byte
+  AES-CBC-128              :      52160 KiB/s,          7 cycles/byte
+  AES-CBC-192              :      46656 KiB/s,         16 cycles/byte
+  AES-CBC-256              :      42176 KiB/s,         25 cycles/byte
+  AES-XTS-128              :      46784 KiB/s,         16 cycles/byte
+  AES-XTS-256              :      38592 KiB/s,         33 cycles/byte
+  AES-GCM-128              :      26752 KiB/s,         12 cycles/byte
+  AES-GCM-192              :      25216 KiB/s,         21 cycles/byte
+  AES-GCM-256              :      23872 KiB/s,         29 cycles/byte
+  AES-CCM-128              :      25856 KiB/s,         17 cycles/byte
+  AES-CCM-192              :      23168 KiB/s,         34 cycles/byte
+  AES-CCM-256              :      20992 KiB/s,         51 cycles/byte
+  AES-CMAC-128             :      56704 KiB/s,          2 cycles/byte
+  AES-CMAC-192             :      50240 KiB/s,         10 cycles/byte
+  AES-CMAC-256             :      45056 KiB/s,         19 cycles/byte
+  AES-CMAC-PRF-128         :      56704 KiB/s,          2 cycles/byte
+  RSA-2048-public          :     500  public/s
+  RSA-2048-private         :      12 private/s
+  RSA-4096-public          :     137  public/s
+  RSA-4096-private         :       2 private/s
+  DHE-2048                 :       3 handshake/s
+  DH-2048                  :       4 handshake/s
+  DHE-3072                 :       1 handshake/s
+  DH-3072                  :       1 handshake/s
+  ECDSA-secp521r1-SIGN     :      30 sign/s
+  ECDSA-brainpoolP512r1-SI :       2 sign/s
+  ECDSA-secp384r1-SIGN     :      49 sign/s
+  ECDSA-brainpoolP384r1-SI :       5 sign/s
+  ECDSA-secp256r1-SIGN     :      74 sign/s
+  ECDSA-secp256k1-SIGN     :      67 sign/s
+  ECDSA-brainpoolP256r1-SI :       9 sign/s
+  ECDSA-secp224r1-SIGN     :     103 sign/s
+  ECDSA-secp224k1-SIGN     :      77 sign/s
+  ECDSA-secp192r1-SIGN     :     138 sign/s
+  ECDSA-secp192k1-SIGN     :     100 sign/s
+  ECDSA-secp521r1-VERIFY   :       8 verify/s
+  ECDSA-brainpoolP512r1-VE :       1 verify/s
+  ECDSA-secp384r1-VERIFY   :      13 verify/s
+  ECDSA-brainpoolP384r1-VE :       1 verify/s
+  ECDSA-secp256r1-VERIFY   :      21 verify/s
+  ECDSA-secp256k1-VERIFY   :      20 verify/s
+  ECDSA-brainpoolP256r1-VE :       2 verify/s
+  ECDSA-secp224r1-VERIFY   :      31 verify/s
+  ECDSA-secp224k1-VERIFY   :      22 verify/s
+  ECDSA-secp192r1-VERIFY   :      40 verify/s
+  ECDSA-secp192k1-VERIFY   :      28 verify/s
+  ECDHE-secp521r1          :       8 handshake/s
+  ECDHE-brainpoolP512r1    :       1 handshake/s
+  ECDHE-secp384r1          :      14 handshake/s
+  ECDHE-brainpoolP384r1    :       1 handshake/s
+  ECDHE-secp256r1          :      22 handshake/s
+  ECDHE-secp256k1          :      21 handshake/s
+  ECDHE-brainpoolP256r1    :       2 handshake/s
+  ECDHE-secp224r1          :      32 handshake/s
+  ECDHE-secp224k1          :      23 handshake/s
+  ECDHE-secp192r1          :      43 handshake/s
+  ECDHE-secp192k1          :      30 handshake/s
+  ECDHE-Curve25519         :      17 handshake/s
+  ECDHE-Curve448           :       8 handshake/s
+  ECDH-secp521r1           :      12 handshake/s
+  ECDH-brainpoolP512r1     :       1 handshake/s
+  ECDH-secp384r1           :      21 handshake/s
+  ECDH-brainpoolP384r1     :       2 handshake/s
+  ECDH-secp256r1           :      33 handshake/s
+  ECDH-secp256k1           :      31 handshake/s
+  ECDH-brainpoolP256r1     :       3 handshake/s
+  ECDH-secp224r1           :      49 handshake/s
+  ECDH-secp224k1           :      35 handshake/s
+  ECDH-secp192r1           :      64 handshake/s
+  ECDH-secp192k1           :      44 handshake/s
+  ECDH-Curve25519          :      34 handshake/s
+  ECDH-Curve448            :      16 handshake/s
+
+!! End of Test !!
