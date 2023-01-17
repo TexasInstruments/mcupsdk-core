@@ -116,7 +116,7 @@ extern "C" {
 /*===========================================================================*/
 #if defined (SOC_AWR294X) || defined (SOC_AM273X)
 #if defined (SUBSYS_MSS)
-extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsMSS[24U];
+extern SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsMSS[30U];
 #endif
 #endif
 
@@ -311,6 +311,33 @@ extern int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_DED_Test_Polling(void);
 
 #if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
 #if defined (SUBSYS_MSS)
+/* Node MSS_MSS_MCRC */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void);
+
+/* Node MSS_MSS_QSPI */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void);
+
+/* Node MSS_MSS_SWBUF */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SWBUF_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SWBUF_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SWBUF_RED_Test(void);
+
+/* Node MSS_MSS_SCRP */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP_RED_Test(void);
+
+/* Node MSS_TO_MDO */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TO_MDO_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TO_MDO_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_TO_MDO_RED_Test(void);
+
+/* Node DAP_R232 */
+extern int32_t SDL_ECC_BUS_SAFETY_DAP_R232_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DAP_R232_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DAP_R232_RED_Test(void);
 /* Node MSS_TPTC_A0_WR */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR_RED_Test_Polling(void);
@@ -565,6 +592,56 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP_RED_Test(void);
 
 /* Node PERI_VBUSP */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP_RED_Test(void);
+
+/* Node MSS_MSS_MCRC */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void);
+
+/* Node MSS_MSS_QSPI */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void);
+
+/* Node MSS_MSS_MBOX */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_RED_Test(void);
+
+/* Node MSS_MSS_STM_STIM */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_STM_STIM_RED_Test(void);
+
+/* Node MSS_MSS_SCRP0 */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP0_RED_Test(void);
+
+/* Node MSS_MSS_SCRP1 */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_RED_Test(void);
+
+/* Node MSS_ICSSM_PDSP0 */
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP0_RED_Test(void);
+
+/* Node MSS_ICSSM_PDSP1 */
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_PDSP1_RED_Test(void);
+
+/* Node MSS_ICSSM_S */
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_RED_Test(void);
+
+/* Node MSS_DAP */
+extern int32_t SDL_ECC_BUS_SAFETY_DAP_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DAP_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_DAP_RED_Test(void);
 #endif
 
 #if defined (SOC_AM273X) ||  defined (SOC_AWR294X)

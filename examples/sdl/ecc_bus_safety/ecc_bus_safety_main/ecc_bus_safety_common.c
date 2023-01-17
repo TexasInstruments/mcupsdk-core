@@ -680,7 +680,7 @@ void setup_CPSW()
      Enet_Pn_Mac_Control bit 3  : pn_rr_flow_en > Receive Flow Control Enable       > 0 >> Receive  Flow Control Disabled.  Full-duplex mode � No outgoing pause frames are sent.
      Enet_Pn_Mac_Control bit 10 : pn_tx_short_gap_en > Transmit Short Gap Enable    > 1 >> Transmit with a short IPG (when TX_SHORT_GAP input is asserted) is enabled
      Enet_Pn_Mac_Control bit 12 : pn_crc_type   >  Port CRC Type   > 0 >> Ethernet CRC
-     Enet_Pn_Mac_Control bit 1  : pn_loopback   >  Loop Back Mode  > 0 >> Not loop back mode : // FIXME : CHECK IF THIS CAN BE WRITTEN ALONG WITH pn_gmii_en. Loopback mode forces internal fullduplex mode regardless of whether the pn_fullduplex bit is set or not.
+     Enet_Pn_Mac_Control bit 1  : pn_loopback   >  Loop Back Mode  > 0 >> Not loop back mode : FIXME : CHECK IF THIS CAN BE WRITTEN ALONG WITH pn_gmii_en. Loopback mode forces internal fullduplex mode regardless of whether the pn_fullduplex bit is set or not.
      Enet_Pn_Mac_Control bit 8  : pn_xgig >  10 Gigabit Mode > 0 - 10/100/1G mode as determined by pn_gig
      Enet_Pn_Mac_Control bit 7  : pn_gig  >  1  Gigabit Mode > 0 - 10/100 mode
      Enet_Pn_Mac_Control bit 5  : pn_gmii_en > 1 >> GMII RX and TX released from reset.
@@ -731,5 +731,3 @@ void setup_CPSW()
 
 #endif
 #endif
-
-

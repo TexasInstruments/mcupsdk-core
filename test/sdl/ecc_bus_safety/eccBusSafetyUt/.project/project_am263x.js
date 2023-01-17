@@ -5,8 +5,8 @@ let device = "am263x";
 const files = {
     common: [
         "ecc_bus_safety_main.c",
-        "sdl_ecc_bus_safety_api_test_pos.c",
         "sdl_ecc_bus_safety_api_test_neg.c",
+        "sdl_ecc_bus_safety_api_test_pos.c",
         "dpl_interface.c",
         "main.c",
 
@@ -53,6 +53,12 @@ const lnkfiles = {
     common: [
         "linker.cmd",
     ]
+};
+
+const defines_r5f = {
+    common: [
+        "SUBSYS_MSS",
+    ],
 };
 
 const syscfgfile = "../example.syscfg";
@@ -104,6 +110,7 @@ function getComponentBuildProperty(buildOption) {
         {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
+            build_property.defines = defines_r5f;
         }
     }
 

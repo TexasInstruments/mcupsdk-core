@@ -52,6 +52,7 @@
 #include <sdl/ecc_bus_safety/v0/sdl_ecc_bus_safety_hw.h>
 #include <sdl/ecc_bus_safety/v0/sdl_ecc_bus_safety.h>
 #include <sdl/ecc_bus_safety/v0/soc/am263x/sdl_ecc_bus_safety_soc.h>
+#include <sdl/ecc_bus_safety/v0/soc/am263x/sdl_ecc_bus_safety_soc.h>
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -287,7 +288,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t
         cmdErr = ((uint32_t) HW_RD_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyErrStatCmd),\
                         SDL_CTRL_BUS_SAFETY_ERR_STAT_CMD_BUS_SAFETY_ERR_STAT_CMD_STAT));
 
-        if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR <= busSftyNode ) && ( SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR >=busSftyNode )) == (bool)0U )
+        if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR <= busSftyNode ) && ( SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR >=busSftyNode )) == (bool)0U )
         {
             readErr = ((uint32_t) HW_RD_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyErrStatRd),\
                         SDL_CTRL_BUS_SAFETY_ERR_STAT_READ_BUS_SAFETY_ERR_STAT_READ_STAT));
@@ -296,7 +297,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t
         {
             readErr =0U;
         }
-        if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode ) && ( SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR >=busSftyNode )) == (bool)0U )
+        if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode ) && ( SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR >=busSftyNode )) == (bool)0U )
         {
             writeErr = ((uint32_t) HW_RD_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyErrStatWr),\
                         SDL_CTRL_BUS_SAFETY_ERR_STAT_WRITE_BUS_SAFETY_ERR_STAT_WRITE_STAT));
@@ -370,10 +371,10 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, ui
     if ( SDL_PASS == retval)
     {
         /* Check for SEC support on Node */
-        if((((bool)((SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP == busSftyNode )||(SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP==busSftyNode)) == (bool)0U)))
+      if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP>=busSftyNode))==(bool)0U)
         {
             /* Check for  dependency */
-            if(((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode) == (bool)0U)&&
+            if(((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD>=busSftyNode) == (bool)0U)&&
                ((bool)(SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )== (bool)0U))
             {
                 /* Validate Start and End address of node */
@@ -409,7 +410,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, ui
                     SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA,\
                     SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA_MAX);
                 /* Check for  dependency */
-                if(((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode))||
+                if(((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD>=busSftyNode))||
                    (SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode ))
                 {
                     retval = SDL_PASS;
@@ -456,10 +457,10 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
     if ( SDL_PASS == retval)
     {
         /* Check for SEC support on Node */
-        if((((bool)((SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP == busSftyNode )||(SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP==busSftyNode)) == (bool)0U)))
+      if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP>=busSftyNode))==(bool)0U)
         {
             /* Check for  dependency */
-            if(((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode) == (bool)0U)&&
+            if(((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD>=busSftyNode) == (bool)0U)&&
                ((bool)(SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )== (bool)0U))
             {
                 /* Validate Start and End address of node */
@@ -482,11 +483,11 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
                 /* enable the bus safety for MSS */
                 SDL_ECC_BUS_SAFETY_MSS_SAFETY_CTRL_enable();
                 /* enable the bus safety for  node */
-	            HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyCtrl),\
+	              HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyCtrl),\
                     SDL_CTRL_BUS_SAFETY_CTRL_BUS_SAFETY_CTRL_ENABLE,\
 		            0x7U);
                 /* enable fault injection for node with: double error correction, appropriate 32 bits of bus */
-	            HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyFi),\
+	              HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyFi),\
                     SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DED,\
 		            0x1U);
                 /* Enable data */
@@ -494,7 +495,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
                     SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA,\
                     SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DATA_MAX);
                 /* Check for  dependency */
-                if(((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode))||
+                if(((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD>=busSftyNode))||
                    (SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode ))
                 {
                     retval = SDL_PASS;
@@ -856,20 +857,6 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->nodeStartAddr        = 0U;
             break;
         }
-        /* MSS_MBOX*/
-        case SDL_ECC_BUS_SAFETY_MSS_MBOX  :
-        {
-            baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_CTRL;
-            baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR;
-            baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_FI;
-            baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_CMD;
-            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_READ;
-            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_WRITE;
-            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = SDL_MBOX_SRAM_U_BASE_END;
-            baseAddrOffst->nodeStartAddr        = SDL_MBOX_SRAM_U_BASE;
-            break;
-        }
         /* MSS_L2_A*/
         case SDL_ECC_BUS_SAFETY_MSS_L2_A  :
         {
@@ -912,7 +899,7 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->nodeStartAddr        = SDL_MPU_L2OCRAM_BANK2;
             break;
         }
-        /* MSS_L2_C*/
+        /* MSS_L2_D*/
         case SDL_ECC_BUS_SAFETY_MSS_L2_D  :
         {
             baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_L2OCRAM_BANK3_BUS_SAFETY_CTRL;
@@ -996,6 +983,154 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->nodeStartAddr        = 0U;
             break;
         }
+        /* MSS_MBOX*/
+       case SDL_ECC_BUS_SAFETY_MSS_MBOX  :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MBOX_SRAM_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = SDL_MBOX_SRAM_U_BASE_END;
+           baseAddrOffst->nodeStartAddr        = SDL_MBOX_SRAM_U_BASE;
+           break;
+       }
+
+       /* MSS_QSPI */
+       case SDL_ECC_BUS_SAFETY_MSS_QSPI :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_QSPI0_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = 0U;
+           baseAddrOffst->nodeStartAddr        = 0U;
+           break;
+       }
+       /* MSS_MCRC */
+       case SDL_ECC_BUS_SAFETY_MSS_MCRC :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MCRC0_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = 0U;
+           baseAddrOffst->nodeStartAddr        = 0U;
+           break;
+       }
+
+       /* MSS_STM_STIM */
+       case SDL_ECC_BUS_SAFETY_MSS_STM_STIM :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_STM_STIM_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = 0U;
+           baseAddrOffst->nodeStartAddr        = 0U;
+           break;
+       }
+
+       /* MSS_SCRP0 */
+       case SDL_ECC_BUS_SAFETY_MSS_SCRP0 :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_SCRM2SCRP_0_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = 0U;
+           baseAddrOffst->nodeStartAddr        = 0U;
+           break;
+       }
+       /* MSS_SCRP1 */
+       case SDL_ECC_BUS_SAFETY_MSS_SCRP1 :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_SCRM2SCRP_1_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = 0U;
+           baseAddrOffst->nodeStartAddr        = 0U;
+           break;
+       }
+
+       /* ICSSM_PDSP0 */
+       case SDL_ECC_BUS_SAFETY_ICSSM_PDSP0 :
+       {
+           baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_CTRL;
+           baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR;
+           baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_FI;
+           baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_CMD;
+           baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_READ;
+           baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_WRITE;
+           baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_ICSSM_PDSP0_BUS_SAFETY_ERR_STAT_WRITERESP;
+           baseAddrOffst->nodeEndAddr          = 0U;
+           baseAddrOffst->nodeStartAddr        = 0U;
+           break;
+       }
+
+      /* ICSSM_PDSP1 */
+      case SDL_ECC_BUS_SAFETY_ICSSM_PDSP1 :
+      {
+          baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_CTRL;
+          baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR;
+          baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_FI;
+          baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_CMD;
+          baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_READ;
+          baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_WRITE;
+          baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_ICSSM_PDSP1_BUS_SAFETY_ERR_STAT_WRITERESP;
+          baseAddrOffst->nodeEndAddr          = 0U;
+          baseAddrOffst->nodeStartAddr        = 0U;
+          break;
+      }
+
+      /* ICSSM_S */
+      case SDL_ECC_BUS_SAFETY_ICSSM_S :
+      {
+          baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_CTRL;
+          baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR;
+          baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_FI;
+          baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_CMD;
+          baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_READ;
+          baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_WRITE;
+          baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_ICSSM_S_BUS_SAFETY_ERR_STAT_WRITERESP;
+          baseAddrOffst->nodeEndAddr          = 0U;
+          baseAddrOffst->nodeStartAddr        = 0U;
+          break;
+      }
+
+      /* DAP */
+      case SDL_ECC_BUS_SAFETY_DAP :
+      {
+          baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_DAP_BUS_SAFETY_CTRL;
+          baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR;
+          baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_DAP_BUS_SAFETY_FI;
+          baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_CMD;
+          baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_READ;
+          baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_WRITE;
+          baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_DAP_BUS_SAFETY_ERR_STAT_WRITERESP;
+          baseAddrOffst->nodeEndAddr          = 0U;
+          baseAddrOffst->nodeStartAddr        = 0U;
+          break;
+      }
+
         default:
         {
             baseAddrOffst->busSftyCtrl          = 0U;
@@ -1050,4 +1185,3 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_readStaticRegs(uint32_t busSftyNode ,\
 
     return (retval);
 }
-

@@ -44,8 +44,8 @@ extern "C"
 ****************************************************************************************************/
 /* MSS */
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
-#define SDL_MSS_CTRL_MSS_BUS_SAFETY_CTRL                             (0x000001A0U)
-
+#define SDL_MSS_CTRL_MSS_BUS_SAFETY_CTRL                                       (0x000001A0U)
+#define SDL_MSS_CTRL_NERROR_MASK                                               (0x000006DCU)
 #elif defined (SOC_AM263X)
 #define SDL_MSS_CTRL_MSS_BUS_SAFETY_CTRL                             (0x00018200U)
 #endif
