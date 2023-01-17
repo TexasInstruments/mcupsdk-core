@@ -202,7 +202,7 @@ def main(argv):
         print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
         print(send_status)
         if("SUCCESS" in send_status):
-            print("Connect to UART in 5 seconds to see logs from UART !!!")
+            print("Connect to UART in 2 seconds to see logs from UART !!!")
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])

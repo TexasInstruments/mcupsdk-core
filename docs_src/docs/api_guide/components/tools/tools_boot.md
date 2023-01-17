@@ -289,7 +289,7 @@ and waits for 5 seconds before running the application binary
   Sending the application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.appimage ...
   Sent application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.appimage of size 99580 bytes in 11.74s.
   [STATUS] Application load SUCCESS !!!
-  Connect to UART in 5 seconds to see logs from UART !!!
+  Connect to UART in 2 seconds to see logs from UART !!!
   \endcode
 
 \cond SOC_AM64X
