@@ -56,7 +56,9 @@ SDL consists of below sub-modules
 - \subpage SDL_CCM_PAGE
 - \subpage SDL_STC_PAGE
 - \subpage SDL_ECC_BUS_SAFETY_PAGE
-- \subpage SDL_HWA_PAGE
 \endcond
 
 
+\cond SOC_AM273X || SOC_AWR294X
+- \subpage SDL_HWA_PAGE
+\endcond
