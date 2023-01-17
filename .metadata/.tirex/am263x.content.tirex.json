@@ -8815,6 +8815,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Cpsw Early Eth Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "enet_cpsw_early_eth",
+        "location": "../../examples/networking/enet_cpsw_early_ethernet/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_cpsw_early_ethernet",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet L2 Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw",
         "location": "../../examples/networking/enet_layer2_cpsw/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

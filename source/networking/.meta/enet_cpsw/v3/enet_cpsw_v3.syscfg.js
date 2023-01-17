@@ -133,6 +133,12 @@ const enet_cpsw_phy1_config =
             default: false,
             readOnly: true,
         },
+        {
+            name: "isStrappedPhy1",
+            description: "Set if PHY SOC has auto-negotiation disabled strap setting (Strapped mode).",
+            displayName: "Strapped Mode",
+            default: false,
+        },
     ],
 };
 
@@ -170,6 +176,12 @@ const enet_cpsw_phy2_config =
             default: false,
             readOnly: true,
         },
+        {
+            name: "isStrappedPhy2",
+            description: "Set if PHY SOC has auto-negotiation disabled strap setting (Strapped mode).",
+            displayName: "Strapped Mode",
+            default: false,
+        },
     ],
 };
 
@@ -189,14 +201,18 @@ const enet_cpsw_board_config = {
                 if(inst.customBoardEnable == true) {
                     ui.phyAddr1.hidden = true;
                     ui.isC45Phy1.hidden = true;
+                    ui.isStrappedPhy1.hidden = true;
                     ui.phyAddr2.hidden = true;
                     ui.isC45Phy2.hidden = true;
+                    ui.isStrappedPhy2.hidden = true;
                 }
                 else {
                     ui.phyAddr1.hidden = false;
                     ui.isC45Phy1.hidden = false;
+                    ui.isStrappedPhy1.hidden = false;
                     ui.phyAddr2.hidden = false;
                     ui.isC45Phy2.hidden = false;
+                    ui.isStrappedPhy2.hidden = false;
                 }
             },
         },
