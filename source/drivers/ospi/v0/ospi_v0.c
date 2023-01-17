@@ -182,6 +182,13 @@ static OSPI_DrvObj gOspiDrvObj =
     .openLock      = NULL,
 };
 
+/** \brief LUT table for log2 calculation using DeBruijn sequence */
+static const uint8_t gTable[32] = 
+{
+    0, 9, 1, 10, 13, 21, 2, 29, 11, 14, 16, 18, 22, 25, 3, 30,
+    8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
+};
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -1971,18 +1978,24 @@ static int32_t OSPI_waitIdle(OSPI_Handle handle, uint32_t timeOut)
 
 static uint32_t OSPI_utilLog2(uint32_t num)
 {
-    uint32_t i, k;
+    /* LUT based bit scan method using deBruijn(2, 5) sequence to avoid the loop */
+    uint32_t ret = 0U;
+    uint32_t temp = num;
 
-    for(i = 31; i >= 0; i--)
+    if(num != 0U)
     {
-        k = (num >> i) & 0x01;
-        if(k == 1)
-        {
-            break;
-        }
+        /* Assume num is not power of 2, fill 1's after the most significant 1 */
+        temp |= (temp >> 1U);
+        temp |= (temp >> 2U);
+        temp |= (temp >> 4U);
+        temp |= (temp >> 8U);
+        temp |= (temp >> 16U);
+
+        /* 0x07C4ACDD is a modified deBruijn sequence */
+        ret = (uint32_t)gTable[(uint32_t)((temp * 0x07C4ACDD) >> 27U)];
     }
 
-    return i;
+    return ret;
 }
 
 static void OSPI_isr(void *args)

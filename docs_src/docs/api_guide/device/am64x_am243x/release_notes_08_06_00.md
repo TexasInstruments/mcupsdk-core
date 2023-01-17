@@ -263,6 +263,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-8985
+    <td> Potential Infinite loop in OSPI_utilLog2 defined in ospi_v0.c
+    <td> OSPI
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Switched to a LUT based log2 calculation
+</tr>
 </table>
 
 ## Known Issues
