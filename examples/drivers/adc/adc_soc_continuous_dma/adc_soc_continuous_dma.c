@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -44,44 +44,68 @@
  * This example sets up two ADC channels to convert simultaneously. The
  * results will be transferred by DMA into a buffer in RAM.
  *
- * It configures ePWM0 to trigger SOC0 on ADC0 and ADC1. EPWM is only used to
- * trigger the first ADC conversion. INT0 of ADC0 is configured to generate
+ * errata i2355 for AM263x:
+ *  DMA trigger from the ADC INT (Late) occurs just before the Result space updation,
+ *  as a result of which the stale data from the result space will be transferred by
+ *  DMA.
+ *  Workaround:
+ *      use an empty channel transfer before the Actual transfer.
+ *
+ * It configures ePWM0 to trigger SOC0 on ADC1 and ADC2. EPWM is only used to
+ * trigger the first ADC conversion. INT0 of ADC1 is configured to generate
  * interrupt after first conversion and will then disable EPWM SOC generation.
  * INT1 of both ADC's is configured to enable continuous conversion.
  *
- * DMA channel 0 is triggered at EOC0 of ADC0 and will copy conversion result
- * to a buffer in RAM. DMA channel 1 is triggered at EOC0 of ADC1 and will copy
- * conversion result to another buffer in RAM. DMA will generate interrupt after
- * the buffer is filled and will stop conversion on both ADC's.
+ * DMA channel 0 is triggered at EOC0 of ADC1 and will copy conversion result
+ * to a empty buffer in RAM, and triggers DMA Channel 1 to copy actual conversion
+ * result to result buffer in RAM. Similarly, DMA Channel 2 is triggered at ADC 2 EOC0
+ * and transfers ADC 2 result space an empty buffer in RAM and .
+ * DMA will generate interrupt after the buffer is filled and will stop conversion on both ADCs.
  *
  * The below watch variables can be used to view ADC conversion results.
  *
  * External Connections
- * ADC0_AIN0 and ADC1_AIN0 pins should be connected to signals to be converted.
+ * ADC1_AIN0 and ADC2_AIN0 pins should be connected to signals to be converted.
+ * AM263X-CC :
+ *  - Feed the External Volatage to the following
+ *      - ADC1_AIN0 :   HSEC-PIN 12
+ *      - ADC2_AIN0 :   HSEC-PIN 31
+ * AM263X-LP :
+ *  - Feed the External Volatage to the following
+ *      - ADC1_AIN0 :   J1/3 24
+ *      - ADC2_AIN0 :   J1/3 25
  *
  * Watch Variables
- * gAdc0DataBuffer - Buffers which stores conversion results from ADC0
  * gAdc1DataBuffer - Buffers which stores conversion results from ADC1
+ * gADC2DataBuffer - Buffers which stores conversion results from ADC2
  */
 
 /* Size of buffer for storing conversion results */
 #define RESULTS_BUFFER_SIZE     1024
 /* Event queue to be used for EDMA transfer */
 #define EDMA_TEST_EVT_QUEUE_NO  0U
-/* DMA channel number to transfer ADC0 and ADC1 conversion results*/
-#define ADC0_EDMA_CHANNEL       (DMA_TRIG_XBAR_EDMA_MODULE_0)
-#define ADC1_EDMA_CHANNEL       (DMA_TRIG_XBAR_EDMA_MODULE_1)
+
+/* DMA channel number to transfer ADC1 and ADC2 conversion results*/
+/* the following channels will be used for empty transaction to comply to errata i2355
+   these chain the ADC result data transfer */
+#define ADC1_EDMA_CHANNEL       (DMA_TRIG_XBAR_EDMA_MODULE_0)
+#define ADC2_EDMA_CHANNEL       (DMA_TRIG_XBAR_EDMA_MODULE_2)
+/* Note: the actual transfer channels are configured for EDMA_RESOURCE_ALLOC_ANY,
+typically selecting the next available channels
+    in this case, DMA_TRIG_XBAR_EDMA_MODULE_1 and DMA_TRIG_XBAR_EDMA_MODULE_3 hold the actual transfer.*/
 
 /* Global variables and objects */
-/* Buffers to store conversion results from ADC0 and ADC1 */
-uint16_t gAdc0DataBuffer[RESULTS_BUFFER_SIZE];
+/* Buffers to store conversion results from ADC1 and ADC2 */
 uint16_t gAdc1DataBuffer[RESULTS_BUFFER_SIZE];
+uint16_t gAdc2DataBuffer[RESULTS_BUFFER_SIZE];
+uint16_t gUnusedBuffer[RESULTS_BUFFER_SIZE];
+
 static HwiP_Object  gAdcHwiObject;
 /* Semaphore to indicate transfer completion */
 static SemaphoreP_Object gEdmaTransferDoneSem;
 /* ADC instance base addresses */
-uint32_t gAdc0baseAddr = CONFIG_ADC0_BASE_ADDR;
 uint32_t gAdc1baseAddr = CONFIG_ADC1_BASE_ADDR;
+uint32_t gAdc2baseAddr = CONFIG_ADC2_BASE_ADDR;
 
 /* Function Prototypes */
 uint16_t App_dmaConfigure(const uint16_t *table, uint16_t table_size,
@@ -107,13 +131,14 @@ void adc_soc_continuous_dma_main(void *args)
     /* Initialize both the result buffers with zeroes */
     for(loopCnt = 0U; loopCnt < RESULTS_BUFFER_SIZE; loopCnt++)
     {
-        gAdc0DataBuffer[loopCnt] = 0U;
+        gUnusedBuffer[loopCnt] = 0U;
         gAdc1DataBuffer[loopCnt] = 0U;
+        gAdc2DataBuffer[loopCnt] = 0U;
     }
 
     /* Perform a cache write back to the result buffers */
-    CacheP_wb((void *)gAdc0DataBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
     CacheP_wb((void *)gAdc1DataBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
+    CacheP_wb((void *)gAdc2DataBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
 
     /* Register & enable interrupt */
     HwiP_Params_init(&hwiPrms);
@@ -127,10 +152,11 @@ void adc_soc_continuous_dma_main(void *args)
     DebugP_assert(SystemP_SUCCESS == status);
 
     /* Configure DMA channels to transfer both ADC results */
-    App_dmaConfigure(gAdc0DataBuffer, RESULTS_BUFFER_SIZE, gEdmaHandle[0],
-                ADC0_EDMA_CHANNEL, CONFIG_ADC0_RESULT_BASE_ADDR, &tccAlloc0);
     App_dmaConfigure(gAdc1DataBuffer, RESULTS_BUFFER_SIZE, gEdmaHandle[0],
-                ADC1_EDMA_CHANNEL, CONFIG_ADC1_RESULT_BASE_ADDR, &tccAlloc1);
+                ADC1_EDMA_CHANNEL, CONFIG_ADC1_RESULT_BASE_ADDR, &tccAlloc0);
+
+    App_dmaConfigure(gAdc2DataBuffer, RESULTS_BUFFER_SIZE, gEdmaHandle[0],
+                ADC2_EDMA_CHANNEL, CONFIG_ADC2_RESULT_BASE_ADDR, &tccAlloc1);
 
     /* Register interrupt */
     intrObj.tccNum = tccAlloc0;
@@ -140,10 +166,10 @@ void adc_soc_continuous_dma_main(void *args)
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* Clear ADC Interrupt status */
-    ADC_clearInterruptStatus(gAdc0baseAddr,ADC_INT_NUMBER1);
-    ADC_clearInterruptStatus(gAdc0baseAddr,ADC_INT_NUMBER2);
     ADC_clearInterruptStatus(gAdc1baseAddr,ADC_INT_NUMBER1);
     ADC_clearInterruptStatus(gAdc1baseAddr,ADC_INT_NUMBER2);
+    ADC_clearInterruptStatus(gAdc2baseAddr,ADC_INT_NUMBER1);
+    ADC_clearInterruptStatus(gAdc2baseAddr,ADC_INT_NUMBER2);
 
     /* Enable event counter init for SOCA */
     EPWM_enableADCTriggerEventCountInit(CONFIG_EPWM0_BASE_ADDR, EPWM_SOC_A);
@@ -157,6 +183,7 @@ void adc_soc_continuous_dma_main(void *args)
 	EPWM_enableADCTrigger(CONFIG_EPWM0_BASE_ADDR, EPWM_SOC_A);
 	EPWM_setADCTriggerSource(CONFIG_EPWM0_BASE_ADDR, EPWM_SOC_A, EPWM_SOC_TBCTR_ZERO, EPWM_SOC_TBCTR_ZERO);
 	EPWM_setADCTriggerEventPrescale(CONFIG_EPWM0_BASE_ADDR, EPWM_SOC_A, 1);
+	EPWM_setTimeBaseCounterMode(CONFIG_EPWM0_BASE_ADDR, EPWM_COUNTER_MODE_UP);
 
     /*
      * Wait while DMA transfers ADC conversion results to buffer.
@@ -164,16 +191,17 @@ void adc_soc_continuous_dma_main(void *args)
     SemaphoreP_pend(&gEdmaTransferDoneSem, SystemP_WAIT_FOREVER);
 
     /* Invalidate destination buffer */
-    CacheP_inv((void *)gAdc0DataBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
+    CacheP_inv((void *)gUnusedBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
     CacheP_inv((void *)gAdc1DataBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
+    CacheP_inv((void *)gAdc2DataBuffer, RESULTS_BUFFER_SIZE*2, CacheP_TYPE_ALL);
 
-    DebugP_log("ADC0 : ADC1 Result register value -\r\n");
+    DebugP_log("ADC1 : ADC2 Result register value -\r\n");
 
     loopCnt = 0;
     /* Print few elements from the result buffer */
     while(loopCnt < RESULTS_BUFFER_SIZE)
     {
-        DebugP_log("%d : %d\r\n", gAdc0DataBuffer[loopCnt], gAdc1DataBuffer[loopCnt]);
+        DebugP_log("%d : %d\r\n", gAdc1DataBuffer[loopCnt], gAdc2DataBuffer[loopCnt]);
         loopCnt += 100;
     }
 
@@ -191,9 +219,16 @@ uint16_t App_dmaConfigure(
 {
 
     uint32_t            baseAddr, regionId;
-    EDMACCPaRAMEntry   edmaParam;
-    uint32_t            dmaCh, tcc, param;
+    EDMACCPaRAMEntry    empty_edmaParam, edmaParam;
+    uint32_t            empty_dmaCh, dmaCh, empty_tcc, tcc, empty_param, param;
+    // EDMACCPaRAMEntry    empty_edmaParam;
+    // uint32_t            empty_dmaCh, empty_tcc, empty_param;
     int32_t             testStatus = SystemP_SUCCESS;
+
+    /* Enable only TC and ITC chaining on dmaCh0.
+       TC and ITC interrupt enable not required. */
+    uint32_t chainOptions = (EDMA_OPT_TCCHEN_MASK |
+                             EDMA_OPT_ITCCHEN_MASK);
 
     baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
     DebugP_assert(baseAddr != 0);
@@ -201,13 +236,27 @@ uint16_t App_dmaConfigure(
     regionId = EDMA_getRegionId(gEdmaHandle[0]);
     DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
 
-    dmaCh = dma_ch;
+    empty_dmaCh = dma_ch;
+    testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &empty_dmaCh);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    /* typically allocates the next available channel */
+    empty_tcc = EDMA_RESOURCE_ALLOC_ANY;
+    testStatus = EDMA_allocTcc(gEdmaHandle[0], &empty_tcc);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    empty_param = EDMA_RESOURCE_ALLOC_ANY;
+    testStatus = EDMA_allocParam(gEdmaHandle[0], &empty_param);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    dmaCh = EDMA_RESOURCE_ALLOC_ANY;
     testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
     DebugP_assert(testStatus == SystemP_SUCCESS);
 
     tcc = EDMA_RESOURCE_ALLOC_ANY;
     testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc);
     DebugP_assert(testStatus == SystemP_SUCCESS);
+    /* Passing back the Channel parameter to register the interrupt ISR*/
     *tccAlloc = tcc;
 
     param = EDMA_RESOURCE_ALLOC_ANY;
@@ -216,7 +265,35 @@ uint16_t App_dmaConfigure(
 
     /* Request channel */
     EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
+         empty_dmaCh, empty_tcc, empty_param, EDMA_TEST_EVT_QUEUE_NO);
+
+    /* Program Param Set */
+    EDMA_ccPaRAMEntry_init(&empty_edmaParam);
+    empty_edmaParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *)(adc_base+CSL_ADC_RESULT_ADCRESULT0));
+    empty_edmaParam.destAddr      = (uint32_t) SOC_virtToPhy((void *)gUnusedBuffer);
+    empty_edmaParam.aCnt          = (uint16_t) 2;
+    empty_edmaParam.bCnt          = (uint16_t) table_size;
+    empty_edmaParam.cCnt          = (uint16_t) 1;
+    empty_edmaParam.bCntReload    = 0;
+    empty_edmaParam.srcBIdx       = (int16_t) EDMA_PARAM_BIDX(0);
+    empty_edmaParam.destBIdx      = (int16_t) EDMA_PARAM_BIDX(2);
+    empty_edmaParam.srcCIdx       = (int16_t) 0;
+    empty_edmaParam.destCIdx      = (int16_t) 0;
+    empty_edmaParam.linkAddr      = 0xFFFFU;
+    empty_edmaParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(0);
+    empty_edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(2);
+    empty_edmaParam.opt           = (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
+                              ((((uint32_t)empty_tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+    /* Enabling in options for the,
+        the Transfer-complete Interrupt          --> After total data is transferred
+    ,   Intermediate transfer complete interrupt --> After each A data chunk transfer is comeplete
+            this will be used for the chaining of the actual transfer.
+    */
+
+    EDMA_setPaRAM(baseAddr, empty_param, &empty_edmaParam);
+
+    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+            dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
 
     /* Program Param Set */
     EDMA_ccPaRAMEntry_init(&edmaParam);
@@ -235,12 +312,19 @@ uint16_t App_dmaConfigure(
     edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(2);
     edmaParam.opt           = (EDMA_OPT_TCINTEN_MASK |
                               ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-
+    /* Enabling the Interrupt for Transfer complete of all the data */
     EDMA_setPaRAM(baseAddr, param, &edmaParam);
 
-    EDMA_enableTransferRegion(baseAddr, regionId, dmaCh,
-                              EDMA_TRIG_MODE_EVENT);
+    /* Chain the empty transfer to the actual transfer.
+    Chain options include Total transfer completion and intermediate channel completion flags
+    from empty channel*/
 
+    EDMA_chainChannel(baseAddr, empty_param, dmaCh, chainOptions);
+
+    /* Enabling the transfer region for empty channel for the trigger mode set in the Syscfg through
+    the DMA Xbars adn DMA TRIG Xbars.*/
+    EDMA_enableTransferRegion(baseAddr, regionId, empty_dmaCh,
+                              EDMA_TRIG_MODE_EVENT);
     return testStatus;
 }
 
@@ -250,7 +334,7 @@ void App_adcISR(void *args)
     EPWM_disableADCTrigger(CONFIG_EPWM0_BASE_ADDR, EPWM_SOC_A);
 
     /* Disable this interrupt from happening again */
-    ADC_disableInterrupt(gAdc0baseAddr, ADC_INT_NUMBER1);
+    ADC_disableInterrupt(gAdc1baseAddr, ADC_INT_NUMBER1);
 }
 
 void App_dmach0ISR(Edma_IntrHandle intrHandle, void *args)
@@ -259,9 +343,9 @@ void App_dmach0ISR(Edma_IntrHandle intrHandle, void *args)
     DebugP_assert(semObjPtr != NULL);
 
     /* Stop the ADCs by removing the trigger for SOC0 */
-    ADC_setInterruptSOCTrigger(gAdc0baseAddr, ADC_SOC_NUMBER0,
-                               ADC_INT_SOC_TRIGGER_NONE);
     ADC_setInterruptSOCTrigger(gAdc1baseAddr, ADC_SOC_NUMBER0,
+                               ADC_INT_SOC_TRIGGER_NONE);
+    ADC_setInterruptSOCTrigger(gAdc2baseAddr, ADC_SOC_NUMBER0,
                                ADC_INT_SOC_TRIGGER_NONE);
 
     /* Post the semaphore to signal end of DMA transfer */
