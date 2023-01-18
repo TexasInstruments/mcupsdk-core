@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,6 +54,7 @@
 /* ========================================================================== */
 
 #include <stdint.h>
+#include <string.h>
 #include <drivers/soc.h>
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/SemaphoreP.h>
@@ -72,6 +73,12 @@ extern "C" {
 #define FWL_MAX_PRIVID_SLOTS                    (3U)
 
 /**
+ * \brief Firewall Limits
+ */
+#define FWL_MAX_ID                              (35U)
+#define FWL_MAX_REGION                          (16U)
+
+/**
  *  \anchor Firewall_PrivId
  *  \name Master Privilege ID's
  *
@@ -80,7 +87,7 @@ extern "C" {
  *  @{
  */
 #define PRIVID_NONE                             (0U)
-#define PRIVID_EVERYONE                         (195U)
+#define PRIVID_ALLOW_EVERYONE                   (195U)
 #define PRIVID_DMSC                             (202U)
 #define PRIVID_BLOCK_EVERYONE                   (197U)
 #define PRIVID_SPROXY_PRIVATE                   (11U)
@@ -287,14 +294,23 @@ int32_t Firewall_open(Firewall_Handle handle);
 void Firewall_close(Firewall_Handle handle);
 
 /**
- * \brief Intialize a firewall with multiple regions
+ * \brief Configure firewall for a single region
  *
- * \param handle #Firewall_Handle initialized in #Firewall_open()
- * \param attrs Firewall configuration parameters
+ * \param firewallId Firewall id of the region
+ * \param region Firewall region configuration parameters
  *
  * \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
-int32_t Firewall_configureRegion(Firewall_Handle handle, Firewall_Attrs *attrs);
+int32_t Firewall_configureSingleRegion(uint32_t firewallId, Firewall_RegionCfg *region);
+
+/**
+ * \brief Intialize a firewall with multiple regions
+ *
+ * \param handle #Firewall_Handle initialized in #Firewall_open()
+ *
+ * \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t Firewall_configureRegion(Firewall_Handle handle);
 
 
 

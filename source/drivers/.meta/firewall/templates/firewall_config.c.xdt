@@ -31,9 +31,9 @@ Firewall_RegionCfg region`common.camelSentence(instance.$name.toLowerCase())`[] 
     %     ctrl_list.push('FWL_CONTROL_DISABLE')
     % }
     % let ctrl = ctrl_list.join(' | ')
-    % let perm1 = regionModule.getPermissionWord(reg_cfg.privConfig1).join('|')
-    % let perm2 = regionModule.getPermissionWord(reg_cfg.privConfig2).join('|')
-    % let perm3 = regionModule.getPermissionWord(reg_cfg.privConfig3).join('|')
+    % let perm1 = regionModule.getPermissionWord(reg_cfg.privConfig1).join(' |\n\t\t\t\t\t\t\t')
+    % let perm2 = regionModule.getPermissionWord(reg_cfg.privConfig2).join(' |\n\t\t\t\t\t\t\t')
+    % let perm3 = regionModule.getPermissionWord(reg_cfg.privConfig3).join(' |\n\t\t\t\t\t\t\t')
     % let fwlPerm1 = reg_cfg.fwlPerm1
     % let fwlPerm2 = reg_cfg.fwlPerm2
     % let fwlPerm3 = reg_cfg.fwlPerm3

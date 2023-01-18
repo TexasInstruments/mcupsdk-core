@@ -3,17 +3,8 @@ let firewall_config= system.getScript(`/drivers/firewall/soc/firewall_am64x_am24
 
 const firewall_master_config = [
     {
-        // master information for default no one
-        name: "NONE",
-        privid: 0,
-        secure: true,
-        nsecure: true,
-        priv: true,
-        user: true,
-    },
-    {
         // master information for everyone
-        name: "EVERYONE",
+        name: "ALLOW_EVERYONE",
         privid: 195,
         secure: true,
         nsecure: true,
