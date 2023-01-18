@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,7 +89,9 @@ typedef struct sdlhwaTest_s
 /*===========================================================================*/
 extern int32_t sdl_hwa_posTest(void);
 extern int32_t sdl_hwa_negTest(void);
-
+extern int32_t sdl_ip_hwaPosTest(void);
+extern int32_t sdl_ip_hwaNegTest(void);
+extern int32_t sdl_ip_hwaCodeCoverageTest(void);
 /*===========================================================================*/
 /*                   Local Function definitions                              */
 /*===========================================================================*/

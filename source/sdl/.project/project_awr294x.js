@@ -15,13 +15,13 @@ const files_r5f = {
         "sdl_mcrc.c",
         "sdl_ip_mcrc.c",
         "sdl_mcrc_soc.c",
-		"sdl_ecc.c",
-		"sdl_ip_ecc.c",
-		"sdl_ecc_r5.c",
-		"sdl_interrupt.c",
-		"sdl_interrupt_handlers.c",
-		"sdl_interrupt_register.c",
-		"sdl_exception.c",
+        "sdl_ecc.c",
+        "sdl_ip_ecc.c",
+        "sdl_ecc_r5.c",
+        "sdl_interrupt.c",
+        "sdl_interrupt_handlers.c",
+        "sdl_interrupt_register.c",
+        "sdl_exception.c",
         "sdl_ip_pbist.c",
         "sdl_pbist_soc.c",
         "sdl_pbist.c",
@@ -45,8 +45,8 @@ const files_r5fss1 = {
 
 const asmfiles_r5f = {
     common: [
-		"sdl_ecc_utils.S",
-		"sdl_r5_utils.S",
+        "sdl_ecc_utils.S",
+        "sdl_r5_utils.S",
 	],
 };
 
@@ -59,7 +59,6 @@ const files_c66 = {
         "sdl_esm_core.c",
         "sdl_hwa.c",
         "sdl_ip_hwa.c",
-        "sdl_hwa_soc.c",
         "sdl_mcrc.c",
         "sdl_ip_mcrc.c",
         "sdl_mcrc_soc.c",
@@ -68,7 +67,7 @@ const files_c66 = {
         "sdl_soc_rti.c",
         "sdl_ecc_bus_safety.c",
         "sdl_ecc.c",
-		"sdl_ip_ecc.c",
+        "sdl_ip_ecc.c",
         "sdl_stc_soc.c",
 
     ],
@@ -84,19 +83,18 @@ const filedirs = {
         "esm/soc/awr294x",
         "hwa",
         "hwa/v0",
-        "hwa/v0/soc/awr294x",
         "rti",
         "rti/v0",
         "rti/v0/soc/awr294x",
         "mcrc",
         "mcrc/v0",
         "mcrc/v0/soc/awr294x",
-		"ecc",
-		"ecc/soc/awr294x",
-		"ecc/V1",
-		"r5",
-		"r5/v0",
-		"r5/v0/awr294x",
+        "ecc",
+        "ecc/soc/awr294x",
+        "ecc/V1",
+        "r5",
+        "r5/v0",
+        "r5/v0/awr294x",
         "pbist",
         "pbist/v0",
         "pbist/v0/soc",
@@ -130,7 +128,7 @@ const defines_r5fss1 = {
 
 const cflags_r5f = {
     common: [
-		"-Wno-extra",
+        "-Wno-extra",
     ],
 };
 
@@ -158,8 +156,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
-		build_property.asmfiles = asmfiles_r5f;
-		build_property.cflags = cflags_r5f;
+        build_property.asmfiles = asmfiles_r5f;
+        build_property.cflags = cflags_r5f;
         build_property.defines = defines_r5f;
     }
     if(buildOption.cpu.match(/r5fss1*/)) {

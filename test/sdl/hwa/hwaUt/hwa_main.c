@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,6 +43,9 @@
 /*===========================================================================*/
 #include "hwa_main.h"
 #include <dpl_interface.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include <ti/build/unit-test/Unity/src/unity.h>
@@ -71,9 +74,13 @@ void test_sdl_hwa_baremetal_test_app (void);
 /*                         Global Variables                                  */
 /*===========================================================================*/
 sdlhwaTest_t  sdlhwaTestList[] = {
-    {sdl_hwa_posTest,             "hwa API POSITIVE TEST",    SDL_APP_TEST_NOT_RUN },
-    {sdl_hwa_negTest,             "hwa API NEGATIVE TEST",    SDL_APP_TEST_NOT_RUN },
-    {NULL,                         "TERMINATING CONDITION",   SDL_APP_TEST_NOT_RUN }
+
+    {sdl_ip_hwaPosTest,           "HWA IP API POSITIVE TEST",       SDL_APP_TEST_NOT_RUN },
+    {sdl_ip_hwaNegTest,           "HWA IP API NEGATIVE TEST",       SDL_APP_TEST_NOT_RUN },
+    {sdl_ip_hwaCodeCoverageTest,  "HWA IP API CODE COVERAGE TEST",  SDL_APP_TEST_NOT_RUN },
+    {sdl_hwa_posTest,             "HWA API POSITIVE TEST",          SDL_APP_TEST_NOT_RUN },
+    {sdl_hwa_negTest,             "HWA API NEGATIVE TEST",          SDL_APP_TEST_NOT_RUN },
+    {NULL,                        "TERMINATING CONDITION",          SDL_APP_TEST_NOT_RUN }
 };
 
 /*===========================================================================*/
@@ -116,11 +123,11 @@ void test_sdl_hwa_baremetal_test_app (void)
     /* Declarations of variables */
     int32_t    testResult = SDL_APP_TEST_PASS;
     int32_t    i;
-
+    Drivers_open();
     /* Init Dpl */
     sdlApp_dplInit();
 
-    DebugP_log("\n hwa Test Application\r\n");
+    DebugP_log("\nHWA Test Application\r\n");
 
     for ( i = 0; sdlhwaTestList[i].testFunction != NULL; i++)
     {
@@ -133,27 +140,28 @@ void test_sdl_hwa_baremetal_test_app (void)
     {
         if (sdlhwaTestList[i].testStatus != SDL_APP_TEST_PASS)
         {
-            DebugP_log("Test Name: %s  FAILED \n", sdlhwaTestList[i].name);
+            DebugP_log("Test Name: %s  FAILED \r\n", sdlhwaTestList[i].name);
             testResult = SDL_APP_TEST_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Test Name: %s  PASSED \n", sdlhwaTestList[i].name);
+            DebugP_log("Test Name: %s  PASSED \r\n", sdlhwaTestList[i].name);
         }
     }
 
     if (testResult == SDL_APP_TEST_PASS)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\n All tests have passed\r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\n Few/all tests Failed\r\n");
     }
 #if defined (UNITY_INCLUDE_CONFIG_H)
     TEST_ASSERT_EQUAL_INT32(SDL_APP_TEST_PASS, testResult);
 #endif
+    Drivers_close();
 }
 
 void test_sdl_hwa_baremetal_test_app_runner(void)
@@ -170,9 +178,10 @@ void test_sdl_hwa_baremetal_test_app_runner(void)
     return;
 }
 
-void test_main(void *args)
+int32_t test_main(void)
 {
     test_sdl_hwa_baremetal_test_app_runner();
+    return 0;
 }
 
 /* Nothing past this point */

@@ -33,6 +33,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=test_hwaUt.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	hwa_main.c \
+	sdl_hwa_ip_test.c \
 	sdl_hwa_api_test_pos.c \
 	sdl_hwa_api_test_neg.c \
 	dpl_interface.c \

@@ -6,11 +6,7 @@
 
 This example demonstrates the usage of the SDL HWA module.
 
-1.The example shows how to setup and use the ECC BUS Safety Diagnostic operation. Shows the generation of SEC DED and RED error on HWA DMA0 and HWA DMA1 bus
-
-Note : SEC - Single Error Correction, DED - Double Error Correction, RED - Redundancy Error Correction
-
-2.The example shows how to setup and use the Parity and FSM Lockstep Diagnostic operation. Shows the generation of parity and FSM Lockstep errors on HWA data memory
+The example shows how to setup and use the Parity and FSM Lockstep Diagnostic operation. Shows the generation of parity and FSM Lockstep errors on HWA data memory
 
 Use Cases
 ---------
@@ -36,12 +32,6 @@ Use Cases
  UC-17    | Parity insertion on HWA DMA1 DMEM7.
  UC-18    | Parity insertion on HWA DMA1 WindowRam.
  UC-19    | FSM locstep insertion on HWA.
- UC-20    | SEC Error insertion on HWA DMA0.
- UC-21    | DED Error insertion on HWA DMA0.
- UC-22    | RED Error insertion on HWA DMA0.
- UC-23    | SEC Error insertion on HWA DMA1.
- UC-24    | DED Error insertion on HWA DMA1.
- UC-25    | RED Error insertion on HWA DMA1.
 
 # Supported Combinations {#EXAMPLES_SDL_HWA_MAIN_COMBOS}
 
@@ -73,60 +63,51 @@ Use Cases
 Shown below is a sample output when the application is run,
 
 \code
- HWA Application
+[C66xx_DSP]
+HWA Application
 
- HWA TEST START : starting
+HWA TEST START : starting
 
- Applications Name: HWA_ParityDMA0DMEM0Test  PASSED
+ESM Initialization for all the SDL HWA Nodes is Done
 
- Applications Name: HWA_ParityDMA0DMEM1Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM0Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM2Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM1Test  PASSED  and Time taken for the Test is 16  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM3Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM2Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM4Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM3Test  PASSED  and Time taken for the Test is 16  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM5Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM4Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM6Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM5Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM7Test  PASSED
+Applications Name: HWA_ParityDMA0DMEM6Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA0WindowRamTest  PASSED
+Applications Name: HWA_ParityDMA0DMEM7Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM0Test  PASSED
+Applications Name: HWA_ParityDMA0WindowRamTest  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM1Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM0Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM2Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM1Test  PASSED  and Time taken for the Test is 16  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM3Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM2Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM4Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM3Test  PASSED  and Time taken for the Test is 16  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM5Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM4Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA1DMEM6Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM5Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA0DMEM7Test  PASSED
+Applications Name: HWA_ParityDMA1DMEM6Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_ParityDMA1WindowRamTest  PASSED
+Applications Name: HWA_ParityDMA1DMEM7Test  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_FsmLockStepTest  PASSED
+Applications Name: HWA_ParityDMA1WindowRamTest  PASSED  and Time taken for the Test is 17  micro secs
 
- Applications Name: HWA_DMA0SECTest  PASSED
+Applications Name: HWA_FsmLockStepTest  PASSED  and Time taken for the Test is 9  micro secs
 
- Applications Name: HWA_DMA0DEDTest  PASSED
-
- Applications Name: HWA_DMA0REDTest  PASSED
-
- Applications Name: HWA_DMA1SECTest  PASSED
-
- Applications Name: HWA_DMA1DEDTest  PASSED
-
- Applications Name: HWA_DMA1REDTest  PASSED
-
- All tests have passed
+All tests have passed
 \endcode
 

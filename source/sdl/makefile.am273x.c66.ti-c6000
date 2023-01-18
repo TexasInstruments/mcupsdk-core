@@ -23,7 +23,6 @@ FILES_common := \
     sdl_esm_core.c \
     sdl_hwa.c \
     sdl_ip_hwa.c \
-    sdl_hwa_soc.c \
     sdl_mcrc.c \
     sdl_ip_mcrc.c \
     sdl_mcrc_soc.c \
@@ -45,7 +44,6 @@ FILES_PATH_common = \
     esm/soc/am273x \
     hwa \
     hwa/v0 \
-    hwa/v0/soc/am273x \
     rti \
     rti/v0 \
     rti/v0/soc/am273x \

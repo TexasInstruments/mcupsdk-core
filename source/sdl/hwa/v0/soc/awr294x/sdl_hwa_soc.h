@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,11 +31,6 @@
  *
  */
 
-/**
- *  @addtogroup SDL_HWA_API API's for HWA
-    @{
- */
-
 #ifndef SDL_HWA_SOC_H_
 #define SDL_HWA_SOC_H_
 
@@ -53,75 +48,15 @@ extern "C" {
 /* ========================================================================== */
 /*                            Macros & Typedefs                               */
 /* ========================================================================== */
+
+
+
 #define SDL_HWA_CFG                   (uint32_t)SDL_DSS_HWA_CFG_U_BASE
 #define SDL_HWA_BUS_CFG               (uint32_t)SDL_DSS_CTRL_U_BASE
 #define SDL_HWA_DMA0_ADDRESS          (uint32_t)SDL_DSS_HWA_DMA0_U_BASE
 #define SDL_HWA_DMA1_ADDRESS          (uint32_t)SDL_DSS_HWA_DMA1_U_BASE
-/**
- * \brief This enumerator defines the HWA memories
- *
- */
-typedef enum {
-    SDL_HWA_DMEM0 = 0,
-    /**< HWA Data memories 0 */
-    SDL_HWA_DMEM1 = 1,
-    /**< HWA Data memories 1 */
-    SDL_HWA_DMEM2 = 2,
-    /**< HWA Data memories 2 */
-    SDL_HWA_DMEM3 = 3,
-    /**< HWA Data memories 3 */
-    SDL_HWA_DMEM4 = 4,
-    /**< HWA Data memories 4 */
-    SDL_HWA_DMEM5 = 5,
-    /**< HWA Data memories 5 */
-    SDL_HWA_DMEM6 = 6,
-    /**< HWA Data memories 6 */
-    SDL_HWA_DMEM7 = 7,
-    /**< HWA Data memories 7 */
-    SDL_HWA_WINDOW_RAM = 8,
-    /**< Window RAM memories */
-    SDL_HWA_FSM_LOCKSTEP = 9,
-    /**<  HWA FSM Lockstep */
-    SDL_HWA_INVALID = 10,
-    /*Memblock */
-} SDL_HWA_MemBlock;
 
 
-/**
- * \brief This enumerator defines the HWA IDs
- *
- */
-typedef enum {
-    SDL_HWA_DMA0_MEM_ID = 0,
-    /**< HWA DMA 0  */
-    SDL_HWA_DMA1_MEM_ID = 1,
-    /**< HWA DMA 1  */
-    SDL_HWA_WINDOW_RAM_MEM_ID = 2,
-    /**< Window RAM  */
-    SDL_HWA_INVALID_ID = 3,
-    /*INVALID Memblock  ID*/
-} SDL_HWA_MemID;
-
-
-/* ========================================================================== */
-/*                         Function Declarations                              */
-/* ========================================================================== */
-/**
- * \brief   This API is used to get the memory block base address.
- *
- * \param   memID             HWA IDs for DMA0, DMA1 and Window RAM
- *
- * \param   memBlock          HWA memories for DMA0/DMA1's block
- *
- * \param   baseAddr          pointer to base addressof the memories
- *
- * \return  status            return the base address of th instance.
- *                            SDL_PASS:     success
- *                            SDL_EBADARGS: failure, indicate the bad input arguments
- *                            SDL_EFAIL:    failure, indicate verify failed
- */
-int32_t SDL_HWA_getMemblockBaseaddr(SDL_HWA_MemID memID, SDL_HWA_MemBlock memBlock,
-                             uint32_t *baseAddr);
 
 #ifdef _cplusplus
 }
@@ -129,4 +64,4 @@ int32_t SDL_HWA_getMemblockBaseaddr(SDL_HWA_MemID memID, SDL_HWA_MemBlock memBlo
 #endif /*extern "C" */
 
 #endif
- /** @} */
+

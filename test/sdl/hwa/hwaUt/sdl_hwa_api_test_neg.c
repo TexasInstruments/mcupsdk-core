@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -40,45 +40,16 @@
 
 #include "hwa_main.h"
 
+/********************************************************************************************************
+* Negative test for HWA API
+*********************************************************************************************************/
+
 int32_t sdl_hwa_negTest(void)
 {
-    int32_t               testStatus = SDL_APP_TEST_PASS;
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA0_redExecute(SDL_HWA_FI_INVALID , SDL_HWA_MAIN_CMD_INTERFACE) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_GLOBAL_SAFE , SDL_HWA_FI_TYPE_INVALID) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_INVALID , SDL_HWA_FI_TYPE_INVALID) != SDL_EBADARGS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
+    int32_t testStatus = SDL_APP_TEST_PASS;
+    /********************************************************************************************************
+    * Test for SDL_HWA_memParityExecute with invalid input parameters
+    *********************************************************************************************************/
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_INVALID_ID, SDL_HWA_DMEM0) != SDL_EBADARGS)
@@ -88,7 +59,7 @@ int32_t sdl_hwa_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -100,32 +71,75 @@ int32_t sdl_hwa_negTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM0) != SDL_EFAIL)
+        if(SDL_HWA_memParityExecute(SDL_HWA_INVALID_ID, SDL_HWA_INVALID) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /********************************************************************************************************
+    * Test for SDL_HWA_getMemblockBaseaddr with invalid input parameters
+    *********************************************************************************************************/
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_HWA_fsmLockStepExecute() != SDL_EFAIL)
+        if (SDL_HWA_getMemblockBaseaddr(SDL_HWA_DMA0_MEM_ID,SDL_HWA_DMEM1,NULL_PTR) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
+    }
+    /********************************************************************************************************
+    * Test for SDL_HWA_memParityExecute with invalid input parameters
+    *********************************************************************************************************/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_INVALID) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
+    }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if(SDL_HWA_memParityExecute(SDL_HWA_INVALID_ID, SDL_HWA_INVALID) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_hwa_api_neg_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
+    /********************************************************************************************************
+    * Test for SDL_HWA_getMemblockBaseaddr with invalid input parameters
+    *********************************************************************************************************/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_HWA_getMemblockBaseaddr(SDL_HWA_DMA1_MEM_ID,SDL_HWA_DMEM1,NULL_PTR) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
     }
     return (testStatus);
 }

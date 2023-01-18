@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,124 +37,39 @@
  *
  *  \details  hwa unit tests
  **/
-
 #include "hwa_main.h"
+
+/********************************************************************************************************
+* Macro
+*********************************************************************************************************/
+
+#define SDL_INTR_GROUP_NUM 2U
+
+/********************************************************************************************************
+* Positive test for HWA API
+*********************************************************************************************************/
 
 int32_t sdl_hwa_posTest(void)
 {
-    int32_t               testStatus = SDL_APP_TEST_PASS;
-    SDL_HWA_DMA0_secExecute();
-    SDL_HWA_DMA0_dedExecute();
-    SDL_HWA_DMA1_secExecute();
-    SDL_HWA_DMA1_dedExecute();
+
+    int32_t   testStatus = SDL_APP_TEST_PASS;
+    /********************************************************************************************************
+    * Test for SDL_HWA_memParityExecute with different input parameters
+    *********************************************************************************************************/
+    /* Window RAM */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_HWA_DMA0_redExecute(SDL_HWA_FI_GLOBAL_SAFE , SDL_HWA_MAIN_CMD_INTERFACE) != SDL_PASS)
+        if (SDL_HWA_memParityExecute(SDL_HWA_WINDOW_RAM_MEM_ID, SDL_HWA_WINDOW_RAM) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_GLOBAL_SAFE , SDL_HWA_MAIN_CMD_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA0_redExecute(SDL_HWA_FI_MAIN , SDL_HWA_MAIN_CMD_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA0_redExecute(SDL_HWA_FI_SAFE , SDL_HWA_MAIN_WRITE_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA0_redExecute(SDL_HWA_FI_GLOBAL_MAIN , SDL_HWA_MAIN_WRITE_STATUS_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_MAIN , SDL_HWA_MAIN_CMD_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_SAFE , SDL_HWA_MAIN_WRITE_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_GLOBAL_SAFE , SDL_HWA_MAIN_READ_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_HWA_DMA1_redExecute(SDL_HWA_FI_GLOBAL_SAFE , SDL_HWA_MAIN_READ_INTERFACE) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
+    /* DMA0 DMEM0 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM0) != SDL_PASS)
@@ -164,9 +79,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM1 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM1) != SDL_PASS)
@@ -176,9 +92,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM2 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM2) != SDL_PASS)
@@ -188,9 +105,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM3 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM3) != SDL_PASS)
@@ -200,9 +118,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM4 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM4) != SDL_PASS)
@@ -212,9 +131,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM5 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM5) != SDL_PASS)
@@ -224,9 +144,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM6 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM6) != SDL_PASS)
@@ -236,9 +157,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA0 DMEM7 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID, SDL_HWA_DMEM7) != SDL_PASS)
@@ -248,9 +170,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM0 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM0) != SDL_PASS)
@@ -260,9 +183,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM1 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM1) != SDL_PASS)
@@ -272,9 +196,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM2 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM2) != SDL_PASS)
@@ -284,9 +209,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM3 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM3) != SDL_PASS)
@@ -296,9 +222,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM4 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM4) != SDL_PASS)
@@ -308,9 +235,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM5 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM5) != SDL_PASS)
@@ -320,9 +248,10 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM6 */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM6) != SDL_PASS)
@@ -332,9 +261,11 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+    /* DMA1 DMEM7 with interrupt configured */
+    SDL_HWA_ESM_CallbackFunction(SDL_ESM_INST_DSS_ESM, SDL_INTR_GROUP_NUM,1, NULL);
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID, SDL_HWA_DMEM7) != SDL_PASS)
@@ -344,14 +275,13 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
-    }
+    /********************************************************************************************************
+    * Test for SDL_HWA_fsmLockStepExecute
+    *********************************************************************************************************/
+    /* FSM lock step */
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_HWA_fsmLockStepExecute() != SDL_PASS)
@@ -361,20 +291,7 @@ int32_t sdl_hwa_posTest(void)
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {
-        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \n", __LINE__);
-        return (testStatus);
+        DebugP_log("SDL_hwa_api_pos_Test: failure on line no. %d \r\n", __LINE__);
     }
-    SDL_HWA_DMA0_secErrorStatus();
-    SDL_HWA_DMA0_dedErrorStatus();
-    SDL_HWA_DMA0_redErrorStatus();
-    SDL_HWA_DMA1_secErrorStatus();
-    SDL_HWA_DMA1_dedErrorStatus();
-    SDL_HWA_DMA1_redErrorStatus();
-    SDL_HWA_DMA0_secErrorClear();
-    SDL_HWA_DMA0_dedErrorClear();
-    SDL_HWA_DMA0_redErrorClear();
-    SDL_HWA_DMA1_secErrorClear();
-    SDL_HWA_DMA1_dedErrorClear();
-    SDL_HWA_DMA1_redErrorClear();
     return (testStatus);
 }

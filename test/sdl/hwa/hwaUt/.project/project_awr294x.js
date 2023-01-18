@@ -5,7 +5,7 @@ let device = "awr294x";
 const files = {
     common: [
         "hwa_main.c",
-        "sdl_hwa_ip_test.c",
+        "sdl_hwa_ip_test.c" ,
         "sdl_hwa_api_test_pos.c",
         "sdl_hwa_api_test_neg.c",
         "dpl_interface.c",

@@ -2,25 +2,15 @@
 
 [TOC]
 
-HWA module consists of ECC Bus Safety Diagnostics, Parity and FSM Lockstep Diagnostics
+HWA module consists of Parity and FSM Lockstep Diagnostics
 
 ## Features Supported
 
-1.HWA supports Diagnostic check for ECC BUS Safety Errors on HWA DMA0 and HWA DMA1.
-
-* ECC BUS Safety Errors : This includes SEC , DED and RED error injection on both HWA DMA0 and DMA1
-
-  Note : SEC - Single Error Correction, DED - Double Error Correction, RED - Redundancy Error Correction
-
-2.HWA supports Diagnostic check for Parity Errors on HWA Data memoriers and window ram on both HWA DMA0 and HWA DMA1.
+HWA supports Diagnostic check for Parity Errors on HWA Data memoriers and window ram on both HWA DMA0 and HWA DMA1.
 
 * Parity Errors : This incluedes parity error injection on both HWA DMA0 and DMA1.
 * FSM LOCKstep Errors : This incluedes fsm lockstep error injection HWA.
 
-The module supports below API's for the application
-
-* API to support and induce error on  HWA DMA BUS.
-* API to support interrupt configuration
 
 ## SysConfig Features
 
@@ -138,141 +128,6 @@ Induce the error FSM Lockstep
     return (SDL_HWA_fsmLockStepExecute());
 \endcode
 
-Induce the error SEC in HWA DMA0
-\code{.c}
-    SDL_HWA_DMA0_secExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA0_secErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA0_secErrorStatus()==1U)
-    {
-        SDL_HWA_DMA0_secErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-\endcode
-
-Induce the error DED in HWA DMA0
-\code{.c}
-    SDL_HWA_DMA0_dedExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA0_dedErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA0_dedErrorStatus()==1U)
-    {
-        SDL_HWA_DMA0_dedErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-\endcode
-
-Induce the error RED in HWA DMA0
-\code{.c}
-    ret_val= SDL_HWA_DMA0_redExecute(SDL_HWA_FI_GLOBAL_SAFE, SDL_HWA_MAIN_CMD_INTERFACE);
-    if(ret_val == SDL_PASS )
-    {
-        /* Wait for test to complete/timeout. */
-        while((SDL_HWA_DMA0_redErrorStatus()!=0U) && (timeout!=0U))
-        {
-            timeout--;
-        }
-        /* Check for the failure. */
-        if(SDL_HWA_DMA0_redErrorStatus()==1U)
-        {
-            SDL_HWA_DMA0_redErrorClear();
-            ret_val = SDL_PASS;
-
-        }
-        else
-        {
-            ret_val = SDL_EFAIL;
-        }
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-\endcode
-
-
-Induce the error SEC in HWA DMA1
-\code{.c}
-    SDL_HWA_DMA1_secExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA1_secErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA1_secErrorStatus()==1U)
-    {
-        SDL_HWA_DMA1_secErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-\endcode
-
-Induce the error DED in HWA DMA1
-\code{.c}
-    SDL_HWA_DMA1_dedExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA1_dedErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA1_dedErrorStatus()==1U)
-    {
-        SDL_HWA_DMA1_dedErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-\endcode
-
-Induce the error RED in HWA DMA1
-\code{.c}
-    ret_val= SDL_HWA_DMA1_redExecute(SDL_HWA_FI_GLOBAL_SAFE, SDL_HWA_MAIN_CMD_INTERFACE);
-    if(ret_val == SDL_PASS )
-    {
-        /* Wait for test to complete/timeout. */
-        while((SDL_HWA_DMA1_redErrorStatus()!=0U) && (timeout!=0U))
-        {
-            timeout--;
-        }
-        /* Check for the failure. */
-        if(SDL_HWA_DMA0_redErrorStatus()==1U)
-        {
-            SDL_HWA_DMA1_redErrorClear();
-            ret_val = SDL_PASS;
-        }
-        else
-        {
-            ret_val = SDL_EFAIL;
-        }
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-\endcode
 
 ## API
 

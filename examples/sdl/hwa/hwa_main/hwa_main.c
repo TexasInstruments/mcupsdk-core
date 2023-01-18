@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -44,7 +44,11 @@
 #include <dpl_interface.h>
 #include <sdl/include/sdl_types.h>
 #include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
 #include <sdl/sdl_hwa.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -55,24 +59,25 @@ typedef struct sdlHWAApp_s
     int32_t  (*application)(void);   /* The code that runs the application */
     char      *name;                  /* The application name */
     int32_t    status;            /* App Status */
+    int64_t    test_time;            /* App Test Time */
 } sdlHWAApp_t;
 
 /*===========================================================================*/
 /*                         Macros                                            */
 /*===========================================================================*/
-#define SDL_APP_NOT_RUN        (-(int32_t) (2))
-#define SDL_APP_FAILED         (-(int32_t) (1))
-#define SDL_APP_PASS           ( (int32_t) (0))
-#define SDL_HWA_ECC_TIMEOUT    (0x10000U)
+#define SDL_APP_NOT_RUN                             (-(int32_t) (2))
+#define SDL_APP_FAILED                              (-(int32_t) (1))
+#define SDL_APP_PASS                                ( (int32_t) (0))
+
+#define SDL_INTR_GROUP_NUM                          (2U)
+#define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_ENABLE_ERR_PIN                          (1U)
+
+
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
-static int32_t SDL_HWA_DMA0_SEC_test(void);
-static int32_t SDL_HWA_DMA0_DED_test(void);
-static int32_t SDL_HWA_DMA0_RED_test(void);
-static int32_t SDL_HWA_DMA1_SEC_test(void);
-static int32_t SDL_HWA_DMA1_DED_test(void);
-static int32_t SDL_HWA_DMA1_RED_test(void);
 static void hwa_testExecute(void);
 static int32_t hwaParityDMA0DMEM0_testExecute(void);
 static int32_t hwaParityDMA0DMEM1_testExecute(void);
@@ -96,6 +101,27 @@ static int32_t hwaParityDMA1WindowRam_testExecute(void);
 /*===========================================================================*/
 /*                         Global Variables                                  */
 /*===========================================================================*/
+/* Event BitMap for ECC ESM callback for DSS */
+SDL_ESM_NotifyParams hwaTestparamsDSS[2U] =
+{
+    {
+        /* Event BitMap for ECC ESM callback for DSS SEC */
+        .groupNumber = SDL_INTR_GROUP_NUM,
+        .errorNumber = SDL_DSS_ESMG2_DSS_HWA_GRP2_ERR ,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_HWA_ESM_CallbackFunction,
+    },
+    {
+        /* Event BitMap for ECC ESM callback for DED and RED for DSS L3 BANKA */
+        .groupNumber = SDL_INTR_GROUP_NUM,
+        .errorNumber = SDL_DSS_ESMG2_DSS_HWA_GRP2_ERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_HWA_ESM_CallbackFunction,
+    },
+};
+
 sdlHWAApp_t  sdlhwaAppTestList[] = {
     {hwaParityDMA0DMEM0_testExecute,      "HWA_ParityDMA0DMEM0Test",      SDL_APP_NOT_RUN },
     {hwaParityDMA0DMEM1_testExecute,      "HWA_ParityDMA0DMEM1Test",      SDL_APP_NOT_RUN },
@@ -116,242 +142,134 @@ sdlHWAApp_t  sdlhwaAppTestList[] = {
     {hwaParityDMA1DMEM7_testExecute,      "HWA_ParityDMA1DMEM7Test",      SDL_APP_NOT_RUN },
     {hwaParityDMA1WindowRam_testExecute,  "HWA_ParityDMA1WindowRamTest",  SDL_APP_NOT_RUN },
     {SDL_HWA_fsmLockStepExecute,          "HWA_FsmLockStepTest",          SDL_APP_NOT_RUN },
-    {SDL_HWA_DMA0_SEC_test,               "HWA_DMA0SECTest",              SDL_APP_NOT_RUN },
-    {SDL_HWA_DMA0_DED_test,               "HWA_DMA0DEDTest",              SDL_APP_NOT_RUN },
-    {SDL_HWA_DMA0_RED_test,               "HWA_DMA0REDTest",              SDL_APP_NOT_RUN },
-    {SDL_HWA_DMA1_SEC_test,               "HWA_DMA0SECTest",              SDL_APP_NOT_RUN },
-    {SDL_HWA_DMA1_DED_test,               "HWA_DMA0DEDTest",              SDL_APP_NOT_RUN },
-    {SDL_HWA_DMA1_RED_test,               "HWA_DMA0REDTest",              SDL_APP_NOT_RUN },
     {NULL,                                "TERMINATING CONDITION",        SDL_APP_NOT_RUN }
 };
 
 /*===========================================================================*/
 /*                   Local Function definitions                              */
 /*===========================================================================*/
-static int32_t SDL_HWA_DMA0_SEC_test(void)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_HWA_ECC_TIMEOUT;
-    SDL_HWA_DMA0_secExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA0_secErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA0_secErrorStatus()==1U)
-    {
-        SDL_HWA_DMA0_secErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-    return ret_val;
-}
-
-static int32_t SDL_HWA_DMA1_SEC_test(void)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_HWA_ECC_TIMEOUT;
-    SDL_HWA_DMA1_secExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA1_secErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA1_secErrorStatus()==1U)
-    {
-        SDL_HWA_DMA1_secErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-    return ret_val;
-}
-
-static int32_t SDL_HWA_DMA0_DED_test(void)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_HWA_ECC_TIMEOUT;
-    SDL_HWA_DMA0_dedExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA0_dedErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA0_dedErrorStatus()==1U)
-    {
-        SDL_HWA_DMA0_dedErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-    return ret_val;
-}
-
-static int32_t SDL_HWA_DMA1_DED_test(void)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_HWA_ECC_TIMEOUT;
-    SDL_HWA_DMA1_dedExecute();
-    /* wait for error notification from ESM, or for timeout */
-    /* fault injection gets deasserted in ISR */
-    while((SDL_HWA_DMA1_dedErrorStatus()!=0U) && (timeout!=0U))
-    {
-        timeout--;
-    }
-    if(SDL_HWA_DMA1_dedErrorStatus()==1U)
-    {
-        SDL_HWA_DMA1_dedErrorClear();
-        ret_val = SDL_PASS;
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-    return ret_val;
-}
-
-static int32_t SDL_HWA_DMA0_RED_test(void)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_HWA_ECC_TIMEOUT;
-    ret_val= SDL_HWA_DMA0_redExecute(SDL_HWA_FI_GLOBAL_SAFE, SDL_HWA_MAIN_CMD_INTERFACE);
-    if(ret_val == SDL_PASS )
-    {
-        /* Wait for test to complete/timeout. */
-        while((SDL_HWA_DMA0_redErrorStatus()!=0U) && (timeout!=0U))
-        {
-            timeout--;
-        }
-        /* Check for the failure. */
-        if(SDL_HWA_DMA0_redErrorStatus()==1U)
-        {
-            SDL_HWA_DMA0_redErrorClear();
-            ret_val = SDL_PASS;
-
-        }
-        else
-        {
-            ret_val = SDL_EFAIL;
-        }
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-    return ret_val;
-}
-
-static int32_t SDL_HWA_DMA1_RED_test(void)
-{
-    int32_t ret_val = SDL_EFAIL;
-    uint32_t timeout = SDL_HWA_ECC_TIMEOUT;
-    ret_val= SDL_HWA_DMA1_redExecute(SDL_HWA_FI_GLOBAL_SAFE, SDL_HWA_MAIN_CMD_INTERFACE);
-    if(ret_val == SDL_PASS )
-    {
-        /* Wait for test to complete/timeout. */
-        while((SDL_HWA_DMA1_redErrorStatus()!=0U) && (timeout!=0U))
-        {
-            timeout--;
-        }
-        /* Check for the failure. */
-        if(SDL_HWA_DMA0_redErrorStatus()==1U)
-        {
-            SDL_HWA_DMA1_redErrorClear();
-            ret_val = SDL_PASS;
-        }
-        else
-        {
-            ret_val = SDL_EFAIL;
-        }
-    }
-    else
-    {
-        ret_val = SDL_EFAIL;
-    }
-    return ret_val;
-}
-
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 0
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM0_testExecute(void)
 {
     return (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM0));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 1
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM1_testExecute(void)
 {
     return (SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM1));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 2
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM2_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM2));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 3
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM3_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM3));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 4
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM4_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM4));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 5
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM5_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM5));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 6
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM6_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM6));
 }
-
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 DMEM 7
+*********************************************************************************************************/
 static int32_t hwaParityDMA0DMEM7_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA0_MEM_ID , SDL_HWA_DMEM7));
 }
-
+/********************************************************************************************************
+* Parity Test for HWA DMA 0 Window RAM
+*********************************************************************************************************/
 static int32_t hwaParityDMA0WindowRam_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_WINDOW_RAM_MEM_ID , SDL_HWA_WINDOW_RAM));
 }
-
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 0
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM0_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM0));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 1
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM1_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM1));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 2
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM2_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM2));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 3
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM3_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM3));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 4
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM4_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM4));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 5
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM5_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM5));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 6
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM6_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM6));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 DMEM 7
+*********************************************************************************************************/
 static int32_t hwaParityDMA1DMEM7_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_DMA1_MEM_ID , SDL_HWA_DMEM7));
 }
+/********************************************************************************************************
+* Parity Test for HWA DMA 1 Window RAM
+*********************************************************************************************************/
 static int32_t hwaParityDMA1WindowRam_testExecute(void)
 {
     return(SDL_HWA_memParityExecute(SDL_HWA_WINDOW_RAM_MEM_ID , SDL_HWA_WINDOW_RAM));
@@ -361,38 +279,64 @@ static void hwa_testExecute(void)
 {
     /* Declarations of variables */
     int32_t    result = SDL_APP_PASS;
-    int32_t    i;
-    DebugP_log("\n HWA TEST START : starting\n");
-    for ( i = 0; sdlhwaAppTestList[i].application != NULL; i++)
+    int32_t    count;
+    uint64_t testStartTime;
+    uint64_t testEndTime;
+    uint64_t diffTime;
+    DebugP_log("\nHWA TEST START : starting\r\n");
+    for(count=0U;count<2U;count++)
     {
-        result = sdlhwaAppTestList[i].application();
-        sdlhwaAppTestList[i].status = result;
-    }
-
-    result = SDL_APP_PASS;
-
-
-    for ( i = 0; sdlhwaAppTestList[i].application != NULL; i++)
-    {
-        if (sdlhwaAppTestList[i].status != SDL_APP_PASS)
+        result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &hwaTestparamsDSS[count],NULL,NULL);
+        if(result == SDL_APP_FAILED )
         {
-            DebugP_log("Applications Name: %s  FAILED \n", sdlhwaAppTestList[i].name);
-            result = SDL_APP_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Applications Name: %s  PASSED \n", sdlhwaAppTestList[i].name);
+            result= SDL_APP_PASS;
         }
     }
-
-    if (result == SDL_APP_PASS)
+    if(result == SDL_APP_PASS )
     {
-        DebugP_log("\n All tests have passed \n");
+        DebugP_log("\nESM Initialization for all the SDL HWA Nodes is Done\r\n");
+        for ( count = 0; sdlhwaAppTestList[count].application != NULL; count++)
+        {
+            sdlhwaAppTestList[count].status = result;
+            /* Get start time of test */
+            testStartTime = ClockP_getTimeUsec();
+            result = sdlhwaAppTestList[count].application();
+            /* Record test end time */
+            testEndTime = ClockP_getTimeUsec();
+            diffTime = testEndTime-testStartTime;
+            sdlhwaAppTestList[count].status = result;
+            sdlhwaAppTestList[count].test_time =diffTime;
+        }
+        for ( count = 0; sdlhwaAppTestList[count].application != NULL; count++)
+        {
+            if (sdlhwaAppTestList[count].status != SDL_APP_PASS)
+            {
+                DebugP_log("\n Applications Name: %s  FAILED and Time taken for the Test is %d  micro secs \r\n", sdlhwaAppTestList[count].name, (uint32_t)sdlhwaAppTestList[count].test_time);
+                result = SDL_APP_FAILED;
+                break;
+            }
+            else
+            {
+                DebugP_log("\nApplications Name: %s  PASSED  and Time taken for the Test is %d  micro secs \r\n", sdlhwaAppTestList[count].name ,(uint32_t)sdlhwaAppTestList[count].test_time );
+            }
+        }
+
+        if (result == SDL_APP_PASS)
+        {
+            DebugP_log("\nAll tests have passed \r\n");
+        }
+        else
+        {
+            DebugP_log("\nFew/all tests Failed \r\n");
+        }
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\nESM Initialization for Few/all the SDL HWA Nodes is Failed\r\n");
     }
 }
 
@@ -406,14 +350,16 @@ void sdl_hwa_test_main(void *args)
     int32_t    result = SDL_APP_PASS;
     /* Init Dpl */
     result = SDL_TEST_dplInit();
+    Drivers_open();
     if (result != SDL_PASS)
     {
-       DebugP_log("Error: DPL Init Failed\n");
+       DebugP_log("\nError: DPL Init Failed\r\n");
     }
 
-    DebugP_log("\n HWA Application\r\n");
+    DebugP_log("\nHWA Application\r\n");
 
     hwa_testExecute();
+    Drivers_close();
 }
 
 /* Nothing past this point */

@@ -1,5 +1,5 @@
-/********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+/*
+ * Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,29 +31,127 @@
  *
  */
 
-#ifndef SDL_IP_HWA_H_
-#define SDL_IP_HWA_H_
-
-#include <stddef.h>
-#include <stdbool.h>
-#include "sdl_hwa.h"
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 /**
- *  \defgroup SDL_IP_SDL_API API's for HWA Low-Level
- *  \ingroup SDL_HWA_MODULE
+ *  @defgroup SDL_HWA_MODULE_IP API's for HWA IP
+ *  @ingroup  SDL_HWA_MODULE
+ *  @section  SDL_HWA_IP Overview
  *
- *  This module contains the Low-Level APIs to program and use the HWA module.
- *
+ *   Provides the IP APIs for HWA HWA memory Parity check and FSM lockstep
  *  @{
  */
 
 /**
- * \brief  Macro's that can be for Parity Error Check APIs
+ *  \file     sdl_ip_hwa.h
+ *
+ *  \brief    This file contains the prototypes of the APIs present in the
+ *            device abstraction layer file of HWA.
+ *            This also contains some related macros.
  */
+
+
+#ifndef SDL_IP_HWA_H_
+#define SDL_IP_HWA_H_
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+#include <stddef.h>
+#include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ @defgroup SDL_IP_HWA_MACROS HWA Macros
+ @ingroup SDL_HWA_MODULE_IP
+*/
+
+/**
+ @defgroup SDL_IP_HWA_ENUM HWA Enumerated Data Types
+ @ingroup SDL_HWA_MODULE_IP
+*/
+
+/**
+ @defgroup SDL_IP_HWA_FUNCTIONS HWA Functions
+ @ingroup SDL_HWA_MODULE_IP
+*/
+
+/**
+ @defgroup SDL_IP_HWA_DATASTRUCT HWA Data Structures
+ @ingroup SDL_HWA_MODULE_IP
+*/
+
+/* ========================================================================== */
+/*                         Structure Declarations                             */
+/* ========================================================================== */
+
+/**
+ @addtogroup SDL_IP_HWA_DATASTRUCT
+@{
+*/
+
+typedef struct Sdl_HWA_Status_t
+{
+    /* Clock status for hwa memory block */
+    uint8_t SDL_HWA_enableHwaClkSTS;
+    /* HWA accelerator status for memory block */
+    uint8_t SDL_HWA_enableHwaSTS;
+}SDL_HWA_Status_s;
+
+/** @} */
+
+/**
+ @addtogroup SDL_IP_HWA_ENUM
+@{
+*/
+typedef enum {
+    SDL_HWA_DMEM0 = 0,
+    /**< HWA Data memories 0 */
+    SDL_HWA_DMEM1 = 1,
+    /**< HWA Data memories 1 */
+    SDL_HWA_DMEM2 = 2,
+    /**< HWA Data memories 2 */
+    SDL_HWA_DMEM3 = 3,
+    /**< HWA Data memories 3 */
+    SDL_HWA_DMEM4 = 4,
+    /**< HWA Data memories 4 */
+    SDL_HWA_DMEM5 = 5,
+    /**< HWA Data memories 5 */
+    SDL_HWA_DMEM6 = 6,
+    /**< HWA Data memories 6 */
+    SDL_HWA_DMEM7 = 7,
+    /**< HWA Data memories 7 */
+    SDL_HWA_WINDOW_RAM = 8,
+    /**< Window RAM memories */
+    SDL_HWA_FSM_LOCKSTEP = 9,
+    /**<  HWA FSM Lockstep */
+    SDL_HWA_INVALID = 10,
+    /**<  Invalid ID*/
+} SDL_HWA_MemBlock;
+
+typedef enum {
+    SDL_HWA_DMA0_MEM_ID = 0,
+    /**< HWA DMA 0  */
+    SDL_HWA_DMA1_MEM_ID = 1,
+    /**< HWA DMA 1  */
+    SDL_HWA_WINDOW_RAM_MEM_ID = 2,
+    /**< Window RAM  */
+    SDL_HWA_INVALID_ID = 3,
+    /**<INVALID Memblock ID*/
+} SDL_HWA_MemID;
+
+/** @} */
+
+/* ========================================================================== */
+/*                            Macros & Typedefs                               */
+/* ========================================================================== */
+
+/**
+ @addtogroup SDL_IP_HWA_MACROS
+@{
+*/
+
 /* Enable HWA */
 #define SDL_HWA_ENABLE_STS                      (1U)
 /* Disable HWA */
@@ -67,22 +165,16 @@ extern "C" {
 /* HWA FSM Lockstep  Enable */
 #define SDL_HWA_DMEM_FSM_LOCKSTEP_EN            (4U)
 
-/**
- * \brief  The status for HWA accelerator and memory block clock status. These
- *         status returned in #SDL_HWA_getHwaEnableDisable function
- */
-
-typedef struct Sdl_HWA_Status_t
-{
-    /* Clock status for hwa memory block */
-    uint8_t SDL_HWA_enableHwaClkSTS;
-    /* HWA accelerator status for memory block */
-    uint8_t SDL_HWA_enableHwaSTS;
-}SDL_HWA_Status_s;
+/** @} */
 
 /* ========================================================================== */
 /*                         Function Declarations                              */
 /* ========================================================================== */
+/**
+ @addtogroup SDL_IP_HWA_FUNCTIONS
+@{
+*/
+
 /**
  * \brief   This API is used to enable or disable the parity for memory block
  *          and lockstep logic
@@ -128,8 +220,11 @@ void SDL_HWA_setHwaEnableDisable(uint8_t enableSts);
  * \param   pHWAStats  pointer to get the status of Radar Hardware Accelerator
  *                     and clock of type SDL_HWA_Status_s
  *
+ * \return  status            return the status
+ *                            SDL_PASS:     success
+ *                            SDL_EBADARGS: failure, indicate the bad input arguments
  */
-void SDL_HWA_getHwaEnableDisable(SDL_HWA_Status_s *pHWAStats);
+int32_t SDL_HWA_getHwaEnableDisable(SDL_HWA_Status_s *pHWAStats);
 
 /**
  * \brief   This API is used to initialize the memory
@@ -201,9 +296,29 @@ uint8_t SDL_HWA_getErrStatus(SDL_HWA_MemBlock memBlock);
  */
 void SDL_HWA_clearErrStatus(SDL_HWA_MemBlock memBlock);
 
+/**
+ * \brief   This API is used to get the memory block base address.
+ *
+ * \param   memID             HWA IDs for DMA0, DMA1 and Window RAM
+ *
+ * \param   memBlock          HWA memories for DMA0/DMA1's block
+ *
+ * \param   baseAddr          pointer to base addressof the memories
+ *
+ * \return  status            return the base address of th instance.
+ *                            SDL_PASS:     success
+ *                            SDL_EBADARGS: failure, indicate the bad input arguments
+ *                            SDL_EFAIL:    failure, indicate verify failed
+ */
+int32_t SDL_HWA_getMemblockBaseaddr(SDL_HWA_MemID memID, SDL_HWA_MemBlock memBlock,
+                             uint32_t *baseAddr);
+
+/** @} */
+
 #ifdef __cplusplus
 }
 #endif
 #endif /* SDL_IP_HWA_H_ */
 
 /** @} */
+

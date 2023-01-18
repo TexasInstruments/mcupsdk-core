@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -67,6 +67,7 @@ typedef struct sdlHWATest_s
     int32_t  (*testFunction)(void);   /* The code that runs the test */
     char      *name;                  /* The test name */
     int32_t    testStatus;            /* Test Status */
+    int64_t    test_time;            /* App Test Time */
 } sdlHWATest_t;
 
 /*===========================================================================*/
@@ -75,6 +76,11 @@ typedef struct sdlHWATest_s
 #define SDL_APP_TEST_NOT_RUN        (-(int32_t) (2))
 #define SDL_APP_TEST_FAILED         (-(int32_t) (1))
 #define SDL_APP_TEST_PASS           ( (int32_t) (0))
+
+#define SDL_INTR_GROUP_NUM                          (2U)
+#define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_ENABLE_ERR_PIN                          (1U)
 
 
 /* ========================================================================== */
@@ -106,7 +112,6 @@ extern int32_t hwaParityDMA0DMEM5_testExecute(void);
 extern int32_t hwaParityDMA0DMEM6_testExecute(void);
 extern int32_t hwaParityDMA0DMEM7_testExecute(void);
 extern int32_t hwaParityDMA0WindowRam_testExecute(void);
-extern int32_t hwaDMA0Red_testExecute(void);
 extern int32_t hwaParityDMA1DMEM0_testExecute(void);
 extern int32_t hwaParityDMA1DMEM1_testExecute(void);
 extern int32_t hwaParityDMA1DMEM2_testExecute(void);
@@ -116,13 +121,6 @@ extern int32_t hwaParityDMA1DMEM5_testExecute(void);
 extern int32_t hwaParityDMA1DMEM6_testExecute(void);
 extern int32_t hwaParityDMA1DMEM7_testExecute(void);
 extern int32_t hwaParityDMA1WindowRam_testExecute(void);
-extern int32_t hwaDMA1Red_testExecute(void);
-extern int32_t SDL_HWA_DMA0_SEC_test(void);
-extern int32_t SDL_HWA_DMA0_DED_test(void);
-extern int32_t SDL_HWA_DMA0_RED_test(void);
-extern int32_t SDL_HWA_DMA1_SEC_test(void);
-extern int32_t SDL_HWA_DMA1_DED_test(void);
-extern int32_t SDL_HWA_DMA1_RED_test(void);
 /*===========================================================================*/
 /*                   Local Function definitions                              */
 /*===========================================================================*/

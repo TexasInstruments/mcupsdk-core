@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,20 +30,13 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+
 /**
- *  @ingroup SDL_HWA_MODULE
- *  @defgroup SDL_HWA_API API's for HWA
- *  @section HWA Overview
- *         HWA Test API's:
- *         1. SDL_HWA_DMA0_secExecute()
- *         2. SDL_HWA_DMA1_secExecute()
- *         3. SDL_HWA_DMA0_dedExecute()
- *         4. SDL_HWA_DMA1_dedExecute()
- *         5. SDL_HWA_DMA0_redExecute()
- *         6. SDL_HWA_DMA1_redExecute()
- *         7. SDL_HWA_memParityExecute()
- *         8. SDL_HWA_fsmLockStepExecute()
+ *  @defgroup SDL_HWA_MODULE_API API's for HWA  memory Parity check and FSM lockstep
+ *  @ingroup  SDL_HWA_MODULE
+ *  @section  SDL_HWA Overview
  *
+ *   Provides the APIs for HWA memory Parity check and FSM lockstep
  *  @{
  */
 /**
@@ -53,6 +46,7 @@
  *            device abstraction layer file of HWA.
  *            This also contains some related macros.
  */
+
 #ifndef SDL_HWA_H_
 #define SDL_HWA_H_
 
@@ -60,37 +54,49 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include "sdl_hwa_hw.h"
+#include "sdl_ip_hwa.h"
 #include <sdl/hwa/v0/soc/sdl_hwa_soc.h>
+#include <sdl/esm/sdlr_esm.h>
+#if defined (SOC_AM273X)
+#include <sdl/esm/v1/sdl_esm.h>
+#include <sdl/include/am273x/sdlr_intr_esm_dss.h>
+#include <sdl/include/am273x/sdlr_intr_esm_mss.h>
+#elif defined (SOC_AWR294X)
+#include <sdl/esm/v1/sdl_esm.h>
+#include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
+#include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
+#endif
 
 #ifdef _cplusplus
 extern "C" {
 #endif
+/**
+ @defgroup SDL_HWA_MACROS HWA Macros
+ @ingroup SDL_HWA_MODULE_API
+*/
+
+/**
+ @defgroup SDL_HWA_FUNCTIONS HWA Functions
+ @ingroup SDL_HWA_MODULE_API
+*/
 
 /* ========================================================================== */
 /*                            Macros & Typedefs                               */
 /* ========================================================================== */
 
+/**
+ @addtogroup SDL_HWA_MACROS
+@{
+*/
+
+#define SDL_HWA_INIT_TIMEOUT   (0XFFU)
+
+
+/** @} */
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
-typedef enum
-{
-    SDL_HWA_FI_MAIN =0,
-    SDL_HWA_FI_SAFE = 1,
-    SDL_HWA_FI_GLOBAL_MAIN =2,
-    SDL_HWA_FI_GLOBAL_SAFE=3,
-    SDL_HWA_FI_INVALID = 4,
-} SDL_HWA_busSftyFiType;
-
-typedef enum
-{
-    SDL_HWA_MAIN_CMD_INTERFACE =0,
-    SDL_HWA_MAIN_WRITE_INTERFACE =1,
-    SDL_HWA_MAIN_WRITE_STATUS_INTERFACE=2,
-    SDL_HWA_MAIN_READ_INTERFACE =3,
-    SDL_HWA_FI_TYPE_INVALID =4,
-}SDL_HWA_busSftyFiRedType;
-
 /* ========================================================================== */
 /*                         Variable Declarations                             */
 /* ========================================================================== */
@@ -98,134 +104,32 @@ typedef enum
 /*                          Function Declarations                             */
 /* ========================================================================== */
 /**
- * \brief   This API is used  for SEC test on DMA0
- *
- */
-void SDL_HWA_DMA0_secExecute(void);
+ @addtogroup SDL_HWA_FUNCTIONS
+@{
+*/
 
 /**
- * \brief   This API is used  for SEC test on DMA1
+ * \brief   This API is a call back function when an interrupt is occured for HWA memory parity and fsm Lockstep
  *
- */
-void SDL_HWA_DMA1_secExecute(void);
-
-/**
- * \brief   This API is used  for DED test on DMA0
+ * \param   instance   indicates the ESM instance
  *
- */
-
-void SDL_HWA_DMA0_dedExecute(void);
-
-/**
- * \brief   This API is used  for DED test on DMA1
+ * \param   grpChannel indicates the ESM channel number for HWA memory parity and fsm Lockstep
  *
- */
-
-void SDL_HWA_DMA1_dedExecute(void);
-
-/**
- * \brief   This API is used  for RED test on DMA0
+ * \param   vecNum     indicates the ESM vector number for HWA memory parity and fsm Lockstep
  *
- * \param   fiType     indicates the Fi type
+ * \param   arg        pointer to input arrguments
  *
- * \param   redType   indicates interface type
- * \return  status    return the Test status.
+ * \return  status    return the status for callback
  *                    SDL_PASS:     success
  *                    SDL_EBADARGS: failure, indicate the bad input arguments
  *                    SDL_EFAIL:    failure, indicate verify failed
  *
  */
-int32_t SDL_HWA_DMA0_redExecute(SDL_HWA_busSftyFiType fiType, SDL_HWA_busSftyFiRedType redType);
-/**
- * \brief   This API is used  for RED test on DMA1
- *
- * \param   fiType     indicates the Fi type
- *
- * \param   redType   indicates interface type
- * \return  status    return the Test status.
- *                    SDL_PASS:     success
- *                    SDL_EBADARGS: failure, indicate the bad input arguments
- *
- */
-int32_t SDL_HWA_DMA1_redExecute(SDL_HWA_busSftyFiType fiType, SDL_HWA_busSftyFiRedType redType);
 
-/**
- * \brief   This API is used to clear SEC error from DMA0
- *
- */
-void SDL_HWA_DMA0_secErrorClear(void);
-
- /**
- * \brief   This API is used to clear SEC error from DMA1
- *
- */
-void SDL_HWA_DMA1_secErrorClear(void);
-
- /**
- *  \brief   This API is used to clear DED error from DMA0
- *
- *
- */
-void SDL_HWA_DMA0_dedErrorClear(void);
-
- /**
- *  \brief   This API is used to clear DED error from DMA1
- *
- */
-void SDL_HWA_DMA1_dedErrorClear(void);
-
- /**
- *  \brief   This API is used to clear RED error from DMA0
- *
- */
-void SDL_HWA_DMA0_redErrorClear(void);
-
- /**
- *  \brief   This API is used to clear red error from DMA1
- *
- */
- void SDL_HWA_DMA1_redErrorClear(void);
-
-/**
- * \brief   This API is used to get SEC error status from DMA0
- *
- */
-uint32_t SDL_HWA_DMA0_secErrorStatus(void);
-
- /**
- * \brief   This API is used to get SEC error status from DMA1
- *
- * \return  status    returns error status.
- */
-uint32_t SDL_HWA_DMA1_secErrorStatus(void);
-
- /**
- *  \brief   This API is used to get DED error status from DMA0
- *
- * \return  status    returns error status.
- */
-uint32_t SDL_HWA_DMA0_dedErrorStatus(void);
-
- /**
- *  \brief   This API is used to get DED error status from DMA1
- *
- * \return  status    returns error status.
- */
-uint32_t SDL_HWA_DMA1_dedErrorStatus(void);
-
- /**
- *  \brief   This API is used to get RED error status from DMA0
- *
- * \return  status    returns error status.
- */
-uint32_t SDL_HWA_DMA0_redErrorStatus(void);
-
- /**
- *  \brief   This API is used to get RED error status from DMA1
- *
- * \return  status    returns error status.
- */
- uint32_t SDL_HWA_DMA1_redErrorStatus(void);
+int32_t SDL_HWA_ESM_CallbackFunction(SDL_ESM_Inst instance,
+                                     int32_t grpChannel,
+                                     int32_t vecNum,
+                                     void *arg);
 
 /**
  * \brief   This API is used  for configuring and testing parity of the HWA memory
@@ -254,6 +158,9 @@ int32_t SDL_HWA_memParityExecute( SDL_HWA_MemID memID , SDL_HWA_MemBlock memBloc
  *
  */
 int32_t SDL_HWA_fsmLockStepExecute( void);
+
+/** @} */
+
 
 #ifdef _cplusplus
 }

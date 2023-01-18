@@ -35,7 +35,6 @@ FILES_PATH_common = \
     esm/soc/awr294x \
     hwa \
     hwa/v0 \
-    hwa/v0/soc/awr294x \
     rti \
     rti/v0 \
     rti/v0/soc/awr294x \

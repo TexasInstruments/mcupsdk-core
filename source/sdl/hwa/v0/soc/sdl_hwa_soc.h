@@ -1,9 +1,5 @@
 /*
- * SDL HWA
- *
- * SDL SoC Header file for HWA
- *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
