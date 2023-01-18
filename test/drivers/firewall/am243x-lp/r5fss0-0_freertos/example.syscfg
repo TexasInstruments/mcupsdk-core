@@ -1,0 +1,128 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const firewall   = scripting.addModule("/drivers/firewall/firewall", {}, false);
+const firewall1  = firewall.addInstance();
+const firewall2  = firewall.addInstance();
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+const mpu_armv77 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+firewall1.$name               = "CONFIG_FIREWALL0";
+firewall1.regCfg.create(1);
+firewall1.regCfg[0].$name     = "FWL_REG_CFG4";
+firewall1.regCfg[0].regIndex  = 1;
+firewall1.regCfg[0].instName  = "SA2_UL0";
+firewall1.regCfg[0].interName = "MMRA";
+firewall1.regCfg[0].fwlBg     = true;
+firewall1.regCfg[0].fwlCache  = true;
+
+firewall2.$name                = "CONFIG_FIREWALL1";
+firewall2.fwlId                = "MSRAM_256K5";
+firewall2.regCfg.create(4);
+firewall2.regCfg[0].$name      = "FWL_REG_CFG0";
+firewall2.regCfg[0].instName   = "MSRAM_256K5";
+firewall2.regCfg[0].interName  = "RAM";
+firewall2.regCfg[0].fwlCache   = true;
+firewall2.regCfg[0].fwlBg      = true;
+firewall2.regCfg[1].$name      = "FWL_REG_CFG1";
+firewall2.regCfg[1].regIndex   = 1;
+firewall2.regCfg[1].instName   = "MSRAM_256K5";
+firewall2.regCfg[1].interName  = "RAM";
+firewall2.regCfg[1].manualAddr = true;
+firewall2.regCfg[1].startAddr  = 0x70141000;
+firewall2.regCfg[1].endAddr    = 0x70141FFF;
+firewall2.regCfg[1].fwlCache   = true;
+firewall2.regCfg[1].fwlPriv1   = "MAIN_0_R5_0_SECURE";
+firewall2.regCfg[1].fwlPriv2   = "MAIN_0_R5_1_SECURE";
+firewall2.regCfg[1].fwlPerm2   = "FWL_PERM_DENY_ALL";
+firewall2.regCfg[2].$name      = "FWL_REG_CFG2";
+firewall2.regCfg[2].manualAddr = true;
+firewall2.regCfg[2].regIndex   = 2;
+firewall2.regCfg[2].startAddr  = 0x70142000;
+firewall2.regCfg[2].endAddr    = 0x70142FFF;
+firewall2.regCfg[2].fwlPriv1   = "MAIN_0_R5_1_SECURE";
+firewall2.regCfg[2].fwlPriv2   = "MAIN_0_R5_0_SECURE";
+firewall2.regCfg[2].fwlPerm2   = "FWL_PERM_DENY_ALL";
+firewall2.regCfg[3].$name      = "FWL_REG_CFG3";
+firewall2.regCfg[3].regIndex   = 3;
+firewall2.regCfg[3].manualAddr = true;
+firewall2.regCfg[3].endAddr    = 0x70143FFF;
+firewall2.regCfg[3].fwlCache   = true;
+firewall2.regCfg[3].fwlPriv1   = "BLOCK_EVERYONE";
+firewall2.regCfg[3].startAddr  = 0x70143000;
+firewall2.regCfg[3].fwlPriv2   = "BLOCK_EVERYONE";
+firewall2.regCfg[3].fwlPriv3   = "BLOCK_EVERYONE";
+
+ipc.r5fss0_1 = "notify";
+ipc.r5fss1_0 = "NONE";
+ipc.r5fss1_1 = "NONE";
+ipc.m4fss0_0 = "NONE";
+
+debug_log.enableCssLog             = false;
+debug_log.enableUartLog            = true;
+debug_log.enableSharedMemLog       = true;
+debug_log.enableSharedMemLogReader = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "USART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.attributes        = "NonCached";
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x701D0000;
+mpu_armv75.size         = 16;
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;
+
+mpu_armv76.$name             = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr          = 0x60000000;
+mpu_armv76.size              = 28;
+mpu_armv76.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv77.$name    = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr = 0x80000000;
+mpu_armv77.size     = 31;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.RXD.$suggestSolution = "ball.B10";
+debug_log.uartLog.UART.TXD.$suggestSolution = "ball.B11";

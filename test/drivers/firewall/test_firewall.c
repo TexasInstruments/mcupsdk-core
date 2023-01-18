@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Texas Instruments Incorporated
+ * Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,65 +30,253 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* ========================================================================== */
-/*                             Include Files                                  */
-/* ========================================================================== */
-
 #include <stdio.h>
-#include <string.h>
 #include <inttypes.h>
-#include <unity.h>
-#include <kernel/dpl/DebugP.h>
+#include <drivers/soc.h>
 #include <kernel/dpl/ClockP.h>
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
+#include <kernel/dpl/SemaphoreP.h>
 #include <drivers/firewall.h>
+#include <unity.h>
+#include "ti_drivers_open_close.h"
+
+/*
+ *  Pre firewall configuration using SysConfig during Drivers_Opem()
+ *  +--------------+--------+------------+------------+------------------------------+
+ *  | Fwl Id       | Region | Start Addr | End Addr   | Privilege & Permission       |
+ *  +--------------+--------+------------+------------+------------------------------+
+ *  | 35 (SA2UL    | 1      | 0x40901000 | 0x40901FFF | Everyone                     |
+ *  | 17 (MSRAM_5) | 0      | 0x70140000 | 0x7017FFFF | Everyone                     |
+ *  | 17 (MSRAM_5) | 1      | 0x70141000 | 0x70141FFF | R50_0 - Allow, R5_0_1 - Deny |
+ *  | 17 (MSRAM_5) | 2      | 0x70142000 | 0x70142FFF | R50_0-Deny, R5_0_1-Allow     |
+ *  | 17 (MSRAM_5) | 3      | 0x70143000 | 0x70143FFF | Block All                    |
+ *  +--------------+--------+------------+------------+------------------------------+
+ */
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+#define TEST_DATA                       (0xABABABAB)
+#define TEST_MEM_SA2UL_MMRA_REGION_1    (0x40901000)
+#define TEST_MEM_MSRAM_BANK_5_REGION_0  (0x701400FF)
+#define TEST_MEM_MSRAM_BANK_5_REGION_1  (0x701410FF)
+#define TEST_MEM_MSRAM_BANK_5_REGION_2  (0x701420FF)
+#define TEST_MEM_MSRAM_BANK_5_REGION_3  (0x701430FF)
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
 
 /* Test cases */
-static void test_fwl_read_write_region(void *args);
+void test_firewall_api(void *args);
+void test_firewall_positive(void *args);
 
+/* client ID that is used to receive messages in Any to Any test */
+uint32_t gClientId = 4u;
 
-/* ========================================================================== */
-/*                            Global Variables                                */
-/* ========================================================================== */
+/* Main core that checks the test pass/fail */
+uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
 
+/* semaphore's used to indicate a main core has finished all message exchanges */
+SemaphoreP_Object gMainDoneSem;
 
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
-void loop_forever()
+/* semaphore used to indicate a remote core has finished all message xchange */
+SemaphoreP_Object gRemoteDoneSem;
+
+void test_firewall_msg_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
 {
-    volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    SemaphoreP_post(&gMainDoneSem);
+}
+
+void test_firewall_msg_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+{
+    SemaphoreP_post(&gRemoteDoneSem);
+}
+
+void test_firewall_api(void *args)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t fwlId = 18; // MSRAM BANK 4
+
+    Firewall_Handle handle = NULL;
+
+    Firewall_RegionCfg region =
+        {
+            .regionIndex = 1,
+            .control = FWL_CONTROL_ENABLE | FWL_CONTROL_CACHE_MODE,
+            .permissions[0] = 0xC5FFFF,
+            .permissions[1] = 0xC5FFFF,
+            .permissions[2] = 0xC5FFFF,
+            .startAddr = 0x70100000,
+            .endAddr = 0x7013FFFF,
+        };
+
+    Firewall_Attrs attrs =
+        {
+            .firewallId = 18,
+            .totalRegions = 4,
+            .regionInfo = &region,
+            .initRegions = 1,
+        };
+
+    Firewall_Config config =
+        {
+            .attrs = NULL,
+            .object = NULL,
+        };
+
+    DebugP_log("Firewall API Test Started !! \r\n");
+
+    /*  ----------  Firewall API's Positive Sanity Test  ----------- */
+
+    status = Firewall_configureSingleRegion(fwlId, &region);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    /*  ----------  Firewall API's Negative Sanity Test  ----------- */
+
+    status = Firewall_configureSingleRegion(fwlId, (Firewall_RegionCfg *)NULL);
+    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, status);
+
+    region.regionIndex = 12;
+    fwlId = 36;
+    status = Firewall_configureSingleRegion(fwlId, &region);
+    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, status);
+
+    status = Firewall_configureRegion(handle);
+    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, status);
+
+    handle = (Firewall_Handle)&config;
+    status = Firewall_configureRegion(handle);
+    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, status);
+
+    config.attrs = &attrs;
+    attrs.firewallId = 36;
+    attrs.totalRegions = 17;
+    status = Firewall_configureRegion(handle);
+    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, status);
+}
+
+void test_firewall_positive(void *args)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t gRemoteCoreId = (uint32_t)args;
+    uint32_t data = 0;
+    uint32_t msgValue = 0;
+
+    DebugP_log("Firewall Positive Test Started !! \r\n");
+
+    /*  ----------  Testing positive scenerios  ----------- */
+
+    /*Test MSRAM Region 0 Access */
+    CSL_REG32_WR((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_0, (uint32_t)TEST_DATA);
+    CacheP_inv((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_0, CacheP_CACHELINE_ALIGNMENT, CacheP_TYPE_ALL);
+    data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_0);
+    if (TEST_DATA != data)
+    {
+        status = SystemP_FAILURE;
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    data = 0;
+    /*Test MSRAM Region 1 Access */
+    CSL_REG32_WR((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_1, (uint32_t)TEST_DATA);
+    CacheP_inv((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_1, CacheP_CACHELINE_ALIGNMENT, CacheP_TYPE_ALL);
+    data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_1);
+    if (TEST_DATA != data)
+    {
+        status = SystemP_FAILURE;
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    /* send message to other core's, wait for message to be put in HW FIFO */
+    status = IpcNotify_sendMsg(gRemoteCoreId, gClientId, msgValue, 1);
+    DebugP_assert(status == SystemP_SUCCESS);
+}
+
+/* This code executes on remote core, i.e not on main core */
+void test_firewall_remote_core_start()
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t data = 0;
+    uint32_t msgValue = 0;
+
+    SemaphoreP_constructBinary(&gRemoteDoneSem, 0);
+
+    /* register a handler to receive messages */
+    status = IpcNotify_registerClient(gClientId, test_firewall_msg_handler_remote_core, NULL);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* wait for all cores to be ready */
+    IpcNotify_syncAll(SystemP_WAIT_FOREVER);
+
+    /* wait for all messages to be echo'ed back */
+    SemaphoreP_pend(&gRemoteDoneSem, SystemP_WAIT_FOREVER);
+
+    /*  ----------  Testing positive scenerios  ----------- */
+
+    /*Test MSRAM Region 0 Access */
+    CSL_REG32_WR((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_0, (uint32_t)TEST_DATA);
+    CacheP_inv((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_0, CacheP_CACHELINE_ALIGNMENT, CacheP_TYPE_ALL);
+    data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_0);
+    if (TEST_DATA != data)
+    {
+        status = SystemP_FAILURE;
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    data = 0;
+    /*Test MSRAM Region 1 Access */
+    CSL_REG32_WR((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_2, (uint32_t)TEST_DATA);
+    CacheP_inv((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_2, CacheP_CACHELINE_ALIGNMENT, CacheP_TYPE_ALL);
+    data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_2);
+    if (TEST_DATA != data)
+    {
+        status = SystemP_FAILURE;
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    status = IpcNotify_sendMsg(gMainCoreId, gClientId, msgValue, 1);
+}
+
+/* This code executes on main core, i.e not on remote core */
+void test_firewall_main_core_start()
+{
+    int32_t status;
+
+    UNITY_BEGIN();
+
+    /* create done semaphore */
+    SemaphoreP_constructBinary(&gMainDoneSem, 0);
+
+    /* register a handler to receive ACK messages, also pass semaphore handle as a arg */
+    status = IpcNotify_registerClient(gClientId, test_firewall_msg_handler_main_core, NULL);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* wait for all cores to be ready */
+    IpcNotify_syncAll(SystemP_WAIT_FOREVER);
+
+    RUN_TEST(test_firewall_api, 9478, NULL);
+    RUN_TEST(test_firewall_positive, 9479, (void *)CSL_CORE_ID_R5FSS0_1);
+
+    UNITY_END();
 }
 
 void test_main(void *args)
 {
-    /* Open drivers to open the UART driver for console */
     Drivers_open();
-    UNITY_BEGIN();
 
-    RUN_TEST(test_fwl_read_write_region, 0, NULL);
+    if (IpcNotify_getSelfCoreId() == gMainCoreId)
+    {
+        test_firewall_main_core_start();
+    }
+    else
+    {
+        test_firewall_remote_core_start();
+    }
 
-    UNITY_END();
-    Drivers_close();
-    return;
+    //Drivers_close();
 }
 
-
-/*
- * Unity framework required functions
- */
 void setUp(void)
 {
 }
@@ -96,54 +284,3 @@ void setUp(void)
 void tearDown(void)
 {
 }
-
-/*
- * Test cases
- */
-
-static void test_fwl_read_write_region(void *args)
-{
-    int32_t retVal = SystemP_SUCCESS;
-    int32_t data = 0x22222222;
-    int32_t readData;
-    Firewall_Handle handle = NULL;
-
-    /* Firewall region settings */
-    Firewall_RegionCfg regionConfigFirewall0[1] =
-    {
-        {
-                .regionIndex    = 0,
-                .control        = FWL_CONTROL_ENABLE | FWL_CONTROL_BG | FWL_CONTROL_CACHE_MODE,
-                .permissions[0] = 0xD4FFFF,
-                .permissions[1] = 0x0,
-                .permissions[2] = 0x0,
-                .startAddr      = 0x70000000,
-                .endAddr        = 0x7003FFFF,
-        },
-    };
-
-    /* Firewall Driver Attributes */
-    Firewall_Attrs gFirewallAttrs[1] =
-    {
-        {
-            .firewallId = 14,
-            .totalRegions = 4,
-            .regionInfo = regionConfigFirewall0,
-            .initRegions = 1,
-        },
-    };
-
-    retVal = Firewall_configureRegion(handle, gFirewallAttrs);
-
-    CSL_REG32_WR(CSL_MSRAM_256K0_RAM_BASE, data);
-    readData = CSL_REG32_RD(CSL_MSRAM_256K0_RAM_BASE);
-    if(data != readData)
-    {
-        retVal = SystemP_FAILURE;
-    }
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
-}
-
-
-
