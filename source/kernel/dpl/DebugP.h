@@ -326,6 +326,13 @@ void DebugP_uartLogWriterPutChar(char character);
  */
 void DebugP_shmLogReaderInit(DebugP_ShmLog *shmLog, uint16_t numCores);
 
+/**
+ * \brief Reads logs from shared memory. 
+ *
+ * User needs to invoke this API periodically to get continous logs from Shared memory. 
+ * Used when Shared Memory log Reader is enabled for nortos application. 
+ */
+void DebugP_shmLogRead(void); 
 
 /**
  * \brief Initialize log write to write to memory trace buffer.

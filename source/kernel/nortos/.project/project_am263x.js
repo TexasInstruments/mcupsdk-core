@@ -5,6 +5,7 @@ const files_r5f = {
         "AddrTranslateP_null.c",
         "boot_armv7r.c",
         "DebugP_shmLogWriter.c",
+		"DebugP_shmLogReader.c",
         "DebugP_uartLogWriter.c",
         "DebugP_uartScanf.c",
         "DebugP_memTraceLogWriter.c",

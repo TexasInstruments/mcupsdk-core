@@ -5,6 +5,7 @@ const files_m4f = {
         "boot_armv7m.c",
         "CacheP_null.c",
         "DebugP_shmLogWriter.c",
+		"DebugP_shmLogReader.c",
         "DebugP_uartLogWriter.c",
         "DebugP_uartScanf.c",
         "DebugP_memTraceLogWriter.c",

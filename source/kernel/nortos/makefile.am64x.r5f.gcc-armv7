@@ -18,6 +18,7 @@ LIBNAME:=nortos.am64x.r5f.gcc-armv7.$(PROFILE).lib
 FILES_common := \
     boot_armv7r.c \
     DebugP_shmLogWriter.c \
+    DebugP_shmLogReader.c \
     DebugP_uartLogWriter.c \
     DebugP_uartScanf.c \
     DebugP_memTraceLogWriter.c \

@@ -66,3 +66,8 @@ int _DebugP_log(char *format, ...)
     return 0;
 }
 
+/* Empty function definition for noRTOS case */ 
+void DebugP_shmLogReaderTaskCreate(void)
+{
+	return ; 
+}

@@ -48,7 +48,7 @@ typedef struct {
 
 DebugP_ShmLogReaderCtrl gDebugShmLogReaderCtrl;
 
-void DebugP_shmLogReaderTaskCreate();
+extern void DebugP_shmLogReaderTaskCreate(void);
 
 void DebugP_shmLogReaderInit(DebugP_ShmLog *shmLog, uint16_t numCores)
 {
@@ -147,6 +147,41 @@ uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
         }
     }
     return num_bytes;
+}
+
+void DebugP_shmLogRead(void) 
+{
+	uint32_t i;
+
+	for(i=0; i<gDebugShmLogReaderCtrl.numCores; i++)
+	{
+		DebugP_ShmLog *shmLog = &gDebugShmLogReaderCtrl.shmLog[i];
+
+		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0)
+		{
+			if(shmLog->isValid == DebugP_SHM_LOG_IS_VALID)
+			{
+				gDebugShmLogReaderCtrl.isCoreShmLogInialized[i] = 1;
+				/* clear isValid flag */
+				shmLog->isValid = 0;
+			}
+		}
+		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i])
+		{
+			uint32_t strLen;
+
+			do
+			{
+				strLen = DebugP_shmLogReaderGetString(shmLog,
+								gDebugShmLogReaderCtrl.lineBuf,
+								DEBUG_SHM_LOG_READER_LINE_BUF_SIZE);
+				if(strLen > 0)
+				{
+					DebugP_log(gDebugShmLogReaderCtrl.lineBuf);
+				}
+			} while(strLen);
+		}
+	}
 }
 
 void DebugP_shmLogReaderTaskMain(void *args)
