@@ -54,7 +54,7 @@ extern "C" {
 *   Required Macros for Instances config
 ======================================================================================================*/
 
-#define SDL_RTI_MAX_INSTANCE    (0x07)
+#define SDL_RTI_MAX_INSTANCE    (0x07U)
 #define INSTANCE_INVALID        (0x0U)
 
 /**

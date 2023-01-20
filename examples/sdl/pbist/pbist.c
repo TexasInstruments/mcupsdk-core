@@ -84,7 +84,6 @@
  *  \brief global variable for holding data buffer.
  */
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
-extern uint32_t gInst;
 #endif
 typedef struct PBIST_TestHandle_s
 {
@@ -173,7 +172,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     uint64_t diffTime;
 
 #if defined (SOC_AM273X) || (SOC_AWR294X)
-  if (gInst == SDL_PBIST_INST_TOP)
+  if (instanceId == SDL_PBIST_INST_TOP)
   {
     if (runNegTest == true)
     {
@@ -194,7 +193,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         testType = SDL_PBIST_TEST;
     }
   }
-   if (gInst == SDL_PBIST_INST_DSS)
+   if (instanceId == SDL_PBIST_INST_DSS)
   {
           if (runNegTest == true)
          {
@@ -259,7 +258,7 @@ else
       {
         #if defined (R5F0_INPUTS)
         {
-            if (gInst == SDL_PBIST_INST_TOP)
+            if (instanceId == SDL_PBIST_INST_TOP)
             {
 
                   DebugP_log(" PBIST complete for ADCBUF\r\n");
@@ -279,7 +278,7 @@ else
                   DebugP_log(" PBIST complete for CORE B BTCM\r\n");
 
             }
-            else if (gInst == SDL_PBIST_INST_DSS)
+            else if (instanceId == SDL_PBIST_INST_DSS)
             {
                  DebugP_log(" PBIST complete for DSS C66 STCROM\r\n");
                  DebugP_log(" PBIST complete for HWA STCROM\r\n");
@@ -336,7 +335,7 @@ else
   {
     #if defined (R5F0_INPUTS)
     {
-        if (gInst == SDL_PBIST_INST_TOP)
+        if (instanceId == SDL_PBIST_INST_TOP)
         {
               DebugP_log(" PBIST complete for TPCC\r\n");
               DebugP_log(" PBIST complete for MAILBOX\r\n");
@@ -354,7 +353,7 @@ else
               DebugP_log(" PBIST complete for CORE B BTCM\r\n");
 
         }
-        else if (gInst == SDL_PBIST_INST_DSS)
+        else if (instanceId == SDL_PBIST_INST_DSS)
         {
              DebugP_log(" PBIST complete for DSS C66 STCROM\r\n");
              DebugP_log(" PBIST complete for HWA STCROM\r\n");
@@ -467,11 +466,31 @@ else
           }
 #endif
 #endif
+       #if defined (SOC_AM263X)
+      if((status == SDL_PASS) && (testType == SDL_PBIST_NEG_TEST))
+      {
+        if (instanceId == SDL_PBIST_INST_TOP)
+        {
+          DebugP_log(" PBIST failure Insertion test complete for TOP BIST\r\n");
+          DebugP_log("PBIST Failure Insertion Test completed in %d micro secs \r\n", (uint32_t)diffTime );
+        }
+      }
+      #endif
+      #if defined (SOC_AM273X) || (defined SOC_AWR294X)
      if((status == SDL_PASS) && (testType == SDL_PBIST_NEG_TEST))
      {
+       if (instanceId == SDL_PBIST_INST_TOP)
+       {
          DebugP_log(" PBIST failure Insertion test complete for TOP BIST\r\n");
          DebugP_log("PBIST Failure Insertion Test completed in %d micro secs \r\n", (uint32_t)diffTime );
+       }
+       else if (instanceId == SDL_PBIST_INST_DSS)
+       {
+         DebugP_log(" PBIST failure Insertion test complete for DSP BIST\r\n");
+         DebugP_log("PBIST Failure Insertion Test completed in %d micro secs \r\n", (uint32_t)diffTime );
+       }
      }
+     #endif
 
      return (testResult);
 }

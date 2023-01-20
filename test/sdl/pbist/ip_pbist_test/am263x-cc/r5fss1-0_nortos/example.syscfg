@@ -1,0 +1,42 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clock     = scripting.addModule("/kernel/dpl/clock");
+const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+debug_log.enableUartLog = true;
+debug_log.uartLog.$name = "CONFIG_UART0";
+
+/**
+ * These are the reserved peripherals and settings in this configuration
+ */
+const iUART1 = scripting.addPeripheral("UART");
+iUART1.$name = "MyUART1";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.$suggestSolution     = "UART2";
+debug_log.uartLog.UART.RXD.$suggestSolution = "ball.B8";
+debug_log.uartLog.UART.TXD.$suggestSolution = "ball.A8";
+iUART1.$suggestSolution                     = "UART1";
+iUART1.CTSn.$suggestSolution                = "ball.G4";
+iUART1.DCDn.$suggestSolution                = "ball.J4";
+iUART1.DSRn.$suggestSolution                = "ball.V17";
+iUART1.DTRn.$suggestSolution                = "ball.K3";
+iUART1.RIn.$suggestSolution                 = "ball.K4";
+iUART1.RTSn.$suggestSolution                = "ball.J2";
+iUART1.RXD.$suggestSolution                 = "ball.A9";
+iUART1.TXD.$suggestSolution                 = "ball.B9";

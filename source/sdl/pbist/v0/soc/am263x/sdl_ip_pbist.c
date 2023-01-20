@@ -60,14 +60,6 @@
 
 SDL_mss_ctrlRegs * ptrMSSCtrlRegs = (SDL_mss_ctrlRegs *)SDL_MSS_CTRL_U_BASE;
 
-uint32_t gInst;
-int32_t SDL_PBIST_Instance (SDL_PBIST_inst instance)
-{
-  gInst= instance;
-
-  return(0);
-}
-
 static void SDL_MSS_enableTopPbist (void)
 {
     /* Enable the TOP PBIST Self-Test Key */
@@ -91,9 +83,10 @@ static void SDL_MSS_disableTopPbist (void)
       0U);
 }
 
-static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t memGroupIndex, uint8_t status)
+static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint64_t memGroupIndex, uint8_t status)
 {
-    uint8_t     index;
+    uint64_t     index;
+    uint32_t     reg;
 
      if (status == 0U)
      {
@@ -105,44 +98,31 @@ static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t 
          }
          else
          {
-             /* Disable the memory group for self-test. */
-             if (memGroupIndex < 32U)
-             {
-                 ptrPBISTRegs->RINFOL = SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 0U);
-             }
-             else
-             {
-                 index = memGroupIndex - 32U;
-                 ptrPBISTRegs->RINFOU = SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 0U);
-             }
+            /*do nothing*/
          }
      }
      else
      {
          /* Check if we need to enable all the memory groups? */
-         if (memGroupIndex == 0xFFU)
-         {
-             ptrPBISTRegs->RINFOL = SDL_REG_WR(&ptrPBISTRegs->RINFOL, 0xFFFFFFFFU);
-             ptrPBISTRegs->RINFOU = SDL_REG_WR(&ptrPBISTRegs->RINFOU, 0xFFFFFFFFU);
-         }
-         else
-         {
+
              /* Enable the memory group for self-test. */
              if (memGroupIndex < 32U)
              {
-                 ptrPBISTRegs->RINFOL = SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 1U);
+                 reg = ptrPBISTRegs->RINFOL;
+                 ptrPBISTRegs->RINFOL = SDL_FINSR(reg, memGroupIndex, memGroupIndex, 1U);
              }
              else
              {
                  index = memGroupIndex - 32U;
-                 ptrPBISTRegs->RINFOU = SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 1U);
+                 reg = ptrPBISTRegs->RINFOU;
+                 ptrPBISTRegs->RINFOU = SDL_FINSR(reg, index, index, 1U);
              }
-         }
      }
 }
 
-static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t algoIndex, uint8_t status)
+static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint32_t algoIndex, uint8_t status)
 {
+  uint32_t     reg;
     if (status == 0U)
     {
         if (algoIndex == 0xFFU)
@@ -151,21 +131,14 @@ static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t algoInd
         }
         else
         {
-            /* Disable the algorithm for self-test. */
-            ptrPBISTRegs->ALGO = SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 0U);
+          /*do nothing*/
         }
     }
     else
     {
-        if (algoIndex == 0xFFU)
-        {
-            ptrPBISTRegs->ALGO = SDL_REG_WR(&ptrPBISTRegs->ALGO, 0xFFFFFFFFU);
-        }
-        else
-        {
             /* Enable the algorithm for self-test. */
-            ptrPBISTRegs->ALGO = SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 1U);
-        }
+            reg = ptrPBISTRegs->ALGO;
+            ptrPBISTRegs->ALGO = SDL_FINSR(reg, algoIndex, algoIndex, 1U);
     }
 }
 
@@ -240,11 +213,11 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
 /*----------------------------------------------------------------
 * Enable the MSS PBIST Self-Test Key.
 *----------------------------------------------------------------*/
-  SDL_MSS_enableTopPbist();
+        SDL_MSS_enableTopPbist();
         /*----------------------------------------------------------------
          * Enable the PBIST internal clocks and ROM interface clock.
          *----------------------------------------------------------------*/
-		pPBISTRegs->PACT = 1U;
+    		pPBISTRegs->PACT = 1U;
 
         /* Wait for some cycles */
         SDL_PBIST_delay();
@@ -252,18 +225,18 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
         /*----------------------------------------------------------------
          * Ensure the Loop count register is at its reset value.
          *----------------------------------------------------------------*/
-		pPBISTRegs->L0 = ((uint32_t)0x0U);
+    		pPBISTRegs->L0 = ((uint32_t)0x0U);
 
         /*----------------------------------------------------------------
          * Program the Override register.
          *----------------------------------------------------------------*/
-		pPBISTRegs->OVER = 1U;
+    		pPBISTRegs->OVER = 1U;
 
         /*----------------------------------------------------------------
          * Config access mode. Setting this bit allows the host processor
          * to configure the PBIST controller registers
          *----------------------------------------------------------------*/
-		pPBISTRegs->DLR = 0x10U;
+    		pPBISTRegs->DLR = 0x10U;
 
         /*----------------------------------------------------------------
          * Clear the memory group registers.
@@ -287,13 +260,13 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
         /*----------------------------------------------------------------
          * Program the Override register.
          *----------------------------------------------------------------*/
-		pPBISTRegs->OVER = 0U;
+		     pPBISTRegs->OVER = 0U;
 
         /*----------------------------------------------------------------
          * Configure ROM MASK Register to ensure both Algorithm and
          * memory information is picked from PBIST ROM.
          *----------------------------------------------------------------*/
-        //SDL_PBIST_setROMAccessMode(pPBISTRegs, 0x3U);
+
         pPBISTRegs->ROM = 0x3u;
         /*----------------------------------------------------------------
         * Configure Interrupt and call-back function.
@@ -311,7 +284,7 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
          *   will execute test algorithms that are stored in the PBIST ROM.
          * - This should cause the PBIST done interrupt
          *************************************************************/
-		pPBISTRegs->DLR = 0x21CU;
+		     pPBISTRegs->DLR = 0x21CU;
 
     }
 

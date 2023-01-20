@@ -118,9 +118,10 @@ static void SDL_DSS_disableDSSPbist (void)
 
 }
 
-static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t memGroupIndex, uint8_t status)
+static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint64_t memGroupIndex, uint8_t status)
 {
-    uint8_t     index;
+    uint64_t     index;
+    uint32_t       reg;
 
      if (status == 0U)
      {
@@ -132,44 +133,31 @@ static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t 
          }
          else
          {
-             /* Disable the memory group for self-test. */
-             if (memGroupIndex < 32U)
-             {
-                 ptrPBISTRegs->RINFOL = SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 0U);
-             }
-             else
-             {
-                 index = memGroupIndex - 32U;
-                 ptrPBISTRegs->RINFOU = SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 0U);
-             }
+            /*do nothing*/
          }
      }
      else
      {
          /* Check if we need to enable all the memory groups? */
-         if (memGroupIndex == 0xFFU)
-         {
-             ptrPBISTRegs->RINFOL = SDL_REG_WR(&ptrPBISTRegs->RINFOL, 0xFFFFFFFFU);
-             ptrPBISTRegs->RINFOU = SDL_REG_WR(&ptrPBISTRegs->RINFOU, 0xFFFFFFFFU);
-         }
-         else
-         {
+
              /* Enable the memory group for self-test. */
              if (memGroupIndex < 32U)
              {
-                 ptrPBISTRegs->RINFOL = SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 1U);
+                 reg = ptrPBISTRegs->RINFOL;
+                 ptrPBISTRegs->RINFOL = SDL_FINSR(reg, memGroupIndex, memGroupIndex, 1U);
              }
              else
              {
+                 reg = ptrPBISTRegs->RINFOU;
                  index = memGroupIndex - 32U;
-                 ptrPBISTRegs->RINFOU = SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 1U);
+                 ptrPBISTRegs->RINFOU = SDL_FINSR(reg, index, index, 1U);
              }
-         }
      }
 }
 
-static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t algoIndex, uint8_t status)
+static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint32_t algoIndex, uint8_t status)
 {
+  uint32_t reg;
     if (status == 0U)
     {
         if (algoIndex == 0xFFU)
@@ -178,21 +166,14 @@ static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint8_t algoInd
         }
         else
         {
-            /* Disable the algorithm for self-test. */
-            ptrPBISTRegs->ALGO = SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 0U);
+          /*do nothing*/
         }
     }
     else
     {
-        if (algoIndex == 0xFFU)
-        {
-            ptrPBISTRegs->ALGO = SDL_REG_WR(&ptrPBISTRegs->ALGO, 0xFFFFFFFFU);
-        }
-        else
-        {
             /* Enable the algorithm for self-test. */
-            ptrPBISTRegs->ALGO = SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 1U);
-        }
+            reg = ptrPBISTRegs->ALGO;
+            ptrPBISTRegs->ALGO = SDL_FINSR(reg, algoIndex, algoIndex, 1U);
     }
 }
 
@@ -244,13 +225,17 @@ int32_t SDL_PBIST_softReset(SDL_pbistRegs *pPBISTRegs)
         /* Zero out Clock Mux Select register */
         pPBISTRegs->CMS = ((uint32_t)0x0u);
 
-      if (gInst == SDL_PBIST_INST_TOP)
+      if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
       {
-              SDL_MSS_disableTopPbist(); //0
+              SDL_MSS_disableTopPbist();
       }
-      else if (gInst == SDL_PBIST_INST_DSS)
+      else if (gInst == (uint32_t)SDL_PBIST_INST_DSS)
       {
-              SDL_DSS_disableDSSPbist(); //1
+              SDL_DSS_disableDSSPbist();
+      }
+      else
+      {
+          sdlResult = SDL_EBADARGS;
       }
 
     }
@@ -272,21 +257,26 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
     }
     else
     {
-/*----------------------------------------------------------------
-* Enable the MSS PBIST Self-Test Key.
-*----------------------------------------------------------------*/
-if (gInst == SDL_PBIST_INST_TOP)
-{
-        SDL_MSS_enableTopPbist(); //0
-}
-else if (gInst == SDL_PBIST_INST_DSS)
-{
-        SDL_DSS_enableDSSPbist(); //1
-}
+          /*----------------------------------------------------------------
+          * Enable the MSS PBIST Self-Test Key.
+          *----------------------------------------------------------------*/
+
+          if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
+          {
+                  SDL_MSS_enableTopPbist();
+          }
+          else if (gInst ==(uint32_t) SDL_PBIST_INST_DSS)
+          {
+                  SDL_DSS_enableDSSPbist();
+          }
+          else
+          {
+            sdlResult = SDL_EBADARGS;
+          }
         /*----------------------------------------------------------------
          * Enable the PBIST internal clocks and ROM interface clock.
          *----------------------------------------------------------------*/
-		pPBISTRegs->PACT = 1U;
+    		pPBISTRegs->PACT = 1U;
 
         /* Wait for some cycles */
         SDL_PBIST_delay();
@@ -294,18 +284,18 @@ else if (gInst == SDL_PBIST_INST_DSS)
         /*----------------------------------------------------------------
          * Ensure the Loop count register is at its reset value.
          *----------------------------------------------------------------*/
-		pPBISTRegs->L0 = ((uint32_t)0x0U);
+    		pPBISTRegs->L0 = ((uint32_t)0x0U);
 
         /*----------------------------------------------------------------
          * Program the Override register.
          *----------------------------------------------------------------*/
-		pPBISTRegs->OVER = 1U;
+    		pPBISTRegs->OVER = 1U;
 
         /*----------------------------------------------------------------
          * Config access mode. Setting this bit allows the host processor
          * to configure the PBIST controller registers
          *----------------------------------------------------------------*/
-		pPBISTRegs->DLR = 0x10U;
+    		pPBISTRegs->DLR = 0x10U;
 
         /*----------------------------------------------------------------
          * Clear the memory group registers.
@@ -329,13 +319,13 @@ else if (gInst == SDL_PBIST_INST_DSS)
         /*----------------------------------------------------------------
          * Program the Override register.
          *----------------------------------------------------------------*/
-		pPBISTRegs->OVER = 0U;
+		     pPBISTRegs->OVER = 0U;
 
         /*----------------------------------------------------------------
          * Configure ROM MASK Register to ensure both Algorithm and
          * memory information is picked from PBIST ROM.
          *----------------------------------------------------------------*/
-        //SDL_PBIST_setROMAccessMode(pPBISTRegs, 0x3U);
+
         pPBISTRegs->ROM = 0x3u;
         /*----------------------------------------------------------------
         * Configure Interrupt and call-back function.
@@ -353,7 +343,7 @@ else if (gInst == SDL_PBIST_INST_DSS)
          *   will execute test algorithms that are stored in the PBIST ROM.
          * - This should cause the PBIST done interrupt
          *************************************************************/
-		pPBISTRegs->DLR = 0x21CU;
+		     pPBISTRegs->DLR = 0x21CU;
 
     }
 
@@ -378,13 +368,18 @@ int32_t SDL_PBIST_startNeg(SDL_pbistRegs *pPBISTRegs,
         /*----------------------------------------------------------------
         * Enable the MSS PBIST Self-Test Key.
         *----------------------------------------------------------------*/
-        if (gInst == SDL_PBIST_INST_TOP)
+
+        if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
         {
-                SDL_MSS_enableTopPbist(); //0
+                SDL_MSS_enableTopPbist();
         }
-        else if (gInst == SDL_PBIST_INST_DSS)
+        else if (gInst == (uint32_t)SDL_PBIST_INST_DSS)
         {
-                SDL_DSS_enableDSSPbist(); //1
+                SDL_DSS_enableDSSPbist();
+        }
+        else
+        {
+            sdlResult = SDL_EBADARGS;
         }
 
         pPBISTRegs->PACT = SDL_PBIST_PACT_PACT_MASK;

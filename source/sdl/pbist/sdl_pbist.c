@@ -55,7 +55,9 @@ static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistIns
     int32_t ret = SDL_PASS;
     SDL_DPL_HwipParams intrParams;
     void *localAddr = NULL;
+    #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_PBIST_Instance(instance);
+    #endif
     /* Disable interrupt */
     if (pInfo->interruptNumber != SDL_PBIST_INTERRUPT_INVALID)
     {
@@ -143,14 +145,18 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
   ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun[i]);
 
 #endif
-#if defined (SOC_AM273X) || (SOC_AWR294X)
-          if (gInst == SDL_PBIST_INST_TOP)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+          if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
           {
                 ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun1[i]);
           }
-          else if (gInst == SDL_PBIST_INST_DSS)
+          else if (gInst == (uint32_t)SDL_PBIST_INST_DSS)
           {
                   ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun2[i]);
+          }
+          else
+          {
+             ret = SDL_EBADARGS ;
           }
 #endif
 
