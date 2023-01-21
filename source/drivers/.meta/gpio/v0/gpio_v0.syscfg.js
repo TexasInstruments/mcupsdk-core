@@ -8,8 +8,8 @@ function getInstanceConfig(moduleInstance) {
         baseAddr: `CSL_${soc.getInstanceString(moduleInstance)}_BASE`,
         moduleIndex: soc.getInstanceString(moduleInstance),
         pinIndex: soc.getPinIndex(moduleInstance),
-        CoreID: getSelfCoreID(),
-        Cfg:boardConfig,
+        coreId: getSelfCoreID(),
+        cfg: boardConfig,
     }
 
     return {
@@ -48,26 +48,26 @@ function getPeripheralPinNames(inst) {
     return ["gpioPin"];
 }
 
-function validate(inst, report){
-    validateInterruptRouter(inst, report , "intrOut");
+function validate(inst, report) {
+    validateInterruptRouter(inst, report, "intrOut");
 }
 
 
 //Function to validate if same interrupt router is selected for other instances
-function validateInterruptRouter(instance, report,fieldname) {
+function validateInterruptRouter(instance, report, fieldname) {
     /* Verified by SYSCFG based on selected pin */
-    if(instance.advanced){
+    if (instance.advanced) {
         let moduleInstances = instance.$module.$instances;
         let validOptions = instance.$module.$configByName.intrOut.options(instance);
         let selectedOptions = instance.intrOut;
         let found = _.find(validOptions, (o) => o.name === selectedOptions)
-        if (!found) {
-            report[`log${"Error"}`]("Selected option is invalid, please reselect.", instance, fieldname);
+        if (found === undefined || found === null) {
+            report.logError("Selected option is invalid, please reselect.", instance, fieldname);
         }
         for (let i = 0; i < moduleInstances.length; i++) {
             if (instance[fieldname] === moduleInstances[i][fieldname] &&
                 instance !== moduleInstances[i]) {
-                report.logError("Same Interrupt Router lines cannot be selected",instance , fieldname);
+                report.logError("Same Interrupt Router lines cannot be selected", instance, fieldname);
                 return
             }
         }
@@ -78,10 +78,10 @@ function validateInterruptRouter(instance, report,fieldname) {
 function getLongDescription(data) {
     let routerDescription = `The interrupt router input to the Core are shared for different resources. Although many output pins were available for the GPIO MUX interrupt router, only resource pin that are allocated in board configuration is available for use`;
     let buttonDescription = 'If you manually changed the resource management (RM) data in source/drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_rm.c, click this button to reflect it in SysConfig.'
-    if (data=="router"){
+    if (data == "router") {
         return routerDescription;
     }
-    if(data=="button"){
+    if (data == "button") {
         return buttonDescription;
     }
     return "";
@@ -89,12 +89,12 @@ function getLongDescription(data) {
 
 //function to get router pin data from boardConfig
 function getRouterPins() {
-    let soc_name = common.getSocName();
-    if(soc_name =="am64x" || soc_name =="am243x"){
-        soc_name="am64x_am243x"
+    let socName = common.getSocName();
+    if (socName == "am64x" || socName == "am243x") {
+        socName = "am64x_am243x"
     }
     let core = common.getSelfSysCfgCoreName();
-    return boardConfig[soc_name][core]["outPinCfg"];
+    return boardConfig[socName][core]["outPinCfg"];
 }
 
 function getConfigurables() {
@@ -161,24 +161,25 @@ function getConfigurables() {
                 buttonText: "GET RM DATA",
                 hidden: true,
                 onLaunch: (inst) => {
-                    let products=system.getProducts()
-                    let sdk_path = products[0].path.split("/.metadata/product.json")[0]
-                    let file_path=sdk_path + "/source/drivers/.meta/gpio/soc/getBoardConfigRm.js"
-                    if(system.getOS()=="win"){
-                        sdk_path = products[0].path.split("\\.metadata\\product.json")[0]
-                        file_path = sdk_path+ "//source//drivers//.meta//gpio//soc//getBoardConfigRm.js"
+                    let products = system.getProducts()
+                    let sdkPath = products[0].path.split("/.metadata/product.json")[0]
+                    let filePath = sdkPath + "/source/drivers/.meta/gpio/soc/getBoardConfigRm.js"
+                    let socName = common.getSocName();
+                    if (system.getOS() == "win") {
+                        sdkPath = products[0].path.split("\\.metadata\\product.json")[0]
+                        filePath = sdkPath + "//source//drivers//.meta//gpio//soc//getBoardConfigRm.js"
                     }
                     return {
-                        command:"node",
-                        args: [file_path, "$comFile"],
+                        command: "node",
+                        args: [filePath, "$comFile", socName],
                         initialData: "initialData",
                         inSystemPath: true,
                     };
                 },
                 onComplete: (inst, _ui, result) => {
-                    if(result.data === "error") {
+                    if (result.data === "error") {
                         return;
-                    } else if(result.data === "initialData") {
+                    } else if (result.data === "initialData") {
                         return;
                     } else {
                         try {
@@ -196,7 +197,7 @@ function getConfigurables() {
                 description: 'GPIO-MUX interrupt Router Output to the destination Core',
                 longDescription: getLongDescription("router"),
                 hidden: true,
-                default: "",
+                default: getRouterPins()[0].name,
                 options: getRouterPins,
             },
         )
