@@ -67,6 +67,27 @@ and does the below,
 - USB device class driver should be operating as higher priority task if host driver is implemented as polling for device response with strict timeout.
 
 - If Cadence driver is used with TinyUSB, makefiles of both example and driver should define TINYUSB_INTEGRATION (like default cdc_echo example). This macro defined in driver and not in example or vice versa is an invalid combination.
+## USB Logging 
+
+- User needs to define following macros to enable logs. 
+	1. **CFG_TUSB_DEBUG** for enabling logs in **TinyUSB** stack .
+	2. **CFG_CUSB_DEBUG** for enabling logs in **USB device driver**.
+- By defult logging for both the modules will be enabled in **debug** profile and disabled in **release** profile. 
+- There is a provision for enabling and disabling logs for certain modules in USB device driver for better performance. Moreover user can also define required verbosity level. 
+
+- Approprite verbosity levels 
+	1. **DBG_CRIT** - critical         
+	2. **DBG_WARN** - warning
+    3. **DBG_FYI** - fyi
+    4. **DBG_HIVERB** - highly verbose
+
+- refer to \ref CUSBD_MODULE_IDS to check out module Ids. 
+- refer to \ref USB_MODULE for API definitions. 
+
+\note 
+	- Due to timings issue UART logs may not give expected performance in debug profile as the code is not optimized	  If user needs high verbose logs is recomended to use UART logs in **release profile or use shared memory logging.**
+	- refer \ref KERNEL_DPL_DEBUG_PAGE for more information on **shared memory logging** and how to use it. 
+
 
 ## Important files and directory structure
 
@@ -134,6 +155,7 @@ and does the below,
 <tr>
     <td> <a href="../../source/usb/cdn/doc/porting/porting_guide.pdf">USB Device Driver Porting Guide</a>
 </tr>
+- Constants defining module Ids for all modules in USB Device driver. 
 <tr><td colspan="1" bgcolor=#F0F0F0> SOC Porting Layer </td></tr>
 <tr>
     <td>\ref USB_MODULE
