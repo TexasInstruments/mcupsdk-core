@@ -103,13 +103,22 @@ Git Bash for the repo setup. Follow the below mentioned steps to setup repo tool
 
 Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Download) and is in your OS path.
 
-- Linux/Git Bash:
-
+- Linux:
+  Do the following in terminal
   ```bash
   curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
   chmod a+x ~/bin/repo
-  vi ~/.bashrc
-  PATH=$HOME/bin:$PATH
+  echo "PATH=$HOME/bin:$PATH" >> ~/.bashrc
+  source ~/.bashrc
+  ```
+
+- Git-Bash (Windows)
+  Make sure that python 3 is callable as `python` from CMD. Do below in Git-Bash
+  ```bash
+  mkdir -p /c/ti
+  curl https://storage.googleapis.com/git-repo-downloads/repo > /c/ti/repo
+  echo "alias repo=\"python winpty /c/ti/repo\"" >> ~/.bashrc
+  source ~/.bashrc
   ```
 
 #### Cloning The Repositories
