@@ -28,6 +28,9 @@ Below features are supported in the SDK
 - USB device
 - USB CDC Class
 
+\note It is highly recomended to use **TinyUSB version 0.14.0** as all the examples of supported device class were throughly 
+tested with **0.14.0**. 
+
 ### USB Device Driver
 
 The USB device driver is the USB HW specific software component that provides a programming abstraction to the Cadence USB IP
