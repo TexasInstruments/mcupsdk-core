@@ -52,6 +52,7 @@
 	.sect	".text"
 
 relocatable0:
+
 datalink_init_start:
 ;State RESET
 	zero			&r0, 124
@@ -66,7 +67,7 @@ datalink_reset:
 	;WAIT_TX_DONE
 	;CLKMODE
 	TX_FRAME_SIZE		0, REG_TMP0
-	TX_CLK_DIV 		CLKDIV_NORMAL, REG_TMP0
+	TX_CLK_DIV 		CLKDIV_FAST, REG_TMP0
 	zero			&H_FRAME, (4*2)
 ;init transport layer here
 	CALL			transport_init
@@ -162,27 +163,55 @@ datalink_no_sync:
 ;--------------------------------------------------------------------------------------------------
 datalink_reset2:
 	;push dummy values to TX FIFO to gain processing time
-	PUSH_FIFO_CONST		0x00
-	PUSH_FIFO_CONST		0x00
+
+
+	PUSH_FIFO_CONST			0x00
+	PUSH_FIFO_CONST			0x00
+	PUSH_FIFO_CONST			0x00
+	PUSH_FIFO_CONST			0x00
 	TX_CHANNEL
+	PUSH_FIFO_CONST_4x		0x00
+	PUSH_FIFO_CONST_8x		0x00
+
+	;debug starts
+;debug_fun:
+	;PUSH_FIFO_CONST		0xF5
+	;PUSH_FIFO_CONST		0x50
+	;WAIT_TX_FIFO_FREE
+	;jmp debug_fun
+	;sebug ends
 	;send RESET 2 times to reset protocol
-	loop			datalink_reset2_end, 2
+
+
+	;R27.b0(used in send 8x macro)
+	ldi   R27.b1 ,0
+RESET_LOOP:
+	;loop			datalink_reset2_end, 4
 	;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=0,vsync=0,reserved=0
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_RESET)
 	CALL			send_header
 	CALL1			send_stuffing
+	add 			R27.b1, R27.b1, 1
+	qbne RESET_LOOP,R27.b1,2
+
 datalink_reset2_end:
+
 ;--------------------------------------------------------------------------------------------------
 ;State SYNC
 ;--------------------------------------------------------------------------------------------------
-	loop			datalink_sync_end, 16
+	ldi   R27.b1 ,0
+SYNC_LOOP:
+	;loop			datalink_sync_end, 16
+
 datalink_sync:
 	;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=0,vsync=0,reserved=0
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_SYNC)
 	CALL			send_header
 	CALL1			send_stuffing
+	;TX_CHANNEL
 datalink_sync_end:
-
+	add 			R27.b1, R27.b1, 1
+	qbne SYNC_LOOP,R27.b1,16
 ;--------------------------------------------------------------------------------------------------
 ;State LEARN
 ; DLS response window is 1 switch bit + 61 slave answer and 12 delay bits
@@ -197,10 +226,11 @@ datalink_sync_end:
 	ldi			LOOP_CNT.b1, 9			;9
 
 datalink_learn:
-	WAIT_TX_FIFO_FREE
+	;;WAIT_TX_FIFO_FREE
 ;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=0,vsync=0,reserved=0
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_START)
 	CALL			send_header
+	;halt
 ; indication of TX_DONE comes about 53ns after wire timing
 	WAIT_TX_DONE
     .if $defined("FREERUN_300_MHZ")
@@ -212,7 +242,7 @@ datalink_learn:
 	NOP_2
 	NOP_2
 	NOP_2
-	NOP_2
+	;NOP_2
     .endif
 ; measured starting point at 0 cable length
 ; first 8 bits will be all ones is delay from encoder and transceiver
@@ -341,10 +371,40 @@ datalink_learn_recv_loop_final:
 datalink_learn_skip_wait:
 
 	TX_EN
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	;;
+	NOP_2
+	NOP_2
+	nop
+	;;
+
+
 ;send TRAILER
-	PUSH_FIFO_CONST		0x03
+	;;PUSH_FIFO_CONST		0x03   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
 	TX_CHANNEL
+	;WAIT_TX_FIFO_FREE
+
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+
+	;PUSH_FIFO_CONST_S_8x     0x0C
 ;	2 dummy cycles
+	;halt
 	NOP_2
 ; test: we are in oversample mode (3 PRU clocks per bit)
 ; extra NOPs should make it shorter
@@ -357,13 +417,14 @@ datalink_learn_skip_wait:
 	NOP_2
 	NOP_2
 	NOP_2
+
     .endif
-	TX_CLK_DIV		CLKDIV_SLOW, REG_TMP2
+	;;TX_CLK_DIV_WAIT		CLKDIV_SLOW, REG_TMP2
 ;reset DISPARITY
 	ldi			DISPARITY, 0
 	;2 dummy cycles
 	NOP_2
-	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP2
+	TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP2
 ;syn with clock before resetting counter
 	WAIT_CLK_LOW		REG_TMP2
 ;reset cycle count
@@ -375,12 +436,12 @@ datalink_learn_skip_wait:
 datalink_learn_pattern:
 	.if $defined(EXT_SYNC_ENABLE)
 	.else
-	WAIT_TX_FIFO_FREE
+	;;WAIT_TX_FIFO_FREE
 ;add stuffing to gain processing time
-	PUSH_FIFO_CONST		0x2c
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0xb2
-	PUSH_FIFO_CONST		0xcb
+	PUSH_FIFO_CONST_8x		0x2c
+	;;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST_8x		0xb2
+	PUSH_FIFO_CONST_8x		0xcb
 	.endif
 
 ;extensive search for test pattern
@@ -473,7 +534,7 @@ update_events_no_int22:
 datalink_learn2_before:
 	ldi			LOOP_CNT.b1, 9; 16
 datalink_learn2:
-	WAIT_TX_FIFO_FREE
+	;;WAIT_TX_FIFO_FREE
 ;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=0,vsync=0,reserved=0
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_LEARN)
 	CALL			send_header
@@ -709,40 +770,42 @@ send_01:
 ;send 01 pattern
 ;2 para bits, 1 switch bit, 5 slave bit
 	or			REG_FNC.b2, REG_FNC.b2, 0x15;0bPPS10101
-	PUSH_FIFO		REG_FNC.b2
+	PUSH_FIFO_8x		REG_FNC.b2
 ;56+12 line delay slave bits
 
 	ldi			REG_TMP0.b0, 8
 send_header_send_01_pattern_loop:
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0x55
+	;;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST_8x		0x55
 	sub			REG_TMP0.b0, REG_TMP0.b0, 1
 	qbne			send_header_send_01_pattern_loop, REG_TMP0.b0, 0
 ;send last 0101 (4 bits)
 	WAIT_TX_FIFO_FREE
-;overclock
+;overclock(No need to send data at 8x since 8x clock is used )
 	PUSH_FIFO_CONST		0x00
 	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9)
-	WAIT			REG_TMP0
-	TX_CLK_DIV		CLKDIV_FAST, REG_TMP0
+	;WAIT			REG_TMP0
+	;;TX_CLK_DIV_WAIT		CLKDIV_FAST, REG_TMP0
 	PUSH_FIFO_CONST		0xff
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0x00
 	PUSH_FIFO_CONST		0xff
 ;reset clock to normal speed
-	WAIT_TX_FIFO_FREE
+	;;WAIT_TX_FIFO_FREE
 ;push TRAILER
-	PUSH_FIFO_CONST		0x03
+	PUSH_FIFO_CONST_8x		0x03    ;as here clock is 1x need to send data for 8x
     .if $defined("FREERUN_300_MHZ")
 	ldi			REG_TMP0, (6*(CLKDIV_FAST+1)-8+2)
     .else
     ldi			REG_TMP0, (6*(CLKDIV_FAST+1)-8)
     .endif
-	WAIT			REG_TMP0
-	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
+	;;WAIT			REG_TMP0
+	;;TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
 ;wait to have same timing as send_trailer
 	ldi			REG_TMP0, 30;6
-	WAIT			REG_TMP0
+	;;WAIT			REG_TMP0
 ;reset cyclecount
 	RESET_CYCLCNT
 	RET1
+
+

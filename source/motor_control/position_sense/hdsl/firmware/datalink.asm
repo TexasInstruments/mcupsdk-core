@@ -173,7 +173,7 @@ update_events_no_int1:
 ;--------------------------------------------------------------------------------------------------
 ;State RX0-RX7
 	ldi			LOOP_CNT.w2, 8
-	;ldi			LOOP_CNT.b3, 0
+	ldi			LOOP_CNT.b3, 0
 	ldi			SEND_PARA, M_PAR_IDLE
 	ldi			CRC, 0
 datalink_rx0_7:
@@ -191,8 +191,9 @@ datalink_rx0_7_not_rx7:
 	and			BYTE_ERROR, BYTE_ERROR, 0x80
 ;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=1,vsync=1,reserved=0
 	mov			REG_FNC.b0, SEND_PARA
-
+	;PUSH_FIFO_CONST_8x		0xff
 	qbeq           modified_header, MODIFIED_HEADER_STARTED, 1
+
 	CALL		   send_header
 	ldi            MODIFIED_HEADER_STARTED, 1
 	qba            header_send_done
@@ -200,7 +201,6 @@ modified_header:
 	CALL			send_header_modified
 	and             R0,R0,R0
 header_send_done:
-
 	CALL			recv_dec
 ;check for vsync and update quality monitor - should only be set in rx7
 	qbbs			datalink_rx0_7_vsync_continue, BYTE_ERROR, BYTE_CH_PARAMETER
@@ -218,19 +218,38 @@ datalink_rx0_7_vsync_continue:
 	;reset flags
 	clr			H_FRAME.flags, H_FRAME.flags, FLAG_ERR_ACC
 	CALL1			send_stuffing
-
+;TEST1:
+;	qbeq TEST1,LOOP_CNT.b2,7
 ;sending sync and 2 bits of sample early to buy processing time for h frame processing
 	qbeq			modified_header_early_data_push_free_run, EXTRA_SIZE, 0
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0x2f
+	;;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST_8x		0x2f
 	;qbeq			modified_header_early_data_push_done, EXTRA_SIZE, 0
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0xff
+	;;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST_8x		0xff
 	RESET_CYCLCNT
 	qba modified_header_early_data_push_done
 modified_header_early_data_push_free_run:
+	;;WAIT_TX_FIFO_FREE
+	;;PUSH_FIFO_CONST_8x		0x2f
 	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0x2f
+	PUSH_FIFO_CONST  0x00
+	;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0x00
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST  0xff
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST  0x00
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST  0xff
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST  0xff
+	;WAIT_TX_FIFO_FREE
+
+
+	;PUSH_FIFO_CONST  0xff
+
+
 modified_header_early_data_push_done:
      ;READ_CYCLCNT		r19
 ;go to H-Frame callback on transport layer (max. 120-50=70 cycles)
@@ -239,20 +258,40 @@ modified_header_early_data_push_done:
 	;READ_CYCLCNT		REG_TMP2
 
 	sub			LOOP_CNT.b2, LOOP_CNT.b2, 1
-	qblt			datalink_rx0_7, LOOP_CNT.b2, 0
+	qblt			A, LOOP_CNT.b2, 0
+	jmp B
+
+A:
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+	qba			datalink_rx0_7
 ;V-Frame ends here
 	;HALT
 ;reset BYTE_ERROR
+B:
 	ldi			BYTE_ERROR, 0x00
 ;debug cnt
-	add			LOOP_CNT.b3, LOOP_CNT.b3, 1
+	;add			LOOP_CNT.b3, LOOP_CNT.b3, 1
 	ldi			LOOP_CNT.b2, 8
 	set			H_FRAME.flags, H_FRAME.flags, FLAG_NORMAL_FLOW
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0x00
 	qba			datalink_rx0_7
 
 ;--------------------------------------------------------------------------------------------------
 ;Reroute data link abort to avoid branching error.
 datalink_abort_jmp:
+	PUSH_FIFO_CONST  0xff
+	TX_CHANNEL
+	PUSH_FIFO_CONST_8x  0xff
+test02:
+	jmp test02
     jmp datalink_abort
 ;--------------------------------------------------------------------------------------------------
 
@@ -660,13 +699,31 @@ datalink_receive_signal_no_error_5:
 send_header:
 	;WAIT_TX_FIFO_FREE
 ;push SYNC and first 2 bits of SAMPLE
-	PUSH_FIFO_CONST		0x2f
+
+	;;PUSH_FIFO_CONST_8x		0x2f
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+
 ;check if we have an EXTRA period
 ;if we have a EXTRA period: do TX FIFO synchronization here to gain processing time
 	qbeq			send_header_no_extra_wait, EXTRA_SIZE, 0
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0xff
+	;;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST_8x		0xff
 	RESET_CYCLCNT
+
 send_header_modified:
 send_header_no_extra_wait:
 ;calculate EQUALIZATION
@@ -715,6 +772,11 @@ send_header_end_disp:
 ; V-frame processing is split into two parts : transport_on_v_frame and
 ; transport_on_v_frame_2.
 	qbne			datalink_transport_no_v_frame, LOOP_CNT.b2, 8
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+	.if !$defined(ICSS_G_V_1_0)
+	jmp			(transport_on_v_frame-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
+	.else
 	jmp			transport_on_v_frame
 datalink_transport_on_v_frame_done:
 datalink_transport_no_v_frame:
@@ -779,30 +841,41 @@ modified_header_wait:
 	ldi			REG_TMP0, (11*(CLKDIV_NORMAL+1))
 modified_header_wait_done:
 	.else
-	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9-4-4)
+	;ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9-4-4)
 	.endif
-	sub			REG_TMP0, REG_TMP0, REG_TMP1
-	WAIT			REG_TMP0
+	;sub			REG_TMP0, REG_TMP0, REG_TMP1
+	;;WAIT			REG_TMP0
+;reset ECAP INT
+	.if !$defined(ICSS_G_V_1_0) ;not using ecap for latching extra edge in AM65xx
+	ldi			REG_TMP0.w0, 0xffff
+	ldi			REG_TMP0.w2, (ECAP+ECAP_ECCLR)
+	sbco			&REG_TMP0.w0, PWMSS2_CONST, REG_TMP0.w2, 2
+	.endif
+
 send_header_extra_no_wait:
-	TX_CLK_DIV		CLKDIV_FAST, REG_TMP0
+	;TX_CLK_DIV_WAIT		CLKDIV_FAST, REG_TMP0
+	.if !$defined(ICSS_G_V_1_0)
+	sub			REG_TMP1.b0, EXTRA_SIZE, 1
+	.else
 	sub			REG_TMP1.b0, EXTRA_SIZE_SELF, 1
 send_header_extra_loop:
-	WAIT_TX_FIFO_FREE
+	;;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0xff
 	sub			REG_TMP1.b0, REG_TMP1.b0, 1
 	qbne			send_header_extra_loop, REG_TMP1.b0, 0
-	ldi			REG_TMP0, (11*(CLKDIV_FAST+1)-0)
+	;ldi			REG_TMP0, (11*(CLKDIV_FAST+1)-0)
 ;send last extra with fine granularity
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO		EXTRA_EDGE_SELF
 send_header_extra_no_edge:
 ;reset clock to normal frequency
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO		REG_TMP11.b0
+	;;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_8x		REG_TMP11.b0
+
 ;skip synch pulse measurement if we generate pulse ourself
-	WAIT			REG_TMP0
+	;;WAIT			REG_TMP0
 send_header_no_wait_after_synch:
-	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
+	TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
 
 	.if $defined(EXT_SYNC_ENABLE)
 ;**********************************************************************************************;
@@ -897,7 +970,7 @@ send_header_extra_drive_cycle_check_end:
 	qba			send_header_encode
 send_header_no_extra:
 ;push last bit of SAMPLE, 3 bits of CYCLE RESET and 4 bits EQUALIZATION
-	PUSH_FIFO		REG_TMP11.b0
+	PUSH_FIFO_8x		REG_TMP11.b0
 send_header_encode:
 ;encode data
 	ldi			REG_TMP11, (PDMEM00+LUT_5b6b_ENC)
@@ -940,9 +1013,15 @@ transport_layer_send_msg_done:
 ;encoding end
 	;.if $defined(EXT_SYNC_ENABLE)
 	;.else
-	WAIT_TX_FIFO_FREE
-	PUSH_FIFO		REG_FNC.b3
+	;;WAIT_TX_FIFO_FREE
+	;sbco 		&REG_FNC.b3,MASTER_REGS_CONST,0x70,1
+	PUSH_FIFO_8x		REG_FNC.b3
+
+	;qbeq			HALT_0, REG_FNC.b0, M_PAR_SYNC
 	;.endif
+
+;TEST1:
+;	qbeq TEST1,LOOP_CNT.b2,7
 
 	;check if we receive or send 01 pattern
 	qbeq			send_header_send_01_pattern, REG_FNC.b0, M_PAR_RESET
@@ -954,8 +1033,9 @@ send_header_send_01_pattern:
 	qba			send_header_end
 send_header_dont_send_01:
 ;send last 2 parameter bits
-	WAIT_TX_FIFO_FREE
+	;;WAIT_TX_FIFO_FREE
 ;overclock
+	;halt
 	qbbs			send_header_dont_send_01_send_1, REG_FNC.b2, 7
 	PUSH_FIFO_CONST		0x00
 	qba			send_header_dont_send_01_send_next
@@ -1170,8 +1250,11 @@ transport_layer_recv_msg_done:
 	READ_CYCLCNT		REG_TMP1
 	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9)
 	sub			REG_TMP0, REG_TMP0, REG_TMP1
-	WAIT			REG_TMP0
-	TX_CLK_DIV		CLKDIV_FAST, r0
+	;WAIT			REG_TMP0
+	NOP_2
+	NOP_2
+	NOP_2
+	TX_CLK_DIV_WAIT		CLKDIV_FAST, r0
 	qbbs			send_header_dont_send_01_send_11, REG_FNC.b2, 6
 	PUSH_FIFO_CONST		0x00
 	ldi			LAST_BIT_SENT, 0
@@ -1247,6 +1330,7 @@ calculation_for_wait_done:
 	mov			REG_TMP11, RET_ADDR1
 	qbeq			send_stuffing_no_stuffing, NUM_STUFFING, 0
 ;check if we have stuffing
+	;halt
 	READ_CYCLCNT		REG_TMP0
 	rsb			REG_TMP2, REG_TMP0, (5*(CLKDIV_NORMAL+1)+4);(6*(CLKDIV_NORMAL+1)+4)
 	mov			REG_FNC.b3, NUM_STUFFING
@@ -1268,7 +1352,7 @@ send_stuffing_sync_clk:
 	qbbc			send_stuffing_sync_clk, REG_TMP1, 8
 	.endif
 send_stuffing_first:
-	TX_CLK_DIV		CLKDIV_DOUBLE, REG_TMP1
+	TX_CLK_DIV_WAIT		CLKDIV_DOUBLE, REG_TMP1
 ;wait 4 cycles
 	ldi			REG_FNC.w0, CLKDIV_NORMAL
 	ldi			REG_FNC.b2, 4
@@ -1305,26 +1389,69 @@ send_trailer:
 ;already overclocked
 ;reduce trailer length by a few ns to compensate for a slightly transmission start delay < 30ns
 ;so: first reduce from higher clockrate to lower clock rate for 1 cycle, then set to normal clockrate again
-	PUSH_FIFO_CONST		0x03
+;;;;;;;;;;;;;
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	;;
+	NOP_2
+	NOP_2
+	nop
+	;;
+
+
+;send TRAILER
+	;;PUSH_FIFO_CONST		0x03   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
 	TX_CHANNEL
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+;	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	;WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+
+
+
+
+
+
+	;;PUSH_FIFO_CONST		0x03
+	;;TX_CHANNEL
 	;determine DELAY Master Register (also used as 2 dummy cycles)
 	lsl			REG_TMP1.b0, RSSI, 4
 	or			REG_TMP1.b0, REG_TMP1.b0, SLAVE_DELAY
 
 ;  additional delay here shortens the the first trailer byte
-	NOP_2
-	NOP_2
-	NOP_2
+	;NOP_2
+	;NOP_2
+	;NOP_2
+	;;new addition
+	;NOP_2
+	;;
     .if $defined("FREERUN_300_MHZ")
-	NOP_2
-	NOP_2
-	NOP_2
-	NOP_2
-	NOP_2
+	;NOP_2
+	;NOP_2
+	;NOP_2
+	;NOP_2
+	;NOP_2
     .endif
 ;   when to use slow (48) or slower (62)??
 ;	TX_CLK_DIV		CLKDIV_SLOWER, REG_TMP0
-	TX_CLK_DIV		CLKDIV_SLOW, REG_TMP0
+	;TX_CLK_DIV_WAIT		CLKDIV_SLOW, REG_TMP0
 
 ;reset DISPARITY
 	ldi			DISPARITY, 0
@@ -1338,7 +1465,7 @@ send_trailer:
 ;restore return addr
 	mov			RET_ADDR1, REG_TMP11.w0
 send_trailer_dont_update_qm:
-	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
+	;TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
 ;syn with clock before resetting counter
 	WAIT_CLK_LOW		REG_TMP0
 	RESET_CYCLCNT
@@ -1454,6 +1581,10 @@ wait_delay:
 	NOP_2
 	NOP_2
 	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	;
 	NOP_2
 	NOP_2
 	NOP_2

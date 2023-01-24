@@ -31,83 +31,83 @@
 ;
 
 CALL .macro func
-	jal		RET_ADDR0, func
-	.endm
+    jal     RET_ADDR0, func
+    .endm
 
 RET .macro
-	JMP		RET_ADDR0
-	.endm
+    JMP     RET_ADDR0
+    .endm
 
 CALL1 .macro func
-	jal		RET_ADDR1, func
-	.endm
+    jal     RET_ADDR1, func
+    .endm
 
 RET1 .macro
-	JMP		RET_ADDR1
-	.endm
+    JMP     RET_ADDR1
+    .endm
 
 QM_ADD .macro val
-	ldi		REG_FNC.b0, (val & 0xff)
-	add	    QM, QM, REG_FNC.b0
-	CALL1		qm_add
-	.endm
+    ldi     REG_FNC.b0, (val & 0xff)
+    add     QM, QM, REG_FNC.b0
+    CALL1       qm_add
+    .endm
 
 QM_SUB .macro val
-	ldi		REG_FNC.b0, (val & 0xff)
-	sub   	QM, QM, REG_FNC.b0
-	CALL1		qm_add
-	.endm
+    ldi     REG_FNC.b0, (val & 0xff)
+    sub     QM, QM, REG_FNC.b0
+    CALL1       qm_add
+    .endm
 
 FIND_EDGE .macro src, tmp
-	LOOKUP_BITCNT		tmp, src
-	add			SAMPLE_EDGE, tmp, 4
-	WRAP_AROUND		SAMPLE_EDGE, 8
-	.endm
+    LOOKUP_BITCNT       tmp, src
+    add         SAMPLE_EDGE, tmp, 4
+    WRAP_AROUND     SAMPLE_EDGE, 8
+    .endm
 
 WRAP_AROUND .macro reg, threshold
-	qbgt		l?, reg, threshold
-	sub			reg, reg, threshold;threshold/2
-	;ldi			reg, (threshold-1)
+    qbgt        l?, reg, threshold
+    sub         reg, reg, threshold;threshold/2
+    ;ldi            reg, (threshold-1)
 l?:
-	.endm
+    .endm
 
 LOOKUP_BITCNT .macro dst, src
-	ldi			dst, (PDMEM00+LUT_BITCNT)
-	lbbo		&dst, dst, src, 1
-	.endm
+    ldi         dst, (PDMEM00+LUT_BITCNT)
+    lbbo        &dst, dst, src, 1
+    .endm
 
 SAMPLE .macro dst, src
-	ldi			dst, (PDMEM00+LUT_BITCNT)
-	lbbo		&dst, dst, src, 1
-	qblt		l?, dst, 4
-	ldi			dst, 0
-	jmp			end?
+    ldi         dst, (PDMEM00+LUT_BITCNT)
+    lbbo        &dst, dst, src, 1
+    qblt        l?, dst, 4
+    ldi         dst, 0
+    jmp         end?
 l?:
-	ldi			dst, 1
+    ldi         dst, 1
 end?:
-	.endm
+    .endm
 
 WAIT .macro delay
-	lsr delay, delay, 1
-l?:	sub delay,delay,1
-	qblt l?,delay,0
-	.endm
+    lsr delay, delay, 1
+l?: sub delay,delay,1
+    qblt l?,delay,0
+    .endm
 
 WAIT_X24 .macro reg, offset
-	lsl		reg, reg, 3
-	sub		reg, reg, offset
+    lsl     reg, reg, 3
+    sub     reg, reg, offset
 l?:
-	and		r0, r0, r0
-	sub		reg, reg, 1
-	qblt	l?, reg, 0
-	.endm
+    and     r0, r0, r0
+    sub     reg, reg, 1
+    qblt    l?, reg, 0
+    .endm
 
 WAIT_BITS .macro bits, reg
-	ldi32		reg, (CYCLES_BIT/2*bits-1)
+    ldi32       reg, (CYCLES_BIT/2*bits-1)
 l?:
-	sub		reg, reg, 1
-	qblt	l?, reg, 0
-	.endm
+    sub     reg, reg, 1
+    qblt    l?, reg, 0
+    .endm
 
 TX_EN .macro
 	.if $defined(CHANNEL_2)
@@ -141,13 +141,19 @@ TX_FRAME_SIZE .macro bits, tmp0
 
 ;4 cycles
 TX_CLK_DIV .macro div, tmp0
-	ldi			tmp0.w2, div
-	;ldi     	REG_SCRATCH, P0EDTXCFG+2
-	sbco		&tmp0.w2, ICSS_CFGx, EDTXCFG+2, 2
-	.endm
+    ldi         tmp0.w2, div
+    ;ldi        REG_SCRATCH, P0EDTXCFG+2
+    sbco        &tmp0.w2, ICSS_CFGx, EDTXCFG+2, 2
+    .endm
+
+TX_CLK_DIV_WAIT .macro div,tmp0
+    nop
+    nop
+    nop
+    .endm
 
 WAIT_TX_DONE .macro
-	;WAIT_TX_FIFO_CLEAR
+    ;WAIT_TX_FIFO_CLEAR
 l?:
 	qbbs		l?, r31, TX_GLOBAL_REINIT_ACTIVE
 	.endm
@@ -183,26 +189,26 @@ SET_TX_CH0 .macro
 	.endm
 
 CLKMODE .macro
-	clr			r30.b2, r30.b2, 3
-	;set			r30.b2, r30.b2, 4
-	;ldi				r30.b2, 0x00
-	;ldi			r30.b2, 0x08
-	;ldi			r30.b2, 0x10
-	;ldi			r30.b2, 0x18
-	.endm
+    clr         r30.b2, r30.b2, 3
+    ;set            r30.b2, r30.b2, 4
+    ;ldi                r30.b2, 0x00
+    ;ldi            r30.b2, 0x08
+    ;ldi            r30.b2, 0x10
+    ;ldi            r30.b2, 0x18
+    .endm
 
 REINIT_TX .macro
 	set			r31, r31, TX_GLOBAL_REINIT
 	TX_EN
 	set			r31, r31, TX_GLOBAL_REINIT
 l?:
-	;qbbs		l?, r31, 21
-	loop	loop1?, 50
-	add R0, R0, 0
+    ;qbbs       l?, r31, 21
+    loop    loop1?, 50
+    add R0, R0, 0
 loop1?:
 
-	CLKMODE
-	.endm
+    CLKMODE
+    .endm
 
 REINIT_TX_CNT .macro reg
 	ldi			reg, 6
@@ -220,12 +226,72 @@ TX_CHANNEL .macro
 	.endm
 
 PUSH_FIFO_CONST .macro dat
-	ldi			r30.b0, dat
-	.endm
+    ldi         r30.b0, dat
+    .endm
 
 PUSH_FIFO .macro dat
-	mov			r30.b0, dat
-	.endm
+    mov         r30.b0, dat
+    .endm
+
+PUSH_FIFO_CONST_8x .macro dat
+
+    ldi r27.b0,dat
+    loop l1?, 8
+    qbbs l2?, r27, 7 ; check bit 0
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    l3?
+l2?:
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+l3?:
+    lsl   r27.b0, r27.b0, 1 ; Drop least significant bit
+l1?:
+    .endm
+
+PUSH_FIFO_8x .macro dat
+    loop L1?, 8
+    qbbs L2?, dat, 7 ; check bit 0
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3?
+L2?:
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3?:
+    lsl   dat,dat, 1 ; Drop least significant bit
+L1?:
+    .endm
+
+PUSH_FIFO_CONST_4x .macro dat
+
+    ldi r27.b0,dat
+    loop l1?, 4
+    qbbs l2?, r27, 7 ; check bit 0
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    l3?
+l2?:
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+l3?:
+    lsl   r27.b0, r27.b0, 1 ; Drop least significant bit
+l1?:
+    .endm
+
+PUSH_FIFO_4x .macro dat
+    loop L1?, 4
+    qbbs L2?, dat, 7 ; check bit 0
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3?
+L2?:
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3?:
+    lsl   dat,dat, 1 ; Drop least significant bit
+L1?:
+    .endm
 
 POP_FIFO .macro dst
 	.if $defined(CHANNEL_2)
@@ -276,21 +342,21 @@ CLEAR_OVF .macro
 	.endm
 
 ;CLEAR_VAL_OVF .macro
-	;ldi			r31.b3, 0x24
-	;.endm
+    ;ldi            r31.b3, 0x24
+    ;.endm
 
 
 RESET_CYCLCNT .macro
-	sbco		&r0, PRU_CTRL_CONST, PRU_CYCLCNT, 4
-	.endm
+    sbco        &r0, PRU_CTRL_CONST, PRU_CYCLCNT, 4
+    .endm
 
 READ_CYCLCNT .macro dst
-	lbco		&dst, PRU_CTRL_CONST, PRU_CYCLCNT, 4
-	.endm
+    lbco        &dst, PRU_CTRL_CONST, PRU_CYCLCNT, 4
+    .endm
 
 READ_IEPCNT .macro dst
-	lbco		&dst, IEP_CONST, IEP_CNT, 4
-	.endm
+    lbco        &dst, IEP_CONST, IEP_CNT, 4
+    .endm
 
 WAIT_CLK_HIGH .macro tmp
 l?:
@@ -325,16 +391,16 @@ l?:
 	.endm
 
 RESET_ECAP_INT .macro tmp0, tmp1
-	ldi			tmp0, (ECAP+ECAP_ECCLR)
-	ldi			tmp1, 0xffff
-	sbco			&tmp1, PWMSS1_CONST, tmp0, 2
-	.endm
+    ldi         tmp0, (ECAP+ECAP_ECCLR)
+    ldi         tmp1, 0xffff
+    sbco            &tmp1, PWMSS1_CONST, tmp0, 2
+    .endm
 
 NOP .macro
-	and			r0, r0, r0
-	.endm
+    and         r0, r0, r0
+    .endm
 
 NOP_2 .macro
-	loop			l?, 2
+    loop            l?, 2
 l?:
 	.endm

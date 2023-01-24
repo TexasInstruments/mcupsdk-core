@@ -218,6 +218,8 @@ transport_on_v_frame_estimate:
 	CALL1		estimator_fpos
 transport_on_v_frame_no_pos_mismatch:
 ;store SAFE POS
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
 	mov		REG_TMP0.b0, VERT_H.b2
 	mov		REG_TMP0.b1, VERT_H.b1
 	mov		REG_TMP0.b2, VERT_H.b0
