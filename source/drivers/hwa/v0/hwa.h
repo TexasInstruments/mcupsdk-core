@@ -312,7 +312,7 @@ extern "C" {
 #define HWA_TRIG_MODE_HARDWARE                      ((uint8_t)4U)      /**<  Hardware based trigger #1 */
 #define HWA_TRIG_MODE_RESERVED2                     ((uint8_t)5U)      /**<  Hardware based trigger #2 */
 #define HWA_TRIG_MODE_RESERVED3                     ((uint8_t)6U)      /**<  Hardware based trigger #3 */
-#define HWA_TRIG_MODE_M4CONTROL                     ((uint8_t)7U)      /**<  equivalent to software trigger, M4 Micro-controller based trigger */
+#define HWA_TRIG_MODE_SOFTWARE2                     ((uint8_t)7U)      /**<  equivalent to software trigger2 */
 /** @} */
 
 /**
@@ -2435,18 +2435,20 @@ extern int32_t HWA_enableContextSwitch(HWA_Handle handle, uint8_t flagEnDis);
 /**
 *  \brief  Function to manually trigger the execution of the state machine via software,
 *           the software trigger through either FW2HWA_TRIG_0 or FW2HWA_TRIG_1 register
-*           if the trigger is set to HWA_TRIG_MODE_SOFTWARE from DSP, trigger is done through FW2HWA_TRIG_0
-*           if the trigger is set to HWA_TRIG_MODE_M4CONTROL from M4, trigger is done through FW2HWA_TRIG_1
+*           if the trigger is set to HWA_TRIG_MODE_SOFTWARE from DSP/R5F, trigger is done through FW2HWA_TRIG_0
+*           if the trigger is set to HWA_TRIG_MODE_SOFTWARE2 from DSP/R5F, trigger is done through FW2HWA_TRIG_1
 *
 *  @pre    HWA_open() has been called.
 *
 *  @param  handle          A HWA_Handle returned from HWA_open()
+*  @param  swTriggerType   see maros \ref HWA_TRIG_MODE, takes value either HWA_TRIG_MODE_SOFTWARE
+*                           or HWA_TRIG_MODE_SOFTWARE2
 *
 *  @return 0 upon success. error code if an error occurs.
 *
 *  @sa     HWA_open()
 */
-extern int32_t HWA_setSoftwareTrigger(HWA_Handle handle);
+extern int32_t HWA_setSoftwareTrigger(HWA_Handle handle, uint8_t swTriggerType);
 
 /**
 *  \brief  Function to manually trigger the execution of the state machine via software in context switch,

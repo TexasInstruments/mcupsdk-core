@@ -1505,7 +1505,7 @@ static void test_azimfft(void *args)
 
     /* trigger the HWA manually using HWA_setSoftwareTrigger if triggerMode is set to Software */
     startTime = CycleCounterP_getCount32();
-    errCode = HWA_setSoftwareTrigger(handle);  //through DSP software trigger
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);  //through DSP software trigger
     endTime = CycleCounterP_getCount32();
     drvApiCycles[DRV_API_SOFTWARETRIG] = endTime - startTime;
     if(errCode != 0)
@@ -1907,7 +1907,7 @@ static void test_histogram(void *args)
     }
 
     /* trigger the HWA manually using HWA_setSoftwareTrigger if triggerMode is set to Software */
-    errCode = HWA_setSoftwareTrigger(handle);  //through DSP software trigger
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);  //through DSP software trigger
     if(errCode != 0)
     {
         DebugP_log("Error: HWA_setSoftwareTrigger returned %d\r\n", errCode);
@@ -2135,7 +2135,7 @@ static void test_compress(void *args)
 
     errCode = HWA_singleParamSetDonePolling(handle, 0);
 
-    errCode = HWA_setSoftwareTrigger(handle);
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);
 
     errCode = HWA_singleParamSetDonePolling(handle, paramsetIdx);
 
@@ -2289,7 +2289,7 @@ static void test_compress(void *args)
 
     errCode = HWA_enable(handle, 1);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
-    errCode = HWA_setSoftwareTrigger(handle);
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
     errCode = HWA_singleParamSetDonePolling(handle, paramsetIdx);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
@@ -3128,7 +3128,7 @@ static void test_contextswitch(void *args)
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
     /* trigger background thread */
-    errCode = HWA_setSoftwareTrigger(handle);
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
     numLoops--;
     while (!gHWAALTThreadDone)
@@ -3138,7 +3138,7 @@ static void test_contextswitch(void *args)
 
     /* wait for ALT treahd  done, trigger paramset 3 in the background thread */
     gHWAALTThreadDone = 0;
-    errCode = HWA_setSoftwareTrigger(handle);
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
     while (numLoops)
     {
@@ -3148,7 +3148,7 @@ static void test_contextswitch(void *args)
         }
         gHWAOneLoopDone = 0;
         numLoops--;
-        errCode = HWA_setSoftwareTrigger(handle); //trigger next loop for background thread
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //trigger next loop for background thread
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
         while (!gHWAALTThreadDone)
@@ -3157,7 +3157,7 @@ static void test_contextswitch(void *args)
         }
         gHWAALTThreadDone = 0;
         //wait for ALT thread done, trigger paramset 3
-        errCode = HWA_setSoftwareTrigger(handle);
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE);
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
     }
 
@@ -3372,14 +3372,14 @@ static void test_contextswitch(void *args)
     for(ii = 0; ii < numLoops; ii++)
     {
         /* trigger backgroud thread */
-        errCode = HWA_setSoftwareTrigger(handle); //param 0
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 0
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 1
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 1
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
@@ -3401,7 +3401,7 @@ static void test_contextswitch(void *args)
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
 #endif
-        errCode = HWA_setSoftwareTrigger(handle); //param 2
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 2
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
@@ -3417,49 +3417,49 @@ static void test_contextswitch(void *args)
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         }
 #endif
-        errCode = HWA_setSoftwareTrigger(handle); //param 10
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 10
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 11
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 11
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 10
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 10
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 11
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 11
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 3
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 3
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 4
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 4
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
 
         }
         gHWAcontextswitchParamDone = 0;
-        errCode = HWA_setSoftwareTrigger(handle); //param 5
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 5
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         while (!gHWAcontextswitchParamDone)
         {
@@ -3677,7 +3677,7 @@ static void test_contextswitch(void *args)
             gHWAOneLoopDone = 0;
 
             /* trigger backgroud thread, paramset 2*/
-            errCode = HWA_setSoftwareTrigger(handle); //param 2
+            errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 2
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
             //This is required for the 1st iteration to synchronize the HWA context -switching to what is expected else context switching in ES2.0 works as expected
             if (ii==0)
@@ -3713,7 +3713,7 @@ static void test_contextswitch(void *args)
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
             //when ALT thread is done, trigger param3
-            errCode = HWA_setSoftwareTrigger(handle); //param 3
+            errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 3
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
             while(gHWAOneLoopDone!=1)
@@ -3731,7 +3731,7 @@ static void test_contextswitch(void *args)
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
             /* trigger backgroud thread, paramset 2*/
-            errCode = HWA_setSoftwareTrigger(handle); //param 2
+            errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 2
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
             /* then wait for ALT thread done interrupt */
@@ -3739,7 +3739,7 @@ static void test_contextswitch(void *args)
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
             //when ALT thread is done, trigger param3
-            errCode = HWA_setSoftwareTrigger(handle); //param 3
+            errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 3
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
         }
     }
@@ -3750,7 +3750,7 @@ static void test_contextswitch(void *args)
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
         /* trigger backgroud thread, paramset 2*/
-        errCode = HWA_setSoftwareTrigger(handle); //param 2
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 2
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
         /* then wait for ALT thread done interrupt */
@@ -3758,7 +3758,7 @@ static void test_contextswitch(void *args)
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
         //when ALT thread is done, trigger param3
-        errCode = HWA_setSoftwareTrigger(handle); //param 3
+        errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //param 3
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
     }
 #endif
@@ -3931,7 +3931,7 @@ static void test_contextswitch(void *args)
     errCode = HWA_enable(handle, 1);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
-    errCode = HWA_setSoftwareTrigger(handle); //trigger paramset 32
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //trigger paramset 32
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
     /* force context switch, then wait for ALT thread done interrupt */
@@ -3953,7 +3953,7 @@ static void test_contextswitch(void *args)
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 #endif
 
-    errCode = HWA_setSoftwareTrigger(handle); //trigger paramset 33
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //trigger paramset 33
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
 #if defined (SOC_AWR294X)
@@ -3970,7 +3970,7 @@ static void test_contextswitch(void *args)
     status = SemaphoreP_pend(&doneSemALT, SystemP_WAIT_FOREVER);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
-    errCode = HWA_setSoftwareTrigger(handle); //trigger paramset 34
+    errCode = HWA_setSoftwareTrigger(handle, HWA_TRIG_MODE_SOFTWARE); //trigger paramset 34
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, errCode);
 
     /* wait for background thread done */

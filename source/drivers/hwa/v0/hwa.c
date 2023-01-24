@@ -409,7 +409,7 @@ static int32_t HWA_validateParamSetConfig(HWA_Object *ptrHWADriver, HWA_ParamCon
     else
     {
         /* general configuration */
-        if((paramConfig->triggerMode > HWA_TRIG_MODE_M4CONTROL) ||
+        if((paramConfig->triggerMode > HWA_TRIG_MODE_SOFTWARE2) ||
            ((paramConfig->triggerSrc > (ptrHWADriver->hwAttrs->numDmaChannels - 1)) &&
                 (paramConfig->triggerMode == HWA_TRIG_MODE_DMA)) ||
            ((paramConfig->triggerSrc > (SOC_HWA_NUM_CSIRX_IRQS - 1)) &&
@@ -4106,17 +4106,19 @@ extern int32_t HWA_enableContextSwitch(HWA_Handle handle, uint8_t flagEnDis)
 *  @brief  Function to manually trigger the execution of the state machine via software,
 *           the software trigger through either FW2HWA_TRIG_0 or FW2HWA_TRIG_1 register
 *           if the trigger is set to HWA_TRIG_MODE_SOFTWARE from DSP, trigger is done through FW2HWA_TRIG_0
-*           if the trigger is set to HWA_TRIG_MODE_M4CONTROL from M4, trigger is done through FW2HWA_TRIG_1
+*           if the trigger is set to HWA_TRIG_MODE_SOFTWARE2 from DSP, trigger is done through FW2HWA_TRIG_1
 *
 *  @pre    HWA_open() has been called.
 *
 *  @param  handle          A HWA_Handle returned from HWA_open()
+*  @param  swTriggerType   see maros \ref HWA_TRIG_MODE, takes value either HWA_TRIG_MODE_SOFTWARE
+*                           or HWA_TRIG_MODE_SOFTWARE2
 *
 *  @return 0 upon success. error code if an error occurs.
 *
 *  @sa     HWA_open()
 */
-int32_t HWA_setSoftwareTrigger(HWA_Handle handle)
+int32_t HWA_setSoftwareTrigger(HWA_Handle handle, uint8_t swTriggerType)
 {
     HWA_Object              *ptrHWADriver = NULL;
     int32_t                  retCode = 0;
@@ -4130,10 +4132,24 @@ int32_t HWA_setSoftwareTrigger(HWA_Handle handle)
     {
         ctrlBaseAddr = (DSSHWACCRegs *)ptrHWADriver->hwAttrs->ctrlBaseAddr;
 
-        CSL_FINSR(ctrlBaseAddr->FW2HWA_TRIG_0,
-                  FW2HWA_TRIG_0_FW2HWA_TRIGGER_0_END,
-                  FW2HWA_TRIG_0_FW2HWA_TRIGGER_0_START,
-                  1U);
+        if(swTriggerType == HWA_TRIG_MODE_SOFTWARE)
+        {
+            CSL_FINSR(ctrlBaseAddr->FW2HWA_TRIG_0,
+                    FW2HWA_TRIG_0_FW2HWA_TRIGGER_0_END,
+                    FW2HWA_TRIG_0_FW2HWA_TRIGGER_0_START,
+                    1U);
+        }
+        else if (swTriggerType == HWA_TRIG_MODE_SOFTWARE2)
+        {
+            CSL_FINSR(ctrlBaseAddr->FW2HWA_TRIG_1,
+                    FW2HWA_TRIG_0_FW2HWA_TRIGGER_0_END,
+                    FW2HWA_TRIG_1_FW2HWA_TRIGGER_1_END,
+                    1U);
+        }
+        else
+        {
+            retCode = HWA_EINVAL;
+        }
 
         HWA_releaseDriverAccess(ptrHWADriver,(bool) true,(bool) false,0);
     }
