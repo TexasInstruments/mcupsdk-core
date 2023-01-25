@@ -1274,7 +1274,7 @@ LIN_setChecksumType(uint32_t base, LIN_ChecksumType type)
     DebugP_assert(LIN_isBaseValid(base));
 
     /* Set stop bit. */
-    HW_WR_FIELD32_RAW((base + CSL_LIN_SCIGCR1), CSL_LIN_SCIGCR1_STOPEXTFRAME_MASK, CSL_LIN_SCIGCR1_STOPEXTFRAME_SHIFT, type);
+    HW_WR_FIELD32_RAW((base + CSL_LIN_SCIGCR1), CSL_LIN_SCIGCR1_CTYPE_MASK, CSL_LIN_SCIGCR1_CTYPE_SHIFT, type);
 }
 
 /**

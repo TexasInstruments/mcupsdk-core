@@ -120,6 +120,7 @@ static void LIN_setPinSampleMaskCheck(void *args);
 
 /*******************  TEST SUITE 4 ************************************/
 static void LIN_setDebugSuspendModeCheck(void *args);
+static void LIN_setCheckSumCheck(void *args);
 static void LIN_enableGlobalInterruptCheck(void *args);
 static void LIN_disableGlobalInterruptCheck(void *args);
 static void LIN_sendDataCheck(void *args);
@@ -164,63 +165,64 @@ void test_main(void *args)
 
     LIN_initModule(CONFIG_LIN1_BASE_ADDR);
 
-    RUN_TEST(LIN_setLINModeCheck,  4000, NULL);
-    RUN_TEST(LIN_setMaximumBaudRateCheck,  4001, NULL);
-    RUN_TEST(LIN_setMessageFilteringCheck,  4002, NULL);
-    RUN_TEST(LIN_enableParityCheck,  4003, NULL);
-    RUN_TEST(LIN_disableParityCheck,  4004, NULL);
-    RUN_TEST(LIN_setIDByteCheck,  4005, NULL);
-    RUN_TEST(LIN_setIDSlaveTaskCheck,  4006, NULL);
-    RUN_TEST(LIN_sendWakeupSignalCheck,  4007, NULL);
-    RUN_TEST(LIN_enterSleepCheck,  4008, NULL);
-    RUN_TEST(LIN_sendChecksumCheck,  4009, NULL);
-    RUN_TEST(LIN_setFrameLengthCheck,  4010, NULL);
-    RUN_TEST(LIN_setCommModeCheck,  4011, NULL);
+    RUN_TEST(LIN_setLINModeCheck,  8038, NULL);
+    RUN_TEST(LIN_setMaximumBaudRateCheck,  8038, NULL);
+    RUN_TEST(LIN_setMessageFilteringCheck,  8038, NULL);
+    RUN_TEST(LIN_enableParityCheck,  8038, NULL);
+    RUN_TEST(LIN_disableParityCheck,  8038, NULL);
+    RUN_TEST(LIN_setIDByteCheck,  8038, NULL);
+    RUN_TEST(LIN_setIDSlaveTaskCheck,  8038, NULL);
+    RUN_TEST(LIN_sendWakeupSignalCheck,  8038, NULL);
+    RUN_TEST(LIN_enterSleepCheck,  8038, NULL);
+    RUN_TEST(LIN_sendChecksumCheck,  8038, NULL);
+    RUN_TEST(LIN_setFrameLengthCheck,  8038, NULL);
+    RUN_TEST(LIN_setCommModeCheck,  8038, NULL);
 
-    RUN_TEST(LIN_isSCISpaceAvailableCheck,  4012, NULL);
-    RUN_TEST(LIN_readSCICharNonBlockingCheck,  4013, NULL);
-    RUN_TEST(LIN_readSCICharBlockingCheck,  4014, NULL);
-    RUN_TEST(LIN_writeSCICharNonBlockingCheck,  4015, NULL);
-    RUN_TEST(LIN_writeSCICharBlockingCheck,  4016, NULL);
-    RUN_TEST(LIN_enableSCIInterruptCheck,  4017, NULL);
-    RUN_TEST(LIN_disableSCIInterruptCheck,  4018, NULL);
-    RUN_TEST(LIN_clearSCIInterruptStatusCheck,  4019, NULL);
-    RUN_TEST(LIN_setSCIInterruptLevel0Check,  4020, NULL);
-    RUN_TEST(LIN_setSCIInterruptLevel1Check,  4021, NULL);
-    //RUN_TEST(LIN_isSCIReceiverIdleCheck,  4022, NULL);
-    RUN_TEST(LIN_getSCITxFrameTypeCheck,  4023, NULL);
-    RUN_TEST(LIN_getSCIRxFrameTypeCheck,  4024, NULL);
-    RUN_TEST(LIN_isSCIBreakDetectedCheck,  4025, NULL);
-    RUN_TEST(LIN_enableModuleCheck,  4026, NULL);
-    RUN_TEST(LIN_disableModuleCheck,  4027, NULL);
-    RUN_TEST(LIN_setBaudRatePrescalerCheck,  4028, NULL);
+    RUN_TEST(LIN_isSCISpaceAvailableCheck,  8038, NULL);
+    RUN_TEST(LIN_readSCICharNonBlockingCheck,  8038, NULL);
+    RUN_TEST(LIN_readSCICharBlockingCheck,  8038, NULL);
+    RUN_TEST(LIN_writeSCICharNonBlockingCheck,  8038, NULL);
+    RUN_TEST(LIN_writeSCICharBlockingCheck,  8038, NULL);
+    RUN_TEST(LIN_enableSCIInterruptCheck,  8038, NULL);
+    RUN_TEST(LIN_disableSCIInterruptCheck,  8038, NULL);
+    RUN_TEST(LIN_clearSCIInterruptStatusCheck,  8038, NULL);
+    RUN_TEST(LIN_setSCIInterruptLevel0Check,  8038, NULL);
+    RUN_TEST(LIN_setSCIInterruptLevel1Check,  8038, NULL);
+    //RUN_TEST(LIN_isSCIReceiverIdleCheck,  8038, NULL);
+    RUN_TEST(LIN_getSCITxFrameTypeCheck,  8038, NULL);
+    RUN_TEST(LIN_getSCIRxFrameTypeCheck,  8038, NULL);
+    RUN_TEST(LIN_isSCIBreakDetectedCheck,  8038, NULL);
+    RUN_TEST(LIN_enableModuleCheck,  8038, NULL);
+    RUN_TEST(LIN_disableModuleCheck,  8038, NULL);
+    RUN_TEST(LIN_setBaudRatePrescalerCheck,  8038, NULL);
 
-    RUN_TEST(LIN_enableDataTransmitterCheck,  4029, NULL);
-    RUN_TEST(LIN_disableDataTransmitterCheck,  4030, NULL);
-    RUN_TEST(LIN_enableDataReceiverCheck,  4031, NULL);
-    RUN_TEST(LIN_disableDataReceiverCheck,  4032, NULL);
-    RUN_TEST(LIN_performSoftwareResetCheck,  4033, NULL);
-    RUN_TEST(LIN_enterSoftwareResetCheck,  4034, NULL);
-    RUN_TEST(LIN_exitSoftwareResetCheck,  4035, NULL);
-    RUN_TEST(LIN_isBusBusyCheck,  4036, NULL);
-    RUN_TEST(LIN_isTxBufferEmptyCheck,  4037, NULL);
-    RUN_TEST(LIN_enableExtLoopbackCheck,  4038, NULL);
-    RUN_TEST(LIN_disableExtLoopbackCheck,  4039, NULL);
-    RUN_TEST(LIN_enableIntLoopbackCheck,  4040, NULL);
-    RUN_TEST(LIN_getInterruptStatusCheck,  4041, NULL);
-    RUN_TEST(LIN_getInterruptLevelCheck,  4042, NULL);
-    RUN_TEST(LIN_getInterruptLine0OffsetCheck,  4043, NULL);
-    RUN_TEST(LIN_getInterruptLine1OffsetCheck,  4044, NULL);
-    RUN_TEST(LIN_enableMultibufferModeCheck,  4045, NULL);
-    RUN_TEST(LIN_disableMultibufferModeCheck,  4046, NULL);
-    RUN_TEST(LIN_setTransmitDelayCheck,  4047, NULL);
-    RUN_TEST(LIN_setPinSampleMaskCheck,  4048, NULL);
+    RUN_TEST(LIN_enableDataTransmitterCheck,  8038, NULL);
+    RUN_TEST(LIN_disableDataTransmitterCheck,  8038, NULL);
+    RUN_TEST(LIN_enableDataReceiverCheck,  8038, NULL);
+    RUN_TEST(LIN_disableDataReceiverCheck,  8038, NULL);
+    RUN_TEST(LIN_performSoftwareResetCheck,  8038, NULL);
+    RUN_TEST(LIN_enterSoftwareResetCheck,  8038, NULL);
+    RUN_TEST(LIN_exitSoftwareResetCheck,  8038, NULL);
+    RUN_TEST(LIN_isBusBusyCheck,  8038, NULL);
+    RUN_TEST(LIN_isTxBufferEmptyCheck,  8038, NULL);
+    RUN_TEST(LIN_enableExtLoopbackCheck,  8038, NULL);
+    RUN_TEST(LIN_disableExtLoopbackCheck,  8038, NULL);
+    RUN_TEST(LIN_enableIntLoopbackCheck,  8038, NULL);
+    RUN_TEST(LIN_getInterruptStatusCheck,  8038, NULL);
+    RUN_TEST(LIN_getInterruptLevelCheck,  8038, NULL);
+    RUN_TEST(LIN_getInterruptLine0OffsetCheck,  8038, NULL);
+    RUN_TEST(LIN_getInterruptLine1OffsetCheck,  8038, NULL);
+    RUN_TEST(LIN_enableMultibufferModeCheck,  8038, NULL);
+    RUN_TEST(LIN_disableMultibufferModeCheck,  8038, NULL);
+    RUN_TEST(LIN_setTransmitDelayCheck,  8038, NULL);
+    RUN_TEST(LIN_setPinSampleMaskCheck,  8038, NULL);
 
-    RUN_TEST(LIN_setDebugSuspendModeCheck,  4049, NULL);
-    RUN_TEST(LIN_enableGlobalInterruptCheck,  4050, NULL);
-    RUN_TEST(LIN_disableGlobalInterruptCheck,  4051, NULL);
-    RUN_TEST(LIN_sendDataCheck,  4052, NULL);
-    RUN_TEST(LIN_generateParityIDCheck,  4053, NULL);
+    RUN_TEST(LIN_setDebugSuspendModeCheck,  8038, NULL);
+    RUN_TEST(LIN_setCheckSumCheck,  8038, NULL);
+    RUN_TEST(LIN_enableGlobalInterruptCheck,  8038, NULL);
+    RUN_TEST(LIN_disableGlobalInterruptCheck,  8038, NULL);
+    RUN_TEST(LIN_sendDataCheck,  8038, NULL);
+    RUN_TEST(LIN_generateParityIDCheck,  8038, NULL);
 
     UNITY_END();
 
@@ -693,6 +695,23 @@ static void LIN_setDebugSuspendModeCheck(void *args)
     /*(HWREG_BP(base + LIN_O_SCIGCR1) & LIN_SCIGCR1_CONT)*/
     TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1) & CSL_LIN_SCIGCR1_CONT_MASK),
                                         (CSL_LIN_SCIGCR1_CONT_MASK), "LIN_setDebugSuspendMode check failed.");
+}
+
+static void LIN_setCheckSumCheck(void *args)
+{
+    LIN_initModule(CONFIG_LIN1_BASE_ADDR);
+
+    LIN_setChecksumType(CONFIG_LIN1_BASE_ADDR, LIN_CHECKSUM_CLASSIC);
+
+    /* Check if the value was written correctly */
+    TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1) & CSL_LIN_SCIGCR1_CTYPE_MASK),
+                                        (0x0U), "LIN_setDebugSuspendMode check failed.");
+
+    LIN_setChecksumType(CONFIG_LIN1_BASE_ADDR, LIN_CHECKSUM_ENHANCED);
+
+    /* Check if the value was written correctly */
+    TEST_ASSERT_EQUAL_INT32_MESSAGE((HW_RD_REG32_RAW(CONFIG_LIN1_BASE_ADDR + CSL_LIN_SCIGCR1) & CSL_LIN_SCIGCR1_CTYPE_MASK),
+                                        (CSL_LIN_SCIGCR1_CTYPE_MASK), "LIN_setDebugSuspendMode check failed.");
 }
 
 static void LIN_enableGlobalInterruptCheck(void *args)
