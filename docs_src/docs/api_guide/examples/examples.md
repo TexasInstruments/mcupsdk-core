@@ -34,6 +34,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_DRIVERS
 -# \subpage EXAMPLES_DRIVERS_SBL
 -# \subpage EXAMPLES_NETWORKING
+-# \subpage EXAMPLES_SECURITY
 -# \subpage EXAMPLES_SDL
 \endcond
 \cond SOC_AM273X

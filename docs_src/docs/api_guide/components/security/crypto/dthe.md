@@ -1,7 +1,7 @@
 # DTHE {#DRIVERS_DTHE_PAGE}
 [TOC]
 
-DTHE stands for Data Transform and Hashing Engine. This module is a wrapper 
+DTHE stands for Data Transform and Hashing Engine. This module is a wrapper
 on top of the Crypto IP with some additional capability, including CRC and Checksum
 
 ### Features Supported In Hardware
@@ -9,7 +9,7 @@ DTHE provides the following features:
 
 * Symmetric encryption and decryption
 	* AES: 128, 192, and 256 bit keys
-	* Cipher modes ECB, CTR, CBC, GCM, CCM, F9, F8, XTS, CFB, ICM, CTR, 
+	* Cipher modes ECB, CTR, CBC, GCM, CCM, F9, F8, XTS, CFB, ICM, CTR,
       CBC-MAC, CMAC based on AES
 * Asymmetric cryptography
 	* High performance PKA (public key engine) for large vector math/modulus operation
@@ -26,7 +26,7 @@ DTHE provides the following features:
     - <b>EIP29T</b> : PKA accelerator
     - <b>EIP57T</b> : SHA/MD5 accelerator
     - <b>EIP36T</b> : AES accelerator
-    - <b>EIP75T</b> : True Random Number Generation
+    - <b>EIP76T</b> : True Random Number Generation
 
 Apart from this the module holds HW accelerator for <b>CRC and Checksum</b>.
 
@@ -43,11 +43,17 @@ The IP supports the following features:
 *  Supports TCP CheckSum (CSUM)
 
 ### Features Supported In Driver
-
-\note True Random Number Generation (TRNG) is not supported currently and will
-be available in future releases.
-
-- \subpage DRIVERS_DTHE_SHA_PAGE 
+\note True Random Number Generation (TRNG) and PKA (Public Key Accelerator) are not supported from R5F on HS-SE devices as these are secure assests and are locked for HSM.
+\cond SOC_AM263X
+\note TRNG and PKA are single context engines and hence are secure assets on HS-SE devices. Should the system integrator choose to use these engines from R5F in HS-SE devices, they can do so by removing SOC and Device type checks in function defintions RNG_open() and PKA_open() in rng.c and pka.c respectively.
+\endcond
+\cond SOC_AM273X
+\note TRNG and PKA are single context engines and hence are secure assets on HS-SE devices.
+\note HSM support for HS-FS devices for using crypto drivers on R5F will be provided in future releases.
+\note On GP devices, AES, PKA and TRNG are not supported. SHA examples will work as is.
+\endcond
+\cond SOC_AM273X
+- \subpage DRIVERS_DTHE_SHA_PAGE
 	- <b>S</b>ecure <b>h</b>ash <b>a</b>lgorithms)
         - <b>SHA256</b>, <b>SHA512</b>
 	- <b>H</b>ash-based <b>m</b>essage <b>a</b>uthentication <b>c</b>ode
@@ -57,8 +63,19 @@ be available in future releases.
         - <b>AES-CBC</b>(128/256)(<b>C</b>ipher <b>B</b>lock <b>C</b>haining)
         - <b>AES-ECB</b>(128/256)(<b>E</b>lectronic <b>C</b>ode <b>B</b>ook)
         - <b>AES-CMAC</b>(128/256)(<b>C</b>ipher-based <b>M</b>essage <b>A</b>uthentication <b>C</b>ode)
- 
-- \subpage SECURITY_PKA_MODULE_PAGE (Public key accelerator)
+\endcond
+\cond SOC_AM263X
+- \subpage DRIVERS_DTHE_SHA_PAGE (Supported on HS-SE and HS-FS device type)
+	- <b>S</b>ecure <b>h</b>ash <b>a</b>lgorithms)
+        - <b>SHA256</b>, <b>SHA512</b>
+	- <b>H</b>ash-based <b>m</b>essage <b>a</b>uthentication <b>c</b>ode
+        - <b>HMAC SHA-256</b>, <b>HMAC SHA-512</b>
+- \subpage DRIVERS_DTHE_AES_PAGE (Supported on HS-SE and HS-FS device type)
+	- <b>A</b>dvanced <b>e</b>ncryption <b>s</b>tandard
+        - <b>AES-CBC</b>(128/256)(<b>C</b>ipher <b>B</b>lock <b>C</b>haining)
+        - <b>AES-ECB</b>(128/256)(<b>E</b>lectronic <b>C</b>ode <b>B</b>ook)
+        - <b>AES-CMAC</b>(128/256)(<b>C</b>ipher-based <b>M</b>essage <b>A</b>uthentication <b>C</b>ode)
+- \subpage SECURITY_PKA_MODULE_PAGE (Public key accelerator) (Supported on HS-FS device type)
     - <b>RSA</b> Module
     	- Supports up to 4096 bit key.
     	- Supports Raw operations.
@@ -67,7 +84,9 @@ be available in future releases.
 	- <b>ECDSA</b> Module
     	- ECDSA signing and verification operations
         - p-256 and p-384 curves
- 
+- \subpage DRIVER_DTHE_TRNG (True Random Number Generation) (Supported on HS-FS device type)
+    - 128 bit random number with no DRBG seeding
+\endcond
 ### Block diagram
 
 \imageStyle{dthe_block_diagram.png,width:60%}
