@@ -32,6 +32,7 @@ const libdirs = {
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
+        "${MCU_PLUS_SDK_PATH}/test/drivers/menu/",
     ],
 };
 
@@ -70,7 +71,6 @@ const templates_nortos_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos"},
 ];
 
 function getComponentProperty() {
