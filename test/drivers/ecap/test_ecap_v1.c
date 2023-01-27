@@ -38,6 +38,10 @@
 #include <stdlib.h>
 #include <unity.h>
 #include <drivers/ecap.h>
+#include <drivers/edma.h>
+#include <drivers/adc.h>
+#include <drivers/gpio.h>
+#include <drivers/pinmux.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
@@ -205,21 +209,39 @@ void tester_command(char *str)
 #define PARAMS_RESET_VAL_SOC_EVT_SOURCE                 (0) // CAP 1
 #define PARAMS_RESET_VAL_INPUT_SEL                      (0) // 0XFF (invalid input.)
 
-
 #define NUM_ECAP_INSTANCES (10)
 uint32_t ecap_base_addr[NUM_ECAP_INSTANCES] =
-    {
-        CSL_CONTROLSS_ECAP0_U_BASE,
-        CSL_CONTROLSS_ECAP1_U_BASE,
-        CSL_CONTROLSS_ECAP2_U_BASE,
-        CSL_CONTROLSS_ECAP3_U_BASE,
-        CSL_CONTROLSS_ECAP4_U_BASE,
-        CSL_CONTROLSS_ECAP5_U_BASE,
-        CSL_CONTROLSS_ECAP6_U_BASE,
-        CSL_CONTROLSS_ECAP7_U_BASE,
-        CSL_CONTROLSS_ECAP8_U_BASE,
-        CSL_CONTROLSS_ECAP9_U_BASE,
+{
+    CSL_CONTROLSS_ECAP0_U_BASE,
+    CSL_CONTROLSS_ECAP1_U_BASE,
+    CSL_CONTROLSS_ECAP2_U_BASE,
+    CSL_CONTROLSS_ECAP3_U_BASE,
+    CSL_CONTROLSS_ECAP4_U_BASE,
+    CSL_CONTROLSS_ECAP5_U_BASE,
+    CSL_CONTROLSS_ECAP6_U_BASE,
+    CSL_CONTROLSS_ECAP7_U_BASE,
+    CSL_CONTROLSS_ECAP8_U_BASE,
+    CSL_CONTROLSS_ECAP9_U_BASE,
 };
+
+uint32_t adc_base_addr[5] =
+{
+    CSL_CONTROLSS_ADC0_U_BASE,
+    CSL_CONTROLSS_ADC1_U_BASE,
+    CSL_CONTROLSS_ADC2_U_BASE,
+    CSL_CONTROLSS_ADC3_U_BASE,
+    CSL_CONTROLSS_ADC4_U_BASE,
+};
+
+#define INPUT   (1)
+#define OUTPUT  (0)
+
+uint32_t gpio_base_addr = CSL_GPIO0_U_BASE;
+
+/* GPIO59 -> EPWM8_A (G3) */
+uint32_t gpio_pin = (PIN_EPWM8_A)>>2;
+
+uint32_t inputxbar_base_addr = CSL_CONTROLSS_INPUTXBAR_U_BASE;
 
 typedef struct
 {
@@ -232,7 +254,7 @@ typedef struct
     bool capture_mode_continuous;
     uint16_t wrap_capture;
     uint16_t prescaler;
-    // todo add: qual_prd;
+    /* todo add: qual_prd; */
     bool polarity[4];
     bool int_en;
     uint16_t int_source;
@@ -271,7 +293,7 @@ void util_ECAP_config_reset(void)
     ecap_config_ptr->prescaler = PARAMS_RESET_VAL_PRESCALER;
 
     /* TBD */
-    // ecap_config_ptr->qual_prd ;
+    /* ecap_config_ptr->qual_prd ; */
 
     /* all to the falling edge polarity */
     for (int iter = 0; iter < 4; iter++)
@@ -325,19 +347,211 @@ static void ECAP_support_absolute_and_difference_mode_timestamp_capture(void *ar
 static void ECAP_add_additional_input_trigger_sources(void *args);
 static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args);
 static void ECAP_selection_of_soc_trigger_source(void *args);
+static void ECAP_selection_of_dma_trigger_source(void *args);
 
 int32_t test_ecap_cases(uint8_t in);
 
+/* ECAP util functions */
 void util_ECAP_reset_all(void);
 void util_start_capture_timestamp(uint16_t instance);
 void ecap_configure(uint16_t instance);
 void ecap_deconfigure_and_reset(uint16_t instance);
-int16_t wait_for_ecap_interrupt(uint16_t instance);
+bool wait_for_ecap_interrupt(uint16_t instance);
 
+/* ADC util funcitons */
+void clear_adc_interrupts(void);
+bool wait_for_adc_interrupts(void);
+void util_adc_init_configure_soc_source(uint16_t adc_instance,uint16_t ecap_instance);
+void util_adc_reset(uint16_t adc_instace);
+
+/* GPIO util funcitons */
+void util_configure_gpio(bool input);
+void util_gpio_toggle(uint16_t times, uint32_t uSec_delay);
+
+/* EDMA util funcitons */
+void util_EDMA_configure(uint16_t ecap_instance);
+void util_EDMA_deconfigure(void);
+
+/* test implementing functions */
 int32_t AM263x_ECAP_BTR_001(uint16_t instance);
+int32_t AM263x_ECAP_BTR_002(uint16_t instance);
+int32_t AM263x_ECAP_BTR_003(uint16_t instance);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/*                            EDMA Related variabls                           */
+
+#define CONFIG_EDMA0 (0U)
+#define CONFIG_EDMA_NUM_INSTANCES (1U)
+/* Event queue to be used for EDMA transfer */
+#define EDMA_TEST_EVT_QUEUE_NO  0U
+
+static EDMA_Object gEdmaObjects[CONFIG_EDMA_NUM_INSTANCES];
+
+/* EDMA Driver handles */
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+/* EDMA Driver Open Parameters */
+EDMA_Params gEdmaParams[CONFIG_EDMA_NUM_INSTANCES] =
+{
+    {
+        .intrEnable = TRUE,
+    },
+};
+static EDMA_Attrs gEdmaAttrs[CONFIG_EDMA_NUM_INSTANCES] =
+{
+    {
+
+        .baseAddr           = CSL_TPCC0_U_BASE,
+        .compIntrNumber     = CSLR_R5FSS0_CORE0_INTR_TPCC0_INTAGGR,
+        .intrAggEnableAddr  = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_TPCC0_INTAGG_MASK,
+        .intrAggEnableMask  = 0x1FF & (~(2U << 0)),
+        .intrAggStatusAddr  = CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_TPCC0_INTAGG_STATUS,
+        .intrAggClearMask   = (2U << 0),
+        .initPrms           =
+        {
+            .regionId     = 0,
+            .queNum       = 0,
+            .initParamSet = FALSE,
+            .ownResource    =
+            {
+                .qdmaCh      = 0x03U,
+                .dmaCh[0]    = 0xFFFFFFFFU,
+                .dmaCh[1]    = 0x000000FFU,
+                .tcc[0]      = 0xFFFFFFFFU,
+                .tcc[1]      = 0x000000FFU,
+                .paramSet[0] = 0xFFFFFFFFU,
+                .paramSet[1] = 0xFFFFFFFFU,
+                .paramSet[2] = 0xFFFFFFFFU,
+                .paramSet[3] = 0xFFFFFFFFU,
+                .paramSet[4] = 0xFFFFFFFFU,
+                .paramSet[5] = 0xFFFFFFFFU,
+                .paramSet[6] = 0xFFFFFFFFU,
+                .paramSet[7] = 0x000007FFU,
+            },
+            .reservedDmaCh[0]    = 0x00000000U,
+            .reservedDmaCh[1]    = 0x00000000U,
+        },
+    },
+};
+EDMA_Config gEdmaConfig[CONFIG_EDMA_NUM_INSTANCES] =
+{
+    {
+        &gEdmaAttrs[CONFIG_EDMA0],
+        &gEdmaObjects[CONFIG_EDMA0],
+    },
+};
+
+/* EDMA global variables */
+uint32_t gEdmaConfigNum = CONFIG_EDMA_NUM_INSTANCES;
+EDMACCPaRAMEntry    edmaParam;
+uint32_t            edma_base_addr, regionId;
+uint32_t            dmaCh, tcc, param;
+
+
+void util_EDMA_configure(uint16_t ecap_instance)
+{
+    /* configuring the ECAP DMA INT To the dmaxbar and trigxbar.*/
+    SOC_xbarSelectEdmaTrigXbarInputSource(CSL_EDMA_TRIG_XBAR_U_BASE, DMA_TRIG_XBAR_EDMA_MODULE_0, DMA_TRIG_XBAR_DMA_XBAR_OUT_0);
+    SOC_xbarSelectDMAXBarInputSource(CSL_CONTROLSS_DMAXBAR_U_BASE, 0, 5, 0, 0, 0, 0, 0, ecap_instance);
+
+    int32_t  status     = SystemP_SUCCESS;
+
+    gEdmaHandle[0] = NULL;   /* Init to NULL so that we can exit gracefully */
+
+    /* Open all instances */
+    gEdmaHandle[0] = EDMA_open(0, &gEdmaParams[0]);
+    if(NULL == gEdmaHandle[0])
+    {
+        DebugP_logError("EDMA open failed for instance %d !!!\r\n", 0);
+        status = SystemP_FAILURE;
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        util_EDMA_deconfigure();   /* Exit gracefully */
+    }
+
+/* -----------------------------------EDMA Setup------------------------------------ */
+    int32_t testStatus = SystemP_SUCCESS;
+
+    edma_base_addr = EDMA_getBaseAddr(gEdmaHandle[0]);
+    DebugP_assert(edma_base_addr != 0);
+
+    regionId = EDMA_getRegionId(gEdmaHandle[0]);
+    DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
+
+    dmaCh = DMA_TRIG_XBAR_EDMA_MODULE_0;
+    testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    tcc = EDMA_RESOURCE_ALLOC_ANY;
+    testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    param = EDMA_RESOURCE_ALLOC_ANY;
+    testStatus = EDMA_allocParam(gEdmaHandle[0], &param);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    EDMA_configureChannelRegion(edma_base_addr, regionId, EDMA_CHANNEL_TYPE_DMA,
+        dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
+
+    EDMA_ccPaRAMEntry_init(&edmaParam);
+    edmaParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *)(0x501c0000));
+    edmaParam.destAddr      = (uint32_t) SOC_virtToPhy((void *) 0x50260000);
+    edmaParam.aCnt          = (uint16_t) 1;
+    edmaParam.bCnt          = (uint16_t) 4;
+    edmaParam.cCnt          = (uint16_t) 1;
+    edmaParam.bCntReload    = (uint16_t) 0;
+    edmaParam.srcBIdx       = (int16_t) EDMA_PARAM_BIDX(0);
+    edmaParam.destBIdx      = (int16_t) EDMA_PARAM_BIDX(0);
+    edmaParam.srcCIdx       = (int16_t) 0;
+    edmaParam.destCIdx      = (int16_t) 0;
+    edmaParam.linkAddr      = 0xFFFFU;
+    edmaParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(0);
+    edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(0);
+    edmaParam.opt           = (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
+                            ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+
+    EDMA_setPaRAM(edma_base_addr, param, &edmaParam);
+
+    EDMA_enableTransferRegion(edma_base_addr, regionId, dmaCh,
+                            EDMA_TRIG_MODE_EVENT);
+/* -----------------------------EDMA Setup Complete-------------------------------- */
+
+    return;
+}
+
+void util_EDMA_deconfigure(void)
+{
+    /* Close all instances that are open */
+
+    int32_t testStatus = SystemP_SUCCESS;
+
+    EDMA_clrIntrRegion(edma_base_addr, regionId, tcc);
+
+    EDMA_freeChannelRegion(edma_base_addr, regionId, EDMA_CHANNEL_TYPE_DMA,
+        dmaCh, EDMA_TRIG_MODE_EVENT, tcc, EDMA_TEST_EVT_QUEUE_NO);
+
+    testStatus = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+    testStatus = EDMA_freeTcc(gEdmaHandle[0], &tcc);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+    testStatus = EDMA_freeParam(gEdmaHandle[0], &param);
+    DebugP_assert(testStatus == SystemP_SUCCESS);
+
+    if(gEdmaHandle[0] != NULL)
+    {
+        EDMA_close(gEdmaHandle[0]);
+        gEdmaHandle[0] = NULL;
+    }
+    /*configuring the DMA xbar, trig xbar to default values*/
+    return;
+}
+
 /* ========================================================================== */
 
 /* None */
@@ -367,6 +581,7 @@ void test_main(void *args)
     RUN_TEST(ECAP_add_additional_input_trigger_sources, 3406, NULL);
     RUN_TEST(ECAP_support_interrupt_generation_on_either_of_4_events, 3407, NULL);
     RUN_TEST(ECAP_selection_of_soc_trigger_source, 7906, NULL);
+    RUN_TEST(ECAP_selection_of_dma_trigger_source, 9476, NULL);
 
 
     UNITY_END();
@@ -487,9 +702,11 @@ throughlue */
 
     /* Resetting the Modulo counter, Counter, Event flags */
     ECAP_resetCounters(base);
-    /* Start Time stamp counter for instance  and enable Timestamp capture separately.*/
-    /* ECAP_startCounter(base); */
-    /* ECAP_enableTimeStampCapture(base); */
+    /* Start Time stamp counter for instance  and enable Timestamp capture separately
+        the following may be used
+        - ECAP_startCounter(base);
+        - ECAP_enableTimeStampCapture(base); */
+    return;
 }
 
 void util_start_capture_timestamp(uint16_t instance)
@@ -497,17 +714,18 @@ void util_start_capture_timestamp(uint16_t instance)
     uint32_t base = ecap_base_addr[instance];
     ECAP_startCounter(base);
     ECAP_enableTimeStampCapture(base);
+    return;
 }
-
 /* resets given instance */
 void ecap_deconfigure_and_reset(uint16_t instance)
 {
     SOC_generateEcapReset(instance);
     util_ECAP_config_reset();
     ecap_configure(instance);
+    return;
 }
-
-int16_t wait_for_ecap_interrupt(uint16_t instance)
+/* returns 1 if wait is successful i.e., interrupt flag set */
+bool wait_for_ecap_interrupt(uint16_t instance)
 {
     int counter_max = 100;
     int count = 0;
@@ -524,14 +742,165 @@ int16_t wait_for_ecap_interrupt(uint16_t instance)
     /* interrupt did not occur. wait unsuccessful*/
     return 0;
 }
+/* clears all the ADC interrupt ADC_INT1 */
+void clear_adc_interrupts(void)
+{
+    for(int adc_instance = 0; adc_instance < 5; adc_instance++)
+    {
+        uint32_t adc_base = adc_base_addr[adc_instance];
+        ADC_clearInterruptStatus(adc_base, ADC_INT_NUMBER1);
+    }
+    return;
+}
+/* returns 1 if wait is successful i.e., interrupt flag set */
+bool wait_for_adc_interrupts(void)
+{
+    int counter_max = 1000;
+    int errors = 0;
+    for(int adc_instance = 0; adc_instance < 5; adc_instance++)
+    {
+        int count = 0;
+        uint32_t adc_base = adc_base_addr[adc_instance];
+        while(count < counter_max)
+        {
+            if(ADC_getInterruptStatus(adc_base, ADC_INT_NUMBER1) == true)
+            {
+                break;
+            }
+            count++;
+        }
 
+        if(count >= counter_max)
+        {
+            /* wait failed.*/
+            DebugP_log("failed at %d\r\n",adc_instance);
+            errors++;
+        }
+    }
+    if(errors > 0 )
+    {
+        return 0;
+    }
+    /* all waits successful */
+    return 1;
+}
+/* returns 1 if wait is successful i.e., interrupt flag set */
+bool wait_for_dma_interrupts(void)
+{
+    int counter_max = 1000;
+    int count = 0;
+
+    int errors = 0;
+
+    while(count < counter_max)
+    {
+        if(EDMA_readIntrStatusRegion(edma_base_addr, regionId, tcc) == true)
+        {
+            break;
+        }
+        count++;
+    }
+
+    if(count >= counter_max)
+    {
+        /* wait failed.*/
+        DebugP_log("wait failed\r\n");
+        errors++;
+    }
+
+    if(errors > 0 )
+    {
+        return 0;
+    }
+    /* all waits successful */
+    return 1;
+}
+/* configures the given adc instance with the ECAP trigger */
+void util_adc_init_configure_soc_source(uint16_t adc_instance, uint16_t ecap_instance)
+{
+    uint32_t adc_base = adc_base_addr[adc_instance];
+
+    SOC_enableAdcReference((adc_base & 0x0000F000)>>12);
+    /*
+     * this util function is meant to..
+     * Set Prescalar to ADC_CLK_DIV_3_0
+     * Set Mode to signal_mode
+     * Set interrupt Pulse Mode to interrupt_pulse_mode
+     */
+    ADC_setPrescaler(adc_base, ADC_CLK_DIV_3_0);
+    ADC_setMode(adc_base, ADC_RESOLUTION_12BIT, ADC_MODE_SINGLE_ENDED);
+    ADC_setInterruptPulseMode(adc_base, ADC_PULSE_END_OF_CONV);
+    ADC_setSOCPriority(adc_base, ADC_PRI_ALL_ROUND_ROBIN);
+    ADC_enableConverter(adc_base);
+    ClockP_usleep(500);
+
+    /* disabling and enabling the interrupt, setting the intterupt source as the ecap soc signal*/
+    ADC_disableInterrupt(adc_base, ADC_INT_NUMBER1);
+    ADC_enableInterrupt(adc_base, ADC_INT_NUMBER1);
+    ADC_setInterruptSource(adc_base, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
+    ADC_clearInterruptStatus(adc_base, ADC_INT_NUMBER1);
+    ADC_clearInterruptOverflowStatus(adc_base, ADC_INT_NUMBER1);
+
+    /* Setting up the SOC configuration for the given ecap_instance SOC signal.*/
+    uint16_t ecap_soc_trigger = ADC_TRIGGER_ECAP0_SOCEVT + ecap_instance;
+    ADC_setupSOC(adc_base, ADC_SOC_NUMBER0, ecap_soc_trigger, ADC_CH_ADCIN0, 16);
+    ClockP_usleep(500);
+
+    return ;
+}
+/* resets the ADC instance */
+void util_adc_reset(uint16_t adc_instance)
+{
+    SOC_generateAdcReset(adc_instance);
+    return;
+}
+/* configures GPIO (declared global) as input or output */
+void util_configure_gpio(bool input)
+{
+    /* Setting EPWM PIN mux (overwriting if already if existed)*/
+    Pinmux_PerCfg_t gPinMuxMainDomainCfg[] = {
+        /* GPIO59 -> EPWM8_A (G3) */
+        {
+            PIN_EPWM8_A,
+            ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_HIGH )
+        },
+
+        {PINMUX_END, PINMUX_END}
+    };
+    Pinmux_config(gPinMuxMainDomainCfg, PINMUX_DOMAIN_ID_MAIN);
+
+    /*setting the GPIO direction*/
+    if(input)
+    {
+        GPIO_setDirMode(gpio_base_addr, gpio_pin, INPUT);
+    }
+    else
+    {
+        GPIO_setDirMode(gpio_base_addr, gpio_pin, OUTPUT);
+    }
+    return;
+}
+/* toggles the GPIO (declared global) for \b times with \b uSecs delay*/
+void util_gpio_toggle(uint16_t times, uint32_t uSec_delay)
+{
+    uint32_t uSec_delay_by_2 = uSec_delay << 1;
+
+    for(int iter = 0; iter < times; iter++)
+    {
+        GPIO_pinWriteHigh(gpio_base_addr, gpio_pin);
+        ClockP_usleep(uSec_delay_by_2);
+        GPIO_pinWriteLow(gpio_base_addr, gpio_pin);
+        ClockP_usleep(uSec_delay_by_2);
+    }
+
+    return;
+}
 
 /* Testcase 1 - Check the ECAP_setEventPrescaler API */
 static void ECAP_setEventPrescalerApiCheck(void *args)
 {
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(0), 0);
 }
-
 static void ECAP_selection_of_sync_in_source(void *args)
 {
     UNITY_TEST_IGNORE("","TODO");
@@ -562,26 +931,18 @@ static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args)
     DebugP_log("Test : Interrupt generation on various events\r\n");
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(1), 0);
 }
-
 static void ECAP_selection_of_soc_trigger_source(void *args)
 {
-    uint16_t instance, soc_trigger_source, actual_value;
-    for (instance = 0; instance < NUM_ECAP_INSTANCES; instance++)
-    {
-        uint32_t ecap_base = ecap_base_addr[instance];
-
-        for (soc_trigger_source = ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1;
-             soc_trigger_source <= ECAP_APWM_MODE_SOC_TRIGGER_SRC_DISABLED;
-             soc_trigger_source++)
-        {
-            if (soc_trigger_source >= ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD)
-                actual_value = soc_trigger_source - (uint16_t)ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD;
-            else
-                actual_value = soc_trigger_source;
-            ECAP_selectSocTriggerSource(ecap_base, soc_trigger_source);
-            TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(ecap_base + CSL_ECAP_ECCTL0) & CSL_ECAP_ECCTL0_SOCEVTSEL_MASK) >> CSL_ECAP_ECCTL0_SOCEVTSEL_SHIFT, actual_value);
-        }
-    }
+    if(enableLog)
+    DebugP_log("Test : ADC_SOC event generation on various events\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(2), 0);
+}
+static void ECAP_selection_of_dma_trigger_source(void *args)
+{
+    if(enableLog)
+    // UNITY_TEST_IGNORE("","TODO");
+    DebugP_log("Test : DMA event generation on various events\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(3), 0);
 }
 
 /*
@@ -667,6 +1028,351 @@ int32_t AM263x_ECAP_BTR_001(uint16_t instance)
     return 0;
 }
 
+/* configures the trigger sources and cycles through events */
+int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
+{
+    int soc_trigger_check = 0;
+    // int dma_trigger_check = 1;
+
+    int errors = 0;
+    bool wait_success = false;
+
+    uint32_t event_source[7] = {
+        ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1,
+        ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2,
+        ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT3,
+        ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT4,
+        ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD,
+        ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP,
+        ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP,
+    };
+
+    uint32_t base = ecap_base_addr[instance];
+
+    /* set GPIOx as inputxbar for the usage in this test case */
+    util_configure_gpio(OUTPUT);
+
+    /* configure input Xbar to a gpio pin.*/
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, gpio_pin, 0);
+
+    for(int iter = 0; iter < 7; iter++)
+    {
+        uint16_t source = event_source[iter];
+
+        ECAP_clearInterrupt(base, ECAP_ISR_SOURCE_ALL);
+            ECAP_stopCounter(base);
+
+        /* Observation :
+        ECAP_forceInterrupt(base, event); doesn't help generating an SOC signal to ADC */
+        if(soc_trigger_check == event_out)
+        {
+            ECAP_selectSocTriggerSource(base, source);
+        }
+        else
+        {
+            ECAP_setDMASource(base,source);
+            // util_EDMA_configure(instance);
+        }
+        if( (source == ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD) ||
+            (source == ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP) ||
+            (source == ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP))
+        {
+            /* these work in the pwm mode*/
+            ECAP_enableAPWMMode(base);
+            /* stop the couter to avoid accidental triggers*/
+            ECAP_stopCounter(base);
+            /* reset the counter*/
+            ECAP_resetCounters(base);
+
+            if(source == ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP)
+            {
+
+                /* setting cmp > prd to verify CMP generating the event*/
+                ECAP_setAPWMCompare(base, 10000);
+                ECAP_setAPWMPeriod(base, 10);
+
+                /*starting the counter*/
+                ECAP_startCounter(base);
+
+                if(event_out == soc_trigger_check)
+                {
+                    wait_success = wait_for_adc_interrupts();
+                }
+                else
+                {
+                    wait_success = wait_for_dma_interrupts();
+                }
+                if(wait_success == false)
+                {
+                    /*Interrupts did not occur. i.e., trigger failed*/
+                    errors++;
+                    DebugP_log("wait failed. for source %d \r\n", source);
+                }
+                else DebugP_log("success source %d \r\n", source);
+
+                /* stopping the couter to avoid accidental triggers*/
+                ECAP_stopCounter(base);
+
+                /* resetting the counter*/
+                ECAP_resetCounters(base);
+
+                /* Clear Interrupts*/
+                if(event_out == soc_trigger_check)
+                {
+                    clear_adc_interrupts();
+                }
+                else
+                {
+                    /*clear DMA interrupts*/
+                    EDMA_clrIntrRegion(edma_base_addr, regionId, tcc);
+                    util_EDMA_deconfigure();
+                    util_EDMA_configure(instance);
+                }
+                ECAP_clearInterrupt(base, ECAP_ISR_SOURCE_ALL);
+
+                /* setting cmp < prd to verify PRD generating the event
+                CMP is already verified above*/
+
+                ECAP_setAPWMCompare(base, 10);
+                ECAP_setAPWMPeriod(base, 10000);
+
+                /*starting the counter*/
+                ECAP_startCounter(base);
+
+                if(event_out == soc_trigger_check)
+                {
+                    wait_success = wait_for_adc_interrupts();
+                }
+                else
+                {
+                    wait_success = wait_for_dma_interrupts();
+                }
+                if(wait_success == false)
+                {
+                    /*Interrupts did not occur. i.e., trigger failed*/
+                    errors++;
+                    DebugP_log("wait failed. for source %d \r\n", source);
+                }
+                else DebugP_log("success source %d \r\n", source);
+
+                /* stopping the couter to avoid accidental triggers*/
+                ECAP_stopCounter(base);
+                /* resetting the counter*/
+                ECAP_resetCounters(base);
+
+                /* Clear Interrupts*/
+                if(event_out == soc_trigger_check)
+                {
+                    clear_adc_interrupts();
+                }
+                else
+                {
+                    /*clear DMA interrupts*/
+                    EDMA_clrIntrRegion(edma_base_addr, regionId, tcc);
+                    util_EDMA_deconfigure();
+                    util_EDMA_configure(instance);
+
+                }
+                ECAP_clearInterrupt(base, ECAP_ISR_SOURCE_ALL);
+
+            }
+            else
+            {
+                ECAP_stopCounter(base);
+                ECAP_resetCounters(base);
+
+                if(source == ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP)
+                {
+                    ECAP_setAPWMCompare(base, 10);
+                    ECAP_setAPWMPeriod(base, 10000);
+                }
+                else
+                {
+                    ECAP_setAPWMCompare(base, 10000);
+                    ECAP_setAPWMPeriod(base, 10);
+                }
+                ECAP_startCounter(base);
+
+                if(event_out == soc_trigger_check)
+                {
+                    wait_success = wait_for_adc_interrupts();
+                }
+                else
+                {
+                    wait_success = wait_for_dma_interrupts();
+                }
+                if(wait_success == false)
+                {
+                    /*Interrupts did not occur. i.e., trigger failed*/
+                    errors++;
+                    DebugP_log("wait failed. for source %d \r\n", source);
+                }
+                else DebugP_log("success source %d \r\n", source);
+
+                /* stopping the couter to avoid accidental triggers*/
+                ECAP_stopCounter(base);
+                /* resetting the counter*/
+                ECAP_resetCounters(base);
+
+                /* Clear Interrupts*/
+                if(event_out == soc_trigger_check)
+                {
+                    clear_adc_interrupts();
+                }
+                else
+                {
+                    /*clear DMA interrupts*/
+                    EDMA_clrIntrRegion(edma_base_addr, regionId, tcc);
+                    util_EDMA_deconfigure();
+                    util_EDMA_configure(instance);
+                }
+                ECAP_clearInterrupt(base, ECAP_ISR_SOURCE_ALL);
+            }
+        }
+        else
+        {
+            /* these work in the Capture mode.*/
+            ECAP_enableCaptureMode(base);
+            ECAP_reArm(base);
+
+            /* set ecap input as inputxbar */
+            ECAP_selectECAPInput(base, ECAP_INPUT_INPUTXBAR0);
+
+            /* set the CAP events to have Raising edge */
+            for(int iter = ECAP_EVENT_1; iter <= ECAP_EVENT_4; iter++)
+            {
+                ECAP_setEventPolarity(base, iter, ECAP_EVNT_RISING_EDGE);
+            }
+
+            ECAP_startCounter(base);
+            ECAP_enableTimeStampCapture(base);
+            /* toggle the GPIO --> inputxbar x number of times. to generate event.*/
+            int num_pulses = source+1;      /* +1 to satify indexing */
+            uint32_t uSec_delay = 10;       /* arbitary */
+
+            util_gpio_toggle(num_pulses, uSec_delay);
+
+            if(event_out == soc_trigger_check)
+            {
+                wait_success = wait_for_adc_interrupts();
+            }
+            else
+            {
+                wait_success = wait_for_dma_interrupts();
+            }
+            if(wait_success == false)
+            {
+                /*Interrupts did not occur. i.e., trigger failed*/
+                errors++;
+                DebugP_log("wait failed. for source %d \r\n", source);
+            }
+                else DebugP_log("success source %d \r\n", source);
+
+            /* Clear Interrupts*/
+            if(event_out == soc_trigger_check)
+            {
+                clear_adc_interrupts();
+            }
+            else
+            {
+                /*clear DMA interrupts*/
+                EDMA_clrIntrRegion(edma_base_addr, regionId, tcc);
+                util_EDMA_deconfigure();
+                util_EDMA_configure(instance);
+            }
+
+        }
+    }
+    /* unset GPIOx as inputxbar for the usage in this test case */
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, 0, 0);
+
+    return errors;
+}
+
+/* ADC_SOC event generation from ECAP
+the following can be used to trigger ADC_SOC:
+
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1 --> reset value.
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT3
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT4
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP
+
+to disable :
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_DISABLED
+*/
+int32_t AM263x_ECAP_BTR_002(uint16_t instance)
+{
+    if(enableLog)
+    DebugP_log("------------- instance : %d-------------\r\n", instance);
+
+    int errors = 0;
+    int soc_trigger_check = 0;
+
+    /* configuring ADCs */
+    for(int adc_instance = 0; adc_instance < 5; adc_instance++)
+    {
+        util_adc_reset(adc_instance);
+        util_adc_init_configure_soc_source(adc_instance, instance);
+    }
+
+    errors = check_soc_dma_triggers(instance, soc_trigger_check);
+
+    for(int adc_instance = 0; adc_instance < 5; adc_instance++)
+    {
+        util_adc_reset(adc_instance);
+    }
+
+    if(errors > 0 )
+    {
+        /* test fail */
+        return 1;
+    }
+    return 0;
+}
+
+/* DMA event generation from ECAP
+the following can be used to trigger ADC_SOC:
+
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1 --> reset value.
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT3
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT4
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP
+
+to disable :
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_DISABLED
+*/
+
+int32_t AM263x_ECAP_BTR_003(uint16_t instance)
+{
+    if(enableLog)
+    DebugP_log("------------- instance : %d-------------\r\n", instance);
+
+    int errors = 0;
+    int dma_trigger_check = 1;
+    uint16_t ecap_instance = instance;
+
+    /* configuring DMA */
+    util_EDMA_configure(ecap_instance);
+
+    errors = check_soc_dma_triggers(instance, dma_trigger_check);
+
+    /* deconfigure DMAs*/
+    util_EDMA_deconfigure();
+
+    if(errors > 0 )
+    {
+        /* test fail */
+        return 1;
+    }
+    return 0;
+}
+
 int32_t test_ecap_cases(uint8_t in)
 {
     int32_t failcount = 0;
@@ -700,6 +1406,20 @@ int32_t test_ecap_cases(uint8_t in)
             failcount += AM263x_ECAP_BTR_001(instance);
             break;
         }
+        case 2:
+        {
+            failcount += AM263x_ECAP_BTR_002(instance);
+            break;
+        }
+        case 3:
+        {
+            failcount += AM263x_ECAP_BTR_003(instance);
+            break;
+        }
+        // case n:
+        // {
+        //     failcount += error returning
+        // }
         }
     }
 
