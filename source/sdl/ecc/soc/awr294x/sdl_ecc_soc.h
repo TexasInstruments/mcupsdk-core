@@ -49,7 +49,7 @@
 #include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
 #include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
 #include <sdl/include/awr294x/sdlr_soc_baseaddress.h>
- 
+
 #define SDL_ECC_WIDTH_UNDEFINED 0x1
 
 /* define Max memEntries for each aggregator (i.e. the number of RAM ID's with * Wrapper type) */
@@ -63,6 +63,9 @@
 #define SDL_ECC_Base_Address_TOTAL_ENTRIES              (7U)
 
 #define SDL_MSS_CPSW0_ECC_U_BASE						(SDL_MSS_CPSW_U_BASE + 0x3F000u)
+
+/* define parity control register addresses */
+#define SDL_TCM_PARITY_ERRFRC	    				(0x02120144)
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_R5FSS0_CORE0_ECC_AGGR
  * -----------------------------------------------------------------------------------

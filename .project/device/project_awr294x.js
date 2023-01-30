@@ -95,11 +95,12 @@ const example_file_list = [
    "examples/sdl/mcrc/mcrc_semi_cpu/.project/project.js",
    "examples/sdl/ecc/sdl_ecc_r5_atcm0/.project/project.js",
    "examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",
-   "examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
+	"examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
+	"examples/sdl/pbist/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
-   "examples/sdl/pbist/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_dss_tptc/.project/project.js",
+	"examples/sdl/parity/sdl_tcm_parity/.project/project.js",
    "examples/sdl/ecc/sdl_dss_ecc_hwa/.project/project.js",
    "examples/sdl/ecc/sdl_dss_l3_ecc/.project/project.js",
    "examples/sdl/ecc/sdl_dss_mailbox/.project/project.js",
@@ -148,6 +149,7 @@ const example_file_list = [
     "test/sdl/stc/stc_mcu/stc_func_test/.project/project.js",
     "test/sdl/reset/reset_mcu/reset_func_test/.project/project.js",
     "test/sdl/reset/reset_mcu/reset_unit_test/.project/project.js",
+	"test/sdl/parity/sdl_tcmparity_functest/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

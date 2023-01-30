@@ -33,6 +33,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_STC
 -# ECC_BUS_SAFETY
    -# \subpage EXAMPLES_SDL_ECC_BUS_SAFETY_MAIN
+-# PARITY
+   -# \subpage EXAMPLES_SDL_TCM_PARITY 
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X
@@ -66,6 +68,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_CCM
 -# RESET
    -# \subpage EXAMPLES_SDL_RESET
+-# PARITY
+   -# \subpage EXAMPLES_SDL_TCM_PARITY
 \endcond
 
 

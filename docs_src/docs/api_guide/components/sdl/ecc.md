@@ -2636,6 +2636,238 @@ int32_t ECC_Test_run_ICSSM_2BitInjectTest(void)
 }
 \endcode
 \endcond
+
+## Example Usage of TCM Parity
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "parity_main.h"
+\endcode
+
+Below are the macros specifies the values need to set for TCM parity Error forcing
+\cond SOC_AM263X
+\code{.c}
+#define SDL_R5F0ATCM0							(0x7U)
+#define SDL_R5F0B0TCM0							(0x700U)
+#define	SDL_R5F0B1TCM0							(0x70000U)
+
+#define SDL_R5F0ATCM1							(0x70U)
+#define SDL_R5F0B0TCM1							(0x7000U)
+#define	SDL_R5F0B1TCM1							(0x700000U)
+
+#define SDL_R5F1ATCM0							(0x7U)
+#define SDL_R5F1B0TCM0							(0x700U)
+#define	SDL_R5F1B1TCM0							(0x70000U)
+
+#define SDL_R5F1ATCM1							(0x70U)
+#define SDL_R5F1B0TCM1							(0x7000U)
+#define	SDL_R5F1B1TCM1							(0x700000U)
+\endcode
+\endcond
+\cond (SOC_AM273X)||(SOC_AM273X)
+\code{.c}
+#define SDL_ESM_MAX_EXAMPLE                (6u)
+#define SDL_INTR_GROUP_NUM_2               (2U)
+#define SDL_INTR_PRIORITY_LVL_LOW          (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH         (1U)
+#define SDL_ENABLE_ERR_PIN                 (1U)
+
+#define SDL_ATCM0_MASK							(0x7U)
+#define SDL_ATCM1_MASK							(0x70U)
+#define SDL_B0TCM0_MASK							(0x700U)
+#define	SDL_B0TCM1_MASK							(0x7000U)
+#define SDL_B1TCM0_MASK							(0x70000U)
+#define	SDL_B1TCM1_MASK							(0x700000U)
+\endcode
+\endcond
+
+ESM callback function
+\cond SOC_AM263X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+    int32_t retVal = 0;
+	
+    printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    printf("\r\nTake action \r\n");
+	/* Clears all the status registers */
+	SDL_clearStatusRegs(SetValue);
+	
+	esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+\cond (SOC_AM273X)||(SOC_AM273X)
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                esmInstType, grpChannel, intSrc);
+    printf("\r\nTake action \r\n");
+	
+	esmError = true;
+
+    return 0;
+}
+\endcode
+\endcond
+
+Event BitMap for ESM callback for TCM Parity
+\cond SOC_AM263X
+\code{.c}
+SDL_ESM_config Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x0003C000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+     .priorityBitmap = {0x0000C000u, 0x000000000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x0003C000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+\endcode
+\endcond
+\cond (SOC_AM273X)||(SOC_AWR294X)
+\code{.c}
+SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_EXAMPLE] =
+{
+	/* ATCM */
+    {
+		/* Event BitMap for ESM callback for ATCM0 Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_2,
+		.errorNumber = SDL_ESMG2_ATCM0_PARITY_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	{
+		/* Event BitMap for ESM callback for ATCM1 Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_2,
+		.errorNumber = SDL_ESMG2_ATCM1_PARITY_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	/* B0TCM */
+	{
+		/* Event BitMap for ESM callback for B0TCM0 Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_2,
+		.errorNumber = SDL_ESMG2_B0TCM0_PARITY_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	{
+		/* Event BitMap for ESM callback for ATCM1 Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_2,
+		.errorNumber = SDL_ESMG2_B0TCM1_PARITY_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	/* B1TCM */
+	{
+		/* Event BitMap for ESM callback for B0TCM0 Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_2,
+		.errorNumber = SDL_ESMG2_B1TCM0_PARITY_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	{
+		/* Event BitMap for ESM callback for ATCM1 Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_2,
+		.errorNumber = SDL_ESMG2_B1TCM1_PARITY_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+
+};
+\endcode
+\endcond
+
+\cond SOC_AM263X
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+\endcode
+\endcond
+\cond (SOC_AM273X)||(SOC_AWR294X)
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMSS[0],NULL,NULL);
+\endcode
+\endcond
+
+Execute TCM Parity Error injection for B0TCM0 for R5FSS0 core 0 
+\cond SOC_AM263X
+\code{.c}
+	if (retVal == 0)
+    {		
+		DebugP_log("\r\nTCM PARITY:B0TCM0 Started\r\n");
+        retValue = SDL_ECC_TCMParity(SDL_R5SS0_CPU0_TCM,\
+								 SDL_R5FSS0_CORE0__B0TCM0,\
+								 SDL_R5F0B0TCM0);
+		DebugP_log("\r\nTCM Parity Status for B0TCM0 = 0x%x\r\n", retValue);
+		if (retValue != 0)
+		{
+			retVal = 0;
+			DebugP_log("\r\nB0TCM0 Parity : Completed\r\n");
+		}
+		else{
+			retVal = -1;
+			DebugP_log("\r\nB0TCM0 Parity : Failed\r\n");
+		}
+	}
+\endcode
+\endcond
+
+\cond (SOC_AM273X)||(SOC_AWR294X)
+\code{.c}
+	if (retVal == 0)
+    {		
+		DebugP_log("\r\nMSS TCM PARITY: ATCM0 Started\r\n");
+        result = SDL_ECC_tcmParity(SDL_TCM_PARITY_ATCM0,\
+								 SDL_ATCM0_MASK);
+		/* Wait until ESM interrupt happens */
+		while(esmError !=true);
+		esmError = false;		
+		if (result != SDL_PASS)
+		{
+			retVal = -1;
+			DebugP_log("\r\nMSS ATCM0 Parity : Failed\r\n");
+		}
+		else{
+			retVal = 0;
+			DebugP_log("\r\nMSS ATCM0 Parity : Completed\r\n");
+		}
+	}
+\endcode
+\endcond
+
 ## API
 
 \ref SDL_ECC_AGGR_API

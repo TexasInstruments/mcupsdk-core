@@ -108,6 +108,7 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_dss_ecc_hwa/.project/project.js",
     "examples/sdl/ecc/sdl_dss_l3_ecc/.project/project.js",
     "examples/sdl/ecc/sdl_dss_mailbox/.project/project.js",
+	"examples/sdl/parity/sdl_tcm_parity/.project/project.js",
 	"examples/sdl/pbist/.project/project.js",
     "examples/sdl/stc/stc_mcu/.project/project.js",
     "examples/sdl/reset/reset_mcu/.project/project.js",
@@ -176,6 +177,7 @@ const example_file_list = [
     "test/sdl/stc/stc_mcu/stc_func_test/.project/project.js",
     "test/sdl/reset/reset_mcu/reset_func_test/.project/project.js",
     "test/sdl/reset/reset_mcu/reset_unit_test/.project/project.js",
+	"test/sdl/parity/sdl_tcmparity_functest/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

@@ -161,6 +161,7 @@ const example_file_list = [
 	"examples/sdl/ecc/sdl_ecc_r5_atcm0/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
+	"examples/sdl/parity/sdl_tcm_parity/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
@@ -230,11 +231,13 @@ const example_file_list = [
     "test/sdl/ecc/common/.project/project.js",
     "test/sdl/ecc/ecc_sdl_funcTest/.project/project.js",
     "test/sdl/ecc/ecc_sdl_unitTest/.project/project.js",
+	"test/sdl/parity/sdl_tcmparity_functest/.project/project.js",
   "test/sdl/ecc_bus_safety/eccBussafetyFuncTest/.project/project.js",
   "test/sdl/ecc_bus_safety/eccBusSafetyUt/.project/project.js",
   "test/sdl/ccm/ccm_ip_test/.project/project.js",
   "test/sdl/ccm/ccm_func_test/.project/project.js",
   "test/sdl/stc/stc_mcu/stc_func_test/.project/project.js",
+  
 ];
 
 function getProjectSpecCpu(cpu) {

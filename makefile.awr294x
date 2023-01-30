@@ -174,11 +174,12 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_atcm0/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_l2/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_tptc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_dss_tptc/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_tcm_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -502,11 +503,12 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_nortos
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mss_tptc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_tptc_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_tcm_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000
@@ -857,20 +859,23 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
 
+ sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  sdl_ecc_mss_tptc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sdl_dss_ecc_tptc_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_dss_tptc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ sdl_tcm_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/parity/sdl_tcm_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
@@ -1015,11 +1020,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mss_tptc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_tptc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tcm_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1370,20 +1376,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
 
+ sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sdl_ecc_mss_tptc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sdl_dss_ecc_tptc_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_dss_tptc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ sdl_tcm_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_tcm_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
@@ -1528,11 +1537,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_semi_cpu_example_awr294x-evm_r5fss0-0_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_atcm0_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mss_l2_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mss_tptc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_tptc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tcm_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -1883,20 +1893,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sdl_ecc_mcan_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
  sdl_pbist_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_pbist_example_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/pbist/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
 
+ sdl_ecc_r5_btcm_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  sdl_ecc_mss_tptc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_dss_ecc_tptc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C examples/sdl/ecc/sdl_ecc_dss_tptc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_tcm_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/parity/sdl_tcm_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_dss_ecc_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C examples/sdl/ecc/sdl_dss_ecc_hwa/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub

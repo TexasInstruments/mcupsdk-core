@@ -154,6 +154,9 @@ static int32_t SDL_ECC_searchMemEntryTable(SDL_ECC_MemSubType memSubType,
                                               const SDL_MemConfig_t memEntryTable[],
                                               uint32_t tableSize,
                                               SDL_MemConfig_t *pMemConfig);
+static int32_t SDL_ECC_tcmparityerrForce_Regs(SDL_ECC_MemType eccMemType,
+							  SDL_ECC_MemSubType memSubType,
+							  uint32_t RegValue);
 
 /** ============================================================================*
  *
@@ -1450,4 +1453,118 @@ static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrR
     }
 
     return retVal;
+}
+/** ============================================================================
+ *
+ * \brief   Injects ECC TCM Parity error 
+ *
+ * \param1  eccMemType: Memory type for ECC AGGR
+ * \param2  memSubType: Memory subtype
+ * \param3  bitValue  : Bit Value to set particular register
+ *
+ * \return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+int32_t SDL_ECC_tcmParity(SDL_ECC_MemType eccMemType,
+							  SDL_ECC_MemSubType memSubType,
+							  uint32_t bitValue)
+{
+	int32_t retValue= SDL_PASS;
+	
+	if(retValue == SDL_PASS)
+	{
+		switch(eccMemType)
+		{
+			case SDL_R5SS0_CPU0_TCM:
+			case SDL_R5SS1_CPU0_TCM:
+				retValue = SDL_ECC_tcmparityerrForce_Regs(eccMemType, memSubType, bitValue);
+				break;
+			
+			default :
+				retValue= SDL_EFAIL;
+				break;
+		}
+	}
+	
+	return retValue;
+	
+}
+/** ============================================================================
+ *
+ * \brief   Set ECC TCM Parity Error force Register
+ *
+ * \param1  eccMemType: Memory type for ECC AGGR
+ * \param2  memSubType: Memory subtype
+ * \param3  RegValue  : Value to set particular register
+ *
+ * \return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+static int32_t SDL_ECC_tcmparityerrForce_Regs(SDL_ECC_MemType eccMemType,
+							  SDL_ECC_MemSubType memSubType,
+							  uint32_t RegValue)
+{
+	int32_t retVal = SDL_EFAIL;
+	
+	if(eccMemType == SDL_R5SS0_CPU0_TCM)
+	{
+		switch (memSubType)
+		{
+			case SDL_R5FSS0_CORE0_ATCM0:
+			case SDL_R5FSS0_CORE0_B0TCM0:			
+			case SDL_R5FSS0_CORE0_B1TCM0:			
+			case SDL_R5FSS0_CORE1_ATCM1:
+			case SDL_R5FSS0_CORE1_B0TCM1:
+			case SDL_R5FSS0_CORE1_B1TCM1:
+				/* Write to error force register the inject error to core 0*/
+				SDL_REG32_WR(SDL_R5SS0_TCM_ADDRPARITY_ERRFORCE, RegValue);
+				retVal = SDL_PASS;
+				break;
+			default :
+				retVal = SDL_EFAIL;
+				break;
+		}
+	}
+	else if(eccMemType == SDL_R5SS1_CPU0_TCM)
+	{
+		switch (memSubType)
+		{
+			case SDL_R5FSS1_CORE0_ATCM0:			
+			case SDL_R5FSS1_CORE0_B0TCM0:			
+			case SDL_R5FSS1_CORE0_B1TCM0:
+			case SDL_R5FSS1_CORE1_ATCM1:
+			case SDL_R5FSS1_CORE1_B0TCM1:
+			case SDL_R5FSS1_CORE1_B1TCM1:
+				/* Write to error force register the inject error core 1*/
+				SDL_REG32_WR(SDL_R5SS1_TCM_ADDRPARITY_ERRFORCE, RegValue);
+				retVal = SDL_PASS;
+				break;
+			default :
+				retVal = SDL_EFAIL;
+				break;
+		}
+	}
+	else
+	{
+		retVal = SDL_EFAIL;
+	}
+	
+	return 	retVal;
+	
+}
+
+int32_t SDL_cleartcmStatusRegs(uint32_t clearVal)
+{
+	/*clearing status and status raw register for R5FSS0_0 */
+	SDL_REG32_WR(SDL_R5FSS0_CORE0_TCM_ERR_STATUS,clearVal);
+	SDL_REG32_WR(SDL_R5FSS0_CORE0_TCM_ERR_STATUS_RAW,clearVal);
+	/*clearing status and status raw register for R5FSS0_1 */
+	SDL_REG32_WR(SDL_R5FSS0_CORE1_TCM_ERR_STATUS,clearVal);
+	SDL_REG32_WR(SDL_R5FSS0_CORE1_TCM_ERR_STATUS_RAW,clearVal);
+	/*clearing status and status raw register for R5FSS1_0 */
+	SDL_REG32_WR(SDL_R5FSS1_CORE0_TCM_ERR_STATUS,clearVal);
+	SDL_REG32_WR(SDL_R5FSS1_CORE0_TCM_ERR_STATUS_RAW,clearVal);
+	/*clearing status and status raw register for R5FSS1_1 */
+	SDL_REG32_WR(SDL_R5FSS1_CORE1_TCM_ERR_STATUS,clearVal);
+	SDL_REG32_WR(SDL_R5FSS1_CORE1_TCM_ERR_STATUS_RAW,clearVal);
+	
+	return 0;
 }

@@ -48,6 +48,7 @@
 #include <sdl/sdl_ecc.h>
 #include <sdl/ecc/sdl_ip_ecc.h>
 #include <sdl/include/am263x/sdlr_soc_baseaddress.h>
+#include <sdl/ecc/soc/am263x/sdl_ecc_soc.h>
 #include "ecc_test_main.h"
 
 /* ========================================================================== */
@@ -1170,6 +1171,126 @@ static int32_t ECC_errNegativeTest(void)
     {
         DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
     }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE0_ATCM0, 0x7U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE0_B0TCM0, 0x70000U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE0_B1TCM0, 0x700000U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE1_ATCM1, 0x70U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE1_B0TCM1, 0x7000U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE1_B1TCM1, 0x700000U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM, SDL_R5FSS1_CORE0_ATCM0, 0x7U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM, SDL_R5FSS1_CORE1_B1TCM1, 0x700000U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM, 13U, 0x700000U) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(2U, 13U, 0x700000U) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        SDL_cleartcmStatusRegs(0X70U);
+        testStatus = SDL_APP_TEST_PASS;
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	
     return (testStatus);
 }
 

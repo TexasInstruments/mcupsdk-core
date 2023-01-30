@@ -72,6 +72,22 @@
 
 #define SDL_CPSW0_ECC_U_BASE													(SDL_CPSW0_U_BASE + 0x3f000u)
 
+/* define parity control register addresses */
+/* R5FSS0 */
+#define SDL_R5FSS0_CORE0_TCM_ERR_STATUS				(0x50D18104U)
+#define SDL_R5FSS0_CORE0_TCM_ERR_STATUS_RAW			(0x50D18108U)
+#define SDL_R5SS0_TCM_ADDRPARITY_ERRFORCE			(0x50D1813CU)
+
+#define SDL_R5FSS0_CORE1_TCM_ERR_STATUS				(0x50D18114U)
+#define SDL_R5FSS0_CORE1_TCM_ERR_STATUS_RAW			(0x50D18118U)
+/* R5FSS1 */
+#define SDL_R5FSS1_CORE0_TCM_ERR_STATUS				(0x50D18144U)
+#define SDL_R5FSS1_CORE0_TCM_ERR_STATUS_RAW			(0x50D18148U)
+#define SDL_R5SS1_TCM_ADDRPARITY_ERRFORCE			(0x50D1817CU)
+
+#define SDL_R5FSS1_CORE1_TCM_ERR_STATUS				(0x50D18154U)
+#define SDL_R5FSS1_CORE1_TCM_ERR_STATUS_RAW			(0x50D18158U)
+
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_SOC_ECC_AGGR
  * -----------------------------------------------------------------------------------

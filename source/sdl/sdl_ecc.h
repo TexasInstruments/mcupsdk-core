@@ -135,6 +135,26 @@ typedef uint32_t SDL_ECC_MemType;
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (10U)
 #define SDL_CPSW3GCSS_ECC_AGGR                                      (11U)
 #define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
+
+/* Parity */
+#define SDL_R5SS0_CPU0_TCM        	(0U)
+#define SDL_R5SS1_CPU0_TCM        	(1U)
+/* SDL_R5SS0_CPU0_TCM */
+#define SDL_R5FSS0_CORE0_ATCM0		(1U)
+#define SDL_R5FSS0_CORE0_B0TCM0		(3U)
+#define SDL_R5FSS0_CORE0_B1TCM0		(5U)
+/* SDL_R5SS0_CPU10_TCM */
+#define SDL_R5FSS0_CORE1_ATCM1		(2U)
+#define SDL_R5FSS0_CORE1_B0TCM1		(4U)
+#define SDL_R5FSS0_CORE1_B1TCM1		(6U)
+/* SDL_R5SS1_CPU0_TCM */
+#define SDL_R5FSS1_CORE0_ATCM0		(7U)
+#define SDL_R5FSS1_CORE0_B0TCM0		(9U)
+#define SDL_R5FSS1_CORE0_B1TCM0		(11U)
+/* SDL_R5SS1_CPU1_TCM */
+#define SDL_R5FSS1_CORE1_ATCM1		(8U)
+#define SDL_R5FSS1_CORE1_B0TCM1		(10U)
+#define SDL_R5FSS1_CORE1_B1TCM1		(12U)
 #endif
 
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -147,6 +167,13 @@ typedef uint32_t SDL_ECC_MemType;
 #define SDL_MSS_MCANB_ECC                                           (5U)
 #define SDL_CPSW3GCSS_ECC_AGGR                                      (6U)
 #define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
+/* TCM PARITY */
+#define SDL_TCM_PARITY_ATCM0		(1U)
+#define SDL_TCM_PARITY_ATCM1		(2U)
+#define SDL_TCM_PARITY_B0TCM0		(3U)
+#define SDL_TCM_PARITY_B0TCM1		(4U)
+#define SDL_TCM_PARITY_B1TCM0		(5U)
+#define SDL_TCM_PARITY_B1TCM1		(6U)
 
 #endif
 /* The following are the memory sub type for Memory type
@@ -397,6 +424,44 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
                                          uint32_t ramId,
                                          uint64_t bitErrorOffset,
                                          uint32_t bitErrorGroup);
+#if defined(SOC_AM263X)
+/** ============================================================================
+ *
+ * \brief   Injects ECC TCM Parity error 
+ *
+ * \param1  eccMemType: Memory type for ECC AGGR
+ * \param2  memSubType: Memory subtype
+ * \param3  bitValue  : Bit Value to set particular register
+ *
+ * \return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+int32_t SDL_ECC_tcmParity(SDL_ECC_MemType eccMemType,
+                              SDL_ECC_MemSubType memSubType,
+							  uint32_t bitValue);
+/** ============================================================================
+ *
+ * \brief   Clear TCM Parity Status Registers 
+ *
+ * \param1  clearVal  : Value to clear particular register
+ *
+ */							  
+int32_t SDL_cleartcmStatusRegs(uint32_t clearVal);
+#endif
+#if defined(SOC_AM273X)|| defined(SOC_AWR294X)
+/** ============================================================================
+ *
+ * \brief   Injects ECC TCM Parity error 
+ *
+ * \param1  memSubType: Memory subtype
+ * \param2  bitValue  : Bit Value to set particular register
+ *
+ * \return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
+							  uint32_t bitValue);
+#endif
+
+
 
 #ifdef __cplusplus
 }

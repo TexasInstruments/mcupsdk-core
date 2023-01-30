@@ -195,6 +195,7 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_ecc_hwa/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l3_ecc/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_tcm_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/reset/reset_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -572,6 +573,7 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_tptc_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += sdl_tcm_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -984,6 +986,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
+ sdl_tcm_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/parity/sdl_tcm_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1181,6 +1186,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_tptc_am273x-evm_c66ss0_nortos_ti-c6
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tcm_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1593,6 +1599,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
+ sdl_tcm_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_tcm_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -1790,6 +1799,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_tptc_am273x-evm_c66ss0_nortos_ti-c6
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_hwa_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_l3_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tcm_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am273x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_reset_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2201,6 +2211,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdl_dss_ecc_mailbox_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C examples/sdl/ecc/sdl_dss_mailbox/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ sdl_tcm_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/parity/sdl_tcm_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_pbist_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

@@ -1148,6 +1148,50 @@ static int32_t ECC_errNegativeTest(void)
     {
         DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
     }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_TCM_PARITY_ATCM0, 0x7) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_TCM_PARITY_ATCM0, 0x7) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(SDL_TCM_PARITY_B0TCM0, 0x700U) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tcmParity(7U, 0x700U) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
     return (testStatus);
 }
 

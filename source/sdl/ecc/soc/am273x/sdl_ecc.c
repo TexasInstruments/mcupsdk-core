@@ -134,7 +134,7 @@ static int32_t SDL_ECC_searchMemEntryTable(SDL_ECC_MemSubType memSubType,
                                               const SDL_MemConfig_t memEntryTable[],
                                               uint32_t tableSize,
                                               SDL_MemConfig_t *pMemConfig);
-											  
+							  
 /* Event BitMap for ECC ESM callback for MSS */
 SDL_ESM_NotifyParams paramsMSS[SDL_ESM_MAX_MSS_PARAM_MAP_WORDS] =
 {
@@ -1560,3 +1560,41 @@ static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrR
 
     return retVal;
 }
+/** ============================================================================
+ *
+ * \brief   Injects ECC TCM Parity error 
+ *
+ * \param1  memSubType: Memory subtype
+ * \param1  bitValue  : Bit Value to set particular register
+ *
+ * \return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
+							  uint32_t bitValue)
+{
+	int32_t retValue= SDL_PASS;
+	
+	if(retValue == SDL_PASS)
+	{
+		/* Set the MSS TCM parity error force bits for parity error injection */ 
+		switch(memSubType)
+		{
+			case SDL_TCM_PARITY_ATCM0:
+			case SDL_TCM_PARITY_ATCM1:
+			case SDL_TCM_PARITY_B0TCM0:
+			case SDL_TCM_PARITY_B0TCM1:
+			case SDL_TCM_PARITY_B1TCM0:
+			case SDL_TCM_PARITY_B1TCM1:
+				SDL_REG32_WR(SDL_TCM_PARITY_ERRFRC,bitValue);
+				retValue = SDL_PASS;
+				break;
+			default :
+				retValue = SDL_EFAIL;
+				break;
+		}
+	}	
+	
+	return retValue;
+}
+	
+

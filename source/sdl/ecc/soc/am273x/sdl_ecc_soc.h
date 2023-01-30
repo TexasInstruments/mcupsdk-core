@@ -63,6 +63,8 @@
 #define SDL_ECC_Base_Address_TOTAL_ENTRIES              (7U)
 
 #define SDL_MSS_CPSW0_ECC_U_BASE					    (SDL_MSS_CPSW_U_BASE + 0x3F000u)
+/* define parity control register addresses */
+#define SDL_TCM_PARITY_ERRFRC	    				(0x02120144)
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_R5FSS0_CORE0_ECC_AGGR
  * -----------------------------------------------------------------------------------
@@ -952,7 +954,6 @@ static SDL_ecc_aggrRegs * const SDL_ECC_aggrBaseAddressTable[SDL_ECC_Base_Addres
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSS_MCANA_ECC_U_BASE )),
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSS_MCANB_ECC_U_BASE)),
 	((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MSS_CPSW0_ECC_U_BASE)),
-
 };
 
 SDL_ecc_aggrRegs * SDL_ECC_aggrTransBaseAddressTable[SDL_ECC_MEMTYPE_MAX];
