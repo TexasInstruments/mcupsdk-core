@@ -130,7 +130,12 @@ void Drivers_epwmOpen(void)
 	/* Digital Compare */
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_dcFilterInput")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_useBlankingWindow")`
-	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowEvent")`
+	% if (instance["epwmDigitalCompare_blankingWindowEvent"] == "EPWM_DC_WINDOW_START_TBCTR_BLANK_PULSE_MIX") {
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowMixedEvent")`
+    % }
+    % else {
+    `epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowEvent")`
+    % }
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowOffset")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_blankingWindowLength")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_invertBlankingWindow")`
@@ -211,19 +216,34 @@ void Drivers_epwmOpen(void)
 
 	/* Event Trigger */
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_enableInterrupt")`
+    % if(instance["epwmEventTrigger_interruptSource"] == "EPWM_INT_TBCTR_ETINTMIX") {
+    `epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptMixedSource")`
+    %}
+    % else{
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptSource")`
+    %}
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCount")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCountInitEnable")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCountInitValue")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_interruptEventCountInitForce")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEnable")`
-	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerSource")`
+	% if (instance["epwmEventTrigger_EPWM_SOC_A_triggerSource"] == "EPWM_SOC_TBCTR_MIXED_EVENT") {
+    `epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerMixedSource")`
+    %}
+    % else{
+    `epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerSource")`
+    %}
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitEnable")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitValue")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_A_triggerEventCountInitForce")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEnable")`
-	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerSource")`
+	% if (instance["epwmEventTrigger_EPWM_SOC_B_triggerSource"] == "EPWM_SOC_TBCTR_MIXED_EVENT") {
+    `epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerMixedSource")`
+    %}
+    % else{
+    `epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerSource")`
+    %}
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventPrescalar")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventCountInitEnable")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmEventTrigger_EPWM_SOC_B_triggerEventCountInitValue")`

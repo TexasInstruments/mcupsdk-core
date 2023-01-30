@@ -24,6 +24,8 @@ function onChangeInterrupt (inst, ui)
             ui.epwmEventTrigger_interruptEventCountInitValue.hidden = true;
             inst.epwmEventTrigger_interruptEventCountInitValue = ePWMCountInitial[0].name;
         }
+
+        ui.epwmEventTrigger_interruptMixedSource.hidden = true;
     }
     else if (inst.epwmEventTrigger_enableInterrupt == false){
         for(let uiConfigIndex = 1; uiConfigIndex < config.length; uiConfigIndex++)
@@ -36,6 +38,7 @@ function onChangeInterrupt (inst, ui)
 
         // Set values to their defaults
         inst.epwmEventTrigger_interruptSource =  device_peripheral.EPWM_INT_TBCTR[0].name;
+        inst.epwmEventTrigger_interruptMixedSource = [];
         inst.epwmEventTrigger_interruptEventCount = ePWMCount[0].name;
         inst.epwmEventTrigger_interruptEventCountInitEnable = false;
         inst.epwmEventTrigger_interruptEventCountInitValue = ePWMCountInitial[0].name;
@@ -45,16 +48,18 @@ function onChangeInterrupt (inst, ui)
 
 function onChangeADCEnableDisable (inst, ui)
 {
-    for (let adcSocConfigIndex = 1; adcSocConfigIndex < ADC_SOC_configs.length-6; adcSocConfigIndex++)
+    //The hardcoded values here are the indices correspondign to the concerned configurables under the "ADC SOC Trigger" section
+
+    for (let adcSocConfigIndex = 1; adcSocConfigIndex < ADC_SOC_configs.length-7; adcSocConfigIndex++)
     {
         let configName = ADC_SOC_configs[adcSocConfigIndex].name;
         if (inst.epwmEventTrigger_EPWM_SOC_A_triggerEnable)
         {
-            if (adcSocConfigIndex == 3)
+            if (adcSocConfigIndex == 4)
             {
                 ui[configName].hidden = false;
-                let configName2 = ADC_SOC_configs[4].name;
-                let configName3 = ADC_SOC_configs[5].name;
+                let configName2 = ADC_SOC_configs[5].name;
+                let configName3 = ADC_SOC_configs[6].name;
                 if (inst[configName] == true)
                 {
                     ui[configName2].hidden = false;
@@ -69,7 +74,7 @@ function onChangeADCEnableDisable (inst, ui)
                     inst[configName3] = false;
                 }
             }
-            else if (adcSocConfigIndex != 4 && adcSocConfigIndex != 5){
+            else if (adcSocConfigIndex != 2 && adcSocConfigIndex != 5 && adcSocConfigIndex != 6){
                 ui[configName].hidden = false;
             }
         }
@@ -83,16 +88,16 @@ function onChangeADCEnableDisable (inst, ui)
         }
     }
 
-    for (let adcSocConfigIndex = 7; adcSocConfigIndex < ADC_SOC_configs.length; adcSocConfigIndex++)
+    for (let adcSocConfigIndex = 8; adcSocConfigIndex < ADC_SOC_configs.length; adcSocConfigIndex++)
     {
         let configName = ADC_SOC_configs[adcSocConfigIndex].name;
         if (inst.epwmEventTrigger_EPWM_SOC_B_triggerEnable)
         {
-            if (adcSocConfigIndex == 9)
+            if (adcSocConfigIndex == 11)
             {
                 ui[configName].hidden = false;
-                let configName2 = ADC_SOC_configs[10].name;
-                let configName3 = ADC_SOC_configs[11].name;
+                let configName2 = ADC_SOC_configs[12].name;
+                let configName3 = ADC_SOC_configs[13].name;
                 if (inst[configName] == true)
                 {
                     ui[configName2].hidden = false;
@@ -107,7 +112,7 @@ function onChangeADCEnableDisable (inst, ui)
                     inst[configName3] = false;
                 }
             }
-            else if (adcSocConfigIndex != 10 && adcSocConfigIndex != 11)
+            else if (adcSocConfigIndex != 9 && adcSocConfigIndex != 12 && adcSocConfigIndex != 13)
             {
                 ui[configName].hidden = false;
             }
@@ -123,6 +128,42 @@ function onChangeADCEnableDisable (inst, ui)
     }
 }
 
+function onChangeIntEventSource(inst, ui)
+{
+    if(inst.epwmEventTrigger_interruptSource == "EPWM_INT_TBCTR_ETINTMIX")
+    {
+        ui["epwmEventTrigger_interruptMixedSource"].hidden =  false;
+    }
+    else
+    {
+        ui["epwmEventTrigger_interruptMixedSource"].hidden =  true;
+
+        // Reset values to their defaults
+        inst.epwmEventTrigger_interruptMixedSource = [];
+    }
+}
+
+function onChangeADCTriggerSource(inst, ui)
+{
+    for (let socIndex in device_peripheral.EPWM_ADCStartOfConversionType)
+    {
+        let soc = device_peripheral.EPWM_ADCStartOfConversionType[socIndex];
+        let triggerSource= "epwmEventTrigger_" + soc.name + "_triggerSource";
+        let triggerMixedSource= "epwmEventTrigger_" + soc.name + "_triggerMixedSource";
+
+        if(inst[triggerSource] == device_peripheral.EPWM_ADCStartOfConversionSource[3].name)
+        {
+            ui[triggerMixedSource].hidden = false;
+        }
+        else
+        {
+            ui[triggerMixedSource].hidden = true;
+            // Reset values to their defaults
+            inst[triggerMixedSource] = [];
+        }
+
+    }
+}
 
 let ePWMCount = [
     { displayName: "Disabled", name: "0" },
@@ -178,7 +219,17 @@ let config = [
         description : 'Select all events that must be enabled to generate an EPWM interrupt',
         hidden      : true,
         default     : device_peripheral.EPWM_INT_TBCTR[0].name,
-        options     : device_peripheral.EPWM_INT_TBCTR
+        options     : device_peripheral.EPWM_INT_TBCTR,
+        onChange    : onChangeIntEventSource
+    },
+    {
+        name: "epwmEventTrigger_interruptMixedSource",
+        displayName : "Interrupt Event Mixed Sources",
+        description : 'Select all events that must be enabled to generate an EPWM interrupt',
+        hidden      : true,
+        default     : [],
+        minSelections : 0,
+        options     : device_peripheral.EPWM_INT_TBCTR_MixedSources,
     },
     {
         name: "epwmEventTrigger_interruptEventCount",
@@ -214,8 +265,6 @@ let config = [
 
 ];
 
-
-
 for (let socIndex in device_peripheral.EPWM_ADCStartOfConversionType)
 {
     let soc = device_peripheral.EPWM_ADCStartOfConversionType[socIndex];
@@ -235,7 +284,18 @@ for (let socIndex in device_peripheral.EPWM_ADCStartOfConversionType)
             description : 'Select the SOC trigger source for ' + soc_name,
             hidden      : true,
             default     : device_peripheral.EPWM_ADCStartOfConversionSource[0].name,
-            options     : device_peripheral.EPWM_ADCStartOfConversionSource
+            options     : device_peripheral.EPWM_ADCStartOfConversionSource,
+            onChange    : onChangeADCTriggerSource
+        },
+        {
+            name: "epwmEventTrigger_" + soc.name + "_triggerMixedSource",
+            displayName : soc_name + " Trigger Mixed Source",
+            description : 'Select the SOC trigger mixed source for ' + soc_name,
+            hidden      : true,
+            default     : [],
+            minSelections: 0,
+            options     : device_peripheral.EPWM_ADCStartOfConversionMixedSource,
+
         },
         {
             name: "epwmEventTrigger_" + soc.name + "_triggerEventPrescalar",

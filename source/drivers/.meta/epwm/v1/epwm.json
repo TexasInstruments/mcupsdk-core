@@ -1234,6 +1234,19 @@
                 "am263x"
 			]
 		},
+        {
+			"name" :  "epwmDigitalCompare_blankingWindowMixedEvent",
+			"driverlibFunction" : "EPWM_setDigitalCompareBlankingEvent",
+			"driverlibFunctionArg" : {
+		        "base" : "",
+		        "blankingPulse" : "EPWM_DC_WINDOW_START_TBCTR_BLANK_PULSE_MIX",
+                "mixedSource": "this",
+			},
+			"register": "DCFCTL.PULSESEL",
+			"devices" : [
+                "am263x"
+			]
+		},
 		{
 			"name" :  "epwmDigitalCompare_blankingWindowOffset",
 			"driverlibFunction" : "EPWM_setDigitalCompareWindowOffset",
@@ -2076,6 +2089,19 @@
                 "am263x"
 			]
 		},
+        {
+			"name" :  "epwmEventTrigger_interruptMixedSource",
+			"driverlibFunction" : "EPWM_setInterruptSource",
+			"driverlibFunctionArg" : {
+		        "base" : "",
+		        "interruptSource": "EPWM_INT_TBCTR_ETINTMIX",
+                "mixedSource": "this",
+			},
+			"register": "ETSEL.INTSEL",
+			"devices" : [
+                "am263x"
+			]
+		},
 		{
 			"name" :  "epwmEventTrigger_interruptEventCount",
 			"driverlibFunction" : "EPWM_setInterruptEventCount",
@@ -2144,6 +2170,20 @@
 		        "base" : "",
 		        "adcSOCType": "EPWM_SOC_A",
 		        "socSource": "this",
+                "mixedSource": "this",
+			},
+			"register": "ETSEL.SOCASEL",
+			"devices" : [
+                "am263x"
+			]
+		},
+        {
+			"name" :  "epwmEventTrigger_EPWM_SOC_A_triggerMixedSource",
+			"driverlibFunction" : "EPWM_setADCTriggerSource",
+			"driverlibFunctionArg" : {
+		        "base" : "",
+		        "adcSOCType": "EPWM_SOC_A",
+		        "socSource": "EPWM_SOC_TBCTR_MIXED_EVENT",
                 "mixedSource": "this",
 			},
 			"register": "ETSEL.SOCASEL",
@@ -2223,6 +2263,20 @@
 		        "base" : "",
 		        "adcSOCType": "EPWM_SOC_B",
 		        "socSource": "this",
+                "mixedSource": "this",
+			},
+			"register": "ETSEL.SOCBSEL",
+			"devices" : [
+                "am263x"
+			]
+		},
+        {
+			"name" :  "epwmEventTrigger_EPWM_SOC_B_triggerMixedSource",
+			"driverlibFunction" : "EPWM_setADCTriggerSource",
+			"driverlibFunctionArg" : {
+		        "base" : "",
+		        "adcSOCType": "EPWM_SOC_B",
+		        "socSource": "EPWM_SOC_TBCTR_MIXED_EVENT",
                 "mixedSource": "this",
 			},
 			"register": "ETSEL.SOCBSEL",

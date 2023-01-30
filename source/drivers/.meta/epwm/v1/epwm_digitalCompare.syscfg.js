@@ -8,6 +8,18 @@ let DCBConfigs = [];
 function pulseSelChanged(inst, ui)
 {
     inst.epwmDigitalCompare_dCCounterCapturePulse = inst.epwmDigitalCompare_blankingWindowEvent;
+
+    if(inst.epwmDigitalCompare_blankingWindowEvent == device_peripheral.EPWM_DigitalCompareBlankingPulse[3].name)
+    {
+        ui.epwmDigitalCompare_blankingWindowMixedEvent.hidden = false;
+    }
+    else
+    {
+        ui.epwmDigitalCompare_blankingWindowMixedEvent.hidden = true;
+
+        // Set everything to its default state
+        inst.epwmDigitalCompare_blankingWindowMixedEvent = [];
+    }
 }
 
 function onChangeDCCounterCapture(inst, ui)
@@ -42,8 +54,10 @@ function onChangeBlankingWindow(inst, ui)
        ui.epwmDigitalCompare_blankingWindowOffset.hidden = true;
        ui.epwmDigitalCompare_blankingWindowLength.hidden = true;
        ui.epwmDigitalCompare_invertBlankingWindow.hidden = true;
+       ui.epwmDigitalCompare_blankingWindowMixedEvent.hidden = true;
        // Set everything to its default state
        inst.epwmDigitalCompare_blankingWindowEvent = device_peripheral.EPWM_DigitalCompareBlankingPulse[0].name;
+       inst.epwmDigitalCompare_blankingWindowMixedEvent = [];
        inst.epwmDigitalCompare_blankingWindowOffset = 0;
        inst.epwmDigitalCompare_blankingWindowLength= 0;
        inst.epwmDigitalCompare_invertBlankingWindow = false;
@@ -364,6 +378,15 @@ let config = [
         default     : device_peripheral.EPWM_DigitalCompareBlankingPulse[0].name,
         options     : device_peripheral.EPWM_DigitalCompareBlankingPulse,
         onChange    : pulseSelChanged
+    },
+    {
+        name: "epwmDigitalCompare_blankingWindowMixedEvent",
+        displayName : "Blanking Window Start Mixed Event",
+        description : 'Select the mixed event source that starts the blanking window counter (And resets the counter)',
+        hidden      : true,
+        default     : [],
+        minSelections: 0,
+        options     : device_peripheral.EPWM_DigitalCompareBlankingMixedPulse,
     },
     {
         name: "epwmDigitalCompare_blankingWindowOffset",

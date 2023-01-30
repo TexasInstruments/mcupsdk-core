@@ -361,6 +361,19 @@ let EPWM_ADCStartOfConversionSource = [
 	{ name: "EPWM_SOC_TBCTR_D_CMPB", displayName: "Time-base counter equal to CMPB when the timer is decrementing" },
 	{ name: "EPWM_SOC_TBCTR_D_CMPD", displayName: "Time-base counter equal to CMPD when the timer is decrementing" },
 ]
+let EPWM_ADCStartOfConversionMixedSource = [
+	{ name: "EPWM_INT_MIX_TBCTR_ZERO", displayName: "Time-base counter equal to zero" },
+	{ name: "EPWM_INT_MIX_TBCTR_PERIOD", displayName: "Time-base counter equal to period" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPA", displayName: "Time-base counter equal to CMPA when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPA", displayName: "Time-base counter equal to CMPA when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPB", displayName: "Time-base counter equal to CMPB when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPB", displayName: "Time-base counter equal to CMPB when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPC", displayName: "Time-base counter equal to CMPC when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPC", displayName: "Time-base counter equal to CMPC when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPD", displayName: "Time-base counter equal to CMPD when the timer is incrementing" },
+    { name: "EPWM_INT_MIX_TBCTR_D_CMPD", displayName: "Time-base counter equal to CMPD when the timer is decrementing" },
+    { name: "EPWM_INT_MIX_DCAEVT1", displayName: "Event is based on DCxEVT1" },
+]
 let EPWM_DigitalCompareType = [
 	{ name: "EPWM_DC_TYPE_DCAH", displayName: "DCA High" },
 	{ name: "EPWM_DC_TYPE_DCAL", displayName: "DCA Low" },
@@ -390,6 +403,18 @@ let EPWM_DigitalCompareBlankingPulse = [
 	{ name: "EPWM_DC_WINDOW_START_TBCTR_ZERO", displayName: "Time base counter equals zero" },
 	{ name: "EPWM_DC_WINDOW_START_TBCTR_ZERO_PERIOD", displayName: "Time base counter equals zero or period" },
     { name: "EPWM_DC_WINDOW_START_TBCTR_BLANK_PULSE_MIX", displayName: "Time base counter equals mixed event" },
+]
+let EPWM_DigitalCompareBlankingMixedPulse = [
+    { name: "EPWM_DC_TBCTR_ZERO", displayName: "Time base counter equals zero" },
+	{ name: "EPWM_DC_TBCTR_PERIOD", displayName: "Time base counter equals period" },
+	{ name: "EPWM_DC_TBCTR_U_CMPA", displayName: "Time base counter equal to CMPA when the timer is incrementing" },
+    { name: "EPWM_DC_TBCTR_D_CMPA", displayName: "Time base counter equal to CMPA when the timer is decrementing" },
+    { name: "EPWM_DC_TBCTR_U_CMPB", displayName: "Time base counter equal to CMPB when the timer is incrementing" },
+    { name: "EPWM_DC_TBCTR_D_CMPB", displayName: "Time base counter equal to CMPB when the timer is decrementing" },
+    { name: "EPWM_DC_TBCTR_U_CMPC", displayName: "Time base counter equal to CMPC when the timer is incrementing" },
+    { name: "EPWM_DC_TBCTR_D_CMPC", displayName: "Time base counter equal to CMPC when the timer is decrementing" },
+    { name: "EPWM_DC_TBCTR_U_CMPD", displayName: "Time base counter equal to CMPD when the timer is incrementing" },
+    { name: "EPWM_DC_TBCTR_D_CMPD", displayName: "Time base counter equal to CMPD when the timer is decrementing" },
 ]
 let EPWM_DigitalCompareFilterInput = [
 	{ name: "EPWM_DC_WINDOW_SOURCE_DCAEVT1", displayName: "DC filter signal source is DCAEVT1" },
@@ -572,7 +597,7 @@ let EPWM_TZ_FORCE_EVENT = [
 let EPWM_INT_TBCTR = [
 	{ name: "EPWM_INT_TBCTR_ZERO", displayName: "Time-base counter equal to zero" },
 	{ name: "EPWM_INT_TBCTR_PERIOD", displayName: "Time-base counter equal to period" },
-	{ name: "EPWM_INT_TBCTR_ETINTMIX", displayName: "Time-base counter based on mix events" },
+	{ name: "EPWM_INT_TBCTR_ETINTMIX", displayName: "Time-base counter based on mixed events" },
 	{ name: "EPWM_INT_TBCTR_U_CMPA", displayName: "time-base counter equal to CMPA when the timer is incrementing" },
 	{ name: "EPWM_INT_TBCTR_U_CMPC", displayName: "time-base counter equal to CMPC when the timer is incrementing" },
 	{ name: "EPWM_INT_TBCTR_D_CMPA", displayName: "time-base counter equal to CMPA when the timer is decrementing" },
@@ -581,6 +606,19 @@ let EPWM_INT_TBCTR = [
 	{ name: "EPWM_INT_TBCTR_U_CMPD", displayName: "time-base counter equal to CMPD when the timer is incrementing" },
 	{ name: "EPWM_INT_TBCTR_D_CMPB", displayName: "time-base counter equal to CMPB when the timer is decrementing" },
 	{ name: "EPWM_INT_TBCTR_D_CMPD", displayName: "time-base counter equal to CMPD when the timer is decrementing" },
+]
+let EPWM_INT_TBCTR_MixedSources = [
+	{ name: "EPWM_INT_MIX_TBCTR_ZERO", displayName: "Time-base counter equal to zero" },
+	{ name: "EPWM_INT_MIX_TBCTR_PERIOD", displayName: "Time-base counter equal to period" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPA", displayName: "Time-base counter equal to CMPA when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPA", displayName: "Time-base counter equal to CMPA when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPB", displayName: "Time-base counter equal to CMPB when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPB", displayName: "Time-base counter equal to CMPB when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPC", displayName: "Time-base counter equal to CMPC when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPC", displayName: "Time-base counter equal to CMPC when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_U_CMPD", displayName: "Time-base counter equal to CMPD when the timer is incrementing" },
+	{ name: "EPWM_INT_MIX_TBCTR_D_CMPD", displayName: "Time-base counter equal to CMPD when the timer is decrementing" },
+	{ name: "EPWM_INT_MIX_DCAEVT1", displayName: "Event is based on DCxEVT1" },
 ]
 let EPWM_DC_COMBINATIONAL = [
 	{ name: "EPWM_DC_COMBINATIONAL_TRIPIN1", displayName: "Combinational Trip 1 input" },
@@ -965,11 +1003,14 @@ exports = {
 	EPWM_TripZoneAdvancedAction: EPWM_TripZoneAdvancedAction,
 	EPWM_TripZoneAdvDigitalCompareEvent: EPWM_TripZoneAdvDigitalCompareEvent,
 	EPWM_CycleByCycleTripZoneClearMode: EPWM_CycleByCycleTripZoneClearMode,
+    EPWM_INT_TBCTR_MixedSources: EPWM_INT_TBCTR_MixedSources,
 	EPWM_ADCStartOfConversionType: EPWM_ADCStartOfConversionType,
 	EPWM_ADCStartOfConversionSource: EPWM_ADCStartOfConversionSource,
+    EPWM_ADCStartOfConversionMixedSource: EPWM_ADCStartOfConversionMixedSource,
 	EPWM_DigitalCompareType: EPWM_DigitalCompareType,
 	EPWM_DigitalCompareTripInput: EPWM_DigitalCompareTripInput,
 	EPWM_DigitalCompareBlankingPulse: EPWM_DigitalCompareBlankingPulse,
+    EPWM_DigitalCompareBlankingMixedPulse:EPWM_DigitalCompareBlankingMixedPulse,
 	EPWM_DigitalCompareFilterInput: EPWM_DigitalCompareFilterInput,
 	EPWM_DigitalCompareModule: EPWM_DigitalCompareModule,
 	EPWM_DigitalCompareEvent: EPWM_DigitalCompareEvent,
