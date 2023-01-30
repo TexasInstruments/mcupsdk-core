@@ -12,6 +12,8 @@ function onChangeECAPMode(inst, ui)
         ui.eventThreePolarity.hidden = false
         ui.eventFourPolarity.hidden = false
         ui.captureMode.hidden = false
+        ui.dmaSourceCapture.hidden = false;
+        ui.dmaSourceAPWM.hidden = true;
         if (inst.useInterrupts){
             ui.interruptSourceCapture.hidden = false
             ui.interruptSourceAPWM.hidden = true
@@ -21,12 +23,19 @@ function onChangeECAPMode(inst, ui)
         ui.reArm.hidden = false
         ui.ecapInput.hidden = false
         ui.resetCounters.hidden = false
-        ui.useDMA.hidden = false
-        ui.dmaSource.hidden = false
+
         //APWM options
         ui.apwmPolarity.hidden = true
         ui.apwmPeriod.hidden = true
         ui.apwmCompare.hidden = true
+
+        //Reset to default values
+        inst.ecap_AdcSoCtriggerSourceAPWM = device_peripheral.ECAP_ADC_TRIGGER_SOURCE[4].name
+        inst.apwmPolarity = device_peripheral.ECAP_APWMPolarity[0].name
+        inst.apwmPeriod = 0
+        inst.apwmCompare = 0
+        inst.interruptSourceAPWM = []
+        inst.dmaSourceAPWM = device_peripheral.ECAP_Events[4].name
     }
     else if(inst.ecapMode == "APWM"){
         //CAPTURE options
@@ -36,6 +45,8 @@ function onChangeECAPMode(inst, ui)
         ui.eventThreePolarity.hidden = true
         ui.eventFourPolarity.hidden = true
         ui.captureMode.hidden = true
+        ui.dmaSourceCapture.hidden = true;
+        ui.dmaSourceAPWM.hidden = false;
         if (inst.useInterrupts){
             ui.interruptSourceCapture.hidden = true
             ui.interruptSourceAPWM.hidden = false
@@ -45,13 +56,30 @@ function onChangeECAPMode(inst, ui)
         ui.reArm.hidden = true
         ui.ecapInput.hidden = true
         ui.resetCounters.hidden = true
-        ui.useDMA.hidden = true
-        ui.dmaSource.hidden = true
+
         //APWM options
         ui.apwmPeriod.hidden = false
         ui.apwmPolarity.hidden = false
         ui.apwmCompare.hidden = false
+
+        //Reset to default values
+        inst.eventPrescaler = 0
+        inst.eventOnePolarity = device_peripheral.ECAP_EventPolarity[0].name
+        inst.eventTwoPolarity = device_peripheral.ECAP_EventPolarity[0].name
+        inst.eventThreePolarity = device_peripheral.ECAP_EventPolarity[0].name
+        inst.eventFourPolarity = device_peripheral.ECAP_EventPolarity[0].name
+        inst.ecap_AdcSoCtriggerSourceCapture = device_peripheral.ECAP_ADC_TRIGGER_SOURCE[0].name
+        inst.eventStop = device_peripheral.ECAP_Events[0].name
+        inst.counterResetOnEvent = []
+        inst.reArm = false
+        inst.ecapInput = defaultInput
+        inst.resetCounters = false
+        inst.interruptSourceCapture = []
+        inst.dmaSourceCapture = device_peripheral.ECAP_Events[0].name
     }
+    inst.ecap_AdcSoCtriggerEnable = false
+    ui.ecap_AdcSoCtriggerSourceCapture.hidden = true
+    ui.ecap_AdcSoCtriggerSourceAPWM.hidden = true
 }
 
 function onChangeUseInterrupts(inst, ui)
@@ -61,10 +89,16 @@ function onChangeUseInterrupts(inst, ui)
         if(inst.ecapMode == "CAPTURE"){
             ui.interruptSourceCapture.hidden = false
             ui.interruptSourceAPWM.hidden = true
+
+            // Reset values to their defaults
+            inst.interruptSourceAPWM = []
         }
         else if(inst.ecapMode == "APWM"){
             ui.interruptSourceCapture.hidden = true
             ui.interruptSourceAPWM.hidden = false
+
+            // Reset values to their defaults
+            inst.interruptSourceCapture = []
         }
 
     }
@@ -72,6 +106,38 @@ function onChangeUseInterrupts(inst, ui)
         ui.enableInterrupt.hidden = true
         ui.interruptSourceCapture.hidden = true
         ui.interruptSourceAPWM.hidden = true
+
+        // Reset values to their defaults
+        inst.interruptSourceCapture = []
+        inst.interruptSourceAPWM = []
+    }
+}
+
+function onChangeADCEnableDisable(inst, ui)
+{
+    if (inst.ecap_AdcSoCtriggerEnable){
+
+        if(inst.ecapMode == "CAPTURE"){
+            ui.ecap_AdcSoCtriggerSourceCapture.hidden = false
+            ui.ecap_AdcSoCtriggerSourceAPWM.hidden = true
+            // Reset values to their defaults
+            inst.ecap_AdcSoCtriggerSourceAPWM = device_peripheral.ECAP_ADC_TRIGGER_SOURCE[4].name
+        }
+        else if(inst.ecapMode == "APWM"){
+            ui.ecap_AdcSoCtriggerSourceCapture.hidden = true
+            ui.ecap_AdcSoCtriggerSourceAPWM.hidden = false
+            // Reset values to their defaults
+            inst.ecap_AdcSoCtriggerSourceCapture = device_peripheral.ECAP_ADC_TRIGGER_SOURCE[0].name
+        }
+
+    }
+    else{
+        ui.ecap_AdcSoCtriggerSourceCapture.hidden = true
+        ui.ecap_AdcSoCtriggerSourceAPWM.hidden = true
+
+        //Reset to default values
+        inst.ecap_AdcSoCtriggerSourceCapture = device_peripheral.ECAP_ADC_TRIGGER_SOURCE[0].name
+        inst.ecap_AdcSoCtriggerSourceAPWM = device_peripheral.ECAP_ADC_TRIGGER_SOURCE[4].name
     }
 }
 
@@ -134,7 +200,11 @@ let config = [
         description : 'Select the event number at which the counter stops or wraps',
         hidden      : false,
         default     : device_peripheral.ECAP_Events[0].name,
-        options     : device_peripheral.ECAP_Events
+        options     : [device_peripheral.ECAP_Events[0],
+                       device_peripheral.ECAP_Events[1],
+                       device_peripheral.ECAP_Events[2],
+                       device_peripheral.ECAP_Events[3],
+                       ]
     },
     {
         name        : "eventPrescaler",
@@ -203,8 +273,6 @@ let config = [
             {name: "ECAP_ISR_SOURCE_CAPTURE_EVENT_3", displayName: "Event 3 ISR source"},
             {name: "ECAP_ISR_SOURCE_CAPTURE_EVENT_4", displayName: "Event 4 ISR source"},
             {name: "ECAP_ISR_SOURCE_COUNTER_OVERFLOW", displayName: "Counter overflow ISR source"},
-            {name: "ECAP_ISR_SOURCE_COUNTER_PERIOD", displayName: "Counter equals period ISR source"},
-            {name: "ECAP_ISR_SOURCE_COUNTER_COMPARE", displayName: "Counter equals compare ISR source"},
         ],
     },
     {
@@ -226,7 +294,11 @@ let config = [
         hidden      : false,
         default     : [],
         minSelections: 0,
-        options     : device_peripheral.ECAP_Events
+        options     : [device_peripheral.ECAP_Events[0],
+                       device_peripheral.ECAP_Events[1],
+                       device_peripheral.ECAP_Events[2],
+                       device_peripheral.ECAP_Events[3],
+                      ]
     },
     {
         name        : "phaseShiftCount",
@@ -307,12 +379,60 @@ config.push(
         default     : false
     },
     {
-        name        : "dmaSource",
+        name        : "dmaSourceCapture",
         displayName : "DMA Source",
-        description : 'Sets the eCAP DMA source.',
+        description : 'Sets the eCAP DMA source in Capture Mode.',
         hidden      : false,
         default     : device_peripheral.ECAP_Events[0].name,
-        options     : device_peripheral.ECAP_Events
+        options     : [device_peripheral.ECAP_Events[0],
+                       device_peripheral.ECAP_Events[1],
+                       device_peripheral.ECAP_Events[2],
+                       device_peripheral.ECAP_Events[3],
+                      ]
+    },
+    {
+        name        : "dmaSourceAPWM",
+        displayName : "DMA Source",
+        description : 'Sets the eCAP DMA source in APWM mode.',
+        hidden      : true,
+        default     : device_peripheral.ECAP_Events[4].name,
+        options     : [device_peripheral.ECAP_Events[4],
+                       device_peripheral.ECAP_Events[5],
+                       device_peripheral.ECAP_Events[6],
+                       device_peripheral.ECAP_Events[7],
+                      ]
+    },
+    {
+        name: "ecap_AdcSoCtriggerEnable",
+        displayName : "ADC SOC Trigger Enable",
+        description : 'Enable the ADC SOC trigger',
+        hidden      : false,
+        default     : false,
+        onChange    : onChangeADCEnableDisable
+    },
+    {
+        name: "ecap_AdcSoCtriggerSourceCapture",
+        displayName : "ADC SOC Trigger Source",
+        description : 'Select the ADC SOC trigger source in Capture mode',
+        hidden      : true,
+        default     : device_peripheral.ECAP_ADC_TRIGGER_SOURCE[0].name,
+        options     : [device_peripheral.ECAP_ADC_TRIGGER_SOURCE[0],
+                       device_peripheral.ECAP_ADC_TRIGGER_SOURCE[1],
+                       device_peripheral.ECAP_ADC_TRIGGER_SOURCE[2],
+                       device_peripheral.ECAP_ADC_TRIGGER_SOURCE[3],
+                    ]
+    },
+    {
+        name: "ecap_AdcSoCtriggerSourceAPWM",
+        displayName : "ADC SOC Trigger Source",
+        description : 'Select the ADC SOC trigger source in APWM mode',
+        hidden      : true,
+        default     : device_peripheral.ECAP_ADC_TRIGGER_SOURCE[4].name,
+        options     : [device_peripheral.ECAP_ADC_TRIGGER_SOURCE[4],
+                       device_peripheral.ECAP_ADC_TRIGGER_SOURCE[5],
+                       device_peripheral.ECAP_ADC_TRIGGER_SOURCE[6],
+                       device_peripheral.ECAP_ADC_TRIGGER_SOURCE[7],
+                       ]
     },
 )
 

@@ -78,7 +78,16 @@ void Drivers_ecapOpen()
 	ECAP_setAPWMCompare(`baseName`,`instance.apwmCompare`);
 	/* Set eCAP APWM polarity */
 	ECAP_setAPWMPolarity(`baseName`,`instance.apwmPolarity`);
+
+    % if (instance.useDMA){
+	/* Sets the eCAP DMA source */
+	ECAP_setDMASource(`baseName`,`instance.dmaSourceAPWM`);
+			% }
+    % if (instance.ecap_AdcSoCtriggerEnable){
+	/* Sets the eCAP DMA source */
+	ECAP_selectSocTriggerSource(`baseName`,`instance.ecap_AdcSoCtriggerSourceAPWM`);
 		% }
+	% }
 	/* Sets a phase shift value count */
 	ECAP_setPhaseShiftCount(`baseName`,`instance.phaseShiftCount`);
 		% if(instance.enableLoadCounter){
@@ -102,8 +111,13 @@ void Drivers_ecapOpen()
 			% }
 			% if (instance.useDMA){
 	/* Sets the eCAP DMA source */
-	ECAP_setDMASource(`baseName`,`instance.dmaSource`);
+	ECAP_setDMASource(`baseName`,`instance.dmaSourceCapture`);
 			% }
+    % if (instance.ecap_AdcSoCtriggerEnable){
+	/* Sets the eCAP DMA source */
+	ECAP_selectSocTriggerSource(`baseName`,`instance.ecap_AdcSoCtriggerSourceCapture`);
+		% }
+
 		% }
 	/* Configures emulation mode */
 	ECAP_setEmulationMode(`baseName`,`instance.emulationMode`);
