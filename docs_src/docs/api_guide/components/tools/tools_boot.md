@@ -371,3 +371,31 @@ Sec Unique ID : fd6e232b89dfc6ea125c2fa09f25f95034e08a54797490c32bf47c64bf4c8f21
 
 \endcond
 
+\cond SOC_AM263X
+## CAN Bootloader Python Script {#CAN_BOOTLOADER_PYTHON_SCRIPT}
+
+- This script is used in QSPI boot mode for sending the appimage binaries to the EVM via CAN, after flashing the SBL CAN. Refer \ref BASIC_STEPS_TO_FLASH_FILES for flashing.
+- Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
+- Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+- Make sure you have the EVM power cable and CAN cable connected as shown in \ref EXAMPLES_DRIVERS_SBL_CAN
+- To boot applications using this script, **POWER OFF the EVM**
+- Switch to \ref BOOTMODE_QSPI
+- **POWER ON the EVM**
+- Open a command prompt and run the below command to send the application binary to the EVM
+\code
+cd ${SDK_INSTALL_PATH}/tools/boot
+python can_bootloader.py --file=< path to multicore appimage of application binary >
+\endcode
+- When you execute this, the script first sends the multicore appimage to the EVM
+- After the multicore appimage is successfully parsed, the CAN bootloader sends an acknowledgment to the script
+- Upon receiving the ack, the script will exit successfully
+- Connect to the UART terminal to see logs from the application
+- Below are the logs of the script after all the files have been sent
+  \code
+  Sending the application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.appimage ...
+  Sent application ../../examples/drivers/udma/udma_memcpy_polling/{board}/r5fss0-0_nortos/ti-arm-clang/udma_memcpy_polling.release.appimage of size 99580 bytes in 11.74s.
+  [STATUS] BOOTLOADER_CAN_STATUS_LOAD_SUCCESS!!!
+  Connect to UART to see logs from UART !!!
+  \endcode
+\endcond
+

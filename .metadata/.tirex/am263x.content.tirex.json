@@ -1129,6 +1129,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Can Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can",
+        "location": "../../examples/drivers/boot/sbl_can/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Can Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can",
+        "location": "../../examples/drivers/boot/sbl_can/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Jtag Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_jtag_uniflash",
         "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

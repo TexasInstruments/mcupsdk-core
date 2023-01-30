@@ -28,6 +28,7 @@ This page lists all the examples related to secondary bootloader and bootloader 
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_QSPI
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
+   -# \subpage EXAMPLES_DRIVERS_SBL_CAN
    -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
 \endcond

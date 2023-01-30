@@ -4,45 +4,45 @@
 
 ## Introduction
 
-This section is aimed at explaining what a bootloader is, why is it needed and details regarding the 
+This section is aimed at explaining what a bootloader is, why is it needed and details regarding the
 bootloader and bootflow used in the MCU+SDK.
 
 ### What Is Bootloader?
 
-Generally speaking, bootloader is a piece of software / firmware that runs as soon as you power on an SoC. A bootloader's main 
+Generally speaking, bootloader is a piece of software / firmware that runs as soon as you power on an SoC. A bootloader's main
 duty is to start the subsequent pieces of software, such an OS, a baremetal application or in some cases another bootloader.
-When it comes to embedded, the bootloader is usually closely tied with the underlying SoC architecture. The bootloader is 
-usually stored in a protected, non-volatile on-chip memory. Typically the bootloader performs various hardware checks, 
-initializes the processor and configures the SoC registers etc. Since the primary aim of the bootloader is to load the 
-next piece of software, it needs to communicate to the external world to receive this firmware/application image. This 
-can be over a number of protocols - USB, UART, SPI, I2C, External Flash, Internal Flash, SD Card, Ethernet, CAN etc. 
+When it comes to embedded, the bootloader is usually closely tied with the underlying SoC architecture. The bootloader is
+usually stored in a protected, non-volatile on-chip memory. Typically the bootloader performs various hardware checks,
+initializes the processor and configures the SoC registers etc. Since the primary aim of the bootloader is to load the
+next piece of software, it needs to communicate to the external world to receive this firmware/application image. This
+can be over a number of protocols - USB, UART, SPI, I2C, External Flash, Internal Flash, SD Card, Ethernet, CAN etc.
 Bootloader is also a key component in embedded security. Hardware Root-of-Trust is usually passed onto the bootloader and
-is passed on down the line. 
+is passed on down the line.
 
-\note In devices supported by MCU+SDK, the first stage bootloader is burned into read-only memory of the device and is 
-considered as device firmware / ROM. Mostly in MCU+SDK when we say "bootloader" we are referring to the secondary bootloader, 
+\note In devices supported by MCU+SDK, the first stage bootloader is burned into read-only memory of the device and is
+considered as device firmware / ROM. Mostly in MCU+SDK when we say "bootloader" we are referring to the secondary bootloader,
 or the SBL
 
 ### Multi-Stage Bootloader
 
-As mentioned earlier, sometimes the bootloader would be loading another bootloader which can load another one and so on. 
-This is usually the case in advanced SoCs, and there are various reasons for this. The first bootloader is usually kept 
-on secure, read-only memory for security reasons and to have a known state always before application software starts. 
-It makes sense then to keep this bootloader simple and let it do only the bare minimum configuration required. This 
-secondary bootloader can be complex and configurable to suit the needs of the application. This can also be updated easily 
-compared to the first stage bootloader. In fact for the devices in MCU+SDK, we have a two-stage bootloading - the first 
+As mentioned earlier, sometimes the bootloader would be loading another bootloader which can load another one and so on.
+This is usually the case in advanced SoCs, and there are various reasons for this. The first bootloader is usually kept
+on secure, read-only memory for security reasons and to have a known state always before application software starts.
+It makes sense then to keep this bootloader simple and let it do only the bare minimum configuration required. This
+secondary bootloader can be complex and configurable to suit the needs of the application. This can also be updated easily
+compared to the first stage bootloader. In fact for the devices in MCU+SDK, we have a two-stage bootloading - the first
 stage bootloader is called ROM Bootloader (RBL) and the second stage bootloader is called Secondary Bootloader (SBL).
 
 ### Multi-Core Bootloading
 
-Multi-core bootloading is almost always a follow up when there is a multi-stage bootloading. In this case the first bootloader 
-technically might not be even aware of the other cores, it will just boot the next stage bootloader and this second stage 
-bootloader will take care of the complex bootloading on the different cores. 
+Multi-core bootloading is almost always a follow up when there is a multi-stage bootloading. In this case the first bootloader
+technically might not be even aware of the other cores, it will just boot the next stage bootloader and this second stage
+bootloader will take care of the complex bootloading on the different cores.
 
-Loading a multi-core application is slightly more complicated than loading a single core application. There would be concerns 
-regarding image preparation, shared memory access, and so on. Mostly there would be a particular format in which the individual 
-core images are created, and then they may/may not be concatenated into a single image for SBL to load. Whatever format the 
-application image is in, the SBL should be aware of it so that it can parse and load the image correctly. 
+Loading a multi-core application is slightly more complicated than loading a single core application. There would be concerns
+regarding image preparation, shared memory access, and so on. Mostly there would be a particular format in which the individual
+core images are created, and then they may/may not be concatenated into a single image for SBL to load. Whatever format the
+application image is in, the SBL should be aware of it so that it can parse and load the image correctly.
 
 
 ## Bootloading in MCU+SDK
@@ -53,16 +53,16 @@ In the MCU+SDK, the bootflow takes place mainly in two steps after you power ON 
 
 ### ROM Boot
 
-The **RBL** or ROM Bootloader is stored in read-only memory and is almost considered as part of the SoC. The details 
-regarding the RBL and ROM Boot is out of scope for this user guide. Please refer to the Technical Reference Manual of 
-the device for more details. But basically the ROM expects an x509 signed binary image of the secondary bootloader to be 
+The **RBL** or ROM Bootloader is stored in read-only memory and is almost considered as part of the SoC. The details
+regarding the RBL and ROM Boot is out of scope for this user guide. Please refer to the Technical Reference Manual of
+the device for more details. But basically the ROM expects an x509 signed binary image of the secondary bootloader to be
 provided for boot.
 
 - As soon as the EVM is powered ON, the ROM bootloader or RBL starts running. The RBL is the primary bootloader.
-- Depending on which boot mode is selected on the EVM, the RBL will load the **secondary bootloader** or SBL from a boot 
+- Depending on which boot mode is selected on the EVM, the RBL will load the **secondary bootloader** or SBL from a boot
   media (OSPI flash, SD card or via UART).
 - Rest of the booting is done by the SBL.
-- The RBL expects the image it boots (SBL in our case) to always be signed as mentioned above. Refer \ref TOOLS_BOOT for 
+- The RBL expects the image it boots (SBL in our case) to always be signed as mentioned above. Refer \ref TOOLS_BOOT for
   more information on signing scripts.
 
 The x509 template for ROM looks something like this:
@@ -134,20 +134,20 @@ shaValue = FORMAT:HEX,OCT:0000
 
 \cond SOC_AM64X || SOC_AM243X
 #### System Controller Firmware (SYSFW)
-- In case of @VAR_SOC_NAME EVM, there is one more component called the System Controller Firmware (SYSFW) which is  
-  important in the booting process and SoC operation. As the name suggests it is controller firmware which runs in the 
-  Cortex M3 core and acts as a centralized server for the SoC which grants services in 
+- In case of @VAR_SOC_NAME EVM, there is one more component called the System Controller Firmware (SYSFW) which is
+  important in the booting process and SoC operation. As the name suggests it is controller firmware which runs in the
+  Cortex M3 core and acts as a centralized server for the SoC which grants services in
 
   - Resource Management (RM)
   - Power Management (PM)
   - Security
 
-- Since the services provided by SYSFW are fundamental, it needs to be loaded before the secondary bootloader can do pretty 
-  much anything. 
-- In MCU+SDK we follow what's called the combined bootflow (for more details on combined bootflow refer \ref BOOTFLOW_MIGRATION_GUIDE), 
-  where RBL boots the SBL and the SYSFW. For this we have to prepare the boot image for RBL specially. It will be a 
-  concatenation of the SBL binary, SYSFW binary and Board Configuration binary all signed with a single x509 certificate. 
-  This process is taken care in SBL makefiles, so in most cases the user need not worry about it. For details regarding 
+- Since the services provided by SYSFW are fundamental, it needs to be loaded before the secondary bootloader can do pretty
+  much anything.
+- In MCU+SDK we follow what's called the combined bootflow (for more details on combined bootflow refer \ref BOOTFLOW_MIGRATION_GUIDE),
+  where RBL boots the SBL and the SYSFW. For this we have to prepare the boot image for RBL specially. It will be a
+  concatenation of the SBL binary, SYSFW binary and Board Configuration binary all signed with a single x509 certificate.
+  This process is taken care in SBL makefiles, so in most cases the user need not worry about it. For details regarding
   the signing script used for this please refer \ref TOOLS_BOOT
 - One of the first things SBL is going to do is wait for a boot notification from SYSFW.
 - There are different types of SYSFW images included in the SDK. You can find below binary files under `source/drivers/sciclient/soc/${soc}`:
@@ -188,7 +188,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - Only the region `0x10200000` to `0x10220000` should be used by SBL code, data, stack etc
 \endcond
 \endcond
-- After building, the SBL application `.out` file is first converted to a binary format `.bin` using the TI ARM CLANG 
+- After building, the SBL application `.out` file is first converted to a binary format `.bin` using the TI ARM CLANG
   `objcopy` tool.
   - This copies the loadable sections from the .out into a binary image stripping all symbol and section information.
   - If there are two loadable sections in the image which are not contiguous then `objcopy` fills the gaps with `0x00`.
@@ -213,13 +213,13 @@ However the steps to convert the application `.out` into a bootable image are di
 ### SBL Boot
 
 - An SBL typically does a bunch of SOC specific initializations and proceeds to the application loading.
-- Depending on the type of SBL loaded, SBL looks for the **multicore appimage** (refer \ref TOOLS_BOOT for more on multicore appimage) 
+- Depending on the type of SBL loaded, SBL looks for the **multicore appimage** (refer \ref TOOLS_BOOT for more on multicore appimage)
   of the application binary at a specified location in a boot media.
-- If the appimage is found, the multicore appimage is parsed into multiple **RPRCs**. These are optimized binaries which 
+- If the appimage is found, the multicore appimage is parsed into multiple **RPRCs**. These are optimized binaries which
   are then loaded into individual CPUs.
-- Each RPRC image will have information regarding the core on which it is to be loaded, entry points and multiple sections 
+- Each RPRC image will have information regarding the core on which it is to be loaded, entry points and multiple sections
   of that application binary
-- The SBL uses this information to initialize each core which has a valid RPRC. It then loads the RPRC according to the 
+- The SBL uses this information to initialize each core which has a valid RPRC. It then loads the RPRC according to the
   sections specified, sets the entry points and releases the core from reset. Now the core will start running.
 
 \inlineVideo{sbl_boot.mp4,SBL BOOT,width=50%}
@@ -240,7 +240,7 @@ However the steps to convert the application `.out` into a bootable image are di
 Shown below are the different steps that are done to convert the compiler+linker generated application `.out` into a format suitable for flashing
 and booting
 
-\cond SOC_AM243X || SOC_AM64X 
+\cond SOC_AM243X || SOC_AM64X
 - For each CPU, the compiler+linker toolchain is used to create the application .out "ELF" file which can be loaded and run via CCS
 - The below "post build" steps are then used to convert the application .out into a "flash" friendly format
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
@@ -281,7 +281,7 @@ and booting
 \endcond
 - When flashing the application we also need to flash a bootloader or SBL image.
 - See \ref TOOLS_FLASH for detailed steps that are done to flash a user application
-  
+
 #### Booting the application
 
 After a SBL and application image is flashed, shown below is the high level boot flow, after the SOC is powered on.
@@ -297,9 +297,9 @@ In secure device variants, there are slight differences in the bootflow. For det
 
 ## Deep Dive into SBLs
 
-The SBL is like any other example of the SDK. They use the bootloader library APIs to carry out the bootloading process. 
-Depending on the boot media from which we load the application binary, we have multiple SBLs like `sbl_ospi`,`sbl_uart` etc. 
-A bare minimum SBL called the `sbl_null` is also included which aids the users to load their applications via CCS. Here are 
+The SBL is like any other example of the SDK. They use the bootloader library APIs to carry out the bootloading process.
+Depending on the boot media from which we load the application binary, we have multiple SBLs like `sbl_ospi`,`sbl_uart` etc.
+A bare minimum SBL called the `sbl_null` is also included which aids the users to load their applications via CCS. Here are
 some details regarding those.
 
 ### SBL NULL
@@ -355,6 +355,17 @@ some details regarding those.
 
 - To boot an application using the `sbl_uart`, you can refer to \ref UART_BOOTLOADER_PYTHON_SCRIPT subsection. Detailed steps on the usage is mentioned in the same subsection.
 
+\cond SOC_AM263X
+### SBL CAN
+
+- The `sbl_can` is a secondary bootloader which needs to be flashed in QSPI Flash.
+
+- The `sbl_can` receives the multicore appimage via CAN, stores it in memory and then does the parsing, core initialization etc.
+
+- To boot an application using the `sbl_can`, you can refer to \ref CAN_BOOTLOADER_PYTHON_SCRIPT subsection.
+
+\endcond
+
 \cond SOC_AM64X
 ### SBL OSPI LINUX
 
@@ -398,6 +409,7 @@ See also these additional pages for more details and examples about the boot flo
 \cond SOC_AM263X
   - \ref EXAMPLES_DRIVERS_SBL_QSPI
   - \ref EXAMPLES_DRIVERS_SBL_UART
+  - \ref EXAMPLES_DRIVERS_SBL_CAN
 \endcond
 - To understand the flashing steps, see \ref TOOLS_FLASH
 - To understand the boot image creation tools, see \ref TOOLS_BOOT

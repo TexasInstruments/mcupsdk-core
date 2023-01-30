@@ -56,6 +56,10 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
     will boot the user application file for all the CPUs
 </tr>
+<tr>
+    <td>sbl_can
+    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file for all the CPUs
+</tr>
 \endcond
 <tr>
     <td>sbl_null
@@ -296,7 +300,7 @@ UART Uniflash GUI is a GUI wrapper around the UART Uniflash tool already present
 This GUI is built on top of the python based UART Uniflash CLI tool already mentioned, and specifically based on the PyQt5 binding of the QT5 framework. So it is expected that python3 and other dependencies (xmodem, pyserial etc) are already installed. In addition to this, one also needs to install the PyQt5 python library for the GUI to work.
 
 - In windows, you can install PyQt5 by doing below:
-  
+
   `python -m pip install pyqt5`
 
 - In Ubuntu (or other Debian based distros) you can install PyQt5 by doing below:
