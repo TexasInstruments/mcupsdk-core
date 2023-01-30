@@ -1,10 +1,10 @@
 let common = system.getScript("/common");
 let soc = system.getScript(`/board/flash/flash_${common.getSocName()}`);
-let copyCmd = "cp";
+let nodeCmd = "node";
 
 if(system.getOS() == "win")
 {
-    copyCmd = "copy";
+    nodeCmd = "node.exe";
 }
 
 let addressingModeDescription = `
@@ -485,9 +485,19 @@ let flash_module = {
                     pickDirectory: false,
                     nonSerializable: true,
                     onLaunch: (inst) => {
+                        let products=system.getProducts()
+                        let sdkPath = ""
+                        let copyScriptPath = ""
+                        if(system.getOS() == "win") {
+                            sdkPath = products[0].path.split("\\.metadata\\product.json")[0];
+                            copyScriptPath = sdkPath + "//source//board//.meta//flash//copyutil.js";
+                        } else {
+                            sdkPath = products[0].path.split("/.metadata/product.json")[0];
+                            copyScriptPath = sdkPath + "/source/board/.meta/flash/copyutil.js";
+                        }
                         return {
-                            command: copyCmd,
-                            args: ["$browsedFile", "$comFile"],
+                            command: nodeCmd,
+                            args: [copyScriptPath, "$browsedFile", "$comFile"],
                             initialData: "initialData",
                             inSystemPath: true,
                         };
