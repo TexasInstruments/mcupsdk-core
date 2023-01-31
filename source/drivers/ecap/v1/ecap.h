@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -142,10 +142,14 @@ typedef enum
 //*****************************************************************************
 typedef enum
 {
-    ECAP_EVENT_1 = 0U,   //!< eCAP event 1
-    ECAP_EVENT_2 = 1U,   //!< eCAP event 2
-    ECAP_EVENT_3 = 2U,   //!< eCAP event 3
-    ECAP_EVENT_4 = 3U    //!< eCAP event 4
+    ECAP_EVENT_1 = 0U,     //!< eCAP event 1 in capture mode
+    ECAP_EVENT_2 = 1U,     //!< eCAP event 2 in capture mode
+    ECAP_EVENT_3 = 2U,     //!< eCAP event 3 in capture mode
+    ECAP_EVENT_4 = 3U,      //!< eCAP event 4
+    ECAP_APWM_MODE_PRD = ECAP_EVENT_1,        //!< eCAP Period match in APWM mode
+    ECAP_APWM_MODE_CMP = ECAP_EVENT_2,        //!< eCAP Compare match  in APWM mode
+    ECAP_APWM_MODE_PRD_CMP = ECAP_EVENT_3,    //!< eCAP Period or compare match  in APWM mode
+    ECAP_APWM_MODE_DISABLED = ECAP_EVENT_4,  //!< Disabled in APWM mode
 }ECAP_Events;
 
 //*****************************************************************************
@@ -1583,7 +1587,9 @@ static inline uint32_t ECAP_getTimeBaseCounter(uint32_t base)
 //! \param event is the event number.
 //!
 //! This function returns the current time stamp count of the given event.
-//! Valid values for event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4.
+//! Valid values for \e event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4 in Capture mode and
+//! \b ECAP_APWM_MODE_PRD, \b ECAP_APWM_MODE_CMP, \b ECAP_APWM_MODE_PRD_CMP,
+//! \b ECAP_APWM_MODE_DISABLED in APWM mode.
 //!
 //! \return Event time stamp value or 0 if \e event is invalid.
 //
@@ -1715,7 +1721,9 @@ static inline void ECAP_resetCounters(uint32_t base)
 //! \param event is the eCAP event for the DMA
 //!
 //! This function sets the eCAP event source for the DMA trigger.
-//! Valid values for \e event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4.
+//! Valid values for \e event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4 in Capture mode and
+//! \b ECAP_APWM_MODE_PRD, \b ECAP_APWM_MODE_CMP, \b ECAP_APWM_MODE_PRD_CMP,
+//! \b ECAP_APWM_MODE_DISABLED in APWM mode.
 //!
 //! \return None.
 //
