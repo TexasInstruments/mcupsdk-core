@@ -691,14 +691,14 @@ typedef enum
 //*****************************************************************************
 typedef enum
 {
-    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1 = 0,
-    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2 = 1,
-    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT3 = 2,
-    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT4 = 3,
-    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD = 4,
-    ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP = 5,
-    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP = 6,
-    ECAP_APWM_MODE_SOC_TRIGGER_SRC_DISABLED = 7
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1 = 0,  //!< eCAP event 1 as ADC SOC trigger source in capture mode
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2 = 1,  //!< eCAP event 2 as ADC SOC trigger source in capture mode
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT3 = 2,  //!< eCAP event 3 as ADC SOC trigger source in capture mode
+    ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT4 = 3,  //!< eCAP event 4 as ADC SOC trigger source in capture mode
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD = ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1, //!< eCAP PRD match as ADC SOC trigger source in APWM mode
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP = ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2, //!< eCAP CMP match as ADC SOC trigger source in APWM mode
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD_CMP = ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT3, //!< eCAP PRD or CMP match as ADC SOC trigger source in APWM mode
+    ECAP_APWM_MODE_SOC_TRIGGER_SRC_DISABLED = ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT4 //!< eCAP ADC SOC trigger source disabled in APWM mode
 }ECAP_SocTriggerSource;
 //*****************************************************************************
 //
@@ -1732,16 +1732,9 @@ static inline void ECAP_selectECAPInput(uint32_t base,
 static inline void ECAP_selectSocTriggerSource(uint32_t base,
                                         ECAP_SocTriggerSource triggersource)
 {
-    uint16_t source = (uint16_t)triggersource;
-    //
-    // Write to ECCTL0
-    //
-    if(source >= ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD)
-        source-= (uint16_t)ECAP_APWM_MODE_SOC_TRIGGER_SRC_PRD;
-
     HW_WR_REG32(base + CSL_ECAP_ECCTL0,
         ((HW_RD_REG32(base + CSL_ECAP_ECCTL0) &
-        ~CSL_ECAP_ECCTL0_SOCEVTSEL_MASK) | (source << CSL_ECAP_ECCTL0_SOCEVTSEL_SHIFT)));
+        ~CSL_ECAP_ECCTL0_SOCEVTSEL_MASK) | (triggersource << CSL_ECAP_ECCTL0_SOCEVTSEL_SHIFT)));
 }
 
 //*****************************************************************************
