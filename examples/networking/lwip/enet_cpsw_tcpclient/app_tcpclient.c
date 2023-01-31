@@ -51,11 +51,13 @@
 
 #define APP_MAX_RX_DATA_LEN (1024U)
 
-#define APP_NUM_ITERATIONS (1U)
+#define APP_NUM_ITERATIONS (2U)
+
+#define APP_SEND_DATA_NUM_ITERATIONS (5U)
 
 #define MAX_IPV4_STRING_LEN (20U)
 
-static const uint8_t APP_CLIENT_TX_MSG1[] = "Greetings from Texas Instruments!";
+char snd_buf[APP_MAX_RX_DATA_LEN];
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -104,16 +106,15 @@ static void AppTcp_simpleclient(void *pArg)
     struct netconn *pConn = NULL;
     err_t err = ERR_OK, connectError = ERR_OK;
     struct App_hostInfo_t* pHostInfo = (struct App_hostInfo_t*) pArg;
-
+    uint32_t buf_len = 0;
     const enum netconn_type connType = NETCONN_TCP;
 
-    struct netbuf *rxBbuf = NULL;
     /* Create a new connection identifier. */
-    pConn = netconn_new(connType);
-
-    if (pConn != NULL)
+    for (uint32_t pktIdx = 0; pktIdx < APP_NUM_ITERATIONS; pktIdx++)
     {
-        for (uint32_t pktIdx = 0; pktIdx < APP_NUM_ITERATIONS; pktIdx++)
+        struct netbuf *rxBbuf = NULL;
+        pConn = netconn_new(connType);
+        if (pConn != NULL)
         {
             /* Connect to the TCP Server */
             EnetAppUtils_print("<<<< ITERATION %d >>>>\r\n", (pktIdx + 1));
@@ -128,32 +129,37 @@ static void AppTcp_simpleclient(void *pArg)
 
             DebugP_log("Connection with the server is established\r\n");
             // send the data to the server
-            err = netconn_write(pConn, APP_CLIENT_TX_MSG1, sizeof(APP_CLIENT_TX_MSG1), NETCONN_COPY);
-            if (err == ERR_OK)
+            for ( uint32_t i = 0; i < APP_SEND_DATA_NUM_ITERATIONS; i++)
             {
-                printf("\"%s\" was sent to the Server\r\n", APP_CLIENT_TX_MSG1);
-            }
-            else
-            {
-                DebugP_log("couldn't send packet to server\r\n");
-                continue;
-            }
+                memset(&snd_buf, 0, sizeof(snd_buf));
+                buf_len = snprintf(snd_buf, sizeof(snd_buf), "Hello over TCP %d", i+1);
+                err = netconn_write(pConn, snd_buf, buf_len, NETCONN_COPY);
+                if (err == ERR_OK)
+                {
+                    printf("\"%s\" was sent to the Server\r\n", snd_buf);
+                }
+                else
+                {
+                    DebugP_log("couldn't send packet to server\r\n");
+                    continue;
+                }
 
-            /* wait until the data is sent by the server */
-            if (netconn_recv(pConn, &rxBbuf) == ERR_OK)
-            {
-                DebugP_log("Successfully received the packet %d\r\n", pktIdx);
-                netbuf_delete(rxBbuf);
-            }
-            else
-            {
-                DebugP_log("No response from server\r\n");
+                /* wait until the data is sent by the server */
+                if (netconn_recv(pConn, &rxBbuf) == ERR_OK)
+                {
+                    DebugP_log("Successfully received the packet %d\r\n", i+1);
+                    netbuf_delete(rxBbuf);
+                }
+                else
+                {
+                    DebugP_log("No response from server\r\n");
+                }
             }
             netconn_close(pConn);
+            netconn_delete(pConn);
             DebugP_log("Connection closed\r\n");
             ClockP_sleep(1);
         }
-        netconn_delete(pConn);
     }
 }
 

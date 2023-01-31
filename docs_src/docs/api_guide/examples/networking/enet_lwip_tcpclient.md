@@ -245,18 +245,17 @@ to a network which has a DHCP server running.
 ==========================
   CPSW LWIP TCP CLIENT    
 ==========================
-Enabling clocks!
-EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2 
-Mdio_open:282 
-EnetPhy_bindDriver:1718 
-PHY 0 is alive
+EnetPhy_bindDriver:1729 
+PHY 3 is alive
+PHY 12 is alive
 Starting lwIP, local interface IP is dhcp-enabled
-Host MAC address: f4:84:4c:fd:a6:00
-[LWIPIF_LWIP] Enet has been started successfully
+Host MAC address-0 : 70:ff:76:1e:7e:52
 [LWIPIF_LWIP] NETIF INIT SUCCESS
 Enet IF UP Event. Local interface IP:0.0.0.0
+[LWIPIF_LWIP] Enet has been started successfully
 Waiting for network UP ...
-Cpsw_handleLinkUp:1369 
+Waiting for network UP ...
+Cpsw_handleLinkUp:1323 
 MAC Port 1: link up
 Network Link UP Event
 Waiting for network UP ...
@@ -265,12 +264,34 @@ Network is UP ...
  TCP Client Menu: 
  Enter TCP server IPv4 address:(example: 192.168.101.100)
 192.168.1.20
- IP eneterd is: 192.168.1.20
+ IP eneterd is: 192.168.1.20 
 <<<< ITERATION 1 >>>>
  Connecting to: 192.168.1.20:8888 
 Connection with the server is established
-"Greetings from Texas Instruments!" was sent to the Server
-Successfully received the packet 0
+"Hello over TCP 1" was sent to the Server
+Successfully received the packet 1
+"Hello over TCP 2" was sent to the Server
+Successfully received the packet 2
+"Hello over TCP 3" was sent to the Server
+Successfully received the packet 3
+"Hello over TCP 4" was sent to the Server
+Successfully received the packet 4
+"Hello over TCP 5" was sent to the Server
+Successfully received the packet 5
+Connection closed
+<<<< ITERATION 2 >>>>
+ Connecting to: 192.168.1.20:8888 
+Connection with the server is established
+"Hello over TCP 1" was sent to the Server
+Successfully received the packet 1
+"Hello over TCP 2" was sent to the Server
+Successfully received the packet 2
+"Hello over TCP 3" was sent to the Server
+Successfully received the packet 3
+"Hello over TCP 4" was sent to the Server
+Successfully received the packet 4
+"Hello over TCP 5" was sent to the Server
+Successfully received the packet 5
 Connection closed
 \endcode
 
