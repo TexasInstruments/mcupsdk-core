@@ -2,7 +2,7 @@
 # Auto generated makefile
 #
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
@@ -13,7 +13,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=usb_device_nortos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=usb_device_cdn_nortos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     cdn_osal_none.c \
@@ -21,7 +21,6 @@ FILES_common := \
     cps.c \
     usb_init.c \
     usbss_functions.c \
-    usb_wrapper.c \
     cusb_ch9_sanity.c \
     cusbd.c \
     cusbd_obj_if.c \
@@ -30,45 +29,31 @@ FILES_common := \
     cusbdma_obj_if.c \
     cusbdma_sanity.c \
     list_sanity.c \
-    dcd.c \
-    tusb.c \
-    tusb_fifo.c \
-    usbd.c \
-    usbd_control.c \
-    cdc_device.c \
 
 FILES_PATH_common = \
-    cdn/core_driver/common/src \
-    cdn/core_driver/device/src \
-    cdn/soc/am64x_am243x \
-    cdn \
-    tinyusb/tinyusb-stack/src \
-    tinyusb/tinyusb-stack/src/common \
-    tinyusb/tinyusb-stack/src/device \
-    tinyusb/tinyusb-stack/src/class/cdc \
-    tinyusb/portable/am64x_am243x \
+    ../cdn/core_driver/common/src \
+    ../cdn/core_driver/device/src \
+    ../cdn/soc/am64x_am243x \
+    ../cdn \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
-    -I../drivers/hw_include \
-    -I../drivers/hw_include/am64x_am243x \
-    -I../kernel/dpl \
-    -I../drivers/soc/am64x_am243x \
-    -Icdn/core_driver/common/src \
-    -Icdn/core_driver/common/include \
-    -Icdn/core_driver/device/src \
-    -Icdn/core_driver/device/include \
-    -Icdn/include \
-    -Icdn/soc/am64x_am243x \
-    -Itinyusb/config/nortos/am64x_am243x \
-    -Itinyusb/tinyusb-stack/src \
-    -Itinyusb/tinyusb-stack/src/common \
-    -Itinyusb/tinyusb-stack/src/device \
-    -Itinyusb/tinyusb-stack/src/class/cdc \
+    -I../../drivers/hw_include \
+    -I../../drivers/hw_include/am64x_am243x \
+    -I../../drivers/soc/am64x_am243x \
+    -I../cdn/core_driver/common/src \
+    -I../cdn/core_driver/common/include \
+    -I../cdn/core_driver/device/src \
+    -I../cdn/core_driver/device/include \
+    -I../cdn/include \
+    -I../cdn/soc/am64x_am243x \
+    -I../tinyusb/tinyusb-stack/src \
+    -I../tinyusb/tinyusb-stack/src/common \
+    -I../tinyusb/tinyusb-stack/src/device \
 
 DEFINES_common := \
-    -DSOC_AM243X \
+    -DSOC_AM64X \
     -DTINYUSB_INTEGRATION \
     -DCFG_TUSB_OS=OPT_OS_NONE \
 
@@ -122,7 +107,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usb_device_nortos/
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/usb_device_cdn_nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

@@ -34,7 +34,14 @@
 /** \addtogroup group_osal
  *  @{ */
 
-#include "common/tusb_common.h"
+/* #include "common/tusb_common.h" */
+#define OPT_OS_NONE       1  ///< No RTOS
+#define OPT_OS_FREERTOS   2  ///< FreeRTOS
+#define OPT_OS_MYNEWT     3  ///< Mynewt OS
+#define OPT_OS_CUSTOM     4  ///< Custom OS is implemented by application
+#define OPT_OS_PICO       5  ///< Raspberry Pi Pico SDK
+#define OPT_OS_RTTHREAD   6  ///< RT-Thread
+#define OPT_OS_RTX4       7  ///< Keil RTX 4
 
 /* Return immediately*/
 #define OSAL_TIMEOUT_NOTIMEOUT     (0)

@@ -41,9 +41,10 @@
 
 #include "hw_usb.h"
 #include "usbss_functions.h"
+#include "cdn_print.h"
 
-#include "tusb_option.h"
-#include "device/dcd.h"
+/* #include "tusb_common.h" */
+/* #include "device/dcd.h" */
 
 void usbss_reset_assert( usb_handle_t *h ) {
     uint32_t regval;
@@ -94,7 +95,7 @@ void usbss_reset_release( usb_handle_t *h ) {
     } while( (otg_nrdy != usbss_ready_n) && (pollcnt <= max_pollcnt) );
 
     if( pollcnt > max_pollcnt ) {
-        TU_LOG2("USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
+        vDbgMsg(USBSSP_DBG_CUSBD,DBG_WARN,"USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
     }
 } /* usbss_reset_release() */
 
@@ -118,7 +119,7 @@ uint8_t check_usbss_ready ( usb_handle_t *h ) {
     } while( (otg_nrdy != usbss_ready_n) && (pollcnt <= max_pollcnt) );
 
     if( pollcnt > max_pollcnt ) {
-        TU_LOG2("USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
+        vDbgMsg(USBSSP_DBG_CUSBD,DBG_WARN,"USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
         return 1; /* Error */
     } else {
       return 0; /* Ok */
@@ -170,7 +171,7 @@ uint8_t check_usbss_host_mode ( usb_handle_t *h ) {
     } while( (drd_mode != expected_strap_mode) && (xhc_ready != expected_xhc_ready) && (pollcnt <= max_pollcnt) );
 
     if( pollcnt > max_pollcnt ) {
-        TU_LOG2("USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
+        vDbgMsg(USBSSP_DBG_CUSBD,DBG_WARN,"USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
         return 1; /* Error */
     }
     return 0; /* Ok */
@@ -199,7 +200,7 @@ uint8_t check_usbss_device_mode( usb_handle_t *h ) {
     } while( (drd_mode != expected_strap_mode) && (dev_ready != expected_dev_ready) && (pollcnt <= max_pollcnt) );
 
     if( pollcnt > max_pollcnt ) {
-        TU_LOG2("USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
+        vDbgMsg(USBSSP_DBG_CUSBD,DBG_WARN,"USB reset release exceeds maximum timeout: pollcnt > %d\n", max_pollcnt);
         return 1; /* Error */
     }
     return 0; /* Ok */

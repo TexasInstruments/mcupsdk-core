@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am243x";
+let device = "am64x";
 
 const files = {
     common: [
@@ -50,16 +50,13 @@ const includes = {
         "../drivers/hw_include",
         "../drivers/hw_include/am64x_am243x",
         "../drivers/soc/am64x_am243x",
-        "../kernel/freertos/FreeRTOS-Kernel/include",
-        "../kernel/freertos/config/am243x/r5f",
-        "../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "cdn/core_driver/common/src",
         "cdn/core_driver/common/include",
         "cdn/core_driver/device/src",
         "cdn/core_driver/device/include",
         "cdn/include",
         "cdn/soc/am64x_am243x",
-        "tinyusb/config/freertos/am64x_am243x",
+        "tinyusb/config/nortos/am64x_am243x",
         "tinyusb/tinyusb-stack/src",
         "tinyusb/tinyusb-stack/src/common",
         "tinyusb/tinyusb-stack/src/device",
@@ -69,12 +66,6 @@ const includes = {
 
 const defines = {
     common: [
-        "TINYUSB_INTEGRATION",
-        "CFG_TUSB_OS=OPT_OS_FREERTOS"
-    ],
-    debug: [
-    ],
-    release: [
     ],
 };
 
@@ -93,11 +84,11 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "usb_device_freertos";
+    property.name = "usb_device_nortos";
     property.isInternal = false;
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
-    property.tag = "freertos";
+    property.tag = "nortos";
 
     return property;
 }

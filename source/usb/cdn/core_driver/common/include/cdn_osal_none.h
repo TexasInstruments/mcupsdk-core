@@ -47,7 +47,7 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 #include "cdn_stdtypes.h"
-#include "HwiP.h"
+#include <kernel/dpl/HwiP.h>
 
 #define OSAL_NO_RTOS_RETURN_SUCCESS (1)
 #define OSAL_NO_RTOS_RETURN_FAILURE (0)

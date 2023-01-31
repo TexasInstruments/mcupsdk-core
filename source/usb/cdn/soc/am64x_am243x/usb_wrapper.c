@@ -40,7 +40,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "tusb_option.h"
+/* #include "tusb_option.h" */
 #include "usb_wrapper.h"
 #include "device/dcd.h"
 

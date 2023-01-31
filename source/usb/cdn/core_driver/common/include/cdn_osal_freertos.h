@@ -32,7 +32,7 @@
 #include "semphr.h"
 #include "queue.h"
 #include "task.h"
-#include "tusb_config.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

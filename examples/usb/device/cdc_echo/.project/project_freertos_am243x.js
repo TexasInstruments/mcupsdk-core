@@ -28,7 +28,7 @@ const defines = {
 
 const includes_freertos_r5f = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/freertos/am64x_am243x",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/freertos/am64x_am243x/cdc_config",
         "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src",
 		"${MCU_PLUS_SDK_PATH}/source/kernel/dpl",
 		"${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
@@ -42,7 +42,8 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/usb/lib",
+        "${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib",
+        "${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib",
     ],
 };
 
@@ -51,7 +52,8 @@ const libs_freertos_r5f = {
         "freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "usb_device_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "usbd_cdn_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "usbd_tusb_cdc_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
