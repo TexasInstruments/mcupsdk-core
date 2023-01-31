@@ -257,6 +257,70 @@ typedef enum
     ECAP_INPUT_EQEP2_QI = 20,
     //! Capture input is EQEP2 QS Signal
     ECAP_INPUT_EQEP2_QS = 21,
+    //! Capture input is EPWM0 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM0_DELACTIVE = 22,
+    //! Capture input is EPWM1 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM1_DELACTIVE = 23,
+    //! Capture input is EPWM2 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM2_DELACTIVE = 24,
+    //! Capture input is EPWM3 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM3_DELACTIVE = 25,
+    //! Capture input is EPWM4 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM4_DELACTIVE = 26,
+    //! Capture input is EPWM5 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM5_DELACTIVE = 27,
+    //! Capture input is EPWM6 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM6_DELACTIVE = 28,
+    //! Capture input is EPWM7 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM7_DELACTIVE = 29,
+    //! Capture input is EPWM8 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM8_DELACTIVE = 30,
+    //! Capture input is EPWM9 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM9_DELACTIVE = 31,
+    //! Capture input is EPWM10 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM10_DELACTIVE = 32,
+    //! Capture input is EPWM11 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM11_DELACTIVE = 33,
+    //! Capture input is EPWM12 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM12_DELACTIVE = 34,
+    //! Capture input is EPWM13 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM13_DELACTIVE = 35,
+    //! Capture input is EPWM14 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM14_DELACTIVE = 36,
+    //! Capture input is EPWM15 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM15_DELACTIVE = 37,
+    //! Capture input is EPWM16 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM16_DELACTIVE = 38,
+    //! Capture input is EPWM17 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM17_DELACTIVE = 39,
+    //! Capture input is EPWM18 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM18_DELACTIVE = 40,
+    //! Capture input is EPWM19 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM19_DELACTIVE = 41,
+    //! Capture input is EPWM20 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM20_DELACTIVE = 42,
+    //! Capture input is EPWM21 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM21_DELACTIVE = 43,
+    //! Capture input is EPWM22 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM22_DELACTIVE = 44,
+    //! Capture input is EPWM23 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM23_DELACTIVE = 45,
+    //! Capture input is EPWM24 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM24_DELACTIVE = 46,
+    //! Capture input is EPWM25 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM25_DELACTIVE = 47,
+    //! Capture input is EPWM26 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM26_DELACTIVE = 48,
+    //! Capture input is EPWM27 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM27_DELACTIVE = 49,
+    //! Capture input is EPWM28 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM28_DELACTIVE = 50,
+    //! Capture input is EPWM29 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM29_DELACTIVE = 51,
+    //! Capture input is EPWM30 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM30_DELACTIVE = 52,
+    //! Capture input is EPWM31 DEL ACTIVE Signal
+    ECAP_INPUT_EPWM31_DELACTIVE = 53,
     //! Capture input is EPWM0 SOC-A Signal
     ECAP_INPUT_EPWM0_SOCA = 54,
     //! Capture input is EPWM1 SOC-A Signal
