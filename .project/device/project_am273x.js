@@ -103,6 +103,8 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
 	"examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
+	"examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
+	"examples/sdl/ecc/sdl_ecc_dss_tptc/.project/project.js",
     "examples/sdl/ecc/sdl_dss_ecc_hwa/.project/project.js",
     "examples/sdl/ecc/sdl_dss_l3_ecc/.project/project.js",
     "examples/sdl/ecc/sdl_dss_mailbox/.project/project.js",

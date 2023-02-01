@@ -9825,6 +9825,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Dthe Rng Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_rng",
+        "location": "../../examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_rng",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Dthe Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_sha_512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -10077,6 +10110,39 @@
             "sdl",
             "pbist",
             "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations in single and double bits for TPTC CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ecc_mss_tptc",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_tptc/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mss_tptc",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [

@@ -24,6 +24,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_ECC_MSS_L2
    -# \subpage EXAMPLES_SDL_ECC_MCAN
    -# \subpage EXAMPLES_SDL_ECC_ICSSM
+   -# \subpage EXAMPLES_SDL_ECC_MSS_TPTC
 -# PBIST
    -# \subpage EXAMPLES_SDL_PBIST
 -# CCM
@@ -50,6 +51,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_R5F_ECC_BTCM
    -# \subpage EXAMPLES_SDL_ECC_MSS_L2
    -# \subpage EXAMPLES_SDL_ECC_MCAN
+   -# \subpage EXAMPLES_SDL_ECC_MSS_TPTC
+   -# \subpage EXAMPLES_SDL_DSS_TPTC_ECC
    -# \subpage EXAMPLES_SDL_DSS_ECC_HWA
    -# \subpage EXAMPLES_SDL_DSS_L3_ECC
    -# \subpage EXAMPLES_SDL_DSS_MAILBOX

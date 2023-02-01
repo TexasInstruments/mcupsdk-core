@@ -1060,7 +1060,7 @@ Initialize ESM module
 
 Initialize ECC parameters for single and double bit error injection
 \code{.c}
-result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
+result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_MSS_ECCInitConfig);
 \endcode
 
 \cond SOC_AM273X || SOC_AWR294X
@@ -1174,6 +1174,437 @@ int32_t ECC_Test_run_MSS_L2RAMB_2BitInjectTest(void)
 
     return retVal;
 }
+\endcode
+
+## Example Usage of MSS TPTC
+
+The following shows an example of SDL MSS TPTC API usage by the application for Error Injection Tests and Exception handling.
+
+Include the below file to access the APIs
+
+\code{.c}
+#include <drivers/edma.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include <sdl/sdl_ecc.h>
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the ECC aggregator and ECC aggregator RAMID for inject the ECC error
+\cond SOC_AM263X
+\code{.c}
+#define SDL_MSS_MAX_MEM_SECTIONS        (1u)
+#define SDL_ECC_SEC						(1U)
+#define SDL_ECC_DED						(2U)
+
+#define SDL_EXAMPLE_ECC_AGGR            SDL_SOC_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID          SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_ID
+\endcode
+\endcond
+
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+#define SDL_ESM_MAX_MSS_EXAMPLE_AGGR    (2u)
+#define SDL_MSS_MAX_MEM_SECTIONS        (1u)
+#define SDL_INTR_GROUP_NUM_1            (1U)
+#define SDL_INTR_PRIORITY_LVL_LOW       (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH      (1U)
+#define SDL_ENABLE_ERR_PIN              (1U)
+#define SDL_ECC_SEC						(1U)
+#define SDL_ECC_DED						(2U)
+
+#define SDL_EXAMPLE_ECC_AGGR            SDL_MSS_ECC_AGG_MSS
+#define SDL_EXAMPLE_ECC_RAM_ID          SDL_MSS_ECC_AGG_MSS_MSS_TPTC_A0_ECC_RAM_ID
+\endcode
+\endcond
+
+ESM callback function
+\cond SOC_AM263X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+
+
+    printf("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x\r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    printf(" \r\nTake action \r\n");
+    if(esmIntrType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+    }
+    retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Any additional customer specific actions can be added here */
+    retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+    printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+               "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
+               eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
+               (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);
+
+    if (eccErrorInfo.injectBitErrCnt != 0)
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+    }
+    else
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+    }
+
+    retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+
+    esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                esmInstType, grpChannel, intSrc);
+    printf("\r\nTake action \r\n");
+
+    retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Any additional customer specific actions can be added here */
+    retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+    printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+               "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
+               eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
+               (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);
+
+    if (eccErrorInfo.injectBitErrCnt != 0)
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+    }
+    else
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+    }
+
+    retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+
+    esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+
+
+This structure defines the elements of ECC  Init configuration
+\code{.c}
+static SDL_ECC_MemSubType ECC_Test_MSS_subMemTypeList[SDL_MSS_MAX_MEM_SECTIONS] =
+{
+     SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_MSS_ECCInitConfig =
+{
+    .numRams = SDL_MSS_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_MSS_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+\endcode
+
+Event BitMap for ECC ESM callback for MSS
+\cond SOC_AM263X
+\code{.c}
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+     .priorityBitmap = {0x00180000u, 0x000000000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+\endcode
+\endcond
+
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+/* Event BitMap for ECC ESM callback for MSS TPTC*/
+SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
+{
+     {
+          /* Event BitMap for ECC ESM callback for MSS Single bit*/
+          .groupNumber = SDL_INTR_GROUP_NUM_1,
+          .errorNumber = SDL_ESMG1_ECCAGGMSS_SERR,
+          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+     },
+     {
+          /* Event BitMap for ECC ESM callback for MSS Double bit*/
+          .groupNumber = SDL_INTR_GROUP_NUM_1,
+          .errorNumber = SDL_ESMG1_ECCAGGMSS_UERR,
+          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+     },
+};
+\endcode
+\endcond
+
+Initialization of EDMA and ECC injection
+\code{.c}
+   /* EDMA transfer with ECC single bit injection*/
+	testResult = edma_interrupt_transfer(CONFIG_EDMA0, SDL_ECC_SEC, 0u, EDMA_MSS_TPCC_A_EVT_FREE_0);
+\endcode
+
+Initialize EDMA
+\code{.c}
+	EDMA_Init();
+    DebugP_log("\r\n[EDMA] Interrupt Transfer Test Started...\r\n");
+    baseAddr = EDMA_getBaseAddr(gEdmaHandle[edmaConfigNum]);
+
+    regionId = EDMA_getRegionId(gEdmaHandle[edmaConfigNum]);
+
+    dmaCh = channelEvent;
+    status = EDMA_allocDmaChannel(gEdmaHandle[edmaConfigNum], &dmaCh);
+
+    tcc = channelEvent;
+    status = EDMA_allocTcc(gEdmaHandle[edmaConfigNum], &tcc);
+
+    param = channelEvent;
+    status = EDMA_allocParam(gEdmaHandle[edmaConfigNum], &param);
+
+\endcode	
+Initialize ECC memory for the ECC aggregator
+\code{.c}
+result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+\endcode
+
+\cond SOC_AM263X
+Initialize ESM module
+\code{.c}
+    result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+\endcode
+\endcond
+
+\cond SOC_AM273X || SOC_AWR294X
+Initialize ESM module
+\code{.c}
+	result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMSS[counter],NULL,NULL);
+\endcode
+\endcond
+
+Initialize ECC parameters for single and double bit error injection
+\code{.c}
+result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_MSS_ECCInitConfig);
+\endcode
+
+Execute ECC MSS TPTC single bit inject test
+\code{.c}
+int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+		
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+    DebugP_log("\n MSS TPTC_A0 Single bit error inject: test starting");
+
+    injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
+
+    /* Run one shot test for MSS TPTC_A0 1 bit error */
+    injectErrorConfig.flipBitMask = 0x02;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 &injectErrorConfig);
+	
+    if (result != SDL_PASS ) {
+        DebugP_log("\n MSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed",
+                    injectErrorConfig.pErrMem);
+        retVal = -1;
+    } else {
+        
+        DebugP_log("\n MSS TPTC_A0 Single bit error inject at pErrMem 0x%p",
+                   injectErrorConfig.pErrMem);
+    }
+
+
+    return retVal;
+}
+\endcode
+
+Execute ECC MSS TPTC double bit inject test
+\code{.c}
+int32_t ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+    DebugP_log("\n MSS TPTC_A0 Double bit error inject: starting");
+
+    /* Run one shot test for MSS TPTC_A0 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+        DebugP_log("\n MSS TPTC_A0 Double bit error inject: at pErrMem 0x%p: fixed location once test failed",
+                    injectErrorConfig.pErrMem);
+       retVal = -1;
+    } else {
+
+        DebugP_log("\n MSS TPTC_A0 Double bit error inject at pErrMem 0x%p ",
+                   injectErrorConfig.pErrMem);
+    }
+
+    return retVal;
+}
+\endcode
+
+Initialize the source address with a pattern and initialize dst address with zero/another pattern (optional)
+\code{.c}
+
+    srcBuffPtr = (uint8_t *) gEdmaTestSrcBuff;
+    dstBuffPtr = (uint8_t *) gEdmaTestDstBuff;
+    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
+    {
+        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
+        dstBuffPtr[loopCnt] = 0;
+    }
+    CacheP_wb((void *)srcBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
+    CacheP_wb((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
+
+    /* Request channel */
+    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+         dmaCh, tcc, param, queueType);
+
+    /* Program Param Set */
+    EDMA_ccPaRAMEntry_init(&edmaParam);
+    edmaParam.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
+    edmaParam.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
+    edmaParam.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
+    edmaParam.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
+    edmaParam.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
+    edmaParam.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
+    edmaParam.srcBIdx       = (int16_t) EDMA_PARAM_BIDX(EDMA_TEST_A_COUNT);
+    edmaParam.destBIdx      = (int16_t) EDMA_PARAM_BIDX(EDMA_TEST_A_COUNT);
+    edmaParam.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
+    edmaParam.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
+    edmaParam.linkAddr      = 0xFFFFU;
+    edmaParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(EDMA_TEST_A_COUNT);
+    edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(EDMA_TEST_A_COUNT);
+    edmaParam.opt          |=
+        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
+         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+    EDMA_setPaRAM(baseAddr, param, &edmaParam);
+
+    status = SemaphoreP_constructBinary(&gEdmaTestDoneSem, 0);
+
+    /* Register interrupt */
+    intrObj.tccNum = tcc;
+    intrObj.cbFxn  = &EDMA_regionIsrFxn;
+    intrObj.appData = (void *) &gEdmaTestDoneSem;
+    status = EDMA_registerIntr(gEdmaHandle[edmaConfigNum], &intrObj);
+
+    /*
+     * Transfer is done in A sync mode
+     * Number of triggers required are B_COUNT * C_COUNT
+     */
+    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
+    {
+        EDMA_enableTransferRegion(
+            baseAddr, regionId, dmaCh, EDMA_TRIG_MODE_MANUAL);
+
+        SemaphoreP_pend(&gEdmaTestDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    /* Invalidate destination buffer and compare with src buffer */
+    CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
+    for(loopCnt = 0; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
+    {
+        if(srcBuffPtr[loopCnt] != dstBuffPtr[loopCnt])
+        {
+            DebugP_log("Error matching value at src and dst address %d\r\n", loopCnt);
+            status = SystemP_FAILURE;
+			result = SDL_EFAIL;
+            break;
+        }
+    }
+
+    status = EDMA_unregisterIntr(gEdmaHandle[edmaConfigNum], &intrObj);
+    SemaphoreP_destruct(&gEdmaTestDoneSem);
+
+    /* Free channel */
+    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+        dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
+
+    /* Free the EDMA resources managed by driver. */
+    status = EDMA_freeDmaChannel(gEdmaHandle[edmaConfigNum], &dmaCh);
+    status = EDMA_freeTcc(gEdmaHandle[edmaConfigNum], &tcc);
+    status = EDMA_freeParam(gEdmaHandle[edmaConfigNum], &param);
+
+    if(status == SystemP_SUCCESS)
+    {
+        DebugP_log("\r\n[EDMA] Interrupt Transfer Test Completed!!\r\n");
+        if(esmError == TRUE)
+        {
+            DebugP_log("\r\nAll tests have passed!!\r\n");
+            esmError = false;
+        }
+        else
+        {
+            result = SDL_EFAIL;
+            DebugP_log("\r\nESM interrupt is not occurred.... Test is failed!!\r\n");
+        }
+    }
+    else
+    {
+        result = SDL_EFAIL;
+        DebugP_log("\r\nSome tests have failed!!\r\n");
+    }
+    EDMA_Deinit();
+
 \endcode
 
 
@@ -1304,6 +1735,339 @@ int32_t ECC_Test_run_DSS_MAILBOX_2BitInjectTest(void)
     return retVal;
 }
 \endcode
+
+## Example Usage of DSS TPTC
+
+The following shows an example of SDL DSS TPTC API usage by the application for Error Injection Tests and Exception handling.
+
+Include the below file to access the APIs
+
+\code{.c}
+#include <drivers/edma.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include <sdl/sdl_ecc.h>
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the ECC aggregator and ECC aggregator RAMID for inject the ECC error
+\code{.c}
+#define SDL_ESM_MAX_DSS_EXAMPLE_AGGR	(2u)
+
+#define SDL_INTR_GROUP_NUM              (1U)
+#define SDL_INTR_PRIORITY_LVL_LOW       (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH      (1U)
+#define SDL_ENABLE_ERR_PIN              (1U)
+#define SDL_ECC_SEC                     (1U)
+#define SDL_ECC_DED                     (2U)
+
+#define SDL_DSS_MAX_MEM_SECTIONS        (1u)
+
+#define SDL_EXAMPLE_ECC_AGGR            SDL_DSS_ECC_AGG
+#define SDL_EXAMPLE_ECC_RAM_ID          SDL_DSS_ECC_AGG_DSS_TPTC_A0_FIFO_ECC_RAM_ID
+\endcode
+
+ESM callback function
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                esmInstType, grpChannel, intSrc);
+    printf("\r\nTake action \r\n");
+
+    retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Any additional customer specific actions can be added here */
+    retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+    printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+               "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
+               eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
+               (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);
+
+    if (eccErrorInfo.injectBitErrCnt != 0)
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+    }
+    else
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+    }
+
+    retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+
+    esmError = true;
+
+    return retVal;
+}
+\endcode
+
+
+This structure defines the elements of ECC  Init configuration
+\code{.c}
+static SDL_ECC_MemSubType ECC_Test_DSSsubMemTypeList[SDL_DSS_MAX_MEM_SECTIONS] =
+{     	
+     SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_DSSECCInitConfig =
+{
+    .numRams = SDL_DSS_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_DSSsubMemTypeList[0]),
+    /**< Sub type list  */
+};
+\endcode
+
+Event BitMap for ECC ESM callback for DSS
+\code{.c}
+/* Event BitMap for ECC ESM callback for DSS TPTC*/
+SDL_ESM_NotifyParams ECC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
+{
+    {
+	   /* Event BitMap for ECC ESM callback for DSS Single bit*/
+	   .groupNumber = SDL_INTR_GROUP_NUM,
+	   .errorNumber = SDL_DSS_ESMG1_DSS_ECC_AGG_SERR,
+	   .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+	   .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+	   .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+    {
+	   /* Event BitMap for ECC ESM callback for DSS Double bit*/
+	   .groupNumber = SDL_INTR_GROUP_NUM,
+	   .errorNumber = SDL_DSS_ESMG1_DSS_ECC_AGG_UERR,
+	   .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+	   .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+	   .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	
+};
+\endcode
+
+Initialization of EDMA and ECC injection
+\code{.c}
+   /* EDMA transfer with ECC single bit injection*/
+	testResult = edma_interrupt_transfer(CONFIG_EDMA0, SDL_ECC_SEC, 0u, EDMA_DSS_TPCC_A_EVT_FREE_0);
+\endcode
+
+Initialize EDMA
+\code{.c}
+	EDMA_Init();
+    DebugP_log("\r\n[EDMA] Interrupt Transfer Test Started...\r\n");
+    baseAddr = EDMA_getBaseAddr(gEdmaHandle[edmaConfigNum]);
+
+    regionId = EDMA_getRegionId(gEdmaHandle[edmaConfigNum]);
+
+    dmaCh = channelEvent;
+    status = EDMA_allocDmaChannel(gEdmaHandle[edmaConfigNum], &dmaCh);
+
+    tcc = channelEvent;
+    status = EDMA_allocTcc(gEdmaHandle[edmaConfigNum], &tcc);
+
+    param = channelEvent;
+    status = EDMA_allocParam(gEdmaHandle[edmaConfigNum], &param);
+
+\endcode	
+Initialize ECC memory for the ECC aggregator
+\code{.c}
+result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+\endcode
+
+Initialize ESM module
+\code{.c}
+	result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[counter],NULL,NULL);
+\endcode
+
+Initialize ECC parameters for single and double bit error injection
+\code{.c}
+result = SDL_ECC_init(SDL_DSS_ECC_AGG, &ECC_Test_DSSECCInitConfig);
+\endcode
+
+Execute ECC DSS TPTC single bit inject test
+\code{.c}
+int32_t ECC_Test_run_DSS_TPTC_A0_1Bit_InjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+		
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+    DebugP_log("\r\nDSS TPTC_A0 Single bit error inject: test starting\r\n");
+
+    injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
+
+    /* Run one shot test for DSS TPTC_A0 1 bit error */
+    injectErrorConfig.flipBitMask = 0x02;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 &injectErrorConfig);
+	
+    if (result != SDL_PASS ) {
+        DebugP_log("\r\nDSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed\r\n",
+                    injectErrorConfig.pErrMem);
+        retVal = -1;
+    } else {
+        
+        DebugP_log("\r\nDSS TPTC_A0 Single bit error inject at pErrMem 0x%p\r\n",
+                   injectErrorConfig.pErrMem);
+    }
+
+
+    return retVal;
+}
+\endcode
+
+Execute ECC DSS TPTC double bit inject test
+\code{.c}
+int32_t ECC_Test_run_DSS_TPTC_A0_2Bit_InjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+    DebugP_log("\r\nDSS TPTC_A0 Double bit error inject: starting\r\n");
+
+    /* Run one shot test for DSS TPTC_A0 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+        DebugP_log("\r\nDSS TPTC_A0 Double bit error inject: at pErrMem 0x%p: fixed location once test failed\r\n",
+                    injectErrorConfig.pErrMem);
+       retVal = -1;
+    } else {
+
+        DebugP_log("\r\nDSS TPTC_A0 Double bit error inject at pErrMem 0x%p\r\n ",
+                   injectErrorConfig.pErrMem);
+    }
+
+    return retVal;
+}
+\endcode
+
+Initialize the source address with a pattern and initialize dst address with zero/another pattern (optional)
+\code{.c}
+
+    srcBuffPtr = (uint8_t *) gEdmaTestSrcBuff;
+    dstBuffPtr = (uint8_t *) gEdmaTestDstBuff;
+    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
+    {
+        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
+        dstBuffPtr[loopCnt] = 0;
+    }
+    CacheP_wb((void *)srcBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
+    CacheP_wb((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
+
+    /* Request channel */
+    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+         dmaCh, tcc, param, queueType);
+
+    /* Program Param Set */
+    EDMA_ccPaRAMEntry_init(&edmaParam);
+    edmaParam.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
+    edmaParam.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
+    edmaParam.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
+    edmaParam.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
+    edmaParam.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
+    edmaParam.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
+    edmaParam.srcBIdx       = (int16_t) EDMA_PARAM_BIDX(EDMA_TEST_A_COUNT);
+    edmaParam.destBIdx      = (int16_t) EDMA_PARAM_BIDX(EDMA_TEST_A_COUNT);
+    edmaParam.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
+    edmaParam.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
+    edmaParam.linkAddr      = 0xFFFFU;
+    edmaParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(EDMA_TEST_A_COUNT);
+    edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(EDMA_TEST_A_COUNT);
+    edmaParam.opt          |=
+        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
+         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+    EDMA_setPaRAM(baseAddr, param, &edmaParam);
+
+    status = SemaphoreP_constructBinary(&gEdmaTestDoneSem, 0);
+
+    /* Register interrupt */
+    intrObj.tccNum = tcc;
+    intrObj.cbFxn  = &EDMA_regionIsrFxn;
+    intrObj.appData = (void *) &gEdmaTestDoneSem;
+    status = EDMA_registerIntr(gEdmaHandle[edmaConfigNum], &intrObj);
+
+    /*
+     * Transfer is done in A sync mode
+     * Number of triggers required are B_COUNT * C_COUNT
+     */
+    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
+    {
+        EDMA_enableTransferRegion(
+            baseAddr, regionId, dmaCh, EDMA_TRIG_MODE_MANUAL);
+
+        SemaphoreP_pend(&gEdmaTestDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    /* Invalidate destination buffer and compare with src buffer */
+    CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
+    for(loopCnt = 0; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
+    {
+        if(srcBuffPtr[loopCnt] != dstBuffPtr[loopCnt])
+        {
+            DebugP_log("Error matching value at src and dst address %d\r\n", loopCnt);
+            status = SystemP_FAILURE;
+			result = SDL_EFAIL;
+            break;
+        }
+    }
+
+    status = EDMA_unregisterIntr(gEdmaHandle[edmaConfigNum], &intrObj);
+    SemaphoreP_destruct(&gEdmaTestDoneSem);
+
+    /* Free channel */
+    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+        dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
+
+    /* Free the EDMA resources managed by driver. */
+    status = EDMA_freeDmaChannel(gEdmaHandle[edmaConfigNum], &dmaCh);
+    status = EDMA_freeTcc(gEdmaHandle[edmaConfigNum], &tcc);
+    status = EDMA_freeParam(gEdmaHandle[edmaConfigNum], &param);
+
+    if(status == SystemP_SUCCESS)
+    {
+        DebugP_log("\r\n[EDMA] Interrupt Transfer Test Completed!!\r\n");
+        if(esmError == TRUE)
+        {
+            DebugP_log("\r\nAll tests have passed!!\r\n");
+            esmError = false;
+        }
+        else
+        {
+            result = SDL_EFAIL;
+            DebugP_log("\r\nESM interrupt is not occurred.... Test is failed!!\r\n");
+        }
+    }
+    else
+    {
+        result = SDL_EFAIL;
+        DebugP_log("\r\nSome tests have failed!!\r\n");
+    }
+    EDMA_Deinit();
+
+\endcode
+
 \endcond
 
 ## Example Usage of MCAN
@@ -1480,13 +2244,13 @@ SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 
 \cond SOC_AM273X || SOC_AWR294X
 \code{.c}
-/* Event BitMap for ECC ESM callback for MSS L2*/
+/* Event BitMap for ECC ESM callback for MSS MCAN*/
 SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 {
      {
           /* Event BitMap for ECC ESM callback for MSS Single bit*/
           .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_ECCAGGMSS_SERR,
+          .errorNumber = SDL_ESMG1_MCANA_SERR,
           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
           .callBackFunction = &SDL_ESM_applicationCallbackFunction,
@@ -1494,7 +2258,7 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
      {
           /* Event BitMap for ECC ESM callback for MSS Double bit*/
           .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_ECCAGGMSS_UERR,
+          .errorNumber = SDL_ESMG1_MCANA_SERR,
           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
           .callBackFunction = &SDL_ESM_applicationCallbackFunction,

@@ -4560,6 +4560,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies ECC inject operations in single and double bits for TPTC CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ecc_mss_tptc",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_tptc/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_mss_tptc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies ECC inject operations for DSS ECC TPTCs in single and double bits CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_ecc_tptc",
+        "location": "../../examples/sdl/ecc/sdl_ecc_dss_tptc/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_ecc_dss_tptc",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies ECC inject operations for DSS ECC AGGRs in single and double bits CPU is C66SS0 running NORTOS.",
         "name": "sdl_dss_ecc_hwa",
         "location": "../../examples/sdl/ecc/sdl_dss_ecc_hwa/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
