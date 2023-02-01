@@ -50,7 +50,7 @@
 #include <sdl/include/am263x/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am263x/sdl_ecc_soc.h>
 #include "ecc_test_main.h"
-
+#include <sdl/include/am263x/sdlr_param_regs.h>
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -1193,6 +1193,7 @@ static int32_t ECC_errNegativeTest(void)
     {
         DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
     }
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_tcmParity(SDL_R5SS0_CPU0_TCM, SDL_R5FSS0_CORE0_B1TCM0, 0x700000U) != SDL_PASS)
@@ -1285,6 +1286,28 @@ static int32_t ECC_errNegativeTest(void)
     {
         SDL_cleartcmStatusRegs(0X70U);
         testStatus = SDL_APP_TEST_PASS;
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(SDL_TPCC0, 0x11u, SDL_PARAM_REG_1, 0x7u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(7u, 0x11u, SDL_PARAM_REG_1, 0x7u) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
     }
     if (testStatus != SDL_APP_TEST_PASS)
     {

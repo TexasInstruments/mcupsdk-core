@@ -52,6 +52,7 @@
  #include <sdl/include/am263x/sdlr_intr_r5fss0_core1.h>
  #include <sdl/include/am263x/sdlr_intr_r5fss1_core0.h>
  #include <sdl/include/am263x/sdlr_intr_r5fss1_core1.h>
+ #include <sdl/include/am263x/sdlr_param_regs.h>
 
 #define SDL_ECC_WIDTH_UNDEFINED 0x1
 
@@ -88,6 +89,15 @@
 #define SDL_R5FSS1_CORE1_TCM_ERR_STATUS				(0x50D18154U)
 #define SDL_R5FSS1_CORE1_TCM_ERR_STATUS_RAW			(0x50D18158U)
 
+/* TPCC */
+#define SDL_R5FSS0_CORE0_TPCC0_PARITY_CTRL			(0x50D18180U)
+#define SDL_R5FSS0_CORE0_TPCC0_PARITY_STATUS		(0x50D18184U)
+
+#define SDL_TPCC0_ERRAGG_STATUS						(0x50D18004U)
+#define SDL_TPCC0_ERRAGG_MASK						(0x50D18000U)
+/*param registers */
+#define SDL_PARAM_REG_1							(SDL_PARAM_REG_SET0 + 0x20U)
+#define SDL_PARAM_REG_2							(SDL_PARAM_REG_SET0 + 0x30U)
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_SOC_ECC_AGGR
  * -----------------------------------------------------------------------------------

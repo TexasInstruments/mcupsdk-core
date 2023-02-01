@@ -49,7 +49,8 @@
 #include <sdl/ecc/sdl_ip_ecc.h>
 #include <sdl/include/awr294x/sdlr_soc_baseaddress.h>
 #include "ecc_test_main.h"
-
+#include <sdl/include/awr294x/sdlr_mss_param_regs.h>
+#include <sdl/include/awr294x/sdlr_dss_param_regs.h>
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -1184,6 +1185,72 @@ static int32_t ECC_errNegativeTest(void)
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_tcmParity(7U, 0x700U) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(SDL_DSS_TPCCA, 0x3u, (SDL_DSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(SDL_DSS_TPCCB, 0x3u, (SDL_DSS_PARAM_REG_B_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(SDL_TPCC0B, 0x1100u, (SDL_MSS_PARAM_REG_B_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(SDL_TPCC0A, 0x11u, (SDL_MSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(SDL_DSS_TPCCC, 0x3u, (SDL_DSS_PARAM_REG_C_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(7u, 0x11u, (SDL_MSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) != SDL_EFAIL)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

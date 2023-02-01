@@ -122,6 +122,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_multicore_app_awr294x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_build
@@ -494,6 +496,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
  sbl_multicore_app_awr294x-evm_system_nortos_build:
 	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec all
 
@@ -640,6 +648,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_multicore_app_awr294x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_clean
@@ -1012,6 +1022,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
  sbl_multicore_app_awr294x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec clean
 
@@ -1158,6 +1174,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_hwa_awr294x-evm_c66ss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_l3_example_awr294x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_ecc_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_multicore_app_awr294x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_awr294x-evm_system_freertos_nortos_export
@@ -1530,6 +1548,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_ccm_example_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ sdl_dma_parity_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_dma_parity_awr294x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
  sbl_multicore_app_awr294x-evm_system_nortos_export:
 	$(MAKE) -C examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos -f makefile_projectspec export
 
@@ -1692,6 +1716,8 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l3_ecc/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

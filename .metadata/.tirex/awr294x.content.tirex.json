@@ -4593,6 +4593,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "Dummy app which runs a while loop. System project.",
         "name": "sbl_multicore_app",
         "location": "../../examples/drivers/boot/sbl_multicore_app/awr294x-evm/system_nortos/system.projectspec",

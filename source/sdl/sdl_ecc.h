@@ -155,10 +155,11 @@ typedef uint32_t SDL_ECC_MemType;
 #define SDL_R5FSS1_CORE1_ATCM1		(8U)
 #define SDL_R5FSS1_CORE1_B0TCM1		(10U)
 #define SDL_R5FSS1_CORE1_B1TCM1		(12U)
+/* TPCC */
+#define SDL_TPCC0        			(2)
 #endif
 
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
-
 #define SDL_R5FSS0_CORE0_ECC_AGGR                                   (0U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR                                   (1U)
 #define SDL_MSS_ECC_AGG_MSS                                         (2U)
@@ -175,6 +176,12 @@ typedef uint32_t SDL_ECC_MemType;
 #define SDL_TCM_PARITY_B1TCM0		(5U)
 #define SDL_TCM_PARITY_B1TCM1		(6U)
 
+/* TPCC */
+#define SDL_TPCC0A        	(2U)
+#define SDL_TPCC0B        	(3U)
+#define SDL_DSS_TPCCA       (4U)
+#define SDL_DSS_TPCCB       (5U)
+#define SDL_DSS_TPCCC       (6U)
 #endif
 /* The following are the memory sub type for Memory type
    SDL_ECC_MEMTYPE_MCU_R5F0_CORE & SDL_ECC_MEMTYPE_MCU_R5F1_CORE */
@@ -462,6 +469,20 @@ int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
 #endif
 
 
+/** ============================================================================
+ *
+ * \brief   Injects TPCC Parity error 
+ *
+ * \param  eccMemType: Memory type for ECC AGGR
+ * \param  bitValue  : Bit Value to set particular register
+ * \param  paramregvalue: select param register
+ * \param  regval : value to be written into param register
+ * \return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
+							  uint32_t bitValue,
+							  uint32_t paramregvalue,
+							  uint32_t regval);
 
 #ifdef __cplusplus
 }

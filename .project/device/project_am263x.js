@@ -172,6 +172,7 @@ const example_file_list = [
     "examples/sdl/ecc_bus_safety/ecc_bus_safety_main/.project/project.js",
 	"examples/sdl/ccm/sdl_ccm_example/.project/project.js",
     "examples/sdl/stc/stc_mcu/.project/project.js",
+	"examples/sdl/parity/sdl_dma_parity/.project/project.js",
     "test/board/eeprom/.project/project.js",
     "test/board/flash/.project/project.js",
     "test/board/led/.project/project.js",
@@ -237,7 +238,7 @@ const example_file_list = [
   "test/sdl/ccm/ccm_ip_test/.project/project.js",
   "test/sdl/ccm/ccm_func_test/.project/project.js",
   "test/sdl/stc/stc_mcu/stc_func_test/.project/project.js",
-  
+  "test/sdl/parity/sdl_dmaparity_functest/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

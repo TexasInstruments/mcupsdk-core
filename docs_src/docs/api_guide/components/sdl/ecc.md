@@ -2868,6 +2868,219 @@ Execute TCM Parity Error injection for B0TCM0 for R5FSS0 core 0
 \endcode
 \endcond
 
+## Example Usage of DMA Parity
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "parity_main.h"
+\endcode
+
+ESM callback function
+\cond SOC_AM263X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+    int32_t retVal = 0;
+	
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                esmInst, grpChannel, intSrc);
+    printf("\r\nTake action \r\n");
+	/* Disable parity for TPCC0 */
+	SDL_REG32_WR(0x50D18180, 0x1000);
+	
+	esmError = true;
+
+    return retVal;
+}
+\endcode
+\endcond
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                esmInstType, grpChannel, intSrc);
+    printf("\r\nTake action \r\n");
+
+#if defined(R5F_INPUTS)
+	/* Disable parity for TPCC0 */
+	SDL_REG32_WR(0x02120160, 0x00);
+#endif
+#if defined(C66_INPUTS)
+	/* Disable parity for TPCCA */
+	SDL_REG32_WR(0x060200BC, 0x4);
+	/* Disable parity for TPCCB */
+	SDL_REG32_WR(0x060200C0, 0x4);
+	/* Disable parity for TPCCC */
+	SDL_REG32_WR(0x060200C4, 0x4);
+#endif	
+	esmError = true;
+
+    return 0;
+}
+\endcode
+\endcond
+
+Event BitMap for ESM callback for TCM Parity
+\cond SOC_AM263X
+\code{.c}
+SDL_ESM_config Test_esmInitConfig_MAIN =
+{
+     .esmErrorConfig = {1u, 8u}, /* Self test error config */
+     .enableBitmap = {0x00000000u, 0x80000000u, 0x00000010u, 0x00000000u,
+                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+      /**< All events enable: except clkstop events for unused clocks
+       *   and PCIE events */
+     .priorityBitmap = {0x00000000u, 0x80000000u, 0x00000010u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+     /**< All events high priority: except clkstop events for unused clocks
+      *   and PCIE events */
+     .errorpinBitmap = {0x00000000u, 0x80000000u, 0x00000010u, 0x00000000u,
+                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     /**< All events high priority: except clkstop for unused clocks
+      *   and PCIE events */
+};
+\endcode
+\endcond
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+SDL_ESM_NotifyParams ECC_Testparams[SDL_ESM_MSS_MAX_EXAMPLE] =
+{
+	/* MSS TPTC */
+    {
+		/* Event BitMap for ESM callback for TPCC_A Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_ESMG1_MSS_TPCC_A_INTAGG_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	/* MSS TPTC */
+    {
+		/* Event BitMap for ESM callback for TPCC_B Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_ESMG1_MSS_TPCC_B_INTAGG_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	
+
+};
+SDL_ESM_NotifyParams ECC_TestparamsDSS[SDL_ESM_DSS_MAX_EXAMPLE] =
+{
+	/* DSS TPTCA */
+    {
+		/* Event BitMap for ESM callback for TPCC_A Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_DSS_ESMG1_DSS_TPCC_A_INTAGG_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	/* DSS TPTCB */
+    {
+		/* Event BitMap for ESM callback for TPCC_B Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_DSS_ESMG1_DSS_TPCC_B_INTAGG_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	/* DSS TPTCC */
+    {
+		/* Event BitMap for ESM callback for TPCC_C Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM_1,
+		.errorNumber = SDL_DSS_ESMG1_DSS_TPCC_C_INTAGG_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+};
+\endcode
+\endcond
+
+\cond SOC_AM263X
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+\endcode
+\endcond
+
+\cond SOC_AM273X || SOC_AWR294X
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_Testparams[0],NULL,NULL);
+\endcode
+\endcond
+
+Execute TPCC Parity Error injection 
+\cond SOC_AM263X
+\code{.c}
+	if (retVal == 0)
+    {
+		DebugP_log("\r\nTPCC PARITY : TPCC0 Started\r\n");
+        retVal = SDL_ECC_TPCCParity(SDL_TPCC0, \
+								 0x11);		
+		DebugP_log("\r\nParam Register = %x\r\n", retVal);
+		
+		/* wait for delay */
+		for (i =0 ; i < 200 ; i = i + 1 );
+		
+		/* Wait until ESM interrupt happens */
+		while(esmError !=true);
+		
+		if(esmError == true)
+		{
+			DebugP_log("\r\nTPCC PARITY : TPCC0 Completed\r\n");
+			esmError = false;
+		}
+		else{
+			result = SDL_EFAIL;
+		}
+	}
+\endcode
+\endcond
+\cond SOC_AM273X || SOC_AWR294X
+\code{.c}
+	if (retVal == 0)
+    {		
+		DebugP_log("\r\nMSS TPCCA Parity \r\n");
+        paramstatus = SDL_ECC_TPCCParity(SDL_TPCC0A, \
+								 0x11);	
+		DebugP_log("\r\nParam Register = %x\r\n", paramstatus);
+		
+		/* Wait until ESM interrupt happens */
+		while(esmError !=true);
+		/*wait for delay */
+		for (i =0 ; i < 200 ; i = i + 1 );
+		
+		if(esmError == true)
+		{
+			DebugP_log("\r\nMSS TPCCA Parity : Completed\r\n");
+			esmError = false;
+		}
+		else{
+			retVal = -1;
+			DebugP_log("\r\nMSS TPCCA Parity : Failed\r\n");
+		}
+	}
+\endcode
+\endcond
+
 ## API
 
 \ref SDL_ECC_AGGR_API

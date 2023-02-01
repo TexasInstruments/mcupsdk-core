@@ -158,6 +158,8 @@ static int32_t SDL_ECC_tcmparityerrForce_Regs(SDL_ECC_MemType eccMemType,
 							  SDL_ECC_MemSubType memSubType,
 							  uint32_t RegValue);
 
+static int32_t SDL_ECC_enableParityerr(uint32_t setmask, uint32_t paramregs,
+											   uint32_t paramval);
 /** ============================================================================*
  *
  * \brief   Get the Error Source corresponding to the inject error
@@ -1454,6 +1456,7 @@ static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrR
 
     return retVal;
 }
+
 /** ============================================================================
  *
  * \brief   Injects ECC TCM Parity error 
@@ -1486,8 +1489,8 @@ int32_t SDL_ECC_tcmParity(SDL_ECC_MemType eccMemType,
 	}
 	
 	return retValue;
-	
 }
+
 /** ============================================================================
  *
  * \brief   Set ECC TCM Parity Error force Register
@@ -1567,4 +1570,53 @@ int32_t SDL_cleartcmStatusRegs(uint32_t clearVal)
 	SDL_REG32_WR(SDL_R5FSS1_CORE1_TCM_ERR_STATUS_RAW,clearVal);
 	
 	return 0;
+}
+int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
+							  uint32_t bitValue, 
+							  uint32_t paramregvalue,
+							  uint32_t regval)
+{
+	int32_t retValue= SDL_PASS;
+	int32_t result=0u;
+	
+	if(retValue == SDL_PASS)
+	{
+		switch(eccMemType)
+		{
+				/* EDMA Parity */
+			case SDL_TPCC0:
+				result = SDL_ECC_enableParityerr(bitValue, paramregvalue, regval);
+				retValue= SDL_PASS;
+				break;
+			default :
+				retValue= SDL_EFAIL;
+				break;
+		}
+	}
+	
+	if(retValue == SDL_PASS)
+	{
+		return 	result;
+	}
+	else{
+		return 	retValue;
+	}
+	
+}
+
+static int32_t SDL_ECC_enableParityerr(uint32_t setmask, uint32_t paramregs, uint32_t paramval)
+{
+	int32_t result=0u;
+	int32_t disabletestmode = 0x01u;
+	
+	/* Enable test mode */
+	SDL_REG32_WR(SDL_R5FSS0_CORE0_TPCC0_PARITY_CTRL,setmask);
+	/* Writeinto param register for data integrity */
+	SDL_REG32_WR(paramregs, paramval);
+	result = SDL_REG32_RD(paramregs);
+	/* Disable test mode */
+	SDL_REG32_WR(SDL_R5FSS0_CORE0_TPCC0_PARITY_CTRL,(setmask & disabletestmode));
+	
+	return result;
+	
 }

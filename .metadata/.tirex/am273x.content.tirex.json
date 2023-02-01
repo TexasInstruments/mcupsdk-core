@@ -3508,6 +3508,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Cpsw Lwip Https Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "cpsw_lwip_https",
+        "location": "../../examples/networking/lwip/cpsw_lwip_https/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "cpsw_lwip_https",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_lwip_cpsw",
         "location": "../../examples/networking/lwip/enet_lwip_cpsw/am273x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -4519,7 +4552,7 @@
             ]
         ]
     },
-	{
+    {
         "resourceType": "project.ccs",
         "resourceClass": [
             "example"
@@ -5344,6 +5377,72 @@
             "dthe_sha",
             "crypto_hmac_sha512",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "c66ss0_nortos"
         ],
         "mainCategories": [
             [

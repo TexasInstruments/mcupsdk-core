@@ -62,7 +62,6 @@
 #define SDL_INTR_PRIORITY_LVL             (1U)
 #define SDL_ENABLE_ERR_PIN                (1U)
 
-
 /* ========================================================================== */
 /*                           enums                                            */
 /* ========================================================================== */
@@ -134,7 +133,10 @@ static int32_t SDL_ECC_searchMemEntryTable(SDL_ECC_MemSubType memSubType,
                                               const SDL_MemConfig_t memEntryTable[],
                                               uint32_t tableSize,
                                               SDL_MemConfig_t *pMemConfig);
-							  
+static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
+									 uint32_t setmask,
+									 uint32_t paramregs,
+									 uint32_t paramval);											  
 /* Event BitMap for ECC ESM callback for MSS */
 SDL_ESM_NotifyParams paramsMSS[SDL_ESM_MAX_MSS_PARAM_MAP_WORDS] =
 {
@@ -1595,4 +1597,125 @@ int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
 	}	
 	
 	return retValue;
+}
+
+int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
+							  uint32_t bitValue, 
+							  uint32_t paramregvalue,
+							  uint32_t regval)
+{
+	int32_t retValue= SDL_PASS;
+	int32_t result=0u;
+	
+	if(retValue == SDL_PASS)
+	{
+		switch(eccMemType)
+		{
+			/* EDMA Parity */
+			/* MSS EDMA Parity */
+			case SDL_TPCC0A:
+			case SDL_TPCC0B:
+			/* DSS EDMA Parity */
+			case SDL_DSS_TPCCA:
+			case SDL_DSS_TPCCB:
+			case SDL_DSS_TPCCC:
+				result = SDL_ECC_enableParityerr(eccMemType, bitValue, paramregvalue, regval);
+				retValue= SDL_PASS;
+				break;
+			default :
+				retValue= SDL_EFAIL;
+				break;
+		}
+	}
+	
+	if(retValue == SDL_PASS)
+	{
+		return 	result;
+	}
+	else{
+		return 	retValue;
+	}
+}	
+/** ============================================================================
+ *
+ * \brief   Enable dma parity for given memory type
+ *
+ * \param1  eccMemType: Memory type
+ * \param2  setmask: value to enable to parity
+ * \param3  paramregs : param register address
+ * \param4  paramval : value to be write into param register
+ * @return  SDL_PASS : Success; SDL_EFAIL for failures
+ */
+static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
+									 uint32_t setmask,
+									 uint32_t paramregs,
+									 uint32_t paramval)
+{
+	int32_t retVal = SDL_PASS;
+	int32_t result=0u;
+	int32_t disabletestmode = 0x01u;
+	
+	switch(eccMemType)
+	{
+		case SDL_TPCC0A:
+			/* Enable test mode */
+			SDL_REG32_WR(TPCC_PARITY_CTRL,setmask);
+			/* Writeinto param register for data integrity */
+			SDL_REG32_WR(paramregs, paramval);
+			result = SDL_REG32_RD(paramregs);
+			/* Disable test mode */
+			SDL_REG32_WR(TPCC_PARITY_CTRL,(setmask & disabletestmode));
+			retVal = SDL_PASS;
+			break;
+		case SDL_TPCC0B:
+			/* Enable test mode */
+			SDL_REG32_WR(TPCC_PARITY_CTRL,setmask);
+			/* Writeinto param register for data integrity */
+			SDL_REG32_WR(paramregs, paramval);
+			result = SDL_REG32_RD(paramregs);
+			/* Disable test mode */
+			SDL_REG32_WR(TPCC_PARITY_CTRL,(setmask >> disabletestmode));
+			retVal = SDL_PASS;
+			break;
+		case SDL_DSS_TPCCA:
+			/* Enable test mode */
+			SDL_REG32_WR(DSS_TPCCA_PARITY_CTRL,setmask);
+			/* Writeinto param register for data integrity */
+			SDL_REG32_WR(paramregs, paramval);
+			result = SDL_REG32_RD(paramregs);
+			/* Disable test mode */
+			SDL_REG32_WR(DSS_TPCCA_PARITY_CTRL,(setmask & disabletestmode));
+			retVal = SDL_PASS;
+			break;
+		case SDL_DSS_TPCCB:
+			/* Enable test mode */
+			SDL_REG32_WR(DSS_TPCCB_PARITY_CTRL,setmask);
+			/* Writeinto param register for data integrity */
+			SDL_REG32_WR(paramregs, paramval);
+			result = SDL_REG32_RD(paramregs);
+			/* Disable test mode */
+			SDL_REG32_WR(DSS_TPCCB_PARITY_CTRL,(setmask & disabletestmode));
+			retVal = SDL_PASS;
+			break;
+		case SDL_DSS_TPCCC:
+			/* Enable test mode */
+			SDL_REG32_WR(DSS_TPCCC_PARITY_CTRL,setmask);
+			/* Writeinto param register for data integrity */
+			SDL_REG32_WR(paramregs, paramval);
+			result = SDL_REG32_RD(paramregs);
+			/* Disable test mode */
+			SDL_REG32_WR(DSS_TPCCC_PARITY_CTRL,(setmask & disabletestmode));
+			retVal = SDL_PASS;
+			break;
+		default:
+			break;
+	}
+	if(retVal == SDL_PASS)
+	{
+		return result;
+	}
+	else
+	{
+		return retVal;
+	}
 }

@@ -50,6 +50,7 @@
 #include <sdl/include/am273x/sdlr_intr_esm_mss.h>
 #include <sdl/include/am273x/sdlr_soc_baseaddress.h>
 
+
 #define SDL_ECC_WIDTH_UNDEFINED 0x1
 
 /* define Max memEntries for each aggregator (i.e. the number of RAM ID's with * Wrapper type) */
@@ -65,6 +66,18 @@
 #define SDL_MSS_CPSW0_ECC_U_BASE					    (SDL_MSS_CPSW_U_BASE + 0x3F000u)
 /* define parity control register addresses */
 #define SDL_TCM_PARITY_ERRFRC	    				(0x02120144)
+
+/* MSS TPCC */
+#define TPCC_PARITY_CTRL							(0x0212015Cu)
+#define SDL_R5FSS0_CORE0_TPCC0_PARITY_STATUS		(0x02120160u)
+/* DSS TPCC */
+#define DSS_TPCCA_PARITY_CTRL						(0x060200BCU)
+#define DSS_TPCCB_PARITY_CTRL						(0x060200C0U)
+#define DSS_TPCCC_PARITY_CTRL						(0x060200C4U)
+#define SDL_R5FSS0_CORE0_TPCCA_PARITY_STATUS		(0x060200C8U)
+#define SDL_R5FSS0_CORE0_TPCCB_PARITY_STATUS		(0x060200CCU)
+#define SDL_R5FSS0_CORE0_TPCCC_PARITY_STATUS		(0x060200D0U)
+
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_R5FSS0_CORE0_ECC_AGGR
  * -----------------------------------------------------------------------------------

@@ -10423,6 +10423,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc2",
         "location": "../../examples/sdl/rti/UC2/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
