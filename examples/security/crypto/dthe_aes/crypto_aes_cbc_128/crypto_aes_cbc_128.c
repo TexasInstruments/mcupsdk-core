@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,7 +89,7 @@ void crypto_aes_cbc_128_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-    
+
     DTHE_AES_Return_t   status;
     DTHE_Handle         aesHandle;
     DTHE_AES_Params     aesParams;

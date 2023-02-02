@@ -47,6 +47,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am273x lwip-contrib-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am273x mbedtls_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am273x sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang sdl_c66.ti-c6000
+	@echo  $(MAKE) -s -f makefile.am273x security_r5f.ti-arm-clang security_c66.ti-c6000
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
@@ -64,6 +65,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am273x lwip-contrib-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am273x mbedtls_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am273x sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean sdl_c66.ti-c6000_clean
+	@echo  $(MAKE) -s -f makefile.am273x security_r5f.ti-arm-clang_clean security_c66.ti-c6000_clean
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
@@ -198,6 +200,16 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -225,9 +237,10 @@ BUILD_COMBO_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
 BUILD_COMBO_mbedtls = mbedtls_r5f.ti-arm-clang
 BUILD_COMBO_sdl = sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang sdl_c66.ti-c6000
+BUILD_COMBO_security = security_r5f.ti-arm-clang security_c66.ti-c6000
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_sdl)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security)
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
@@ -283,6 +296,9 @@ $(BUILD_COMBO_mbedtls):
 $(BUILD_COMBO_sdl):
 	$(MAKE) -C source/sdl -f makefile.am273x.$(subst sdl_,,$@) all
 
+$(BUILD_COMBO_security):
+	$(MAKE) -C source/security -f makefile.am273x.$(subst security_,,$@) all
+
 
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_c66.ti-c6000_clean
@@ -299,9 +315,10 @@ BUILD_COMBO_CLEAN_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang
 BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mbedtls = mbedtls_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_sdl = sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean sdl_c66.ti-c6000_clean
+BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean security_c66.ti-c6000_clean
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_sdl)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_security)
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
@@ -352,6 +369,9 @@ $(BUILD_COMBO_CLEAN_mbedtls):
 $(BUILD_COMBO_CLEAN_sdl):
 	$(MAKE) -C source/sdl -f makefile.am273x.$(subst sdl_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_security):
+	$(MAKE) -C source/security -f makefile.am273x.$(subst security_,,$(subst _clean,,$@)) clean
+
 
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_c66.ti-c6000_scrub_scrub
@@ -368,9 +388,10 @@ BUILD_COMBO_SCRUB_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang
 BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mbedtls = mbedtls_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_sdl = sdl_r5f.ti-arm-clang_scrub sdl_r5fss1.ti-arm-clang_scrub sdl_c66.ti-c6000_scrub_scrub
+BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub security_c66.ti-c6000_scrub_scrub
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_sdl)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -420,6 +441,9 @@ $(BUILD_COMBO_SCRUB_mbedtls):
 
 $(BUILD_COMBO_SCRUB_sdl):
 	$(MAKE) -C source/sdl -f makefile.am273x.$(subst sdl_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_security):
+	$(MAKE) -C source/security -f makefile.am273x.$(subst security_,,$(subst _scrub,,$@)) scrub
 
 
 BUILD_COMBO_EXAMPLE_ALL =
@@ -551,6 +575,16 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos
@@ -961,6 +995,36 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  ecap_epwm_loopback_am273x-evm_system_nortos:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile all
 
@@ -1112,6 +1176,16 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean
@@ -1522,6 +1596,36 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  ecap_epwm_loopback_am273x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile clean
 
@@ -1673,6 +1777,16 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_scrub
@@ -2082,6 +2196,36 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  ecap_epwm_loopback_am273x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile scrub

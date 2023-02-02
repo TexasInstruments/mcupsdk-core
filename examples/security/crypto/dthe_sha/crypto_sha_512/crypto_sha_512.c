@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -74,7 +74,7 @@ void crypto_sha_512_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-    
+
     DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
@@ -126,7 +126,7 @@ void crypto_sha_512_main(void *args)
 
     Board_driversClose();
     Drivers_close();
-   
+
     return;
 }
 
