@@ -339,20 +339,35 @@ help:
 	@echo  $(MAKE) -s -C examples/motor_control/tamagawa_diagnostic/single_channel/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/motor_control/tamagawa_diagnostic/single_channel/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1182,20 +1197,35 @@ BUILD_COMBO_EXAMPLE_ALL += tamagawa_diagnostic_multi_channel_am243x-evm_r5fss0-0
 BUILD_COMBO_EXAMPLE_ALL += tamagawa_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tamagawa_diagnostic_single_channel_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -1929,47 +1959,92 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2394,20 +2469,35 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += tamagawa_diagnostic_multi_channel_am243x-evm_r5
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tamagawa_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tamagawa_diagnostic_single_channel_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -3141,47 +3231,92 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3606,20 +3741,35 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += tamagawa_diagnostic_multi_channel_am243x-evm_r5
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tamagawa_diagnostic_single_channel_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tamagawa_diagnostic_single_channel_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -4353,47 +4503,92 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  cdc_echo_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
