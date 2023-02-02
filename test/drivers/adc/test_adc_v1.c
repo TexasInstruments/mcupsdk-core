@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,7 +45,6 @@
 #include "ti_board_open_close.h"
 #include <../source/kernel/dpl/CycleCounterP.h>
 
-// #include <../drivers/menu/menu.h>
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -325,6 +324,7 @@ uint32_t gEdmaConfigNum = CONFIG_EDMA_NUM_INSTANCES;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
+#define MIN_SAMPLE_WINDOW (17)
 
 void util_ADC_init(uint32_t base,
                    ADC_ClkPrescale  prescalar,
@@ -883,7 +883,6 @@ void util_ADC_setup_and_enable_trigger_source(
                                         + CSL_CONTROLSS_G0_EPWM0_U_BASE;
 
         util_EPWM_setup_adc_trigger(epwm_base, (trigger%2));
-        // if(enableLog) DebugP_log("%x epwm base, %d trigger\r\n", epwm_base, trigger%2);
 
 
     }
@@ -907,7 +906,7 @@ void util_ADC_setup_and_enable_trigger_source(
         soc_number,
         trigger,
         channel,
-        sample_window);
+        MIN_SAMPLE_WINDOW);
 
     /* enabling the interrupt*/
     ADC_enableInterrupt(base, int_number);
@@ -927,8 +926,6 @@ void util_ADC_fire_soc_trigger(
     ADC_SOCNumber   soc_number,
     ADC_Trigger     trigger)
 {
-    // static int count;
-    // DebugP_log("%d count\r\n", count++);
 
     if (trigger == ADC_TRIGGER_SW_ONLY)
     {
@@ -970,24 +967,16 @@ void util_ADC_fire_soc_trigger(
                         INPUT_PIN_PIN,
                         INPUT_PIN_DIR);
 
-        // if(manual_testing)
-        // {
-        //     DebugP_log("please input a trigger on inputxbar[5], routed from GPIO 15\r\n");
-
-        //     wait_for_user_uart_input();
-        // }
-        // else
-        // {
-            sprintf(test_command,"%s","trigger on GPIO 24 for InputXbar[5] to trigger ADC");
-            tester_command(test_command);
-        // }
+        sprintf(test_command,"%s","trigger on GPIO 24 for InputXbar[5] to trigger ADC");
+        tester_command(test_command);
     }
     else if ((trigger >= ADC_TRIGGER_EPWM0_SOCA) &&
              (trigger <= ADC_TRIGGER_EPWM31_SOCB))
     {
         /* trigger the given EPWM */
         uint8_t epwm_instance   = (uint8_t) (trigger - 8)/2 ;
-        EPWM_clearADCTriggerFlag(epwm_instance, (trigger%2));
+        uint32_t    epwm_base       = ((uint32_t) epwm_instance<<12) + CSL_CONTROLSS_G0_EPWM0_U_BASE;
+        EPWM_clearADCTriggerFlag(epwm_base, (trigger%2));
         util_EPWM_start_counter (epwm_instance);
 
         SemaphoreP_pend(&gEpwmSyncSemObject, SystemP_WAIT_FOREVER);
@@ -1004,13 +993,25 @@ void util_ADC_fire_soc_trigger(
         int offset = 0x1000;
         int instance = trigger - 0x48;
         int ecap_base = CSL_CONTROLSS_ECAP0_U_BASE + instance*offset;
-        // ECAP_enableCaptureMode(ecap_base);
+
+        ECAP_enableCaptureMode(ecap_base);
+        ECAP_reArm(ecap_base);
+        /* set ecap input as inputxbar 5 (this is already set up for the GPIO 24) */
+        ECAP_selectECAPInput(ecap_base, ECAP_INPUT_INPUTXBAR5);
         ECAP_selectSocTriggerSource(ecap_base, ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1);
-        // ECAP_enableInterrupt(ecap_base, ECAP_ISR_SOURCE_CAPTURE_EVENT_1);
-        ECAP_forceInterrupt(ecap_base, ECAP_ISR_SOURCE_CAPTURE_EVENT_1);
+
+        ECAP_setEventPolarity(ecap_base, ECAP_EVENT_1, ECAP_EVNT_RISING_EDGE);
+
+        /*toggling the GPIO*/
+        GPIO_setDirMode(INPUT_PIN_BASE_ADDR,
+                        INPUT_PIN_PIN,
+                        INPUT_PIN_DIR);
+
+        sprintf(test_command,"%s","trigger on GPIO 24 for InputXbar[5] to trigger ADC");
+        tester_command(test_command);
 
         /* Disabling the trigger source*/
-        ECAP_selectSocTriggerSource(ecap_base, ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1);
+        ECAP_selectSocTriggerSource(ecap_base, ECAP_APWM_MODE_SOC_TRIGGER_SRC_DISABLED);
     }
     if(enableLog)
     {
@@ -1035,7 +1036,6 @@ int test_trigger(
     trigger_test = 1;
     int     wait        = 0;
     int     errors      = 0;
-    // int     adc_instance = (base & 0x0000f000)>>12;
     ADC_Channel     channel;
     ADC_SOCNumber   soc_number;
 
@@ -1045,98 +1045,92 @@ int test_trigger(
         ADC_MODE_DIFFERENTIAL,
         ADC_PRI_ALL_ROUND_ROBIN);
 
-    // for(int channel_iter = 0; channel_iter < MAX_CHANNEL_COUNT; channel_iter++)
-    // {
-        channel = ADC_CH_ADCIN0;
-        // channel = ADC_channels_list[adc_instance][channel_iter];
-        // if(channel == NO_CHANNEL)
-        // {
-        //     continue;
-        // }
-        for (soc_number = ADC_SOC_NUMBER0;
-            soc_number <= ADC_SOC_NUMBER15;
-            soc_number++)
+    channel = ADC_CH_ADCIN0;
+
+    for (soc_number = ADC_SOC_NUMBER0;
+        soc_number <= ADC_SOC_NUMBER15;
+        soc_number++)
+    {
+        util_ADC_setup_and_enable_trigger_source(
+            base,
+            soc_number,
+            trigger,
+            int_number,
+            channel,
+            sample_window);
+
+        /* Enabling and clearing the interrupt, overflow flags if any*/
+        ADC_enableInterrupt(base, int_number);
+        ADC_clearInterruptStatus(base, int_number);
+        if (ADC_getInterruptOverflowStatus(base, int_number))
         {
-            util_ADC_setup_and_enable_trigger_source(
-                base,
-                soc_number,
-                trigger,
-                int_number,
-                channel,
-                sample_window);
-
-            /* Enabling and clearing the interrupt, overflow flags if any*/
-            ADC_enableInterrupt(base, int_number);
-            ADC_clearInterruptStatus(base, int_number);
-            if (ADC_getInterruptOverflowStatus(base, int_number))
-            {
-                ADC_clearInterruptOverflowStatus(base, int_number);
-            }
-
-            /* firing false trigger*/
-            /* Using the GPIO loopback for generating a InputXbar.out[5] trigger */
-            util_ADC_fire_soc_trigger(
-                base,
-                soc_number,
-                false_trigger);
-
-            wait = util_ADC_wait_for_adc_interrupt(base, int_number);
-
-            if (wait == 1)
-            {
-                /* wait successful. Conversion happened */
-                /* false trigger triggered the SOC*/
-                errors++;
-                if(enableLog) DebugP_log("ERROR : false trigger triggered the soc\r\n");
-            }
-            wait = 0;
-
-            /* clearing the interrupt, overflow flags if any*/
-            ADC_clearInterruptStatus(base, int_number);
-            if (ADC_getInterruptOverflowStatus(base, int_number))
-            {
-                ADC_clearInterruptOverflowStatus(base, int_number);
-            }
-
-            util_ADC_fire_soc_trigger(
-                base,
-                soc_number,
-                trigger);
-
-            if((trigger >= ADC_TRIGGER_EPWM0_SOCA) && (trigger <= ADC_TRIGGER_EPWM31_SOCB))
-            {
-                uint32_t epwm_instance = (trigger - 8)/2;
-                uint32_t epwm_base = (epwm_instance * 0x00001000) +  CSL_CONTROLSS_G0_EPWM0_U_BASE;
-
-                if(EPWM_getADCTriggerFlagStatus(epwm_base, trigger%2) != 1)
-                {
-                    errors++;
-                    DebugP_log("no adc_soca/b flag\r\n");
-                }
-                else
-                {
-                    EPWM_clearADCTriggerFlag(epwm_base, trigger%2);
-                }
-            }
-            wait = util_ADC_wait_for_adc_interrupt(base, int_number);
-            if (wait == 0)
-            {
-                /* wait unsuccessful. Conversion did not happen*/
-                /* trigger did not trigger the SOC*/
-                errors++;
-                if(enableLog) DebugP_log("ERROR : trigger %d did not trigger the SOC\r\n", trigger);
-            }
-            wait = 0;
-            if(enableLog)
-            {
-                uint32_t result_base = base - 0x001c0000;
-                int result = ADC_readResult(result_base, soc_number);
-                DebugP_log("\t\t\tresult : %d\r\n",result);
-            }
-
+            ADC_clearInterruptOverflowStatus(base, int_number);
         }
-    // }
-    if(enableLog) DebugP_log("%d is errors for %d trigger\r\n", errors, trigger);
+
+        /* firing false trigger*/
+        /* Using the GPIO loopback for generating a InputXbar.out[5] trigger */
+        util_ADC_fire_soc_trigger(
+            base,
+            soc_number,
+            false_trigger);
+
+        wait = util_ADC_wait_for_adc_interrupt(base, int_number);
+
+        if (wait == 1)
+        {
+            /* wait successful. Conversion happened */
+            /* false trigger triggered the SOC*/
+            errors++;
+            if(enableLog) DebugP_log("ERROR : false trigger triggered the soc\r\n");
+        }
+        wait = 0;
+
+        /* clearing the interrupt, overflow flags if any*/
+        ADC_clearInterruptStatus(base, int_number);
+        if (ADC_getInterruptOverflowStatus(base, int_number))
+        {
+            ADC_clearInterruptOverflowStatus(base, int_number);
+        }
+
+        util_ADC_fire_soc_trigger(
+            base,
+            soc_number,
+            trigger);
+
+        if((trigger >= ADC_TRIGGER_EPWM0_SOCA) && (trigger <= ADC_TRIGGER_EPWM31_SOCB))
+        {
+            uint32_t epwm_instance = (trigger - 8)/2;
+            uint32_t epwm_base = (epwm_instance * 0x00001000) +  CSL_CONTROLSS_G0_EPWM0_U_BASE;
+
+            if(EPWM_getADCTriggerFlagStatus(epwm_base, (trigger%2)) != 1)
+            {
+                errors++;
+                DebugP_log("ERROR : no adc_soca/b flag\r\n");
+            }
+            else
+            {
+                EPWM_clearADCTriggerFlag(epwm_base, (trigger%2));
+            }
+        }
+        wait = util_ADC_wait_for_adc_interrupt(base, int_number);
+        if (wait == 0)
+        {
+            /* wait unsuccessful. Conversion did not happen*/
+            /* trigger did not trigger the SOC*/
+            errors++;
+            if(enableLog) DebugP_log("ERROR : trigger %d did not trigger the SOC\r\n", trigger);
+        }
+        wait = 0;
+        if(enableLog)
+        {
+            volatile uint16_t result = util_ADC_check_result(base, soc_number);
+            DebugP_log("\t\t\tresult : %d\r\n",result);
+        }
+
+    }
+
+    if(enableLog)
+    DebugP_log("%d is errors for %d trigger\r\n", errors, trigger);
 
     trigger_test = 0;
 
@@ -1208,8 +1202,6 @@ void epwms_interrupt_isr_setup(void)
     /* this is to setup the interrupt xbar,
      * setup ISR for all the epwms. */
 
-    /* sets up all the epwm interrupts to the given interrupt xbar instance*/
-    /* here, INTXbar.out[1] is used for all the ewpm istances*/
     SOC_xbarSelectInterruptXBarInputSource(
         CSL_CONTROLSS_INTXBAR_U_BASE,
         1,                     // instance number 1
@@ -1220,19 +1212,22 @@ void epwms_interrupt_isr_setup(void)
 
     /* Initialising a Interrupt parameter
      * setting up the interrupt, callbacks.*/
-    HwiP_Params     hwiPrms;
-    HwiP_Params_init(&hwiPrms);
-    // hwiPrms.priority    = 0;
-    hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_1;
-    hwiPrms.callback    = &EPWM_INT_ISR;
-    hwiPrms.isPulse     = 1;
-    status              = HwiP_construct(&gEpwmHwiObject1, &hwiPrms);
+    static HwiP_Params     hwiPrms1;
+
+    HwiP_Params_init(&hwiPrms1);
+    hwiPrms1.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_1;
+    hwiPrms1.callback    = &EPWM_INT_ISR;
+    hwiPrms1.isPulse     = 1;
+    status              = HwiP_construct(&gEpwmHwiObject1, &hwiPrms1);
     DebugP_assert(status == SystemP_SUCCESS);
+
 
     if(enableLog)
     {
         DebugP_log("INTXbar.out[1] is configured for all EPWM interrupts and EPWM_INT_ISR is setup\r\n");
     }
+    /* sets up all the epwm interrupts to the given interrupt xbar instance*/
+    /* here, INTXbar.out[1] is used for all the ewpm istances*/
 
 }
 
@@ -1258,9 +1253,9 @@ void util_EPWM_init(uint32_t epwm_base)
 
     if(trigger_test)
     {
-        period     = 100;
-        compare_a  = 50;
-        compare_b  = 50;
+        period     = 10;
+        compare_a  = 5;
+        compare_b  = 5;
     }
     else
     {
@@ -1364,13 +1359,18 @@ void util_EPWM_setup_adc_trigger(uint32_t epwm_base, EPWM_ADCStartOfConversionTy
     /* enabling the ADC soc trigger from EPWM */
     EPWM_enableADCTrigger( epwm_base, adc_soc_type);
 
-    EPWM_setADCTriggerEventPrescale(epwm_base, adc_soc_type, 1);
     /* ADC trigger is set at counter == compare A while incrementing*/
     EPWM_setADCTriggerSource(
         epwm_base,
         adc_soc_type,
         EPWM_SOC_TBCTR_U_CMPA,
         EPWM_SOC_TBCTR_U_CMPA);
+
+    EPWM_setADCTriggerEventPrescale(epwm_base, adc_soc_type, 1);
+	EPWM_enableADCTriggerEventCountInit(epwm_base, adc_soc_type);
+	EPWM_setADCTriggerEventCountInitValue(epwm_base, adc_soc_type, 0);
+
+    return;
 }
 
 void util_EPWM_deinit(uint32_t epwm_base)
@@ -1437,7 +1437,6 @@ void ADC_INT_ISR_for_periodic_triggering_from_epwm(void *args)
 
 void EPWM_INT_ISR_for_periodic_triggering_from_epwm(void *args)
 {
-    gEpwm_ISR2_count++;
     if(gEpwm_ISR2_count >= 10)
     {
         SemaphoreP_post(&gEpwmIsrSemObject);
@@ -1520,7 +1519,7 @@ int test_adc_operational_mode(uint32_t base, int mode)
      * adding 1 at the end to make it >= actual adc_clock_cycle
      */
     sample_window = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     if(mode == 0)
     {
@@ -1548,31 +1547,19 @@ int test_adc_operational_mode(uint32_t base, int mode)
             channel_availability--;
             continue;
         }
-        // if(manual_testing)
-        // {
-        //     DebugP_log("Please provide the input voltage on ADC instance %d channel %d to be between 3.3V and 0V\r\n",
-        //                 adc_instance, channel);
 
-        //     wait_for_user_uart_input();
-        // }
-        // else
-        // {
-            // tester_command("gen pwm-dac voltage 03A 2.000V");   // even channels
-            // tester_command("gen pwm-dac voltage 03B 1.000V");   // odd channels
-            float voltage;
-            if((channel%2) == 0)
-            {
-                voltage = 2.000;
-                // voltage = 2.000;
-            }
-            else
-            {
-                voltage = 1.000;
-            }
+        float voltage;
+        if((channel%2) == 0)
+        {
+            voltage = 2.000;
+        }
+        else
+        {
+            voltage = 1.000;
+        }
 
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, adc_instance, channel);
-            tester_command(test_command);   // even channels
-        // }
+        sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, adc_instance, channel);
+        tester_command(test_command);   // even channels
 
         for (soc_number = ADC_SOC_NUMBER0;
             soc_number <= ADC_SOC_NUMBER15;
@@ -1716,7 +1703,6 @@ int32_t AM263x_ADC_BTR_003(uint32_t base)
     int errors = 0;
 
     ADC_Trigger trigger, false_trigger;
-    // ADC_Channel channel;
     uint32_t sample_window;
 
     ADC_IntNumber int_number;
@@ -1730,7 +1716,7 @@ int32_t AM263x_ADC_BTR_003(uint32_t base)
      * adding 1 at the end to make it >= actual adc_clock_cycle
      */
     sample_window = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     errors += test_trigger(
         base,
@@ -1774,14 +1760,13 @@ int32_t AM263x_ADC_BTR_004(uint32_t base)
 
     int_number      = ADC_INT_NUMBER1;
     false_trigger   = ADC_TRIGGER_INPUT_XBAR_OUT5;
-    // channel = ADC_CH_ADCIN2;
 
     /*
      * ADC_clock_cycle = (ADC_CLK_DIV_X_Y/2 +1)*input_clock_cycle
      * adding 1 at the end to make it >= actual adc_clock_cycle
      */
     sample_window = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     for (trigger = ADC_TRIGGER_RTI1;
          trigger <= ADC_TRIGGER_RTI3;
@@ -1836,7 +1821,7 @@ int32_t AM263x_ADC_BTR_005(uint32_t base)
      * adding 1 at the end to make it >= actual adc_clock_cycle
      */
     sample_window = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     /* loops through all the SOCs in the ADC*/
     errors += test_trigger(
@@ -1867,12 +1852,13 @@ int32_t AM263x_ADC_BTR_005(uint32_t base)
  */
 int32_t AM263x_ADC_BTR_006(uint32_t base)
 {
+
+    int errors = 0;
     if(enableLog)
     {
         DebugP_log("\r\n\r\n------------------------------ base : %x -------------------------------------\r\n\r\n", base);
         DebugP_log("Test : ePWM SOC Trigger\r\n\r\n");
     }
-    int errors = 0;
 
     uint32_t        sample_window;
     ADC_Trigger     trigger, false_trigger;
@@ -1886,7 +1872,7 @@ int32_t AM263x_ADC_BTR_006(uint32_t base)
      * adding 1 at the end to make it >= actual adc_clock_cycle
      */
     sample_window = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     uint32_t status = SemaphoreP_constructBinary(&gEpwmSyncSemObject, 0);
     DebugP_assert(SystemP_SUCCESS == status);
@@ -1922,6 +1908,8 @@ int32_t AM263x_ADC_BTR_006(uint32_t base)
 
         util_EPWM_deinit(epwm_base);
     }
+
+    HwiP_destruct(&gEpwmHwiObject1);
 
     disable_all_epwms();
     /* resetting and disabling the ADC Converter*/
@@ -1961,7 +1949,8 @@ uint32_t AM263_ADC_BTR_NEW(uint32_t base)
      * adding 1 at the end to make it >= actual adc_clock_cycle
      */
     sample_window = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
+
 
     /* loops through all the SOCs in the ADC*/
     for(trigger = ADC_TRIGGER_ECAP0_SOCEVT;
@@ -2000,7 +1989,6 @@ int32_t AM263x_ADC_BTR_007( void )
 {
     if(enableLog)
     {
-        // DebugP_log("\r\n\r\n------------------------------ base : %x -------------------------------------\r\n\r\n", base);
         DebugP_log("Test :  All ADCs working together\r\n\r\n");
     }
 
@@ -2018,7 +2006,7 @@ int32_t AM263x_ADC_BTR_007( void )
 
     trigger         =   ADC_TRIGGER_RTI1;
     sample_window   =   ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window   =   (sample_window > 17)? sample_window : 17;
+    sample_window   =   (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     for (adc_offset = 0; adc_offset <= 0x4000; adc_offset = adc_offset + 0x1000)
     {
@@ -2029,57 +2017,48 @@ int32_t AM263x_ADC_BTR_007( void )
          * single ended mode and round robin mode
          */
 
-        // int adc_instance = (base & 0x0000f000)>>12;
-
         util_ADC_init(
             base,
             ADC_CLK_DIV_4_0,
             ADC_MODE_SINGLE_ENDED,
             ADC_PRI_ALL_ROUND_ROBIN
             );
-            /* Disabling all the interrupts*/
-            ADC_disableInterrupt(base, ADC_INT_NUMBER1);
-            ADC_disableInterrupt(base, ADC_INT_NUMBER2);
-            ADC_disableInterrupt(base, ADC_INT_NUMBER3);
-            ADC_disableInterrupt(base, ADC_INT_NUMBER4);
+        /* Disabling all the interrupts*/
+        ADC_disableInterrupt(base, ADC_INT_NUMBER1);
+        ADC_disableInterrupt(base, ADC_INT_NUMBER2);
+        ADC_disableInterrupt(base, ADC_INT_NUMBER3);
+        ADC_disableInterrupt(base, ADC_INT_NUMBER4);
 
-            /* Enabling the interrupt*/
-            ADC_enableInterrupt(base, ADC_INT_NUMBER1);
-            ADC_disableContinuousMode(base, ADC_INT_NUMBER1);
-            ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
+        /* Enabling the interrupt*/
+        ADC_enableInterrupt(base, ADC_INT_NUMBER1);
+        ADC_disableContinuousMode(base, ADC_INT_NUMBER1);
+        ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
 
-        // for(int channel_iter = 0; channel_iter < MAX_CHANNEL_COUNT; channel_iter++)
-        // {
-        //     channel = ADC_channels_list[adc_instance][channel_iter];
-            // if(channel == NO_CHANNEL)
-            // {
-                // DebugP_log("DEBUG : continuing base : %x\r\n", base);
-            //     continue;
-            // }
-            for (soc_number = ADC_SOC_NUMBER0;
-                soc_number <= ADC_SOC_NUMBER15;
-                soc_number ++)
-                {
-                    /*
-                        * Setting up the SOCs to be triggered by the same trigger
-                        */
 
-                    ADC_setupSOC(
-                        base,
-                        soc_number,
-                        trigger,
-                        channel,
-                        sample_window
-                        );
-                    if(soc_number == ADC_SOC_NUMBER15)
-                    {
-                        /* for the last SOC in the round robin priority,
-                            * adding the interrupt to be triggered at the end of
-                            * conversion. this will be used for checking EOC*/
-                        ADC_setInterruptSource(base, ADC_INT_NUMBER1, soc_number);
-                    }
-                }
-        // }
+        for (soc_number = ADC_SOC_NUMBER0;
+            soc_number <= ADC_SOC_NUMBER15;
+            soc_number ++)
+        {
+            /*
+            * Setting up the SOCs to be triggered by the same trigger
+            */
+
+            ADC_setupSOC(
+                base,
+                soc_number,
+                trigger,
+                channel,
+                sample_window
+                );
+            if(soc_number == ADC_SOC_NUMBER15)
+            {
+                /* for the last SOC in the round robin priority,
+                    * adding the interrupt to be triggered at the end of
+                    * conversion. this will be used for checking EOC*/
+                ADC_setInterruptSource(base, ADC_INT_NUMBER1, soc_number);
+            }
+        }
+
         /* Clearing interrupts of all the ADCs*/
         ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
         ADC_clearInterruptOverflowStatus(base, ADC_INT_NUMBER1);
@@ -2154,7 +2133,7 @@ int32_t AM263x_ADC_BTR_008(uint32_t base)
     int_number      =   ADC_INT_NUMBER1;
     trigger         =   ADC_TRIGGER_SW_ONLY;
     sample_window   =   ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window   =   (sample_window > 17)? sample_window : 17;
+    sample_window   =   (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     int adc_instance = (base & 0x0000f000)>>12;
 
@@ -2186,68 +2165,70 @@ int32_t AM263x_ADC_BTR_008(uint32_t base)
         for( multiple_trigger = 0xff00;
             multiple_trigger <= 0xffff;
             multiple_trigger++)
+        {
+            ADC_enableInterrupt(base, int_number);
+            ADC_clearInterruptStatus(base, int_number);
+            if (ADC_getInterruptOverflowStatus(base, int_number))
             {
-                ADC_enableInterrupt(base, int_number);
-                ADC_clearInterruptStatus(base, int_number);
-                if (ADC_getInterruptOverflowStatus(base, int_number))
-                {
-                    ADC_clearInterruptOverflowStatus(base, int_number);
-                }
-
-                mask =  0x8000;
-                max_value = 0;
-                /* setting up SOCs based on the bits set in the multiple trigger*/
-                for(soc_number = 15; soc_number>= 0; soc_number--)
-                {
-                    if((mask & multiple_trigger)!= 0)
-                    {
-                        max_value =(max_value < soc_number)? soc_number : max_value;
-                            ADC_setupSOC(
-                                base,
-                                soc_number,
-                                trigger,
-                                channel,
-                                sample_window);
-                    }
-                    mask = mask >> 1;
-                    if(mask == 0)break;
-                }
-
-                /*
-                * Setting up the last SOC in the selected multiple triggers
-                * to trigger ADC_INT at its EOC.
-                */
-                soc_number = max_value;
-                ADC_setInterruptSource(base, int_number, soc_number);
-
-                /* Forcing multiple SOCs*/
-                ADC_forceMultipleSOC(base, multiple_trigger);
-
-                /*
-                * waiting for ADC_INT generated at the end of last SOC in
-                * the round robin
-                */
-                wait = util_ADC_wait_for_adc_interrupt(base, int_number);
-                if(wait == 0)
-                {
-                    /* wait unsuccessful. conversions didnt happen as intended.*/
-                    errors++;
-                    DebugP_log("ERROR : wait unsuccessful. conversions didnt happen as intended\r\n");
-                }
-                ADC_disableInterrupt(base, int_number);
-                if(multiple_trigger == 0xffff) break;
+                ADC_clearInterruptOverflowStatus(base, int_number);
             }
+
+            mask =  0x8000;
+            max_value = 0;
+            /* setting up SOCs based on the bits set in the multiple trigger*/
+            for(soc_number = 15; soc_number>= 0; soc_number--)
+            {
+                if((mask & multiple_trigger)!= 0)
+                {
+                    max_value =(max_value < soc_number)? soc_number : max_value;
+                    ADC_setupSOC(
+                        base,
+                        soc_number,
+                        trigger,
+                        channel,
+                        sample_window);
+                }
+                mask = mask >> 1;
+                if(mask == 0)break;
+            }
+
+            /*
+            * Setting up the last SOC in the selected multiple triggers
+            * to trigger ADC_INT at its EOC.
+            */
+            soc_number = max_value;
+            ADC_setInterruptSource(base, int_number, soc_number);
+
+            /* Forcing multiple SOCs*/
+            ADC_forceMultipleSOC(base, multiple_trigger);
+
+            /*
+            * waiting for ADC_INT generated at the end of last SOC in
+            * the round robin
+            */
+            wait = util_ADC_wait_for_adc_interrupt(base, int_number);
+            if(wait == 0)
+            {
+                /* wait unsuccessful. conversions didnt happen as intended.*/
+                errors++;
+                DebugP_log("ERROR : wait unsuccessful. conversions didnt happen as intended\r\n");
+            }
+            ADC_disableInterrupt(base, int_number);
+            if(multiple_trigger == 0xffff) break;
         }
+    }
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
 
     if(errors > 0) DebugP_log("%d errors for base %x\r\n", errors, base);
-    if(errors > 0)  /* Fail criteria */
+    if(errors > 0)
     {
+        /* Fail criteria */
         return 1 ;
     }
-    else            /* Pass Criteria*/
+    else
     {
+        /* Pass Criteria*/
         return 0;
     }
 
@@ -2297,10 +2278,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
     int_number      =   ADC_INT_NUMBER1;
     trigger         =   ADC_TRIGGER_SW_ONLY;
     sample_window   =   ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
     float voltage;
 
-    // volatile ADC_PPBNumber ppb_number;
     volatile uint16_t ppb_number;
 
     util_ADC_init(
@@ -2320,7 +2300,6 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
     ADC_enableInterrupt(base, int_number);
     ADC_setInterruptPulseMode(base, ADC_PULSE_END_OF_CONV);
     ADC_setInterruptSource(base, int_number, soc_number);
-    // ADC_enableContinuousMode(base, int_number);
     ADC_disableContinuousMode(base, int_number);
 
 
@@ -2329,190 +2308,191 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
 
         if(enableLog) DebugP_log("iteration : %d\r\n", iterations);
 
-        // for(ppb_number = ADC_PPB_NUMBER1;
-        //     ppb_number <=ADC_PPB_NUMBER4;
-        //     ppb_number++)
-        for(ppb_number = 0;
-            ppb_number <=3;
+        for(ppb_number = ADC_PPB_NUMBER1;
+            ppb_number <=ADC_PPB_NUMBER4;
             ppb_number++)
-            {   int adc_result;
-                int ppb_result;
-                if(enableLog) DebugP_log("ppb_number : %d\t, base : %x\t errors so far : %d\r\n",ppb_number, base, errors);
-                ADC_setupPPB(base, ppb_number, soc_number);
-                ADC_enablePPBEvent(base, ppb_number, ADC_EVT_TRIPHI);
-                ADC_setPPBTripLimits(base, ppb_number, 3000, 1000);
-                ADC_setPPBReferenceOffset(base, ppb_number, 0);
-
-                ADC_clearPPBEventStatus(base, ppb_number, 0x7);
-                /* setting the voltage to be between trip limits*/
-                if(manual_testing)
-                {
-                    DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
-                }
-
-                voltage = 1.500;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                tester_command(test_command);
-
-                ADC_forceSOC(base, soc_number);
-                while(ADC_getInterruptStatus(base, int_number) != 1);
-                ADC_clearInterruptStatus(base, int_number);
-                adc_result = util_ADC_check_result(base, soc_number);
-                ppb_result = ADC_readPPBResult(result_base, ppb_number);
-                if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
-                if(((ADC_getPPBEventStatus(base, ppb_number)) & (0x1)) == 1)
-                {
-                    /* error : flag set*/
-                    errors++;
-                    DebugP_log("1 flag set for ppb_number : %d\r\n",ppb_number);
-                    ADC_clearPPBEventStatus(base, ppb_number, 0x7);
-
-                }
-
-                if(manual_testing)
-                {
-                    DebugP_log("Please input voltage above trip hi value 2.34V");
-                }
-
-                voltage = 3.1000;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                tester_command(test_command);
-
-
-                ADC_forceSOC(base, soc_number);
-                while(ADC_getInterruptStatus(base, int_number) != 1);
-                ADC_clearInterruptStatus(base, int_number);
-                adc_result = ADC_readResult(result_base, soc_number);
-                ppb_result = ADC_readPPBResult(result_base,ppb_number);
-                if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
-                if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
-                {
-                    /* error : flag not set*/
-                    errors++;
-                    DebugP_log("2 flag not set for ppb_number : %d\r\n",ppb_number);
-                }
-
-                /* setting the voltage to be between trip limits*/
-                if(manual_testing)
-                {
-                    DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
-                }
-
-                voltage = 1.500;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                tester_command(test_command);
-
-
-                ADC_forceSOC(base, soc_number);
-                while(ADC_getInterruptStatus(base, int_number) != 1);
-                ADC_clearInterruptStatus(base, int_number);
-                adc_result = util_ADC_check_result(base, soc_number);
-                ppb_result = ADC_readPPBResult(result_base,ppb_number);
-                if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
-                if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
-                {
-                    /* error : flag not set*/
-                    errors++;
-                    DebugP_log("3 flag not set for ppb_number : %d\r\n",ppb_number);
-                }
-
-                ADC_clearPPBEventStatus(base, ppb_number, ADC_EVT_TRIPHI);
-
-                /* enabling PPB CBC evet clear */
-                ADC_enablePPBEventCBCClear(base, ppb_number);
-
-                /* setting the voltage to be between trip limits*/
-                if(manual_testing)
-                {
-                    DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
-                }
-
-                voltage = 1.500;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                tester_command(test_command);
-
-
-                ADC_forceSOC(base, soc_number);
-                while(ADC_getInterruptStatus(base, int_number) != 1);
-                ADC_clearInterruptStatus(base, int_number);
-                adc_result = util_ADC_check_result(base, soc_number);
-                ppb_result = ADC_readPPBResult(result_base,ppb_number);
-                if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
-                if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) == 1)
-                {
-                    /* error : flag set*/
-                    errors++;
-                    DebugP_log("4 flag set for ppb_number : %d\r\n",ppb_number);
-                }
-
-                if(manual_testing)
-                {
-                    DebugP_log("Please input voltage above trip hi value 2.34V");
-                }
-                voltage = 3.1000;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                tester_command(test_command);
-
-
-                ADC_forceSOC(base, soc_number);
-                while(ADC_getInterruptStatus(base, int_number) != 1);
-                ADC_clearInterruptStatus(base, int_number);
-                adc_result = util_ADC_check_result(base, soc_number);
-                ppb_result = ADC_readPPBResult(result_base,ppb_number);
-                if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
-                if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
-                {
-                    /* error : flag not set*/
-                    errors++;
-                    DebugP_log("5 flag not set for ppb_number : %d\r\n",ppb_number);
-                }
-
-                /* setting the voltage to be between trip limits*/
-                if(manual_testing)
-                {
-                    DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
-                }
-
-
-                voltage = 1.500;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                tester_command(test_command);
-
-                ADC_forceSOC(base, soc_number);
-                while(ADC_getInterruptStatus(base, int_number) != 1);
-                ADC_clearInterruptStatus(base, int_number);
-                adc_result = util_ADC_check_result(base, soc_number);
-                ppb_result = ADC_readPPBResult(result_base,ppb_number);
-                if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
-                if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) == 1)
-                {
-                    /* error : flag set*/
-                    errors++;
-                    DebugP_log("6 flag set for ppb_number : %d\r\n",ppb_number);
-                    ADC_clearPPBEventStatus(base, ppb_number, 0x7);
-                }
-                ADC_disablePPBEventCBCClear(base, ppb_number);
-                ADC_clearPPBEventStatus(base, ppb_number, ADC_EVT_TRIPHI);
-                ADC_disablePPBEvent(base, ppb_number, ADC_EVT_TRIPHI);
+        {
+            int adc_result;
+            int ppb_result;
+            if(enableLog)
+            {
+                DebugP_log("ppb_number : %d\t, base : %x\t errors so far : %d\r\n",ppb_number, base, errors);
             }
+
+            ADC_setupPPB(base, ppb_number, soc_number);
+            ADC_enablePPBEvent(base, ppb_number, ADC_EVT_TRIPHI);
+            ADC_setPPBTripLimits(base, ppb_number, 3000, 1000);
+            ADC_setPPBReferenceOffset(base, ppb_number, 0);
+
+            ADC_clearPPBEventStatus(base, ppb_number, 0x7);
+            /* setting the voltage to be between trip limits*/
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
+            }
+
+            voltage = 1.500;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+            ADC_forceSOC(base, soc_number);
+            while(ADC_getInterruptStatus(base, int_number) != 1);
+            ADC_clearInterruptStatus(base, int_number);
+            adc_result = util_ADC_check_result(base, soc_number);
+            ppb_result = ADC_readPPBResult(result_base, ppb_number);
+            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+
+            if(((ADC_getPPBEventStatus(base, ppb_number)) & (0x1)) == 1)
+            {
+                /* error : flag set*/
+                errors++;
+                DebugP_log("1 flag set for ppb_number : %d\r\n",ppb_number);
+                ADC_clearPPBEventStatus(base, ppb_number, 0x7);
+            }
+
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage above trip hi value 2.34V");
+            }
+
+            voltage = 3.1000;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+
+            ADC_forceSOC(base, soc_number);
+            while(ADC_getInterruptStatus(base, int_number) != 1);
+            ADC_clearInterruptStatus(base, int_number);
+            adc_result = ADC_readResult(result_base, soc_number);
+            ppb_result = ADC_readPPBResult(result_base,ppb_number);
+            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+
+            if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
+            {
+                /* error : flag not set*/
+                errors++;
+                DebugP_log("2 flag not set for ppb_number : %d\r\n",ppb_number);
+            }
+
+            /* setting the voltage to be between trip limits*/
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
+            }
+
+            voltage = 1.500;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+
+            ADC_forceSOC(base, soc_number);
+            while(ADC_getInterruptStatus(base, int_number) != 1);
+            ADC_clearInterruptStatus(base, int_number);
+            adc_result = util_ADC_check_result(base, soc_number);
+            ppb_result = ADC_readPPBResult(result_base,ppb_number);
+            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+
+            if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
+            {
+                /* error : flag not set*/
+                errors++;
+                DebugP_log("3 flag not set for ppb_number : %d\r\n",ppb_number);
+            }
+
+            ADC_clearPPBEventStatus(base, ppb_number, ADC_EVT_TRIPHI);
+
+            /* enabling PPB CBC evet clear */
+            ADC_enablePPBEventCBCClear(base, ppb_number);
+
+            /* setting the voltage to be between trip limits*/
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
+            }
+
+            voltage = 1.500;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+
+            ADC_forceSOC(base, soc_number);
+            while(ADC_getInterruptStatus(base, int_number) != 1);
+            ADC_clearInterruptStatus(base, int_number);
+            adc_result = util_ADC_check_result(base, soc_number);
+            ppb_result = ADC_readPPBResult(result_base,ppb_number);
+            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+
+            if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) == 1)
+            {
+                /* error : flag set*/
+                errors++;
+                DebugP_log("4 flag set for ppb_number : %d\r\n",ppb_number);
+            }
+
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage above trip hi value 2.34V");
+            }
+
+            voltage = 3.1000;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+            ADC_forceSOC(base, soc_number);
+            while(ADC_getInterruptStatus(base, int_number) != 1);
+            ADC_clearInterruptStatus(base, int_number);
+            adc_result = util_ADC_check_result(base, soc_number);
+            ppb_result = ADC_readPPBResult(result_base,ppb_number);
+            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+
+            if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
+            {
+                /* error : flag not set*/
+                errors++;
+                DebugP_log("5 flag not set for ppb_number : %d\r\n",ppb_number);
+            }
+
+            /* setting the voltage to be between trip limits*/
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage between trip values 2.34V and 0.78V");
+            }
+
+
+            voltage = 1.500;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+            ADC_forceSOC(base, soc_number);
+            while(ADC_getInterruptStatus(base, int_number) != 1);
+            ADC_clearInterruptStatus(base, int_number);
+            adc_result = util_ADC_check_result(base, soc_number);
+            ppb_result = ADC_readPPBResult(result_base,ppb_number);
+            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+
+            if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) == 1)
+            {
+                /* error : flag set*/
+                errors++;
+                DebugP_log("6 flag set for ppb_number : %d\r\n",ppb_number);
+                ADC_clearPPBEventStatus(base, ppb_number, 0x7);
+            }
+            ADC_disablePPBEventCBCClear(base, ppb_number);
+            ADC_clearPPBEventStatus(base, ppb_number, ADC_EVT_TRIPHI);
+            ADC_disablePPBEvent(base, ppb_number, ADC_EVT_TRIPHI);
+        }
     }
     util_ADC_deinit(base);
 
@@ -2552,7 +2532,7 @@ int32_t AM263x_ADC_BTR_010(uint32_t base)
     channel         =   ADC_CH_ADCIN2;
     trigger         =   ADC_TRIGGER_SW_ONLY;
     sample_window   =   ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window   =   (sample_window > 17)? sample_window : 17;
+    sample_window   =   (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     util_ADC_init(
         base,
@@ -2563,63 +2543,63 @@ int32_t AM263x_ADC_BTR_010(uint32_t base)
     for (int_number = ADC_INT_NUMBER1;
          int_number <= ADC_INT_NUMBER4;
          int_number++)
-         {
-            /*for each interrupt checking the interrupt overflow status*/
+    {
+        /*for each interrupt checking the interrupt overflow status*/
 
-            util_ADC_setup_and_enable_trigger_source(
-                base,
-                soc_number,
-                trigger,
-                int_number,
-                channel,
-                sample_window);
-            /* clearing the interrupt status and overflow status*/
-            ADC_clearInterruptStatus(base, int_number);
-            ADC_clearInterruptOverflowStatus(base, int_number);
+        util_ADC_setup_and_enable_trigger_source(
+            base,
+            soc_number,
+            trigger,
+            int_number,
+            channel,
+            sample_window);
+        /* clearing the interrupt status and overflow status*/
+        ADC_clearInterruptStatus(base, int_number);
+        ADC_clearInterruptOverflowStatus(base, int_number);
 
-            /* trigger ADC conversion*/
-            ADC_forceSOC(base, soc_number);
-            int wait = util_ADC_wait_for_adc_interrupt(base, int_number);
+        /* trigger ADC conversion*/
+        ADC_forceSOC(base, soc_number);
+        int wait = util_ADC_wait_for_adc_interrupt(base, int_number);
 
-            if(wait == 0 )
-            {
-                /* wait failed*/
-                errors ++;
-            }
-            wait = 0;
-            /* */
-            if(ADC_getInterruptOverflowStatus(base, int_number) == 1)errors++;
-
-            /* Not clearing the interrupt. forcing trigger again. this should
-             * set the interrupt overflow flag */
-            ADC_forceSOC(base, soc_number);
-            wait = util_ADC_wait_for_adc_interrupt(base, int_number);
-
-            if(wait == 0 )
-            {
-                /* wait failed*/
-                errors ++;
-            }
-            wait = 0;
-            /* Interrupt Overflow Occurred. now clear it*/
-            ADC_clearInterruptOverflowStatus(base, int_number);
-            if(ADC_getInterruptOverflowStatus(base, int_number) == 1) errors++;
-
-            /* diabling interrupt source*/
-            ADC_disableInterrupt(base, int_number);
-         }
-        util_ADC_deinit(base);
-
-        if(errors > 0)
+        if(wait == 0 )
         {
-            /* fail criteria*/
-            return 1;
+            /* wait failed*/
+            errors ++;
         }
-        else
+        wait = 0;
+        /* */
+        if(ADC_getInterruptOverflowStatus(base, int_number) == 1)errors++;
+
+        /* Not clearing the interrupt. forcing trigger again. this should
+            * set the interrupt overflow flag */
+        ADC_forceSOC(base, soc_number);
+        wait = util_ADC_wait_for_adc_interrupt(base, int_number);
+
+        if(wait == 0 )
         {
-            /* pass criteria*/
-            return 0;
+            /* wait failed*/
+            errors ++;
         }
+        wait = 0;
+        /* Interrupt Overflow Occurred. now clear it*/
+        ADC_clearInterruptOverflowStatus(base, int_number);
+        if(ADC_getInterruptOverflowStatus(base, int_number) == 1) errors++;
+
+        /* diabling interrupt source*/
+        ADC_disableInterrupt(base, int_number);
+    }
+    util_ADC_deinit(base);
+
+    if(errors > 0)
+    {
+        /* fail criteria*/
+        return 1;
+    }
+    else
+    {
+        /* pass criteria*/
+        return 0;
+    }
 }
 
 /*
@@ -2649,7 +2629,7 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
     uint32_t        result_base = base - 0x001c0000;
     int             adc_instance = (base & 0x0000f000) >> 12;
     uint32_t        sample_window   = ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
     float voltage;
 
@@ -2660,10 +2640,7 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
         {
             continue;
         }
-        // if(enableLog)
-        // {
-        //     DebugP_log("adc base 0x%x\t channel : %d\r\n", base, channel);
-        // }
+
         util_ADC_setup_and_enable_trigger_source(
                     base,
                     soc_number,
@@ -2676,101 +2653,98 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
         for(ppb_number  = ADC_PPB_NUMBER1;
             ppb_number <= ADC_PPB_NUMBER4;
             ppb_number++)
+        {
+            if(enableLog)
             {
-                if(enableLog)
-                {
-                    DebugP_log("---ppb_number : %d---\r\n",ppb_number);
-                }
-                ADC_setupPPB(base, ppb_number, soc_number);
-                int16_t offset;
-
-                    DebugP_log("Please input constant voltage say, 1.65 V ");
-
-                    voltage = 1.6500;
-                    sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                    tester_command(test_command);
-                    sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                    tester_command(test_command);
-
-
-                for(offset = -512; offset <= 511; offset++)
-                {
-                    uint16_t result_without_cal_offset = 0;
-                    int16_t result_without_ref_offset = 0;
-                    uint16_t result_with_cal_offset = 0;
-                    int16_t result_with_ref_offset = 0;
-
-
-                    for(int twos_complement_flag = 0;
-                        twos_complement_flag <= 1;
-                        twos_complement_flag++)
-                        {
-                            if(twos_complement_flag == 0)
-                            {
-                                ADC_disablePPBTwosComplement(base, ppb_number);
-                            }
-                            else
-                            {
-                                ADC_enablePPBTwosComplement(base, ppb_number);
-                            }
-                            ADC_setPPBCalibrationOffset(base, ppb_number, 0);
-                            ADC_setPPBReferenceOffset(base, ppb_number, 0);
-
-                            ADC_forceSOC(base, soc_number);
-                            while(ADC_getInterruptStatus(base, int_number) != 1);
-                            ClockP_usleep(10);
-                            result_without_cal_offset = util_ADC_check_result(base, soc_number);
-                            result_without_ref_offset = ADC_readPPBResult(result_base, ppb_number);
-                            (void)result_without_ref_offset; /* Presently set but not used. Suppress warning */
-
-                            ADC_setPPBCalibrationOffset(base, ppb_number, offset);
-                            ADC_setPPBReferenceOffset(base, ppb_number, offset);
-
-                            ADC_forceSOC(base, soc_number);
-                            while(ADC_getInterruptStatus(base, int_number) != 1);
-                            ClockP_usleep(10);
-                            result_with_cal_offset = util_ADC_check_result(base, soc_number);
-                            result_with_ref_offset = ADC_readPPBResult(result_base, ppb_number);
-                            if((int16_t) result_with_cal_offset != (int16_t)(result_without_cal_offset - offset))
-                            {   if((result_with_cal_offset != 0) && (result_with_cal_offset != 0xffff))
-                                {
-                                    errors++;
-                                    DebugP_log("ERROR!! cal offset fail for offset %d\r\n",offset);
-                                }
-                            }
-                            if(twos_complement_flag == 0)
-                            {
-                                if((int16_t)result_with_ref_offset != (int16_t) (result_with_cal_offset - offset))
-                                {
-                                    errors++;
-                                    DebugP_log("ERROR!! ref offset fail for offset without twos Complement %d\r\n",offset);
-                                }
-                            }
-                            else
-                            {
-                                if((int16_t)result_with_ref_offset != (int16_t) (offset - result_with_cal_offset))
-                                {
-                                    errors++;
-                                    DebugP_log("ERROR!! ref offset fail for offset with twos Complement %d\r\n",offset);
-
-                                }
-                            }
-                        }
-
-
-                }
-
+                DebugP_log("---ppb_number : %d---\r\n",ppb_number);
             }
+            ADC_setupPPB(base, ppb_number, soc_number);
+            int16_t offset;
+
+            voltage = 1.6500;
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            tester_command(test_command);
+
+            for(offset = -512; offset <= 511; offset++)
+            {
+                uint16_t result_without_cal_offset = 0;
+                int16_t result_without_ref_offset = 0;
+                uint16_t result_with_cal_offset = 0;
+                int16_t result_with_ref_offset = 0;
+
+
+                for(int twos_complement_flag = 0;
+                    twos_complement_flag <= 1;
+                    twos_complement_flag++)
+                {
+                    if(twos_complement_flag == 0)
+                    {
+                        ADC_disablePPBTwosComplement(base, ppb_number);
+                    }
+                    else
+                    {
+                        ADC_enablePPBTwosComplement(base, ppb_number);
+                    }
+                    ADC_setPPBCalibrationOffset(base, ppb_number, 0);
+                    ADC_setPPBReferenceOffset(base, ppb_number, 0);
+
+                    ADC_forceSOC(base, soc_number);
+                    while(ADC_getInterruptStatus(base, int_number) != 1);
+                    ClockP_usleep(10);
+                    result_without_cal_offset = util_ADC_check_result(base, soc_number);
+                    result_without_ref_offset = ADC_readPPBResult(result_base, ppb_number);
+                    (void)result_without_ref_offset; /* Presently set but not used. Suppress warning */
+
+                    ADC_setPPBCalibrationOffset(base, ppb_number, offset);
+                    ADC_setPPBReferenceOffset(base, ppb_number, offset);
+
+                    ADC_forceSOC(base, soc_number);
+                    while(ADC_getInterruptStatus(base, int_number) != 1);
+                    ClockP_usleep(10);
+                    result_with_cal_offset = util_ADC_check_result(base, soc_number);
+                    result_with_ref_offset = ADC_readPPBResult(result_base, ppb_number);
+
+                    if((int16_t) result_with_cal_offset != (int16_t)(result_without_cal_offset - offset))
+                    {   if((result_with_cal_offset != 0) && (result_with_cal_offset != 0xffff))
+                        {
+                            errors++;
+                            DebugP_log("ERROR!! cal offset fail for offset %d\r\n",offset);
+                        }
+                    }
+                    if(twos_complement_flag == 0)
+                    {
+                        if((int16_t)result_with_ref_offset != (int16_t) (result_with_cal_offset - offset))
+                        {
+                            errors++;
+                            DebugP_log("ERROR!! ref offset fail for offset without twos Complement %d\r\n",offset);
+                        }
+                    }
+                    else
+                    {
+                        if((int16_t)result_with_ref_offset != (int16_t) (offset - result_with_cal_offset))
+                        {
+                            errors++;
+                            DebugP_log("ERROR!! ref offset fail for offset with twos Complement %d\r\n",offset);
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     util_ADC_deinit(base);
 
     if(errors > 0)
     {
+        /* fail criteria */
         return 1;
     }
     else
     {
+        /* pass criteria */
         return 0;
     }
 }
@@ -2799,12 +2773,12 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
 
 
     uint32_t        sample_window   =   ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);
-    sample_window = (sample_window > 17)? sample_window : 17;
+    sample_window = (sample_window > MIN_SAMPLE_WINDOW)? sample_window : MIN_SAMPLE_WINDOW;
 
 
-    if(sample_window < 16)
+    if(sample_window < MIN_SAMPLE_WINDOW)
     {
-        sample_window = 16;
+        sample_window = MIN_SAMPLE_WINDOW;
     }
     /* setting up all the SOC in roundrobin mode. enabling ADC instance*/
     util_ADC_init(
@@ -2823,27 +2797,27 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
     for(soc_number = ADC_SOC_NUMBER0;
         soc_number <=ADC_SOC_NUMBER15;
         soc_number++)
-        {
-            ADC_setupSOC(
-                base,
-                soc_number,
-                trigger,
-                channel,
-                sample_window);
+    {
+        ADC_setupSOC(
+            base,
+            soc_number,
+            trigger,
+            channel,
+            sample_window);
 
-            /* setting soc_0, soc_5, soc_10, soc_15 to be configured
-             * for PPBs  1 to 4 respectively */
-            if((soc_number%5) == 0)
-            {
-                ADC_setupPPB(base, ppb_number, soc_number);
-                ppb_number++;
-            }
-            if(soc_number == ADC_SOC_NUMBER15)
-            {
-                /* last soc to trigger interrupt*/
-                ADC_setInterruptSource(base, int_number, soc_number);
-            }
+        /* setting soc_0, soc_5, soc_10, soc_15 to be configured
+            * for PPBs  1 to 4 respectively */
+        if((soc_number%5) == 0)
+        {
+            ADC_setupPPB(base, ppb_number, soc_number);
+            ppb_number++;
         }
+        if(soc_number == ADC_SOC_NUMBER15)
+        {
+            /* last soc to trigger interrupt*/
+            ADC_setInterruptSource(base, int_number, soc_number);
+        }
+    }
     /* triggers all the SOCs*/
        GPIO_setDirMode(INPUT_PIN_BASE_ADDR,
                         INPUT_PIN_PIN,
@@ -2854,16 +2828,6 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
         DebugP_log(" trigger for all SOCs is selected as INPUTxbar[5]\r\n");
     }
     util_ADC_fire_soc_trigger(base, soc_number, trigger);
-        /* GPIO_setDirMode(OUTPUT_PIN_BASE_ADDR,
-                        OUTPUT_PIN_PIN,
-                        OUTPUT_PIN_DIR);
-
-        GPIO_pinWriteHigh(OUTPUT_PIN_BASE_ADDR, OUTPUT_PIN_PIN); */
-
-        /* Adding a delay*/
-        // ClockP_usleep(1000);
-
-        // GPIO_pinWriteLow(OUTPUT_PIN_BASE_ADDR, OUTPUT_PIN_PIN);
 
     /* wait for last SOC to complete conversion and trigger ADC_interrupt*/
     while(ADC_getInterruptStatus(base, int_number) != 1);
@@ -2882,10 +2846,10 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
        (ppb_3_delay_stamp <= ppb_2_delay_stamp) ||
        (ppb_2_delay_stamp <= ppb_1_delay_stamp) ||
        (ppb_1_delay_stamp)>  2)
-       {
+    {
         errors++;
 
-       }
+    }
     ADC_disableInterrupt(base, int_number);
 
     util_ADC_deinit(base);
@@ -2900,7 +2864,6 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
         /* pass criteria*/
         return 0;
     }
-
 }
 
 /*
@@ -2915,7 +2878,7 @@ int32_t AM263x_ADC_BTR_013(uint32_t base)
     }
     int errors = 0;
     ADC_SOCNumber   soc_number;
-    uint32_t        sample_window   =   17;
+    uint32_t        sample_window   =   MIN_SAMPLE_WINDOW;
 
     /* INPUTXbar to be trigger for all SOCs of all ADCs*/
     ADC_Trigger     trigger    = ADC_TRIGGER_INPUT_XBAR_OUT5;
@@ -2924,53 +2887,42 @@ int32_t AM263x_ADC_BTR_013(uint32_t base)
 
     uint32_t        base0 = base;
     uint32_t        adc_offset = 0;
+
     for(adc_offset = 0x0000;
         adc_offset <= 0x4000;
         adc_offset = adc_offset + 0x1000)
-        {
-            base = adc_offset + base0;
-            util_ADC_init(
-                base,
-                ADC_CLK_DIV_4_0,
-                ADC_MODE_SINGLE_ENDED,
-                ADC_PRI_ALL_ROUND_ROBIN);
+    {
+        base = adc_offset + base0;
+        util_ADC_init(
+            base,
+            ADC_CLK_DIV_4_0,
+            ADC_MODE_SINGLE_ENDED,
+            ADC_PRI_ALL_ROUND_ROBIN);
 
-            ADC_enableInterrupt(base,int_number);
-            ADC_clearInterruptStatus(base, int_number);
-            for(soc_number = ADC_SOC_NUMBER0;
-                soc_number <= ADC_SOC_NUMBER15;
-                soc_number++ )
-                {
-                    ADC_setupSOC(
-                        base,
-                        soc_number,
-                        trigger,
-                        channel,
-                        sample_window);
-                    if(soc_number == 15)
-                    {
-                        ADC_setInterruptSource(base, int_number, soc_number);
-                    }
-                }
-            sample_window = sample_window + 3;
-            /* sample_windows for all ADCs will be 16, 19, 22, 25, 28 */
+        ADC_enableInterrupt(base,int_number);
+        ADC_clearInterruptStatus(base, int_number);
+        for(soc_number = ADC_SOC_NUMBER0;
+            soc_number <= ADC_SOC_NUMBER15;
+            soc_number++ )
+        {
+            ADC_setupSOC(
+                base,
+                soc_number,
+                trigger,
+                channel,
+                sample_window);
+            if(soc_number == 15)
+            {
+                ADC_setInterruptSource(base, int_number, soc_number);
+            }
         }
+        /* sample_windows for all ADCs will be 16, 19, 22, 25, 28 */
+        sample_window = sample_window + 3;
+    }
 
     /* trigger through the inputxbar :: GPIO Loopback*/
-    GPIO_setDirMode(INPUT_PIN_BASE_ADDR,
-                    INPUT_PIN_PIN,
-                    INPUT_PIN_DIR);
-
-    GPIO_setDirMode(OUTPUT_PIN_BASE_ADDR,
-                    OUTPUT_PIN_PIN,
-                    OUTPUT_PIN_DIR);
-
-    GPIO_pinWriteHigh(OUTPUT_PIN_BASE_ADDR, OUTPUT_PIN_PIN);
-
-    /* Adding a delay*/
-    ClockP_usleep(1000);
-
-    GPIO_pinWriteLow(OUTPUT_PIN_BASE_ADDR, OUTPUT_PIN_PIN);
+    sprintf(test_command,"%s","trigger on GPIO 24 for InputXbar[5] to trigger ADC");
+    tester_command(test_command);
     /* All SOCs of all ADCs are triggered.*/
 
     /* SOC15 of ADC4 should be the last one to be done
@@ -2995,10 +2947,10 @@ int32_t AM263x_ADC_BTR_013(uint32_t base)
     for(adc_offset = 0x0000;
         adc_offset <= 0x4000;
         adc_offset = adc_offset + 0x1000)
-        {
-            ADC_disableInterrupt(base,int_number);
-            util_ADC_deinit(base);
-        }
+    {
+        ADC_disableInterrupt(base,int_number);
+        util_ADC_deinit(base);
+    }
 
     if(errors > 0)
     {
@@ -3021,117 +2973,87 @@ int32_t AM263_ADC_ITR_0001(uint32_t base)
         DebugP_log("\r\n\r\n------------------------------ base : %x -------------------------------------\r\n\r\n", base);
         DebugP_log("Test : Back to back conversions\r\n\r\n");
     }
-    volatile ADC_SOCNumber    first_in_burst_mode, last_in_burst_mode;
-    ADC_PriorityMode priority;
-    // ADC_Channel      channel;
     int              errors = 0;
-    int              sample_window = 17;
-    // int              adc_instance = (base & 0x0000f000) >> 12;
+    int              sample_window = MIN_SAMPLE_WINDOW;
+    ADC_PriorityMode priority;
+    volatile ADC_SOCNumber    first_in_burst_mode, last_in_burst_mode;
     volatile uint16_t         burst_size;
-    // volatile uint16_t* rrPointer;
-
-    // rrPointer = (uint16_t *)(base + CSL_ADC_ADCSOCPRICTL);
-    /* the test expects non zero voltages on channels*/
 
     for(priority = ADC_PRI_ALL_ROUND_ROBIN;
         priority  <= ADC_PRI_ALL_HIPRI;
         priority++)
+    {
+
+        volatile uint16_t max_burst_size = ADC_PRI_ALL_HIPRI - priority;
+
+        for(burst_size = 1; burst_size <= max_burst_size; burst_size++)
         {
             util_ADC_deinit(base);
+            util_ADC_init(
+            base,
+            ADC_CLK_DIV_4_0,
+            ADC_MODE_SINGLE_ENDED,
+            priority);
 
-           volatile uint16_t max_burst_size = ADC_PRI_ALL_HIPRI - priority;
+            ADC_setSOCPriority(base, priority);
 
-            // for(int channel_iter = 0; channel_iter < MAX_CHANNEL_COUNT; channel_iter++)
-            // {
-                // channel = ADC_channels_list[adc_instance][channel_iter];
-                // if(channel == NO_CHANNEL)
-                // {
-                    // continue;
-                // }
-                for(burst_size = 1; burst_size <= max_burst_size; burst_size++)
+            ADC_enableInterrupt(base, ADC_INT_NUMBER1);
+
+            ADC_disableContinuousMode(base, ADC_INT_NUMBER1);
+
+            ADC_setBurstModeConfig(base, ADC_TRIGGER_INPUT_XBAR_OUT5, burst_size);
+            ADC_enableBurstMode(base);
+
+            first_in_burst_mode = (ADC_SOCNumber) priority;
+            last_in_burst_mode = first_in_burst_mode + burst_size - 1 ;
+
+            /* enabling and setting up interrupt for the last soc
+                in the high priority */
+            ADC_setInterruptSource(
+                base,
+                ADC_INT_NUMBER1,
+                last_in_burst_mode);
+
+
+            for (ADC_SOCNumber soc_number = first_in_burst_mode; soc_number <= last_in_burst_mode; soc_number++)
+            {
+                ADC_setupSOC(base,
+                            soc_number,
+                            ADC_TRIGGER_SW_ONLY,
+                            ADC_CH_ADCIN0,
+                            sample_window);
+            }
+
+            ADC_clearInterruptStatus(base,ADC_INT_NUMBER1);
+
+            util_ADC_fire_soc_trigger(base, first_in_burst_mode, ADC_TRIGGER_INPUT_XBAR_OUT5);
+
+            /*triggering and waiting for the conversions to occur*/
+
+            int wait_success = util_ADC_wait_for_adc_interrupt(base, ADC_INT_NUMBER1);
+            if(wait_success == false)
+            {
+                DebugP_log("ERROR : fail for %x base and %d first, %d last\r\n",base,first_in_burst_mode, last_in_burst_mode);
+                errors++;
+            }
+
+            if(enableLog)
+            {
+                for(int iter = first_in_burst_mode; iter<= last_in_burst_mode; iter++)
                 {
-                    // DebugP_log("Before writing to PRICTL expected RRpointer is x.\tRRpointer : %d\r\n", (*rrPointer & 0x03D0) >> 5);
-
-                    ADC_setSOCPriority(base, priority);
-                    // DebugP_log("After writing to PRICTL expected RRpointer is 16.\tRRpointer : %d\r\n", (*rrPointer & 0x03D0) >> 5);
-
-                    util_ADC_deinit(base);
-                    // DebugP_log("After ADC reset expected RRpointer is 16.\tRRpointer : %d\r\n", (*rrPointer & 0x03D0) >> 5);
-
-                    util_ADC_init(
-                    base,
-                    ADC_CLK_DIV_4_0,
-                    ADC_MODE_SINGLE_ENDED,
-                    priority);
-
-                    ADC_enableInterrupt(base, ADC_INT_NUMBER1);
-
-                    ADC_disableContinuousMode(base, ADC_INT_NUMBER1);
-
-                    ADC_setBurstModeConfig(base, ADC_TRIGGER_INPUT_XBAR_OUT5, burst_size);
-                    ADC_enableBurstMode(base);
-
-                    first_in_burst_mode = (ADC_SOCNumber) priority;
-                    last_in_burst_mode = first_in_burst_mode + burst_size - 1 ;
-
-                    /* enabling and setting up interrupt for the last soc
-                       in the high priority */
-                    ADC_setInterruptSource(
-                        base,
-                        ADC_INT_NUMBER1,
-                        last_in_burst_mode);
-
-
-                    for (ADC_SOCNumber soc_number = first_in_burst_mode; soc_number <= last_in_burst_mode; soc_number++)
-                    {
-                        ADC_setupSOC(base,
-                                 soc_number,
-                                 ADC_TRIGGER_SW_ONLY,
-                                //  channel,
-                                 ADC_CH_ADCIN0,
-                                 sample_window);
-                    }
-
-                    ADC_clearInterruptStatus(base,ADC_INT_NUMBER1);
-
-                    util_ADC_fire_soc_trigger(base, first_in_burst_mode, ADC_TRIGGER_INPUT_XBAR_OUT5);
-
-                    /*triggering and waiting for the conversions to occur*/
-                    // ClockP_sleep(1);
-
-                    int wait_success = util_ADC_wait_for_adc_interrupt(base, ADC_INT_NUMBER1);
-                    if(wait_success == false)
-                    {
-                        errors++;
-                    }
-
-                    // wait_success = util_ADC_wait_for_adc_interrupt(base, ADC_INT_NUMBER2);
-                    // if(wait_success == true)
-                    // {
-                    //     DebugP_log("\t\t\t\t\t\t\t\teoc 15 occureed?\r\n");
-                    // }
-                    if(enableLog)
-                    {
-                        // DebugP_log("ADC : %x\t conversion is expected to start from : %d \tRR position : %d\tBurst size : %d\r\n", base, first_in_burst_mode, (*rrPointer & 0x03D0) >> 5, burst_size);
-                        for(int iter = first_in_burst_mode; iter<= last_in_burst_mode; iter++)
-                        {
-                            uint16_t result = util_ADC_check_result(base, iter);
-                            DebugP_log("\t\tSOC NUMBER : %d\tresult : %d\r\n", iter, result);
-                        }
-                        DebugP_log("\r\n");
-                    }
-                    ADC_disableBurstMode(base);
-                    ADC_disableInterrupt(base,ADC_INT_NUMBER1);
-                    ADC_disableInterrupt(base,ADC_INT_NUMBER2);
-
+                    uint16_t result = util_ADC_check_result(base, iter);
+                    DebugP_log("\t\tSOC NUMBER : %d\tresult : %d\r\n", iter, result);
                 }
-
-
-            // }
-
+                DebugP_log("\r\n");
+            }
             ADC_disableBurstMode(base);
-            util_ADC_deinit(base);
+            ADC_disableInterrupt(base,ADC_INT_NUMBER1);
+            ADC_disableInterrupt(base,ADC_INT_NUMBER2);
         }
+
+        ADC_disableBurstMode(base);
+        util_ADC_deinit(base);
+    }
 
     if(errors > 0)
     {
@@ -3164,7 +3086,7 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
     triphi_value    = 2112;
     triplo_value    = 0;
     float voltage;
-    uint16_t evtflg = ADC_EVT_TRIPHI;    //trip high event
+    uint16_t evtflg = ADC_EVT_TRIPHI;
 
     util_ADC_init(
         base,
@@ -3199,110 +3121,107 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
     for(ppb_number = ADC_PPB_NUMBER1;
         ppb_number <=ADC_PPB_NUMBER4;
         ppb_number++)
+    {
+        if(enableLog)
         {
-            if(enableLog)
+            DebugP_log("adc base 0x%x\r ppb_number : %d\r\n",base, ppb_number);
+        }
+        for(int channel_iter = 0; channel_iter < MAX_CHANNEL_COUNT; channel_iter++)
+        {
+            channel = ADC_channels_list[adc_instance][channel_iter];
+            if(channel == NO_CHANNEL)
             {
-                DebugP_log("adc base 0x%x\r ppb_number : %d\r\n",base, ppb_number);
+                continue;
             }
-            for(int channel_iter = 0; channel_iter < MAX_CHANNEL_COUNT; channel_iter++)
+            if(enableLog) DebugP_log("---channel  : %d---\r\n",channel);
+
+            ADC_setupSOC(base, ADC_SOC_NUMBER0, ADC_TRIGGER_SW_ONLY,channel, 16);
+
+
+            ADC_enableInterrupt(base, ADC_INT_NUMBER1);
+            ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
+            ADC_setInterruptSource(base, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
+
+            ADC_setupPPB(base, ppb_number, ADC_SOC_NUMBER0);
+
+            /* for each ppb_numbers, assign trip functionality */
+            ADC_setPPBTripLimits(base, ppb_number, triphi_value, triplo_value);
+            ADC_enablePPBEvent(base, ppb_number, evtflg);
+            ADC_clearPPBEventStatus(base, ppb_number,evtflg);
+
+            /* get adc input to be higher than the trip value and small wait*/
+            if(manual_testing)
+            {
+                DebugP_log("Please input voltage higher than trip hi value 1.65V\r\n");
+                wait_for_user_uart_input();
+            }
+            else
+            {
+                voltage = 3.000;
+                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+                tester_command(test_command);
+                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+                tester_command(test_command);
+            }
+
+            ADC_forceSOC(base, ADC_SOC_NUMBER0);
+            while(false == ADC_getInterruptStatus(base, ADC_INT_NUMBER1));
+            ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
+
+            if( (SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) != 1)
+                ||
+                ((ADC_getPPBEventStatus(base, ppb_number) & evtflg) != evtflg))
                 {
-                    channel = ADC_channels_list[adc_instance][channel_iter];
-                    if(channel == NO_CHANNEL)
+                    errors++;
+                    if(enableLog)
                     {
-                        continue;
-                    }
-                    if(enableLog) DebugP_log("---channel  : %d---\r\n",channel);
-
-                    ADC_setupSOC(base, ADC_SOC_NUMBER0, ADC_TRIGGER_SW_ONLY,channel, 16);
-
-
-                    ADC_enableInterrupt(base, ADC_INT_NUMBER1);
-                    ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
-                    ADC_setInterruptSource(base, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
-
-                    ADC_setupPPB(base, ppb_number, ADC_SOC_NUMBER0);
-
-                    /* for each ppb_numbers, assign trip functionality */
-                    ADC_setPPBTripLimits(base, ppb_number, triphi_value, triplo_value);
-                    ADC_enablePPBEvent(base, ppb_number, evtflg);
-                    ADC_clearPPBEventStatus(base, ppb_number,evtflg);
-
-                    /* get adc input to be higher than the trip value and small wait*/
-                    // if(manual_testing)
-                    // {
-                        DebugP_log("Please input voltage higher than trip hi value 1.65V\r\n");
-                        // wait_for_user_uart_input();
-                    // }
-                    // else
-                    // {
-                        voltage = 3.000;
-                        sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                        tester_command(test_command);
-                        sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                        tester_command(test_command);
-                        // tester_command("gen pwm-dac voltage 03A 3.000V");
-                        // tester_command("gen pwm-dac voltage 03B 3.000V");
-                    // }
-                    ADC_forceSOC(base, ADC_SOC_NUMBER0);
-                    while(false == ADC_getInterruptStatus(base, ADC_INT_NUMBER1));
-                    ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
-
-                    if( (SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) != 1)
-                        ||
-                        ((ADC_getPPBEventStatus(base, ppb_number) & evtflg) != evtflg))
-                        {
-                            errors++;
-                            if(enableLog)
-                            {
-                                DebugP_log("Trip signal failed, ppbevtstats : %x.\r\n ppbresult : %x \t socresult : %x\r\n", (ADC_getPPBEventStatus(base, ppb_number) & evtflg) , ADC_readPPBResult((base - 0x001c0000),ppb_number), ADC_readResult((base - 0x001c0000), ADC_SOC_NUMBER0));
-                            }
-                        }
-
-                    ADC_clearPPBEventStatus(base, ppb_number, evtflg);
-
-                    if((SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) == 1))
-                        {
-                        errors++;
-                        if(enableLog)
-                        {
-                            DebugP_log("Trip signal is not cleared\r\n");
-                        }
-                        }
-                    ADC_disablePPBEvent(base, ppb_number, evtflg);
-
-                    // if(manual_testing)
-                    // {
-                        DebugP_log("the input voltage may be changed back to default\r\n");
-                    //     wait_for_user_uart_input();
-                    // }
-                    // else
-                    // {
-                        voltage = 1.000;
-                        sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
-                        tester_command(test_command);
-                        sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
-                        tester_command(test_command);
-                        // tester_command("gen pwm-dac voltage 03A 1.000V");
-                        // tester_command("gen pwm-dac voltage 03B 1.000V");
-                    // }
-
-                    /* There should not be any trip occuring now.*/
-                    ADC_forceSOC(base, ADC_SOC_NUMBER0);
-                    while(false == ADC_getInterruptStatus(base, ADC_INT_NUMBER1));
-                    ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
-
-                    if( (SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) == 1)
-                    ||
-                    ((ADC_getPPBEventStatus(base, ppb_number) & evtflg) == evtflg))
-                    {
-                        errors++;
-                        if(enableLog)
-                        {
-                            DebugP_log("ERROR : Trip signal occurred, ppbevtstats : %x.\r\n ppbresult : %x \t socresult : %x\r\n", (ADC_getPPBEventStatus(base, ppb_number) & evtflg) , ADC_readPPBResult((base - 0x001c0000),ppb_number), ADC_readResult((base - 0x001c0000), ADC_SOC_NUMBER0));
-                        }
+                        DebugP_log("Trip signal failed, ppbevtstats : %x.\r\n ppbresult : %x \t socresult : %x\r\n", (ADC_getPPBEventStatus(base, ppb_number) & evtflg) , ADC_readPPBResult((base - 0x001c0000),ppb_number), ADC_readResult((base - 0x001c0000), ADC_SOC_NUMBER0));
                     }
                 }
+
+            ADC_clearPPBEventStatus(base, ppb_number, evtflg);
+
+            if((SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) == 1))
+                {
+                errors++;
+                if(enableLog)
+                {
+                    DebugP_log("Trip signal is not cleared\r\n");
+                }
+                }
+            ADC_disablePPBEvent(base, ppb_number, evtflg);
+
+            if(manual_testing)
+            {
+                DebugP_log("the input voltage may be changed back to default\r\n");
+                wait_for_user_uart_input();
+            }
+            else
+            {
+                voltage = 1.000;
+                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+                tester_command(test_command);
+                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+                tester_command(test_command);
+            }
+
+            /* There should not be any trip occuring now.*/
+            ADC_forceSOC(base, ADC_SOC_NUMBER0);
+            while(false == ADC_getInterruptStatus(base, ADC_INT_NUMBER1));
+            ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
+
+            if( (SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) == 1)
+            ||
+            ((ADC_getPPBEventStatus(base, ppb_number) & evtflg) == evtflg))
+            {
+                errors++;
+                if(enableLog)
+                {
+                    DebugP_log("ERROR : Trip signal occurred, ppbevtstats : %x.\r\n ppbresult : %x \t socresult : %x\r\n", (ADC_getPPBEventStatus(base, ppb_number) & evtflg) , ADC_readPPBResult((base - 0x001c0000),ppb_number), ADC_readResult((base - 0x001c0000), ADC_SOC_NUMBER0));
+                }
+            }
         }
+    }
 
     disable_all_epwms();
     util_ADC_deinit(base);
@@ -3335,7 +3254,7 @@ int32_t AM263_ADC_ITR_0003(uint32_t base)
     ADC_SOCNumber   soc_number      = ADC_SOC_NUMBER0;
     ADC_Trigger     trigger         = ADC_TRIGGER_EPWM0_SOCA;
     ADC_Channel     channel         = ADC_CH_ADCIN0;
-    uint32_t        sample_window   = 17;
+    uint32_t        sample_window   = MIN_SAMPLE_WINDOW;
 
     uint32_t status = SemaphoreP_constructBinary(&gEpwmIsrSemObject, 0);
     DebugP_assert(SystemP_SUCCESS == status);
@@ -3404,19 +3323,20 @@ int32_t AM263_ADC_ITR_0003(uint32_t base)
 
     gAdc_ISR1_count     = 0;
     gEpwm_ISR2_count    = 0;
+    EPWM_clearEventTriggerInterruptFlag(CSL_CONTROLSS_G0_EPWM0_U_BASE);
 
     util_EPWM_start_counter(0); //starting epwm0 counter
 
-    // ClockP_sleep(1);
-    SemaphoreP_pend(&gEpwmIsrSemObject, SystemP_WAIT_FOREVER);
+    SemaphoreP_pend(&gEpwmIsrSemObject, 0);
+
     util_EPWM_stop_counter(CSL_CONTROLSS_G0_EPWM0_U_BASE);
-
-
+    EPWM_clearEventTriggerInterruptFlag(CSL_CONTROLSS_G0_EPWM0_U_BASE);
     int difference = gAdc_ISR1_count - gEpwm_ISR2_count;
 
     if((difference < -1) || (difference > 1))
     {
         errors++;
+        DebugP_log("ERROR : ISR Counts did not match\r\n");
     }
 
     HwiP_destruct(&gEpwmHwiObject2);
@@ -3482,7 +3402,7 @@ int32_t AM263_ADC_TTR_0001(uint32_t base)
                 DebugP_log("%d is adc_result_read_latency\r\n",adc_result_read_latency);
             }
             /* observation 19 or 20 cycles*/
-            if((adc_result_read_latency < 17) || (adc_result_read_latency > 22))
+            if((adc_result_read_latency < MIN_SAMPLE_WINDOW) || (adc_result_read_latency > 22))
             {
                 errors_count++;
             }
@@ -3490,24 +3410,24 @@ int32_t AM263_ADC_TTR_0001(uint32_t base)
 
         if(iter == 0) errors = errors_count;
     }
+
     if(errors > 0)
     {
+        /* fail criteria */
         return 1;
     }
     else
     {
+        /* pass criteria */
         return 0;
     }
 }
 
 
-// void ADC_ISR_for_ADC_TTR_0002(void* args) __attribute__();
-// __attribute__();
 void ADC_ISR_for_ADC_TTR_0002(void* args)
 {
     gISR_latency = CycleCounterP_getCount32();
     gISR_complete++;
-    // ClockP_usleep(1000);
 }
 
 /* AM263_ADC_TTR_0002	 ADC Latch to R5F response latency */
@@ -3521,8 +3441,6 @@ int32_t AM263_ADC_TTR_0002(base)
     int errors = 0;
     int latency_test_max_iterations = 2;
 
-    // volatile uint16_t* ADC_intFlagStatus =(uint16_t*) ((uint32_t)base + (uint32_t)0x0006);
-
     for(int iter = latency_test_max_iterations; iter >= 0; iter--)
     {
         HwiP_destruct(&gAdcHwiObject2);
@@ -3531,7 +3449,6 @@ int32_t AM263_ADC_TTR_0002(base)
         while(ADC_isBusy(base) == true);
 
         volatile uint32_t trigger_API_to_int_flg_latency[4] = {0,0,0,0};
-        // volatile uint32_t counter_start_read_latency;
         volatile uint32_t temp;
 
         gISR_latency = 0;
@@ -3611,71 +3528,64 @@ int32_t AM263_ADC_TTR_0002(base)
 
         ADC_setInterruptPulseMode(base, ADC_PULSE_END_OF_ACQ_WIN);
 
-
-
-        // CycleCounterP_reset();
-        // counter_start_read_latency = CycleCounterP_getCount32();
-
-
-
         for(ADC_IntNumber int_number = ADC_INT_NUMBER1;
                         int_number <= ADC_INT_NUMBER4;
                         int_number++)
+        {
+            util_ADC_deinit(base);
+
+            util_ADC_init(
+                base,
+                ADC_CLK_DIV_4_0,
+                ADC_MODE_DIFFERENTIAL,
+                ADC_PRI_ALL_ROUND_ROBIN);
+
+            ADC_setInterruptPulseMode(base,ADC_PULSE_END_OF_ACQ_WIN);
+
+            ADC_setupSOC(
+                base,
+                ADC_SOC_NUMBER0,
+                ADC_TRIGGER_SW_ONLY,
+                ADC_CH_ADCIN2,
+                MIN_SAMPLE_WINDOW);
+
+            gISR_latency = 0;
+
+            ADC_disableInterrupt(base, int_number);
+
+            gISR_complete = 0;
+            ADC_enableInterrupt(base, int_number);
+            ADC_setInterruptSource(base, int_number, ADC_SOC_NUMBER0);
+            ADC_clearInterruptStatus(base, int_number);
+            status              = HwiP_construct(&gAdcHwiObject2, &hwiPrms);
+            DebugP_assert(status == SystemP_SUCCESS);
+
+            while(ADC_isBusy(base) == true);
+
+            CycleCounterP_reset();
+            ADC_forceSOC(base,ADC_SOC_NUMBER0);
+
+            while(gISR_complete != 1);
+
+            ADC_clearInterruptStatus(base, int_number);
+
+            gISR_latency -= (trigger_API_to_int_flg_latency[int_number]);
+
+            if((enableLog == 1) && (iter == 0))
             {
-                util_ADC_deinit(base);
-
-                util_ADC_init(
-                    base,
-                    ADC_CLK_DIV_4_0,
-                    ADC_MODE_DIFFERENTIAL,
-                    ADC_PRI_ALL_ROUND_ROBIN);
-
-                ADC_setInterruptPulseMode(base,ADC_PULSE_END_OF_ACQ_WIN);
-
-                ADC_setupSOC(
-                    base,
-                    ADC_SOC_NUMBER0,
-                    ADC_TRIGGER_SW_ONLY,
-                    ADC_CH_ADCIN2,
-                    16);
-
-                gISR_latency = 0;
-
-                ADC_disableInterrupt(base, int_number);
-
-                gISR_complete = 0;
-                ADC_enableInterrupt(base, int_number);
-                ADC_setInterruptSource(base, int_number, ADC_SOC_NUMBER0);
-                ADC_clearInterruptStatus(base, int_number);
-                status              = HwiP_construct(&gAdcHwiObject2, &hwiPrms);
-                DebugP_assert(status == SystemP_SUCCESS);
-
-                while(ADC_isBusy(base) == true);
-
-                CycleCounterP_reset();
-                ADC_forceSOC(base,ADC_SOC_NUMBER0);
-
-                while(gISR_complete != 1);
-
-                ADC_clearInterruptStatus(base, int_number);
-
-                gISR_latency -= (trigger_API_to_int_flg_latency[int_number]); //+ counter_start_read_latency);
-
-                if((enableLog == 1) && (iter == 0))
-                {
-                    DebugP_log("ADC INT %d latch to r5 response :\t%d\r\n",int_number, gISR_latency);
-                }
-
-                if(iter == 0)
-                {
-                    if((gISR_latency <= 20)||(gISR_latency >= 30))
-                    errors++;
-                }
-                ADC_disableInterrupt(base, int_number);
-
-                HwiP_destruct(&gAdcHwiObject2);
-
+                DebugP_log("ADC INT %d latch to r5 response :\t%d\r\n",int_number, gISR_latency);
             }
+
+            if(iter == 0)
+            {
+                if((gISR_latency <= 20)||(gISR_latency >= 30))
+                errors++;
+            }
+            ADC_disableInterrupt(base, int_number);
+
+            HwiP_destruct(&gAdcHwiObject2);
+
+        }
 
         HwiP_destruct(&gAdcHwiObject2);
 
@@ -3764,7 +3674,6 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
 
         /* 32 bit burst write*/
         CycleCounterP_reset();
-        // memcpy( (volatile uint32_t *)(base + CSL_ADC_ADCSOC0CTL), adc_output_32_write, 16);
         memcpy( (void*)(base + CSL_ADC_ADCSOC0CTL), adc_output_32_write, 16);
         temp_count = CycleCounterP_getCount32();
         counter_values_for_write[2] = temp_count - counter_read_latency;
@@ -3772,7 +3681,6 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
 
         /* 32 bit burst read*/
         CycleCounterP_reset();
-        // memcpy( (volatile uint32_t *)(base + CSL_ADC_ADCSOC0CTL), adc_output_32_write, 16);
         memcpy( adc_output_32_write, (void*)(base + CSL_ADC_ADCSOC0CTL), 16);
         temp_count = CycleCounterP_getCount32();
         counter_values_for_read[4] = temp_count - counter_read_latency;
@@ -3843,17 +3751,18 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
     }
 if(errors > 0)
 {
+    /* fail criteria */
     return 1;
 }
 else
 {
+    /* pass criteria */
     return 0;
 }
 
 }
 
 /* AM263_ADC_TTR_0004	 DMA Latency */
-
 int32_t AM263_ADC_TTR_0004(uint32_t base)
 {
     if(enableLog)
@@ -3876,10 +3785,6 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
     {
 
         while(ADC_isBusy(base) == true);
-
-        // uint16_t gAdc0DataBuffer[RESULTS_BUFFER_SIZE];
-
-
 
         util_ADC_init(base, ADC_CLK_DIV_4_0, ADC_MODE_DIFFERENTIAL, ADC_PRI_ALL_ROUND_ROBIN);
         ADC_setInterruptPulseMode(base, ADC_PULSE_END_OF_ACQ_WIN);
@@ -3909,8 +3814,6 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
         trigger_API_to_int_flg_latency = temp;
 
         ADC_clearInterruptStatus(base, 0);
-        // ADC_disableInterrupt(base, ADC_INT_NUMBER1);
-
 
         if((enableLog == 1) && (iter == 0))
         {
@@ -3957,7 +3860,6 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
 
         EDMA_ccPaRAMEntry_init(&edmaParam);
         edmaParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *)(adc_result_base_addr));
-        // edmaParam.destAddr      = (uint32_t) SOC_virtToPhy((void *) 0x70180000);
         edmaParam.destAddr      = (uint32_t) SOC_virtToPhy((void *) 0x50260000);
         edmaParam.aCnt          = (uint16_t) 2*16;  /*data from 16 16-bit result registers to be transfered*/
         edmaParam.bCnt          = (uint16_t) 1;     /*single transfer*/
@@ -3990,10 +3892,7 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
 
         while(EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1);
         dma_trigger_to_transfer_complete_latency = CycleCounterP_getCount32();
-        if((enableLog == 1) && (iter == 0))
-        {
-            DebugP_log("total latency :\t%d\r\n",dma_trigger_to_transfer_complete_latency);
-        }
+
         /*---------------------------- DMA TRANSFER COMPLETE------------------------------- */
 
         EDMA_clrIntrRegion(baseAddr, regionId, tcc);
@@ -4012,30 +3911,36 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
 
         util_ADC_deinit(base);
 
+        if((enableLog == 1) && (iter == 0))
+        {
+            DebugP_log("total latency :\t%d\r\n",dma_trigger_to_transfer_complete_latency);
+        }
         dma_trigger_to_transfer_complete_latency -= trigger_API_to_int_flg_latency;
-        // if((enableLog == 1) && (iter == 0))
-        // {
-        //     DebugP_log("adc_instance : %d, DMA trigger to transfer complete latency  : %d\r\n",adc_instance, dma_trigger_to_transfer_complete_latency);
-        // }
+
         if(iter == 0)
         {
-        /* from observation */
-        if((dma_trigger_to_transfer_complete_latency > 40+10 ) || (dma_trigger_to_transfer_complete_latency < 40-10 )) errors_count++;
-        errors = errors_count;
-        if(errors)DebugP_log("error!!!  %d\r\n",dma_trigger_to_transfer_complete_latency);
-        if(enableLog == 1)
-        {
-            DebugP_log("adc_instance : %d, DMA trigger to transfer complete latency  : %d\r\n",adc_instance, dma_trigger_to_transfer_complete_latency);
-        }
+            /* from observation */
+            if((dma_trigger_to_transfer_complete_latency > 40+10 ) || (dma_trigger_to_transfer_complete_latency < 40-10 ))
+            {
+                errors_count++;
+            }
+            errors = errors_count;
+            if(errors)DebugP_log("error!!!  %d\r\n",dma_trigger_to_transfer_complete_latency);
+            if(enableLog)
+            {
+                DebugP_log("adc_instance : %d, DMA trigger to transfer complete latency  : %d\r\n",adc_instance, dma_trigger_to_transfer_complete_latency);
+            }
 
         }
     }
     if(errors > 0)
     {
+        /* fail criteria */
         return 1;
     }
     else
     {
+        /* pass criteria */
         return 0;
     }
 }
