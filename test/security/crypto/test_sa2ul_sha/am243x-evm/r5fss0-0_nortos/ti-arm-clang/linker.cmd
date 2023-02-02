@@ -16,10 +16,10 @@
 
 /* This is the size of stack when R5 is in IRQ mode
  * In NORTOS,
- * - Here interrupt nesting is disabled as of now
+ * - Here interrupt nesting is enabled
  * - This is the stack used by ISRs registered as type IRQ
  * In FreeRTOS,
- * - Here interrupt nesting is enabled
+ * - Here interrupt nesting is disabled
  * - This is stack that is used initally when a IRQ is received
  * - But then the mode is switched to SVC mode and SVC stack is used for all user ISR callbacks
  * - Hence in FreeRTOS, IRQ stack size is less and SVC stack size is more
@@ -103,7 +103,6 @@ SECTIONS
     .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
     /* General purpose non cacheable memory, used in some examples */
     .bss.nocache (NOLOAD) : {} > NON_CACHE_MEM
-    .bss.filebuf (NOLOAD) : {} > DDR
 }
 
 /*
@@ -146,5 +145,4 @@ MEMORY
     USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x180
     LOG_SHM_MEM             : ORIGIN = 0x701D0000 + 0x180, LENGTH = 0x00004000 - 0x180
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D4000, LENGTH = 0x0000C000
-    DDR                     : ORIGIN = 0x80000000 , LENGTH = 0x800000
 }
