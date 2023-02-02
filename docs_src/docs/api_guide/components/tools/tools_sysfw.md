@@ -59,7 +59,7 @@ gmake -s libs
 
 \code
 cd ${SDK_INSTALL_PATH}
-gmake -s libs
+gmake -s sbl
 \endcode
 
 - If you're not using any of the SBLs (SBL UART, SBL OSPI, SBL NULL) and is following the CCS boot method (\ref EVM_SOC_INIT_NOBOOT_MODE), make sure to build the sciclient_set_boardcfg application by doing
