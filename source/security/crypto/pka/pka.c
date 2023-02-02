@@ -45,6 +45,7 @@
 #include <kernel/dpl/ClockP.h>
 #include <security/crypto/pka/pka.h>
 #include <drivers/hw_include/cslr.h>
+#include <drivers/hw_include/cslr_soc.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -147,6 +148,9 @@
 #define PKA_ECDSA_VERIFY_CMD   (((uint32_t) 0x2U) << PKA_FUNCTION_CMD_HI_SHIFT) | \
     (((uint32_t) 0x3U) << PKA_FUNCTION_CMD_LO_SHIFT)
 
+/** \brief device type HSSE */
+#define DEVTYPE_HSSE         (0x0AU)
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -196,7 +200,7 @@ static CSL_Cp_aceRegs* PKA_getCaBaseAddress(PKA_Attrs *attrs)
 
 static void PKA_setALength(CSL_Eip_29t2_ramRegs *pka_regs, uint32_t size)
 {
-	CSL_REG_WR(&pka_regs->EIP_27B_EIP27_REGISTERS.PKA_ALENGTH, size);
+    CSL_REG_WR(&pka_regs->EIP_27B_EIP27_REGISTERS.PKA_ALENGTH, size);
 
 }
 
@@ -257,6 +261,14 @@ PKA_Handle PKA_open(uint32_t index)
         }
     }
 
+    #if (((defined (SOC_AM263X) || defined (SOC_AM273X)) && defined(__ARM_ARCH_7R__)))
+        CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
+        if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == DEVTYPE_HSSE)
+        {
+            status = PKA_RETURN_FAILURE;
+        }
+    #endif
+
     if(PKA_RETURN_SUCCESS == status)
     {
         attrs->isOpen = TRUE;
@@ -314,10 +326,10 @@ PKA_Return_t PKA_RSAPrivate(PKA_Handle handle,
     }
     if(PKA_RETURN_SUCCESS == status)
     {
-		pka_regs = PKA_getBaseAddress(attrs);
+        pka_regs = PKA_getBaseAddress(attrs);
 
-		PKA_setALength(pka_regs, size);
-		PKA_setBLength(pka_regs, size);
+        PKA_setALength(pka_regs, size);
+        PKA_setBLength(pka_regs, size);
 
         /* Vectors A has Dp[Alen], [pad], Dq[Alen] */
         offset = 0U;
@@ -327,12 +339,12 @@ PKA_Return_t PKA_RSAPrivate(PKA_Handle handle,
         offset += PKA_dwAlign(size);
 
         /* Vectors B has p[Blen], [1], [pad] q[Blen], [1] */
-		PKA_setBPtr(pka_regs, offset);
+        PKA_setBPtr(pka_regs, offset);
         PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 1U, k->p);
         offset += PKA_dwAlign(size + 1U);
 
         /* Temporarily set A offset to compare */
-		PKA_setAPtr(pka_regs, offset);
+        PKA_setAPtr(pka_regs, offset);
         PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 1U, k->q);
         offset += PKA_dwAlign(size + 1U);
 
@@ -360,17 +372,17 @@ PKA_Return_t PKA_RSAPrivate(PKA_Handle handle,
             if ((reg & PKA_COMPARE_A_LT_B_MASK) != 0U)
             {
                 /* Restore A offset to zero */
-				PKA_setAPtr(pka_regs, 0U);
+                PKA_setAPtr(pka_regs, 0U);
 
                 /* Vectors C has qInv[Blen] */
-				PKA_setCPtr(pka_regs, offset);
+                PKA_setCPtr(pka_regs, offset);
                 PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset],
                          size, k->coefficient);
                 offset += PKA_dwAlign(size);
 
                 /* Vectors D has M [2*Blen], [1], [pad]
                 * WorkSpace */
-				PKA_setDPtr(pka_regs, offset);
+                PKA_setDPtr(pka_regs, offset);
                 PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset],
                            size * 2U, m);
 
@@ -488,7 +500,7 @@ PKA_Return_t PKA_RSAPublic(PKA_Handle handle,
     }
     if(status == PKA_RETURN_SUCCESS)
     {
-		pka_regs = PKA_getBaseAddress(attrs);
+        pka_regs = PKA_getBaseAddress(attrs);
 
         offset = 0U;
         for(numCount = 0; numCount < (k->e[0]); numCount++)
@@ -497,7 +509,7 @@ PKA_Return_t PKA_RSAPublic(PKA_Handle handle,
         }
 
         offset += PKA_dwAlign(k->e[0]);
-		PKA_setBPtr(pka_regs, offset);
+        PKA_setBPtr(pka_regs, offset);
         for(numCount = 0; numCount < (k->n[0]); numCount++)
         {
             pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset + numCount] = k->n[1 + numCount];
@@ -508,7 +520,7 @@ PKA_Return_t PKA_RSAPublic(PKA_Handle handle,
          * word */
         offset += PKA_dwAlign(k->n[0] + 1U);
 
-		PKA_setCPtr(pka_regs, offset);
+        PKA_setCPtr(pka_regs, offset);
 
         for(numCount = 0; numCount < m[0]; numCount++)
         {
@@ -516,7 +528,7 @@ PKA_Return_t PKA_RSAPublic(PKA_Handle handle,
         }
 
         /* check if m is less than n. temporarily use Aptr and Asize */
-		PKA_setAPtr(pka_regs, offset);
+        PKA_setAPtr(pka_regs, offset);
 
         PKA_setALength(pka_regs, m[0]);
 
@@ -546,8 +558,8 @@ PKA_Return_t PKA_RSAPublic(PKA_Handle handle,
             {
                 /* Restore the value of Aptr and Aoffset to
                  *point to E */
-				PKA_setAPtr(pka_regs, 0U);
-				PKA_setALength(pka_regs, k->e[0]);
+                PKA_setAPtr(pka_regs, 0U);
+                PKA_setALength(pka_regs, k->e[0]);
 
                 /* To save PKA-RAM space, the MODEXP operation
                  * allows the input (M) to be located at the
@@ -555,7 +567,7 @@ PKA_Return_t PKA_RSAPublic(PKA_Handle handle,
                  * So PKA_CPTR and PKA_DPTR  are allowed to be
                  * identical
                  */
-				PKA_setDPtr(pka_regs, offset);
+                PKA_setDPtr(pka_regs, offset);
                 CSL_REG_WR(&pka_regs->EIP_27B_EIP27_REGISTERS.PKA_SHIFT, 1U);
 
                 CSL_REG_WR(&pka_regs->EIP_27B_EIP27_REGISTERS.PKA_FUNCTION, PKA_MODEXP_CMD |
@@ -645,14 +657,14 @@ PKA_Return_t PKA_ECDSASign(PKA_Handle handle,
     }
     if(status == PKA_RETURN_SUCCESS)
     {
-		pka_regs = PKA_getBaseAddress(attrs);
+        pka_regs = PKA_getBaseAddress(attrs);
 
-		PKA_setALength(pka_regs, size);
-		PKA_setBLength(pka_regs, size);
+        PKA_setALength(pka_regs, size);
+        PKA_setBLength(pka_regs, size);
 
         offset = 0U;
         /* Vector B has p, a, b, gz, gy and Rz (must be 1) */
-		PKA_setBPtr(pka_regs, offset);
+        PKA_setBPtr(pka_regs, offset);
         PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, cp->prime);
         offset += PKA_dwAlign(size + 2U);
 
@@ -675,15 +687,15 @@ PKA_Return_t PKA_ECDSASign(PKA_Handle handle,
         offset += PKA_dwAlign(size + 2U);
 
         /* Vector C has h */
-		PKA_setCPtr(pka_regs, offset);
+        PKA_setCPtr(pka_regs, offset);
         PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, h);
         offset += PKA_dwAlign(size + 2U);
 
-		PKA_setAPtr(pka_regs, offset);
+        PKA_setAPtr(pka_regs, offset);
         PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, priv);
         offset += PKA_dwAlign(size + 2U);
 
-		PKA_setDPtr(pka_regs, offset);
+        PKA_setDPtr(pka_regs, offset);
         PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, k);
 
         CSL_REG_WR(&pka_regs->EIP_27B_EIP27_REGISTERS.PKA_FUNCTION, PKA_ECDSA_SIGN_CMD | (((uint32_t) 1U) << PKA_FUNCTION_RUN_SHIFT));
@@ -765,14 +777,14 @@ PKA_Return_t PKA_ECDSAVerify(PKA_Handle handle,
         }
         if(status == PKA_RETURN_SUCCESS)
         {
-			pka_regs = PKA_getBaseAddress(attrs);
+            pka_regs = PKA_getBaseAddress(attrs);
 
-			PKA_setALength(pka_regs, size);
-			PKA_setBLength(pka_regs, size);
+            PKA_setALength(pka_regs, size);
+            PKA_setBLength(pka_regs, size);
 
             offset = 0;
             /* Vector B has p, a, b, gz, gy and Rz (must be 1) */
-			PKA_setBPtr(pka_regs, offset);
+            PKA_setBPtr(pka_regs, offset);
             PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, cp->prime);
             offset += PKA_dwAlign(size + 2U);
 
@@ -795,12 +807,12 @@ PKA_Return_t PKA_ECDSAVerify(PKA_Handle handle,
             offset += PKA_dwAlign(size + 2U);
 
             /* Vector C has h */
-			PKA_setCPtr(pka_regs, offset);
+            PKA_setCPtr(pka_regs, offset);
             PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, h);
             offset += PKA_dwAlign(size + 2U);
 
             /* Vector A has px, py and R'z (must be 1) */
-			PKA_setAPtr(pka_regs, offset);
+            PKA_setAPtr(pka_regs, offset);
             PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, pub->x);
             offset += PKA_dwAlign(size + 2U);
 
@@ -810,7 +822,7 @@ PKA_Return_t PKA_ECDSAVerify(PKA_Handle handle,
             PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, bn_one);
             offset += PKA_dwAlign(size + 2U);
 
-			PKA_setDPtr(pka_regs, offset);
+            PKA_setDPtr(pka_regs, offset);
             PKA_cpyz(&pka_regs->EIP_29T2_RAM_PKA_RAM.PKA_RAM[offset], size + 2U, sig->r);
             offset += PKA_dwAlign(size + 2U);
 
@@ -856,7 +868,7 @@ static PKA_Return_t PKA_enable(PKA_Attrs *attrs, uint32_t inst)
     uint64_t curTimeInUsecs, totalTimeInUsecs = 0;
 
     /* PKA Base address */
-	CSL_Eip_29t2_ramRegs *pka_regs = PKA_getBaseAddress(attrs);
+    CSL_Eip_29t2_ramRegs *pka_regs = PKA_getBaseAddress(attrs);
 
     /* Engine enable registers are available only in am64x and am243x */
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
@@ -966,7 +978,7 @@ static PKA_Return_t PKA_loadFirmware(PKA_Attrs *attrs, uint32_t inst)
     volatile int32_t i;
     PKA_Return_t status = PKA_RETURN_FAILURE;
 
-	CSL_Eip_29t2_ramRegs *pka_regs = PKA_getBaseAddress(attrs);
+    CSL_Eip_29t2_ramRegs *pka_regs = PKA_getBaseAddress(attrs);
 
     /* Put EIP-29t2 (PKA) in reset, set bit 31 of PKA_SEQ_CTRL */
     CSL_REG_WR(&pka_regs->EIP_28PX12_GF2_2PRAM_EIP28_REGISTERS.PKA_SEQ_CTRL, ((uint32_t) 1U) << PKA_SEQ_CTRL_RESET_SHIFT);
@@ -1034,7 +1046,7 @@ static void PKA_disable(PKA_Attrs *attrs)
     uint32_t reg;
 #endif
     /* PKA Base address */
-	CSL_Eip_29t2_ramRegs *pka_regs = PKA_getBaseAddress(attrs);
+    CSL_Eip_29t2_ramRegs *pka_regs = PKA_getBaseAddress(attrs);
 
     /* Engine enable registers are available only in am64x and am243x */
 #if defined(SOC_AM64X) || defined(SOC_AM243X)

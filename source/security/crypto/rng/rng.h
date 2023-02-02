@@ -85,13 +85,13 @@ typedef struct
     /*
      * SOC configuration
      */
-	uint32_t				caBaseAddr;
-	/**< Crypto Accelerator Base Adders*/
+    uint32_t                caBaseAddr;
+    /**< Crypto Accelerator Base Adders*/
     uint32_t                rngBaseAddr;
     /**< RNG Base address */
     uint32_t                mode;
     /**< Flag to enable different modes*/
-	uint32_t                isOpen;
+    uint32_t                isOpen;
     /**< Flag to indicate whether the instance is opened already */
     uint32_t                faultStatus;
     /**< Flag to ascertain whether the handle was opened successfully */
@@ -103,6 +103,9 @@ typedef struct
     RNG_Attrs             *attrs;
     /**< Driver params passed during open */
 } RNG_Config;
+
+/** \brief device type HSSE */
+#define DEVTYPE_HSSE         (0x0AU)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -121,7 +124,7 @@ extern uint32_t              gRngConfigNum;
  * \brief Function to Open RNG instance, Initialize clocks
  *
  * \return        A #RNG_Handle on success or a NULL on an error or if it has been
- *          	  opened already
+ *                opened already
  */
 RNG_Handle RNG_open(uint32_t index);
 

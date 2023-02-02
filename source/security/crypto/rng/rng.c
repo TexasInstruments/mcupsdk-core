@@ -47,7 +47,6 @@
 #include <drivers/hw_include/cslr.h>
 #include <security/crypto/pka/hw_include/cslr_cp_ace.h>
 #include <drivers/hw_include/cslr_soc.h>
-
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -65,6 +64,16 @@ RNG_Handle RNG_open(uint32_t index)
     RNG_Handle      handle  = NULL;
     RNG_Config      *config = NULL;
     RNG_Attrs       *attrs  = NULL;
+
+    #if (((defined (SOC_AM263X) || defined (SOC_AM273X)) && defined(__ARM_ARCH_7R__)))
+        CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
+        if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == DEVTYPE_HSSE)
+        {
+            status = RNG_RETURN_FAILURE;
+            return (handle);
+        }
+    #endif
+
     /* Check instance */
     if(index >= gRngConfigNum)
     {
@@ -120,7 +129,7 @@ RNG_Return_t RNG_close(RNG_Handle handle)
 
 RNG_Return_t RNG_setup(RNG_Handle handle)
 {
-    uint32_t val    = 0; 
+    uint32_t val    = 0;
     RNG_Return_t retVal = RNG_RETURN_FAILURE;
     RNG_Config *config  = (RNG_Config *)handle;
     CSL_Cp_aceTrngRegs *pTrngRegs;
@@ -133,25 +142,25 @@ RNG_Return_t RNG_setup(RNG_Handle handle)
         CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, 0U);
 
         /* Initialize TRNG_CONFIG to 0 */
-	    val = ((uint32_t) 0U);
-	    val |= ((((uint32_t) 5U) << CSL_CP_ACE_TRNG_CONFIG_SAMPLE_CYCLES_SHIFT) & (CSL_CP_ACE_TRNG_CONFIG_SAMPLE_CYCLES_MASK));
+        val = ((uint32_t) 0U);
+        val |= ((((uint32_t) 5U) << CSL_CP_ACE_TRNG_CONFIG_SAMPLE_CYCLES_SHIFT) & (CSL_CP_ACE_TRNG_CONFIG_SAMPLE_CYCLES_MASK));
         CSL_REG_WR(&pTrngRegs->TRNG_CONFIG, val);
 
         /* Leave the ALARMCNT register at its reset value */
-	    val = ((uint32_t) 0xFFU);
+        val = ((uint32_t) 0xFFU);
         CSL_REG_WR(&pTrngRegs->TRNG_ALARMCNT, val);
 
         /* write zeros to ALARMMASK and ALARMSTOP registers */
-	    val = ((uint32_t) 0U);
-	    CSL_REG_WR(&pTrngRegs->TRNG_ALARMMASK, val);
-	    CSL_REG_WR(&pTrngRegs->TRNG_ALARMSTOP, val);
+        val = ((uint32_t) 0U);
+        CSL_REG_WR(&pTrngRegs->TRNG_ALARMMASK, val);
+        CSL_REG_WR(&pTrngRegs->TRNG_ALARMSTOP, val);
 
         /* We have 8 FRO's in the RNG */
-	    val = ((uint32_t) 0xFFU);
+        val = ((uint32_t) 0xFFU);
         CSL_REG_WR(&pTrngRegs->TRNG_FROENABLE, val);
 
         /* Start the actual engine by setting the TRNG_CONTROL[10] ENABLE_TRNG register bit*/
-	    val = ((((uint32_t) 1U) << CSL_CP_ACE_TRNG_CONTROL_ENABLE_TRNG_SHIFT));
+        val = ((((uint32_t) 1U) << CSL_CP_ACE_TRNG_CONTROL_ENABLE_TRNG_SHIFT));
         CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, val);
 
         retVal = RNG_RETURN_SUCCESS;
@@ -166,44 +175,44 @@ RNG_Return_t RNG_read(RNG_Handle handle, uint32_t *out)
     uint32_t     ready   = 0U;
     RNG_Config   *config;
     CSL_Cp_aceTrngRegs  *pTrngRegs;
-    
+
     if (NULL != handle)
     {
         config = (RNG_Config *)handle;
         pTrngRegs  = (CSL_Cp_aceTrngRegs *)config->attrs->rngBaseAddr;
         val = CSL_REG_RD(&pTrngRegs->TRNG_CONTROL);
         mask = ((((uint32_t) 1U) << CSL_CP_ACE_TRNG_CONTROL_ENABLE_TRNG_SHIFT));
-        
-    	if ((val & mask) == mask)
+
+        if ((val & mask) == mask)
         {
-		    retVal = RNG_RETURN_SUCCESS;
-	    }
+            retVal = RNG_RETURN_SUCCESS;
+        }
     }
     else
     {
-		retVal = RNG_RETURN_FAILURE;
+        retVal = RNG_RETURN_FAILURE;
         DebugP_assert(RNG_RETURN_SUCCESS == retVal);
-	}
+    }
 
     if(RNG_RETURN_SUCCESS == retVal)
     {
         /* Check if random data is available */
-		val = CSL_REG_RD(&pTrngRegs->TRNG_STATUS);
-		ready =  (val & CSL_CP_ACE_TRNG_STATUS_READY_MASK) >> CSL_CP_ACE_TRNG_STATUS_READY_SHIFT;
-		while (ready != 1U)
+        val = CSL_REG_RD(&pTrngRegs->TRNG_STATUS);
+        ready =  (val & CSL_CP_ACE_TRNG_STATUS_READY_MASK) >> CSL_CP_ACE_TRNG_STATUS_READY_SHIFT;
+        while (ready != 1U)
         {
             val = CSL_REG_RD(&pTrngRegs->TRNG_STATUS);
             ready =  (val & CSL_CP_ACE_TRNG_STATUS_READY_MASK) >> CSL_CP_ACE_TRNG_STATUS_READY_SHIFT;
         }
         /* If data is available, read it into the output buffer */
-		out[0]  = CSL_REG_RD(&pTrngRegs->TRNG_INPUT_0);
+        out[0]  = CSL_REG_RD(&pTrngRegs->TRNG_INPUT_0);
         out[1]  = CSL_REG_RD(&pTrngRegs->TRNG_INPUT_1);
         out[2]  = CSL_REG_RD(&pTrngRegs->TRNG_INPUT_2);
         out[3]  = CSL_REG_RD(&pTrngRegs->TRNG_INPUT_3);
 
-		/*Set the INTACK and go back*/
-		CSL_REG_WR(&pTrngRegs->TRNG_STATUS, (CSL_CP_ACE_TRNG_INTACK_READY_ACK_MASK << CSL_CP_ACE_TRNG_INTACK_READY_ACK_SHIFT));
-	}
+        /*Set the INTACK and go back*/
+        CSL_REG_WR(&pTrngRegs->TRNG_STATUS, (CSL_CP_ACE_TRNG_INTACK_READY_ACK_MASK << CSL_CP_ACE_TRNG_INTACK_READY_ACK_SHIFT));
+    }
     return (retVal);
 }
 
