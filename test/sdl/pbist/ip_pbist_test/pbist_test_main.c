@@ -88,46 +88,6 @@ void tearDown(void)
 }
 #endif
 
-
-static
-int32_t PBIST_appInitBoard(void)
-{
-    int32_t       testResult = SDL_PASS;
-#ifndef SDL_SOC_MCU_R5F
-    uint64_t mcuClkFreq;
-
-    /* Following code is needed to set Dpl timing */
-#if defined (SOC_J721E) || defined (SOC_J7200)
-    /* Get the clock frequency */
-    testResult = Sciclient_pmGetModuleClkFreq(TISCI_DEV_MCU_R5FSS0_CORE0,
-                                              TISCI_DEV_MCU_R5FSS0_CORE0_CPU_CLK,
-                                              &mcuClkFreq,
-                                              SCICLIENT_SERVICE_WAIT_FOREVER);
-#elif
-#error "SOC NOT supported please check"
-#endif
-    if (testResult == 0)
-    {
-        Dpl_HwAttrs  hwAttrs;
-        uint32_t      ctrlBitmap;
-
-        testResult = Dpl_getHwAttrs(&hwAttrs);
-        if (testResult == 0)
-        {
-            /*
-             * Change the timer input clock frequency configuration
-               based on R5 CPU clock configured
-             */
-            hwAttrs.cpuFreqKHz = (int32_t)(mcuClkFreq/1000U);
-            ctrlBitmap         = DPL_HWATTR_SET_CPU_FREQ;
-            testResult = Dpl_setHwAttrs(ctrlBitmap, &hwAttrs);
-        }
-    }
-    DebugP_log("mcuClkFreq %d\n", (uint32_t)mcuClkFreq);
-#endif
-    return (testResult);
-}
-
 int32_t PBIST_dplInit(void)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -229,10 +189,7 @@ void test_sdl_pbist_test_app_runner(void)
 int32_t test_main(void)
 {
     /* Declaration of variables */
-    int32_t  testResult;
-
-    /* Init Board */
-    testResult = PBIST_appInitBoard();
+    int32_t  testResult=SDL_PASS;
 
     if (testResult == SDL_PASS)
     {

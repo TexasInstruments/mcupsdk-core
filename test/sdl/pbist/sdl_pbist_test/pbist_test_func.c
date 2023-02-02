@@ -81,7 +81,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 {
     int32_t testResult = 0;
     SDL_ErrType_t status;
-    bool PBISTResult;
+    bool PBISTResult = false;
     SDL_PBIST_testType testType;
 
     uint64_t startTime , testStartTime,  testEndTime, endTime;
@@ -91,6 +91,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 #endif
 
 #ifndef SDL_SOC_MCU_R5F
+    int i;
     uint32_t moduleState = TISCI_MSG_VALUE_DEVICE_HW_STATE_OFF;
     uint32_t resetState = 0U;
     uint32_t contextLossState = 0U;
@@ -421,6 +422,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, APP_PBIST_TIMEOUT, &PBISTResult);
         if ((status != SDL_PASS) || (PBISTResult == false))
         {
+            DebugP_log("  SDL_PBIST_selfTest failed status [%d] result [%d] \n", status, PBISTResult);
             testResult = -1;
         }
     }
@@ -981,11 +983,13 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
              }
 #endif
 #endif
+
+#ifdef SDL_SOC_MCU_R5F
     if((status == SDL_PASS) && (testType == SDL_PBIST_NEG_TEST))
     {
         DebugP_log(" PBIST failure Insertion test complete for TOP BIST\n");
     }
-
+#endif
 
     return (testResult);
 }
@@ -1003,6 +1007,32 @@ int32_t PBIST_funcTest(void)
     }
     else
     {
+#ifndef SDL_SOC_MCU_R5F
+        /* Run the test for diagnostics first */
+        for (uint32_t i = 0; i < PBIST_NUM_INSTANCE; i++)
+        {
+            /* Run test on selected instance */
+            testResult = PBIST_runTest(i, true);
+            if ( testResult != 0)
+            {
+                break;
+            }
+        }
+
+        if (testResult == 0)
+        {
+            /* Then run the pbist test */
+            for (uint32_t i = 0; i < PBIST_NUM_INSTANCE; i++)
+            {
+                /* Run test on selected instance */
+                testResult = PBIST_runTest(i, false);
+                if ( testResult != 0)
+                {
+                    break;
+                }
+            }
+        }
+#else
         /* Run the test for diagnostics first */
         /* Run test on selected instance */
         testResult = PBIST_runTest(SDL_PBIST_INST_TOP, true);
@@ -1027,8 +1057,8 @@ int32_t PBIST_funcTest(void)
             }
           #endif
           #endif
+#endif
       }
-
 
     return (testResult);
 }

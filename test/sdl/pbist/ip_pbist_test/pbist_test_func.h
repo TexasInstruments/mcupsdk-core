@@ -51,7 +51,9 @@ extern "C"
 /* ========================================================================== */
 
 #define PBIST_INSTANCE_NAME_MAX_LENGTH    20
-
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#define PBIST_MAX_NUM_RUNS                2
+#endif
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
@@ -79,7 +81,7 @@ typedef struct PBIST_TestHandle_s
     SDL_PBIST_inst pbistInst;
     uint64_t PBISTRegsHiAddress;
     SDL_pbistRegs *pPBISTRegs;
-    SDL_PBIST_config PBISTConfigRun[2];
+    SDL_PBIST_config PBISTConfigRun[PBIST_MAX_NUM_RUNS];
     uint32_t numPBISTRuns;
     SDL_PBIST_configNeg PBISTNegConfigRun;
     uint32_t tisciPBISTDeviceId;

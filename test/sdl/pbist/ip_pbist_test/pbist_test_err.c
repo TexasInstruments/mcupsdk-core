@@ -96,6 +96,7 @@ static int32_t PBIST_errNegativeTest(void)
             testResult = -1;
         }
     }
+	#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     if (testResult == 0)
     {
         sdlRet = SDL_PBIST_startNeg((SDL_pbistRegs *)SDL_TOP_PBIST_U_BASE, NULL);
@@ -105,6 +106,7 @@ static int32_t PBIST_errNegativeTest(void)
             testResult = -1;
         }
     }
+	#endif
     if (testResult == 0)
     {
         sdlRet = SDL_PBIST_startNeg(NULL, &PBISTNegConfig);
@@ -133,7 +135,7 @@ static int32_t PBIST_errNegativeTest(void)
             testResult = -1;
         }
     }
-
+	#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     if (testResult == 0)
     {
         sdlRet = SDL_PBIST_start((SDL_pbistRegs *)SDL_TOP_PBIST_U_BASE, NULL);
@@ -143,6 +145,7 @@ static int32_t PBIST_errNegativeTest(void)
             testResult = -1;
         }
     }
+	#endif
     if (testResult == 0)
     {
         sdlRet = SDL_PBIST_start(NULL, &PBISTConfig);
@@ -161,7 +164,7 @@ static int32_t PBIST_errNegativeTest(void)
             testResult = -1;
         }
     }
-
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     if (testResult == 0)
     {
         sdlRet = SDL_PBIST_checkResult((SDL_pbistRegs *)PBIST_NEG_TEST_PBIST_CFG_BASE, &PBISTresult);
@@ -181,7 +184,7 @@ static int32_t PBIST_errNegativeTest(void)
             testResult = -1;
         }
     }
-
+#endif
     if (testResult == 0)
     {
         sdlRet = SDL_PBIST_checkResult((SDL_pbistRegs *)PBIST_NEG_TEST_PBIST_CFG_BASE, NULL);

@@ -77,16 +77,7 @@ typedef struct PBIST_TestHandle_s
 #ifndef SDL_SOC_MCU_R5F
     char     testName[PBIST_INSTANCE_NAME_MAX_LENGTH];
     SDL_PBIST_inst pbistInst;
-    uint64_t PBISTRegsHiAddress;
-    SDL_pbistRegs *pPBISTRegs;
-    SDL_PBIST_config PBISTConfigRun[2];
-    uint32_t numPBISTRuns;
-    SDL_PBIST_configNeg PBISTNegConfigRun;
     uint32_t tisciPBISTDeviceId;
-    bool     pollMode;
-    uint32_t interruptNumber;
-    SDL_ESM_Inst esmInst;
-    uint32_t esmEventNumber;
     bool procRstNeeded;
     bool secondaryCoreNeeded;
     char coreName[16];
@@ -95,7 +86,6 @@ typedef struct PBIST_TestHandle_s
     uint32_t tisciSecProcId;
     uint32_t tisciDeviceId;
     uint32_t tisciSecDeviceId;
-    volatile bool doneFlag;
     bool     coreCustPwrSeqNeeded;
     uint8_t  numPostPbistToCheck;
     uint32_t numAuxDevices;

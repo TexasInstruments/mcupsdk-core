@@ -303,4 +303,3 @@ extern "C"
 }
 #endif
 #endif /* SDLR_R5FSS0_CORE0_INTERRUPT_MAP_H_ */
-

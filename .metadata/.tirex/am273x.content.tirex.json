@@ -4958,7 +4958,7 @@
         ],
         "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_pbist_example",
-        "location": "../../examples/sdl/pbist/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/pbist/pbist_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM273x_EVM"
         ],
@@ -4971,6 +4971,7 @@
         "subCategories": [
             "sdl",
             "pbist",
+            "pbist_mcu",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -4990,7 +4991,7 @@
         ],
         "description": "This example verifies the PBIST CPU is R5FSS0-1 running NORTOS.",
         "name": "sdl_pbist_example",
-        "location": "../../examples/sdl/pbist/am273x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/pbist/pbist_mcu/am273x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM273x_EVM"
         ],
@@ -5003,6 +5004,7 @@
         "subCategories": [
             "sdl",
             "pbist",
+            "pbist_mcu",
             "r5fss0-1_nortos"
         ],
         "mainCategories": [

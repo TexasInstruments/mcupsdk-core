@@ -47,6 +47,7 @@ SDL consists of below sub-modules
 - \subpage SDL_VTM_PAGE
 - \subpage SDL_POK_PAGE
 - \subpage SDL_MTOG_PAGE
+- \subpage SDL_PBIST_PAGE
 - \subpage SDL_ECC_PAGE
 - \subpage SDL_RTI_PAGE
 \endcond
@@ -79,4 +80,5 @@ SDL consists of below sub-modules
 - \subpage SDL_ECC_PAGE
 - \subpage SDL_MCRC_PAGE
 - \subpage SDL_RTI_PAGE
+- \subpage SDL_PBIST_PAGE
 \endcond

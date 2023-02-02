@@ -55,9 +55,7 @@ extern "C" {
 #include <stdint.h>
 #include <sdl/include/soc_config.h>
 
-#if defined (IP_VERSION_PBIST_V0)
 #include <sdl/pbist/v0/soc/sdl_soc_pbist.h>
-#endif
 
 /**
  *  \brief PBIST self test type

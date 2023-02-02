@@ -132,6 +132,8 @@ typedef struct {
 #if defined(IP_VERSION_PBIST_V0)
     volatile uint32_t RINFOL;                     /* RAM Info Mask Register */
     volatile uint32_t RINFOU;                     /* RAM Info Mask Register */
+#elif defined(IP_VERSION_PBIST_V0_1)
+    volatile uint64_t RINFO;                     /* RAM Info Mask Register */
 #endif
 } SDL_pbistRegs;
 

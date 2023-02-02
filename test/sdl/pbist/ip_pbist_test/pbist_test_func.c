@@ -83,7 +83,9 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     SDL_ErrType_t status;
     bool PBISTResult;
     SDL_PBIST_testType testType;
-
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+	int i=0;
+#endif
     uint64_t startTime , testStartTime,  testEndTime, endTime;
     uint64_t prepTime, diffTime, restoreTime;
 #ifdef DEBUG
@@ -1003,6 +1005,33 @@ int32_t PBIST_funcTest(void)
     }
     else
     {
+		
+#ifndef SDL_SOC_MCU_R5F
+        /* Run the test for diagnostics first */
+        for (uint32_t i = 0; i < PBIST_NUM_INSTANCE; i++)
+        {
+            /* Run test on selected instance */
+            testResult = PBIST_runTest(i, true);
+            if ( testResult != 0)
+            {
+                break;
+            }
+        }
+
+        if (testResult == 0)
+        {
+            /* Then run the pbist test */
+            for (uint32_t i = 0; i < PBIST_NUM_INSTANCE; i++)
+            {
+                /* Run test on selected instance */
+                testResult = PBIST_runTest(i, false);
+                if ( testResult != 0)
+                {
+                    break;
+                }
+            }
+        }
+#else
         /* Run the test for diagnostics first */
         /* Run test on selected instance */
         testResult = PBIST_runTest(SDL_PBIST_INST_TOP, true);
@@ -1027,8 +1056,8 @@ int32_t PBIST_funcTest(void)
             }
           #endif
           #endif
-      }
-
+#endif
+    }
 
     return (testResult);
 }

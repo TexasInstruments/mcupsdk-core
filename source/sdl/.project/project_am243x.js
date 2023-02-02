@@ -36,6 +36,9 @@ const files_r5f = {
         "sdl_rti.c",
         "sdl_ip_rti.c",
 		"sdl_soc_rti.c",
+        "sdl_ip_pbist.c",
+        "sdl_pbist_soc.c",
+        "sdl_pbist.c",
     ],
 };
 const filedirs = {
@@ -71,6 +74,10 @@ const filedirs = {
         "rti",
         "rti/v0",
 		"rti/v0/soc/am243x",
+        "pbist",
+        "pbist/v0",
+        "pbist/v0/soc",
+        "pbist/v0/soc/am243x",
     ],
 };
 

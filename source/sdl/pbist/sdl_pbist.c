@@ -47,7 +47,9 @@
 #define PBIST_REG_REGION_SIZE             (0x400u)
 
 #define PBIST_MAX_TIMEOUT_VALUE           (100000000u)
+#if defined (SOC_AM273X) || (SOC_AWR294X)
 extern uint32_t gInst;
+#endif
 static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistInstInfo *pInfo,
                                      SDL_pbistRegs **pRegs,
                                      pSDL_DPL_HwipHandle *PBIST_intrHandle)
@@ -140,11 +142,6 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
     {
         if (testType == SDL_PBIST_TEST)
         {
-#if defined (SOC_AM263X)
-
-  ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun[i]);
-
-#endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
           if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
           {
@@ -158,8 +155,9 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
           {
              ret = SDL_EBADARGS ;
           }
+#else
+            ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun[i]);
 #endif
-
         }
         else /* (testType == SDL_PBIST_NEG_TEST) */
         {
@@ -202,10 +200,6 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
 
             /* reset Done flag so we can run again */
             pInfo->doneFlag = PBIST_NOT_DONE;
-            if (testType != SDL_PBIST_TEST)
-            {
-                break;
-            }
         }
     }
 

@@ -34,7 +34,7 @@ The PBIST Module of the SDL supports execution of the software-initiated PBIST f
 ## Important Usage Guidelines
 
 - Execution of the PBIST tests requires preparation of the IPs under test by bringing them to a certain power and reset state before executing the test. It will be required that the application bring the cores/IPs to the proper state before executing the PBIST. Additionally, there is an "exit sequence" that is required to bring the cores/IPs back to the system control after the PBIST test is executed. This will also be the responsibility of the application. The PBIST examples provided with SDL will give the necessary sequences, which can be used by the application for implementing the sequence.
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 - The PBIST module uses ESM events to detect completion of the test. The application should not enable these events through SDL_ESM_init in order to prevent interference with the test execution.
 \endcond
 
@@ -48,7 +48,7 @@ Include the below file to access the APIs
 #include <sdl/sdl_pbist.h>
 \endcode
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 Note: Do not initialize the ESM to detect PBIST completion events
 \endcond
 

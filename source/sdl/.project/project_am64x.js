@@ -34,6 +34,9 @@ const files_m4f = {
     "sdl_ip_rti.c",
 	"sdl_soc_rti.c",
 
+        "sdl_ip_pbist.c",
+        "sdl_pbist_soc.c",
+        "sdl_pbist.c",
     ],
 };
 
@@ -71,6 +74,9 @@ const files_r5f = {
           "sdl_rti.c",
           "sdl_ip_rti.c",
           "sdl_soc_rti.c",
+          "sdl_ip_pbist.c",
+          "sdl_pbist_soc.c",
+          "sdl_pbist.c",
     ],
 };
 
@@ -109,6 +115,10 @@ const filedirs_m4f = {
         "rti/v0",
 		"rti/v0/soc/am64x",
 
+        "pbist",
+        "pbist/v0",
+        "pbist/v0/soc",
+        "pbist/v0/soc/am64x",
     ],
 };
 
@@ -148,14 +158,10 @@ const filedirs_r5f = {
         "rti",
         "rti/v0",
 		"rti/v0/soc/am64x",
+        "pbist/v0",
+        "pbist/v0/soc",
+        "pbist/v0/soc/am64x",
     ],
-};
-
-const asmfiles_r5f = {
-    common: [
-		"sdl_ecc_utils.S",
-		"sdl_r5_utils.S",
-	],
 };
 
 const r5_macro = {

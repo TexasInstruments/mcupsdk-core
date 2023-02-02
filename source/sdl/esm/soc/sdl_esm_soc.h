@@ -48,6 +48,12 @@ extern "C" {
 #include <sdl/esm/soc/am64x/sdl_esm_core.h>
 #endif /* SOC_AM64X */
 
+#if defined (SOC_AM243X)
+#include <sdl/esm/soc/am243x/sdl_esm_soc.h>
+#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
+#include <sdl/esm/soc/am243x/sdl_esm_core.h>
+#endif /* SOC_AM243X */
+
 #if defined (SOC_AM263X)
 #include <sdl/esm/soc/am263x/sdl_esm_soc.h>
 #endif /* SOC_AM263X */
@@ -63,12 +69,6 @@ extern "C" {
 #include <sdl/include/awr294x/sdlr_mss_ctrl.h>
 #include <sdl/esm/soc/awr294x/sdl_esm_core.h>
 #endif /* SOC_AWR294X */
-
-#if defined (SOC_AM243X)
-#include <sdl/esm/soc/am243x/sdl_esm_soc.h>
-#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
-#include <sdl/esm/soc/am243x/sdl_esm_core.h>
-#endif /* SOC_AM243X */
 
 #ifdef __cplusplus
 }

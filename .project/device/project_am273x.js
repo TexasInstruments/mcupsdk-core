@@ -111,7 +111,7 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_dss_l3_ecc/.project/project.js",
     "examples/sdl/ecc/sdl_dss_mailbox/.project/project.js",
 	"examples/sdl/parity/sdl_tcm_parity/.project/project.js",
-	"examples/sdl/pbist/.project/project.js",
+	"examples/sdl/pbist/pbist_mcu/.project/project.js",
     "examples/sdl/stc/stc_mcu/.project/project.js",
     "examples/sdl/reset/reset_mcu/.project/project.js",
     "examples/sdl/ecc_bus_safety/ecc_bus_safety_main/.project/project.js",
