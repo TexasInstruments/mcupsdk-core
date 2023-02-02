@@ -71,7 +71,7 @@ extern "C" {
 */
 
 /**
-@defgroup SDL_PBIST_ENUM PBIST Enuerated Data Types
+@defgroup SDL_PBIST_ENUM PBIST Enumerated Data Types
 @ingroup SDL_PBIST_API
 */
 

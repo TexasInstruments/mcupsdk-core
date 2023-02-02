@@ -1,5 +1,5 @@
-/* =============================================================================
- *   Copyright (c) Texas Instruments Incorporated 2022
+/* 
+ *   Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,10 +31,7 @@
  *
  */
 
- /**
-  *  @addtogroup SDL_RTI_API APIs for SDL RTI
-     @{
-  */
+
 
 #ifndef SDL_SOC_RTI_H_
 #define SDL_SOC_RTI_H_
@@ -45,22 +42,22 @@
 extern "C" {
 #endif
 
-/**
-@defgroup SDL_RTI_ENUM RTI Enumerated Data Types
-@ingroup SDL_RTI_API
-*/
-
-/*======================================================================================================
+/*
 *   Required Macros for Instances config
-======================================================================================================*/
+*/
 
 #define SDL_RTI_MAX_INSTANCE    (0x07U)
 #define INSTANCE_INVALID        (0x0U)
 
 /**
- *  @addtogroup SDL_RTI_ENUM
-    @{
+ *  @addtogroup SDL_RTI_API APIs for SDL RTI
+ *   @{
  */
+/**
+* \defgroup SDL_RTI_ENUM RTI Enumerated Data Types
+* \ingroup SDL_RTI_API
+* @{
+*/
 
 /*************************************************************************************************************
 *  Enum for different RTI module instances
@@ -80,6 +77,7 @@ typedef enum {
 } SDL_RTI_InstanceType;
 
 /** @} */
+/** @} */
 /*======================================================================================================
 *   This is global array gives the BASE ADDRESS of RTI modules
 ======================================================================================================*/
@@ -95,4 +93,3 @@ static uint32_t SDL_RTI_baseAddress[SDL_RTI_MAX_INSTANCE+1U] = {SDL_MSS_WDT_U_BA
 #endif
 
 #endif /* SDL_SOC_RTI_H_ */
-/** @} */

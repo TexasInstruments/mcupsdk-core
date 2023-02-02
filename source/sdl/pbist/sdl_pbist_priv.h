@@ -35,7 +35,7 @@
  *
  *   @brief This file contains the SDL PBIST internal definitions.
  *
- *   @defgroup SDL_PBIST_API Built-In Test (PBIST)
+ *   @defgroup SDL_PBIST_MODULE APIs for PBIST (Memory Built-In Self Test)
  *
  *   Provides the internal definitions for PBIST.
  */

@@ -50,7 +50,7 @@ extern "C" {
 
 /**
  * @ingroup SDL_IP_MODULE
- * @defgroup SDL_ECC_AGGR_API ECC Aggregator (ECC_AGGR)
+ * @defgroup SDL_ECC_AGGR_API APIs for SDL ECC (ECC_AGGR)
  *
  *
  * To increase functional safety and system reliability the memories (for example,

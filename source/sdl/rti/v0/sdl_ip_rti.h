@@ -1,4 +1,4 @@
-/* =============================================================================
+/*
  *   Copyright (c) Texas Instruments Incorporated 2022
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -45,8 +45,8 @@ extern "C"
 
 /**
  *
- * @ingroup  SDL_IP_MODULE
- * @defgroup SDL_IP_RTI_API RTI Low-Level API
+ * \ingroup  SDL_IP_MODULE
+ * \defgroup SDL_RTI_API APIs for SDL RTI
  *
  *    The Digital Watchdog Timer(DWT) generates reset after a programmable
  *    period, if not serviced within that period. In DWT, time-out
@@ -60,26 +60,10 @@ extern "C"
  *    configuration.
  *
  */
-
-/**
-@defgroup SDL_IP_RTI_DATASTRUCT  RTI Data Structures
-@ingroup SDL_IP_RTI_API
-*/
-
-/**
-@defgroup SDL_IP_RTI_FUNCTION  RTI Functions
-@ingroup SDL_IP_RTI_API
-*/
-
-/**
-@defgroup SDL_IP_RTI_ENUM  RTI Enumerated Types
-@ingroup SDL_IP_RTI_API
-*/
-
-/** ===========================================================================
- *  @addtogroup SDL_IP_RTI_DATASTRUCT
-    @{
- * ============================================================================
+ /**
+ * \defgroup SDL_IP_RTI_DATASTRUCT  RTI Data Structures
+ * \ingroup SDL_RTI_API
+ * @{
  */
 
 /**
@@ -111,16 +95,16 @@ typedef struct{
     uint32_t        SDL_RTI_dwwdReaction;
 }SDL_RTI_configParms;
 
-
+/** @} */
 /********************************************************************************************************
 *   Below are the Declarations of Low Level Functions
 ********************************************************************************************************/
+/**
+* \defgroup SDL_IP_RTI_FUNCTION  RTI IP Functions
+* \ingroup SDL_RTI_API
+* @{
+*/
 
-/** ===========================================================================
- *  @addtogroup SDL_IP_RTI_FUNCTION
-    @{
- * ============================================================================
- */
 /**
 * \brief This API will check the Window Size for DWWD.
 *
@@ -190,12 +174,7 @@ int32_t  SDL_RTI_setPreload(uint32_t baseAddr, uint32_t dwwdPreloadVal);
  */
 int32_t  SDL_RTI_getPreload(uint32_t baseAddr, uint32_t *pPreloadVal);
 
-
-/** ===========================================================================
- *  @addtogroup SDL_IP_RTI_ENUM
-    @{
- * ============================================================================
- */
+/** @} */
 
 /**
 * \anchor SDL_RTIWinSizeValues
@@ -399,4 +378,3 @@ static inline uint32_t SDL_RTI_readReaction(uint32_t baseAddr)
 }
 #endif
 #endif  /* HW_RTI_H_ */
-
