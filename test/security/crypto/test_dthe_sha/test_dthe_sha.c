@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Texas Instruments Incorporated
+ * Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -259,7 +259,7 @@ void test_main(void *args)
     RUN_TEST(test_sha512_512bBuf, 8475, NULL);
 
     /** sha256 multishot computation*/
-    RUN_TEST(test_sha256_32kBuf,  8474, NULL);    
+    RUN_TEST(test_sha256_32kBuf,  8474, NULL);
     RUN_TEST(test_sha256_16kBuf,  8474, NULL);
     RUN_TEST(test_sha256_8kBuf,   8474, NULL);
     RUN_TEST(test_sha256_4kBuf,   8474, NULL);
@@ -283,11 +283,11 @@ void tearDown(void)
 
 void test_sha512_32kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
-    
+
     /* Opening crypto driver */
     shaHandle = DTHE_open(0);
     DebugP_assert(shaHandle != NULL);
@@ -334,7 +334,7 @@ void test_sha512_32kBuf(void *args)
 
 void test_sha512_16kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -385,7 +385,7 @@ void test_sha512_16kBuf(void *args)
 
 void test_sha512_8kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -436,7 +436,7 @@ void test_sha512_8kBuf(void *args)
 
 void test_sha512_4kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -487,7 +487,7 @@ void test_sha512_4kBuf(void *args)
 
 void test_sha512_2kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -538,7 +538,7 @@ void test_sha512_2kBuf(void *args)
 
 void test_sha512_1kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -590,7 +590,7 @@ void test_sha512_1kBuf(void *args)
 
 void test_sha512_512bBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -642,7 +642,7 @@ void test_sha512_512bBuf(void *args)
 
 void test_sha256_32kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params      shaParams;
     uint32_t            t1, t2;
@@ -695,7 +695,7 @@ void test_sha256_32kBuf(void *args)
 
 void test_sha256_16kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -747,7 +747,7 @@ void test_sha256_16kBuf(void *args)
 
 void test_sha256_8kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -799,7 +799,7 @@ void test_sha256_8kBuf(void *args)
 
 void test_sha256_4kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -851,7 +851,7 @@ void test_sha256_4kBuf(void *args)
 
 void test_sha256_2kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -904,7 +904,7 @@ void test_sha256_2kBuf(void *args)
 
 void test_sha256_1kBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -956,7 +956,7 @@ void test_sha256_1kBuf(void *args)
 
 void test_sha256_512bBuf(void *args)
 {
-    DTHE_SHA_Return_t   status;    
+    DTHE_SHA_Return_t   status;
     DTHE_Handle         shaHandle;
     DTHE_SHA_Params     shaParams;
     uint32_t            t1, t2;
@@ -1020,7 +1020,7 @@ void App_printPerformanceResults(double t1, double t2, uint32_t numBytes)
     DebugP_log("[CRYPTO] Total ticks : %ld \r\n", (uint64_t)(diffCnt));
 
     throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
-    
+
     DebugP_log("[CRYPTO] Total throughput In Mbps  : %lf \r\n", (double)(8 * throughputInMBps));
 }
 

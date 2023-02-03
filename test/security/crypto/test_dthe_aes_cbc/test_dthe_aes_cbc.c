@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Texas Instruments Incorporated
+ * Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1292,7 +1292,7 @@ void App_printPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes)
     DebugP_log("[CRYPTO] Total ticks : %ld \r\n", (uint64_t)(diffCnt));
 
     throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
-    
+
     DebugP_log("[CRYPTO] Total throughput In Mbps  : %lf \r\n", (double)(8 * throughputInMBps));
 }
 
