@@ -8,8 +8,6 @@ const files = {
         "dthe.c",
         "dthe_aes.c",
         "dthe_sha.c",
-        "pka.c",
-        "eip29t2_firmware.c",
         "crypto_util.c",
     ],
 };
@@ -18,7 +16,6 @@ const filedirs = {
     common: [
         "crypto",
         "crypto/dthe",
-        "crypto/pka",
     ],
 };
 

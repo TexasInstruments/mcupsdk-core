@@ -19,14 +19,11 @@ FILES_common := \
     dthe.c \
     dthe_aes.c \
     dthe_sha.c \
-    pka.c \
-    eip29t2_firmware.c \
     crypto_util.c \
 
 FILES_PATH_common = \
     crypto \
     crypto/dthe \
-    crypto/pka \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
