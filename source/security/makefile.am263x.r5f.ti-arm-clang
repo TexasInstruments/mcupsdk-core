@@ -22,11 +22,13 @@ FILES_common := \
     pka.c \
     eip29t2_firmware.c \
     crypto_util.c \
+    rng.c \
 
 FILES_PATH_common = \
     crypto \
     crypto/dthe \
     crypto/pka \
+    crypto/rng \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

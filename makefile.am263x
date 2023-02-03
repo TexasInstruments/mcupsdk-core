@@ -338,6 +338,7 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am263x-cc/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -881,6 +882,7 @@ BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_ALL += dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_am263x-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1723,6 +1725,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2084,6 +2089,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2926,6 +2932,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3287,6 +3296,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4128,6 +4138,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

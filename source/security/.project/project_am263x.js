@@ -11,6 +11,7 @@ const files_r5f = {
         "pka.c",
         "eip29t2_firmware.c",
         "crypto_util.c",
+        "rng.c"
     ],
 };
 
@@ -19,6 +20,7 @@ const filedirs_r5f = {
         "crypto",
         "crypto/dthe",
         "crypto/pka",
+        "crypto/rng"
     ],
 };
 
