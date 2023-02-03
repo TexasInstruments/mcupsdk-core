@@ -21,7 +21,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
--# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_ICSSG
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
@@ -39,7 +39,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
--# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 \endcond
@@ -63,11 +63,10 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
--# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 \endcond
-
 \cond  SOC_AM273X
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS

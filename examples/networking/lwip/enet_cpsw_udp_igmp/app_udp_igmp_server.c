@@ -41,6 +41,7 @@
 #include "lwip/api.h"
 #include "lwip/sockets.h"
 #include <kernel/dpl/ClockP.h>
+#include <kernel/dpl/CacheP.h>
 #include "enet_apputils.h"
 
 /* ========================================================================== */
@@ -138,6 +139,7 @@ static void AppUdp_ServerTask(void *pArg)
         DebugP_log("Packet recieved \r\n\r");
         count = (count >= UDP_RECV_BUFSIZE) ? UDP_RECV_BUFSIZE - 1 : count;
         recv_buf[count] = '\0';
+        CacheP_wbInv(recv_buf, sizeof(recv_buf), CacheP_TYPE_ALLD);
         DebugP_log("Client: %s\r\n", recv_buf);
         if (sendto(sock, recv_buf, count, 0, (struct sockaddr*) &from, fromlen) < 0)
         {

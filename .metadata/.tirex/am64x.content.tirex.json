@@ -12266,9 +12266,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Udpserver Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_udpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_udpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Udpclient Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_udpclient",
+        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -12281,7 +12281,7 @@
         "subCategories": [
             "networking",
             "lwip",
-            "enet_cpsw_udpserver",
+            "enet_cpsw_udpclient",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
