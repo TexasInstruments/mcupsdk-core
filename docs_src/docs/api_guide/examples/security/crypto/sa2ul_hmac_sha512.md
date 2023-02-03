@@ -14,7 +14,7 @@ This example demonstrates the how to generate HMAC-SHA 512 hash using SA2UL modu
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/crypto_hmac_sha512.c
 
 \endcond

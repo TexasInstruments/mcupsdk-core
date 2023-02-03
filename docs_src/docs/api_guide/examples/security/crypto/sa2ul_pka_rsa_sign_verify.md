@@ -14,7 +14,7 @@ This example demonstrates the SA2UL PKA RSA Signing and Verification operations.
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/security/crypto/sa2ul_pka/rsa_signing_verification/rsa_signing_verification.c
 \endcond
 

@@ -14,7 +14,7 @@ This example demonstrates the AES CMAC-128 using SA2UL module.
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/crypto_aes_cmac_128.c
 
 \endcond
