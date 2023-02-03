@@ -33,4 +33,5 @@ This page lists all the examples related to Security.
 -# \subpage EXAMPLES_DRIVERS_DTHE_PKA_ECDSA_SIGN_VERIFY
 -# \subpage EXAMPLES_DRIVERS_DTHE_PKA_RSA_ENC_DEC
 -# \subpage EXAMPLES_DRIVERS_DTHE_PKA_RSA_SIGN_VERIFY
+-# \subpage EXAMPLES_DRIVERS_DTHE_RNG
 \endcond
