@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -341,11 +341,13 @@ void Bootloader_socConfigurePll(void)
 
     /* CORE ADPLL reconfiguration. */
     hsDivCfg.hsdivOutEnMask = (SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_1 |
-                               SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_2);
-    hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(500U);
+                               SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_2 |
+                               SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_3);
+    hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(200);
     hsDivCfg.hsDivOutFreqHz[2] = gCoreBootInfo[CSL_CORE_ID_R5FSS0_0].defaultClockHz;
+    hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(200);
 
-    SOC_rcmCoreDpllConfig(SOC_RcmPllFoutFreqId_CLK_1500MHZ, &hsDivCfg);
+    SOC_rcmCoreDpllConfig(SOC_RcmPllFoutFreqId_CLK_600MHZ, &hsDivCfg);
 
     /* Change the CORE clock source back to DPLL CORE HSDIV0 CLKOUT2. */
     retVal = SOC_rcmSetHSDivMux(SOC_RcmHSDIVClkOutMuxId_DPLL_CORE_OUT2,
@@ -386,6 +388,18 @@ void Bootloader_socConfigurePllPostApllSwitch(void)
     SOC_rcmApllHSDivDisableOutput(SOC_RcmAPLLID_1P8G, SOC_RCM_PLL_HSDIV_OUTPUT_IDX1);
     SOC_rcmApllHSDivDisableOutput(SOC_RcmAPLLID_1P8G, SOC_RCM_PLL_HSDIV_OUTPUT_IDX2);
     SOC_rcmApllHSDivDisableOutput(SOC_RcmAPLLID_1P8G, SOC_RCM_PLL_HSDIV_OUTPUT_IDX3);
+
+    /* COREDPLL CLOCKOUT0 */
+    SOC_rcmDpllHSDivDisableOutput(SOC_RCM_DPLL_CORE, SOC_RCM_PLL_HSDIV_OUTPUT_IDX0);
+
+    /* PER PLL */
+    SOC_rcmDpllHSDivDisableOutput(SOC_RCM_DPLL_PER, SOC_RCM_PLL_HSDIV_OUTPUT_IDX0);
+    SOC_rcmDpllHSDivDisableOutput(SOC_RCM_DPLL_PER, SOC_RCM_PLL_HSDIV_OUTPUT_IDX2);
+    SOC_rcmDpllHSDivDisableOutput(SOC_RCM_DPLL_PER, SOC_RCM_PLL_HSDIV_OUTPUT_IDX3);
+
+    /* DSP PLL */
+    SOC_rcmDpllHSDivDisableOutput(SOC_RCM_DPLL_DSS, SOC_RCM_PLL_HSDIV_OUTPUT_IDX0);
+    SOC_rcmDpllHSDivDisableOutput(SOC_RCM_DPLL_DSS, SOC_RCM_PLL_HSDIV_OUTPUT_IDX3);
 }
 
 uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId)

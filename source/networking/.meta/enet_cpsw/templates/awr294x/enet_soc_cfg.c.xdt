@@ -45,7 +45,7 @@
 #define CPSW_ENET_CTRL_MODE_RMII                     (1U)
 #define CPSW_ENET_CTRL_MODE_RGMII                    (2U)
 
-#define CPSW_SOC_ENABLE_1GBPS                       (1)
+#define CPSW_SOC_ENABLE_1GBPS                        (0)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -303,7 +303,7 @@ Enet_Obj gEnetSoc_perObj[] =
 
 EnetCpdma_DrvObj gEnetSoc_dmaObj[ENET_ARRAYSIZE(gEnetSoc_perObj)] =
 {
-    [0] = 
+    [0] =
     {
         .enetType   = ENET_CPSW_2G,
         .cpdmaRegs  = (CSL_CpdmaRegs *)(CSL_MCU_CPSW0_NUSS_BASE + CPSW_CPDMA_OFFSET),

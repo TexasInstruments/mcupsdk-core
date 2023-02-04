@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -180,13 +180,6 @@ typedef enum SOC_RcmClockSrcType_e
     SOC_RCM_CLKSRCTYPE_DPLL_HSDIVOUT,
     SOC_RCM_CLKSRCTYPE_DPLL_HSDIVOUTMUX,
 } SOC_RcmClockSrcType;
-
-typedef enum SOC_RcmDpllIdType_e
-{
-    SOC_RCM_DPLL_CORE,
-    SOC_RCM_DPLL_DSS,
-    SOC_RCM_DPLL_PER,
-} SOC_RcmDpllId_e;
 
 typedef enum SOC_RcmPllHSDIVOutId_e
 {
@@ -1038,7 +1031,7 @@ static const uint32_t gSocRcmCpswMiiClkSrcValMap[] =
    [SOC_RcmCpswMiiClockSource_DPLL_CORE_HSDIV0_CLKOUT1]       = 0x000U,
    [SOC_RcmCpswMiiClockSource_DPLL_PER_HSDIV0_CLKOUT1_MUXED]  = 0x111U,
    [SOC_RcmCpswMiiClockSource_SYS_CLK]                        = 0x222U,
-   [SOC_RcmCpswMiiClockSource_RC_CLK_10M]                       = 0x333U,
+   [SOC_RcmCpswMiiClockSource_RC_CLK_10M]                     = 0x333U,
 };
 
 static const uint16_t gSocRcmRssClkSrcValMap[] =
@@ -2527,10 +2520,8 @@ static void SOC_rcmProgPllCoreDivider(uint8_t inputClockDiv , uint8_t divider,
 
     /* Initialization sequence referred from ADPLLLJ_GS70_v0.8-02 */
     /* program M2 (post divider) */
-    // GEL file equivalent
     // APPLJ-1 Setting
     // CLOCKOUT = M/(N+1) * CLKINP * (1/M2)  =  0x7d0/(39+1) * 40 * (1/1) = 2G
-    // GEL file equivalent
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_CORE_M2NDIV     , 0x10027);      //M2NDIV_M2[22:16] = 1 , M2NDIV_N[7:0] = 0x27
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_CORE_MN2DIV     , 0x107d0);      //MN2DIV_N2[19:16] = 1 , MN2DIV_M[11:0] = 0x7d0
 
@@ -2567,7 +2558,6 @@ static void SOC_rcmProgPllDspDivider(uint8_t inputClockDiv , uint8_t divider,
 
     /* Initialization sequence referred from ADPLLLJ_GS70_v0.8-02 */
     /* program M2 (post divider) */
-    // GEL file equivalent
     // APPLJ-2 Setting
     // CLOCKOUT = M/(N+1) * CLKINP * (1/M2)  =  0x708/(39+1) * 40 * (1/1) = 1.8G
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_DSP_M2NDIV     , 0x10027);      //M2NDIV_M2[22:16] = 1 , M2NDIV_N[7:0] = 0x27
@@ -2605,7 +2595,6 @@ static void SOC_rcmProgPllPerDivider(uint8_t inputClockDiv , uint8_t divider,
 
     /* Initialization sequence referred from ADPLLLJ_GS70_v0.8-02 */
     /* program M2 (post divider) */
-    // GEL file equivalent
     // APPLJ-3 Setting
     // CLOCKOUT = M/(N+1) * CLKINP * (1/M2)  =  0x6C0/(39+1) * 40 * (1/1) = 1.728G
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_PER_M2NDIV     , 0x10027);      //M2NDIV_M2[22:16] = 1 , M2NDIV_N[7:0] = 0x27
@@ -2645,7 +2634,6 @@ static void SOC_rcmConfigurePllCore(uint16_t trimVal)
     /* update the Clock control setting */
     // APPLJ-1 Setting
     // CLOCKOUT = M/(N+1) * CLKINP * (1/M2)  =  0x7d0/(39+1) * 40 * (1/1) = 2G
-    // GEL file equivalent
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_CORE_M2NDIV     , 0x10027);      //M2NDIV_M2[22:16] = 1 , M2NDIV_N[7:0] = 0x27
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_CORE_MN2DIV     , 0x107d0);      //MN2DIV_N2[19:16] = 1 , MN2DIV_M[11:0] = 0x7d0
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_CORE_CLKCTRL    , 0x29021000);   //CLKDCOLDOEN[29] = 1,NWELLTRIM[28:24] = 9 IDLE[23] = 0 CLKDCOLDOPWDNZ[17] = 1 SELFREQDCO[12:10] = 4
@@ -2660,7 +2648,7 @@ static void SOC_rcmConfigurePllCore(uint16_t trimVal)
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 29U, 29U, 0x1U);
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 23U, 23U, 0x0U);
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 17U, 17U, 0x1U);
-    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 12U, 10U, 0x4U);
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 12U, 10U, 0x2U);
 
     /* Write Nwell Trim Value */
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 28U, 24U, ((uint8_t) trimVal & 0x1FU));
@@ -2684,7 +2672,6 @@ static void SOC_rcmConfigurePllCore(uint16_t trimVal)
     *ptrTenableDiv = SOC_rcmInsert8 (*ptrTenableDiv, 0U, 0U, 0x0U);
 
     /* wait for the Phase lock for Core/DSP PLL */
-    //GEL File equivalent
     // APPLJ-1  :  loop check to PLLLOCK DONE
     //lock_status = HW_RD_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_CORE_STATUS); //PHASELOCK[10]
     //while(0x400 != (lock_status & 0x400)) {
@@ -2713,7 +2700,6 @@ static void SOC_rcmConfigurePllDsp(uint16_t trimVal)
 
     /* update the Clock control setting */
     /* program CLKDCOLDOEN[29] = 1, IDLE[23] = 0, CLKDCOLDOPWDNZ[17] = 1, SELFREQDCO[12:10] = 4 */
-    /* GEL file equivalent */
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_DSP_CLKCTRL    , 0x29021000);   //CLKDCOLDOEN[29] = 1,NWELLTRIM[28:24] = 9 IDLE[23] = 0 CLKDCOLDOPWDNZ[17] = 1 SELFREQDCO[12:10] = 4
 
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_DSP_TENABLE    , 0x1);          // TENABLE    = 1
@@ -2725,7 +2711,7 @@ static void SOC_rcmConfigurePllDsp(uint16_t trimVal)
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 29U, 29U, 0x1U);
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 23U, 23U, 0x0U);
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 17U, 17U, 0x1U);
-    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 12U, 10U, 0x4U);
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 12U, 10U, 0x2U);
 
     /* Write Nwell Trim Value */
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 28U, 24U, ((uint8_t) trimVal & 0x1FU));
@@ -2749,7 +2735,6 @@ static void SOC_rcmConfigurePllDsp(uint16_t trimVal)
     *ptrTenableDiv = SOC_rcmInsert8 (*ptrTenableDiv, 0U, 0U, 0x0U);
 
     /* wait for the Phase lock for Core/DSP PLL */
-    //GEL File equivalent
     // APPLJ-2 : loop check to PLLLOCK DONE
     //lock_status = HW_RD_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_DSP_STATUS); //PHASELOCK[10]
     //while(0x400 != (lock_status & 0x400)) {
@@ -2778,7 +2763,6 @@ static void SOC_rcmConfigurePllPer(uint16_t trimVal)
 
     /* update the Clock control setting */
     /* program CLKDCOLDOEN[29] = 1, IDLE[23] = 0, CLKDCOLDOPWDNZ[17] = 1, SELFREQDCO[12:10] = 4 */
-    /* GEL file equivalent */
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_PER_CLKCTRL    , 0x29021000);   //CLKDCOLDOEN[29] = 1,NWELLTRIM[28:24] = 9 IDLE[23] = 0 CLKDCOLDOPWDNZ[17] = 1 SELFREQDCO[12:10] = 4
 
     //HW_WR_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_PER_TENABLE    , 0x1);          // TENABLE    = 1
@@ -2814,7 +2798,6 @@ static void SOC_rcmConfigurePllPer(uint16_t trimVal)
     *ptrTenableDiv = SOC_rcmInsert8 (*ptrTenableDiv, 0U, 0U, 0x0U);
 
     /* wait for the Phase lock for Core/DSP PLL */
-    //GEL File equivalent
     // APPLJ-3 : loop check to PLLLOCK DONE
     //lock_status = HW_RD_REG32(CSL_MSS_TOPRCM_U_BASE+PLL_PER_STATUS); //PHASELOCK[10]
     //while(0x400 != (lock_status & 0x400)) {
@@ -3144,6 +3127,83 @@ void SOC_rcmApllHSDivDisableOutput(SOC_RcmApllId apllId, uint32_t  hsDivIdx)
         *regHsDivClkOut = SOC_rcmInsert32 (*regHsDivClkOut, 8U, 8U, 0);
         while(SOC_rcmExtract32(*regHsDivClkOut, 9U, 9U) != 0);
         *regHsDivClkOut = SOC_rcmInsert32 (*regHsDivClkOut, 8U, 8U, 0);
+    }
+}
+
+void SOC_rcmDpllHSDivDisableOutput(SOC_RcmDpllId_e dpllId, uint32_t  hsDivIdx)
+{
+    CSL_mss_toprcmRegs *ptrTopRCMRegs;
+    volatile uint32_t *regHsDivClkOut = NULL;
+
+    ptrTopRCMRegs = CSL_TopRCM_getBaseAddress();
+    if(dpllId == SOC_RCM_DPLL_CORE)
+    {
+        switch (hsDivIdx)
+        {
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX0:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT0;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX1:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT1;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX2:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX3:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3;
+                break;
+            default:
+                regHsDivClkOut = NULL;
+                break;
+        }
+    }
+    if(dpllId == SOC_RCM_DPLL_DSS)
+    {
+        switch (hsDivIdx)
+        {
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX0:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_DSP_HSDIVIDER_CLKOUT0;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX1:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_DSP_HSDIVIDER_CLKOUT1;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX2:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_DSP_HSDIVIDER_CLKOUT2;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX3:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_DSP_HSDIVIDER_CLKOUT3;
+                break;
+            default:
+                regHsDivClkOut = NULL;
+                break;
+        }
+    }
+    if(dpllId == SOC_RCM_DPLL_PER)
+    {
+        switch (hsDivIdx)
+        {
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX0:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX1:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT1;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX2:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT2;
+                break;
+            case SOC_RCM_PLL_HSDIV_OUTPUT_IDX3:
+                regHsDivClkOut = &ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT3;
+                break;
+            default:
+                regHsDivClkOut = NULL;
+                break;
+        }
+    }
+    if (regHsDivClkOut != NULL)
+    {
+        *regHsDivClkOut = SOC_rcmInsert32 (*regHsDivClkOut, 8U, 8U, 0);
+        while(SOC_rcmExtract32(*regHsDivClkOut, 9U, 9U) != 0);
+        *regHsDivClkOut = SOC_rcmInsert32 (*regHsDivClkOut, 12U, 12U, 1);
     }
 }
 
@@ -3628,6 +3688,19 @@ void SOC_rcmPopulateBSSControl(void)
 	/* 2KB of memory is needed for BSS to transfer the BSS logger data. */
 	/* Applications are required to make sure the 2KB starting from 0x10260000 is reserved for BSS logger. */
 	CSL_REG_WR(&rssProcCtrl->RSS_CR4_BOOT_INFO_REG6, 0xC0260000);
+
+    /* BSS dynamic frequency switching feature control - Enable */
+    /*  0b0 - BSS CPU clock is always kept at 200MHz. */
+    /*  0b1 - BSS CPU clock frequency will be switched to 40MHz when */
+    /*        going to sleep and will be switched back to 200MHz on waking up. */
+    CSL_FINSR(rssProcCtrl->RSS_CR4_BOOT_INFO_REG5, 3, 3, 1);
+
+    /* BSS CPU clock source select configuration.*/
+    /* 12-bit RSS CPU clock source selection at MSS_TOPRCM→RSS_CLK_SRC_SEL. */
+    /* SBL configures DPLL_PER_HSDIV0_CLKOUT1_MUXED (0x333U) as the clock source for RSS */
+    CSL_FINSR(rssProcCtrl->RSS_CR4_BOOT_INFO_REG5, 15, 4, 0x333U);
+
+    SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MSS_RTIC, SOC_RcmPeripheralClockSource_XTAL_CLK, 40000000);
 
 }
 
@@ -4953,7 +5026,7 @@ void SOC_rcmConfigEthMacIf(void)
     clkDivisor = SOC_rcmGetModuleClkDivVal(clkFreq, SOC_RCM_FREQ_MHZ2HZ(5U));
     mii10ClkDivVal = (clkDivisor & 0xFF) | ((clkDivisor & 0xFF) << 8) | ((clkDivisor & 0xFF) << 16);
     ptrMSSRCMRegs->MSS_MII10_CLK_DIV_VAL  = SOC_rcmInsert32 (ptrMSSRCMRegs->MSS_MII10_CLK_DIV_VAL, 23U, 0U, mii10ClkDivVal);
-    clkDivisor = SOC_rcmGetModuleClkDivVal(clkFreq, SOC_RCM_FREQ_MHZ2HZ(250U));
+    clkDivisor = SOC_rcmGetModuleClkDivVal(clkFreq, SOC_RCM_FREQ_MHZ2HZ(50U));
     ptrMSSRCMRegs->MSS_RGMII_CLK_DIV_VAL = SOC_rcmInsert16 (ptrMSSRCMRegs->MSS_RGMII_CLK_DIV_VAL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(clkDivisor));
 }
 

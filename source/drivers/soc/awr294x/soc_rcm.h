@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -334,6 +334,16 @@ typedef enum SOC_RcmApllId_e
     SOC_RcmAPLLID_1P2G,
     SOC_RcmAPLLID_1P8G,
 } SOC_RcmApllId;
+
+/**
+ * @brief DPLL IDs
+ */
+typedef enum SOC_RcmDpllIdType_e
+{
+    SOC_RCM_DPLL_CORE,
+    SOC_RCM_DPLL_DSS,
+    SOC_RCM_DPLL_PER,
+} SOC_RcmDpllId_e;
 
 /**
  * @brief RSS BSS Frc Clock Sources
@@ -795,6 +805,14 @@ void SOC_rcmDisableTopPbist(void);
  * \brief Switches R5 clock to XTAL
  */
 void SOC_rcmSwitchR5Clock(SOC_RcmR5ClockSource clkSrc, uint32_t divVal);
+
+/**
+ *  \brief Disable PLL HS Div clock output
+ *
+ * \param dpllId [in] DPLL ID
+ * \param hsDivIdx [in] Hs Divider clock index
+ */
+void SOC_rcmDpllHSDivDisableOutput(SOC_RcmDpllId_e dpllId, uint32_t  hsDivIdx);
 
 /*
  *  Misc functions
