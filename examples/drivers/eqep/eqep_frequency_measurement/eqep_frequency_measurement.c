@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -52,16 +52,26 @@
 /* Defines used by example */
 /* Sysclk frequency */
 #define DEVICE_SYSCLK_FREQ  (200000000U)
-/* We want to output at 5 kHz */
-#define PWM_CLK  (5000U)
+/* Output PWM at 10 kHz (Configured using Sysconfig EPWM module)*/
+#define PWM_CLK  (10000U)
 /* Base/max frequency is 10 kHz */
 #define BASE_FREQ  (10000U)
-/* FIXME: See Equation 5 in eqep_ex1_calculation.c */
+
+/*      t2 - t1 = 8(SYSCLKFREQ / 128) / (10kHz * 2)
+                = (SYSCLKFREQ / 128) / (2 * 10kHz / 8)
+                = maximum (t2 - t1) = freqScalerPR
+*/
 #define FREQ_SCALER_PR  (((DEVICE_SYSCLK_FREQ / 128) * 8) / (2 * BASE_FREQ))
-/* FIXME: See Equation 2 in eqep_ex1_calculation.c */
+
+/*      10kHz = (x2 - x1) / (2 / 100Hz)
+        max (x2 - x1) = 200 counts = freqScalerFR
+*/
 #define FREQ_SCALER_FR  ((BASE_FREQ * 2) / 100)
 /* App Run Time in seconds */
 #define APP_RUN_TIME  (10U)
+
+#define APP_SEM_TIMEOUT_TICKS  (100U)
+
 /* Macro for interrupt pulse */
 #define APP_INT_IS_PULSE  (1U)
 
@@ -106,11 +116,17 @@ void eqep_frequency_measurement_main(void *args)
     uint32_t numIsrCnt = (APP_RUN_TIME * PWM_CLK);
     HwiP_Params hwiPrms;
 
-    /* Open drivers to open the UART driver for console */
+	/* Open drivers
+		- Open the UART driver for console
+		- Open EPWM and EQEP driver for position and speed measurement
+		- Open XBAR driver for EPWM interrupt routing to R5F
+	*/
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("EQEP Frequency Measurement Test Started ...\r\n");
+	DebugP_log("Please ensure EPWM to EQEP loopback is connected...\r\n");
+	DebugP_log("Please wait %d seconds ...\r\n", APP_RUN_TIME);
 
     gEpwmBaseAddr = CONFIG_EPWM0_BASE_ADDR;
     gEqepBaseAddr = CONFIG_EQEP0_BASE_ADDR;
@@ -133,7 +149,12 @@ void eqep_frequency_measurement_main(void *args)
 
     while(numIsrCnt > 0)
     {
-        SemaphoreP_pend(&gEpwmSyncSemObject, SystemP_WAIT_FOREVER);
+        int32_t ret = SemaphoreP_pend(&gEpwmSyncSemObject, APP_SEM_TIMEOUT_TICKS);
+		
+		if( (ret == SystemP_TIMEOUT) || (ret == SystemP_FAILURE))
+		{
+			DebugP_log("ERROR!!\r\n");
+		}
         numIsrCnt--;
     }
 
@@ -141,6 +162,8 @@ void eqep_frequency_measurement_main(void *args)
     EPWM_clearEventTriggerInterruptFlag(gEpwmBaseAddr);     /* Clear any pending interrupts if any */
     HwiP_destruct(&gEpwmHwiObject);
     SemaphoreP_destruct(&gEpwmSyncSemObject);
+
+	DebugP_log("Expected frequency = %d Hz, Measured frequency = %d Hz \r\n", PWM_CLK, freq.freqHzFR);
 
     if (pass)
     {
@@ -169,7 +192,7 @@ static void App_epwmIntrISR(void *handle)
     /* less than input */
     if (count >= 3)
     {
-        if (((freq.freqHzFR - PWM_CLK) < 50) && ((freq.freqHzFR - PWM_CLK) > -50))
+        if (((freq.freqHzFR - (int32_t)PWM_CLK) < 50) && ((freq.freqHzFR - (int32_t)PWM_CLK) > -50))
         {
             pass = 1; fail = 0;
         }

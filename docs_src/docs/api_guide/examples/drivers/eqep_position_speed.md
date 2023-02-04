@@ -8,10 +8,13 @@ Position and Speed Measurement Using eQEP
 
 This example provides position and speed measurement using the
 capture unit and speed measurement using unit time out of the eQEP module.
-ePWM0 and a GPIO are configured to generate simulated eQEP signals. The
+ePWM and a GPIO are configured to generate simulated eQEP signals. The
 ePWM module will interrupt once every period and call the position/speed
 calculation function. This example uses the IQMath library to simplify
 high-precision calculations.
+
+\imageStyle{am263_eqep_position_speed_measurement_fig1a.png,width:50%}
+\image html am263_eqep_position_speed_measurement_fig1a.png "Figure 1a. Block diagram"
 
 The configuration for this example is as follows
 - Maximum speed is configured to 6000rpm (baseRPM)
@@ -19,8 +22,8 @@ The configuration for this example is as follows
 - Pole pair is configured to 2 (polePairs)
 - Encoder resolution is configured to 4000 counts/revolution (mechScaler)
 - Which means: 4000 / 4 = 1000 line/revolution quadrature encoder
-  (simulated by ePWM0)
-- ePWM0 (simulating QEP encoder signals) is configured for a 5kHz frequency
+  (simulated by ePWM)
+- ePWM (simulating QEP encoder signals) is configured for a 5kHz frequency
   or 300 rpm (= 4 * 5000 cnts/sec * 60 sec/min) / 4000 cnts/rev)
 
 SPEEDRPM_FR: High Speed Measurement is obtained by counting the QEP
@@ -35,7 +38,7 @@ and the capture unit performs the time measurement using pre-scaled SYSCLK.
 Note that the pre-scaler for capture unit clock is selected such that the
 capture timer does not overflow at the required minimum frequency.
 
-This example wait for 10 iterations of unit time out event and verifies the
+This example waits for 10 iterations of unit time out event and verifies the
 measured speed:  295 < posSpeed.speedRPMFR < 305
 
  - posSpeed.speedRPMFR - Speed meas. in rpm using QEP position counter
@@ -45,20 +48,21 @@ measured speed:  295 < posSpeed.speedRPMFR < 305
 
 # External connections
 
-- Connect eQEP0A to ePWM0A (simulates eQEP Phase A signal)
-- Connect eQEP0B to ePWM0B (simulates eQEP Phase B signal)
-- Connect eQEP0I to GPIO48 (simulates eQEP Index Signal)
+- Connect ePWM0A to eQEP0A (EPWM_A simulates eQEP Phase A signal)
+- Connect ePWM0B to eQEP0B (EPWM_B simulates eQEP Phase B signal)
+- Connect GPIO48 to eQEP0I (GPIO simulates eQEP Index Signal)
+
 ## AM263X-CC
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Connect HSEC Pin 49 to HSEC Pin 102 (simulates eQEP Phase A signal)
-- Connect HSEC Pin 51 to HSEC Pin 100 (simulates eQEP Phase B signal)
-- Connect HSEC Pin 106 to HSEC Pin 52 (simulates eQEP Index Signal)
+- Connect HSEC Pin 49 (ePWM0A) to HSEC Pin 102 (eQEP0A)
+- Connect HSEC Pin 51 (ePWM0B) to HSEC Pin 100 (eQEP0B)
+- Connect HSEC Pin 52 (GPIO48) to HSEC Pin 106 (eQEP0I)
 
 ## AM263X-LP
-- Connect eQEP2A (J25 Pin 1) to ePWM0A (J2/J4 Pin 11) (simulates eQEP Phase A signal)
-- Connect eQEP2B (J25 Pin 2) to ePWM0B (J6/J8 Pin 59) (simulates eQEP Phase B signal)
-- Connect eQEP2I (J25 Pin 3) to GPIO48 (J2/J4 Pin 40) (simulates eQEP Index Signal)
+- Connect J2 Pin 11 (ePWM0A) to J25 Pin 1 (eQEP2A)
+- Connect J6 Pin 59 (ePWM0B) to J25 Pin 2 (eQEP2B)
+- Connect J2 Pin 40 (GPIO48) to J25 Pin 3 (eQEP2I)
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EQEP_POSITION_SPEED_COMBOS}
@@ -94,6 +98,12 @@ Shown below is a sample output when the application is run,
 
 \code
 EQEP Position Speed Test Started ...
+Please ensure EPWM to EQEP loopback is connected...
+Please wait few seconds ...
+Expected speed = 300 RPM, Measured speed = 299 RPM 
+Electrical angle (Q15) = 19608 
+Mechanical angle (Q15) = 26188 
+Rotation direction = CW, forward 
 EQEP Position Speed Test Passed!!
 All tests have passed!!
 \endcode

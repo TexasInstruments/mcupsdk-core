@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -112,6 +112,7 @@ typedef   uint64_t    _iq;
 // Base/max rpm is 6000rpm
 #define BASE_RPM  (6000)
 
+
 /* Typedefs */
 typedef struct
 {
@@ -178,14 +179,20 @@ void eqep_position_speed_main(void *args)
     int32_t status;
     HwiP_Params hwiPrms;
 
-    /* Open drivers to open the UART driver for console */
+    /* Open drivers
+		- Open the UART driver for console
+		- Open EPWM and EQEP driver for position and speed measurement
+		- Open XBAR driver for EPWM interrupt routing to R5F
+	*/
     Drivers_open();
     Board_driversOpen();
 
     GPIO_setDirMode(CONFIG_GPIO0_BASE_ADDR, CONFIG_GPIO0_PIN, CONFIG_GPIO0_DIR);
-
+	
     DebugP_log("EQEP Position Speed Test Started ...\r\n");
-
+	DebugP_log("Please ensure EPWM to EQEP loopback is connected...\r\n");
+	DebugP_log("Please wait few seconds ...\r\n");
+	
     gEqepBaseAddr = CONFIG_EQEP0_BASE_ADDR;
     gEpwmBaseAddr = CONFIG_EPWM0_BASE_ADDR;
 
@@ -206,9 +213,27 @@ void eqep_position_speed_main(void *args)
     {
         //Wait for posSpeed results
     }
-
+	
+	EPWM_setTimeBaseCounterMode(gEpwmBaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
+	
     if((gPass == 1) && (gFail == 0))
     {
+		/* Expected 300 RPM based on programmed EPWM frequency*/
+		DebugP_log("Expected speed = %d RPM, Measured speed = %d RPM \r\n", 300, posSpeed.speedRPMFR);	
+		
+		DebugP_log("Electrical angle (Q15) = %d \r\n", posSpeed.thetaElec);
+		DebugP_log("Mechanical angle (Q15) = %d \r\n", posSpeed.thetaMech);
+		
+		DebugP_log("Rotation direction = ");
+		if(posSpeed.directionQEP==1)
+		{
+			DebugP_log("CW, forward \r\n");
+		}
+		if(posSpeed.directionQEP==-1)
+		{
+			DebugP_log("CCW, reverse \r\n");
+		}
+	
         DebugP_log("EQEP Position Speed Test Passed!!\r\n");
         DebugP_log("All tests have passed!!\r\n");
     }
