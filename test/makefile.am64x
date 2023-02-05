@@ -617,6 +617,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/mbedtls_test/test_pka/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -1177,6 +1178,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/mbedtls_test/test_pka/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -1737,6 +1739,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/mbedtls_test/test_pka/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 

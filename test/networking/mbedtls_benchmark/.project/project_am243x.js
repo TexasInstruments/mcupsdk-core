@@ -64,17 +64,6 @@ const syscfgfile = "../example.syscfg"
 
 const readmeDoxygenPageTag = "EXAMPLES_EMPTY";
 
-const templates_freertos_r5f =
-[
-    {
-        input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "mbedtls_test_main",
-        },
-    }
-];
-
 const defines_r5f = {
     common: [
         "MBEDTLS_CONFIG_FILE=\\\"alt_config.h\\\"",
@@ -119,7 +108,6 @@ function getComponentBuildProperty(buildOption) {
         build_property.includes = includes_freertos_r5f;
         build_property.libdirs = libdirs_freertos;
         build_property.libs = libs_freertos_r5f;
-        build_property.templates = templates_freertos_r5f;
         build_property.defines = defines_r5f;
     }
     return build_property;

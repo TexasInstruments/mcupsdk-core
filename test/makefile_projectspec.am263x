@@ -56,6 +56,7 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  test_mbedtls_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
  mbedtls_benchmark_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
@@ -121,6 +122,7 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  test_mbedtls_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
  mbedtls_benchmark_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
@@ -186,6 +188,7 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  test_mbedtls_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/mbedtls_test/test_ssl_x509/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
  mbedtls_benchmark_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/mbedtls_benchmark/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
