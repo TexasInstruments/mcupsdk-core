@@ -84,6 +84,7 @@ const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl =
 
 #define ENET_BOARD_NUM_MACADDR_MAX                                        (3U)
 #define ENET_GET_NUM_MAC_ADDR(num) ((num>>3)+1)
+#define ENET_MAC_ADDR_VALIDATE_MASK (0x01U)
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -414,9 +415,10 @@ void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
 {
     int32_t status = ENET_SOK;
     uint32_t macAddrCnt;
-    uint8_t numMacMax;
     uint32_t i;
+    uint8_t numMacMax;
     uint8_t macAddrBuf[ENET_BOARD_NUM_MACADDR_MAX * ENET_MAC_ADDR_LEN];
+    uint8_t validNumMac = 0
 
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0],  I2C_EEPROM_MAC_CTRL_OFFSET, &numMacMax, sizeof(uint8_t));
     EnetAppUtils_assert(status == ENET_SOK);
@@ -429,13 +431,16 @@ void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
     EnetAppUtils_assert(status == ENET_SOK);
 
     /* Save only those required to meet the max number of MAC entries */
-    /* TODO Read number of mac addresses from the board eeprom */
+    /* Validating that the MAC addresses from the EEPROM are not MULTICAST addresses */
     for (i = 0U; i < macAddrCnt; i++)
     {
-        memcpy(macAddr[i], &macAddrBuf[i * ENET_MAC_ADDR_LEN], ENET_MAC_ADDR_LEN);
+        if(!(macAddrBuf[i * ENET_MAC_ADDR_LEN] & ENET_MAC_ADDR_VALIDATE_MASK)){
+            memcpy(macAddr[validNumMac], &macAddrBuf[i * ENET_MAC_ADDR_LEN], ENET_MAC_ADDR_LEN);
+            validNumMac++;
+        }
     }
 
-    *pAvailMacEntries = macAddrCnt;
+    *pAvailMacEntries = validNumMac;
 
     if (macAddrCnt == 0U)
     {

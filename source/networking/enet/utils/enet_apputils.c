@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) Texas Instruments Incorporated 2020
+ *  Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -875,6 +875,10 @@ void EnetAppUtils_validatePacketState(EnetDma_PktQ *pQueue,
 }
 
 #if ENET_CFG_IS_ON(RM_PRESENT)
+/*
+ * This function iterates over all the cores and reduce the mac address count as much as possible for each core.
+ *
+*/
 static void EnetAppUtils_reduceCoreMacAllocation(EnetRm_ResPrms *resPrms,
                                                  uint32_t *pReduceCount,
                                                  uint32_t coreMinCount,
@@ -897,7 +901,7 @@ static void EnetAppUtils_reduceCoreMacAllocation(EnetRm_ResPrms *resPrms,
             }
             else
             {
-                coreMacAddrReducedCount -= *pReduceCount;
+                coreMacAddrReducedCount  = *pReduceCount;
                 *pReduceCount            = 0;
             }
 
@@ -906,7 +910,7 @@ static void EnetAppUtils_reduceCoreMacAllocation(EnetRm_ResPrms *resPrms,
                                resPrms->coreDmaResInfo[i].coreId,
                                resPrms->coreDmaResInfo[i].numMacAddress,
                                (resPrms->coreDmaResInfo[i].numMacAddress - coreMacAddrReducedCount));
-            resPrms->coreDmaResInfo[i].numMacAddress -= coreMacAddrReducedCount;
+            resPrms->coreDmaResInfo[i].numMacAddress  -= coreMacAddrReducedCount;
         }
     }
 }
@@ -928,7 +932,10 @@ static void EnetAppUtils_updatemacResPart(EnetRm_ResPrms *resPrms,
     {
         uint32_t reduceCount = totalResPartMacCnt - availMacCount;
 
-        /* First reduce mac count for cores with more than one mac address allocation */
+        /* First reduce mac count for cores with more than one mac address allocation.
+         * If the available mac addr count is less than expected, Divide the available
+         * mac addresses among the cores giving preference to the present core.
+        */
         EnetAppUtils_reduceCoreMacAllocation(resPrms, &reduceCount, 1, false, selfCoreId);
         if (reduceCount)
         {
