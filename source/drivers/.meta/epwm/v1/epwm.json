@@ -1227,7 +1227,7 @@
 			"driverlibFunctionArg" : {
 		        "base" : "",
 		        "blankingPulse" : "this",
-                "mixedSource": "this",
+                "mixedSource": "0",
 			},
 			"register": "DCFCTL.PULSESEL",
 			"devices" : [
@@ -2082,7 +2082,7 @@
 			"driverlibFunctionArg" : {
 		        "base" : "",
 		        "interruptSource": "this",
-                "mixedSource": "this",
+                "mixedSource": "0",
 			},
 			"register": "ETSEL.INTSEL",
 			"devices" : [
@@ -2170,7 +2170,7 @@
 		        "base" : "",
 		        "adcSOCType": "EPWM_SOC_A",
 		        "socSource": "this",
-                "mixedSource": "this",
+                "mixedSource": "0",
 			},
 			"register": "ETSEL.SOCASEL",
 			"devices" : [
