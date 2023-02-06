@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -100,6 +100,13 @@
 #define UART_CTS_ENABLE                  (UART_EFR_HW_ENALE_CTS_VALUE)
 #define UART_RTS_CTS_ENABLE              (UART_EFR_HW_ENABLE_RTS_CTS_FLOW_CONTROL_VALUE)
 
+#define UART_TIMEOUTL                       (0x98U)
+#define UART_TIMEOUTH                       (0x9CU)
+
+#define UART_EFR2                             (0x8CU)
+#define UART_EFR2_TIMEOUT_BEHAVE_SHIFT        (0x6U)
+#define UART_EFR2_TIMEOUT_BEHAVE_MASK         (0x6U)
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
@@ -192,6 +199,7 @@ static void UART_flowCtrlTrigLvlConfig(uint32_t baseAddr,
 static uint32_t UART_spaceAvail(uint32_t baseAddr);
 static uint32_t UART_getRxError(uint32_t baseAddr);
 static uint32_t UART_regConfigModeEnable(uint32_t baseAddr, uint32_t modeFlag);
+static void UART_i2310WA(uint32_t baseAddr);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -1941,6 +1949,14 @@ static void UART_masterIsr(void *arg)
                     UART_intrDisable(attrs->baseAddr, UART_INTR_THR);
                 }
             }
+            else if ((intType & UART_INTID_CHAR_TIMEOUT) == UART_INTID_CHAR_TIMEOUT)
+            {
+                /* Work around for errata i2310 */
+                if (FALSE == UART_checkCharsAvailInFifo(attrs->baseAddr))
+                {
+                    UART_i2310WA(attrs->baseAddr);
+                }
+            }
             else
             {
                 break;
@@ -2370,6 +2386,30 @@ static inline void UART_procLineStatusErr(UART_Config *config)
     }
 
     return;
+}
+
+/* Work around for errata i2310
+ *
+ * Fixes Erroneous clear/trigger of timeout interrupt
+ *  - If timeout interrupt is erroneously set, and the FIFO is empty
+ *      - Set a high value of timeout counter in TIMEOUTH and TIMEOUTL registers
+ *      - Set EFR2 bit 6 to 1 to change timeout mode to periodic
+ *      - Read the IIR register to clear the interrupt
+ *      - Set EFR2 bit 6 back to 0 to change timeout mode back to the original mode
+ *
+ * Errata document : https://www.ti.com/lit/pdf/sprz457
+ */
+static void UART_i2310WA(uint32_t baseAddr)
+{
+    HW_WR_REG32(baseAddr + UART_TIMEOUTL, 0xFF);
+
+    HW_WR_REG32(baseAddr + UART_TIMEOUTH, 0xFF);
+
+    HW_WR_FIELD32(baseAddr + UART_EFR2, UART_EFR2_TIMEOUT_BEHAVE, 1);
+
+    HW_RD_REG32(baseAddr + UART_IIR);
+
+    HW_WR_FIELD32(baseAddr + UART_EFR2, UART_EFR2_TIMEOUT_BEHAVE, 0);
 }
 
 /* ========================================================================== */
