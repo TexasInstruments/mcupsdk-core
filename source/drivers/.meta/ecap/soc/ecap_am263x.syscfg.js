@@ -322,7 +322,6 @@ let ECAP_ISR_SOURCE = [
 	{ name: "ECAP_ISR_SOURCE_COUNTER_OVERFLOW", displayName: "Counter overflow ISR source" },
 	{ name: "ECAP_ISR_SOURCE_COUNTER_PERIOD", displayName: "Counter equals period ISR source" },
 	{ name: "ECAP_ISR_SOURCE_COUNTER_COMPARE", displayName: "Counter equals compare ISR source" },
-    { name: "ECAP_ISR_SOURCE_HR_ERROR", displayName: "High Resolution Error ISR source" },
 ]
 exports = {
 	ECAP_EmulationMode: ECAP_EmulationMode,
