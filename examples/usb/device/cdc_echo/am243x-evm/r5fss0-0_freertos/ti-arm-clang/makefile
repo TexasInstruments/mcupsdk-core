@@ -30,12 +30,6 @@ BOOTIMAGE_NAME_SIGNED:=cdc_echo_freertos.$(PROFILE).appimage.signed
 BOOTIMAGE_RPRC_NAME:=cdc_echo_freertos.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=cdc_echo_freertos.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=cdc_echo_freertos.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=cdc_echo_freertos.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=cdc_echo_freertos.$(PROFILE).appimage.hs_fs
-TARGETS := $(BOOTIMAGE_NAME)
-ifeq ($(DEVICE_TYPE), HS)
-   TARGETS += $(BOOTIMAGE_NAME_HS)
-endif
 
 FILES_common := \
 	cdc_echo_freertos.c \
@@ -172,7 +166,7 @@ $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: am243x:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
-all: $(TARGETS)
+all: $(BOOTIMAGE_NAME)
 
 SYSCFG_GEN_FILES=generated/ti_drivers_config.c generated/ti_drivers_config.h
 SYSCFG_GEN_FILES+=generated/ti_drivers_open_close.c generated/ti_drivers_open_close.h
@@ -264,7 +258,6 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -289,27 +282,9 @@ endif
 	$(XIPGEN_CMD) -i $(BOOTIMAGE_RPRC_NAME_TMP) -o $(BOOTIMAGE_RPRC_NAME) -x $(BOOTIMAGE_RPRC_NAME_XIP) --flash-start-addr 0x60000000 -v > $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME) $(MULTI_CORE_IMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-# Sign the appimage for HS-FS using appimage signing script
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am243x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-	@echo  Boot image: am243x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
-	@echo  .
 
-$(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
-ifeq ($(DEVICE_TYPE), HS)
-# Sign the appimage using appimage signing script
-ifeq ($(ENC_ENABLED),no)
-	@echo Boot image signing: Encryption is disabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
-else
-	@echo Boot image signing: Encryption is enabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_HS)
-	$(RM) $(BOOTIMAGE_NAME)-enc
-endif
-	@echo  Boot image: am243x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  .
-endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))

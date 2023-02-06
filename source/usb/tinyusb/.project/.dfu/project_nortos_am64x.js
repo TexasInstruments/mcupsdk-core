@@ -4,21 +4,8 @@ let device = "am64x";
 
 const files = {
     common: [
-        /* AM64x/AM243x porting layer (usb/cdn/soc)/am64x_am243x */
-        "cdn_print.c",
-        "cps.c",
-        "usb_init.c",
-        "usbss_functions.c",
+		/* cdn -> tusb  wrapper */
         "usb_wrapper.c",
-        /* CDN device driver (usb/cdn/core_driver) */
-        "cusb_ch9_sanity.c",
-        "cusbd.c",
-        "cusbd_obj_if.c",
-        "cusbd_sanity.c",
-        "cusbdma.c",
-        "cusbdma_obj_if.c",
-        "cusbdma_sanity.c",
-        "list_sanity.c",
         /* TinyUSB porting layer (usb/tinyusb/portable) */
         "dcd.c",
         /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
@@ -27,45 +14,48 @@ const files = {
         "usbd.c",
         "usbd_control.c",
         /* TinyUSB CDC class driver (usb/tinyusb/tinyusb-stack/class) */
-        "cdc_device.c",
+        "dfu_device.c",
     ],
 };
 
 const filedirs = {
     common: [
-        "cdn/core_driver/common/src",
-        "cdn/core_driver/device/src",
-        "cdn/soc/am64x_am243x",
-        "cdn",
-        "tinyusb/tinyusb-stack/src",
-        "tinyusb/tinyusb-stack/src/common",
-        "tinyusb/tinyusb-stack/src/device",
-        "tinyusb/tinyusb-stack/src/class/cdc",
-        "tinyusb/portable/am64x_am243x",
+        "../tinyusb/tinyusb-stack/src",
+        "../tinyusb/tinyusb-stack/src/common",
+        "../tinyusb/tinyusb-stack/src/device",
+        "../tinyusb/tinyusb-stack/src/class/dfu",
+        "../tinyusb/portable/am64x_am243x",
+        "../cdn/include",
+        "../cdn/soc/am64x_am243x",
     ],
 };
 
 const includes = {
     common: [
-        "../drivers/hw_include",
-        "../drivers/hw_include/am64x_am243x",
-        "../drivers/soc/am64x_am243x",
-        "cdn/core_driver/common/src",
-        "cdn/core_driver/common/include",
-        "cdn/core_driver/device/src",
-        "cdn/core_driver/device/include",
-        "cdn/include",
-        "cdn/soc/am64x_am243x",
-        "tinyusb/config/nortos/am64x_am243x",
-        "tinyusb/tinyusb-stack/src",
-        "tinyusb/tinyusb-stack/src/common",
-        "tinyusb/tinyusb-stack/src/device",
-        "tinyusb/tinyusb-stack/src/class/cdc",
+        "../../drivers/hw_include",
+        "../../drivers/hw_include/am64x_am243x",
+        "../../drivers/soc/am64x_am243x",
+        "../tinyusb/config/nortos/am64x_am243x",
+        "../tinyusb/tinyusb-stack/src",
+        "../tinyusb/tinyusb-stack/src/common",
+        "../tinyusb/tinyusb-stack/src/device",
+        "../tinyusb/tinyusb-stack/src/class/dfu",
+        "../tinyusb/config/nortos/am64x_am243x/dfu_config",
+        "../cdn/core_driver/common/src",
+        "../cdn/core_driver/common/include",
+        "../cdn/core_driver/device/src",
+        "../cdn/core_driver/device/include",
+        "../cdn/include",
+        "../cdn/soc/am64x_am243x",
     ],
 };
 
 const defines = {
     common: [
+    ],
+    debug: [
+    ],
+    release: [
     ],
 };
 
@@ -82,13 +72,13 @@ const buildOptionCombos = [
 function getComponentProperty() {
     let property = {};
 
-    property.dirPath = path.resolve(__dirname, "..");
+    property.dirPath = path.resolve(__dirname, "../..");
     property.type = "library";
-    property.name = "usb_device_nortos";
+    property.name = "usbd_tusb_dfu_nortos";
     property.isInternal = false;
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
-    property.tag = "nortos";
+    property.tag = "dfu_nortos";
 
     return property;
 }

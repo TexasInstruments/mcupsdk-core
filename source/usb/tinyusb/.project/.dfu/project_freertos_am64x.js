@@ -4,6 +4,8 @@ let device = "am64x";
 
 const files = {
     common: [
+		/* cdn -> tusb  wrapper */
+        "usb_wrapper.c",
         /* TinyUSB porting layer (usb/tinyusb/portable) */
         "dcd.c",
         /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
@@ -12,33 +14,41 @@ const files = {
         "usbd.c",
         "usbd_control.c",
         /* TinyUSB CDC class driver (usb/tinyusb/tinyusb-stack/class) */
-        "cdc_device.c",
+        "dfu_device.c",
     ],
 };
 
 const filedirs = {
     common: [
-        "tinyusb/tinyusb-stack/src",
-        "tinyusb/tinyusb-stack/src/common",
-        "tinyusb/tinyusb-stack/src/device",
-        "tinyusb/tinyusb-stack/src/class/cdc",
-        "tinyusb/portable/am64x_am243x",
+        "../tinyusb/tinyusb-stack/src",
+        "../tinyusb/tinyusb-stack/src/common",
+        "../tinyusb/tinyusb-stack/src/device",
+        "../tinyusb/tinyusb-stack/src/class/dfu",
+        "../tinyusb/portable/am64x_am243x",
+        "../cdn/include",
+        "../cdn/soc/am64x_am243x",
     ],
 };
 
 const includes = {
     common: [
-        "../drivers/hw_include",
-        "../drivers/hw_include/am64x_am243x",
-        "../drivers/soc/am64x_am243x",
-        "../kernel/freertos/FreeRTOS-Kernel/include",
-        "../kernel/freertos/config/am64x/r5f",
-        "../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
-        "tinyusb/config/freertos/am64x_am243x",
-        "tinyusb/tinyusb-stack/src",
-        "tinyusb/tinyusb-stack/src/common",
-        "tinyusb/tinyusb-stack/src/device",
-        "tinyusb/tinyusb-stack/src/class/cdc",
+        "../../drivers/hw_include",
+        "../../drivers/hw_include/am64x_am243x",
+        "../../drivers/soc/am64x_am243x",
+        "../../kernel/freertos/FreeRTOS-Kernel/include",
+        "../../kernel/freertos/config/am64x/r5f",
+        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+        "../tinyusb/config/freertos/am64x_am243x/dfu_config",
+        "../tinyusb/tinyusb-stack/src",
+        "../tinyusb/tinyusb-stack/src/common",
+        "../tinyusb/tinyusb-stack/src/device",
+        "../tinyusb/tinyusb-stack/src/class/dfu",
+        "../cdn/core_driver/common/src",
+        "../cdn/core_driver/common/include",
+        "../cdn/core_driver/device/src",
+        "../cdn/core_driver/device/include",
+        "../cdn/include",
+        "../cdn/soc/am64x_am243x",
     ],
 };
 
@@ -60,13 +70,13 @@ const buildOptionCombos = [
 function getComponentProperty() {
     let property = {};
 
-    property.dirPath = path.resolve(__dirname, "..");
+    property.dirPath = path.resolve(__dirname, "../..");
     property.type = "library";
-    property.name = "usb_device_tusb_freertos";
+    property.name = "usbd_tusb_dfu_freertos";
     property.isInternal = false;
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
-    property.tag = "freertos";
+    property.tag = "dfu_freertos";
 
     return property;
 }

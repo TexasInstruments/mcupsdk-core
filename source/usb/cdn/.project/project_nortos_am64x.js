@@ -73,7 +73,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "usb_device_cdn_nortos";
+    property.name = "usbd_cdn_nortos";
     property.isInternal = false;
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;

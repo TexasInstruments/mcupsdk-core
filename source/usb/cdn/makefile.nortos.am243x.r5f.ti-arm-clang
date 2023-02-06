@@ -13,7 +13,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=usb_device_cdn_nortos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=usbd_cdn_nortos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     cdn_osal_none.c \
@@ -108,7 +108,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usb_device_cdn_nortos/
+OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usbd_cdn_nortos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)
