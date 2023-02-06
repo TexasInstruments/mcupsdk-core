@@ -12,7 +12,7 @@ function onChangeECAPMode(inst, ui)
         ui.eventThreePolarity.hidden = false
         ui.eventFourPolarity.hidden = false
         ui.captureMode.hidden = false
-        ui.dmaSourceCapture.hidden = false;
+        ui.dmaSource.hidden = false;
         ui.dmaSourceAPWM.hidden = true;
         if (inst.useInterrupts){
             ui.interruptSourceCapture.hidden = false
@@ -35,7 +35,7 @@ function onChangeECAPMode(inst, ui)
         inst.apwmPeriod = 0
         inst.apwmCompare = 0
         inst.interruptSourceAPWM = []
-        inst.dmaSourceAPWM = device_peripheral.ECAP_Events[4].name
+        inst.dmaSourceAPWM = device_peripheral.ECAP_DMA_TRIGGER_SOURCE[4].name
     }
     else if(inst.ecapMode == "APWM"){
         //CAPTURE options
@@ -45,7 +45,7 @@ function onChangeECAPMode(inst, ui)
         ui.eventThreePolarity.hidden = true
         ui.eventFourPolarity.hidden = true
         ui.captureMode.hidden = true
-        ui.dmaSourceCapture.hidden = true;
+        ui.dmaSource.hidden = true;
         ui.dmaSourceAPWM.hidden = false;
         if (inst.useInterrupts){
             ui.interruptSourceCapture.hidden = true
@@ -75,7 +75,7 @@ function onChangeECAPMode(inst, ui)
         inst.ecapInput = defaultInput
         inst.resetCounters = false
         inst.interruptSourceCapture = []
-        inst.dmaSourceCapture = device_peripheral.ECAP_Events[0].name
+        inst.dmaSource = device_peripheral.ECAP_DMA_TRIGGER_SOURCE[0].name
     }
     inst.ecap_AdcSoCtriggerEnable = false
     ui.ecap_AdcSoCtriggerSourceCapture.hidden = true
@@ -200,11 +200,7 @@ let config = [
         description : 'Select the event number at which the counter stops or wraps',
         hidden      : false,
         default     : device_peripheral.ECAP_Events[0].name,
-        options     : [device_peripheral.ECAP_Events[0],
-                       device_peripheral.ECAP_Events[1],
-                       device_peripheral.ECAP_Events[2],
-                       device_peripheral.ECAP_Events[3],
-                       ]
+        options     : device_peripheral.ECAP_Events
     },
     {
         name        : "eventPrescaler",
@@ -294,11 +290,8 @@ let config = [
         hidden      : false,
         default     : [],
         minSelections: 0,
-        options     : [device_peripheral.ECAP_Events[0],
-                       device_peripheral.ECAP_Events[1],
-                       device_peripheral.ECAP_Events[2],
-                       device_peripheral.ECAP_Events[3],
-                      ]
+        options     : device_peripheral.ECAP_Events
+
     },
     {
         name        : "phaseShiftCount",
@@ -379,15 +372,15 @@ config.push(
         default     : false
     },
     {
-        name        : "dmaSourceCapture",
+        name        : "dmaSource",
         displayName : "DMA Source",
         description : 'Sets the eCAP DMA source in Capture Mode.',
         hidden      : false,
-        default     : device_peripheral.ECAP_Events[0].name,
-        options     : [device_peripheral.ECAP_Events[0],
-                       device_peripheral.ECAP_Events[1],
-                       device_peripheral.ECAP_Events[2],
-                       device_peripheral.ECAP_Events[3],
+        default     : device_peripheral.ECAP_DMA_TRIGGER_SOURCE[0].name,
+        options     : [device_peripheral.ECAP_DMA_TRIGGER_SOURCE[0],
+                       device_peripheral.ECAP_DMA_TRIGGER_SOURCE[1],
+                       device_peripheral.ECAP_DMA_TRIGGER_SOURCE[2],
+                       device_peripheral.ECAP_DMA_TRIGGER_SOURCE[3],
                       ]
     },
     {
@@ -395,11 +388,11 @@ config.push(
         displayName : "DMA Source",
         description : 'Sets the eCAP DMA source in APWM mode.',
         hidden      : true,
-        default     : device_peripheral.ECAP_Events[4].name,
-        options     : [device_peripheral.ECAP_Events[4],
-                       device_peripheral.ECAP_Events[5],
-                       device_peripheral.ECAP_Events[6],
-                       device_peripheral.ECAP_Events[7],
+        default     : device_peripheral.ECAP_DMA_TRIGGER_SOURCE[4].name,
+        options     : [device_peripheral.ECAP_DMA_TRIGGER_SOURCE[4],
+                       device_peripheral.ECAP_DMA_TRIGGER_SOURCE[5],
+                       device_peripheral.ECAP_DMA_TRIGGER_SOURCE[6],
+                       device_peripheral.ECAP_DMA_TRIGGER_SOURCE[7],
                       ]
     },
     {

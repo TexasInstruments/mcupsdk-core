@@ -137,7 +137,7 @@ typedef enum
 //
 //! Values that can be passed to ECAP_setEventPolarity(),ECAP_setCaptureMode(),
 //! ECAP_enableCounterResetOnEvent(),ECAP_disableCounterResetOnEvent(),
-//! ECAP_getEventTimeStamp(),ECAP_setDMASource() as the \e event parameter.
+//! ECAP_getEventTimeStamp() as the \e event parameter.
 //
 //*****************************************************************************
 typedef enum
@@ -146,10 +146,6 @@ typedef enum
     ECAP_EVENT_2 = 1U,     //!< eCAP event 2 in capture mode
     ECAP_EVENT_3 = 2U,     //!< eCAP event 3 in capture mode
     ECAP_EVENT_4 = 3U,      //!< eCAP event 4
-    ECAP_APWM_MODE_PRD = ECAP_EVENT_1,        //!< eCAP Period match in APWM mode
-    ECAP_APWM_MODE_CMP = ECAP_EVENT_2,        //!< eCAP Compare match  in APWM mode
-    ECAP_APWM_MODE_PRD_CMP = ECAP_EVENT_3,    //!< eCAP Period or compare match  in APWM mode
-    ECAP_APWM_MODE_DISABLED = ECAP_EVENT_4,  //!< Disabled in APWM mode
 }ECAP_Events;
 
 //*****************************************************************************
@@ -670,6 +666,23 @@ typedef enum
     ECAP_INPUT_INPUTXBAR31 = 233
 }ECAP_InputCaptureSignals;
 
+//*****************************************************************************
+//
+//! Values that can be passed to ECAP_setDMASource() as the \e triggersource
+//! parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT1 = 0,  //!< eCAP event 1 as DMA trigger source in capture mode
+    ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT2 = 1,  //!< eCAP event 2 as DMA trigger source in capture mode
+    ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT3 = 2,  //!< eCAP event 3 as DMA trigger source in capture mode
+    ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT4 = 3,  //!< eCAP event 4 as DMA trigger source in capture mode
+    ECAP_APWM_MODE_DMA_TRIGGER_SRC_PRD = ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT1, //!< eCAP PRD match as DMA trigger source in APWM mode
+    ECAP_APWM_MODE_DMA_TRIGGER_SRC_CMP = ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT2, //!< eCAP CMP match as DMA trigger source in APWM mode
+    ECAP_APWM_MODE_DMA_TRIGGER_SRC_PRD_CMP = ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT3, //!< eCAP PRD or CMP match as DMA trigger source in APWM mode
+    ECAP_APWM_MODE_DMA_TRIGGER_SRC_DISABLED = ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT4 //!< eCAP DMA trigger source disabled in APWM mode
+}ECAP_DmaTriggerSource;
 //*****************************************************************************
 //
 //! Values that can be passed to ECAP_selectSocTriggerSource() as the \e triggersource
@@ -1586,10 +1599,20 @@ static inline uint32_t ECAP_getTimeBaseCounter(uint32_t base)
 //! \param base is the base address of the ECAP module.
 //! \param event is the event number.
 //!
-//! This function returns the current time stamp count of the given event.
-//! Valid values for \e event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4 in Capture mode and
-//! \b ECAP_APWM_MODE_PRD, \b ECAP_APWM_MODE_CMP, \b ECAP_APWM_MODE_PRD_CMP,
-//! \b ECAP_APWM_MODE_DISABLED in APWM mode.
+//! This function returns the current time stamp count of the given event in capture and apwm mode.
+//! Valid values for \e event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4.
+//!
+//! In capture mode of operation -
+//! \b ECAP_EVENT_1 - Read CAP1 register
+//! \b ECAP_EVENT_2 - Read CAP2 register
+//! \b ECAP_EVENT_3 - Read CAP3 register
+//! \b ECAP_EVENT_4 - Read CAP4 register
+//!
+//! In APWM mode of operation -
+//! \b ECAP_EVENT_1 - Read PRD ACTIVE register
+//! \b ECAP_EVENT_2 - Read CMP ACTIVE register
+//! \b ECAP_EVENT_3 - Read PRD SHADOW register
+//! \b ECAP_EVENT_4 - Read CMP SHADOW register
 //!
 //! \return Event time stamp value or 0 if \e event is invalid.
 //
@@ -1718,17 +1741,15 @@ static inline void ECAP_resetCounters(uint32_t base)
 //! Sets the eCAP DMA source.
 //!
 //! \param base is the base address of the ECAP module.
-//! \param event is the eCAP event for the DMA
+//! \param triggersource is the eCAP event for the DMA
 //!
-//! This function sets the eCAP event source for the DMA trigger.
-//! Valid values for \e event are \b ECAP_EVENT_1 to \b ECAP_EVENT_4 in Capture mode and
-//! \b ECAP_APWM_MODE_PRD, \b ECAP_APWM_MODE_CMP, \b ECAP_APWM_MODE_PRD_CMP,
-//! \b ECAP_APWM_MODE_DISABLED in APWM mode.
+//! Please refer to the ::ECAP_DmaTriggerSource Enum for the valid values
+//! to be passed to \e triggersource parameter.
 //!
 //! \return None.
 //
 //*****************************************************************************
-static inline void ECAP_setDMASource(uint32_t base, ECAP_Events event)
+static inline void ECAP_setDMASource(uint32_t base, ECAP_DmaTriggerSource triggersource)
 {
     //
     // Write to ECCTL2
@@ -1736,7 +1757,7 @@ static inline void ECAP_setDMASource(uint32_t base, ECAP_Events event)
     HW_WR_REG16(base + CSL_ECAP_ECCTL2,
         ((HW_RD_REG16(base + CSL_ECAP_ECCTL2) &
         ~CSL_ECAP_ECCTL2_DMAEVTSEL_MASK) |
-        ((uint16_t)event << CSL_ECAP_ECCTL2_DMAEVTSEL_SHIFT)));
+        ((uint16_t)triggersource << CSL_ECAP_ECCTL2_DMAEVTSEL_SHIFT)));
 }
 
 //*****************************************************************************

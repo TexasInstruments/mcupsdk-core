@@ -12,10 +12,6 @@ let ECAP_Events = [
 	{ name: "ECAP_EVENT_2", displayName: "eCAP event 2" },
 	{ name: "ECAP_EVENT_3", displayName: "eCAP event 3" },
 	{ name: "ECAP_EVENT_4", displayName: "eCAP event 4" },
-    { name: "ECAP_APWM_MODE_PRD", displayName: "eCAP Period match" },
-    { name: "ECAP_APWM_MODE_CMP", displayName: "eCAP Compare match" },
-    { name: "ECAP_APWM_MODE_PRD_CMP", displayName: "eCAP Period or compare match" },
-    { name: "ECAP_APWM_MODE_DISABLED", displayName:"Disabled" },
 ]
 let ECAP_SyncOutMode = [
 	{ name: "ECAP_SYNC_OUT_SYNCI", displayName: "sync out on the sync in signal and software force" },
@@ -301,6 +297,16 @@ let ECAP_SyncInPulseSource = [
 	{ name: "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM30", displayName: "Sync-in source is EPWM30 sync-out signal" },
 	{ name: "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM31", displayName: "Sync-in source is EPWM31 sync-out signal" },
 ]
+let ECAP_DMA_TRIGGER_SOURCE =[
+    { name: "ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT1", displayName: "DMA trigger source is eCAP event 1"},
+    { name: "ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT2", displayName: "DMA trigger source is eCAP event 2"},
+    { name: "ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT3", displayName: "DMA trigger source is eCAP event 3"},
+    { name: "ECAP_CAP_MODE_DMA_TRIGGER_SRC_CEVT4", displayName: "DMA trigger source is eCAP event 4"},
+    { name: "ECAP_APWM_MODE_DMA_TRIGGER_SRC_PRD", displayName: "DMA trigger source is eCAP Period match"  },
+    { name: "ECAP_APWM_MODE_DMA_TRIGGER_SRC_CMP", displayName: "DMA trigger source is eCAP Compare match" },
+    { name: "ECAP_APWM_MODE_DMA_TRIGGER_SRC_PRD_CMP", displayName: "DMA trigger source is eCAP Period or Compare match"},
+    { name: "ECAP_APWM_MODE_DMA_TRIGGER_SRC_DISABLED", displayName: "DMA trigger source is Disabled" },
+]
 let ECAP_ADC_TRIGGER_SOURCE =[
     { name: "ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT1", displayName: "ADC SOC trigger source is eCAP event 1"},
     { name: "ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2", displayName: "ADC SOC trigger source is eCAP event 2"},
@@ -332,6 +338,7 @@ exports = {
 	ECAP_EventPolarity: ECAP_EventPolarity,
 	ECAP_InputCaptureSignals: ECAP_InputCaptureSignals,
 	ECAP_SyncInPulseSource: ECAP_SyncInPulseSource,
+    ECAP_DMA_TRIGGER_SOURCE: ECAP_DMA_TRIGGER_SOURCE,
     ECAP_ADC_TRIGGER_SOURCE: ECAP_ADC_TRIGGER_SOURCE,
 	ECAP_MAX_PRESCALER_VALUE: ECAP_MAX_PRESCALER_VALUE,
 	ECAP_ISR_SOURCE: ECAP_ISR_SOURCE,

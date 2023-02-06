@@ -109,7 +109,7 @@ void Drivers_ecapOpen()
 			% }
 			% if (instance.useDMA){
 	/* Sets the eCAP DMA source */
-	ECAP_setDMASource(`baseName`,`instance.dmaSourceCapture`);
+	ECAP_setDMASource(`baseName`,`instance.dmaSource`);
 			% }
     % if (instance.ecap_AdcSoCtriggerEnable){
 	/* Sets the eCAP DMA source */
