@@ -206,6 +206,7 @@ const example_file_list = [
     "test/security/crypto/test_dthe_pka/test_ecdsa_signing_verification/.project/project.js",
     "test/security/crypto/test_dthe_pka/test_rsa_encryption_decryption/.project/project.js",
     "test/security/crypto/test_dthe_pka/test_rsa_signing_verification/.project/project.js",
+    "test/security/crypto/test_dthe_rng/.project/project.js",
     "test/sdl/pbist/sdl_pbist_test/.project/project.js",
     "test/sdl/pbist/ip_pbist_test/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_func_test/.project/project.js",
