@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -167,6 +167,8 @@ extern "C" {
 #define HWA_EINVAL_PARAMSET_LOCALMAXMODE                (HWA_ERRNO_BASE - 34)
 /** \brief Error Code: if paramset interrupt is enabled, polling should be disabled */
 #define HWA_PARAMSET_POLLINGNOTALLOWED                  (HWA_ERRNO_BASE - 35)
+/** \brief Error Code: Invalid argument: for CFAR config in common register - CFAR_DET_THR */
+#define HWA_EINVAL_COMMON_REGISTER_CFAR_DET_THR         (HWA_ERRNO_BASE - 36)
 /** @} */
 
 /** \brief Number of RX channels in pre-processing block */
@@ -509,10 +511,11 @@ extern "C" {
 #define HWA_COMMONCONFIG_MASK_INTERF_MITG_WINDOW_PARAM  ((uint64_t)0x40000000U)      /**<  Use when \ref HWA_CommonConfig::mitigationWindowParam array is valid */
 #define HWA_COMMONCONFIG_MASK_EGECOMRESS_KPARAM         ((uint64_t)0x80000000U)      /**<  Use when \ref HWA_CommonConfig::EGEKparam array is valid */
 
+#define HWA_COMMONCONFIG_MASK_CFAR_DET_THR             ((uint64_t)0x1000000000U)     /**<  Use when \ref HWA_CommonConfig::cfarDetthreshold is valid */
 #if defined (SOC_AWR294X)
-#define HWA_COMMONCONFIG_MASK_CMP_LFSRSEED0            ((uint64_t)0x100000000U)     /**<  Use when \ref HWA_CommonConfig::cmpLfsrSeed0 is valid */
-#define HWA_COMMONCONFIG_MASK_CMP_LFSRSEED1            ((uint64_t)0x200000000U)     /**<  Use when \ref HWA_CommonConfig::cmpLfsrSeed1 is valid */
-#define HWA_COMMONCONFIG_MASK_SW_RESTART_LOOP          ((uint64_t)0x400000000U)     /**<  Use when \ref HWA_CommonConfig::swRestartLoop is valid */
+#define HWA_COMMONCONFIG_MASK_CMP_LFSRSEED0            ((uint64_t)0x200000000U)     /**<  Use when \ref HWA_CommonConfig::cmpLfsrSeed0 is valid */
+#define HWA_COMMONCONFIG_MASK_CMP_LFSRSEED1            ((uint64_t)0x400000000U)     /**<  Use when \ref HWA_CommonConfig::cmpLfsrSeed1 is valid */
+#define HWA_COMMONCONFIG_MASK_SW_RESTART_LOOP          ((uint64_t)0x800000000U)     /**<  Use when \ref HWA_CommonConfig::swRestartLoop is valid */
 #endif
 
 /** @} */
@@ -1057,6 +1060,15 @@ typedef struct HWA_CommonConfig_t {
                                                         in mag/mag-sqr mode, this value should be represented as 14.4.
                                                         Sets the CFAR_THRESH_CFAR_THRESH bits in CFAR_THRESH register */
     } cfarConfig;
+
+    struct {
+
+        uint32_t        cfarDetthreshold;          /**<  23-bit value: specifies the detection threshold value used to
+                                                         compare with cell under test. The detection threshold value is
+                                                         held constant, independent of “surrounding noise level” and CFAR_THRESH.
+                                                         This configuration is applicable only in constant threshold mode of CFAR
+                                                         (i.e. only in CFAR-CA mode and only if CFAR_AVG_LEFT = CFAR_AVG_RIGHT = 0).) */
+    } cfarDetThresConfig;
 
     struct {
 

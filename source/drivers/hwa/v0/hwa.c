@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -2077,6 +2077,13 @@ int32_t HWA_configCommon(HWA_Handle handle, HWA_CommonConfig *commonConfig)
             retCode = HWA_EINVAL_COMMON_REGISTER_CFAR;
         }
         else if (
+            ((commonConfig->configMask & HWA_COMMONCONFIG_MASK_CFAR_DET_THR) && (commonConfig->cfarDetThresConfig.cfarDetthreshold > (1U << 23U)))
+            )
+        {
+            /* invalid config */
+            retCode = HWA_EINVAL_COMMON_REGISTER_CFAR_DET_THR;
+        }
+        else if (
             ((commonConfig->configMask & HWA_COMMONCONFIG_MASK_INTERFSUM_MAG) &&
              ((commonConfig->interfConfig.sumMagShift > 6U))) ||
             ((commonConfig->configMask & HWA_COMMONCONFIG_MASK_INTERFSUM_MAGDIFF) &&
@@ -2242,6 +2249,15 @@ int32_t HWA_configCommon(HWA_Handle handle, HWA_CommonConfig *commonConfig)
                           CFAR_THRESH_CFAR_THRESH_END,
                           CFAR_THRESH_CFAR_THRESH_START,
                           commonConfig->cfarConfig.thresholdScale);
+            }
+
+            /* CFAR_DET_THR Configuration. */
+            if (commonConfig->configMask & HWA_COMMONCONFIG_MASK_CFAR_DET_THR)
+            {
+                CSL_FINSR(ctrlBaseAddr->CFAR_THRESH,
+                          CFAR_DET_THR_CFAR_DET_THR_END,
+                          CFAR_DET_THR_CFAR_DET_THR_START,
+                          commonConfig->cfarDetThresConfig.cfarDetthreshold);
             }
 
             /* set DCEST scale and shift */
