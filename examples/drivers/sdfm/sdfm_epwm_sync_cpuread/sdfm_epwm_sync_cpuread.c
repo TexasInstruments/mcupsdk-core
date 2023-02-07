@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,30 +42,40 @@
  */
 
 /* Defines */
-#define MAX_SAMPLES  (1024U)
 #define SDFM_INT_MASK  (0x8000F000U)
+#define APP_RUN_TIME  (100)
 
 /* Globals */
-int16_t  filter1Result[MAX_SAMPLES];
-int16_t  filter2Result[MAX_SAMPLES];
-int16_t  filter3Result[MAX_SAMPLES];
-int16_t  filter4Result[MAX_SAMPLES];
+int16_t  filter1Result;
+int16_t  filter2Result;
+int16_t  filter3Result;
+int16_t  filter4Result;
 
 /* Function protoypes */
 static void sdfmISR1(void *handle);
 static void initSDFM(uint32_t sdfmInstance);
 static HwiP_Object gSdfmHwiObject;
 uint32_t gSdfmBaseAddr;
-uint32_t gEpwmBaseAddr;
+uint32_t gClockEpwmBaseAddr;
+uint32_t gSyncEpwmBaseAddr;
+
+volatile uint32_t gInterruptCount;
+volatile uint16_t gSdfmDataTimestamp;
 
 void sdfm_epwm_sync_cpuread_main(void *args)
 {
     gSdfmBaseAddr = CONFIG_SDFM0_BASE_ADDR;
-    gEpwmBaseAddr = CONFIG_EPWM0_BASE_ADDR;
+    gClockEpwmBaseAddr = CONFIG_EPWM0_BASE_ADDR;
+	gSyncEpwmBaseAddr = CONFIG_EPWM1_BASE_ADDR;
 
     DebugP_log("SDFM EPWM Sync CPU Read Test Started ...\r\n");
+	DebugP_log("Please wait %d seconds ...\r\n", APP_RUN_TIME);
 
-    /* Open drivers to open the UART driver for console */
+    /* Open drivers
+		- Open the UART driver for console
+		- Open SDFM and EPWM driver
+		- Open XBAR driver for SDFM interrupt routing to R5F
+	*/
     Drivers_open();
     Board_driversOpen();
 
@@ -80,19 +90,67 @@ void sdfm_epwm_sync_cpuread_main(void *args)
     status              = HwiP_construct(&gSdfmHwiObject, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 
+	/* Initialize SDFM*/
     initSDFM(gSdfmBaseAddr);
 
-    while(true)
+	gInterruptCount = 0;
+	
+	/* Check interrupt and data*/
+	uint32_t loopCount = 0;
+    while(loopCount < APP_RUN_TIME)
     {
-        /* Read and display results values */
-        DebugP_log("Filter 0 data 0 : %d \r\n", filter1Result[0]);
-        DebugP_log("Filter 1 data 0 : %d \r\n", filter2Result[0]);
-        DebugP_log("Filter 2 data 0 : %d \r\n", filter3Result[0]);
-        DebugP_log("Filter 3 data 0 : %d \r\n", filter4Result[0]);
+		DebugP_log("\r\nSDFM ISR count: %u\r\n", gInterruptCount);
+		gInterruptCount=0;
+			
+		if( (SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_1) == true ) &&
+			(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_2) == true ) &&
+			(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_3) == true ) &&
+			(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_4) == true ))
+		{
+			DebugP_log("Modulator operating normally\r\n");
+			
+			/* Read and display result values */
+			DebugP_log("Filter 1 data : %d \r\n", filter1Result);
+			DebugP_log("Filter 2 data : %d \r\n", filter2Result);
+			DebugP_log("Filter 3 data : %d \r\n", filter3Result);
+			DebugP_log("Filter 4 data : %d \r\n", filter4Result);
+			
+			/*DebugP_log("SDFM ISR timestamp (Sync EPWM Timebase counter value) = %u \r\n", gSdfmDataTimestamp);*/
+		}
+		else
+		{
+			DebugP_log("Modulator failure\r\n");
+		}
+			
+		ClockP_sleep(1);
+		loopCount++;
     }
 
-    DebugP_log("SDFM EPWM Sync CPU Read Test Passed!!\r\n");
-    DebugP_log("All tests have passed!!\r\n");
+	if(	(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_1) == true ) &&
+		(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_2) == true ) &&
+		(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_3) == true ) &&
+		(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_4) == true ))
+	{
+		/*Pass if SDFM ISR period matches configured EPWM SOCA period 65535*5ns = 327.675us => 3051Hz.
+			Sync EPWM Period configured using Sysconfig
+		  Fail if SDFM ISR period matches (without sync) SD clock freq/OSR = 1MHz/256 = 3906.25Hz.
+			SD clock frequency (Clock EPWM) configured using Sysconfig.
+		*/
+				
+		if( ((gInterruptCount -3051) < 50) && ((gInterruptCount -3051) > -50) )
+		{
+			DebugP_log("SDFM EPWM Sync CPU Read Test Passed!!\r\n");
+			DebugP_log("All tests have passed!!\r\n");
+		}
+		else
+		{
+			DebugP_log("Sync Fail!!\r\n");
+		}
+	}
+	else
+	{
+		DebugP_log("Fail. Modulator failure!!\r\n");
+	}
 
     Board_driversClose();
     Drivers_close();
@@ -101,26 +159,28 @@ void sdfm_epwm_sync_cpuread_main(void *args)
 /* SDFM 1 ISR */
 static void sdfmISR1(void *handle)
 {
-    static uint16_t loopCounter1 = 0;
-
-    /* Wait for result from all the filters (SDIFLG) */
-    while(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, 0) == false);
-    while(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, 1) == false);
-    while(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, 2) == false);
-    while(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, 3) == false);
-
-    /* Reset the loop counter */
-    if(loopCounter1 >= MAX_SAMPLES)
-    {
-        loopCounter1 = 0;
-    }
+	gSdfmDataTimestamp = EPWM_getTimeBaseCounterValue(gSyncEpwmBaseAddr);
 
     /* Read each SDFM filter output and store it in respective filter result array */
-    filter1Result[loopCounter1] = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_1) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
-    filter2Result[loopCounter1] = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_2) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
-    filter3Result[loopCounter1] = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_3) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
-    filter4Result[loopCounter1++] = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_4) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
+    if(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, SDFM_FILTER_1) == true)
+	{
+		filter1Result = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_1) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
+	}
+    if(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, SDFM_FILTER_2) == true)
+	{
+		filter2Result = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_2) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
+	}
+    if(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, SDFM_FILTER_3) == true)
+	{
+		filter3Result = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_3) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
+	}
+	if(SDFM_getNewFilterDataStatus(gSdfmBaseAddr, SDFM_FILTER_4) == true)
+	{
+		filter4Result = SDFM_getFilterData(gSdfmBaseAddr, SDFM_FILTER_4) >> CSL_SDFM_SDDATA1_DATA32HI_SHIFT;
+	}
 
+	gInterruptCount++;
+	
     /* Clear SDFM flag register */
     SDFM_clearInterruptFlag(gSdfmBaseAddr, SDFM_INT_MASK);
 }
@@ -181,10 +241,10 @@ static void initSDFM(uint32_t sdfmInstance)
     SDFM_enableExternalReset(sdfmInstance, SDFM_FILTER_3);
     SDFM_enableExternalReset(sdfmInstance, SDFM_FILTER_4);
 
-    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_1, SDFM_SYNC_PWM0_SOCA);
-    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_2, SDFM_SYNC_PWM0_SOCA);
-    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_3, SDFM_SYNC_PWM0_SOCA);
-    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_4, SDFM_SYNC_PWM0_SOCA);
+    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_1, SDFM_SYNC_PWM1_SOCA);
+    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_2, SDFM_SYNC_PWM1_SOCA);
+    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_3, SDFM_SYNC_PWM1_SOCA);
+    SDFM_setPWMSyncSource(sdfmInstance, SDFM_FILTER_4, SDFM_SYNC_PWM1_SOCA);
 
     SDFM_selectClockSource(sdfmInstance, SDFM_FILTER_2, SDFM_CLK_SOURCE_SD1_CLK);
     SDFM_selectClockSource(sdfmInstance, SDFM_FILTER_3, SDFM_CLK_SOURCE_SD1_CLK);
