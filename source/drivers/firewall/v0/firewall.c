@@ -169,7 +169,7 @@ int32_t Firewall_open(Firewall_Handle handle)
     }
 
     /* Configure Firewall regions */
-    if (status == SystemP_SUCCESS)
+    if (SystemP_SUCCESS == status)
     {
         if (SOC_isHsDevice())
         {
@@ -206,9 +206,9 @@ void Firewall_close(Firewall_Handle handle)
 static void Firewall_readRegionAddress(uint32_t baseAddr, uint64_t *startAddr, uint64_t *endAddr)
 {
     const CSL_firewall_cfgRegs *pReg = (const CSL_firewall_cfgRegs *)baseAddr;
-    *startAddr = CSL_REG32_RD(&pReg->START_ADDR_L);
+    *startAddr = (uint64_t)CSL_REG32_RD(&pReg->START_ADDR_L);
     *startAddr = *startAddr | (uint64_t)CSL_REG32_RD(&pReg->START_ADDR_H) << 32;
-    *endAddr = CSL_REG32_RD(&pReg->END_ADDR_L);
+    *endAddr = (uint64_t)CSL_REG32_RD(&pReg->END_ADDR_L);
     *endAddr = *endAddr | (uint64_t)CSL_REG32_RD(&pReg->END_ADDR_H) << 32;
 }
 
@@ -295,13 +295,17 @@ static int32_t Firewall_writeRegionPermission(uint32_t baseAddr,
  */
 int32_t Firewall_configureSingleRegion(uint32_t firewallId, Firewall_RegionCfg *region)
 {
-    uint32_t status = SystemP_SUCCESS;
-    uint32_t fwlBaseAddr = FWL_ID_BASE_ADDR(firewallId);
-    uint32_t regBaseAddr = FWL_REGION_BASE_ADDR(fwlBaseAddr, region->regionIndex);
+    int32_t status = SystemP_SUCCESS;
+    uint32_t fwlBaseAddr, regBaseAddr;
 
-    if (region == NULL || firewallId > FWL_MAX_ID || region->regionIndex > FWL_MAX_REGION)
+    if ((region == NULL) || (firewallId > FWL_MAX_ID) || (region->regionIndex > FWL_MAX_REGION))
     {
         status = SystemP_FAILURE;
+    }
+    else
+    {
+        fwlBaseAddr = FWL_ID_BASE_ADDR(firewallId);
+        regBaseAddr = FWL_REGION_BASE_ADDR(fwlBaseAddr, region->regionIndex);
     }
 
     if (SystemP_SUCCESS == status)
@@ -322,24 +326,29 @@ int32_t Firewall_configureSingleRegion(uint32_t firewallId, Firewall_RegionCfg *
  */
 int32_t Firewall_configureRegion(Firewall_Handle handle)
 {
-    uint32_t status = SystemP_SUCCESS;
+    int32_t status = SystemP_SUCCESS;
     Firewall_Config *config = (Firewall_Config *)handle;
     Firewall_Attrs *attrs = config->attrs;
 
-    if (handle == NULL || attrs == NULL)
-    {
-        status = SystemP_FAILURE;
-    }
-
-    if (attrs->firewallId > FWL_MAX_ID || attrs->totalRegions > FWL_MAX_REGION ||
-        attrs->initRegions > attrs->totalRegions)
+    if ((handle == NULL) || (attrs == NULL))
     {
         status = SystemP_FAILURE;
     }
 
     if (status == SystemP_SUCCESS)
     {
-        for (uint16_t count = 0; count < attrs->initRegions; count++)
+
+        if ((attrs->firewallId > FWL_MAX_ID) || (attrs->totalRegions > FWL_MAX_REGION) ||
+            (attrs->initRegions > attrs->totalRegions))
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+
+        for (uint32_t count = 0; count < attrs->initRegions; count++)
         {
             Firewall_RegionCfg *region = &attrs->regionInfo[count];
             if (SystemP_SUCCESS == status)
