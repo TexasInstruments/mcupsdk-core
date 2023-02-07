@@ -21,16 +21,16 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_ecc_func.$(PROFILE).out
+OUTNAME:=sdl_ecc_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_ecc_func.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_ecc_func.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_QSPI:=test_ecc_func.$(PROFILE).appimage_qspi
-BOOTIMAGE_NAME_SIGNED:=test_ecc_func.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=test_ecc_func.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_ecc_func.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_ecc_func.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=sdl_ecc_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=sdl_ecc_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_QSPI:=sdl_ecc_test_app.$(PROFILE).appimage_qspi
+BOOTIMAGE_NAME_SIGNED:=sdl_ecc_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=sdl_ecc_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=sdl_ecc_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=sdl_ecc_test_app.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	dpl_interface.c \
@@ -198,7 +198,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang test_ecc_func ...
+	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang sdl_ecc_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -44,6 +44,9 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <stdio.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
@@ -56,7 +59,12 @@
 /*                                Macros                                      */
 /* ========================================================================== */
 
+#define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D18094u)
+#define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D18098u)
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u) 
 
+#define SDL_CLEAR_STATUS									(0xffu) 
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -124,31 +132,40 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     }
     retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
 
-    if((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) ||
-       (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS0_CORE0_ECC_AGGR))
+    if(((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) ||
+       (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS0_CORE0_ECC_AGGR)) && ((intSrc != 0x33) && (intSrc != 0x35)))
     {
         /* Clear DED MSS_CTRL register*/
-        SDL_REG32_WR(0x50D18094u, 0x01);
-        rd_data = SDL_REG32_RD(0x50D18094u);
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS);
         printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
         /* Clear DED RAW MSS_CTRL register*/
-        SDL_REG32_WR(0x50D18098u, 0x01);
-        rd_data = SDL_REG32_RD(0x50D18098u);
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW);
         printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
 
         /* Clear SEC MSS_CTRL register*/
-        SDL_REG32_WR(0x50D18088u, 0x01);
-        rd_data = SDL_REG32_RD(0x50D18088u);
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
         printf("\r\nRead data of SEC MSS_CTRL register is  0x%u\r\n",rd_data);
         /* Clear SEC RAW MSS_CTRL register*/
-        SDL_REG32_WR(0x50D18084u, 0x01);
-        rd_data = SDL_REG32_RD(0x50D18084u);
+        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
         printf("\r\nRead data of SEC RAW MSS_CTRL register is 0x%u\r\n",rd_data);
     }
     else
     {
 
-
+		if(intSrc == 0x33U)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
+		}
+		if(intSrc == 0x35U)
+		{
+			eccmemtype = 1U;
+			eccIntrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
+		}
         /* Any additional customer specific actions can be added here */
         retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 
@@ -218,7 +235,7 @@ void ECC_func_app(void)
     {
         DebugP_log("\r\nAll ip tests passed. \r\n");
     }
-    else
+    else 
     {
         DebugP_log("\r\nSome ip tests failed. \r\n");
     }
@@ -258,9 +275,17 @@ void ecc_app_runner(void)
 
 int32_t test_main(void)
 {
+	/* Open drivers to open the UART driver for console */
+    Drivers_open();
+    Board_driversOpen();
+	
     sdlApp_dplInit();
     ecc_app_runner();
 
+	/* Close drivers to close the UART driver for console */
+    Board_driversClose();
+    Drivers_close();
+	
     return (0);
 }
 
