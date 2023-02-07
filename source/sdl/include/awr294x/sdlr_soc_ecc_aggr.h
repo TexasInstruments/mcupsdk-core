@@ -234,7 +234,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_INJECT_TYPE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_ACCESSIBLE                                 (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_ROW_WIDTH                                  (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_SIZE                                   (8192U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_SIZE                                   (16384U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_RAM_ID                                     (22U)
@@ -242,7 +242,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_INJECT_TYPE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_ACCESSIBLE                                 (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_ROW_WIDTH                                  (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_RAM_SIZE                                   (8192U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_RAM_SIZE                                   (16384U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID                                    (23U)
@@ -250,7 +250,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID                                    (24U)
@@ -258,7 +258,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID                                    (25U)
@@ -266,7 +266,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID                                    (26U)
@@ -274,7 +274,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID                                        (27U)
@@ -462,7 +462,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_INJECT_TYPE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_ACCESSIBLE                                 (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_ROW_WIDTH                                  (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_RAM_SIZE                                   (8192U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK0_RAM_SIZE                                   (16384U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_RAM_ID                                     (22U)
@@ -470,7 +470,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_INJECT_TYPE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_ACCESSIBLE                                 (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_ROW_WIDTH                                  (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_RAM_SIZE                                   (8192U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_ATCM1_BANK1_RAM_SIZE                                   (16384U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_ID                                    (23U)
@@ -478,7 +478,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID                                    (24U)
@@ -486,7 +486,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_ID                                    (25U)
@@ -494,7 +494,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_ID                                    (26U)
@@ -502,7 +502,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_SIZE                                  (4096U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_SIZE                                  (8192U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_ID                                        (27U)
