@@ -9237,40 +9237,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cbc_256",
-        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_LAUNCHPAD"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "sa2ul_aes",
-            "crypto_aes_cbc_256",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Tamagawa Diagnostic Single Channel Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "tamagawa_diagnostic_single_channel",
         "location": "../../examples/motor_control/tamagawa_diagnostic/single_channel/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -9288,40 +9254,6 @@
             "tamagawa_diagnostic",
             "single_channel",
             "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Crypto Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cbc_128",
-        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_LAUNCHPAD"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "sa2ul_aes",
-            "crypto_aes_cbc_128",
-            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [
@@ -9372,9 +9304,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_ecb_256",
-        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cbc_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9388,7 +9320,7 @@
             "security",
             "crypto",
             "sa2ul_aes",
-            "crypto_aes_ecb_256",
+            "crypto_aes_cbc_256",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9440,9 +9372,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_ecb_128",
-        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cbc_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9456,7 +9388,7 @@
             "security",
             "crypto",
             "sa2ul_aes",
-            "crypto_aes_ecb_128",
+            "crypto_aes_cbc_128",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9508,9 +9440,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cmac_128",
-        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_ecb_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9524,7 +9456,7 @@
             "security",
             "crypto",
             "sa2ul_aes",
-            "crypto_aes_cmac_128",
+            "crypto_aes_ecb_256",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9576,9 +9508,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cmac_256",
-        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_ecb_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9592,7 +9524,7 @@
             "security",
             "crypto",
             "sa2ul_aes",
-            "crypto_aes_cmac_256",
+            "crypto_aes_ecb_128",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9644,9 +9576,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Sha Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_sha",
-        "location": "../../examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cmac_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9659,7 +9591,8 @@
         "subCategories": [
             "security",
             "crypto",
-            "sa2ul_sha",
+            "sa2ul_aes",
+            "crypto_aes_cmac_128",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9711,9 +9644,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Hmac Sha1 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_hmac_sha1",
-        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cmac_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9726,8 +9659,8 @@
         "subCategories": [
             "security",
             "crypto",
-            "sa2ul_hmac_sha",
-            "crypto_hmac_sha1",
+            "sa2ul_aes",
+            "crypto_aes_cmac_256",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9778,9 +9711,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_hmac_sha256",
-        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Sha Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_sha",
+        "location": "../../examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9793,8 +9726,7 @@
         "subCategories": [
             "security",
             "crypto",
-            "sa2ul_hmac_sha",
-            "crypto_hmac_sha256",
+            "sa2ul_sha",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9846,9 +9778,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_hmac_sha512",
-        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Hmac Sha1 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha1",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9862,7 +9794,7 @@
             "security",
             "crypto",
             "sa2ul_hmac_sha",
-            "crypto_hmac_sha512",
+            "crypto_hmac_sha1",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9914,9 +9846,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Hmac Sha256 Multishot Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_hmac_sha256_multishot",
-        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha256",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9930,7 +9862,7 @@
             "security",
             "crypto",
             "sa2ul_hmac_sha",
-            "crypto_hmac_sha256_multishot",
+            "crypto_hmac_sha256",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -9982,9 +9914,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sa2ul Rng Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sa2ul_rng",
-        "location": "../../examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha512",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -9997,7 +9929,8 @@
         "subCategories": [
             "security",
             "crypto",
-            "sa2ul_rng",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha512",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -10049,9 +9982,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Rsa Encryption Decryption Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "rsa_encryption_decryption",
-        "location": "../../examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Crypto Hmac Sha256 Multishot Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha256_multishot",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -10064,8 +9997,8 @@
         "subCategories": [
             "security",
             "crypto",
-            "sa2ul_pka",
-            "rsa_encryption_decryption",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha256_multishot",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -10116,9 +10049,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Rsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "rsa_signing_verification",
-        "location": "../../examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Sa2ul Rng Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sa2ul_rng",
+        "location": "../../examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -10131,8 +10064,7 @@
         "subCategories": [
             "security",
             "crypto",
-            "sa2ul_pka",
-            "rsa_signing_verification",
+            "sa2ul_rng",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -10184,9 +10116,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ecdsa_signing_verification",
-        "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Rsa Encryption Decryption Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rsa_encryption_decryption",
+        "location": "../../examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -10200,7 +10132,7 @@
             "security",
             "crypto",
             "sa2ul_pka",
-            "ecdsa_signing_verification",
+            "rsa_encryption_decryption",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -10252,11 +10184,79 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Rsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rsa_signing_verification",
+        "location": "../../examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "rsa_signing_verification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecdsa_signing_verification",
         "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "ecdsa_signing_verification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecdsa_signing_verification",
+        "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
         ],
         "kernel": [
             "nortos"
