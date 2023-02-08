@@ -55,9 +55,8 @@ This example does:
 ## SW modifications
 
 - We need to disable Enet Logs and recompiler the enet-cpsw library.
-- To do so, remove the ENABLE_ENET_LOG define from mcu_plus_sdk/source/networking/enet/.project/project_am263x_cpsw.js file and run gen-build by below command:
-    - make gen-buildfiles DEVICE=am263x
-- Recompile the enet-cpsw library post the gen-build command.
+- To do so, remove the ENABLE_ENET_LOG define from mcu_plus_sdk/source/networking/enet/makefile.cpsw.am263x.r5f.ti-arm-clang makefile.
+- Recompile the enet-cpsw library.
 
 # Tips to minimize link up time for Ethernet applications
 
