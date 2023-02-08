@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -66,21 +66,7 @@ typedef struct {
     volatile uint16_t ECFRC;
     volatile uint8_t  Resv_60[8];
     volatile uint32_t ECAPSYNCINSEL;
-    volatile uint32_t HRCTL;
-    volatile uint8_t  Resv_72[4];
-    volatile uint32_t HRINTEN;
-    volatile uint32_t HRFLG;
-    volatile uint32_t HRCLR;
-    volatile uint32_t HRFRC;
-    volatile uint32_t HRCALPRD;
-    volatile uint32_t HRSYSCLKCTR;
-    volatile uint32_t HRSYSCLKCAP;
-    volatile uint32_t HRCLKCTR;
-    volatile uint32_t HRCLKCAP;
-    volatile uint8_t  Resv_116[8];
-    volatile uint32_t HRDEBUGCTL;
-    volatile uint32_t HRDEBUGOBSERVE1;
-    volatile uint32_t HRDEBUGOBSERVE2;
+    volatile uint8_t  Resv_68[64];
     volatile uint32_t MUNIT_COMMON_CTL;
     volatile uint8_t  Resv_192[60];
     volatile uint32_t MUNIT_1_CTL;
@@ -123,19 +109,6 @@ typedef struct {
 #define CSL_ECAP_ECCLR                                                         (0x00000030U)
 #define CSL_ECAP_ECFRC                                                         (0x00000032U)
 #define CSL_ECAP_ECAPSYNCINSEL                                                 (0x0000003CU)
-#define CSL_ECAP_HRCTL                                                         (0x00000040U)
-#define CSL_ECAP_HRINTEN                                                       (0x00000048U)
-#define CSL_ECAP_HRFLG                                                         (0x0000004CU)
-#define CSL_ECAP_HRCLR                                                         (0x00000050U)
-#define CSL_ECAP_HRFRC                                                         (0x00000054U)
-#define CSL_ECAP_HRCALPRD                                                      (0x00000058U)
-#define CSL_ECAP_HRSYSCLKCTR                                                   (0x0000005CU)
-#define CSL_ECAP_HRSYSCLKCAP                                                   (0x00000060U)
-#define CSL_ECAP_HRCLKCTR                                                      (0x00000064U)
-#define CSL_ECAP_HRCLKCAP                                                      (0x00000068U)
-#define CSL_ECAP_HRDEBUGCTL                                                    (0x00000074U)
-#define CSL_ECAP_HRDEBUGOBSERVE1                                               (0x00000078U)
-#define CSL_ECAP_HRDEBUGOBSERVE2                                               (0x0000007CU)
 #define CSL_ECAP_MUNIT_COMMON_CTL                                              (0x00000080U)
 #define CSL_ECAP_MUNIT_1_CTL                                                   (0x000000C0U)
 #define CSL_ECAP_MUNIT_1_SHADOW_CTL                                            (0x000000C4U)
@@ -500,14 +473,6 @@ typedef struct {
 #define CSL_ECAP_ECEINT_CTR_EQ_CMP_VAL_ECAP_DISAB_CE_INTERRUPT                 (0x0U)
 #define CSL_ECAP_ECEINT_CTR_EQ_CMP_VAL_ECAP_ENAB_CE_INTERRUPT                  (0x1U)
 
-#define CSL_ECAP_ECEINT_HRERROR_MASK                                           (0x0100U)
-#define CSL_ECAP_ECEINT_HRERROR_SHIFT                                          (0x0008U)
-#define CSL_ECAP_ECEINT_HRERROR_RESETVAL                                       (0x0000U)
-#define CSL_ECAP_ECEINT_HRERROR_MAX                                            (0x0001U)
-
-#define CSL_ECAP_ECEINT_HRERROR_VAL_ECAP_DISAB_HRERROR_INTERRUPT               (0x0U)
-#define CSL_ECAP_ECEINT_HRERROR_VAL_ECAP_ENAB_HRERROR_INTERRUPT                (0x1U)
-
 #define CSL_ECAP_ECEINT_MUNIT_1_ERROR_EVT1_MASK                                (0x0200U)
 #define CSL_ECAP_ECEINT_MUNIT_1_ERROR_EVT1_SHIFT                               (0x0009U)
 #define CSL_ECAP_ECEINT_MUNIT_1_ERROR_EVT1_RESETVAL                            (0x0000U)
@@ -600,14 +565,6 @@ typedef struct {
 
 #define CSL_ECAP_ECFLG_CTR_CMP_VAL_ECAP_INDICATE_NO_EVENT                      (0x0U)
 #define CSL_ECAP_ECFLG_CTR_CMP_VAL_ECAP_INDICATE_COUNTER_COMPARE_REG           (0x1U)
-
-#define CSL_ECAP_ECFLG_HRERROR_MASK                                            (0x0100U)
-#define CSL_ECAP_ECFLG_HRERROR_SHIFT                                           (0x0008U)
-#define CSL_ECAP_ECFLG_HRERROR_RESETVAL                                        (0x0000U)
-#define CSL_ECAP_ECFLG_HRERROR_MAX                                             (0x0001U)
-
-#define CSL_ECAP_ECFLG_HRERROR_VAL_ECAP_INDICATE_NO_EVENT                      (0x0U)
-#define CSL_ECAP_ECFLG_HRERROR_VAL_ECAP_INDICATE_HIGH_RESOLUTION_ERROR         (0x1U)
 
 #define CSL_ECAP_ECFLG_MUNIT_1_ERROR_EVT1_MASK                                 (0x0200U)
 #define CSL_ECAP_ECFLG_MUNIT_1_ERROR_EVT1_SHIFT                                (0x0009U)
@@ -702,14 +659,6 @@ typedef struct {
 #define CSL_ECAP_ECCLR_CTR_CMP_VAL_ECAP_0_NO_EFFECT                            (0x0U)
 #define CSL_ECAP_ECCLR_CTR_CMP_VAL_ECAP_1_CLEARS_CTR_CMP                       (0x1U)
 
-#define CSL_ECAP_ECCLR_HRERROR_MASK                                            (0x0100U)
-#define CSL_ECAP_ECCLR_HRERROR_SHIFT                                           (0x0008U)
-#define CSL_ECAP_ECCLR_HRERROR_RESETVAL                                        (0x0000U)
-#define CSL_ECAP_ECCLR_HRERROR_MAX                                             (0x0001U)
-
-#define CSL_ECAP_ECCLR_HRERROR_VAL_ECAP_0_NO_EFFECT                            (0x0U)
-#define CSL_ECAP_ECCLR_HRERROR_VAL_ECAP_1_CLEARS_HRERROR                       (0x1U)
-
 #define CSL_ECAP_ECCLR_MUNIT_1_ERROR_EVT1_MASK                                 (0x0200U)
 #define CSL_ECAP_ECCLR_MUNIT_1_ERROR_EVT1_SHIFT                                (0x0009U)
 #define CSL_ECAP_ECCLR_MUNIT_1_ERROR_EVT1_RESETVAL                             (0x0000U)
@@ -800,14 +749,6 @@ typedef struct {
 #define CSL_ECAP_ECFRC_CTR_CMP_VAL_ECAP_NO_EFFECT_0                            (0x0U)
 #define CSL_ECAP_ECFRC_CTR_CMP_VAL_ECAP_1_SETS_CTR_CMP                         (0x1U)
 
-#define CSL_ECAP_ECFRC_HRERROR_MASK                                            (0x0100U)
-#define CSL_ECAP_ECFRC_HRERROR_SHIFT                                           (0x0008U)
-#define CSL_ECAP_ECFRC_HRERROR_RESETVAL                                        (0x0000U)
-#define CSL_ECAP_ECFRC_HRERROR_MAX                                             (0x0001U)
-
-#define CSL_ECAP_ECFRC_HRERROR_VAL_ECAP_NO_EFFECT_0                            (0x0U)
-#define CSL_ECAP_ECFRC_HRERROR_VAL_ECAP_1_SETS_CTR_CMP                         (0x1U)
-
 #define CSL_ECAP_ECFRC_MUNIT_1_ERROR_EVT1_MASK                                 (0x0200U)
 #define CSL_ECAP_ECFRC_MUNIT_1_ERROR_EVT1_SHIFT                                (0x0009U)
 #define CSL_ECAP_ECFRC_MUNIT_1_ERROR_EVT1_RESETVAL                             (0x0000U)
@@ -848,248 +789,6 @@ typedef struct {
 #define CSL_ECAP_ECAPSYNCINSEL_RESERVED_1_MAX                                  (0x01FFFFFFU)
 
 #define CSL_ECAP_ECAPSYNCINSEL_RESETVAL                                        (0x00000001U)
-
-/* HRCTL */
-
-#define CSL_ECAP_HRCTL_HRE_MASK                                                (0x00000001U)
-#define CSL_ECAP_HRCTL_HRE_SHIFT                                               (0x00000000U)
-#define CSL_ECAP_HRCTL_HRE_RESETVAL                                            (0x00000000U)
-#define CSL_ECAP_HRCTL_HRE_MAX                                                 (0x00000001U)
-
-#define CSL_ECAP_HRCTL_HRCLKE_MASK                                             (0x00000002U)
-#define CSL_ECAP_HRCTL_HRCLKE_SHIFT                                            (0x00000001U)
-#define CSL_ECAP_HRCTL_HRCLKE_RESETVAL                                         (0x00000000U)
-#define CSL_ECAP_HRCTL_HRCLKE_MAX                                              (0x00000001U)
-
-#define CSL_ECAP_HRCTL_PRDSEL_MASK                                             (0x00000004U)
-#define CSL_ECAP_HRCTL_PRDSEL_SHIFT                                            (0x00000002U)
-#define CSL_ECAP_HRCTL_PRDSEL_RESETVAL                                         (0x00000000U)
-#define CSL_ECAP_HRCTL_PRDSEL_MAX                                              (0x00000001U)
-
-#define CSL_ECAP_HRCTL_CALIBSTART_MASK                                         (0x00000008U)
-#define CSL_ECAP_HRCTL_CALIBSTART_SHIFT                                        (0x00000003U)
-#define CSL_ECAP_HRCTL_CALIBSTART_RESETVAL                                     (0x00000000U)
-#define CSL_ECAP_HRCTL_CALIBSTART_MAX                                          (0x00000001U)
-
-#define CSL_ECAP_HRCTL_CALIBSTS_MASK                                           (0x00000010U)
-#define CSL_ECAP_HRCTL_CALIBSTS_SHIFT                                          (0x00000004U)
-#define CSL_ECAP_HRCTL_CALIBSTS_RESETVAL                                       (0x00000000U)
-#define CSL_ECAP_HRCTL_CALIBSTS_MAX                                            (0x00000001U)
-
-#define CSL_ECAP_HRCTL_CALIBCONT_MASK                                          (0x00000020U)
-#define CSL_ECAP_HRCTL_CALIBCONT_SHIFT                                         (0x00000005U)
-#define CSL_ECAP_HRCTL_CALIBCONT_RESETVAL                                      (0x00000000U)
-#define CSL_ECAP_HRCTL_CALIBCONT_MAX                                           (0x00000001U)
-
-#define CSL_ECAP_HRCTL_RESERVED_1_MASK                                         (0xFFFFFFC0U)
-#define CSL_ECAP_HRCTL_RESERVED_1_SHIFT                                        (0x00000006U)
-#define CSL_ECAP_HRCTL_RESERVED_1_RESETVAL                                     (0x00000000U)
-#define CSL_ECAP_HRCTL_RESERVED_1_MAX                                          (0x03FFFFFFU)
-
-#define CSL_ECAP_HRCTL_RESETVAL                                                (0x00000000U)
-
-/* HRINTEN */
-
-#define CSL_ECAP_HRINTEN_RESERVED_1_MASK                                       (0x00000001U)
-#define CSL_ECAP_HRINTEN_RESERVED_1_SHIFT                                      (0x00000000U)
-#define CSL_ECAP_HRINTEN_RESERVED_1_RESETVAL                                   (0x00000000U)
-#define CSL_ECAP_HRINTEN_RESERVED_1_MAX                                        (0x00000001U)
-
-#define CSL_ECAP_HRINTEN_CALIBDONE_MASK                                        (0x00000002U)
-#define CSL_ECAP_HRINTEN_CALIBDONE_SHIFT                                       (0x00000001U)
-#define CSL_ECAP_HRINTEN_CALIBDONE_RESETVAL                                    (0x00000000U)
-#define CSL_ECAP_HRINTEN_CALIBDONE_MAX                                         (0x00000001U)
-
-#define CSL_ECAP_HRINTEN_CALPRDCHKSTS_MASK                                     (0x00000004U)
-#define CSL_ECAP_HRINTEN_CALPRDCHKSTS_SHIFT                                    (0x00000002U)
-#define CSL_ECAP_HRINTEN_CALPRDCHKSTS_RESETVAL                                 (0x00000000U)
-#define CSL_ECAP_HRINTEN_CALPRDCHKSTS_MAX                                      (0x00000001U)
-
-#define CSL_ECAP_HRINTEN_RESERVED_2_MASK                                       (0xFFFFFFF8U)
-#define CSL_ECAP_HRINTEN_RESERVED_2_SHIFT                                      (0x00000003U)
-#define CSL_ECAP_HRINTEN_RESERVED_2_RESETVAL                                   (0x00000000U)
-#define CSL_ECAP_HRINTEN_RESERVED_2_MAX                                        (0x1FFFFFFFU)
-
-#define CSL_ECAP_HRINTEN_RESETVAL                                              (0x00000000U)
-
-/* HRFLG */
-
-#define CSL_ECAP_HRFLG_CALIBINT_MASK                                           (0x00000001U)
-#define CSL_ECAP_HRFLG_CALIBINT_SHIFT                                          (0x00000000U)
-#define CSL_ECAP_HRFLG_CALIBINT_RESETVAL                                       (0x00000000U)
-#define CSL_ECAP_HRFLG_CALIBINT_MAX                                            (0x00000001U)
-
-#define CSL_ECAP_HRFLG_CALIBDONE_MASK                                          (0x00000002U)
-#define CSL_ECAP_HRFLG_CALIBDONE_SHIFT                                         (0x00000001U)
-#define CSL_ECAP_HRFLG_CALIBDONE_RESETVAL                                      (0x00000000U)
-#define CSL_ECAP_HRFLG_CALIBDONE_MAX                                           (0x00000001U)
-
-#define CSL_ECAP_HRFLG_CALPRDCHKSTS_MASK                                       (0x00000004U)
-#define CSL_ECAP_HRFLG_CALPRDCHKSTS_SHIFT                                      (0x00000002U)
-#define CSL_ECAP_HRFLG_CALPRDCHKSTS_RESETVAL                                   (0x00000000U)
-#define CSL_ECAP_HRFLG_CALPRDCHKSTS_MAX                                        (0x00000001U)
-
-#define CSL_ECAP_HRFLG_RESERVED_1_MASK                                         (0xFFFFFFF8U)
-#define CSL_ECAP_HRFLG_RESERVED_1_SHIFT                                        (0x00000003U)
-#define CSL_ECAP_HRFLG_RESERVED_1_RESETVAL                                     (0x00000000U)
-#define CSL_ECAP_HRFLG_RESERVED_1_MAX                                          (0x1FFFFFFFU)
-
-#define CSL_ECAP_HRFLG_RESETVAL                                                (0x00000000U)
-
-/* HRCLR */
-
-#define CSL_ECAP_HRCLR_CALIBINT_MASK                                           (0x00000001U)
-#define CSL_ECAP_HRCLR_CALIBINT_SHIFT                                          (0x00000000U)
-#define CSL_ECAP_HRCLR_CALIBINT_RESETVAL                                       (0x00000000U)
-#define CSL_ECAP_HRCLR_CALIBINT_MAX                                            (0x00000001U)
-
-#define CSL_ECAP_HRCLR_CALIBDONE_MASK                                          (0x00000002U)
-#define CSL_ECAP_HRCLR_CALIBDONE_SHIFT                                         (0x00000001U)
-#define CSL_ECAP_HRCLR_CALIBDONE_RESETVAL                                      (0x00000000U)
-#define CSL_ECAP_HRCLR_CALIBDONE_MAX                                           (0x00000001U)
-
-#define CSL_ECAP_HRCLR_CALPRDCHKSTS_MASK                                       (0x00000004U)
-#define CSL_ECAP_HRCLR_CALPRDCHKSTS_SHIFT                                      (0x00000002U)
-#define CSL_ECAP_HRCLR_CALPRDCHKSTS_RESETVAL                                   (0x00000000U)
-#define CSL_ECAP_HRCLR_CALPRDCHKSTS_MAX                                        (0x00000001U)
-
-#define CSL_ECAP_HRCLR_RESERVED_1_MASK                                         (0xFFFFFFF8U)
-#define CSL_ECAP_HRCLR_RESERVED_1_SHIFT                                        (0x00000003U)
-#define CSL_ECAP_HRCLR_RESERVED_1_RESETVAL                                     (0x00000000U)
-#define CSL_ECAP_HRCLR_RESERVED_1_MAX                                          (0x1FFFFFFFU)
-
-#define CSL_ECAP_HRCLR_RESETVAL                                                (0x00000000U)
-
-/* HRFRC */
-
-#define CSL_ECAP_HRFRC_RESERVED_1_MASK                                         (0x00000001U)
-#define CSL_ECAP_HRFRC_RESERVED_1_SHIFT                                        (0x00000000U)
-#define CSL_ECAP_HRFRC_RESERVED_1_RESETVAL                                     (0x00000000U)
-#define CSL_ECAP_HRFRC_RESERVED_1_MAX                                          (0x00000001U)
-
-#define CSL_ECAP_HRFRC_CALIBDONE_MASK                                          (0x00000002U)
-#define CSL_ECAP_HRFRC_CALIBDONE_SHIFT                                         (0x00000001U)
-#define CSL_ECAP_HRFRC_CALIBDONE_RESETVAL                                      (0x00000000U)
-#define CSL_ECAP_HRFRC_CALIBDONE_MAX                                           (0x00000001U)
-
-#define CSL_ECAP_HRFRC_CALPRDCHKSTS_MASK                                       (0x00000004U)
-#define CSL_ECAP_HRFRC_CALPRDCHKSTS_SHIFT                                      (0x00000002U)
-#define CSL_ECAP_HRFRC_CALPRDCHKSTS_RESETVAL                                   (0x00000000U)
-#define CSL_ECAP_HRFRC_CALPRDCHKSTS_MAX                                        (0x00000001U)
-
-#define CSL_ECAP_HRFRC_RESERVED_2_MASK                                         (0xFFFFFFF8U)
-#define CSL_ECAP_HRFRC_RESERVED_2_SHIFT                                        (0x00000003U)
-#define CSL_ECAP_HRFRC_RESERVED_2_RESETVAL                                     (0x00000000U)
-#define CSL_ECAP_HRFRC_RESERVED_2_MAX                                          (0x1FFFFFFFU)
-
-#define CSL_ECAP_HRFRC_RESETVAL                                                (0x00000000U)
-
-/* HRCALPRD */
-
-#define CSL_ECAP_HRCALPRD_PRD_MASK                                             (0xFFFFFFFFU)
-#define CSL_ECAP_HRCALPRD_PRD_SHIFT                                            (0x00000000U)
-#define CSL_ECAP_HRCALPRD_PRD_RESETVAL                                         (0x003FFFFFU)
-#define CSL_ECAP_HRCALPRD_PRD_MAX                                              (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRCALPRD_RESETVAL                                             (0x003FFFFFU)
-
-/* HRSYSCLKCTR */
-
-#define CSL_ECAP_HRSYSCLKCTR_HRSYSCLKCTR_MASK                                  (0xFFFFFFFFU)
-#define CSL_ECAP_HRSYSCLKCTR_HRSYSCLKCTR_SHIFT                                 (0x00000000U)
-#define CSL_ECAP_HRSYSCLKCTR_HRSYSCLKCTR_RESETVAL                              (0x00000000U)
-#define CSL_ECAP_HRSYSCLKCTR_HRSYSCLKCTR_MAX                                   (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRSYSCLKCTR_RESETVAL                                          (0x00000000U)
-
-/* HRSYSCLKCAP */
-
-#define CSL_ECAP_HRSYSCLKCAP_HRSYSCLKCAP_MASK                                  (0xFFFFFFFFU)
-#define CSL_ECAP_HRSYSCLKCAP_HRSYSCLKCAP_SHIFT                                 (0x00000000U)
-#define CSL_ECAP_HRSYSCLKCAP_HRSYSCLKCAP_RESETVAL                              (0x00000000U)
-#define CSL_ECAP_HRSYSCLKCAP_HRSYSCLKCAP_MAX                                   (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRSYSCLKCAP_RESETVAL                                          (0x00000000U)
-
-/* HRCLKCTR */
-
-#define CSL_ECAP_HRCLKCTR_HRCLKCTR_MASK                                        (0xFFFFFFFFU)
-#define CSL_ECAP_HRCLKCTR_HRCLKCTR_SHIFT                                       (0x00000000U)
-#define CSL_ECAP_HRCLKCTR_HRCLKCTR_RESETVAL                                    (0x00000000U)
-#define CSL_ECAP_HRCLKCTR_HRCLKCTR_MAX                                         (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRCLKCTR_RESETVAL                                             (0x00000000U)
-
-/* HRCLKCAP */
-
-#define CSL_ECAP_HRCLKCAP_HRCLKCAP_MASK                                        (0xFFFFFFFFU)
-#define CSL_ECAP_HRCLKCAP_HRCLKCAP_SHIFT                                       (0x00000000U)
-#define CSL_ECAP_HRCLKCAP_HRCLKCAP_RESETVAL                                    (0x00000000U)
-#define CSL_ECAP_HRCLKCAP_HRCLKCAP_MAX                                         (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRCLKCAP_RESETVAL                                             (0x00000000U)
-
-/* HRDEBUGCTL */
-
-#define CSL_ECAP_HRDEBUGCTL_DISABLEINVSEL_MASK                                 (0x00000001U)
-#define CSL_ECAP_HRDEBUGCTL_DISABLEINVSEL_SHIFT                                (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_DISABLEINVSEL_RESETVAL                             (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_DISABLEINVSEL_MAX                                  (0x00000001U)
-
-#define CSL_ECAP_HRDEBUGCTL_DELAYRESETDLINE_MASK                               (0x00000002U)
-#define CSL_ECAP_HRDEBUGCTL_DELAYRESETDLINE_SHIFT                              (0x00000001U)
-#define CSL_ECAP_HRDEBUGCTL_DELAYRESETDLINE_RESETVAL                           (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_DELAYRESETDLINE_MAX                                (0x00000001U)
-
-#define CSL_ECAP_HRDEBUGCTL_CAPIN_MMAP_SOURCE_MASK                             (0x00000004U)
-#define CSL_ECAP_HRDEBUGCTL_CAPIN_MMAP_SOURCE_SHIFT                            (0x00000002U)
-#define CSL_ECAP_HRDEBUGCTL_CAPIN_MMAP_SOURCE_RESETVAL                         (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_CAPIN_MMAP_SOURCE_MAX                              (0x00000001U)
-
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_1_MASK                                    (0x00000008U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_1_SHIFT                                   (0x00000003U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_1_RESETVAL                                (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_1_MAX                                     (0x00000001U)
-
-#define CSL_ECAP_HRDEBUGCTL_CALIB_INPUT_SEL_MASK                               (0x00000030U)
-#define CSL_ECAP_HRDEBUGCTL_CALIB_INPUT_SEL_SHIFT                              (0x00000004U)
-#define CSL_ECAP_HRDEBUGCTL_CALIB_INPUT_SEL_RESETVAL                           (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_CALIB_INPUT_SEL_MAX                                (0x00000003U)
-
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_2_MASK                                    (0x000000C0U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_2_SHIFT                                   (0x00000006U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_2_RESETVAL                                (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_2_MAX                                     (0x00000003U)
-
-#define CSL_ECAP_HRDEBUGCTL_OBSERVE_SRC_SEL_MASK                               (0x00000F00U)
-#define CSL_ECAP_HRDEBUGCTL_OBSERVE_SRC_SEL_SHIFT                              (0x00000008U)
-#define CSL_ECAP_HRDEBUGCTL_OBSERVE_SRC_SEL_RESETVAL                           (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_OBSERVE_SRC_SEL_MAX                                (0x0000000FU)
-
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_3_MASK                                    (0xFFFFF000U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_3_SHIFT                                   (0x0000000CU)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_3_RESETVAL                                (0x00000000U)
-#define CSL_ECAP_HRDEBUGCTL_RESERVED_3_MAX                                     (0x000FFFFFU)
-
-#define CSL_ECAP_HRDEBUGCTL_RESETVAL                                           (0x00000000U)
-
-/* HRDEBUGOBSERVE1 */
-
-#define CSL_ECAP_HRDEBUGOBSERVE1_HROUTH_MASK                                   (0xFFFFFFFFU)
-#define CSL_ECAP_HRDEBUGOBSERVE1_HROUTH_SHIFT                                  (0x00000000U)
-#define CSL_ECAP_HRDEBUGOBSERVE1_HROUTH_RESETVAL                               (0x00000000U)
-#define CSL_ECAP_HRDEBUGOBSERVE1_HROUTH_MAX                                    (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRDEBUGOBSERVE1_RESETVAL                                      (0x00000000U)
-
-/* HRDEBUGOBSERVE2 */
-
-#define CSL_ECAP_HRDEBUGOBSERVE2_HROUTL_MASK                                   (0xFFFFFFFFU)
-#define CSL_ECAP_HRDEBUGOBSERVE2_HROUTL_SHIFT                                  (0x00000000U)
-#define CSL_ECAP_HRDEBUGOBSERVE2_HROUTL_RESETVAL                               (0x00000000U)
-#define CSL_ECAP_HRDEBUGOBSERVE2_HROUTL_MAX                                    (0xFFFFFFFFU)
-
-#define CSL_ECAP_HRDEBUGOBSERVE2_RESETVAL                                      (0x00000000U)
 
 /* MUNIT_COMMON_CTL */
 
