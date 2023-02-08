@@ -111,7 +111,7 @@ static  void SDL_STC_resetCauseClearR5F1(void);
 *   This is global array gives the BASE ADDRESS of STC modules
 ======================================================================================================*/
 
-static uint32_t SDL_STC_baseAddress[SDL_STC_NUM_INSTANCES] = {SDL_R5SS0_STC_U_BASE, SDL_R5SS1_STC_U_BASE};
+static uint32_t SDL_STC_baseAddress[SDL_STC_NUM_INSTANCES] = {(uint32_t)SDL_R5SS0_STC_U_BASE, (uint32_t)SDL_R5SS1_STC_U_BASE};
 
 #define MSS_RCM_BaseAddress         (SDL_MSS_RCM_U_BASE)
 #define MSS_CTRL_BaseAddress        (SDL_MSS_CTRL_U_BASE)

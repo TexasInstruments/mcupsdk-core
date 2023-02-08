@@ -99,7 +99,7 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
     }
     else
     {
-        stcResult= INVALID_RESULT;
+        stcResult= (int32_t)INVALID_RESULT;
     }
 
     return stcResult;
@@ -218,7 +218,7 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
             HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_FORCE_WFI ,SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE,
                     SDL_MSS_CTRL_R5SS0_FORCE_WFI_CR5_WFI_OVERIDE_MAX);
         }
-        else if(instance ==SDL_STC_INST_MAINR5F1)
+        else
         {
             HW_WR_FIELD32(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS1_FORCE_WFI ,SDL_MSS_CTRL_R5SS1_FORCE_WFI_CR5_WFI_OVERIDE,
                     SDL_MSS_CTRL_R5SS1_FORCE_WFI_CR5_WFI_OVERIDE_MAX);
@@ -278,14 +278,21 @@ int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType, SDL
 {
     int32_t sdlResult= SDL_EFAIL;
 
-    if(instance==SDL_STC_INST_MAINR5F0)
+    if(instance < INVALID_INSTANCE)
     {
-        SDL_STC_resetCauseClearR5F0();
-    }
-    else if (instance==SDL_STC_INST_MAINR5F1)
+        if(instance==SDL_STC_INST_MAINR5F0)
+        {
+            SDL_STC_resetCauseClearR5F0();
+        }
+        else
         {
             SDL_STC_resetCauseClearR5F1();
         }
+    }
+    else
+    {
+        ;/* Do nothing */
+    }
 
     if(pConfig != NULL)
     {
