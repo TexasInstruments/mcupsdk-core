@@ -8,7 +8,18 @@ This example demonstrates the how to generate HMAC-SHA 512 hash using SA2UL modu
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_HMAC_SHA512_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/crypto_hmac_sha512.c
+
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------

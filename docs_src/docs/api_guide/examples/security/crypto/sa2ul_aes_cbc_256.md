@@ -8,7 +8,17 @@ This example demonstrates the AES CBC-256 Encryption and Decryptions using SA2UL
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_AES_CBC_256_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/crypto_aes_cbc_256.c
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------

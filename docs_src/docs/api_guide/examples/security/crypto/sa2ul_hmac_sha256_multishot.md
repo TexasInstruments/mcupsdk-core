@@ -8,7 +8,18 @@ This example demonstrates the how to generate HMAC SHA-256 Multi shot hash using
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_HMAC_SHA256_MULTISHOT_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/crypto_hmac_sha256_multishot.c
+
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------

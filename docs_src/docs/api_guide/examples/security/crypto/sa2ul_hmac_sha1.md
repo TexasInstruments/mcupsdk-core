@@ -8,7 +8,18 @@ This example demonstrates the how to generate HMAC SHA-1 hash using SA2UL module
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_HMAC_SHA1_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/crypto_hmac_sha1.c
+
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------

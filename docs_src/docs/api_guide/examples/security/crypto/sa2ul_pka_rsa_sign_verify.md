@@ -8,7 +8,17 @@ This example demonstrates the SA2UL PKA RSA Signing and Verification operations.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_PKA_RSA_SIGN_VERIFY_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_pka/rsa_signing_verification/rsa_signing_verification.c
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------

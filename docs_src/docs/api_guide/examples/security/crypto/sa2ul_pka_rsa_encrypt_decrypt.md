@@ -8,7 +8,17 @@ This example demonstrates the SA2UL PKA RSA Encryption and Decryption operations
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_PKA_RSA_PUB_PRIV_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/rsa_encryption_decryption.c
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------

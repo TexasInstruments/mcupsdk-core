@@ -8,7 +8,17 @@ This example demonstrates the SA2UL PKA ECDSA Signing and Verification operation
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SA2UL_PKA_ECDSA_SIGN_VERIFY_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/ecdsa_signing_verification.c
+\endcond
+
+\cond SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
