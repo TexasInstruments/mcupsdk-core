@@ -384,6 +384,7 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
     <td> 8.5.0
     <td> None
 </tr>
+<tr>
     <td> PROC_SDL-4558
     <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
     <td> SDL
@@ -433,7 +434,6 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
 </table>
 
 ## Upgrade and Compatibility Information
-
 ### Compiler Options
 
 <table>
@@ -453,6 +453,39 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> ECAP
+    <td> HRCAP APIs and Macros
+- Removed 16 functions:
+    - HRCAP_enableHighResolution
+    - HRCAP_disableHighResolution
+    - HRCAP_enableHighResolutionClock
+    - HRCAP_disbleHighResolutionClock
+    - HRCAP_startCalibration
+    - HRCAP_setCalibrationMode
+    - HRCAP_enableCalibrationInterrupt
+    - HRCAP_disableCalibrationInterrupt
+    - HRCAP_getCalibrationFlags
+    - HRCAP_clearCalibrationFlags
+    - HRCAP_isCalibrationBusy
+    - HRCAP_forceCalibrationFlags
+    - HRCAP_setCalibrationPeriod
+    - HRCAP_getCalibrationClockPeriod
+    - HRCAP_getScaleFactor
+    - HRCAP_convertEventTimeStampNanoseconds
+- Removed a supported input macro from 5 functions and 1 macro:
+    - ECAP_ISR_SOURCE_HR_ERROR from ECAP_forceInterrupt, ECAP_clearInterrupt, ECAP_getInterruptSource, ECAP_disableInterrupt, ECAP_enableInterrupt. And from ECAP_ISR_SOURCE_ALL
+- Removed 2 enums and 3 macros:
+    - HRCAP_CalibrationClockSource,
+    - HRCAP_ContinuousCalibrationMode.
+    - HRCAP_GLOBAL_CALIBRATION_INTERRUPT,
+    - HRCAP_CALIBRATION_DONE and
+    - HRCAP_CALIBRATION_PERIOD_OVERFLOW
+- CSLR change:
+    - removed register offsets and related CSL for HRCAP in ECAP.
+    <td> removed
+    <td> HRCAP is not supported in AM263x.
 </tr>
 
 </table>
