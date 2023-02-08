@@ -418,7 +418,7 @@ void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
     uint32_t i;
     uint8_t numMacMax;
     uint8_t macAddrBuf[ENET_BOARD_NUM_MACADDR_MAX * ENET_MAC_ADDR_LEN];
-    uint8_t validNumMac = 0
+    uint8_t validNumMac = 0U;
 
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0],  I2C_EEPROM_MAC_CTRL_OFFSET, &numMacMax, sizeof(uint8_t));
     EnetAppUtils_assert(status == ENET_SOK);
