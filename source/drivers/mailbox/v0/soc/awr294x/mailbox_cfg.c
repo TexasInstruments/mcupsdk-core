@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,8 +61,6 @@
 #define RSS_R4_MBOX_PROC_BIT_POS    (12U)
 
 #define RIGHT_SHIFT_BY_TWO    (2U)
-
-#define RIGHT_SHIFT_BY_TWO    (2)
 
 Mailbox_RemoteCoreObj gMailboxRemoteCoreObj_r5ss0_0_to_rss_r4 =
 {

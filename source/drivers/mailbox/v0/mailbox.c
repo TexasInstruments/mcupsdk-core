@@ -33,11 +33,6 @@
 
 #include "mailbox_priv.h"
 
-#if defined(__aarch64__) || defined(__arm__)
-#define ASM_DSP  __asm__( "dsb sy")
-#define ASM_ISB  __asm__( "isb")
-#endif
-
 /* global state of mailbox communication */
 Mailbox_Ctrl gMailbox_ctrl;
 
