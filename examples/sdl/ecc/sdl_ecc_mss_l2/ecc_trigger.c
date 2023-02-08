@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -404,7 +404,7 @@ static int32_t ECC_sdlFuncTest(void)
         }
 #endif
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AWR294X)
         /* Initialize ECC Memory */
         SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 #endif

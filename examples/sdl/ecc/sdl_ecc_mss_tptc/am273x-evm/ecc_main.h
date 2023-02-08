@@ -44,6 +44,13 @@ extern "C"
 /* ========================================================================== */
 #include <stdint.h>
 #include <string.h>
+#include <kernel/dpl/SemaphoreP.h>
+#include <kernel/dpl/HwiP.h>
+#include <kernel/dpl/ClockP.h>
+#include <drivers/edma.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include <sdl/include/sdl_types.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/dpl/sdl_dpl.h>

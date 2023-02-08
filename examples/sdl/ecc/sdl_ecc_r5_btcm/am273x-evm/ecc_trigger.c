@@ -64,10 +64,10 @@
 *           BTCM different banks
 *           Only one macro should be enabled at one time
 **/
-#define SDL_B0TCM0_BANK0							(0U)
+#define SDL_B0TCM0_BANK0							(1U)
 #define	SDL_B0TCM0_BANK1							(0U)
 #define	SDL_B1TCM0_BANK0							(0U)
-#define	SDL_B1TCM0_BANK1							(1U)
+#define	SDL_B1TCM0_BANK1							(0U)
 
 
 /* This macro shows how many ESM events are configured*/
@@ -78,37 +78,35 @@
 #define SDL_INTR_GROUP_NUM_3                        (3U)
 #define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
 #define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
 #define SDL_ENABLE_ERR_PIN                          (1U)
 
 #define SDL_MSS_CTRL_ESM_GATING4_ADDR               (0x02120118u)
 
 #if SDL_B0TCM0_BANK0
-#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
-#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080010u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080000u) /* R5F BTCM RAM address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID
 #endif
 
 #if SDL_B0TCM0_BANK1
-#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
-#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00081510u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080004u) /* R5F BTCM RAM address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID
 #endif
 
 #if SDL_B1TCM0_BANK0
-#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
-#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00082510u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080008u) /* R5F BTCM RAM address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID
 #endif
 
 #if SDL_B1TCM0_BANK1
-#define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
-#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00083510u) /* R5F BTCM RAM address */
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x0008000cu) /* R5F BTCM RAM address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID
 #endif
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */

@@ -118,6 +118,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 void ecc_app_runner(void)
 {
     int32_t    testResult;
+	
 	DebugP_log("\r\nECC UC-1 and UC-2 Test\r\n");
 	testResult = ECC_funcTest();
 
@@ -136,9 +137,16 @@ void ecc_app_runner(void)
 
 void ecc_main(void *args)
 {
+	/* Open drivers to open the UART driver for console */
+    Drivers_open();
+    Board_driversOpen();
 	
-    DebugP_log("\nECC Example Application\r\n");
+    DebugP_log("\r\nECC Example Application\r\n");
     (void)ecc_app_runner();
+
+	/* Close drivers to close the UART driver for console */
+    Board_driversClose();
+    Drivers_close();
 	
 }
 

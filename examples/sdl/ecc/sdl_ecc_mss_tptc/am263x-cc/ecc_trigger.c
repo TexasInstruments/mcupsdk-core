@@ -46,13 +46,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <kernel/dpl/DebugP.h>
-#include <kernel/dpl/SemaphoreP.h>
-#include <kernel/dpl/HwiP.h>
-#include <kernel/dpl/ClockP.h>
-#include <drivers/edma.h>
-#include "ti_drivers_config.h"
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #include <sdl/sdl_ecc.h>
@@ -149,17 +142,7 @@ static void EDMA_regionIsrFxn(Edma_IntrHandle intrHandle, void *args);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-void EDMA_Init(void)
-{
-   Drivers_open();
-   Board_driversOpen();
-}
 
-void EDMA_Deinit(void)
-{
-    Board_driversClose();
-    Drivers_close();
-}
 /*********************************************************************
 * @fn      ECC_Example_init
 *
@@ -196,7 +179,7 @@ int32_t ECC_Example_init (void)
 
             retValue = -1;
         } else {
-            DebugP_log("\nECC_Test_init: MSS ECC AGGR initialization is completed \n");
+            DebugP_log("\r\nECC_Test_init: MSS ECC AGGR initialization is completed \n");
         }
     }
     return retValue;
@@ -218,7 +201,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
 		
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
-    DebugP_log("\n MSS TPTC_A0 Single bit error inject: test starting");
+    DebugP_log("\r\nMSS TPTC_A0 Single bit error inject: test starting");
 
     injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
 
@@ -230,12 +213,12 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
                                  &injectErrorConfig);
 	
     if (result != SDL_PASS ) {
-        DebugP_log("\n MSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed",
+        DebugP_log("\r\nMSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed",
                     injectErrorConfig.pErrMem);
         retVal = -1;
     } else {
         
-        DebugP_log("\n MSS TPTC_A0 Single bit error inject at pErrMem 0x%p",
+        DebugP_log("\r\nMSS TPTC_A0 Single bit error inject at pErrMem 0x%p",
                    injectErrorConfig.pErrMem);
     }
 
@@ -259,7 +242,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
-    DebugP_log("\n MSS TPTC_A0 Double bit error inject: starting");
+    DebugP_log("\r\nMSS TPTC_A0 Double bit error inject: starting");
 
     /* Run one shot test for MSS TPTC_A0 2 bit error */
     /* Note the address is relative to start of ram */
@@ -272,12 +255,12 @@ int32_t ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest(void)
                                  &injectErrorConfig);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n MSS TPTC_A0 Double bit error inject: at pErrMem 0x%p: fixed location once test failed",
+        DebugP_log("\r\nMSS TPTC_A0 Double bit error inject: at pErrMem 0x%p: fixed location once test failed",
                     injectErrorConfig.pErrMem);
        retVal = -1;
     } else {
 
-        DebugP_log("\n MSS TPTC_A0 Double bit error inject at pErrMem 0x%p ",
+        DebugP_log("\r\nMSS TPTC_A0 Double bit error inject at pErrMem 0x%p ",
                    injectErrorConfig.pErrMem);
     }
 
@@ -307,7 +290,6 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
     uint32_t            dmaCh, tcc, param;
 	int32_t             result = SDL_PASS;
 
-    EDMA_Init();
     DebugP_log("\r\n[EDMA] Interrupt Transfer Test Started...\r\n");
     baseAddr = EDMA_getBaseAddr(gEdmaHandle[edmaConfigNum]);
 
@@ -439,7 +421,6 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
         result = SDL_EFAIL;
         DebugP_log("\r\nSome tests have failed!!\r\n");
     }
-    EDMA_Deinit();
     return(result);
 }
 

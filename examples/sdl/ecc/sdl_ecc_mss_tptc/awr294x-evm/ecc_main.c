@@ -44,9 +44,6 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <stdio.h>
-#include "ti_drivers_config.h"
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
 #include "ecc_main.h"
 #include <sdl/include/sdl_types.h>
 #include <sdl/dpl/sdl_dpl.h>
@@ -175,10 +172,10 @@ void ecc_main(void *args)
 {
 	int32_t    testResult;
 
-    /* Open drivers to open the UART driver for console */
+	/* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-
+	
     DebugP_log("\r\nECC Example Application\r\n");
     DebugP_log("\r\nECC UC-1 and UC-2 Test \r\n");
     testResult = ECC_funcTest();
@@ -191,10 +188,11 @@ void ecc_main(void *args)
     {
         DebugP_log("\r\nSome tests have failed. \r\n");
     }
-
-    /* Close drivers to close the UART driver for console */
+	
+	/* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
+	
     while (true)
     {
     }

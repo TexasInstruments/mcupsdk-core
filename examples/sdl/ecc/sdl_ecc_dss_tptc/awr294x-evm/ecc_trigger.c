@@ -46,13 +46,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <kernel/dpl/DebugP.h>
-#include <kernel/dpl/SemaphoreP.h>
-#include <kernel/dpl/HwiP.h>
-#include <kernel/dpl/ClockP.h>
-#include <drivers/edma.h>
-#include "ti_drivers_config.h"
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/include/awr294x/sdlr_soc_ecc_aggr.h>
 #include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
@@ -158,17 +151,7 @@ static void EDMA_regionIsrFxn(Edma_IntrHandle intrHandle, void *args);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-void EDMA_Init(void)
-{
-   Drivers_open();
-   Board_driversOpen();
-}
 
-void EDMA_Deinit(void)
-{
-    Board_driversClose();
-    Drivers_close();
-}
 /*********************************************************************
 * @fn      ECC_Example_init
 *
@@ -323,7 +306,6 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
     uint32_t            dmaCh, tcc, param;
     int32_t             result = SDL_PASS;
 
-    EDMA_Init();
     DebugP_log("\r\n[EDMA] Interrupt Transfer Test Started...\r\n");
     baseAddr = EDMA_getBaseAddr(gEdmaHandle[edmaConfigNum]);
 
@@ -455,7 +437,7 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
         result = SDL_EFAIL;
         DebugP_log("\r\nSome tests have failed!!\r\n");
     }
-    EDMA_Deinit();
+	
     return(result);
 }
 
