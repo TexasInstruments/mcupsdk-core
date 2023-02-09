@@ -403,6 +403,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Pcie Host Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_pcie_host",
+        "location": "../../examples/drivers/boot/sbl_pcie_host/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_pcie_host",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Sd Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_sd",
         "location": "../../examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
