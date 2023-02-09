@@ -170,12 +170,15 @@ void Bootloader_profilePrintProfileLog(void)
         case BOOTLOADER_MEDIA_SD:
             bootMediaName = "SD Card";
             break;
+        case BOOTLOADER_MEDIA_PCIE:
+            bootMediaName = "PCIE";
+            break;
         default:
             bootMediaName = "undefined";
             break;
     }
     uint32_t clk = gProfileObj.bootMediaClk;
-    
+
     DebugP_log("[BOOTLOADER_PROFILE] Boot Media       : %s \r\n", bootMediaName);
     /* If boot media clock is not given don't print that information */
     if(clk != 0)

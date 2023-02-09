@@ -513,7 +513,8 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
     else
     {
         uint8_t x509Header[4];
-        if(config->bootMedia == BOOTLOADER_MEDIA_MEM)
+        if((config->bootMedia == BOOTLOADER_MEDIA_MEM) ||
+                (config->bootMedia == BOOTLOADER_MEDIA_PCIE))
         {
             Bootloader_MemArgs *memArgs = (Bootloader_MemArgs *)(config->args);
             certLoadAddr = memArgs->appImageBaseAddr;
@@ -584,7 +585,8 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
             else
             {
                 /* Authentication passed, all good. Now re-init bootloader params to point to image start instead of start of x509 certificate */
-                if(config->bootMedia == BOOTLOADER_MEDIA_MEM)
+                if((config->bootMedia == BOOTLOADER_MEDIA_MEM) ||
+                    (config->bootMedia == BOOTLOADER_MEDIA_PCIE))
                 {
                     Bootloader_MemArgs *memArgs = (Bootloader_MemArgs *)(config->args);
                     memArgs->appImageBaseAddr += certLen;

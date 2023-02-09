@@ -146,6 +146,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1542,6 +1543,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  sbl_ospi_multi_partition_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_pcie_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sbl_sd_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3050,6 +3054,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sbl_ospi_multi_partition_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ sbl_pcie_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sbl_sd_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4557,6 +4564,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sbl_ospi_multi_partition_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ sbl_pcie_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  sbl_sd_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -5669,6 +5679,7 @@ sbl: libs
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -5689,6 +5700,7 @@ sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5709,6 +5721,7 @@ sbl-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -5729,6 +5742,7 @@ sbl-hs:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
@@ -5749,6 +5763,7 @@ sbl-hs-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
@@ -5769,6 +5784,7 @@ sbl-hs-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_ospi_multi_partition/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_pcie/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
