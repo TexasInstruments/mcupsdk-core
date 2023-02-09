@@ -96,7 +96,7 @@ LIBS_common = \
 	-lnortos.awr294x.c66.ti-c6000.${ConfigName}.lib \
 	-ldrivers.awr294x.c66.ti-c6000.${ConfigName}.lib \
 	-lunity.awr294x.c66.ti-c6000.${ConfigName}.lib \
-	-lsdl.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lsdl.awr294x.c66.ti-c6000.${ConfigName}.lib \
 	-llibc.a \
 
 LFLAGS_common = \
@@ -110,7 +110,7 @@ LIBS_NAME = \
 	nortos.awr294x.c66.ti-c6000.${ConfigName}.lib \
 	drivers.awr294x.c66.ti-c6000.${ConfigName}.lib \
 	unity.awr294x.c66.ti-c6000.${ConfigName}.lib \
-	sdl.am273x.r5f.ti-arm-clang.${ConfigName}.lib \
+	sdl.awr294x.c66.ti-c6000.${ConfigName}.lib \
 	libc.a \
 
 LIBS_PATH_NAME = \

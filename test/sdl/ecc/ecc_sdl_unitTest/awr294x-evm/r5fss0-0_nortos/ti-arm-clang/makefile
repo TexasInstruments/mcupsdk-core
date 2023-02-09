@@ -61,11 +61,12 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/common/ \
-	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/awr294x-evm/ \
+	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_unitTest/awr294x-evm/ \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AWR294X \
+	-DR5F_INPUTS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

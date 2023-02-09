@@ -21,15 +21,15 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_ecc_func.$(PROFILE).out
+OUTNAME:=sdl_ecc_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_ecc_func.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_ecc_func.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_ecc_func.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=test_ecc_func.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_ecc_func.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_ecc_func.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=sdl_ecc_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=sdl_ecc_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=sdl_ecc_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=sdl_ecc_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=sdl_ecc_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=sdl_ecc_test_app.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	dpl_interface.c \
@@ -182,7 +182,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am273x:c66ss0:nortos:ti-c6000 test_ecc_func ...
+	@echo  Scrubing: am273x:c66ss0:nortos:ti-c6000 sdl_ecc_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

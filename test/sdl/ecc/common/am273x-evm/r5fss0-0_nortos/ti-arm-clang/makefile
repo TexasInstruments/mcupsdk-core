@@ -21,15 +21,15 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_ecc_common.$(PROFILE).out
+OUTNAME:=ecc_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_ecc_common.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_ecc_common.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_ecc_common.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=test_ecc_common.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_ecc_common.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_ecc_common.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=ecc_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ecc_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=ecc_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=ecc_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ecc_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ecc_test_app.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	dpl_interface.c \
@@ -73,6 +73,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM273X \
+	-DR5F_INPUTS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -201,7 +202,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am273x:r5fss0-0:nortos:ti-arm-clang test_ecc_common ...
+	@echo  Scrubing: am273x:r5fss0-0:nortos:ti-arm-clang ecc_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

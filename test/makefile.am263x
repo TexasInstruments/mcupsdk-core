@@ -131,7 +131,6 @@ help:
 	@echo  $(MAKE) -s -C sdl/ccm/common/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_ip_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ccm/ccm_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/parity/sdl_dmaparity_functest/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
@@ -306,13 +305,10 @@ BUILD_COMBO_EXAMPLE_ALL += ecc_ut_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_tcmparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ccm_ip_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ccm_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ccm_common_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ccm_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ccm_func_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am263x-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am263x-lp_system_freertos_nortos
@@ -600,9 +596,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_ccm_func_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/ccm/ccm_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- stc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/parity/sdl_dmaparity_functest/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -733,13 +726,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_ut_app_am263x-cc_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_tcmparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_ip_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ccm_common_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ccm_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ccm_func_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am263x-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am263x-lp_system_freertos_nortos_clean
@@ -1027,9 +1017,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_ccm_func_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/ccm/ccm_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- stc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/parity/sdl_dmaparity_functest/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -1160,13 +1147,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_ut_app_am263x-cc_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_tcmparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_ip_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ccm_common_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ccm_test_app_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ccm_func_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am263x-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am263x-lp_system_freertos_nortos_scrub
@@ -1453,9 +1437,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_ccm_func_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/ccm/ccm_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stc_func_test_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_dmaparity_functest_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/parity/sdl_dmaparity_functest/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

@@ -21,16 +21,16 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ecc_test_app.$(PROFILE).out
+OUTNAME:=ecc_ut_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=ecc_test_app.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=ecc_test_app.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_QSPI:=ecc_test_app.$(PROFILE).appimage_qspi
-BOOTIMAGE_NAME_SIGNED:=ecc_test_app.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=ecc_test_app.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ecc_test_app.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ecc_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=ecc_ut_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ecc_ut_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_QSPI:=ecc_ut_app.$(PROFILE).appimage_qspi
+BOOTIMAGE_NAME_SIGNED:=ecc_ut_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=ecc_ut_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ecc_ut_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ecc_ut_app.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	dpl_interface.c \
@@ -184,7 +184,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: awr294x:c66ss0:nortos:ti-c6000 ecc_test_app ...
+	@echo  Scrubing: awr294x:c66ss0:nortos:ti-c6000 ecc_ut_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
