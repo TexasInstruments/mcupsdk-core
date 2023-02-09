@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -163,17 +163,6 @@ int32_t HwiP_intcGlobalNmiEnable(void);
 int32_t HwiP_intcGlobalExcepEnable(void);
 int32_t HwiP_intcGlobalExtExcepEnable(void);
 int32_t HwiP_intcGlobalExcepClear(HwiP_IntcExcep exc);
-
-/**
- * \brief App callback invoked at end of ISR handler.
- *
- * - Application must implement this function.
- *
- * \note Invoked from ISR context so callback should return ASAP
- * \note Currently enabled only for C66x SafeRTOS port
- */
-void HwiP_appInterruptHandlerHook(uint32_t interruptVectorNum );
-
 
 #ifdef __cplusplus
 }

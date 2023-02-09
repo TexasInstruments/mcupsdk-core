@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -84,15 +84,6 @@ static TaskP_Object gMyTask;
 
 #if defined(_TMS320C6X)
 void test_c66x(void);
-#endif
-
-#if defined (OS_SAFERTOS)
-volatile uint32_t appIsrhookCounter = 0U;
-
-void HwiP_appInterruptHandlerHook(uint32_t interruptVectorNum )
-{
-    appIsrhookCounter++;
-}
 #endif
 
 static void myISR1(void *args)

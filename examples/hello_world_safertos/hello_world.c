@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,6 +37,7 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include <kernel/safertos/dpl/c66/HwiP_safertos.h>
 
 volatile uint32_t appIsrhookCounter = 0U;
 
@@ -50,6 +51,8 @@ void hello_world_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+
+    HwiP_registerInterruptHandlerHook(&HwiP_appInterruptHandlerHook);
 
     DebugP_log("Hello World!\r\n");
 

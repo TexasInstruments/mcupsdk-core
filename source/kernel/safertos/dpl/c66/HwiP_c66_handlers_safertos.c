@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,6 +39,7 @@
 #include <drivers/hw_include/csl_types.h>
 #include <kernel/nortos/dpl/c66/HwiP_c66.h>
 #include <c6x.h>
+#include <kernel/safertos/dpl/c66/HwiP_safertos.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -56,7 +57,7 @@
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+HwiP_appInterruptHandlerHookFxnPtr gHwiIntHook = NULL;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -153,6 +154,12 @@ void HwiP_intcIvpSet(void)
     vPortSetInterruptVectors();
 }
 
+/* Register interrupt handler callback. */
+void HwiP_registerInterruptHandlerHook(HwiP_appInterruptHandlerHookFxnPtr hookFxnPtr)
+{
+    gHwiIntHook = hookFxnPtr;
+}
+
 /* Dispatch handler for TI MCU+ style interrupts. */
 void vApplicationInterruptHandlerHook( portUInt32Type ulInterruptVectorNum )
 {
@@ -170,6 +177,10 @@ void vApplicationInterruptHandlerHook( portUInt32Type ulInterruptVectorNum )
         {
             HwiP_intcEcmDispatcher( ulInterruptVectorNum - HwiP_VECTID_ECM_START );
         }
-        HwiP_appInterruptHandlerHook(ulInterruptVectorNum);
+
+        if(gHwiIntHook != NULL)
+        {
+            gHwiIntHook(ulInterruptVectorNum);
+        }
     }
 }
