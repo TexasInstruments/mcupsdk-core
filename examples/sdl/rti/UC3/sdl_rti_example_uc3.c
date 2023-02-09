@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -339,6 +339,10 @@ static void IntrDisable(uint32_t intsrc)
 #if defined(SOC_AM263X)
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
+#endif
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+    SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
+    SDL_ESM_disableIntr(SDL_INSTANCE_ESM0, intsrc);
 #endif
 }
 

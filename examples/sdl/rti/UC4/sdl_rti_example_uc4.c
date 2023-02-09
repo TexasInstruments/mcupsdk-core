@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -66,7 +66,7 @@
 
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
-  SDL_RTI_configParms     pConfig;
+volatile  SDL_RTI_configParms     pConfig;
   uint32_t rtiModule = SDL_RTI_BASE;
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -265,6 +265,8 @@ int32_t SDL_RTI_exampleTest(void)
 
         SDL_RTI_service(SDL_INSTANCE_RTI);
 
+        isrFlag = RTI_NO_INTERRUPT;
+
 
         if (isrFlag != RTI_NO_INTERRUPT)
         {
@@ -325,7 +327,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 
 #if defined (SOC_AM263X)
 #define RTI_CLOCK_SOURCE RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ
-#elif defined (SOC_AWR294X) || (SOC_AM273X)
+#elif defined (SOC_AWR294X) || defined (SOC_AM273X)
 #define RTI_CLOCK_SOURCE RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ
 #endif
 static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
@@ -356,7 +358,8 @@ static void IntrDisable(uint32_t intsrc)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
     RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
-#elif defined (SOC_AWR294X) || (SOC_AM273X)
+#endif
+#if defined (SOC_AWR294X) || defined (SOC_AM273X)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
   	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
@@ -365,6 +368,10 @@ static void IntrDisable(uint32_t intsrc)
     /* Clear ESM registers. */
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
+#endif
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+    SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
+    SDL_ESM_disableIntr(SDL_INSTANCE_ESM0, intsrc);
 #endif
    isrFlag  |= RTI_ESM_INTRPT;
 }
@@ -375,7 +382,7 @@ static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size
     SDL_RTI_writeWinSz(rtiModule, RTI_DWWD_WINDOWSIZE_100_PERCENT);
     /* Servicing watchdog will generate error. */
     SDL_RTI_service(SDL_INSTANCE_RTI);
-    SDL_RTI_writeWinSz(rtiModule, rtiWindow_size);
+    SDL_RTI_writeWinSz(rtiModule, RTI_DWWD_WINDOWSIZE_50_PERCENT);
     /* Service watchdog again. */
     SDL_RTI_service(SDL_INSTANCE_RTI);
 }
