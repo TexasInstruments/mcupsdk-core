@@ -7,6 +7,7 @@ const files = {
       "pbist_test_err.c",
       "pbist_test_func.c",
       "pbist_test_main.c",
+      "test_dpl_interface.c",
       "dpl_interface.c",
       "pbist_test_cfg.c",
       "main.c",
@@ -72,6 +73,7 @@ const r5f1_macro = {
     common: [
         "R5F1_INPUTS",
     ],
+
 };
 
 const lnkfiles = {

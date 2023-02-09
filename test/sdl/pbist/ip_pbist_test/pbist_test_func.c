@@ -1,5 +1,4 @@
-/*
- *   Copyright (c) Texas Instruments Incorporated 2019
+/* Copyright (c) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +31,7 @@
  */
 
  /**
- *  \file     pbist_test_func.c
+ *  \file     sdl_pbist_test_func.c
  *
  *  \brief    This file contains PBIST Functional test code.
  *
@@ -46,17 +45,15 @@
 #include <string.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_pbist.h>
-#include <sdl/pbist/sdl_pbist_priv.h>
 #ifndef SDL_SOC_MCU_R5F
 #include <drivers/sciclient.h>
 #include "power_seq.h"
 #endif
 
 /* DPL API header files */
-#include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>
-#include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/DebugP.h>
+
 
 #include <pbist_test_cfg.h>
 
@@ -67,56 +64,50 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#define APP_PBIST_TIMEOUT   (100000000U)
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
-void PBIST_eventHandler( uint32_t instanceId );
-
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-
-
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+extern uint32_t gInst;
+#endif
 int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 {
-
-#ifndef SDL_SOC_MCU_R5F
-    uint32_t resetState = 0U;
-    uint32_t contextLossState = 0U;
-    uint32_t moduleState = TISCI_MSG_VALUE_DEVICE_HW_STATE_OFF;
-#endif
     int32_t testResult = 0;
     SDL_ErrType_t status;
-    HwiP_Params hwiParams;
-    HwiP_Object PBIST_hwiPObj;
-    SDL_pbistRegs *pPBISTRegs;
     bool PBISTResult;
+    SDL_PBIST_testType testType;
 
-    uint32_t timeoutCount = 0;
     uint64_t startTime , testStartTime,  testEndTime, endTime;
     uint64_t prepTime, diffTime, restoreTime;
-    int i;
 #ifdef DEBUG
     char inputChar;
 #endif
 
-    uint32_t numRuns = 0;
+#ifndef SDL_SOC_MCU_R5F
+    uint32_t moduleState = TISCI_MSG_VALUE_DEVICE_HW_STATE_OFF;
+    uint32_t resetState = 0U;
+    uint32_t contextLossState = 0U;
 
     if (runNegTest == true)
     {
         DebugP_log("\n Starting PBIST failure insertion test on %s, index %d...\n",
                     PBIST_TestHandleArray[instanceId].testName,
                     instanceId);
+        testType = SDL_PBIST_NEG_TEST;
     }
     else
     {
         DebugP_log("\n Starting PBIST test on %s, index %d...\n",
                     PBIST_TestHandleArray[instanceId].testName,
                     instanceId);
+        testType = SDL_PBIST_TEST;
     }
 
 #ifdef DEBUG
@@ -130,32 +121,9 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     }
 #endif
 
-    SDL_pbistInstInfo *pInfo;
-
-    pInfo = SDL_PBIST_getInstInfo(PBIST_TestHandleArray[instanceId].pbistInst);
-
-    if (PBIST_TestHandleArray[instanceId].interruptNumber != SDL_PBIST_INTERRUPT_INVALID)
-    {
-        /* Disable interrupt */
-        HwiP_disableInt(PBIST_TestHandleArray[instanceId].interruptNumber);
-
-        /* Default parameter initialization */
-        HwiP_Params_init(&hwiParams);
-
-        /* Pass core Index as argument to handler*/
-        hwiParams.args = (void *)instanceId;
-        hwiParams.intNum = PBIST_TestHandleArray[instanceId].interruptNumber;
-        hwiParams.callback = (HwiP_FxnCallback)PBIST_eventHandler;
-#ifdef DEBUG
-        DebugP_log("\n HwiP_Params_init complete \n");
-#endif
-        /* Register call back function for PBIST Interrupt */
-        HwiP_construct(&PBIST_hwiPObj, &hwiParams);
-    }
-
     /* Get start time of test */
     startTime = ClockP_getTimeUsec();
-#ifndef SDL_SOC_MCU_R5F
+
     if ((testResult == 0) && (PBIST_TestHandleArray[instanceId].procRstNeeded))
     {
         if (PBIST_TestHandleArray[instanceId].tisciProcId != 0u)
@@ -444,148 +412,22 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         }
 
     }
-#endif
-    /* Get PBIST register space Pointer */
-    pPBISTRegs = PBIST_TestHandleArray[instanceId].pPBISTRegs;
 
     if (testResult == 0)
     {
-        /* Translate to get the local address */
-        pPBISTRegs = (SDL_pbistRegs *)AddrTranslateP_getLocalAddr((uint64_t)pPBISTRegs);
+        /* Get start time for PBIST test */
+        testStartTime = ClockP_getTimeUsec();
+
+        status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, APP_PBIST_TIMEOUT, &PBISTResult);
+        if ((status != SDL_PASS) || (PBISTResult == false))
+        {
+            testResult = -1;
+        }
     }
-    PBIST_TestHandleArray[instanceId].doneFlag = false;
-
-    /* Get start time for PBIST test */
-    testStartTime = ClockP_getTimeUsec();
-
-    if (runNegTest == true)
-    {
-        numRuns = 1;
-    }
-    else
-    {
-        #ifndef SDL_SOC_MCU_R5F
-        numRuns = PBIST_TestHandleArray[instanceId].numPBISTRuns;
-        // #else
-        // numRuns = (pInfo->numPBISTRuns) - SDL_PBIST_EXCLUDE_MEMORY;
-        #endif
-    }
-
-    /* Start the PBIST test */
-    for (i = 0; i < numRuns; i++)
-    {
-#ifdef DEBUG
-        DebugP_log("\n Starting PBIST Run %d for Instance ID #%d\n",
-                    i, instanceId);
-#endif
-        if (testResult == 0)
-        {
-#ifdef DEBUG
-            DebugP_log("\n Starting %s in PBIST Run %d\n",
-                        runNegTest ? "SDL_PBIST_startNeg" : "SDL_PBIST_start", i);
-#endif
-            if (runNegTest == true)
-            {
-                status = SDL_PBIST_startNeg(pPBISTRegs, &PBIST_TestHandleArray[instanceId].PBISTNegConfigRun);
-            }
-            else
-            {
-                #ifndef SDL_SOC_MCU_R5F
-                status = SDL_PBIST_start(pPBISTRegs, &PBIST_TestHandleArray[instanceId].PBISTConfigRun[i]);
-                // #else
-                // status = SDL_PBIST_start(pPBISTRegs, &pInfo->PBISTConfigRun[i]);
-                #endif
-            }
-            if (status != SDL_PASS)
-            {
-                DebugP_log(" %s failed in PBIST Run %d\n",
-                            runNegTest ? "SDL_PBIST_startNeg" : "SDL_PBIST_start", i);
-                testResult = -1;
-            }
-        }
-
-        if (testResult == 0)
-        {
-            /* Timeout if exceeds time */
-            while ((!PBIST_TestHandleArray[instanceId].doneFlag)
-                   && (timeoutCount++ < PBIST_MAX_TIMEOUT_VALUE))
-            {
-                #ifndef SDL_SOC_MCU_R5F
-                SDL_PBIST_checkDone(pInfo);
-                #endif
-                if (pInfo->doneFlag == 0x1)
-                {
-                    PBIST_TestHandleArray[instanceId].doneFlag = true;
-                }
-            }
-
-            if (!(PBIST_TestHandleArray[instanceId].doneFlag))
-            {
-                DebugP_log(" PBIST test timed out in PBIST Run %d\n", i);
-                testResult = -1;
-            }
-            /* reset Done flag so we can run again */
-            PBIST_TestHandleArray[instanceId].doneFlag = false;
-        }
-
-        if (testResult == 0)
-        {
-#ifdef DEBUG
-            DebugP_log("\n Starting SDL_PBIST_checkResult in PBIST Run %d\n", i);
-#endif
-            status = SDL_PBIST_checkResult(pPBISTRegs, &PBISTResult);
-            if (status != SDL_PASS)
-            {
-                DebugP_log(" SDL_PBIST_checkResult failed in PBIST Run %d\n", i);
-                testResult = -1;
-            }
-            else
-            {
-                /* Check the PBIST result */
-                if (((runNegTest == true) && (PBISTResult == true)) ||
-                    ((runNegTest == false) && (PBISTResult != true)))
-                {
-                    DebugP_log("\n PBIST test failed in PBIST Run %d\n", i);
-                    testResult = -1;
-                }
-            }
-        }
-
-        /* Do a Soft Reset */
-        if (testResult == 0)
-        {
-#ifdef DEBUG
-            DebugP_log("\n Starting SDL_PBIST_softReset \n");
-#endif
-
-            /* Run PBIST test */
-            status = SDL_PBIST_softReset(pPBISTRegs);
-            if (status != SDL_PASS)
-            {
-                DebugP_log(" SDL_PBIST_softReset failed \n");
-                testResult = -1;
-            }
-        }
-
-        /* Execute exit sequence */
-        if (testResult == 0)
-        {
-#ifdef DEBUG
-            DebugP_log("\n Starting SDL_PBIST_releaseTestMode \n");
-#endif
-            /* Exit PBIST test */
-            status = SDL_PBIST_releaseTestMode(pPBISTRegs);
-            if (status != SDL_PASS)
-            {
-                DebugP_log(" SDL_PBIST_releaseTestMode failed \n");
-                testResult = -1;
-            }
-        }
-    } /* for (i = 0; i < PBIST_TestHandleArray[instanceId].numPBISTRuns; i++) */
 
     /* Record test end time */
     testEndTime = ClockP_getTimeUsec();
-#ifndef SDL_SOC_MCU_R5F
+
     /* Execute Auxilliary restore function */
     if (testResult == 0)
     {
@@ -846,7 +688,98 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             }
         }
     }
-#endif //SOC_AM64X
+#endif
+
+#ifdef SDL_SOC_MCU_R5F
+    if (runNegTest == true)
+    {
+      #if defined (SOC_AM273X) || defined (SOC_AWR294X)
+      #if defined (R5F0_INPUTS) || defined (R5F1_INPUTS)
+      if (gInst == SDL_PBIST_INST_TOP)
+      {
+        DebugP_log("\n Starting PBIST failure insertion test on TOP PBIST\n",
+                    PBIST_TestHandleArray[instanceId].testName,
+                    instanceId);
+      }
+      else if (gInst == SDL_PBIST_INST_DSS)
+       {
+         DebugP_log("\n Starting PBIST failure insertion test on DSS PBIST\n",
+                   PBIST_TestHandleArray[instanceId].testName,
+                   instanceId);
+       }
+
+      #endif
+      #elif defined (SOC_AM263X)
+
+        {
+          DebugP_log("\n Starting PBIST failure insertion test on TOP PBIST\n",
+                      PBIST_TestHandleArray[instanceId].testName,
+                      instanceId);
+        }
+
+      #endif
+        testType = SDL_PBIST_NEG_TEST;
+    }
+    else
+    {
+      #if defined (SOC_AM273X) || defined (SOC_AWR294X)
+      if (gInst == SDL_PBIST_INST_TOP)
+      {
+        DebugP_log("\n Starting PBIST test on TOP PBIST\n",
+                    PBIST_TestHandleArray[instanceId].testName,
+                    instanceId);
+      }
+      else if (gInst == SDL_PBIST_INST_DSS)
+       {
+         DebugP_log("\n Starting PBIST test on DSS PBIST\n",
+                     PBIST_TestHandleArray[instanceId].testName,
+                     instanceId);
+       }
+       #elif defined (SOC_AM263X)
+       {
+         DebugP_log("\n Starting PBIST test on TOP PBIST\n",
+                     PBIST_TestHandleArray[instanceId].testName,
+                     instanceId);
+       }
+       #endif
+        testType = SDL_PBIST_TEST;
+    }
+
+#ifdef DEBUG
+    DebugP_log("\n Press any key to continue...");
+    inputChar = UART_getChar();
+
+    if (inputChar == 'n')
+    {
+        DebugP_log("\n Skipping this test. on request \n");
+        return 0;
+    }
+#endif
+
+    /* Get start time of test */
+    startTime = ClockP_getTimeUsec();
+#ifndef SDL_SOC_MCU_R5F
+    if (testResult == 0)
+    {
+#endif
+        /* Get start time for PBIST test */
+        testStartTime = ClockP_getTimeUsec();
+
+        status = SDL_PBIST_selfTest((SDL_PBIST_inst)PBIST_TestHandleArray[instanceId].pbistInst, testType, APP_PBIST_TIMEOUT, &PBISTResult);
+        if ((status != SDL_PASS) || (PBISTResult == false))
+        {
+            testResult = -1;
+        }
+#ifndef SDL_SOC_MCU_R5F
+    }
+#endif
+
+    /* Record test end time */
+    testEndTime = ClockP_getTimeUsec();
+
+
+#endif
+
     /* Record end time */
     endTime = ClockP_getTimeUsec();
 
@@ -859,14 +792,208 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     DebugP_log(" PBIST complete %s, test index %d\n",
                 PBIST_TestHandleArray[instanceId].testName,
                 instanceId);
+#if defined (SOC_AWR294X)
+    if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+    {
+      #if defined (R5F0_INPUTS)
+        if (gInst == SDL_PBIST_INST_TOP)
+        {
+
+              DebugP_log(" PBIST complete for ADCBUF\n");
+              DebugP_log(" PBIST complete for TPCC\n");
+              DebugP_log(" PBIST complete for MAILBOX\n");
+              DebugP_log(" PBIST complete for COREB VIM\n");
+              DebugP_log(" PBIST complete for MCAN\n");
+              DebugP_log(" PBIST complete for SPIA\n");
+              DebugP_log(" PBIST complete for SPIB\n");
+              DebugP_log(" PBIST complete for CORE B R5FSS RAM\n");
+              DebugP_log(" PBIST complete for MSS_L2_1\n");
+              DebugP_log(" PBIST complete for CPSW\n");
+              DebugP_log(" PBIST complete for GPADC\n");
+              DebugP_log(" PBIST complete for RETRAM\n");
+              DebugP_log(" PBIST complete for STCROM\n");
+              DebugP_log(" PBIST complete for CORE B ATCM\n");
+              DebugP_log(" PBIST complete for CORE B BTCM\n");
+
+        }
+        else if (gInst == SDL_PBIST_INST_DSS)
+        {
+          DebugP_log(" PBIST complete for DSS C66 STCROM\n");
+          DebugP_log(" PBIST complete for HWA STCROM\n");
+          DebugP_log(" PBIST complete for DSS PBISTROM\n");
+          DebugP_log(" PBIST complete for C66 L1D\n");
+          DebugP_log(" PBIST complete for C66 L1P\n");
+          DebugP_log(" PBIST complete for PBIST C66 L2 TAG\n");
+          DebugP_log(" PBIST complete for DSS HWA\n");
+          DebugP_log(" PBIST complete for DSS HWA MBOX\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB0\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB0\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB0\n");
+          DebugP_log(" PBIST complete for DSS MBOX RAM\n");
+          DebugP_log(" PBIST complete for DSS TPCC RAM\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK0\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK1\n");
+          DebugP_log(" PBIST complete for DSS L2 PARITY\n");
+          DebugP_log(" PBIST complete for HWA RAM\n");
+          DebugP_log(" PBIST complete for DSS CBUF\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB1\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB1\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB2\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB1\n");
+         }
+         if (testResult == SDL_PASS)
+         {
+             DebugP_log("\r\nAll tests have passed. \r\n");
+         }
+         else
+         {
+             DebugP_log("\r\nSome tests have failed. \r\n");
+         }
+
+    #elif defined (R5F1_INPUTS)
+    {
+        DebugP_log(" PBIST complete for MSS_TCMAROM_0\n");
+        DebugP_log(" PBIST complete for MSS_TCMAROM_1\n");
+        DebugP_log(" PBIST complete for PBISTROM\n");
+        DebugP_log(" PBIST complete for CORE A VIM\n");
+        DebugP_log(" PBIST complete for MSS_L2_0\n");
+        DebugP_log(" PBIST complete for CORE A ATCM\n");
+        DebugP_log(" PBIST complete for CORE A BTCM\n");
+        DebugP_log(" PBIST complete for CORE A R5SS RAM\n");
+        DebugP_log(" PBIST complete for MEM_TOP_AURORA\n");
+        DebugP_log(" PBIST complete for MEM_TOP_MDO\n");
+        DebugP_log(" PBIST complete for DBGSS_TRACE\n");
+    }
+    #endif
+  }
+#endif
+#if defined (SOC_AM273X)
+    if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+    {
+      #if defined (R5F0_INPUTS)
+        if (gInst == SDL_PBIST_INST_TOP)
+        {
+              DebugP_log(" PBIST complete for TPCC\n");
+              DebugP_log(" PBIST complete for MAILBOX\n");
+              DebugP_log(" PBIST complete for COREB VIM\n");
+              DebugP_log(" PBIST complete for MCAN\n");
+              DebugP_log(" PBIST complete for SPIA\n");
+              DebugP_log(" PBIST complete for SPIB\n");
+              DebugP_log(" PBIST complete for CORE B R5FSS RAM\n");
+              DebugP_log(" PBIST complete for MSS_L2_1\n");
+              DebugP_log(" PBIST complete for CPSW\n");
+              DebugP_log(" PBIST complete for GPADC\n");
+              DebugP_log(" PBIST complete for RETRAM\n");
+              DebugP_log(" PBIST complete for STCROM\n");
+              DebugP_log(" PBIST complete for CORE B ATCM\n");
+              DebugP_log(" PBIST complete for CORE B BTCM\n");
+
+        }
+        else if (gInst == SDL_PBIST_INST_DSS)
+        {
+          DebugP_log(" PBIST complete for DSS C66 STCROM\n");
+          DebugP_log(" PBIST complete for HWA STCROM\n");
+          DebugP_log(" PBIST complete for DSS PBISTROM\n");
+          DebugP_log(" PBIST complete for C66 L1D\n");
+          DebugP_log(" PBIST complete for C66 L1P\n");
+          DebugP_log(" PBIST complete for PBIST C66 L2 TAG\n");
+          DebugP_log(" PBIST complete for DSS HWA\n");
+          DebugP_log(" PBIST complete for DSS HWA MBOX\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB0\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB0\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB0\n");
+          DebugP_log(" PBIST complete for DSS MBOX RAM\n");
+          DebugP_log(" PBIST complete for DSS TPCC RAM\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK0\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK1\n");
+          DebugP_log(" PBIST complete for DSS L2 PARITY\n");
+          DebugP_log(" PBIST complete for HWA RAM\n");
+          DebugP_log(" PBIST complete for DSS CBUF\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB1\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB1\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB2\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB1\n");
+         }
+         if (testResult == SDL_PASS)
+         {
+             DebugP_log("\r\nAll tests have passed. \r\n");
+         }
+         else
+         {
+             DebugP_log("\r\nSome tests have failed. \r\n");
+         }
+
+    #elif defined (R5F1_INPUTS)
+    {
+        DebugP_log(" PBIST complete for MSS_TCMAROM_0\n");
+        DebugP_log(" PBIST complete for MSS_TCMAROM_1\n");
+        DebugP_log(" PBIST complete for PBISTROM\n");
+        DebugP_log(" PBIST complete for CORE A VIM\n");
+        DebugP_log(" PBIST complete for MSS_L2_0\n");
+        DebugP_log(" PBIST complete for CORE A ATCM\n");
+        DebugP_log(" PBIST complete for CORE A BTCM\n");
+        DebugP_log(" PBIST complete for CORE A R5SS RAM\n");
+        DebugP_log(" PBIST complete for MEM_TOP_AURORA\n");
+        DebugP_log(" PBIST complete for MEM_TOP_MDO\n");
+        DebugP_log(" PBIST complete for DBGSS_TRACE\n");
+    }
+    #endif
+  }
+#endif
+#if defined (SOC_AM263X)
+#if defined (R5F0_INPUTS)
+             if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+             {
+                 DebugP_log(" PBIST complete for R5 STC\n");
+                 DebugP_log(" PBIST complete for R51 STC\n");
+                 DebugP_log(" PBIST complete for PBISTROM\n");
+                 DebugP_log(" PBIST complete for CPSW\n");
+                 DebugP_log(" PBIST complete for ICSSM\n");
+                 DebugP_log(" PBIST complete for MBOX\n");
+                 DebugP_log(" PBIST complete for MCAN\n");
+                 DebugP_log(" PBIST complete for TPCC\n");
+                 DebugP_log(" PBIST complete for MSS_L2_1\n");
+                 DebugP_log(" PBIST complete for MSS_L2_2\n");
+                 DebugP_log(" PBIST complete for MSS_L2_3\n");
+                 DebugP_log(" PBIST complete for VIM1 R5SS0\n");
+                 DebugP_log(" PBIST complete for VIM0 R5SS1\n");
+                 DebugP_log(" PBIST complete for VIM1 R5SS1\n");
+                 DebugP_log(" PBIST complete for R5SS1 RAM\n");
+                 DebugP_log(" PBIST complete for MSS CR5B ATCM0\n");
+                 DebugP_log(" PBIST complete for MSS CR5B ATCM1\n");
+                 DebugP_log(" PBIST complete for MSS CR5B BTCM0\n");
+                 DebugP_log(" PBIST complete for MSS CR5B BTCM1\n");
+             }
+    #elif defined (R5F1_INPUTS)
+     if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+            {
+               DebugP_log(" PBIST complete for  VIM0 R5SS0\n");
+               DebugP_log(" PBIST complete for MSS_L2_0\n");
+               DebugP_log(" PBIST complete for R5SS0 RAM\n");
+               DebugP_log(" PBIST complete for CR5A ROM0\n");
+               DebugP_log(" PBIST complete for TRACE\n");
+               DebugP_log(" PBIST complete for MMCH0\n");
+               DebugP_log(" PBIST complete for MSS CR5A ATCM0\n");
+               DebugP_log(" PBIST complete for MSS CR5A ATCM1\n");
+               DebugP_log(" PBIST complete for MSS CR5A BTCM0\n");
+               DebugP_log(" PBIST complete for MSS CR5A BTCM1\n");
+
+             }
+#endif
+#endif
+    if((status == SDL_PASS) && (testType == SDL_PBIST_NEG_TEST))
+    {
+        DebugP_log(" PBIST failure Insertion test complete for TOP BIST\n");
+    }
+
+
     return (testResult);
 }
-
 
 /* PBIST Functional test */
 int32_t PBIST_funcTest(void)
 {
-     int32_t    testResult = 0;
+    int32_t    testResult = 0;
 
     testResult = PBIST_commonInit();
 
@@ -878,14 +1005,30 @@ int32_t PBIST_funcTest(void)
     {
         /* Run the test for diagnostics first */
         /* Run test on selected instance */
-           testResult = PBIST_runTest(0, true);
+        testResult = PBIST_runTest(SDL_PBIST_INST_TOP, true);
 
         if (testResult == 0)
         {
-            /* Run test on selected instance */
-            testResult = PBIST_runTest(0, false);
+          /* Run test on selected instance */
+
+          testResult = PBIST_runTest(SDL_PBIST_INST_TOP, false);
         }
-    }
+        #if defined (SOC_AM273X) || (SOC_AWR294X)
+        #if defined R5F0_INPUTS
+        gInst = SDL_PBIST_INST_DSS;
+        /* Run the test for diagnostics first */
+        /* Run test on selected instance */
+            testResult = PBIST_runTest(SDL_PBIST_INST_DSS, true);
+
+            if (testResult == 0)
+            {
+              /* Run test on selected instance */
+              testResult = PBIST_runTest(SDL_PBIST_INST_DSS, false);
+            }
+          #endif
+          #endif
+      }
+
 
     return (testResult);
 }

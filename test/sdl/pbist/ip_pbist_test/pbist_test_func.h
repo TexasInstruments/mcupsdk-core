@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2020
+ *   Copyright (c) Texas Instruments Incorporated 2021-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +32,7 @@
  */
 
  /**
- *  \file     pbist_test_func.h
+ *  \file     sdl_pbist_test_func.h
  *
  *  \brief    This file contains PBIST test function structures
  *
@@ -58,9 +58,6 @@ extern "C"
 #include <stdint.h>
 #include <string.h>
 #include <sdl/sdl_pbist.h>
-#ifdef SOC_AM64X
-#include <sdl/sdl_esm.h>
-#endif
 
 /* ========================================================================== */
 /*                                Data Structures                             */
@@ -77,7 +74,7 @@ typedef int32_t (*PBIST_auxInitRestoreFunctionPtr)(bool init);
 
 typedef struct PBIST_TestHandle_s
 {
-    #ifndef SDL_SOC_MCU_R5F
+#ifndef SDL_SOC_MCU_R5F
     char     testName[PBIST_INSTANCE_NAME_MAX_LENGTH];
     SDL_PBIST_inst pbistInst;
     uint64_t PBISTRegsHiAddress;
@@ -114,12 +111,12 @@ typedef struct PBIST_TestHandle_s
     uint32_t interruptNumber;
     volatile bool doneFlag;
 #endif
+
 } PBIST_TestHandle_t;
 
-
-void PBIST_eventHandler(uint32_t coreIndex);
-
 int32_t PBIST_commonInit(void);
+
+int32_t PBIST_clecConfig(uint32_t instance);
 
 #ifdef __cplusplus
 }

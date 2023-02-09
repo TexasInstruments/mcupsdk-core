@@ -7,6 +7,7 @@ const files = {
         "pbist_test_err.c",
         "pbist_test_func.c",
         "pbist_test_main.c",
+        "test_dpl_interface.c",
         "dpl_interface.c",
         "pbist_test_cfg.c",
         "main.c",
@@ -75,6 +76,7 @@ const r5fss1_macro = {
 
 };
 
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -127,13 +129,14 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match("r5fss0-0"))
+
     {
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
         build_property.defines = r5f0_macro;
     }
 
-    if (buildOption.cpu.match("r5fss0-1"))
+   if(buildOption.cpu.match("r5fss0-1"))
     {
         build_property.libs = libs_r5fss1;
         build_property.templates = templates_nortos_r5f;

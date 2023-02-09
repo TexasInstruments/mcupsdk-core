@@ -7,6 +7,7 @@ const files = {
         "pbist_test_err.c",
         "pbist_test_func.c",
         "pbist_test_main.c",
+        "test_dpl_interface.c",
         "dpl_interface.c",
         "pbist_test_cfg.c",
         "main.c",
@@ -43,7 +44,7 @@ const includes_nortos = {
     ],
 };
 
-const libs_r5f0 = {
+const libs_r5f = {
     common: [
         "nortos.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -52,7 +53,7 @@ const libs_r5f0 = {
     ],
 };
 
-const libs_nortos_r5fss1 = {
+const libs_r5fss1 = {
     common: [
         "nortos.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -67,11 +68,14 @@ const r5f0_macro = {
     ],
 
 };
-const r5f1_macro = {
+
+const r5fss1_macro = {
     common: [
         "R5F1_INPUTS",
     ],
+
 };
+
 
 const lnkfiles = {
     common: [
@@ -81,22 +85,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const templates_nortos_r5f0 =
-[
-    {
-        input: ".project/templates/awr294x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
-        input: ".project/templates/awr294x/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "test_main",
-        },
-    }
-];
-
-const templates_nortos_R51 =
+const templates_nortos_r5f =
 [
     {
         input: ".project/templates/awr294x/common/linker_r5f.cmd.xdt",
@@ -112,8 +101,8 @@ const templates_nortos_R51 =
 ];
 
 const buildOptionCombos = [
-  { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
-  { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -140,18 +129,20 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match("r5fss0-0"))
-     {
-        build_property.libs = libs_r5f0;
-        build_property.templates = templates_nortos_r5f0;
-        build_property.defines = r5f0_macro;
-     }
 
-  if(buildOption.cpu.match("r5fss0-1"))
-  {
-        build_property.libs = libs_nortos_r5fss1;
-        build_property.templates = templates_nortos_R51;
-        build_property.defines = r5f1_macro;
-       }
+    {
+        build_property.libs = libs_r5f;
+        build_property.templates = templates_nortos_r5f;
+        build_property.defines = r5f0_macro;
+    }
+
+   if(buildOption.cpu.match("r5fss0-1"))
+    {
+        build_property.libs = libs_r5fss1;
+        build_property.templates = templates_nortos_r5f;
+        build_property.defines = r5fss1_macro;
+    }
+
     return build_property;
 }
 

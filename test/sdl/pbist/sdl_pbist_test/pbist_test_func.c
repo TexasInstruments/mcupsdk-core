@@ -1,5 +1,4 @@
-/*
- *   Copyright (c) Texas Instruments Incorporated 2021
+/* Copyright (c) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -65,7 +64,7 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define APP_PBIST_TIMEOUT   (0x10000U)
+#define APP_PBIST_TIMEOUT   (100000000U)
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -1016,6 +1015,7 @@ int32_t PBIST_funcTest(void)
         }
         #if defined (SOC_AM273X) || (SOC_AWR294X)
         #if defined R5F0_INPUTS
+        gInst = SDL_PBIST_INST_DSS;
         /* Run the test for diagnostics first */
         /* Run test on selected instance */
             testResult = PBIST_runTest(SDL_PBIST_INST_DSS, true);

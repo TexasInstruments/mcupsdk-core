@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -64,7 +64,7 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 #define PBIST_INSTANCE_NAME_MAX_LENGTH    20
-#define APP_PBIST_TIMEOUT   (0x10000U)
+#define APP_PBIST_TIMEOUT   (100000000U)
 #if defined (SOC_AM263X)
 #if defined (R5F0_INPUTS)
 #define SDL_INTR_NUM SDL_R5FSS0_CORE0_INTR_PBIST_DONE

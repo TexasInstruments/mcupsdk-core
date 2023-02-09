@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2019-2021
+ *   Copyright (c) Texas Instruments Incorporated 2021-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -226,7 +226,7 @@ void test_sdl_pbist_test_app_runner(void)
 #endif
 }
 
-void test_main(void *args)
+int32_t test_main(void)
 {
     /* Declaration of variables */
     int32_t  testResult;
@@ -253,7 +253,7 @@ void test_main(void *args)
         DebugP_log("\r\nBoard Init failed. Exiting the app.\r\n");
     }
 
-
+    return (0);
 }
 
 /* Nothing past this point */
