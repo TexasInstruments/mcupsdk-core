@@ -90,7 +90,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     return 0;
 }
 
-int32_t parity_testmain(void *args)
+void parity_testmain(void *args)
 {
 	int32_t    testResult;
 	
@@ -113,8 +113,7 @@ int32_t parity_testmain(void *args)
     /* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
-	
-	return testResult;
+
 }
 
 /* Nothing past this point */
