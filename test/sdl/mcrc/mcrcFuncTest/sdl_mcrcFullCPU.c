@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -101,7 +101,7 @@ static SDL_MCRC_ConfigParams_t testParams[2] =
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
 		MCRC_INSTANCE,
 #endif
-        (uint32_t) SDL_MCRC_CHANNEL_3,
+        (uint32_t) SDL_MCRC_CHANNEL_1,
         (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
         4U,
         MCRC_DEF_PATTERN_COUNT,

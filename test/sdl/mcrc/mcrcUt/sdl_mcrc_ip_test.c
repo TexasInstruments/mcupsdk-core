@@ -1,4 +1,4 @@
- /* Copyright (c) 2021 Texas Instruments Incorporated
+ /* Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -214,7 +214,7 @@ int32_t sdl_ip_mcrcNegTest(void)
 	
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_MCRC_verifyBusTracingCtrl(instance, ctrlFlag, dataBusMask, 7U)!= SDL_PASS)
+        if (SDL_MCRC_verifyBusTracingCtrl(instance, ctrlFlag, dataBusMask, 7U)!= SDL_EFAIL)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

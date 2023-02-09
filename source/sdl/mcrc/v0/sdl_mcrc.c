@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -127,6 +127,7 @@ int32_t SDL_MCRC_init(SDL_MCRC_InstType instance,
                               SDL_MCRC_BCTOPLD2,
                               blockPreload);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 /* Configure watchdog pre-load value */
                 HW_WR_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3,
@@ -147,6 +148,7 @@ int32_t SDL_MCRC_init(SDL_MCRC_InstType instance,
                               SDL_MCRC_BCTOPLD4,
                               blockPreload);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -192,6 +194,7 @@ int32_t SDL_MCRC_verifyInit(SDL_MCRC_InstType     instance,
                 readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD2,
                                                  SDL_MCRC_BCTOPLD2);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 readwatchdogPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_WDTOPLD3,
                                                     SDL_MCRC_WDTOPLD3);
@@ -204,6 +207,7 @@ int32_t SDL_MCRC_verifyInit(SDL_MCRC_InstType     instance,
                 readblockPreload = HW_RD_FIELD32(baseAddr + SDL_MCRC_BCTOPLD4,
                                                  SDL_MCRC_BCTOPLD4);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -272,6 +276,7 @@ int32_t SDL_MCRC_config(SDL_MCRC_InstType instance,
                               SDL_MCRC_CTRL2_CH2_MODE,
                               mode);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 /* Configure MSDL_MCRC pattern count */
                 HW_WR_FIELD32(baseAddr + SDL_MCRC_PCOUNT_REG3,
@@ -300,6 +305,7 @@ int32_t SDL_MCRC_config(SDL_MCRC_InstType instance,
                               SDL_MCRC_CTRL2_CH4_MODE,
                               mode);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -352,6 +358,7 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                 mcrcMode = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL2,
                                          SDL_MCRC_CTRL2_CH2_MODE);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 pCount = HW_RD_FIELD32(baseAddr + SDL_MCRC_PCOUNT_REG3,
                                        SDL_MCRC_PCOUNT_REG3_PAT_COUNT3);
@@ -368,6 +375,7 @@ int32_t SDL_MCRC_verifyConfig(SDL_MCRC_InstType  instance,
                 mcrcMode = HW_RD_FIELD32(baseAddr + SDL_MCRC_CTRL2,
                                          SDL_MCRC_CTRL2_CH4_MODE);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -420,6 +428,7 @@ int32_t SDL_MCRC_channelReset(SDL_MCRC_InstType instance,
                               SDL_MCRC_CTRL0_CH2_PSA_SWRE,
                               SDL_MCRC_CTRL0_CH2_PSA_SWRE_OFF);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL0,
                               SDL_MCRC_CTRL0_CH3_PSA_SWRE,
@@ -436,6 +445,7 @@ int32_t SDL_MCRC_channelReset(SDL_MCRC_InstType instance,
                               SDL_MCRC_CTRL0_CH4_PSA_SWRE,
                               SDL_MCRC_CTRL0_CH4_PSA_SWRE_OFF);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -472,6 +482,7 @@ int32_t SDL_MCRC_getPSASig(SDL_MCRC_InstType     instance,
                 pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH2);
                 pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL2);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH3);
                 pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL3);
@@ -480,6 +491,7 @@ int32_t SDL_MCRC_getPSASig(SDL_MCRC_InstType     instance,
                 pPSAsign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH4);
                 pPSAsign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL4);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -524,6 +536,7 @@ int32_t SDL_MCRC_setPSASeedSig(SDL_MCRC_InstType           instance,
                 HW_WR_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH2, pSeedSign->regH);
                 HW_WR_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL2, pSeedSign->regL);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 /* Configure MCRC operation mode */
                 HW_WR_FIELD32(baseAddr + SDL_MCRC_CTRL2,
@@ -540,6 +553,7 @@ int32_t SDL_MCRC_setPSASeedSig(SDL_MCRC_InstType           instance,
                 HW_WR_REG32(baseAddr + SDL_MCRC_PSA_SIGREGH4, pSeedSign->regH);
                 HW_WR_REG32(baseAddr + SDL_MCRC_PSA_SIGREGL4, pSeedSign->regL);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -576,6 +590,7 @@ int32_t SDL_MCRC_getPSASectorSig(SDL_MCRC_InstType     instance,
                 pSecSign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SECSIGREGH2);
                 pSecSign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SECSIGREGL2);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 pSecSign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SECSIGREGH3);
                 pSecSign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SECSIGREGL3);
@@ -584,6 +599,7 @@ int32_t SDL_MCRC_getPSASectorSig(SDL_MCRC_InstType     instance,
                 pSecSign->regH = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SECSIGREGH4);
                 pSecSign->regL = HW_RD_REG32(baseAddr + SDL_MCRC_PSA_SECSIGREGL4);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -622,6 +638,7 @@ int32_t SDL_MCRC_getIntrStatus(SDL_MCRC_InstType     instance,
                 intVal = intVal & (SDL_MCRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL <<
                                    SDL_MCRC_STATUS_CH2_CCIT_SHIFT);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 intVal = intVal & (SDL_MCRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL <<
                                    SDL_MCRC_STATUS_CH3_CCIT_SHIFT);
@@ -630,6 +647,7 @@ int32_t SDL_MCRC_getIntrStatus(SDL_MCRC_InstType     instance,
                 intVal = intVal & (SDL_MCRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL <<
                                    SDL_MCRC_STATUS_CH4_CCIT_SHIFT);
                 break;
+#endif
             default:
                 /* Invalid input */
                 status = SDL_EBADARGS;
@@ -671,12 +689,14 @@ int32_t SDL_MCRC_enableIntr(SDL_MCRC_InstType  instance,
             case SDL_MCRC_CHANNEL_2:
                 intVal = (intrMask << SDL_MCRC_INTS_CH2_CCITENS_SHIFT);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 intVal = (intrMask << SDL_MCRC_INTS_CH3_CCITENS_SHIFT);
                 break;
             case SDL_MCRC_CHANNEL_4:
                 intVal = (intrMask << SDL_MCRC_INTS_CH4_CCITENS_SHIFT);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -717,12 +737,14 @@ int32_t SDL_MCRC_disableIntr(SDL_MCRC_InstType  instance,
             case SDL_MCRC_CHANNEL_2:
                 intVal = (intrMask << SDL_MCRC_INTR_CH2_CCITENR_SHIFT);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 intVal = (intrMask << SDL_MCRC_INTR_CH3_CCITENR_SHIFT);
                 break;
             case SDL_MCRC_CHANNEL_4:
                 intVal = (intrMask << SDL_MCRC_INTR_CH4_CCITENR_SHIFT);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -763,12 +785,14 @@ int32_t SDL_MCRC_clearIntr(SDL_MCRC_InstType  instance,
             case SDL_MCRC_CHANNEL_2:
                 intVal = (intrMask << SDL_MCRC_STATUS_CH2_CCIT_SHIFT);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 intVal = (intrMask << SDL_MCRC_STATUS_CH3_CCIT_SHIFT);
                 break;
             case SDL_MCRC_CHANNEL_4:
                 intVal = (intrMask << SDL_MCRC_STATUS_CH4_CCIT_SHIFT);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -813,6 +837,7 @@ int32_t SDL_MCRC_isBusy(SDL_MCRC_InstType   instance,
                 busyVal = HW_RD_FIELD32(baseAddr + SDL_MCRC_BUSY,
                                         SDL_MCRC_BUSY_CH2);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 busyVal = HW_RD_FIELD32(baseAddr + SDL_MCRC_BUSY,
                                         SDL_MCRC_BUSY_CH3);
@@ -821,6 +846,7 @@ int32_t SDL_MCRC_isBusy(SDL_MCRC_InstType   instance,
                 busyVal = HW_RD_FIELD32(baseAddr + SDL_MCRC_BUSY,
                                         SDL_MCRC_BUSY_CH4);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -863,6 +889,7 @@ int32_t SDL_MCRC_getCurSecNum(SDL_MCRC_InstType  instance,
                 *pCurSecNum = HW_RD_FIELD32(baseAddr + SDL_MCRC_CURSEC_REG2,
                                             SDL_MCRC_CURSEC_REG2_CURSEC2);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 *pCurSecNum = HW_RD_FIELD32(baseAddr + SDL_MCRC_CURSEC_REG3,
                                             SDL_MCRC_CURSEC_REG3_CURSEC3);
@@ -871,6 +898,7 @@ int32_t SDL_MCRC_getCurSecNum(SDL_MCRC_InstType  instance,
                 *pCurSecNum = HW_RD_FIELD32(baseAddr + SDL_MCRC_CURSEC_REG4,
                                             SDL_MCRC_CURSEC_REG4_CURSEC4);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -912,6 +940,7 @@ int32_t SDL_MCRC_getCurPSASig(SDL_MCRC_InstType     instance,
                 pCurPSASig->regH = HW_RD_FIELD32(baseAddr + SDL_MCRC_REGH2,
                                                  SDL_MCRC_REGH2_CRC2_63_32);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 pCurPSASig->regL = HW_RD_FIELD32(baseAddr + SDL_MCRC_REGL3,
                                                  SDL_MCRC_REGL3_CRC3);
@@ -924,6 +953,7 @@ int32_t SDL_MCRC_getCurPSASig(SDL_MCRC_InstType     instance,
                 pCurPSASig->regH = HW_RD_FIELD32(baseAddr + SDL_MCRC_REGH4,
                                                  SDL_MCRC_REGH4_CRC4_63_32);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
@@ -992,6 +1022,7 @@ int32_t SDL_MCRC_getPSASigRegAddr(SDL_MCRC_InstType instance, SDL_MCRC_Channel_t
                 pMCRCregAddr->regH = (baseAddr + SDL_MCRC_PSA_SIGREGH2);
                 pMCRCregAddr->regL = (baseAddr + SDL_MCRC_PSA_SIGREGL2);
                 break;
+#if defined(SOC_AM263X)
             case SDL_MCRC_CHANNEL_3:
                 pMCRCregAddr->regH = (baseAddr + SDL_MCRC_PSA_SIGREGH3);
                 pMCRCregAddr->regL = (baseAddr + SDL_MCRC_PSA_SIGREGL3);
@@ -1000,6 +1031,7 @@ int32_t SDL_MCRC_getPSASigRegAddr(SDL_MCRC_InstType instance, SDL_MCRC_Channel_t
                 pMCRCregAddr->regH = (baseAddr + SDL_MCRC_PSA_SIGREGH4);
                 pMCRCregAddr->regL = (baseAddr + SDL_MCRC_PSA_SIGREGL4);
                 break;
+#endif
             default:
                 status = SDL_EBADARGS;
                 break;
