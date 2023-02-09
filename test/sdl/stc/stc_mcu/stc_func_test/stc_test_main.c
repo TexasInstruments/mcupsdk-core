@@ -71,6 +71,11 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 
+#define COMMON_VARIABLE_MASK      (0x0000FFFF)
+#define COMMON_VARIABLE_SHIFT      (0U)
+#define SHARED_ADDRESS             (0x102E8000)
+#define DSP_STC_BASEADDRESS        (0x6F79200U)
+
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
@@ -85,7 +90,7 @@ void STC_DSP_test_main(int32_t testType);
  *  \brief global variable for holding data buffer.
  */
 static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, SDL_STC_INST_DSP};
-static  int32_t test_Result;
+volatile  int32_t test_Result;
 
 
 /*===========================================================================*/
@@ -96,6 +101,7 @@ void STC_DSP_test_main(int32_t testType)
 {
     int32_t sdlResult=SDL_PASS;
     volatile int32_t wait_Time = 0;
+    volatile int32_t Wait_var=0;
 
     /* Two type of test cases are supported\
         1.SDL_STC_TEST       (STC should pass for this testType);
@@ -129,6 +135,19 @@ void STC_DSP_test_main(int32_t testType)
     }
 
     DebugP_log("If DSP STC test is successfull, DSP Core will be reset.\r\n");
+
+    /* Reading this register for confirmation for intrrupt registration */
+    Wait_var= (int32_t) HW_RD_FIELD32(SHARED_ADDRESS, COMMON_VARIABLE);
+    while(1)
+    {
+        DebugP_log("Wait for interrupt registration in DSP Core .\r\n");
+        if(Wait_var==0x1111)
+        {
+            break;
+        }
+    }
+    DebugP_log("Interrupt registration is Done on DSP Core .\r\n");
+
     sdlResult=   SDL_STC_selfTest(test_case[1], testType, pConfig);
 
     /* Wait for completion of STC test from DSP side */
@@ -140,6 +159,10 @@ void STC_DSP_test_main(int32_t testType)
             break;
         }
     } while (1);
+    while(1!= (uint32_t)HW_RD_FIELD32(DSP_STC_BASEADDRESS + SDL_STC_STCGSTAT, SDL_STC_TEST_DONE))
+    {
+      ;
+    }
 
     if (sdlResult!=SDL_PASS)
     {
@@ -181,8 +204,6 @@ void STC_DSP_test_main(int32_t testType)
             break;
     }
 }
-
-
 
 void STC_test_main(int32_t testType)
 {
@@ -230,9 +251,6 @@ void STC_test_main(int32_t testType)
         DebugP_log("R5F STC Test Could not completed Successfully.\r\n");
     }
 }
-
-
-
 
 void STC_func_test_main(void *args)
 {

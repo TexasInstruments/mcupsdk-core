@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -56,9 +56,9 @@ mpu_armv74.size     = 20;
 
 mpu_armv75.$name        = "CONFIG_MPU_REGION4";
 mpu_armv75.baseAddr     = 0x102E0000;
-mpu_armv75.size         = 16;
 mpu_armv75.attributes   = "NonCached";
 mpu_armv75.allowExecute = false;
+mpu_armv75.size         = 10;
 
 mpu_armv76.$name        = "CONFIG_MPU_REGION5";
 mpu_armv76.baseAddr     = 0x2F79800;

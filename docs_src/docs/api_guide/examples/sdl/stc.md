@@ -87,6 +87,8 @@ Shown below is a sample output when the application is run for R5F,
 DSP STC Test Application started.
 DSP STC Test should Pass & Completed.
 If DSP STC test is successfull, DSP Core will be reset.
+Wait for interrupt registration in DSP Core .
+Interrupt registration in Done on DSP Core .
 DSP Core is Reset.
 DSP STC is done Successfully & Passed.
 R5F STC Test Application started.

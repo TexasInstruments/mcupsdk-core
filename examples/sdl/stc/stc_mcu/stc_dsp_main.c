@@ -57,6 +57,10 @@
 /*===========================================================================*/
 #define DSS_DSP_PDC_INT   118U
 
+#define SHARED_ADDRESS           (0xC02E8000)
+#define COMMON_VARIABLE_MASK      (0x0000FFFF)
+#define COMMON_VARIABLE_SHIFT      (0U)
+
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
@@ -103,6 +107,10 @@ void STC_main(void *args)
     stc_Params.priority =1U;
     HwiP_construct(&stcHwiObj, &stc_Params);
     HwiP_enableInt(intNum);
+    DebugP_log("DSP core is done with interrupt register.\r\n");
+    /* This is shared memory register, which is being used for
+    confirmatoion for intrrupt Registartion is complete in DSP core */
+    HW_WR_FIELD32(SHARED_ADDRESS, COMMON_VARIABLE, 0x1111);
 
     while(1)
     {
