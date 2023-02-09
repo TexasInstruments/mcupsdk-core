@@ -46,6 +46,8 @@
 Bootloader_MmcsdArgs gBootloader`i`Args =
         % } else if(instance.bootMedia == "BUFIO") {
 Bootloader_BufIoArgs gBootloader`i`Args =
+        % } else if(instance.bootMedia == "PCIE") {
+Bootloader_MemArgs  gBootloader`i`Args =
         % } else {
 Bootloader_`common.camelSentence(instance.bootMedia)`Args gBootloader`i`Args =
         % }
@@ -70,6 +72,9 @@ Bootloader_`common.camelSentence(instance.bootMedia)`Args gBootloader`i`Args =
     .virtMemOffset  = 0,
     .drvIdx         = 0,
     .tempBuf        = 0,
+    % }
+    % else if(instance.bootMedia == "PCIE") {
+    .curOffset      = 0,
     % }
 };
 % }
@@ -115,6 +120,8 @@ Bootloader_Config gBootloaderConfig[CONFIG_BOOTLOADER_NUM_INSTANCES] =
         &gBootloaderMmcsdFxns,
     % } else if(module.$instances[i].bootMedia == "BUFIO") {
         &gBootloaderBufIoFxns,
+    % } else if(module.$instances[i].bootMedia == "PCIE") {
+        &gBootloaderMemFxns,
     % } else {
         &gBootloader`common.camelSentence(instance.bootMedia)`Fxns,
     % }

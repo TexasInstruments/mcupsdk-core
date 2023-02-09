@@ -12,6 +12,7 @@ const bootloader_bootmedia = [
     { name: "MEM", displayName: "SOC Memory" },
     { name: "EMMC", displayName: "EMMC"},
     { name: "BUFIO", displayName: "Buffered IO Device (UART)"},
+    { name: "PCIE", displayName: "PCIe"},
 ];
 
 function getDefaultConfig()

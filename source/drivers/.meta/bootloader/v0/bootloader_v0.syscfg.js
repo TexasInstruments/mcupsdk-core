@@ -5,6 +5,15 @@ function getConfigArr() {
 	return soc.getConfigArr();
 }
 
+let romPCIeCfgDesciption = `
+If checked, will use the PCIE configuration as done by ROM, and SBL will not
+reopen the driver (enable clocks, do link training). SBL will only be
+configuring the ATU regions required to receive the application image.
+On checking the box, will generate a macro that can be used in the SBL to
+selectively compile PCIe reinitialization sections. Uncecking the box, will pull
+in PCIe in EP (End Point) mode.
+`
+
 let bootloader_module_name = "/drivers/bootloader/bootloader";
 function getConfig(){
     let cfg = [
@@ -35,6 +44,13 @@ function getConfig(){
                 else {
                     ui.EMMCAppImageOffset.hidden = true;
                 }
+                /* romPCIeCfg applicabke only for PCIe boot */
+                if(inst.bootMedia == "PCIE") {
+                    ui.romPCIeCfg.hidden = false;
+                }
+                else {
+                    ui.romPCIeCfg.hidden = true;
+                }
             },
 
         },
@@ -59,6 +75,13 @@ function getConfig(){
             default: "0x00000000",
             hidden: true,
         },
+        {
+            name: "romPCIeCfg",
+            displayName: "Use ROM PCIe Configuration",
+            longDescription: romPCIeCfgDesciption,
+            default: true,
+            hidden: true,
+        }
     ]
     if(common.getSocName() == "am263x"){
         cfg.push(
@@ -135,6 +158,18 @@ function moduleInstances(instance){
             requiredArgs: {
                 moduleSelect: "MMC0",
             },
+        });
+    }
+
+    if(instance.bootMedia == "PCIE" && instance.romPCIeCfg != true) {
+        modInstances.push({
+            name: "PCIEDriver",
+            displayName: "Pcie Driver Configuration",
+            moduleName: '/drivers/pcie/pcie',
+            requiredArgs: {
+                operMode: "PCIE_EP_MODE",
+                gen: "PCIE_GEN2",
+            }
         });
     }
 
