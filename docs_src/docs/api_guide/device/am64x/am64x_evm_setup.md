@@ -119,7 +119,7 @@ Refer to SK page for more details on the AM64X-SK, https://www.ti.com/tool/SK-AM
 
 ## Flash SOC Initialization Binary {#EVM_FLASH_SOC_INIT}
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please 
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
 refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
 
 ### AM64X-EVM
@@ -473,7 +473,7 @@ and flash driver is not yet available for that EVM.
 
 #### SOC Initialization Using CCS Scripting {#EVM_SOC_INIT_NOBOOT_MODE}
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please 
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
 refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BOOT_HS_FS
 
 ##### Set Environment Variable
@@ -551,7 +551,7 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BO
     \imageStyle{ccs_load_dmsc_00.png,width:50%}
     \image html ccs_load_dmsc_00.png "Scripting Console"
 
-- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc.js` or 
+- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc.js` or
 `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc_hsfs.js`
 
 - After successful execution of this script one would see logs as below
@@ -780,6 +780,17 @@ This mode is used to boot applications via eMMC on the EVM.
 
   \imageStyle{boot_pins_emmc_mode.png,width:30%}
   \image html boot_pins_emmc_mode.png "EMMC BOOT MODE"
+
+#### PCIE BOOT MODE  {#BOOTMODE_PCIE}
+##### AM64X-EVM
+This mode is used to boot applications via PCIe on the EVM.
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 1101 0110
+    BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
+    \endcode
+
+  \imageStyle{boot_pins_pcie_mode.png,width:30%}
+  \image html boot_pins_pcie_mode.png "PCIE BOOT MODE"
 
 ## Troubleshooting EVM issues {#TROUBLESHOOT_ISSUES}
 

@@ -10,7 +10,7 @@ If checked, will use the PCIE configuration as done by ROM, and SBL will not
 reopen the driver (enable clocks, do link training). SBL will only be
 configuring the ATU regions required to receive the application image.
 On checking the box, will generate a macro that can be used in the SBL to
-selectively compile PCIe reinitialization sections. Uncecking the box, will pull
+selectively compile PCIe reinitialization sections. Unchecking the box, will pull
 in PCIe in EP (End Point) mode.
 `
 

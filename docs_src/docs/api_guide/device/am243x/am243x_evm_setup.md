@@ -127,7 +127,7 @@
 
 ## Flash SOC Initialization Binary {#EVM_FLASH_SOC_INIT}
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please 
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
 refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
 
 ### AM243X-LP
@@ -439,7 +439,7 @@ and flash driver is not yet available for that EVM.
 
 #### SOC Initialization Using CCS Scripting {#EVM_SOC_INIT_NOBOOT_MODE}
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please 
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
 refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BOOT_HS_FS
 
 ##### Set Environment Variable
@@ -693,6 +693,17 @@ This mode is used in conjunction with the `load_dmsc.js` script described here \
 
   \imageStyle{boot_pins_noboot_mode.png,width:30%}
   \image html boot_pins_noboot_mode.png "NO BOOT MODE"
+
+#### PCIE BOOT MODE  {#BOOTMODE_PCIE}
+##### AM243X-EVM
+This mode is used to boot applications via PCIe on the EVM.
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 1101 0110
+    BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
+    \endcode
+
+  \imageStyle{boot_pins_pcie_mode.png,width:30%}
+  \image html boot_pins_pcie_mode.png "PCIE BOOT MODE"
 
 ## Troubleshooting EVM issues {#TROUBLESHOOT_ISSUES}
 

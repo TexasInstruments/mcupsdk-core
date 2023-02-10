@@ -151,13 +151,13 @@ shaValue = FORMAT:HEX,OCT:0000
   the signing script used for this please refer \ref TOOLS_BOOT
 - One of the first things SBL is going to do is wait for a boot notification from SYSFW.
 - There are different types of SYSFW images included in the SDK. You can find below binary files under `source/drivers/sciclient/soc/${soc}`:
-  - `sysfw-hs-fs-enc.bin`: This is the encrypted and signed SYSFW binary to be packaged with SBL when preparing the SBL 
+  - `sysfw-hs-fs-enc.bin`: This is the encrypted and signed SYSFW binary to be packaged with SBL when preparing the SBL
     boot image for **HS-FS** device.
-  - `sysfw-hs-fs-enc-cert.bin`: This is the x509 certificate binary generated while signing the above (`sysfw-hs-fs-enc.bin`) image. 
+  - `sysfw-hs-fs-enc-cert.bin`: This is the x509 certificate binary generated while signing the above (`sysfw-hs-fs-enc.bin`) image.
     This is also to be packaged with SBL when preparing the SBL boot image for **HS-FS** device.
-  - `sysfw-hs-enc.bin`: This is the encrypted and signed SYSFW binary to be packaged with SBL when preparing the SBL 
+  - `sysfw-hs-enc.bin`: This is the encrypted and signed SYSFW binary to be packaged with SBL when preparing the SBL
     boot image for **HS-SE**  device.
-  - `sysfw-hs-enc-cert.bin`: This is the x509 certificate binary generated while signing the above (`sysfw-hs-enc.bin`) image. 
+  - `sysfw-hs-enc-cert.bin`: This is the x509 certificate binary generated while signing the above (`sysfw-hs-enc.bin`) image.
     This is also to be packaged with SBL when preparing the SBL boot image for **HS-SE** device.
 \endcond
 - For ROM to accept any image to boot, there are some restrictions in the image preparation
@@ -195,10 +195,10 @@ However the steps to convert the application `.out` into a bootable image are di
   - It is highly recommended to keep all loadable sections together within a SBL application.
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
 - This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
-   - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image 
+   - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
    - A default key is used for this.
    - This is a ROM bootloader requirement and is needed even on a non-secure device.
-   - The signing tools take the `.bin` file 
+   - The signing tools take the `.bin` file
 - Depending on the device type for which we build the SBL, there will be certain prefixes to the `.tiimage` extension like so:
   - **GP** device:
     - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
@@ -366,6 +366,20 @@ some details regarding those.
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+
+### SBL PCIE
+
+- The `sbl pcie` is a secondary bootloader which receives the multicore appimage via
+PCIe to memory and then does the parsing, core initialization etc.
+
+- The bootloader and appimage for `sbl pcie` is send over to the target board from a host
+board running \ref EXAMPLES_DRIVERS_SBL_PCIE_HOST.
+
+- For detailed steps on running `sbl pcie`, you can refer to \ref EXAMPLES_DRIVERS_SBL_PCIE.
+
+\endcond
+
 \cond SOC_AM64X
 ### SBL OSPI LINUX
 
@@ -402,6 +416,7 @@ See also these additional pages for more details and examples about the boot flo
   - \ref EXAMPLES_DRIVERS_SBL_UART
   - \ref EXAMPLES_DRIVERS_SBL_OSPI_MULTI_PARTITION
   - \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
+  - \ref EXAMPLES_DRIVERS_SBL_PCIE
 \endcond
 \cond SOC_AM64X
   - \ref EXAMPLES_DRIVERS_SBL_OSPI_LINUX
