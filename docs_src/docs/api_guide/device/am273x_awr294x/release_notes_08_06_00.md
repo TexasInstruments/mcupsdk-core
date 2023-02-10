@@ -154,16 +154,17 @@ Ethernet driver (ENET)      | R5F            | NO                | FreeRTOS    |
 
 Module            | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                                            | Key features not tested / NOT supported
 ------------------|-----------------|-------------------|------------------|------------------------------------------------------------------------------------------------|----------------------------------------
-MCRC              | R5F, C66        | NA                |  NORTOS | Full CPU Mode, Auto CPU Mode.                                                         | Semi CPU Auto Mode on R5F and C66X.
-DCC               | R5F, C66        | NA                |  NORTOS | Single Shot Mode, Continuous Mode                                   |
+MCRC              | R5F, C66        | NA                |  NORTOS | Full CPU Mode, Auto CPU Mode.                                                         | Semi CPU Auto Mode on R5F and C66X
+DCC               | R5F, C66        | NA                |  NORTOS | Single Shot Mode, Continuous Mode                                   |-
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS and DSS PBIST controller.          |-
 ESM               | R5F, C66        | NA                |  NORTOS | Tested in combination with RTI, DCC, ECC                                        |-
 RTI               | R5F, C66        | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F, C66        | NA                |  NORTOS | ECC of MSS_L2, Mailbox, TPTC, R5SS TCM, MCAN     | R5F Cache, VIM, HSM and ICSSM
-Bus Safety        | R5F, C66        | NA                |  NORTOS | Bus Safety of Mailbox, DSS L3, HWA, ADCBUF, DSS_PCR, MSS_TPTC, CORE A and B AHB, MCRC                | MSS_CR5, MSS_QSPI, HSM_DTHE, MSS_CPSW, MSS_PCR, HSM, MSS_L2, MSS_SWBUF, MSS_GPADC, MSS_DMM, MSS_TO_MDO, MSS_SCRP, DAP_R232, DSS_DSP, DSS_DSP_SDMA
+ECC               | R5F, C66        | NA                |  NORTOS | ECC of MSS_L2, Mailbox, TPTC, R5SS TCM, MCAN, VIM, ICSSM     | R5F Cache, HSM
+Bus Safety        | R5F, C66        | NA                |  NORTOS | Bus Safety of Mailbox, DSS L3, HWA, ADCBUF, DSS_PCR, MSS_TPTC, CORE A and B AHB, MCRC, MSS_CR5 ,MSS_QSPI, MSS_PCR, MSS_SWBUF, MSS_GPADC, DSS_DSP_SDMA,MSS_TO_MDO  | HSM_DTHE, MSS_CPSW, HSM, MSS_L2, MSS_DMM, MSS_SCRP, DAP_R232, DSS_DSP_MDMA 
 HWA               | C66             | NA                |  NORTOS | Parity on Data Memories, Window Memory and FSM Lockstep                                                 | -
-CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode.                                                 | Error Forcing Mode and Self Test Error Forcing Mode.
-R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F.                                                 |-
+CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode, Error Forcing Mode and Self Test Error Forcing Mode                                 | - 
+R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F and DSP.                                                 |-
+PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA memories                                                |-
 
 ## Fixed Issues
 
@@ -195,6 +196,20 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
     <td> ENET
     <td> 8.4.0 onwards
     <td> Fixed the udp examples and added udp client socket example
+</tr>
+<tr>
+    <td> PROC_SDL-4558
+    <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> Fixed the example.
+</tr>
+<tr>
+    <td> PROC_SDL-4751
+    <td> In CCM mode, only self test mode tested.Error Forcing Mode and Self Test Error Forcing Mode are not yet supported.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> Error Forcing and self test error forcing more support added.
 </tr>
 \cond SOC_AM273X
 
@@ -254,22 +269,8 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
     <td> None. Issue is not seen in driver unit test
 </tr>
 <tr>
-    <td> PROC_SDL-4558
-    <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> Add the resetvecs.S manually in to CCS project / Use the binary generated from gmake.
-</tr>
-<tr>
     <td> PROC_SDL-4749
     <td> AXI DED Bus Safety fail.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4751
-    <td> In CCM mode, only self test mode tested.Error Forcing Mode and Self Test Error Forcing Mode are not yet supported.
     <td> SDL
     <td> 8.5.0 onwards
     <td> None.
@@ -286,6 +287,27 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
     <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
     <td> SDL
     <td> 8.5.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5615
+    <td> DAP R232 SEC, DED does not work.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5616
+    <td> For ECC Bus Safety, SEC and DED are not supported for CPSW.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5617
+    <td> ECC Bus safety for SEC and DED not supported for MSS_L2.
+    <td> SDL
+    <td> 8.6.0 onwards
     <td> None.
 </tr>
 \endcond

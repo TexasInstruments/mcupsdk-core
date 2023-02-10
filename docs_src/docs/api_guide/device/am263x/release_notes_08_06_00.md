@@ -172,10 +172,11 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN      | R5F Cache, VIM, HSM, ICSSM, CPSW
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM      | R5F Cache, HSM, CPSW
 Bus Safety        | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
-CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode.                                                 | Error Forcing Mode and Self Test Error Forcing Mode.
+CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F.                                                 |-
+PARITY            | R5F             | NA                |  NORTOS | TCM and DMA memories                                                |-
 ## Fixed Issues
 
 <table>
@@ -266,6 +267,55 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F. 
     <td> 8.4.0 onwards
     <td> AM263x
     <td> Fixed
+</tr>
+<tr>
+    <td> PROC_SDL-4558
+    <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> Fixed the example.
+</tr>
+<tr>
+    <td> PROC_SDL-4751
+    <td> In CCM mode, only self test mode tested.Error Forcing Mode and Self Test Error Forcing Mode are not yet supported.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> Error Forcing and self test error forcing more support added.
+</tr>
+<tr>
+    <td> PROC_SDL-4749
+    <td> AXI DED Bus Safety fail.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-4755
+    <td> MCRC Semi CPU mode is not supported.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> Use Full CPU mode ot Auto mode.
+</tr>
+<tr>
+    <td> PROC_SDL-5159
+    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5616
+    <td> For ECC Bus Safety, SEC and DED are not supported for CPSW.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5617
+    <td> ECC Bus safety for SEC and DED not supported for MSS_L2.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
 </tr>
 </table>
 
