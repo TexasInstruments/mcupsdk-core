@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -155,7 +155,7 @@ uint64_t HDSL_get_pos(int position_id);
 uint8_t HDSL_get_qm();
 
 /**
-*  \brief       taking values of High bytes event(EVENT_H),Low bytes event(EVENT_L)
+*  \brief       Taking values of High bytes event (EVENT_H) and Low bytes event(EVENT_L)
  *
  *  \param[in]  None
 
@@ -163,6 +163,47 @@ uint8_t HDSL_get_qm();
  *
  */
 uint16_t HDSL_get_events();
+
+/**
+*  \brief       Taking values of Safe Event (EVENT_S) register
+ *
+ *  \param[in]  None
+
+ *  \retval       8 bit integer values of EVENT_S
+ *
+ */
+uint8_t HDSL_get_safe_events();
+
+
+/**
+*  \brief       Taking values of Online Status D (ONLINE_STATUS_D) register
+ *
+ *  \param[in]  None
+
+ *  \retval       16 bit integer value of ONLINE_STATUS_D
+ *
+ */
+uint16_t HDSL_get_online_status_d();
+
+/**
+*  \brief       Taking values of Online Status D (ONLINE_STATUS_D) register
+ *
+ *  \param[in]  None
+
+ *  \retval       16 bit integer value of ONLINE_STATUS_D
+ *
+ */
+uint16_t HDSL_get_online_status_1();
+
+/**
+*  \brief       Taking values of Online Status D (ONLINE_STATUS_D) register
+ *
+ *  \param[in]  None
+
+ *  \retval       16 bit integer value of ONLINE_STATUS_D
+ *
+ */
+uint16_t HDSL_get_online_status_2();
 
 /**
 *  \brief   Getting Summarized slave status

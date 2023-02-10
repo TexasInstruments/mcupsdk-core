@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -141,11 +141,33 @@ uint8_t HDSL_get_qm()
 }
 
 
- uint16_t HDSL_get_events()
+uint16_t HDSL_get_events()
 {
     uint16_t ureg = gHdslInterface->EVENT_L | (gHdslInterface->EVENT_H << 8);
+    return ureg;
+}
 
+uint8_t HDSL_get_safe_events()
+{
+    uint8_t ureg = gHdslInterface->EVENT_S;
+    return ureg;
+}
 
+uint16_t HDSL_get_online_status_d()
+{
+    uint16_t ureg = gHdslInterface->ONLINE_STATUS_D;
+    return ureg;
+}
+
+uint16_t HDSL_get_online_status_1()
+{
+    uint16_t ureg = gHdslInterface->ONLINE_STATUS_1;
+    return ureg;
+}
+
+uint16_t HDSL_get_online_status_2()
+{
+    uint16_t ureg = gHdslInterface->ONLINE_STATUS_2;
     return ureg;
 }
 

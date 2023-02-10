@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -111,7 +111,7 @@ struct hdslInterface
     volatile uint8_t MAXDEV_H;    /**< Fast position estimator deviation high byte */
     volatile uint8_t MAXDEV_L;    /**< Fast position estimator deviation low byte */
     volatile uint8_t resvd10;     /**< Reserved 10 */
-    volatile uint8_t resvd11;     /**< Reserved 11 */
+    volatile uint8_t EVENT_S;     /**< Safe Events */
     volatile uint8_t resvd12;     /**< Reserved 12 */
     volatile uint8_t DUMMY;       /**< Dummy, no data */
     volatile uint8_t SLAVE_REG_CTRL;    /**< Short message control */
