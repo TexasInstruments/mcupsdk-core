@@ -151,7 +151,7 @@ void sync_calculation(void)
             counter++;
             if(counter > MAX_WAIT)
             {
-                DebugP_log("\rSYNC PULSE NOT FOUND, WAITING FOR SYNC PULSE\n");
+                DebugP_log("\r\n SYNC PULSE NOT FOUND, WAITING FOR SYNC PULSE");
                 counter = 0;
             }
         }
@@ -188,21 +188,21 @@ void sync_calculation(void)
     wait_before_start = wait_before_start - 51;
     if(extra_size < 4 || extra_size > 9)
     {
-        DebugP_log("\rERROR: ES or period selected is Invalid \n");
+        DebugP_log("\r\n ERROR: ES or period selected is Invalid ");
     }
-    DebugP_log("\r********************************************************************\n");
-    DebugP_log("\rSYNC MODE: period = %d\n", period);
-    DebugP_log("\rSYNC MODE: ES = %d\n", ES);
-    DebugP_log("\rSYNC MODE: counter = %d\n", counter);
-    DebugP_log("\rSYNC MODE: wait_before_start = %d\n", wait_before_start);
-    DebugP_log("\rSYNC MODE: bottom_up_cycles = %d\n", bottom_up_cycles);
-    DebugP_log("\rSYNC MODE: extra_size = %d\n", extra_size);
-    DebugP_log("\rSYNC MODE: temp_gRest = %d\n", time_gRest);
-    DebugP_log("\rSYNC MODE: extra_edge = %d\n", extra_edge);
-    DebugP_log("\rSYNC MODE: num_of_stuffing = %d\n", num_of_stuffing);
-    DebugP_log("\rSYNC MODE: extra_size_remainder = %d\n", extra_size_remainder);
-    DebugP_log("\rSYNC MODE: stuffing_remainder = %d\n", stuffing_remainder);
-    DebugP_log("\r********************************************************************\n");
+    DebugP_log("\r\n ********************************************************************");
+    DebugP_log("\r\n SYNC MODE: period = %d", period);
+    DebugP_log("\r\n SYNC MODE: ES = %d", ES);
+    DebugP_log("\r\n SYNC MODE: counter = %d", counter);
+    DebugP_log("\r\n SYNC MODE: wait_before_start = %d", wait_before_start);
+    DebugP_log("\r\n SYNC MODE: bottom_up_cycles = %d", bottom_up_cycles);
+    DebugP_log("\r\n SYNC MODE: extra_size = %d", extra_size);
+    DebugP_log("\r\n SYNC MODE: temp_gRest = %d", time_gRest);
+    DebugP_log("\r\n SYNC MODE: extra_edge = %d", extra_edge);
+    DebugP_log("\r\n SYNC MODE: num_of_stuffing = %d", num_of_stuffing);
+    DebugP_log("\r\n SYNC MODE: extra_size_remainder = %d", extra_size_remainder);
+    DebugP_log("\r\n SYNC MODE: stuffing_remainder = %d", stuffing_remainder);
+    DebugP_log("\r\n ********************************************************************");
 
     sync_param_mem_start =sync_param_mem_start + (uint32_t)gPru_dramx;
     HWREGB(sync_param_mem_start) = extra_size;
@@ -231,29 +231,29 @@ void process_request(int menu){
     switch(menu)
     {
         case MENU_SAFE_POSITION:
-            if (vpos==1){
-                    val0=HDSL_get_pos(0);
-                    if(val0!=-1){
+            if (vpos == 1)
+            {
+                val0 = HDSL_get_pos(0);
+                if(val0 != -1)
+                {
 
-                        DebugP_log( "|\r  fast position read successfully \n");
-                    }
+                    DebugP_log("\r\n Fast Position read successfully");
+                }
 
-                    val2=HDSL_get_pos(2);
-                               if(val2!=-1){
-                                   DebugP_log( "|\r  safe position 2 read successfully \n");
-                               }
-
-                   pos2 = (float)(val2 & gMask) / (float)(gMask + 1) * (float)360;
-
+                val2 = HDSL_get_pos(2);
+                if(val2 != -1)
+                {
+                    DebugP_log("\r\n Safe Position 2 read successfully");
+                }
+                pos2 = (float)(val2 & gMask) / (float)(gMask + 1) * (float)360;
             }
-            else{
-
-                    val0=HDSL_get_pos(1);
-
-                    if(val0!=-1){
-
-                        DebugP_log( "|\r  safe position 1 read successfully \n");
-                     }
+            else
+            {
+                val0 = HDSL_get_pos(1);
+                if(val0 != -1)
+                {
+                    DebugP_log("\r\n Safe Position 1 read successfully");
+                }
             }
 
             pos0 = (float)(val0 & gMask) / (float)(gMask + 1) * (float)360;
@@ -261,64 +261,84 @@ void process_request(int menu){
             ureg = HDSL_get_rssi();
             ureg1 = HDSL_get_qm();
 
-               if ( gMulti_turn)
-               {
-                   uint64_t turn, turn2;
+            if (gMulti_turn)
+            {
+                uint64_t turn, turn2;
 
-                   turn = val0 & ~gMask;
-                   turn >>= gRes;
+                turn = val0 & ~gMask;
+                turn >>= gRes;
 
-                   turn2 = val2 & ~gMask;
-                   turn2 >>= gRes;
+                turn2 = val2 & ~gMask;
+                turn2 >>= gRes;
 
-                   DebugP_log( "|\r Angle: %10.6f\tTurn: %llu\t RSSI: %u\n\r| SafePos2: %10.6f\tTurn: %llu\t QM:  %u\n ", pos0, turn, ureg, pos2, turn2, ureg1 );
-               }
-               else
-               {
-                   DebugP_log( "|\r Angle: %10.6f\n", pos0);
-               }
+                DebugP_log("\r\n Angle: %10.6f\tTurn: %llu\t RSSI: %u\r\n SafePos2: %10.6f\tTurn: %llu\t QM:  %u", pos0, turn, ureg, pos2, turn2, ureg1 );
+            }
+            else
+            {
+                DebugP_log("\r\n Angle: %10.6f", pos0);
+            }
             break;
         case MENU_QUALITY_MONITORING:
             ret_status= HDSL_get_qm();
-            if(ret_status!=-1){
-                DebugP_log( "|\r Quality monitoring value: %u\n", ret_status);
-                        }
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n Quality monitoring value: %u", ret_status);
+            }
             break;
         case MENU_EVENTS:
             ret_status=HDSL_get_events();
-            if(ret_status!=-1){
-                DebugP_log( "|\r Events: 0x%x\n", ret_status);
-                        }
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n EVENT_H and EVENT_L: 0x%x", ret_status);
+            }
+            ret_status=HDSL_get_safe_events();
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n EVENT_S: 0x%x", ret_status);
+            }
+            ret_status=HDSL_get_online_status_d();
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n ONLINE_STATUS_D: 0x%x", ret_status);
+            }
+            ret_status=HDSL_get_online_status_1();
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n ONLINE_STATUS_1: 0x%x", ret_status);
+            }
+            ret_status=HDSL_get_online_status_2();
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n ONLINE_STATUS_2: 0x%x", ret_status);
+            }
             break;
         case MENU_SUMMARY:
             ret_status= HDSL_get_sum();
-            if(ret_status!=-1){
-                DebugP_log( "|\r Summarized slave status: 0x%x\n", ret_status);
-                        }
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n Summarized slave status: 0x%x", ret_status);
+            }
             break;
         case MENU_ACC_ERR_CNT:
             ret_status= HDSL_get_acc_err_cnt();
-            if(ret_status!=-1){
-                DebugP_log( "|\r Acceleration error counter: %u\n", ret_status);
-                        }
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n Acceleration error counter: %u", ret_status);
+            }
             break;
         case MENU_RSSI:
             ret_status=HDSL_get_rssi();
-            if(ret_status!=-1){
-                DebugP_log( "|\r RSSI: %u\n", ret_status);
-                        }
+            if(ret_status!=-1)
+            {
+                DebugP_log("\r\n RSSI: %u", ret_status);
+            }
             break;
         case MENU_PC_SHORT_MSG_WRITE:
-            ret_status= HDSL_write_pc_short_msg(gPc_addr, gPc_data);
-            if(ret_status!=-1){
-                DebugP_log( "|\r Parameter channel short message written\n");
-                        }
+            TC_write_pc_short_msg();
             break;
-
         case MENU_PC_SHORT_MSG_READ:
             TC_read_pc_short_msg();
             break;
-
         case MENU_DIRECT_READ_RID0_LENGTH8:
             direct_read_rid0_length8();
             break;
@@ -339,7 +359,7 @@ void process_request(int menu){
             break;
 
         default:
-            DebugP_log( "\r| ERROR: invalid request\n");
+            DebugP_log( "\r\n ERROR: invalid request");
             break;
     }
 }
@@ -417,16 +437,17 @@ void hdsl_init()
     hdsl_pruss_init();
 
     HDSL_iep_init(gPruIcss0Handle, gPru_cfg,gPru_dramx);
-    DebugP_log( "\r\nEnter ES(number of frames per sync period), note ES=0 for FREE RUN mode: \n");
+    DebugP_log("\r\n Enter ES(number of frames per sync period), note ES=0 for FREE RUN mode: ");
     DebugP_scanf("%d", &ES);
     HDSL_set_sync_ctrl(ES);
+
     if(ES != 0)
     {
 #if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ==300000000)
         DebugP_log("\r\n Sync mode with 300 MHz is not available");
         while(1);
 #endif
-        DebugP_log( "\r\nSYNC MODE\n");
+        DebugP_log("\r\nSYNC MODE\n");
         DebugP_log("\r\nEnter period for SYNC PULSE in unit of cycles(1 cycle = 4.44ns):");
         DebugP_scanf("%d",&period);
 
@@ -452,11 +473,11 @@ void TC_read_pc_short_msg(void)
 
     gPc_data=HDSL_read_pc_short_msg(0xC0);
 
-    DebugP_log("\r Parameter channel short message read 0x40 data should be 0x01 (in default state)= %u", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read 0x40 data should be 0x01 (in default state)= %u", gPc_data);
     ClockP_usleep(1000);
     gPc_data=HDSL_read_pc_short_msg(0xFF);
 
-    DebugP_log("\r Parameter channel short message read PING(0x7F) register should be 0xab = %u", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read PING(0x7F) register = %x (should be 0xab)", gPc_data);
 }
 
 void TC_write_pc_short_msg(void)
@@ -467,11 +488,11 @@ void TC_write_pc_short_msg(void)
 
     gPc_data=HDSL_read_pc_short_msg(0xC0);
 
-    DebugP_log("\r Parameter channel short message read 0x40 data =%u should be 0x01", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read 0x40 data = %x (should be 0x01)", gPc_data);
 
     gPc_data=HDSL_read_pc_short_msg(0xFF);
 
-    DebugP_log("\r Parameter channel short message read PING(0x7F) register  =%u should be 0xab ", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read PING(0x7F) register = %x (should be 0xab) ", gPc_data);
 
     ClockP_usleep(1000);
 
@@ -481,37 +502,37 @@ void TC_write_pc_short_msg(void)
 
     gPc_data=HDSL_read_pc_short_msg(0xC0);
 
-    DebugP_log("\r Parameter channel short message read 0x40 data =%u should be 0x01", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read 0x40 data = %x (should be 0x01)", gPc_data);
 
     ClockP_usleep(1000);
 
     gPc_data=HDSL_read_pc_short_msg(0xFF);
 
-    DebugP_log("\r Parameter channel short message read PING(0x7F) register  =%u should be 0xcd", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read PING(0x7F) register = %x (should be 0xcd)", gPc_data);
 }
 
 static void display_menu(void)
 {
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r|                                    MENU                                      |\n");
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r| %2d : Safe position                                                           |\n", MENU_SAFE_POSITION);
-    DebugP_log("\r| %2d : Quality monitoring                                                      |\n", MENU_QUALITY_MONITORING);
-    DebugP_log("\r| %2d : Events                                                                  |\n", MENU_EVENTS);
-    DebugP_log("\r| %2d : Summarized slave status                                                 |\n", MENU_SUMMARY);
-    DebugP_log("\r| %2d : Acceleration error counter                                              |\n", MENU_ACC_ERR_CNT);
-    DebugP_log("\r| %2d : RSSI                                                                    |\n", MENU_RSSI);
-    DebugP_log("\r| %2d : Parameter channel short message write                                   |\n", MENU_PC_SHORT_MSG_WRITE);
-    DebugP_log("\r| %2d : Parameter channel short message read                                    |\n", MENU_PC_SHORT_MSG_READ);
-    DebugP_log("\r| %2d : Parameter channel long message write                                    |\n", MENU_PC_LONG_MSG_WRITE);
-    DebugP_log("\r| %2d : Access on RID 0h, direct read access with length 8                      |\n", MENU_DIRECT_READ_RID0_LENGTH8);
-    DebugP_log("\r| %2d : Access on RID 81h, direct read access with length 8                     |\n", MENU_DIRECT_READ_RID81_LENGTH8);
-    DebugP_log("\r| %2d : Access on RID 81h, direct read access with length 2                     |\n", MENU_DIRECT_READ_RID81_LENGTH2);
-    DebugP_log("\r| %2d : Access on RID 0h, indirect write, length 8, with offset 0               |\n", MENU_INDIRECT_WRITE_RID0_LENGTH8_OFFSET0);
-    DebugP_log("\r| %2d : Access on RID 0h; indirect write, length 8, without offset value        |\n", MENU_INDIRECT_WRITE_RID0_LENGTH8);
-    DebugP_log("\r| %2d : Access on RID 0h, direct read, length 8, with offset 6                  |\n", MENU_DIRECT_READ_RID0_LENGTH8_OFFSET6);
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r| enter value: ");
+    DebugP_log("\r\n");
+    DebugP_log("\r\n |------------------------------------------------------------------------------|");
+    DebugP_log("\r\n |                                    MENU                                      |");
+    DebugP_log("\r\n |------------------------------------------------------------------------------|");
+    DebugP_log("\r\n | %2d : Safe Position                                                           |", MENU_SAFE_POSITION);
+    DebugP_log("\r\n | %2d : Quality Monitoring                                                      |", MENU_QUALITY_MONITORING);
+    DebugP_log("\r\n | %2d : Events                                                                  |", MENU_EVENTS);
+    DebugP_log("\r\n | %2d : Summarized Slave Status                                                 |", MENU_SUMMARY);
+    DebugP_log("\r\n | %2d : Acceleration Error Counter                                              |", MENU_ACC_ERR_CNT);
+    DebugP_log("\r\n | %2d : RSSI                                                                    |", MENU_RSSI);
+    DebugP_log("\r\n | %2d : Parameter Channel Short Message Write                                   |", MENU_PC_SHORT_MSG_WRITE);
+    DebugP_log("\r\n | %2d : Parameter Channel Short Message Read                                    |", MENU_PC_SHORT_MSG_READ);
+    DebugP_log("\r\n | %2d : Access on RID 0h, direct read access with length 8                      |", MENU_DIRECT_READ_RID0_LENGTH8);
+    DebugP_log("\r\n | %2d : Access on RID 81h, direct read access with length 8                     |", MENU_DIRECT_READ_RID81_LENGTH8);
+    DebugP_log("\r\n | %2d : Access on RID 81h, direct read access with length 2                     |", MENU_DIRECT_READ_RID81_LENGTH2);
+    DebugP_log("\r\n | %2d : Access on RID 0h, indirect write, length 8, with offset 0               |", MENU_INDIRECT_WRITE_RID0_LENGTH8_OFFSET0);
+    DebugP_log("\r\n | %2d : Access on RID 0h; indirect write, length 8, without offset value        |", MENU_INDIRECT_WRITE_RID0_LENGTH8);
+    DebugP_log("\r\n | %2d : Access on RID 0h, direct read, length 8, with offset 6                  |", MENU_DIRECT_READ_RID0_LENGTH8_OFFSET6);
+    DebugP_log("\r\n |------------------------------------------------------------------------------|\n");
+    DebugP_log("\r\n Enter value: ");
 }
 
 void  direct_read_rid0_length8(void)
@@ -542,26 +563,26 @@ void  direct_read_rid0_length8(void)
                 gPc_buf3 = HDSL_read_pc_buffer(3);
                 if(gPc_buf3 == 84)
                 {
-                    DebugP_log("\r PASS \n");
+                    DebugP_log("\r\n PASS");
                 }
                 else
                 {
-                    DebugP_log("\r FAIL: gPc_buf3 != T = %u\n", gPc_buf3);
+                    DebugP_log("\r\n FAIL: gPc_buf3 != T = %u", gPc_buf3);
                 }
             }
             else
             {
-                DebugP_log("\r FAIL: gPc_buf2 != O = %u\n", gPc_buf2);
+                DebugP_log("\r\n FAIL: gPc_buf2 != O = %u", gPc_buf2);
             }
         }
         else
         {
-            DebugP_log("\r FAIL: gPc_buf1 != O = %u\n", gPc_buf1);
+            DebugP_log("\r\n FAIL: gPc_buf1 != O = %u", gPc_buf1);
         }
     }
     else
     {
-        DebugP_log("\r FAIL: gPc_buf0 != R = %u\n", gPc_buf0);
+        DebugP_log("\r\n FAIL: gPc_buf0 != R = %u", gPc_buf0);
     }
 }
 
@@ -603,47 +624,47 @@ void  direct_read_rid81_length8(void)
                                 gPc_buf7 = HDSL_read_pc_buffer(7);
                                 if(gPc_buf7 == 78)
                                 {
-                                    DebugP_log("\r PASS \n");
+                                    DebugP_log("\r\n PASS ");
                                 }
                                 else
                                 {
-                                    DebugP_log("\r FAIL: gPc_buf7 != N \n", gPc_buf7);
+                                    DebugP_log("\r\n FAIL: gPc_buf7 != N ", gPc_buf7);
                                 }
                             }
                             else
                             {
-                                DebugP_log("\r FAIL: gPc_buf6 != T \n", gPc_buf6);
+                                DebugP_log("\r\n FAIL: gPc_buf6 != T ", gPc_buf6);
                             }
                         }
                         else
                         {
-                            DebugP_log("\r FAIL: gPc_buf5 != U \n", gPc_buf5);
+                            DebugP_log("\r\n FAIL: gPc_buf5 != U ", gPc_buf5);
                         }
                     }
                     else
                     {
-                        DebugP_log("\r FAIL: gPc_buf4 != L \n", gPc_buf4);
+                        DebugP_log("\r\n FAIL: gPc_buf4 != L ", gPc_buf4);
                     }
 
                 }
                 else
                 {
-                    DebugP_log("\r FAIL: gPc_buf3 != O \n", gPc_buf3);
+                    DebugP_log("\r\n FAIL: gPc_buf3 != O ", gPc_buf3);
                 }
             }
             else
             {
-                DebugP_log("\r FAIL: gPc_buf2 != S = %u\n", gPc_buf2);
+                DebugP_log("\r\n FAIL: gPc_buf2 != S = %u", gPc_buf2);
             }
         }
         else
         {
-            DebugP_log("\r FAIL: gPc_buf1 != E = %u\n", gPc_buf1);
+            DebugP_log("\r\n FAIL: gPc_buf1 != E = %u", gPc_buf1);
         }
     }
     else
     {
-        DebugP_log("\r FAIL: gPc_buf0 != R = %u\n", gPc_buf0);
+        DebugP_log("\r\n FAIL: gPc_buf0 != R = %u", gPc_buf0);
     }
 }
 
@@ -669,18 +690,18 @@ void  direct_read_rid81_length2(void)
         gPc_buf1 = HDSL_read_pc_buffer(1);
         if(gPc_buf1 == 0x0f)
         {
-            DebugP_log("\r PASS \n");
+            DebugP_log("\r\n PASS ");
 
         }
         else
         {
-            DebugP_log("\r FAIL: gPc_buf1 != 0x0f = %u\n", gPc_buf1);
+            DebugP_log("\r\n FAIL: gPc_buf1 != 0x0f = %u", gPc_buf1);
         }
 
     }
     else
     {
-        DebugP_log("\r FAIL: gPc_buf0 != 0x00 = %u\n", gPc_buf0);
+        DebugP_log("\r\n FAIL: gPc_buf0 != 0x00 = %u", gPc_buf0);
     }
 }
 
@@ -705,16 +726,16 @@ void  indirect_write_rid0_length8_offset0(void)
         gPc_buf1 = HDSL_read_pc_buffer(1);
         if(gPc_buf1 == 0x10)
         {
-            DebugP_log("\r PASS \n");
+            DebugP_log("\r\n PASS ");
         }
         else
         {
-            DebugP_log("\r FAIL: gPc_buf1 != 0x10 = %u\n", gPc_buf1);
+            DebugP_log("\r\n FAIL: gPc_buf1 != 0x10 = %u", gPc_buf1);
         }
     }
     else
     {
-        DebugP_log("\r FAIL: gPc_buf0 != 0x41 = %u\n", gPc_buf0);
+        DebugP_log("\r\n FAIL: gPc_buf0 != 0x41 = %u", gPc_buf0);
     }
 
 }
@@ -740,16 +761,16 @@ void  indirect_write_rid0_length8(void)
         gPc_buf1 = HDSL_read_pc_buffer(1);
         if(gPc_buf1 == 0x10)
         {
-            DebugP_log("\r PASS \n");
+            DebugP_log("\r\n PASS ");
         }
         else
         {
-            DebugP_log("\r FAIL: gPc_buf1 != 0x10 = %u\n", gPc_buf1);
+            DebugP_log("\r\n FAIL: gPc_buf1 != 0x10 = %u", gPc_buf1);
         }
     }
     else
     {
-        DebugP_log("\r FAIL: gPc_buf0 != 0x41 = %u\n", gPc_buf0);
+        DebugP_log("\r\n FAIL: gPc_buf0 != 0x41 = %u", gPc_buf0);
     }
 }
 
@@ -774,16 +795,16 @@ void  direct_read_rid0_length8_offset6(void)
         gPc_buf1 = HDSL_read_pc_buffer(1);
         if(gPc_buf1 == 0x10)
         {
-            DebugP_log("\r PASS \n");
+            DebugP_log("\r\n PASS ");
         }
         else
         {
-            DebugP_log("\r FAIL: gPc_buf1 != 0x10 = %u\n", gPc_buf1);
+            DebugP_log("\r\n FAIL: gPc_buf1 != 0x10 = %u", gPc_buf1);
         }
     }
     else
     {
-        DebugP_log("\r FAIL: gPc_buf0 != 0x41 = %u\n", gPc_buf0);
+        DebugP_log("\r\n FAIL: gPc_buf0 != 0x41 = %u", gPc_buf0);
     }
 }
 
@@ -794,117 +815,100 @@ static int get_menu(void)
 
     if(DebugP_scanf("%d\n", &cmd) < 0 || cmd >= MENU_LIMIT)
     {
-        DebugP_log( "| WARNING: invalid option, Safe position selected\r\n");
+        DebugP_log("\r\n WARNING: invalid option, Safe position selected");
         cmd = MENU_SAFE_POSITION;
-        DebugP_log( "\r| Enter 0 :Fast Position \n Enter 1: Safe Position 1 \n Enter 2: Safe Position 2 \r\n ");
+        DebugP_log( "\r\n Enter 0 :Fast Position \r\n Enter 1: Safe Position 1 \r\n Enter 2: Safe Position 2 \r");
 
-           if((DebugP_scanf("%d\n", &get_pos) < 0) || get_pos > 2)
-           {
-                   DebugP_log( "\r| WARNING: invalid position value\n");
-
-           }
-    }
-
-    if (cmd == MENU_PC_SHORT_MSG_WRITE)
-    {
-        DebugP_log( "\r| enter addgRess (hex value): ");
-        if(DebugP_scanf("%x\n", &gPc_addr) < 0 || gPc_addr > 0x3f)
+        if((DebugP_scanf("%d", &get_pos) < 0) || get_pos > 2)
         {
-            DebugP_log( "\r| WARNING: invalid addgRess\n|\n|\n");
-            return MENU_INVALID;
-        }
-        DebugP_log( "\r| enter data (hex value): ");
-        if (DebugP_scanf("%x\n", &gPc_data) < 0 || gPc_data > 0xff)
-        {
-            DebugP_log( "\r| WARNING: invalid data\n|\n|\n");
-            return MENU_INVALID;
+            DebugP_log("\r\n  WARNING: invalid position value");
         }
     }
 
     if (cmd == MENU_PC_LONG_MSG_WRITE)
     {
 
-        DebugP_log("\r| enter addgRess High (hex value): ");
+        DebugP_log("\r\n Enter addgRess High (hex value): ");
         if(DebugP_scanf("%x\n", &gPc_addrh) < 0 || gPc_addrh > 0x3f)
         {
-            DebugP_log("\r| WARNING: invalid addgRess High\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid addgRess High");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter addgRess Low (hex value): ");
+        DebugP_log("\r\n Enter addgRess Low (hex value): ");
         if(DebugP_scanf("%x\n", &gPc_addrl) < 0 || gPc_addrl > 0x3f)
         {
-            DebugP_log("\r| WARNING: invalid addgRess Low\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid addgRess Low");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter parameter channel offset high (hex value): ");
+        DebugP_log("\r\n Enter parameter channel offset high (hex value): ");
         if(DebugP_scanf("%x\n", &gPc_offh) < 0 || gPc_offh > 0x3f)
         {
-            DebugP_log("\r| WARNING: invalid parameter channel offset high\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid parameter channel offset high");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter parameter channel offset low (hex value): ");
+        DebugP_log("\r\n Enter parameter channel offset low (hex value): ");
         if(DebugP_scanf("%x\n", &gPc_offl) < 0 || gPc_offl > 0x3f)
         {
-            DebugP_log("\r| WARNING: invalid parameter channel offset low\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid parameter channel offset low");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 0 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 0 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf0) < 0 || gPc_buf0 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 0 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 0 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 1 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 1 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf1) < 0 || gPc_buf1 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 1 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 1 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 2 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 2 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf2) < 0 || gPc_buf2 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 2 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 2 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 3 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 3 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf3) < 0 || gPc_buf3 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 3 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 3 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 4 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 4 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf4) < 0 || gPc_buf4 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 4 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 4 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 5 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 5 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf5) < 0 || gPc_buf5 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 5 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 5 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 6 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 6 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf6) < 0 || gPc_buf6 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 6 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 6 data");
             return MENU_INVALID;
         }
 
-        DebugP_log("\r| enter buffer 7 data (hex value): ");
+        DebugP_log("\r\n Enter buffer 7 data (hex value): ");
         if (DebugP_scanf("%x\n", &gPc_buf7) < 0 || gPc_buf7 > 0xff)
         {
-            DebugP_log("\r| WARNING: invalid buffer 7 data\n|\n|\n");
+            DebugP_log("\r\n WARNING: invalid buffer 7 data");
             return MENU_INVALID;
         }
     }
@@ -987,9 +991,9 @@ void hdsl_diagnostic_main(void *arg)
     hdsl_i2c_io_expander(NULL);
     #endif
 
-    DebugP_log( "\n\n Hiperface DSL diagnostic\n");
+    DebugP_log("\r\n Hiperface DSL Diagnostic");
     hdsl_init();
-    DebugP_log( "\r\n HDSL setup finished\n");
+    DebugP_log("\r\n HDSL Setup finished");
     /*need some extra time for SYNC mode since frames are longer*/
     ClockP_usleep(1000);
 
@@ -999,49 +1003,49 @@ void hdsl_diagnostic_main(void *arg)
         { /* wait 1ms to detect, increase if reqd. */
             while(1)
             {
-                DebugP_log( "\r\nHiperface DSL encoder not detected\n\n");
+                DebugP_log( "\r\n Hiperface DSL encoder not detected\n");
                 ClockP_usleep(5000);
             }
         }
     }
 
-    DebugP_log( "\r\n");
-    DebugP_log( "\r|------------------------------------------------------------------------------|\n");
-    DebugP_log( "\r|                            Hiperface DSL diagnostic                          |\n");
-    DebugP_log( "\r|------------------------------------------------------------------------------|\n");
-    DebugP_log( "\r|\n");
-    DebugP_log( "\r| Quality monitoring value: %u\n", ureg & 0xF);
+    DebugP_log("\r\n ");
+    DebugP_log("\r\n |-------------------------------------------------------------------------------|");
+    DebugP_log("\r\n |                            Hiperface DSL diagnostic                           |");
+    DebugP_log("\r\n |-------------------------------------------------------------------------------|");
+    DebugP_log("\r\n | Quality monitoring value: %u                                                  |", ureg & 0xF);
 
     ureg = HDSL_get_edges();
-    DebugP_log( "\r| Edges: 0x%x\n", ureg);
+    DebugP_log("\r\n | Edges: 0x%x                                                                    |", ureg);
 
     ureg = HDSL_get_delay();
-    DebugP_log( "\r| Cable delay: %u\tRSSI: %u\n", ureg & 0xF, (ureg & 0xF0) >> 4);
+    DebugP_log("\r\n | Cable delay: %u                                                                |", ureg & 0xF);
+    DebugP_log("\r\n | RSSI: %u                                                                       |", (ureg & 0xF0) >> 4);
 
-    val =HDSL_get_enc_id(0) | (HDSL_get_enc_id(1) << 8) |
-              (HDSL_get_enc_id(2) << 16);
+    val = HDSL_get_enc_id(0) | (HDSL_get_enc_id(1) << 8) | (HDSL_get_enc_id(2) << 16);
     acc_bits = val & 0xF;
     acc_bits += 8;
     pos_bits = (val & 0x3F0) >> 4;
     pos_bits += acc_bits;
-    DebugP_log( "\r| Encoder ID: 0x%x", val);
-    DebugP_log( "(");
-    DebugP_log( "Acceleration bits: %u ,", acc_bits);
-    DebugP_log( "Position bits: %u,", pos_bits);
-    DebugP_log( "%s", val & 0x400 ? " Bipolar position" : " Unipolar position");
-    DebugP_log( ")\r|\n");
+    DebugP_log("\r\n | Encoder ID: 0x%x", val);
+    DebugP_log("(");
+    DebugP_log("Acceleration bits: %u, ", acc_bits);
+    DebugP_log("Position bits: %u,", pos_bits);
+    DebugP_log("%s", val & 0x400 ? " Bipolar position" : " Unipolar position");
+    DebugP_log(")|");
+    DebugP_log("\r\n |-------------------------------------------------------------------------------|");
 
-    DebugP_log( "\r| Enter single turn bits: ");
-    if((DebugP_scanf("%d\n", &gRes) < 0) || gRes > pos_bits)
+    DebugP_log("\r\n Enter single turn bits: ");
+    if((DebugP_scanf("%d", &gRes) < 0) || gRes > pos_bits)
     {
-            DebugP_log( "\r| WARNING: invalid single turn bits, assuming single turn encoder\n");
+            DebugP_log("\r\n WARNING: invalid single turn bits, assuming single turn encoder");
             gRes = pos_bits;
     }
     gMulti_turn = pos_bits - gRes;
     gMask = pow(2, gRes) - 1;
     if (gMulti_turn)
     {
-        DebugP_log( "\r| Multi turn bits: %u\n", gMulti_turn);
+        DebugP_log("\r\n Multi turn bits: %u", gMulti_turn);
     }
 
     while(1)
@@ -1052,9 +1056,7 @@ void hdsl_diagnostic_main(void *arg)
 
         menu = get_menu();
         process_request(menu);
-        DebugP_log( "|\r \n");
         DebugP_log( "\r%s", gUart_buffer);
-        DebugP_log( "\r|\n\r|\n\r|\n");
     }
 
     Board_driversClose();
