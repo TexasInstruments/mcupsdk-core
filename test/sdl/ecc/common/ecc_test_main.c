@@ -88,7 +88,7 @@ volatile bool   gMsmcMemParityInterrupt = false;
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
-void ecc_sdl_delay(void);
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -110,17 +110,6 @@ void tearDown(void)
 }
 #endif
 
-/*
- * ecc_sdl_delay() function is used  give delay
- * */
-void ecc_sdl_delay(void)
-{
-    uint32_t u32delayCount = 0;
-    while(u32delayCount < SDL_DELAY)
-    {
-        u32delayCount++;
-    }
-}
 #if defined (SOC_AM263X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,

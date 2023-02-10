@@ -92,7 +92,6 @@ volatile bool gMsmcMemParityInterrupt = false;
 /* ========================================================================== */
 /*                          EXternal Function Definitions                              */
 /* ========================================================================== */
-extern void ecc_sdl_delay(void);
 #if defined(R5F_INPUTS)
 extern int32_t ECC_funcTest(void);
 extern int32_t ECC_ip_funcTest(void);
@@ -248,8 +247,7 @@ static int32_t sdlApp_dplInit(void)
 
 void ECC_func_app(void)
 {
-    
-    ecc_sdl_delay();
+
 #if defined(R5F_INPUTS)
     int32_t    testResult = 0;
     testResult = ECC_ip_funcTest();
