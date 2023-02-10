@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -223,55 +223,58 @@ void sync_calculation(void)
 
 void process_request(int menu){
     uint64_t ret_status=0;
-    int vpos=1;
-    uint64_t val0, val2;
+    uint64_t val0, val1, val2;
     uint8_t ureg, ureg1;
-    float pos0, pos2;
+    float pos0, pos1, pos2;
+    uint64_t turn0, turn1, turn2;
 
     switch(menu)
     {
         case MENU_SAFE_POSITION:
-            if (vpos == 1)
+
+            val0 = HDSL_get_pos(0);
+            if(val0 != -1)
             {
-                val0 = HDSL_get_pos(0);
-                if(val0 != -1)
-                {
 
-                    DebugP_log("\r\n Fast Position read successfully");
-                }
-
-                val2 = HDSL_get_pos(2);
-                if(val2 != -1)
-                {
-                    DebugP_log("\r\n Safe Position 2 read successfully");
-                }
-                pos2 = (float)(val2 & gMask) / (float)(gMask + 1) * (float)360;
+                DebugP_log("\r\n Fast Position read successfully");
             }
-            else
+
+            val1 = HDSL_get_pos(1);
+            if(val1 != -1)
             {
-                val0 = HDSL_get_pos(1);
-                if(val0 != -1)
-                {
-                    DebugP_log("\r\n Safe Position 1 read successfully");
-                }
+                DebugP_log("\r\n Safe Position 1 read successfully");
+            }
+
+            val2 = HDSL_get_pos(2);
+            if(val2 != -1)
+            {
+                DebugP_log("\r\n Safe Position 2 read successfully");
             }
 
             pos0 = (float)(val0 & gMask) / (float)(gMask + 1) * (float)360;
+            pos1 = (float)(val1 & gMask) / (float)(gMask + 1) * (float)360;
+            pos2 = (float)(val2 & gMask) / (float)(gMask + 1) * (float)360;
 
             ureg = HDSL_get_rssi();
             ureg1 = HDSL_get_qm();
 
             if (gMulti_turn)
             {
-                uint64_t turn, turn2;
 
-                turn = val0 & ~gMask;
-                turn >>= gRes;
+                turn0 = val0 & ~gMask;
+                turn0 >>= gRes;
+
+                turn1 = val1 & ~gMask;
+                turn1 >>= gRes;
 
                 turn2 = val2 & ~gMask;
                 turn2 >>= gRes;
 
-                DebugP_log("\r\n Angle: %10.6f\tTurn: %llu\t RSSI: %u\r\n SafePos2: %10.6f\tTurn: %llu\t QM:  %u", pos0, turn, ureg, pos2, turn2, ureg1 );
+                DebugP_log("\r\n Angle: %10.6f\tTurn: %llu\t", pos0, turn0);
+                DebugP_log("\r\n SafePos1: %10.6f\tTurn: %llu", pos1, turn1);
+                DebugP_log("\r\n SafePos2: %10.6f\tTurn: %llu", pos2, turn2);
+                DebugP_log("\r\n RSSI: %u\t QM:  %u", ureg, ureg1 );
+
             }
             else
             {
