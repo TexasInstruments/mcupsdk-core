@@ -247,9 +247,9 @@ static int32_t sdlApp_dplInit(void)
 
 void ECC_func_app(void)
 {
-    int32_t    testResult = 0;
 
 #if defined(R5F_INPUTS)
+    int32_t    testResult = 0;
     testResult = ECC_ip_funcTest();
     DebugP_log("\r\nECC ip func Test\r\n");
     if (testResult == SDL_PASS)
@@ -281,6 +281,7 @@ void ECC_func_app(void)
         DebugP_log("\r\nSome sdl tests failed. \r\n");
     }
 #elif defined(C66_INPUTS)
+    int32_t    testResult = 0;
 	testResult = DSS_ECC_sdl_funcTest();
 	DebugP_log("\nDSS ECC sdl func Test");
     if (testResult == SDL_PASS)
