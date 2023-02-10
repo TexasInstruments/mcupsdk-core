@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,7 +60,6 @@ Monitor ePWM0/1/2/3/4 A/B pins on an oscilloscope.
 
 float periodFine = MIN_HRPWM_PRD_PERCENT;
 uint16_t status;
-uint16_t i=0;
 uint16_t MEP_ScaleFactor = 33; // TBCLK/MEP_step_size_am263x = 5ns/150ps
 
 /* variable to hold base address of EPWM that is used */
@@ -75,12 +74,13 @@ void initHRPWM(uint32_t period);
 
 void epwm_hr_updown_main(void *args)
 {
-    uint16_t i = 0;
+    uint16_t itr = 0, epwm_instance_tracker;
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("EPWM High Resolution Up Down Test Started ...\r\n");
+    DebugP_log("Please wait for 60 secs\r\n");
 
      /* Get Address of ePWM */
     gEpwmBaseAddr1 = CONFIG_EPWM0_BASE_ADDR;
@@ -91,19 +91,19 @@ void epwm_hr_updown_main(void *args)
 
     initHRPWM(EPWM_TIMER_TBPRD);
 
-    for(;i<10;i++)
+    for(;itr<10;itr++)
     {
          //
          // Sweep DutyFine
          //
          for(periodFine = MIN_HRPWM_PRD_PERCENT; periodFine < 0.9; periodFine += 0.01)
          {
-             ClockP_sleep(10);
-             for(i=0; i<LAST_EPWM_INDEX_FOR_EXAMPLE; i++)
+             ClockP_usleep(100000);
+             for(epwm_instance_tracker=0; epwm_instance_tracker<LAST_EPWM_INDEX_FOR_EXAMPLE; epwm_instance_tracker++)
              {
                  float count = ((EPWM_TIMER_TBPRD-1) << 8UL) + (float)(periodFine * 256);
                  uint32_t compCount = count;
-                 HRPWM_setHiResTimeBasePeriod(ePWM[i], compCount);
+                 HRPWM_setHiResTimeBasePeriod(ePWM[epwm_instance_tracker], compCount);
              }
          }
      }

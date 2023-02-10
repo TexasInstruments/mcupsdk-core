@@ -60,6 +60,7 @@ Shown below is a sample output when the application is run,
 
 \code
 EPWM High Resolution Up Down Test Started ...
+Please wait for 60 secs
 EPWM High Resolution Up Down Test Passed!!
 All tests have passed!!
 \endcode
