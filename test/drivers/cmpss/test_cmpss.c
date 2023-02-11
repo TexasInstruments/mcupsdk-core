@@ -144,7 +144,7 @@ void tester_init(void)
     trans.count = RSP_SIZE;
     transferOK = UART_read(gUartHandle[TESTER_UART], &trans);
 
-    if(enableLog) DebugP_log("\r\nReceived response. Tester Initialized!!");
+    if(enableLog) DebugP_log("\r\nReceived response!! (%d %d) : ", transferOK, trans.status);
 
     /*Clear TX buffer for shorter commands*/
     uint8_t ind;
@@ -234,6 +234,8 @@ void test_main(void *args)
 
     UNITY_BEGIN();
 
+	enableLog = 1;
+
     if(enableLog) DebugP_log("\r\nAM263: CMPSS tests");
 
     tester_init();
@@ -292,6 +294,7 @@ void test_main(void *args)
         trans.buf       = &optionBuffer[0U];
         trans.count     = 2;
         trans.timeout   = TIMEOUT_UART_MENU;
+        trans.status = 0;
         transferOK      = UART_read(gUartHandle[CONFIG_UART0], &trans);
 
         if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
@@ -348,6 +351,7 @@ void test_main(void *args)
         trans.buf       = &optionBuffer[0U];
         trans.count     = 2;
         trans.timeout   = TIMEOUT_UART_MENU;
+        trans.status = 0;
         transferOK      = UART_read(gUartHandle[CONFIG_UART0], &trans);
 
         if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
@@ -368,6 +372,7 @@ void test_main(void *args)
             trans.buf       = &optionBuffer[0U];
             trans.count     = 1;
             trans.timeout   = TIMEOUT_UART_MENU;
+            trans.status = 0;
             transferOK      = UART_read(gUartHandle[CONFIG_UART0], &trans);
 
             if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
@@ -973,16 +978,14 @@ void util_EPWM_config_trip(uint32_t base)
 
 }
 
-void util_EPWM_config_blank(uint32_t base, uint16_t windowLengthCount)
+void util_EPWM_config_blank(uint32_t base, uint16_t blankWindowLength_Count, uint16_t blankWindowOffset_Count, EPWM_DigitalCompareBlankingPulse blankingPulse)
 {
-    uint16_t windowOffsetCount = 0;
-
-    EPWM_setDigitalCompareBlankingEvent(base, EPWM_DC_WINDOW_START_TBCTR_ZERO, 0);
-    EPWM_setDigitalCompareWindowOffset(base, windowOffsetCount);
-    EPWM_setDigitalCompareWindowLength(base, windowLengthCount);
+    EPWM_setDigitalCompareBlankingEvent(base, blankingPulse, 0);
+    EPWM_setDigitalCompareWindowOffset(base, blankWindowOffset_Count);
+    EPWM_setDigitalCompareWindowLength(base, blankWindowLength_Count);
     EPWM_enableDigitalCompareBlankingWindow(base);
 
-    if(enableLog) DebugP_log("\r\n input windowOffsetCount = %u, reg val = %u", windowOffsetCount, HW_RD_REG16(base + 0x192));
+    if(enableLog) DebugP_log("\r\n Blank window length = 0x%04x, Window offset = 0x%04x, Window offset reg val = 0x%04x", blankWindowLength_Count, blankWindowOffset_Count, HW_RD_REG16(base + 0x192));
 }
 
 void util_EPWM_deConfig_blank(uint32_t base)
@@ -1194,18 +1197,18 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
 
                 if(status != (test_vec[j][i][6]<<out))
                 {
-                    DebugP_log("\r\nerror");
-                    DebugP_log("\r\nPWMXbar %d SOC_xbarGetPWMXBarOutputSignalStatus returns 0x%08x", out, status);
+                    if(enableLog) DebugP_log("\r\nerror");
+                    if(enableLog) DebugP_log("\r\nPWMXbar %d SOC_xbarGetPWMXBarOutputSignalStatus returns 0x%08x", out, status);
 
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G3));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7));
-                    DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G3));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7));
+                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8));
 
                     uint32_t i;
                     for(i=0;i<30;i++)
@@ -1214,7 +1217,7 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
                     }
 
 
-                    DebugP_log("\r\nerror");
+                    if(enableLog) DebugP_log("\r\nerror");
                     error++;
                 }
 
@@ -1240,8 +1243,8 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
 
                 if(status != (test_vec[j][i][7]<<out))
                 {
-                    DebugP_log("\r\nerror");
-                    DebugP_log("\r\nOutputXbar %d SOC_xbarGetOutputXBarOutputSignalStatus returns 0x%08x", out, status);
+                    if(enableLog) DebugP_log("\r\nerror");
+                    if(enableLog) DebugP_log("\r\nOutputXbar %d SOC_xbarGetOutputXBarOutputSignalStatus returns 0x%08x", out, status);
                     error++;
                 }
 
@@ -1301,6 +1304,8 @@ int32_t AM263x_CMPSS_BTR_0003(uint32_t base)
     return test_cmpss_analog(base, CMPSS_DACREF_VDDA);
 }
 
+#define NUM_HYS_TESTS     (8)
+
 int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
 {
     // COMP: Comparator hysteresis
@@ -1309,19 +1314,49 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
 
     if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0004", util_CMPSS_getInstanceFromBase(base));
 
-    uint32_t error=0;
+    // Configure pinmux for Output XBAR for debug
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK1,0x95A4F1E0);
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_I2C1_SCL_CFG_REG, 0x05) ;
 
+    uint32_t error=0;
     uint8_t hysteresis_mode;
     uint8_t hysteresis_amount;
     uint8_t low_high_comp;
-    uint16_t i;
-    uint16_t input_voltage;
-    char inh_cmd_str[64] = "provide analog volatge of 0.0000V on ADC 0 Channel 0";
+    float   dac_voltage;
 
-    uint16_t prev_status;
+    uint16_t test_vec[NUM_HYS_TESTS][7] =
+    {   //0 High/Low comp selection,
+        //1 Hysteresis mode selection,
+        //2 Hysteresis amount selection,
+        //3 DAC voltage(mV) configured,
+        //4 Expected trip level (mV) at input triangle wave ramping up,
+        //5 Expected trip level (mV) at input triangle wave ramping down,
+        //6 Error tolerance of expected trip level (mV)
+                                                        //Tests for Low comp
+        {0, 0,  0,  1000,   1000,   1000,   20},        //0 hysteresis configured. So expected trip level same when input ramping up or down
+        {0, 0,  4,  1000,   1000,   958,    20},        //4x hysteresis configured. Mode 0. So expected trip level to be LOWER by 52.5LSB = 42mV when input ramping down
+        {0, 1,  0,  1000,   1000,   1000,   20},        //0 hysteresis configured. So expected trip level same when input ramping up or down
+        {0, 1,  4,  1000,   1042,   1000,   20},        //4x hysteresis configured. Mode 1. So expected trip level to be HIGHER by 52.5LSB = 42mV when input ramping up
 
-    for(low_high_comp = 0 ; low_high_comp < 2 ; low_high_comp++)
+        {1, 0,  0,  1000,   1000,   1000,   20},        //Same tests for High comp
+        {1, 0,  4,  1000,   1000,   958,    20},
+        {1, 1,  0,  1000,   1000,   1000,   20},
+        {1, 1,  4,  1000,   1042,   1000,   20}
+    };
+
+    uint16_t test_index;
+
+    for( test_index = 0; test_index < NUM_HYS_TESTS ; test_index++ )
     {
+        low_high_comp = test_vec[test_index][0];
+        hysteresis_mode = test_vec[test_index][1];
+        hysteresis_amount = test_vec[test_index][2];
+        dac_voltage = test_vec[test_index][3]/1000.0f;
+
+        /*if(enableLog)*/ DebugP_log("\r\nComparator High(1)/Low(0) = %u, hysteresis_mode  = %u, hysteresis_amount = %u", low_high_comp, hysteresis_mode, hysteresis_amount);
+
+        // Configure Output xbar for debug
         uint8_t shift;
         uint8_t out = 7;
         if((util_CMPSS_getInstanceFromBase(base)>=0)&&(util_CMPSS_getInstanceFromBase(base)<10))
@@ -1334,80 +1369,105 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
             shift = ((util_CMPSS_getInstanceFromBase(base)-10) * 2) + low_high_comp;     //1 for High, 0 for low
             SOC_xbarSelectOutputXBarInputSource(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, out, 0,0,0,0,0,0,0,0x1<<shift,0,0,0);
         }
-        HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
-        HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK1,0x95A4F1E0);
 
-        HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_I2C1_SCL_CFG_REG, 0x05) ;
+        CMPSS_enableModule(base);
 
-        for(hysteresis_mode = 0 ; hysteresis_mode < 2 ; hysteresis_mode++)
+        if(low_high_comp==1)
         {
-            for(hysteresis_amount = 0 ; hysteresis_amount < 4 ; hysteresis_amount++)
+            CMPSS_configHighComparator(base, CMPSS_INSRC_DAC);      //INH vs DACH
+            CMPSS_configOutputsHigh(base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_ASYNC_COMP);
+            CMPSS_setComparatorHighHysteresis(base,(hysteresis_mode<<2)|hysteresis_amount);
+            uint16_t dacval = (uint16_t)((dac_voltage * 4096 ) / (3.29f));
+            CMPSS_setDACValueHigh(base, dacval);
+        }
+        if(low_high_comp==0)
+        {
+            CMPSS_configLowComparator(base, CMPSS_INSRC_PIN_INH);   //INH vs DACL
+            CMPSS_configOutputsLow(base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_ASYNC_COMP);
+            CMPSS_setComparatorLowHysteresis(base,(hysteresis_mode<<2)|hysteresis_amount);
+            uint16_t dacval = (uint16_t)((dac_voltage * 4096 ) / (3.29f));
+            CMPSS_setDACValueLow(base, dacval);
+        }
+
+        uint16_t i;
+        uint16_t input_voltage;
+        char inh_cmd_str[64] = "provide analog volatge of 0.0000V on ADC 0 Channel 0";
+        uint16_t prev_status;
+        bool ramp_up = true; //true - up
+
+        uint16_t inp_triangle_min = test_vec[test_index][3] - (test_vec[test_index][3]/10);
+        uint16_t inp_triangle_max = test_vec[test_index][3] + (test_vec[test_index][3]/10);
+
+        for(i=inp_triangle_min;i<inp_triangle_min+2*(inp_triangle_max-inp_triangle_min);i=i+1)
+        {
+            if(i>inp_triangle_max)
             {
-                if(enableLog) DebugP_log("\r\nComparator High(1)/Low(0) = %u, hysteresis_mode  = %u, hysteresis_amount = %u", low_high_comp, hysteresis_mode, hysteresis_amount);
+                ramp_up = false;
+                input_voltage = inp_triangle_min + ( (inp_triangle_min+2*(inp_triangle_max-inp_triangle_min))-i );
+            }
+            else
+            {
+                ramp_up = true;
+                input_voltage = i;
+            }
 
-                CMPSS_enableModule(base);
-                if(low_high_comp==1)
-                {
-                    CMPSS_configHighComparator(base, CMPSS_INSRC_DAC);      //INH vs DACH
-                    CMPSS_configOutputsHigh(base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_ASYNC_COMP);
-                    CMPSS_setComparatorHighHysteresis(base,(hysteresis_mode<<2)|hysteresis_amount);
-                    uint16_t dacval = (uint16_t)((1.000f * 4096 ) / (3.29f));
-                    CMPSS_setDACValueHigh(base, dacval);
-                }
-                if(low_high_comp==0)
-                {
-                    CMPSS_configLowComparator(base, CMPSS_INSRC_PIN_INH);   //INH vs DACL
-                    CMPSS_configOutputsLow(base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_ASYNC_COMP);
-                    CMPSS_setComparatorLowHysteresis(base,(hysteresis_mode<<2)|hysteresis_amount);
-                    uint16_t dacval = (uint16_t)((1.000f * 4096 ) / (3.29f));
-                    CMPSS_setDACValueLow(base, dacval);
-                }
+            //Convert int to string. And insert in command.
+            inh_cmd_str[30] = '0' + input_voltage%10;
+            inh_cmd_str[29] = '0' + (input_voltage/10)%10;
+            inh_cmd_str[28] = '0' + (input_voltage/100)%10;
+            inh_cmd_str[26] = '0' + (input_voltage/1000)%10;
 
+            tester_command(inh_cmd_str);
 
-                for(i=0;i<500;i=i+1)
+            //Detect crossing voltage
+
+            //Read CMPSS status
+            uint16_t statusMask;
+            if(low_high_comp==1)
+            {
+                statusMask = CSL_CMPSSA_COMPSTS_COMPHSTS_MASK;
+            }
+            if(low_high_comp==0)
+            {
+                statusMask = CSL_CMPSSA_COMPSTS_COMPLSTS_MASK;
+            }
+            uint16_t curr_status = (CMPSS_getStatus(base) & statusMask);
+
+            //Detect status change
+            if(i!=inp_triangle_min)
+            {
+                if( curr_status != prev_status )
                 {
-                    if(i>250)
+                    /*if(enableLog)*/ DebugP_log("\r\n status changed. input_voltage=%u mV. prev_status=%u, curr_status=%u", input_voltage, prev_status, curr_status);
+                    if(ramp_up==false)
                     {
-                        input_voltage = 900 + (500-i);
+                        /*if(enableLog)*/ DebugP_log(" Input Triangle ramping down");
+                        if( (input_voltage > (test_vec[test_index][5] + test_vec[test_index][6]))  ||
+                            (input_voltage < (test_vec[test_index][5] - test_vec[test_index][6]))
+                        )
+                        {
+                            /*if(enableLog)*/ DebugP_log(" Error. Expected around %u mV", test_vec[test_index][5]);
+                            error++;
+                        }
                     }
                     else
                     {
-                        input_voltage = 900 + i;
+                        /*if(enableLog)*/ DebugP_log(" Input Triangle ramping up");
+                        if( (input_voltage > (test_vec[test_index][4] + test_vec[test_index][6]))  ||
+                            (input_voltage < (test_vec[test_index][4] - test_vec[test_index][6]))
+                        )
+                        {
+                            /*if(enableLog)*/ DebugP_log(" Error. Expected around %u mV", test_vec[test_index][4]);
+                            error++;
+                        }
                     }
-
-                    inh_cmd_str[30] = '0' + input_voltage%10;
-                    inh_cmd_str[29] = '0' + (input_voltage/10)%10;
-                    inh_cmd_str[28] = '0' + (input_voltage/100)%10;
-                    inh_cmd_str[26] = '0' + (input_voltage/1000)%10;
-
-                    // TODO :
-
-                    tester_command(inh_cmd_str);
-                    //Detect crossing voltage
-
-                    uint16_t statusMask;
-
-                    if(low_high_comp==1)
-                    {
-                        statusMask = CSL_CMPSSA_COMPSTS_COMPHSTS_MASK;
-                    }
-                    if(low_high_comp==0)
-                    {
-                        statusMask = CSL_CMPSSA_COMPSTS_COMPLSTS_MASK;
-                    }
-
-                    uint16_t curr_status = (CMPSS_getStatus(base) & statusMask);
-                    if(i!=0001)
-                    if( curr_status != prev_status )
-                    {
-                        if(enableLog) DebugP_log("\r\n status changed. input_voltage=%u. prev_status=%u, curr_status=%u", input_voltage, prev_status, curr_status);
-                    }
-                    prev_status = curr_status;
                 }
-
-                CMPSS_disableModule(base);
             }
+            prev_status = curr_status;
         }
+
+        CMPSS_disableModule(base);
+
         SOC_xbarSelectOutputXBarInputSource(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, out, 0,0,0,0,0,0,0,0,0,0,0);
 
     }
@@ -1678,10 +1738,10 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
                 else
                 {
                     //Error
-                    DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
-                    DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
+                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
 
-                    DebugP_log("\r\nerror 1");
+                    if(enableLog) DebugP_log("\r\nerror 1");
                     error++;
                 }
             }
@@ -1702,10 +1762,10 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
                     else
                     {
                         //Error
-                        DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
-                        DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                        if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
+                        if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
 
-                        DebugP_log("\r\nerror 2");
+                        if(enableLog) DebugP_log("\r\nerror 2");
                         error++;
                     }
                 }
@@ -1713,10 +1773,10 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
                 {
                     //Error
 
-                    DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
-                    DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
+                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
 
-                    DebugP_log("\r\nerror 3");
+                    if(enableLog) DebugP_log("\r\nerror 3");
                     error++;
                 }
             }
@@ -2116,73 +2176,60 @@ int32_t AM263x_CMPSS_ITR_0005(uint32_t base)
 
     HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_I2C1_SCL_CFG_REG, 0x05) ;
 
+    out = 0;
+    if((util_CMPSS_getInstanceFromBase(base)>=0)&&(util_CMPSS_getInstanceFromBase(base)<10))
+    {
+        shift = (util_CMPSS_getInstanceFromBase(base) * 2) + 1;     //1 for High, 0 for low
+        SOC_xbarSelectPWMXBarInputSource(CSL_CONTROLSS_PWMXBAR_U_BASE, out, 0x1<<shift, 0, 0, 0, 0, 0, 0, 0, 0);
+    }
+    if((util_CMPSS_getInstanceFromBase(base)>=10)&&(util_CMPSS_getInstanceFromBase(base)<20))
+    {
+        shift = ((util_CMPSS_getInstanceFromBase(base)-10) * 2) + 1;     //1 for High, 0 for low
+        SOC_xbarSelectPWMXBarInputSource(CSL_CONTROLSS_PWMXBAR_U_BASE, out, 0, 0x1<<shift, 0, 0, 0, 0, 0, 0, 0);
+    }
+
 
     for(pwmindex=0;pwmindex<32;pwmindex++)
     {
         //Enable and configure CMPSS
         CMPSS_enableModule(base);
-        CMPSS_configHighComparator(base, CMPSS_INSRC_PIN);  //Source: Pin, Inversion: No, Async or with filter: No
+        CMPSS_configHighComparator(base, CMPSS_INSRC_DAC);  //Source: INH vs DAC, Inversion: No, Async or with filter: No
+        //CMPSS_configDAC(base, CMPSS_DACREF_VDDA);
+        CMPSS_setDACValueHigh(base, 0);
+        //Asynchrounous output to PWM XBAR and Latched output to Output XBAR for debug
         CMPSS_configOutputsHigh(base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_LATCH );    //TRIP: async TRIPOUT: latch
-
-        //Force output to 1 using inversion
-        CMPSS_configHighComparator(base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);  //Source: Pin, Inversion: Yes, Async or with filter: No
-
-        //if(enableLog) DebugP_log("\r\nCOMPCTL 0x%04x", HW_RD_REG16(base + CSL_CMPSSB_COMPCTL));
-        if(enableLog) DebugP_log("\r\nCMPSS_getStatus returns 0x%04x", CMPSS_getStatus(base));
-
-//
-//
-//
-//        CMPSS_enableModule(base);
-//        CMPSS_configHighComparator(base, CMPSS_INSRC_PIN);  //Source: Pin, Inversion: No, Async or with filter: No
-//        CMPSS_configOutputsHigh(base, CMPSS_TRIP_FILTER | CMPSS_TRIPOUT_FILTER);    //TRIP: filter TRIPOUT: filter
-//
-//        CMPSS_configLowComparator(base, CMPSS_INSRC_PIN_INH);  //Source: Pin, Inversion: No, Async or with filter: No
-//        CMPSS_configOutputsLow(base, CMPSS_TRIP_FILTER | CMPSS_TRIPOUT_FILTER);    //TRIP: filter TRIPOUT: filter
-//
-//
-//        CMPSS_configFilterHigh(base, 0x3FF, 32, 31);
-//        CMPSS_initFilterHigh(base);
-//
-//        CMPSS_configFilterLow(base, 0x3FF, 32, 31);
-//        CMPSS_initFilterLow(base);
-//
-
-
-
+        //Configure and enable CMPSS blanking
         CMPSS_configBlanking(base, (pwmindex+1));
-
         CMPSS_enableBlanking(base);
         HW_WR_REG16((base+CSL_CMPSSA_COMPSTSCLR), HW_RD_REG16(base+CSL_CMPSSA_COMPSTSCLR)|CSL_CMPSSA_COMPSTSCLR_HSYNCCLREN_MASK|CSL_CMPSSA_COMPSTSCLR_LSYNCCLREN_MASK);
 
-        //Configure PWM
-        util_EPWM_config(CSL_CONTROLSS_G0_EPWM0_U_BASE + (pwmindex*0x1000), 49);
-        util_EPWM_config_blank(CSL_CONTROLSS_G0_EPWM0_U_BASE + (pwmindex*0x1000), 0xFFFF);
+        //Configure PWM and PWM blanking
+        uint16_t pwm_period=49;
+        util_EPWM_config(CSL_CONTROLSS_G0_EPWM0_U_BASE + (pwmindex*0x1000), pwm_period);
+        util_EPWM_config_blank(CSL_CONTROLSS_G0_EPWM0_U_BASE + (pwmindex*0x1000), pwm_period*2, 0, EPWM_DC_WINDOW_START_TBCTR_ZERO);     //Offset: 0, Window: 2*period (since updown), input pulse is ctr=zero
+
+
+        //Force output to 1
+        char inh_cmd_str[64] = "provide analog volatge of 3.0000V on ADC 0 Channel 0";
+        tester_command(inh_cmd_str);
+        //CMPSS_configHighComparator(base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);  //Source: Pin, Inversion: Yes, Async or with filter: No
 
         uint32_t wait_for_status;
-        for(wait_for_status=0;wait_for_status<49*100;wait_for_status++)
+        uint16_t cmpss_status;
+        uint32_t pwmxbar_status;
+        for(wait_for_status=0;wait_for_status<pwm_period*100;wait_for_status++)
         {
-            CMPSS_getStatus(base);
+            cmpss_status = CMPSS_getStatus(base);
+            pwmxbar_status = SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE);;
         }
 
-        //Check if latched digital filter output is reset
-        uint16_t status_log[100]={}, status_log_index;
-        for(status_log_index=0;status_log_index<100;status_log_index++)
-        {
-            status_log[status_log_index]= CMPSS_getStatus(base);
-        }
-        for(status_log_index=0;status_log_index<100;status_log_index++)
-        {
-            if(enableLog) DebugP_log("\r\nCMPSS_getStatus returns 0x%04x", status_log[status_log_index]);
-        }
+        //Check if latched digital filter output is reset and direct digital filter output is set
 
-        if( (status_log[100-1] & (CSL_CMPSSA_COMPSTS_COMPHLATCH_MASK | CSL_CMPSSA_COMPSTS_COMPLLATCH_MASK)) == 0x0000 )
+        if( ((cmpss_status & (CSL_CMPSSA_COMPSTS_COMPHLATCH_MASK | CSL_CMPSSA_COMPSTS_COMPHSTS_MASK)) != (0x0000) ) ||
+            (pwmxbar_status != 0x00000001)
+            )
         {
-            if(enableLog) DebugP_log("\r\nOk. Latched digital filter output is reset");
-        }
-        else
-        {
-            if(enableLog) DebugP_log("\r\nerror. Latched digital filter output is not reset");
+            if(enableLog) DebugP_log("\r\nError. CMPSS Status = 0x%04x, Expected = 0x%04x, PWM XBAR status = 0x%08x, Expected = 0x%08x\r\n", cmpss_status, 0x0000, pwmxbar_status, 0x00000001);
             error++;
         }
 
@@ -2556,7 +2603,7 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_1[i][2] != (0x0043 & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configHighComparator API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configHighComparator API check error");
         }
 
     }
@@ -2580,7 +2627,7 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_1b[i][1] != (0x4300 & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configLowComparator API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configLowComparator API check error");
         }
     }
 
@@ -2613,14 +2660,14 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_2[i][2] != (0x003C & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configOutputsHigh API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configOutputsHigh API check error");
         }
 
         CMPSS_configOutputsLow(base, test_vec_2[i][0]);
         if(test_vec_2[i][1] != (0x3C00 & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configOutputsLow API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configOutputsLow API check error");
         }
     }
 
@@ -2660,7 +2707,7 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_2b[i][1] != (0x00A1 & HW_RD_REG16(base + 0x08)))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configDAC API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configDAC API check error");
         }
     }
 
@@ -2679,13 +2726,13 @@ int32_t apiCheck(uint32_t base)
         if( (HW_RD_REG16(base + 0x0C) != test_vec_3) || (HW_RD_REG16(base + 0x24) != test_vec_3) )
         {
             error++;
-            DebugP_log("\r\nCMPSS_setDACValueHigh and CMPSS_setDACValueLow API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_setDACValueHigh and CMPSS_setDACValueLow API check error");
         }
 
         if( (CMPSS_getDACValueHigh(base) != test_vec_3) || (CMPSS_getDACValueLow(base) != test_vec_3) )
         {
             error++;
-            DebugP_log("\r\nCMPSS_getDACValueHigh and CMPSS_getDACValueLow API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_getDACValueHigh and CMPSS_getDACValueLow API check error");
         }
 
         CMPSS_configHighDACShadowValue2(base, test_vec_3);
@@ -2694,7 +2741,7 @@ int32_t apiCheck(uint32_t base)
         if( (HW_RD_REG16(base + 0x38) != test_vec_3) || (HW_RD_REG16(base + 0x3A) != test_vec_3) )
         {
             error++;
-            DebugP_log("\r\nCMPSS_configHighDACShadowValue2 and CMPSS_configLowDACShadowValue2 API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configHighDACShadowValue2 and CMPSS_configLowDACShadowValue2 API check error");
         }
     }
 
@@ -2767,13 +2814,13 @@ int32_t apiCheck(uint32_t base)
         if( HW_RD_REG16(base + 0x14) != inp )
         {
             error++;
-            DebugP_log("\r\nCMPSS_setMaxRampValue API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_setMaxRampValue API check error");
         }
 
         if( CMPSS_getMaxRampValue(base) != inp )
         {
             error++;
-            DebugP_log("\r\nCMPSS_getMaxRampValue API check error 0x%08x", test_vec_4);
+            if(enableLog) DebugP_log("\r\nCMPSS_getMaxRampValue API check error 0x%08x", test_vec_4);
         }
     }
 
@@ -2794,13 +2841,13 @@ int32_t apiCheck(uint32_t base)
         if( HW_RD_REG16(base + 0x1C) != inp )
         {
             error++;
-            DebugP_log("\r\nCMPSS_setRampDecValue API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_setRampDecValue API check error");
         }
 
         if( CMPSS_getRampDecValue(base) != inp )
         {
             error++;
-            DebugP_log("\r\nCMPSS_getRampDecValue API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_getRampDecValue API check error");
         }
     }
 
@@ -2821,13 +2868,13 @@ int32_t apiCheck(uint32_t base)
         if( HW_RD_REG16(base + 0x2A) != inp )
         {
             error++;
-            DebugP_log("\r\nCMPSS_setRampDelayValuee API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_setRampDelayValuee API check error");
         }
 
         if( CMPSS_getRampDelayValue(base) != inp )
         {
             error++;
-            DebugP_log("\r\nCMPSS_getRampDelayValue API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_getRampDelayValue API check error");
         }
     }
 
@@ -2848,7 +2895,7 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x08) & 0x0F00) != test_vec_4b[i][1] ) || ((HW_RD_REG16(base + 0x0A) & 0x0100) != test_vec_4b[i][2]))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configBlanking API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configBlanking API check error");
         }
 
     }
@@ -2866,7 +2913,7 @@ int32_t apiCheck(uint32_t base)
         if( (HW_RD_REG16(base + 0x0A) & 0x003E) != (test_vec_4c<<1) )
         {
             error++;
-            DebugP_log("\r\nCMPSS_selectDEACTIVESource API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_selectDEACTIVESource API check error");
         }
     }
     util_CMPSS_deInit(base);
@@ -2894,7 +2941,7 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x3C) & 0x000F) != test_vec_4d[i][1] ) || ((HW_RD_REG16(base + 0x3C) & 0x00F0) != test_vec_4d[i][2]))
         {
             error++;
-            DebugP_log("\r\nCMPSS_setComparatorHighHysteresis and CMPSS_setComparatorLowHysteresis API check error, 0x%04x", HW_RD_REG16(base + 0x3C));
+            if(enableLog) DebugP_log("\r\nCMPSS_setComparatorHighHysteresis and CMPSS_setComparatorLowHysteresis API check error, 0x%04x", HW_RD_REG16(base + 0x3C));
         }
 
     }
@@ -2923,7 +2970,7 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x30) & 0x3FF0) != test_vec_4e[i][3] ) || ((HW_RD_REG16(base + 0x32) & 0xFFFF) != test_vec_4e[i][4]))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configFilterHigh API check error %u 0x%04x 0x%04x", i, HW_RD_REG16(base + 0x2C), HW_RD_REG16(base + 0x2E));
+            if(enableLog) DebugP_log("\r\nCMPSS_configFilterHigh API check error %u 0x%04x 0x%04x", i, HW_RD_REG16(base + 0x2C), HW_RD_REG16(base + 0x2E));
         }
 
         CMPSS_configFilterLow(base, test_vec_4e[i][0], test_vec_4e[i][1], test_vec_4e[i][2]);
@@ -2931,7 +2978,7 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x2C) & 0x3FF0) != test_vec_4e[i][3] ) || ((HW_RD_REG16(base + 0x2E) & 0xFFFF) != test_vec_4e[i][4]))
         {
             error++;
-            DebugP_log("\r\nCMPSS_configFilterLow API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configFilterLow API check error");
         }
     }
 
@@ -2954,7 +3001,7 @@ int32_t apiCheck(uint32_t base)
         if(  (HW_RD_REG16(base + 0x06) & 0x0404) != test_vec_4f[i][2] )
         {
             error++;
-            DebugP_log("\r\nCMPSS_configLatchOnPWMSYNC API check error %u 0x%04x", i, HW_RD_REG16(base + 0x06));
+            if(enableLog) DebugP_log("\r\nCMPSS_configLatchOnPWMSYNC API check error %u 0x%04x", i, HW_RD_REG16(base + 0x06));
         }
 
     }
@@ -2984,7 +3031,7 @@ int32_t apiCheck(uint32_t base)
             )
         {
             error++;
-            DebugP_log("\r\nCMPSS_configRamp API check error");
+            if(enableLog) DebugP_log("\r\nCMPSS_configRamp API check error");
         }
 
     }

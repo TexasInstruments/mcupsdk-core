@@ -94,7 +94,7 @@ static UART_Transaction trans;
 static bool send_ack = true;
 
 /* PWM-ADC voltage generation Globals*/
-#define MAX_PWM_VAL              (100)
+#define MAX_PWM_VAL              (4096)
 #define MAX_ANALOG_VOLTAGE       (3.29)
 #define PINMUX_DOMAIN_ID_MAIN          (0U)
 
@@ -179,7 +179,7 @@ void util_deinit_epwms(int8_t epwm_offset);
 /*
  * sets a period of 100, and a duty cycle as passed arg
  */
-void util_set_PWM_duty_cycle(uint8_t epwm_offset, uint8_t duty_cycle);
+void util_set_PWM_duty_cycle(uint8_t epwm_offset, uint16_t duty_cycle);
 
 void test_main(void *args)
 {
@@ -758,7 +758,7 @@ void util_deinit_epwms(int8_t epwm_offset)
 /*
  * sets a period of 100, and a duty cycle as passed arg
  */
-void util_set_PWM_duty_cycle(uint8_t epwm_offset, uint8_t duty_cycle)
+void util_set_PWM_duty_cycle(uint8_t epwm_offset, uint16_t duty_cycle)
 {
     uint32_t base;
     base = CSL_CONTROLSS_G0_EPWM0_U_BASE + (0x1000*epwm_offset);
