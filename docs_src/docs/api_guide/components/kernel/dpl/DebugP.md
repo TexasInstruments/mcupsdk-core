@@ -30,7 +30,6 @@
 
 \cond !SOC_AM62X
 ### Shared memory logging
-- The core on which the shared memory reader is enabled needs to run FreeRTOS since it needs task support.
 - The core on which the shared memory reader is enabled, the option to use shared memory writer is ignored.
 - When shared memory writer/reader is enabled, a shared memory section is used to write and read the strings for all the cores,
   - When SysCfg is used, the array representing this shared memory is generated in the file `ti_dpl_config.c`.
@@ -42,6 +41,9 @@
 - The memory used for logging is limited per core. If the writer is faster than reader, then the writer drops the
   characters to be printed.
 - To change the size of the log buffer, change the value of \ref DebugP_SHM_LOG_SIZE in `source/kernel/dpl/DebugP.h`.
+\note When shared memory reader is enabled for a nortos application user needs to invoke \ref DebugP_shmLogRead API 
+	to read logs from shared memory. \ref DebugP_shmLogRead will read the log once and exit thus application needs to call this 
+	API periodically in-order to gather continous logs. 
 \endcond
 
 ### UART logging
