@@ -10319,6 +10319,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A USB Device CDC echo. CPU is R5FSS0-1 running NORTOS.",
+        "name": "cdc_echo_nortos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A USB Device CDC echo. CPU is R5FSS0-0 running NORTOS.",
         "name": "cdc_echo_nortos",
         "location": "../../examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -10336,6 +10369,39 @@
             "device",
             "cdc_echo",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC echo. CPU is R5FSS0-1 running NORTOS.",
+        "name": "cdc_echo_nortos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "r5fss0-1_nortos"
         ],
         "mainCategories": [
             [
@@ -10385,6 +10451,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A USB Device CDC echo. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "cdc_echo_freertos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A USB Device CDC echo. CPU is R5FSS0-0 running FREERTOS.",
         "name": "cdc_echo_freertos",
         "location": "../../examples/usb/device/cdc_echo/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -10402,6 +10501,39 @@
             "device",
             "cdc_echo",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC echo. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "cdc_echo_freertos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-lp/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "r5fss0-1_freertos"
         ],
         "mainCategories": [
             [
@@ -12105,6 +12237,126 @@
             "motor_control",
             "benchmark_demo",
             "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC echo. System project.",
+        "name": "cdc_echo_nortos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC echo. System project.",
+        "name": "cdc_echo_nortos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-lp/system_nortos/system.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC echo. System project.",
+        "name": "cdc_echo_freertos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-evm/system_freertos/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device CDC echo. System project.",
+        "name": "cdc_echo_freertos",
+        "location": "../../examples/usb/device/cdc_echo/am243x-lp/system_freertos/system.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "cdc_echo",
+            "system_freertos"
         ],
         "mainCategories": [
             [

@@ -11,6 +11,17 @@ The example does the below
 - Create two virtual COM ports visible to an USB host
 - Any alphabetic input from the USB host will be echo-ed back in lower case on one COM and in upper case in the other COM port
 
+# USB Logging Template Example 
+
+- This example also demonstrate how to enable logging for USB using shared memory log feature. 
+	- The R5FSS0_0_freertos/nortos core will write logs in the shared memory and R5FSS0_1_freertos/nortos core will read and print it on UART0. 
+- see \ref USB_DEVICE_DRIVER for more information on how to enable USB logs. 
+- see \ref KERNEL_DPL_DEBUG_PAGE for more information on how to enable shared memory log feature. 
+
+\note 
+	- Enabling logs in debug build may lead to unwanted behaviour as the application code is build with -O0 flag. 
+	- It is recomended to use **release** build when USB logging is enabled. 
+
 # Supported Combinations {#EXAMPLES_USB_CDC_ECHO_EXAMPLE_COMBOS}
 
 \cond SOC_AM64X
@@ -18,7 +29,9 @@ The example does the below
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
+ ^				| r5fss0_1_freertos log Reader
  ^              | r5fss0-0_nortos
+ ^              | r5fss0-1_nortos   log Reader
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/usb/device/cdc_echo
@@ -30,7 +43,9 @@ The example does the below
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
+ ^				| r5fss0_1_freertos
  ^              | r5fss0-0_nortos
+ ^              | r5fss0-1_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/usb/device/cdc_echo
