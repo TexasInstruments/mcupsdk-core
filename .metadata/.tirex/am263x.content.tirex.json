@@ -8687,6 +8687,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "Low latency interrupt example CPU is R5FSS0-0 running NORTOS.",
+        "name": "dpl_low_latency_interrupt",
+        "location": "../../examples/kernel/dpl/dpl_low_latency_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "dpl",
+            "dpl_low_latency_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An interrupt prioritization example. This example demonstrates prioritization of interrupts. CPU is R5FSS0-0 running NORTOS.",
         "name": "interrupt_prioritization",
         "location": "../../examples/kernel/dpl/interrupt_prioritization/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

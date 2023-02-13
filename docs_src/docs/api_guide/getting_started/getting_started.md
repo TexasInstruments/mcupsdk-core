@@ -13,6 +13,10 @@
 
 \note In Windows, use the `cmd.exe` as command prompt and in Linux, use the bash shell as the command prompt.
 
+\cond SOC_AM263X
+\note For performance measurements, use compiler optimization level -Os. Refer developer guide \ref PERFORMANCE_OPTIMIZATIONS_GUIDE for more details
+\endcond
+
 ## Introduction
 
 ### Getting Started Goals

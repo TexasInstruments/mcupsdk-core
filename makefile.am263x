@@ -299,6 +299,7 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_low_latency_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -858,6 +859,7 @@ BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dpl_low_latency_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += interrupt_prioritization_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += interrupt_prioritization_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += interrupt_prioritization_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -1656,6 +1658,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dpl_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ dpl_low_latency_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/dpl/dpl_low_latency_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  interrupt_prioritization_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2183,6 +2188,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_low_latency_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += interrupt_prioritization_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += interrupt_prioritization_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += interrupt_prioritization_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2981,6 +2987,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dpl_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ dpl_low_latency_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_low_latency_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  interrupt_prioritization_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3508,6 +3517,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_low_latency_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += interrupt_prioritization_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += interrupt_prioritization_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += interrupt_prioritization_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4305,6 +4315,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dpl_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ dpl_low_latency_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_low_latency_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  interrupt_prioritization_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

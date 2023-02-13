@@ -50,6 +50,7 @@ SDK features and tools.
 - \subpage CUSTOM_FLASH_SUPPORT_GUIDE
 - \subpage CCS_CLOUD_INTRO_PAGE
 - \subpage REAL_TIME_DEBUG_SUPPORT_GUIDE
+- \subpage PERFORMANCE_OPTIMIZATIONS_GUIDE
 \endcond
 
 \cond SOC_AM62X
