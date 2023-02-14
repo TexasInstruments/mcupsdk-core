@@ -355,6 +355,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-9578
+    <td> ICSS-EMAC : IOCTL for statistics always returns errors
+    <td> ICSS-EMAC
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues

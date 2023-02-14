@@ -890,7 +890,9 @@ void ICSS_EMAC_close(ICSS_EMAC_Handle icssEmacHandle);
  *                                  \ref ICSS_EMAC_IOCTL_VLAN_FILTER_CTRL_COMMANDS
  *
  *
- *  \return         #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
+ *  \return         For "ioctlCommand = ICSS_EMAC_IOCTL_LEARNING_CTRL" and "ioctlParams.command = ICSS_EMAC_LEARN_CTRL_FIND_MAC",
+ *                  return value of 0 means not found, 1 means Port 0, and 2 means Port 1 \n
+ *                  For others, #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
  */
 int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
                         uint32_t         ioctlCommand,

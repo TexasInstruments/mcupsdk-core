@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -141,13 +141,13 @@ typedef struct ICSS_EMAC_HashTable_s
 * @param  tablePtr Hash Table pointer for the port for which table must be updated
 * @param  exceptionCallBack Call back for protocol specific task
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
-                               uint8_t                          *macId,
-                               uint8_t                          portNum,
-                               ICSS_EMAC_HashTable              *tablePtr,
-                               const ICSS_EMAC_CallBackConfig   *exceptionCallBack);
+int32_t ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
+                                  uint8_t                          *macId,
+                                  uint8_t                          portNum,
+                                  ICSS_EMAC_HashTable              *tablePtr,
+                                  const ICSS_EMAC_CallBackConfig   *exceptionCallBack);
 
 /**
 * @brief Clear the Learning table associated with a given port
@@ -155,9 +155,9 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
 * @param portNum Port number whose learning table is to be flushed
 * @param  tablePtr Hash Table pointer for the port for which table is to be flushed
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_purgeTable(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr);
+int32_t ICSS_EMAC_purgeTable(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr);
 
 /**
 * @brief Remove old MAC entries from the table
@@ -165,16 +165,16 @@ void ICSS_EMAC_purgeTable(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr);
 * @param  portNum Portnumber whose learning table is to be flushed
 * @param  tablePtr pointer to the hash table for corresponding portNum
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr);
+int32_t ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr);
 
 /**
 * @brief Find given a MAC ID which port it exists
 *
 * @param  macId MAC ID which is to be found
 *
-* @retval tablePtr where the MAC ID exists, 0 means not found 1 means port 0 and 2 means port 1
+* @retval tablePtr where the MAC ID exists, 0 means not found, 1 means port 0, and 2 means port 1
 */
 uint8_t ICSS_EMAC_findMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr);
 
@@ -184,23 +184,23 @@ uint8_t ICSS_EMAC_findMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr);
 * @param  macId  MAC which is to be found
 * @param  tablePtr Hash Table pointer for the port for which MAC ID (provided) to be removed
 *
-* @retval pass/fail. 0 means operation failed (mac not found)
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE if MAC ID is not found
 */
-uint8_t ICSS_EMAC_removeMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr);
+int32_t ICSS_EMAC_removeMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr);
 
 /**
 * @brief This takes in a hash key and the port number and removes the MAC ID if found in the other port
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_incrementCounter(ICSS_EMAC_HashTable *tablePtr);
+int32_t ICSS_EMAC_incrementCounter(ICSS_EMAC_HashTable *tablePtr);
 
 /**
-* @brief This takes in a hash key and the port number and removes the MAC ID if found in the other port
+* @brief Initialize the learning table
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_initLearningTable(ICSS_EMAC_HashTable *tablePtr);
+int32_t ICSS_EMAC_initLearningTable(ICSS_EMAC_HashTable *tablePtr);
 
 /**
 * @brief Change the Port state. Supported values are Learning/Not Learning/Locked
@@ -208,9 +208,9 @@ void ICSS_EMAC_initLearningTable(ICSS_EMAC_HashTable *tablePtr);
 * @param  state Port state which is an Enum type. See corresponding in include file
 * @param  tablePtr Hash Table pointer for the port for which state must be changed
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_changePortState(uint32_t state, ICSS_EMAC_HashTable *tablePtr);
+int32_t ICSS_EMAC_changePortState(uint32_t state, ICSS_EMAC_HashTable *tablePtr);
 
 /**
 * @brief API to copy Macaddress

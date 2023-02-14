@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -84,20 +84,20 @@ typedef struct ICSS_EMAC_HostStatistics_s
 * @param portNum Port Number. 1/2
 * @param icssEmacHandle EMAC Handle. Provides PRUSS memory map
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_readStats(ICSS_EMAC_Handle           icssEmacHandle,
-                         uint8_t                    portNum,
-                         ICSS_EMAC_PruStatistics    *pruStatStructPtr);
+int32_t ICSS_EMAC_readStats(ICSS_EMAC_Handle           icssEmacHandle,
+                            uint8_t                    portNum,
+                            ICSS_EMAC_PruStatistics    *pruStatStructPtr);
 
 /**
 * @brief   clear switch statistics
 * @param portNum Port Number. 1/2
 * @param icssEmacHandle EMAC Handle. Provides PRUSS memory map
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_purgeStats(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNum);
+int32_t ICSS_EMAC_purgeStats(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNum);
 
 /**
 * @brief   Do the stats initialization, call at the beginning of the frame

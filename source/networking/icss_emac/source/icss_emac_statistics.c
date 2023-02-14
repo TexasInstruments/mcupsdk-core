@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -97,10 +97,9 @@ int doNotUpdateStatsRX[NUM_PORTS];
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-/* TODO: Review this function */
-void ICSS_EMAC_readStats(ICSS_EMAC_Handle           icssEmacHandle,
-                         uint8_t                    portNum,
-                         ICSS_EMAC_PruStatistics    *pruStatStructPtr)
+int32_t ICSS_EMAC_readStats(ICSS_EMAC_Handle           icssEmacHandle,
+                            uint8_t                    portNum,
+                            ICSS_EMAC_PruStatistics    *pruStatStructPtr)
 {
     volatile uint8_t        *statsPointer;
     uint32_t                statisticsOffset = 0U;
@@ -132,11 +131,10 @@ void ICSS_EMAC_readStats(ICSS_EMAC_Handle           icssEmacHandle,
 
     memcpy((void *)pruStatStructPtr, (const void *)statsPointer, (size_t)statsSize);
 
-    return;
+    return SystemP_SUCCESS;
 }
 
-/* TODO: Review this function */
-void ICSS_EMAC_purgeStats(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNum)
+int32_t ICSS_EMAC_purgeStats(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNum)
 {
     uint32_t                    *statsPointer = NULL;
     uint32_t                    temp_addr = 0U;
@@ -172,6 +170,8 @@ void ICSS_EMAC_purgeStats(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNum)
 
     /*clear port stats*/
     memset(hostStatsPtr, 0x0, (size_t)sizeof(ICSS_EMAC_HostStatistics));
+
+    return SystemP_SUCCESS;
 }
 
 void ICSS_EMAC_initStats(ICSS_EMAC_Handle icssEmacHandle, uint8_t portNum)

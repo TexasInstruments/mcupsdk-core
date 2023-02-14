@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -106,21 +106,22 @@ typedef struct ICSS_EMAC_StormPrevention_s
 * @param portnum Port Number
 * @param icssEmacHandle Pointer to ICSS EMAC Handle
 * @param spType storm prevention type, weather BC/MC/UC
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_initStormPreventionTable(uint8_t             portnum,
-                                        ICSS_EMAC_Handle    icssEmacHandle,
-                                        uint8_t             spType);
+int32_t ICSS_EMAC_initStormPreventionTable(uint8_t             portnum,
+                                           ICSS_EMAC_Handle    icssEmacHandle,
+                                           uint8_t             spType);
+
 /**
 * @brief Disable Storm Prevention for a particular port
 * @param portnum  Port number for which Storm Prevention must be disabled
 * @param icssEmacHandle Pointer to ICSS EMAC Handle
 * @param spType storm prevention type, weather BC/MC/UC
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
-                                      ICSS_EMAC_Handle  icssEmacHandle,
-                                      uint8_t           spType);
+int32_t ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
+                                         ICSS_EMAC_Handle  icssEmacHandle,
+                                         uint8_t           spType);
 
 /**
 * @brief   Set the credit value for broadcast packets used in storm prevention
@@ -129,31 +130,31 @@ void ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
 * @param stormPrevPtr Pointer to Storm Prevention member instance for that port
 * @param spType storm prevention type, weather BC/MC/UC
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_setCreditValue(uint16_t                  creditValue,
-                              ICSS_EMAC_StormPrevention *stormPrevPtr,
-                              uint8_t                   spType);
+int32_t ICSS_EMAC_setCreditValue(uint16_t                  creditValue,
+                                 ICSS_EMAC_StormPrevention *stormPrevPtr,
+                                 uint8_t                   spType);
 
 /**
 * @brief Enable Storm Prevention for a particular port
 * @param portnum  Port number for which Storm Prevention must be disabled
 * @param icssEmacHandle Pointer to ICSS EMAC Handle
 * @param spType storm prevention type, weather BC/MC/UC
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_enableStormPrevention(uint8_t            portnum,
-                                     ICSS_EMAC_Handle   icssEmacHandle,
-                                     uint8_t            spType);
+int32_t ICSS_EMAC_enableStormPrevention(uint8_t            portnum,
+                                        ICSS_EMAC_Handle   icssEmacHandle,
+                                        uint8_t            spType);
 
 /**
 * @brief   Reset the credits at the end of time period, this time period is common to both broadcast and multicast packets
 * @param icssEmacHandle Pointer to ICSS EMAC Handle
 * @param spType storm prevention type, weather BC/MC/UC
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
-                                           uint8_t          spType);
+int32_t ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
+                                              uint8_t          spType);
 
 /**
 * @brief   Sets the stormPreventionOffset, suppressionEnabled and creditsPtr depending on storm prevention type
@@ -165,14 +166,14 @@ void ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
 * @param icssEmacHandle emac handle
 * @param stormPrevPtr storm prevention pointer
 *
-* @retval none
+* @retval #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
 */
-void ICSS_EMAC_checkStormPreventionType(uint32_t                    **stormPreventionOffsetPtr,
-                                        uint16_t                    **suppressionEnabledPtr,
-                                        uint16_t                    **creditsPtr,
-                                        uint8_t                     spType,
-                                        ICSS_EMAC_Handle            icssEmacHandle,
-                                        ICSS_EMAC_StormPrevention   *stormPrevPtr);
+int32_t ICSS_EMAC_checkStormPreventionType(uint32_t                    **stormPreventionOffsetPtr,
+                                           uint16_t                    **suppressionEnabledPtr,
+                                           uint16_t                    **creditsPtr,
+                                           uint8_t                     spType,
+                                           ICSS_EMAC_Handle            icssEmacHandle,
+                                           ICSS_EMAC_StormPrevention   *stormPrevPtr);
 
 /**
 * @brief   byte by byte memcpy

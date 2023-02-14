@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,11 +62,11 @@ static uint8_t ICSS_EMAC_checkDuplicateMAC(uint8_t              key,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
-                               uint8_t                          *macId,
-                               uint8_t                          portNum,
-                               ICSS_EMAC_HashTable              *tablePtr,
-                               const ICSS_EMAC_CallBackConfig   *exceptionCallBack)
+int32_t ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
+                                  uint8_t                          *macId,
+                                  uint8_t                          portNum,
+                                  ICSS_EMAC_HashTable              *tablePtr,
+                                  const ICSS_EMAC_CallBackConfig   *exceptionCallBack)
 {
     uint8_t                 key = 0;
     uint8_t                 i;
@@ -82,12 +82,12 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
 
     if((tablePtr == NULL) || (macId == NULL))
     {
-        return;
+        return SystemP_FAILURE;
     }
 
     if((macId[0] & 0x01U) > 0U)
     { /* MAC reversed - lowest bit indicates MC  */
-        return;
+        return SystemP_FAILURE;
     }
 
     /*TODO: Test this*/
@@ -96,7 +96,7 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
     /* don't do anything for wrong port num  */
     if(portNum > (uint8_t)ICSS_EMAC_LEARNING_PORT_2)
     {
-        return;
+        return SystemP_FAILURE;
     }
 
     /*Call back for Protocol specific adaption*/
@@ -104,7 +104,7 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
     {
         if(protException((void *)icssEmacHandle, macId, protExceptionuser) == 0U)
         {
-            return;
+            return SystemP_FAILURE;
         }
     }
     /*get the key*/
@@ -113,7 +113,7 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
     if((table->state == ICSS_EMAC_LEARNING_PORT_STATE_LOCKED) ||
        (table->state == ICSS_EMAC_LEARNING_PORT_STATE_NOT_LEARNING))
     {
-        return; /*not allowed to make any changes in cases table is locked or if learning is disabled  */
+        return SystemP_FAILURE; /*not allowed to make any changes in cases table is locked or if learning is disabled  */
     }
     /*go to first hash entry in the table*/
     bucket = &(table->entries[key]);
@@ -131,7 +131,7 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
         bucket->timerCount[0] = 0;
         bucket->numEntries++;
         table->totalNumEntries++;
-    } 
+    }
     else
     {
         oldestTimestamp = bucket->timerCount[0];
@@ -153,12 +153,12 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
                 index = i;
             }
         }
-        if (macFound == 0U) 
+        if (macFound == 0U)
         {
             /* make sure the SLT has no entry for this MAC on the other port  */
             ICSS_EMAC_checkDuplicateMAC(key, macId, portNum, tablePtr);
 
-            if(bucket->numEntries == ICSS_EMAC_LEARNING_MAX_NUM_ENTRIES_PER_BUCKET) 
+            if(bucket->numEntries == ICSS_EMAC_LEARNING_MAX_NUM_ENTRIES_PER_BUCKET)
             {
                 /*replace an existing entry(the least hit)*/
                 ICSS_EMAC_copyMAC(bucket->mac[index].macId, macId);
@@ -177,19 +177,22 @@ void ICSS_EMAC_updateHashTable(ICSS_EMAC_Handle                 icssEmacHandle,
             }
         }
     }
-}                     
+    return SystemP_SUCCESS;
+}
 
-void ICSS_EMAC_purgeTable(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
+int32_t ICSS_EMAC_purgeTable(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
 {
     int32_t i;
+    int32_t retVal = SystemP_FAILURE;
+
     /*don't do anything for wrong port num*/
     if(portNum <= (uint8_t)ICSS_EMAC_LEARNING_PORT_2)
-    { 
+    {
         ICSS_EMAC_HashTable *table;
         table = tablePtr;
 
          /*not allowed to make any changes in cases table is locked  */
-        if(table->state != ICSS_EMAC_LEARNING_PORT_STATE_LOCKED) 
+        if(table->state != ICSS_EMAC_LEARNING_PORT_STATE_LOCKED)
         {
             /*make total entries to 0*/
             table->totalNumEntries = 0;
@@ -198,12 +201,13 @@ void ICSS_EMAC_purgeTable(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
             {
                 table->entries[i].numEntries = 0;
             }
+            retVal = SystemP_SUCCESS;
         }
     }
-    return;
+    return retVal;
 }
 
-void ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
+int32_t ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
 {
 
     int32_t                 i;
@@ -215,6 +219,7 @@ void ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
     ICSS_EMAC_HashBucket    *bucket;
     /*Right now this is hardcoded, modified only at compile time, can be added as an option later*/
     uint8_t                 ageingTime = ICSS_EMAC_LEARNING_AGEING_COUNT;
+    int32_t                 retVal = SystemP_FAILURE;
 
     /* don't do anything for wrong port num  */
     if(portNum <= (uint8_t)ICSS_EMAC_LEARNING_PORT_2)
@@ -222,9 +227,9 @@ void ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
         /*get the table for the corresponding port*/
         table  = tablePtr;
 
-        if(table->state != ICSS_EMAC_LEARNING_PORT_STATE_LOCKED) 
+        if(table->state != ICSS_EMAC_LEARNING_PORT_STATE_LOCKED)
         {
-            for(i=0; i < ICSS_EMAC_LEARNING_NUMBUCKETS; i++) 
+            for(i=0; i < ICSS_EMAC_LEARNING_NUMBUCKETS; i++)
             {
                 bucket = &(table->entries[i]);
                 size = bucket->numEntries;
@@ -255,9 +260,12 @@ void ICSS_EMAC_ageingRoutine(uint8_t portNum, ICSS_EMAC_HashTable *tablePtr)
                 /*Update the total number of entries removed  */
                 table->totalNumEntries -= numEntriesRemoved;
             }
+            retVal = SystemP_SUCCESS;
+
         }
     }
-    return;
+
+    return retVal;
 }
 
 uint8_t ICSS_EMAC_findMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
@@ -291,9 +299,9 @@ uint8_t ICSS_EMAC_findMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
     /*since a return val of 0 means MAC Id not found 1 is added to distinguish port 0 from mac id not found,
      user to subtract 1 to get port number*/
     /*If MAC ID moves from port 1 to port 2, both ports will return false*/
-    for(numPorts = 0; numPorts < ICSS_EMAC_MAX_PORTS_PER_INSTANCE; numPorts++) 
+    for(numPorts = 0; numPorts < ICSS_EMAC_MAX_PORTS_PER_INSTANCE; numPorts++)
     {
-        if(macFound[numPorts]) 
+        if(macFound[numPorts])
         {
             ret_val = numPorts + 1U;
             break;
@@ -302,7 +310,7 @@ uint8_t ICSS_EMAC_findMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
     return ret_val;
 }
 
-uint8_t ICSS_EMAC_removeMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
+int32_t ICSS_EMAC_removeMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
 {
     uint8_t                 j = 0;
     uint8_t                 key = 0;
@@ -311,20 +319,20 @@ uint8_t ICSS_EMAC_removeMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
     uint8_t                 numPorts = 0;
     ICSS_EMAC_HashTable     *table;
     ICSS_EMAC_HashBucket    *bucket;
-    uint8_t                 ret_val = 0U;
-    
+    uint8_t                 ret_val = SystemP_FAILURE;
+
     key = ICSS_EMAC_hashFuncGPMAC(macId);
 
     /*Look in all port entries, exit if true*/
     for(numPorts = 0; numPorts < ICSS_EMAC_MAX_PORTS_PER_INSTANCE; numPorts++)
     {
         table = tablePtr + numPorts;
-        if(table->state != ICSS_EMAC_LEARNING_PORT_STATE_LOCKED) 
+        if(table->state != ICSS_EMAC_LEARNING_PORT_STATE_LOCKED)
         {
             bucket = &(table->entries[key]);
-            for (j = 0; j < bucket->numEntries; j++ ) 
+            for (j = 0; j < bucket->numEntries; j++ )
             {
-                if (COMPARE_MAC(bucket->mac[j].macId, macId)) 
+                if (COMPARE_MAC(bucket->mac[j].macId, macId))
                 {
                     macFound[numPorts] = (uint8_t)1U;
                     macIndex[numPorts] = j;
@@ -349,14 +357,14 @@ uint8_t ICSS_EMAC_removeMAC(const uint8_t *macId, ICSS_EMAC_HashTable *tablePtr)
             }
             bucket->numEntries--;
             table->totalNumEntries--;
-            ret_val = 1U;
+            ret_val = SystemP_SUCCESS;
             break;
         }
     }
     return ret_val;
 }
 
-void ICSS_EMAC_incrementCounter(ICSS_EMAC_HashTable *tablePtr)
+int32_t ICSS_EMAC_incrementCounter(ICSS_EMAC_HashTable *tablePtr)
 {
     int32_t                 i;
     int32_t                 j;
@@ -370,8 +378,9 @@ void ICSS_EMAC_incrementCounter(ICSS_EMAC_HashTable *tablePtr)
         table = tablePtr + port;
         if(table->state == ICSS_EMAC_LEARNING_PORT_STATE_LOCKED)
         {
-            break; /*not allowed to make any changes in cases table is locked  */
+                return SystemP_FAILURE; /*not allowed to make any changes in cases table is locked  */
         }
+
         for(i=0; i<ICSS_EMAC_LEARNING_NUMBUCKETS;i++)
         {
             bucket = &(table->entries[i]);
@@ -384,10 +393,10 @@ void ICSS_EMAC_incrementCounter(ICSS_EMAC_HashTable *tablePtr)
             }
         }
     }
-    return;
+    return SystemP_SUCCESS;
 }
 
-void ICSS_EMAC_initLearningTable(ICSS_EMAC_HashTable *tablePtr)
+int32_t ICSS_EMAC_initLearningTable(ICSS_EMAC_HashTable *tablePtr)
 {
     ICSS_EMAC_HashTable *table;
     uint8_t             ports = 0;
@@ -399,11 +408,14 @@ void ICSS_EMAC_initLearningTable(ICSS_EMAC_HashTable *tablePtr)
         ICSS_EMAC_purgeTable(ports, table);
         table->state = ICSS_EMAC_LEARNING_PORT_STATE_LEARNING;
     }
+
+    return SystemP_SUCCESS;
 }
 
-void ICSS_EMAC_changePortState(uint32_t state, ICSS_EMAC_HashTable *tablePtr)
+int32_t ICSS_EMAC_changePortState(uint32_t state, ICSS_EMAC_HashTable *tablePtr)
 {
     tablePtr->state = state;
+    return SystemP_SUCCESS;
 }
 
 void ICSS_EMAC_copyMAC(uint8_t *dst, const uint8_t *src)
@@ -422,7 +434,7 @@ static uint8_t ICSS_EMAC_hashFuncGPMAC(const uint8_t *macId)
     uint8_t key;
     /*get the key*/
     key = macId[0] ^ macId[1] ^ macId[2] ^ macId[3] ^ macId[4] ^ macId[5];
-    return key;    
+    return key;
 }
 
 static uint8_t ICSS_EMAC_checkDuplicateMAC(uint8_t              key,
@@ -439,23 +451,23 @@ static uint8_t ICSS_EMAC_checkDuplicateMAC(uint8_t              key,
     uint8_t                 ret_val = 0U;
 
     /*don't do anything for wrong port num*/
-    if(portNum <= (uint8_t)ICSS_EMAC_LEARNING_PORT_2) 
+    if(portNum <= (uint8_t)ICSS_EMAC_LEARNING_PORT_2)
     {
         /*Look in all other port tables for duplicates*/
-        for(port = 0; port < ICSS_EMAC_MAX_PORTS_PER_INSTANCE; port++) 
+        for(port = 0; port < ICSS_EMAC_MAX_PORTS_PER_INSTANCE; port++)
         {
             /*Skip the current port, look in other ports*/
-            if((portNum-1U) != port) 
+            if((portNum-1U) != port)
             {
                 table = tablePtr + port;
                 bucket = &(table->entries[key]);
 
-                for (j = 0; j < bucket->numEntries; j++ ) 
+                for (j = 0; j < bucket->numEntries; j++ )
                 {
-                    if (COMPARE_MAC(bucket->mac[j].macId, macId)) 
+                    if (COMPARE_MAC(bucket->mac[j].macId, macId))
                     {
                         macFound = 1U;
-                        for(i = j; i < (bucket->numEntries - ((uint8_t)1U)); i++) 
+                        for(i = j; i < (bucket->numEntries - ((uint8_t)1U)); i++)
                         {
                             bucket->timerCount[i] = bucket->timerCount[i+1U];
                             ICSS_EMAC_copyMAC(bucket->mac[i].macId, bucket->mac[i+1U].macId);
@@ -464,7 +476,7 @@ static uint8_t ICSS_EMAC_checkDuplicateMAC(uint8_t              key,
                         table->totalNumEntries--;
                         break;
                     }
-            
+
                 }
                 /*MAC Found, no need to look in other ports*/
                 if(macFound == 1U)
@@ -475,5 +487,5 @@ static uint8_t ICSS_EMAC_checkDuplicateMAC(uint8_t              key,
         }
         ret_val = macFound;
     }
-    return ret_val;    
+    return ret_val;
 }

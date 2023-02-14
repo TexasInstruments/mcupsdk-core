@@ -317,6 +317,13 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> 8.6.0 onwards
     <td> None.
 </tr>
+<tr>
+    <td> MCUSDK-9578
+    <td> ICSS-EMAC : IOCTL for statistics always returns errors
+    <td> ICSS-EMAC
+    <td> 7.3.0 onwards
+    <td> Fixed
+</tr>
 </table>
 
 

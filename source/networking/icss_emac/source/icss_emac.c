@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -447,13 +447,13 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
             {
                 temp_addr = (pruicssHwAttrs->pru0DramBase + pStaticMMap->portControlAddr);
                 pControl = (uint8_t*)(temp_addr);
-                retVal = 0;
+                retVal = SystemP_SUCCESS;
             }
             else if((uint8_t)ICSS_EMAC_PORT_2 == portNo)
             {
                 temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->portControlAddr);
                 pControl = (uint8_t*)(temp_addr);
-                retVal = 0;
+                retVal = SystemP_SUCCESS;
             }
             else
             {
@@ -467,36 +467,36 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
             switch(ioctlCmd->command)
             {
                 case ICSS_EMAC_LEARN_CTRL_UPDATE_TABLE:
-                    ICSS_EMAC_updateHashTable(icssEmacHandle,
-                                              (uint8_t *)ioctlData,
-                                              portNo,
-                                              &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]),
-                                              (const ICSS_EMAC_CallBackConfig *)&((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).learningExCallBack));
+                    retVal = ICSS_EMAC_updateHashTable(icssEmacHandle,
+                                                       (uint8_t *)ioctlData,
+                                                       portNo,
+                                                       &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]),
+                                                       (const ICSS_EMAC_CallBackConfig *)&((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).learningExCallBack));
                     break;
 
                 case ICSS_EMAC_LEARN_CTRL_CLR_TABLE:
                     if(portNo == (uint8_t)ICSS_EMAC_PORT_1)
                     {
-                        ICSS_EMAC_purgeTable(portNo,
-                                             &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
+                        retVal = ICSS_EMAC_purgeTable(portNo,
+                                                      &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
                     }
                     if(portNo == (uint8_t)ICSS_EMAC_PORT_2)
                     {
-                        ICSS_EMAC_purgeTable(portNo,
-                                             &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
+                        retVal = ICSS_EMAC_purgeTable(portNo,
+                                                      &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
                     }
                     break;
 
                 case ICSS_EMAC_LEARN_CTRL_AGEING:
                     if(portNo == (uint8_t)ICSS_EMAC_PORT_1)
                     {
-                        ICSS_EMAC_ageingRoutine(portNo,
-                                                &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
+                        retVal = ICSS_EMAC_ageingRoutine(portNo,
+                                                         &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
                     }
                     if(portNo == (uint8_t)ICSS_EMAC_PORT_2)
                     {
-                        ICSS_EMAC_ageingRoutine(portNo,
-                                                &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
+                        retVal = ICSS_EMAC_ageingRoutine(portNo,
+                                                         &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[portNo - 1]));
                     }
                     break;
 
@@ -506,20 +506,20 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
                     break;
 
                 case ICSS_EMAC_LEARN_CTRL_REMOVE_MAC:
-                    ICSS_EMAC_removeMAC((uint8_t *)ioctlData,
-                                        &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
+                    retVal = ICSS_EMAC_removeMAC((uint8_t *)ioctlData,
+                                                 &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
                     break;
 
                 case ICSS_EMAC_LEARN_CTRL_INC_COUNTER:
-                    ICSS_EMAC_incrementCounter(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
+                    retVal = ICSS_EMAC_incrementCounter(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
                     break;
 
                 case ICSS_EMAC_LEARN_CTRL_INIT_TABLE:
-                    ICSS_EMAC_initLearningTable(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
+                    retVal = ICSS_EMAC_initLearningTable(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
                     break;
 
                 case ICSS_EMAC_LEARN_CTRL_SET_PORTSTATE:
-                    ICSS_EMAC_changePortState((*((uint32_t *)ioctlData)),
+                    retVal = ICSS_EMAC_changePortState((*((uint32_t *)ioctlData)),
                                               &(((ICSS_EMAC_Object *)icssEmacHandle->object)->macTable[0]));
                     break;
 
@@ -536,80 +536,128 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
                 switch(ioctlCmd->command)
                 {
                     case ICSS_EMAC_STORM_PREV_CTRL_ENABLE:
-                        ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_DISABLE:
-                        ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_SET_CREDITS:
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_INIT:
-                        ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_RESET:
-                        ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_ENABLE_BC:
-                        ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_DISABLE_BC:
-                        ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_SET_CREDITS_BC:
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_BC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_INIT_BC:
-                        ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_RESET_BC:
-                        ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_BC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_ENABLE_MC:
-                        ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_DISABLE_MC:
-                        ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_SET_CREDITS_MC:
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_MC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_INIT_MC:
-                        ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_RESET_MC:
-                        ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_MC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_ENABLE_UC:
-                        ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_enableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        if(retVal == SystemP_SUCCESS)
+                        {
+                            retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        }
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_DISABLE_UC:
-                        ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_disableStormPrevention(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_SET_CREDITS_UC:
-                        ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_setCreditValue((*((uint16_t *)ioctlData)), (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev)), ICSS_EMAC_UC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_INIT_UC:
-                        ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_initStormPreventionTable(portNo, icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
                         break;
                     case ICSS_EMAC_STORM_PREV_CTRL_RESET_UC:
-                        ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
+                        retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, ICSS_EMAC_UC_STORM_PREVENTION);
                         break;
                     default:
                         retVal = SystemP_FAILURE;
@@ -622,10 +670,10 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
             switch(ioctlCmd->command)
             {
                 case ICSS_EMAC_IOCTL_STAT_CTRL_GET:
-                    ICSS_EMAC_readStats(icssEmacHandle, portNo, (ICSS_EMAC_PruStatistics *)ioctlData);
+                    retVal = ICSS_EMAC_readStats(icssEmacHandle, portNo, (ICSS_EMAC_PruStatistics *)ioctlData);
                     break;
                 case ICSS_EMAC_IOCTL_STAT_CTRL_CLEAR:
-                    ICSS_EMAC_purgeStats(icssEmacHandle, portNo);
+                    retVal = ICSS_EMAC_purgeStats(icssEmacHandle, portNo);
                     break;
                 default:
                     retVal = SystemP_FAILURE;
@@ -676,13 +724,13 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
                     {
                         temp_addr = (pruicssHwAttrs->pru0DramBase);
                         pControl = (uint8_t*)(temp_addr);
-                        retVal = 0;
+                        retVal = SystemP_SUCCESS;
                     }
                     else if((uint8_t)ICSS_EMAC_PORT_2 == portNo)
                     {
                         temp_addr = (pruicssHwAttrs->pru1DramBase);
                         pControl = (uint8_t*)(temp_addr);
-                        retVal = 0;
+                        retVal = SystemP_SUCCESS;
                     }
                     else
                     {
@@ -699,9 +747,9 @@ int32_t ICSS_EMAC_ioctl(ICSS_EMAC_Handle icssEmacHandle,
             break;
 
         case ICSS_EMAC_IOCTL_PORT_FLUSH_CTRL:
-            ICSS_EMAC_portFlush( icssEmacHandle, portNo);
+            ICSS_EMAC_portFlush(icssEmacHandle, portNo);
+            retVal = SystemP_SUCCESS;
             break;
-
 
         default:
             retVal = SystemP_FAILURE;

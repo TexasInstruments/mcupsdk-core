@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -68,11 +68,12 @@ inline uint8_t ICSS_EMAC_ifStormPreventionEnabled(const ICSS_EMAC_StormPreventio
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void ICSS_EMAC_initStormPreventionTable(uint8_t             portnum,
-                                        ICSS_EMAC_Handle    icssEmacHandle,
-                                        uint8_t             spType)
+int32_t ICSS_EMAC_initStormPreventionTable(uint8_t             portnum,
+                                           ICSS_EMAC_Handle    icssEmacHandle,
+                                           uint8_t             spType)
 {
-    ICSS_EMAC_StormPrevention *stormPrevPtr;
+    int32_t                     retVal = SystemP_FAILURE;
+    ICSS_EMAC_StormPrevention   *stormPrevPtr;
 
     if(ICSS_EMAC_MODE_SWITCH != ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask)
     {
@@ -82,16 +83,26 @@ void ICSS_EMAC_initStormPreventionTable(uint8_t             portnum,
     stormPrevPtr = (ICSS_EMAC_StormPrevention *)(&(((ICSS_EMAC_Object *)icssEmacHandle->object)->stormPrev));
     stormPrevPtr += (portnum - 1U);
 
-    ICSS_EMAC_setCreditValue(ICSS_EMAC_DEFAULT_CREDITS, stormPrevPtr, spType);
-    ICSS_EMAC_enableStormPrevention(portnum, icssEmacHandle, spType);
-    
-    /* Reset credit value during init */
-    ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, spType);
-}                                        
+    retVal = ICSS_EMAC_setCreditValue(ICSS_EMAC_DEFAULT_CREDITS, stormPrevPtr, spType);
 
-void ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
-                                      ICSS_EMAC_Handle  icssEmacHandle,
-                                      uint8_t           spType)
+    if (retVal == SystemP_SUCCESS)
+    {
+        retVal = ICSS_EMAC_enableStormPrevention(portnum, icssEmacHandle, spType);
+    }
+
+    /* Reset credit value during init */
+
+    if (retVal == SystemP_SUCCESS)
+    {
+        retVal = ICSS_EMAC_resetStormPreventionCounter(icssEmacHandle, spType);
+    }
+
+    return retVal;
+}
+
+int32_t ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
+                                         ICSS_EMAC_Handle  icssEmacHandle,
+                                         uint8_t           spType)
 {
     uint16_t                    *controlPointer;
     ICSS_EMAC_StormPrevention   *stormPrevPtr;
@@ -100,7 +111,7 @@ void ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
     uint16_t                    *suppressionEnabledPtr = NULL;
     uint16_t                    *creditsPtr = NULL;
 
-    if (portnum <= (uint8_t)ICSS_EMAC_PORT_2) 
+    if (portnum <= (uint8_t)ICSS_EMAC_PORT_2)
     {
         if(ICSS_EMAC_MODE_SWITCH != ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask)
         {
@@ -117,20 +128,22 @@ void ICSS_EMAC_disableStormPrevention(uint8_t           portnum,
         {
             temp_addr = (uint32_t)stormPreventionOffsetPtr[0];
             controlPointer = (uint16_t*)(temp_addr);
-        } 
+        }
         else
         {
             temp_addr = (uint32_t)stormPreventionOffsetPtr[1];
             controlPointer = (uint16_t*)(temp_addr);
         }
         ICSS_EMAC_byteCopy((uint8_t*)controlPointer, (uint8_t*)suppressionEnabledPtr, 2);
+        return SystemP_SUCCESS;
     }
-    return;
-}                                      
 
-void ICSS_EMAC_setCreditValue(uint16_t                  creditValue,
-                              ICSS_EMAC_StormPrevention *stormPrevPtr,
-                              uint8_t                   spType)
+    return SystemP_FAILURE;
+}
+
+int32_t ICSS_EMAC_setCreditValue(uint16_t                  creditValue,
+                                 ICSS_EMAC_StormPrevention *stormPrevPtr,
+                                 uint8_t                   spType)
 {
     uint16_t *creditsPtr = NULL;
 
@@ -151,12 +164,15 @@ void ICSS_EMAC_setCreditValue(uint16_t                  creditValue,
     if (creditsPtr != NULL)
     {
         *(creditsPtr) = creditValue;
+        return SystemP_SUCCESS;
     }
-}                              
 
-void ICSS_EMAC_enableStormPrevention(uint8_t            portnum,
-                                     ICSS_EMAC_Handle   icssEmacHandle,
-                                     uint8_t            spType)
+    return SystemP_FAILURE;
+}
+
+int32_t ICSS_EMAC_enableStormPrevention(uint8_t            portnum,
+                                        ICSS_EMAC_Handle   icssEmacHandle,
+                                        uint8_t            spType)
 {
     uint16_t                    *controlPointer;
     ICSS_EMAC_StormPrevention   *stormPrevPtr;
@@ -165,7 +181,7 @@ void ICSS_EMAC_enableStormPrevention(uint8_t            portnum,
     uint16_t                    *suppressionEnabledPtr = NULL;
     uint16_t                    *creditsPtr = NULL;
 
-    if (portnum <= (uint8_t)ICSS_EMAC_PORT_2) 
+    if (portnum <= (uint8_t)ICSS_EMAC_PORT_2)
     {
         if(ICSS_EMAC_MODE_SWITCH != ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask)
         {
@@ -190,12 +206,14 @@ void ICSS_EMAC_enableStormPrevention(uint8_t            portnum,
             controlPointer = (uint16_t*)(temp_addr);
         }
         ICSS_EMAC_byteCopy((uint8_t*)controlPointer, (uint8_t*)suppressionEnabledPtr, 2);
+        return SystemP_SUCCESS;
     }
-    return;
-}                                     
 
-void ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
-                                           uint8_t          spType)
+    return SystemP_FAILURE;
+}
+
+int32_t ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
+                                              uint8_t          spType)
 {
     uint32_t                    *controlPointer;
     uint32_t                    controlWord;
@@ -205,8 +223,9 @@ void ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
     uint32_t                    *stormPreventionOffsetPtr[2] = {NULL, NULL};
     uint16_t                    *suppressionEnabledPtr = NULL;
     uint16_t                    *creditsPtr = NULL;
+    int32_t                     retVal = SystemP_FAILURE;
 
-    ICSS_EMAC_checkStormPreventionType(stormPreventionOffsetPtr, &suppressionEnabledPtr, &creditsPtr, spType, icssEmacHandle, stormPrevPtr);
+    retVal = ICSS_EMAC_checkStormPreventionType(stormPreventionOffsetPtr, &suppressionEnabledPtr, &creditsPtr, spType, icssEmacHandle, stormPrevPtr);
     if(*suppressionEnabledPtr)
     {
         temp_addr = (uint32_t)stormPreventionOffsetPtr[0];
@@ -216,11 +235,11 @@ void ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
         ICSS_EMAC_byteCopy((uint8_t*)controlPointer, (uint8_t*)(&controlWord), 4);
     }
 
-    if(ICSS_EMAC_MODE_SWITCH == ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask) 
+    if( (ICSS_EMAC_MODE_SWITCH == ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask) && (retVal == SystemP_SUCCESS))
     {
         /*Access next port member*/
         stormPrevPtr += 1;
-        ICSS_EMAC_checkStormPreventionType(stormPreventionOffsetPtr, &suppressionEnabledPtr, &creditsPtr, spType, icssEmacHandle, stormPrevPtr);
+        retVal = ICSS_EMAC_checkStormPreventionType(stormPreventionOffsetPtr, &suppressionEnabledPtr, &creditsPtr, spType, icssEmacHandle, stormPrevPtr);
 
         if(*suppressionEnabledPtr)
         {
@@ -231,19 +250,20 @@ void ICSS_EMAC_resetStormPreventionCounter(ICSS_EMAC_Handle icssEmacHandle,
             ICSS_EMAC_byteCopy((uint8_t*)controlPointer, (uint8_t*)(&controlWord), 4);
         }
     }
-    return;
-}                                           
+    return retVal;
+}
 
-void ICSS_EMAC_checkStormPreventionType(uint32_t                    **stormPreventionOffsetPtr,
-                                        uint16_t                    **suppressionEnabledPtr,
-                                        uint16_t                    **creditsPtr,
-                                        uint8_t                     spType,
-                                        ICSS_EMAC_Handle            icssEmacHandle,
-                                        ICSS_EMAC_StormPrevention   *stormPrevPtr)
+int32_t ICSS_EMAC_checkStormPreventionType(uint32_t                    **stormPreventionOffsetPtr,
+                                           uint16_t                    **suppressionEnabledPtr,
+                                           uint16_t                    **creditsPtr,
+                                           uint8_t                     spType,
+                                           ICSS_EMAC_Handle            icssEmacHandle,
+                                           ICSS_EMAC_StormPrevention   *stormPrevPtr)
 {
     ICSS_EMAC_FwStaticMmap  *pStaticMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwStaticMMap);
     PRUICSS_Handle          pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
-    PRUICSS_HwAttrs const   *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs); 
+    PRUICSS_HwAttrs const   *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+    int32_t                 retVal = SystemP_FAILURE;
 
     switch(spType)
     {
@@ -252,23 +272,27 @@ void ICSS_EMAC_checkStormPreventionType(uint32_t                    **stormPreve
             stormPreventionOffsetPtr[1] = (uint32_t *)(pruicssHwAttrs->pru1DramBase + pStaticMMap->stormPreventionOffsetBC);
             *suppressionEnabledPtr = &(stormPrevPtr->suppressionEnabledBC);
             *creditsPtr = &(stormPrevPtr->creditsBC);
+            retVal = SystemP_SUCCESS;
             break;
         case ICSS_EMAC_MC_STORM_PREVENTION:
             stormPreventionOffsetPtr[0] = (uint32_t *)(pruicssHwAttrs->pru0DramBase + pStaticMMap->stormPreventionOffsetMC);
             stormPreventionOffsetPtr[1] = (uint32_t *)(pruicssHwAttrs->pru1DramBase + pStaticMMap->stormPreventionOffsetMC);
             *suppressionEnabledPtr = &(stormPrevPtr->suppressionEnabledMC);
             *creditsPtr = &(stormPrevPtr->creditsMC);
+            retVal = SystemP_SUCCESS;
             break;
         case ICSS_EMAC_UC_STORM_PREVENTION:
             stormPreventionOffsetPtr[0] = (uint32_t *)(pruicssHwAttrs->pru0DramBase + pStaticMMap->stormPreventionOffsetUC);
             stormPreventionOffsetPtr[1] = (uint32_t *)(pruicssHwAttrs->pru1DramBase + pStaticMMap->stormPreventionOffsetUC);
             *suppressionEnabledPtr = &(stormPrevPtr->suppressionEnabledUC);
             *creditsPtr = &(stormPrevPtr->creditsUC);
+            retVal = SystemP_SUCCESS;
             break;
         default:
             break;
     }
-}                                        
+    return retVal;
+}
 
 void ICSS_EMAC_byteCopy(uint8_t *dst_ptr, uint8_t *src_ptr, uint32_t size_bytes)
 {
