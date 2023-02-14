@@ -17,6 +17,7 @@ LIBNAME:=sdl.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     sdl_dpl.c \
+    sdl_dpl.c \
     sdl_esm.c \
     sdl_ip_esm.c \
     sdl_esm_core.c \
@@ -44,6 +45,9 @@ FILES_common := \
     sdl_mcrc.c \
     sdl_ip_mcrc.c \
     sdl_mcrc_soc.c \
+    sdl_rti.c \
+    sdl_ip_rti.c \
+    sdl_soc_rti.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -78,6 +82,9 @@ FILES_PATH_common = \
     mcrc \
     mcrc/v0 \
     mcrc/v0/soc/am243x \
+    rti \
+    rti/v0 \
+    rti/v0/soc/am243x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

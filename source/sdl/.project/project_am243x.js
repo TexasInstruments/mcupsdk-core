@@ -5,6 +5,7 @@ let device = "am243x";
 const files_r5f = {
     common: [
       "sdl_dpl.c",
+      "sdl_dpl.c",
         "sdl_esm.c",
         "sdl_ip_esm.c",
         "sdl_esm_core.c",
@@ -32,6 +33,9 @@ const files_r5f = {
         "sdl_mcrc.c",
         "sdl_ip_mcrc.c",
         "sdl_mcrc_soc.c",
+        "sdl_rti.c",
+        "sdl_ip_rti.c",
+		"sdl_soc_rti.c",
     ],
 };
 const filedirs = {
@@ -64,6 +68,9 @@ const filedirs = {
         "mcrc",
         "mcrc/v0",
         "mcrc/v0/soc/am243x",
+        "rti",
+        "rti/v0",
+		"rti/v0/soc/am243x",
     ],
 };
 
@@ -73,7 +80,6 @@ const asmfiles_r5f = {
 		"sdl_r5_utils.S",
 	],
 };
-
 
 const r5_macro = {
     common: [
@@ -87,10 +93,10 @@ common: [
 "-Wno-extra",
 ],
 };
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
-
 
 function getComponentProperty() {
     let property = {};
@@ -122,3 +128,4 @@ module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
 };
+

@@ -47,7 +47,7 @@
 #include <kernel/dpl/DebugP.h>
 #include <dpl_interface.h>
 #include <sdl/sdl_rti.h>
-#if defined(SOC_AM64X)
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/sciclient.h>
 #endif
 #include <drivers/soc.h>
@@ -64,7 +64,7 @@
 #if defined(C66_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_DSS_WDT
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #endif
 

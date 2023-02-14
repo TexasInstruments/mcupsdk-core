@@ -36,6 +36,21 @@ Example folder |examples/sdl/rti/uc4/
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | m4fss0-0 nortos
+  ^             | r5ss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/rti/uc1/
+ Example folder | examples/sdl/rti/uc2/
+ Example folder | examples/sdl/rti/uc3/
+ Example folder | examples/sdl/rti/uc4/
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/rti/uc1/

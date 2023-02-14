@@ -42,6 +42,14 @@
 extern "C" {
 #endif
 
+#if defined (SOC_AM64X)
+#include <sdl/rti/v0/soc/am64x/sdl_soc_rti.h>
+#endif /* SOC_AM64X */
+
+#if defined (SOC_AM243X)
+#include <sdl/rti/v0/soc/am243x/sdl_soc_rti.h>
+#endif /* SOC_AM243X */
+
 #if defined (SOC_AM263X)
 #include <sdl/rti/v0/soc/am263x/sdl_soc_rti.h>
 #endif /* SOC_AM263X */

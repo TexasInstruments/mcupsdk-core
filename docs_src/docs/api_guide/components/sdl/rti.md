@@ -51,6 +51,20 @@ Instances in Main domain:
 5)	RTI10 is dedicated to the third R5F CPU core in the Main domain (R5FSS1_CORE0)
 6)	RTI11 is dedicated to the fourth R5F CPU core in the Main domain (R5FSS1_CORE1)
 \endcond
+\cond SOC_AM243X
+There are 5 RTI Modules in the device – 1 in the MCU domain and 4 in the Main domain
+
+Instances in MCU domain:
+
+1)	MCU_RTI0 is dedicated to the MCU cluster (MCU_M4FSS0) in lockstep and when unlocked serves as a Windowed Watchdog for the first M4F CPU core in the MCU domain (MCU_M4FSS0_CORE0).
+
+Instances in Main domain:
+
+1)	RTI8 is dedicated to the first R5F CPU core in the Main domain (R5FSS0_CORE0)
+2)	RTI9 is dedicated to the second R5F CPU core in the Main domain (R5FSS0_CORE1)
+3)	RTI10 is dedicated to the third R5F CPU core in the Main domain (R5FSS1_CORE0)
+4)	RTI11 is dedicated to the fourth R5F CPU core in the Main domain (R5FSS1_CORE1)
+\endcond
 
 All WWDT instances that are provisioned for a particular CPU core should not be used by any other CPU cores.
 
@@ -129,6 +143,54 @@ Start an RTI Instance
 \code{.c}
 /* Servicing of the watchdog is done by the core that is being monitored with the watchdg */
 SDL_RTI_service(SDL_WDT0_U_BASE);
+\endcode
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
+Config an RTI Instance
+\code{.c}
+SDL_RTI_configParms pConfig;
+
+/* Configure RTI parameters */
+pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ, RTI_WDT_TIMEOUT);
+pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_100_PERCENT;
+pConfig.SDL_RTI_dwwdReaction   = RTI_DWWD_REACTION_GENERATE_NMI;
+
+retVal = SDL_RTI_config(SDL_INSTANCE_RTI, &pConfig);
+
+if (retVal == SDL_EFAIL)
+{
+    UART_printf("Error during Window configuration.\n");
+}
+\endcode
+
+Verify the config
+\code{.c}
+/* Verify the config */
+retVal = SDL_RTI_verifyConfig(SDL_INSTANCE_RTI, &pConfig);
+
+if (retVal == SDL_EFAIL)
+{
+    UART_printf("Error during Window Verify configuration.\n");
+}
+\endcode
+
+Read the static registers
+\code{.c}
+SDL_RTI_staticRegs pStaticRegs;
+
+retVal = SDL_RTI_readStaticRegs(SDL_INSTANCE_RTI, &pStaticRegs);
+\endcode
+
+Start an RTI Instance
+\code{.c}
+SDL_RTI_start(SDL_INSTANCE_RTI);
+\endcode
+
+Start an RTI Instance
+\code{.c}
+/* Servicing of the watchdog is done by the core that is being monitored with the watchdg */
+SDL_RTI_service(SDL_INSTANCE_RTI);
 \endcode
 \endcond
 

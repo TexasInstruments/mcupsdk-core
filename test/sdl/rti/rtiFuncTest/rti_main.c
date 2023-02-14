@@ -43,10 +43,12 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "rti_main.h"
-#if defined (SOC_AM64X)
+#include <dpl_interface.h>
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/sciclient.h>
 #endif
-
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 
 #ifdef UNITY_INCLUDE_CONFIG_H
@@ -102,7 +104,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
 };
 #endif
-#if !defined (SOC_AM64X)
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
@@ -129,12 +131,12 @@ static int32_t Sdl_Module_clockSetFrequency()
 }
 #endif
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 #define RTI_NUM_DEVICES 1
 uint32_t RTI_devices[RTI_NUM_DEVICES] =
 {
     TISCI_DEV_MCU_RTI0,
 };
-
 static int32_t sdlApp_initRTI(void)
 {
     int32_t status = SDL_PASS;
@@ -158,8 +160,47 @@ static int32_t sdlApp_initRTI(void)
     return status;
 }
 #endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+#define RTI_NUM_DEVICES SDL_INSTANCE_RTI11_CFG+1
+uint32_t RTI_devices[RTI_NUM_DEVICES] =
+{
+    TISCI_DEV_MCU_RTI0,
+    TISCI_DEV_RTI0,
+    TISCI_DEV_RTI1,
+    TISCI_DEV_RTI8,
+    TISCI_DEV_RTI9,
+    TISCI_DEV_RTI10,
+    TISCI_DEV_RTI11
+};
+static int32_t sdlApp_initRTI(void)
+{
+    int32_t status = SDL_PASS;
+    uint32_t i;
+
+    for (i = 0; i < RTI_NUM_DEVICES; i++)
+    {
+       /* Power up RTI */
+        status = Sciclient_pmSetModuleState(RTI_devices[i],
+                                            TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
+                                            TISCI_MSG_FLAG_AOP,
+                                            SystemP_WAIT_FOREVER);
+
+        if (status != SDL_PASS)
+        {
+            printf("   RTI Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\n",
+                        RTI_devices[i], status);
+        }
+    }
+
+    return status;
+}
+#endif
+#endif
 
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 SDL_ESM_config RTI_Test_esmInitConfig_MCU =
 {
     .esmErrorConfig = {0u, 3u}, /* Self test error config */
@@ -173,6 +214,28 @@ SDL_ESM_config RTI_Test_esmInitConfig_MCU =
     .errorpinBitmap = {0xffffffffu, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
                       },
 };
+#endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
+{
+ .esmErrorConfig = {0u, 3u}, /* Self test error config */
+ .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                  0x00000000u, 0x00000004u,
+                 },
+      /**< All events enable: except timer and self test  events, */
+     /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
+ .priorityBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000004u,
+                   },
+     /**< Configured based off esmErrorConfig to test high or low priorty events. */
+  .errorpinBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                     0x00000000u, 0x00000004u,
+                    },
+    /**< All events high priority:  */
+};
+#endif
 #endif
 
 #if defined (SOC_AM263X)
@@ -297,7 +360,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
     }
     return (retVal);
 }
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -352,7 +415,7 @@ void test_sdl_rti_baremetal_test_app (void)
     Drivers_open();
     Board_driversOpen();
 
-  #if defined (SOC_AM263X) || defined (SOC_AM64X)
+  #if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
     void *ptr = (void *)&arg;
   #endif
 
@@ -360,12 +423,11 @@ void test_sdl_rti_baremetal_test_app (void)
 
     /* Init dpl */
     sdlApp_dplInit();
-	#if !defined (SOC_AM64X)
+	#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     Sdl_Module_clockEnable();
     Sdl_Module_clockSetFrequency();
 	#endif
     /* Initialize MCU RTI module */
-	
     #if defined (SOC_AM263X)
     result = SDL_ESM_init(SDL_INSTANCE_ESM0, &RTI_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
     #elif defined (SOC_AM273X)
@@ -374,9 +436,17 @@ void test_sdl_rti_baremetal_test_app (void)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);
     #endif
 	#if defined (SOC_AM64X)
+    #if defined (M4F_CORE)
 	sdlApp_initRTI();
 	result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &RTI_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, ptr);
 	#endif
+    #endif
+    #if defined (SOC_AM64X) || defined (SOC_AM243X)
+    #if defined (R5F_CORE)
+	sdlApp_initRTI();
+	result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &RTI_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+	#endif
+    #endif
 
     if (result != SDL_PASS)
     {
@@ -446,7 +516,11 @@ void test_sdl_rti_baremetal_test_app_runner(void)
 
 void test_main(void *args)
 {
+	Drivers_open();
+	Board_driversOpen();
     test_sdl_rti_baremetal_test_app_runner();
+	Board_driversClose();
+	Drivers_close();
 }
 
 /* Nothing past this point */

@@ -102,4 +102,6 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_DCC
 -# MCRC
    -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
+-# RTI
+   -# \subpage EXAMPLES_SDL_RTI
 \endcond

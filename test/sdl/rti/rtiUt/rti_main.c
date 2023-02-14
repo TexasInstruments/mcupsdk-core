@@ -42,7 +42,7 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "rti_main.h"
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/sciclient.h>
 #endif
 
@@ -50,6 +50,8 @@
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
 #endif
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #define SOC_MODULES_END     (0xFFFFFFFFu)
 /*===========================================================================*/
 /*                         Declarations                                      */
@@ -116,7 +118,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
 };
 #endif
-#if !defined (SOC_AM64X)
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
@@ -155,7 +157,7 @@ static int32_t sdlApp_dplInit(void)
     return ret;
 }
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #define RTI_NUM_DEVICES SDL_INSTANCE_RTI11_CFG+1
 uint32_t RTI_devices[RTI_NUM_DEVICES] =
 {
@@ -209,11 +211,11 @@ void test_sdl_rti_baremetal_test_app (void)
     sdlApp_dplInit();
 
     DebugP_log("\n rti Test Application\r\n");
-	#if !defined (SOC_AM64X)
+	#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
     Sdl_Module_clockEnable();
     Sdl_Module_clockSetFrequency();
 	#endif
-	#if defined (SOC_AM64X)
+	#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	sdlApp_initRTI();
 	#endif
     for ( i = 0; sdlrtiTestList[i].testFunction != NULL; i++)
@@ -269,7 +271,11 @@ void test_sdl_rti_baremetal_test_app_runner(void)
 
 void test_main(void *args)
 {
+	Drivers_open();
+	Board_driversOpen();
     test_sdl_rti_baremetal_test_app_runner();
+	Board_driversClose();
+	Drivers_close();
 }
 
 /* Nothing past this point */

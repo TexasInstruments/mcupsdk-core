@@ -48,6 +48,7 @@ SDL consists of below sub-modules
 - \subpage SDL_POK_PAGE
 - \subpage SDL_MTOG_PAGE
 - \subpage SDL_ECC_PAGE
+- \subpage SDL_RTI_PAGE
 \endcond
 
 \cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
@@ -77,4 +78,5 @@ SDL consists of below sub-modules
 - \subpage SDL_DCC_PAGE
 - \subpage SDL_ECC_PAGE
 - \subpage SDL_MCRC_PAGE
+- \subpage SDL_RTI_PAGE
 \endcond

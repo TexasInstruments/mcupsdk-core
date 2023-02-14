@@ -68,6 +68,9 @@ const files_r5f = {
   		"sdl_interrupt_handlers.c",
   		"sdl_interrupt_register.c",
   		"sdl_exception.c",
+          "sdl_rti.c",
+          "sdl_ip_rti.c",
+          "sdl_soc_rti.c",
     ],
 };
 
@@ -142,6 +145,9 @@ const filedirs_r5f = {
         "ecc/V0",
         "r5",
         "r5/v0",
+        "rti",
+        "rti/v0",
+		"rti/v0/soc/am64x",
     ],
 };
 
@@ -193,15 +199,16 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     if(buildOption.cpu.match(/m4f*/)) {
-        build_property.filedirs = filedirs_m4f;
         build_property.files = files_m4f;
+        build_property.filedirs = filedirs_m4f;
         build_property.defines = m4_macro;
     }
 
+
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.asmfiles = asmfiles_r5f;
         build_property.files = files_r5f;
         build_property.filedirs = filedirs_r5f;
-        build_property.asmfiles = asmfiles_r5f;
         build_property.defines = r5_macro;
         build_property.cflags = cflags_r5f;
     }
@@ -212,3 +219,4 @@ module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
 };
+

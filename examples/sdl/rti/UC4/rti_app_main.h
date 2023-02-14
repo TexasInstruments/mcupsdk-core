@@ -50,10 +50,13 @@
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/dpl/sdl_dpl.h>
+#if defined (SOC_AM64X) || (SOC_AM243X)
+#include <sdl/sdl_esm.h>
+#endif
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/sciclient.h>
 #include <sdl/sdl_esm.h>
 #endif
@@ -102,7 +105,7 @@
 
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
 
-#if !defined (SOC_AM64X)
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
 #define SDL_MCU_CTRL_MMR0_CFG0_BASE                                         (0x40f00000UL)
 #endif
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x00008180U)
@@ -164,7 +167,7 @@ typedef enum rtiClockSource
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -178,7 +181,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 /*===========================================================================*/
 
 extern int32_t SDL_RTI_exampleTest(void);
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

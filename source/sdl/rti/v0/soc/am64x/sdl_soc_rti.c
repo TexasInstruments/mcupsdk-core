@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,7 +37,7 @@
  *  \brief    This file contains the soc-specific implementation of the API's present in the
  *            device abstraction layer file of rti.
  */
- 
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <sdl/rti/v0/sdl_ip_rti.h>

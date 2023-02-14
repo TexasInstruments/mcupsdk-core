@@ -46,10 +46,18 @@
 /*===========================================================================*/
 /* None */
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #define SDL_WDT_BASE SDL_MCU_RTI0_CFG_BASE
 #endif
+#endif
 
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_RTI8_CFG
+#define SDL_WDT_BASE SDL_RTI8_CFG_BASE
+#endif
+#endif
 #if defined (SOC_AM263X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE
@@ -82,7 +90,7 @@ volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect);
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect);
 #endif
@@ -352,14 +360,14 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 #endif
 }
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect)
 {
     uint32_t baseAddr;
-	
+
 	switch (rtiModuleSelect) {
-        case SDL_MCU_RTI0_CFG_BASE:
+        case SDL_RTI8_CFG_BASE:
 			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_MCU_CTRL_MMR0_CFG0_SIZE);
             HW_WR_FIELD32(baseAddr,
                           SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL,
@@ -401,10 +409,11 @@ static void IntrDisable(uint32_t intsrc)
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
 	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
     #endif
-	#if defined (SOC_AM64X)
+	#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
 	#endif
+      /* Clear ESM registers. */
     #if defined (SOC_AM263X)
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
@@ -414,14 +423,22 @@ static void IntrDisable(uint32_t intsrc)
         SDL_ESM_disableIntr(SDL_INSTANCE_ESM0, intsrc);
     #endif
 	#if defined (SOC_AM64X)
+    #if defined (M4F_CORE)
 	/* clear the ERROR pin */
     SDL_ESM_clrNError(SDL_ESM_INST_MCU_ESM0);
 	#endif
+    #endif
+	#if defined (SOC_AM64X) || defined (SOC_AM243X)
+     #if defined (R5F_CORE)
+	/* clear the ERROR pin */
+    SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
+	#endif
+    #endif
 
     isrFlag  |= RTI_ESM_INTRPT;
 }
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

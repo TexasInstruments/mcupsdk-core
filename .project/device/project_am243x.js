@@ -272,6 +272,12 @@ const example_file_list = [
     "examples/sdl/dcc/dcc_modes/.project/project.js",
 	"test/sdl/dcc/dcc_unit_test/.project/project.js",
     "test/sdl/dcc/dcc_func_test/.project/project.js",
+	"examples/sdl/rti/UC1/.project/project.js",
+	"examples/sdl/rti/UC2/.project/project.js",
+	"examples/sdl/rti/UC3/.project/project.js",
+	"examples/sdl/rti/UC4/.project/project.js",
+	"test/sdl/rti/rtiUt/.project/project.js",
+    "test/sdl/rti/rtiFuncTest/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

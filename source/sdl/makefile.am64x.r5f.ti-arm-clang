@@ -44,6 +44,9 @@ FILES_common := \
     sdl_interrupt_handlers.c \
     sdl_interrupt_register.c \
     sdl_exception.c \
+    sdl_rti.c \
+    sdl_ip_rti.c \
+    sdl_soc_rti.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -59,9 +62,6 @@ FILES_PATH_common = \
     esm/soc/am64x \
     esm/v0 \
     esm/v0/v0_0 \
-    rti \
-    rti/v0 \
-    rti/v0/soc/am64x \
     dcc \
     dcc/v0 \
     dcc/v0/soc \
@@ -84,6 +84,9 @@ FILES_PATH_common = \
     ecc/V0 \
     r5 \
     r5/v0 \
+    rti \
+    rti/v0 \
+    rti/v0/soc/am64x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

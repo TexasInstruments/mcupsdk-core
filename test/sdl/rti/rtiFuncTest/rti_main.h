@@ -56,7 +56,7 @@
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || (SOC_AM243X)
 #include <sdl/sdl_esm.h>
 #endif
 #include <sdl/sdl_rti.h>
@@ -88,8 +88,16 @@
 #define SDL_INSTANCE_ESM0 SDL_ESM_INST_MAIN_ESM0
 #endif
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #define SDL_WDT_BASE  SDL_INSTANCE_MCU_RTI0_CFG
+#endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_RTI8_CFG
+#define SDL_WDT_BASE SDL_RTI8_CFG_BASE
+#endif
 #endif
 /* MSS Instance for AM273x and AWR294X*/
 #if defined (R5F_INPUTS)
@@ -128,11 +136,11 @@
 #define MCU_ESM_RTI0_INTR                     (104U)
 #define MCU_ESM_RTI1_INTR                     (105U)
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x045080B0U)
 #endif
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
-#if !defined (SOC_AM64X)
+#if !defined (SOC_AM64X) && !defined (SOC_AM243X)
 #define SDL_MCU_CTRL_MMR0_CFG0_BASE                                         (0x4500000UL)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x00008180U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_SHIFT                 		(0x00000000U)
@@ -196,7 +204,7 @@ void sdlApp_print(const char * str);
  */
 #define RTI_DWD_MIN_PRELOAD_VAL             (0x1FFFU)
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -213,7 +221,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pWinStatus);
 
 extern int32_t SDL_RTI_funcTest(void);
 
-#if defined (SOC_AM263X)|| defined (SOC_AM64X)
+#if defined (SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

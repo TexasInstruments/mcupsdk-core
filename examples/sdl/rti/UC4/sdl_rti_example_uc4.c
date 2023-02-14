@@ -45,8 +45,16 @@
 /*===========================================================================*/
 /* None */
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #define SDL_RTI_BASE SDL_MCU_RTI0_CFG_BASE
+#endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_RTI8_CFG
+#define SDL_RTI_BASE SDL_RTI8_CFG_BASE
+#endif
 #endif
 #if defined (SOC_AM263X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
@@ -79,7 +87,7 @@ volatile  SDL_RTI_configParms     pConfig;
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect);
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect);
 #endif
@@ -273,6 +281,7 @@ int32_t SDL_RTI_exampleTest(void)
         {
             RTIDwwdIsClosedWindow(rtiModule, &closedWinStatus);
             /* Keep checking till window is open. */
+
         }
 
         SDL_RTI_service(SDL_INSTANCE_RTI);
@@ -333,14 +342,14 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 }
 #endif
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect)
 {
     uint32_t baseAddr;
-	
+
 	switch (rtiModuleSelect) {
-        case SDL_MCU_RTI0_CFG_BASE:
+        case SDL_RTI8_CFG_BASE:
 			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_MCU_CTRL_MMR0_CFG0_SIZE);
             HW_WR_FIELD32(baseAddr,
                           SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL,
@@ -354,7 +363,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 #define SDL_TEST_ESM_INT_HI_LVL SDL_MSS_INTR_MSS_ESM_HI
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 #define RTI_CLOCK_SOURCE RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ
 #elif defined (SOC_AWR294X) || defined (SOC_AM273X)
 #define RTI_CLOCK_SOURCE RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ
@@ -394,8 +403,17 @@ static void IntrDisable(uint32_t intsrc)
   	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
 #endif
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 	SDL_RTI_getStatus(SDL_INSTANCE_MCU_RTI0_CFG, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_MCU_RTI0_CFG, intrStatus);
+#endif
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+	SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
+	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+#endif
 #endif
 #if defined (SOC_AM263X)
     /* Clear ESM registers. */
@@ -403,12 +421,21 @@ static void IntrDisable(uint32_t intsrc)
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
 #endif
 #if defined (SOC_AM64X)
+#if defined (M4F_CORE)
 	/* clear the ERROR pin */
     SDL_ESM_clrNError(SDL_ESM_INST_MCU_ESM0);
+#endif
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
     SDL_ESM_disableIntr(SDL_INSTANCE_ESM0, intsrc);
+#endif
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+	/* clear the ERROR pin */
+    SDL_ESM_disableIntr(SDL_ESM0_CFG_BASE, intsrc);
+    SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
+#endif
 #endif
    isrFlag  |= RTI_ESM_INTRPT;
 }
@@ -428,7 +455,7 @@ static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size
     /* Service watchdog again. */
     SDL_RTI_service(SDL_INSTANCE_RTI);
 }
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {
