@@ -363,6 +363,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-9386
+    <td> Profinet does not respond to ARP frames
+    <td> Profinet Device
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9582
+    <td> Profinet, EtherNet/IP: Enabling MDIO Work-around leads to data memory corruption
+    <td> Profinet Device, EtherNet/IP Adapter
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues

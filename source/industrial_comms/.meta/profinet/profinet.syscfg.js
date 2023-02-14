@@ -302,7 +302,7 @@ function getConfigurables()
         config.push({
             name: "mdioManualModeBaseAddr",
             displayName: "MDIO Manual Mode Base Address",
-            default: 0x00010E40,
+            default: 0x0001FF00,
             readOnly: true,
             displayFormat: "hex",
             onChange: (inst, ui) => {
