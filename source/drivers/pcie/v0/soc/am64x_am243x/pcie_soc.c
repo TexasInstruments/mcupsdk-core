@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -302,20 +302,22 @@ static void Pcie_msiHandler(void * args)
 
 void Pcie_srisControl (Pcie_Handle handle, uint32_t enable)
 {
-    Pcie_DeviceCfgBaseAddr *cfg = Pcie_handleGetBases (handle);
+    if(handle != NULL)
+    {
+        Pcie_DeviceCfgBaseAddr *cfg = Pcie_handleGetBases (handle);
 
-    DebugP_assert(NULL != cfg);
+        if(cfg != NULL)
+        {
+            Pcie_DevParams *params = (Pcie_DevParams*)cfg->devParams;
 
-    Pcie_DevParams *params = (Pcie_DevParams*)cfg->devParams;
+            CSL_user_cfgRegs *userCfg = (CSL_user_cfgRegs *)params->userCfgBase;
+            uint32_t val = userCfg->INITCFG;
 
-    DebugP_assert(NULL != params);
+            PCIE_SETBITS(val, CSL_USER_CFG_INITCFG_SRIS_ENABLE, enable);
 
-    CSL_user_cfgRegs *userCfg = (CSL_user_cfgRegs *)params->userCfgBase;
-    uint32_t val = userCfg->INITCFG;
-
-    PCIE_SETBITS(val, CSL_USER_CFG_INITCFG_SRIS_ENABLE, enable);
-
-    userCfg->INITCFG = val;
+            userCfg->INITCFG = val;
+        }
+    }
 }
 
 void Pcie_unlockMMRCtrlReg (void)
@@ -657,7 +659,7 @@ int32_t Pcie_rcEnableMSI (Pcie_Handle handle, uint32_t drvIndex,
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t self_core = 0;
-    int32_t ring_index = 0;
+    uint32_t ring_index = 0;
     int32_t global_event = 0;
     int32_t vint = 0;
     uint32_t intNum = 0;

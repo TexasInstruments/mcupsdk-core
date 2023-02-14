@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,8 +61,11 @@
 /* Maximum number of outbound regions */
 #define OB_REGION_MAX       32
 
-/* Maximum number of inbound regions */
-#define IB_REGION_MAX       8
+/* Maximum number of inbound regions for EP */
+#define IB_REGION_MAX_EP    8
+
+/* Maximum number of inbound regions for RC */
+#define IB_REGION_MAX_RC    2
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -426,7 +429,7 @@ int32_t Pcie_LtssmCtrl (Pcie_Handle handle, uint8_t enable)
 
     DebugP_assert (status == SystemP_SUCCESS);
 
-    return SystemP_SUCCESS;
+    return status;
 }
 
 /*****************************************************************************
@@ -1706,7 +1709,7 @@ static int32_t Pcie_readPlconfIatuRegLowerBaseReg (const CSL_pcie_ep_coreRegs *b
     if (status == SystemP_SUCCESS)
     {
         if (((simIatuWindow->regionDirection == 0) && (regionIndex < OB_REGION_MAX))
-            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX)))
+            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX_EP)))
         {
             if (simIatuWindow->regionDirection == 0U)
             {
@@ -1760,7 +1763,7 @@ static int32_t Pcie_readPlconfIatuRegUpperBaseReg (const CSL_pcie_ep_coreRegs *b
     if (status == SystemP_SUCCESS)
     {
         if (((simIatuWindow->regionDirection == 0) && (regionIndex < OB_REGION_MAX))
-            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX)))
+            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX_EP)))
         {
             if (simIatuWindow->regionDirection == 0U)
             {
@@ -1908,7 +1911,7 @@ static int32_t Pcie_readLinkStatusReg (const CSL_pcie_ep_coreRegs *baseAddr, Pci
 /*****************************************************************************
  * Read and split up the Message Signaled Interrupt Capability register
  ****************************************************************************/
-static int32_t Pcie_readMsiCapReg(const CSL_pcie_ep_coreRegs *baseAddr,Pcie_MsiCapReg *swReg)
+static int32_t Pcie_readMsiCapReg(const CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsiCapReg *swReg)
 {
     uint32_t *regVal = (uint32_t *)baseAddr;
     uint32_t val = swReg->raw = *regVal;
@@ -3501,7 +3504,7 @@ static int32_t Pcie_writePlconfIatuRegLowerBaseReg (CSL_pcie_ep_coreRegs *baseAd
         regionIndex = simIatuWindow->regionIndex;
 
         if (((simIatuWindow->regionDirection == 0) && (regionIndex < OB_REGION_MAX))
-            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX)))
+            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX_EP)))
         {
             if (simIatuWindow->regionDirection == 0U)
             {
@@ -3555,7 +3558,7 @@ static int32_t Pcie_writePlconfIatuRegLowerBaseRcReg (CSL_pcie_ep_coreRegs *base
         regionIndex = simIatuWindow->regionIndex;
 
         if (((simIatuWindow->regionDirection == 0) && (regionIndex < OB_REGION_MAX))
-            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX)))
+            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX_RC)))
         {
             if (simIatuWindow->regionDirection == 0U)
             {
@@ -3608,7 +3611,7 @@ static int32_t Pcie_writePlconfIatuRegUpperBaseReg (CSL_pcie_ep_coreRegs *baseAd
         regionIndex = simIatuWindow->regionIndex;
 
         if (((simIatuWindow->regionDirection == 0) && (regionIndex < OB_REGION_MAX))
-            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX)))
+            || ((simIatuWindow->regionDirection == 1) && (regionIndex < IB_REGION_MAX_EP)))
         {
             if (simIatuWindow->regionDirection == 0U)
             {
