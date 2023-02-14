@@ -1425,8 +1425,8 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, ui
     if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR>=busSftyNode))==(bool)0U)
         {
             /* Check for  dependency */
-            if(((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode) == (bool)0U)&&
-                ((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR == busSftyNode) ==(bool)0U)&& ((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR2 == busSftyNode)==(bool)0U)&&
+            if(((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode)) == (bool)0U)&&
+                (((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR == busSftyNode) ==(bool)0U)&& ((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR2 == busSftyNode)==(bool)0U))&&
                 ((bool)(SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )==(bool)0U))
             {
                 /* Validate Start and End address of node */
@@ -1535,8 +1535,8 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
       if((bool)((SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR>=busSftyNode))==(bool)0U)
         {
             /* Check for  dependency */
-            if(((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode) == (bool)0U)&&
-                ((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR == busSftyNode) ==(bool)0U)&& ((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR2 == busSftyNode)==(bool)0U)&&
+            if((((bool)(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD <= busSftyNode )&&(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD>=busSftyNode)) == (bool)0U)&&
+                ((((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR == busSftyNode) ==(bool)0U)&& ((bool)(SDL_ECC_BUS_SAFETY_MSS_PCR2 == busSftyNode)))==(bool)0U)&&
                 ((bool)(SDL_ECC_BUS_SAFETY_MSS_CPSW == busSftyNode )==(bool)0U))
             {
                 /* Validate Start and End address of node */

@@ -121,7 +121,6 @@ static void SDL_DSS_disableDSSPbist (void)
 static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint64_t memGroupIndex, uint8_t status)
 {
     uint64_t     index;
-    uint32_t       reg;
 
      if (status == 0U)
      {
@@ -143,21 +142,19 @@ static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint64_t
              /* Enable the memory group for self-test. */
              if (memGroupIndex < 32U)
              {
-                 reg = ptrPBISTRegs->RINFOL;
-                 ptrPBISTRegs->RINFOL = SDL_FINSR(reg, memGroupIndex, memGroupIndex, 1U);
+                SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 1U);
              }
              else
              {
-                 reg = ptrPBISTRegs->RINFOU;
                  index = memGroupIndex - 32U;
-                 ptrPBISTRegs->RINFOU = SDL_FINSR(reg, index, index, 1U);
+                 SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 1U);
              }
      }
 }
 
 static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint32_t algoIndex, uint8_t status)
 {
-  uint32_t reg;
+
     if (status == 0U)
     {
         if (algoIndex == 0xFFU)
@@ -172,8 +169,7 @@ static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint32_t algoIn
     else
     {
             /* Enable the algorithm for self-test. */
-            reg = ptrPBISTRegs->ALGO;
-            ptrPBISTRegs->ALGO = SDL_FINSR(reg, algoIndex, algoIndex, 1U);
+            SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 1U);
     }
 }
 

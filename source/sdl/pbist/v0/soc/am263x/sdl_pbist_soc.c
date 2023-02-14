@@ -239,7 +239,8 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
             },
 
      },
- #elif defined (SUBSYS_R5SS1)
+        #endif
+        #if defined (SUBSYS_R5SS1)
             .numPBISTRuns        = 10u,
             .PBISTConfigRun = {
 
@@ -333,8 +334,7 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
               .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
           },
       },
-
-#endif
+        #endif
 
 
         .PBISTNegConfigRun =

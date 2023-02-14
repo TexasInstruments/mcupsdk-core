@@ -126,7 +126,7 @@ typedef enum {
 
 /** @} */
 
-#define SDL_PBIST_NUM_INSTANCES 16U
+#define SDL_PBIST_NUM_INSTANCES 1U
 
 #define SDL_PBIST_HWPOST_NUM_INSTANCES 1
 

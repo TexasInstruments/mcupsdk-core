@@ -449,7 +449,7 @@
  };
  #endif
  #if defined(SUBSYS_R5FSS1)
- static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[SDL_PBIST_NUM_INSTANCES] =
+ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
  {
      /* MCU R5F Instance */
      {
