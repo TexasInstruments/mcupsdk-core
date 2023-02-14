@@ -172,6 +172,87 @@ extern "C" {
 /** \brief Total Queues available */
 #define ICSS_EMAC_NUMQUEUES ((uint32_t)17U)
 
+/**  \anchor ICSS_EMAC_ErrorCodes
+ *   \name ICSS EMAC Error Codes
+ *
+ *  @{
+ */
+
+/** \brief Switch Error Base */
+#define ICSS_EMAC_SWITCH_ERROR_BASE                     ((uint32_t)0x21Fu)
+/** \brief Switch Error Code */
+#define ICSS_EMAC_SWITCH_ERROR_CODE                     (ICSS_EMAC_SWITCH_ERROR_BASE)
+/** \brief Switch Error/Informational */
+#define ICSS_EMAC_SWITCH_ERROR_INFO                     (ICSS_EMAC_SWITCH_ERROR_CODE)
+/** \brief Switch Error/Warning */
+#define ICSS_EMAC_SWITCH_ERROR_WARNING                  (ICSS_EMAC_SWITCH_ERROR_CODE | 0x1000u)
+/** \brief Switch Error Minor */
+#define ICSS_EMAC_SWITCH_ERROR_MINOR                    (ICSS_EMAC_SWITCH_ERROR_CODE | 0x2000u)
+/** \brief Switch Error Major */
+#define ICSS_EMAC_SWITCH_ERROR_MAJOR                    (ICSS_EMAC_SWITCH_ERROR_CODE | 0x3000u)
+/** \brief Switch Error Critical */
+#define ICSS_EMAC_SWITCH_ERROR_CRITICAL                 (ICSS_EMAC_SWITCH_ERROR_CODE | 0x4000u)
+
+/** \brief Success code */
+#define ICSS_EMAC_SWITCH_SUCCESS                        (0u)
+
+/**  Error codes */
+/** \brief Device is not instantiated yet.*/
+#define ICSS_EMAC_ERR_DEV_NOT_INSTANTIATED              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 1u)
+/** \brief Function or calling parameter is invalid */
+#define ICSS_EMAC_ERR_SWITCH_INVALID_PARAM              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 2u)
+/** \brief Channel number invalid */
+#define ICSS_EMAC_ERR_CH_INVALID                        (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 3u)
+/** \brief Channel already initialized and setup */
+#define ICSS_EMAC_ERR_CH_ALREADY_INIT                   (ICSS_EMAC_SWITCH_ERROR_MAJOR + 4u)
+/** \brief Tx Channel already closed. Channel close failed */
+#define ICSS_EMAC_ERR_TX_CH_ALREADY_CLOSED              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 5u)
+/** \brief Tx Channel not open.*/
+#define ICSS_EMAC_ERR_TX_CH_NOT_OPEN                    (ICSS_EMAC_SWITCH_ERROR_MAJOR + 6u)
+/** \brief Tx Link not up.*/
+#define ICSS_EMAC_ERR_TX_NO_LINK                        (ICSS_EMAC_SWITCH_ERROR_MAJOR + 7u)
+/** \brief Tx ran out of Buffer descriptors to use.*/
+#define ICSS_EMAC_ERR_TX_OUT_OF_BD                      (ICSS_EMAC_SWITCH_ERROR_MAJOR + 8u)
+/** \brief Rx Channel invalid number.*/
+#define ICSS_EMAC_ERR_RX_CH_INVALID                     (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 9u)
+/** \brief Rx Channel already setup.*/
+#define ICSS_EMAC_ERR_RX_CH_ALREADY_INIT                (ICSS_EMAC_SWITCH_ERROR_MAJOR + 10u)
+/** \brief Rx Channel already closed. Channel close failed.*/
+#define ICSS_EMAC_ERR_RX_CH_ALREADY_CLOSED              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 11u)
+/** \brief Rx Channel not open yet.*/
+#define ICSS_EMAC_ERR_RX_CH_NOT_OPEN                    (ICSS_EMAC_SWITCH_ERROR_MAJOR + 12u)
+/** \brief EMAC device already created.*/
+#define ICSS_EMAC_ERR_DEV_ALREADY_CREATED               (ICSS_EMAC_SWITCH_ERROR_MAJOR + 13u)
+/** \brief Device is not open or not ready */
+#define ICSS_EMAC_ERR_DEV_NOT_OPEN                      (ICSS_EMAC_SWITCH_ERROR_MAJOR + 14u)
+/** \brief Device close failed. Device already closed.*/
+#define ICSS_EMAC_ERR_DEV_ALREADY_CLOSED                (ICSS_EMAC_SWITCH_ERROR_MAJOR + 15u)
+/** \brief Device open failed. Device already open.*/
+#define ICSS_EMAC_ERR_DEV_ALREADY_OPEN                  (ICSS_EMAC_SWITCH_ERROR_MAJOR + 16u)
+/** \brief Rx Buffer Descriptor allocation failed.*/
+#define ICSS_EMAC_ERR_RX_BUFFER_ALLOC_FAIL              (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 17u)
+/** \brief EMAC Internal failure.*/
+#define ICSS_EMAC_SWITCH_INTERNAL_FAILURE               (ICSS_EMAC_SWITCH_ERROR_MAJOR + 18u)
+/** \brief VLAN support not enabled in EMAC */
+#define ICSS_EMAC_SWITCH_VLAN_UNAWARE_MODE              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 19u)
+/** \brief ALE Table full.*/
+#define ICSS_EMAC_SWITCH_ALE_TABLE_FULL                 (ICSS_EMAC_SWITCH_ERROR_MAJOR + 20u)
+/** \brief Multicast/Unicast/OUI Address not found in ALE.*/
+#define ICSS_EMAC_SWITCH_ADDR_NOTFOUND                  (ICSS_EMAC_SWITCH_ERROR_MAJOR + 21u)
+/** \brief Invalid VLAN Id.*/
+#define ICSS_EMAC_SWITCH_INVALID_VLANID                 (ICSS_EMAC_SWITCH_ERROR_MAJOR + 22u)
+/** \brief Invalid Port Specified.*/
+#define ICSS_EMAC_SWITCH_INVALID_PORT                   (ICSS_EMAC_SWITCH_ERROR_MAJOR + 23u)
+/** \brief Buffer Descriptor Allocation failure. OOM */
+#define ICSS_EMAC_SWITCH_BD_ALLOC_FAIL                  (ICSS_EMAC_SWITCH_ERROR_MAJOR + 24u)
+/** \brief Supplied packet was invalid */
+#define ICSS_EMAC_ERR_BADPACKET                         (ICSS_EMAC_SWITCH_ERROR_MAJOR + 25u)
+/** \brief Collision queue was full */
+#define ICSS_EMAC_ERR_COLLISION_FAIL                    (ICSS_EMAC_SWITCH_ERROR_MAJOR + 26u)
+/** \brief Fatal Error - \ref ICSS_EMAC_close required */
+#define ICSS_EMAC_ERR_MACFATAL                          (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 26u)
+/** @} */
+
 /** \brief Maximum Valid size (incl header + VLAN TAG..., no CRC) */
 #define ICSS_EMAC_MAXMTU  (1518U)
 /** \brief Minimum Valid size ( DA + SA + Ethertype) */
@@ -661,7 +742,7 @@ typedef struct ICSS_EMAC_RxArgument_s
 
 /**
  * \brief   Tx packet processing information block that needs to passed into
- *          call to ICSS_EMAC_TxPacket
+ *          call to \ref ICSS_EMAC_txPacket
  */
 typedef struct ICSS_EMAC_TxArgument_s
 {
@@ -857,7 +938,16 @@ int32_t ICSS_EMAC_rxPktInfo(ICSS_EMAC_Handle icssEmacHandle,
  *                      when calling ICSS_EMAC_TxPacket which is default Tx
  *                      Packet API
  *
- *  \return     #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
+ *  \return     - If "customTxCallBack" is not defined, code from \ref ICSS_EMAC_ErrorCodes \n
+ *                  - If txArg.portNumber is \ref ICSS_EMAC_PORT_0 and if Tx is
+ *                    triggered for both ports, then lower 16 bits contain the
+ *                    return code for \ref ICSS_EMAC_PORT_1 and upper 16 bits contain
+ *                    the return code for \ref ICSS_EMAC_PORT_2.
+ *                  - If txArg.portNumber is not \ref ICSS_EMAC_PORT_0, then the
+ *                    lower 16 bits contain the return code.
+ *              - If "customTxCallBack" is defined, it returns the same value as
+ *                return value from "customTxCallBack.callBack." \n
+ *
  */
 int32_t ICSS_EMAC_txPacket(const ICSS_EMAC_TxArgument *txArg, void *userArg);
 

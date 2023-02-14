@@ -739,7 +739,12 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
-
+<tr>
+    <th> ICSS-EMAC
+    <th> \ref ICSS_EMAC_txPacket
+    <th> Return value is updated to provide detailed error codes.
+    <th> -
+</tr>
 </table>
 
 ### PRU-IO

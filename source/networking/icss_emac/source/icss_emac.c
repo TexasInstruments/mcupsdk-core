@@ -44,90 +44,6 @@
 /**Minimum supported size of Ethernet frame*/
 #define ETHERNET_FRAME_SIZE_60          (60U)
 
-/**
- *  \name ICSS-EMAC Internal Error Codes
- *  @{
- */
-/** Internal functions return error codes */
-#define ICSS_EMAC_SWITCH_INSTANCE_CODE                        ((uint32_t)0u)
-/**< Switch Instance Code                                              */
-#define ICSS_EMAC_SWITCH_ERROR_BASE                           ((uint32_t)0x200001Fu)
-/**< Switch Error Base                                              */
-#define ICSS_EMAC_SWITCH_ERROR_CODE                           ((ICSS_EMAC_SWITCH_ERROR_BASE | ((ICSS_EMAC_SWITCH_INSTANCE_CODE) << 16)))
-/**< Switch Error Code                                              */
-#define ICSS_EMAC_SWITCH_ERROR_INFO                           (ICSS_EMAC_SWITCH_ERROR_CODE)
-/**< Switch Error/Informational                                              */
-#define ICSS_EMAC_SWITCH_ERROR_WARNING                        (ICSS_EMAC_SWITCH_ERROR_CODE | 0x10000000u)
-/**< Switch Error/Warning                                              */
-#define ICSS_EMAC_SWITCH_ERROR_MINOR                          (ICSS_EMAC_SWITCH_ERROR_CODE | 0x20000000u)
-/**< Switch Error Minor                                              */
-#define ICSS_EMAC_SWITCH_ERROR_MAJOR                          (ICSS_EMAC_SWITCH_ERROR_CODE | 0x30000000u)
-/**< Switch Error Major                                              */
-#define ICSS_EMAC_SWITCH_ERROR_CRITICAL                       (ICSS_EMAC_SWITCH_ERROR_CODE | 0x40000000u)
-/**< Switch Error Critical                                              */
-
-/**  Success code */
-#define ICSS_EMAC_SWITCH_SUCCESS                              (0u)
-
-/**  Error codes */
-#define ICSS_EMAC_ERR_DEV_ALREADY_INSTANTIATED(instID)  (0x30000000u + ICSS_EMAC_SWITCH_ERROR_BASE + ((instId) << 16) )
-/**< Device with same instance ID already created. */
-#define ICSS_EMAC_ERR_DEV_NOT_INSTANTIATED              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 1u)
-/**< Device is not instantiated yet.                                        */
-#define ICSS_EMAC_ERR_SWITCH_INVALID_PARAM                            (ICSS_EMAC_SWITCH_ERROR_MAJOR + 2u)
-/**< Function or calling parameter is invalid                               */
-#define ICSS_EMAC_ERR_CH_INVALID                        (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 3u)
-/**< Channel number invalid                                                 */
-#define ICSS_EMAC_ERR_CH_ALREADY_INIT                   (ICSS_EMAC_SWITCH_ERROR_MAJOR + 4u)
-/**< Channel already initialized and setup                                  */
-#define ICSS_EMAC_ERR_TX_CH_ALREADY_CLOSED              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 5u)
-/**< Tx Channel already  closed. Channel close failed                       */
-#define ICSS_EMAC_ERR_TX_CH_NOT_OPEN                   (ICSS_EMAC_SWITCH_ERROR_MAJOR + 6u)
-/**< Tx Channel not open.                                                   */
-#define ICSS_EMAC_ERR_TX_NO_LINK                       (ICSS_EMAC_SWITCH_ERROR_MAJOR + 7u)
-/**< Tx Link not up.                                                        */
-#define ICSS_EMAC_ERR_TX_OUT_OF_BD                     (ICSS_EMAC_SWITCH_ERROR_MAJOR + 8u)
-/**< Tx ran out of Buffer descriptors to use.                               */
-#define ICSS_EMAC_ERR_RX_CH_INVALID                    (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 9u)
-/**< Rx Channel invalid number.                                             */
-#define ICSS_EMAC_ERR_RX_CH_ALREADY_INIT               (ICSS_EMAC_SWITCH_ERROR_MAJOR + 10u)
-/**< Rx Channel already setup.                                              */
-#define ICSS_EMAC_ERR_RX_CH_ALREADY_CLOSED             (ICSS_EMAC_SWITCH_ERROR_MAJOR + 11u)
-/**< Rx Channel already closed. Channel close failed.                       */
-#define ICSS_EMAC_ERR_RX_CH_NOT_OPEN                   (ICSS_EMAC_SWITCH_ERROR_MAJOR + 12u)
-/**< Rx Channel not open yet.                                               */
-#define ICSS_EMAC_ERR_DEV_ALREADY_CREATED              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 13u)
-/**< EMAC device already created.                                           */
-#define ICSS_EMAC_ERR_DEV_NOT_OPEN                     (ICSS_EMAC_SWITCH_ERROR_MAJOR + 14u)
-/**< Device is not open or not ready                                        */
-#define ICSS_EMAC_ERR_DEV_ALREADY_CLOSED               (ICSS_EMAC_SWITCH_ERROR_MAJOR + 15u)
-/**< Device close failed. Device already closed.                            */
-#define ICSS_EMAC_ERR_DEV_ALREADY_OPEN                 (ICSS_EMAC_SWITCH_ERROR_MAJOR + 16u)
-/**< Device open failed. Device already open.                               */
-#define ICSS_EMAC_ERR_RX_BUFFER_ALLOC_FAIL             (ICSS_EMAC_SWITCH_ERROR_CRITICAL +17u)
-/**< Rx Buffer Descriptor allocation failed.                                */
-#define ICSS_EMAC_SWITCH_INTERNAL_FAILURE                     (ICSS_EMAC_SWITCH_ERROR_MAJOR + 18u)
-/**< EMAC Internal failure.                                                 */
-#define ICSS_EMAC_SWITCH_VLAN_UNAWARE_MODE          (ICSS_EMAC_SWITCH_ERROR_MAJOR + 19u)
-/**< VLAN support not enabled in EMAC                                       */
-#define ICSS_EMAC_SWITCH_ALE_TABLE_FULL             (ICSS_EMAC_SWITCH_ERROR_MAJOR + 20u)
-/**< ALE Table full.                                               */
-#define ICSS_EMAC_SWITCH_ADDR_NOTFOUND              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 21u)
-/**< Multicast/Unicast/OUI Address not found in ALE.                        */
-#define ICSS_EMAC_SWITCH_INVALID_VLANID             (ICSS_EMAC_SWITCH_ERROR_MAJOR + 22u)
-/**< Invalid VLAN Id.                                                       */
-#define ICSS_EMAC_SWITCH_INVALID_PORT               (ICSS_EMAC_SWITCH_ERROR_MAJOR + 23u)
-/**< Invalid Port Specified.                                                */
-#define ICSS_EMAC_SWITCH_BD_ALLOC_FAIL              (ICSS_EMAC_SWITCH_ERROR_MAJOR + 24u)
-/**< Buffer Descriptor Allocation failure. OOM                              */
-#define ICSS_EMAC_ERR_BADPACKET                        (ICSS_EMAC_SWITCH_ERROR_MAJOR + 25u)
-/**< Supplied packet was invalid  */
-#define ICSS_EMAC_ERR_COLLISION_FAIL                   (ICSS_EMAC_SWITCH_ERROR_MAJOR + 26u)
-/**< Collision queue was full                             */
-#define ICSS_EMAC_ERR_MACFATAL                         (ICSS_EMAC_SWITCH_ERROR_CRITICAL + 26u)
-/**< Fatal Error - EMACClose() required                                    */
-/** @} */
-
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -171,8 +87,7 @@ const ICSS_EMAC_Params ICSS_EMAC_defaultParams =
  *                              for transmission
  *  \param[in] lengthOfPacket   Length of the frame in bytes
  *
- *  TODO: Review the following line
- *  \return     #SystemP_SUCCESS in case of success, #SystemP_FAILURE otherwise
+ *  \return     Code from \ref ICSS_EMAC_ErrorCodes
  */
 int32_t ICSS_EMAC_txPacketEnqueue(ICSS_EMAC_Handle  icssEmacHandle,
                                   const uint8_t     *srcAddress,
@@ -1098,7 +1013,8 @@ int32_t ICSS_EMAC_rxPktInfo(ICSS_EMAC_Handle icssEmacHandle,
 
 int32_t ICSS_EMAC_txPacket(const ICSS_EMAC_TxArgument *txArg, void *userArg)
 {
-    int32_t             ret = SystemP_FAILURE;
+    int32_t             ret1 = SystemP_FAILURE;
+    int32_t             ret2 = SystemP_FAILURE;
     const uint8_t       *macId;
     uint8_t             txPort;
     uint8_t             trigTx1;
@@ -1107,15 +1023,14 @@ int32_t ICSS_EMAC_txPacket(const ICSS_EMAC_TxArgument *txArg, void *userArg)
     uint8_t             portNumber= txArg->portNumber;
     uint8_t             queuePriority = txArg->queuePriority;
     uint16_t            lengthOfPacket = txArg->lengthOfPacket;
-    int32_t             ret_val = SystemP_SUCCESS;
 
     if(((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).customTxCallBack).callBack != NULL)
     {
         /* Invoke  custom Tx packet callback function */
-        ret_val = (((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).customTxCallBack).callBack)(
+        ret1 = (((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).customTxCallBack).callBack)(
                         (void *)icssEmacHandle, (void *)txArg,
                         ((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject.customTxCallBack.userArg);
-        return(ret_val);
+        return ret1;
     }
     macId = txArg->srcAddress;
 
@@ -1147,7 +1062,7 @@ int32_t ICSS_EMAC_txPacket(const ICSS_EMAC_TxArgument *txArg, void *userArg)
 
         if(trigTx1 == 1U)
         {
-            ret = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
+            ret1 = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
                                             txArg->srcAddress,
                                             (uint8_t)ICSS_EMAC_PORT_1,
                                             queuePriority,
@@ -1156,47 +1071,23 @@ int32_t ICSS_EMAC_txPacket(const ICSS_EMAC_TxArgument *txArg, void *userArg)
 
         if(trigTx2 == 1U)
         {
-            if (ret == 0)
-            {
-                /*TODO: Review this. "ret =" was not present*/
-                ret = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
-                                                txArg->srcAddress,
-                                                (uint8_t)ICSS_EMAC_PORT_2,
-                                                queuePriority,
-                                                lengthOfPacket);
-            }
-            else
-            {
-                ret = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
-                                                txArg->srcAddress,
-                                                (uint8_t)ICSS_EMAC_PORT_2,
-                                                queuePriority,
-                                                lengthOfPacket);
-            }
+            ret2 = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
+                                            txArg->srcAddress,
+                                            (uint8_t)ICSS_EMAC_PORT_2,
+                                            queuePriority,
+                                            lengthOfPacket);
         }
-
     }
     else
     {
-        ret = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
+        ret1 = ICSS_EMAC_txPacketEnqueue(icssEmacHandle,
                                         txArg->srcAddress,
                                         portNumber,
                                         queuePriority,
                                         lengthOfPacket);
     }
 
-    /*TODO: Merge use of ret and ret_val*/
-    if(ret == 0)
-    {
-        ret_val = SystemP_SUCCESS;
-    }
-    else
-    {
-        ret_val = SystemP_FAILURE;
-    }
-
-
-    return(ret_val);
+    return ((ret2 << 16) | (ret1));
 }
 
 int32_t ICSS_EMAC_txPacketEnqueue(ICSS_EMAC_Handle  icssEmacHandle,
@@ -1643,7 +1534,7 @@ int32_t ICSS_EMAC_txPacketEnqueue(ICSS_EMAC_Handle  icssEmacHandle,
         }
     }
     ICSS_EMAC_updateTxStats(macAddr,(uint32_t)lengthOfPacket, hostStatPtr);
-    return 0;
+    return ICSS_EMAC_SWITCH_SUCCESS;
 }
 
 void ICSS_EMAC_osRxTaskFnc(void *args)
