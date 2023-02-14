@@ -288,7 +288,7 @@ ECAP_config_t* ecap_config_ptr =(ECAP_config_t*) &ECAP_config;
     instance 0 prescaler div_1 all events disabled
     onshot - capture mode - stops at evt 1 (falling)
 */
-void util_ECAP_config_reset(void)
+void util_ecap_config_reset(void)
 {
     ecap_config_ptr->emu_mode = PARAMS_RESET_VAL_EMU_MODE;
     /* to capture mode */
@@ -378,8 +378,7 @@ static void ECAP_setEventPrescalerApiCheck(void *args);
 static void ECAP_selection_of_sync_in_source(void *args);
 static void ECAP_high_resolution_functions_for_ecap(void *args);
 static void ECAP_capture_event_polarity(void *args);
-static void ECAP_setting_the_mode_of_capture(void *args);
-static void ECAP_support_absolute_and_difference_mode_timestamp_capture(void *args);
+static void ECAP_capture_mode_tests(void *args);
 static void ECAP_add_additional_input_trigger_sources(void *args);
 static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args);
 static void ECAP_selection_of_soc_trigger_source(void *args);
@@ -396,7 +395,7 @@ bool util_wait_for_ecap_interrupt(uint16_t instance);
 void util_configure_ecap_input(void);
 void util_activate_input_pulses(void);
 bool util_compare_in_range(int value1, int value2, int delta);
-int uitl_validate_input_events(uint16_t instance);
+int util_validate_input_events(uint16_t instance, bool check_flags);
 
 /* ADC util funcitons */
 void util_clear_adc_interrupts(void);
@@ -617,8 +616,7 @@ void test_main(void *args)
 
     RUN_TEST(ECAP_high_resolution_functions_for_ecap, 3402, NULL);
     RUN_TEST(ECAP_capture_event_polarity, 3403, NULL);
-    RUN_TEST(ECAP_setting_the_mode_of_capture, 3404, NULL);
-    RUN_TEST(ECAP_support_absolute_and_difference_mode_timestamp_capture, 3405, NULL);
+    RUN_TEST(ECAP_capture_mode_tests, 3404, NULL);
     RUN_TEST(ECAP_add_additional_input_trigger_sources, 3406, NULL);
     RUN_TEST(ECAP_support_interrupt_generation_on_either_of_4_events, 3407, NULL);
     RUN_TEST(ECAP_selection_of_soc_trigger_source, 7906, NULL);
@@ -666,22 +664,15 @@ void util_ecap_configure(uint16_t instance)
 
     /* Disable ,clear all capture flags and interrupts */
     /* TODO : Add Signal Monitoring events */
-    ECAP_disableInterrupt(base,
-		(ECAP_ISR_SOURCE_CAPTURE_EVENT_1  |
-		 ECAP_ISR_SOURCE_CAPTURE_EVENT_2  |
-		 ECAP_ISR_SOURCE_CAPTURE_EVENT_3  |
-		 ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |
-		 ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
-		 ECAP_ISR_SOURCE_COUNTER_PERIOD   |
-		 ECAP_ISR_SOURCE_COUNTER_COMPARE));
-	ECAP_clearInterrupt(base,
-	  	(ECAP_ISR_SOURCE_CAPTURE_EVENT_1 |
-		ECAP_ISR_SOURCE_CAPTURE_EVENT_2  |
-		ECAP_ISR_SOURCE_CAPTURE_EVENT_3  |
-		ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |
-		ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
-		ECAP_ISR_SOURCE_COUNTER_PERIOD   |
-		ECAP_ISR_SOURCE_COUNTER_COMPARE));
+    if(ecap_config_ptr->int_en)
+    {
+        ECAP_enableInterrupt(base, ecap_config_ptr->int_source);
+    	ECAP_clearInterrupt(base, ecap_config_ptr->int_source);
+    }else
+    {
+        ECAP_disableInterrupt(base, ECAP_ISR_SOURCE_ALL);
+        ECAP_clearInterrupt(base, ECAP_ISR_SOURCE_ALL);
+    }
 
     if(ecap_config_ptr->ecap_mode_apwm)
     {
@@ -764,7 +755,7 @@ void util_start_capture_timestamp(uint16_t instance)
 void util_ecap_deconfigure_and_reset(uint16_t instance)
 {
     SOC_generateEcapReset(instance);
-    util_ECAP_config_reset();
+    util_ecap_config_reset();
     util_ecap_configure(instance);
     return;
 }
@@ -930,7 +921,7 @@ void util_gpio_toggle(uint16_t times, uint32_t uSec_delay)
     if(enableLog)
     DebugP_log("toggling GPIO %d\r\n", gpio_pin);
     /* if uSec_delay is <=0 then only toggle without any delay*/
-    if(uSec_delay > 0)
+    if(uSec_delay == 0)
     {
         for(int iter = 0; iter < times; iter++)
         {
@@ -970,13 +961,11 @@ static void ECAP_capture_event_polarity(void *args)
 {
     UNITY_TEST_IGNORE("","TODO");
 }
-static void ECAP_setting_the_mode_of_capture(void *args)
+static void ECAP_capture_mode_tests(void *args)
 {
-    UNITY_TEST_IGNORE("","TODO");
-}
-static void ECAP_support_absolute_and_difference_mode_timestamp_capture(void *args)
-{
-    UNITY_TEST_IGNORE("","TODO");
+    if(enableLog)
+    DebugP_log("Test : Capture Mode tests. Tests the mode of captures and counter reset on each capture.\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(5), 0);
 }
 static void ECAP_add_additional_input_trigger_sources(void *args)
 {
@@ -999,7 +988,6 @@ static void ECAP_selection_of_soc_trigger_source(void *args)
 static void ECAP_selection_of_dma_trigger_source(void *args)
 {
     if(enableLog)
-    // UNITY_TEST_IGNORE("","TODO");
     DebugP_log("Test : DMA event generation on various events\r\n");
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(3), 0);
 }
@@ -1091,7 +1079,6 @@ int32_t AM263x_ECAP_BTR_001(uint16_t instance)
 int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
 {
     int soc_trigger_check = 0;
-    // int dma_trigger_check = 1;
 
     int errors = 0;
     bool wait_success = false;
@@ -1438,7 +1425,7 @@ void util_configure_ecap_input(void)
         /* input source is xbar instance */
         /* set the input event count to be 4 and timestamps to be of 1 uSec */
         util_configure_gpio(OUTPUT);
-        // util_configure_gpio(INPUT);
+
         uint8_t inputxbar_instance = (uint8_t) (input - ECAP_INPUT_INPUTXBAR0);
 
         SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, inputxbar_instance, 0, gpio_pin, 0);
@@ -1483,7 +1470,7 @@ bool util_compare_in_range(int value1, int value2, int delta)
     return true;
 }
 
-int uitl_validate_input_events(uint16_t instance)
+int util_validate_input_events(uint16_t instance, bool check_flags)
 {
     int errors = 0;
     uint32_t ecap_base = ecap_base_addr[instance];
@@ -1494,7 +1481,7 @@ int uitl_validate_input_events(uint16_t instance)
     /* for expected events are each bits. */
     uint16_t expected_flags = (1<<((ecap_config_ptr->wrap_capture)+1))-1;
 
-    if((flags>>1)!= (expected_flags))
+    if(check_flags && ((flags>>1)!= (expected_flags)))
     {
         errors++;
         DebugP_log("ERROR: expected number of events did not occur.\r\n");
@@ -1567,8 +1554,142 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
         /* activate input pulses */
         util_activate_input_pulses();
         /* check the ecap cap_registers, event flags to verify the input to expected output */
-        errors += uitl_validate_input_events(instance);
-        // break;
+        errors += util_validate_input_events(instance, true);
+    }
+
+    if(errors > 0)
+    {
+        /* fail criteria*/
+        return 1;
+    }
+    /* Pass criteria */
+    return 0;
+}
+
+
+static HwiP_Object  gEcapHwiObject1;
+volatile uint8_t      ecap_isr_count;
+volatile uint32_t gbase = 0;
+void ECAP_CAPTURE_MODE_ISR(void* args)
+{
+    ecap_isr_count++;
+    ECAP_clearInterrupt(gbase, ECAP_ISR_SOURCE_ALL);
+    ECAP_clearGlobalInterrupt(gbase);
+}
+
+/* tests Continuous or oneshot mode of the captures in ECAP and counter reset events */
+int32_t AM263x_ECAP_BTR_005(uint16_t instance)
+{
+    if(enableLog)
+    DebugP_log("------------- instance : %d-------------\r\n", instance);
+
+    int errors = 0;
+    ECAP_CaptureMode capture_mode;
+
+    util_configure_gpio(OUTPUT);
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, gpio_pin, 0);
+
+    uint32_t reset_events[4][4]={
+        {true, false, false, true},
+        {true, true,  false, true},
+        {true, false, true,  true},
+        {true, true,  true,  true},
+    };
+
+    /* this array might need updation based on the GPIO toggling speeds */
+    /* Observed data :
+        a gpio rising edge to next rising edge (toggle period)
+        is seen to be around 210 (in release build and 440 in debug build)
+        ecap timestamp counts on prescaled value of 1
+    */
+
+    uint32_t gpio_toggle = 210;
+#ifdef _DEBUG_
+    gpio_toggle = 440;     // for debug mode
+#endif
+    uint32_t timestamps_array[4][4]={
+        {0, 1*gpio_toggle, 2*gpio_toggle, 3*gpio_toggle},
+        {0, 1*gpio_toggle, 1*gpio_toggle, 2*gpio_toggle},
+        {0, 1*gpio_toggle, 2*gpio_toggle, 1*gpio_toggle},
+        {0, 1*gpio_toggle, 1*gpio_toggle, 1*gpio_toggle},
+    };
+
+    gbase = ecap_base_addr[instance];
+    DebugP_log("%x is the base\r\n",gbase);
+    volatile uint32_t intxbar_input = 1<<(instance);
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 0, 0, 0, 0, 0, 0, ( intxbar_input ), 0);
+
+    for(capture_mode =  ECAP_CONTINUOUS_CAPTURE_MODE; capture_mode <= ECAP_ONE_SHOT_CAPTURE_MODE; capture_mode++)
+    {
+        for(int iter=0; iter<4; iter++)
+        {
+            ECAP_clearGlobalInterrupt(gbase);
+            ecap_isr_count = 0;
+            /* registering the ISR */
+            int32_t status;
+            HwiP_Params     hwiPrms;
+            HwiP_Params_init(&hwiPrms);
+            hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_0;
+            hwiPrms.callback    = &ECAP_CAPTURE_MODE_ISR;
+            hwiPrms.isPulse     = 0;
+            status              = HwiP_construct(&gEcapHwiObject1, &hwiPrms);
+            DebugP_assert(status == SystemP_SUCCESS);
+            /*
+            set the reset events to be (1,4) (1,2,4) (1,3,4) (1,2,3,4)
+                generate 8 gpio toggles with no delay in between
+                for reset on (1,4) -> the timestamps will be
+
+            */
+            util_input_params_init();
+            util_ecap_config_reset();
+
+            ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;
+            ecap_config_ptr->capture_mode_continuous = capture_mode;
+            ecap_config_ptr->rearm = true;
+            ecap_config_ptr->int_en = true;
+            ecap_config_ptr->int_source = ( ECAP_ISR_SOURCE_CAPTURE_EVENT_1 | ECAP_ISR_SOURCE_CAPTURE_EVENT_2 | ECAP_ISR_SOURCE_CAPTURE_EVENT_3 | ECAP_ISR_SOURCE_CAPTURE_EVENT_4 );
+
+            input_params->check_timestamps[iter] = true;
+            input_params->check_timestamps[0] = false;
+            for(int element = 0; element <= 4; element++)
+            {
+                ecap_config_ptr->counter_reset_capture[element] = reset_events[iter][element];
+                input_params->timestamps[element] = timestamps_array[iter][element];
+            }
+
+            util_ecap_configure(instance);
+            util_start_capture_timestamp(instance);
+
+            /*
+            set ISR for 4 events and toggle GPIO 8 times.
+            the ISR shall read 8 for continuous mode and only 4 for oneshot mode.
+            ISR shall stop the ecap counter at 8th ocurrance.
+            this confirms the continuous/oneshot mode.
+            */
+
+            int num_times = 8;
+            util_gpio_toggle(num_times, 0);
+            HwiP_destruct(&gEcapHwiObject1);
+
+            if(capture_mode == ECAP_CONTINUOUS_CAPTURE_MODE)
+            {
+                if(ecap_isr_count != num_times)
+                {
+                    errors++;
+                    DebugP_log("ISR count didn't match. Expected %d recieved %d\r\n", num_times, ecap_isr_count);
+                }
+            }
+            else
+            {
+                if(ecap_isr_count != 4)
+                {
+                    errors++;
+                    DebugP_log("ISR count didn't match. Expected 4 recieved %d\r\n", ecap_isr_count);
+                }
+            }
+            errors += util_validate_input_events(instance, false);
+        }
+
     }
 
     if(errors > 0)
@@ -1626,6 +1747,11 @@ int32_t test_ecap_cases(uint8_t in)
         case 4:
         {
             failcount += AM263x_ECAP_BTR_004(instance);
+            break;
+        }
+        case 5:
+        {
+            failcount += AM263x_ECAP_BTR_005(instance);
             break;
         }
         // case n:
