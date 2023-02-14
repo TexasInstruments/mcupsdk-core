@@ -1196,7 +1196,7 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
                     {
                         /* Calculate error offset */
                         errAddrOffset =  ((uintptr_t)pECCErrorConfig->pErrMem - memConfig.memStartAddr)
-                                        / ((memConfig.stride)*4);
+                                        / ((memConfig.stride)*4u);
                     }
                     else
                     {
@@ -1578,25 +1578,22 @@ int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
 {
 	int32_t retValue= SDL_PASS;
 	
-	if(retValue == SDL_PASS)
+	/* Set the MSS TCM parity error force bits for parity error injection */ 
+	switch(memSubType)
 	{
-		/* Set the MSS TCM parity error force bits for parity error injection */ 
-		switch(memSubType)
-		{
-			case SDL_TCM_PARITY_ATCM0:
-			case SDL_TCM_PARITY_ATCM1:
-			case SDL_TCM_PARITY_B0TCM0:
-			case SDL_TCM_PARITY_B0TCM1:
-			case SDL_TCM_PARITY_B1TCM0:
-			case SDL_TCM_PARITY_B1TCM1:
-				SDL_REG32_WR(SDL_TCM_PARITY_ERRFRC,bitValue);
-				retValue = SDL_PASS;
-				break;
-			default :
-				retValue = SDL_EFAIL;
-				break;
-		}
-	}	
+		case SDL_TCM_PARITY_ATCM0:
+		case SDL_TCM_PARITY_ATCM1:
+		case SDL_TCM_PARITY_B0TCM0:
+		case SDL_TCM_PARITY_B0TCM1:
+		case SDL_TCM_PARITY_B1TCM0:
+		case SDL_TCM_PARITY_B1TCM1:
+			SDL_REG32_WR(SDL_TCM_PARITY_ERRFRC,bitValue);
+			retValue = SDL_PASS;
+			break;
+		default :
+			retValue = SDL_EFAIL;
+			break;
+	}		
 	
 	return retValue;
 }
@@ -1606,37 +1603,26 @@ int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
 							  uint32_t paramregvalue,
 							  uint32_t regval)
 {
-	int32_t retValue= SDL_PASS;
-	int32_t result=0u;
+	int32_t result=0;
 	
-	if(retValue == SDL_PASS)
+	switch(eccMemType)
 	{
-		switch(eccMemType)
-		{
-			/* EDMA Parity */
-			/* MSS EDMA Parity */
-			case SDL_TPCC0A:
-			case SDL_TPCC0B:
-			/* DSS EDMA Parity */
-			case SDL_DSS_TPCCA:
-			case SDL_DSS_TPCCB:
-			case SDL_DSS_TPCCC:
-				result = SDL_ECC_enableParityerr(eccMemType, bitValue, paramregvalue, regval);
-				retValue= SDL_PASS;
-				break;
-			default :
-				retValue= SDL_EFAIL;
-				break;
-		}
+		/* EDMA Parity */
+		/* MSS EDMA Parity */
+		case SDL_TPCC0A:
+		case SDL_TPCC0B:
+		/* DSS EDMA Parity */
+		case SDL_DSS_TPCCA:
+		case SDL_DSS_TPCCB:
+		case SDL_DSS_TPCCC:
+			result = SDL_ECC_enableParityerr(eccMemType, bitValue, paramregvalue, regval);
+			break;
+		default :
+			result=0;
+			break;
 	}
 	
-	if(retValue == SDL_PASS)
-	{
-		return 	result;
-	}
-	else{
-		return 	retValue;
-	}
+	return 	result;
 }	
 /** ============================================================================
  *
@@ -1653,9 +1639,8 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 									 uint32_t paramregs,
 									 uint32_t paramval)
 {
-	int32_t retVal = SDL_PASS;
-	int32_t result=0u;
-	int32_t disabletestmode = 0x01u;
+	uint32_t result=0u;
+	uint32_t disabletestmode = 0x01u;
 	
 	switch(eccMemType)
 	{
@@ -1667,7 +1652,6 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 			result = SDL_REG32_RD(paramregs);
 			/* Disable test mode */
 			SDL_REG32_WR(TPCC_PARITY_CTRL,(setmask & disabletestmode));
-			retVal = SDL_PASS;
 			break;
 		case SDL_TPCC0B:
 			/* Enable test mode */
@@ -1677,7 +1661,6 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 			result = SDL_REG32_RD(paramregs);
 			/* Disable test mode */
 			SDL_REG32_WR(TPCC_PARITY_CTRL,(setmask >> disabletestmode));
-			retVal = SDL_PASS;
 			break;
 		case SDL_DSS_TPCCA:
 			/* Enable test mode */
@@ -1687,7 +1670,6 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 			result = SDL_REG32_RD(paramregs);
 			/* Disable test mode */
 			SDL_REG32_WR(DSS_TPCCA_PARITY_CTRL,(setmask & disabletestmode));
-			retVal = SDL_PASS;
 			break;
 		case SDL_DSS_TPCCB:
 			/* Enable test mode */
@@ -1697,7 +1679,6 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 			result = SDL_REG32_RD(paramregs);
 			/* Disable test mode */
 			SDL_REG32_WR(DSS_TPCCB_PARITY_CTRL,(setmask & disabletestmode));
-			retVal = SDL_PASS;
 			break;
 		case SDL_DSS_TPCCC:
 			/* Enable test mode */
@@ -1707,18 +1688,11 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 			result = SDL_REG32_RD(paramregs);
 			/* Disable test mode */
 			SDL_REG32_WR(DSS_TPCCC_PARITY_CTRL,(setmask & disabletestmode));
-			retVal = SDL_PASS;
 			break;
 		default:
 			break;
 	}
-	if(retVal == SDL_PASS)
-	{
-		return result;
-	}
-	else
-	{
-		return retVal;
-	}
+	
+	return ((int32_t)result);
 	
 }

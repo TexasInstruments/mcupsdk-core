@@ -1195,7 +1195,7 @@ static int32_t ECC_errNegativeTest(void)
     }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_tpccParity(SDL_TPCC0A, 0x11u, (SDL_MSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        if (SDL_ECC_tpccParity(SDL_TPCC0A, 0x11u, (SDL_MSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1206,7 +1206,7 @@ static int32_t ECC_errNegativeTest(void)
     }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_tpccParity(SDL_TPCC0B, 0x1100u, (SDL_MSS_PARAM_REG_B_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        if (SDL_ECC_tpccParity(SDL_TPCC0B, 0x1100u, (SDL_MSS_PARAM_REG_B_SET0 + 0x20U), 0x7u) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1217,7 +1217,7 @@ static int32_t ECC_errNegativeTest(void)
     }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_tpccParity(SDL_DSS_TPCCA, 0x3u, (SDL_DSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        if (SDL_ECC_tpccParity(SDL_DSS_TPCCA, 0x3u, (SDL_DSS_PARAM_REG_A_SET0 + 0x20U), 0x7u) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1228,7 +1228,7 @@ static int32_t ECC_errNegativeTest(void)
     }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_tpccParity(SDL_DSS_TPCCB, 0x3u, (SDL_DSS_PARAM_REG_B_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        if (SDL_ECC_tpccParity(SDL_DSS_TPCCB, 0x3u, (SDL_DSS_PARAM_REG_B_SET0 + 0x20U), 0x7u) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1239,7 +1239,7 @@ static int32_t ECC_errNegativeTest(void)
     }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_tpccParity(SDL_DSS_TPCCC, 0x3u, (SDL_DSS_PARAM_REG_C_SET0 + 0x20U), 0x7u) != SDL_PASS)
+        if (SDL_ECC_tpccParity(SDL_DSS_TPCCC, 0x3u, (SDL_DSS_PARAM_REG_C_SET0 + 0x20U), 0x7u) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
