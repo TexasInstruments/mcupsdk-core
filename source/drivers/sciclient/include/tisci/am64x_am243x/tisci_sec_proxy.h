@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2017-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,7 +49,7 @@
  *
  * Secure Proxy indices for AM64X device
  *
- * Data version: 221102_180519
+ * Data version: 230209_212853
  *
  */
 #ifndef AM64X_TISCI_SEC_PROXY_H
@@ -256,6 +256,34 @@ extern "C"
 #define TISCI_SEC_PROXY_A53_4_WRITE_LOW_PRIORITY_THREAD_ID (27U)
 /** Num messages macro for A53_4 low_priority */
 #define TISCI_SEC_PROXY_A53_4_WRITE_LOW_PRIORITY_NUM_MESSAGES (5U)
+
+/*
+ * Secure Proxy configurations for ICSSG_0 host
+ */
+
+/** Thread ID macro for ICSSG_0 response */
+#define TISCI_SEC_PROXY_ICSSG_0_READ_RESPONSE_THREAD_ID (28U)
+/** Num messages macro for ICSSG_0 response */
+#define TISCI_SEC_PROXY_ICSSG_0_READ_RESPONSE_NUM_MESSAGES (2U)
+
+/** Thread ID macro for ICSSG_0 low_priority */
+#define TISCI_SEC_PROXY_ICSSG_0_WRITE_LOW_PRIORITY_THREAD_ID (29U)
+/** Num messages macro for ICSSG_0 low_priority */
+#define TISCI_SEC_PROXY_ICSSG_0_WRITE_LOW_PRIORITY_NUM_MESSAGES (1U)
+
+/*
+ * Secure Proxy configurations for ICSSG_1 host
+ */
+
+/** Thread ID macro for ICSSG_1 response */
+#define TISCI_SEC_PROXY_ICSSG_1_READ_RESPONSE_THREAD_ID (30U)
+/** Num messages macro for ICSSG_1 response */
+#define TISCI_SEC_PROXY_ICSSG_1_READ_RESPONSE_NUM_MESSAGES (2U)
+
+/** Thread ID macro for ICSSG_1 low_priority */
+#define TISCI_SEC_PROXY_ICSSG_1_WRITE_LOW_PRIORITY_THREAD_ID (31U)
+/** Num messages macro for ICSSG_1 low_priority */
+#define TISCI_SEC_PROXY_ICSSG_1_WRITE_LOW_PRIORITY_NUM_MESSAGES (1U)
 
 
 

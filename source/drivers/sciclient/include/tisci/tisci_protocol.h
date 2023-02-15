@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2017-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -97,8 +97,8 @@ struct tisci_header {
     uint8_t    host;
     uint8_t    seq;
     uint32_t    flags;
-    /* Windows Visual Studio build has issues with  payload[], changing it only for visual studio build */ 
-#ifdef _MSC_VER 
+    /* Both GCC-11 and Windows Visual Studio build has issues with payload[], changing it for host emulation build */
+#ifdef HOST_EMULATION
     uint8_t    payload; 
 #else 
     uint8_t    payload[]; 
