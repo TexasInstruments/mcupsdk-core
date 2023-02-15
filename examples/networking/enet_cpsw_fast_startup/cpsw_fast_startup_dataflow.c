@@ -31,16 +31,16 @@
  */
 
 /*!
- * \file  cpsw_early_eth_dataflow.c
+ * \file  cpsw_fast_startup_dataflow.c
  *
- * \brief This file contains the implementation of the APIs for data flow for Early ethernet example
+ * \brief This file contains the implementation of the APIs for data flow for Enet Fast Startup example
  */
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include "cpsw_early_eth_common.h"
-#include "cpsw_early_eth_dataflow.h"
+#include "cpsw_fast_startup_common.h"
+#include "cpsw_fast_startup_dataflow.h"
 #include "enet_profiler.h"
 #include "ti_enet_config.h"
 
@@ -81,7 +81,6 @@ int32_t EnetApp_openDma(void)
                            &txInArgs,
                            &txChInfo);
 
-    gEnetApp.txChNum = txChInfo.txChNum;
     gEnetApp.hTxCh   = txChInfo.hTxCh;
 
     /* Allocate TX packets and keep them locally enqueued */
@@ -109,7 +108,6 @@ int32_t EnetApp_openDma(void)
         EnetApp_getRxDmaHandle(ENET_DMA_RX_CH0,
                                &rxInArgs,
                                &rxChInfo);
-        gEnetApp.rxChNum = rxChInfo.rxChNum;
         gEnetApp.hRxCh  = rxChInfo.hRxCh;
         EnetAppUtils_assert(rxChInfo.macAddressValid == true);
         EnetUtils_copyMacAddr(gEnetApp.macAddr, rxChInfo.macAddr);

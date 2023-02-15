@@ -4,10 +4,10 @@ let device = "am263x";
 
 const files = {
     common: [
-            "cpsw_early_eth_cfg.c",
-            "cpsw_early_eth_main.c",
+            "cpsw_fast_startup_cfg.c",
+            "cpsw_fast_startup_main.c",
             "main.c",
-            "cpsw_early_eth_dataflow.c",
+            "cpsw_fast_startup_dataflow.c",
             "enet_profiler.c",
     ],
 };
@@ -105,7 +105,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_EARLY_ETHERNET";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP";
 
 const templates_nortos_r5f =
 [
@@ -128,7 +128,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "enet_cpsw_early_eth";
+    property.name = "enet_cpsw_fast_startup";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -176,6 +176,3 @@ module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
 };
-
-
-

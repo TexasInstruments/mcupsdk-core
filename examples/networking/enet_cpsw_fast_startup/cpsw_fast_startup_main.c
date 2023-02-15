@@ -31,17 +31,17 @@
  */
 
 /*!
- * \file  cpsw_early_eth_main.c
+ * \file  cpsw_fast_startup_main.c
  *
- * \brief This file contains the implementation of the Enet CPSW Early Ethernet example
+ * \brief This file contains the implementation of the Enet CPSW Fast Startup example
  */
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include "cpsw_early_eth_common.h"
-#include "cpsw_early_eth_cfg.h"
-#include "cpsw_early_eth_dataflow.h"
+#include "cpsw_fast_startup_common.h"
+#include "cpsw_fast_startup_cfg.h"
+#include "cpsw_fast_startup_dataflow.h"
 #include "enet_profiler.h"
 
 /* ========================================================================== */
@@ -86,7 +86,7 @@ void EnetApp_main(void *args)
     Board_driversOpen();
 
     EnetAppUtils_print("==========================\r\n");
-    EnetAppUtils_print("   CPSW Early Ethernet    \r\n");
+    EnetAppUtils_print("    CPSW Fast Startup     \r\n");
     EnetAppUtils_print("==========================\r\n");
 
     /* Initialize test config */
@@ -209,7 +209,7 @@ static void EnetApp_handleEvent(const uint32_t eventMask)
 static void EnetApp_terminateApp()
 {
     DebugP_log("=====================================================\r\n");
-    DebugP_log("     Boot Time Profiling logs in Microseconds(us)    \r\n");
+    DebugP_log("   Fast Startup Profiling logs in Microseconds(us)    \r\n");
     DebugP_log("=====================================================\r\n");
     
     DebugP_log("Application start time: %d \r\n", gProfilerArr[0U][0U]); 

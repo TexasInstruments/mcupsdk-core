@@ -1,19 +1,15 @@
-# Enet L2 CPSW Early Ethernet Example {#EXAMPLES_ENET_CPSW_EARLY_ETHERNET}
+# Enet Layer 2 CPSW Fast Startup Example {#EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP}
 
 [TOC]
 
 # Introduction
 
-The Enet CPSW early ethernet example is dedicated to demonstrate the early ethernet functionality of CPSW3G showing Strapped and forced mode configuration of PHY.
+The Enet CPSW fast startup example is dedicated to demonstrate the fast link up functionality of CPSW3G showing Strapped and forced mode configuration of PHY.
 
-
-\cond SOC_AM263X
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
   - It uses ethernet driver underneath with LwIP TCP/IP networking stack
-
-\endcond
 
 This example does:
     - Demonstrates the strapped PHY functionality(Auto-Negotiation disabled).
@@ -29,18 +25,30 @@ This example does:
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos
+ CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/enet_cpsw_early_ethernet
+ Example folder | examples/networking/enet_cpsw_fast_startup
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/networking/enet_cpsw_fast_startup
 
 \endcond
 
 # Modifications needed before running the example:
 
+\cond SOC_AM263X
 ## EVM Board modification
 
-- On AM263x-cc(E1), we need to disable Auto-negotiation in the PHY  and force it to strapped mode with external starp resistors connected on PHY.
+- On AM263x-cc(PROC110E1), we need to disable Auto-negotiation in the PHY  and force it to strapped mode with external starp resistors connected on PHY.
 - To do that, modify below registers mentioned in below section for RGMII1 and RGMII2
 - For other variants of AM263x, refer the schematics of board to modify the strap resistors for that specific EVM.
 
@@ -58,9 +66,43 @@ This example does:
 - To do so, remove the ENABLE_ENET_LOG define from mcu_plus_sdk/source/networking/enet/makefile.cpsw.am263x.r5f.ti-arm-clang makefile.
 - Recompile the enet-cpsw library.
 
+\endcond
+
+\cond SOC_AM243X
+## EVM Board modification
+
+- On AM243x-lp(PROC109E3), we need to disable Auto-negotiation in the PHY  and force it to strapped mode with external starp resistors connected on PHY.
+- To do that, modify below registers mentioned in below section for RGMII1 and RGMII2
+- For other variants of AM243x, refer the schematics of board to modify the strap resistors for that specific EVM.
+
+### Modifications for CPSW RGMII1:
+    
+- Remove Strapping resistors from R138, R137, R139 and add the same to R265, R266, R264. All resistors are of same value.
+
+### Modifications for CPSW RGMII2:
+    
+- Remove Strapping resistors from  R75, R74, R76 and add the same to R226, R227, R225. All resistors are of same value.
+
+## SW modifications
+
+- We need to disable Enet Logs and recompiler the enet-cpsw library.
+- To do so, remove the ENABLE_ENET_LOG define from mcu_plus_sdk/source/networking/enet/makefile.cpsw.am243x.r5f.ti-arm-clang makefile.
+- Recompile the enet-cpsw library.
+
+\endcond
+
+# Media Dependent Interface(MDI configuration)
+
+- With forced strapped mode, we don't have Auto-MDIX option in Phy, it can only be configured in manual MDI or MDIX mode, here in current configuration, we are setting both ports to manual MDIX mode.
+- Ports that are connected by MDI-to-MDI and MDIX-to-MDIX connections must use crossover twisted-pair cabling.
+- If straight cable is used, we need to put a switch in between the two ports.
+- Refer the crossover cable wiring shceme given below:
+
+  \imageStyle{crossover_cable.png,width:30%}
+  \image html crossover_cable.png Crossover cable wiring shceme
 # Tips to minimize link up time for Ethernet applications
 
-- Auto-Negotiation on Am263x-cc phy takes around 2-3 seconds, so to achieve quick link up, we cannot operate in Auto-Neg mode and have to use strapped and forced modes.
+- Auto-Negotiation on @VAR_SOC_NAME phy takes around 2-3 seconds, so to achieve quick link up, we cannot operate in Auto-Neg mode and have to use strapped and forced modes.
 - Forced mode needs to be enabled on both sides of nodes.
 - Typically Enet examples wait for 1 second after checking for link status.This is mainly considering auto-negotiation timing, but if forced and strapped mode, this delay can be significantly low, around 3ms(tested).
 - HW strapped of PHY is needed to disble auto-negotiation when the phy is powered on.
@@ -90,7 +132,7 @@ This example does:
 \code
 
 =====================================================
-     Boot Time Profiling logs in Microseconds(us)    
+     Fast Srtartup Profiling logs in Microseconds(us)    
 =====================================================
 Application start time: 14 
 Enet-lld initialisation done time : 3024

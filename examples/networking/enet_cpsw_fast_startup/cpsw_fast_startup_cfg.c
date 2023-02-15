@@ -31,17 +31,17 @@
  */
 
 /*!
- * \file  cpsw_early_eth_cfg.c
+ * \file  cpsw_fast_startup_cfg.c
  *
- * \brief This file contains the implementation of the APIs for peripheral configuration for Early ethernet example
+ * \brief This file contains the implementation of the APIs for peripheral configuration for Enet Fast Startup example
  */
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include "cpsw_early_eth_common.h"
-#include "cpsw_early_eth_cfg.h"
-#include "cpsw_early_eth_dataflow.h"
+#include "cpsw_fast_startup_common.h"
+#include "cpsw_fast_startup_cfg.h"
+#include "cpsw_fast_startup_dataflow.h"
 #include "ti_enet_open_close.h"
 #include "ti_enet_config.h"
 #include "enet_profiler.h"

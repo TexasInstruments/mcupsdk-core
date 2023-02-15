@@ -30,8 +30,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _CPSW_EARLY_ETH_COMMON_H_
-#define _CPSW_EARLY_ETH_COMMON_H_
+#ifndef _CPSW_FAST_STARTUP_COMMON_H_
+#define _CPSW_FAST_STARTUP_COMMON_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -131,14 +131,8 @@ typedef struct EnetApp_Obj_s
      * host port's MAC addres in Switch */
     uint8_t macAddr[ENET_MAC_ADDR_LEN];
 
-    /* TX channel number */
-    uint32_t txChNum;
-
     /* TX channel handle */
     EnetDma_TxChHandle hTxCh;
-
-    /* Regular traffic RX channel number */
-    uint32_t rxChNum;
 
     /* RX channel handle for regular traffic */
     EnetDma_RxChHandle hRxCh;
@@ -175,4 +169,4 @@ EnetApp_Obj gEnetApp;
 }
 #endif
 
-#endif /* _CPSW_EARLY_ETH_COMMON_H_ */
+#endif /* _CPSW_FAST_STARTUP_COMMON_H_ */

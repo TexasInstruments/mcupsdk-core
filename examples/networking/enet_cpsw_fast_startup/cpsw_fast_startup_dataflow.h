@@ -30,14 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _CPSW_EARLY_ETH_DATAFLOW_H_
-#define _CPSW_EARLY_ETH_DATAFLOW_H_
+#ifndef _CPSW_FAST_STARTUP_DATAFLOW_H_
+#define _CPSW_FAST_STARTUP_DATAFLOW_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "cpsw_early_eth_common.h"
+#include "cpsw_fast_startup_common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -83,4 +83,4 @@ void EnetApp_handleRxPkt(void);
 }
 #endif
 
-#endif /* _CPSW_EARLY_ETH_DATAFLOW_H_ */
+#endif /* _CPSW_FAST_STARTUP_DATAFLOW_H_ */

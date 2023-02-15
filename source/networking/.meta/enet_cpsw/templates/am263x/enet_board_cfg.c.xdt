@@ -185,7 +185,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_am263xEthPort[] =
         .phyCfg   =
         {
             .phyAddr         = `instance.phyAddr1`,
-            .isStrapped      = false,
+            .isStrapped      = `instance.isStrappedPhy1`,
             .skipExtendedCfg = false,
             .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
             .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
@@ -200,7 +200,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_am263xEthPort[] =
         .phyCfg   =
         {
             .phyAddr         = `instance.phyAddr2`,
-            .isStrapped      = false,
+            .isStrapped      = `instance.isStrappedPhy2`,
             .skipExtendedCfg = false,
             .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
             .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),

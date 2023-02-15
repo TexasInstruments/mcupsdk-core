@@ -169,7 +169,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_`device.replace('-','_')`_EthPort[]
         .phyCfg   =
         {
             .phyAddr         = `instance.phyAddr1`,
-            .isStrapped      = false,
+            .isStrapped      = `instance.isStrappedPhy1`,
             .skipExtendedCfg = false,
             .extendedCfg     = &`getEnetPhyInfo('ENET_MAC_PORT_1')`,
             .extendedCfgSize = sizeof(`getEnetPhyInfo('ENET_MAC_PORT_1')`),
@@ -184,7 +184,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_`device.replace('-','_')`_EthPort[]
         .phyCfg   =
         {
             .phyAddr         = `instance.phyAddr2`,
-            .isStrapped      = false,
+            .isStrapped      = `instance.isStrappedPhy2`,
             .skipExtendedCfg = false,
             .extendedCfg     = &`getEnetPhyInfo('ENET_MAC_PORT_2')`,
             .extendedCfgSize = sizeof(`getEnetPhyInfo('ENET_MAC_PORT_2')`),
@@ -209,7 +209,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_`device.replace('-','_')`_EthPort[]
         .phyCfg   =
         {
             .phyAddr         = `instance.phyAddr1`,
-            .isStrapped      = false,
+            .isStrapped      = `instance.isStrappedPhy1`,
             .skipExtendedCfg = false,
             .extendedCfg     = &`getEnetPhyInfo('ENET_MAC_PORT_1')`,
             .extendedCfgSize = sizeof(`getEnetPhyInfo('ENET_MAC_PORT_1')`),
@@ -224,7 +224,7 @@ static const EnetBoard_PortCfg gEnetCpbBoard_`device.replace('-','_')`_EthPort[]
         .phyCfg   =
         {
             .phyAddr         = `instance.phyAddr2`,
-            .isStrapped      = false,
+            .isStrapped      = `instance.isStrappedPhy2`,
             .skipExtendedCfg = false,
             .extendedCfg     = &`getEnetPhyInfo('ENET_MAC_PORT_2')`,
             .extendedCfgSize = sizeof(`getEnetPhyInfo('ENET_MAC_PORT_2')`),

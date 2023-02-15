@@ -135,7 +135,7 @@ const example_file_list = [
     "examples/networking/lwip/enet_cpsw_tcpserver/.project/project.js",
     "examples/networking/lwip/enet_cpsw_rawhttpserver/.project/project.js",
     "examples/networking/lwip/enet_cpsw_socket/.project/project.js",
-    "examples/networking/enet_cpsw_early_ethernet/.project/project.js",
+    "examples/networking/enet_cpsw_fast_startup/.project/project.js",
     "examples/networking/enet_layer2_cpsw/.project/project.js",
     "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
     "examples/networking/enet_layer2_multi_channel/.project/project.js",

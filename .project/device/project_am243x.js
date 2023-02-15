@@ -226,6 +226,7 @@ const example_file_list = [
     "examples/networking/enet_layer2_multi_channel/.project/project.js",
     "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
     "examples/networking/enet_cpsw_est/.project/project.js",
+    "examples/networking/enet_cpsw_fast_startup/.project/project.js",
     "examples/pru_io/adc/ads85x8/.project/project.js",
     "examples/pru_io/adc/ads85x8/firmware/.project/project.js",
     "examples/pru_io/adc/ads127/.project/project.js",
