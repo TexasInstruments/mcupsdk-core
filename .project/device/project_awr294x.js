@@ -44,6 +44,7 @@ const example_file_list = [
     "examples/drivers/gpio/gpio_input_interrupt/.project/project.js",
     "examples/drivers/gpio/gpio_led_blink/.project/project.js",
     "examples/drivers/hwa/hwa_real_fft/.project/project.js",
+    "examples/drivers/hwa/hwa_bfp_compression/.project/project.js",
     "examples/drivers/i2c/i2c_read/.project/project.js",
     "examples/drivers/i2c/i2c_temperature/.project/project.js",
     "examples/drivers/ipc/ipc_notify_echo/.project/project.js",

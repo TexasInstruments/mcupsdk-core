@@ -1195,6 +1195,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "HWA based BFP Compression example. This example demonstrates HWA BFP Compression and Decompression operation for complex range-FFT data CPU is R5FSS0-0 running NORTOS.",
+        "name": "hwa_bfp_compression",
+        "location": "../../examples/drivers/hwa/hwa_bfp_compression/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "hwa",
+            "hwa_bfp_compression",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "HWA based BFP Compression example. This example demonstrates HWA BFP Compression and Decompression operation for complex range-FFT data CPU is C66SS0 running NORTOS.",
+        "name": "hwa_bfp_compression",
+        "location": "../../examples/drivers/hwa/hwa_bfp_compression/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "hwa",
+            "hwa_bfp_compression",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A I2c Read Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

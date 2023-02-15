@@ -124,6 +124,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
 -# HWA
+   -# \subpage EXAMPLES_DRIVERS_HWA_BFP_COMPRESSION
    -# \subpage EXAMPLES_DRIVERS_HWA_REAL_FFT
 -# I2C
    -# \subpage EXAMPLES_DRIVERS_I2C_READ
