@@ -50,6 +50,7 @@
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
+#include <sdl/include/am273x/sdlr_soc_baseaddress.h>
 #include <sdl/sdl_ecc.h>
 #include "ecc_test_main.h"
 /* ========================================================================== */
@@ -65,7 +66,30 @@
 #define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
 #define SDL_ENABLE_ERR_PIN                          (1U)
 
-#define SDL_DSS_MAX_MEM_SECTIONS                    (17u)
+#define SDL_DSS_MAX_MEM_SECTIONS                    (7u)
+
+/* ECC AGGEGATORS ADDRESS */
+#define DSS_L3_RAMA_ADDR  		(0x88000000u)
+#define DSS_L3_RAMB_ADDR  		(0x88100000u)
+#define DSS_L3_RAMC_ADDR  		(0x88200000u)
+#define DSS_L3_RAMD_ADDR  		(0x88300000u)
+#define DSS_MAILBOX_ADDR  		(0x83100000u)
+#define DSS_CM4_MAILBOX_ADDR  	(0x48000000u)
+#define DSS_TPTC_A0_ADDR  		(0x06160000u)
+#define DSS_TPTC_A1_ADDR  		(0x06180000u)
+#define DSS_TPTC_B0_ADDR  		(0x061a0000u)
+#define DSS_TPTC_B1_ADDR  		(0x061c0000u)
+#define DSS_TPTC_C0_ADDR  		(0x061e0000u)
+#define DSS_TPTC_C1_ADDR  		(0x06200000u)
+#define DSS_TPTC_C2_ADDR  		(0x06220000u)
+#define DSS_TPTC_C3_ADDR  		(0x06240000u)
+#define DSS_TPTC_C4_ADDR  		(0x06260000u)
+#define DSS_TPTC_C5_ADDR  		(0x06280000u)
+#define DSS_HWA_ADDR  			(0x06060000u)
+
+/* DSS Registers */
+#define DSS_STATUS_1BIT_REG			(0x060A0040u)
+#define DSS_STATUS_2BIT_REG			(0x060A0140U)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -79,16 +103,6 @@ static SDL_ECC_MemSubType ECC_Test_DSSsubMemTypeList[SDL_DSS_MAX_MEM_SECTIONS] =
 	 SDL_DSS_ECC_AGG_DSS_L3RAMD_ECC_RAM_ID,
 	 SDL_DSS_ECC_AGG_DSS_MAILBOX_ECC_RAM_ID,
 	 SDL_DSS_ECC_AGG_DSS_CM4_MAILBOX_ECC_RAM_ID,	
-	 SDL_DSS_ECC_AGG_DSS_TPTC_A0_FIFO_ECC_RAM_ID,
-	 SDL_DSS_ECC_AGG_DSS_TPTC_A1_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_B0_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_B1_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_C0_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_C1_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_C2_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_C3_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_C4_FIFO_ECC_RAM_ID,
-     SDL_DSS_ECC_AGG_DSS_TPTC_C5_FIFO_ECC_RAM_ID,
 	 SDL_DSS_ECC_AGG_DSS_HWA_PARAM_RAM_ECC_RAM_ID,
 };
 
@@ -185,15 +199,15 @@ int32_t ECC_Test_run_DSS_HWA_PARAM_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS_HWA_PARAM Single bit error inject: test starting");
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection", ecc_ctrl, ecc_sts);
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06060000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_HWA_ADDR);
 
     /* Run one shot test for DSS_HWA_PARAM 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -205,7 +219,7 @@ int32_t ECC_Test_run_DSS_HWA_PARAM_1Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
@@ -240,16 +254,16 @@ int32_t ECC_Test_run_DSS_HWA_PARAM_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS_HWA_PARAM Double bit error inject: starting");
 
     /* Run one shot test for DSS_HWA_PARAM 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06060000u);	
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_HWA_ADDR);	
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",ecc_ctrl, ecc_sts);
 
@@ -262,7 +276,7 @@ int32_t ECC_Test_run_DSS_HWA_PARAM_2Bit_N_RowRepeatInjectTest(void)
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
@@ -297,17 +311,17 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("DSS L3RAMA Single bit error inject: test starting\n");
 
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection\n", ecc_ctrl, ecc_sts);
 				   
 	/* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
     /* Run one shot test for DSS L3RAMA 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -318,7 +332,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_N_RowRepeatInjectTest(void)
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC single bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -355,16 +369,16 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("DSS L3RAMA Double bit error inject: starting");
 
     /* Run one shot test for DSS L3RAMA 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\nDSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection\n",ecc_ctrl, ecc_sts);
 
     injectErrorConfig.flipBitMask = 0x101;
@@ -376,7 +390,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_N_RowRepeatInjectTest(void)
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -408,14 +422,14 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_OnceInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection\n", ecc_ctrl, ecc_sts);
 				   
 	/* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
     /* Run one shot test for DSS L3RAMA 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -426,7 +440,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_OnceInjectTest(void)
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC single bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -462,14 +476,14 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_N_RowOnceInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection\n", ecc_ctrl, ecc_sts);
 				   
 	/* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
     /* Run one shot test for DSS L3RAMA 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -480,7 +494,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_N_RowOnceInjectTest(void)
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC single bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -516,14 +530,14 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_N_RepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection\n", ecc_ctrl, ecc_sts);
 				   
 	/* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
     /* Run one shot test for DSS L3RAMA 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -534,7 +548,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_1Bit_N_RepeatInjectTest(void)
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC single bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -570,14 +584,14 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_OnceInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     /* Run one shot test for DSS L3RAMA 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection\n",ecc_ctrl, ecc_sts);
 
     injectErrorConfig.flipBitMask = 0x101;
@@ -589,7 +603,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_OnceInjectTest(void)
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -621,14 +635,14 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_N_RowOnceInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     /* Run one shot test for DSS L3RAMA 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection\n",ecc_ctrl, ecc_sts);
 
     injectErrorConfig.flipBitMask = 0x101;
@@ -640,7 +654,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_N_RowOnceInjectTest(void)
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -672,14 +686,14 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_N_RepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     /* Run one shot test for DSS L3RAMA 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMA_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection\n",ecc_ctrl, ecc_sts);
 
     injectErrorConfig.flipBitMask = 0x101;
@@ -691,7 +705,7 @@ int32_t SDL_Test_run_DSS_L3RAMA_2Bit_N_RepeatInjectTest(void)
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection\n",
                        ecc_ctrl, ecc_sts);
@@ -723,17 +737,17 @@ int32_t SDL_Test_run_DSS_L3RAMB_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS L3RAMB Single bit error inject: test starting");
 
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection", ecc_ctrl, ecc_sts);
 				   
 	/* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88100000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMB_ADDR);
 	
     /* Run one shot test for DSS L3RAMA 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -744,7 +758,7 @@ int32_t SDL_Test_run_DSS_L3RAMB_1Bit_N_RowRepeatInjectTest(void)
 
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",ecc_ctrl, ecc_sts);
 					   
 	if (result != SDL_PASS ) {
@@ -779,16 +793,16 @@ int32_t SDL_Test_run_DSS_L3RAMB_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS L3RAMB Double bit error inject: starting");
 
     /* Run one shot test for DSS L3RAMA 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88100000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMB_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection", ecc_ctrl, ecc_sts);
 
     injectErrorConfig.flipBitMask = 0x101;
@@ -800,7 +814,7 @@ int32_t SDL_Test_run_DSS_L3RAMB_2Bit_N_RowRepeatInjectTest(void)
     ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -834,15 +848,15 @@ int32_t SDL_Test_run_DSS_L3RAMC_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS DSS_L3RAMC Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88200000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMC_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -855,7 +869,7 @@ int32_t SDL_Test_run_DSS_L3RAMC_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -892,16 +906,16 @@ int32_t SDL_Test_run_DSS_L3RAMC_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS L3RAMC Double bit error inject: starting");
 
     /* Run one shot test for DSS L3RAMC 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88200000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMC_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -914,7 +928,7 @@ int32_t SDL_Test_run_DSS_L3RAMC_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -949,15 +963,15 @@ int32_t SDL_Test_run_DSS_L3RAMD_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS DSS_L3RAMD Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88280000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMD_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -970,7 +984,7 @@ int32_t SDL_Test_run_DSS_L3RAMD_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1007,16 +1021,16 @@ int32_t SDL_Test_run_DSS_L3RAMD_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS L3RAMD Double bit error inject: starting");
 
     /* Run one shot test for DSS L3RAMD 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x88280000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_L3_RAMD_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1029,7 +1043,7 @@ int32_t SDL_Test_run_DSS_L3RAMD_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1064,19 +1078,17 @@ int32_t ECC_Test_run_DSS_MAILBOX_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS MAILBOX Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_MAILBOX_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
 
     /* Run one shot test for DSS MAILBOX 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -1087,7 +1099,7 @@ int32_t ECC_Test_run_DSS_MAILBOX_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1124,16 +1136,16 @@ int32_t ECC_Test_run_DSS_MAILBOX_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS MAILBOX Double bit error inject: starting");
 
     /* Run one shot test for DSS MAILBOX 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_MAILBOX_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1146,7 +1158,7 @@ int32_t ECC_Test_run_DSS_MAILBOX_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1181,19 +1193,17 @@ int32_t ECC_Test_run_DSS_CM4_MAILBOX_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS CM4_MAILBOX Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_CM4_MAILBOX_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
-                   ecc_ctrl, ecc_sts);
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x48000000u);
+                   ecc_ctrl, ecc_sts);    
 
     /* Run one shot test for DSS CM4_RAM_B0 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -1204,7 +1214,7 @@ int32_t ECC_Test_run_DSS_CM4_MAILBOX_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1241,16 +1251,16 @@ int32_t ECC_Test_run_DSS_CM4_MAILBOX_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS CM4_RAM_B0 Double bit error inject: starting");
 
     /* Run one shot test for DSS CM4_MAILBOX 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x48000000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_CM4_MAILBOX_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1263,7 +1273,7 @@ int32_t ECC_Test_run_DSS_CM4_MAILBOX_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1298,19 +1308,17 @@ int32_t ECC_Test_run_DSS_TPTC_A0_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_A0 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x83100000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_A0_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06160000u);
 
     /* Run one shot test for DSS TPTC_A0 1 bit error */
     injectErrorConfig.flipBitMask = 0x10;
@@ -1321,7 +1329,7 @@ int32_t ECC_Test_run_DSS_TPTC_A0_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1358,16 +1366,16 @@ int32_t ECC_Test_run_DSS_TPTC_A0_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_A0 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_A0 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06160000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_A0_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1380,7 +1388,7 @@ int32_t ECC_Test_run_DSS_TPTC_A0_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1415,15 +1423,15 @@ int32_t ECC_Test_run_DSS_TPTC_A1_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_A1 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06180000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_A1_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1436,7 +1444,7 @@ int32_t ECC_Test_run_DSS_TPTC_A1_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1473,16 +1481,16 @@ int32_t ECC_Test_run_DSS_TPTC_A1_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_A1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_A1 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06180000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_A1_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1495,7 +1503,7 @@ int32_t ECC_Test_run_DSS_TPTC_A1_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1530,15 +1538,15 @@ int32_t ECC_Test_run_DSS_TPTC_B0_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B0 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x061a0000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_B0_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1551,7 +1559,7 @@ int32_t ECC_Test_run_DSS_TPTC_B0_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1588,16 +1596,16 @@ int32_t ECC_Test_run_DSS_TPTC_B0_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B0 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_B0 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x061a0000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_B0_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1610,7 +1618,7 @@ int32_t ECC_Test_run_DSS_TPTC_B0_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1645,15 +1653,15 @@ int32_t ECC_Test_run_DSS_TPTC_B1_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x061c0000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_B1_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1666,7 +1674,7 @@ int32_t ECC_Test_run_DSS_TPTC_B1_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1703,16 +1711,16 @@ int32_t ECC_Test_run_DSS_TPTC_B1_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_B1 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x061c0000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_B1_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1725,7 +1733,7 @@ int32_t ECC_Test_run_DSS_TPTC_B1_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1760,15 +1768,15 @@ int32_t ECC_Test_run_DSS_TPTC_C0_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_C0 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x061e0000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C0_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1781,7 +1789,7 @@ int32_t ECC_Test_run_DSS_TPTC_C0_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1818,16 +1826,16 @@ int32_t ECC_Test_run_DSS_TPTC_C0_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_C0 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x061e0000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C0_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1840,7 +1848,7 @@ int32_t ECC_Test_run_DSS_TPTC_C0_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1875,15 +1883,15 @@ int32_t ECC_Test_run_DSS_TPTC_C1_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_C1 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06200000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C1_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1896,7 +1904,7 @@ int32_t ECC_Test_run_DSS_TPTC_C1_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1933,16 +1941,16 @@ int32_t ECC_Test_run_DSS_TPTC_C1_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_C1 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06200000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C1_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -1955,7 +1963,7 @@ int32_t ECC_Test_run_DSS_TPTC_C1_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -1990,15 +1998,15 @@ int32_t ECC_Test_run_DSS_TPTC_C2_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_C2 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06220000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C2_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2011,7 +2019,7 @@ int32_t ECC_Test_run_DSS_TPTC_C2_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2048,16 +2056,16 @@ int32_t ECC_Test_run_DSS_TPTC_C2_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_C2 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06220000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C2_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2070,7 +2078,7 @@ int32_t ECC_Test_run_DSS_TPTC_C2_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2105,15 +2113,15 @@ int32_t ECC_Test_run_DSS_TPTC_C3_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_C3 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06240000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C3_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2126,7 +2134,7 @@ int32_t ECC_Test_run_DSS_TPTC_C3_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2163,16 +2171,16 @@ int32_t ECC_Test_run_DSS_TPTC_C3_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_C3 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06240000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C3_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2185,7 +2193,7 @@ int32_t ECC_Test_run_DSS_TPTC_C3_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2220,15 +2228,15 @@ int32_t ECC_Test_run_DSS_TPTC_C4_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_C4 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06260000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C4_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2241,7 +2249,7 @@ int32_t ECC_Test_run_DSS_TPTC_C4_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2278,16 +2286,16 @@ int32_t ECC_Test_run_DSS_TPTC_C4_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_C4 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06260000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C4_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2300,7 +2308,7 @@ int32_t ECC_Test_run_DSS_TPTC_C4_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2335,15 +2343,15 @@ int32_t ECC_Test_run_DSS_TPTC_C5_1Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_C5 Single bit error inject: test starting");
 
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06280000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C5_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0040);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2356,7 +2364,7 @@ int32_t ECC_Test_run_DSS_TPTC_C5_1Bit_N_RowRepeatInjectTest(void)
 								 
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0040);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_1BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC single bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2392,16 +2400,16 @@ int32_t ECC_Test_run_DSS_TPTC_C5_2Bit_N_RowRepeatInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 	
-	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)0x060A0000u));
+	SDL_dss_ecc_aggRegs *pEccAggrRegs = ((SDL_dss_ecc_aggRegs *)((uintptr_t)SDL_DSS_ECC_AGG_U_BASE));
 
     DebugP_log("\n DSS TPTC_B1 Double bit error inject: starting");
 
     /* Run one shot test for DSS TPTC_C5 2 bit error */
     /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x06280000u);
+    injectErrorConfig.pErrMem = (uint32_t *)(DSS_TPTC_C5_ADDR);
 	
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
-	ecc_sts = SDL_REG32_RD(0x060A0140);
+	ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
 	DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values before ECC double bit error injection",
                    ecc_ctrl, ecc_sts);
 
@@ -2414,7 +2422,7 @@ int32_t ECC_Test_run_DSS_TPTC_C5_2Bit_N_RowRepeatInjectTest(void)
 	ecc_ctrl = SDL_REG32_RD(&pEccAggrRegs->CONTROL);
 	/* Access the memory where injection is expected */
     testLocationValue = injectErrorConfig.pErrMem[0];
-    ecc_sts = SDL_REG32_RD(0x060A0140);
+    ecc_sts = SDL_REG32_RD(DSS_STATUS_2BIT_REG);
             
     DebugP_log("\n DSS ECC control Register = 0x%p and Status Register = 0x%p values after ECC double bit error injection",
                        ecc_ctrl, ecc_sts);
@@ -2459,6 +2467,7 @@ static int32_t DSS_ECC_FuncTest(void)
 	}
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_1Bit_N_RowRepeatInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_1Bit_N_RowRepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2467,6 +2476,7 @@ static int32_t DSS_ECC_FuncTest(void)
     }
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_1Bit_OnceInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_1Bit_OnceInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2475,6 +2485,7 @@ static int32_t DSS_ECC_FuncTest(void)
     }
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
+		DebugP_log("\n DSS_L3RAMA_1Bit_RowOnceInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_1Bit_N_RowOnceInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2483,24 +2494,17 @@ static int32_t DSS_ECC_FuncTest(void)
     }
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_1Bit_N_RepeatInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_1Bit_N_RepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
             DebugP_log("\n ECC_Test_run_DSS_L3RAMA_1Bit_N_RepeatInjectTest has failed...");
         }
     }
-    /* Initialize ECC L3RAMA Memory */
-	result = SDL_ECC_initMemory(SDL_DSS_ECC_AGG, SDL_DSS_ECC_AGG_DSS_L3RAMA_ECC_RAM_ID);
-	if (result != SDL_PASS) {
-		/* print error and quit */
-		DebugP_log("ECC_Test_init: Error initializing Memory of DSS ECC AGGR: result = %d\n", result);
-
-		retVal = -1;
-	} else {
-		DebugP_log("\nECC_Test_init: Initialize of DSS ECC AGGR Memory is complete \n");
-	}
+    
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[1],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_2Bit_N_RowRepeatInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_2Bit_N_RowRepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2509,6 +2513,7 @@ static int32_t DSS_ECC_FuncTest(void)
     }
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[1],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_2Bit_OnceInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_2Bit_OnceInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2517,6 +2522,7 @@ static int32_t DSS_ECC_FuncTest(void)
     }
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[1],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_2Bit_N_RowOnceInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_2Bit_N_RowOnceInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2525,6 +2531,7 @@ static int32_t DSS_ECC_FuncTest(void)
     }
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[1],NULL,NULL);
+		DebugP_log("\nDSS_L3RAMA_2Bit_N_RepeatInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_2Bit_N_RepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2544,6 +2551,8 @@ static int32_t DSS_ECC_FuncTest(void)
     if (retVal == 0)
     {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
+		//SDL_REG32_WR(0x880c0000, 0xF);
+		DebugP_log("\nDSS_L3RAMB_1Bit_N_RowRepeatInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMB_1Bit_N_RowRepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -2612,16 +2621,7 @@ static int32_t DSS_ECC_FuncTest(void)
             DebugP_log("\n ECC_Test_run_DSS_L3RAMD_1Bit_N_RowRepeatInjectTest has failed...");
         }
     }
-    /* Initialize ECC MAILBOX Memory */
-	result = SDL_ECC_initMemory(SDL_DSS_ECC_AGG, SDL_DSS_ECC_AGG_DSS_MAILBOX_ECC_RAM_ID);
-	if (result != SDL_PASS) {
-		/* print error and quit */
-		DebugP_log("ECC_Test_init: Error initializing Memory of DSS ECC AGGR: result = %d\n", result);
-
-		retVal = -1;
-	} else {
-		DebugP_log("\nECC_Test_init: Initialize of DSS ECC AGGR Memory is complete \n");
-	}
+    
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
         result = ECC_Test_run_DSS_MAILBOX_1Bit_N_RowRepeatInjectTest();
@@ -2638,16 +2638,7 @@ static int32_t DSS_ECC_FuncTest(void)
             DebugP_log("\n ECC_Test_run_DSS_MAILBOX_2Bit_N_RowRepeatInjectTest has failed...");
         }
     }
-    /* Initialize ECC CM4 MAILBOX Memory */
-	result = SDL_ECC_initMemory(SDL_DSS_ECC_AGG, SDL_DSS_ECC_AGG_DSS_CM4_MAILBOX_ECC_RAM_ID);
-	if (result != SDL_PASS) {
-		/* print error and quit */
-		DebugP_log("ECC_Test_init: Error initializing Memory of DSS ECC AGGR: result = %d\n", result);
-
-		retVal = -1;
-	} else {
-		DebugP_log("\nECC_Test_init: Initialize of DSS ECC AGGR Memory is complete \n");
-	}
+    
 	if (retVal == 0) {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
         result = ECC_Test_run_DSS_CM4_MAILBOX_1Bit_N_RowRepeatInjectTest();
@@ -2664,16 +2655,7 @@ static int32_t DSS_ECC_FuncTest(void)
             DebugP_log("\n ECC_Test_run_DSS_CM4_MAILBOX_2Bit_N_RowRepeatInjectTest has failed...");
         }
     }
-    /* Initialize ECC HWA AGGR Memory */
-	result = SDL_ECC_initMemory(SDL_DSS_ECC_AGG, SDL_DSS_ECC_AGG_DSS_HWA_PARAM_RAM_ECC_RAM_ID);
-	if (result != SDL_PASS) {
-		/* print error and quit */
-		DebugP_log("ECC_Test_init: Error initializing Memory of DSS ECC AGGR: result = %d\n", result);
-
-		retVal = -1;
-	} else {
-		DebugP_log("\nECC_Test_init: Initialize of DSS ECC AGGR Memory is complete \n");
-	}
+    
     if (retVal == 0)
     {
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
