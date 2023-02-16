@@ -76,7 +76,9 @@ void Drivers_ecapOpen()
 %				eventCount++
 %			}
 	/* Select eCAP input */
+    /* Select qualification period to filter out noise*/
 	ECAP_selectECAPInput(`baseName`,`instance.ecapInput`);
+    ECAP_selectQualPeriod(`baseName`,`instance.qualPeriod`);
 		% }
 		% if(instance.ecapMode == "APWM"){
 	/* Set eCAP APWM period */

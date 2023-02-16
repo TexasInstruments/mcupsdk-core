@@ -23,6 +23,7 @@ function onChangeECAPMode(inst, ui)
         ui.counterResetOnEvent.hidden = false
         ui.reArm.hidden = false
         ui.ecapInput.hidden = false
+        ui.qualPeriod.hidden = false
         ui.resetCounters.hidden = false
 
         //-------------Signal Monitoring -------------------//
@@ -66,6 +67,7 @@ function onChangeECAPMode(inst, ui)
         ui.counterResetOnEvent.hidden = true
         ui.reArm.hidden = true
         ui.ecapInput.hidden = true
+        ui.qualPeriod.hidden = true
         ui.resetCounters.hidden = true
 
         //-------------Signal Monitoring -------------------//
@@ -104,6 +106,7 @@ function onChangeECAPMode(inst, ui)
         inst.counterResetOnEvent = []
         inst.reArm = false
         inst.ecapInput = defaultInput
+        inst.qualPeriod = device_peripheral.ECAP_QualPeriodSelect[0].name
         inst.resetCounters = false
         inst.interruptSourceCapture = []
         inst.dmaSource = device_peripheral.ECAP_DMA_TRIGGER_SOURCE[0].name
@@ -407,6 +410,14 @@ config.push(
         hidden      : false,
         default     : defaultInput,
         options     : device_peripheral.ECAP_InputCaptureSignals
+    },
+    {
+        name        : "qualPeriod",
+        displayName : "Filter Out Pulses",
+        description : 'Select qualification period to filter out noise.',
+        hidden      : false,
+        default     : device_peripheral.ECAP_QualPeriodSelect[0].name,
+        options     : device_peripheral.ECAP_QualPeriodSelect
     },
     {
         name        : "resetCounters",
