@@ -67,6 +67,13 @@ extern "C"
 
 //*****************************************************************************
 //
+// Define to mask out the bits in the signal monitoring unit.
+//
+//*****************************************************************************
+#define ECAP_MUNIT_STEP            (CSL_ECAP_MUNIT_2_CTL - CSL_ECAP_MUNIT_1_CTL)
+
+//*****************************************************************************
+//
 // eCAP minimum and maximum values
 //
 //*****************************************************************************
@@ -93,6 +100,14 @@ extern "C"
 #define ECAP_ISR_SOURCE_COUNTER_PERIOD    (0x40U)
 //! Counter equals compare ISR source
 #define ECAP_ISR_SOURCE_COUNTER_COMPARE    (0x80U)
+//! Monitoring unit 1 error event 1 ISR source
+#define ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 (0x200U)
+//! Monitoring unit 1 error event 2 ISR source
+#define ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 (0x400U)
+//! Monitoring unit 2 error event 1 ISR source
+#define ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 (0x800U)
+//! Monitoring unit 2 error event 2 ISR source
+#define ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 (0x1000U)
 //! All ISR source
 #define ECAP_ISR_SOURCE_ALL    (ECAP_ISR_SOURCE_CAPTURE_EVENT_1  |\
                                 ECAP_ISR_SOURCE_CAPTURE_EVENT_2  |\
@@ -100,7 +115,11 @@ extern "C"
                                 ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |\
                                 ECAP_ISR_SOURCE_COUNTER_OVERFLOW |\
                                 ECAP_ISR_SOURCE_COUNTER_PERIOD   |\
-                                ECAP_ISR_SOURCE_COUNTER_COMPARE  )
+                                ECAP_ISR_SOURCE_COUNTER_COMPARE  |\
+                                ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |\
+                                ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |\
+                                ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |\
+                                ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2)
 
 
 //*****************************************************************************
@@ -778,6 +797,250 @@ typedef enum
 
 //*****************************************************************************
 //
+// Values that can be passed to ECAP Signal Monitoring APIs
+//
+//*****************************************************************************
+//! ECAP Monitoring Unit 1
+#define ECAP_MONITORING_UNIT_1       0U
+//! ECAP Monitoring Unit 2
+#define ECAP_MONITORING_UNIT_2       1U
+
+//*****************************************************************************
+
+//*****************************************************************************
+//
+//! Values that can be passed to ECAP_selectMonitoringType() as the
+//! \e monSel parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    //! High Pulse Width
+    ECAP_MUNIT_HIGH_PULSE_WIDTH = 0U,
+    //! Low Pulse Width
+    ECAP_MUNIT_LOW_PULSE_WIDTH = 1U,
+    //! Period width from rise to rise
+    ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE = 2U,
+    //! Period width from fall to fall
+    ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL = 3U,
+    //! Monitor rise edge
+    ECAP_MUNIT_MONITOR_RISE_EDGE = 4U,
+    //! Monitor fall edge
+    ECAP_MUNIT_MONITOR_FALL_EDGE = 5U,
+}ECAP_MonitoringTypeSelect;
+
+//*****************************************************************************
+//
+//! Values that can be passed to ECAP_selectTripSignal() as the \e tripSel.
+//
+//*****************************************************************************
+typedef enum
+{
+    //! Disabled
+    ECAP_MUNIT_TRIP_DISABLED = 0U,
+    //! MUNIT trip source is PWMXBAR output 0
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT0 = 1U,
+    //! MUNIT trip source is PWMXBAR output 1
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT1 = 2U,
+    //! MUNIT trip source is PWMXBAR output 2
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT2 = 3U,
+    //! MUNIT trip source is PWMXBAR output 3
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT3 = 4U,
+    //! MUNIT trip source is PWMXBAR output 4
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT4 = 5U,
+    //! MUNIT trip source is PWMXBAR output 5
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT5 = 6U,
+    //! MUNIT trip source is PWMXBAR output 6
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT6 = 7U,
+    //! MUNIT trip source is PWMXBAR output 7
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT7 = 8U,
+    //! MUNIT trip source is PWMXBAR output 8
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT8 = 9U,
+    //! MUNIT trip source is PWMXBAR output 9
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT9 = 10U,
+    //! MUNIT trip source is PWMXBAR output 10
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT10 = 11U,
+    //! MUNIT trip source is PWMXBAR output 11
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT11 = 12U,
+    //! MUNIT trip source is PWMXBAR output 12
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT12 = 13U,
+    //! MUNIT trip source is PWMXBAR output 13
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT13 = 14U,
+    //! MUNIT trip source is PWMXBAR output 14
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT14 = 15U,
+    //! MUNIT trip source is PWMXBAR output 15
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT15 = 16U,
+    //! MUNIT trip source is PWMXBAR output 16
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT16 = 17U,
+    //! MUNIT trip source is PWMXBAR output 17
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT17 = 18U,
+    //! MUNIT trip source is PWMXBAR output 18
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT18 = 19U,
+    //! MUNIT trip source is PWMXBAR output 19
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT19 = 20U,
+    //! MUNIT trip source is PWMXBAR output 20
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT20 = 21U,
+    //! MUNIT trip source is PWMXBAR output 21
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT21 = 22U,
+    //! MUNIT trip source is PWMXBAR output 22
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT22 = 23U,
+    //! MUNIT trip source is PWMXBAR output 23
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT23 = 24U,
+    //! MUNIT trip source is PWMXBAR output 24
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT24 = 25U,
+    //! MUNIT trip source is PWMXBAR output 25
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT25 = 26U,
+    //! MUNIT trip source is PWMXBAR output 26
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT26 = 27U,
+    //! MUNIT trip source is PWMXBAR output 27
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT27 = 28U,
+    //! MUNIT trip source is PWMXBAR output 28
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT28 = 29U,
+    //! MUNIT trip source is PWMXBAR output 29
+    ECAP_MUNIT_TRIP_EPWM_XBAR_OUT29 = 30U,
+    //! MUNIT trip source is EPWM0 trip out signal
+    ECAP_MUNIT_TRIP_EPWM0_TRIPOUT = 32U,
+    //! MUNIT trip source is EPWM1 trip out signal
+    ECAP_MUNIT_TRIP_EPWM1_TRIPOUT = 33U,
+    //! MUNIT trip source is EPWM2 trip out signal
+    ECAP_MUNIT_TRIP_EPWM2_TRIPOUT = 34U,
+    //! MUNIT trip source is EPWM3 trip out signal
+    ECAP_MUNIT_TRIP_EPWM3_TRIPOUT = 35U,
+    //! MUNIT trip source is EPWM4 trip out signal
+    ECAP_MUNIT_TRIP_EPWM4_TRIPOUT = 36U,
+    //! MUNIT trip source is EPWM5 trip out signal
+    ECAP_MUNIT_TRIP_EPWM5_TRIPOUT = 37U,
+    //! MUNIT trip source is EPWM6 trip out signal
+    ECAP_MUNIT_TRIP_EPWM6_TRIPOUT = 38U,
+    //! MUNIT trip source is EPWM7 trip out signal
+    ECAP_MUNIT_TRIP_EPWM7_TRIPOUT = 39U,
+    //! MUNIT trip source is EPWM8 trip out signal
+    ECAP_MUNIT_TRIP_EPWM8_TRIPOUT = 40U,
+    //! MUNIT trip source is EPWM9 trip out signal
+    ECAP_MUNIT_TRIP_EPWM9_TRIPOUT = 41U,
+    //! MUNIT trip source is EPWM10 trip out signal
+    ECAP_MUNIT_TRIP_EPWM10_TRIPOUT = 42U,
+    //! MUNIT trip source is EPWM11 trip out signal
+    ECAP_MUNIT_TRIP_EPWM11_TRIPOUT = 43U,
+    //! MUNIT trip source is EPWM12 trip out signal
+    ECAP_MUNIT_TRIP_EPWM12_TRIPOUT = 44U,
+    //! MUNIT trip source is EPWM13 trip out signal
+    ECAP_MUNIT_TRIP_EPWM13_TRIPOUT = 45U,
+    //! MUNIT trip source is EPWM14 trip out signal
+    ECAP_MUNIT_TRIP_EPWM14_TRIPOUT = 46U,
+    //! MUNIT trip source is EPWM15 trip out signal
+    ECAP_MUNIT_TRIP_EPWM15_TRIPOUT = 47U,
+    //! MUNIT trip source is EPWM16 trip out signal
+    ECAP_MUNIT_TRIP_EPWM16_TRIPOUT = 48U,
+    //! MUNIT trip source is EPWM17 trip out signal
+    ECAP_MUNIT_TRIP_EPWM17_TRIPOUT = 49U,
+    //! MUNIT trip source is EPWM18 trip out signal
+    ECAP_MUNIT_TRIP_EPWM18_TRIPOUT = 50U,
+    //! MUNIT trip source is EPWM19 trip out signal
+    ECAP_MUNIT_TRIP_EPWM19_TRIPOUT = 51U,
+    //! MUNIT trip source is EPWM20 trip out signal
+    ECAP_MUNIT_TRIP_EPWM20_TRIPOUT = 52U,
+    //! MUNIT trip source is EPWM21 trip out signal
+    ECAP_MUNIT_TRIP_EPWM21_TRIPOUT = 53U,
+    //! MUNIT trip source is EPWM22 trip out signal
+    ECAP_MUNIT_TRIP_EPWM22_TRIPOUT = 54U,
+    //! MUNIT trip source is EPWM23 trip out signal
+    ECAP_MUNIT_TRIP_EPWM23_TRIPOUT = 55U,
+    //! MUNIT trip source is EPWM24 trip out signal
+    ECAP_MUNIT_TRIP_EPWM24_TRIPOUT = 56U,
+    //! MUNIT trip source is EPWM25 trip out signal
+    ECAP_MUNIT_TRIP_EPWM25_TRIPOUT = 57U,
+    //! MUNIT trip source is EPWM26 trip out signal
+    ECAP_MUNIT_TRIP_EPWM26_TRIPOUT = 58U,
+    //! MUNIT trip source is EPWM27 trip out signal
+    ECAP_MUNIT_TRIP_EPWM27_TRIPOUT = 59U,
+    //! MUNIT trip source is EPWM28 trip out signal
+    ECAP_MUNIT_TRIP_EPWM28_TRIPOUT = 60U,
+    //! MUNIT trip source is EPWM29 trip out signal
+    ECAP_MUNIT_TRIP_EPWM29_TRIPOUT = 61U,
+    //! MUNIT trip source is EPWM30 trip out signal
+    ECAP_MUNIT_TRIP_EPWM30_TRIPOUT = 62U,
+    //! MUNIT trip source is EPWM31 trip out signal
+    ECAP_MUNIT_TRIP_EPWM31_TRIPOUT = 63U,
+}ECAP_MunitTripInputSelect;
+
+//*****************************************************************************
+//
+//! Values that can be passed to ECAP_selectGlobalLoadStrobe() as the \e strobe.
+//
+//*****************************************************************************
+typedef enum
+{
+    //! Disabled
+    ECAP_MUNIT_GLDSTRB_DISABLED = 0U,
+    //! MUNIT global load strobe is EPWM0's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM0 = 1U,
+    //! MUNIT global load strobe is EPWM1's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM1 = 2U,
+    //! MUNIT global load strobe is EPWM2's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM2 = 3U,
+    //! MUNIT global load strobe is EPWM3's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM3 = 4U,
+    //! MUNIT global load strobe is EPWM4's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM4 = 5U,
+    //! MUNIT global load strobe is EPWM5's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM5 = 6U,
+    //! MUNIT global load strobe is EPWM6's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM6 = 7U,
+    //! MUNIT global load strobe is EPWM7's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM7 = 8U,
+    //! MUNIT global load strobe is EPWM8's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM8 = 9U,
+    //! MUNIT global load strobe is EPWM9's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM9 = 10U,
+    //! MUNIT global load strobe is EPWM10's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM10 = 11U,
+    //! MUNIT global load strobe is EPWM11's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM11 = 12U,
+    //! MUNIT global load strobe is EPWM12's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM12 = 13U,
+    //! MUNIT global load strobe is EPWM13's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM13 = 14U,
+    //! MUNIT global load strobe is EPWM14's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM14 = 15U,
+    //! MUNIT global load strobe is EPWM15's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM15 = 16U,
+    //! MUNIT global load strobe is EPWM16's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM16 = 17U,
+    //! MUNIT global load strobe is EPWM17's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM17 = 18U,
+    //! MUNIT global load strobe is EPWM18's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM18 = 19U,
+    //! MUNIT global load strobe is EPWM19's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM19 = 20U,
+    //! MUNIT global load strobe is EPWM20's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM20 = 21U,
+    //! MUNIT global load strobe is EPWM21's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM21 = 22U,
+    //! MUNIT global load strobe is EPWM22's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM22 = 23U,
+    //! MUNIT global load strobe is EPWM23's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM23 = 24U,
+    //! MUNIT global load strobe is EPWM24's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM24 = 25U,
+    //! MUNIT global load strobe is EPWM25's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM25 = 26U,
+    //! MUNIT global load strobe is EPWM26's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM26 = 27U,
+    //! MUNIT global load strobe is EPWM27's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM27 = 28U,
+    //! MUNIT global load strobe is EPWM28's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM28 = 29U,
+    //! MUNIT global load strobe is EPWM29's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM29 = 30U,
+    //! MUNIT global load strobe is EPWM30's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM30 = 31U,
+    //! MUNIT global load strobe is EPWM31's global load strobe
+    ECAP_MUNIT_GLDSTRB_EPWM31 = 32U,
+}ECAP_MunitGlobalStrobeSelect;
+
+//*****************************************************************************
+//
 //! Sets the input prescaler.
 //!
 //! \param base is the base address of the ECAP module.
@@ -920,6 +1183,14 @@ static inline void ECAP_reArm(uint32_t base)
 //!                                       interrupt
 //!  - ECAP_ISR_SOURCE_COUNTER_COMPARE  - Counter equal compare generates
 //!                                       interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Monitoring unit 1 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Monitoring unit 1 error event 2
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Monitoring unit 2 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Monitoring unit 2 error event 2
+//!                                         generates interrupt
 //!
 //! \return None.
 //
@@ -933,7 +1204,11 @@ static inline void ECAP_enableInterrupt(uint32_t base,
                    ECAP_ISR_SOURCE_CAPTURE_EVENT_4 |
                    ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
                    ECAP_ISR_SOURCE_COUNTER_PERIOD |
-                   ECAP_ISR_SOURCE_COUNTER_COMPARE)) == 0U);
+                   ECAP_ISR_SOURCE_COUNTER_COMPARE |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2)) == 0U);
 
     //
     // Set bits in ECEINT register
@@ -1002,6 +1277,14 @@ static inline void ECAP_disableInterrupt(uint32_t base,
 //!                                        interrupt
 //!  - ECAP_ISR_SOURCE_COUNTER_COMPARE   - Counter equal compare generates
 //!                                        interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Monitoring unit 1 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Monitoring unit 1 error event 2
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Monitoring unit 2 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Monitoring unit 2 error event 2
+//!                                         generates interrupt
 //!
 //! \note - User can check if a combination of various interrupts have occurred
 //!         by ORing the above return values.
@@ -1052,6 +1335,14 @@ static inline bool ECAP_getGlobalInterruptStatus(uint32_t base)
 //!                                       interrupt
 //!  - ECAP_ISR_SOURCE_COUNTER_COMPARE  - Counter equal compare generates
 //!                                       interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Monitoring unit 1 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Monitoring unit 1 error event 2
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Monitoring unit 2 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Monitoring unit 2 error event 2
+//!                                         generates interrupt
 //!
 //! \return None.
 //
@@ -1065,7 +1356,11 @@ static inline void ECAP_clearInterrupt(uint32_t base,
                    ECAP_ISR_SOURCE_CAPTURE_EVENT_4 |
                    ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
                    ECAP_ISR_SOURCE_COUNTER_PERIOD |
-                   ECAP_ISR_SOURCE_COUNTER_COMPARE)) == 0U);
+                   ECAP_ISR_SOURCE_COUNTER_COMPARE |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2)) == 0U);
 
     //
     // Write to ECCLR register
@@ -1113,6 +1408,14 @@ static inline void ECAP_clearGlobalInterrupt(uint32_t base)
 //!                                       interrupt
 //!  - ECAP_ISR_SOURCE_COUNTER_COMPARE  - Counter equal compare generates
 //!                                       interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Monitoring unit 1 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Monitoring unit 1 error event 2
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Monitoring unit 2 error event 1
+//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Monitoring unit 2 error event 2
+//!                                         generates interrupt
 //!
 //! \return None.
 //
@@ -1126,7 +1429,12 @@ static inline void ECAP_forceInterrupt(uint32_t base,
                    ECAP_ISR_SOURCE_CAPTURE_EVENT_4 |
                    ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
                    ECAP_ISR_SOURCE_COUNTER_PERIOD |
-                   ECAP_ISR_SOURCE_COUNTER_COMPARE)) == 0U);
+                   ECAP_ISR_SOURCE_COUNTER_COMPARE |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2
+                   )) == 0U);
 
     //
     // Write to ECFRC register
@@ -1787,6 +2095,591 @@ static inline ECAP_Events ECAP_getModuloCounterStatus(uint32_t base)
     return((ECAP_Events)(counterStatusValue));
 }
 
+//
+// Signal Monitoring related APIs
+//
+//*****************************************************************************
+//
+//! Enable eCAP monitoring unit.
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function enables the eCAP signal monitoring unit.
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_enableSignalMonitoringUnit(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_CTL;
+
+    //
+    // Enable MUNIT
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) |
+        CSL_ECAP_MUNIT_1_CTL_EN_MASK));
+}
+
+//*****************************************************************************
+//
+//! Disable eCAP monitoring unit.
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function disables the eCAP signal monitoring unit.
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_disableSignalMonitoringUnit(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_CTL;
+
+    //
+    // Disable MUNIT
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) &
+        ~CSL_ECAP_MUNIT_1_CTL_EN_MASK));
+}
+
+//*****************************************************************************
+//
+//! Enables debug mode to capture range from min to max
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function enables the eCAP debug mode for signal monitoring.
+//! Range is captured in DEBUG_RANGE_MAX and DEBUG_RANGE_MIN registers.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_enableDebugRange(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_CTL;
+
+    //
+    // Enable debug mode for MUNIT 1
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) |
+        CSL_ECAP_MUNIT_1_CTL_DEBUG_RANGE_EN_MASK));
+}
+
+//*****************************************************************************
+//
+//! Disables debug mode to capture range from min to max
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function disables the eCAP debug mode for signal monitoring.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_disableDebugRange(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_CTL;
+
+    //
+    // Disable debug mode for MUNIT
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) &
+        ~CSL_ECAP_MUNIT_1_CTL_DEBUG_RANGE_EN_MASK));
+}
+
+//*****************************************************************************
+//
+//! Selects the type of monitoring
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//! \param monSel is the type of monitoring to be selected.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//! - monSel:
+//!    - ECAP_MUNIT_HIGH_PULSE_WIDTH       - High Pulse Width
+//!    - ECAP_MUNIT_LOW_PULSE_WIDTH        - Low Pulse Width
+//!    - ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE - Period width from rise to rise
+//!    - ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL - Period width from fall to fall
+//!    - ECAP_MUNIT_MONITOR_RISE_EDGE      - Monitor rise edge
+//!    - ECAP_MUNIT_MONITOR_FALL_EDGE      - Monitor fall edge
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_selectMonitoringType(uint32_t base, uint32_t munit,
+                          ECAP_MonitoringTypeSelect monSel)
+{
+    uint32_t munitOffset;
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_CTL;
+
+    //
+    // Select Monitoring Type for MUNIT
+    //
+    HW_WR_REG32(base + munitOffset,
+            (HW_RD_REG32(base + munitOffset) &
+            ~CSL_ECAP_MUNIT_1_CTL_MON_SEL_MASK) |
+            ((uint32_t)monSel << CSL_ECAP_MUNIT_1_CTL_MON_SEL_SHIFT));
+}
+
+//*****************************************************************************
+//
+//! Selects the trip signal to disable and enable monitoring automatically.
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param tripSel is the trip signal.
+//!
+//! Valid values for the input variables are:
+//! - tripSel:
+//!     - DISABLED
+//!     - ECAP_MUNIT_TRIP_EPWM_XBAR_OUTn - n is 0-29
+//!     - ECAP_MUNIT_TRIP_EPWMn_TRIPOUT - n is 0-31
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_selectTripSignal(uint32_t base, ECAP_MunitTripInputSelect tripSel)
+{
+    //
+    // Select Monitoring Type
+    //
+    HW_WR_REG32(base + CSL_ECAP_MUNIT_COMMON_CTL,
+            (HW_RD_REG32(base + CSL_ECAP_MUNIT_COMMON_CTL) &
+             ~CSL_ECAP_MUNIT_COMMON_CTL_TRIPSEL_MASK) |
+            ((uint32_t)tripSel << CSL_ECAP_MUNIT_COMMON_CTL_TRIPSEL_SHIFT));
+}
+
+//*****************************************************************************
+//
+//! Selects the global load strobe to enable shadow to active loading
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param strobe is the type of monitoring to be selected.
+//!
+//! Valid values for the input variables are:
+//! - strobe:
+//!     - DISABLED
+//!     - ECAP_MUNIT_GLDSTRB_EPWMn - n is 0-31
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_selectGlobalLoadStrobe(uint32_t base, ECAP_MunitGlobalStrobeSelect strobe)
+{
+    //
+    // Select the global load strobe
+    //
+    HW_WR_REG32(base + CSL_ECAP_MUNIT_COMMON_CTL,
+            (HW_RD_REG32(base + CSL_ECAP_MUNIT_COMMON_CTL) &
+             ~CSL_ECAP_MUNIT_COMMON_CTL_GLDSTRBSEL_MASK) |
+            ((uint32_t)strobe << CSL_ECAP_MUNIT_COMMON_CTL_GLDSTRBSEL_SHIFT));
+}
+
+//*****************************************************************************
+//
+//! Enables shadowing for min and max registers
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function enables the shadowing feature for min and max registers.
+//!
+//! Valid values for the input variable:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_enableShadowMinMaxRegisters(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_SHADOW_CTL;
+
+    //
+    // Enable shadowing for MUNIT 1
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) |
+        CSL_ECAP_MUNIT_1_SHADOW_CTL_SYNCI_EN_MASK));
+}
+
+//*****************************************************************************
+//
+//! Disables shadowing for min and max registers
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function disables the shadowing feature for min and max registers.
+//!
+//! Valid values for the input variable:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_disableShadowMinMaxRegisters(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_SHADOW_CTL;
+
+    //
+    // Disable shadowing for MUNIT 1
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) &
+        ~CSL_ECAP_MUNIT_1_SHADOW_CTL_SYNCI_EN_MASK));
+}
+
+//*****************************************************************************
+//
+//! Enables software sync operation
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function enables the SW Sync to copy min and max values from
+//! shadow to active registers immediately if shadowing is enabled.
+//!
+//! Valid values for the input variable:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_enableSoftwareSync(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_SHADOW_CTL;
+
+    //
+    // Generates SW Sync for MUNIT
+    //
+    HW_WR_REG32(base + munitOffset,
+        (HW_RD_REG32(base + munitOffset) |
+        CSL_ECAP_MUNIT_1_SHADOW_CTL_SWSYNC_MASK));
+}
+
+//*****************************************************************************
+//
+//! Selects the shadow to active load mode
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//! \param loadMode is the shadow to active mode to be selected.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//! - loadMode:
+//!    - ECAP_ACTIVE_LOAD_SYNC_EVT       - Active loaded with shadow on
+//!                                        next sync event
+//!    - ECAP_ACTIVE_LOAD_GLDLCSTRB_EVT  - Active loaded with shadow on
+//!                                        EPWM GLDLCSTRB event
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_selectShadowLoadMode(uint32_t base, uint32_t munit,
+                          uint32_t loadMode)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_SHADOW_CTL;
+
+    //
+    // Select shadow to active load mode for MUNIT
+    //
+    HW_WR_REG32(base + munitOffset,
+            (HW_RD_REG32(base + munitOffset) &
+             ~CSL_ECAP_MUNIT_1_SHADOW_CTL_LOADMODE_MASK) |
+            (loadMode << CSL_ECAP_MUNIT_1_SHADOW_CTL_LOADMODE_SHIFT));
+}
+
+//*****************************************************************************
+//
+//! Configure minimum value for monitoring
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//! \param minValue is the minimum value for monitoring.
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//! - minValue:
+//!    - Range from 0x0 to 0xFFFFFFFF
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_configureMinValue(uint32_t base, uint32_t munit,
+                       uint32_t minValue)
+{
+    uint32_t munitOffset;
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_MIN;
+
+    //
+    // Load minimum value for monitoring
+    //
+    HW_WR_REG32(base + munitOffset, minValue);
+}
+
+//*****************************************************************************
+//
+//! Configure maximum value for monitoring
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//! \param maxValue is the maximum value for monitoring.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//! - maxValue:
+//!    - Range from 0x0 to 0xFFFFFFFF
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_configureMaxValue(uint32_t base, uint32_t munit,
+                       uint32_t maxValue)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_MAX;
+
+    //
+    // Load maximum value for monitoring
+    //
+    HW_WR_REG32(base + munitOffset, maxValue);
+}
+
+//*****************************************************************************
+//
+//! Configure minimum value for shadow register
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//! \param minValue is the minimum value for monitoring.
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//! - minValue:
+//!    - Range from 0x0 to 0xFFFFFFFF
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_configureShadowMinValue(uint32_t base, uint32_t munit,
+                             uint32_t minValue)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_MIN_SHADOW;
+    //
+    // Load minimum value for monitoring
+    //
+    HW_WR_REG32(base + munitOffset, minValue);
+}
+
+//*****************************************************************************
+//
+//! Configure maximum value for shadow register
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//! \param maxValue is the maximum value for monitoring.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//! - maxValue:
+//!    - Range from 0x0 to 0xFFFFFFFF
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ECAP_configureShadowMaxValue(uint32_t base, uint32_t munit,
+                             uint32_t maxValue)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_MAX_SHADOW;
+
+    //
+    // Load maximum value for monitoring
+    //
+    HW_WR_REG32(base + munitOffset, maxValue);
+}
+
+//*****************************************************************************
+//
+//! Returns observed minimum value
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function returns the observed minimum value when the DEBUG_RANGE_EN
+//! bit is set to 1.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return returns the observed minimum value.
+//
+//*****************************************************************************
+static inline uint32_t
+ECAP_observedMinValue(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_DEBUG_RANGE_MIN;
+
+    //
+    // Returns minimum value
+    //
+    return(HW_RD_REG32(base + munitOffset));
+}
+
+//*****************************************************************************
+//
+//! Returns observed maximum value
+//!
+//! \param base is the base address of the ECAP signal monitoring module.
+//! \param munit is the monitoring unit, either 1 or 2.
+//!
+//! This function returns the observed maximum value when the DEBUG_RANGE_EN
+//! bit is set to 1.
+//!
+//! Valid values for the input variables are:
+//! - munit:
+//!    - ECAP_MONITORING_UNIT_1 - ECAP Monitoring Unit 1
+//!    - ECAP_MONITORING_UNIT_2 - ECAP Monitoring Unit 2
+//!
+//! \return returns the observed maximum value.
+//
+//*****************************************************************************
+static inline uint32_t
+ECAP_observedMaxValue(uint32_t base, uint32_t munit)
+{
+    uint32_t munitOffset;
+
+    //
+    // Get the offset to the appropriate MUNIT configuration register.
+    //
+    munitOffset = (ECAP_MUNIT_STEP * munit) + CSL_ECAP_MUNIT_1_DEBUG_RANGE_MAX;
+
+    //
+    // Returns maximum value
+    //
+    return(HW_RD_REG32(base + munitOffset));
+}
 //*****************************************************************************
 //
 //! Configures emulation mode.
