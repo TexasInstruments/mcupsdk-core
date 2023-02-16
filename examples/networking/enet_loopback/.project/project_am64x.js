@@ -17,7 +17,7 @@ const files = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
-        "../../../V0", /* Example base */
+        "../../..", /* Example base */
     ],
 };
 

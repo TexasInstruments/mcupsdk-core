@@ -31,19 +31,43 @@
  */
 
 /*!
- * \file  loopback_cfg.h
+ * \file  loopback_common.h
  *
- * \brief This is the configuration header file of loopback application.
+ * \brief This is the common header file of loopback application.
  */
 
-#ifndef _LOOPBACK_CFG_H_
-#define _LOOPBACK_CFG_H_
+#ifndef _LOOPBACK_COMMON_H_
+#define _LOOPBACK_COMMON_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-/* None */
+#include <stdint.h>
+#include <string.h>
+#include <assert.h>
+
+#include <include/core/enet_osal.h>
+#include <kernel/dpl/TaskP.h>
+#include <kernel/dpl/ClockP.h>
+#include <kernel/dpl/SemaphoreP.h>
+
+#include <enet.h>
+#include <enet_cfg.h>
+#include <include/core/enet_dma.h>
+#include <include/per/cpsw.h>
+
+#include <enet_apputils.h>
+#include <enet_appmemutils.h>
+#include <enet_appmemutils_cfg.h>
+
+/* SDK includes */
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_board_config.h"
+#include "ti_enet_open_close.h"
+#include "ti_enet_config.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,32 +77,85 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+/* Helper macro used to create loopback port menu options */
+#define ENETLPBK_PORT_OPT(macPort, macMode, boardId) { #macPort " - "  #macMode, (macPort), (macMode), (boardId) }
+
+/* Task stack size */
+#define ENETLPBK_TASK_STACK_SZ                     (10U * 1024U)
+
+/* Loopback test iteration count */
+#define ENETLPBK_NUM_ITERATION                     (5U)
+
+#define ENETLPBK_TEST_PKT_NUM                      (1000U)
+
+#define ENETLPBK_TEST_PKT_LEN                      (500U)
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
 
-/* None */
+typedef enum EnetLpbk_type_e
+{
+    /* MAC loopback */
+    LOOPBACK_TYPE_MAC = 0,
+    /* PHY loopback (internal) */
+    LOOPBACK_TYPE_PHY = 1
+} EnetLpbk_type;
+
+typedef struct EnetLpbk_Obj_s
+{
+    /* Enet driver */
+    Enet_Handle hEnet;
+    Enet_Type enetType;
+    uint32_t instId;
+    uint32_t coreId;
+    uint32_t coreKey;
+    uint32_t boardId;
+    Enet_MacPort macPort;
+    emac_mode macMode;      /* MAC mode (defined in board library) */
+    EnetDma_RxChHandle hRxCh;
+    EnetDma_PktQ rxFreeQ;
+    EnetDma_PktQ rxReadyQ;
+    EnetDma_TxChHandle hTxCh;
+    EnetDma_PktQ txFreePktInfoQ;
+    uint8_t hostMacAddr[ENET_MAC_ADDR_LEN];
+
+    /* Test config params */
+    EnetLpbk_type testLoopBackType;
+    bool printFrame;        /* Print received Ethernet frames? */
+
+    /* Test runtime params */
+    volatile bool exitFlag;
+    volatile bool exitFlagDone;
+
+    /* Packet transmission */
+    TaskP_Object txTaskObj;
+    SemaphoreP_Object txSemObj;
+    SemaphoreP_Object txDoneSemObj;
+    uint32_t totalTxCnt;
+
+    /* Packet reception */
+    TaskP_Object rxTaskObj;
+    SemaphoreP_Object rxSemObj;
+    SemaphoreP_Object rxDoneSemObj;
+    uint32_t totalRxCnt;
+} EnetLpbk_Obj;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void EnetApp_showMenu(void);
-
-void EnetApp_createClock(void);
-
-void EnetApp_deleteClock(void);
+int32_t EnetApp_loopbackTest(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+/* Enet loopback test object declaration */
+extern EnetLpbk_Obj gEnetLpbk;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _LOOPBACK_CFG_H_ */
+#endif /* _LOOPBACK_COMMON_H_ */

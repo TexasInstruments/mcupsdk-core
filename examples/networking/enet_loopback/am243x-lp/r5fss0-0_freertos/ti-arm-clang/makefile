@@ -56,7 +56,7 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
-	../../../V0 \
+	../../.. \
 	generated \
 
 INCLUDES_common := \

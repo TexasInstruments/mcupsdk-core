@@ -51,7 +51,7 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
-	../../../V1 \
+	../../.. \
 	generated \
 
 INCLUDES_common := \
