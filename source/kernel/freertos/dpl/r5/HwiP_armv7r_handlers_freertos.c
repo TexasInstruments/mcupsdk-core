@@ -175,7 +175,7 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abo
     while(loop != 0U)  { ;}
 }
 
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void)
+void __attribute__((interrupt("ABORT"), section(".text.hwi"), weak)) HwiP_data_abort_handler_c(void)
 {
     volatile uint32_t loop = 1;
     while(loop != 0U){ ; }

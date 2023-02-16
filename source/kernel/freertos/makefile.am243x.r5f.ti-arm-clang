@@ -69,6 +69,7 @@ ASMFILES_common := \
     CpuId_armv7r_asm.S \
     PmuP_armv7r_asm.S \
     HwiP_armv7r_vectors_freertos_asm.S \
+    HwiP_armv7r_handlers_freertos_asm.S \
     portASM.S \
 
 FILES_PATH_common = \

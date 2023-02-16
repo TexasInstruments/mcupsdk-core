@@ -30,77 +30,9 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* make this 0 to disable FPU context save/restore */
-#define ENABLE_FPU_SAVE_RESTORE (1)
-
         .text
         .arm
         .align 2
-
-        .set SVC_MODE,  0x13
-        .set IRQ_MODE,  0x12
-
-/* FUNCTION DEF: void HwiP_irq_handler(void) */
-        .global HwiP_irq_handler
-        .type HwiP_irq_handler,%function
-        .section ".text.hwi","ax",%progbits
-        .arm
-        .align 2
-HwiP_irq_handler:
-        /* Return to the interrupted instruction. */
-        SUB             lr, lr, #4
-
-        /* Push the return address and SPSR. */
-        PUSH    {lr}
-        MRS     lr, SPSR
-        PUSH    {lr}
-
-        /* Change to supervisor mode to allow reentry. */
-        CPS  #SVC_MODE
-
-        /* Push used registers. */
-        PUSH    {r0-r4, r12}
-
-        #if ENABLE_FPU_SAVE_RESTORE
-        FMRX  R0, FPSCR
-        VPUSH {D0-D15}
-        /* VPUSH {D16-D31} */
-        PUSH  {R0}
-        #endif
-
-        /* Ensure bit 2 of the stack pointer is clear.  r2 holds the bit 2 value for
-         * future use.  _RB_ Is this ever needed provided the start of the stack is
-         * alligned on an 8-byte boundary?
-         */
-        MOV     r2, sp
-        AND     r2, r2, #4
-        SUB     sp, sp, r2
-
-        /* Call the interrupt handler. */
-        PUSH    {r0-r4, lr}
-        LDR     r1, HwiP_irq_handler_const
-        BLX     r1
-        POP     {r0-r4, lr}
-        ADD     sp, sp, r2
-
-        /* disable IRQ */
-        CPSID   i
-        DSB
-        ISB
-
-        #if ENABLE_FPU_SAVE_RESTORE
-        POP   {R0}
-        /* VPOP {D16-D31} */
-        VPOP  {D0-D15}
-        VMSR  FPSCR, R0
-        #endif
-
-        POP     {r0-r4, r12}
-        CPS  #IRQ_MODE
-        POP     {LR}
-        MSR     SPSR_cxsf, LR
-        POP     {LR}
-        MOVS    PC, LR
 
 /* FUNCTION DEF: void HwiP_data_abort_handler(void) */
         .global HwiP_data_abort_handler
@@ -137,7 +69,6 @@ HwiP_data_abort_handler:
         POP	{LR}
         MOVS	PC, LR
 
-HwiP_irq_handler_const: .word HwiP_irq_handler_c
 HwiP_data_abort_handler_const: .word HwiP_data_abort_handler_c
 
         .end

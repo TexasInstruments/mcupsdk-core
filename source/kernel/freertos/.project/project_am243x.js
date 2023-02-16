@@ -153,6 +153,7 @@ const asmfiles_r5f = {
         "PmuP_armv7r_asm.S",
         // picked from freertos DPL
         "HwiP_armv7r_vectors_freertos_asm.S",
+        "HwiP_armv7r_handlers_freertos_asm.S",
         // picked from freertos "portable"
         "portASM.S",
     ],
