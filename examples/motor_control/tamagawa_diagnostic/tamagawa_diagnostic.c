@@ -162,7 +162,7 @@ static void tamagawa_handle_rx(struct tamagawa_priv *priv, int32_t cmd)
         return;
     }
     /* Case of successful parsing, display the results after CRC check*/
-    DebugP_log("\r\n Channel is  is %x \n",priv->channel);
+    DebugP_log("\r\n Channel is  %x \n",priv->channel);
     DebugP_log("\r\n data id is %x \n",cmd);
     if (tamagawa_crc_verify(priv) == 1)
     {
