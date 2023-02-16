@@ -1,6 +1,7 @@
 let common   = system.getScript("/common");
 
 let device_peripheral = system.getScript("/drivers/ecap/soc/ecap_am263x.syscfg.js");
+let signalmonitoringunit = device_peripheral.ECAP_Monitoring_Unit;
 
 function onChangeECAPMode(inst, ui)
 {
@@ -23,6 +24,16 @@ function onChangeECAPMode(inst, ui)
         ui.reArm.hidden = false
         ui.ecapInput.hidden = false
         ui.resetCounters.hidden = false
+
+        //-------------Signal Monitoring -------------------//
+        ui.trip_selection_signalMunit.hidden = false
+        ui.global_strobe_selection_signalMunit.hidden = false
+        for (let unit of signalmonitoringunit)
+        {
+            let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+            ui["enable_monitorunit"+ unit_number].hidden = false;
+        }
+        //------------------------------------------------//
 
         //APWM options
         ui.apwmPolarity.hidden = true
@@ -57,6 +68,26 @@ function onChangeECAPMode(inst, ui)
         ui.ecapInput.hidden = true
         ui.resetCounters.hidden = true
 
+        //-------------Signal Monitoring -------------------//
+        ui.trip_selection_signalMunit.hidden = true
+        ui.global_strobe_selection_signalMunit.hidden = true
+        for (let unit of signalmonitoringunit)
+        {
+            let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+
+            ui["enable_monitorunit"+ unit_number].hidden = true;
+            ui["monitorSelect_"+ unit_number].hidden = true;
+            ui["minValue_"+ unit_number].hidden = true;
+            ui["maxValue_"+ unit_number].hidden = true;
+            ui["enableSyncIn_"+ unit_number].hidden = true;
+            ui["forceload_"+ unit_number].hidden = true;
+            ui["loadmode_"+ unit_number].hidden = true;
+            ui["shadowMinValue_"+ unit_number].hidden = true;
+            ui["shadowMaxValue_"+ unit_number].hidden = true;
+            ui["enableDebug_"+ unit_number].hidden = true;
+        }
+        //------------------------------------------------//
+
         //APWM options
         ui.apwmPeriod.hidden = false
         ui.apwmPolarity.hidden = false
@@ -76,6 +107,26 @@ function onChangeECAPMode(inst, ui)
         inst.resetCounters = false
         inst.interruptSourceCapture = []
         inst.dmaSource = device_peripheral.ECAP_DMA_TRIGGER_SOURCE[0].name
+
+        //-------------Signal Monitoring -------------------//
+        inst.trip_selection_signalMunit = device_peripheral.ECAP_MunitTripInputSelect[0].name
+        inst.global_strobe_selection_signalMunit = device_peripheral.ECAP_MunitGlobalStrobeSelect[0].name
+        for (let unit of signalmonitoringunit)
+        {
+            let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+
+            inst["enable_monitorunit"+ unit_number] = false;
+            inst["monitorSelect_"+ unit_number] = device_peripheral.ECAP_MonitoringTypeSelect[0].name;
+            inst["minValue_"+ unit_number] = 0;
+            inst["maxValue_"+ unit_number] = 0;
+            inst["enableSyncIn_"+ unit_number] = false;
+            inst["forceload_"+ unit_number] = false;
+            inst["loadmode_"+ unit_number] = device_peripheral.ECAP_MunitloadMode[0].name;
+            inst["shadowMinValue_"+ unit_number] = 0;
+            inst["shadowMaxValue_"+ unit_number] = 0;
+            inst["enableDebug_"+ unit_number] = false;
+        }
+        //------------------------------------------------//
     }
     inst.ecap_AdcSoCtriggerEnable = false
     ui.ecap_AdcSoCtriggerSourceCapture.hidden = true
@@ -450,6 +501,194 @@ config.push(
     },
 )
 
+let signal_monitoring_unit_config = [];
+
+function onEnableMonitorUnit(inst, ui)
+{
+    for (let unit of signalmonitoringunit)
+    {
+        let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+        if(inst["enable_monitorunit"+ unit_number])
+        {
+            ui["monitorSelect_"+ unit_number].hidden = false;
+            ui["minValue_"+ unit_number].hidden = false;
+            ui["maxValue_"+ unit_number].hidden = false;
+            ui["enableSyncIn_"+ unit_number].hidden = false;
+            ui["enableDebug_"+ unit_number].hidden = false;
+        }
+        else
+        {
+            ui["monitorSelect_"+ unit_number].hidden = true;
+            ui["minValue_"+ unit_number].hidden = true;
+            ui["maxValue_"+ unit_number].hidden = true;
+            ui["enableSyncIn_"+ unit_number].hidden = true;
+            ui["forceload_"+ unit_number].hidden = true;
+            ui["loadmode_"+ unit_number].hidden = true;
+            ui["shadowMinValue_"+ unit_number].hidden = true;
+            ui["shadowMaxValue_"+ unit_number].hidden = true;
+            ui["enableDebug_"+ unit_number].hidden = true;
+
+            // Reset values to their defaults
+
+            inst["monitorSelect_"+ unit_number] = device_peripheral.ECAP_MonitoringTypeSelect[0].name;
+            inst["minValue_"+ unit_number] = 0;
+            inst["maxValue_"+ unit_number] = 0;
+            inst["enableSyncIn_"+ unit_number] = false;
+            inst["forceload_"+ unit_number] = false;
+            inst["loadmode_"+ unit_number] = device_peripheral.ECAP_MunitloadMode[0].name;
+            inst["shadowMinValue_"+ unit_number] = 0;
+            inst["shadowMaxValue_"+ unit_number] = 0;
+            inst["enableDebug_"+ unit_number] = false;
+        }
+    }
+}
+
+function onChangeSyncIn(inst, ui)
+{
+    for (let unit of signalmonitoringunit)
+    {
+        let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+        if(inst["enableSyncIn_"+ unit_number])
+        {
+            ui["forceload_"+ unit_number].hidden = false;
+            ui["loadmode_"+ unit_number].hidden = false;
+            ui["shadowMinValue_"+ unit_number].hidden = false;
+            ui["shadowMaxValue_"+ unit_number].hidden = false;
+        }
+        else
+        {
+            ui["forceload_"+ unit_number].hidden = true;
+            ui["loadmode_"+ unit_number].hidden = true;
+            ui["shadowMinValue_"+ unit_number].hidden = true;
+            ui["shadowMaxValue_"+ unit_number].hidden = true;
+
+            // Reset values to their defaults
+
+            inst["forceload_"+ unit_number] = false;
+            inst["loadmode_"+ unit_number] = device_peripheral.ECAP_MunitloadMode[0].name;
+            inst["shadowMinValue_"+ unit_number] = 0;
+            inst["shadowMaxValue_"+ unit_number] = 0;
+        }
+    }
+}
+
+let signal_monitoring_common_config =
+[
+    {
+        name: "trip_selection_signalMunit",
+        displayName: "Trip Selection",
+        description : 'Select trip source signal to enable/ disable/ no effect signal monitoring unit',
+        default: 0,
+        default: device_peripheral.ECAP_MunitTripInputSelect[0].name,
+        options: device_peripheral.ECAP_MunitTripInputSelect
+    },
+    {
+        name: "global_strobe_selection_signalMunit",
+        displayName: "Global Load Strobe",
+        description : 'Select global load strobe to enable shadow to active loading',
+        default: device_peripheral.ECAP_MunitGlobalStrobeSelect[0].name,
+        options: device_peripheral.ECAP_MunitGlobalStrobeSelect
+    }
+]
+for (let unit of signalmonitoringunit)
+{
+    let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+    signal_monitoring_unit_config =  signal_monitoring_unit_config.concat ([
+        {
+            name: unit.name,
+            displayName:   unit.name.replace(/_/g, " "),
+            config:
+        [
+            {
+                name: "enable_monitorunit"+ unit_number,
+                displayName: "Enable Monitor Unit",
+                description : 'Enable signal monitoring unit ' + unit_number,
+                default: false,
+                onChange: onEnableMonitorUnit
+            },
+            {
+                name: "monitorSelect_"+ unit_number,
+                displayName: "Select Monitoring Type Of MUNIT",
+                description : 'Select Monitoring Type of MUNIT ' + unit_number,
+                hidden:  true,
+                default: device_peripheral.ECAP_MonitoringTypeSelect[0].name,
+                options: device_peripheral.ECAP_MonitoringTypeSelect
+            },
+            {
+                name: "minValue_"+ unit_number,
+                displayName: "Minimum Value For Monitoring",
+                description : 'Minimum Value For Monitoring of ' + unit_number,
+                hidden:  true,
+                default: 0,
+            },
+            {
+                name: "maxValue_"+ unit_number,
+                displayName: "Maximum Value For Monitoring",
+                description : 'Maximum Value For Monitoring of ' + unit_number,
+                hidden:  true,
+                default: 0,
+            },
+            {
+                name: "enableSyncIn_"+ unit_number,
+                displayName: "Enable SyncIn",
+                description : 'Enable SyncIn for ' + unit_number,
+                hidden:  true,
+                default: false,
+                onChange: onChangeSyncIn
+            },
+            {
+                name: "forceload_"+ unit_number,
+                displayName: "Force Copy From Shadow",
+                description : 'Force Copy from Shadow ' + unit_number,
+                hidden:  true,
+                default: false,
+            },
+            {
+                name: "loadmode_"+ unit_number,
+                displayName: "Select Shadow Load Mode",
+                description : 'Select Shadow Load Mode for ' + unit_number,
+                hidden:  true,
+                default: device_peripheral.ECAP_MunitloadMode[0].name,
+                options: device_peripheral.ECAP_MunitloadMode
+            },
+            {
+                name: "shadowMinValue_"+ unit_number,
+                displayName: "Shadow Minimum Value For Monitoring",
+                description : 'Shadow Minimum Value For Monitoring of ' + unit_number,
+                hidden:  true,
+                default: 0,
+            },
+            {
+                name: "shadowMaxValue_"+ unit_number,
+                displayName: "Shadow Maximum Value For Monitoring",
+                description : 'Shadow Maximum Value For Monitoring of ' + unit_number,
+                hidden:  true,
+                default: 0,
+            },
+            {
+                name: "enableDebug_"+ unit_number,
+                displayName: "Enable Debug Mode",
+                description : 'Enable Debug Mode  for ' + unit_number,
+                hidden:  true,
+                default: false,
+            },
+    ]}
+    ])
+}
+
+let signal_monitoring_total = signal_monitoring_common_config;
+signal_monitoring_total = signal_monitoring_total.concat(signal_monitoring_unit_config);
+
+config = config.concat([
+    {
+        name: "signalMonitoring",
+        displayName: "Signal Monitoring Unit",
+        description: "",
+        config : signal_monitoring_total
+    }
+])
+
+
 function onValidate(inst, validation) {
 
     let usedECAPInsts = [];
@@ -504,6 +743,35 @@ function onValidate(inst, validation) {
         validation.logError(
             "Enter an integer for APWM Compare between 0 and 4,294,967,295!",
             inst, "apwmCompare");
+    }
+    for (let unit of signalmonitoringunit)
+    {
+        let unit_number = unit.name.replace("ECAP_MONITORING_UNIT_", "");
+        /* Validate APWM Compare up to 32 bit unsigned int */
+        if (inst["minValue_"+unit_number]< 0 || inst["minValue_"+unit_number] > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for Minimum Value For Monitoring between 0 and 4,294,967,295!",
+                inst, "minValue_"+unit_number);
+        }
+        if (inst["maxValue_"+unit_number]< 0 || inst["maxValue_"+unit_number] > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for Maximum Value For Monitoring between 0 and 4,294,967,295!",
+                inst, "maxValue_"+unit_number);
+        }
+        if (inst["shadowMinValue_"+unit_number]< 0 || inst["shadowMinValue_"+unit_number] > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for Shadow Minimum Value For Monitoring between 0 and 4,294,967,295!",
+                inst, "shadowMinValue_"+unit_number);
+        }
+        if (inst["shadowMaxValue_"+unit_number]< 0 || inst["shadowMaxValue_"+unit_number] > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for Shadow Maximum Value For Monitoring between 0 and 4,294,967,295!",
+                inst, "shadowMaxValue_"+unit_number);
+        }
     }
 }
 

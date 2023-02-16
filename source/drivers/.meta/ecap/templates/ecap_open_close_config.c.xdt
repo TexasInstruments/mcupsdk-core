@@ -1,6 +1,7 @@
 void Drivers_ecapOpen()
 {
 % let module = system.modules['/drivers/ecap/ecap'];
+% let device_peripheral = system.getScript("/drivers/ecap/soc/ecap_am263x.syscfg.js");
 % let common   = system.getScript("/common");
 % let nameOfModule = "ecap";
 % let nameOfPeripheral = module.peripheralName;
@@ -18,7 +19,11 @@ void Drivers_ecapOpen()
 		 ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |
 		 ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
 		 ECAP_ISR_SOURCE_COUNTER_PERIOD   |
-		 ECAP_ISR_SOURCE_COUNTER_COMPARE  ));
+		 ECAP_ISR_SOURCE_COUNTER_COMPARE  |
+         ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+         ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+         ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+         ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2));
 	ECAP_clearInterrupt(`baseName`,
 	  	(ECAP_ISR_SOURCE_CAPTURE_EVENT_1 |
 		ECAP_ISR_SOURCE_CAPTURE_EVENT_2  |
@@ -26,7 +31,11 @@ void Drivers_ecapOpen()
 		ECAP_ISR_SOURCE_CAPTURE_EVENT_4  |
 		ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
 		ECAP_ISR_SOURCE_COUNTER_PERIOD   |
-		ECAP_ISR_SOURCE_COUNTER_COMPARE  ));
+		ECAP_ISR_SOURCE_COUNTER_COMPARE  |
+        ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+        ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+        ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+        ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2));
 		% }
 		% if(instance.ecapMode == "CAPTURE"){
 	/* Disables time stamp capture */
@@ -205,5 +214,50 @@ void Drivers_ecapOpen()
 		% }
 	% }
 
+
+    //-----------------Signal Monitoring--------------------//
+
+    % for(let i = 0; i < module.$instances.length; i++) {
+        % let instance = module.$instances[i];
+        % let baseName = instance.$name + "_BASE_ADDR";
+        % if(instance.ecapMode == "CAPTURE") {
+    % if(instance.trip_selection_signalMunit != device_peripheral.ECAP_MunitTripInputSelect[0].name) {
+    ECAP_selectTripSignal(`baseName`, `instance.trip_selection_signalMunit`);
+            %}
+    %if(instance.global_strobe_selection_signalMunit!=device_peripheral.ECAP_MunitTripInputSelect[0].name) {
+    ECAP_selectGlobalLoadStrobe(`baseName`, `instance.global_strobe_selection_signalMunit`);
+            %}
+    %for(let j =0; j < device_peripheral.ECAP_Monitoring_Unit.length; j++) {
+        % let unit_name = device_peripheral.ECAP_Monitoring_Unit[j].name;
+        % let unit = (unit_name).replace("ECAP_MONITORING_UNIT_", "");
+        %if(instance["enable_monitorunit"+unit]) {
+    ECAP_enableSignalMonitoringUnit(`baseName`, `unit_name`);
+    ECAP_selectMonitoringType(`baseName`, `unit_name`, `instance["monitorSelect_"+unit]`);
+            %if(instance["minValue_"+unit] != 0){
+    ECAP_configureMinValue(`baseName`, `unit_name`, `instance["minValue_"+unit]`);
+          %}
+            %if(instance["maxValue_"+unit] != 0){
+    ECAP_configureMaxValue(`baseName`, `unit_name`, `instance["maxValue_"+unit]`);
+          %}
+            %if(instance["enableSyncIn_"+unit]){
+    ECAP_enableShadowMinMaxRegisters(`baseName`, `unit_name`);
+                %if(instance["forceload_"+unit]){
+    ECAP_enableSoftwareSync(`baseName`, `unit_name`);
+          %}
+    ECAP_selectShadowLoadMode(`baseName`, `unit_name`, `instance["loadmode_"+unit]`);
+                %if(instance["shadowMinValue_"+unit] != 0){
+    ECAP_configureShadowMinValue(`baseName`, `unit_name`, `instance["shadowMinValue_"+unit]`);
+          %}
+                %if(instance["shadowMaxValue_"+unit] != 0){
+    ECAP_configureShadowMaxValue(`baseName`, `unit_name`, `instance["shadowMaxValue_"+unit]`);
+          %}
+          %}
+             %if(instance["enableDebug_"+unit]){
+    ECAP_enableDebugRange(`baseName`, `unit_name`);
+            %}
+                %}
+            %}
+        %}
+    %}
 %}
 }
