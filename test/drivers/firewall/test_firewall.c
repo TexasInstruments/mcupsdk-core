@@ -40,7 +40,7 @@
 #include "ti_drivers_open_close.h"
 
 /*
- *  Pre firewall configuration using SysConfig during Drivers_Opem()
+ *  Pre firewall configuration using SysConfig during Drivers_Open()
  *  +--------------+--------+------------+------------+------------------------------+
  *  | Fwl Id       | Region | Start Addr | End Addr   | Privilege & Permission       |
  *  +--------------+--------+------------+------------+------------------------------+
@@ -62,6 +62,10 @@
 #define TEST_MEM_MSRAM_BANK_5_REGION_1  (0x701410FF)
 #define TEST_MEM_MSRAM_BANK_5_REGION_2  (0x701420FF)
 #define TEST_MEM_MSRAM_BANK_5_REGION_3  (0x701430FF)
+#define TEST_MEM_MSRAM_BLOCKED_REGION_1 (0x701FC000)
+#define TEST_MEM_MSRAM_BLOCKED_REGION_2 (0x701FC010)
+
+#define TEST_DATA_ABORT_EXCEP_COUNT     (2U)
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -70,18 +74,30 @@
 /* Test cases */
 void test_firewall_api(void *args);
 void test_firewall_positive(void *args);
+void test_firewall_negative(void *args);
+
+/* Strong declaration of user defined data abort exception */
+extern void HwiP_data_abort_handler_c(void);
 
 /* client ID that is used to receive messages in Any to Any test */
 uint32_t gClientId = 4u;
-
+/* Flag that is used to check data abort exception*/
+uint32_t gDataAbortRecived = 0;
+/* variable that is used to read data from address */
+uint32_t data = 0;
 /* Main core that checks the test pass/fail */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
 
 /* semaphore's used to indicate a main core has finished all message exchanges */
 SemaphoreP_Object gMainDoneSem;
-
 /* semaphore used to indicate a remote core has finished all message xchange */
 SemaphoreP_Object gRemoteDoneSem;
+
+/* Strong definition of user defined data abort exception. This function will be called incase of any data abort */
+void HwiP_data_abort_handler_c(void)
+{
+    gDataAbortRecived++;
+}
 
 void test_firewall_msg_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
 {
@@ -160,7 +176,6 @@ void test_firewall_positive(void *args)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t gRemoteCoreId = (uint32_t)args;
-    uint32_t data = 0;
     uint32_t msgValue = 0;
 
     DebugP_log("Firewall Positive Test Started !! \r\n");
@@ -191,13 +206,56 @@ void test_firewall_positive(void *args)
     /* send message to other core's, wait for message to be put in HW FIFO */
     status = IpcNotify_sendMsg(gRemoteCoreId, gClientId, msgValue, 1);
     DebugP_assert(status == SystemP_SUCCESS);
+
+    /* wait for messages from remote core */
+    SemaphoreP_pend(&gMainDoneSem, SystemP_WAIT_FOREVER);
+}
+
+void test_firewall_negative(void *args)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t gRemoteCoreId = (uint32_t)args;
+    uint32_t msgValue = 0;
+
+    DebugP_log("Firewall Negative Test Started !! \r\n");
+
+    /*  ----------  Testing negative scenerios  ----------- */
+
+    /* Bank 5 Firewall only configured on HS devices */
+    if(SOC_isHsDevice())
+    {
+        /*Test MSRAM Region 1 Access */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_2);
+        /*Test MSRAM Region 3 Access */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_3);
+    }
+    else
+    {
+        /* Checking MSRAM blocked region by sysfw on GP devices */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BLOCKED_REGION_1);
+        /*Test MSRAM Region 3 Access */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BLOCKED_REGION_2);
+
+    }
+
+    if (gDataAbortRecived != TEST_DATA_ABORT_EXCEP_COUNT)
+    {
+        status = SystemP_FAILURE;
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    /* send message to other core's, wait for message to be put in HW FIFO */
+    status = IpcNotify_sendMsg(gRemoteCoreId, gClientId, msgValue, 1);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* wait for messages from remote core */
+    SemaphoreP_pend(&gMainDoneSem, SystemP_WAIT_FOREVER);
 }
 
 /* This code executes on remote core, i.e not on main core */
 void test_firewall_remote_core_start()
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t data = 0;
     uint32_t msgValue = 0;
 
     SemaphoreP_constructBinary(&gRemoteDoneSem, 0);
@@ -209,7 +267,7 @@ void test_firewall_remote_core_start()
     /* wait for all cores to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
-    /* wait for all messages to be echo'ed back */
+    /* wait for all messages from main core */
     SemaphoreP_pend(&gRemoteDoneSem, SystemP_WAIT_FOREVER);
 
     /*  ----------  Testing positive scenerios  ----------- */
@@ -235,7 +293,41 @@ void test_firewall_remote_core_start()
     }
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
+    /* send message to main core's, wait for message to be put in HW FIFO */
     status = IpcNotify_sendMsg(gMainCoreId, gClientId, msgValue, 1);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* wait for all messages from main core */
+    SemaphoreP_pend(&gRemoteDoneSem, SystemP_WAIT_FOREVER);
+
+    /*  ----------  Testing negative scenerios  ----------- */
+
+    /* Bank 5 Firewall only configured on HS devices */
+    if(SOC_isHsDevice())
+    {
+        /*Test MSRAM Region 1 Access */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_1);
+        /*Test MSRAM Region 3 Access */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BANK_5_REGION_3);
+    }
+    else
+    {
+        /* Checking MSRAM blocked region by sysfw on GP devices */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BLOCKED_REGION_1);
+        /*Test MSRAM Region 3 Access */
+        data = CSL_REG32_RD((uint32_t *)TEST_MEM_MSRAM_BLOCKED_REGION_2);
+
+    }
+
+    if (gDataAbortRecived != TEST_DATA_ABORT_EXCEP_COUNT)
+    {
+        status = SystemP_FAILURE;
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    /* send message to other core's, wait for message to be put in HW FIFO */
+    status = IpcNotify_sendMsg(gMainCoreId, gClientId, msgValue, 1);
+    DebugP_assert(status == SystemP_SUCCESS);
 }
 
 /* This code executes on main core, i.e not on remote core */
@@ -257,6 +349,7 @@ void test_firewall_main_core_start()
 
     RUN_TEST(test_firewall_api, 9478, NULL);
     RUN_TEST(test_firewall_positive, 9479, (void *)CSL_CORE_ID_R5FSS0_1);
+    RUN_TEST(test_firewall_negative, 9619, (void *)CSL_CORE_ID_R5FSS0_1);
 
     UNITY_END();
 }
@@ -274,7 +367,8 @@ void test_main(void *args)
         test_firewall_remote_core_start();
     }
 
-    //Drivers_close();
+    /* We dont close drivers to let the UART driver remain open and flush any pending messages to console */
+    // Drivers_close();
 }
 
 void setUp(void)
