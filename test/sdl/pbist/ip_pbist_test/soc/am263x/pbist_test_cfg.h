@@ -57,33 +57,13 @@ extern "C"
 /*                                Macros                                      */
 /* ========================================================================== */
 
-/* Note the following are array indexes into the test config array */
-#define PBIST_INSTANCE_PULSAR_0      (0U)
-#define PBIST_INSTANCE_PULSAR_1      (1U)
-#define PBIST_INSTANCE_MPU           (2U)
-#define PBIST_INSTANCE_INFRA         (3U)
-#define PBIST_INSTANCE_MCU           (4U)
-
-
-
-#define PBIST_MAX_INSTANCE                (PBIST_INSTANCE_MCU+1U)
-
-#define PBIST_NUM_INSTANCE                (PBIST_INSTANCE_INFRA+1U)
-
-#define PBIST_MAX_TIMEOUT_VALUE           (100000000u)
-
-#define MPU_NUM_AUX_DEVICES               2
-
-#define INFRA_NUM_AUX_DEVICES            11
-
-#define MCU_NUM_AUX_DEVICES               3
-
-#define PBIST_NEG_TEST_PBIST_CFG_BASE    (0x0U)
-
-#define APP_PBIST_TEST_NEG_INST          (0x5U)
-#define APP_PCONFIG_TEST_INSTANCE        (0x5U)
-
+#if defined (R5F0_INPUTS)
 extern PBIST_TestHandle_t PBIST_TestHandleArray[1];
+#elif defined (R5F1_INPUTS)
+extern PBIST_TestHandle_t PBIST_TestHandleArray[1];
+#endif
+#define PBIST_NEG_TEST_PBIST_CFG_BASE    (0x0U)
+#define APP_PBIST_TEST_NEG_INST          (0x5U)
 
 #ifdef __cplusplus
 }

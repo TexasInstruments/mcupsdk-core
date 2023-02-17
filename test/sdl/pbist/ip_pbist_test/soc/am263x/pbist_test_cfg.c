@@ -46,7 +46,6 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/pbist/sdl_pbist_priv.h>
 #include <sdl/sdl_pbist.h>
-#include <kernel/dpl/AddrTranslateP.h>
 #include "pbist_test_cfg.h"
 
 /* ========================================================================== */
@@ -58,13 +57,14 @@
 /*                            Local function prototypes                       */
 /* ========================================================================== */
 
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
+#if defined (R5F0_INPUTS)
 PBIST_TestHandle_t PBIST_TestHandleArray[1] =
 {
-    /* Pulsar Instance 0 */
     {
         .testName               = "TOP PBIST",
         .pbistInst              = SDL_PBIST_INST_TOP,
@@ -74,6 +74,20 @@ PBIST_TestHandle_t PBIST_TestHandleArray[1] =
         .doneFlag               = false,                /* Initialize done flag  */
     },
 };
+#endif
+#if defined (R5F1_INPUTS)
+PBIST_TestHandle_t PBIST_TestHandleArray[1] =
+{
+    {
+        .testName               = "TOP PBIST",
+        .pbistInst              = SDL_PBIST_INST_TOP,
+        .pPBISTRegs             = (SDL_pbistRegs *)SDL_TOP_PBIST_U_BASE,
+        .numPBISTRuns           = 1u,
+        .interruptNumber        = SDL_R5FSS0_CORE0_INTR_PBIST_DONE,
+        .doneFlag               = false,                /* Initialize done flag  */
+    },
+};
+#endif
 
 /* Captures common Initialization: currently nothing needed */
 int32_t PBIST_commonInit(void)
@@ -85,9 +99,9 @@ int32_t PBIST_commonInit(void)
 
 void PBIST_eventHandler( uint32_t instanceId)
 {
-
     PBIST_TestHandleArray[instanceId].doneFlag = true;
 
     return;
 }
+
 /* Nothing past this point */
