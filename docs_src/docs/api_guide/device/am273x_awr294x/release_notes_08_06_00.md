@@ -160,9 +160,9 @@ PBIST             | R5F             | NA                |  NORTOS | Memories sup
 ESM               | R5F, C66        | NA                |  NORTOS | Tested in combination with RTI, DCC, ECC                                        |-
 RTI               | R5F, C66        | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
 ECC               | R5F, C66        | NA                |  NORTOS | ECC of MSS_L2, Mailbox, TPTC, R5SS TCM, MCAN, VIM, ICSSM     | R5F Cache, HSM
-Bus Safety        | R5F, C66        | NA                |  NORTOS | Bus Safety of Mailbox, DSS L3, HWA, ADCBUF, DSS_PCR, MSS_TPTC, CORE A and B AHB, MCRC, MSS_CR5 ,MSS_QSPI, MSS_PCR, MSS_SWBUF, MSS_GPADC, DSS_DSP_SDMA,MSS_TO_MDO  | HSM_DTHE, MSS_CPSW, HSM, MSS_L2, MSS_DMM, MSS_SCRP, DAP_R232, DSS_DSP_MDMA 
+Bus Safety        | R5F, C66        | NA                |  NORTOS | Bus Safety of Mailbox, DSS L3, HWA, ADCBUF, DSS_PCR, MSS_TPTC, CORE A and B AHB, MCRC, MSS_CR5 ,MSS_QSPI, MSS_PCR, MSS_SWBUF, MSS_GPADC, DSS_DSP_SDMA,MSS_TO_MDO  | MSS_CPSW, MSS_L2, DAP_R232, DSS_DSP_MDMA
 HWA               | C66             | NA                |  NORTOS | Parity on Data Memories, Window Memory and FSM Lockstep                                                 | -
-CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode, Error Forcing Mode and Self Test Error Forcing Mode                                 | - 
+CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode, Error Forcing Mode and Self Test Error Forcing Mode                                 | -
 R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F and DSP.                                                 |-
 PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA memories                                                |-
 
@@ -310,6 +310,14 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> 8.6.0 onwards
     <td> None.
 </tr>
+<tr>
+    <td> PROC_SDL-5650
+    <td> ECC Bus safety for SEC and DED not supported for DSS_DSP_MDMA.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+
 \endcond
 </table>
 
