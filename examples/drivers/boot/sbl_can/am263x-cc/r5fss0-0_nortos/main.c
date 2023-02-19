@@ -65,11 +65,20 @@ int main()
     Bootloader_socInitL2MailBoxMemory();
 
     System_init();
+    Bootloader_profileAddProfilePoint("System_init");
+
     Drivers_open();
+    Bootloader_profileAddProfilePoint("Drivers_open");
+
+    DebugP_log("\r\n");
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    DebugP_log("Starting CAN Bootloader ... \r\n");
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
+    Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
 
@@ -155,6 +164,14 @@ int main()
             else
             {
                 /* do nothing */
+            }
+
+            if(status == SystemP_SUCCESS)
+            {
+                Bootloader_profileAddProfilePoint("SBL End");
+                Bootloader_profilePrintProfileLog();
+                DebugP_log("Image loading done, switching to application ...\r\n");
+                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
             }
 
             /* Run CPUs */

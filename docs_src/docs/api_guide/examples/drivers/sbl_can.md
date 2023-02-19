@@ -32,7 +32,7 @@ A simple custom made protocol is created for communication between the Host Mach
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/drivers/boot/sbl_can
 
-**NOTE: Tested on Windows, using PCAN-USB Peripheral. No CAN-FD Support as of now.**
+**NOTE: Tested on Windows, using PCAN-USB Peripheral. Both Standard CAN and CAN-FD Support for SBL CAN.**
 \endcond
 
 # Steps to Run the Example

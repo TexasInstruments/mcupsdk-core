@@ -48,7 +48,9 @@ extern "C"
 #include <string.h>
 
 #define CONFIG_MCAN0 (0U)
+#define ENABLE_CANFD_SUPPORT
 
+/* Macro for CAN FD Support, undefine this to use as Std CAN */
 #ifdef ENABLE_CANFD_SUPPORT
 #define APP_MCAN_BUFFER_SIZE                     (MCAN_DATA_SIZE_64BYTES)
 #define FILE_PKT_SIZE                            (63U)

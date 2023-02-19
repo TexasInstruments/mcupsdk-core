@@ -23,7 +23,7 @@ USAGE: python can_bootloader.py [OPTIONS]
 
 m_objPCANBasic = None
 m_DLLFound = False
-IsFD = False
+IsFD = True    # Set it to False if std CAN Protocol to be used.
 
 PcanHandle = PCAN_USBBUS1
 
@@ -44,8 +44,8 @@ def open_can_port():
         return
 
     if IsFD:
-        BitrateFD = b'f_clock_mhz=20, nom_brp=5, nom_tseg1=2, nom_tseg2=1, nom_sjw=1, data_brp=2, data_tseg1=3, data_tseg2=1, data_sjw=1'
-
+        # Make Sure to set correct timing parameters. Current parameters is as per SDK-CAN driver.
+        BitrateFD = b'f_clock_mhz=80, nom_brp=1, nom_tseg1=67, nom_tseg2=12, nom_sjw=12, data_brp=1, data_tseg1=13, data_tseg2=2, data_sjw=1'
         stsResult = m_objPCANBasic.InitializeFD(PcanHandle,BitrateFD)
     else:
         Bitrate = PCAN_BAUD_1M
@@ -115,6 +115,13 @@ def WriteMessages(canobj, msg):
         msgCanMessage.DLC = 15
         msgCanMessage.MSGTYPE = PCAN_MESSAGE_EXTENDED.value | PCAN_MESSAGE_FD.value | PCAN_MESSAGE_BRS.value
         dataSize = 64
+
+        for i in range(min(len(msg),dataSize)):
+            msgCanMessage.DATA[i] = msg[i]
+            pass
+
+        stsResult = canobj.WriteFD(PcanHandle, msgCanMessage)
+
     else:
         ## Sends a CAN message with extended ID, 8 data bytes
         msgCanMessage = TPCANMsg()
@@ -123,11 +130,11 @@ def WriteMessages(canobj, msg):
         msgCanMessage.MSGTYPE = PCAN_MESSAGE_EXTENDED.value
         dataSize = 8
 
-    for i in range(min(len(msg),dataSize)):
-        msgCanMessage.DATA[i] = msg[i]
-        pass
+        for i in range(min(len(msg),dataSize)):
+            msgCanMessage.DATA[i] = msg[i]
+            pass
 
-    stsResult = canobj.Write(PcanHandle, msgCanMessage)
+        stsResult = canobj.Write(PcanHandle, msgCanMessage)
 
     return stsResult
 
@@ -186,15 +193,13 @@ def send_receive_file(filename, get_response=True):
 
 
     bar.update(16)
-    bar.refresh()
     i=0
     seq=0
+    tstart = time.time()
+
     while(filesize>0):
         if (seq>255):
             seq=0
-
-        tstart = time.time()
-        tstop = time.time()
 
         if(filesize >= dataSize):
             stream.seek(i,0)
@@ -206,7 +211,6 @@ def send_receive_file(filename, get_response=True):
 
             #"MSGACK" interpreted in Byte Array
             if(CAN_MSG_ACK in in_data):
-                tstop = time.time()
                 i = i+dataSize
                 filesize = filesize-dataSize
                 bar.update(dataSize)
@@ -223,18 +227,17 @@ def send_receive_file(filename, get_response=True):
 
             #"MSGACK" interpreted in Byte Array
             if(CAN_MSG_ACK in in_data):
-                tstop = time.time()
                 i = i+filesize
-                filesize = 0
                 stream.seek(filesize)
                 bar.update(filesize)
                 bar.refresh()
+                filesize = 0
                 seq=seq+1
 
-        bar.refresh()
-        timetaken = timetaken+round(tstop-tstart, 2)
-
     stream.close()
+    #tstop = time.time()
+    #timetaken = timetaken+round(tstop-tstart, 2)
+    #tstart = time.time()
 
     while(filesize==0):
         s="LSTMSG"
@@ -260,6 +263,8 @@ def send_receive_file(filename, get_response=True):
             filesize = 0
 
     resp_status = 0
+    tstop = time.time()
+    timetaken = timetaken + round(tstop-tstart, 2)
 
     # Don't do the receive if get_response is False
     if(get_response):

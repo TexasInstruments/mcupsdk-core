@@ -41,6 +41,8 @@ uint32_t gMcanBaseAddr;
 MCAN_TxBufElement gtxMsg;
 MCAN_RxBufElement grxMsg;
 
+#define ENABLE_CANFD_SUPPORT /* Macro for CAN FD Support, undefine this to use as Std CAN */
+
 void mcanConfigTxMsg(MCAN_TxBufElement *txMsg, uint32_t idx)
 {
     /* Initialize message to transmit */
@@ -139,7 +141,7 @@ int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf)
 
     DebugP_assert(!strcmp((const char *)&grxMsg.data[0], &gCANMsgsList[0][0]));
 
-    /**********************  Ping from am263x-cc Board to Script ***************************/
+    /**********************  Pong from am263x-cc Board to Script ***************************/
     /* Configure Tx Msg to transmit */
     mcanConfigTxMsg(&gtxMsg, 0U);
 
