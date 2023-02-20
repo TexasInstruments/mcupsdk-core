@@ -649,5 +649,4 @@ void edma_negTest(void *args)
     Board_driversClose();
     Drivers_close();
 
-	return 0;
 }

@@ -532,11 +532,4 @@ void edma_posTest(void *args)
     Board_driversClose();
     Drivers_close();
 
-	return 0;
 }
-
-
-
-
-
-

@@ -174,8 +174,8 @@ static const uint8_t gEdmaTestDstBuffFive[EDMA_TEST_C_COUNT_TWO] =
 };
 static uint16_t gEdmaTestDstBuffSix[EDMA_TEST_C_COUNT_TWO];
 
-void test_pos_main(void *args);
-void test_neg_main(void *args);
+void edma_posTest(void *args);
+void edma_negTest(void *args);
 
 
 /* ========================================================================== */
