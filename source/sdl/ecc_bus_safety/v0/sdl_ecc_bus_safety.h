@@ -303,7 +303,19 @@ int32_t SDL_ECC_BUS_SAFETY_DSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t
 int32_t SDL_ECC_BUS_SAFETY_DSS_readStaticRegs(uint32_t busSftyNode ,\
                                                SDL_ECC_BUS_SAFETY_staticRegs *pStaticRegs);
 
-
+/**
+* \brief   This API is used  for SEC test on MSS
+*
+* \param   busSftyNode Node identifier
+*
+* \param   addr        address to which data to be written
+*
+* \param   wr_data     data to be be written on the address
+*
+* \return  status      return the Test status.
+*                      SDL_PASS:     success
+*                      SDL_EBADARGS: failure, indicate the bad input arguments
+*/
 int32_t SDL_ECC_BUS_SAFETY_MSS_secExecute(uint32_t busSftyNode,uint32_t addr, uint32_t wr_data);
 
 /**
@@ -336,7 +348,6 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
  */
 int32_t SDL_ECC_BUS_SAFETY_MSS_redExecute(uint32_t busSftyNode,\
          SDL_ECC_BUS_SAFETY_busSftyFiType fiType, SDL_ECC_BUS_SAFETY_busSftyFiRedType redType );
-
 
 /**
  * \brief   This API is used to clear SEC error on MSS
@@ -412,9 +423,6 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode);
  *                    SDL_EBADARGS: failure, indicate the bad input arguments
  */
 int32_t SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t *status);
-
-
-int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode);
 
 /**
  *  \brief   This API is used to get MSS static register values

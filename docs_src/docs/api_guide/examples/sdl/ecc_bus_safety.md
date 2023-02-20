@@ -312,29 +312,20 @@ UC-43    | MSS_CR5A_AXI_S_SEC_Test in Interrupt Method.
 UC-44    | MSS_CR5A_AXI_S_RED_Test in Interrupt Method.
 UC-45    | MSS_CR5B_AXI_S_SEC_Test in Interrupt Method.
 UC-46    | MSS_CR5B_AXI_S_RED_Test in Interrupt Method.
-UC-15    | MSS_CR5A_AXI_WR_RED_Test in Interrupt Method.
-UC-16    | MSS_CR5B_AXI_WR_RED_Test in Interrupt Method.
-UC-17    | MSS_CR5A_AXI_RD_RED_Test in Interrupt Method.
-UC-18    | MSS_CR5B_AXI_RD_RED_Test in Interrupt Method.
-UC-19    | MSS_CR5A_AXI_S_RED_Test in Interrupt Method.
-UC-20    | MSS_CR5B_AXI_S_RED_Test in Interrupt Method.
-UC-21    | MSS_MBOX_SEC_Test in Interrupt Method.
-UC-22    | MSS_MBOX_DED_Test in Interrupt Method.
-UC-23    | MSS_MBOX_RED_Test in Interrupt Method.
-UC-24    | MSS_MCRC_SEC_Test in Interrupt  Method.
-UC-25    | MSS_MCRC_DED_Test in Interrupt  Method.
-UC-26    | MSS_MCRC_RED_Test in Interrupt  Method.
-UC-27    | MSS_QSPI_SEC_Test in Interrupt  Method.
-UC-28    | MSS_QSPI_DED_Test in Interrupt  Method.
-UC-29    | MSS_QSPI_RED_Test in Interrupt  Method.
-UC-30    | MSS_SWBUF_SEC_Test in Interrupt  Method.
-UC-31    | MSS_SWBUF_DED_Test in Interrupt  Method.
-UC-32    | MSS_SWBUF_RED_Test in Interrupt  Method.
-UC-33    | MSS_TO_MDO_SEC_Test in Interrupt  Method.
-UC-34    | MSS_TO_MDO_DED_Test in Interrupt  Method.
-UC-35    | MSS_TO_MDO_RED_Test in Interrupt  Method.
-UC-36    | DAP_R232_RED_Test in Interrupt  Method.
-UC-37    | MSS_SCRP_RED_Test in Interrupt  Method.
+UC-47    | MSS_MCRC_SEC_Test in Interrupt  Method.
+UC-48    | MSS_MCRC_DED_Test in Interrupt  Method.
+UC-49    | MSS_MCRC_RED_Test in Interrupt  Method.
+UC-50    | MSS_QSPI_SEC_Test in Interrupt  Method.
+UC-51    | MSS_QSPI_DED_Test in Interrupt  Method.
+UC-52    | MSS_QSPI_RED_Test in Interrupt  Method.
+UC-53    | MSS_SWBUF_SEC_Test in Interrupt  Method.
+UC-54    | MSS_SWBUF_DED_Test in Interrupt  Method.
+UC-55    | MSS_SWBUF_RED_Test in Interrupt  Method.
+UC-56    | MSS_TO_MDO_SEC_Test in Interrupt  Method.
+UC-57    | MSS_TO_MDO_DED_Test in Interrupt  Method.
+UC-58    | MSS_TO_MDO_RED_Test in Interrupt  Method.
+UC-59    | DAP_R232_RED_Test in Interrupt  Method.
+UC-60    | MSS_SCRP_RED_Test in Interrupt  Method.
 
 Use Cases On AWR294X in R5 Core
 ---------
@@ -384,29 +375,20 @@ UC-43    | MSS_CR5A_AXI_S_SEC_Test in Interrupt Method.
 UC-44    | MSS_CR5A_AXI_S_RED_Test in Interrupt Method.
 UC-45    | MSS_CR5B_AXI_S_SEC_Test in Interrupt Method.
 UC-46    | MSS_CR5B_AXI_S_RED_Test in Interrupt Method.
-UC-15    | MSS_CR5A_AXI_WR_RED_Test in Interrupt Method.
-UC-16    | MSS_CR5B_AXI_WR_RED_Test in Interrupt Method.
-UC-17    | MSS_CR5A_AXI_RD_RED_Test in Interrupt Method.
-UC-18    | MSS_CR5B_AXI_RD_RED_Test in Interrupt Method.
-UC-19    | MSS_CR5A_AXI_S_RED_Test in Interrupt Method.
-UC-20    | MSS_CR5B_AXI_S_RED_Test in Interrupt Method.
-UC-21    | MSS_MBOX_SEC_Test in Interrupt Method.
-UC-22    | MSS_MBOX_DED_Test in Interrupt Method.
-UC-23    | MSS_MBOX_RED_Test in Interrupt Method.
-UC-24    | MSS_MCRC_SEC_Test in Interrupt  Method.
-UC-25    | MSS_MCRC_DED_Test in Interrupt  Method.
-UC-26    | MSS_MCRC_RED_Test in Interrupt  Method.
-UC-27    | MSS_QSPI_SEC_Test in Interrupt  Method.
-UC-28    | MSS_QSPI_DED_Test in Interrupt  Method.
-UC-29    | MSS_QSPI_RED_Test in Interrupt  Method.
-UC-30    | MSS_SWBUF_SEC_Test in Interrupt  Method.
-UC-31    | MSS_SWBUF_DED_Test in Interrupt  Method.
-UC-32    | MSS_SWBUF_RED_Test in Interrupt  Method.
-UC-33    | MSS_TO_MDO_SEC_Test in Interrupt  Method.
-UC-34    | MSS_TO_MDO_DED_Test in Interrupt  Method.
-UC-35    | MSS_TO_MDO_RED_Test in Interrupt  Method.
-UC-36    | DAP_R232_RED_Test in Interrupt  Method.
-UC-37    | MSS_SCRP_RED_Test in Interrupt  Method.
+UC-47    | MSS_MCRC_SEC_Test in Interrupt  Method.
+UC-48    | MSS_MCRC_DED_Test in Interrupt  Method.
+UC-49    | MSS_MCRC_RED_Test in Interrupt  Method.
+UC-50    | MSS_QSPI_SEC_Test in Interrupt  Method.
+UC-51    | MSS_QSPI_DED_Test in Interrupt  Method.
+UC-52    | MSS_QSPI_RED_Test in Interrupt  Method.
+UC-53    | MSS_SWBUF_SEC_Test in Interrupt  Method.
+UC-54    | MSS_SWBUF_DED_Test in Interrupt  Method.
+UC-55    | MSS_SWBUF_RED_Test in Interrupt  Method.
+UC-56    | MSS_TO_MDO_SEC_Test in Interrupt  Method.
+UC-57    | MSS_TO_MDO_DED_Test in Interrupt  Method.
+UC-58    | MSS_TO_MDO_RED_Test in Interrupt  Method.
+UC-59    | DAP_R232_RED_Test in Interrupt  Method.
+UC-60    | MSS_SCRP_RED_Test in Interrupt  Method.
 
 Use Cases On AWR294X in C66 Core
  ---------
