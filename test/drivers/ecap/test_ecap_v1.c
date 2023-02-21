@@ -38,12 +38,15 @@
 #include <stdlib.h>
 #include <unity.h>
 #include <drivers/ecap.h>
+#include <drivers/epwm.h>
 #include <drivers/edma.h>
 #include <drivers/adc.h>
 #include <drivers/gpio.h>
 #include <drivers/pinmux.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+
+#include "menu.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -62,135 +65,6 @@
 /* ========================================================================== */
 
 /* ========================================================================== */
-/* TA-DUT UART communincation related definitions, macros, variables */
-#define CMD_TX_BUFSIZE (200U)
-#define CMD_RX_BUFSIZE (200U)
-
-#define CMD_SIZE (64U)
-#define RSP_SIZE (64U)
-
-#define SIZE_STRING_TEST_NAME       (70)
-#define TIMEOUT_UART_MENU           (10000)
-#define TIMEOUT_UART_TESTER         (10000)
-#define TIMEOUT_UART_INFINITE       (SystemP_WAIT_FOREVER)
-
-char test_command[CMD_SIZE];
-uint8_t gCmdTxBuffer[CMD_TX_BUFSIZE];
-uint8_t gCmdRxBuffer[CMD_RX_BUFSIZE];
-
-volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U;
-
-UART_Transaction trans;
-int32_t transferOK;
-
-bool enableLog;
-bool manual_testing;
-
-/* Initialises the tester-DUT UART Communication.*/
-void tester_int(void);
-/* waits for the user uart input of char 'y'*/
-void wait_for_user_uart_input(void);
-/* Sends out the str into UART based on the manual_testing*/
-void tester_command(char *str);
-
-void tester_init(void)
-{
-    UART_Transaction_init(&trans);
-    trans.timeout = TIMEOUT_UART_TESTER;
-
-    if (enableLog)
-        DebugP_log("\r\nSending initialization command!!");
-
-    gNumBytesWritten = 0U;
-    trans.buf = &gCmdTxBuffer[0U];
-    strncpy(trans.buf, "123456780000000000000000ABCDEFEF", CMD_SIZE);
-    trans.count = CMD_SIZE; // if not pulled up CMD_SIZE-1 expected. Send CMD_SIZE-1 only to sync. Unexpected 1.
-    transferOK = UART_write(gUartHandle[TESTER_UART], &trans);
-    /* Quickly wait to read ack. No debug prints here*/
-    gNumBytesRead = 0U;
-    trans.buf = &gCmdRxBuffer[0U];
-    trans.count = RSP_SIZE;
-    transferOK = UART_read(gUartHandle[TESTER_UART], &trans);
-
-    if (enableLog)
-        DebugP_log("\r\nReceived response. Tester Initialized!!");
-
-    /*Clear TX buffer for shorter commands*/
-    uint8_t ind;
-    for (ind = 0; ind < CMD_SIZE; ind++)
-    {
-        gCmdTxBuffer[ind] = 0;
-    }
-}
-
-void wait_for_user_uart_input(void)
-{
-
-    bool correct_input = false;
-
-    while (!correct_input)
-    {
-        DebugP_log("please enter 'y' after setting up required configuration for test\r\n");
-
-        /*Clearing the Rx buffer for 1 char*/
-        gCmdRxBuffer[0] = '\0';
-
-        /* forever wait until the user inputs*/
-        trans.timeout = TIMEOUT_UART_INFINITE;
-        trans.buf = &gCmdRxBuffer[0U];
-        trans.count = 1;
-        transferOK = UART_read(gUartHandle[CONFIG_UART0], &trans);
-
-        correct_input = (gCmdRxBuffer[0] == 'y') || (gCmdRxBuffer[0] == 'Y');
-    }
-
-    /* changing timeout back to default*/
-    trans.timeout = TIMEOUT_UART_TESTER;
-
-    return;
-}
-
-void tester_command(char *str)
-{
-    if (manual_testing)
-    {
-        DebugP_log("%s\r\n", str);
-        wait_for_user_uart_input();
-        return;
-    }
-
-    if (enableLog)
-        DebugP_log("\r\nSending command!!");
-
-    /* Send command*/
-    gNumBytesWritten = 0U;
-    trans.buf = &gCmdTxBuffer[0U];
-    strncpy(trans.buf, str, strlen(str));
-    trans.count = CMD_SIZE;
-    transferOK = UART_write(gUartHandle[TESTER_UART], &trans);
-
-    /* Quickly wait to read ack. No debug prints here*/
-    gNumBytesRead = 0U;
-    trans.buf = &gCmdRxBuffer[0U];
-    trans.count = RSP_SIZE;
-    transferOK = UART_read(gUartHandle[TESTER_UART], &trans);
-
-    uint8_t ind;
-    if (enableLog)
-    {
-        DebugP_log("\r\nReceived response!! (%d %d) : ", transferOK, trans.status);
-        for (ind = 0; ind < RSP_SIZE; ind++)
-        {
-            DebugP_log("%c", gCmdRxBuffer[ind]);
-        }
-        DebugP_log("\r\n");
-    }
-    /*Clear TX buffer for shorter commands*/
-    for (ind = 0; ind < CMD_SIZE; ind++)
-    {
-        gCmdTxBuffer[ind] = 0;
-    }
-}
 
 /* ========================================================================== */
 
@@ -233,6 +107,42 @@ uint32_t adc_base_addr[5] =
     CSL_CONTROLSS_ADC4_U_BASE,
 };
 
+uint32_t epwm_base_addr[32] =
+{
+    CSL_CONTROLSS_G0_EPWM0_U_BASE,
+    CSL_CONTROLSS_G0_EPWM1_U_BASE,
+    CSL_CONTROLSS_G0_EPWM2_U_BASE,
+    CSL_CONTROLSS_G0_EPWM3_U_BASE,
+    CSL_CONTROLSS_G0_EPWM4_U_BASE,
+    CSL_CONTROLSS_G0_EPWM5_U_BASE,
+    CSL_CONTROLSS_G0_EPWM6_U_BASE,
+    CSL_CONTROLSS_G0_EPWM7_U_BASE,
+    CSL_CONTROLSS_G0_EPWM8_U_BASE,
+    CSL_CONTROLSS_G0_EPWM9_U_BASE,
+    CSL_CONTROLSS_G0_EPWM10_U_BASE,
+    CSL_CONTROLSS_G0_EPWM11_U_BASE,
+    CSL_CONTROLSS_G0_EPWM12_U_BASE,
+    CSL_CONTROLSS_G0_EPWM13_U_BASE,
+    CSL_CONTROLSS_G0_EPWM14_U_BASE,
+    CSL_CONTROLSS_G0_EPWM15_U_BASE,
+    CSL_CONTROLSS_G0_EPWM16_U_BASE,
+    CSL_CONTROLSS_G0_EPWM17_U_BASE,
+    CSL_CONTROLSS_G0_EPWM18_U_BASE,
+    CSL_CONTROLSS_G0_EPWM19_U_BASE,
+    CSL_CONTROLSS_G0_EPWM20_U_BASE,
+    CSL_CONTROLSS_G0_EPWM21_U_BASE,
+    CSL_CONTROLSS_G0_EPWM22_U_BASE,
+    CSL_CONTROLSS_G0_EPWM23_U_BASE,
+    CSL_CONTROLSS_G0_EPWM24_U_BASE,
+    CSL_CONTROLSS_G0_EPWM25_U_BASE,
+    CSL_CONTROLSS_G0_EPWM26_U_BASE,
+    CSL_CONTROLSS_G0_EPWM27_U_BASE,
+    CSL_CONTROLSS_G0_EPWM28_U_BASE,
+    CSL_CONTROLSS_G0_EPWM29_U_BASE,
+    CSL_CONTROLSS_G0_EPWM30_U_BASE,
+    CSL_CONTROLSS_G0_EPWM31_U_BASE,
+};
+
 ECAP_Events events[4] =
 {
     ECAP_EVENT_1,
@@ -250,6 +160,8 @@ uint32_t gpio_base_addr = CSL_GPIO0_U_BASE;
 
 /* GPIO59 -> EPWM8_A (G3) */
 uint32_t gpio_pin = (PIN_EPWM8_A)>>2;
+uint32_t pwm_input = (PIN_EPWM13_A)>>2;
+
 
 uint32_t inputxbar_base_addr = CSL_CONTROLSS_INPUTXBAR_U_BASE;
 
@@ -360,7 +272,6 @@ void util_input_params_init(void)
     return;
 }
 
-
 /*
 Info: Procedure to configure the peripheral modes and interrupts
 - Disable global interrupts
@@ -388,34 +299,46 @@ int32_t test_ecap_cases(uint8_t in);
 
 /* ECAP util functions */
 void util_ecap_reset_all(void);
-void util_start_capture_timestamp(uint16_t instance);
+void util_ecap_start_timestamp(uint16_t instance);
 void util_ecap_configure(uint16_t instance);
 void util_ecap_deconfigure_and_reset(uint16_t instance);
-bool util_wait_for_ecap_interrupt(uint16_t instance);
-void util_configure_ecap_input(void);
+bool util_ecap_wait_for_interrupt(uint16_t instance);
+void util_ecap_configure_input(void);
 void util_activate_input_pulses(void);
 bool util_compare_in_range(int value1, int value2, int delta);
 int util_validate_input_events(uint16_t instance, bool check_flags);
 
 /* ADC util funcitons */
-void util_clear_adc_interrupts(void);
-bool util_wait_for_adc_interrupts(void);
+void util_adc_clear_interrupts(void);
+bool util_adc_wait_for_interrupts(void);
 void util_adc_init_configure_soc_source(uint16_t adc_instance,uint16_t ecap_instance);
 void util_adc_reset(uint16_t adc_instace);
 
 /* GPIO util funcitons */
-void util_configure_gpio(bool input);
+void util_gpio_configure(bool input);
 void util_gpio_toggle(uint16_t times, uint32_t uSec_delay);
+void util_gpio_pwm_input_configure(void);
 
 /* EDMA util funcitons */
 void util_edma_configure(uint16_t ecap_instance);
 void util_edma_deconfigure(void);
+
+/* EPWM util functions */
+void util_epwm_enable_all(void);
+void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period);
+void util_epwm_reset(int8_t epwm_instance);
+void util_epwm_enable(uint16_t epwm_instance);
+void util_epwm_sync(uint16_t epwm_instance, uint16_t main_pwm_instance, uint16_t phase_shift_value);
+void util_epwm_disable_all(void);
+void util_xbar_configure_sync_dut(uint32_t epwm_instance);
 
 /* test implementing functions */
 int32_t AM263x_ECAP_BTR_001(uint16_t instance);
 int32_t AM263x_ECAP_BTR_002(uint16_t instance);
 int32_t AM263x_ECAP_BTR_003(uint16_t instance);
 int32_t AM263x_ECAP_BTR_004(uint16_t instance);
+int32_t AM263x_ECAP_BTR_005(uint16_t instance);
+int32_t AM263x_ECAP_BTR_006(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -599,30 +522,38 @@ void util_edma_deconfigure(void)
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+#define TOTAL_TEST_CASES (9)
+
 void test_main(void *args)
 {
     /* Open drivers */
     Drivers_open();
     Board_driversOpen();
 
-    /* Todo : Add tester init, menu functionalities.*/
-    enableLog = true;
-
+    tester_init();
     UNITY_BEGIN();
+    char test_title[] = "----------------------ECAP-TEST-CASES----------------------";
 
-    RUN_TEST(ECAP_setEventPrescalerApiCheck, 3330, NULL);
+    menu_input test_list_input_independent[TOTAL_TEST_CASES] =
+    {
+        {0, 3330,  ECAP_setEventPrescalerApiCheck,                         "ECAP_setEventPrescalerApiCheck"},
+        {0, 9476,  ECAP_selection_of_dma_trigger_source,                   "ECAP_selection_of_dma_trigger_source"},
+        {0, 7906,  ECAP_selection_of_soc_trigger_source,                   "ECAP_selection_of_soc_trigger_source"},
+        {0, 3403,  ECAP_capture_event_polarity,                            "ECAP_capture_event_polarity"},
+        {0, 3404,  ECAP_capture_mode_tests,                                "ECAP_capture_mode_tests"},
+        {0, 3406,  ECAP_add_additional_input_trigger_sources,              "ECAP_add_additional_input_trigger_sources"},
+        {0, 3407,  ECAP_support_interrupt_generation_on_either_of_4_events,"ECAP_support_interrupt_generation_on_either_of_4_events"},
+        {0, 3402,  ECAP_high_resolution_functions_for_ecap,                "ECAP_high_resolution_functions_for_ecap"},
+        {1, 3401,  ECAP_selection_of_sync_in_source,                       "ECAP_selection_of_sync_in_source"},
+    };
 
-    RUN_TEST(ECAP_selection_of_sync_in_source, 3401, NULL);
+    menu(TOTAL_TEST_CASES, test_list_input_independent, test_title);
 
-    RUN_TEST(ECAP_high_resolution_functions_for_ecap, 3402, NULL);
-    RUN_TEST(ECAP_capture_event_polarity, 3403, NULL);
-    RUN_TEST(ECAP_capture_mode_tests, 3404, NULL);
-    RUN_TEST(ECAP_add_additional_input_trigger_sources, 3406, NULL);
-    RUN_TEST(ECAP_support_interrupt_generation_on_either_of_4_events, 3407, NULL);
-    RUN_TEST(ECAP_selection_of_soc_trigger_source, 7906, NULL);
-    RUN_TEST(ECAP_selection_of_dma_trigger_source, 9476, NULL);
-
-
+    if(enableLog)
+    {
+        DebugP_logZoneEnable(DebugP_LOG_ZONE_ERROR);
+        DebugP_logZoneEnable(DebugP_LOG_ZONE_INFO);
+    }
     UNITY_END();
 
     /* Close drivers */
@@ -699,6 +630,7 @@ void util_ecap_configure(uint16_t instance)
         for(int event = 0; event < 4; event++)
         {
             ECAP_setEventPolarity(base, event, ecap_config_ptr->polarity[event]);
+
             if(ecap_config_ptr->counter_reset_capture[event])
             {
                 ECAP_enableCounterResetOnEvent(base, event);
@@ -713,7 +645,18 @@ void util_ecap_configure(uint16_t instance)
         ECAP_selectECAPInput(base, ecap_config_ptr->input);
     }
     /* Sets a phase shift value count */
-    ECAP_setPhaseShiftCount(base,ecap_config_ptr->phase_shift_count);
+    ECAP_setPhaseShiftCount(base, ecap_config_ptr->phase_shift_count);
+
+    uint16_t syncout_source = (ecap_config_ptr->sync_out_mode) >> 3;
+    /* Configures Sync out signal mode */
+    ECAP_setSyncOutMode(base, syncout_source);
+
+    /* Configures emulation mode */
+    ECAP_setEmulationMode(base, ecap_config_ptr->emu_mode);
+
+
+    /* Set up the source for sync-in pulse */
+    ECAP_setSyncInPulseSource(base, ecap_config_ptr->sync_in_source);
 
     if((ecap_config_ptr->load_counter_en) == 0)
     {
@@ -721,17 +664,10 @@ void util_ecap_configure(uint16_t instance)
 throughlue */
         ECAP_disableLoadCounter(base);
     }
-    uint16_t syncout_source = (ecap_config_ptr->sync_out_mode) >> 3;
-    /* Configures Sync out signal mode */
-    ECAP_setSyncOutMode(base,syncout_source);
-
-    /* Configures emulation mode */
-    ECAP_setEmulationMode(base,ecap_config_ptr->emu_mode);
-
-
-    /* Set up the source for sync-in pulse */
-    ECAP_setSyncInPulseSource(base, ecap_config_ptr->sync_in_source);
-
+    else
+    {
+        ECAP_enableLoadCounter(base);
+    }
     /* Resetting the Modulo counter, Counter, Event flags */
     ECAP_resetCounters(base);
     /* Start Time stamp counter for instance  and enable Timestamp capture separately
@@ -739,12 +675,13 @@ throughlue */
         - ECAP_startCounter(base);
         - ECAP_enableTimeStampCapture(base); */
     if(ecap_config_ptr->rearm)
-    ECAP_reArm(base);
-
+    {
+        ECAP_reArm(base);
+    }
     return;
 }
 
-void util_start_capture_timestamp(uint16_t instance)
+void util_ecap_start_timestamp(uint16_t instance)
 {
     uint32_t base = ecap_base_addr[instance];
     ECAP_enableTimeStampCapture(base);
@@ -760,7 +697,7 @@ void util_ecap_deconfigure_and_reset(uint16_t instance)
     return;
 }
 /* returns 1 if wait is successful i.e., interrupt flag set */
-bool util_wait_for_ecap_interrupt(uint16_t instance)
+bool util_ecap_wait_for_interrupt(uint16_t instance)
 {
     int counter_max = 100;
     int count = 0;
@@ -778,7 +715,7 @@ bool util_wait_for_ecap_interrupt(uint16_t instance)
     return 0;
 }
 /* clears all the ADC interrupt ADC_INT1 */
-void util_clear_adc_interrupts(void)
+void util_adc_clear_interrupts(void)
 {
     for(int adc_instance = 0; adc_instance < 5; adc_instance++)
     {
@@ -788,7 +725,7 @@ void util_clear_adc_interrupts(void)
     return;
 }
 /* returns 1 if wait is successful i.e., interrupt flag set */
-bool util_wait_for_adc_interrupts(void)
+bool util_adc_wait_for_interrupts(void)
 {
     int counter_max = 1000;
     int errors = 0;
@@ -808,7 +745,7 @@ bool util_wait_for_adc_interrupts(void)
         if(count >= counter_max)
         {
             /* wait failed.*/
-            DebugP_log("failed at %d\r\n",adc_instance);
+            DebugP_logError("failed at %d\r\n",adc_instance);
             errors++;
         }
     }
@@ -820,7 +757,7 @@ bool util_wait_for_adc_interrupts(void)
     return 1;
 }
 /* returns 1 if wait is successful i.e., interrupt flag set */
-bool wait_for_dma_interrupts(void)
+bool util_dma_wait_for_interrupts(void)
 {
     int counter_max = 1000;
     int count = 0;
@@ -839,7 +776,7 @@ bool wait_for_dma_interrupts(void)
     if(count >= counter_max)
     {
         /* wait failed.*/
-        DebugP_log("wait failed\r\n");
+        DebugP_logError("wait failed\r\n");
         errors++;
     }
 
@@ -890,7 +827,7 @@ void util_adc_reset(uint16_t adc_instance)
     return;
 }
 /* configures GPIO (declared global) as input or output */
-void util_configure_gpio(bool input)
+void util_gpio_configure(bool input)
 {
     /* Setting EPWM PIN mux (overwriting if already if existed)*/
     Pinmux_PerCfg_t gPinMuxMainDomainCfg[] = {
@@ -918,8 +855,7 @@ void util_configure_gpio(bool input)
 /* toggles the GPIO (declared global) for \b times with \b uSecs delay*/
 void util_gpio_toggle(uint16_t times, uint32_t uSec_delay)
 {
-    if(enableLog)
-    DebugP_log("toggling GPIO %d\r\n", gpio_pin);
+    DebugP_testLog("toggling GPIO %d\r\n", gpio_pin);
     /* if uSec_delay is <=0 then only toggle without any delay*/
     if(uSec_delay == 0)
     {
@@ -944,12 +880,149 @@ void util_gpio_toggle(uint16_t times, uint32_t uSec_delay)
     return;
 }
 
+/* Configures the Input Pinmux and sets as GPIO input for PWM input */
+void util_gpio_pwm_input_configure(void)
+{
+
+    Pinmux_PerCfg_t gPinMuxMainDomainCfg[] = {
+                /* GPIO0 pin config */
+        /* GPIO69 -> EPWM13_A (K4) */
+        {
+            PIN_EPWM13_A,
+            ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_HIGH )
+        },
+
+        {
+            PIN_I2C1_SDA,
+        ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_SYNC | PIN_GPIO_R5SS0_0 )
+        },
+
+        {PINMUX_END, PINMUX_END}
+    };
+    Pinmux_config(gPinMuxMainDomainCfg, PINMUX_DOMAIN_ID_MAIN);
+
+    GPIO_setDirMode(gpio_base_addr, pwm_input, INPUT);
+    GPIO_setDirMode(gpio_base_addr, (PIN_I2C1_SDA)>>2, INPUT);
+}
+
+void util_epwm_enable_all(void)
+{
+    for(int i = 0; i<=31 ; i++)
+    {
+        SOC_setEpwmTbClk(i, TRUE);
+        SOC_setEpwmGroup(i, 0);
+    }
+
+    DebugP_testLog("Enabled TB CLK for all EPWM, set group as 0\r\n");
+}
+/* sets up the given epwm to given period, ON_value values, enables syncout pulse by default at counter = 0 */
+void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period)
+{
+    uint32_t epwm_base = epwm_base_addr[epwm_instance];
+    /* reset before setting up the configuration */
+    util_epwm_reset(epwm_instance);
+    EPWM_setClockPrescaler(epwm_base, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);
+    EPWM_setTimeBasePeriod(epwm_base, period);
+    EPWM_disablePhaseShiftLoad(epwm_base);
+    EPWM_setTimeBaseCounter(epwm_base, 0);
+    EPWM_setTimeBaseCounterMode(epwm_base, EPWM_COUNTER_MODE_STOP_FREEZE);
+
+    EPWM_setCounterCompareShadowLoadMode(epwm_base, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);
+    EPWM_setCounterCompareValue(epwm_base, EPWM_COUNTER_COMPARE_A, ON_value);
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+
+    EPWM_setCounterCompareShadowLoadMode(epwm_base, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);
+    EPWM_setCounterCompareValue(epwm_base, EPWM_COUNTER_COMPARE_B, ON_value);
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+
+    EPWM_enableSyncOutPulseSource(epwm_base, EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO);
+
+    DebugP_testLog("\tPWM %d is set for Period : %d, ON_value : %d\r\n", epwm_instance, period, ON_value);
+}
+
+void util_epwm_reset(int8_t epwm_instance)
+{
+    SOC_generateEpwmReset(epwm_instance);
+}
+
+void util_epwm_enable(uint16_t epwm_instance)
+{
+    SOC_setEpwmTbClk(epwm_instance, TRUE);
+    SOC_setEpwmGroup(epwm_instance, 0);
+}
+
+void util_epwm_sync(uint16_t epwm_instance, uint16_t main_pwm_instance, uint16_t phase_shift_value)
+{
+    EPWM_SyncInPulseSource sync_in_source = EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0 + main_pwm_instance;
+    uint32_t epwm_base_address = epwm_base_addr[epwm_instance];
+	EPWM_setSyncInPulseSource(epwm_base_address, sync_in_source);
+	EPWM_enablePhaseShiftLoad(epwm_base_address);
+	EPWM_setPhaseShift(epwm_base_address, phase_shift_value);
+}
+
+void util_epwm_disable_all(void)
+{
+    for (int i = 0; i <= 31; i++)
+    {
+        SOC_setEpwmTbClk(i, FALSE);
+    }
+}
+
+/* Configures xbar instance to route the syncout signal from given EPWM to GPIO to sync at TESTER */
+void util_xbar_configure_sync_dut(uint32_t epwm_instance)
+{
+
+    util_epwm_enable(epwm_instance);
+
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK1,0x95A4F1E0);
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_PR0_PRU1_GPO18_CFG_REG, 0x5);
+
+    SOC_xbarSelectOutputXBarInputSource(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, OUTPUT_XBAR_EPWM_SYNCOUT_XBAR0, 0);
+    SOC_xbarSelectLatchOutputXBarOutputSignal(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+    SOC_xbarSelectStretchedPulseOutputXBarOutputSignal(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+    SOC_xbarSelectPWMSyncOutXBarInput(CSL_CONTROLSS_PWMSYNCOUTXBAR_U_BASE, 0, (1<<epwm_instance));
+}
+
 /* Testcase 1 - Check the ECAP_setEventPrescaler API */
 static void ECAP_setEventPrescalerApiCheck(void *args)
 {
+    DebugP_testLog("Test : Prescaler API Check\r\n");
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(0), 0);
 }
+static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args)
+{
+    DebugP_testLog("Test : Interrupt generation on various events\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(1), 0);
+}
+static void ECAP_selection_of_soc_trigger_source(void *args)
+{
+    DebugP_testLog("Test : ADC_SOC event generation on various events\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(2), 0);
+}
+static void ECAP_selection_of_dma_trigger_source(void *args)
+{
+    DebugP_testLog("Test : DMA event generation on various events\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(3), 0);
+}
+static void ECAP_add_additional_input_trigger_sources(void *args)
+{
+    DebugP_testLog("Test : Input Sources to ECAP\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(4), 0);
+}
+static void ECAP_capture_mode_tests(void *args)
+{
+    DebugP_testLog("Test : Capture Mode tests. Tests the mode of captures and counter reset on each capture.\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(5), 0);
+}
 static void ECAP_selection_of_sync_in_source(void *args)
+{
+    DebugP_testLog("Test : Sync In Sources from EPWM tests\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(6), 0);
+}
+static void ECAP_capture_event_polarity(void *args)
 {
     UNITY_TEST_IGNORE("","TODO");
 }
@@ -957,41 +1030,6 @@ static void ECAP_high_resolution_functions_for_ecap(void *args)
 {
     UNITY_TEST_IGNORE("","TODO");
 }
-static void ECAP_capture_event_polarity(void *args)
-{
-    UNITY_TEST_IGNORE("","TODO");
-}
-static void ECAP_capture_mode_tests(void *args)
-{
-    if(enableLog)
-    DebugP_log("Test : Capture Mode tests. Tests the mode of captures and counter reset on each capture.\r\n");
-    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(5), 0);
-}
-static void ECAP_add_additional_input_trigger_sources(void *args)
-{
-    if(enableLog)
-    DebugP_log("Test : Input Sources to ECAP\r\n");
-    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(4), 0);
-}
-static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args)
-{
-    if(enableLog)
-    DebugP_log("Test : Interrupt generation on various events\r\n");
-    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(1), 0);
-}
-static void ECAP_selection_of_soc_trigger_source(void *args)
-{
-    if(enableLog)
-    DebugP_log("Test : ADC_SOC event generation on various events\r\n");
-    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(2), 0);
-}
-static void ECAP_selection_of_dma_trigger_source(void *args)
-{
-    if(enableLog)
-    DebugP_log("Test : DMA event generation on various events\r\n");
-    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(3), 0);
-}
-
 /*
 configure and test the interrupt sources.
 interrupt sources for ECAP are the following
@@ -1009,8 +1047,7 @@ TODO : test the Signal monitoring events as sources and test.
 */
 int32_t AM263x_ECAP_BTR_001(uint16_t instance)
 {
-    if(enableLog)
-    DebugP_log("------------- instance : %d-------------\r\n", instance);
+    DebugP_testLog("------------- instance : %d-------------\r\n", instance);
 
     int errors = 0;
     uint32_t base = ecap_base_addr[instance];
@@ -1050,10 +1087,10 @@ int32_t AM263x_ECAP_BTR_001(uint16_t instance)
         /* force interrupt event*/
         ECAP_forceInterrupt(base, interrupt_source[iter]);
 
-        if(util_wait_for_ecap_interrupt(instance) == false)
+        if(util_ecap_wait_for_interrupt(instance) == false)
         {
             errors++;
-            DebugP_log("wait failed for source : %x\r\n", interrupt_source[iter]);
+            DebugP_logError("wait failed for source : %x\r\n", interrupt_source[iter]);
         }
         else
         {
@@ -1061,7 +1098,7 @@ int32_t AM263x_ECAP_BTR_001(uint16_t instance)
             if(interrupt_event_flag != interrupt_source[iter])
             {
                 errors++;
-                DebugP_log("incorrect interrupt source failed\r\n");
+                DebugP_logError("incorrect interrupt source failed\r\n");
             }
         }
     }
@@ -1096,7 +1133,7 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
     uint32_t base = ecap_base_addr[instance];
 
     /* set GPIOx as inputxbar for the usage in this test case */
-    util_configure_gpio(OUTPUT);
+    util_gpio_configure(OUTPUT);
 
     /* configure input Xbar to a gpio pin.*/
     SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, gpio_pin, 0);
@@ -1141,17 +1178,17 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
 
                 if(event_out == soc_trigger_check)
                 {
-                    wait_success = util_wait_for_adc_interrupts();
+                    wait_success = util_adc_wait_for_interrupts();
                 }
                 else
                 {
-                    wait_success = wait_for_dma_interrupts();
+                    wait_success = util_dma_wait_for_interrupts();
                 }
                 if(wait_success == false)
                 {
                     /*Interrupts did not occur. i.e., trigger failed*/
                     errors++;
-                    DebugP_log("wait failed. for source %d \r\n", source);
+                    DebugP_logError("wait failed. for source %d \r\n", source);
                 }
 
                 /* stopping the couter to avoid accidental triggers*/
@@ -1163,7 +1200,7 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
                 /* Clear Interrupts*/
                 if(event_out == soc_trigger_check)
                 {
-                    util_clear_adc_interrupts();
+                    util_adc_clear_interrupts();
                 }
                 else
                 {
@@ -1185,17 +1222,17 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
 
                 if(event_out == soc_trigger_check)
                 {
-                    wait_success = util_wait_for_adc_interrupts();
+                    wait_success = util_adc_wait_for_interrupts();
                 }
                 else
                 {
-                    wait_success = wait_for_dma_interrupts();
+                    wait_success = util_dma_wait_for_interrupts();
                 }
                 if(wait_success == false)
                 {
                     /*Interrupts did not occur. i.e., trigger failed*/
                     errors++;
-                    DebugP_log("wait failed. for source %d \r\n", source);
+                    DebugP_logError("wait failed. for source %d \r\n", source);
                 }
 
                 /* stopping the couter to avoid accidental triggers*/
@@ -1206,7 +1243,7 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
                 /* Clear Interrupts*/
                 if(event_out == soc_trigger_check)
                 {
-                    util_clear_adc_interrupts();
+                    util_adc_clear_interrupts();
                 }
                 else
                 {
@@ -1238,17 +1275,17 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
 
                 if(event_out == soc_trigger_check)
                 {
-                    wait_success = util_wait_for_adc_interrupts();
+                    wait_success = util_adc_wait_for_interrupts();
                 }
                 else
                 {
-                    wait_success = wait_for_dma_interrupts();
+                    wait_success = util_dma_wait_for_interrupts();
                 }
                 if(wait_success == false)
                 {
                     /*Interrupts did not occur. i.e., trigger failed*/
                     errors++;
-                    DebugP_log("wait failed. for source %d \r\n", source);
+                    DebugP_logError("wait failed. for source %d \r\n", source);
                 }
 
                 /* stopping the couter to avoid accidental triggers*/
@@ -1259,7 +1296,7 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
                 /* Clear Interrupts*/
                 if(event_out == soc_trigger_check)
                 {
-                    util_clear_adc_interrupts();
+                    util_adc_clear_interrupts();
                 }
                 else
                 {
@@ -1296,23 +1333,23 @@ int16_t check_soc_dma_triggers(uint16_t instance, int event_out)
 
             if(event_out == soc_trigger_check)
             {
-                wait_success = util_wait_for_adc_interrupts();
+                wait_success = util_adc_wait_for_interrupts();
             }
             else
             {
-                wait_success = wait_for_dma_interrupts();
+                wait_success = util_dma_wait_for_interrupts();
             }
             if(wait_success == false)
             {
                 /*Interrupts did not occur. i.e., trigger failed*/
                 errors++;
-                DebugP_log("wait failed. for source %d \r\n", source);
+                DebugP_logError("wait failed. for source %d \r\n", source);
             }
 
             /* Clear Interrupts*/
             if(event_out == soc_trigger_check)
             {
-                util_clear_adc_interrupts();
+                util_adc_clear_interrupts();
             }
             else
             {
@@ -1346,8 +1383,7 @@ to disable :
 */
 int32_t AM263x_ECAP_BTR_002(uint16_t instance)
 {
-    if(enableLog)
-    DebugP_log("------------- instance : %d-------------\r\n", instance);
+    DebugP_testLog("------------- instance : %d-------------\r\n", instance);
 
     int errors = 0;
     int soc_trigger_check = 0;
@@ -1391,8 +1427,7 @@ to disable :
 
 int32_t AM263x_ECAP_BTR_003(uint16_t instance)
 {
-    if(enableLog)
-    DebugP_log("------------- instance : %d-------------\r\n", instance);
+    DebugP_testLog("------------- instance : %d-------------\r\n", instance);
 
     int errors = 0;
     int dma_trigger_check = 1;
@@ -1414,7 +1449,7 @@ int32_t AM263x_ECAP_BTR_003(uint16_t instance)
     return 0;
 }
 
-void util_configure_ecap_input(void)
+void util_ecap_configure_input(void)
 {
     ECAP_InputCaptureSignals input = ecap_config_ptr->input;
 
@@ -1424,7 +1459,7 @@ void util_configure_ecap_input(void)
         /* InputXbar type. expect four pulses so the stop/wrap capture should be event 4*/
         /* input source is xbar instance */
         /* set the input event count to be 4 and timestamps to be of 1 uSec */
-        util_configure_gpio(OUTPUT);
+        util_gpio_configure(OUTPUT);
 
         uint8_t inputxbar_instance = (uint8_t) (input - ECAP_INPUT_INPUTXBAR0);
 
@@ -1464,7 +1499,7 @@ bool util_compare_in_range(int value1, int value2, int delta)
 
     if((max_value - min_value) >= delta)
     {
-        DebugP_log("values differ out of range\r\n");
+        DebugP_logError("values differ out of range\r\n");
         return false;
     }
     return true;
@@ -1484,9 +1519,9 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
     if(check_flags && ((flags>>1)!= (expected_flags)))
     {
         errors++;
-        DebugP_log("ERROR: expected number of events did not occur.\r\n");
-        DebugP_log("\t\tExpected flags: %x\r\n",expected_flags);
-        DebugP_log("\r\n\t\tSet flags: %x\r\n", flags>>1);
+        DebugP_logError("ERROR: expected number of events did not occur.\r\n");
+        DebugP_testLog("\t\tExpected flags: %x\r\n",expected_flags);
+        DebugP_testLog("\r\n\t\tSet flags: %x\r\n", flags>>1);
         errors++;
     }
     if( (input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31) )
@@ -1508,9 +1543,9 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
                 continue;
             }
             errors++;
-            DebugP_log("\tTimeStamps for event %d donot match\r\n",iter);
-            DebugP_log("\t\tExpected: %d\r\n", input_params->timestamps[iter]);
-            DebugP_log("\t\tReturned: %d\r\n", timestamp);
+            DebugP_logError("\tTimeStamps for event %d donot match\r\n",iter);
+            DebugP_testLog("\t\tExpected: %d\r\n", input_params->timestamps[iter]);
+            DebugP_testLog("\t\tReturned: %d\r\n", timestamp);
         }
 
     }
@@ -1519,15 +1554,14 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
     {
         /* invalid input source */
         errors++;
-        DebugP_log("invalid input source\r\n");
+        DebugP_logError("invalid input source\r\n");
     }
     return errors;
 }
 /* Tests the input sources to the ECAP */
 int32_t AM263x_ECAP_BTR_004(uint16_t instance)
 {
-    if(enableLog)
-    DebugP_log("------------- instance : %d-------------\r\n", instance);
+    DebugP_testLog("------------- instance : %d-------------\r\n", instance);
 
     int errors = 0;
     /* Add additional signals too*/
@@ -1537,8 +1571,7 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
         input <= ECAP_INPUT_INPUTXBAR31;
         input++)
     {
-        if(enableLog)
-        DebugP_log("Selected input %d\r\n",input);
+        DebugP_testLog("Selected input %d\r\n",input);
         /* configure ecap for the oneshot mode to capture a max of 4 events. */
         ecap_config_ptr->capture_mode_continuous = false;
         /* configure input and select input source for ecap */
@@ -1546,11 +1579,11 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
         /* setting rearm configuration ecap */
         ecap_config_ptr->rearm = true;
         /* wrap capture poit will be set inside the input configuration based on the input */
-        util_configure_ecap_input();
+        util_ecap_configure_input();
         /* configure the ecap with the settings updated */
         util_ecap_configure(instance);
         /* start the counter in the ecap and enable capture timestamps */
-        util_start_capture_timestamp(instance);
+        util_ecap_start_timestamp(instance);
         /* activate input pulses */
         util_activate_input_pulses();
         /* check the ecap cap_registers, event flags to verify the input to expected output */
@@ -1580,13 +1613,12 @@ void ECAP_CAPTURE_MODE_ISR(void* args)
 /* tests Continuous or oneshot mode of the captures in ECAP and counter reset events */
 int32_t AM263x_ECAP_BTR_005(uint16_t instance)
 {
-    if(enableLog)
-    DebugP_log("------------- instance : %d-------------\r\n", instance);
+    DebugP_testLog("------------- instance : %d-------------\r\n", instance);
 
     int errors = 0;
     ECAP_CaptureMode capture_mode;
 
-    util_configure_gpio(OUTPUT);
+    util_gpio_configure(OUTPUT);
     SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, gpio_pin, 0);
 
     uint32_t reset_events[4][4]={
@@ -1615,7 +1647,7 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
     };
 
     gbase = ecap_base_addr[instance];
-    DebugP_log("%x is the base\r\n",gbase);
+    DebugP_testLog("%x is the base\r\n",gbase);
     volatile uint32_t intxbar_input = 1<<(instance);
     SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 0, 0, 0, 0, 0, 0, ( intxbar_input ), 0);
 
@@ -1658,7 +1690,7 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
             }
 
             util_ecap_configure(instance);
-            util_start_capture_timestamp(instance);
+            util_ecap_start_timestamp(instance);
 
             /*
             set ISR for 4 events and toggle GPIO 8 times.
@@ -1676,7 +1708,7 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
                 if(ecap_isr_count != num_times)
                 {
                     errors++;
-                    DebugP_log("ISR count didn't match. Expected %d recieved %d\r\n", num_times, ecap_isr_count);
+                    DebugP_logError("ISR count didn't match. Expected %d recieved %d\r\n", num_times, ecap_isr_count);
                 }
             }
             else
@@ -1684,7 +1716,7 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
                 if(ecap_isr_count != 4)
                 {
                     errors++;
-                    DebugP_log("ISR count didn't match. Expected 4 recieved %d\r\n", ecap_isr_count);
+                    DebugP_logError("ISR count didn't match. Expected 4 recieved %d\r\n", ecap_isr_count);
                 }
             }
             errors += util_validate_input_events(instance, false);
@@ -1701,11 +1733,218 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
     return 0;
 }
 
+/* tests Sync In Pulse */
+int32_t AM263x_ECAP_BTR_006(void)
+{
+    int errors = 0;
+    uint32_t pwm_period = 32000;
+    uint32_t pwm_ON_value = (pwm_period)>>1;    /* 50% duty cycle */
+
+    uint16_t input_duty_cycle = 5;             /* irrespective of sync PWM duty cycle */
+    uint16_t input_period = (pwm_period)>>5;
+
+    char     tester_cmd_start_input[CMD_SIZE];
+    char     tester_cmd_stop_input[CMD_SIZE] = "halt pwm input";
+
+    sprintf(tester_cmd_start_input, "generate pwm with duty cycle %02d period %05d on GPIO ", input_duty_cycle, input_period);
+    /* test description :
+        1. set up a Main PWM to sync all the PWMs
+        2. set up a fixed phase shift between all the PWMs
+        3. set all the 10 ECAPs with consecutive PWMs to sync their Counters.
+            Absolute timestamps in continuous mode.
+        4. All the ECAPs will be capturing a single input that is at least 4 times faster than the Main PWM
+        5. the timestamps should differ from uniformly across the ECAPs.
+    */
+    /*
+        10 ecaps to be testing 32 pwms syncouts.
+        32 epwms -> 4* (set of 8 pwms)
+        10 ecaps -> 8 to sync with 8 pwms. 2 redundant ones.
+    */
+    uint32_t pwm_phase_shifts[8];
+    pwm_phase_shifts[0] = 0;
+    for(int iter = 1; iter<8; iter++)
+    {
+        pwm_phase_shifts[iter] = pwm_period - (iter)*(pwm_period/8);
+    }
+
+    util_epwm_enable_all();
+
+    util_gpio_pwm_input_configure();
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
+
+    DebugP_testLog("pwm_input gpio is %d\r\n", pwm_input);
+    /* enabling the sync pulse from EPWM0 to xbar to sync external input. */
+
+    for(int iter = 0; iter < 4; iter++)
+    {
+        uint16_t ecap_instance;
+        for(int pwm_instance = (iter*8); pwm_instance < ((iter+1)*8); pwm_instance++)
+        {
+            /* ecap instances 0 till 7 are configured here */
+            ecap_instance = (pwm_instance%8);
+            uint16_t sync_in_pwm = ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0 + pwm_instance;
+
+            uint16_t epwm_sync_instance = (iter*8);
+
+            util_epwm_setup(epwm_sync_instance, pwm_ON_value, pwm_period);
+            util_epwm_enable(epwm_sync_instance);
+            util_xbar_configure_sync_dut(epwm_sync_instance);
+            EPWM_setTimeBaseCounterMode(epwm_base_addr[epwm_sync_instance], EPWM_COUNTER_MODE_UP);
+
+            util_epwm_setup(pwm_instance, pwm_ON_value, pwm_period);
+            util_epwm_enable(pwm_instance);
+
+            util_epwm_sync(pwm_instance, epwm_sync_instance, pwm_period - pwm_phase_shifts[(pwm_instance%8)]);
+
+            DebugP_testLog("\tPWM Instance %d has phase shift value of %d syncs ecap %d \r\n", pwm_instance, pwm_phase_shifts[(pwm_instance%8)], ecap_instance);
+
+            util_ecap_config_reset();
+
+            ecap_config_ptr->load_counter_en = true;
+            ecap_config_ptr->sync_in_source = sync_in_pwm;
+            ecap_config_ptr->phase_shift_count = 0;
+            ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;
+
+            ecap_config_ptr->polarity[0] = FALLING;
+            ecap_config_ptr->polarity[1] = FALLING;
+            ecap_config_ptr->polarity[2] = FALLING;
+            ecap_config_ptr->polarity[3] = FALLING;
+
+            util_ecap_configure(ecap_instance);
+            ClockP_usleep(5);
+        }
+        /*
+            the other two ecaps, i.e., 8,9 are configured here, with phase shift at ecap instance.
+            these are statically, phase shifted with 100 and 200 with ecap 0 to validate the timestamp differences
+        */
+        ecap_config_ptr->sync_in_source = (iter*8) + ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0;
+
+        uint32_t ecap_phase_8 = pwm_period>>2;
+        uint32_t ecap_phase_9 = pwm_period>>4;
+
+        ecap_instance = 8;
+        ecap_config_ptr->phase_shift_count = ecap_phase_8;
+
+        util_ecap_configure(ecap_instance);
+        DebugP_testLog("ecap %d is configured and is synced by pwm_instance %d \r\n",ecap_instance, iter*8);
+
+        ecap_instance = 9;
+        ecap_config_ptr->phase_shift_count = ecap_phase_9;
+        util_ecap_configure(ecap_instance);
+
+        DebugP_testLog("ecap %d is configured and is synced by pwm_instance %d \r\n",ecap_instance, iter*8);
+
+
+        /* now, run the PWMs, start capturing the timestamps. */
+        for(int pwm_instance = (iter*8); pwm_instance < ((iter+1)*8); pwm_instance++)
+        {
+            EPWM_setTimeBaseCounterMode(epwm_base_addr[pwm_instance], EPWM_COUNTER_MODE_UP);
+        }
+
+        /* start the captures for all the ecaps */
+        for(int ecap_instance = 0; ecap_instance < 10; ecap_instance++)
+        {
+            util_ecap_start_timestamp(ecap_instance);
+        }
+
+        /* requesting the input */
+        tester_command(tester_cmd_start_input);
+
+        /* wait for some amount of time, stop all the ecap captures and EPWMs. */
+        ClockP_usleep(5);
+
+        uint32_t flags_set = ECAP_getInterruptSource(ecap_base_addr[0]);
+        if(ECAP_getInterruptSource(ecap_base_addr[0]) > 0)
+        {
+            DebugP_testLog("flags set ! : %b\r\n", flags_set);
+        }
+        else
+        {
+            DebugP_logError("Error : no flags set  %b\r\n", flags_set);
+        }
+        /* Halt the input PWM */
+        tester_command(tester_cmd_stop_input);
+
+        util_epwm_disable_all();
+
+        for(int ecap_instance = 0; ecap_instance < 10; ecap_instance++)
+        {
+            ECAP_stopCounter(ecap_base_addr[ecap_instance]);
+        }
+
+        /*
+            validate the timestamps of all the ecaps with respect to each other.
+            Note :
+            1. the consecutive ECAPs(0-7) timestamp[0] should differ by phase shift of the coresponding PWM phase shifts.
+            2. the ECAPs(8,9) should have the timestamp[0] should differ by 100, 200 with respect to ECAP0
+        */
+        volatile uint32_t ecap_0_timestamp_0;
+        volatile uint32_t ecap_8_timestamp_0;
+        volatile uint32_t ecap_9_timestamp_0;
+
+
+        ecap_0_timestamp_0 = ECAP_getEventTimeStamp(ecap_base_addr[0], ECAP_EVENT_1);
+        ecap_8_timestamp_0 = ECAP_getEventTimeStamp(ecap_base_addr[8], ECAP_EVENT_1);
+        ecap_9_timestamp_0 = ECAP_getEventTimeStamp(ecap_base_addr[9], ECAP_EVENT_1);
+
+        for(int ecap_instance=1; ecap_instance<8; ecap_instance++)
+        {
+            volatile uint32_t ecap_iter_timestamp_0 = ECAP_getEventTimeStamp(ecap_base_addr[ecap_instance], ECAP_EVENT_1);
+
+            /*
+            the timestamp diff is,
+                (ecap_0_timestamp + pwm_period - phase_diff) % pwm_period = ecap_iter_timestamp
+            */
+            uint32_t check_timestamp = (ecap_0_timestamp_0 + pwm_period - pwm_phase_shifts[ecap_instance]) % pwm_period;
+            if(util_compare_in_range(check_timestamp, ecap_iter_timestamp_0, 50))
+            {
+                DebugP_testLog("PASS\r\n");
+            }
+            else
+            {
+                errors++;
+                DebugP_logError("ERROR: timestamps didnt match.\tecap_0_timestamp_0 : %d\tecap_%d_timestamp_0 : %d\tphase_diff_expected : %d\r\n",
+                            ecap_0_timestamp_0, ecap_instance, ecap_iter_timestamp_0, pwm_period - pwm_phase_shifts[ecap_instance]);
+            }
+
+        }
+        /*
+        input period is 4000, phase shift is 100 (or 200).
+            so, the timestamp diff should be 4000 - 100 (or 200)
+        */
+            uint32_t check_timestamp_8 = (ecap_0_timestamp_0 + ecap_phase_8) % pwm_period;
+            uint32_t check_timestamp_9 = (ecap_0_timestamp_0 + ecap_phase_9) % pwm_period;
+            if( util_compare_in_range(check_timestamp_8, ecap_8_timestamp_0, 50) &&
+                util_compare_in_range(check_timestamp_9, ecap_9_timestamp_0, 50))
+            {
+                DebugP_testLog("PASS\r\n");
+            }
+            else
+            {
+                DebugP_logError("ERROR: timestamps didnt match.\tecap_0_timestamp_0 : %d\tecap_8_timestamp_0 : %d\tphase_diff_expected : %d\r\n",
+                                ecap_0_timestamp_0, ecap_8_timestamp_0, pwm_period -  ecap_phase_8);
+
+                DebugP_logError("ERROR: timestamps didnt match.\tecap_0_timestamp_0 : %d\tecap_9_timestamp_0 : %d\tphase_diff_expected : %d\r\n",
+                                ecap_0_timestamp_0, ecap_9_timestamp_0,pwm_period -  ecap_phase_9);
+            }
+    util_ecap_reset_all();
+    util_epwm_disable_all();
+    }
+
+    if(errors > 0)
+    {
+        /* fail criteria*/
+        return 1;
+    }
+    /* Pass criteria */
+    return 0;
+}
+
 int32_t test_ecap_cases(uint8_t in)
 {
     int32_t failcount = 0;
     uint16_t instance;
-
+    bool single_instance_test = false;
     for (instance = 0; instance < NUM_ECAP_INSTANCES; instance++)
     {
         switch (in)
@@ -1754,22 +1993,29 @@ int32_t test_ecap_cases(uint8_t in)
             failcount += AM263x_ECAP_BTR_005(instance);
             break;
         }
+        case 6:
+        {
+            failcount += AM263x_ECAP_BTR_006();
+            single_instance_test = true;
+            break;
+        }
         // case n:
         // {
         //     failcount += error returning
         // }
         }
 
-        if(!TEST_ALL_INSTANCES)
+        if((!TEST_ALL_INSTANCES) || single_instance_test)
         break;
     }
 
-    if (enableLog)
-        DebugP_log("%d is the failcount FYI\r\n", failcount);
+    DebugP_testLog("%d is the failcount FYI\r\n", failcount);
+
     if (failcount != 0)
     {
         return 1;
     }
+
     else
     {
         return 0;
