@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -319,6 +319,14 @@ void SOC_generateDacReset(void);
  * \param adcInstance [in] ADC instance number [0 - 4]
  */
 void SOC_generateAdcReset(uint32_t adcInstance);
+
+/**
+ * \brief Halt EPWM with corresponding cPU
+ *
+ * \param epwmInstance [in] EPWM instance number [0 - 31]
+ */
+
+void Soc_enableEPWMHalt (uint32_t epwmInstance);
 
 /**
  * \brief Generate OTTO reset

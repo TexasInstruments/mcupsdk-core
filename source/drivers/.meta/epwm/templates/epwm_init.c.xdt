@@ -11,12 +11,15 @@
     % if (["am263x"].includes(common.getSocName())) {
         SOC_setEpwmTbClk(`config.name.slice(4)`, TRUE);
         SOC_setEpwmGroup(`config.name.slice(4)`, `instance.epwmGroup.slice(-1)`);
+        % if(instance.epwmTimebase_emulationMode != "EPWM_EMULATION_FREE_RUN") {
+        Soc_enableEPWMHalt(`config.name.slice(4)`);
+        % }
     % }
     % else if((["am273x"].includes(common.getSocName())) || (["awr294x"].includes(common.getSocName()))){
-	   SOC_setEpwmTbClk(`i`,TRUE); 
+	   SOC_setEpwmTbClk(`i`,TRUE);
     % }
-	% else {      
-       SOC_setEpwmTbClk(`parseInt(config.baseAddr.slice(8,9))`, TRUE);			 
-	% }	
+	% else {
+       SOC_setEpwmTbClk(`parseInt(config.baseAddr.slice(8,9))`, TRUE);
+	% }
 % }
     }
