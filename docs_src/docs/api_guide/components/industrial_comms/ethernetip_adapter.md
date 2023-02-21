@@ -39,6 +39,7 @@ EtherNet/IP firmware for PRU-ICSS is a black box product maintained by TI. Ether
 - Statistics
     - Media counters supported per port
     - Interface counters supported per port
+- LLDP Support
 - Firmware based on 200 MHz clock frequency for PRU-ICSS Core Clock and IEP Clock
 
 ### Known Issues
