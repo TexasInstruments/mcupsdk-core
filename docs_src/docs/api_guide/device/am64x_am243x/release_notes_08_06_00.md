@@ -347,6 +347,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-9644
+    <td> Incorrect List toggle operation in profinet device driver
+    <td> Profinet Device
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues

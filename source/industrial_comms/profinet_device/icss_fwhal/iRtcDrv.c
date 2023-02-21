@@ -1050,7 +1050,7 @@ void PN_initLists(PN_Handle pnHandle)
     (pnHandle->ppmList).mrpFlag = 0;
 
     (pnHandle->cpmList).listToggleReq = 0;
-    (pnHandle->cpmList).listToggleReq = 0;
+    (pnHandle->ppmList).listToggleReq = 0;
 
     /* clear DHT event sources (8 bytes)*/
     for(i = 0; i < NO_CPM; i++)
@@ -1314,7 +1314,7 @@ void PN_clearMrpFlag(PN_Handle pnHandle)
 void PN_setListToggleReq(PN_Handle pnHandle, uint8_t enable)
 {
 
-    (pnHandle->cpmList).listToggleReq = enable;
+    (pnHandle->ppmList).listToggleReq = enable;
 
     return;
 }

@@ -55,7 +55,7 @@ extern "C"
 /** @def IRT_LEGACY_STARTUP_SUPPORT
  *       Enable IRT legacy startup mode support in driver
  */
-#define IRT_LEGACY_STARTUP_SUPPORT
+//#define IRT_LEGACY_STARTUP_SUPPORT
 
 /** @def MRP_SUPPORT
  *       needs to be defined in case of MRP support
