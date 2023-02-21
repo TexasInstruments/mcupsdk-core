@@ -43,7 +43,6 @@
 	.ref wait_delay
 	.ref datalink_loadfw
 	.ref recv_dec
-	.ref update_events
 	.ref datalink_wait_vsynch
 	.global datalink_reset
 	.global datalink_init_start
@@ -89,6 +88,9 @@ datalink_reset:
 	lbco			&REG_TMP0, MASTER_REGS_CONST, SYS_CTRL, 1
 	clr			REG_TMP0.b0, REG_TMP0.b0, SYS_CTRL_PRST
 	sbco			&REG_TMP0, MASTER_REGS_CONST, SYS_CTRL, 1
+;reset SAFE_CTRL register
+    zero        &REG_TMP0.b0, 1
+	sbco        &REG_TMP0.b0, MASTER_REGS_CONST, SAFE_CTRL, 1
 ;check for SPOL and configure eCAP accordingly
 	ldi			REG_TMP1, (ECAP+ECAP_ECCTL1)
 	lbco			&REG_TMP2, PWMSS1_CONST, REG_TMP1, 4
@@ -442,8 +444,24 @@ datalink_abort2_no_wait:
 	lbco			&REG_TMP0.b0, MASTER_REGS_CONST, NUM_RESETS, 1
 	add			REG_TMP0.b0, REG_TMP0.b0, 1
 	sbco			&REG_TMP0.b0, MASTER_REGS_CONST, NUM_RESETS, 1
-	ldi			REG_FNC.w0, EVENT_PRST
-	CALL1			update_events
+; Set EVENT_PRST in EVENT_H register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_PRST
+	qbbc		update_events_no_int15, REG_TMP0.w2, EVENT_PRST
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ
+update_events_no_int15:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set EVENT_S_PRST in EVENT_S register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
+	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_PRST
+	qbbc		update_events_no_int22, REG_TMP0.b1, EVENT_S_PRST
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ4
+update_events_no_int22:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ;we need rel. jump here
 	;here toggling a EDIO pin, when communication resets(for debugging)
 	;ldi32			R24, 0x40000+0x2E000+0x310

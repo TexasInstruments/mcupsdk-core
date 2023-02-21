@@ -36,6 +36,8 @@
 	;.sect	".text"
 	.ref transport_init_done
 	.ref datalink_transport_on_v_frame_done
+	.ref transport_layer_processing_1_done
+	.ref transport_layer_processing_2_done
 	.ref datalink_abort
 	.ref datalink_abort2
 	.ref qm_add
@@ -43,13 +45,14 @@
 	.ref transport_layer_send_msg_done
 	.ref transport_layer_recv_msg_done
 	;.ref transport_layer_assemble_msg_done
-	.global update_events
 	.global transport_layer_send_msg
 	;.global transport_layer_assemble_msg
 	.global transport_layer_recv_msg
 	.global transport_init
 	.global transport_on_h_frame
 	.global transport_on_v_frame
+	.global transport_layer_processing_1
+	.global transport_layer_processing_2
 	.global transport_layer
 	.global calc_speed
 	.global calc_16bit_crc
@@ -102,17 +105,15 @@ transport_on_v_frame:
 	qbbs		transport_on_v_frame_dont_update_qm, H_FRAME.flags, FLAG_ERR_VERT
 ;checking for crc error
 	qbeq		check_for_slave_error_on_v_frame, CRC_VERT, 0
-;set event
-	ldi		REG_FNC.b0, EVENT_SCE
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
-	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int4, REG_TMP0.w2, REG_TMP0.w2
-; generate interrupt
-	ldi		r31.w0, PRU0_ARM_IRQ
+; Set EVENT_S_SCE in EVENT register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
+	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_SCE
+	qbbc		update_events_no_int4, REG_TMP0.b1, EVENT_S_SCE
+; generate interrupt_s
+	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int4:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	QM_SUB		6
 transport_on_v_frame_dont_update_qm:
 ;update CRC error count
@@ -128,17 +129,15 @@ check_for_slave_error_on_v_frame:
 	QM_ADD		1
 ;check for special character: K29.7 is sent in first byte of vertical channel if slave error occured
 	qbne		transport_on_v_frame_check_pos, VERT_H.b3, K29_7
-;set event due to encoder internal error
-	ldi		REG_FNC.b0, EVENT_VPOS
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
-	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int5, REG_TMP0.w2, REG_TMP0.w2
-; generate interrupt
-	ldi		r31.w0, PRU0_ARM_IRQ
+; Set EVENT_S_VPOS in EVENT register, due to encoder internal error
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
+	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_VPOS
+	qbbc		update_events_no_int5, REG_TMP0.b1, EVENT_S_VPOS
+; generate interrupt_s
+	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int5:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qba		transport_on_v_frame_exit
 transport_on_v_frame_check_pos:
 	lsl		REG_TMP2, CHANNEL.ch_verth, 8
@@ -173,11 +172,10 @@ transport_on_v_frame_dont_update_maxdev:
 	mov		REG_TMP0.b3, REG_TMP0.b0
 ;check if it is larger
 	qbge		transport_on_v_frame_dont_update_dte, REG_TMP2, REG_TMP0.w2
-	ldi		REG_FNC.b0, EVENT_DTE
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_DTE in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int6, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_DTE
+	qbbc		update_events_no_int6, REG_TMP0.w2, EVENT_DTE
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int6:
@@ -227,10 +225,10 @@ transport_on_v_frame_exit:
 	sbco		&REG_TMP0, MASTER_REGS_CONST, REL_POS0, 4
 ;store last FAST_POS
 	sbco		&FAST_POSL, MASTER_REGS_CONST, LAST_FAST_POS0, SIZE_FAST_POS
-;store SUMMARY
-	sbco		&VERT_H.b3, MASTER_REGS_CONST, SUMMARY, 1
+;store SUMMARY in SAFE_SUM
+	sbco		&VERT_H.b3, MASTER_REGS_CONST, SAFE_SUM, 1
 ;check SUMMARY and MASK_SUM
-	lbco		&REG_TMP1.b1, MASTER_REGS_CONST, MASK_SUM, 1
+    lbco		&REG_TMP1.b1, MASTER_REGS_CONST, MASK_SUM, 1
 	and		REG_TMP1.b0, VERT_H.b3, REG_TMP1.b1
 	qbeq		summary_no_int, REG_TMP1.b0, 0x00
 ;set event and generate interrupt
@@ -272,6 +270,11 @@ transport_layer_recv_msg:
 	qbbc		transport_layer_no_prst, REG_TMP0.b0, SYS_CTRL_PRST
 	jmp		datalink_abort
 transport_layer_no_prst:
+;check if we reset protocol by reading SAFE_CTRL register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SAFE_CTRL, 1
+	qbbc		transport_layer_no_safe_prst, REG_TMP0.b0, SAFE_CTRL_PRST
+	jmp		datalink_abort
+transport_layer_no_safe_prst:
 ;process only if drive cycle sync is enabled
 	qbbc		transport_layer_recv_msg_end, H_FRAME.flags, FLAG_NORMAL_FLOW
 ;are we already receiving a long message?
@@ -308,11 +311,10 @@ transport_layer_recving_long_msg_crc:
 ;we are receiving crc
 	qbne		transport_layer_recving_long_msg_end, LONG_MSG_RECV.bits_left, 4
 ;set long msg channel to unbusy
-	ldi		REG_FNC.w0, EVENT_FREL
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_FREL in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int8, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_FREL
+	qbbc		update_events_no_int8, REG_TMP0.w2, EVENT_FREL
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int8:
@@ -320,11 +322,10 @@ update_events_no_int8:
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ;check for crc error
 	qbeq		transport_layer_recving_long_msg_end, LONG_MSG_RECV.crc, 0
-	ldi		REG_FNC.b0, EVENT_ANS
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_ANS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int9, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_ANS
+	qbbc		update_events_no_int9, REG_TMP0.w2, EVENT_ANS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int9:
@@ -386,17 +387,16 @@ transport_layer_short_msg_recv_read:
 	sbco		&REG_TMP11.b2, MASTER_REGS_CONST, S_PC_DATA, 1
 ;we received a valid msg -> set ACK flag
 	or		SHORT_MSG.timeout, SHORT_MSG.timeout, (1<<FLAG_ACK)
-;set short msg channel to unbsy
-	ldi		REG_FNC.w0, EVENT_FRES
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
-	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int10, REG_TMP0.w2, REG_TMP0.w2
+;set short msg channel to unbusy
+; Set EVENT_S_FRES in EVENT register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_S_FRES
+	qbbc		update_events_no_int10, REG_TMP0.b1, EVENT_S_FRES
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int10:
 ;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qba		transport_layer_recv_msg_check_for_nak
 transport_layer_received_long_msg:
 ;process long message
@@ -431,11 +431,10 @@ transport_layer_received_long_msg_no_loffset:
 transport_layer_received_long_msg_no_loffset_crc:
 ;long message is complete
 	xor		REG_TMP11.b0, REG_TMP11.b0, 0xff
-	ldi		REG_FNC.b0, EVENT_FREL
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_FREL in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int11, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_FREL
+	qbbc		update_events_no_int11, REG_TMP0.w2, EVENT_FREL
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int11:
@@ -451,11 +450,10 @@ transport_layer_received_long_msg_loffset_end:
 ;raise error if long message complete and error
 	qbne		transport_layer_resend_msg_end, LONG_MSG_RECV.bits_left, 0
 	qbeq		transport_layer_resend_msg_end, LONG_MSG_RECV.crc, 0
-	ldi		REG_FNC.b0, EVENT_ANS
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_ANS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int12, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_ANS
+	qbbc		update_events_no_int12, REG_TMP0.w2, EVENT_ANS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int12:
@@ -472,17 +470,39 @@ transport_layer_recv_msg_check_for_nak:
 ;check for S_PAR_LNAK
 	qbne		transport_layer_recv_msg_check_for_nak_no_lnak, REG_TMP0.b0, S_PAR_LNAK
 ;raise flag
-	ldi		REG_FNC.b0, EVENT_ANS
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_ANS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int13, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_ANS
+	qbbc		update_events_no_int13, REG_TMP0.w2, EVENT_ANS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int13:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+    qba         transport_layer_recv_msg_check_for_init_no_init
 transport_layer_recv_msg_check_for_nak_no_lnak:
+;check for S_PAR_INIT
+	qbne		transport_layer_recv_msg_check_for_init_no_init, REG_TMP0.b0, S_PAR_INIT
+; Moving the events register update to transport_update_events_and_online_status
+; Set MIN bit to indicate acknowledgment of message initialization
+; set MIN bit in EVENT_L and EVENT_S registers
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_MIN
+	qbbc		update_events_no_int19, REG_TMP0.w2, EVENT_MIN
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ
+update_events_no_int19:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
+	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_MIN
+	qbbc		update_events_no_int20, REG_TMP0.b1, EVENT_S_MIN
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ4
+update_events_no_int20:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+transport_layer_recv_msg_check_for_init_no_init:
 ;check for timeout - count only down when bitsleft = 0 amnd timeout != 0
 	qbne		transport_layer_resend_msg_end, SHORT_MSG.bits_left, 0
 ;lower 6 bits is timeout value - MSB is ACK flag
@@ -513,7 +533,7 @@ transport_layer_send_msg:
 	ldi		SEND_PARA, M_PAR_IDLE
 ;check if we discard any messages and reset parameter channel
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYS_CTRL, 1
-	qbbc		transport_layer_send_msg_no_reset, REG_TMP0.b0, SYS_CTRL_MRST
+	qbbc		transport_layer_send_msg_no_reset_sys_ctrl, REG_TMP0.b0, SYS_CTRL_MRST
 ;clear flag
 	clr		REG_TMP0.b0, REG_TMP0.b0, SYS_CTRL_MRST
 	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYS_CTRL, 1
@@ -522,7 +542,19 @@ transport_layer_send_msg:
 	zero		&SHORT_MSG, (6)
 	clr		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
 	qba		transport_layer_send_msg_end
-transport_layer_send_msg_no_reset:
+transport_layer_send_msg_no_reset_sys_ctrl:
+;check if we discard any messages and reset parameter channel
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SAFE_CTRL, 1
+	qbbc		transport_layer_send_msg_no_reset_safe_ctrl, REG_TMP0.b0, SAFE_CTRL_MRST
+;clear flag
+	clr		REG_TMP0.b0, REG_TMP0.b0, SAFE_CTRL_MRST
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, SAFE_CTRL, 1
+;reset
+	ldi		SEND_PARA, M_PAR_INIT
+	zero		&SHORT_MSG, (6)
+	clr		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
+	qba		transport_layer_send_msg_end
+transport_layer_send_msg_no_reset_safe_ctrl:
 ;do not send new message if we are not finished with message
 	qbbc		transport_layer_check_for_new_short_msg, H_FRAME.flags, FLAG_PARA_BUSY
 	sub		SHORT_MSG.bits_left, SHORT_MSG.bits_left, 4
@@ -577,10 +609,10 @@ transport_layer_check_for_new_short_msg:
 ;check for SLAVE_REG_CTRL if we read/write data
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
 	qbeq		transport_layer_no_short_msg, REG_TMP0.b0, 0x3f
-;set short msg channel to busy (reset FRES)
-	lbco		&REG_TMP0.w2, MASTER_REGS_CONST, EVENT_H, 2
-	clr		REG_TMP0.w2, REG_TMP0.w2, EVENT_FRES
-	sbco		&REG_TMP0.w2, MASTER_REGS_CONST, EVENT_H, 2
+;set short msg channel to busy (reset EVENT_S_FRES)
+	lbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
+	clr		REG_TMP0.b2, REG_TMP0.b2, EVENT_S_FRES
+	sbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
 ;reset
 	ldi		REG_TMP0.b1, 0xff
 	sbco		&REG_TMP0.b1, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
@@ -656,6 +688,56 @@ transport_layer_send_msg_end:
 	jmp		transport_layer_send_msg_done
 
 ;----------------------------------------------------
+;Function: transport_layer_processing_1
+;
+; Cycle Budget : 120 cycles (at 225 MHz)
+;input:
+;output:
+;modifies:
+;----------------------------------------------------
+transport_layer_processing_1:
+; Check for Low QM value and update event registers if required
+; Check EVENT_UPDATE_PENDING_QMLW to process a low QM value event update
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
+    qbbc        no_qmlw_event, REG_TMP0.b0, EVENT_UPDATE_PENDING_QMLW
+; Set EVENT_QMLW in EVENT register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_QMLW
+	qbbc		update_events_no_int3, REG_TMP0.w2, EVENT_QMLW
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ
+update_events_no_int3:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set EVENT_S_QMLW in EVENT_S register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 2
+	set		    REG_TMP0.b0, REG_TMP0.b0, EVENT_S_QMLW
+	qbbc		update_events_no_int16, REG_TMP0.b1, EVENT_S_QMLW
+; generate interrupt_s
+	ldi		r31.w0, PRU0_ARM_IRQ4
+update_events_no_int16:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+;Clear EVENT_UPDATE_PENDING_QMLW
+	clr         REG_TMP0.w0, REG_TMP0.w0, EVENT_UPDATE_PENDING_QMLW
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
+no_qmlw_event:
+    jmp transport_layer_processing_1_done
+
+
+;----------------------------------------------------
+;Function: transport_layer_processing_2
+;
+; Cycle Budget : 22 cycles (at 225 MHz)
+;
+;input:
+;output:
+;modifies:
+;----------------------------------------------------
+transport_layer_processing_2:
+    jmp transport_layer_processing_2_done
+
+;----------------------------------------------------
 ;Function: transport_on_h_frame (RET_ADDR)
 ;calculates the acceleration, velocity and fast position
 ; 38+9+52 = 99 cycles
@@ -726,12 +808,10 @@ estimator_acc_sign_extend_dacc1:
 	RET
 ;restore return addr
 	mov		RET_ADDR0, REG_TMP11.w0
-;set event
-	ldi		REG_FNC.w0, EVENT_POS
-	;CALL1		update_events; Instead of calling the API, copy the code here to save PRU cycles.
+; Set EVENT_POS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int14, REG_TMP0.w2, REG_TMP0.w2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_POS
+	qbbc		update_events_no_int14, REG_TMP0.w2, EVENT_POS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int14:

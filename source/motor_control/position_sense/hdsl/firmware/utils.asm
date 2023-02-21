@@ -54,7 +54,7 @@ update_events:
 ;read events and masks
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
-	qbbc		update_events_no_int, REG_TMP0.w2, REG_TMP0.w2
+	qbbc		update_events_no_int, REG_TMP0.w2, REG_FNC.b0
 ;TODO: generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int:

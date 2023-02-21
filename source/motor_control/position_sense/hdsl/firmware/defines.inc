@@ -182,6 +182,7 @@ FLAG_ACK .set							7
 LOFF .set							5
 
 
+; This interrupt is used for EVENT interrupt
 PRU_ARM_EVENT0 .set						(18 - 16) ;SYS_EVENT_18 is pr1_pru_mst_intr<2>_int_req
 PRU0_ARM_IRQ .set						(0x20 | PRU_ARM_EVENT0)
 
@@ -194,12 +195,17 @@ PRU0_ARM_IRQ2 .set						(0x20 | PRU_ARM_EVENT2)
 PRU_ARM_EVENT3 .set						(21 - 16) ;SYS_EVENT_21 is pr1_pru_mst_intr<5>_int_req
 PRU0_ARM_IRQ3 .set						(0x20 | PRU_ARM_EVENT3)
 
-;constants for evnet_h/l (event_h is saved in low part of register when read from memory!)
+; This interrupt is used for EVENT_S interrupt
+PRU_ARM_EVENT4 .set						(22 - 16) ;SYS_EVENT_22 is pr1_pru_mst_intr<6>_int_req
+PRU0_ARM_IRQ4 .set						(0x20 | PRU_ARM_EVENT4)
+
+;constants for event_h/l (event_h is saved in low part of register when read from memory!)
 ;event_h
+EVENT_INT .set							7
 EVENT_SUM .set							6
-EVENT_SCE .set							5
+; EVENT_SCE is moved to EVENT_S_SCE
 EVENT_POS .set							3
-EVENT_VPOS .set							2
+; EVENT_VPOS is moved to EVENT_S_VPOS
 EVENT_DTE .set							1
 EVENT_PRST .set							0
 
@@ -208,8 +214,17 @@ EVENT_MIN .set							(5+8)
 EVENT_ANS .set							(4+8)
 EVENT_QMLW .set							(2+8)
 EVENT_FREL .set							(1+8)
-EVENT_FRES .set							(0+8)
+; EVENT_FRES is moved to EVENT_S_FRES
 
+;constants for event_s
+EVENT_S_SINT .set						7
+EVENT_S_SSUM .set						6
+EVENT_S_SCE .set						5
+EVENT_S_VPOS .set						4
+EVENT_S_QMLW .set						3
+EVENT_S_PRST .set						2
+EVENT_S_MIN .set						1
+EVENT_S_FRES .set						0
 
 ;SYS_CTRL constants
 SYS_CTRL_PRST .set						7
@@ -220,6 +235,10 @@ SYS_CTRL_PRDY .set						3
 SYS_CTRL_SPPE .set						2
 SYS_CTRL_SPOL .set						1
 SYS_CTRL_OEN .set						0
+
+;SAFE_CTRL constants
+SAFE_CTRL_PRST .set						7
+SAFE_CTRL_MRST .set						6
 
 ;STUFFING is at max. 26*6 bits
 MAX_STUFFING .set						26

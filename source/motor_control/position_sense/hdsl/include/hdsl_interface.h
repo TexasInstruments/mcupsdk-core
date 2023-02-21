@@ -74,7 +74,7 @@ struct hdslInterface
     volatile uint8_t VEL2;        /**< Speed, byte 2 */
     volatile uint8_t VEL1;        /**< Speed, byte 1 */
     volatile uint8_t VEL0;        /**< Speed, byte 0 */
-    volatile uint8_t SUMMARY;     /**< Summarized slave status */
+    volatile uint8_t resvd2;      /**< Reserved 2 */
     volatile uint8_t VPOS4;       /**< Safe position, byte 4 */
     volatile uint8_t VPOS3;       /**< Safe position, byte 3 */
     volatile uint8_t VPOS2;       /**< Safe position, byte 2 */
@@ -98,21 +98,21 @@ struct hdslInterface
     volatile uint8_t PIPE_S;      /**< Sensor hub channel status */
     volatile uint8_t PIPE_D;      /**< Sensor hub channel data */
     volatile uint8_t PC_DATA;     /**< Short message parameters channel data */
-    volatile uint8_t resvd2;      /**< Reserved 2 */
     volatile uint8_t resvd3;      /**< Reserved 3 */
     volatile uint8_t resvd4;      /**< Reserved 4 */
     volatile uint8_t resvd5;      /**< Reserved 5 */
     volatile uint8_t resvd6;      /**< Reserved 6 */
     volatile uint8_t resvd7;      /**< Reserved 7 */
     volatile uint8_t resvd8;      /**< Reserved 8 */
+    volatile uint8_t SAFE_SUM;    /**< Summarized slave status */
     volatile uint8_t S_PC_DATA;   /**< Response of Short message parameters channel Read for safe1 channel */
     volatile uint8_t ACC_ERR_CNT; /**< Fast position error counter */
     volatile uint8_t MAXACC;      /**< Fast position acceleration boundary */
     volatile uint8_t MAXDEV_H;    /**< Fast position estimator deviation high byte */
     volatile uint8_t MAXDEV_L;    /**< Fast position estimator deviation low byte */
-    volatile uint8_t resvd10;     /**< Reserved 10 */
+    volatile uint8_t resvd9;     /**< Reserved 9 */
     volatile uint8_t EVENT_S;     /**< Safe Events */
-    volatile uint8_t resvd12;     /**< Reserved 12 */
+    volatile uint8_t resvd10;     /**< Reserved 10 */
     volatile uint8_t DUMMY;       /**< Dummy, no data */
     volatile uint8_t SLAVE_REG_CTRL;    /**< Short message control */
     volatile uint8_t ACC_ERR_CNT_THRES; /**< Fast position error counter threshold */
@@ -130,7 +130,7 @@ struct hdslInterface
     volatile uint8_t VPOSCRC2_H;
     volatile uint8_t VPOSCRC2_L;
     volatile uint8_t DUMMY2;
-	/* Online Status*/
+	/* Online Status */
 	volatile uint16_t ONLINE_STATUS_D;
 	volatile uint16_t ONLINE_STATUS_1;
 	volatile uint16_t ONLINE_STATUS_2;

@@ -173,17 +173,13 @@ uint16_t HDSL_get_online_status_2()
 
 uint8_t HDSL_get_sum()
 {
-    uint8_t ureg = gHdslInterface->SUMMARY;
-
-
+    uint8_t ureg = gHdslInterface->SAFE_SUM;
     return ureg;
 }
 
 uint8_t HDSL_get_acc_err_cnt()
 {
     uint8_t ureg = gHdslInterface->ACC_ERR_CNT & 0x1F;
-
-
     return ureg;
 }
 
@@ -191,8 +187,6 @@ uint8_t HDSL_get_rssi()
 {
     uint8_t ureg = (gHdslInterface->DELAY & 0xF0) >> 4;
     return ureg;
-
-
 }
 
 int HDSL_write_pc_short_msg(uint32_t gPc_addr,uint32_t gPc_data)

@@ -256,7 +256,8 @@ POS0		.set						0x14
 VEL2		.set						0x15
 VEL1		.set						0x16
 VEL0		.set						0x17
-SUMMARY		.set						0x18
+;SUMMARY/MIR_SUM is not supported
+;SUMMARY		.set						0x18
 VPOS4		.set						0x19
 VPOS3		.set						0x1A
 VPOS2		.set						0x1B
@@ -326,7 +327,16 @@ LAST_FAST_POS2	.set						0xa6
 LAST_FAST_POS3	.set						0xa7
 LAST_FAST_POS4	.set						0xa8
 NUM_RESETS	.set						0xa9
-; 0xaa is unused
+EVENT_UPDATE_PENDING    .set                0xaa
+;EVENT_UPDATE_PENDING Bit Defines
+EVENT_UPDATE_PENDING_QMLW  .set             (0)
+EVENT_UPDATE_PENDING_BIT_1  .set            (1)
+EVENT_UPDATE_PENDING_BIT_2  .set            (2)
+EVENT_UPDATE_PENDING_BIT_3  .set            (3)
+EVENT_UPDATE_PENDING_BIT_4  .set            (4)
+EVENT_UPDATE_PENDING_BIT_5  .set            (5)
+EVENT_UPDATE_PENDING_BIT_6  .set            (6)
+EVENT_UPDATE_PENDING_BIT_7  .set            (7)
 TEST_PATTERN0	.set						0xac
 TEST_PATTERN1	.set						0xad
 TEST_PATTERN2	.set						0xae
