@@ -2000,6 +2000,7 @@ static inline void ICSS_EMAC_pollPkt(ICSS_EMAC_Handle icssEmacHandle)
     while((allQueuesEempty != 1) && (numPacketsInLoop <= (((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->pacingThreshold)))
     {
         pLength = ((int16_t)(ICSS_EMAC_rxPktInfo2(icssEmacHandle, &rxPktInfo)));
+        isNRT = 0;
         if(pLength > 0)
         {
             /* Check if split queue is enabled */

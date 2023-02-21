@@ -324,6 +324,14 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> 7.3.0 onwards
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-9640
+    <td> ICSS-EMAC : isNRT flag in ICSS_EMAC_pollPkt is not cleared appropriately
+    <td> ICSS-EMAC
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 

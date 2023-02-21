@@ -379,6 +379,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-9640
+    <td> ICSS-EMAC : isNRT flag in ICSS_EMAC_pollPkt is not cleared appropriately
+    <td> ICSS-EMAC
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues
