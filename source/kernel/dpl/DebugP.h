@@ -222,7 +222,7 @@ void _DebugP_logZone(uint32_t logZone, char *format, ...);
  *
  * \param format [in] String to log
  */
-#define DebugP_log(format, ...)    _DebugP_logZone(DebugP_LOG_ZONE_ALWAYS_ON, format, ##__VA_ARGS__)
+#define DebugP_log(format, ...)    _DebugP_logZone(DebugP_LOG_ZONE_ALWAYS_ON, (char *)format, ##__VA_ARGS__)
 
 /**
  * \brief Function to log a string to the enabled console, for error zone.
@@ -329,12 +329,12 @@ void DebugP_uartLogWriterPutChar(char character);
 void DebugP_shmLogReaderInit(DebugP_ShmLog *shmLog, uint16_t numCores);
 
 /**
- * \brief Reads logs from shared memory. 
+ * \brief Reads logs from shared memory.
  *
- * User needs to invoke this API periodically to get continous logs from Shared memory. 
- * Used when Shared Memory log Reader is enabled for nortos application. 
+ * User needs to invoke this API periodically to get continous logs from Shared memory.
+ * Used when Shared Memory log Reader is enabled for nortos application.
  */
-void DebugP_shmLogRead(void); 
+void DebugP_shmLogRead(void);
 
 /**
  * \brief Initialize log write to write to memory trace buffer.
