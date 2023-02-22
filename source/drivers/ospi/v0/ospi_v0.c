@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -399,6 +399,7 @@ void OSPI_ReadCmdParams_init(OSPI_ReadCmdParams *rdParams)
     rdParams->numAddrBytes = 3;
     rdParams->rxDataBuf = NULL;
     rdParams->rxDataLen = 0;
+    rdParams->dummyBits = 0;
 }
 
 void OSPI_WriteCmdParams_init(OSPI_WriteCmdParams *wrParams)
