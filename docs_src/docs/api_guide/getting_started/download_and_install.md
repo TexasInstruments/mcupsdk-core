@@ -137,11 +137,7 @@ To build applications using this SDK, one needs below host PC machine
 
 ### OpenSSL {#INSTALL_OPENSSL}
 
-\note You need to install OpenSSL only if you plan to rebuild the SBL application.
-      For initial evaluation on TI EVM, you do not need to rebuild the SBL and you can use the pre-built SBL's for TI EVM.
-      In this case, at least initially in your development, you don't need OpenSSL and you can skip this step.
-
-- OpenSSL is needed for signing the bootloader images when booting using a bootloader.
+- OpenSSL is needed for signing the bootloader and application images when booting using a bootloader.
 - Download and install OpenSSL as below,
   - In windows,
     - Download v1.1.1 from https://slproweb.com/products/Win32OpenSSL.html
