@@ -2,6 +2,7 @@
 
 This page lists all the examples related to secondary bootloader and bootloader driver.
 
+To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW_GUIDE
 \cond SOC_AM64X || SOC_AM243X
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
@@ -10,6 +11,7 @@ This page lists all the examples related to secondary bootloader and bootloader 
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
    -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
+   -# \subpage EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
    \cond SOC_AM64X
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI_LINUX
    -# \subpage EXAMPLES_DRIVERS_SBL_EMMC_LINUX

@@ -691,6 +691,20 @@ This mode is used to flash files to the AM64X-SK flash via UART. It can also be 
   \imageStyle{sk_boot_pins_uart_mode.png,width:30%}
   \image html sk_boot_pins_uart_mode.png "UART BOOT MODE"
 
+#### DFU BOOT MODE {#BOOTMODE_DFU}
+
+##### AM64x-EVM 
+
+This mode is used to flash files to the EVM flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU. 
+
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 1100 1010
+    BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
+    \endcode
+
+  \imageStyle{bootpins-dfu-evm.jpg,width:30%}
+  \image html bootpins-dfu-evm.jpg "DFU BOOT MODE"
+
 #### OSPI BOOT MODE  {#BOOTMODE_OSPI}
 ##### AM64X-EVM
 This mode is used to boot flashed applications via EVM flash like OSPI flash

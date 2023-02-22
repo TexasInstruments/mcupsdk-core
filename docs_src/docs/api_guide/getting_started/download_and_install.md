@@ -165,6 +165,72 @@ To build applications using this SDK, one needs below host PC machine
         C:\> openssl version
         OpenSSL 1.1.1k  25 Mar 2021
 
+\cond SOC_AM64X || SOC_AM243X
+
+### dfu-util {#INSTALL_DFU_UTIL}
+
+\note USB2.0 DFU driver and application is tested with dfu-util verson `dfu-util 0.11-dev` and `dfu-util 0.8-dev`. It is recomended to use that same version as mentioned.
+
+#### Windows 
+
+- Download the \htmllink{http://dfu-util.sourceforge.net/releases/dfu-util-0.8-binaries/win32-mingw32/dfu-util-static.exe, dfu-util} to your local system
+- Rename it to `dfu-util.exe`
+- Add the path to `dfu-util.exe` to the system environment variable `path`. 
+- check dfu-util version 
+	
+            $ dfu-util --version 
+
+  \imageStyle{dfu_verison.png,width:60%}
+  \image html dfu_version.png "dfu-util version"
+
+##### Steps to install windows generic USB drivers. 
+
+- On windows we have to make sure that correct generic USB drivers are installed. We will use *Zadig* tool to install dependent USB libraries. 
+- Click here to Install [zadig](https://github.com/pbatard/libwdi/releases/download/v1.4.1/zadig-2.7.exe). 
+
+	- Connect EVM USB to PC and put the SOC in DFU boot mode. refer \ref EVM_SETUP_PAGE. Select **WinUSB** as shown in the figure below.  
+
+
+  \imageStyle{driver-install0.PNG,width:30%}
+  \image html driver-install0.PNG "Step 1 select AM64x DFU from the list of devices."
+
+	- Select 1.options 2. list all device. Find and select device named **AM64x DFU**. Click **Install WCID Driver**. 
+
+  \imageStyle{driver-install1.PNG,width:30%}
+  \image html driver-install1.PNG "Step 2 Install drivers for AM64x DFU device."
+
+	- Use following command to check whether ROM DFU device has been enumerated correctly or not. 
+	
+			$ dfu-util -l 
+
+  \imageStyle{rom_dfu_enum.PNG,width:60%}
+  \image html rom_dfu_enum.PNG "Step 2 Install drivers for AM64x DFU device."
+
+##### Setps to Install drivers for using SBL DFU. 
+
+- After following above mentioned steps user will be able to perfom ROM DFU Boot. For using \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH DFU based flash writter tool follow below mentioned steps. 
+
+	- Follow the setps mentioned in the above section then use following command to boot the SBL DFU Uniflash flash writter. 
+
+			$ dfu-util -a 0 -i 0 -t 64 -D <path_to_sbl_dfu_uniflash.release.tiimage>
+
+	- Once booted successfully, 1. open zadig tool 2. select options. 3. select list all devices. Select USB device named **AM64x-AM243x DFU**. Now select **Install WCID Driver** to install. 
+
+  \imageStyle{driver-install2.PNG,width:30%}
+  \image html driver-install2.PNG "Install drivers for AM64x-AM243x DFU device."
+
+Once the Drivers are installed successfully, user should be able to use the \ref TOOLS_FLASH_DFU_UNIFLASH tool to flash the application images. 
+
+#### Linux 
+
+- Download the  \htmllink{http://dfu-util.sourceforge.net/releases/dfu-util-0.8-binaries/win32-mingw32/dfu-util-static.exe, dfu-util} or use the package manager of your distribution to get the latest version.
+
+            $ sudo apt install dfu-util
+
+- check dfu-util version 
+	
+            $ dfu-util --version 
+\endcond
 ### PRU-CGT {#INSTALL_PRU-CGT}
 
 \attention You MUST install PRU-CGT if trying to build PRU firmware.

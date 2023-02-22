@@ -46,7 +46,7 @@ We can then boot this application without being connected to CCS via JTAG.
 - Next, we need to list the files to flash in a flash configuration file. A default configuration file can be found at below path.
   You can edit this file directly or take a copy and edit this file.
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || in a way that is connected with the meaning of words SOC_AWR294X || SOC_AM263X
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
 \endcond
 \cond SOC_AM64X || SOC_AM243X
@@ -636,3 +636,6 @@ We can then boot this application without being connected to CCS via JTAG.
 
 \endcond
 
+## see also 
+
+- \ref GETTING_STARTED_FLASH_DFU

@@ -614,6 +614,32 @@ This mode is used to flash files to the EVM flash via UART. It can also be used 
   \imageStyle{boot_pins_uart_mode.png,width:30%}
   \image html boot_pins_uart_mode.png "UART BOOT MODE"
 
+#### DFU BOOT MODE {#BOOTMODE_DFU}
+
+##### AM243x-LP 
+
+This mode is used to flash files to the AM243X-LP flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU
+
+    \code
+    BOOTMODE [ 1 :  8 ] (SW4) = 1010 0000
+    \endcode
+
+  \imageStyle{bootpins-dfu-lp.jpg,width:30%}
+  \image html bootpins-dfu-lp.jpg "DFU BOOT MODE"
+
+
+##### AM243x-EVM 
+
+This mode is used to flash files to the EVM flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU. 
+
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 1100 1010
+    BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
+    \endcode
+
+  \imageStyle{bootpins-dfu-evm.jpg,width:30%}
+  \image html bootpins-dfu-evm.jpg "DFU BOOT MODE"
+
 #### OSPI BOOT MODE  {#BOOTMODE_OSPI}
 
 ##### AM243X-LP

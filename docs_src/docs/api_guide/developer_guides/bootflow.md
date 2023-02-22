@@ -401,6 +401,7 @@ See also these additional pages for more details and examples about the boot flo
   - \ref EXAMPLES_DRIVERS_SBL_OSPI
   - \ref EXAMPLES_DRIVERS_SBL_UART
   - \ref EXAMPLES_DRIVERS_SBL_OSPI_MULTI_PARTITION
+  - \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
 \endcond
 \cond SOC_AM64X
   - \ref EXAMPLES_DRIVERS_SBL_OSPI_LINUX

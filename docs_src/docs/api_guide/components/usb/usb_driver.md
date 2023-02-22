@@ -29,8 +29,7 @@ Below features are supported in the SDK
 - USB CDC Class
 - USB DFU Class 
 
-\note It is highly recomended to use **TinyUSB version 0.14.0** as all the examples of supported device class were throughly 
-tested with **0.14.0**. 
+\note Supported TinyUSB version is [0.14.0](https://github.com/hathach/tinyusb/tree/0.14.0) 
 
 ### USB Device Driver
 

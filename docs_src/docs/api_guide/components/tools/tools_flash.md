@@ -7,6 +7,9 @@
 Flashing tools allow to flash binaries to the flash on a EVM.
 
 - \ref TOOLS_FLASH_UART_UNIFLASH
+\cond SOC_AM64X || SOC_AM243X
+- \ref TOOLS_FLASH_DFU_UNIFLASH 
+\endcond
 - \ref TOOLS_FLASH_JTAG_UNIFLASH
 
 ## UART Uniflash {#TOOLS_FLASH_UART_UNIFLASH}
@@ -370,6 +373,170 @@ There is also a log area which will show detailed logs in addition to the pop up
 - The GUI is based on the `uart_uniflash.py` CLI script, and reuses a lot of objects and functions, so core functionality is the same among both.
 - In manual config case, if a drop down is non blank it is assumed that the file provided there needs to be flashed. So it will be picked up and used when `FLASH` button is clicked. If this is not required, make sure to delete it and keep it blank, the drop down is editable. This is true for the config file drop down as well, but the mishap is more probable in manual config case.
 
+
+\cond SOC_AM64X || SOC_AM243X
+
+## USB DFU Uniflash{#TOOLS_FLASH_DFU_UNIFLASH}
+
+- **usb_dfu_uniflash.py** is a tool which is used for flashing the images onto the flash memory using USB DFU protocol. 
+It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB. 
+- This tool is used in conjuction with \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH which is a flash-writer application. 
+
+- refer \ref EXAMPLES_USB_DFU for more information on DFU. 
+
+### USB DFU bootflow using dfu based flash-writer.
+
+- Following diagram explains boot flow using USB DFU and SBL OSPI. 
+- Its a three step process. 
+	1. Put the device into DFU BOOT mode refer \ref BOOTMODE_DFU. After this ROM Bootoader will accept a valid SBL image 
+	via USB and boot it. In this case we will boot \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH which is a flash-writer binary. 
+	2. Once flash-writer is booted a new USB DFU capable device will be enumerated. After this using **usb_dfu_uniflash.py** tool 
+	we will send **SBL_OSPI** or **SBL_QSPI** along with multicore appimage. Flash-writer SBL will flash the received files onto 
+	flash memory. 
+	3. Change the boot mode to \ref BOOTMODE_OSPI and power cycle the board. First **SBL_OSPI** or **SBL_QSPI** will be booted from flash 
+	and later it is responsible to boot the multicore appimages. 
+
+
+  \imageStyle{dfu_flash_bootflow.png,width:40%}
+  \image html dfu_flash_bootflow.png 
+
+
+### Tool requirements on host PC
+
+- The tool is implemented using python and needs python version 3.x
+- Refer to the page, \ref INSTALL_PYTHON3 , to install python and the required python packages on your PC.
+- It uses **dfu-util** tool to execute dfu commands from the host PC.  
+- Refer to the page \ref INSTALL_DFU_UTIL , to install **dfu-util** tool. 
+
+### Important files and folders
+
+<table>
+<tr>
+    <th>Folder/Files
+    <th>Description
+</tr>
+<tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/tools/boot/</td></tr>
+<tr>
+    <td>usb_dfu_uniflash.py
+    <td>Flashing tool
+</tr>
+<tr>
+    <td>sbl_prebuilt/@VAR_BOARD_NAME_LOWER
+    <td>Pre-built bootloader images and default flash configuration files for a supported EVM
+</tr>
+<tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/examples/drivers/boot/</td></tr>
+<tr>
+    <td>sbl_dfu_uniflash
+    <td>Flashing application that is run on the EVM to receive files to flash
+</tr>
+\cond SOC_AM64X || SOC_AM243X
+<tr>
+    <td>sbl_ospi
+    <td>OSPI bootloader application that needs to be flashed at offset 0x0. When in OSPI boot mode, this bootloader application
+    will boot the user application file for all the CPUs
+</tr>
+\endcond
+\cond SOC_AM263X
+<tr>
+    <td>sbl_qspi
+    <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
+    will boot the user application file for all the CPUs
+</tr>
+<tr>
+    <td>sbl_can
+    <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file for all the CPUs
+</tr>
+\endcond
+<tr>
+    <td>sbl_null
+    <td>SOC init bootloader application that can be used to init the SOC when working in CCS IDE environment.
+</tr>
+</table>
+
+### Basic steps to flash files {#BASIC_STEPS_TO_FLASH_FILES_DFU}
+
+ - The flashing steps are same as refer \ref BASIC_STEPS_TO_FLASH_FILES only difference is instead of using ~~uart_uniflash.py~~ use **usb_dfu_uniflash.py**.
+
+
+#### Flashing the files
+
+- Set EVM in \ref BOOTMODE_DFU and power on the EVM
+
+- Run below python command on the Windows command prompt (`cmd.exe`) or Linux bash shell to flash the files.
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python usb_dfu_uniflash.py --cfg={path to your edited config file}
+
+- At each step in the flashing your will see success or error messages, including progress as the file is being transferred.
+
+\cond SOC_AM243X || SOC_AM64X
+
+- If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
+\endcond
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+- If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_QSPI and power ON the EVM to run the flashed application.
+\endcond
+
+- If flashing is not successful, then DFU device i.e EVM must have send error status in **GET_STATUS** phase of **SETUP** transfer. This error condition 
+will be detected by **dfu-util** tool and will be displayed on console. 
+
+#### Flash tool options
+
+- Type below to see all the possible options with the flashing tool and also see the default .cfg file for syntax and options possible in the config file
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python usb_dfu_uniflash.py --help
+
+### Detailed sequence of steps that happen when flashing files using usb_dfu_uniflash tool 
+
+\note This section has more detailed sequence of steps that happen underneath the tools and on the EVM for reference.
+
+The detailed sequence of steps that happen when flashing files is listed below, refer to the \ref EVM_SETUP_PAGE page to see how to setup the EVM in different boot modes that are needed for this sequence of steps.
+
+- Set EVM in DFU boot mode and power it on, the SOC ROM bootloader waits to receive a file using the USB2.0 DFU protocol.
+- PC sends the flashing application file (`sbl_dfu_uniflash.release.tiimage`) via the flashing tool using USB2.0 DFU protocol underneath.
+- The ROM bootloader, boots the flashing application
+- The flashing application now initializes the flash on the EVM and waits for additional commands using USB2.0 DFU protocol
+- The PC tool can now send one or more of below commands with the file data, one after the other, until it is done.
+  - Flash a file at a given offset in the flash
+  - Verify a previously flashed file at a given offset in the flash
+  - Erase a region of flash memory
+- The flashing application as such does not care what the file contains, it will simply flash it at the user specified location.
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+- However typically one needs to at least send the below files to flash
+  - Send a QSPI flash bootloader application and flash it at offset 0x0 (`sbl_qspi.release.tiimage`). If the QSPI bootloader is
+    already flashed previously then this step can be skipped.
+  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage`).
+    The offset 0x80000 is the offset that is specified in the QSPI bootloader and when the EVM boots in QSPI mode, it
+    will attempt to find a application at this location.
+- After flashing is done, power OFF the EVM
+- Set EVM in QSPI boot mode and power ON the EVM.
+  - The ROM bootloader will now boot the QSPI bootloader by reading offset 0x0
+  - And the QSPI bootloader will boot the application by reading from offset 0x80000.
+- The initial flashing application and the subsequent commands to send and flash the QSPI bootloader and application files are all specified
+  in a single configuration file which is provided as input to the tool.
+\endcond
+\cond SOC_AM243X || SOC_AM64X
+- However typically one needs to at least send the below files to flash
+  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.tiimage`). If the OSPI bootloader is
+    already flashed previously then this step can be skipped.
+  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage`).
+    The offset 0x80000 is the offset that is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it
+    will attempt to find a application at this location.
+- After flashing is done, power OFF the EVM
+- Set EVM in OSPI boot mode and power ON the EVM.
+  - The ROM bootloader will now boot the OSPI bootloader by reading offset 0x0
+  - And the OSPI bootloader will boot the application by reading from offset 0x80000.
+- The initial flashing application and the subsequent commands to send and flash the OSPI bootloader and application files are all specified
+  in a single configuration file which is provided as input to the tool.
+\endcond
+
+\endcond
+
+\note As of now the max data per setup transaction is set to 64 Bytes by default. Due to this you can see throughput degradation. The upcoming release will enable USB DFU at its full potential i.e 512 Bytes data transfer per setup transaction. It is recomended to not change the --transfer-size parameter in the tool . 
+
+- see also \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH 
+
 ## JTAG Uniflash {#TOOLS_FLASH_JTAG_UNIFLASH}
 
 JTAG is used as the transport or interface to send the file to flash to the EVM.
@@ -392,3 +559,8 @@ JTAG is used as the transport or interface to send the file to flash to the EVM.
 ### Basic steps to flash files
 
 Refer the example \ref EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
+
+
+### See also 
+
+- \ref EXAMPLES_USB_DFU
