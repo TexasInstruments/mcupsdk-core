@@ -105,6 +105,7 @@ let mcan_module = {
                 displayFormat: "dec",
                 onChange: function (inst, ui) {
                     inst.nomBitRate = 80000 / (inst.nomRatePrescalar + 1) / (3 + inst.nomTimeSeg1 + inst.nomTimeSeg2)
+                    inst.samplingNomBitRate = (2 + inst.nomTimeSeg1) / (3 + inst.nomTimeSeg1 + inst.nomTimeSeg2) * 100
                 }
             },
             {
@@ -114,6 +115,7 @@ let mcan_module = {
                 displayFormat: "dec",
                 onChange: function (inst, ui) {
                     inst.nomBitRate = 80000 / (inst.nomRatePrescalar + 1) / (3 + inst.nomTimeSeg1 + inst.nomTimeSeg2)
+                    inst.samplingNomBitRate = (2 + inst.nomTimeSeg1) / (3 + inst.nomTimeSeg1 + inst.nomTimeSeg2) * 100
                 }
             },
             {
@@ -126,7 +128,15 @@ let mcan_module = {
                 name: "nomBitRate",
                 displayName: "Effective Nom Bitrate (Kbps)",
                 default: 1000,
-                description: "Recommended sampling point should be between 85 to 90%",
+                description: "Recommended sampling point should be between 85 to 90 percent",
+                readOnly: true,
+                displayFormat: "dec",
+            },
+            {
+                name: "samplingNomBitRate",
+                displayName: "Sampling Point For Nom Bitrate",
+                default: 85,
+                description: "Recommended sampling point should be between 85 to 90 percent",
                 readOnly: true,
                 displayFormat: "dec",
             },
@@ -146,6 +156,7 @@ let mcan_module = {
                 displayFormat: "dec",
                 onChange: function (inst, ui) {
                     inst.dataBitRate = 80000 / (inst.dataRatePrescalar + 1) / (3 + inst.dataTimeSeg1 + inst.dataTimeSeg2)
+                    inst.samplingDataBitRate = (2 + inst.dataTimeSeg1) / (3 + inst.dataTimeSeg1 + inst.dataTimeSeg2) * 100
                 }
             },
             {
@@ -155,6 +166,7 @@ let mcan_module = {
                 displayFormat: "dec",
                 onChange: function (inst, ui) {
                     inst.dataBitRate = 80000 / (inst.dataRatePrescalar + 1) / (3 + inst.dataTimeSeg1 + inst.dataTimeSeg2)
+                    inst.samplingDataBitRate = (2 + inst.dataTimeSeg1) / (3 + inst.dataTimeSeg1 + inst.dataTimeSeg2) * 100
                 }
             },
             {
@@ -167,7 +179,15 @@ let mcan_module = {
                 name: "dataBitRate",
                 displayName: "Effective Data Bitrate (Kbps)",
                 default: 5000,
-                description: "Recommended sampling point should be between 85 to 90%",
+                description: "Recommended sampling point should be between 85 to 90 percent",
+                readOnly: true,
+                displayFormat: "dec",
+            },
+            {
+                name: "samplingDataBitRate",
+                displayName: "Sampling Point For Data Bitrate",
+                default: 87.5,
+                description: "Recommended sampling point should be between 85 to 90 percent",
                 readOnly: true,
                 displayFormat: "dec",
             },
