@@ -206,6 +206,8 @@ function getPeripheralPinNames(inst)
 
 let cpsw_input_clk_freq = 150000000;
 
+let cpts_input_clk_freq = 200000000;
+
 const enet_config = [
     {
         clockIds        : [ "SOC_RcmPeripheralId_MSS_CPSW", "SOC_RcmPeripheralId_MSS_CPTS"],
@@ -217,8 +219,8 @@ const enet_config = [
             },
             {
                 moduleId: "SOC_RcmPeripheralId_MSS_CPTS",
-                clkId   : "SOC_RcmPeripheralClockSource_SYS_CLK",
-                clkRate : cpsw_input_clk_freq,
+                clkId   : "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1",
+                clkRate : cpts_input_clk_freq,
             },
         ],
     },
@@ -511,7 +513,7 @@ function validate(instance, report) {
                 report.logError("Both MAC ports in MAC PORT Config should be enabled to support two NetIfs", instance);
             }
         }
-        
+
     }
 
 }
