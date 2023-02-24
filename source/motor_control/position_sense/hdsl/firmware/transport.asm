@@ -103,6 +103,9 @@ transport_on_v_frame:
 	sbco		&REG_TMP1, MASTER_REGS_CONST, VPOSCRC_H, 2
 ;transmission error?
 	qbbs		transport_on_v_frame_dont_update_qm, H_FRAME.flags, FLAG_ERR_VERT
+    lbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
+    clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_SCE
+    clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_VPOS
 ;checking for crc error
 	qbeq		check_for_slave_error_on_v_frame, CRC_VERT, 0
 ; Set EVENT_S_SCE in EVENT register
@@ -114,6 +117,9 @@ transport_on_v_frame:
 update_events_no_int4:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+; Set ONLINE_STATUS_1_SCE in ONLINE_STATUS_1 register
+    set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_SCE
+    sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
 	QM_SUB		6
 transport_on_v_frame_dont_update_qm:
 ;update CRC error count
@@ -138,8 +144,12 @@ check_for_slave_error_on_v_frame:
 update_events_no_int5:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+; Set ONLINE_STATUS_1_VPOS in ONLINE_STATUS_1 register
+    set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_VPOS
+    sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
 	qba		transport_on_v_frame_exit
 transport_on_v_frame_check_pos:
+	sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
 	lsl		REG_TMP2, CHANNEL.ch_verth, 8
 	mov		REG_TMP2.b0, VERT_L.b3
 ;first V-Frame? -> update FAST POS with SAFE POS
@@ -171,7 +181,10 @@ transport_on_v_frame_dont_update_maxdev:
 	mov		REG_TMP0.b2, REG_TMP0.b3
 	mov		REG_TMP0.b3, REG_TMP0.b0
 ;check if it is larger
+	lbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
 	qbge		transport_on_v_frame_dont_update_dte, REG_TMP2, REG_TMP0.w2
+; Set EVENT_DTE in ONLINE_STATUS_D register
+    set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_DTE
 ; Set EVENT_DTE in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_DTE
@@ -182,6 +195,9 @@ update_events_no_int6:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 transport_on_v_frame_dont_update_dte:
+; Clear EVENT_DTE in ONLINE_STATUS_D register
+    clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_DTE
+	sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
 ;check for diff. is 0 -> estimate if not
 	qbne		transport_on_v_frame_estimate, REG_TMP1, 0
 	qbne		transport_on_v_frame_estimate, VERT_H.b2, FAST_POSL
@@ -207,7 +223,6 @@ transport_on_v_frame_no_pos_mismatch:
 ; swap bytes in each 32 bit register r20 and r21
 	xin     160, &r20, 8
 	sbco	&r21.b0, MASTER_REGS_CONST, STATUS2, 4
-	sbco	&r21.b0, MASTER_REGS_CONST, ONLINE_STATUS_2, 1
 	ldi	    r31.w0, PRU0_ARM_IRQ2
 ;generate sperate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
@@ -243,8 +258,6 @@ update_events_no_int7:
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 summary_no_int:
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 2
-	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_1, 2
 	ldi		    r31.w0, PRU0_ARM_IRQ1
 ;generate sperate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
@@ -320,6 +333,10 @@ transport_layer_recving_long_msg_crc:
 update_events_no_int8:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set ONLINE_STATUS_D_FREL in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_FREL-8)
+    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 ;check for crc error
 	qbeq		transport_layer_recving_long_msg_end, LONG_MSG_RECV.crc, 0
 ; Set EVENT_ANS in EVENT register
@@ -331,7 +348,15 @@ update_events_no_int8:
 update_events_no_int9:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set ANS in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 transport_layer_recving_long_msg_end:
+; Clear ANS in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	clr		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	sub		LONG_MSG_RECV.bits_left, LONG_MSG_RECV.bits_left, 4
 	qba		transport_layer_recv_msg_end
 transport_layer_check_for_new_msg:
@@ -397,6 +422,10 @@ transport_layer_short_msg_recv_read:
 update_events_no_int10:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
+    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 	qba		transport_layer_recv_msg_check_for_nak
 transport_layer_received_long_msg:
 ;process long message
@@ -440,6 +469,10 @@ transport_layer_received_long_msg_no_loffset_crc:
 update_events_no_int11:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set ONLINE_STATUS_D_FREL in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_FREL-8)
+    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	clr		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
 transport_layer_received_long_msg_loffset_end:
 ;calculate CRC for already recevied bits
@@ -459,6 +492,10 @@ transport_layer_received_long_msg_loffset_end:
 update_events_no_int12:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set ANS in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	qba		transport_layer_resend_msg_end
 transport_layer_recv_no_msg:
 ;reset flag
@@ -479,6 +516,10 @@ transport_layer_recv_msg_check_for_nak:
 update_events_no_int13:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Set ANS in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
     qba         transport_layer_recv_msg_check_for_init_no_init
 transport_layer_recv_msg_check_for_nak_no_lnak:
 ;check for S_PAR_INIT
@@ -518,6 +559,22 @@ transport_layer_resend_msg:
 transport_layer_resend_msg_read:
 transport_layer_resend_msg_end:
 transport_layer_recv_msg_end:
+; update MIN bits in ONLINE_STATUS_D and ONLINE_STATUS_1
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 1
+    qbbc        transport_layer_min_unset, REG_TMP0.b0, EVENT_S_MIN
+transport_layer_min_set:
+	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
+    set         REG_TMP0.w0, REG_TMP0.w0, ONLINE_STATUS_D_MIN
+    set         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_MIN
+	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
+    qba         transport_layer_min_update_done
+transport_layer_min_unset:
+	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
+    clr         REG_TMP0.w0, REG_TMP0.w0, ONLINE_STATUS_D_MIN
+    clr         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_MIN
+	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
+transport_layer_min_update_done:
+
 	jmp		transport_layer_recv_msg_done
 ;----------------------------------------------------
 ;transport_layer_send_msg
@@ -613,6 +670,10 @@ transport_layer_check_for_new_short_msg:
 	lbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
 	clr		REG_TMP0.b2, REG_TMP0.b2, EVENT_S_FRES
 	sbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
+; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
+	clr		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
+    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 ;reset
 	ldi		REG_TMP0.b1, 0xff
 	sbco		&REG_TMP0.b1, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
@@ -652,6 +713,10 @@ transport_layer_no_short_msg:
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 2
 	clr		REG_TMP0.w0, REG_TMP0.w0, EVENT_FREL
 	sbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 2
+; Set ONLINE_STATUS_D_FREL in ONLINE_STATUS_D register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
+	clr		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_FREL-8)
+    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	lbco		&REG_TMP1, MASTER_REGS_CONST, PC_ADD_H, 4
 	mov		SHORT_MSG.addr, REG_TMP1.b0
 	ldi		SHORT_MSG.bits_left, 16
@@ -690,7 +755,8 @@ transport_layer_send_msg_end:
 ;----------------------------------------------------
 ;Function: transport_layer_processing_1
 ;
-; Cycle Budget : 120 cycles (at 225 MHz)
+; Cycle Budget : 60 cycles (at 225 MHz)
+; Available cycles : 3
 ;input:
 ;output:
 ;modifies:
@@ -699,7 +765,7 @@ transport_layer_processing_1:
 ; Check for Low QM value and update event registers if required
 ; Check EVENT_UPDATE_PENDING_QMLW to process a low QM value event update
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
-    qbbc        no_qmlw_event, REG_TMP0.b0, EVENT_UPDATE_PENDING_QMLW
+    qbbc        transport_layer_no_qmlw_event, REG_TMP0.b0, EVENT_UPDATE_PENDING_QMLW
 ; Set EVENT_QMLW in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_QMLW
@@ -721,15 +787,60 @@ update_events_no_int16:
 ;Clear EVENT_UPDATE_PENDING_QMLW
 	clr         REG_TMP0.w0, REG_TMP0.w0, EVENT_UPDATE_PENDING_QMLW
 	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
-no_qmlw_event:
+transport_layer_no_qmlw_event:
+
+; Update QMLW bits in ONLINE_STATUS registers
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, MASTER_QM, 1
+    qble	    transport_layer_online_status_qm_not_low, REG_TMP0.b0, 14
+; Set QMLW bits
+	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 6
+    set         REG_TMP0.w0, REG_TMP0.w0, ONLINE_STATUS_D_QMLW
+    set         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_QMLW
+    set         REG_TMP1.w0, REG_TMP1.w0, ONLINE_STATUS_2_QMLW
+	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 6
+    qba         transport_layer_online_status_qm_update_done
+transport_layer_online_status_qm_not_low:
+; Clear QMLW bits
+	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 6
+    clr         REG_TMP0.w0, REG_TMP0.w0, ONLINE_STATUS_D_QMLW
+    clr         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_QMLW
+    clr         REG_TMP1.w0, REG_TMP1.w0, ONLINE_STATUS_2_QMLW
+	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 6
+transport_layer_online_status_qm_update_done:
+
+; update POS bits in ONLINE_STATUS_D and EVENT
+    lbco        &REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
+; Check EVENT_UPDATE_PENDING_POS to process a pending POS set
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
+    qbbc        transport_layer_no_pos_event, REG_TMP0.b0, EVENT_UPDATE_PENDING_POS
+; Clear EVENT_UPDATE_PENDING_POS
+	clr         REG_TMP0.w0, REG_TMP0.w0, EVENT_UPDATE_PENDING_POS
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
+
+; Set EVENT_POS in EVENT register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_POS
+	qbbc		update_events_no_int14, REG_TMP0.w2, EVENT_POS
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ
+update_events_no_int14:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+    set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_POS
+    qba         transport_layer_pos_update_done
+transport_layer_no_pos_event:
+    clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_POS
+transport_layer_pos_update_done:
+    sbco        &REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
+
     jmp transport_layer_processing_1_done
 
 
 ;----------------------------------------------------
 ;Function: transport_layer_processing_2
 ;
-; Cycle Budget : 22 cycles (at 225 MHz)
-;
+; Cycle Budget : 70 cycles (at 225 MHz)
+; Available cycles : 63
 ;input:
 ;output:
 ;modifies:
@@ -758,7 +869,7 @@ transport_on_h_frame:
 	qbne		transport_acc_err_inc, REG_FNC.b0, 0
 ;check for special character: K29.7 is sent two times if slave error occured
 	ldi		REG_TMP0.w0, DOUBLE_K29_7
-	qbne		delta_delta_position, H_FRAME.acc, REG_TMP0.w0
+    qbne		delta_delta_position, H_FRAME.acc, REG_TMP0.w0
 transport_acc_err_inc:
 ;update the acc_err_cnt register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, ACC_ERR_CNT, 1
@@ -808,15 +919,11 @@ estimator_acc_sign_extend_dacc1:
 	RET
 ;restore return addr
 	mov		RET_ADDR0, REG_TMP11.w0
-; Set EVENT_POS in EVENT register
-	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
-	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_POS
-	qbbc		update_events_no_int14, REG_TMP0.w2, EVENT_POS
-; generate interrupt
-	ldi		r31.w0, PRU0_ARM_IRQ
-update_events_no_int14:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
+; Moving the event and online register update during stuffing
+; Set EVENT_UPDATE_PENDING_POS to indicate a fast position data consistency error
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
+	set         REG_TMP0.b0, REG_TMP0.w0, EVENT_UPDATE_PENDING_POS
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
 	qba		transport_on_h_frame_exit
 delta_delta_position:
 ;reset ACC_ERR_CNT

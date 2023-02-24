@@ -135,6 +135,7 @@ CHANNEL .sassign r18, channel_s
 	.asg	r18.w0, crc_vert
 	.asg	r18, VERT_L
 	.asg	r19, VERT_H
+; R18, R19, R20, R21, R22 and R23 are used for channel_s
 
 h_frame_s .struct
 vert		.byte
@@ -330,7 +331,7 @@ NUM_RESETS	.set						0xa9
 EVENT_UPDATE_PENDING    .set                0xaa
 ;EVENT_UPDATE_PENDING Bit Defines
 EVENT_UPDATE_PENDING_QMLW  .set             (0)
-EVENT_UPDATE_PENDING_BIT_1  .set            (1)
+EVENT_UPDATE_PENDING_POS  .set              (1)
 EVENT_UPDATE_PENDING_BIT_2  .set            (2)
 EVENT_UPDATE_PENDING_BIT_3  .set            (3)
 EVENT_UPDATE_PENDING_BIT_4  .set            (4)

@@ -91,6 +91,31 @@ datalink_reset:
 ;reset SAFE_CTRL register
     zero        &REG_TMP0.b0, 1
 	sbco        &REG_TMP0.b0, MASTER_REGS_CONST, SAFE_CTRL, 1
+; Write the fixed bits and reset PRST bits in ONLINE_STATUS_D, ONLINE_STATUS_1 and ONLINE_STATUS_2
+; In ONLINE_STATUS_D high, bit 2 is FIX0, bit 4 is FIX1 and bit 5 is FIX0
+; In ONLINE_STATUS_D low, bit 0 is FIX0 and bit 3 is FIX0
+	lbco        &REG_TMP0.w0, MASTER_REGS_CONST, ONLINE_STATUS_D, 2
+    ; clearing bits with fix0 and PRST bit
+    and         REG_TMP0.w0, REG_TMP0.w0, ((~((1<<ONLINE_STATUS_D_PRST) | (1<<ONLINE_STATUS_D_HIGH_BIT5_FIX0) | (1<<ONLINE_STATUS_D_HIGH_BIT2_FIX0) | (1<<ONLINE_STATUS_D_LOW_BIT3_FIX0) | (1<<ONLINE_STATUS_D_LOW_BIT0_FIX0))) & 0xFF)
+    ; setting bits with fix1
+    or         REG_TMP0.w0, REG_TMP0.w0, (1<<ONLINE_STATUS_D_HIGH_BIT4_FIX1)
+	sbco        &REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 2
+; In ONLINE_STATUS_1 high, bit 1 is FIX0, bit 3 is FIX0 and bit 4 is FIX1
+; In ONLINE_STATUS_1 low, bit 1 is FIX0, bit 3 is FIX0 and bit 4 is FIX0
+	lbco        &REG_TMP0.w0, MASTER_REGS_CONST, ONLINE_STATUS_1, 2
+    ; clearing bits with fix0 and PRST bit
+    and         REG_TMP0.w0, REG_TMP0.w0, ((~((1<<ONLINE_STATUS_1_PRST) | (1<<ONLINE_STATUS_1_HIGH_BIT1_FIX0) | (1<<ONLINE_STATUS_1_HIGH_BIT3_FIX0) | (1<<ONLINE_STATUS_1_LOW_BIT4_FIX0) | (1<<ONLINE_STATUS_1_LOW_BIT3_FIX0) | (1<<ONLINE_STATUS_1_LOW_BIT1_FIX0))) & 0xFF)
+    ; setting bits with fix1
+    or         REG_TMP0.w0, REG_TMP0.w0, (1<<ONLINE_STATUS_1_HIGH_BIT4_FIX1)
+	sbco        &REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_1, 2
+; In ONLINE_STATUS_2 high, bit 1 is FIX0, bit 3 is FIX0, bit 4 is FIX1 and bit7 is FIX1
+; In ONLINE_STATUS_2 low, bits 0, 1, 3, 4, 5 are FIX0
+	lbco        &REG_TMP0.w0, MASTER_REGS_CONST, ONLINE_STATUS_2, 2
+    ; clearing bits with fix0 and PRST bit
+    and         REG_TMP0.w0, REG_TMP0.w0, ((~((1<<ONLINE_STATUS_2_PRST) | (1<<ONLINE_STATUS_2_HIGH_BIT1_FIX0) | (1<<ONLINE_STATUS_2_HIGH_BIT3_FIX0) | (1<<ONLINE_STATUS_2_HIGH_BIT7_FIX0) | (1<<ONLINE_STATUS_2_LOW_BIT0_FIX0) | (1<<ONLINE_STATUS_2_LOW_BIT1_FIX0) | (1<<ONLINE_STATUS_2_LOW_BIT3_FIX0) | (1<<ONLINE_STATUS_2_LOW_BIT4_FIX0) | (1<<ONLINE_STATUS_2_LOW_BIT5_FIX0))) & 0xFF)
+    ; setting bits with fix1
+    or         REG_TMP0.w0, REG_TMP0.w0, (1<<ONLINE_STATUS_2_HIGH_BIT4_FIX1)
+	sbco        &REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_2, 2
 ;check for SPOL and configure eCAP accordingly
 	ldi			REG_TMP1, (ECAP+ECAP_ECCTL1)
 	lbco			&REG_TMP2, PWMSS1_CONST, REG_TMP1, 4
