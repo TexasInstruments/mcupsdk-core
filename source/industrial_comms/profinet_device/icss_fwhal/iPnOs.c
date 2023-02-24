@@ -140,8 +140,11 @@ void PN_PTCP_syncMonitorTask(uintptr_t arg0, uintptr_t arg1);
 /* ========================================================================== */
 int32_t PN_initOs(PN_Handle pnHandle)
 {
+
+#if defined(PTCP_SUPPORT) || defined(IRT_LEGACY_STARTUP_SUPPORT) || defined(MRP_SUPPORT) || defined(WATCHDOG_SUPPORT)
     TaskP_Params taskParams;
     uint32_t status = SystemP_FAILURE;
+#endif
 
 #ifdef PTCP_SUPPORT
     TaskP_Params_init(&taskParams);
@@ -206,6 +209,10 @@ int32_t PN_initOs(PN_Handle pnHandle)
     taskParams.args = (void *)pnHandle;
     taskParams.taskMain = (TaskP_FxnMain)PN_MRP_CPMTask;
     status = TaskP_construct(&(pnHandle->MrpMachineTaskObject), &taskParams);
+    if(status == SystemP_FAILURE)
+    {
+        return -5;
+    }
 #endif /*MRP_SUPPORT*/
 #ifdef WATCHDOG_SUPPORT
     TaskP_Params_init(&taskParams);
