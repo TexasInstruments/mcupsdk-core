@@ -5,6 +5,7 @@
  * GPIO
  */
 #include <drivers/gpio.h>
+#include <kernel/dpl/AddrTranslateP.h>
 
 /* GPIO PIN Macros */
 % for(let i = 0; i < module.$instances.length; i++) {

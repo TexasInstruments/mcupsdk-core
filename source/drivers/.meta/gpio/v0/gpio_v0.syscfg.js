@@ -219,6 +219,8 @@ let gpio_module = {
         },
         "/drivers/system/system_config.c.xdt": {
             driver_config: "/drivers/gpio/templates/gpio_config.c.xdt",
+            driver_init: "/drivers/gpio/templates/gpio_init.c.xdt",
+            driver_deinit: "/drivers/gpio/templates/gpio_deinit.c.xdt",
             moduleName: gpio_module_name,
         },
         "/drivers/pinmux/pinmux_config.c.xdt": {
