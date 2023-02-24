@@ -50,7 +50,7 @@
 /* ========================================================================== */
 
 /* None */
-
+#define TEST_ALL_INSTANCES false
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -142,8 +142,10 @@ void tester_init(void)
     UART_Transaction_init(&trans);
     trans.timeout=TIMEOUT_UART_TESTER;
 
-    if(enableLog) DebugP_log("\r\nSending initialization command!!");
-
+    if(enableLog)
+    {
+        DebugP_log("\r\nSending initialization command!!");
+    }
     gNumBytesWritten = 0U;
     trans.buf   = &gCmdTxBuffer[0U];
     strncpy(trans.buf,"123456780000000000000000ABCDEFEF", CMD_SIZE);
@@ -155,8 +157,10 @@ void tester_init(void)
     trans.count = RSP_SIZE;
     transferOK = UART_read(gUartHandle[TESTER_UART], &trans);
 
-    if(enableLog) DebugP_log("\r\nReceived response. Tester Initialized!!");
-
+    if(enableLog)
+    {
+        DebugP_log("\r\nReceived response. Tester Initialized!!");
+    }
     /*Clear TX buffer for shorter commands*/
     uint8_t ind;
     for(ind=0;ind<CMD_SIZE;ind++)
@@ -201,8 +205,10 @@ void tester_command(char *str)
         return;
     }
 
-    if(enableLog) DebugP_log("\r\nSending command!!");
-
+    if(enableLog)
+    {
+        DebugP_log("\r\nSending command!!");
+    }
     /* Send command*/
     gNumBytesWritten = 0U;
     trans.buf   = &gCmdTxBuffer[0U];
@@ -451,7 +457,6 @@ void test_main(void *args)
         DebugP_log("\r\n01\t:\tmanual testing\r\n02\t:\tauto testing (using Tester Applicaiton)\r\n03\t:\tQuit\r\n");
 
         UART_Transaction_init(&trans);
-        UART_Transaction trans;
         uint8_t optionBuffer[3];
         int option;
         uint8_t i;
@@ -549,8 +554,8 @@ void test_main(void *args)
 
             if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
             {
-                DebugP_log("\r\nInvalid input! \r\n selecting enable logs by default\r\n");
-                log_option = 'y';     //""Run All tests and quit"
+                DebugP_log("\r\nInvalid input! \r\n selecting disable logs by default\r\n");
+                log_option = 'n';
             }
             else
             {
@@ -650,7 +655,7 @@ void test_main(void *args)
                 break;
 
             case 23 :
-                DebugP_log("Running All tests and ending.");
+                DebugP_log("Running All tests and ending.\r\n");
 
                 RUN_TEST(ADC_setPrescalerApiCheck, 1, NULL);
                 RUN_TEST(ADC_trigger_to_sample_delay_capture , 3166, NULL);
@@ -664,6 +669,7 @@ void test_main(void *args)
                 RUN_TEST(ADC_triggering_from_timer , 3158, NULL);
                 RUN_TEST(ADC_inputxbar_trigger , 3159, NULL);
                 RUN_TEST(ADC_epwm_soc_trigger , 3160, NULL);
+                RUN_TEST(ADC_ecap_soc_trigger , 7910, NULL);
                 RUN_TEST(ADC_all_adcs_working_together , 3161, NULL);
                 RUN_TEST(ADC_force_multiple_socs_simultaneously , 3162, NULL);
                 RUN_TEST(ADC_enable_ppb_adcevt_cycle_by_cycle_mode , 3163, NULL);
@@ -1081,7 +1087,10 @@ int test_trigger(
             /* wait successful. Conversion happened */
             /* false trigger triggered the SOC*/
             errors++;
-            if(enableLog) DebugP_log("ERROR : false trigger triggered the soc\r\n");
+            if(enableLog)
+            {
+                DebugP_log("ERROR : false trigger triggered the soc\r\n");
+            }
         }
         wait = 0;
 
@@ -1105,7 +1114,10 @@ int test_trigger(
             if(EPWM_getADCTriggerFlagStatus(epwm_base, (trigger%2)) != 1)
             {
                 errors++;
-                DebugP_log("ERROR : no adc_soca/b flag\r\n");
+                if(enableLog)
+                {
+                    DebugP_log("ERROR : no adc_soca/b flag\r\n");
+                }
             }
             else
             {
@@ -1118,7 +1130,10 @@ int test_trigger(
             /* wait unsuccessful. Conversion did not happen*/
             /* trigger did not trigger the SOC*/
             errors++;
-            if(enableLog) DebugP_log("ERROR : trigger %d did not trigger the SOC\r\n", trigger);
+            if(enableLog)
+            {
+                DebugP_log("ERROR : trigger %d did not trigger the SOC\r\n", trigger);
+            }
         }
         wait = 0;
         if(enableLog)
@@ -1130,8 +1145,9 @@ int test_trigger(
     }
 
     if(enableLog)
-    DebugP_log("%d is errors for %d trigger\r\n", errors, trigger);
-
+    {
+        DebugP_log("%d is errors for %d trigger\r\n", errors, trigger);
+    }
     trigger_test = 0;
 
     return errors;
@@ -1266,8 +1282,10 @@ void util_EPWM_init(uint32_t epwm_base)
 
 
     int epwm_instance = (epwm_base & 0x0001f000)>>12;
-    if(enableLog) DebugP_log("%x is epwm_base\r\n", epwm_base);
-
+    if(enableLog)
+    {
+        DebugP_log("%x is epwm_base\r\n", epwm_base);
+    }
     SOC_generateEpwmReset(epwm_instance);
 
     if(trigger_test)
@@ -1623,7 +1641,10 @@ int test_adc_operational_mode(uint32_t base, int mode)
         errors++;
     }
 
-    if(enableLog) DebugP_log("%d errors for base %x, %d non zero values\r\n", errors, base, non_zero_values);
+    if(enableLog)
+    {
+        DebugP_log("%d errors for base %x, %d non zero values\r\n", errors, base, non_zero_values);
+    }
 
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
@@ -1726,8 +1747,10 @@ int32_t AM263x_ADC_BTR_003(uint32_t base)
         sample_window);
 
     ADC_disableInterrupt(base, int_number);
-    if(enableLog) DebugP_log("%d errors for base %x\r\n", errors, base);
-
+    if(enableLog)
+    {
+        DebugP_log("%d errors for base %x\r\n", errors, base);
+    }
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
 
@@ -1781,8 +1804,10 @@ int32_t AM263x_ADC_BTR_004(uint32_t base)
             sample_window);
         ADC_disableInterrupt(base, int_number);
     }
-    if(enableLog) DebugP_log("%d errors for base %x\r\n", errors, base);
-
+    if(enableLog)
+    {
+        DebugP_log("%d errors for base %x\r\n", errors, base);
+    }
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
 
@@ -1832,8 +1857,10 @@ int32_t AM263x_ADC_BTR_005(uint32_t base)
         sample_window);
     ADC_disableInterrupt(base, int_number);
 
-    if(enableLog) DebugP_log("%d errors for base %x\r\n", errors, base);
-
+    if(enableLog)
+    {
+        DebugP_log("%d errors for base %x\r\n", errors, base);
+    }
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
 
@@ -1902,7 +1929,10 @@ int32_t AM263x_ADC_BTR_006(uint32_t base)
 
         if(errors > 0)
         {
-            if(enableLog)DebugP_log("trigger : %d complete. %d errors so far\r\n", trigger, errors);
+            if(enableLog)
+            {
+                DebugP_log("trigger : %d complete. %d errors so far\r\n", trigger, errors);
+            }
         }
         ADC_disableInterrupt(base, int_number);
 
@@ -1967,8 +1997,10 @@ uint32_t AM263_ADC_BTR_NEW(uint32_t base)
 
     ADC_disableInterrupt(base, int_number);
 
-    if(errors > 0) DebugP_log("%d errors for base %x\r\n", errors, base);
-
+    if(errors > 0)
+    {
+        DebugP_log("%d errors for base %x\r\n", errors, base);
+    }
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
 
@@ -2220,7 +2252,10 @@ int32_t AM263x_ADC_BTR_008(uint32_t base)
     /* resetting and disabling the ADC Converter*/
     util_ADC_deinit(base);
 
-    if(errors > 0) DebugP_log("%d errors for base %x\r\n", errors, base);
+    if(errors > 0)
+    {
+        DebugP_log("%d errors for base %x\r\n", errors, base);
+    }
     if(errors > 0)
     {
         /* Fail criteria */
@@ -2306,8 +2341,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
     for(int iterations = 0 ; iterations <2; iterations++)
     {
 
-        if(enableLog) DebugP_log("iteration : %d\r\n", iterations);
-
+        if(enableLog)
+        {
+            DebugP_log("iteration : %d\r\n", iterations);
+        }
         for(ppb_number = ADC_PPB_NUMBER1;
             ppb_number <=ADC_PPB_NUMBER4;
             ppb_number++)
@@ -2338,12 +2375,14 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             tester_command(test_command);
 
             ADC_forceSOC(base, soc_number);
-            while(ADC_getInterruptStatus(base, int_number) != 1);
+            if(util_ADC_wait_for_adc_interrupt(base, int_number) == false) errors++;
             ADC_clearInterruptStatus(base, int_number);
             adc_result = util_ADC_check_result(base, soc_number);
             ppb_result = ADC_readPPBResult(result_base, ppb_number);
-            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
+            if(enableLog)
+            {
+                DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+            }
             if(((ADC_getPPBEventStatus(base, ppb_number)) & (0x1)) == 1)
             {
                 /* error : flag set*/
@@ -2365,12 +2404,14 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
 
 
             ADC_forceSOC(base, soc_number);
-            while(ADC_getInterruptStatus(base, int_number) != 1);
+            if(util_ADC_wait_for_adc_interrupt(base, int_number) == false) errors++;
             ADC_clearInterruptStatus(base, int_number);
             adc_result = ADC_readResult(result_base, soc_number);
             ppb_result = ADC_readPPBResult(result_base,ppb_number);
-            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
+            if(enableLog)
+            {
+                DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+            }
             if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
             {
                 /* error : flag not set*/
@@ -2392,12 +2433,14 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
 
 
             ADC_forceSOC(base, soc_number);
-            while(ADC_getInterruptStatus(base, int_number) != 1);
+            if(util_ADC_wait_for_adc_interrupt(base, int_number) == false) errors++;
             ADC_clearInterruptStatus(base, int_number);
             adc_result = util_ADC_check_result(base, soc_number);
             ppb_result = ADC_readPPBResult(result_base,ppb_number);
-            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
+            if(enableLog)
+            {
+                DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+            }
             if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
             {
                 /* error : flag not set*/
@@ -2424,12 +2467,14 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
 
 
             ADC_forceSOC(base, soc_number);
-            while(ADC_getInterruptStatus(base, int_number) != 1);
+            if(util_ADC_wait_for_adc_interrupt(base, int_number) == false) errors++;
             ADC_clearInterruptStatus(base, int_number);
             adc_result = util_ADC_check_result(base, soc_number);
             ppb_result = ADC_readPPBResult(result_base,ppb_number);
-            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
+            if(enableLog)
+            {
+                DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+            }
             if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) == 1)
             {
                 /* error : flag set*/
@@ -2449,12 +2494,14 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             tester_command(test_command);
 
             ADC_forceSOC(base, soc_number);
-            while(ADC_getInterruptStatus(base, int_number) != 1);
+            if(util_ADC_wait_for_adc_interrupt(base, int_number) == false) errors++;
             ADC_clearInterruptStatus(base, int_number);
             adc_result = util_ADC_check_result(base, soc_number);
             ppb_result = ADC_readPPBResult(result_base,ppb_number);
-            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
+            if(enableLog)
+            {
+                DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+            }
             if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) != 1)
             {
                 /* error : flag not set*/
@@ -2476,12 +2523,14 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             tester_command(test_command);
 
             ADC_forceSOC(base, soc_number);
-            while(ADC_getInterruptStatus(base, int_number) != 1);
+            if(util_ADC_wait_for_adc_interrupt(base, int_number) == false) errors++;
             ADC_clearInterruptStatus(base, int_number);
             adc_result = util_ADC_check_result(base, soc_number);
             ppb_result = ADC_readPPBResult(result_base,ppb_number);
-            if(enableLog) DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
-
+            if(enableLog)
+            {
+                DebugP_log("adc_result : %x\tppb_result : %x\r\n", adc_result, ppb_result);
+            }
             if((ADC_getPPBEventStatus(base, ppb_number)& 0x0001) == 1)
             {
                 /* error : flag set*/
@@ -2691,7 +2740,10 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
                     ADC_setPPBReferenceOffset(base, ppb_number, 0);
 
                     ADC_forceSOC(base, soc_number);
-                    while(ADC_getInterruptStatus(base, int_number) != 1);
+                    if(util_ADC_wait_for_adc_interrupt(base, int_number) == false)
+                    {
+                        errors++;
+                    }
                     ClockP_usleep(10);
                     result_without_cal_offset = util_ADC_check_result(base, soc_number);
                     result_without_ref_offset = ADC_readPPBResult(result_base, ppb_number);
@@ -2701,7 +2753,10 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
                     ADC_setPPBReferenceOffset(base, ppb_number, offset);
 
                     ADC_forceSOC(base, soc_number);
-                    while(ADC_getInterruptStatus(base, int_number) != 1);
+                    if(util_ADC_wait_for_adc_interrupt(base, int_number) == false)
+                    {
+                        errors++;
+                    }
                     ClockP_usleep(10);
                     result_with_cal_offset = util_ADC_check_result(base, soc_number);
                     result_with_ref_offset = ADC_readPPBResult(result_base, ppb_number);
@@ -2830,17 +2885,31 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
     util_ADC_fire_soc_trigger(base, soc_number, trigger);
 
     /* wait for last SOC to complete conversion and trigger ADC_interrupt*/
-    while(ADC_getInterruptStatus(base, int_number) != 1);
-
+    if(util_ADC_wait_for_adc_interrupt(base, int_number) == false)
+    {
+        errors++;
+    }
     ppb_1_delay_stamp = ADC_getPPBDelayTimeStamp(base, ADC_PPB_NUMBER1);
     ppb_2_delay_stamp = ADC_getPPBDelayTimeStamp(base, ADC_PPB_NUMBER2);
     ppb_3_delay_stamp = ADC_getPPBDelayTimeStamp(base, ADC_PPB_NUMBER3);
     ppb_4_delay_stamp = ADC_getPPBDelayTimeStamp(base, ADC_PPB_NUMBER4);
 
-    if(enableLog) DebugP_log("%d is ppb_1_delaystamp for soc0\r\n", ppb_1_delay_stamp );
-    if(enableLog) DebugP_log("%d is ppb_2_delaystamp for soc5\r\n", ppb_2_delay_stamp );
-    if(enableLog) DebugP_log("%d is ppb_3_delaystamp for soc10\r\n", ppb_3_delay_stamp);
-    if(enableLog) DebugP_log("%d is ppb_4_delaystamp for soc15\r\n", ppb_4_delay_stamp);
+    if(enableLog)
+    {
+        DebugP_log("%d is ppb_1_delaystamp for soc0\r\n", ppb_1_delay_stamp );
+    }
+    if(enableLog)
+    {
+        DebugP_log("%d is ppb_2_delaystamp for soc5\r\n", ppb_2_delay_stamp );
+    }
+    if(enableLog)
+    {
+        DebugP_log("%d is ppb_3_delaystamp for soc10\r\n", ppb_3_delay_stamp);
+    }
+    if(enableLog)
+    {
+        DebugP_log("%d is ppb_4_delaystamp for soc15\r\n", ppb_4_delay_stamp);
+    }
 
     if((ppb_4_delay_stamp <= ppb_3_delay_stamp) ||
        (ppb_3_delay_stamp <= ppb_2_delay_stamp) ||
@@ -2848,7 +2917,6 @@ int32_t AM263x_ADC_BTR_012(uint32_t base)
        (ppb_1_delay_stamp)>  2)
     {
         errors++;
-
     }
     ADC_disableInterrupt(base, int_number);
 
@@ -2929,8 +2997,10 @@ int32_t AM263x_ADC_BTR_013(uint32_t base)
         * Hence its interrupt is last to be triggered */
 
     /* base is now base0 = 0x4000*/
-    while(ADC_getInterruptStatus(base, int_number) != 1);
-
+    if(util_ADC_wait_for_adc_interrupt(base, int_number) == false)
+    {
+        errors++;
+    }
     /* errors if other ADCs haven't completed */
     base = base0;
     for(adc_offset = 0x0000;
@@ -3133,8 +3203,10 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
             {
                 continue;
             }
-            if(enableLog) DebugP_log("---channel  : %d---\r\n",channel);
-
+            if(enableLog)
+            {
+                DebugP_log("---channel  : %d---\r\n",channel);
+            }
             ADC_setupSOC(base, ADC_SOC_NUMBER0, ADC_TRIGGER_SW_ONLY,channel, 16);
 
 
@@ -3165,7 +3237,11 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
             }
 
             ADC_forceSOC(base, ADC_SOC_NUMBER0);
-            while(false == ADC_getInterruptStatus(base, ADC_INT_NUMBER1));
+            if(util_ADC_wait_for_adc_interrupt(base, ADC_INT_NUMBER1) == false)
+            {
+                errors++;
+            }
+
             ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
 
             if( (SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) != 1)
@@ -3207,7 +3283,10 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
 
             /* There should not be any trip occuring now.*/
             ADC_forceSOC(base, ADC_SOC_NUMBER0);
-            while(false == ADC_getInterruptStatus(base, ADC_INT_NUMBER1));
+            if(util_ADC_wait_for_adc_interrupt(base, ADC_INT_NUMBER1) == false)
+            {
+                errors++;
+            }
             ADC_clearInterruptStatus(base, ADC_INT_NUMBER1);
 
             if( (SOC_xbarGetPWMXBarOutputSignalStatus(CSL_CONTROLSS_PWMXBAR_U_BASE) == 1)
@@ -3484,7 +3563,6 @@ int32_t AM263_ADC_TTR_0002(base)
 
             ADC_forceSOC(base,ADC_SOC_NUMBER0);
             while(ADC_getInterruptStatus(base, iterative) != 1);
-
             temp = CycleCounterP_getCount32();
 
             trigger_API_to_int_flg_latency[iterative] = temp;
@@ -3498,7 +3576,7 @@ int32_t AM263_ADC_TTR_0002(base)
         {
             if((enableLog == 1) && (iter == 0 ) )
             {
-                DebugP_log("API to interrupt %d flag latency :\t%d\r\n", iterative,trigger_API_to_int_flg_latency[iterative]);
+                DebugP_log("API to interrupt %d flag latency :\t%d\r\n", iterative, trigger_API_to_int_flg_latency[iterative]);
             }
         }
 
@@ -3692,46 +3770,53 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
             if ((counter_values_for_read[0] < 30-3) || (counter_values_for_read[0] > 30+3) )
             {
                 errors++ ;    /* 16 bit read */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 16 bit read : %d\r\n",base,counter_values_for_read[0]);
             }
             if ((counter_values_for_read[1] < 30-3) || (counter_values_for_read[1] > 30+3) )
             {
                 errors++ ;    /* 32 bit read */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 32 bit read : %d\r\n",base,counter_values_for_read[1]);
-
             }
             if ((counter_values_for_read[2] < 25-4) || (counter_values_for_read[2] > 25+4) )
             {
                 errors++ ;    /* 16 bit result space read */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 16 bit result space read  : %d\r\n",base,counter_values_for_read[2]);
 
             }
             if ((counter_values_for_read[3] < 22-3) || (counter_values_for_read[3] > 22+3) )
             {
                 errors++ ;    /* 32 bit result space read */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 32 bit result space read  : %d\r\n",base,counter_values_for_read[3]);
             }
             if ((counter_values_for_read[4] < 470-10) || (counter_values_for_read[4] > 470+10) )
             {
                 errors++ ;  /* 32 bit result space burst read 4*32 bit*/
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 32 bit result space burst read 4*32 bit : %d\r\n",base,counter_values_for_read[4]);
 
             }
             if ((counter_values_for_write[0] < 11-3) || (counter_values_for_write[0] > 11+3) )
             {
                 errors++ ;  /* 16 bit write */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 16 bit write : %d\r\n",base,counter_values_for_write[0]);
 
             }
             if ((counter_values_for_write[1] < 11-3) || (counter_values_for_write[1] > 11+3) )
             {
                 errors++ ;  /* 32 bit write */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 32 bit write : %d\r\n",base,counter_values_for_write[1]);
 
             }
             if ((counter_values_for_write[2] < 250-16) || (counter_values_for_write[2] > 250+16) )
             {
                 errors++ ; /* 32 bit result space burst write 4*32 bit */
+                if(enableLog)
                 DebugP_log("ERROR FOR BASE : %X 32 bit result space burst write 4*32 bit : %d\r\n",base,counter_values_for_write[2]);
 
             }
@@ -3925,7 +4010,10 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
                 errors_count++;
             }
             errors = errors_count;
-            if(errors)DebugP_log("error!!!  %d\r\n",dma_trigger_to_transfer_complete_latency);
+            if(errors)
+            {
+                DebugP_log("error!!!  %d\r\n",dma_trigger_to_transfer_complete_latency);
+            }
             if(enableLog)
             {
                 DebugP_log("adc_instance : %d, DMA trigger to transfer complete latency  : %d\r\n",adc_instance, dma_trigger_to_transfer_complete_latency);
@@ -3950,8 +4038,9 @@ int32_t test_adc_cases(uint8_t in)
     int32_t failcount = 0;
     uint32_t adc_offset = 0;
     uint32_t base;
-    int flag_for_all_adcs_working_together = 0;
-    int flag_for_asynchronous_operation    = 0;
+
+    bool single_run_test = false;
+
     for (adc_offset = 0x0000; adc_offset <= 0x4000; adc_offset = adc_offset + 0x1000)
     {
 
@@ -3989,14 +4078,9 @@ int32_t test_adc_cases(uint8_t in)
             /*
              * This test will include all the ADCs in one testcase. so there is
              * no need for this to be repeated.
-             * Hence the flag_for_all_adcs_working_together is used
              */
-            if(flag_for_all_adcs_working_together == 1)
-            {
-                break;
-            }
             failcount += AM263x_ADC_BTR_007();
-            flag_for_all_adcs_working_together++;
+            single_run_test = true;
             break;
         case 8:
             /* AM263_ADC_BTR_0008	 Force multiple SOCs simultaneously */
@@ -4020,12 +4104,8 @@ int32_t test_adc_cases(uint8_t in)
             break;
         case 13:
             /* AM263_ADC_BTR_0013	 Asynchronous operation */
-            if(flag_for_asynchronous_operation == 1)
-            {
-                break;
-            }
             failcount += AM263x_ADC_BTR_013(base);
-            flag_for_asynchronous_operation++;
+            single_run_test = true;
             break;
         case 14:
             /* AM263_ADC_ITR_0001	 Back to back conversions
@@ -4058,14 +4138,23 @@ int32_t test_adc_cases(uint8_t in)
             failcount += AM263_ADC_TTR_0004(base);
             break;
         case 21:
+            /* ecap SOC triggers */
             failcount += AM263_ADC_BTR_NEW(base);
+            break;
+        }
+
+        if(single_run_test || (!TEST_ALL_INSTANCES))
+        {
             break;
         }
     }
 
-    if(enableLog) DebugP_log("%d is the failcount FYI\r\n", failcount);
     if (failcount != 0)
     {
+        if(enableLog)
+        {
+            DebugP_log("%d is the failcount FYI\r\n", failcount);
+        }
         return 1;
     }
     else

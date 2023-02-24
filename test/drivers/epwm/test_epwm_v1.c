@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -285,7 +285,6 @@ void test_main(void *args)
         DebugP_log("\r\n01\t:\tmanual testing\r\n02\t:\tauto testing (using Tester Applicaiton)\r\n03\t:\tQuit\r\n");
 
         UART_Transaction_init(&trans);
-        UART_Transaction trans;
         uint8_t optionBuffer[3];
         int option;
         uint8_t i;
@@ -384,8 +383,8 @@ void test_main(void *args)
 
             if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
             {
-                DebugP_log("\r\nInvalid input! \r\n selecting enable logs by default\r\n");
-                log_option = 'y';     //""Run All tests and quit"
+                DebugP_log("\r\nInvalid input! \r\n selecting disable logs by default\r\n");
+                log_option = 'n';
             }
             else
             {
@@ -439,6 +438,7 @@ void test_main(void *args)
                 * RUN_TEST(EPWM_latency_of_fast_access_bridge_hrpwm_registers_through_r5f , 3382, NULL);
                 */
                 RUN_TEST(EPWM_checkAPIs, -1, NULL);
+                while_breaker = 1;
                 break;
             case 1:
                 RUN_TEST(EPWM_setClockPrescalerApiCheck, 3327, NULL);
@@ -628,8 +628,8 @@ void test_main(void *args)
                 RUN_TEST(EPWM_hrpwm_operation , 3354, NULL);
                 /* RUN_TEST(EPWM_hrpwm_operation_with_sfo , 3355, NULL); */
                 /* RUN_TEST(EPWM_sdfm_trips_pwm , 3369, NULL); */
+                while_breaker = 1;
                 break;
-
             default :
                 DebugP_log("Invalid Input. try again\r\n");
                 break;
@@ -1216,13 +1216,18 @@ int32_t AM263x_EPWM_xTR_0001(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -1304,7 +1309,10 @@ int32_t AM263x_EPWM_xTR_0002(uint32_t dummy)
         sprintf(ts_epwmx, "get timestamp 01 A");
         sprintf(ts_epwmy, "get timestamp 02 A");
 
-        /* if(enableLog) DebugP_log("EPWM_%d_A to ECAP%d ; EPWM_%d_B to ECAP %d\n",itr3,epwm_to_ecap[2*itr3], itr3, epwm_to_ecap[2*itr3+1]); */
+        /* if(enableLog)
+        {
+            DebugP_log("EPWM_%d_A to ECAP%d ; EPWM_%d_B to ECAP %d\n",itr3,epwm_to_ecap[2*itr3], itr3, epwm_to_ecap[2*itr3+1]);
+        }*/
 
         /* int32_t timestamp_event1_X=0; */
         int32_t timestamp_event2_X=0;
@@ -1353,17 +1361,18 @@ int32_t AM263x_EPWM_xTR_0002(uint32_t dummy)
         */
         int32_t timestamp_diff = abs(timestamp_event2_X - timestamp_event2_Y);
 
-        if(enableLog) DebugP_log("%u - %u, %u - %u, %u - %u\r\n",timestamp_event2_X, timestamp_event2_Y, low_pulse_width, expected_low_pulse_width,
+        if(enableLog) {
+            DebugP_log("%u - %u, %u - %u, %u - %u\r\n",timestamp_event2_X, timestamp_event2_Y, low_pulse_width, expected_low_pulse_width,
         high_pulse_width, expected_high_pulse_width);
-
-        DebugP_log("\r\n On EPWM 1\r\n");
-        DebugP_log("Timestamp captured for low pulse is %u and expected value is %u\r\n", timestamp_event3_X, expected_low_pulse_width);
-        DebugP_log("Timestamp captured for high pulse is %u and expected value is %u\r\n", high_pulse_width, expected_high_pulse_width);
-        DebugP_log("Absolute timestamp from TBCTR = 0  to falling edge is %u\n\r\n", timestamp_event2_X);
-        DebugP_log("On EPWM 2\r\n");
-        DebugP_log("Timestamp captured for low pulse is %u and expected value is %u\r\n", timestamp_event3_Y, expected_low_pulse_width);
-        DebugP_log("Timestamp captured for high pulse is %u and expected value is %u\r\n", (timestamp_event4_Y - timestamp_event3_Y), expected_high_pulse_width);
-        DebugP_log("Absolute timestamp from TBCTR = 0  to falling edge is %u\r\n", timestamp_event2_Y);
+            DebugP_log("\r\n On EPWM 1\r\n");
+            DebugP_log("Timestamp captured for low pulse is %u and expected value is %u\r\n", timestamp_event3_X, expected_low_pulse_width);
+            DebugP_log("Timestamp captured for high pulse is %u and expected value is %u\r\n", high_pulse_width, expected_high_pulse_width);
+            DebugP_log("Absolute timestamp from TBCTR = 0  to falling edge is %u\n\r\n", timestamp_event2_X);
+            DebugP_log("On EPWM 2\r\n");
+            DebugP_log("Timestamp captured for low pulse is %u and expected value is %u\r\n", timestamp_event3_Y, expected_low_pulse_width);
+            DebugP_log("Timestamp captured for high pulse is %u and expected value is %u\r\n", (timestamp_event4_Y - timestamp_event3_Y), expected_high_pulse_width);
+            DebugP_log("Absolute timestamp from TBCTR = 0  to falling edge is %u\r\n", timestamp_event2_Y);
+        }
 
 
         if( (diff_low_pulse_width > 10 ) || (diff_high_pulse_width  >10 ) || (timestamp_diff > 10))
@@ -1394,14 +1403,19 @@ int32_t AM263x_EPWM_xTR_0002(uint32_t dummy)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -1533,14 +1547,18 @@ int32_t AM263x_EPWM_xTR_0003(uint32_t base, uint32_t i)
     //****************************************************************************************//
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -1594,13 +1612,19 @@ int8_t AM263x_EPWM_xTR_0005(uint32_t dummy)
     //****************************************************************************************//
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -1693,7 +1717,10 @@ int32_t AM263x_EPWM_xTR_0006(uint32_t base, uint32_t i)
     /* timestamp_event2_A = ts[1]; */ /* Width of low pulse of ePWMxA */
     timestamp_event3_A = ts[2]; /* Width of high pulse of ePWMxA */
     timestamp_event4_A = ts[3]; /* Width of low pulse of ePWMxA */
-    /* if(enableLog) DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A); */
+    /* if(enableLog)
+    {
+        DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A);
+    }*/
 
     tester_command(ts_epwmB);
     timestamp_event1_B = ts[0]; /* Width of first high pulse of ePWMxB */
@@ -1742,13 +1769,19 @@ int32_t AM263x_EPWM_xTR_0006(uint32_t base, uint32_t i)
     //****************************************************************************************//
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -1876,8 +1909,10 @@ int32_t AM263x_EPWM_xTR_0007(uint32_t dummy)
                     high_cap_diff=abs(timestamp_event3_A-high_pulse_width);
 
                     if(enableLog)
-                        DebugP_log("%u - %u, %u - %u\r\n",timestamp_event4_A,low_pulse_width, timestamp_event3_A, high_pulse_width);
-                   if( (low_cap_diff > 20 ) || (high_cap_diff  >20 ))
+                        {
+                            DebugP_log("%u - %u, %u - %u\r\n",timestamp_event4_A,low_pulse_width, timestamp_event3_A, high_pulse_width);
+                        }
+                    if( (low_cap_diff > 20 ) || (high_cap_diff  >20 ))
                     {
                         error++;
                         //break;
@@ -1905,13 +1940,18 @@ int32_t AM263x_EPWM_xTR_0007(uint32_t dummy)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -2028,13 +2068,19 @@ int32_t AM263x_EPWM_xTR_0008(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -2144,13 +2190,19 @@ int32_t AM263x_EPWM_xTR_0009(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -2241,7 +2293,10 @@ int32_t AM263x_EPWM_xTR_0010(uint32_t base, uint32_t i)
                 timestamp_event2_A = ts[1]; /* Width of period of ePWMxA */
                 timestamp_event3_A = ts[2]; /* Width of period of ePWMxA */
                 timestamp_event4_A = ts[3]; /* Width of low pulse of ePWMxA */
-                /* if(enableLog) DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A); */
+                /* if(enableLog)
+                {
+                    DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A);
+                }*/
 
                 tester_command(ts_epwmB);
                 timestamp_event1_B = ts[0]; /* Width of high pulse of ePWMxB */
@@ -2273,8 +2328,11 @@ int32_t AM263x_EPWM_xTR_0010(uint32_t base, uint32_t i)
             error++;
         }
 
-        if(enableLog) DebugP_log("%u - %u, %u - %u, %u\r\n",high_pulse_width,expected_high_pulse_width, low_pulse_width, expected_low_pulse_width,
+        if(enableLog)
+        {
+            DebugP_log("%u - %u, %u - %u, %u\r\n",high_pulse_width,expected_high_pulse_width, low_pulse_width, expected_low_pulse_width,
         diff_low_chA_chB);
+        }
 
     //*************************************De-initializing*************************************//
     /*util_deinit_epwms(i);*/
@@ -2288,13 +2346,18 @@ int32_t AM263x_EPWM_xTR_0010(uint32_t base, uint32_t i)
     //****************************************************************************************//
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -2389,8 +2452,10 @@ int32_t AM263x_EPWM_xTR_0012(uint32_t base, uint32_t i)
                 timestamp_event2_A = ts[1]; /* Width of period of ePWMxA */
                 timestamp_event3_A = ts[2]; /* Width of period of ePWMxA */
                 timestamp_event4_A = ts[3]; /* Width of low pulse of ePWMxA */
-                /* if(enableLog) DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A); */
-
+                /* if(enableLog)
+                    {
+                        DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A);
+                    }*/
                 tester_command(ts_epwmA);
                 timestamp_event1_B = ts[0]; /* Width of high pulse of ePWMxB */
                 timestamp_event2_B = ts[1];  /* Width of period of ePWMxB */
@@ -2426,8 +2491,11 @@ int32_t AM263x_EPWM_xTR_0012(uint32_t base, uint32_t i)
             error++;
         }
 
-        if(enableLog) DebugP_log("%u - %u, %u - %u, %u\r\n",high_pulse_width,expected_high_pulse_width, low_pulse_width, expected_low_pulse_width,
+        if(enableLog)
+        {
+            DebugP_log("%u - %u, %u - %u, %u\r\n",high_pulse_width,expected_high_pulse_width, low_pulse_width, expected_low_pulse_width,
         diff_low_chA_chB);
+        }
 
         /*******************************************************************************************/
 
@@ -2444,13 +2512,19 @@ int32_t AM263x_EPWM_xTR_0012(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -2595,8 +2669,10 @@ int32_t AM263x_EPWM_xTR_0014(uint32_t base, uint32_t i)
                 }
 
                 if(enableLog)
-                DebugP_log("%u - %u = %u, %u - %u =%u\r\n",high_pulse_width_A,expected_high_pulse_width_A, diff_high_pulse_width_A,
+                {
+                    DebugP_log("%u - %u = %u, %u - %u =%u\r\n",high_pulse_width_A,expected_high_pulse_width_A, diff_high_pulse_width_A,
                 low_pulse_width_B, expected_low_pulse_width_B, diff_low_pulse_width_B);
+                }
             }
             /*Rising edge delay of 2.5US to ePWMxA and falling edge delay of 5Us to the rising edge delayed signal.
               OutB will have the same signal as OutA as S6 is switched on.
@@ -2617,8 +2693,10 @@ int32_t AM263x_EPWM_xTR_0014(uint32_t base, uint32_t i)
                 }
 
                 if(enableLog)
-                DebugP_log("%u - %u = %u, %u - %u = %u\r\n",high_pulse_width_A,expected_high_pulse_width_A,
+                {
+                    DebugP_log("%u - %u = %u, %u - %u = %u\r\n",high_pulse_width_A,expected_high_pulse_width_A,
                 diff_high_pulse_width_A, high_pulse_width_B, expected_high_pulse_width_B, diff_high_pulse_width_B);
+                }
             }
 
         /************************************************************************************************/
@@ -2645,14 +2723,18 @@ int32_t AM263x_EPWM_xTR_0014(uint32_t base, uint32_t i)
     //****************************************************************************************//
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -2676,14 +2758,18 @@ int32_t AM263x_EPWM_xTR_0015(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -2800,14 +2886,18 @@ int32_t AM263x_EPWM_xTR_0016(uint32_t base, uint32_t i)
     //****************************************************************************************//
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -2850,14 +2940,18 @@ int32_t AM263x_EPWM_xTR_0017(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -2887,13 +2981,18 @@ int32_t AM263x_EPWM_xTR_0019(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
 
         return 1;
     }
@@ -2912,14 +3011,18 @@ int32_t AM263x_EPWM_xTR_0020(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -2940,8 +3043,10 @@ int32_t AM263x_EPWM_xTR_0024(uint32_t base, uint32_t i)
     CycleCounterP_reset();
     result_dummy = HW_RD_REG16(result_addr);
     epwm_result_read_latency = CycleCounterP_getCount32() - counter_start_stop_latency;
-    if(enableLog) DebugP_log("Value:%u and %d is epwm_result_read_latency\r\r\n", result_dummy, epwm_result_read_latency);
-
+    if(enableLog)
+    {
+        DebugP_log("Value:%u and %d is epwm_result_read_latency\r\r\n", result_dummy, epwm_result_read_latency);
+    }
     /* observation 19 or 20 cycles*/
     if((epwm_result_read_latency < 17) || (epwm_result_read_latency > 22))
     {
@@ -3060,14 +3165,18 @@ int32_t AM263x_EPWM_xTR_0033(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3094,14 +3203,18 @@ int32_t AM263x_EPWM_xTR_0035(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3170,14 +3283,18 @@ int32_t AM263x_EPWM_xTR_0036(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3218,14 +3335,18 @@ int32_t AM263x_EPWM_xTR_0037(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3249,14 +3370,18 @@ int32_t AM263x_EPWM_xTR_0039(uint32_t base,uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3281,14 +3406,18 @@ int32_t AM263x_EPWM_xTR_0040(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3305,14 +3434,18 @@ int32_t AM263x_EPWM_xTR_0042(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3401,7 +3534,10 @@ int32_t AM263x_EPWM_xTR_0043(uint32_t base, uint32_t i)
     timestamp_event3_A = ts[2]; /* Width of high pulse of ePWMxA */
     timestamp_event4_A = ts[3]; /* Width of low pulse of ePWMxA */
     /* if(enableLog)
-        DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A); */
+        {
+            DebugP_log("%u %u %u %u\r\n", timestamp_event1_A, timestamp_event2_A, timestamp_event3_A, timestamp_event4_A);
+        }
+    */
 
     tester_command(ts_epwmB);
     /* timestamp_event1_B = ts[0]; */ /* Width of first high pulse of ePWMxB */
@@ -3429,9 +3565,10 @@ int32_t AM263x_EPWM_xTR_0043(uint32_t base, uint32_t i)
         error++;
     }
     if(enableLog)
+    {
         DebugP_log("%d - %d, %d - %d, %d - %d\r\n",high_pulse_width_A,expected_high_pulse_width_A, high_pulse_width_B,
         expected_high_pulse_width_B, rising_edge_diff, falling_edge_diff);
-
+    }
     /*******************************************************************************************/
 
     //*************************************De-initializing*************************************//
@@ -3445,14 +3582,18 @@ int32_t AM263x_EPWM_xTR_0043(uint32_t base, uint32_t i)
 
         if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3469,14 +3610,18 @@ int32_t AM263x_EPWM_xTR_0044(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3539,14 +3684,18 @@ int32_t AM263x_EPWM_xTR_0045(uint32_t dummy)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3644,14 +3793,18 @@ int32_t AM263x_EPWM_xTR_0046(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -3718,14 +3871,18 @@ int32_t AM263x_EPWM_xTR_0047(uint32_t base, uint32_t i)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
-
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
         return 1;
     }
 }
@@ -4061,7 +4218,10 @@ int32_t test_epwm_cases(uint8_t in)
                         break;
                 }
                 util_deinit_epwms(epwm_offset);
-            if(enableLog) DebugP_log("\r\nEPWM offset %d failcount=%d\r\r\n", epwm_offset, failcount);
+            if(enableLog)
+            {
+                DebugP_log("\r\nEPWM offset %d failcount=%d\r\r\n", epwm_offset, failcount);
+            }
 
                 //if(in == 2 || in==3 || in==5 || in==7 || in==45)
                 //break;
@@ -4072,12 +4232,18 @@ int32_t test_epwm_cases(uint8_t in)
 
     if(failcount!=0)
     {
-        if(enableLog) DebugP_log("\r\nFAIL %d", failcount);
+        if(enableLog)
+        {
+            DebugP_log("\r\nFAIL %d", failcount);
+        }
         return 1;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
         return 0;
     }
 
@@ -4088,8 +4254,10 @@ void tester_init(void)
     UART_Transaction_init(&trans);
     trans.timeout=TIMEOUT_UART_TESTER;
 
-    if(enableLog) DebugP_log("\r\nSending initialization command!!");
-
+    if(enableLog)
+    {
+        DebugP_log("\r\nSending initialization command!!");
+    }
     gNumBytesWritten = 0U;
     trans.buf   = &gCmdTxBuffer[0U];
     strncpy(trans.buf,"123456780000000000000000ABCDEFEF", CMD_SIZE);
@@ -4101,8 +4269,10 @@ void tester_init(void)
     trans.count = RSP_SIZE;
     transferOK = UART_read(gUartHandle[TESTER_UART], &trans);
 
-    if(enableLog) DebugP_log("\r\nReceived response. Tester Initialized!!");
-
+    if(enableLog)
+    {
+        DebugP_log("\r\nReceived response. Tester Initialized!!");
+    }
     /*Clear TX buffer for shorter commands*/
     uint8_t ind;
     for(ind=0;ind<CMD_SIZE;ind++)
@@ -4147,8 +4317,10 @@ void tester_command(char *str)
         return;
     }
 
-    if(enableLog) DebugP_log("\r\nSending command!!");
-
+    if(enableLog)
+    {
+        DebugP_log("\r\nSending command!!");
+    }
     /* Send command*/
     gNumBytesWritten = 0U;
     trans.buf   = &gCmdTxBuffer[0U];

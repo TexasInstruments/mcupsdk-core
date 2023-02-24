@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -131,7 +131,11 @@ void tester_init(void)
     UART_Transaction_init(&trans);
     trans.timeout=TIMEOUT_UART_TESTER;
 
-    if(enableLog) DebugP_log("\r\nSending initialization command!!");
+    if(enableLog)
+    {
+        DebugP_log("\r\nSending initialization command!!");
+    }
+
 
     gNumBytesWritten = 0U;
     trans.buf   = &gCmdTxBuffer[0U];
@@ -144,7 +148,11 @@ void tester_init(void)
     trans.count = RSP_SIZE;
     transferOK = UART_read(gUartHandle[TESTER_UART], &trans);
 
-    if(enableLog) DebugP_log("\r\nReceived response!! (%d %d) : ", transferOK, trans.status);
+    if(enableLog)
+    {
+        DebugP_log("\r\nReceived response!! (%d %d) : ", transferOK, trans.status);
+    }
+
 
     /*Clear TX buffer for shorter commands*/
     uint8_t ind;
@@ -194,7 +202,11 @@ void tester_command(char *str)
         return;
     }
 
-    if(enableLog) DebugP_log("\r\nSending command!!");
+    if(enableLog)
+    {
+        DebugP_log("\r\nSending command!!");
+    }
+
 
     /* Send command*/
     gNumBytesWritten = 0U;
@@ -236,7 +248,11 @@ void test_main(void *args)
 
 	enableLog = 1;
 
-    if(enableLog) DebugP_log("\r\nAM263: CMPSS tests");
+    if(enableLog)
+    {
+        DebugP_log("\r\nAM263: CMPSS tests");
+    }
+
 
     tester_init();
 
@@ -281,7 +297,6 @@ void test_main(void *args)
         DebugP_log("\r\n01\t:\tmanual testing\r\n02\t:\tauto testing (using Tester Applicaiton)\r\n03\t:\tQuit\r\n");
 
         UART_Transaction_init(&trans);
-        UART_Transaction trans;
         uint8_t optionBuffer[3];
         int option;
         uint8_t i;
@@ -377,8 +392,8 @@ void test_main(void *args)
 
             if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
             {
-                DebugP_log("\r\nInvalid input! \r\n selecting enable logs by default\r\n");
-                log_option = 'y';     //""Run All tests and quit"
+                DebugP_log("\r\nInvalid input! \r\n selecting disable logs by default\r\n");
+                log_option = 'n';
             }
             else
             {
@@ -726,7 +741,11 @@ void util_CMPSS_deInit(uint32_t base)
 
     /*Module reset*/
 
-    if(enableLog) DebugP_log("\r\n util_CMPSS_deInit");
+    if(enableLog)
+    {
+        DebugP_log("\r\n util_CMPSS_deInit");
+    }
+
 
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK0 ,0x01234567);
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK1 ,0xFEDCBA8);
@@ -742,7 +761,11 @@ void util_CMPSS_deInit(uint32_t base)
 void util_EPWM_deInit()
 {
 
-    if(enableLog) DebugP_log("\r\n util_EPWM_deInit");
+    if(enableLog)
+    {
+        DebugP_log("\r\n util_EPWM_deInit");
+    }
+
 
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK0 ,0x01234567);
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK1 ,0xFEDCBA8);
@@ -761,7 +784,11 @@ void util_EPWM_deInit()
 
 void util_EPWM_config(uint32_t base, uint16_t period)
 {
-    if(enableLog) DebugP_log("\r\nEPWM %d configuration", (base-CSL_CONTROLSS_G0_EPWM0_U_BASE)/0x1000);
+    if(enableLog)
+    {
+        DebugP_log("\r\nEPWM %d configuration", (base-CSL_CONTROLSS_G0_EPWM0_U_BASE)/0x1000);
+    }
+
 
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK0 ,0x01234567);
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_LOCK0_KICK1 ,0xFEDCBA8);
@@ -985,7 +1012,11 @@ void util_EPWM_config_blank(uint32_t base, uint16_t blankWindowLength_Count, uin
     EPWM_setDigitalCompareWindowLength(base, blankWindowLength_Count);
     EPWM_enableDigitalCompareBlankingWindow(base);
 
-    if(enableLog) DebugP_log("\r\n Blank window length = 0x%04x, Window offset = 0x%04x, Window offset reg val = 0x%04x", blankWindowLength_Count, blankWindowOffset_Count, HW_RD_REG16(base + 0x192));
+    if(enableLog)
+    {
+        DebugP_log("\r\n Blank window length = 0x%04x, Window offset = 0x%04x, Window offset reg val = 0x%04x", blankWindowLength_Count, blankWindowOffset_Count, HW_RD_REG16(base + 0x192));
+    }
+
 }
 
 void util_EPWM_deConfig_blank(uint32_t base)
@@ -1151,7 +1182,11 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
     {
         for( i = 0; i < NUM_COMBO ; i++ )
         {
-            if(enableLog) DebugP_log("\r\nComparator High(1)/Low(0) = %u, Combo = %u 0x%02x 0x%02x, INH = %u, DACH = %u, INL = %u, DACL = %u, TRIP 0x%02x, TRIPOUT 0x%02x", j, i, test_vec[j][i][0], test_vec[j][i][1], test_vec[j][i][2], test_vec[j][i][3], test_vec[j][i][4], test_vec[j][i][5], test_vec[j][i][6], test_vec[j][i][7]);
+            if(enableLog)
+            {
+                DebugP_log("\r\nComparator High(1)/Low(0) = %u, Combo = %u 0x%02x 0x%02x, INH = %u, DACH = %u, INL = %u, DACL = %u, TRIP 0x%02x, TRIPOUT 0x%02x", j, i, test_vec[j][i][0], test_vec[j][i][1], test_vec[j][i][2], test_vec[j][i][3], test_vec[j][i][4], test_vec[j][i][5], test_vec[j][i][6], test_vec[j][i][7]);
+            }
+
 
             CMPSS_enableModule(base);
             CMPSS_configDAC(base, ref_in);
@@ -1197,18 +1232,62 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
 
                 if(status != (test_vec[j][i][6]<<out))
                 {
-                    if(enableLog) DebugP_log("\r\nerror");
-                    if(enableLog) DebugP_log("\r\nPWMXbar %d SOC_xbarGetPWMXBarOutputSignalStatus returns 0x%08x", out, status);
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nerror");
+                    }
 
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G3));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7));
-                    if(enableLog) DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8));
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nPWMXbar %d SOC_xbarGetPWMXBarOutputSignalStatus returns 0x%08x", out, status);
+                    }
+
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G3));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7));
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\n0x%08x", HW_RD_REG32(CSL_CONTROLSS_PWMXBAR_U_BASE + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8));
+                    }
+
 
                     uint32_t i;
                     for(i=0;i<30;i++)
@@ -1217,7 +1296,11 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
                     }
 
 
-                    if(enableLog) DebugP_log("\r\nerror");
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nerror");
+                    }
+
                     error++;
                 }
 
@@ -1243,8 +1326,16 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
 
                 if(status != (test_vec[j][i][7]<<out))
                 {
-                    if(enableLog) DebugP_log("\r\nerror");
-                    if(enableLog) DebugP_log("\r\nOutputXbar %d SOC_xbarGetOutputXBarOutputSignalStatus returns 0x%08x", out, status);
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nerror");
+                    }
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nOutputXbar %d SOC_xbarGetOutputXBarOutputSignalStatus returns 0x%08x", out, status);
+                    }
+
                     error++;
                 }
 
@@ -1259,13 +1350,21 @@ int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
 
     if(error==0)
     {
-      if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
       return 0;
     }
     else
     {
-      if(enableLog) DebugP_log("\r\nFail");
+    if(enableLog)
+    {
+        DebugP_log("\r\nFail");
+    }
+
 
       return 1;
     }
@@ -1277,7 +1376,11 @@ int32_t AM263x_CMPSS_BTR_0001(uint32_t base)
     // Enables the comparators and selects the CTRIPH/CTRIPL and CTRIPOUTH/CTRIPOUTL source to asynchronous or synchronous output, with and without inversion
     // Comparator output high if positive input>negative input. Low if otherwise.
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0001", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0001", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_analog(base, CMPSS_DACREF_VDDA);
 }
@@ -1288,7 +1391,11 @@ int32_t AM263x_CMPSS_BTR_0002(uint32_t base)
     // Selects high comparator negative input source as internal DAC/external pin (ADC)
     // Check High comparator output reponds to configured input source only
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0002", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0002", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_analog(base, CMPSS_DACREF_VDDA);
 }
@@ -1299,7 +1406,11 @@ int32_t AM263x_CMPSS_BTR_0003(uint32_t base)
     // Selects low comparator positive input source as the INP(of connected ADC pin)/INM(ADC of connected ADC pin)
     // Check Low comparator output responds to configured input source only
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0003", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0003", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_analog(base, CMPSS_DACREF_VDDA);
 }
@@ -1312,7 +1423,11 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
     // Sets different amount (1x to 4x) of hysteresis on comparator inputs
     // Comparator output shows configured hysteresis (12 bits to 48 bits)
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0004", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0004", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     // Configure pinmux for Output XBAR for debug
     HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
@@ -1354,8 +1469,10 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
         hysteresis_amount = test_vec[test_index][2];
         dac_voltage = test_vec[test_index][3]/1000.0f;
 
-        /*if(enableLog)*/ DebugP_log("\r\nComparator High(1)/Low(0) = %u, hysteresis_mode  = %u, hysteresis_amount = %u", low_high_comp, hysteresis_mode, hysteresis_amount);
-
+        /*if(enableLog)
+        {
+            DebugP_log("\r\nComparator High(1)/Low(0) = %u, hysteresis_mode  = %u, hysteresis_amount = %u", low_high_comp, hysteresis_mode, hysteresis_amount);
+        }*/
         // Configure Output xbar for debug
         uint8_t shift;
         uint8_t out = 7;
@@ -1438,27 +1555,46 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
             {
                 if( curr_status != prev_status )
                 {
-                    /*if(enableLog)*/ DebugP_log("\r\n status changed. input_voltage=%u mV. prev_status=%u, curr_status=%u", input_voltage, prev_status, curr_status);
+                    /*if(enableLog)
+                    {
+                        DebugP_log("\r\n status changed. input_voltage=%u mV. prev_status=%u, curr_status=%u", input_voltage, prev_status, curr_status);
+                    }
+                    */
                     if(ramp_up==false)
                     {
-                        /*if(enableLog)*/ DebugP_log(" Input Triangle ramping down");
+                        /*if(enableLog)
+                        {
+                            DebugP_log(" Input Triangle ramping down");
+                        }*/
                         if( (input_voltage > (test_vec[test_index][5] + test_vec[test_index][6]))  ||
                             (input_voltage < (test_vec[test_index][5] - test_vec[test_index][6]))
                         )
                         {
-                            /*if(enableLog)*/ DebugP_log(" Error. Expected around %u mV", test_vec[test_index][5]);
-                            error++;
+                            /*if(enableLog)
+                            {
+                                DebugP_log(" Error. Expected around %u mV", test_vec[test_index][5]);
+                            }
+                            */
+                           error++;
                         }
                     }
                     else
                     {
-                        /*if(enableLog)*/ DebugP_log(" Input Triangle ramping up");
+                        /*if(enableLog)
+                        {
+                            DebugP_log(" Input Triangle ramping up");
+                        }
+                        */
                         if( (input_voltage > (test_vec[test_index][4] + test_vec[test_index][6]))  ||
                             (input_voltage < (test_vec[test_index][4] - test_vec[test_index][6]))
                         )
                         {
-                            /*if(enableLog)*/ DebugP_log(" Error. Expected around %u mV", test_vec[test_index][4]);
-                            error++;
+                            /*if(enableLog)
+                            {
+                                DebugP_log(" Error. Expected around %u mV", test_vec[test_index][4]);
+                            }
+                            */
+                           error++;
                         }
                     }
                 }
@@ -1476,13 +1612,21 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -1495,7 +1639,11 @@ int32_t AM263x_CMPSS_BTR_0005(uint32_t base)
     // Selects VDDA/VDAC as reference voltage
     // Comparator output reflects according to configured DAC reference voltage
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0005", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0005", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     uint32_t error=0;
 
@@ -1506,13 +1654,21 @@ int32_t AM263x_CMPSS_BTR_0005(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -1559,7 +1715,11 @@ int32_t test_cmpss_dac_swload(uint32_t base, uint32_t diode_emulation_mode)
     {
         dac_input = dac_input_vals[dac_input_index];
 
-        if(enableLog) DebugP_log("\r\ndac_input=0x%04x", dac_input);
+        if(enableLog)
+        {
+            DebugP_log("\r\ndac_input=0x%04x", dac_input);
+        }
+
         uint16_t active_dac_value;
 
         if(diode_emulation_mode != 1)
@@ -1588,7 +1748,11 @@ int32_t test_cmpss_dac_swload(uint32_t base, uint32_t diode_emulation_mode)
 
         if(active_dac_value != (dac_input & CSL_CMPSSA_DACHVALA_DACVAL_MASK))
         {
-            if(enableLog) DebugP_log("\r\n error: CMPSS_getDACValueHigh=0x%04x", active_dac_value);
+            if(enableLog)
+            {
+                DebugP_log("\r\n error: CMPSS_getDACValueHigh=0x%04x", active_dac_value);
+            }
+
             error++;
         }
 
@@ -1627,7 +1791,11 @@ int32_t test_cmpss_dac_swload(uint32_t base, uint32_t diode_emulation_mode)
 
         if(active_dac_value != (dac_input & CSL_CMPSSA_DACHVALA_DACVAL_MASK))
         {
-            if(enableLog) DebugP_log("\r\n error: CMPSS_getDACValueLow=0x%04x", active_dac_value);
+            if(enableLog)
+            {
+                DebugP_log("\r\n error: CMPSS_getDACValueLow=0x%04x", active_dac_value);
+            }
+
             error++;
         }
 
@@ -1651,13 +1819,21 @@ int32_t test_cmpss_dac_swload(uint32_t base, uint32_t diode_emulation_mode)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -1670,7 +1846,11 @@ int32_t AM263x_CMPSS_BTR_0006(uint32_t base)
     // Enables 12 bit DACs in CMPSSA and 8 bt DACs in CMPSSB
     // Active DAC value is 12 bit/8 bit as programmed
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0006", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0006", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_dac_swload(base, 0);
 }
@@ -1738,10 +1918,22 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
                 else
                 {
                     //Error
-                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
-                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
+                    }
 
-                    if(enableLog) DebugP_log("\r\nerror 1");
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                    }
+
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nerror 1");
+                    }
+
                     error++;
                 }
             }
@@ -1762,10 +1954,22 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
                     else
                     {
                         //Error
-                        if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
-                        if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                        if(enableLog)
+                        {
+                            DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
+                        }
 
-                        if(enableLog) DebugP_log("\r\nerror 2");
+                        if(enableLog)
+                        {
+                            DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                        }
+
+
+                        if(enableLog)
+                        {
+                            DebugP_log("\r\nerror 2");
+                        }
+
                         error++;
                     }
                 }
@@ -1773,10 +1977,22 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
                 {
                     //Error
 
-                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
-                    if(enableLog) DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count, rampsts_logs[loop_count],loop_count, pwmtbctr_logs[loop_count]);
+                    }
 
-                    if(enableLog) DebugP_log("\r\nerror 3");
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nrampsts[%d] = 0x%04x, pwmtbctr[%d] = 0x%04x", loop_count+1, rampsts_logs[loop_count+1],loop_count+1, pwmtbctr_logs[loop_count+1]);
+                    }
+
+
+                    if(enableLog)
+                    {
+                        DebugP_log("\r\nerror 3");
+                    }
+
                     error++;
                 }
             }
@@ -1792,13 +2008,21 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -1810,7 +2034,11 @@ int32_t AM263x_CMPSS_BTR_0007(uint32_t base)
     // Configures ramp generation to feed to DAC
     // Active DAC value updates as per programmed ramp
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0007", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0007", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_ramp_pwm(base);
 }
@@ -1821,7 +2049,11 @@ int32_t AM263x_CMPSS_BTR_0008(uint32_t base)
     // Configure ramp generator behavior during emulation suspend
     // Ramp generation stops immediately/stops at next EPWMSYNCPER/does not stop
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0008", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0008", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     //TBD: manual verification during emulation suspend
     return test_cmpss_ramp_pwm(base);
@@ -1882,13 +2114,21 @@ int32_t test_cmpss_digital_filter(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -1901,7 +2141,11 @@ int32_t AM263x_CMPSS_BTR_0009(uint32_t base)
     // Digital filter output as per filter configuration
 
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0009", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_BTR_0009", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_digital_filter(base);
 
@@ -1954,7 +2198,11 @@ int32_t AM263x_CMPSS_ITR_0001(uint32_t base)
     // Tests the pin sharing: 2 differential pairs of ADC shared with 2 CMPSSA. 1 differential pair of ADC shared with 2 CMPSSB.
     // ADC and CMPSS output reflects according to same input signal
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0001", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0001", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
 
     uint32_t error=0;
@@ -1991,7 +2239,11 @@ int32_t AM263x_CMPSS_ITR_0001(uint32_t base)
             tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 1");
         }
 
-        if(enableLog) DebugP_log("\r\n %u %u", result1, result2);
+        if(enableLog)
+        {
+            DebugP_log("\r\n %u %u", result1, result2);
+        }
+
     }
     else
     {
@@ -2013,19 +2265,31 @@ int32_t AM263x_CMPSS_ITR_0001(uint32_t base)
             tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 0");
         }
 
-        if(enableLog) DebugP_log("\r\n %u", result1);
+        if(enableLog)
+        {
+            DebugP_log("\r\n %u", result1);
+        }
+
     }
 
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+                DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -2037,7 +2301,11 @@ int32_t AM263x_CMPSS_ITR_0002(uint32_t base)
     // Configures CMPSS outputs CTRIPH and CTRIPL to feed to PWM Xbar
     // CTRIPH and CTRIPL reaches PWMXbar outputs (EPWM trip/ICSS)
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0002", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0002", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_analog(base, CMPSS_DACREF_VDDA);
 }
@@ -2049,7 +2317,11 @@ int32_t AM263x_CMPSS_ITR_0003(uint32_t base)
     // Configures CMPSS outputs CTRIPH and CTRIPL to feed to ECAP input mux
     // CTRIPH and CTRIPL reaches ECAP
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0003", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0003", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     uint32_t error=0;
 
@@ -2123,13 +2395,21 @@ int32_t AM263x_CMPSS_ITR_0003(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -2141,7 +2421,11 @@ int32_t AM263x_CMPSS_ITR_0004(uint32_t base)
     // Configures CMPSS outputs CTRIPOUTH and CTRIPOUTL to output Xbar
     // CTRIPOUTH ad CTRIPOUTL reaches Output Xbar outputs (GPIO)
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0004", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0004", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_analog(base, CMPSS_DACREF_VDDA);
 }
@@ -2152,7 +2436,11 @@ int32_t AM263x_CMPSS_ITR_0005(uint32_t base)
     // Enables BLANK feature and select EPWM blank source to reset latched digital filter output
     // Comparator output does not trip during blank window
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0005", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0005", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     uint32_t error=0;
 
@@ -2229,7 +2517,11 @@ int32_t AM263x_CMPSS_ITR_0005(uint32_t base)
             (pwmxbar_status != 0x00000001)
             )
         {
-            if(enableLog) DebugP_log("\r\nError. CMPSS Status = 0x%04x, Expected = 0x%04x, PWM XBAR status = 0x%08x, Expected = 0x%08x\r\n", cmpss_status, 0x0000, pwmxbar_status, 0x00000001);
+            if(enableLog)
+            {
+                DebugP_log("\r\nError. CMPSS Status = 0x%04x, Expected = 0x%04x, PWM XBAR status = 0x%08x, Expected = 0x%08x\r\n", cmpss_status, 0x0000, pwmxbar_status, 0x00000001);
+            }
+
             error++;
         }
 
@@ -2245,18 +2537,26 @@ int32_t AM263x_CMPSS_ITR_0005(uint32_t base)
     }
 
     SOC_xbarSelectOutputXBarInputSource(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, out, 0,0,0,0,0,0,0,0,0,0,0);
-    
+
     util_CMPSS_deInit(base);
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -2268,7 +2568,11 @@ int32_t AM263x_CMPSS_ITR_0006(uint32_t base)
     // Configures source of DAC as the shadow register and loaded upon EPWMSYNCPER
     // Comparator output aligns with PWM cycle
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0006", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0006", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     uint32_t error=0;
     uint32_t pwmindex=0;
@@ -2339,13 +2643,21 @@ int32_t AM263x_CMPSS_ITR_0006(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -2357,7 +2669,11 @@ int32_t AM263x_CMPSS_ITR_0007(uint32_t base)
     // Is this feature available in AM263? Routing Comparator DAC output to an external pin
     // DAC output voltage at external pin
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0007", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0007", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     uint32_t error=0;
 
@@ -2382,13 +2698,21 @@ int32_t AM263x_CMPSS_ITR_0007(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -2403,7 +2727,11 @@ int32_t AM263x_CMPSS_ITR_0008(uint32_t base)
     // Configures source of DAC as ramp generator and ramp source is EPWMSYNCPER
     // Ramp start aligns with PWM cycle
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0008", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_ITR_0008", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     return test_cmpss_ramp_pwm(base);
 }
@@ -2415,7 +2743,11 @@ int32_t AM263x_CMPSS_STR_0001(uint32_t base)
     // Enables diode emulation mode and select diode emulation logic EPWM source. Setup TRIPH and TRIPL signals to drive the EPWMA and EPWMB outputs directly
     // PWM output driven by CMPSS CTRIPH and CTRIPL upon trip
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_STR_0001", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_STR_0001", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
    return test_cmpss_dac_swload(base, 1);
 }
@@ -2426,11 +2758,19 @@ int32_t AM263x_CMPSS_STR_0002(uint32_t base)
     // CMPSS is configured to generate trip signals to trip the EPWM signals.
     // PWM gets tripped and outputs as high
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_STR_0002", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] AM263x_CMPSS_STR_0002", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     //MCUSDK-6 CMPSS: Example to generate asynchronous trip output
 
-    if(enableLog) DebugP_log("\r\n\nCMPSS[%d] cmpss_ex1_asynch", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\nCMPSS[%d] cmpss_ex1_asynch", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     uint32_t error=0;
 
@@ -2493,13 +2833,21 @@ int32_t AM263x_CMPSS_STR_0002(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -2534,7 +2882,11 @@ int32_t apiCheck(uint32_t base)
     int32_t error=0;
     uint8_t i;
 
-    if(enableLog) DebugP_log("\r\n\r\nCMPSS[%d] API check", util_CMPSS_getInstanceFromBase(base));
+    if(enableLog)
+    {
+        DebugP_log("\r\n\r\nCMPSS[%d] API check", util_CMPSS_getInstanceFromBase(base));
+    }
+
 
     /* CMPSS_enableModule and CMPSS_disableModule API check */
     /* CMPSS_enableBlanking and CMPSS_disableBlanking API check */
@@ -2603,7 +2955,11 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_1[i][2] != (0x0043 & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configHighComparator API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configHighComparator API check error");
+            }
+
         }
 
     }
@@ -2627,7 +2983,11 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_1b[i][1] != (0x4300 & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configLowComparator API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configLowComparator API check error");
+            }
+
         }
     }
 
@@ -2660,14 +3020,22 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_2[i][2] != (0x003C & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configOutputsHigh API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configOutputsHigh API check error");
+            }
+
         }
 
         CMPSS_configOutputsLow(base, test_vec_2[i][0]);
         if(test_vec_2[i][1] != (0x3C00 & HW_RD_REG16(base + 0x0)))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configOutputsLow API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configOutputsLow API check error");
+            }
+
         }
     }
 
@@ -2707,7 +3075,11 @@ int32_t apiCheck(uint32_t base)
         if(test_vec_2b[i][1] != (0x00A1 & HW_RD_REG16(base + 0x08)))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configDAC API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configDAC API check error");
+            }
+
         }
     }
 
@@ -2726,13 +3098,21 @@ int32_t apiCheck(uint32_t base)
         if( (HW_RD_REG16(base + 0x0C) != test_vec_3) || (HW_RD_REG16(base + 0x24) != test_vec_3) )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_setDACValueHigh and CMPSS_setDACValueLow API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_setDACValueHigh and CMPSS_setDACValueLow API check error");
+            }
+
         }
 
         if( (CMPSS_getDACValueHigh(base) != test_vec_3) || (CMPSS_getDACValueLow(base) != test_vec_3) )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_getDACValueHigh and CMPSS_getDACValueLow API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_getDACValueHigh and CMPSS_getDACValueLow API check error");
+            }
+
         }
 
         CMPSS_configHighDACShadowValue2(base, test_vec_3);
@@ -2741,7 +3121,11 @@ int32_t apiCheck(uint32_t base)
         if( (HW_RD_REG16(base + 0x38) != test_vec_3) || (HW_RD_REG16(base + 0x3A) != test_vec_3) )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configHighDACShadowValue2 and CMPSS_configLowDACShadowValue2 API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configHighDACShadowValue2 and CMPSS_configLowDACShadowValue2 API check error");
+            }
+
         }
     }
 
@@ -2814,13 +3198,21 @@ int32_t apiCheck(uint32_t base)
         if( HW_RD_REG16(base + 0x14) != inp )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_setMaxRampValue API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_setMaxRampValue API check error");
+            }
+
         }
 
         if( CMPSS_getMaxRampValue(base) != inp )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_getMaxRampValue API check error 0x%08x", test_vec_4);
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_getMaxRampValue API check error 0x%08x", test_vec_4);
+            }
+
         }
     }
 
@@ -2841,13 +3233,21 @@ int32_t apiCheck(uint32_t base)
         if( HW_RD_REG16(base + 0x1C) != inp )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_setRampDecValue API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_setRampDecValue API check error");
+            }
+
         }
 
         if( CMPSS_getRampDecValue(base) != inp )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_getRampDecValue API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_getRampDecValue API check error");
+            }
+
         }
     }
 
@@ -2868,13 +3268,21 @@ int32_t apiCheck(uint32_t base)
         if( HW_RD_REG16(base + 0x2A) != inp )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_setRampDelayValuee API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_setRampDelayValuee API check error");
+            }
+
         }
 
         if( CMPSS_getRampDelayValue(base) != inp )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_getRampDelayValue API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_getRampDelayValue API check error");
+            }
+
         }
     }
 
@@ -2895,7 +3303,11 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x08) & 0x0F00) != test_vec_4b[i][1] ) || ((HW_RD_REG16(base + 0x0A) & 0x0100) != test_vec_4b[i][2]))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configBlanking API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configBlanking API check error");
+            }
+
         }
 
     }
@@ -2913,7 +3325,11 @@ int32_t apiCheck(uint32_t base)
         if( (HW_RD_REG16(base + 0x0A) & 0x003E) != (test_vec_4c<<1) )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_selectDEACTIVESource API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_selectDEACTIVESource API check error");
+            }
+
         }
     }
     util_CMPSS_deInit(base);
@@ -2941,7 +3357,11 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x3C) & 0x000F) != test_vec_4d[i][1] ) || ((HW_RD_REG16(base + 0x3C) & 0x00F0) != test_vec_4d[i][2]))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_setComparatorHighHysteresis and CMPSS_setComparatorLowHysteresis API check error, 0x%04x", HW_RD_REG16(base + 0x3C));
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_setComparatorHighHysteresis and CMPSS_setComparatorLowHysteresis API check error, 0x%04x", HW_RD_REG16(base + 0x3C));
+            }
+
         }
 
     }
@@ -2970,7 +3390,11 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x30) & 0x3FF0) != test_vec_4e[i][3] ) || ((HW_RD_REG16(base + 0x32) & 0xFFFF) != test_vec_4e[i][4]))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configFilterHigh API check error %u 0x%04x 0x%04x", i, HW_RD_REG16(base + 0x2C), HW_RD_REG16(base + 0x2E));
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configFilterHigh API check error %u 0x%04x 0x%04x", i, HW_RD_REG16(base + 0x2C), HW_RD_REG16(base + 0x2E));
+            }
+
         }
 
         CMPSS_configFilterLow(base, test_vec_4e[i][0], test_vec_4e[i][1], test_vec_4e[i][2]);
@@ -2978,7 +3402,11 @@ int32_t apiCheck(uint32_t base)
         if( ( (HW_RD_REG16(base + 0x2C) & 0x3FF0) != test_vec_4e[i][3] ) || ((HW_RD_REG16(base + 0x2E) & 0xFFFF) != test_vec_4e[i][4]))
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configFilterLow API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configFilterLow API check error");
+            }
+
         }
     }
 
@@ -3001,7 +3429,11 @@ int32_t apiCheck(uint32_t base)
         if(  (HW_RD_REG16(base + 0x06) & 0x0404) != test_vec_4f[i][2] )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configLatchOnPWMSYNC API check error %u 0x%04x", i, HW_RD_REG16(base + 0x06));
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configLatchOnPWMSYNC API check error %u 0x%04x", i, HW_RD_REG16(base + 0x06));
+            }
+
         }
 
     }
@@ -3031,7 +3463,11 @@ int32_t apiCheck(uint32_t base)
             )
         {
             error++;
-            if(enableLog) DebugP_log("\r\nCMPSS_configRamp API check error");
+            if(enableLog)
+            {
+                DebugP_log("\r\nCMPSS_configRamp API check error");
+            }
+
         }
 
     }
@@ -3066,13 +3502,21 @@ int32_t apiCheck(uint32_t base)
 
     if(error==0)
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
 
         return 0;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nFail");
+        if(enableLog)
+        {
+            DebugP_log("\r\nFail");
+        }
+
 
         return 1;
     }
@@ -3116,7 +3560,11 @@ int32_t test_cmpss_cases(uint8_t in)
 
             base = CSL_CONTROLSS_CMPSSA0_U_BASE + cmpss_offset + cmpss_a_b_offset;
 
-            if(enableLog) DebugP_log("\r\n\nbase=0x%08x, instance=%d", base, util_CMPSS_getInstanceFromBase(base));
+            if(enableLog)
+            {
+                DebugP_log("\r\n\nbase=0x%08x, instance=%d", base, util_CMPSS_getInstanceFromBase(base));
+            }
+
 
             if(isTestSupported[util_CMPSS_getInstanceFromBase(base)][in-1])
             {
@@ -3184,11 +3632,19 @@ int32_t test_cmpss_cases(uint8_t in)
                     case 20:
                         failcount += apiCheck(base);
                 }
-                if(enableLog) DebugP_log("\r\nfailcount=%d", failcount);
+                if(enableLog)
+                {
+                    DebugP_log("\r\nfailcount=%d", failcount);
+                }
+
             }
             else
             {
-                if(enableLog) DebugP_log("\r\nCMPSS %u, Test %u not supported", util_CMPSS_getInstanceFromBase(base), in-1);
+                if(enableLog)
+                {
+                    DebugP_log("\r\nCMPSS %u, Test %u not supported", util_CMPSS_getInstanceFromBase(base), in-1);
+                }
+
             }
         }
     }
@@ -3196,12 +3652,20 @@ int32_t test_cmpss_cases(uint8_t in)
 
     if(failcount!=0)
     {
-        if(enableLog) DebugP_log("\r\nFAIL %d", failcount);
+        if(enableLog)
+        {
+            DebugP_log("\r\nFAIL %d", failcount);
+        }
+
         return 1;
     }
     else
     {
-        if(enableLog) DebugP_log("\r\nPass");
+        if(enableLog)
+        {
+            DebugP_log("\r\nPass");
+        }
+
         return 0;
     }
 
