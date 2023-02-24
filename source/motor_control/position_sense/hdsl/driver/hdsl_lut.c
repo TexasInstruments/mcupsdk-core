@@ -45,17 +45,14 @@
 #define LUT_RSSI_OFFS      0x5E4
 #define LUT_EE_OFFS        (0x5E4 + 256)
 
-extern struct hdslInterface *gHdslInterface;
-extern void *gPru_dramx;
-
-static void hdsl_enc_dec_lut(void)
+static void hdsl_enc_dec_lut(HDSL_Handle hdslHandle)
 {
 #define INVAL 0xFF
 
-    void *enc_5b6b = (void *)((uint32_t)gPru_dramx + ENC_5B6B_OFFS);
-    void *enc_3b4b = (void *)((uint32_t)gPru_dramx + ENC_3B4B_OFFS);
-    void *dec_5b6b = (void *)((uint32_t)gPru_dramx + DEC_5B6B_OFFS);
-    void *dec_3b4b = (void *)((uint32_t)gPru_dramx + DEC_3B4B_OFFS);
+    void *enc_5b6b = (void *)((uint32_t)(hdslHandle->baseMemAddr) + ENC_5B6B_OFFS);
+    void *enc_3b4b = (void *)((uint32_t)(hdslHandle->baseMemAddr) + ENC_3B4B_OFFS);
+    void *dec_5b6b = (void *)((uint32_t)(hdslHandle->baseMemAddr) + DEC_5B6B_OFFS);
+    void *dec_3b4b = (void *)((uint32_t)(hdslHandle->baseMemAddr) + DEC_3B4B_OFFS);
 
     // Encoding LUTs (input MSB first, output LSB first)
     // LUT 5b/6b encoding
@@ -92,7 +89,7 @@ static void hdsl_enc_dec_lut(void)
     HW_WR_REG8((uint32_t)enc_5b6b + 0x1e, 0x21);
     HW_WR_REG8((uint32_t)enc_5b6b + 0x1f, 0x14);
 
-    // LUT 3b/64 encoding
+    // LUT 3b/4b encoding
     HW_WR_REG8((uint32_t)enc_3b4b + 0x00, 0x04);
     HW_WR_REG8((uint32_t)enc_3b4b + 0x01, 0x09);
     HW_WR_REG8((uint32_t)enc_3b4b + 0x02, 0x05);
@@ -189,9 +186,9 @@ static void hdsl_enc_dec_lut(void)
 
 }
 
-static void hdsl_generate_bit_cnt_lut(void)
+static void hdsl_generate_bit_cnt_lut(HDSL_Handle hdslHandle)
 {
-    void *bitcnt = (void *)((uint32_t)gPru_dramx + BITCNT_OFFS);
+    void *bitcnt = (void *)((uint32_t)(hdslHandle->baseMemAddr) + BITCNT_OFFS);
 
     HW_WR_REG8((uint32_t)bitcnt + 0x0, 0);
     HW_WR_REG8((uint32_t)bitcnt + 0x1, 1);
@@ -452,9 +449,9 @@ static void hdsl_generate_bit_cnt_lut(void)
 
 }
 
-static void hdsl_generate_crc5_lut(void)
+static void hdsl_generate_crc5_lut(HDSL_Handle hdslHandle)
 {
-    void *lut_crc5 = (void *)((uint32_t)gPru_dramx + LUT_CRC5_OFFS);
+    void *lut_crc5 = (void *)((uint32_t)(hdslHandle->baseMemAddr) + LUT_CRC5_OFFS);
 
     HW_WR_REG8((uint32_t)lut_crc5 + 0x0, 0x0);
     HW_WR_REG8((uint32_t)lut_crc5 + 0x1, 0x5);
@@ -715,10 +712,9 @@ static void hdsl_generate_crc5_lut(void)
 
 }
 
-static void hdsl_generate_crc16_lut(void)
+static void hdsl_generate_crc16_lut(HDSL_Handle hdslHandle)
 {
-
-    void *lut_crc16 = (void *)((uint32_t)gPru_dramx + LUT_CRC16_OFFS);
+    void *lut_crc16 = (void *)((uint32_t)(hdslHandle->baseMemAddr) + LUT_CRC16_OFFS);
 
     HW_WR_REG16((uint32_t)lut_crc16 + 0x0, 0x0);
     HW_WR_REG16((uint32_t)lut_crc16 + 0x2, 0x90d9);
@@ -979,10 +975,9 @@ static void hdsl_generate_crc16_lut(void)
 
 }
 
-static void hdsl_generate_bit_to_byte_lut(void)
+static void hdsl_generate_bit_to_byte_lut(HDSL_Handle hdslHandle)
 {
-
-    void *lut_bittobyte = (void *)((uint32_t)gPru_dramx + LUT_BITTOBYTE_OFFS);
+    void *lut_bittobyte = (void *)((uint32_t)(hdslHandle->baseMemAddr) + LUT_BITTOBYTE_OFFS);
 
     HW_WR_REG32((uint32_t)lut_bittobyte + 0x0, 0x0);
     HW_WR_REG32((uint32_t)lut_bittobyte + 0x4, 0x1);
@@ -1003,9 +998,9 @@ static void hdsl_generate_bit_to_byte_lut(void)
 
 }
 
-static void hdsl_generate_rssi_lut(void)
+static void hdsl_generate_rssi_lut(HDSL_Handle hdslHandle)
 {
-    void *lut_rssi = (void *)((uint32_t)gPru_dramx + LUT_RSSI_OFFS);
+    void *lut_rssi = (void *)((uint32_t)(hdslHandle->baseMemAddr) + LUT_RSSI_OFFS);
 
     HW_WR_REG8((uint32_t)lut_rssi + 0x0, 0xc);
     HW_WR_REG8((uint32_t)lut_rssi + 0x1, 0xc);
@@ -1265,9 +1260,9 @@ static void hdsl_generate_rssi_lut(void)
     HW_WR_REG8((uint32_t)lut_rssi + 0xff, 0xc);
 }
 
-static void hdsl_generate_extra_edge_lut(void)
+static void hdsl_generate_extra_edge_lut(HDSL_Handle hdslHandle)
 {
-    void *lut_ee = (void *)((uint32_t)gPru_dramx + LUT_EE_OFFS);
+    void *lut_ee = (void *)((uint32_t)(hdslHandle->baseMemAddr) + LUT_EE_OFFS);
 
     HW_WR_REG8((uint32_t)lut_ee + 0, 0x00);
     HW_WR_REG8((uint32_t)lut_ee + 1, 0x80);
@@ -1280,32 +1275,30 @@ static void hdsl_generate_extra_edge_lut(void)
     HW_WR_REG8((uint32_t)lut_ee + 8, 0xff);
 }
 
-static void hdsl_configure_register_if(void)
+static void hdsl_configure_register_if(HDSL_Handle hdslHandle)
 {
-    gHdslInterface->PC_ADD_H = 0x80;
-    gHdslInterface->PC_OFF_H = 0x80;
-    gHdslInterface->MAXDEV_H = 0x0;
-    gHdslInterface->MAXDEV_L = 0x0;
-    gHdslInterface->MAXDEV_H_THRES = 0xFF;
-    gHdslInterface->MAXDEV_L_THRES = 0xFF;
-    gHdslInterface->VERSION = 0x41;
-    gHdslInterface->ACC_ERR_CNT_THRES = 0x1F;
+    hdslHandle->hdslInterface->PC_ADD_H          = 0x80;
+    hdslHandle->hdslInterface->PC_OFF_H          = 0x80;
+    hdslHandle->hdslInterface->MAXDEV_H          = 0x0;
+    hdslHandle->hdslInterface->MAXDEV_L          = 0x0;
+    hdslHandle->hdslInterface->MAXDEV_H_THRES    = 0xFF;
+    hdslHandle->hdslInterface->MAXDEV_L_THRES    = 0xFF;
+    hdslHandle->hdslInterface->VERSION           = 0x41;
+    hdslHandle->hdslInterface->ACC_ERR_CNT_THRES = 0x1F;
 
-#define TEST_PATTERN0      ((uint32_t)gPru_dramx + 0xac)
-
-    HW_WR_REG32(TEST_PATTERN0, 0x4cc8115d);
-    HW_WR_REG32(TEST_PATTERN0+4, 0xfb334990);
-    HW_WR_REG32(TEST_PATTERN0+8, 0xfffff800);
+    HW_WR_REG32(((uint32_t)(hdslHandle->baseMemAddr) + 0xac), 0x4cc8115d);
+    HW_WR_REG32(((uint32_t)(hdslHandle->baseMemAddr) + 0xac)+4, 0xfb334990);
+    HW_WR_REG32(((uint32_t)(hdslHandle->baseMemAddr) + 0xac)+8, 0xfffff800);
 }
 
-void HDSL_generate_memory_image(void)
+void HDSL_generate_memory_image(HDSL_Handle hdslHandle)
 {
-    hdsl_enc_dec_lut();
-    hdsl_generate_bit_cnt_lut();
-    hdsl_generate_crc5_lut();
-    hdsl_generate_crc16_lut();
-    hdsl_generate_bit_to_byte_lut();
-    hdsl_generate_rssi_lut();
-    hdsl_generate_extra_edge_lut();
-    hdsl_configure_register_if();
+    hdsl_enc_dec_lut(hdslHandle);
+    hdsl_generate_bit_cnt_lut(hdslHandle);
+    hdsl_generate_crc5_lut(hdslHandle);
+    hdsl_generate_crc16_lut(hdslHandle);
+    hdsl_generate_bit_to_byte_lut(hdslHandle);
+    hdsl_generate_rssi_lut(hdslHandle);
+    hdsl_generate_extra_edge_lut(hdslHandle);
+    hdsl_configure_register_if(hdslHandle);
 }

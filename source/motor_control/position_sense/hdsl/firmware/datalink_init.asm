@@ -60,7 +60,11 @@ datalink_init_start:
 datalink_reset:
 	;zero			&r0, 124
 ;setup ICSS encoder peripheral for Hiperface DSL
+
 	ldi			DISPARITY, 0x00
+
+;TEST10:
+;	jmp TEST10
 	TX_EN
 	SET_TX_CH0
 	REINIT_TX
@@ -68,6 +72,10 @@ datalink_reset:
 	;CLKMODE
 	TX_FRAME_SIZE		0, REG_TMP0
 	TX_CLK_DIV 		CLKDIV_FAST, REG_TMP0
+	;;
+	ldi r27.b0,1
+	sbco			&r27.b0, MASTER_REGS_CONST, 0x70, 1
+	;;
 	zero			&H_FRAME, (4*2)
 ;init transport layer here
 	CALL			transport_init
@@ -164,7 +172,6 @@ datalink_no_sync:
 datalink_reset2:
 	;push dummy values to TX FIFO to gain processing time
 
-
 	PUSH_FIFO_CONST			0x00
 	PUSH_FIFO_CONST			0x00
 	PUSH_FIFO_CONST			0x00
@@ -172,6 +179,11 @@ datalink_reset2:
 	TX_CHANNEL
 	PUSH_FIFO_CONST_4x		0x00
 	PUSH_FIFO_CONST_8x		0x00
+	;WAIT_TX_FIFO_FREE
+	;PUSH_FIFO_CONST			0x00
+	;PUSH_FIFO_CONST			0x00
+	;PUSH_FIFO_CONST			0x00
+	;PUSH_FIFO_CONST_4x		0x00
 
 	;debug starts
 ;debug_fun:
@@ -242,7 +254,11 @@ datalink_learn:
 	NOP_2
 	NOP_2
 	NOP_2
-	;NOP_2
+	.if $defined("ENDAT_CHANNEL_0")
+	NOP_2
+	NOP_2
+    .endif
+
     .endif
 ; measured starting point at 0 cable length
 ; first 8 bits will be all ones is delay from encoder and transceiver
@@ -395,11 +411,11 @@ datalink_learn_skip_wait:
 	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-	WAIT_TX_FIFO_FREE
+	;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-	WAIT_TX_FIFO_FREE
+	;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
 
 	;PUSH_FIFO_CONST_S_8x     0x0C
@@ -417,7 +433,7 @@ datalink_learn_skip_wait:
 	NOP_2
 	NOP_2
 	NOP_2
-
+	;
     .endif
 	;;TX_CLK_DIV_WAIT		CLKDIV_SLOW, REG_TMP2
 ;reset DISPARITY
@@ -441,6 +457,7 @@ datalink_learn_pattern:
 	PUSH_FIFO_CONST_8x		0x2c
 	;;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST_8x		0xb2
+
 	PUSH_FIFO_CONST_8x		0xcb
 	.endif
 
@@ -572,6 +589,9 @@ datalink_line_check_end:
 ;save delay to master registers after all checks were successful
 	sbco			&SLAVE_DELAY, MASTER_REGS_CONST, DELAY, 1
 datalink_id_req:
+;.if $defined("ENDAT_CHANNEL_0")
+
+    ;.endif
 	ldi			REG_FNC.w0, (0x0000 | M_PAR_IDREQ)
 	CALL			send_header
 	CALL			recv_dec

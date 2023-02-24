@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Hdsl Master Freerun 300 Mhz"
-        name = "hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt"
+        title="Hdsl Master Freerun 300 Mhz Ch2"
+        name = "hdsl_master_freerun_300_mhz_ch2_am64x-evm_icssg0-pru1_fw_ti-pru-cgt"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,
@@ -36,21 +36,25 @@
             -DSOC_AM64X
             -Dicss1
             -DPRU1
+<<<<<<< HEAD:source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am243x-evm/icssg0-pru1_fw/ti-pru-cgt/example.projectspec
             -DCHANNEL_0
+=======
+            -DENDAT_CHANNEL_2
+>>>>>>> am64x/am243x: HDSL: Multi channel(ch0 and ch1) HDSL with fixed clock in Free Run Mode.:source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch2/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/example.projectspec
             -DICSS_G_V_1_0
             -DFREERUN_300_MHZ
         "
         linkerBuildOptions="
-            -m=hdsl_master_freerun_300_mhz.${ConfigName}.map
+            -m=hdsl_master_freerun_300_mhz_ch2.${ConfigName}.map
             --disable_auto_rts
             --entry_point=main
         "
 
         postBuildStep="
-            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_300_mhz_bin.h Hiperface_DSL2_0 4;  move  hdsl_master_icssg_300_mhz_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_bin.h ;
+            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_freerun_300_mhz_ch2_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_freerun_300_mhz_ch2_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_300_mhz_ch2_bin.h Hiperface_DSL2_0_TX 4;  move  hdsl_master_icssg_300_mhz_ch2_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_ch2_bin.h ;
         "
 
-        description="A Hdsl Master Freerun 300 Mhz FW project">
+        description="A Hdsl Master Freerun 300 Mhz Ch2 FW project">
 
         <configuration name="Debug"
             compilerBuildOptions="

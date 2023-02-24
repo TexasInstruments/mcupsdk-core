@@ -60,7 +60,6 @@ P1EDCH2CFG1 .set                        0x11C
 ;ICSS0 PRU0 DMEM
 ;--------------------------------------------------------------------------------------------------
     .if $defined(PRU1)
-PDMEM00 .set                           0x00
 ICSS_CFGx .set                          C5
 EDTXCFG   .set                          (P1EDTXCFG-0x100)
 EDRXCFG   .set                          (P1EDRXCFG-0x100)
@@ -71,7 +70,6 @@ EDCH1CFG1 .set                          (P1EDCH1CFG1-0x100)
 EDCH2CFG0 .set                          (P1EDCH2CFG0-0x100)
 EDCH2CFG1 .set                          (P1EDCH2CFG1-0x100)
     .else
-PDMEM00 .set                           0x00
 ICSS_CFGx .set                          C4
 EDTXCFG   .set                          P0EDTXCFG
 EDRXCFG   .set                          P0EDRXCFG
@@ -83,9 +81,23 @@ EDCH2CFG0 .set                          P0EDCH2CFG0
 EDCH2CFG1 .set                          P0EDCH2CFG1
     .endif
 
+; Each HDSL channel will use a portion of DMEM for HDSL shared/local data storage for that channel.
+; ENDAT_CHANNEL_0: 0x0000 - 0x06FF
+; ENDAT_CHANNEL_1: 0x0700 - 0x0DFF
+; ENDAT_CHANNEL_2: 0x0E00 - 0x0~FF
+
+    .if $defined(ENDAT_CHANNEL_2)   ; TX_PRU
+PDMEM00	                  .set					   0x0E00
+	.endif
+	.if $defined(ENDAT_CHANNEL_1)   ; PRU
+PDMEM00		              .set					   0x0700
+	.endif
+	.if $defined(ENDAT_CHANNEL_0)   ; RTU_PRU
+PDMEM00			          .set					   0x0000
+	.endif
 
 PDMEM00_CONST .set						C24
-MASTER_REGS_CONST .set					C24
+MASTER_REGS_CONST .set                  C24
 IEP1_BASE_CONST .set					C1
 ;Hiperface DSL Master Registers
 MASTER_REGS .set						0x00

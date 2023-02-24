@@ -236,7 +236,7 @@ PUSH_FIFO .macro dat
 PUSH_FIFO_CONST_8x .macro dat
 
     ldi r27.b0,dat
-    loop l1?, 8
+    loop l1?, 6
     qbbs l2?, r27, 7 ; check bit 0
     WAIT_TX_FIFO_FREE
     ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
@@ -247,19 +247,48 @@ l2?:
 l3?:
     lsl   r27.b0, r27.b0, 1 ; Drop least significant bit
 l1?:
+
+    qbbs L2_1?, r27.b0, 7 ; check bit 0
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_1?
+L2_1?:
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_1?:
+    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
+
+    qbbs L2_2?, r27.b0, 7 ; check bit 0
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_2?
+L2_2?:
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_2?:
+    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
+
+
     .endm
 
 PUSH_FIFO_8x .macro dat
-    loop L1?, 8
-    qbbs L2?, dat, 7 ; check bit 0
+    mov r27.b0,dat
+    loop L1?, 4
+    qbbs L2_0?, r27.b0, 7 ; check bit 0
     WAIT_TX_FIFO_FREE
     ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
-    qba    L3?
-L2?:
+    qba    L3_0?
+L2_0?:
     WAIT_TX_FIFO_FREE
     ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
-L3?:
-    lsl   dat,dat, 1 ; Drop least significant bit
+L3_0?:
+    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
+
+    qbbs L2_1?, r27.b0, 7 ; check bit 0
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_1?
+L2_1?:
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_1?:
+    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
+
+
 L1?:
     .endm
 

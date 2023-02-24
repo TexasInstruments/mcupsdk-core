@@ -17,7 +17,7 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
-"$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/hdsl_master_icssg.cmd" \
+"$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/hdsl_master_icssg.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 
@@ -32,10 +32,10 @@ SUBDIRS := \
 
 # Add inputs and outputs from these tool invocations to the build variables
 CMD_SRCS += \
-$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/hdsl_master_icssg.cmd \
+$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/hdsl_master_icssg.cmd \
 
 ASM_SRCS += \
-$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/main.asm
+$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch0/main.asm
 
 OBJS += \
 ./main.obj
@@ -50,10 +50,10 @@ ASM_DEPS__QUOTED += \
 "main.d"
 
 ASM_SRCS__QUOTED += \
-"$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/main.asm"
+"$(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch0/main.asm"
 
 # Each subdirectory must supply rules for building sources it contributes
-main.obj: $(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/main.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
+main.obj: $(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch0/main.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
 	@echo 'Building file: "$<"'
 	@echo 'Invoking: PRU Compiler'
 	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ --include_path="$(CCS_PATH)" --include_path="$(SYSCFG_DIR)" --include_path="${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
@@ -66,35 +66,39 @@ LIBS := -llibc.a
 
 # Add inputs and outputs from these tool invocations to the build variables
 EXE_OUTPUTS += \
-hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out \
+hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out \
 
 EXE_OUTPUTS__QUOTED += \
-"hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out" \
+"hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out" \
 
 BIN_OUTPUTS += \
-hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex \
+hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex" \
+"hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out"
+	@$(MAKE) --no-print-directory -Onone "hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out"
 
 # Tool invocations
-hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
+<<<<<<< HEAD:source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/makefile
 	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+=======
+	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=ENDAT_CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+>>>>>>> am64x/am243x: HDSL: Multi channel(ch0 and ch1) HDSL with fixed clock in Free Run Mode.:source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt/makefile
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
 
-hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex: $(EXE_OUTPUTS)
+hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex: $(EXE_OUTPUTS)
 	@echo 'Building secondary target: "$@"'
 	@echo 'Invoking: PRU Hex Utility'
-	"$(CG_TOOL_ROOT)/bin/hexpru" -o "hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex" $(EXE_OUTPUTS__QUOTED)
+	"$(CG_TOOL_ROOT)/bin/hexpru" -o "hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building secondary target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -108,7 +112,7 @@ clean:
 	-@echo ' '
 
 post-build:
-	-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_300_mhz_bin.h Hiperface_DSL2_0 4;  move  hdsl_master_icssg_300_mhz_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_bin.h 
+	-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_freerun_300_mhz_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_300_mhz_ch0_bin.h Hiperface_DSL2_0_RTU 4;  move  hdsl_master_icssg_300_mhz_ch0_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_ch0_bin.h 
 	-@echo ' '
 
 .PHONY: all clean dependents

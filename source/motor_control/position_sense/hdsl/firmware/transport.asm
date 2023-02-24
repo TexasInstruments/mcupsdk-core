@@ -60,6 +60,7 @@
 	.global calc_16bit_crc
 	.global calc_fastpos
 
+
 	.sect ".text"
 ;Initialize transport layer here
 transport_init:
@@ -405,6 +406,7 @@ transport_layer_recv_msg:
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYS_CTRL, 1
 ;ERROR: qbbc datalink_abort2 is not working, though no compiler error
 	qbbc		transport_layer_no_prst, REG_TMP0.b0, SYS_CTRL_PRST
+
 	jmp		datalink_abort
 transport_layer_no_prst:
 ;check if we reset protocol by reading SAFE_CTRL register
@@ -414,6 +416,7 @@ transport_layer_no_prst:
 transport_layer_no_safe_prst:
 ;are we already receiving a long message?
 	qbeq		transport_layer_check_for_new_msg, LONG_MSG_RECV.bits_left, 0
+
 	and		REG_TMP2.b0, CHANNEL.ch_paral, 0x0f
 ;last byte (crc low)? -> then flip it
 	qblt		transport_layer_recving_long_msg_dont_flip_nibble, LONG_MSG_RECV.bits_left, 8
@@ -513,6 +516,7 @@ transport_layer_reassemble_msg_loop:
 ;identify message type
 	;jmp transport_layer_received_long_msg
 	qbbs		transport_layer_received_long_msg, REG_TMP11.b3, 7
+	halt
 transport_layer_received_short_msg:
 ;check crc
 	ldi		REG_TMP1.b0, &r12.b0
@@ -579,7 +583,7 @@ transport_layer_received_long_msg_no_data:
 	xin     160, &REG_TMP0, 4
 ;check if we have LOFF
 	qbbc		transport_layer_received_long_msg_no_loffset, REG_TMP11.b3, LOFF
-	sbco		&REG_TMP0, MASTER_REGS_CONST, PC_ADD_H, 2;
+	sbco		&REG_TMP0, MASTER_REGS_CONST, PC_ADD_H, 2
 	sbco		&REG_TMP11.b0, MASTER_REGS_CONST, PC_BUFFER0, 2
 ;set ptr
 	ldi		LONG_MSG_RECV.ptr, 0x20
@@ -718,6 +722,9 @@ transport_layer_recv_msg_end:
 ;modifies:
 ;----------------------------------------------------
 transport_layer_send_msg:
+	;lbco &r27.b0,MASTER_REGS_CONST, PC_ADD_H, 1
+	;clr r27.b0,r27.b0,5
+	;sbco &r27.b0,MASTER_REGS_CONST, PC_ADD_H, 1
 ;TODO: reduce cycles
 	ldi		SEND_PARA, M_PAR_IDLE
 ;check if we discard any messages and reset parameter channel
@@ -730,6 +737,7 @@ transport_layer_send_msg:
 	ldi		SEND_PARA, M_PAR_INIT
 	zero		&SHORT_MSG, (6)
 	clr		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
+
 	qba		transport_layer_send_msg_end
 transport_layer_send_msg_no_reset_sys_ctrl:
 ;check if we discard any messages and reset parameter channel
@@ -745,6 +753,7 @@ transport_layer_send_msg_no_reset_sys_ctrl:
 	qba		transport_layer_send_msg_end
 transport_layer_send_msg_no_reset_safe_ctrl:
 ;do not send new message if we are not finished with message
+
 	qbbc		transport_layer_check_for_new_short_msg, H_FRAME.flags, FLAG_PARA_BUSY
 	sub		SHORT_MSG.bits_left, SHORT_MSG.bits_left, 4
 ;check if we still need to calculate crc or if we send crc
@@ -797,6 +806,8 @@ transport_layer_send_sending_msg_crc_dont_flip:
 transport_layer_check_for_new_short_msg:
 ;check for SLAVE_REG_CTRL if we read/write data
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
+	;PUSH_FIFO_CONST_8x		0xff
+
 	qbeq		transport_layer_no_short_msg, REG_TMP0.b0, 0x3f
 ;set short msg channel to busy (reset EVENT_S_FRES)
 	lbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
@@ -813,6 +824,7 @@ transport_layer_check_for_new_short_msg:
 	and		SHORT_MSG.addr, REG_TMP0.b0, 0x3f
 ;reset CRC
 	ldi		SHORT_MSG.crc, 0
+
 ;MSB in Master Register identifies mode (r/w)
 	qbbc		transport_layer_short_msg_write, REG_TMP0.b0, 7
 ;we read slave register
@@ -822,6 +834,8 @@ transport_layer_check_for_new_short_msg:
 	ldi		SHORT_MSG.bits_left, (8*3)
 	qba		transport_layer_short_msg_dir_end
 transport_layer_short_msg_write:
+	;PUSH_FIFO_CONST_8x		0xff
+	;PUSH_FIFO_8x		REG_FNC.b3
 ;we write slave register -> DIR=0
 ;load data from S_PC_DATA for writing
 	lbco		&REG_TMP0.b1, MASTER_REGS_CONST, S_PC_DATA, 1
@@ -834,6 +848,7 @@ transport_layer_short_msg_dir_end:
 	set		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
 	qba		transport_layer_send_msg_end
 transport_layer_no_short_msg:
+	;PUSH_FIFO_8x		REG_FNC.b3
 ;check for new long msg
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, PC_CTRL, 1
 	qbbc		transport_layer_send_msg_end, REG_TMP0.b0, 0
@@ -857,6 +872,7 @@ transport_layer_no_short_msg:
 	add		SHORT_MSG.bits_left, SHORT_MSG.bits_left, 16
 transport_layer_assemble_long_msg_no_pc_off:
 ;save ADDR(+OFF) to memory buffer
+
 	lsr		REG_TMP0.b0, SHORT_MSG.bits_left, 3
 	sbco		&REG_TMP1, MASTER_REGS_CONST, LONG_MSG_BUFFER, b0
 ;skip LLEN on read operation
@@ -866,7 +882,7 @@ transport_layer_assemble_long_msg_no_pc_off:
 	and		REG_TMP1.b0, REG_TMP1.b0, 0x03
 	qbeq		transport_layer_assemble_long_msg_no_llen, REG_TMP1.b0, 0
 	ldi		REG_TMP1.b1, 8
-	lsl		REG_TMP1.b0, REG_TMP1.b1, REG_TMP1.b0
+	lsl		REG_TMP1.b0, REG_TMP1.b1, REG_TMP1.b0;counting no. of bits length we need to send
 	add		SHORT_MSG.bits_left, SHORT_MSG.bits_left, REG_TMP1.b0
 	mov		REG_TMP0.b2, REG_TMP0.b0
 	lsr		REG_TMP0.b0, REG_TMP1.b0, 3

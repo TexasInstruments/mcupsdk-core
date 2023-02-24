@@ -75,7 +75,6 @@
 	.global main
 	.global datalink_wait_vsynch
 
-
 ;Initialize connection and state machine here
 datalink_init:
 ;--------------------------------------------------------------------------------------------------
@@ -172,6 +171,7 @@ update_events_no_int1:
     sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 ;--------------------------------------------------------------------------------------------------
 ;State RX0-RX7
+
 	ldi			LOOP_CNT.w2, 8
 	ldi			LOOP_CNT.b3, 0
 	ldi			SEND_PARA, M_PAR_IDLE
@@ -217,11 +217,12 @@ datalink_rx0_7_vsync_inc_qm:
 datalink_rx0_7_vsync_continue:
 	;reset flags
 	clr			H_FRAME.flags, H_FRAME.flags, FLAG_ERR_ACC
-	CALL1			send_stuffing
+	;CALL1			send_stuffing
 ;TEST1:
 ;	qbeq TEST1,LOOP_CNT.b2,7
 ;sending sync and 2 bits of sample early to buy processing time for h frame processing
 	qbeq			modified_header_early_data_push_free_run, EXTRA_SIZE, 0
+
 	;;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST_8x		0x2f
 	;qbeq			modified_header_early_data_push_done, EXTRA_SIZE, 0
@@ -236,6 +237,7 @@ modified_header_early_data_push_free_run:
 	PUSH_FIFO_CONST  0x00
 	;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0x00
+	PUSH_FIFO_CONST  0xff
 	;WAIT_TX_FIFO_FREE
 	;PUSH_FIFO_CONST  0xff
 	;WAIT_TX_FIFO_FREE
@@ -262,10 +264,11 @@ modified_header_early_data_push_done:
 	jmp B
 
 A:
-	PUSH_FIFO_CONST  0xff
+
 	PUSH_FIFO_CONST  0x00
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0xff
+	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0xff
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0xff
@@ -280,18 +283,18 @@ B:
 	;add			LOOP_CNT.b3, LOOP_CNT.b3, 1
 	ldi			LOOP_CNT.b2, 8
 	set			H_FRAME.flags, H_FRAME.flags, FLAG_NORMAL_FLOW
-	PUSH_FIFO_CONST  0xff
+	;PUSH_FIFO_CONST  0xff
 	PUSH_FIFO_CONST  0x00
 	qba			datalink_rx0_7
 
 ;--------------------------------------------------------------------------------------------------
 ;Reroute data link abort to avoid branching error.
 datalink_abort_jmp:
-	PUSH_FIFO_CONST  0xff
-	TX_CHANNEL
-	PUSH_FIFO_CONST_8x  0xff
-test02:
-	jmp test02
+;	PUSH_FIFO_CONST  0xff
+;	TX_CHANNEL
+;	PUSH_FIFO_CONST_8x  0xff
+;test02:
+;	jmp test02
     jmp datalink_abort
 ;--------------------------------------------------------------------------------------------------
 
@@ -875,7 +878,7 @@ send_header_extra_no_edge:
 ;skip synch pulse measurement if we generate pulse ourself
 	;;WAIT			REG_TMP0
 send_header_no_wait_after_synch:
-	TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
+	;TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
 
 	.if $defined(EXT_SYNC_ENABLE)
 ;**********************************************************************************************;
@@ -971,11 +974,18 @@ send_header_extra_drive_cycle_check_end:
 send_header_no_extra:
 ;push last bit of SAMPLE, 3 bits of CYCLE RESET and 4 bits EQUALIZATION
 	PUSH_FIFO_8x		REG_TMP11.b0
+	;;;;;;qbeq HALT_0 , LEARN_STATE_STARTED, 1
+
+	;;;;;;For multichannel after that it goes bad (after some V-frames)
 send_header_encode:
 ;encode data
 	ldi			REG_TMP11, (PDMEM00+LUT_5b6b_ENC)
 	lbbo			&REG_FNC.b3, REG_TMP11, REG_FNC.b0, 1
 	LOOKUP_BITCNT		REG_TMP0, REG_FNC.b3
+
+
+
+
 	ldi			REG_TMP11, (PDMEM00+LUT_3b4b_ENC)
 	lbbo			&REG_FNC.b2, REG_TMP11, REG_FNC.b1, 1
 	LOOKUP_BITCNT		REG_TMP1, REG_FNC.b2
@@ -1007,21 +1017,23 @@ send_header_encode_sec_subblock_end:
 	or			REG_FNC.b3, REG_FNC.b3, REG_TMP0.b0
 	lsl			REG_FNC.b2, REG_FNC.b2, 6
 
+;;check for long message data
+	sbco &REG_FNC.b3,MASTER_REGS_CONST, 0x78, 1
+;	lbco		&r27.b0, MASTER_REGS_CONST, PC_CTRL, 1
+;	qbbc CONTINUE,r27.b0,0
+;LONG_MSG:
+;	ldi REG_FNC.b3,0x91
+;CONTINUE:
+
 	qbbc			transport_layer_send_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
 	jmp			transport_layer_send_msg
 transport_layer_send_msg_done:
 ;encoding end
 	;.if $defined(EXT_SYNC_ENABLE)
 	;.else
-	;;WAIT_TX_FIFO_FREE
-	;sbco 		&REG_FNC.b3,MASTER_REGS_CONST,0x70,1
+	;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_8x		REG_FNC.b3
-
-	;qbeq			HALT_0, REG_FNC.b0, M_PAR_SYNC
 	;.endif
-
-;TEST1:
-;	qbeq TEST1,LOOP_CNT.b2,7
 
 	;check if we receive or send 01 pattern
 	qbeq			send_header_send_01_pattern, REG_FNC.b0, M_PAR_RESET
@@ -1255,6 +1267,7 @@ transport_layer_recv_msg_done:
 	NOP_2
 	NOP_2
 	TX_CLK_DIV_WAIT		CLKDIV_FAST, r0
+DL0:
 	qbbs			send_header_dont_send_01_send_11, REG_FNC.b2, 6
 	PUSH_FIFO_CONST		0x00
 	ldi			LAST_BIT_SENT, 0
@@ -1400,7 +1413,7 @@ send_trailer:
 	;;
 	NOP_2
 	NOP_2
-	nop
+	NOP_2
 	;;
 
 
@@ -1467,7 +1480,7 @@ send_trailer:
 send_trailer_dont_update_qm:
 	;TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
 ;syn with clock before resetting counter
-	WAIT_CLK_LOW		REG_TMP0
+	;WAIT_CLK_LOW		REG_TMP0
 	RESET_CYCLCNT
 	RET1
 ;--------------------------------------------------------------------------------------------------
@@ -1587,6 +1600,8 @@ wait_delay:
 	;
 	NOP_2
 	NOP_2
+	NOP_2
+	;
 	NOP_2
     .endif
 ; same code as in learn

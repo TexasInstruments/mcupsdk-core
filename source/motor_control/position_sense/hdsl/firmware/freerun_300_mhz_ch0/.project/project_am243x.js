@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am64x";
+let device = "am243x";
 
 const files = {
     common: [
@@ -49,14 +49,14 @@ const lflags = {
 };
 
 let postBuildSteps = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_300_mhz_bin.h Hiperface_DSL2_0 4;  move  hdsl_master_icssg_300_mhz_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_bin.h ;"
+    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_freerun_300_mhz_ch0_am243x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_freerun_300_mhz_ch0_am243x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_300_mhz_ch0_bin.h Hiperface_DSL2_0_RTU 4;  move  hdsl_master_icssg_300_mhz_ch0_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_300_mhz_ch0_bin.h ;"
 
 ];
 
 const readmeDoxygenPageTag = "HDSL_DESIGN";
 
 const buildOptionCombos = [
-    { device: device, cpu: "icssg0-pru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icssg0-pru1", cgt: "ti-pru-cgt", board: "am243x-evm", os: "fw"},
 ];
 
 function getComponentProperty() {
@@ -65,7 +65,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.makefile = "pru";
-    property.name = "hdsl_master_freerun_300_mhz";
+    property.name = "hdsl_master_freerun_300_mhz_ch0";
     property.description = "HDSL Master Free Run Mode Firmware for PRU-ICSS running at 300 MHz";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;

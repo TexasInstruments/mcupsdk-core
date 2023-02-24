@@ -18,7 +18,7 @@
  *    from this software without specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPhdslvariables->gResS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  "AS IS" AND ANY EXPS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
  *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
  *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -34,33 +34,69 @@
 #include <kernel/dpl/ClockP.h>
 #include <drivers/hw_include/tistdtypes.h>
 
-struct hdslInterface *gHdslInterface;
+/* Should move the below to sysconfig  generated code */
+    HDSL_Config hdslConfig0;
+    HDSL_Config hdslConfig1;
+    HDSL_Config hdslConfig2;
 
-void HDSL_iep_init(PRUICSS_Handle gPruIcss0Handle, void *gPru_cfg,void *gPru_dramx)
-
+HDSL_Handle HDSL_open(PRUICSS_Handle icssgHandle, uint32_t icssCore)
 {
-    gHdslInterface = (struct hdslInterface *)gPru_dramx;
-    void *pru_iep;
+    /*
+        HDSL memory map:
+        RTU_PRU core:   0x0000 - 0x06FF
+        PRU core:       0x0700 - 0x0DFF
+        TX_PRU core:    0x0E00 - 0x1500
+    */
+    HDSL_Handle hdslHandle;
+    if(icssCore == PRUICSS_RTU_PRU1)
+    {
+        hdslHandle = &hdslConfig0;
+        hdslHandle->baseMemAddr = (uint32_t *)(((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase);
+    }
+    else if(icssCore == PRUICSS_PRU1)
+    {
+        hdslHandle = &hdslConfig1;
+        hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase) + 0x700);
+    }
+    else if(icssCore == PRUICSS_TX_PRU1)
+    {
+        hdslHandle = &hdslConfig2;
+        hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase) + 0xE00);
+    }
+    else
+    {
+        hdslHandle = NULL;
+    }
 
-    pru_iep = (void *)(((PRUICSS_HwAttrs *)(gPruIcss0Handle->hwAttrs))->iep0RegBase);
+    if (hdslHandle != NULL)
+    {
+        hdslHandle->icssgHandle   = icssgHandle;
+        hdslHandle->icssCore      = icssCore;
+        hdslHandle->hdslInterface = (HDSL_Interface *) hdslHandle->baseMemAddr;
+        hdslHandle->multi_turn    = 0;
+    }
 
-    HW_WR_REG32((uint32_t)pru_iep + CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG,
-                (CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MASK | (1 << CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG_DEFAULT_INC_SHIFT)));
-    /* Use OCP as IEP CLK src */
-    HW_WR_REG32((uint32_t)gPru_cfg + CSL_ICSSCFG_IEPCLK, CSL_ICSSCFG_IEPCLK_OCP_EN_MASK);
+    return hdslHandle;
 }
 
-int HDSL_enable_sync_signal(uint8_t ES,uint32_t period)
+void HDSL_iep_init(HDSL_Handle hdslHandle)
 {
-    /*programm here*/
+    HW_WR_REG32((uint32_t)(((PRUICSS_HwAttrs *)(hdslHandle->icssgHandle->hwAttrs))->iep0RegBase) + CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG,
+                (CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MASK | (1 << CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG_DEFAULT_INC_SHIFT)));
+    /* Use OCP as IEP CLK src */
+    HW_WR_REG32((uint32_t)(((PRUICSS_HwAttrs *)(hdslHandle->icssgHandle->hwAttrs))->cfgRegBase) + CSL_ICSSCFG_IEPCLK, CSL_ICSSCFG_IEPCLK_OCP_EN_MASK);
+}
+
+int HDSL_enable_sync_signal(uint8_t ES, uint32_t period)
+{
+    /*program here*/
     uint32_t start_time = 10000;
 
     uint32_t inEvent;
     uint32_t outEvent_latch;
     uint32_t outEvent_gpio;
-    uint32_t iep_base;
+    uint32_t iep_base = CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_IEP1_SLV_REGS_BASE;
 
-    iep_base = CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_IEP1_SLV_REGS_BASE;
     /*Enable IEP. Enable the Counter and set the DEFAULT_INC and CMP_INC to 1.*/
     HWREG(CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_IEP1_SLV_REGS_BASE + CSL_ICSS_G_PR1_IEP1_SLV_GLOBAL_CFG_REG) = 0x111;
 
@@ -91,47 +127,44 @@ int HDSL_enable_sync_signal(uint8_t ES,uint32_t period)
     return 1;
 }
 
-uint64_t HDSL_get_pos(int position_id)
+uint64_t HDSL_get_pos(HDSL_Handle hdslHandle, int position_id)
 {
-
-uint64_t val;
+    uint64_t val;
+    HDSL_Interface *hdslInterfaceStruct = hdslHandle->hdslInterface;
     switch(position_id){
         case 0:
             /* Fast Position */
-                    val = gHdslInterface->POS0 | (gHdslInterface->POS1 << 8) |
-                           (gHdslInterface->POS2 << 16) | (gHdslInterface->POS3 << 24);
-                    val |= (uint64_t)gHdslInterface->POS4 << 32;
+                    val = hdslInterfaceStruct->POS0 | (hdslInterfaceStruct->POS1 << 8) |
+                           (hdslInterfaceStruct->POS2 << 16) | (hdslInterfaceStruct->POS3 << 24);
+                    val |= (uint64_t)hdslInterfaceStruct->POS4 << 32;
                     return val;
 
                 break;
 
         case 1:
             /* Safe Position 1 */
-                    val = gHdslInterface->VPOS0 | (gHdslInterface->VPOS1 << 8) |
-                           (gHdslInterface->VPOS2 << 16) | (gHdslInterface->VPOS3 << 24);
-                    val |= (uint64_t)gHdslInterface->VPOS4 << 32;
+                    val = hdslInterfaceStruct->VPOS0 | (hdslInterfaceStruct->VPOS1 << 8) |
+                           (hdslInterfaceStruct->VPOS2 << 16) | (hdslInterfaceStruct->VPOS3 << 24);
+                    val |= (uint64_t)hdslInterfaceStruct->VPOS4 << 32;
                     return val;
 
                 break;
 
-
         case 2:
             /* Safe Position 2 */
-                    val = gHdslInterface->VPOS20 | (gHdslInterface->VPOS21 << 8) |
-                           (gHdslInterface->VPOS22 << 16) | (gHdslInterface->VPOS23 << 24);
-                    val |= (uint64_t)gHdslInterface->VPOS24 << 32;
+                    val = hdslInterfaceStruct->VPOS20 | (hdslInterfaceStruct->VPOS21 << 8) |
+                           (hdslInterfaceStruct->VPOS22 << 16) | (hdslInterfaceStruct->VPOS23 << 24);
+                    val |= (uint64_t)hdslInterfaceStruct->VPOS24 << 32;
 
                     return val;
                 break;
 
         default:
                 return -1;
-
-
-           }
+    }
 }
 
-uint8_t HDSL_get_qm()
+uint8_t HDSL_get_qm(HDSL_Handle hdslHandle)
 {
     uint8_t ureg = gHdslInterface->MASTER_QM & 0xF;
     return ureg;
@@ -169,13 +202,12 @@ uint8_t HDSL_get_sum()
     return gHdslInterface->SAFE_SUM;
 }
 
-uint8_t HDSL_get_acc_err_cnt()
+uint8_t HDSL_get_acc_err_cnt(HDSL_Handle hdslHandle)
 {
-    uint8_t ureg = gHdslInterface->ACC_ERR_CNT & 0x1F;
-    return ureg;
+    return (uint8_t) (hdslHandle->hdslInterface->ACC_ERR_CNT & 0x1F);
 }
 
-uint8_t HDSL_get_rssi()
+uint8_t HDSL_get_rssi(HDSL_Handle hdslHandle)
 {
     uint8_t ureg = (gHdslInterface->DELAY & 0xF0) >> 4;
     return ureg;
@@ -245,119 +277,113 @@ int32_t HDSL_read_pc_short_msg(uint8_t addr, uint8_t *data, uint64_t timeout)
     return SystemP_SUCCESS;
 }
 
-uint8_t HDSL_read_pc_buffer(uint8_t buff)
+uint8_t HDSL_read_pc_buffer(HDSL_Handle hdslHandle, uint8_t buff_off)
 {
-
-    switch(buff)
+    switch(buff_off)
     {
     case 0:
-        return (gHdslInterface->PC_BUFFER0);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER0);
         break;
     case 1:
-        return (gHdslInterface->PC_BUFFER1);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER1);
         break;
     case 2:
-        return (gHdslInterface->PC_BUFFER2);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER2);
         break;
     case 3:
-        return (gHdslInterface->PC_BUFFER3);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER3);
         break;
     case 4:
-        return (gHdslInterface->PC_BUFFER4);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER4);
         break;
     case 5:
-        return (gHdslInterface->PC_BUFFER5);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER5);
         break;
     case 6:
-        return (gHdslInterface->PC_BUFFER6);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER6);
         break;
     case 7:
-        return (gHdslInterface->PC_BUFFER7);
+        return (uint8_t) (hdslHandle->hdslInterface->PC_BUFFER7);
         break;
-
     default:
         return 0;
         break;
-
     }
 }
 
-void HDSL_write_pc_buffer(uint8_t gPc_buf0,uint8_t gPc_buf1,uint8_t gPc_buf2,uint8_t gPc_buf3,uint8_t gPc_buf4,uint8_t gPc_buf5,uint8_t gPc_buf6,uint8_t gPc_buf7)
-  {
-    gHdslInterface->PC_BUFFER0 = gPc_buf0;
-    gHdslInterface->PC_BUFFER1 = gPc_buf1;
-    gHdslInterface->PC_BUFFER2 = gPc_buf2;
-    gHdslInterface->PC_BUFFER3 = gPc_buf3;
-    gHdslInterface->PC_BUFFER4 = gPc_buf4;
-    gHdslInterface->PC_BUFFER5 = gPc_buf5;
-    gHdslInterface->PC_BUFFER6 = gPc_buf6;
-    gHdslInterface->PC_BUFFER7 = gPc_buf7;
-}
-
-uint8_t HDSL_get_sync_ctrl()
+void HDSL_write_pc_buffer(HDSL_Handle hdslHandle, uint8_t pc_buf0, uint8_t pc_buf1, uint8_t pc_buf2, uint8_t pc_buf3, uint8_t pc_buf4, uint8_t pc_buf5, uint8_t pc_buf6, uint8_t pc_buf7)
 {
-    return (gHdslInterface->SYNC_CTRL);
+    hdslHandle->hdslInterface->PC_BUFFER0 = pc_buf0;
+    hdslHandle->hdslInterface->PC_BUFFER1 = pc_buf1;
+    hdslHandle->hdslInterface->PC_BUFFER2 = pc_buf2;
+    hdslHandle->hdslInterface->PC_BUFFER3 = pc_buf3;
+    hdslHandle->hdslInterface->PC_BUFFER4 = pc_buf4;
+    hdslHandle->hdslInterface->PC_BUFFER5 = pc_buf5;
+    hdslHandle->hdslInterface->PC_BUFFER6 = pc_buf6;
+    hdslHandle->hdslInterface->PC_BUFFER7 = pc_buf7;
 }
 
-void HDSL_set_sync_ctrl(uint8_t val )
+uint8_t HDSL_get_sync_ctrl(HDSL_Handle hdslHandle)
 {
-    gHdslInterface->SYNC_CTRL=val;
+    return (uint8_t) (hdslHandle->hdslInterface->SYNC_CTRL);
 }
 
-uint8_t HDSL_get_master_qm()
+void HDSL_set_sync_ctrl(HDSL_Handle hdslHandle, uint8_t val)
 {
-    return gHdslInterface->MASTER_QM;
+    hdslHandle->hdslInterface->SYNC_CTRL = val;
 }
 
-uint8_t HDSL_get_edges()
+uint8_t HDSL_get_master_qm(HDSL_Handle hdslHandle)
 {
-    return gHdslInterface->EDGES;
+    return (uint8_t) hdslHandle->hdslInterface->MASTER_QM;
 }
 
-void HDSL_set_pc_addr(uint8_t gPc_addrh,uint8_t gPc_addrl,uint8_t gPc_offh,uint8_t gPc_offl)
-  {
-
-    gHdslInterface->PC_ADD_L = gPc_addrl;
-    gHdslInterface->PC_ADD_H = gPc_addrh;
-
-    gHdslInterface->PC_OFF_L = gPc_offl;
-    gHdslInterface->PC_OFF_H = gPc_offh;
-
-}
-
-void HDSL_set_pc_ctrl(uint8_t value)
+uint8_t HDSL_get_edges(HDSL_Handle hdslHandle)
 {
-    gHdslInterface->PC_CTRL = value;
+    return (uint8_t) hdslHandle->hdslInterface->EDGES;
 }
 
-uint8_t HDSL_get_delay()
+void HDSL_set_pc_addr(HDSL_Handle hdslHandle, uint8_t pc_addrh, uint8_t pc_addrl, uint8_t pc_offh, uint8_t pc_offl)
 {
-    return gHdslInterface->DELAY;
+    hdslHandle->hdslInterface->PC_ADD_L = pc_addrl;
+    hdslHandle->hdslInterface->PC_ADD_H = pc_addrh;
+
+    hdslHandle->hdslInterface->PC_OFF_L = pc_offl;
+    hdslHandle->hdslInterface->PC_OFF_H = pc_offh;
 }
 
-uint8_t HDSL_get_enc_id(int byte)
+void HDSL_set_pc_ctrl(HDSL_Handle hdslHandle, uint8_t value)
 {
+    hdslHandle->hdslInterface->PC_CTRL = value;
+}
 
-    switch(byte){
-    case 0:
-        return gHdslInterface->ENC_ID0;
-    case 1:
-        return gHdslInterface->ENC_ID1;
-    case 2:
-        return gHdslInterface->ENC_ID2;
+uint8_t HDSL_get_delay(HDSL_Handle hdslHandle)
+{
+    return (uint8_t) hdslHandle->hdslInterface->DELAY;
+}
 
-    default:
-        return -1;
-
+uint8_t HDSL_get_enc_id(HDSL_Handle hdslHandle, int byte)
+{
+    switch(byte)
+    {
+        case 0:
+            return (uint8_t) hdslHandle->hdslInterface->ENC_ID0;
+        case 1:
+            return (uint8_t) hdslHandle->hdslInterface->ENC_ID1;
+        case 2:
+            return (uint8_t) hdslHandle->hdslInterface->ENC_ID2;
+        default:
+            return -1;
     }
 }
 
-void* HDSL_get_src_loc()
+void* HDSL_get_src_loc(HDSL_Handle hdslHandle)
 {
-    return (void *)gHdslInterface;
+    /* returns HDSL interface struct memory location */
+    return (void *)hdslHandle->hdslInterface;
 }
 
-uint32_t HDSL_get_length()
+uint32_t HDSL_get_length(HDSL_Handle hdslHandle)
 {
-    return sizeof(*gHdslInterface);
+    return sizeof(*(hdslHandle->hdslInterface));
 }
