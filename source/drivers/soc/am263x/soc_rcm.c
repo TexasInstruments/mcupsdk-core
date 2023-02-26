@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1700,14 +1700,7 @@ uint32_t SOC_rcmGetPeripheralClockFrequency(SOC_RcmPeripheralClockSource clkSour
         case RCM_PLLID_XTALCLK:
         {
             Finp = gXTALInfo[clkFreqId].Finp;
-            if (gXTALInfo[clkFreqId].div2flag)
-            {
-                clkFreq = Finp/2;
-            }
-            else
-            {
-                clkFreq = Finp;
-            }
+            clkFreq = Finp * 1000 * 1000;
             break;
         }
         default:

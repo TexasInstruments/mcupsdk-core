@@ -1,7 +1,9 @@
 
 let common = system.getScript("/common");
+let wdt_func_clk = 200000000;
 
-let wdt_func_clk = 5000000;
+//Note that clockFrequencies.clkId and clockFrequencies.clkRate are user configurable from sycfg
+//and default values will get overwritten by those input
 
 const watchdog_config = [
     {
@@ -77,7 +79,31 @@ function getConfigArr() {
     return wdtInst;
 }
 
+const SOC_RcmClkSrcInfo = [
+    {
+        name: "SOC_RcmPeripheralClockSource_XTALCLK",
+        displayName: "XTALCLK  (25 MHz)",
+        freq: 25000000
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_SYS_CLK",
+        freq: 200000000,
+        displayName: "SYS_CLK (200 MHz)"
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1",
+        freq: 500000000,
+        displayName: "DPLL_CORE_HSDIV0_CLKOUT1 (500 MHz)",
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1",
+        freq: 192000000,
+        displayName: "DPLL_PER_HSDIV0_CLKOUT1  (192 MHz)",
+    },
+]
+
 exports = {
     getConfigArr,
+    SOC_RcmClkSrcInfo
 };
 

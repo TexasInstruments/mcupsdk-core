@@ -1,5 +1,7 @@
 
 let common = system.getScript("/common");
+let clockSourcesInfo = system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).SOC_RcmClkSrcInfo;
+let srcclkfreq = 200000000;
 
 function getConfigArr() {
     return system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).getConfigArr();
@@ -22,6 +24,8 @@ function getClockEnableIds(instance) {
 
 function getClockFrequencies(inst) {
     let instConfig = getInstanceConfig(inst);
+    instConfig.clockFrequencies[0].clkRate = inst["wdt_func_clk"];
+    instConfig.clockFrequencies[0].clkId = inst["wdt_clk_src"];
     return instConfig.clockFrequencies;
 }
 
@@ -29,9 +33,61 @@ function getInterfaceName(inst) {
     return "WDT";
 }
 
+function utilfunction(inst, ui)
+{
+    for (let args of clockSourcesInfo)
+    {
+        if(args.name == inst.wdt_clk_src)
+        {
+            srcclkfreq = args.freq;
+            break;
+        }
+    }
+}
+
+function validatePair(instance, report)
+{
+    let mult_pair = (instance.expirationTime * instance.wdt_func_clk)/1000;
+    /*
+        texp = (2^13(1+PRD)) /freq
+        => PRD = (texp * freq)/2^13 -1
+        0 <= PRD <= (2^12) -1  (RTIDWDPRLD[DWDPRLD] is a 12-bit field)
+        0<= ( (texp * freq) /2^13) -1 <= 2^12 -1
+        2^13 < = (texp * freq) <= 2^25
+    */
+    if( mult_pair < 8192 || mult_pair > 33554432)
+    report.logError(`(Expiration time * WDT input clock frequency) = ${mult_pair} has to be within 8192 to 33554432`, instance, "expirationTime");
+}
+
+function validateInputClkFreq(instance, report)
+{
+
+    let mod = srcclkfreq % (instance.wdt_func_clk);
+    let div = srcclkfreq / (instance.wdt_func_clk);
+
+    if(instance["wdt_clk_src"] == "SOC_RcmPeripheralClockSource_XTALCLK" && div>=5)
+        report.logError(`For XTALCLK, you can only choose values above 5 MHz ${div}`, instance, "wdt_func_clk");
+
+    if( mod != 0 || div < 0 || div > 16)
+        report.logError(`The WDT input clock frequency has to be INTEGRAL divisor of Clock source ${srcclkfreq} Hz
+        and divisor = ${div} should be between 1 to 16`, instance, "wdt_func_clk");
+
+}
+
 function validate(instance, report) {
     common.validate.checkSameInstanceName(instance, report);
     common.validate.checkNumberRange(instance, report, "expirationTime", 0, 60000, "dec");
+    validatePair(instance, report);
+    validateInputClkFreq(instance, report);
+}
+
+let clock_sources = []
+
+for (let arg of clockSourcesInfo)
+{
+    let list = {name: arg.name, displayName: arg.displayName}
+
+    clock_sources =clock_sources.concat(list);
 }
 
 let watchdog_module_name = "/drivers/watchdog/watchdog";
@@ -112,9 +168,24 @@ let watchdog_module = {
             description: "WDT Window size",
         },
         {
+            name: "wdt_clk_src",
+            displayName: "WDT Clock Source",
+            default: clock_sources[1].name,
+            description: "WDT Clock Source",
+            options : clock_sources,
+            onChange: utilfunction
+        },
+        {
+            name: "wdt_func_clk",
+            displayName: "WDT Input Clock Frequency (Hz)",
+            hidden: false,
+            default: 200000000,
+            description: "WDT Input Clock frequency (Hz)",
+        },
+        {
             name: "expirationTime",
             displayName: "WDT Expiry Time In Millisecond(ms)",
-            default: 1000,
+            default: 165,
             description: "Expiration time in millisecond (ms)",
         },
         common.ui.makeInstanceConfig(getConfigArr()),
