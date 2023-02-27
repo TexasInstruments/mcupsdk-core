@@ -234,6 +234,7 @@ const example_file_list = [
     "test/sdl/dcc/dcc_unit_test/.project/project.js",
     "test/sdl/dcc/dcc_func_test/.project/project.js",
     "examples/sdl/mcrc/mcrc_full_cpu/.project/project.js",
+    "examples/sdl/stog/.project/project.js",
     "examples/sdl/dcc/dcc_modes/.project/project.js",
     "examples/networking/enet_loopback/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
