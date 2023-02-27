@@ -233,6 +233,8 @@ const example_file_list = [
     "test/sdl/esm/esm_unit_test/.project/project.js",
     "test/sdl/dcc/dcc_unit_test/.project/project.js",
     "test/sdl/dcc/dcc_func_test/.project/project.js",
+    "test/sdl/stog/stog_func_test/.project/project.js",
+    "test/sdl/stog/stog_unit_test/.project/project.js",
     "examples/sdl/mcrc/mcrc_full_cpu/.project/project.js",
     "examples/sdl/stog/.project/project.js",
     "examples/sdl/dcc/dcc_modes/.project/project.js",
