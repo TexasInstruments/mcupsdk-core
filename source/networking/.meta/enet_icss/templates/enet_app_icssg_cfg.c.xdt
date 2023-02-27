@@ -8,7 +8,7 @@ static const Mdio_Cfg enetAppIcssgMdioCfg =
 {
     .mode               = `instance.mdioMode`,
     .mdioBusFreqHz      = `instance.mdioBusFreqHz`,
-    .phyStatePollFreqHz = `instance.mdioPhyStatePollFreqHz`,
+    .phyStatePollFreqHz = `enetutilsScript.getPhyStatePollFreqHz(instance.mdioBusFreqHz, instance.mdioIPGRatio)`,
     .pollEnMask         = `enetutilsScript.getArraytoBitMask(instance.mdioPollEnMask)`,
     .c45EnMask          = `enetutilsScript.getArraytoBitMask(instance.mdioC45EnMask)`,
     .isMaster           = `instance.mdioIsMaster`,

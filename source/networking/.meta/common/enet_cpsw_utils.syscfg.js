@@ -9,7 +9,7 @@
  *  @param groupList   - List of groups
  *  @param groupName   - The name of the group to return
  */
- 
+
 function getGroupByName(groupList, groupName)
 {
   for(let i = 0; i < groupList.length; i++)
@@ -61,11 +61,11 @@ function getNameListToHide(group)
 {
   let namesArray = _.map(group, function (n)
                          {
-                             if (n.hasOwnProperty("config")) 
-                             { 
+                             if (n.hasOwnProperty("config"))
+                             {
                                  return (getNameListToHide(n.config));
                              }
-                             else 
+                             else
                              {
                                  return n.name;
                              }
@@ -99,6 +99,11 @@ function getPortSpecificConfig(configObj, fromProperty, toProperty) {
     return updatedConfig;
 }
 
+function getPhyStatePollFreqHz(mdioBusFreqHz, mdioIPGRatio) {
+
+    return ((Math.floor)(mdioBusFreqHz/mdioIPGRatio));
+}
+
 function getArraytoBitMask(configObj) {
     let bitmask = 0;
 
@@ -118,4 +123,5 @@ exports =
     updatePortConfig: updatePortConfig,
     getPortSpecificConfig: getPortSpecificConfig,
     getArraytoBitMask: getArraytoBitMask,
+    getPhyStatePollFreqHz: getPhyStatePollFreqHz,
 };

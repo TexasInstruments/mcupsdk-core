@@ -6,13 +6,13 @@
 
 %%{
 function getAleModeFlags(module, instance) {
-    let aleModeFlag = "(";        
+    let aleModeFlag = "(";
 
     aleModeFlag += "CPSW_ALE_CFG_MODULE_EN";
-    
+
     aleModeFlag += (instance.BypassEnable === true) ? " | CPSW_ALE_CFG_BYPASS_EN" : "";
     aleModeFlag += (instance.UnknownUnicastFloodToHost === true) ? " | CPSW_ALE_CFG_UNKNOWN_UCAST_FLOOD2HOST" : "";
-    
+
     aleModeFlag += ")";
     return aleModeFlag;
 }
@@ -99,10 +99,10 @@ static void EnetApp_initEnetLinkCbPrms(Cpsw_Cfg *cpswCfg)
     cpswCfg->portLinkStatusChangeCbArg = NULL;
 }
 
-static const CpswAle_Cfg enetAppCpswAleCfg = 
+static const CpswAle_Cfg enetAppCpswAleCfg =
 {
     .modeFlags = `getAleModeFlags(module,instance)`,
-    .policerGlobalCfg = 
+    .policerGlobalCfg =
     {
         .policingEn         = `instance.policingEn`,
         .yellowDropEn       = `instance.yellowDropEn`,
@@ -114,7 +114,7 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                                   .commitRateInBitsPerSec = `instance.UnregulatedTrafficCommitedRateInBitsPerSec`,
                               }
     },
-    .agingCfg = 
+    .agingCfg =
     {
         .autoAgingEn        = `instance.autoAgingEn`,
         .agingPeriodInMs    = `instance.agingPeriodInMs`,
@@ -130,13 +130,13 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
         .unknownUnregMcastFloodMask     = `getAlePortMask(instance,"unknownUnregMcast")`,
         .unknownVlanMemberListMask      = `getAlePortMask(instance,"unknownVlanMembership")`,
     },
-    .nwSecCfg = 
+    .nwSecCfg =
     {
         .hostOuiNoMatchDeny  = `instance.hostOuiNoMatchDeny`,
         .vid0ModeEn          = `instance.vid0ModeEn`,
         .malformedPktCfg     = {
                                    .srcMcastDropDis = `instance.srcMcastDropDis`,
-                                   .badLenPktDropEn = `instance.badLenPktDropEn`,                          
+                                   .badLenPktDropEn = `instance.badLenPktDropEn`,
                                },
         .ipPktCfg            = {
                                    .dfltNoFragEn          = `instance.dfltNoFragEn`,
@@ -146,18 +146,18 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                                                               `getIpNxtWhitelistInitArray(instance)`
                                                             },
                                },
-    
-    
+
+
         .macAuthCfg          = {
                                    .authModeEn           = `instance.authModeEn`,
                                    .macAuthDisMask       = `getAlePortMask(instance, "disableMacAuth")`,
                                },
     },
-    .portCfg = 
+    .portCfg =
     {
         [CPSW_ALE_HOST_PORT_NUM] =
         {
-            .learningCfg = 
+            .learningCfg =
             {
                 .noLearn         = `instance.nolearn_hostPort`,
                 .noSaUpdateEn    = `instance.noSaUpdteEn_hostPort`,
@@ -174,9 +174,9 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                 .macOnlyCafEn    = `instance.macOnlyCafEn_hostPort`,
                 .macOnlyEn       = `instance.macOnlyEn_hostPort`,
             },
-            .pvidCfg = 
+            .pvidCfg =
             {
-                .vlanIdInfo      = 
+                .vlanIdInfo      =
                 {
                     .vlanId   = `instance.vlanId_hostPort`,
                     .tagType  = `instance.tagType_hostPort`,
@@ -185,7 +185,7 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                 .unregMcastFloodMask     = `getAlePortMask(instance,"unregMcastFloodMask_hostPort_")`,
                 .regMcastFloodMask       = `getAlePortMask(instance,"regMcastFloodMask_hostPort_")`,
                 .forceUntaggedEgressMask = `getAlePortMask(instance,"forceUntaggedEgressMask_hostPort_")`,
-                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_hostPort_")`, 
+                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_hostPort_")`,
                 .vidIngressCheck         = `instance.vidIngressCheck_hostPort`,
                 .limitIPNxtHdr           = `instance.limitIPNxtHdr_hostPort`,
                 .disallowIPFrag          = `instance.disallowIPFrag_hostPort`,
@@ -193,7 +193,7 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
         },
         [CPSW_ALE_MACPORT_TO_ALEPORT(ENET_MAC_PORT_1)] =
         {
-            .learningCfg = 
+            .learningCfg =
             {
                 .noLearn         = `instance.nolearn_macPort1`,
                 .noSaUpdateEn    = `instance.noSaUpdteEn_macPort1`,
@@ -210,9 +210,9 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                 .macOnlyCafEn    = `instance.macOnlyCafEn_macPort1`,
                 .macOnlyEn       = `instance.macOnlyEn_macPort1`,
             },
-            .pvidCfg = 
+            .pvidCfg =
             {
-                .vlanIdInfo      = 
+                .vlanIdInfo      =
                 {
                     .vlanId   = `instance.vlanId_macPort1`,
                     .tagType  = `instance.tagType_macPort1`,
@@ -221,7 +221,7 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                 .unregMcastFloodMask     = `getAlePortMask(instance,"unregMcastFloodMask_macPort1_")`,
                 .regMcastFloodMask       = `getAlePortMask(instance,"regMcastFloodMask_macPort1_")`,
                 .forceUntaggedEgressMask = `getAlePortMask(instance,"forceUntaggedEgressMask_macPort1_")`,
-                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_macPort1_")`, 
+                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_macPort1_")`,
                 .vidIngressCheck         = `instance.vidIngressCheck_macPort1`,
                 .limitIPNxtHdr           = `instance.limitIPNxtHdr_macPort1`,
                 .disallowIPFrag          = `instance.disallowIPFrag_macPort1`,
@@ -230,7 +230,7 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
 %if (instance.hasOwnProperty(`nolearn_macPort2`)) {
         [CPSW_ALE_MACPORT_TO_ALEPORT(ENET_MAC_PORT_2)] =
         {
-            .learningCfg = 
+            .learningCfg =
             {
                 .noLearn         = `instance.nolearn_macPort2`,
                 .noSaUpdateEn    = `instance.noSaUpdteEn_macPort2`,
@@ -247,9 +247,9 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                 .macOnlyCafEn    = `instance.macOnlyCafEn_macPort2`,
                 .macOnlyEn       = `instance.macOnlyEn_macPort2`,
             },
-            .pvidCfg = 
+            .pvidCfg =
             {
-                .vlanIdInfo      = 
+                .vlanIdInfo      =
                 {
                     .vlanId   = `instance.vlanId_macPort2`,
                     .tagType  = `instance.tagType_macPort2`,
@@ -258,7 +258,7 @@ static const CpswAle_Cfg enetAppCpswAleCfg =
                 .unregMcastFloodMask     = `getAlePortMask(instance,"unregMcastFloodMask_macPort2_")`,
                 .regMcastFloodMask       = `getAlePortMask(instance,"regMcastFloodMask_macPort2_")`,
                 .forceUntaggedEgressMask = `getAlePortMask(instance,"forceUntaggedEgressMask_macPort2_")`,
-                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_macPort2_")`, 
+                .noLearnMask             = `getAlePortMask(instance,"noLearnMask_macPort2_")`,
                 .vidIngressCheck         = `instance.vidIngressCheck_macPort2`,
                 .limitIPNxtHdr           = `instance.limitIPNxtHdr_macPort2`,
                 .disallowIPFrag          = `instance.disallowIPFrag_macPort2`,
@@ -273,7 +273,7 @@ static const Mdio_Cfg enetAppCpswMdioCfg =
 {
     .mode               = `instance.mdioMode`,
     .mdioBusFreqHz      = `instance.mdioBusFreqHz`,
-    .phyStatePollFreqHz = `instance.mdioPhyStatePollFreqHz`,
+    .phyStatePollFreqHz = `enetutilsScript.getPhyStatePollFreqHz(instance.mdioBusFreqHz, instance.mdioIPGRatio)`,
     .pollEnMask         = `enetutilsScript.getArraytoBitMask(instance.mdioPollEnMask)`,
     .c45EnMask          = `enetutilsScript.getArraytoBitMask(instance.mdioC45EnMask)`,
     .isMaster           = `instance.mdioIsMaster`,
@@ -320,7 +320,7 @@ static const CpswMacPort_Cfg enetAppCpswMacPortCfg[] =
         .crcType    = `instance.macport1CrcType`,
         .rxMtu      = `instance.macport1RxMtu`,
         .passPriorityTaggedUnchanged = `instance.macport1PassPriorityTaggedUnchanged`,
-        .vlanCfg = 
+        .vlanCfg =
         {
             .portPri = `instance.macport1PortPri`,
             .portCfi = `instance.macport1PortCfi`,
@@ -328,7 +328,7 @@ static const CpswMacPort_Cfg enetAppCpswMacPortCfg[] =
         },
         .txPriorityType = `instance.macport1TxPriorityType`,
         .sgmiiMode      = ENET_MAC_SGMIIMODE_INVALID, // INVALID as SGMII is not supported in MCU+ devices
-    
+
     },
 % if (instance.hasOwnProperty(`macport2LoopbackEn`))  {
     [ENET_MAC_PORT_2] =
@@ -337,7 +337,7 @@ static const CpswMacPort_Cfg enetAppCpswMacPortCfg[] =
         .crcType    = `instance.macport2CrcType`,
         .rxMtu      = `instance.macport2RxMtu`,
         .passPriorityTaggedUnchanged = `instance.macport2PassPriorityTaggedUnchanged`,
-        .vlanCfg = 
+        .vlanCfg =
         {
             .portPri = `instance.macport2PortPri`,
             .portCfi = `instance.macport2PortCfi`,
@@ -345,7 +345,7 @@ static const CpswMacPort_Cfg enetAppCpswMacPortCfg[] =
         },
         .txPriorityType = `instance.macport2TxPriorityType`,
         .sgmiiMode      = ENET_MAC_SGMIIMODE_INVALID, // INVALID as SGMII is not supported in MCU+ devices
-    
+
     },
 % }
 };

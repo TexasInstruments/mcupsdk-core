@@ -66,12 +66,12 @@ const enet_icssg_mdio_config = {
             range: [1, 1000000000],
         },
         {
-            name: "mdioPhyStatePollFreqHz",
-            description: "Polling inter packet gap frequency in Hz",
-            displayName: "PHY State Poll Frequency",
-            default: 2200000,
+            name: "mdioIPGRatio",
+            description: "PHY State Poll interval in number of MDCLK ticks. This is also called as 'Polling inter packet gap'",
+            displayName: "PHY State Poll Interval",
+            default: 100,
             isInteger: true,
-            range: [1, 1000000000],
+            range: [1, 255],
         },
         {
             name: "mdioPollEnMask",
