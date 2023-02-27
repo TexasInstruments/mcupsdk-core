@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-2023 Texas Instruments Incorporated
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,23 +30,41 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef SDL_SOC_CONFIG_IN_H_
-#define SDL_SOC_CONFIG_IN_H_
 
-#ifdef __cplusplus
-extern "C"
+/**
+ *  \file     sdl_tog_soc.c
+ *
+ *  \brief    This file contains the soc-specific implementation of the API's present in the
+ *            device abstraction layer file of TOG.
+ */
+
+#include <stdint.h>
+#include <stdbool.h>
+#include <sdl/include/sdl_types.h>
+#include <sdl/include/hw_types.h>
+#include <sdl/dpl/sdl_dpl.h>
+#include <sdl/stog/v0/soc/sdl_tog_soc.h>
+
+int32_t SDL_TOG_getBaseaddr(SDL_TOG_Inst instance,
+                            uint32_t *baseAddr)
 {
-#endif
+    int32_t status = SDL_PASS;
+    uint32_t size = 0;
 
-/* IP versions */
-#define IP_VERSION_ESM_V0
-#define IP_VERSION_ESM_V0_0
-#define IP_VERSION_MCRC_V0
-#define IP_VERSION_DCC_V0
-#define IP_VERSION_TOG_V0
+    if (baseAddr == NULL)
+    {
+        status = SDL_EBADARGS;
+    }
+    else
+    {
+        *baseAddr = SDL_TOG_baseAddress[instance];
+    }
 
-#ifdef __cplusplus
+    if (status == SDL_PASS)
+    {
+        *baseAddr = (uint32_t)SDL_DPL_addrTranslate((uint64_t)*baseAddr, size);
+    }
+
+    return (status);
 }
-#endif
 
-#endif

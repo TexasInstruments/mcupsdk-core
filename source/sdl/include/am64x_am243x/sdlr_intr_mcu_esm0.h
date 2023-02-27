@@ -2,7 +2,7 @@
 *
 * MCU_ESM0 INTERRUPT MAP. header file
 *
-* Copyright (C) 2015-2019 Texas Instruments Incorporated.
+* Copyright (C) 2015-2023 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -59,6 +59,9 @@ extern "C"
 #define SDLR_MCU_ESM0_ESM_LVL_EVENT_GLUELOGIC_HFOSC0_CLKLOSS_GLUE_REF_CLK_LOSS_DETECT_OUT_0        (13U)
 #define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_ECC_AGGR0_CORR_LEVEL_0                                     (14U)
 #define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_ECC_AGGR0_UNCORR_LEVEL_0                                   (15U)
+#define SDLR_MCU_ESM0_ESM_LVL_EVENT_GLUELOGIC_GLUE_EFC_ERROR_AGGREGATED_ERR_0                      (25U)
+#define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_MASTER_SAFETY_GASKET0_TIMED_OUT_0                          (26U)
+#define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_TIMEOUT0_TRANS_ERR_LVL_0                                   (27U)
 #define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_DCC0_INTR_DONE_LEVEL_0                                     (36U)
 #define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_DCC0_INTR_ERR_LEVEL_0                                      (37U)
 #define SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_PLLFRACF_SSMOD0_LOCKLOSS_IPCFG_0                           (47U)

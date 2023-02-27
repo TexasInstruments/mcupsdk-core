@@ -14,6 +14,9 @@ const files_m4f = {
         "sdl_esm_priv.c",
         "sdl_dcc.c",
         "sdl_soc_dcc.c",
+        "sdl_ip_tog.c",
+        "sdl_tog.c",
+        "sdl_soc_tog.c",
     ],
 };
 
@@ -32,6 +35,9 @@ const filedirs = {
         "dcc/v0",
         "dcc/v0/soc",
         "dcc/v0/soc/am64x",
+        "stog/v0",
+        "stog/v0/soc",
+        "stog/v0/soc/am64x",
     ],
 };
 

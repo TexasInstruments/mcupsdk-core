@@ -1,5 +1,9 @@
 /*
- *  Copyright (C) 2022-2023 Texas Instruments Incorporated
+ * SDL TOG
+ *
+ * SDL SoC Header file for TOG
+ *
+ *  Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,23 +34,20 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef SDL_SOC_CONFIG_IN_H_
-#define SDL_SOC_CONFIG_IN_H_
+
+#ifndef INCLUDE_SDL_TOG_SOC_H_
+#define INCLUDE_SDL_TOG_SOC_H_
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-/* IP versions */
-#define IP_VERSION_ESM_V0
-#define IP_VERSION_ESM_V0_0
-#define IP_VERSION_MCRC_V0
-#define IP_VERSION_DCC_V0
-#define IP_VERSION_TOG_V0
+#if defined (SOC_AM64X)
+#include <sdl/stog/v0/soc/am64x/sdl_soc_tog.h>
+#endif /* SOC_AM64X */
 
 #ifdef __cplusplus
 }
-#endif
+#endif  /* extern "C" */
 
-#endif
+#endif /* INCLUDE_SDL_STC_SOC_H_ */

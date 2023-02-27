@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2022-2023 Texas Instruments Incorporated
+/********************************************************************
+ * Copyright (C) 2019-2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,24 +29,27 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+*/
+
+/**
+ *  \defgroup SDL_STOG_MODULE APIs for Slave Timeout Gasket(STOG).
+ *  \ingroup SDL_MODULE
+ *
+ *  This module contains APIs for using the STOG module. The APIs can be
+ *  used to configure the STOG instances on the device.
+ *
+ *  @{
  */
-#ifndef SDL_SOC_CONFIG_IN_H_
-#define SDL_SOC_CONFIG_IN_H_
+/** @} */
 
-#ifdef __cplusplus
-extern "C"
-{
+#ifndef SDLR_TOG_TOP_H_
+#define SDLR_TOG_TOP_H_
+
+#include "sdlr.h"
+
+#include <sdl/include/soc_config.h>
+
+#if defined (IP_VERSION_TOG_V0)
+#include <sdl/stog/v0/sdlr_tog.h>
 #endif
-
-/* IP versions */
-#define IP_VERSION_ESM_V0
-#define IP_VERSION_ESM_V0_0
-#define IP_VERSION_MCRC_V0
-#define IP_VERSION_DCC_V0
-#define IP_VERSION_TOG_V0
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+#endif	/* SDLR_TOG_TOP_H_ */
