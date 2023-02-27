@@ -7,6 +7,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
 -# ESM
    -# \subpage EXAMPLES_SDL_MCU_ESM
+-# STOG
+   -# \subpage EXAMPLES_SDL_STOG
 \endcond
 
 \cond SOC_AM263X
