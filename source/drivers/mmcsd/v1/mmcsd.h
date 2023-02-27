@@ -154,6 +154,7 @@ extern "C" {
 /** \brief MMC any operating voltage. */
 #define MMCSD_VOLTAGE_ANY               (0x0U)
 
+
 typedef void* MMCSD_Handle;
 
 /* ========================================================================== */
@@ -505,7 +506,7 @@ typedef struct
     uint8_t specVersion;
     /* SD card specification version */
 
-     uint32_t blockCount;
+    uint32_t blockCount;
     /* Number of blocks in the SD */
 
     uint8_t transferSpeed;
@@ -619,8 +620,10 @@ typedef struct
     uint32_t rca;
     /*< Relative card address. */
 
-    uint32_t dataBlockCount;
+    uint32_t blockCount;
+    /*< Number of blocks. */
 
+    uint32_t dataBlockCount;
     /*< Data dec. block counter */
 
     uint32_t dataBlockSize;
@@ -711,7 +714,6 @@ typedef struct
 
     SemaphoreP_Object       xferCompleteSemObj;
     /**< Transfer complete semaphore */
-
 
 } MMCSD_Object;
 
@@ -856,10 +858,8 @@ uint32_t MMCSD_getBlockSize(MMCSD_Handle handle);
  */
 uint32_t MMCSD_getBlockCount(MMCSD_Handle handle);
 
-/** @} */
-
 #ifdef __cplusplus
 }
 #endif
-
+/** @} */
 #endif /* MMCSD_H_ */

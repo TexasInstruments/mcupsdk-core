@@ -3,6 +3,7 @@ const common = require("../common.js");
 const component_file_list = [
     "source/board/.project/project.js",
     "source/drivers/.project/project.js",
+    "source/fs/freertos_fat/.project/project.js",
     "source/industrial_comms/ethercat_slave/icss_fwhal/.project/project.js",
     "source/kernel/nortos/.project/project.js",
     "source/kernel/freertos/.project/project.js",
@@ -104,6 +105,7 @@ const example_file_list = [
     "examples/drivers/mcspi/mcspi_loopback_dma/.project/project.js",
     "examples/drivers/mcspi/mcspi_performance_8bit/.project/project.js",
     "examples/drivers/mcspi/mcspi_performance_32bit/.project/project.js",
+    "examples/drivers/mmcsd/mmcsd_file_io/.project/project.js",
     "examples/drivers/mmcsd/mmcsd_raw_io/.project/project.js",
     "examples/drivers/qspi/qspi_flash_dma_transfer/.project/project.js",
     "examples/drivers/qspi/qspi_flash_diag/.project/project.js",

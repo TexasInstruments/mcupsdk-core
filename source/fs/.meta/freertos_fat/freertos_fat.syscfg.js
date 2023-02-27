@@ -39,13 +39,18 @@ function moduleInstances(inst) {
 
     switch(inst.media) {
     	case "SD":
+            let moduleSelectName = "MMC1";
+            if ((common.getSocName() == "am263x"))
+            {
+                moduleSelectName = "MMC";
+            }
     		modInstances.push({
     		    name: "peripheralDriver",
     		    displayName: "MMCSD Configuration",
     		    moduleName: '/drivers/mmcsd/mmcsd',
     		    useArray: false,
     		    requiredArgs: {
-    		        moduleSelect: "MMC1",
+    		        moduleSelect: moduleSelectName,
     		    },
     		});
     		break;

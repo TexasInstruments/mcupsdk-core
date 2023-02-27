@@ -10,22 +10,27 @@
 FF_Disk_t gFFDisks[CONFIG_FF_NUM_INSTANCES];
 
 /* FreeRTOS+FAT MMCSD Configs */
-FF_MMCSD_Config gFFMmcsdConfig[CONFIG_FF_NUM_INSTANCES] = 
+FF_MMCSD_Config gFFMmcsdConfig[CONFIG_FF_NUM_INSTANCES] =
 {
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let peripheralDriver = instance.peripheralDriver;
     {
-        .mediaType         = MMCSD_CARD_TYPE_`peripheralDriver.cardType`,
+        % if(common.getSocName() == "am263x"){
+            .mediaType         = MMCSD_CARD_`peripheralDriver.cardType`,
+        %}
+        % else{
+            .mediaType         = MMCSD_CARD_TYPE_`peripheralDriver.cardType`,
+        %}
         .mmcsdInstance     = `peripheralDriver.$name.toUpperCase()`,
     },
-% }	
+% }
 };
 
 /* FreeRTOS+FAT partitions */
 % let sdPartitionCount = 0;
 % let emmcPartitionCount = 0;
-FF_MMCSD_PartitionId gFFPartitionIds[CONFIG_FF_NUM_INSTANCES] = 
+FF_MMCSD_PartitionId gFFPartitionIds[CONFIG_FF_NUM_INSTANCES] =
 {
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
@@ -43,7 +48,7 @@ FF_MMCSD_PartitionId gFFPartitionIds[CONFIG_FF_NUM_INSTANCES] =
     },
     % sdPartitionCount += 1;
     % }
-% }	
+% }
 };
 
 void Drivers_ffOpen(void)

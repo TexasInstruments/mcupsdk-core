@@ -1,0 +1,97 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const freertos_fat  = scripting.addModule("/fs/freertos_fat/freertos_fat", {}, false);
+const freertos_fat1 = freertos_fat.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+const mpu_armv77 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+gpio1.$name                = "CONFIG_GPIO0";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.gpioPin.pu_pd   = "pu";
+gpio1.GPIO.gpioPin.$assign = "ball.B16";
+
+freertos_fat1.$name                     = "CONFIG_FREERTOS_FAT0";
+freertos_fat1.peripheralDriver.$name    = "CONFIG_MMCSD0";
+freertos_fat1.peripheralDriver.cardType = "SD";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.clkFreq          = 96000000;
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name       = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr    = 0x80000000;
+mpu_armv76.size        = 31;
+mpu_armv76.tex         = 0;
+mpu_armv76.isCacheable = false;
+
+mpu_armv77.$name       = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr    = 0x52200000;
+mpu_armv77.size        = 15;
+mpu_armv77.attributes  = "CUSTOM";
+mpu_armv77.tex         = 0;
+mpu_armv77.isCacheable = false;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+gpio1.GPIO.$suggestSolution = "GPIO0";
+
+freertos_fat1.peripheralDriver.MMC.$suggestSolution       = "MMC";
+freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution   = "ball.B6";
+freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution   = "ball.A4";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution  = "ball.B5";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution  = "ball.B4";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution  = "ball.A3";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution  = "ball.A2";
+freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution  = "ball.A5";
+freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution  = "ball.C6";

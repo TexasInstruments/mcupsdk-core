@@ -1062,7 +1062,7 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
                     if(SystemP_SUCCESS == status)
                     {
                         obj->blockSize = 1024U;
-                        obj->dataBlockCount = obj->size / obj->blockSize;
+                        obj->blockCount = obj->size / obj->blockSize;
                         break_val = 1U;
                     }
 
@@ -1079,7 +1079,7 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
                         {
                             obj->size = 1024U;
                             obj->blockSize = 512U;
-                            obj->dataBlockCount = (obj->size) / (obj->blockSize);
+                            obj->blockCount = (obj->size) / (obj->blockSize);
                             break_val = 1U;
                         }
                     }
@@ -1100,7 +1100,6 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
                 trans.arg = obj->rca << 16U;
 
                 status = MMCSD_transfer(handle,&trans);
-
                 memcpy(obj->csd, trans.response, 16U);
             }
 
@@ -1111,14 +1110,14 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
                     obj->tranSpeed = MMCSD_CARD1_TRANSPEED(obj);
                     obj->blockSize = ((uint32_t)1U) << (MMCSD_CARD1_RDBLKLEN(obj));
                     obj->size = MMCSD_CARD1_SIZE(obj);
-                    obj->dataBlockCount = obj->size / obj->blockSize;
+                    obj->blockCount = obj->size / obj->blockSize;
                 }
                 else
                 {
                     obj->tranSpeed = MMCSD_CARD0_TRANSPEED(obj);
                     obj->blockSize = ((uint32_t)1U) << (MMCSD_CARD0_RDBLKLEN(obj));
                     obj->size = MMCSD_CARD0_SIZE(obj);
-                    obj->dataBlockCount = MMCSD_CARD0_NUMBLK(obj);
+                    obj->blockCount = MMCSD_CARD0_NUMBLK(obj);
                 }
 
                 /* Set data block length to 512 (for byte addressing cards) */
@@ -1131,7 +1130,6 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
 
                     if(SystemP_SUCCESS == status)
                     {
-                        obj->dataBlockCount = (obj->dataBlockCount * obj->blockSize) / 512U;
                         obj->blockSize = 512U;
                     }
                 }
@@ -3056,6 +3054,19 @@ uint32_t MMCSD_getBlockSize(MMCSD_Handle handle)
     blockSize = obj->blockSize;
 
     return blockSize;
+}
+
+uint32_t MMCSD_getBlockCount(MMCSD_Handle handle)
+{
+    MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
+
+    uint32_t blockCount = 0U;
+    if(obj != NULL)
+    {
+        blockCount = obj->blockCount;;
+    }
+
+    return blockCount;
 }
 
 static int32_t MMCSD_isCardInserted(uint32_t baseAddr)

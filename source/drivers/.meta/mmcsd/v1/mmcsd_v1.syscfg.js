@@ -25,46 +25,48 @@ function pinmuxRequirements(instance) {
 	let interfaceName = getInterfaceName(instance);
 	let resources = [];
     let pinResource = {};
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_CLK", "MMC0 CLK Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "nopull" );
-    resources.push( pinResource);
+    if(interfaceName == "MMC")
+    {
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_CLK", "MMC1 CLK Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "nopull" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_SDWP", "MMC0 SDWP Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "nopull" );
-    resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_SDWP", "MMC1 SDWP Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "nopull" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_CMD", "MMC0 CMD Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
-    resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_CMD", "MMC1 CMD Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT0", "MMC0 DAT0 Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
-    resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT0", "MMC1 DAT0 Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT1", "MMC0 DAT1 Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
-    resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT1", "MMC1 DAT1 Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT2", "MMC0 DAT2 Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
-    resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT2", "MMC1 DAT2 Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT3", "MMC0 DAT3 Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
-    resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_DAT3", "MMC1 DAT3 Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "pu" );
+        resources.push( pinResource);
 
-    pinResource = pinmux.getPinRequirements(interfaceName, "MMC_SDCD", "MMC0 SDCD Pin");
-    pinmux.setConfigurableDefault( pinResource, "rx", true );
-    pinmux.setConfigurableDefault( pinResource, "pu_pd", "nopull" );
-    resources.push( pinResource);
-
+        pinResource = pinmux.getPinRequirements(interfaceName, "MMC_SDCD", "MMC1 SDCD Pin");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        pinmux.setConfigurableDefault( pinResource, "pu_pd", "nopull" );
+        resources.push( pinResource);
+    }
 	let peripheral = {
 		name          : interfaceName,
         displayName   : "MMCSD Instance",
