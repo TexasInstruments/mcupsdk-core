@@ -66,6 +66,10 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     <td>sbl_can
     <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file for all the CPUs
 </tr>
+<tr>
+    <td>sbl_sd
+    <td>SD bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file from SD card for all the CPUs
+</tr>
 \endcond
 <tr>
     <td>sbl_null

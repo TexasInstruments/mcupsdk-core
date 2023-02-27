@@ -376,6 +376,17 @@ some details regarding those.
 
 - To boot an application using the `sbl_can`, you can refer to \ref CAN_BOOTLOADER_PYTHON_SCRIPT subsection.
 
+### SBL SD {#BOOTFLOW_SBL_SD}
+
+- The `sbl_sd` is a secondary bootloader which reads the application image file from the SD card and then moves on to core initialization and other steps
+
+- To boot an application using the `sbl_sd`, the application image needs to be copied to the SD card as a file named "app"
+
+- Similarly you can copy any appimage file to the SD card and rename in the SD card as "app" so that the SBL can pick it up.
+
+- Currently the `sbl_sd` reads the full appimage file into an MSRAM buffer and then parses the multicore appimage. Because of this reason **appimages higher than ~512 KB in size can't be booted by `sbl_sd` as of now**.
+
+- To boot and appication using `sbl_sd`, you can refer to \ref EXAMPLES_DRIVERS_SBL_SD subsection.
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X
