@@ -66,6 +66,7 @@ const example_file_list = [
     "examples/drivers/boot/sbl_sd/.project/project.js",
     "examples/drivers/boot/sbl_uart/.project/project.js",
     "examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
+    "examples/drivers/boot/sbl_dfu_uniflash/.project/project.js",
     "examples/drivers/crc/crc_full_cpu/.project/project.js",
     "examples/drivers/ddr/ddr_ecc_test_main_esm/.project/project.js",
     "examples/drivers/ecap/ecap_epwm_loopback/.project/project.js",
