@@ -3043,6 +3043,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates the deadband functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_deadband",
+        "location": "../../examples/drivers/epwm/epwm_deadband/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_CC"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_deadband",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the deadband functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_deadband",
+        "location": "../../examples/drivers/epwm/epwm_deadband/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM263x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_deadband",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "In this example ePWM uses Minimum Deadband to do various operations on the signal coming to the MDL block. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_minimum_deadband",
         "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

@@ -73,6 +73,7 @@ const example_file_list = [
     "examples/drivers/epwm/epwm_protection_pru/.project/project.js",
     //"examples/drivers/epwm/epwm_xcmp_multiple_edges/.project/project.js",
     //"examples/drivers/epwm/epwm_diode_emulation/.project/project.js",
+    "examples/drivers/epwm/epwm_deadband/.project/project.js",
     "examples/drivers/epwm/epwm_minimum_deadband/.project/project.js",
     "examples/drivers/epwm/epwm_illegal_combo_logic/.project/project.js",
     "examples/drivers/eqep/eqep_frequency_measurement/.project/project.js",
