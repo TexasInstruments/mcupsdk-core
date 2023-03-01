@@ -742,8 +742,8 @@ typedef enum
 //*****************************************************************************
 typedef enum
 {
-    EPWM_DB_OUTPUT_A = 0, //!< DB output is ePWMA
-    EPWM_DB_OUTPUT_B = 1  //!< DB output is ePWMB
+    EPWM_DB_OUTPUT_A = 1, //!< DB output is ePWMA
+    EPWM_DB_OUTPUT_B = 0  //!< DB output is ePWMB
 } EPWM_DeadBandOutput;
 
 //*****************************************************************************
