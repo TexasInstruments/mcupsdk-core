@@ -47,6 +47,7 @@
 #include "enetextphy_priv.h"
 #include "generic_phy.h"
 #include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -178,7 +179,7 @@ void EnetExtPhy_setExtendedCfg(EnetExtPhy_Cfg *phyCfg,
 }
 
 
-static void EnetExtPhy_triggerAutoNegotiation(EnetExtPhy_Handle hPhy)
+static void EnetExtPhy_triggerReset(EnetExtPhy_Handle hPhy)
 {
     bool complete;
 
@@ -188,16 +189,53 @@ static void EnetExtPhy_triggerAutoNegotiation(EnetExtPhy_Handle hPhy)
         /* Wait for PHY reset to complete */
         complete = hPhy->hDrv->isResetComplete(hPhy);
     } while (complete != true);
-    EnetExtPhy_enable(hPhy);
-    DebugP_assert((hPhy->state.isNwayCapable && hPhy->state.enableNway));
-    do {
-        complete = EnetExtPhy_nwayStart(hPhy);
-    } while (complete != true);
-    do {
-        complete = EnetExtPhy_nwayWait(hPhy);
-    } while (complete != true);
+
 }
 
+bool EnetExtPhy_WaitForLinkUp(EnetExtPhy_Handle hPhy, uint32_t timeoutMs)
+{
+    bool isLinkUp = false;
+    bool complete = false;
+    uint32_t i;
+
+    for (i = 0U; i < timeoutMs; i++)
+    {
+        complete =  EnetExtPhy_nwayStart(hPhy);
+        if(complete)
+        {
+            break;
+        }
+        ClockP_usleep(1000);
+    }
+
+    if (complete)
+    {
+        for (i = 0U; i < timeoutMs; i++)
+        {
+            complete =  EnetExtPhy_nwayWait(hPhy);
+            if(complete)
+            {
+                break;
+            }
+            ClockP_usleep(1000);
+        }
+
+        if (complete)
+        {
+            for (i = 0U; i < timeoutMs; i++)
+            {
+                isLinkUp = EnetExtPhy_isLinked(hPhy);
+                if(isLinkUp)
+                {
+                    break;
+                }
+                ClockP_usleep(1000);
+            }
+        }
+    }
+
+    return isLinkUp;
+}
 
 EnetExtPhy_Handle EnetExtPhy_open(const EnetExtPhy_Cfg *phyCfg,
                             EnetExtPhy_Mii mii,
@@ -248,7 +286,10 @@ EnetExtPhy_Handle EnetExtPhy_open(const EnetExtPhy_Cfg *phyCfg,
 
         DebugP_assert(ENETEXTPHY_SOK == status);
 
-        EnetExtPhy_triggerAutoNegotiation(hPhy);
+        EnetExtPhy_triggerReset(hPhy);
+
+        EnetExtPhy_enable(hPhy);
+        DebugP_assert((hPhy->state.isNwayCapable && hPhy->state.enableNway));
 
         ENETEXTPHYTRACE_DBG_IF((status == ENETEXTPHY_SOK), "PHY %u: open\r\n", hPhy->addr);
 
@@ -845,14 +886,20 @@ static bool EnetExtPhy_checkLink(EnetExtPhy_Handle hPhy)
 
 static void EnetExtPhy_handleLinkDown(EnetExtPhy_Handle hPhy)
 {
-    bool linked;
-
-    linked = EnetExtPhy_isPhyLinked(hPhy);
+    bool linked = EnetExtPhy_isPhyLinked(hPhy);
 
     /* Not linked */
     if (!linked)
     {
-        EnetExtPhy_triggerAutoNegotiation(hPhy);
+        EnetExtPhy_triggerReset(hPhy);
+
+        EnetExtPhy_enable(hPhy);
+        DebugP_assert((hPhy->state.isNwayCapable && hPhy->state.enableNway));
+
+        do 
+        {
+            linked = EnetExtPhy_WaitForLinkUp(hPhy, ENETEXTPHY_TIMEOUT_MS);
+        } while (!linked);
     }
 }
 

@@ -196,7 +196,7 @@ int enet_lwip_example(void *args)
     }
 
     EnetAppUtils_assert(status == ENET_SOK);
-    #if (ENET_SYSCFG_ENABLE_EXTPHY == 1U)
+#if (ENET_SYSCFG_ENABLE_EXTPHY == 1U)
     {
         uint8_t numMacPorts;
         uint32_t i;
@@ -216,6 +216,7 @@ int enet_lwip_example(void *args)
 #endif
         portENTER_CRITICAL();
         uint32_t phyAddMask = 0;
+        bool islinked = false;
         for (i = 0; i < ENETAPP_EXT_PHY_NUM_ENABLED_PORTS; i++)
         {
             EnetApp_waitForPhyAlive(enetType,
@@ -227,6 +228,14 @@ int enet_lwip_example(void *args)
                                macPortList[i]);
             phyAddMask |= (1 << EnetApp_getExtPhyHandle(i)->phyCfg.phyAddr);
         }
+
+        do {
+            for (i = 0; i < ENETAPP_EXT_PHY_NUM_ENABLED_PORTS; i++)
+            {
+               islinked |= EnetExtPhy_WaitForLinkUp(EnetApp_getExtPhyHandle(i), ENETEXTPHY_TIMEOUT_MS);
+            }
+        } while (!islinked);
+
 #if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
         EnetApp_enablePhyLinkPollingMask(phyAddMask);
 #else

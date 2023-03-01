@@ -69,6 +69,8 @@ extern "C" {
 /*! \brief Macro to get the size of an array. */
 #define ENETEXTPHY_ARRAYSIZE(x)                  (sizeof(x) / sizeof(x[0]))
 
+#define ENETEXTPHY_TIMEOUT_MS (1000U * 5U)
+
 /*!
  * \anchor EnetExtPhy_ErrorCodes
  * \name   Ethernet PHY driver error codes
@@ -809,6 +811,8 @@ int32_t EnetExtPhy_rmwC45Reg(EnetExtPhy_Handle hPhy,
  * \param hPhy     PHY device handle
  */
 void EnetExtPhy_printRegs(EnetExtPhy_Handle hPhy);
+
+bool EnetExtPhy_WaitForLinkUp(EnetExtPhy_Handle hPhy, uint32_t timeoutMs);
 
 /* ========================================================================== */
 /*                        Deprecated Function Declarations                    */
