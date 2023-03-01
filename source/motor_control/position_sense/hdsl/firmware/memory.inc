@@ -467,10 +467,7 @@ ENDAT_CHANNEL_NUM                 .set                     1
 ENDAT_CHANNEL_NUM                 .set                     0
 	.endif
 
-
-
-;TS: secondary
-VERSION2    .set                        0x44  ;TS: adress not correct
+VERSION2    .set                        0x44
 ENC2_ID     .set                        0x45
 STATUS2     .set                        0x46
 VPOS24      .set                        0x47
@@ -480,9 +477,18 @@ VPOS21      .set                        0x4A
 VPOS20      .set                        0x4B
 VPOSCRC2_H  .set                        0x4C
 VPOSCRC2_L  .set                        0x4D
-DUMMY2      .set                        0x4E
-;TS: end
+POSTX       .set                        0x4E
 
 ONLINE_STATUS_D	.set					0x50
 ONLINE_STATUS_1	.set					0x52
 ONLINE_STATUS_2	.set					0x54
+
+H_FRAME_FLAGS_TEMP .set                 0x56 ; 2 bytes
+CRC_SEC_TEMP .set                       0x58 ; 2 bytes
+VPOS_VALID .set                         0x5A ; 1 byte
+VPOS_TEMP .set                          0x5B ; 5 bytes
+VPOSCRC_TEMP .set                       0x60 ; 2 bytes
+STATUS2_TEMP .set                       0x62 ; 1 byte
+VPOS2_TEMP .set                         0x63 ; 5 bytes
+VPOSCRC2_TEMP .set                      0x68 ; 2 bytes
+SAFE_SUM_TEMP .set                      0x70 ; 1 byte

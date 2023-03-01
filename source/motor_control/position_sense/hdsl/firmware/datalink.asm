@@ -38,6 +38,7 @@
 	.ref transport_init
 	.ref transport_on_h_frame
 	.ref transport_on_v_frame
+	.ref transport_on_v_frame_2
     .ref transport_layer_processing_1
     .ref transport_layer_processing_2
 	.ref calc_acc_crc
@@ -59,6 +60,7 @@
 	.global datalink_abort2
 	.global qm_add
 	.global datalink_transport_on_v_frame_done
+	.global datalink_transport_on_v_frame_done_2
     .global transport_layer_processing_1_done
     .global transport_layer_processing_2_done
 	.global datalink_init
@@ -777,12 +779,23 @@ send_header_end_disp:
 	;sbco			&REG_TMP1.w2, PWMSS2_CONST, REG_TMP1.w0, 2
 ;HINT: we have some processing time here (140 cycles)
 ;go to V-Frame callback on transport layer
-	qbbc			datalink_transport_no_v_frame, H_FRAME.flags, FLAG_NORMAL_FLOW
-;check if it V-Frame is complete -> state rx0 since we wait processes in beginning of next frame and not at end of frame in rx7
+	qbbc			datalink_transport_no_v_frame_2, H_FRAME.flags, FLAG_NORMAL_FLOW
+; Check if it V-Frame is complete (and currently the header for first H-Frame is
+; being sent) -> state rx0 since we wait for processing v-frame in beginning of
+; next frame and not at end of frame in rx7. If yes, start the V-frame
+; processing. It will be completed in next H-Frame (State rx1). Therefore the
+; V-frame processing is split into two parts : transport_on_v_frame and
+; transport_on_v_frame_2.
 	qbne			datalink_transport_no_v_frame, LOOP_CNT.b2, 8
 	jmp			transport_on_v_frame
 datalink_transport_on_v_frame_done:
 datalink_transport_no_v_frame:
+; Check if the first H-Frame is complete (and currently the header for second H-Frame
+; is being sent). If yes, perform the remaining part of V-frame processing
+	qbne			datalink_transport_no_v_frame_2, LOOP_CNT.b2, 7
+    jmp             transport_on_v_frame_2
+datalink_transport_on_v_frame_done_2:
+datalink_transport_no_v_frame_2:
 ;check if we have an EXTRA period
 	qbeq			send_header_no_extra, EXTRA_SIZE, 0
 
@@ -996,7 +1009,8 @@ send_header_encode_sec_subblock_end:
 	qbbc			transport_layer_send_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
 	jmp			transport_layer_send_msg
 transport_layer_send_msg_done:
-    jmp         transport_layer_processing_1
+	qbbc			transport_layer_processing_1_done, H_FRAME.flags, FLAG_NORMAL_FLOW
+	jmp			transport_layer_processing_1
 transport_layer_processing_1_done:
 ;encoding end
 	;.if $defined(EXT_SYNC_ENABLE)
@@ -1230,7 +1244,8 @@ comp_logic_ends:
 ;HINT: we have processing time here (~168 cycles)
 	jmp			transport_layer_recv_msg
 transport_layer_recv_msg_done:
-    jmp         transport_layer_processing_2
+	qbbc			transport_layer_processing_2_done, H_FRAME.flags, FLAG_NORMAL_FLOW
+	jmp			transport_layer_processing_2
 transport_layer_processing_2_done:
 	READ_CYCLCNT		REG_TMP1
 	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9)

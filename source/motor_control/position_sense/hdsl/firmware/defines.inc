@@ -288,6 +288,11 @@ ONLINE_STATUS_2_QMLW .set					    (2+8)
 ONLINE_STATUS_2_LOW_BIT1_FIX0 .set				(1+8)
 ONLINE_STATUS_2_LOW_BIT0_FIX0 .set				(0+8)
 
+; STATUS2 constants
+STATUS2_TOG2 .set                       7
+STATUS2_TEST2 .set                      6
+STATUS2_ERR2 .set                       5
+
 ;SYS_CTRL constants
 SYS_CTRL_PRST .set						7
 SYS_CTRL_MRST .set						6
