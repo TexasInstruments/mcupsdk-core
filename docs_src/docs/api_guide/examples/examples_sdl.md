@@ -11,6 +11,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_STOG
 -# VTM
    -# \subpage EXAMPLES_SDL_VTM
+-# POK
+   -# \subpage EXAMPLES_SDL_POK
 \endcond
 
 \cond SOC_AM263X

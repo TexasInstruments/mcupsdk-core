@@ -12531,6 +12531,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies POK operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "pok_example",
+        "location": "../../examples/sdl/pok/pok_mcu/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pok",
+            "pok_mcu",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies VTM operation CPU is R5FSS0-0 running NORTOS.",
         "name": "vtm_example",
         "location": "../../examples/sdl/vtm/vtm_uc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

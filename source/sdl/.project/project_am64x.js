@@ -21,8 +21,13 @@ const files = {
 		"sdl_vtm_pvt_sensor.c",
 		"sdl_vtm.c",
 		"sdl_soc_vtm.c",
+        "sdl_pok.c",
+		"sdl_ip_pok.c",
+		"sdl_soc_pok.c",
+		"sdl_ip_pok_defs.c",
     ],
 };
+
 
 const filedirs = {
     common: [
@@ -45,6 +50,10 @@ const filedirs = {
         "vtm",
         "vtm/v0",
         "vtm/v0/soc/am64x",
+        "pok",
+	    "pok/v1",
+		"pok/v1/soc",
+	    "pok/v1/soc/am64x",
     ],
 };
 
@@ -90,7 +99,6 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.defines = r5_macro;
     }
-
     return build_property;
 }
 

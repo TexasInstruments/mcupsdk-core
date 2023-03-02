@@ -45,6 +45,7 @@ SDL consists of below sub-modules
 - \subpage SDL_ESM_PAGE
 - \subpage SDL_STOG_PAGE
 - \subpage SDL_VTM_PAGE
+- \subpage SDL_POK_PAGE
 \endcond
 
 \cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
