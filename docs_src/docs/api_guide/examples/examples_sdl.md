@@ -19,6 +19,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_ECC
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
+-# RTI
+   -# \subpage EXAMPLES_SDL_RTI
 \endcond
 
 \cond SOC_AM263X

@@ -64,6 +64,9 @@
 #if defined(C66_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_DSS_WDT
 #endif
+#if defined (SOC_AM64X)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
+#endif
 
 #if !defined(RTI_MAIN_H)
 #define RTI_MAIN_H

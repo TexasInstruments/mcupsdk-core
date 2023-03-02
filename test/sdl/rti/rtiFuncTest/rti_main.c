@@ -43,8 +43,9 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "rti_main.h"
-#include <dpl_interface.h>
-
+#if defined (SOC_AM64X)
+#include <drivers/sciclient.h>
+#endif
 
 
 
@@ -101,6 +102,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
 };
 #endif
+#if !defined (SOC_AM64X)
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
@@ -125,6 +127,53 @@ static int32_t Sdl_Module_clockSetFrequency()
         DebugP_assertNoLog(status == SystemP_SUCCESS);
   return status;
 }
+#endif
+#if defined (SOC_AM64X)
+#define RTI_NUM_DEVICES 1
+uint32_t RTI_devices[RTI_NUM_DEVICES] =
+{
+    TISCI_DEV_MCU_RTI0,
+};
+
+static int32_t sdlApp_initRTI(void)
+{
+    int32_t status = SDL_PASS;
+    uint32_t i;
+
+    for (i = 0; i < RTI_NUM_DEVICES; i++)
+    {
+       /* Power up RTI */
+        status = Sciclient_pmSetModuleState(RTI_devices[i],
+                                            TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
+                                            TISCI_MSG_FLAG_AOP,
+                                            SystemP_WAIT_FOREVER);
+
+        if (status != SDL_PASS)
+        {
+            printf("   RTI Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\n",
+                        RTI_devices[i], status);
+        }
+    }
+
+    return status;
+}
+#endif
+
+#if defined (SOC_AM64X)
+SDL_ESM_config RTI_Test_esmInitConfig_MCU =
+{
+    .esmErrorConfig = {0u, 3u}, /* Self test error config */
+    .enableBitmap = {0xffffffffu, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
+                },
+     /**< esm events enable */
+
+    .priorityBitmap = {0xffffffffu, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
+                        },
+    /**< esm events high priority */
+    .errorpinBitmap = {0xffffffffu, 0xff0fffffu, 0x7fffffffu, 0x00000007u,
+                      },
+};
+#endif
 
 #if defined (SOC_AM263X)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
@@ -185,9 +234,13 @@ static inline uint32_t RTIDwwdReadWinSz(uint32_t baseAddr)
 
 int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
 {
-    uint32_t closedWindowstatus, currentDownCounter, windowSizeShift;
+    uint32_t closedWindowstatus, currentDownCounter=0, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
-
+#if defined (SOC_AM64X)
+	uint32_t getBaseAddr;
+	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
+	baseAddr=getBaseAddr;
+#endif
     int32_t retVal = SDL_EFAIL;
     if ((baseAddr        != ((uint32_t) NULL)) &&
         (pIsClosedWindow != (NULL_PTR)))
@@ -244,7 +297,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
     }
     return (retVal);
 }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -299,7 +352,7 @@ void test_sdl_rti_baremetal_test_app (void)
     Drivers_open();
     Board_driversOpen();
 
-  #if defined (SOC_AM263X)
+  #if defined (SOC_AM263X) || defined (SOC_AM64X)
     void *ptr = (void *)&arg;
   #endif
 
@@ -307,10 +360,12 @@ void test_sdl_rti_baremetal_test_app (void)
 
     /* Init dpl */
     sdlApp_dplInit();
+	#if !defined (SOC_AM64X)
     Sdl_Module_clockEnable();
     Sdl_Module_clockSetFrequency();
-
+	#endif
     /* Initialize MCU RTI module */
+	
     #if defined (SOC_AM263X)
     result = SDL_ESM_init(SDL_INSTANCE_ESM0, &RTI_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
     #elif defined (SOC_AM273X)
@@ -318,7 +373,10 @@ void test_sdl_rti_baremetal_test_app (void)
     #elif defined (SOC_AWR294X)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);
     #endif
-
+	#if defined (SOC_AM64X)
+	sdlApp_initRTI();
+	result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &RTI_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, ptr);
+	#endif
 
     if (result != SDL_PASS)
     {

@@ -107,15 +107,35 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 #endif
 }
 #endif
+#if defined (SOC_AM64X)
+static void RTISetClockSource(uint32_t rtiModuleSelect,
+                              uint32_t rtiClockSourceSelect)
+{
+    uint32_t baseAddr; 
+	
+	switch (rtiModuleSelect) {
+        case SDL_MCU_RTI0_CFG_BASE:
+			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_MCU_CTRL_MMR0_CFG0_SIZE);
+            HW_WR_FIELD32(baseAddr,
+                          SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL,
+                          rtiClockSourceSelect);
+            break;
+	}
+}
+#endif
+
 static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size)
 {
+	#if defined (SOC_AM64X)
+	uint32_t getBaseAddr;
+	SDL_RTI_getBaseaddr(rtiModule,&getBaseAddr);
+	rtiModule=getBaseAddr;
+	#endif
     /* Set dwwd window size to 100 percent. */
     SDL_RTI_writeWinSz(rtiModule, RTI_DWWD_WINDOWSIZE_100_PERCENT);
-    //SDL_DPL_delay(1U);
     /* Servicing watchdog will generate error. */
     SDL_RTI_service(SDL_INSTANCE_RTI);
     SDL_RTI_writeWinSz(rtiModule, rtiWindow_size);
-    //SDL_DPL_delay(1U);
     /* Service watchdog again. */
     SDL_RTI_service(SDL_INSTANCE_RTI);
 }
@@ -131,11 +151,14 @@ int32_t SDL_RTI_funcTest(void)
         isrFlag = RTI_NO_INTERRUPT;
 
     /* Configure RTI parameters */
-    pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_200MHZ_FREQ_KHZ, RTI_WDT_TIMEOUT);
+    pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_32KHZ, RTI_WDT_TIMEOUT);
     pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_100_PERCENT;
     pConfig.SDL_RTI_dwwdReaction   = RTI_DWWD_REACTION_GENERATE_NMI;
 
-
+	#if defined (SOC_AM64X)
+	/* Select RTI module clock source */
+    RTISetClockSource(rtiModule, RTI_CLOCK_SOURCE_32KHZ);
+	#endif
     retVal = SDL_RTI_config(SDL_INSTANCE_RTI, &pConfig);
 
     if (retVal == SDL_EFAIL)
@@ -257,7 +280,6 @@ int32_t SDL_RTI_funcTest(void)
             {
                 RTIDwwdIsClosedWindow(rtiModule, &closedWinStatus);
                 /* Keep checking till window is open. */
-               //SDL_DPL_delay(1U);
             }
             SDL_RTI_service(SDL_INSTANCE_RTI);
         }
@@ -300,7 +322,11 @@ static void IntrDisable(uint32_t intsrc)
 	  SDL_RTI_clearStatus(SDL_INSTANCE_DSS_WDT, intrStatus);
 		RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
 #endif
-
+#if defined (SOC_AM64X)
+	SDL_RTI_getStatus(SDL_INSTANCE_MCU_RTI0_CFG, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_MCU_RTI0_CFG, intrStatus);
+    SDL_ESM_clrNError(SDL_ESM_INST_MCU_ESM0);
+#endif
    /* Clear ESM registers. */
 #if defined (SOC_AM263X)
   SDL_ESM_disableIntr(SDL_ESM_U_BASE, intsrc);
@@ -314,7 +340,7 @@ static void IntrDisable(uint32_t intsrc)
 
 }
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

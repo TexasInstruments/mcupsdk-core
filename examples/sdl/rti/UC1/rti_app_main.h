@@ -50,7 +50,7 @@
 #include <sdl/sdl_rti.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
-
+#include <sdl/dpl/sdl_dpl.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -81,7 +81,7 @@
 #endif
 
 /* ========================================================================== */
-/*                     Dependant macros in sdl_rti_funcTest.c                  */
+/*                     Dependant macros in SDL_RTI_exampleTest.c                  */
 /* ========================================================================== */
 
 #define RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ        (32U)
@@ -101,7 +101,9 @@
 
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
 
+#if !defined (SOC_AM64X)
 #define SDL_MCU_CTRL_MMR0_CFG0_BASE                                         (0x4500000UL)
+#endif
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x00008180U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL_SHIFT                 (0x00000000U)
@@ -155,7 +157,7 @@ typedef enum rtiClockSource
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -169,7 +171,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 /*===========================================================================*/
 
 extern int32_t SDL_RTI_exampleTest(void);
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X)|| defined (SOC_AM64X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

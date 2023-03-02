@@ -44,6 +44,10 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 /* None */
+#if defined (SOC_AM64X)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
+#define SDL_WDT_BASE SDL_MCU_RTI0_CFG_BASE
+#endif
 #if defined (SOC_AM263X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE
@@ -76,6 +80,10 @@ volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect);
 #endif
+#if defined (SOC_AM64X)
+static void RTISetClockSource(uint32_t rtiModuleSelect,
+                              uint32_t rtiClockSourceSelect);
+#endif
 static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal);
 static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size);
 int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pWinStatus);
@@ -103,7 +111,11 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
 {
     uint32_t closedWindowstatus, currentDownCounter, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
-
+#if defined (SOC_AM64X)
+	uint32_t getBaseAddr;
+	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
+	baseAddr=getBaseAddr;
+#endif
     int32_t retVal = SDL_EFAIL;
     if ((baseAddr        != ((uint32_t) NULL)) &&
         (pIsClosedWindow != (NULL_PTR)))
@@ -141,11 +153,13 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
             default:
                 break;
         }
+
         timeOutValue    = RTIDwwdReadTimeOut(baseAddr);
         windowStartTime = (timeOutValue /
                            (uint32_t) ((uint32_t) 0x1U << windowSizeShift));
         /* Get current down counter */
         currentDownCounter = HW_RD_REG32(baseAddr + RTI_RTIDWDCNTR);
+
         if (currentDownCounter > windowStartTime)
         {
             closedWindowstatus = TRUE;
@@ -290,6 +304,11 @@ int32_t SDL_RTI_exampleTest(void)
 
 static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size)
 {
+	#if defined (SOC_AM64X)
+	uint32_t getBaseAddr;
+	SDL_RTI_getBaseaddr(rtiModule,&getBaseAddr);
+	rtiModule=getBaseAddr;
+	#endif
     /* Set dwwd window size to 100 percent. */
     SDL_RTI_writeWinSz(rtiModule, RTI_DWWD_WINDOWSIZE_100_PERCENT);
     /* Servicing watchdog will generate error. */
@@ -331,6 +350,22 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 #endif
 }
 #endif
+#if defined (SOC_AM64X)
+static void RTISetClockSource(uint32_t rtiModuleSelect,
+                              uint32_t rtiClockSourceSelect)
+{
+    uint32_t baseAddr;
+	
+	switch (rtiModuleSelect) {
+        case SDL_MCU_RTI0_CFG_BASE:
+			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_MCU_CTRL_MMR0_CFG0_SIZE);
+            HW_WR_FIELD32(baseAddr,
+                          SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL,
+                          rtiClockSourceSelect);
+            break;
+	}
+}
+#endif
 
 static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
 {
@@ -362,9 +397,12 @@ static void IntrDisable(uint32_t intsrc)
     #elif defined (SOC_AWR294X) || (SOC_AM273X)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
-	  RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
     #endif
-      /* Clear ESM registers. */
+	#if defined (SOC_AM64X)
+	SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
+	#endif
     #if defined (SOC_AM263X)
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
@@ -373,11 +411,15 @@ static void IntrDisable(uint32_t intsrc)
         SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
         SDL_ESM_disableIntr(SDL_INSTANCE_ESM0, intsrc);
     #endif
+	#if defined (SOC_AM64X)
+	/* clear the ERROR pin */
+    SDL_ESM_clrNError(SDL_ESM_INST_MCU_ESM0);
+	#endif
 
     isrFlag  |= RTI_ESM_INTRPT;
 }
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

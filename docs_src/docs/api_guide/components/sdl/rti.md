@@ -35,6 +35,23 @@ associated with:
 * DSS WDT is dedicated to C66 DSP core (C66SS0)
 \endcond
 
+\cond SOC_AM64X
+There are 7 RTI Modules in the device – 1 in the MCU domain and 6 in the Main domain
+
+Instances in MCU domain:
+
+1)	MCU_RTI0 is dedicated to the MCU cluster (MCU_M4FSS0) in lockstep and when unlocked serves as a Windowed Watchdog for the first M4F CPU core in the MCU domain (MCU_M4FSS0_CORE0).
+
+Instances in Main domain:
+
+1)	RTI0 is dedicated to the first A53 CPU core in the A53 cluster (A53SS0_CORE0)
+2)	RTI1 is dedicated to the second A53 CPU core in the A53 cluster (A53SS0_CORE1)
+3)	RTI8 is dedicated to the first R5F CPU core in the Main domain (R5FSS0_CORE0)
+4)	RTI9 is dedicated to the second R5F CPU core in the Main domain (R5FSS0_CORE1)
+5)	RTI10 is dedicated to the third R5F CPU core in the Main domain (R5FSS1_CORE0)
+6)	RTI11 is dedicated to the fourth R5F CPU core in the Main domain (R5FSS1_CORE1)
+\endcond
+
 All WWDT instances that are provisioned for a particular CPU core should not be used by any other CPU cores.
 
 ## SysConfig Features
@@ -42,6 +59,17 @@ All WWDT instances that are provisioned for a particular CPU core should not be 
 
 ## Features NOT Supported
 - None
+
+
+## Features NOT Supported
+
+\cond SOC_AM273X || SOC_AWR294X
+• NTU input to FRC0
+\endcond
+
+\cond SOC_AM64X
+- None
+\endcond
 
 ## Important Usage Guidelines
 - None
@@ -56,7 +84,7 @@ Include the below file to access the APIs
 #include <sdl/sdl_rti.h>
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM64X
 Config an RTI Instance
 \code{.c}
 SDL_RTI_configParms pConfig;

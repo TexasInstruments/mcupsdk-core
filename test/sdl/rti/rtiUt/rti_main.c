@@ -42,7 +42,9 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "rti_main.h"
-
+#if defined (SOC_AM64X)
+#include <drivers/sciclient.h>
+#endif
 
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include <ti/build/unit-test/Unity/src/unity.h>
@@ -114,6 +116,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
 };
 #endif
+#if !defined (SOC_AM64X)
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
@@ -138,7 +141,7 @@ static int32_t Sdl_Module_clockSetFrequency()
         DebugP_assertNoLog(status == SystemP_SUCCESS);
   return status;
 }
-
+#endif
 static int32_t sdlApp_dplInit(void)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -152,6 +155,42 @@ static int32_t sdlApp_dplInit(void)
     return ret;
 }
 
+#if defined (SOC_AM64X)
+#define RTI_NUM_DEVICES SDL_INSTANCE_RTI11_CFG+1
+uint32_t RTI_devices[RTI_NUM_DEVICES] =
+{
+    TISCI_DEV_MCU_RTI0,
+    TISCI_DEV_RTI0,
+    TISCI_DEV_RTI1,
+    TISCI_DEV_RTI8,
+    TISCI_DEV_RTI9,
+    TISCI_DEV_RTI10,
+    TISCI_DEV_RTI11
+};
+
+static int32_t sdlApp_initRTI(void)
+{
+    int32_t status = SDL_PASS;
+    uint32_t i;
+
+    for (i = 0; i < RTI_NUM_DEVICES; i++)
+    {
+       /* Power up RTI */
+        status = Sciclient_pmSetModuleState(RTI_devices[i],
+                                            TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
+                                            TISCI_MSG_FLAG_AOP,
+                                            SystemP_WAIT_FOREVER);
+
+        if (status != SDL_PASS)
+        {
+            printf("   RTI Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\n",
+                        RTI_devices[i], status);
+        }
+    }
+
+    return status;
+}
+#endif
 /*===========================================================================*/
 /*                         Function definitions                              */
 /*===========================================================================*/
@@ -170,10 +209,13 @@ void test_sdl_rti_baremetal_test_app (void)
     sdlApp_dplInit();
 
     DebugP_log("\n rti Test Application\r\n");
-
+	#if !defined (SOC_AM64X)
     Sdl_Module_clockEnable();
     Sdl_Module_clockSetFrequency();
-
+	#endif
+	#if defined (SOC_AM64X)
+	sdlApp_initRTI();
+	#endif
     for ( i = 0; sdlrtiTestList[i].testFunction != NULL; i++)
     {
         testResult = sdlrtiTestList[i].testFunction();

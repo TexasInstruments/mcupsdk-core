@@ -56,13 +56,15 @@
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
+#if defined (SOC_AM64X)
+#include <sdl/sdl_esm.h>
+#endif
 #include <sdl/sdl_rti.h>
 #include <sdl/rti/v0/sdl_ip_rti.h>
 #include <sdl/rti/v0/sdl_rti.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/dpl/sdl_dpl.h>
-
 
 #if !defined(SDL_RTI_TEST_H)
 #define SDL_RTI_TEST_H
@@ -84,6 +86,10 @@
 #define SDL_WDT_BASE SDL_WDT0_U_BASE
 #define SDL_ESM_U_BASE SDL_TOP_ESM_U_BASE
 #define SDL_INSTANCE_ESM0 SDL_ESM_INST_MAIN_ESM0
+#endif
+#if defined (SOC_AM64X)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
+#define SDL_WDT_BASE  SDL_INSTANCE_MCU_RTI0_CFG
 #endif
 /* MSS Instance for AM273x and AWR294X*/
 #if defined (R5F_INPUTS)
@@ -122,15 +128,19 @@
 #define MCU_ESM_RTI0_INTR                     (104U)
 #define MCU_ESM_RTI1_INTR                     (105U)
 #endif
-
+#if defined (SOC_AM64X)
+#define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x045080B0U)
+#endif
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
-
+#if !defined (SOC_AM64X)
 #define SDL_MCU_CTRL_MMR0_CFG0_BASE                                         (0x4500000UL)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x00008180U)
+#define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_SHIFT                 		(0x00000000U)
+#endif
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL_SHIFT                 (0x00000000U)
 
-//#define SDL_MCU_CTRL_MMR0_CFG0_BASE                                         (0x40f00000UL)
+
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL                               (0x00008184U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_SHIFT                 (0x00000000U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_MAX                   (0x00000007U)
@@ -186,7 +196,7 @@ void sdlApp_print(const char * str);
  */
 #define RTI_DWD_MIN_PRELOAD_VAL             (0x1FFFU)
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -203,7 +213,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pWinStatus);
 
 extern int32_t SDL_RTI_funcTest(void);
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X)|| defined (SOC_AM64X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

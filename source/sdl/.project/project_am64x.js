@@ -30,6 +30,10 @@ const files_m4f = {
 		"sdl_soc_mtog.c",
     "sdl_ecc.c",
     "sdl_ip_ecc.c",
+    "sdl_rti.c",
+    "sdl_ip_rti.c",
+	"sdl_soc_rti.c",
+
     ],
 };
 
@@ -98,6 +102,10 @@ const filedirs_m4f = {
         "ecc",
         "ecc/soc/am64x_am243x",
         "ecc/V0",
+        "rti",
+        "rti/v0",
+		"rti/v0/soc/am64x",
+
     ],
 };
 

@@ -60,9 +60,6 @@
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-#include <dpl_interface.h>
-#include <kernel/dpl/DebugP.h>
-#include <sdl/dpl/sdl_dpl.h>
 #if !defined(SDL_RTI_TEST_H)
 #define SDL_RTI_TEST_H
 
@@ -91,6 +88,9 @@
 #define RTI_CPU_INTERRUPT                      (1U)
 #define RTI_ESM_INTRPT                         (2U)
 
+#if defined (SOC_AM64X)
+#define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x045080B0U)
+#endif
 
 #if defined(SOC_TPR12) || defined (SOC_AWR294X)
 #define MCU_ESM_RTI0_INTR                   ESMG2_WDT_NMI_REQ
@@ -101,8 +101,10 @@
 
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI1_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
 
+#if !defined (SOC_AM64X)
 #define SDL_MCU_CTRL_MMR0_CFG0_BASE                                         (0x40f00000UL)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL                               (0x00008180U)
+#endif
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL_MASK                  (0x00000007U)
 #define SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL_SHIFT                 (0x00000000U)
 
@@ -163,7 +165,7 @@ typedef enum rtiClockSource
 /*===========================================================================*/
 /*                         Internal function declarations                    */
 /*===========================================================================*/
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -177,7 +179,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 /*===========================================================================*/
 
 extern int32_t SDL_RTI_exampleTest(void);
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

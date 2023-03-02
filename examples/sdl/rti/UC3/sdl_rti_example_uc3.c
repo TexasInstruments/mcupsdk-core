@@ -44,6 +44,10 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 /* None */
+#if defined (SOC_AM64X)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
+#define SDL_RTI_BASE SDL_MCU_RTI0_CFG_BASE
+#endif
 #if defined (SOC_AM263X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_RTI_BASE SDL_WDT0_U_BASE
@@ -66,11 +70,16 @@
 
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
-
+  SDL_RTI_configParms     pConfig;
+  uint32_t rtiModule = SDL_RTI_BASE;
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 #if defined (R5F_INPUTS)
+static void RTISetClockSource(uint32_t rtiModuleSelect,
+                              uint32_t rtiClockSourceSelect);
+#endif
+#if defined (SOC_AM64X)
 static void RTISetClockSource(uint32_t rtiModuleSelect,
                               uint32_t rtiClockSourceSelect);
 #endif
@@ -101,7 +110,11 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
 {
     uint32_t closedWindowstatus, currentDownCounter, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
-
+#if defined (SOC_AM64X)
+	uint32_t getBaseAddr;
+	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
+	baseAddr=getBaseAddr;
+#endif
     int32_t retVal = SDL_EFAIL;
     if ((baseAddr        != ((uint32_t) NULL)) &&
         (pIsClosedWindow != (NULL_PTR)))
@@ -307,6 +320,23 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 }
 #endif
 
+#if defined (SOC_AM64X)
+static void RTISetClockSource(uint32_t rtiModuleSelect,
+                              uint32_t rtiClockSourceSelect)
+{
+    uint32_t baseAddr;
+	
+	switch (rtiModuleSelect) {
+        case SDL_MCU_RTI0_CFG_BASE:
+			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_MCU_CTRL_MMR0_CFG0_SIZE);
+            HW_WR_FIELD32(baseAddr,
+                          SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL,
+                          rtiClockSourceSelect);
+            break;
+	}
+}
+#endif
+
 static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
 {
     uint32_t clkFreqKHz       = (uint32_t) RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ,
@@ -334,7 +364,6 @@ static void IntrDisable(uint32_t intsrc)
 
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
-
     /* Clear ESM registers. */
 #if defined(SOC_AM263X)
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
@@ -346,7 +375,7 @@ static void IntrDisable(uint32_t intsrc)
 #endif
 }
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {
