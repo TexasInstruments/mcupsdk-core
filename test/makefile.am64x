@@ -142,6 +142,8 @@ help:
 	@echo  $(MAKE) -s -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -327,6 +329,8 @@ BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_firewall_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_firewall_am64x-sk_system_freertos_nortos
@@ -645,6 +649,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
  test_firewall_am64x-evm_system_freertos_nortos:
 	$(MAKE) -C drivers/firewall/am64x-evm/system_freertos_nortos -f makefile all
 
@@ -780,6 +790,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_firewall_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_firewall_am64x-sk_system_freertos_nortos_clean
@@ -1098,6 +1110,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
  test_firewall_am64x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C drivers/firewall/am64x-evm/system_freertos_nortos -f makefile clean
 
@@ -1233,6 +1251,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_firewall_am64x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_firewall_am64x-sk_system_freertos_nortos_scrub
@@ -1550,6 +1570,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_firewall_am64x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C drivers/firewall/am64x-evm/system_freertos_nortos -f makefile scrub

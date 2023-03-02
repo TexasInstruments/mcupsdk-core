@@ -25,6 +25,9 @@ const files_m4f = {
 		"sdl_ip_pok.c",
 		"sdl_soc_pok.c",
 		"sdl_ip_pok_defs.c",
+		"sdl_ip_mtog.c",
+		"sdl_mtog.c",
+		"sdl_soc_mtog.c",
     ],
 };
 
@@ -75,6 +78,9 @@ const filedirs = {
 	    "pok/v1",
 		"pok/v1/soc",
 	    "pok/v1/soc/am64x",
+		"mtog", 
+		"mtog/v0",      
+		"mtog/soc/am64x",
     ],
 };
 
