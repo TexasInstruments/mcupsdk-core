@@ -2119,7 +2119,10 @@ int32_t AM263x_ADC_BTR_007( void )
         {
             /* wait unsuccessful. so error occurred*/
             errors++;
-            DebugP_log("ERROR!! wait unsuccessful., base : %x\r\n", base);
+            if(enableLog)
+            {
+                DebugP_log("ERROR!! wait unsuccessful., base : %x\r\n", base);
+            }
             wait = 0;
         }
     }
@@ -2243,7 +2246,10 @@ int32_t AM263x_ADC_BTR_008(uint32_t base)
             {
                 /* wait unsuccessful. conversions didnt happen as intended.*/
                 errors++;
-                DebugP_log("ERROR : wait unsuccessful. conversions didnt happen as intended\r\n");
+                if(enableLog)
+                {
+                    DebugP_log("ERROR : wait unsuccessful. conversions didnt happen as intended\r\n");
+                }
             }
             ADC_disableInterrupt(base, int_number);
             if(multiple_trigger == 0xffff) break;
@@ -2254,7 +2260,10 @@ int32_t AM263x_ADC_BTR_008(uint32_t base)
 
     if(errors > 0)
     {
-        DebugP_log("%d errors for base %x\r\n", errors, base);
+        if(enableLog)
+        {
+            DebugP_log("%d errors for base %x\r\n", errors, base);
+        }
     }
     if(errors > 0)
     {
@@ -2387,7 +2396,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             {
                 /* error : flag set*/
                 errors++;
-                DebugP_log("1 flag set for ppb_number : %d\r\n",ppb_number);
+                if(enableLog)
+                {
+                    DebugP_log("1 flag set for ppb_number : %d\r\n",ppb_number);
+                }
                 ADC_clearPPBEventStatus(base, ppb_number, 0x7);
             }
 
@@ -2416,7 +2428,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             {
                 /* error : flag not set*/
                 errors++;
-                DebugP_log("2 flag not set for ppb_number : %d\r\n",ppb_number);
+                if(enableLog)
+                {
+                    DebugP_log("2 flag not set for ppb_number : %d\r\n",ppb_number);
+                }
             }
 
             /* setting the voltage to be between trip limits*/
@@ -2445,7 +2460,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             {
                 /* error : flag not set*/
                 errors++;
-                DebugP_log("3 flag not set for ppb_number : %d\r\n",ppb_number);
+                if(enableLog)
+                {
+                    DebugP_log("3 flag not set for ppb_number : %d\r\n",ppb_number);
+                }
             }
 
             ADC_clearPPBEventStatus(base, ppb_number, ADC_EVT_TRIPHI);
@@ -2479,7 +2497,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             {
                 /* error : flag set*/
                 errors++;
-                DebugP_log("4 flag set for ppb_number : %d\r\n",ppb_number);
+                if(enableLog)
+                {
+                    DebugP_log("4 flag set for ppb_number : %d\r\n",ppb_number);
+                }
             }
 
             if(manual_testing)
@@ -2506,7 +2527,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             {
                 /* error : flag not set*/
                 errors++;
-                DebugP_log("5 flag not set for ppb_number : %d\r\n",ppb_number);
+                if(enableLog)
+                {
+                    DebugP_log("5 flag not set for ppb_number : %d\r\n",ppb_number);
+                }
             }
 
             /* setting the voltage to be between trip limits*/
@@ -2535,7 +2559,10 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             {
                 /* error : flag set*/
                 errors++;
-                DebugP_log("6 flag set for ppb_number : %d\r\n",ppb_number);
+                if(enableLog)
+                {
+                    DebugP_log("6 flag set for ppb_number : %d\r\n",ppb_number);
+                }
                 ADC_clearPPBEventStatus(base, ppb_number, 0x7);
             }
             ADC_disablePPBEventCBCClear(base, ppb_number);
@@ -2765,7 +2792,10 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
                     {   if((result_with_cal_offset != 0) && (result_with_cal_offset != 0xffff))
                         {
                             errors++;
-                            DebugP_log("ERROR!! cal offset fail for offset %d\r\n",offset);
+                            if(enableLog)
+                            {
+                                DebugP_log("ERROR!! cal offset fail for offset %d\r\n",offset);
+                            }
                         }
                     }
                     if(twos_complement_flag == 0)
@@ -2773,7 +2803,10 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
                         if((int16_t)result_with_ref_offset != (int16_t) (result_with_cal_offset - offset))
                         {
                             errors++;
-                            DebugP_log("ERROR!! ref offset fail for offset without twos Complement %d\r\n",offset);
+                            if(enableLog)
+                            {
+                                DebugP_log("ERROR!! ref offset fail for offset without twos Complement %d\r\n",offset);
+                            }
                         }
                     }
                     else
@@ -2781,7 +2814,10 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
                         if((int16_t)result_with_ref_offset != (int16_t) (offset - result_with_cal_offset))
                         {
                             errors++;
-                            DebugP_log("ERROR!! ref offset fail for offset with twos Complement %d\r\n",offset);
+                            if(enableLog)
+                            {
+                                DebugP_log("ERROR!! ref offset fail for offset with twos Complement %d\r\n",offset);
+                            }
 
                         }
                     }
@@ -3103,7 +3139,10 @@ int32_t AM263_ADC_ITR_0001(uint32_t base)
             int wait_success = util_ADC_wait_for_adc_interrupt(base, ADC_INT_NUMBER1);
             if(wait_success == false)
             {
-                DebugP_log("ERROR : fail for %x base and %d first, %d last\r\n",base,first_in_burst_mode, last_in_burst_mode);
+                if(enableLog)
+                {
+                    DebugP_log("ERROR : fail for %x base and %d first, %d last\r\n",base,first_in_burst_mode, last_in_burst_mode);
+                }
                 errors++;
             }
 
@@ -3415,7 +3454,10 @@ int32_t AM263_ADC_ITR_0003(uint32_t base)
     if((difference < -1) || (difference > 1))
     {
         errors++;
-        DebugP_log("ERROR : ISR Counts did not match\r\n");
+        if(enableLog)
+        {
+            DebugP_log("ERROR : ISR Counts did not match\r\n");
+        }
     }
 
     HwiP_destruct(&gEpwmHwiObject2);
@@ -3771,39 +3813,51 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
             {
                 errors++ ;    /* 16 bit read */
                 if(enableLog)
-                DebugP_log("ERROR FOR BASE : %X 16 bit read : %d\r\n",base,counter_values_for_read[0]);
+                {
+                    DebugP_log("ERROR FOR BASE : %X 16 bit read : %d\r\n",base,counter_values_for_read[0]);
+                }
             }
             if ((counter_values_for_read[1] < 30-3) || (counter_values_for_read[1] > 30+3) )
             {
                 errors++ ;    /* 32 bit read */
                 if(enableLog)
-                DebugP_log("ERROR FOR BASE : %X 32 bit read : %d\r\n",base,counter_values_for_read[1]);
+                {
+                    DebugP_log("ERROR FOR BASE : %X 32 bit read : %d\r\n",base,counter_values_for_read[1]);
+                }
             }
             if ((counter_values_for_read[2] < 25-4) || (counter_values_for_read[2] > 25+4) )
             {
                 errors++ ;    /* 16 bit result space read */
                 if(enableLog)
-                DebugP_log("ERROR FOR BASE : %X 16 bit result space read  : %d\r\n",base,counter_values_for_read[2]);
+                {
+                    DebugP_log("ERROR FOR BASE : %X 16 bit result space read  : %d\r\n",base,counter_values_for_read[2]);
+                }
 
             }
             if ((counter_values_for_read[3] < 22-3) || (counter_values_for_read[3] > 22+3) )
             {
                 errors++ ;    /* 32 bit result space read */
                 if(enableLog)
-                DebugP_log("ERROR FOR BASE : %X 32 bit result space read  : %d\r\n",base,counter_values_for_read[3]);
+                {
+                    DebugP_log("ERROR FOR BASE : %X 32 bit result space read  : %d\r\n",base,counter_values_for_read[3]);
+                }
             }
             if ((counter_values_for_read[4] < 470-10) || (counter_values_for_read[4] > 470+10) )
             {
                 errors++ ;  /* 32 bit result space burst read 4*32 bit*/
                 if(enableLog)
-                DebugP_log("ERROR FOR BASE : %X 32 bit result space burst read 4*32 bit : %d\r\n",base,counter_values_for_read[4]);
+                {
+                    DebugP_log("ERROR FOR BASE : %X 32 bit result space burst read 4*32 bit : %d\r\n",base,counter_values_for_read[4]);
+                }
 
             }
             if ((counter_values_for_write[0] < 11-3) || (counter_values_for_write[0] > 11+3) )
             {
                 errors++ ;  /* 16 bit write */
                 if(enableLog)
-                DebugP_log("ERROR FOR BASE : %X 16 bit write : %d\r\n",base,counter_values_for_write[0]);
+                {
+                    DebugP_log("ERROR FOR BASE : %X 16 bit write : %d\r\n",base,counter_values_for_write[0]);
+                }
 
             }
             if ((counter_values_for_write[1] < 11-3) || (counter_values_for_write[1] > 11+3) )
@@ -4010,12 +4064,12 @@ int32_t AM263_ADC_TTR_0004(uint32_t base)
                 errors_count++;
             }
             errors = errors_count;
-            if(errors)
-            {
-                DebugP_log("error!!!  %d\r\n",dma_trigger_to_transfer_complete_latency);
-            }
             if(enableLog)
             {
+                if(errors)
+                {
+                    DebugP_log("error!!!  %d\r\n",dma_trigger_to_transfer_complete_latency);
+                }
                 DebugP_log("adc_instance : %d, DMA trigger to transfer complete latency  : %d\r\n",adc_instance, dma_trigger_to_transfer_complete_latency);
             }
 
