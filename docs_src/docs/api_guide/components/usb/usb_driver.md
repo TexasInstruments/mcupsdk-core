@@ -27,6 +27,7 @@ TinyUSB is an open-source cross-platform USB Host/Device stack for embedded syst
 Below features are supported in the SDK
 - USB device
 - USB CDC Class
+- USB DFU Class 
 
 \note It is highly recomended to use **TinyUSB version 0.14.0** as all the examples of supported device class were throughly 
 tested with **0.14.0**. 
@@ -70,6 +71,7 @@ and does the below,
 - USB device class driver should be operating as higher priority task if host driver is implemented as polling for device response with strict timeout.
 
 - If Cadence driver is used with TinyUSB, makefiles of both example and driver should define TINYUSB_INTEGRATION (like default cdc_echo example). This macro defined in driver and not in example or vice versa is an invalid combination.
+
 ## USB Logging 
 
 - User needs to define following macros to enable logs. 
@@ -140,6 +142,9 @@ and does the below,
 <tr><td colspan="1" bgcolor=#F0F0F0> SOC Porting Layer </td></tr>
 <tr>
     <td>\ref EXAMPLES_USB_CDC_ECHO
+</tr>
+<tr>
+    <td>\ref EXAMPLES_USB_DFU
 </tr>
 <tr><td colspan="1" bgcolor=#F0F0F0> TinyUSB </td></tr>
 <tr>

@@ -87,6 +87,12 @@ The example does the below
 - Connect the J10 on AM243x LP to the USB host
 - USB2.0 is validated from Type C connector
 
+\note The am243x-LP board is powered by the same J10 connector. It requires 
+USB-type C port that has power delivery classification. 
+- Thunderbolt 
+- Battery behind USB logo. 
+refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=1677756057987&ref_url=https%253A%252F%252Fwww.google.com%252F)
+
   \imageStyle{am243x_lp_j10.png,width:30%}
   \image html am243x_lp_j10.png USB Type-C Host/Device Connector
 

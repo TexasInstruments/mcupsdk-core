@@ -1,41 +1,33 @@
 
-# USB CDC Echo Example {#EXAMPLES_USB_DFU}
+# USB DFU Example {#EXAMPLES_USB_DFU}
 
 [TOC]
 
 # Introduction
 
-This example is a USB device CDC-ACM application based on USB CDC class from TinyUSB.
+- This examples demonstrates the use of **TinyUSB** **DFU DEV Class driver**. Its implements all the necessary callbacks that are 
+required by TinyUSB DFU DEV class driver. 
 
-The example does the below
-- Initializes the TinyUSB USB core driver and CDC class
-- Create two virtual COM ports visible to an USB host
-- Any alphabetic input from the USB host will be echo-ed back in lower case on one COM and in upper case in the other COM port
+- When user issues DFU download command then the application receives the data in a static buffer via USB DFU. Once the manifest 
+state is completed the application sends the received data back to UART0. 
+- When user issues DFU Upload command it sends the **"Hello world from AM64x-AM243x DFU! - Partition 0"** string back to the HOST PC. 
 
-# USB Logging Template Example 
+- refer [USB2.0 DFU specs](https://www.usb.org/sites/default/files/DFU_1.1.pdf) to konw more about USB 2.0 DFU class. 
 
-- This example also demonstrate how to enable logging for USB using shared memory log feature. 
-	- The R5FSS0_0_freertos/nortos core will write logs in the shared memory and R5FSS0_1_freertos/nortos core will read and print it on UART0. 
-- see \ref USB_DEVICE_DRIVER for more information on how to enable USB logs. 
-- see \ref KERNEL_DPL_DEBUG_PAGE for more information on how to enable shared memory log feature. 
+\note The max buffer size is 4KB thus, as far as this example is concerned user can send at max 4KB of data. 
 
-\note 
-	- Enabling logs in debug build may lead to unwanted behaviour as the application code is build with -O0 flag. 
-	- It is recomended to use **release** build when USB logging is enabled. 
+- To enable USB Logging for this example refer \ref EXAMPLES_USB_CDC_ECHO
 
-# Supported Combinations {#EXAMPLES_USB_CDC_ECHO_EXAMPLE_COMBOS}
+# Supported Combinations {#EXAMPLES_USB_DFU_EXAMPLE_COMBOS}
 
 \cond SOC_AM64X
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos
- ^				| r5fss0_1_freertos log Reader
- ^              | r5fss0-0_nortos
- ^              | r5fss0-1_nortos   log Reader
+ CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/usb/device/cdc_echo
+ Example folder | examples/usb/device/dfu
 
 \endcond
 
@@ -43,13 +35,10 @@ The example does the below
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos
- ^				| r5fss0_1_freertos
- ^              | r5fss0-0_nortos
- ^              | r5fss0-1_nortos
+ CPU + OS       | r5fss0-0_nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/usb/device/cdc_echo
+ Example folder | examples/usb/device/dfu
 
 \endcond
 
@@ -88,6 +77,12 @@ The example does the below
 - Connect the J10 on AM243x LP to the USB host
 - USB2.0 is validated from Type C connector
 
+\note The am243x-LP board is powered by the same J10 connector. It requires 
+USB-type C port that has power delivery classification. 
+- Thunderbolt 
+- Battery behind USB logo. 
+refer am243x-LP [User Guide](https://www.ti.com/lit/ug/spruj12c/spruj12c.pdf?ts=1677756057987&ref_url=https%253A%252F%252Fwww.google.com%252F)
+
   \imageStyle{am243x_lp_j10.png,width:30%}
   \image html am243x_lp_j10.png USB Type-C Host/Device Connector
 
@@ -97,50 +92,68 @@ The example does the below
 
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
 
-- When the application is running, two COM ports will be enumerated on the USB host
+- When the application is running. Observer DFU device detected on HOST PC. 
 
-### For Window 10
+- Open cmd in windows and terminal in case of Linux. Run Following command to detect whether the DFU device has been enumerated or not. 
 
-- The two enumerated COM ports can be displayed using the Device Manager on Windows 10,
+	**Windows** 
 
-\imageStyle{usb_cdc_echo_example_enum.png,width:50%}
-\image html usb_cdc_echo_example_enum.png COM ports (COM3 and COM4) displayed using Deveice Manager
+        dfu-util -l 
 
-- On USB host, use any serial port communication program, like Tera Term, to connect to those two COM ports
+	**Linux** 
 
-\imageStyle{usb_cdc_echo_example_com3.png,width:30%}
-\image html usb_cdc_echo_example_com3.png Using Tera Term to connect to port 1
+        sudo dfu-util -l 
 
-\imageStyle{usb_cdc_echo_example_com4.png,width:30%}
-\image html usb_cdc_echo_example_com4.png Using Tera Term to connect to port 2
+- If the enumeration is successful the following should be displayed on console. 
 
-- Type in any alphabetic characters, the lower case of the input will be displayed on one COM port and the upper case of the input will be displayed on the other COM port
+\imageStyle{usb_dfu_enum.png,width:50%}
+\image html usb_dfu_enum.png AM64x-AM243x DFU Device detected. 
 
-\imageStyle{usb_cdc_echo_example_lower.png,width:30%}
-\image html usb_cdc_echo_example_lower.png Lower Case Input Echo-ed
+- If the DFU device is not detected then most probably the WinUSB driver is not installed. 
+- refer "Install steps for dfu-util tools(windows)" in \ref SDK_DOWNLOAD_PAGE 
 
-\imageStyle{usb_cdc_echo_example_upper.png,width:30%}
-\image html usb_cdc_echo_example_upper.png Upper Case Input Echo-ed
+#### DFU Download 
 
-### For Linux
+- Open COM port in windows and /dev/ttyUSBx in linux which opens console for UART0. 
+- Once the DFU device is enumerated run the following command. 
 
-- The two enumerated serial ports can be enumerated as "/dev/ttyACM0" and "/dev/ttyACM1"
-- On Linux, one has to change the access right for those two serial ports as shown below.
-- Then use any serial port communication program, like putty, to connect to those two serial ports
+	**Windows** 
 
-\imageStyle{usb_cdc_echo_linux_ttyacm0.png,width:30%}
-\image html usb_cdc_echo_linux_ttyacm0.png Using putty to connect to port 1
+        dfu-util -a 0 -i 0 -D test_data.txt
 
-\imageStyle{usb_cdc_echo_linux_ttyacm1.png,width:30%}
-\image html usb_cdc_echo_linux_ttyacm1.png Using putty to connect to port 2
 
-- Type in any alphabetic characters, the lower case of the input will be displayed on one COM port and the upper case of the input will be displayed on the other COM port
+	**Linux** 
 
-\imageStyle{usb_cdc_echo_linux_lower.png,width:30%}
-\image html usb_cdc_echo_linux_lower.png Lower Case Input Echo-ed
+		sudo dfu-util -a 0 -i 0 -D test_data.txt
 
-\imageStyle{usb_cdc_echo_linux_upper.png,width:30%}
-\image html usb_cdc_echo_linux_upper.png Upper Case Input Echo-ed
+- The *test_data.txt* file contains a string data that is to be transfered. 
+- Once the DFU transfer is completed following will be displayed on the terminal. 
+
+
+\imageStyle{dfu_cmd.png,width:50%}
+\image html dfu_cmd.png DFU Download command successful
+
+- Open UART0 serial port to observe the content of `test_data.txt` file displayed on same serial port. 
+
+\imageStyle{dfu_download.png,width:50%}
+\image html dfu_download.png Content of received file displayed on serial port. 
+
+#### DFU Upload 
+
+- Run the following command to read the data from DFU device. 
+
+	**Windows** 
+
+		dfu-util -a 0 -i 0 -U upload_data.txt 
+
+	**Linux** 
+
+		sudo dfu-util -a 0 -i 0 -U upload_data.txt
+
+- Once the DFU Upload transaction is successful , open `upload_data.txt` file to see the contents 
+
+\imageStyle{upload_data.png,width:30%}
+\image html upload_data.png Data sent by DFU device to DFU host. 
 
 # See Also
 
