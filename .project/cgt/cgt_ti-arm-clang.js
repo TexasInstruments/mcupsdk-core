@@ -106,7 +106,7 @@ const cgt_instrumentation = {
     },
 };
 
-function getCgtOptions(cpu)
+function getCgtOptions(cpu, device)
 {
     let cgtOptions = {};
 

@@ -10,7 +10,7 @@ function genExampleFilesDevice(device) {
     for(example of example_file_list) {
         property = require(`../${example}`).getComponentProperty(device);
         for(buildOption of property.buildOptionCombos) {
-            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu);
+            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
             let project = [];
             let outPath = common.path.makeExampleOutPath(property.dirPath, buildOption);

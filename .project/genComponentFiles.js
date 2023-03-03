@@ -8,7 +8,7 @@ function genComponentFilesDevice(device) {
     for(component of file_list) {
         property = require(`../${component}`).getComponentProperty(device);
         for(buildOption of property.buildOptionCombos) {
-            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu);
+            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
             let project = [];
 

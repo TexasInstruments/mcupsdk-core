@@ -183,7 +183,7 @@ function genMakefileLibrary(component_file_list, device) {
     for(component of component_file_list) {
         property = require(`../${component}`).getComponentProperty(device);
         for(buildOption of property.buildOptionCombos) {
-            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu);
+            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
             build_property = require(`../${component}`).getComponentBuildProperty(buildOption);
 
@@ -199,7 +199,7 @@ function genMakefileLibrary(component_file_list, device) {
                 sdkPath: "MCU_PLUS_SDK_PATH",
                 relPath: common.path.relative(project.dirPath, "."),
                 project: project,
-                cgtOptions: require(`./cgt/cgt_${project.cgt}`).getCgtOptions(buildOption.cpu),
+                cgtOptions: require(`./cgt/cgt_${project.cgt}`).getCgtOptions(buildOption.cpu, device),
             };
 
             let tag="";
@@ -236,7 +236,7 @@ function genMakefileExample(example_file_list, device) {
     for(example of example_file_list) {
         property = require(`../${example}`).getComponentProperty(device);
         for(buildOption of property.buildOptionCombos) {
-            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu);
+            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
             let project = [];
             let makefileOutPath = common.path.makeExampleOutPath(property.dirPath, buildOption);
@@ -261,7 +261,7 @@ function genMakefileExample(example_file_list, device) {
                 sdkPath: "MCU_PLUS_SDK_PATH",
                 relPath: common.path.relative(project.dirPath, "."),
                 project: project,
-                cgtOptions: require(`./cgt/cgt_${project.cgt}`).getCgtOptions(buildOption.cpu),
+                cgtOptions: require(`./cgt/cgt_${project.cgt}`).getCgtOptions(buildOption.cpu, device),
                 syscfg: {
                     device: require(`./device/project_${device}.js`).getSysCfgDevice(buildOption.board),
                     cpu: require(`./device/project_${device}.js`).getSysCfgCpu(buildOption.cpu),
@@ -313,7 +313,7 @@ function genMakefileProjectSpec(example_file_list, device) {
             continue;
 
         for(buildOption of property.buildOptionCombos) {
-            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu);
+            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
             let project = [];
             let makefileOutPath = common.path.makeExampleOutPath(property.dirPath, buildOption);

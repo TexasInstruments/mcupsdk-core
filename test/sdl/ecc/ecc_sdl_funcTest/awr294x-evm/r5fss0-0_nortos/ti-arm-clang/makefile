@@ -69,6 +69,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AWR294X \
+	-DR5F_INPUTS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

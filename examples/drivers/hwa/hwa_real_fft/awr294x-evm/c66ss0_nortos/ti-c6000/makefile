@@ -60,15 +60,18 @@ DEFINES_common := \
 
 CFLAGS_common := \
 	-mv6600 \
-	--abi=eabi \
+	--c99 \
 	-q \
-	-mi10 \
 	-mo \
 	-pden \
-	-pds=238 \
-	-pds=880 \
-	-pds1110 \
 	--emit_warnings_as_errors \
+	--mem_model:const=data \
+	--mem_model:data=far_aggregates \
+	--remove_hooks_when_inlining \
+	-on2 \
+	--disable_push_pop \
+	--fp_mode=relaxed \
+	--assume_control_regs_read \
 
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
@@ -76,7 +79,7 @@ CFLAGS_debug := \
 CFLAGS_release := \
 	--program_level_compile \
 	-o3 \
-	-mf3 \
+	-mf2 \
 
 LNK_FILES_common = \
 	linker.cmd \
@@ -96,7 +99,7 @@ LIBS_common = \
 LFLAGS_common = \
 	--warn_sections \
 	--emit_warnings_as_errors \
-	--rom_model \
+	--ram_model \
 	-x \
 
 

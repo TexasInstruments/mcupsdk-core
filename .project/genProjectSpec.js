@@ -217,7 +217,7 @@ function genProjectSpecExample(device) {
             continue;
 
         for(buildOption of property.buildOptionCombos) {
-            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu);
+            let commonCgtOptions = require(`./cgt/cgt_${buildOption.cgt}`).getCgtOptions(buildOption.cpu, device);
             let common_build_property = require(`./device/project_${device}`).getProperty();
             let project = [];
             let projectSpecOutPath = common.path.makeExampleOutPath(property.dirPath, buildOption);
@@ -241,7 +241,7 @@ function genProjectSpecExample(device) {
                 relPath: common.path.relative(project.dirPath, "."),
                 project: project,
                 utils: utils,
-                cgtOptions: require(`./cgt/cgt_${project.cgt}`).getCgtOptions(buildOption.cpu),
+                cgtOptions: require(`./cgt/cgt_${project.cgt}`).getCgtOptions(buildOption.cpu, device),
                 linuxFwName: require(`./device/project_${device}`).getLinuxFwName(buildOption.cpu),
                 syscfg: {
                     device: require(`./device/project_${device}.js`).getSysCfgDevice(buildOption.board),

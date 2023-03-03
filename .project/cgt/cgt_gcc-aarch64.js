@@ -70,7 +70,7 @@ const cgt_common = {
     }
 };
 
-function getCgtOptions(cpu)
+function getCgtOptions(cpu, device)
 {
     let cgtOptions = {};
 

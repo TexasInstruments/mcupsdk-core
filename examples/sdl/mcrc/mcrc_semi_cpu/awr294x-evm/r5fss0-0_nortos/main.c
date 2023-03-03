@@ -36,7 +36,7 @@
 
 void sdl_mcrc_semicpu_test_app(void *args);
 
-int main()
+int main(void)
 {
     System_init();
     Board_init();
