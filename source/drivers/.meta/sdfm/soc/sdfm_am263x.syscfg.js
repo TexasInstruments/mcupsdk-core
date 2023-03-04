@@ -15,8 +15,8 @@ let SDFM_FilterNumber = [
 let SDFM_FilterType = [
 	{ name: "SDFM_FILTER_SINC_FAST", displayName: "Digital filter with SincFast structure." },
 	{ name: "SDFM_FILTER_SINC_1", displayName: "Digital filter with Sinc1 structure" },
-	{ name: "SDFM_FILTER_SINC_2", displayName: "Digital filter with Sinc3 structure." },
-	{ name: "SDFM_FILTER_SINC_3", displayName: "Digital filter with Sinc4 structure." },
+	{ name: "SDFM_FILTER_SINC_2", displayName: "Digital filter with Sinc2 structure." },
+	{ name: "SDFM_FILTER_SINC_3", displayName: "Digital filter with Sinc3 structure." },
 ]
 let SDFM_ModulatorClockMode = [
 	{ name: "SDFM_MODULATOR_CLK_EQUAL_DATA_RATE", displayName: "Modulator clock is identical to the data rate" },
@@ -165,6 +165,9 @@ const staticConfig = [
         ],
     },
 ];
+
+let numberOfSDFMs = 2;
+
 function getStaticConfigArr() {
     return staticConfig;
 }
@@ -187,4 +190,5 @@ exports = {
 	SDFM_COMPEVT_FILTER_LOCK_M: SDFM_COMPEVT_FILTER_LOCK_M,
     getInterfaceName,
     getStaticConfigArr,
+    numberOfSDFMs
 }

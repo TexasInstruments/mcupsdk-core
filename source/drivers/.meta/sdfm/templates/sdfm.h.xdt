@@ -1,4 +1,10 @@
 % let module = system.modules['/drivers/sdfm/sdfm'];
+% let common   = system.getScript("/common");
+/*
+ * SDFM
+ */
+#include <drivers/sdfm.h>
+#include <drivers/soc.h>
 %if (module != null)
 %{
     % for(let i = 0; i < module.$instances.length; i++) {
@@ -6,5 +12,6 @@
         % let config = module.getInstanceConfig(instance);
 #define `instance.$name`_BASE_ADDR (`config.baseAddr`)
     % }
+#define CONFIG_SDFM_NUM_INSTANCES (`module.$instances.length`U)
 %}
 %
