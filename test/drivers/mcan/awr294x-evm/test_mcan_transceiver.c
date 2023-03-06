@@ -33,99 +33,165 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
+#include <string.h>
+#include <stdio.h>
 #include <drivers/gpio.h>
 #include <drivers/mibspi.h>
 #include <drivers/edma.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include "ti_drivers_open_close.h"
+#include <drivers/pinmux.h>
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
-/* size used for the test*/
-#define APP_MSGSIZE                 4   
+/* PMIC configuration message size used using MIBSPIB interface */
+#define APP_MSGSIZE                 (3U)
+
+/* PMIC Register LOCK offset */
+#define PMIC_REG_LOCK_OFFSET        (0xAU)
+/* PMIC Register Lock value: Other then 9B value */
+#define PMIC_REG_LOCK_VALUE         (0x0U)
+/* PMIC Register unlock value */
+#define PMIC_REG_UNLOCK_VALUE       (0x9BU)
+/* PMIC Register CRC configuration offset */
+#define PMIC_REG_CRC_OFFSET         (0x62U)
+/* PMIC Register CRC configuration value */
+#define PMIC_REG_CRC_VALUE          (0x0U)
+/* PMIC Register Interface configuration offset */
+#define PMIC_REG_INTF_OFFSET        (0x1BU)
+/* PMIC Interface configuration NINT polarity value */
+#define PMIC_REG_INTF_NINT_VALUE    (0x2U)
 
 static uint8_t BoardDiag_mcanReadPmicReg(MIBSPI_Handle handle, uint8_t regOffset)
 {
-    uint8_t txBuffer[APP_MSGSIZE];
-    uint8_t rxBuffer[APP_MSGSIZE];
-    uint8_t regValue;
-    MIBSPI_Transaction spiTransaction;
+    uint8_t tx[APP_MSGSIZE];
+    uint8_t rx[APP_MSGSIZE];
+    MIBSPI_Transaction transaction;
+
+    memset(&transaction, 0, sizeof(transaction));
 
     /* Configure Data Transfer */
-    spiTransaction.count = APP_MSGSIZE-1;
-    spiTransaction.txBuf = txBuffer;
-    spiTransaction.rxBuf = rxBuffer;
-    spiTransaction.peripheralIndex = 0;
-    txBuffer[0] = regOffset;
-    // Indicate PMIC a read sequence */
-    txBuffer[1] = 0x10;
-    txBuffer[2] = 0;
-    /* Start Data Transfer */
-    MIBSPI_transfer(handle, &spiTransaction);
-    
-    /*PMIC register value */
-    regValue = rxBuffer[2];
+    transaction.count = APP_MSGSIZE;
+    transaction.txBuf = tx;
+    transaction.rxBuf = rx;
+    transaction.peripheralIndex = 0;
+    /* Single read transmissions consists of 24bit:
+     * Bits 0-7  : Register Address
+     * Bits 8-10 : Page address for the register
+     * Bit  11   : For Read, value should be 1
+     * Bits 12-15: Reserved
+     * Bits 16-23: Value Read from the PMIC
+     */
+    tx[0] = regOffset;
+    tx[1] = 0x10;
+    tx[2] = 0;
 
-    return regValue;
+    CacheP_wbInv((void *) tx, APP_MSGSIZE, CacheP_TYPE_ALL);
+
+    /* Start Data Transfer */
+    MIBSPI_transfer(handle, &transaction);
+    /* Invalidate the receive buffer */
+    CacheP_inv((void *) rx, APP_MSGSIZE, CacheP_TYPE_ALL);
+
+    return rx[2];
+
 }
 
 static void BoardDiag_mcanWritePmicReg(MIBSPI_Handle handle, uint8_t regAddr, uint8_t val)
 {
-    uint8_t txBuffer[APP_MSGSIZE];
-    MIBSPI_Transaction spiTransaction;
+
+    uint8_t tx[APP_MSGSIZE];
+    MIBSPI_Transaction transaction;
+
+    memset(&transaction, 0, sizeof(transaction));
 
     /* Configure Data Transfer */
-    spiTransaction.count = APP_MSGSIZE-1;
-    spiTransaction.txBuf = txBuffer;
-    spiTransaction.rxBuf = NULL;
-    spiTransaction.peripheralIndex = 0;
-    txBuffer[0] = regAddr;
-    /* Indicate PMIC a write sequence */
-    txBuffer[1] = 0;
-    /* Write data */
-    txBuffer[2] = val;
+    transaction.count = APP_MSGSIZE;
+    transaction.txBuf = tx;
+    transaction.rxBuf = NULL;
+    transaction.peripheralIndex = 0;
+    /* Single write transmissions consists of 24bit:
+     * Bits 0-7  : Register Address
+     * Bits 8-10 : Page address for the register
+     * Bit  11   : For Write, value should be 0
+     * Bits 12-15: Reserved
+     * Bits 16-23: Value to be written to the register
+     */
+    tx[0] = regAddr;
+    tx[1] = 0;
+    tx[2] = val;
 
-    CacheP_wbInv((void *) txBuffer, 3,CacheP_TYPE_ALLD);
+    CacheP_wbInv((void *) tx, APP_MSGSIZE, CacheP_TYPE_ALL);
     /* Start Data Transfer */
-    MIBSPI_transfer(handle, &spiTransaction);
+    MIBSPI_transfer(handle, &transaction);
 }
 
 int32_t BoardDiag_mcanConfigSTB(MIBSPI_Handle handle)
 {
+    int32_t status = SystemP_SUCCESS;
     uint8_t regValue;
     uint8_t regAddr;
-    int32_t status = SystemP_SUCCESS;
 
-    /* Read the PMIC register value */
-    regValue = BoardDiag_mcanReadPmicReg(handle, 0xA);
+    /* Unlock the registers */
+    regAddr = PMIC_REG_LOCK_OFFSET;
+    regValue = PMIC_REG_UNLOCK_VALUE;
+    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
+    ClockP_usleep(10000);
 
-    regAddr = 0xA;
-    regValue = 0x9B;
-    ClockP_sleep(4);
-    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
-    
-    regAddr = 0x62;
-    regValue = 0;
-    ClockP_sleep(4);
-    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
-    
-    regAddr = 0x62;
+    /* Read Register Lock Status
+     * 1: Registers are locked and configuration registers are read only
+     * 0: Registers are unlocked and configuration registers can be written
+     */
+    regAddr = PMIC_REG_LOCK_OFFSET;
     regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
-    
-    regAddr = 0x1B;
-    regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
-    
-    regAddr  = 0x1B;
-    regValue = regValue | 0x2;
-    ClockP_sleep(4);
-    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
-    
-    regAddr = 0x1B;
-    regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
-    
-    regAddr = 0x1B;
-    regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
-    if(regValue  == 0)
+
+    /* Check for unlock register successful */
+    if(regValue != 0)
     {
-        status = SystemP_FAILURE;
+        DebugP_logError("Register unlock failed and check the mibspi bitrate!!\n");
+        DebugP_assert(FALSE);
+    }
+
+    /* Configure the CRC */
+    regAddr = PMIC_REG_CRC_OFFSET;
+    regValue = PMIC_REG_CRC_VALUE;
+    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
+    ClockP_usleep(10000);
+
+    /* Read Interface Config register */
+    regAddr = PMIC_REG_INTF_OFFSET;
+    regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
+
+    /* Configure nINT active high */
+    regAddr  = PMIC_REG_INTF_OFFSET;
+    regValue = regValue | PMIC_REG_INTF_NINT_VALUE;
+    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
+    ClockP_usleep(10000);
+
+    /* Read back nINT bit value and validate */
+    regAddr = PMIC_REG_INTF_OFFSET;
+    regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
+
+    if((regValue & PMIC_REG_INTF_NINT_VALUE) != PMIC_REG_INTF_NINT_VALUE)
+    {
+       status = SystemP_FAILURE; ;
+    }
+
+     /* Lock the registers */
+    regAddr = PMIC_REG_LOCK_OFFSET;
+    regValue = PMIC_REG_LOCK_VALUE;
+    BoardDiag_mcanWritePmicReg(handle, regAddr, regValue);
+    ClockP_usleep(10000);
+
+    /* Read the Lock Status register */
+    regAddr = PMIC_REG_LOCK_OFFSET;
+    regValue = BoardDiag_mcanReadPmicReg(handle, regAddr);
+
+    /* Check for lock register successful */
+    if(regValue != 1)
+    {
+        DebugP_logError("Register lock failed !!\n");
+        DebugP_assert(FALSE);
     }
 
     return status;
@@ -139,7 +205,7 @@ void test_mcanEnableTransceiver(void)
     retVal = BoardDiag_mcanConfigSTB(gMibspiHandle[CONFIG_MIBSPI0]);
     if(retVal != 0)
     {
-        DebugP_logError("CAN STB Pin Configurations Failed!!\n");
-        DebugP_assert(FALSE);
+       DebugP_logError("CAN STB Pin Configurations Failed!!\n");
+       DebugP_assert(FALSE);
     }
 }
