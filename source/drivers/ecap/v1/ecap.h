@@ -1216,23 +1216,23 @@ static inline void ECAP_reArm(uint32_t base)
 //!
 //! This function sets and enables eCAP interrupt source. The following are
 //! valid interrupt sources.
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_1 - Event 1 generates interrupt
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_2 - Event 2 generates interrupt
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_3 - Event 3 generates interrupt
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_4 - Event 4 generates interrupt
-//!  - ECAP_ISR_SOURCE_COUNTER_OVERFLOW - Counter overflow generates interrupt
-//!  - ECAP_ISR_SOURCE_COUNTER_PERIOD   - Counter equal period generates
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_1 - Enables Event 1 generating interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_2 - Enables Event 2 generating interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_3 - Enables Event 3 generating interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_4 - Enables Event 4 generating interrupt
+//!  - ECAP_ISR_SOURCE_COUNTER_OVERFLOW - Enables Counter overflow generating interrupt
+//!  - ECAP_ISR_SOURCE_COUNTER_PERIOD   - Enables Counter equal period generating
 //!                                       interrupt
-//!  - ECAP_ISR_SOURCE_COUNTER_COMPARE  - Counter equal compare generates
+//!  - ECAP_ISR_SOURCE_COUNTER_COMPARE  - Enables Counter equal compare generating
 //!                                       interrupt
-//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Monitoring unit 1 error event 1
-//!                                         generates interrupt
-//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Monitoring unit 1 error event 2
-//!                                         generates interrupt
-//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Monitoring unit 2 error event 1
-//!                                         generates interrupt
-//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Monitoring unit 2 error event 2
-//!                                         generates interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Enables Monitoring unit 1 error event 1
+//!                                         generating interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Enables Monitoring unit 1 error event 2
+//!                                         generating interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Enables Monitoring unit 2 error event 1
+//!                                         generating interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Enables Monitoring unit 2 error event 2
+//!                                         generating interrupt
 //!
 //! \return None.
 //
@@ -1268,15 +1268,23 @@ static inline void ECAP_enableInterrupt(uint32_t base,
 //!
 //! This function clears and disables eCAP interrupt source. The following are
 //! valid interrupt sources.
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_1   - Event 1 generates interrupt
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_2   - Event 2 generates interrupt
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_3   - Event 3 generates interrupt
-//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_4   - Event 4 generates interrupt
-//!  - ECAP_ISR_SOURCE_COUNTER_OVERFLOW  - Counter overflow generates interrupt
-//!  - ECAP_ISR_SOURCE_COUNTER_PERIOD    - Counter equal period generates
-//!                                        interrupt
-//!  - ECAP_ISR_SOURCE_COUNTER_COMPARE   - Counter equal compare generates
-//!                                        interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_1 - Disables Event 1 generating interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_2 - Disables Event 2 generating interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_3 - Disables Event 3 generating interrupt
+//!  - ECAP_ISR_SOURCE_CAPTURE_EVENT_4 - Disables Event 4 generating interrupt
+//!  - ECAP_ISR_SOURCE_COUNTER_OVERFLOW - Disables Counter overflow generating interrupt
+//!  - ECAP_ISR_SOURCE_COUNTER_PERIOD   - Disables Counter equal period generating
+//!                                       interrupt
+//!  - ECAP_ISR_SOURCE_COUNTER_COMPARE  - Disables Counter equal compare generating
+//!                                       interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 - Disables Monitoring unit 1 error event 1
+//!                                         generating interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 - Disables Monitoring unit 1 error event 2
+//!                                         generating interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 - Disables Monitoring unit 2 error event 1
+//!                                         generating interrupt
+//!  - ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2 - Disables Monitoring unit 2 error event 2
+//!                                         generating interrupt
 //!
 //! \return None.
 //
@@ -1290,7 +1298,11 @@ static inline void ECAP_disableInterrupt(uint32_t base,
                    ECAP_ISR_SOURCE_CAPTURE_EVENT_4 |
                    ECAP_ISR_SOURCE_COUNTER_OVERFLOW |
                    ECAP_ISR_SOURCE_COUNTER_PERIOD |
-                   ECAP_ISR_SOURCE_COUNTER_COMPARE)) == 0U);
+                   ECAP_ISR_SOURCE_COUNTER_COMPARE |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+                   ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2)) == 0U);
 
     //
     // Clear bits in ECEINT register
