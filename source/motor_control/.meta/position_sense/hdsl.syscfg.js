@@ -1,13 +1,30 @@
 
 let common = system.getScript("/common");
 let hdsl_endat_pins = system.getScript("/motor_control/position_sense/hdsl_endat_pins.js");
-
+let device = common.getDeviceName();
 let hdsl_module_name = "/motor_control/position_sense/hdsl";
+
+function onValidate(inst, validation) {
+
+    for (let instance_index in inst.$module.$instances)
+    {
+        /* validation for booster pack */
+        if((device!="am243x-lp")&&(instance.Booster_Pack))
+        {
+            validation.logError("Select only when using Booster Pack with LP",inst,"Booster_Pack");
+        }
+    }
+
+}
 
 let hdsl_module = {
 
     displayName: "HDSL Position Encoder",
     templates: {
+        "/drivers/system/system_config.h.xdt": {
+            driver_config: "/motor_control/position_sense/templates/hdsl_templates.h.xdt",
+            moduleName: hdsl_module_name,
+        },
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: hdsl_module_name,
         },
@@ -42,6 +59,12 @@ let hdsl_module = {
 
             ],
         },
+        {
+            name: "Booster_Pack",
+            displayName: "Booster Pack",
+            description: "Only for Booster Pack",
+            default: false,
+        },
     ],
     moduleStatic: {
         modules: function(inst) {
@@ -70,6 +93,17 @@ function sharedModuleInstances(instance) {
             iepSyncMode: true,
         },
     });
+    if(device == "am243x-lp")
+    {
+       modInstances.push({
+            name: "ENC1_EN",
+            displayName: "Booster Pack Ch0 Enable Pin",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT"
+            },
+        });
+    }
 
     return (modInstances);
 }

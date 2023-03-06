@@ -33,6 +33,7 @@ Tamagawa Multi Channel                                                          
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
 EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
+Boosterpack support: EnDat, HDSL and Tamagawa                                                   | Position Sense
 Mbed-TLS library support (software cryptography)                                                | Networking
 \endcond
 
@@ -214,9 +215,9 @@ HSR-PRP FWHAL                         | R5F            | YES               | Fre
 
 Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                                             | Key features not tested
 ----------------------------|----------------|-------------------|-------------------|-----------------------------------------------------------------------------------------------------------------|------------------------
-Position Sense HDSL         | R5F            | YES               | FreeRTOS, NORTOS  | Freerun mode(300MHz,225MHz), Sync mode(225MHz), Short Message Read & Write, Long Message Read & Write           |  Long cables
-Position Sense EnDat        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode for single channel, Load share mode, Recovery Time for 2.2 command set              |  16 MHz Baud Rate Different cable lengths, Continuous clock mode for multi channel
-Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support            |  -
+Position Sense HDSL         | R5F            | YES               | FreeRTOS, NORTOS  | Freerun mode(300MHz,225MHz), Sync mode(225MHz), Short Message Read & Write, Long Message Read & Write, Boosterpack with AM243x-LP           |  Long cables
+Position Sense EnDat        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode for single channel, Load share mode, Recovery Time for 2.2 command set, Boosterpack with AM243x-LP              |  16 MHz Baud Rate Different cable lengths, Continuous clock mode for multi channel
+Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support, Boosterpack with AM243x-LP            |  -
 
 ### Networking
 
@@ -750,7 +751,7 @@ earlier SDKs.
     <td> McASP
     <td> MACRO MCASP_OPMODE_MASTER, MCASP_OPMODE_SLAVE
     <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller**, for example..\n
-    MCASP_OPMODE_MASTER->MCASP_OPMODE_CONTROLLER         
+    MCASP_OPMODE_MASTER->MCASP_OPMODE_CONTROLLER
     <td> Updated to use the inclusive naming
 </tr>
 <tr>
@@ -762,7 +763,7 @@ earlier SDKs.
     Structure MIBSPI_Transaction member slaveIndex\n
     Structure MIBSPI_MasterModeParams
     <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **peripheral**, for example..\n
-    MIBSPI_SlaveProfile->MIBSPI_PeripheralProfile         
+    MIBSPI_SlaveProfile->MIBSPI_PeripheralProfile
     <td> Updated to use the inclusive naming
 </tr>
 

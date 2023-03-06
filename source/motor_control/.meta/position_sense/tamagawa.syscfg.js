@@ -19,6 +19,12 @@ function onValidate(inst, validation) {
             validation.logError(
                 "On AM243x-LP, only Channel 0 is supported",inst,"channel_0"
         );
+
+        /* validation for booster pack */
+        if((device!="am243x-lp")&&(instance.Booster_Pack))
+        {
+            validation.logError("Select only when using Booster Pack with LP",inst,"Booster_Pack");
+        }
     }
 }
 
@@ -85,6 +91,12 @@ let tamagawa_module = {
                 },
             ],
         },
+        {
+            name: "Booster_Pack",
+            displayName: "Booster Pack",
+            description: "Only for Booster Pack",
+            default: false,
+        },
     ],
     moduleStatic: {
         modules: function(inst) {
@@ -113,7 +125,17 @@ function sharedModuleInstances(instance) {
             coreClk: 200*1000000,
         },
     });
-
+    if(device == "am243x-lp")
+    {
+       modInstances.push({
+            name: "ENC1_EN",
+            displayName: "Booster Pack Ch0 Enable Pin",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT"
+            },
+        });
+    }
     return (modInstances);
 }
 

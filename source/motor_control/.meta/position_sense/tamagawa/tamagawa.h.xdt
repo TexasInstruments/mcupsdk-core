@@ -31,6 +31,7 @@
 #define `instance.$name`_CHANNEL1         (`instance.channel_1 & 1`)
 #define `instance.$name`_CHANNEL2         (`instance.channel_2 & 1`)
 #define `instance.$name`_BAUDRATE         (`instance.baudrate`)
+#define `instance.$name`_BOOSTER_PACK     (`instance.Booster_Pack & 1`)
 #define PRUICSS_PRUx                      (`sliceVal`)
 #define PRUICSSx                          (`icssValue`)
 % }

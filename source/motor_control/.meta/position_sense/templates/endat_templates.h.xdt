@@ -42,6 +42,7 @@
 #define `instance.$name`_CHANNEL2         `instance.Channel_2 & 1`
 #define `instance.$name`_load_share_mode  `instance.Multi_Channel_Load_Share & 1`
 #define  `instance.$name`_MODE             `Mode`
+#define `instance.$name`_BOOSTER_PACK     `instance.Booster_Pack & 1`
 #define  PRU_ICSSGx_PRU_SLICE            `Slice`
 % }
 

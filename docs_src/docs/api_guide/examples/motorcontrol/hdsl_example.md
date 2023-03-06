@@ -43,7 +43,7 @@ It then presents the user with menu options, based on the option selected, appli
 
 </table>
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
 
  Parameter      | Value
  ---------------|-----------
@@ -52,6 +52,19 @@ It then presents the user with menu options, based on the option selected, appli
  PRU            | PRU1
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/motorcontrol/hdsl_example
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ ICSSG          | ICSSG0
+ PRU            | PRU1
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/motorcontrol/hdsl_example
 
 \endcond
@@ -75,6 +88,15 @@ Other than the basic EVM setup mentioned in \ref EVM_SETUP_PAGE, below additiona
 		- Schematics are shared in the MCU+SDK package. For more design details of the transceiver card, please contact TI via E2E/FAE.
 		- \htmllink{../am64x_am243x/HDSL_AM64xE1_Schematics.pdf, HDSL Transceiver Card Schematics} document.
 
+\cond SOC_AM243X
+### Hardware Prerequisities for Booster Pack
+
+- HDSL encoder
+- AM243x-LP board
+- BP-AM2BLDCSERVO
+\endcond
+
+
 ## Hardware Setup(Using TIDA-00179, TIDEP-01015 and Interface board)
 
 \imageStyle{HDSL_Connections.png,width:40%}
@@ -85,6 +107,80 @@ Other than the basic EVM setup mentioned in \ref EVM_SETUP_PAGE, below additiona
 \imageStyle{HDSL_AM64xE1.png,width:60%}
 \image html HDSL_AM64xE1.png "Hardware Setup"
 
+\cond SOC_AM243X
+## Hardware Setup(Using Booster Pack & AM243x-LP)
+\imageStyle{HDSL_Booster_Pack.png,width:40%}
+\image html HDSL_Booster_Pack.png  "Hardware Setup of Booster Pack + LP for HDSL"
+
+#### Booster Pack Jumper Configuration
+<table>
+<tr>
+    <th>Designator</th>
+    <th>ON/OFF</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td>J11</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE select</td>
+</tr>
+<tr>
+    <td>J13</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE select</td>
+</tr>
+<tr>
+    <td>J17</td>
+    <td>Pin 1-2 Connected</td>
+    <td>SDFM Clock Feedback Select</td>
+</tr>
+<tr>
+    <td>J18/J19</td>
+    <td>J18 OFF & J19 ON</td>
+    <td>Axis 1: Encoder/Resolver Voltage Select</td>
+</tr>
+<tr>
+    <td>J20/J21</td>
+    <td>J20 ON & J21 OFF</td>
+    <td>Axis 2: Encoder/Resolver Voltage Select</td>
+</tr>
+<tr>
+    <td>J22</td>
+    <td>OFF</td>
+    <td>Axis 1: Manchester Encoding Select</td>
+</tr>
+<tr>
+    <td>J23</td>
+    <td>OFF</td>
+    <td>Axis 2: Manchester Encoding Select</td>
+</tr>
+<tr>
+    <td>J24</td>
+    <td>ON</td>
+    <td>Axis 1: RS485/DSL MUX</td>
+</tr>
+<tr>
+    <td>J25</td>
+    <td>OFF</td>
+    <td>Axis 2: RS485/DSL MUX</td>
+</tr>
+<tr>
+    <td>J26</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE Select</td>
+</tr>
+<tr>
+    <td>J27</td>
+    <td>ON</td>
+    <td>3WIRE/SDFM MUX</td>
+</tr>
+<tr>
+    <td>J28</td>
+    <td>OFF</td>
+    <td>3WIRE MUX</td>
+</tr>
+</table>
+\endcond
 ## Build, load and run
 
 - **When using CCS projects to build**, import the CCS project and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).

@@ -2,6 +2,7 @@
 let common = system.getScript("/common");
 let hdsl_endat_pins = system.getScript("/motor_control/position_sense/hdsl_endat_pins.js");
 let endat_module_name = "/motor_control/position_sense/endat";
+let device = common.getDeviceName();
 function onValidate(inst, validation) {
 
     for (let instance_index in inst.$module.$instances)
@@ -10,6 +11,11 @@ function onValidate(inst, validation) {
         /* select atleast one cahnnel */
         if ((!instance.Channel_0)&&(!instance.Channel_2)&&(!instance.Channel_1))
             validation.logError("Select atleast one channel",inst,"Channel_0");
+        /* validation for booster pack */
+        if((device!="am243x-lp")&&(instance.Booster_Pack))
+        {
+            validation.logError("Select only when using Booster Pack with LP",inst,"Booster_Pack");
+        }
     }
 
 }
@@ -67,7 +73,12 @@ let endat_module = {
             description: "Selected Channels have different make",
             default: false,
         },
-
+        {
+            name: "Booster_Pack",
+            displayName: "Booster Pack",
+            description: "Only for Booster Pack",
+            default: false,
+        },
 
     ],
     moduleStatic: {
@@ -98,6 +109,18 @@ function sharedModuleInstances(instance) {
 
         },
     });
+    if(device == "am243x-lp")
+    {
+       modInstances.push({
+            name: "ENC1_EN",
+            displayName: "Booster Pack Ch0 Enable Pin",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT"
+            },
+        });
+    }
+
 
     return (modInstances);
 }

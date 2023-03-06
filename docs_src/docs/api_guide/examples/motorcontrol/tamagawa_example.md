@@ -90,6 +90,15 @@ Other than the basic EVM setup mentioned in \ref EVM_SETUP_PAGE, additional hard
 -  TIDEP-01015 3 Axis board
 -  Interface card connecting EVM and TIDEP-01015 3 Axis board
 
+\cond SOC_AM243X
+### Hardware Prerequisities for Booster Pack
+
+- Tamagawa encoder
+- AM243x-LP board
+- BP-AM2BLDCSERVO
+\endcond
+
+
 ## Hardware Setup
 
 \imageStyle{Tamagawa_setup.jpg,width:60%}
@@ -102,6 +111,80 @@ Other than the basic EVM setup mentioned in \ref EVM_SETUP_PAGE, additional hard
 
 \imageStyle{Tamagawa_Setup_am243x_lp.jpeg,width:60%}
 \image html Tamagawa_Setup_am243x_lp.jpeg "Hardware Setup for 1 channel on AM243x Launchpad"
+
+
+## Hardware Setup(Using Booster Pack & AM243x-LP)
+\imageStyle{Tamagawa_Booster_Pack.png,width:40%}
+\image html Tamagawa_Booster_Pack.png  "Hardware Setup of Booster Pack + LP for Tamagawa"
+
+#### Booster Pack Jumper Configuration
+<table>
+<tr>
+    <th>Designator</th>
+    <th>ON/OFF</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td>J11</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE select</td>
+</tr>
+<tr>
+    <td>J13</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE select</td>
+</tr>
+<tr>
+    <td>J17</td>
+    <td>Pin 1-2 Connected</td>
+    <td>SDFM Clock Feedback Select</td>
+</tr>
+<tr>
+    <td>J18/J19</td>
+    <td>J18 OFF & J19 ON</td>
+    <td>Axis 1: Encoder/Resolver Voltage Select</td>
+</tr>
+<tr>
+    <td>J20/J21</td>
+    <td>J20 ON & J21 OFF</td>
+    <td>Axis 2: Encoder/Resolver Voltage Select</td>
+</tr>
+<tr>
+    <td>J22</td>
+    <td>OFF</td>
+    <td>Axis 1: Manchester Encoding Select</td>
+</tr>
+<tr>
+    <td>J23</td>
+    <td>OFF</td>
+    <td>Axis 2: Manchester Encoding Select</td>
+</tr>
+<tr>
+    <td>J24</td>
+    <td>OFF</td>
+    <td>Axis 1: RS485/DSL MUX</td>
+</tr>
+<tr>
+    <td>J25</td>
+    <td>OFF</td>
+    <td>Axis 2: RS485/DSL MUX</td>
+</tr>
+<tr>
+    <td>J26</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE Select</td>
+</tr>
+<tr>
+    <td>J27</td>
+    <td>ON</td>
+    <td>3WIRE/SDFM MUX</td>
+</tr>
+<tr>
+    <td>J28</td>
+    <td>OFF</td>
+    <td>3WIRE MUX</td>
+</tr>
+</table>
 
 \endcond
 

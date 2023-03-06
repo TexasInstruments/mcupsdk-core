@@ -4,7 +4,7 @@ let device = "am243x";
 
 const files = {
     common: [
-        "hdsl_diagnostic.c",        
+        "hdsl_diagnostic.c",
         "main.c",
     ],
 };
@@ -53,7 +53,7 @@ const lnkfiles = {
 
 const projectspec_files = {
     common: [
-        "../../../hdsl_diagnostic.h",        
+        "../../../hdsl_diagnostic.h",
 
     ]
 }
@@ -76,6 +76,7 @@ const templates_freertos_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
 ];
 
 function getComponentProperty() {

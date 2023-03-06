@@ -298,7 +298,11 @@ void tamagawa_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-
+/*C16 pin High for Enabling ch0 in booster pack */
+#if (CONFIG_TAMAGAWA0_BOOSTER_PACK)
+    GPIO_setDirMode(ENC1_EN_BASE_ADDR, ENC1_EN_PIN, ENC1_EN_DIR);
+    GPIO_pinWriteHigh(ENC1_EN_BASE_ADDR, ENC1_EN_PIN);
+#endif
     void *pruicss_cfg;
     uint32_t slice_value = 1;
     uint32_t selected_ch;

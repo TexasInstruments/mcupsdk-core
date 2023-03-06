@@ -80,7 +80,7 @@ Following section describes the Example implementation of EnDat on ARM(R5F).
 
 # Supported Combinations {#EXAMPLES_MOTORCONTROL_ENDAT_COMBOS}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X
 
  Parameter      | Value
  ---------------|-----------
@@ -93,6 +93,18 @@ Following section describes the Example implementation of EnDat on ARM(R5F).
 
 \endcond
 
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ ICSSG          | ICSSG0
+ PRU            | PRU1
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/motorcontrol/endat_example
+
+\endcond
 
 # Steps to Run the Example
 
@@ -104,11 +116,93 @@ Other than the basic EVM setup mentioned in \ref EVM_SETUP_PAGE, below additiona
 - TIDEP-01015 3 Axis board
 - Interface card connecting EVM and TIDEP-01015 3 Axis board
 
+\cond SOC_AM243X
+### Hardware Prerequisities for Booster Pack
+
+- EnDat encoder
+- AM243x-LP board
+- BP-AM2BLDCSERVO
+\endcond
+
 ## Hardware Setup
 
 \imageStyle{EnDAT_Connections.png,width:40%}
 \image html EnDAT_Connections.png "Hardware Setup"
 
+\cond SOC_AM243X
+## Hardware Setup(Using Booster Pack & AM243x-LP)
+\imageStyle{EnDat_Booster_Pack.png,width:40%}
+\image html EnDat_Booster_Pack.png  "Hardware Setup of Booster Pack + LP for EnDat"
+
+#### Booster Pack Jumper Configuration
+<table>
+<tr>
+    <th>Designator</th>
+    <th>ON/OFF</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td>J11</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE select</td>
+</tr>
+<tr>
+    <td>J13</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE select</td>
+</tr>
+<tr>
+    <td>J17</td>
+    <td>Pin 1-2 Connected</td>
+    <td>SDFM Clock Feedback Select</td>
+</tr>
+<tr>
+    <td>J18/J19</td>
+    <td>J18 OFF & J19 ON</td>
+    <td>Axis 1: Encoder/Resolver Voltage Select</td>
+</tr>
+<tr>
+    <td>J20/J21</td>
+    <td>J20 ON & J21 OFF</td>
+    <td>Axis 2: Encoder/Resolver Voltage Select</td>
+</tr>
+<tr>
+    <td>J22</td>
+    <td>OFF</td>
+    <td>Axis 1: Manchester Encoding Select</td>
+</tr>
+<tr>
+    <td>J23</td>
+    <td>OFF</td>
+    <td>Axis 2: Manchester Encoding Select</td>
+</tr>
+<tr>
+    <td>J24</td>
+    <td>OFF</td>
+    <td>Axis 1: RS485/DSL MUX</td>
+</tr>
+<tr>
+    <td>J25</td>
+    <td>OFF</td>
+    <td>Axis 2: RS485/DSL MUX</td>
+</tr>
+<tr>
+    <td>J26</td>
+    <td>OFF</td>
+    <td>VSENSE/ISENSE Select</td>
+</tr>
+<tr>
+    <td>J27</td>
+    <td>ON</td>
+    <td>3WIRE/SDFM MUX</td>
+</tr>
+<tr>
+    <td>J28</td>
+    <td>OFF</td>
+    <td>3WIRE MUX</td>
+</tr>
+</table>
+\endcond
 ## Build, load and run
 
 - **When using CCS projects to build**, import the CCS project and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).

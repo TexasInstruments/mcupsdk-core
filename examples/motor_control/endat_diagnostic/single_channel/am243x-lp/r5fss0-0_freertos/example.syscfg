@@ -17,8 +17,10 @@ const mpu_armv72 = mpu_armv7.addInstance();
 const mpu_armv73 = mpu_armv7.addInstance();
 const mpu_armv74 = mpu_armv7.addInstance();
 const mpu_armv75 = mpu_armv7.addInstance();
-const tamagawa   = scripting.addModule("/motor_control/position_sense/tamagawa", {}, false);
-const tamagawa1  = tamagawa.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+const endat      = scripting.addModule("/motor_control/position_sense/endat", {}, false);
+const endat1     = endat.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -53,28 +55,38 @@ mpu_armv75.baseAddr          = 0x60000000;
 mpu_armv75.size              = 28;
 mpu_armv75.accessPermissions = "Supervisor RD, User RD";
 
-tamagawa1.$name                      = "CONFIG_TAMAGAWA0";
-tamagawa1.Booster_Pack               = true;
-tamagawa1.PRU_ICSSG0_PRU.$assign     = "PRU_ICSSG0_PRU1";
-tamagawa1.PRU_ICSSG0_PRU.GPO5.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO4.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO3.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPI14.$used = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO8.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO12.$used = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO6.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPI11.$used = false;
+timer1.$name         = "CONFIG_TIMER0";
+timer1.intrPriority  = 0;
+timer1.timerCallback = "endat_position_loop";
+timer1.TIMER.$assign = "DMTIMER0";
 
-tamagawa1.ENC1_EN          = gpio1;
+endat1.$name                        = "CONFIG_ENDAT0";
+endat1.Booster_Pack                 = true;
+endat1.PRU_ICSSG0_PRU.$assign       = "PRU_ICSSG0_PRU1";
+endat1.PRU_ICSSG0_PRU.GPO2.$assign  = "ball.M2";
+endat1.PRU_ICSSG0_PRU.GPO1.$assign  = "ball.J2";
+endat1.PRU_ICSSG0_PRU.GPO0.$assign  = "ball.L5";
+endat1.PRU_ICSSG0_PRU.GPI13.$assign = "ball.T4";
+endat1.PRU_ICSSG0_PRU.GPO5.$used    = false;
+endat1.PRU_ICSSG0_PRU.GPO4.$used    = false;
+endat1.PRU_ICSSG0_PRU.GPO3.$used    = false;
+endat1.PRU_ICSSG0_PRU.GPI14.$used   = false;
+endat1.PRU_ICSSG0_PRU.GPO8.$used    = false;
+endat1.PRU_ICSSG0_PRU.GPO12.$used   = false;
+endat1.PRU_ICSSG0_PRU.GPO6.$used    = false;
+endat1.PRU_ICSSG0_PRU.GPI11.$used   = false;
+
+endat1.ENC1_EN             = gpio1;
 gpio1.$name                = "ENC1_EN";
 gpio1.GPIO.$assign         = "GPIO1";
+gpio1.GPIO.gpioPin.pu_pd   = "pu";
 gpio1.GPIO.gpioPin.rx      = false;
 gpio1.GPIO.gpioPin.$assign = "ball.C16";
 
 const pruicss                            = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
 const pruicss1                           = pruicss.addInstance({}, false);
 pruicss1.$name                           = "CONFIG_PRU_ICSS0";
-tamagawa1.pru                            = pruicss1;
+endat1.pru                               = pruicss1;
 pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
 
 /**
@@ -82,9 +94,5 @@ pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.RXD.$suggestSolution     = "ball.B10";
-debug_log.uartLog.UART.TXD.$suggestSolution     = "ball.B11";
-tamagawa1.PRU_ICSSG0_PRU.GPO2.$suggestSolution  = "ball.M2";
-tamagawa1.PRU_ICSSG0_PRU.GPO1.$suggestSolution  = "ball.J2";
-tamagawa1.PRU_ICSSG0_PRU.GPO0.$suggestSolution  = "ball.L5";
-tamagawa1.PRU_ICSSG0_PRU.GPI13.$suggestSolution = "ball.T4";
+debug_log.uartLog.UART.RXD.$suggestSolution = "ball.B10";
+debug_log.uartLog.UART.TXD.$suggestSolution = "ball.B11";

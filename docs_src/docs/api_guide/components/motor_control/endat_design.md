@@ -315,3 +315,38 @@ EnDat Receiver and the encoder is connected using the RS-485 transceiver. Data i
 	<td>Onboard RS485 receive enable
 </tr>
 </table>
+\cond SOC_AM243X
+##### AM243x-LP Booster Pack Pin-Multiplexing
+<table>
+<tr>
+    <th>Pin name
+    <th>Signal name
+	<th>Function
+</tr>
+<tr>
+    <td>PRG0_PRU1_GPO0
+    <td>pru1_endat0_clk
+	<td>Channel 0 clock
+</tr>
+<tr>
+    <td>PRG0_PRU1_GPO1
+    <td>pru1_endat0_out
+	<td>Channel 0 transmit
+</tr>
+<tr>
+    <td>PRG0_PRU1_GPO2
+    <td>pru1_endat0_outen
+	<td>Channel 0 transmit enable
+</tr>
+<tr>
+    <td>PRG0_PRU1_GPI13
+    <td>pru1_endat0_in
+	<td>Channel 0 receive
+</tr>
+<tr>
+    <td>GPIO Pin(GPIO1_78)
+    <td>ENC1_EN
+    <td>Enbale endat mode in Axis 1 of BP (C16 GPIO pin)
+</tr>
+</table>
+\endcond

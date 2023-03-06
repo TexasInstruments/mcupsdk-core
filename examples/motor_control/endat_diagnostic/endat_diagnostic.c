@@ -1850,6 +1850,11 @@ void endat_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
+/*C16 pin High for Enabling ch0 in booster pack */
+#if (CONFIG_ENDAT0_BOOSTER_PACK)
+    GPIO_setDirMode(ENC1_EN_BASE_ADDR, ENC1_EN_PIN, ENC1_EN_DIR);
+    GPIO_pinWriteHigh(ENC1_EN_BASE_ADDR, ENC1_EN_PIN);
+#endif
 
 
     i = endat_get_fw_version();

@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules[args[0]];
+%%}
+/*
+ * HDSL
+ */
+
+/* HDSL Instance Macros */
+
+#define CONFIG_HDSL_NUM_INSTANCES               `module.$instances.length`
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name`_BOOSTER_PACK     `instance.Booster_Pack & 1`
+% }

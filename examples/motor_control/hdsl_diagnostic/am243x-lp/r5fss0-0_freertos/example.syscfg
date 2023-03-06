@@ -10,6 +10,11 @@
  */
 const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1   = pruicss.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -17,12 +22,24 @@ const mpu_armv72 = mpu_armv7.addInstance();
 const mpu_armv73 = mpu_armv7.addInstance();
 const mpu_armv74 = mpu_armv7.addInstance();
 const mpu_armv75 = mpu_armv7.addInstance();
-const tamagawa   = scripting.addModule("/motor_control/position_sense/tamagawa", {}, false);
-const tamagawa1  = tamagawa.addInstance();
+const hdsl       = scripting.addModule("/motor_control/position_sense/hdsl", {}, false);
+const hdsl1      = hdsl.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+gpio1.$name                = "CONFIG_GPIO0";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.gpioPin.rx      = false;
+gpio1.GPIO.gpioPin.$assign = "ball.R20";
+
+i2c1.$name       = "CONFIG_I2C0";
+i2c1.I2C.$assign = "I2C1";
+
+pruicss1.$name                           = "CONFIG_PRU_ICSS1";
+pruicss1.instance                        = "ICSSG1";
+pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO1";
+
 debug_log.enableUartLog        = true;
 debug_log.enableCssLog         = false;
 debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
@@ -53,38 +70,40 @@ mpu_armv75.baseAddr          = 0x60000000;
 mpu_armv75.size              = 28;
 mpu_armv75.accessPermissions = "Supervisor RD, User RD";
 
-tamagawa1.$name                      = "CONFIG_TAMAGAWA0";
-tamagawa1.Booster_Pack               = true;
-tamagawa1.PRU_ICSSG0_PRU.$assign     = "PRU_ICSSG0_PRU1";
-tamagawa1.PRU_ICSSG0_PRU.GPO5.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO4.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO3.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPI14.$used = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO8.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO12.$used = false;
-tamagawa1.PRU_ICSSG0_PRU.GPO6.$used  = false;
-tamagawa1.PRU_ICSSG0_PRU.GPI11.$used = false;
+hdsl1.$name                      = "CONFIG_HDSL0";
+hdsl1.Booster_Pack               = true;
+hdsl1.PRU_ICSSG0_PRU.$assign     = "PRU_ICSSG0_PRU1";
+hdsl1.PRU_ICSSG0_PRU.GPO5.$used  = false;
+hdsl1.PRU_ICSSG0_PRU.GPO4.$used  = false;
+hdsl1.PRU_ICSSG0_PRU.GPO3.$used  = false;
+hdsl1.PRU_ICSSG0_PRU.GPI14.$used = false;
+hdsl1.PRU_ICSSG0_PRU.GPO8.$used  = false;
+hdsl1.PRU_ICSSG0_PRU.GPO12.$used = false;
+hdsl1.PRU_ICSSG0_PRU.GPO6.$used  = false;
+hdsl1.PRU_ICSSG0_PRU.GPI11.$used = false;
 
-tamagawa1.ENC1_EN          = gpio1;
-gpio1.$name                = "ENC1_EN";
-gpio1.GPIO.$assign         = "GPIO1";
-gpio1.GPIO.gpioPin.rx      = false;
-gpio1.GPIO.gpioPin.$assign = "ball.C16";
+hdsl1.ENC1_EN              = gpio2;
+gpio2.$name                = "ENC1_EN";
+gpio2.GPIO.$assign         = "GPIO1";
+gpio2.GPIO.gpioPin.rx      = false;
+gpio2.GPIO.gpioPin.$assign = "ball.C16";
 
-const pruicss                            = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
-const pruicss1                           = pruicss.addInstance({}, false);
-pruicss1.$name                           = "CONFIG_PRU_ICSS0";
-tamagawa1.pru                            = pruicss1;
-pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
+const pruicss2                           = pruicss.addInstance({}, false);
+pruicss2.$name                           = "CONFIG_PRU_ICSS0";
+hdsl1.pru                                = pruicss2;
+pruicss2.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.RXD.$suggestSolution     = "ball.B10";
-debug_log.uartLog.UART.TXD.$suggestSolution     = "ball.B11";
-tamagawa1.PRU_ICSSG0_PRU.GPO2.$suggestSolution  = "ball.M2";
-tamagawa1.PRU_ICSSG0_PRU.GPO1.$suggestSolution  = "ball.J2";
-tamagawa1.PRU_ICSSG0_PRU.GPO0.$suggestSolution  = "ball.L5";
-tamagawa1.PRU_ICSSG0_PRU.GPI13.$suggestSolution = "ball.T4";
+gpio1.GPIO.$suggestSolution                 = "GPIO0";
+i2c1.I2C.SCL.$suggestSolution               = "ball.A17";
+i2c1.I2C.SDA.$suggestSolution               = "ball.B18";
+debug_log.uartLog.UART.RXD.$suggestSolution = "ball.B10";
+debug_log.uartLog.UART.TXD.$suggestSolution = "ball.B11";
+hdsl1.PRU_ICSSG0_PRU.GPO2.$suggestSolution  = "ball.M2";
+hdsl1.PRU_ICSSG0_PRU.GPO1.$suggestSolution  = "ball.J2";
+hdsl1.PRU_ICSSG0_PRU.GPO0.$suggestSolution  = "ball.L5";
+hdsl1.PRU_ICSSG0_PRU.GPI13.$suggestSolution = "ball.T4";

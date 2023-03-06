@@ -966,6 +966,11 @@ void hdsl_diagnostic_main(void *arg)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+/*C16 pin High for Enabling ch0 in booster pack */
+#if (CONFIG_HDSL0_BOOSTER_PACK)
+    GPIO_setDirMode(ENC1_EN_BASE_ADDR, ENC1_EN_PIN, ENC1_EN_DIR);
+    GPIO_pinWriteHigh(ENC1_EN_BASE_ADDR, ENC1_EN_PIN);
+#endif
 
     #ifndef HDSL_AM64xE1_TRANSCEIVER
     /* Configure g_mux_en to 1 in ICSSG_SA_MX_REG Register. This is required to remap EnDAT signals correctly via Interface card.*/
