@@ -195,6 +195,9 @@ typedef struct {
 
     /**  Enhanced Scheduled Traffic enable (EST) */
     Uint32      estEnable;
+
+    /**  Intersperced Express Traffic enable (IET) */
+    Uint32      ietEnable;
 } CSL_CPSW_CONTROL;
 
 /** @brief  CPSW_THRU_RATE register
@@ -1054,6 +1057,9 @@ typedef struct {
     /** EST Port Enable */
     Uint32      estPortEnable;
 
+    /** IET Port Enable */
+    Uint32      ietPortEnable;
+
     /**  Eneregy Efficient Etherent (EEE) Transmit LPI clockstop enable
          for EMAC port only
          1: The GMII or RGMII transmit clock is stopped in the EEE
@@ -1599,6 +1605,83 @@ typedef struct {
      */
     Uint32 estOneBuf;
 } CSL_CPSW_EST_CONFIG;
+
+/** @brief
+ *
+ *  Holds the Enet_Pn_IET_Control register contents
+ */
+typedef struct {
+    /** Mac Prempt Queue.
+     *  Indicates which transmit FIFO queues are sent to the prempt MAC.
+     *  Bit 0 indicates queue zero, bit 1 queue 1 and so on.  Packets will
+     *  be sent to the prempt MAC only when pn_mac_penable is set, and when
+     *  mac_verified (from Enet_Pn_IET_Status) or pn_mac_disableverify is set,
+     *  and when pn_iet_port_en is set.
+     */
+    Uint32 macPremptQueue;
+
+    /** Mac Fragment Size.
+     *  An integer in the range 0:7 indicating, as a multiple of 64,
+     *  the minimum additional length for nonfinal mPackets
+     *  0 = 64
+     *  1 = 128
+     *  …
+     *  7 = 512
+     */
+    Uint32 macAddFragSize;
+
+    /** Mac Link Fail.
+     *  Link Fail Indicatior to reset the verifly state machine.
+     *  This bit is reset high.  Verify and response frames will
+     *  be sent/allowed when this bit is cleared.
+     */
+    Uint32 macLinkFail;
+
+    /** Mac Disable Verify.
+     *  Disables verification on the port when set.  If this bit is set
+     *  then packets will be sent to the prempt MAC when mac_penable is set
+     *  (This is a forced mode with no IET verification).
+     */
+    Uint32 macDisableVerify;
+
+    /** Mac Hold.
+     *  Hold Premptable traffic on the port.
+     */
+    Uint32 macHold;
+
+    /** Mac Premption Enable.
+     *  Port Premption Enable. This takes effect only when pn_iet_port_en is set.
+     */
+    Uint32 macPremptEnable;
+} CSL_CPSW_IET_CONFIG;
+
+/** @brief
+ *
+ *  Holds the Enet_Pn_IET_Status register contents
+ */
+typedef struct {
+    /** Mac Verified.
+     *  Indication that verification was successful.
+     */
+    Uint8 macVerified;
+
+    /** Mac Verification Failed.
+     * Indication that verification was unsuccessful.
+     */
+    Uint8 macVerifyFail;
+
+    /** Mac Received Respond Packet with Errors.
+     *  Set when a respond packet with errors is received.
+     *  Cleared when pn_mac_penable is cleared to zero.
+     */
+    Uint8 macRxRespondErr;
+
+    /** Mac Received Verify Packet with Errors.
+     *  Set when a verify packet with errors is received.
+     *  Cleared when pn_mac_penable is cleared to zero.
+     */
+    Uint8 macRxVerifyErr;
+} CSL_CPSW_IET_STATUS;
 
 /**
 @}
@@ -2468,6 +2551,7 @@ void CSL_CPSW_disableSoftIdle (CSL_Xge_cpswRegs *hCpswRegs);
  *      XGE_CPSW_P0_CONTROL_REG_DSCP_IPV6_EN,
  *
  *      XGE_CPSW_PN_CONTROL_REG_EST_PORT_EN,
+ *      XGE_CPSW_PN_CONTROL_REG_IET_PORT_EN,
  *      XGE_CPSW_PN_CONTROL_REG_DSCP_IPV4_EN,
  *      XGE_CPSW_PN_CONTROL_REG_DSCP_IPV6_EN,
  *      XGE_CPSW_PN_CONTROL_REG_TX_LPI_CLKSTOP_EN,
@@ -2521,6 +2605,7 @@ void CSL_CPSW_getPortControlReg (CSL_Xge_cpswRegs *hCpswRegs,
  *      XGE_CPSW_P0_CONTROL_REG_DSCP_IPV6_EN,
  *
  *      XGE_CPSW_PN_CONTROL_REG_EST_PORT_EN,
+ *      XGE_CPSW_PN_CONTROL_REG_IET_PORT_EN,
  *      XGE_CPSW_PN_CONTROL_REG_DSCP_IPV4_EN,
  *      XGE_CPSW_PN_CONTROL_REG_DSCP_IPV6_EN,
  *      XGE_CPSW_PN_CONTROL_REG_TX_LPI_CLKSTOP_EN,
@@ -4817,6 +4902,238 @@ void CSL_CPSW_readEstFetchCmd(CSL_Xge_cpswRegs    *hCpswRegs,
                               Uint32              index,
                               Uint32              *fetchCount,
                               Uint8               *fetchAllow);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getPortIetControlReg
+ *
+ *   @b Description
+ *   @n This function retrieves the contents of IET control register
+ *      corresponding to the CPSW port number specified per user configuration.
+ *
+ *   @b Arguments
+     @verbatim
+        portNum                 CPSW port number for which the registers must be
+                                read.
+        pIetConfig              CSL_CPSW_IET_CONFIG containing settings for
+                                port's IET control register.
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_PREMPT
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_ADDFRAGSIZE
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_LINKFAIL
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_DISABLEVERIFY
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_HOLD
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_PENABLE
+ *   @b Example
+ *   @verbatim
+ *      Uint32              portNum;
+        CSL_CPSW_IET_CONFIG ietConfig;
+
+        portNum = 1;
+
+        CSL_CPSW_getPortIetControlReg(portNum, &ietConfig);
+
+     @endverbatim
+ */
+void CSL_CPSW_getPortIetControlReg(CSL_Xge_cpswRegs    *hCpswRegs,
+                                   Uint32              portNum,
+                                   CSL_CPSW_IET_CONFIG *pIetConfig);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setPortIetControlReg
+ *
+ *   @b Description
+ *   @n This function sets up the contents of IET control register corresponding
+ *      to the CPSW port number specified per user configuration.
+ *
+ *   @b Arguments
+     @verbatim
+        portNum                 CPSW port number for which the registers must be
+                                configured.
+        pEstConfig              CSL_CPSW_IET_CONFIG containing settings for
+                                port's IET control register.
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_PREMPT
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_ADDFRAGSIZE
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_LINKFAIL
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_DISABLEVERIFY
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_HOLD
+        CSL_XGE_CPSW_PN_IET_CONTROL_REG_MAC_PENABLE
+ *   @b Example
+ *   @verbatim
+ *      Uint32              portNum;
+        CSL_CPSW_IET_CONFIG ietConfig;
+
+        portNum = 1;
+
+        ietConfig.macPremptQueue = 1;
+        ietConfig.macPremptEnable = 1;
+        ...
+
+        CSL_CPSW_setPortIetControlReg(portNum, &ietConfig);
+
+     @endverbatim
+ */
+void CSL_CPSW_setPortIetControlReg(CSL_Xge_cpswRegs    *hCpswRegs,
+                                   Uint32              portNum,
+                                   CSL_CPSW_IET_CONFIG *pIetConfig);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getPortIetVerifyTimeout
+ *
+ *   @b Description
+ *   @n This function reads the contents of IET Verify timeout register corresponding
+ *      to the CPSW port number specified per user configuration.
+ *
+ *   @b Arguments
+     @verbatim
+        portNum                 CPSW port number for which the registers must be
+                                configured.
+        pIetVerifyTimeout       Number of wireside clocks contained in the verify timeout
+                                counter.
+
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n CSL_XGE_CPSW_PN_IET_VERIFY_REG_MAC_VERIFY_CNT
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32              portNum;
+        Uint32              ietVerifyTimeout;
+
+        portNum = 1;
+
+        CSL_CPSW_getPortIetVerifyTimeout(portNum, &ietVerifyTimeout);
+
+     @endverbatim
+ */
+void CSL_CPSW_getPortIetVerifyTimeout(CSL_Xge_cpswRegs    *hCpswRegs,
+                                      Uint32              portNum,
+                                      Uint32              *pIetVerifyTimeout);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setPortIetVerifyTimeout
+ *
+ *   @b Description
+ *   @n This function sets the contents of IET Verify timeout register corresponding
+ *      to the CPSW port number specified per user configuration.
+ *
+ *   @b Arguments
+     @verbatim
+        portNum                 CPSW port number for which the registers must be
+                                configured.
+        pIetVerifyTimeout       Number of wireside clocks contained in the verify timeout
+                                counter.
+
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n CSL_XGE_CPSW_PN_IET_VERIFY_REG_MAC_VERIFY_CNT
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32              portNum;
+        Uint32              ietVerifyTimeout;
+
+        portNum = 1;
+
+        ietVerifyTimeout = 0x1312d0;
+
+        CSL_CPSW_setPortIetVerifyTimeout(portNum, ietVerifyTimeout);
+
+     @endverbatim
+ */
+void CSL_CPSW_setPortIetVerifyTimeout(CSL_Xge_cpswRegs    *hCpswRegs,
+                                      Uint32              portNum,
+                                      Uint32              ietVerifyTimeout);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_PortIetStatus
+ *
+ *   @b Description
+ *   @n This function retrieves the contents of the IET status register corresponding
+ *      to the CPSW port number specified per user configuration.
+ *
+ *   @b Arguments
+     @verbatim
+        portNum                 CPSW port number for which the registers must be
+                                configured.
+        pIetStatus              CSL_CPSW_IET_STATUS containing settings for
+                                port's IET status register.
+
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n CSL_XGE_CPSW_PN_IET_STATUS_REG_MAC_VERIFIED
+ *      CSL_XGE_CPSW_PN_IET_STATUS_REG_MAC_VERIFY_FAIL
+ *      CSL_XGE_CPSW_PN_IET_STATUS_REG_MAC_RESPOND_ERR
+ *      CSL_XGE_CPSW_PN_IET_STATUS_REG_MAC_VERIFY_ERR
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32               portNum;
+        CSL_CPSW_IET_STATUS  ietStatus;
+
+        portNum = 1;
+
+        CSL_CPSW_PortIetStatus(portNum, &ietStatus);
+
+     @endverbatim
+ */
+void CSL_CPSW_PortIetStatus(CSL_Xge_cpswRegs     *hCpswRegs,
+                            Uint32               portNum,
+                            CSL_CPSW_IET_STATUS  *pIetStatus);
 
 
 /********************************************************************************

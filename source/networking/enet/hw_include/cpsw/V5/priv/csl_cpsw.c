@@ -702,6 +702,9 @@ void CSL_CPSW_getCpswControlReg (CSL_Xge_cpswRegs *hCpswRegs,
     pControlRegInfo->p0RxPassCrcErr =   CSL_FEXT (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_P0_RX_PASS_CRC_ERR);
     pControlRegInfo->eeeEnable      =   CSL_FEXT (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_EEE_ENABLE);
     pControlRegInfo->estEnable      =   CSL_FEXT (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_EST_ENABLE);
+#if ENET_CFG_IS_ON(CPSW_IET_INCL)
+    pControlRegInfo->ietEnable      =   CSL_FEXT (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_IET_ENABLE);
+#endif
 
     return;
 }
@@ -771,7 +774,9 @@ void CSL_CPSW_setCpswControlReg (CSL_Xge_cpswRegs *hCpswRegs,
     CSL_FINS (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_P0_RX_PASS_CRC_ERR, pControlRegInfo->p0RxPassCrcErr);
     CSL_FINS (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_EEE_ENABLE, pControlRegInfo->eeeEnable);
     CSL_FINS (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_EST_ENABLE, pControlRegInfo->estEnable);
-
+#if ENET_CFG_IS_ON(CPSW_IET_INCL)
+    CSL_FINS (hCpswRegs->CONTROL_REG, XGE_CPSW_CONTROL_REG_IET_ENABLE, pControlRegInfo->ietEnable);
+#endif
     return;
 }
 
@@ -1152,6 +1157,9 @@ void CSL_CPSW_getPortControlReg (CSL_Xge_cpswRegs *hCpswRegs,
     {
 
         pControlInfo->estPortEnable      =   CSL_FEXT (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_EST_PORT_EN);
+#if ENET_CFG_IS_ON(CPSW_IET_INCL)
+        pControlInfo->ietPortEnable      =   CSL_FEXT (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_IET_PORT_EN);
+#endif
         pControlInfo->dscpIpv4Enable     =   CSL_FEXT (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_DSCP_IPV4_EN);
         pControlInfo->dscpIpv6Enable     =   CSL_FEXT (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_DSCP_IPV6_EN);
         pControlInfo->txLpiClkstopEnable =   CSL_FEXT (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_TX_LPI_CLKSTOP_EN);
@@ -1226,6 +1234,9 @@ void CSL_CPSW_setPortControlReg (CSL_Xge_cpswRegs *hCpswRegs,
     {
 
         CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_EST_PORT_EN, pControlInfo->estPortEnable);
+#if ENET_CFG_IS_ON(CPSW_IET_INCL)
+        CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_IET_PORT_EN, pControlInfo->ietPortEnable);
+#endif
         CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_DSCP_IPV4_EN, pControlInfo->dscpIpv4Enable);
         CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_DSCP_IPV6_EN, pControlInfo->dscpIpv6Enable);
         CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_CONTROL_REG, XGE_CPSW_PN_CONTROL_REG_TX_LPI_CLKSTOP_EN, pControlInfo->txLpiClkstopEnable);
@@ -4011,6 +4022,99 @@ void CSL_CPSW_readEstFetchCmd(CSL_Xge_cpswRegs    *hCpswRegs,
     }
 }
 
+#if ENET_CFG_IS_ON(CPSW_IET_INCL)
+void CSL_CPSW_getPortIetControlReg(CSL_Xge_cpswRegs    *hCpswRegs,
+                                   Uint32              portNum,
+                                   CSL_CPSW_IET_CONFIG *pIetConfig)
+{
+    if ((portNum >= 1) &&  (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT)))
+    {
+        pIetConfig->macPremptQueue = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                                              XGE_CPSW_PN_IET_CONTROL_REG_MAC_PREMPT);
+
+        pIetConfig->macAddFragSize = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                                              XGE_CPSW_PN_IET_CONTROL_REG_MAC_ADDFRAGSIZE);
+
+        pIetConfig->macLinkFail = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                                           XGE_CPSW_PN_IET_CONTROL_REG_MAC_LINKFAIL);
+
+        pIetConfig->macDisableVerify = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                                                XGE_CPSW_PN_IET_CONTROL_REG_MAC_DISABLEVERIFY);
+
+        pIetConfig->macHold = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                                       XGE_CPSW_PN_IET_CONTROL_REG_MAC_HOLD);
+
+        pIetConfig->macPremptEnable = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                                               XGE_CPSW_PN_IET_CONTROL_REG_MAC_PENABLE);
+    }
+}
+
+void CSL_CPSW_setPortIetControlReg(CSL_Xge_cpswRegs    *hCpswRegs,
+                                   Uint32              portNum,
+                                   CSL_CPSW_IET_CONFIG *pIetConfig)
+{
+    if ((portNum >= 1) &&  (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT)))
+    {
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                 XGE_CPSW_PN_IET_CONTROL_REG_MAC_PREMPT, pIetConfig->macPremptQueue);
+
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                 XGE_CPSW_PN_IET_CONTROL_REG_MAC_ADDFRAGSIZE, pIetConfig->macAddFragSize);
+
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                 XGE_CPSW_PN_IET_CONTROL_REG_MAC_LINKFAIL, pIetConfig->macLinkFail);
+
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                 XGE_CPSW_PN_IET_CONTROL_REG_MAC_DISABLEVERIFY, pIetConfig->macDisableVerify);
+
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                 XGE_CPSW_PN_IET_CONTROL_REG_MAC_HOLD, pIetConfig->macHold);
+
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_CONTROL_REG,
+                 XGE_CPSW_PN_IET_CONTROL_REG_MAC_PENABLE, pIetConfig->macPremptEnable);
+    }
+}
+
+void CSL_CPSW_getPortIetVerifyTimeout(CSL_Xge_cpswRegs    *hCpswRegs,
+                                      Uint32              portNum,
+                                      Uint32              *pIetVerifyTimeout)
+{
+    if ((portNum >= 1) &&  (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT)))
+    {
+        *pIetVerifyTimeout = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_VERIFY_REG,
+                                      XGE_CPSW_PN_IET_VERIFY_REG_MAC_VERIFY_CNT);
+    }
+
+}
+
+void CSL_CPSW_setPortIetVerifyTimeout(CSL_Xge_cpswRegs    *hCpswRegs,
+                                      Uint32              portNum,
+                                      Uint32              ietVerifyTimeout)
+{
+    if ((portNum >= 1) &&  (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT)))
+    {
+        CSL_FINS(hCpswRegs->ENETPORT[portNum-1].PN_IET_VERIFY_REG,
+                 XGE_CPSW_PN_IET_VERIFY_REG_MAC_VERIFY_CNT, ietVerifyTimeout);
+    }
+}
+
+void CSL_CPSW_PortIetStatus(CSL_Xge_cpswRegs     *hCpswRegs,
+                            Uint32               portNum,
+                            CSL_CPSW_IET_STATUS  *pIetStatus)
+{
+    if ((portNum >= 1) &&  (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT)))
+    {
+        pIetStatus->macVerified = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_STATUS_REG,
+                                           XGE_CPSW_PN_IET_STATUS_REG_MAC_VERIFIED);
+        pIetStatus->macVerifyFail = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_STATUS_REG,
+                                             XGE_CPSW_PN_IET_STATUS_REG_MAC_VERIFY_FAIL);
+        pIetStatus->macRxRespondErr = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_STATUS_REG,
+                                               XGE_CPSW_PN_IET_STATUS_REG_MAC_RESPOND_ERR);
+        pIetStatus->macRxVerifyErr = CSL_FEXT(hCpswRegs->ENETPORT[portNum-1].PN_IET_STATUS_REG,
+                                              XGE_CPSW_PN_IET_STATUS_REG_MAC_VERIFY_ERR);
+    }
+}
+#endif
 
 /********************************************************************************
 *************************  Statistics (STATS) Submodule *************************

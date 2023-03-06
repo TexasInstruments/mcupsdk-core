@@ -74,7 +74,7 @@ extern "C" {
 #define ENET_CFG_CPDMA_CH_OVERRIDE                  (ENET_OFF)
 
 /*! \brief CPSW IET support. */
-#define ENET_CFG_CPSW_IET_INCL                      (ENET_ON)
+#define ENET_CFG_CPSW_IET_INCL                      (ENET_OFF)
 
 /*! \brief ALE VLAN MASK MUX support. */
 #define ENET_CFG_ALE_VLAN_MASK_MUX                  (ENET_ON)
