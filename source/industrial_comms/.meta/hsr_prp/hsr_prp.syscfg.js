@@ -62,9 +62,20 @@ function getPeripheralRequirements(inst, peripheralName, name)
                 (pinResource.name !== "MII0_CRS") &&
                 (pinResource.name !== "MII1_COL") &&
                 (pinResource.name !== "MII1_CRS"))
-            {
-                resources.push( pinResource );
-            }
+                {
+                    if(inst.mdioManualModeLinkPolling === "Polling")
+                    {
+                        if((pinResource.name !== "MII0_RXLINK") &&
+                           (pinResource.name !== "MII1_RXLINK"))
+                        {
+                            resources.push( pinResource );
+                        }
+                    }
+                    else    // enable RXLINK pinmux configuration only for MLINK mode
+                    {
+                        resources.push( pinResource );
+                    }
+                }
         }
     }
 
@@ -108,9 +119,16 @@ function pinmuxRequirements(inst) {
     {
         let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
         let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
-        let mii_g_rt = getPeripheralRequirements(inst, "MII_G_RT");
 
-        return [mdio, iep, rgmii1, rgmii2, mii_g_rt];
+        if(inst.mdioManualModeLinkPolling === "Polling")
+        {
+            return [mdio, iep, rgmii1, rgmii2];
+        }
+        else    // enable RXLINK pinmux configuration only for MLINK mode
+        {
+            let mii_rxlink = getPeripheralRequirements(inst, "MII_G_RT");
+            return [mdio, iep, rgmii1, rgmii2, mii_rxlink];
+        }
     }
 }
 

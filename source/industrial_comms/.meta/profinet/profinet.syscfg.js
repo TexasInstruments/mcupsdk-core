@@ -55,26 +55,58 @@ function getPeripheralRequirements(inst, peripheralName, name)
         /* make all pins as "rx" and then override to make "rx" as false as needed  */
         pinmux.setConfigurableDefault( pinResource, "rx", true );
 
-        if((device === "am64x-evm") || (device === "am243x-evm"))
+        if( inst.phyToMacInterfaceMode === "RGMII" && peripheralName === "MII_G_RT")
         {
-            if((pinResource.name !== "MII0_COL") &&
-               (pinResource.name !== "MII0_CRS") &&
-               (pinResource.name !== "MII1_COL") &&
-               (pinResource.name !== "MII1_CRS"))
+            if((pinResource.name === "MII0_RXLINK") || (pinResource.name === "MII1_RXLINK"))
             {
                 resources.push( pinResource );
             }
         }
-        else if(device === "am243x-lp")
+        else
         {
-            if((pinResource.name !== "MII0_RXER") &&
-               (pinResource.name !== "MII0_COL") &&
-               (pinResource.name !== "MII0_CRS") &&
-               (pinResource.name !== "MII1_RXER") &&
-               (pinResource.name !== "MII1_COL") &&
-               (pinResource.name !== "MII1_CRS"))
+            if((device === "am64x-evm") || (device === "am243x-evm"))
             {
-                resources.push( pinResource );
+                if((pinResource.name !== "MII0_COL") &&
+                   (pinResource.name !== "MII0_CRS") &&
+                   (pinResource.name !== "MII1_COL") &&
+                   (pinResource.name !== "MII1_CRS"))
+                {
+                    if(inst.mdioManualModeLinkPolling === "Polling")
+                    {
+                        if((pinResource.name !== "MII0_RXLINK") &&
+                           (pinResource.name !== "MII1_RXLINK"))
+                        {
+                            resources.push( pinResource );
+                        }
+                    }
+                    else    // enable RXLINK pinmux configuration only for MLINK mode
+                    {
+                        resources.push( pinResource );
+                    }
+                }
+            }
+            else if(device === "am243x-lp")
+            {
+                if((pinResource.name !== "MII0_RXER") &&
+                   (pinResource.name !== "MII0_COL") &&
+                   (pinResource.name !== "MII0_CRS") &&
+                   (pinResource.name !== "MII1_RXER") &&
+                   (pinResource.name !== "MII1_COL") &&
+                   (pinResource.name !== "MII1_CRS"))
+                {
+                    if(inst.mdioManualModeLinkPolling === "Polling")
+                    {
+                        if((pinResource.name !== "MII0_RXLINK") &&
+                           (pinResource.name !== "MII1_RXLINK"))
+                        {
+                            resources.push( pinResource );
+                        }
+                    }
+                    else    // enable RXLINK pinmux configuration only for MLINK mode
+                    {
+                        resources.push( pinResource );
+                    }
+                }
             }
         }
     }
@@ -132,13 +164,28 @@ function pinmuxRequirements(inst) {
         let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
         let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
 
-        if( inst.rtMode === "IRT")
+        if(inst.mdioManualModeLinkPolling === "Polling")
         {
-            return [mdio, iep, rgmii1, rgmii2];
+            if( inst.rtMode === "IRT")
+            {
+                return [mdio, iep, rgmii1, rgmii2];
+            }
+            else
+            {
+                return [mdio, rgmii1, rgmii2];
+            }
         }
-        else
+        else    // enable RXLINK pinmux configuration only for MLINK mode
         {
-            return [mdio, rgmii1, rgmii2];
+            let mii_rxlink = getPeripheralRequirements(inst, "MII_G_RT");
+            if( inst.rtMode === "IRT")
+            {
+                return [mdio, iep, rgmii1, rgmii2, mii_rxlink];
+            }
+            else
+            {
+                return [mdio, rgmii1, rgmii2, mii_rxlink];
+            }
         }
     }
 }
