@@ -169,6 +169,9 @@ let hsr_prp_module = {
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: hsr_prp_module_name,
         },
+        "/drivers/system/system_config.h.xdt": {
+            driver_config: "/industrial_comms/hsr_prp/templates/hsr_prp.h.xdt",
+        },
     },
     defaultInstanceName: "CONFIG_HSR_PRP",
     config: [
@@ -216,10 +219,14 @@ let hsr_prp_module = {
             displayName: "Enable MDIO Manual Mode",
             default: true,
             onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-                else
-                    ui.mdioManualModeBaseAddr.hidden = true;
+                if(inst.manualMode) {
+                    ui.mdioManualModeBaseAddr.hidden    = false;
+                    ui.mdioManualModeLinkPolling.hidden = false;
+                }
+                else {
+                    ui.mdioManualModeBaseAddr.hidden    = true;
+                    ui.mdioManualModeLinkPolling.hidden = true;
+                }
             },
         },
         {
@@ -228,11 +235,25 @@ let hsr_prp_module = {
             default: 0x0001FF00,
             readOnly: true,
             displayFormat: "hex",
-            onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-            },
         },
+        {
+            name: "mdioManualModeLinkPolling",
+            displayName: "MDIO Manual Mode Link Status Update",
+            default: "Polling",
+            options: [
+                {
+                    name: "MLINK",
+                    displayName: "MLINK Based",
+                    description: "In this MLINK pins for getting link status updates from the PHY",
+                },
+                {
+                    name: "Polling",
+                    displayName: "PHY Polling Based",
+                    description: "In this MDIO WA FW Polls the PHY register for link status",
+                }
+            ],
+        },
+
 
     ],
     moduleStatic: {

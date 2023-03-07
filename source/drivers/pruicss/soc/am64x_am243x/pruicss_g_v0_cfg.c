@@ -37,7 +37,7 @@
 #include <drivers/pruicss.h>
 #include <drivers/hw_include/cslr_soc.h>
 
-PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSG0 =
+PRUICSS_HwAttrs gPruIcssHwAttrs_ICSSG0 =
 {
     0,                                                      /* instance */
     CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE,                      /* baseAddr */
@@ -76,7 +76,7 @@ PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSG0 =
     CSL_PRU_ICSSG0_PR1_PDSP_TX1_IRAM_RAM_SIZE,              /* txPru1IramSize */
 };
 
-PRUICSS_HwAttrs const gPruIcssHwAttrs_ICSSG1 =
+PRUICSS_HwAttrs gPruIcssHwAttrs_ICSSG1 =
 {
     1,                                                      /* instance */
     CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE,                      /* baseAddr */

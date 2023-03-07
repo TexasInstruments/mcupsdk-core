@@ -1,5 +1,6 @@
 %%{
     let module = system.modules['/drivers/pruicss/pruicss'];
+    let ethphyModule = system.modules['/board/ethphy/ethphy'];
     let common = system.getScript("/common");
 
     function getDeviceName() {
@@ -96,4 +97,10 @@
     CSL_REG32_WR(CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_CFG_SLV_REGS_BASE + CSL_ICSS_M_PR1_CFG_SLV_IEPCLK_REG, 1);
     %   }
 % }
+% }
+% if (ethphyModule?.$instances[0]?.manualMode) {
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    gPruIcssConfig[`i`].hwAttrs->miiMdioRegBase = CSL_PRU_`instance.instance`_DRAM0_SLV_RAM_BASE + 0x`(ethphyModule.$instances[0].mdioManualModeBaseAddr).toString(16)`;
+    % }
 % }

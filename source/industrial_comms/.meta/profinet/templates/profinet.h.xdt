@@ -1,0 +1,37 @@
+%%{
+    let module = system.modules['/industrial_comms/profinet/profinet'];
+%%}
+% let manualModeEnabled = 0;
+% let mdioManualModeLinkPolling = 0;
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % if(instance.manualMode) {
+        % manualModeEnabled += 1;
+    % }
+    % if(instance.mdioManualModeLinkPolling === "Polling") {
+        % mdioManualModeLinkPolling += 1;
+    % }
+% }
+% if(manualModeEnabled != 0) {
+/* MDIO manual mode specific defines */
+#define     MDIO_MANUAL_MODE_LINK_POLLING_ENABLE            0x1
+#define     MDIO_MANUAL_MODE_LINK_POLLING_DISABLE           0x0
+#define     MDIO_MANUAL_MODE_LINK_POLLING_INTR_ENABLE       0x2
+#define     MDIO_MANUAL_MODE_LINK_POLLING_INTR_DISABLE      0x0
+#define     MDIO_MANUAL_MODE_PRU_CLK_FREQ_200               0x0
+#define     MDIO_MANUAL_MODE_PRU_CLK_FREQ_250               0x4
+#define     MDIO_MANUAL_MODE_PRU_CLK_FREQ_333               0x8
+
+% let macro_value = "MDIO_MANUAL_MODE_PRU_CLK_FREQ_200";
+% if(module.$instances[0].icss.coreClk === 250*1000000) {
+    % macro_value = "MDIO_MANUAL_MODE_PRU_CLK_FREQ_250";
+% }
+% if(module.$instances[0].icss.coreClk === 333333333) {
+    % macro_value = "MDIO_MANUAL_MODE_PRU_CLK_FREQ_333";
+% }
+% if(mdioManualModeLinkPolling !== 0) {
+#define     MDIO_MANUAL_MODE_FW_CONFIG_VALUE    (MDIO_MANUAL_MODE_LINK_POLLING_ENABLE | MDIO_MANUAL_MODE_LINK_POLLING_INTR_ENABLE | `macro_value`)
+% } else {
+#define     MDIO_MANUAL_MODE_FW_CONFIG_VALUE    (MDIO_MANUAL_MODE_LINK_POLLING_DISABLE | MDIO_MANUAL_MODE_LINK_POLLING_INTR_DISABLE | `macro_value`)
+% }
+% }

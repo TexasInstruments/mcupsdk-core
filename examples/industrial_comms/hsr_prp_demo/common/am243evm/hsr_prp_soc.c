@@ -51,6 +51,8 @@
 #define I2C_EEPROM_MAC_DATA_OFFSET      (0x42)
 
 #define PRUICSS_PRUx                    PRUICSS_TX_PRU0
+#define PRU_REG_10                      (4*10)
+#define PRU_REG_12                      (4*12)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -79,8 +81,12 @@ void mdioManualModeSetup()
     status = PRUICSS_writeMemory(prusshandle, PRUICSS_IRAM_TX_PRU(0), 0,
                        (uint32_t *) PRUFirmware, sizeof(PRUFirmware));
     DebugP_assert(status != 0);
-    /* Pass value to R12 of TX_PRU core */
-    CSL_REG32_WR(CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_PDSP_TX0_IRAM_DEBUG_REGS_BASE + (4*12), MDIO_MANUAL_MODE_BASE_ADDRESS);
+
+    /* Pass value to R10 of TX_PRU core for MDIO FW WA Configuration */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_PDSP_TX0_IRAM_DEBUG_REGS_BASE + PRU_REG_10, MDIO_MANUAL_MODE_FW_CONFIG_VALUE);
+    /* Pass value to R12 of TX_PRU core for emulated MDIO Base Address */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_PDSP_TX0_IRAM_DEBUG_REGS_BASE + PRU_REG_12, MDIO_MANUAL_MODE_BASE_ADDRESS);
+
     /* Run firmware */
     status = PRUICSS_enableCore(prusshandle, PRUICSS_PRUx);
     DebugP_assert(SystemP_SUCCESS == status);
@@ -89,11 +95,6 @@ void mdioManualModeSetup()
 
 void hsrprp_configureInterrupts(ICSS_EMAC_Handle emachandle)
 {
-#ifdef  MDIO_MANUAL_MODE_ENABLED
-    uint32_t mdioBaseAddress = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY0))->mdioBaseAddress;
-    uint32_t phy0addr = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY0))->phyAddress;
-    uint32_t phy1addr = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY1))->phyAddress;
-#endif
     /*Configure Time Sync interrupts*/
     PRUICSS_HwAttrs const *pruicssHwAttrs = PRUICSS_getAttrs(CONFIG_PRU_ICSS1);
 
@@ -102,8 +103,12 @@ void hsrprp_configureInterrupts(ICSS_EMAC_Handle emachandle)
     else if(pruicssHwAttrs->instance == 1)
         timeSyncHandle->timeSyncConfig.txIntNum = CSLR_R5FSS0_CORE0_INTR_PRU_ICSSG1_PR1_HOST_INTR_PEND_0 + 3;
 #ifdef MDIO_MANUAL_MODE_ENABLED
-    MDIO_enableLinkInterrupt(mdioBaseAddress, 0, phy0addr, MDIO_LINKSEL_MLINK_MODE);
-    MDIO_enableLinkInterrupt(mdioBaseAddress, 1, phy1addr, MDIO_LINKSEL_MLINK_MODE);
+    /* Update the user phy sel registers at the emulated register space */
+    uint32_t mdioBaseAddress = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY0))->mdioBaseAddress;
+    uint32_t phy0addr = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY0))->phyAddress;
+    uint32_t phy1addr = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY1))->phyAddress;
+    MDIO_enableLinkInterrupt(mdioBaseAddress, 0, phy0addr, MDIO_LINKSEL_MDIO_MODE);
+    MDIO_enableLinkInterrupt(mdioBaseAddress, 1, phy1addr, MDIO_LINKSEL_MDIO_MODE);
 #endif
 }
 

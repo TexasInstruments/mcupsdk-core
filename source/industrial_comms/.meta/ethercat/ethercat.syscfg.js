@@ -33,10 +33,14 @@ function getConfigurables()
             displayName: "Enable MDIO Manual Mode",
             default: true,
             onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-                else
-                    ui.mdioManualModeBaseAddr.hidden = true;
+                if(inst.manualMode) {
+                    ui.mdioManualModeBaseAddr.hidden    = false;
+                    ui.mdioManualModeLinkPolling.hidden = false;
+                }
+                else {
+                    ui.mdioManualModeBaseAddr.hidden    = true;
+                    ui.mdioManualModeLinkPolling.hidden = true;
+                }
             },
         });
         config.push({
@@ -45,10 +49,23 @@ function getConfigurables()
             default: 0x00010E40,
             readOnly: true,
             displayFormat: "hex",
-            onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-            },
+        });
+        config.push({
+            name: "mdioManualModeLinkPolling",
+            displayName: "MDIO Manual Mode Link Status Update",
+            default: "MLINK",
+            options: [
+                {
+                    name: "MLINK",
+                    displayName: "MLINK Based",
+                    description: "In this MLINK pins for getting link status updates from the PHY",
+                },
+                {
+                    name: "Polling",
+                    displayName: "PHY Polling Based",
+                    description: "In this MDIO WA FW Polls the PHY register for link status",
+                }
+            ],
         });
     }
 
@@ -63,6 +80,9 @@ let ethercat_module = {
     templates: {
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: ethercat_module_name,
+        },
+        "/drivers/system/system_config.h.xdt": {
+            driver_config: "/industrial_comms/ethercat/templates/ethercat.h.xdt",
         },
     },
     defaultInstanceName: "CONFIG_ETHERCAT",

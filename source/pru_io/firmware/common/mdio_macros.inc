@@ -1,4 +1,4 @@
-; Copyright (C) 2022 Texas Instruments Incorporated - http://www.ti.com/
+; Copyright (C) 2023 Texas Instruments Incorporated - http://www.ti.com/
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -62,9 +62,6 @@ __mdio_macros_inc           .set    1
     .asg    0x88,    MDIO_USER_ACCESS_1_REG_OFFSET
     .asg    0x8C,    MDIO_USER_PHY_SEL_1_REG_OFFSET
 
-; MDIO CLK Freq is about = (PRU_CLK/(2*MDIO_CLK_PERIOD_CONFIG+12))
-MDIO_CLK_PERIOD_CONFIG                  .set    34
-
 ; Bit positions corresponding to MDIO registers
 MDIO_PIN_BIT                        .set    0
 MDIO_OE_BIT                         .set    1
@@ -77,17 +74,21 @@ MDIO_USER_ACCESS_REG_GO_BIT         .set    31
 MDIO_USER_ACCESS_REG_WRITE_BIT      .set    30
 MDIO_USER_ACCESS_REG_ACK_BIT        .set    29
 
-MASK_5_BITS                         .set    0x1F
 DEFINED_MDIO_MEM_OFFSET             .set    0xE40
 
 ; Global Registers:
 ;   mdio_manual_if_reg
 
-nopx    .macro  COUNT
+nopx        .macro  COUNT
     loop    endLoop?, COUNT-1
     nop
 endLoop?:
+  .endm
 
+nopx_reg    .macro  COUNT_REG
+    loop    endLoop?, COUNT_REG
+    nop
+endLoop?:
   .endm
 
 ;************************************************************************************
@@ -170,9 +171,9 @@ m_mdio_clr_bit  .macro  BIT, baseAddr
 ;************************************************************************************
 m_mdio_toggle_bit_lh   .macro   BIT, baseAddr
     m_mdio_clr_bit      BIT, baseAddr
-    nopx    MDIO_CLK_PERIOD_CONFIG
+    nopx_reg            MDIO_CLK_PERIOD_CONFIG_REG
     m_mdio_set_bit      BIT, baseAddr
-    nopx    MDIO_CLK_PERIOD_CONFIG
+    nopx_reg            MDIO_CLK_PERIOD_CONFIG_REG
 
   .endm
 

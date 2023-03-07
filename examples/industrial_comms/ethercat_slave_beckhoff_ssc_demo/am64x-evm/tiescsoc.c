@@ -82,6 +82,8 @@
 #define DP83869_RX_ERR_CNT_REG_ADDRESS          (0x15)
 
 #define PRUICSS_PRUx                            PRUICSS_TX_PRU0
+#define PRU_REG_10                              (4*10)
+#define PRU_REG_12                              (4*12)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -138,8 +140,10 @@ void tiesc_mdioManualModeSetup()
                        (uint32_t *) PRUFirmware, sizeof(PRUFirmware));
     DebugP_assert(status != 0);
 
-    /* Pass value to R12 of TX_PRU core */
-    CSL_REG32_WR(CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_PDSP_TX0_IRAM_DEBUG_REGS_BASE + (4*12), MDIO_MANUAL_MODE_BASE_ADDRESS);
+    /* Pass value to R10 of TX_PRU core for MDIO FW WA Configuration */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_PDSP_TX0_IRAM_DEBUG_REGS_BASE + PRU_REG_10, MDIO_MANUAL_MODE_FW_CONFIG_VALUE);
+    /* Pass value to R12 of TX_PRU core for emulated MDIO Base Address */
+    CSL_REG32_WR(CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_PDSP_TX0_IRAM_DEBUG_REGS_BASE + PRU_REG_12, MDIO_MANUAL_MODE_BASE_ADDRESS);
 
     /* Run firmware */
     status = PRUICSS_enableCore(pruIcss1Handle, PRUICSS_PRUx);
@@ -227,6 +231,7 @@ void tiesc_socParamsInit(bsp_params *bspInitParams)
     bspInitParams->eeprom_write = tiesc_eepromWrite;
     bspInitParams->spinlock_base_address = CSL_SPINLOCK0_BASE;
     bspInitParams->ethphy_init = tiesc_ethphyInit;
+    /*Change the enhancedlink_enable to TIESC_MDIO_RX_LINK_DISABLE if not using MLINK*/
     bspInitParams->enhancedlink_enable = TIESC_MDIO_RX_LINK_ENABLE;
     bspInitParams->link0_polarity = TIESC_LINK0_POL;
     bspInitParams->link1_polarity = TIESC_LINK1_POL;
@@ -239,6 +244,12 @@ void tiesc_socParamsInit(bsp_params *bspInitParams)
     bspInitParams->pruicssClkFreq = TIESC_PRUICSS_CLOCK_FREQUENCY_333_MHZ;
 #elif CONFIG_PRU_ICSS1_CORE_CLK_FREQ_HZ == (200000000U)
     bspInitParams->pruicssClkFreq = TIESC_PRUICSS_CLOCK_FREQUENCY_200_MHZ;
+#endif
+    /*MDIO_MANUAL_MODE_ENABLED is defined in SysConfig generated code*/
+#ifdef  MDIO_MANUAL_MODE_ENABLED
+    bspInitParams->mdioManualMode = TIESC_MDIO_MANUAL_MODE_FW;
+#else
+    bspInitParams->mdioManualMode = TIESC_MDIO_HW_MODE;
 #endif
 
 

@@ -215,6 +215,7 @@ process path latency improvement can be achieved by disabling below define */
 #define ESC_ADDR_TI_EDMA_LATENCY_ENHANCEMENT    0xE24
 #define ESC_ADDR_TI_PHY_RX_ER_REG               0xE28
 #define ESC_ADDR_TI_PRU_CLK_FREQUENCY           0xE34
+#define ESC_ADDR_TI_MDIO_MANUAL_MODE            0xE35
 #define TI_ESC_RST_CMD_U    0x545352
 #define TI_ESC_RST_CMD_L    0x747372
 
@@ -447,6 +448,18 @@ extern volatile uint32_t ecat_timer_inc_p_ms;
  */
 #define TIESC_PRUICSS_CLOCK_FREQUENCY_333_MHZ (1)
 
+/**
+ * \brief TIESC_MDIO_HW_MODE
+ *  To set the SoC HW mode configuration for MDIO communication
+ */
+#define TIESC_MDIO_HW_MODE                    (0)
+
+/**
+ * \brief TIESC_MDIO_MANUAL_MODE_FW
+ *  To set the manual mode configuration for MDIO communication using FW
+ */
+#define TIESC_MDIO_MANUAL_MODE_FW             (1)
+
 typedef int32_t (*bsp_eeprom_read_t)(uint8_t *buf, uint32_t len);
 typedef int32_t (*bsp_eeprom_write_t)(uint8_t *buf, uint32_t len);
 typedef void (*bsp_init_spinlock_t)(void);
@@ -512,6 +525,10 @@ typedef struct bsp_params_s
     uint8_t                             pruicssClkFreq;
     /**< PRU-ICSS Core Clock and IEP Clock Frequency.
      *   Set TIESC_PRUICSS_CLOCK_FREQUENCY_200_MHZ/TIESC_PRUICSS_CLOCK_FREQUENCY_333_MHZ. Default is TIESC_PRUICSS_CLOCK_FREQUENCY_200_MHZ.
+     *   NOTE : Only applicable for PRU-ICSSG (AM64x/AM243x). Not applicable for PRU-ICSSM(AM263x). */
+    uint8_t                             mdioManualMode;
+    /**< MDIO MANUAL MODE using PRU FW selection.
+     *   When set to 1, it enables usage of PRU FW for MDIO communication with PHYs, else uses MDIO HW only.
      *   NOTE : Only applicable for PRU-ICSSG (AM64x/AM243x). Not applicable for PRU-ICSSM(AM263x). */
 } bsp_params;
 

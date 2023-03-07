@@ -54,10 +54,8 @@ function getPeripheralRequirements(inst, peripheralName, name)
         {
             if((pinResource.name !== "MII0_COL") &&
                (pinResource.name !== "MII0_CRS") &&
-               (pinResource.name !== "MII0_RXLINK") &&
                (pinResource.name !== "MII1_COL") &&
-               (pinResource.name !== "MII1_CRS") &&
-               (pinResource.name !== "MII1_RXLINK"))
+               (pinResource.name !== "MII1_CRS"))
             {
                 resources.push( pinResource );
             }
@@ -67,11 +65,9 @@ function getPeripheralRequirements(inst, peripheralName, name)
             if((pinResource.name !== "MII0_RXER") &&
                (pinResource.name !== "MII0_COL") &&
                (pinResource.name !== "MII0_CRS") &&
-               (pinResource.name !== "MII0_RXLINK") &&
                (pinResource.name !== "MII1_RXER") &&
                (pinResource.name !== "MII1_COL") &&
-               (pinResource.name !== "MII1_CRS") &&
-               (pinResource.name !== "MII1_RXLINK"))
+               (pinResource.name !== "MII1_CRS"))
             {
                 resources.push( pinResource );
             }
@@ -219,10 +215,14 @@ function getConfigurables()
             displayName: "Enable MDIO Manual Mode",
             default: true,
             onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-                else
-                    ui.mdioManualModeBaseAddr.hidden = true;
+                if(inst.manualMode) {
+                    ui.mdioManualModeBaseAddr.hidden    = false;
+                    ui.mdioManualModeLinkPolling.hidden = false;
+                }
+                else {
+                    ui.mdioManualModeBaseAddr.hidden    = true;
+                    ui.mdioManualModeLinkPolling.hidden = true;
+                }
             },
         });
         config.push({
@@ -231,10 +231,23 @@ function getConfigurables()
             default: 0x0001FF00,
             readOnly: true,
             displayFormat: "hex",
-            onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-            },
+        });
+        config.push({
+            name: "mdioManualModeLinkPolling",
+            displayName: "MDIO Manual Mode Link Status Update",
+            default: "Polling",
+            options: [
+                {
+                    name: "MLINK",
+                    displayName: "MLINK Based",
+                    description: "In this MLINK pins for getting link status updates from the PHY",
+                },
+                {
+                    name: "Polling",
+                    displayName: "PHY Polling Based",
+                    description: "In this MDIO WA FW Polls the PHY register for link status",
+                }
+            ],
         });
     }
 
@@ -250,72 +263,12 @@ let ethernetip_module = {
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: ethernetip_module_name,
         },
+        "/drivers/system/system_config.h.xdt": {
+            driver_config: "/industrial_comms/ethernetip/templates/ethernetip.h.xdt",
+        },
     },
     defaultInstanceName: "CONFIG_ETHERNETIP",
-    config: [
-        {
-            name: "instance",
-            displayName: "Instance",
-            default: "ICSSG1",
-            options: [
-                {
-                    name: "ICSSG0",
-                },
-                {
-                    name: "ICSSG1",
-                }
-            ],
-        },
-        {
-            name: "phyToMacInterfaceMode",
-            displayName: "MII/RGMII",
-            default: "MII",
-            options: [
-                {
-                    name: "MII",
-                },
-                {
-                    name: "RGMII",
-                },
-            ],
-        },
-        {
-            name: "phyAddr0",
-            description: "Phy Address of the port 0. Value MUST be between 0 .. 31",
-            displayName: "Phy Address 0",
-            default: 15,
-        },
-        {
-            name: "phyAddr1",
-            description: "Phy Address of Port 1. Value MUST be between 0 .. 31",
-            displayName: "Phy Address 1",
-            default: 3,
-        },
-        {
-            name: "manualMode",
-            description: "Enable MDIO Manual Mode",
-            displayName: "Enable MDIO Manual Mode",
-            default: true,
-            onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-                else
-                    ui.mdioManualModeBaseAddr.hidden = true;
-            },
-        },
-        {
-            name: "mdioManualModeBaseAddr",
-            displayName: "MDIO Manual Mode Base Address",
-            default: 0x0001FF00,
-            readOnly: true,
-            displayFormat: "hex",
-            onChange: (inst, ui) => {
-                if(inst.manualMode)
-                    ui.mdioManualModeBaseAddr.hidden = false;
-            },
-        },
-
-    ],
+    config: getConfigurables(),
     moduleStatic: {
         modules: function(inst) {
             return [{

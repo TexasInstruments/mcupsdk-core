@@ -375,9 +375,9 @@ typedef struct PRUICSS_HWAttrs
  */
 typedef struct PRUICSS_Config_s
 {
-    PRUICSS_Object        *object;
+    PRUICSS_Object    *object;
     /**< Pointer to a driver specific data object */
-    PRUICSS_HwAttrs const *hwAttrs;
+    PRUICSS_HwAttrs   *hwAttrs;
     /**< Pointer to a driver specific hardware attributes structure */
 } PRUICSS_Config;
 

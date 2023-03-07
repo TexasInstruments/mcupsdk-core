@@ -61,6 +61,7 @@
 #include <industrial_comms/hsr_prp/icss_fwhal/hsrPrp_red_config.h>
 #include <industrial_comms/hsr_prp/icss_fwhal/firmware/icss_emac_mmap.h>
 #include <networking/icss_emac/lwipif/inc/lwip2icss_emac.h>
+#include <drivers/mdio.h>
 
 /*--------------------------Stack Related Includes----------------------------*/
 
@@ -922,6 +923,14 @@ int hsr_prp_main()
 
     emachandle = ICSS_EMAC_open(CONFIG_ICSS_EMAC0, &icssEmacParams);
     DebugP_assert(emachandle != NULL);
+#ifdef MDIO_MANUAL_MODE_ENABLED
+    /* Update the user phy sel registers at the emulated register space */
+    uint32_t mdioBaseAddress = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY0))->mdioBaseAddress;
+    uint32_t phy0addr = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY0))->phyAddress;
+    uint32_t phy1addr = ((const ETHPHY_Attrs *)ETHPHY_getAttrs(CONFIG_ETHPHY1))->phyAddress;
+    MDIO_enableLinkInterrupt(mdioBaseAddress, 0, phy0addr, MDIO_LINKSEL_MDIO_MODE);
+    MDIO_enableLinkInterrupt(mdioBaseAddress, 1, phy1addr, MDIO_LINKSEL_MDIO_MODE);
+#endif
 
     DebugP_assert(hsrprp_initICSSPtpHandle(timeSyncHandle, emachandle) == TIME_SYNC_OK);
 

@@ -1531,6 +1531,18 @@ int32_t bsp_init(bsp_params *init_params)
 
     if(status == SystemP_SUCCESS)
     {
+        if(init_params->mdioManualMode > TIESC_MDIO_MANUAL_MODE_FW)
+        {
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            g_bsp_params.mdioManualMode = init_params->mdioManualMode;
+        }
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
 
         pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruIcssHandle->hwAttrs);
 
@@ -1608,7 +1620,8 @@ int32_t bsp_init(bsp_params *init_params)
 
         bsp_write_word(pruIcssHandle, 0x00, ESC_ADDR_TI_EDMA_LATENCY_ENHANCEMENT);
         bsp_write_word(pruIcssHandle, g_bsp_params.phy_rx_err_reg, ESC_ADDR_TI_PHY_RX_ER_REG);
-        bsp_write_word(pruIcssHandle, g_bsp_params.pruicssClkFreq, ESC_ADDR_TI_PRU_CLK_FREQUENCY);
+        bsp_write_byte(pruIcssHandle, g_bsp_params.pruicssClkFreq, ESC_ADDR_TI_PRU_CLK_FREQUENCY);
+        bsp_write_byte(pruIcssHandle, g_bsp_params.mdioManualMode, ESC_ADDR_TI_MDIO_MANUAL_MODE);
 
         bsp_esc_reg_perm_init(pruIcssHandle);
         //Trigger PDI WD on  LATCH_IN or every command send to firmware
