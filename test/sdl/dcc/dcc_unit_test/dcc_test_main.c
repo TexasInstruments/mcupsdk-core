@@ -49,6 +49,8 @@
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
 #endif
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 
 /*===========================================================================*/
@@ -171,7 +173,11 @@ void test_sdl_dcc_baremetal_test_app_runner(void)
 
 int32_t test_main(void)
 {
+	Drivers_open();
+	Board_driversOpen();
     test_sdl_dcc_baremetal_test_app_runner();
+	Board_driversClose();
+	Drivers_close();
 
     return 0;
 }

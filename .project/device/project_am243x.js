@@ -266,6 +266,9 @@ const example_file_list = [
     "examples/sdl/stog_r5f/.project/project.js",
     "test/sdl/stog/stog_func_test_r5f/.project/project.js",
     "test/sdl/stog/stog_unit_test/.project/project.js",
+    "examples/sdl/dcc/dcc_modes/.project/project.js",
+	"test/sdl/dcc/dcc_unit_test/.project/project.js",
+    "test/sdl/dcc/dcc_func_test/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

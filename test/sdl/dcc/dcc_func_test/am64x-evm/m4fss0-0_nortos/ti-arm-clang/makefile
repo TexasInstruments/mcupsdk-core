@@ -65,6 +65,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DM4F_CORE \
 
 CFLAGS_common := \
 	-mcpu=cortex-m4 \

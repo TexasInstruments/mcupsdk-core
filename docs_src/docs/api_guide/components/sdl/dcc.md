@@ -64,6 +64,38 @@ SDL_ESM_config DCC_Test_esmInitConfig_MCU =
 SDL_ECC_init(SDL_ESM_INST_MCU_ESM0, &DCC_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, NULL);
 \endcode
 \endcond
+\cond SOC_AM243X
+\code{.c}
+SDL_ESM_config DCC_Test_esmInitConfig_MCU =
+{
+
+     /**< All high priority events to error pin */
+        .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+	 
+
+};
+
+SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &DCC_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, NULL);
+\endcode
+\endcond
 \cond SOC_AM263X
 \code{.c}
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
@@ -188,6 +220,79 @@ SDL_DCC_enable(SDL_DCC_INST_MCU_DCC0);
 \endcode
 \endcond
 
+
+\cond SOC_AM243X
+Configure MCU DCC Instance 0 seed values and clocks
+
+\code{.c}
+SDL_DCC_Config configParams;
+
+/* Select Input0 to be CLOCK0[2] */
+configParams.clk0Src = SDL_DCC_CLK0_SRC_CLOCK0_2;
+/* Select Input1 to be CLKSRC2 */
+configParams.clk1Src = SDL_DCC_CLK1_SRC_CLOCKSRC2;
+
+/* Not shown:
+ * Determine the clock frequencies for the sources
+ * Figure out the seed values for successful completion
+ * Check DCC example code for reference
+ */
+
+/* Assign the seed values for the clock selections */
+configParams->clk0Seed = clk0_seed_value;
+configParams->clk1Seed = clk1_seed_value;
+configParams->clk0ValidSeed = clk0_valid_seed_value;
+
+retVal = SDL_DCC_configure(SDL_DCC_INST_MCU_DCC0, &configParams);
+
+Configure MCU DCC Instance 0 for continuous mode
+
+\code{.c}
+/* Select continuous mode */
+configParams.mode    = SDL_DCC_MODE_CONTINUOUS;
+\endcode
+
+Or, configure the MCU DCC Instance 0 for single-shot mode.
+
+\code{.c}
+/* Select continuous mode */
+configParams.mode    = SDL_DCC_MODE_SINGLE_SHOT_2;
+
+retVal = SDL_DCC_configure(SDL_DCC_INST_MCU_DCC0, &configParams);
+\endcode
+
+If configuring single-shot mode, also register and enablei the done interrupt. In single-shot mode, the completion (Done) interrupt will happen at the end of the test if there are no errors. If error happens, then ESM interrupt will occur as well as the DCC error interrupt.
+
+\code{.c}
+int32_t                 status = SystemP_SUCCESS;
+HwiP_Params             hwiPrms;
+
+/* Register interrupt */
+HwiP_Params_init(&hwiPrms);
+hwiPrms.intNum      = APP_DCC_INTR_NUM;
+hwiPrms.callback    = &SDL_DCCAppDoneIntrISR;
+status              = HwiP_construct(&gDCCHwiObject, &hwiPrms);
+
+/* Enable the Done interrupt for DCC instance */
+SDL_DCC_enableIntr(SDL_DCC_INST_MCU_DCC0, SDL_DCC_INTERRUPT_DONE);
+
+\endcode
+
+The done interrupt handler should clear the interrupt
+
+\code{.c}
+static void SDL_DCCAppDoneIntrISR(void *arg)
+{
+    SDL_DCC_clearIntr(SDL_DCC_INST_MCU_DCC0, SDL_DCC_INTERRUPT_DONE);
+}
+\endcode
+
+Enable DCC Instance
+
+\code{.c}
+SDL_DCC_enable(SDL_DCC_INST_MCU_DCC0);
+\endcode
+\endcond
 
 \cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 Configure MAIN DCC Instance 0 seed values and clocks

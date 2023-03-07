@@ -49,7 +49,8 @@
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
 #endif
-
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 /*===========================================================================*/
 /*                         Declarations                                      */
 /*===========================================================================*/
@@ -75,7 +76,8 @@ sdlDccTest_t  sdlDccTestList[] = {
     {NULL,             "TERMINATING CONDITION",  SDL_APP_TEST_NOT_RUN }
 };
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined(SOC_AM243X)
+#if defined (M4F_CORE)
 /* Although the test uses only Main Domain events, MCU domain must be enabled
  * in order to receive the Main domain event notification */
 SDL_ESM_config DCC_Test_esmInitConfig_MCU =
@@ -109,6 +111,56 @@ SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
     /**< All high priority events to error pin */
 };
 #endif
+#if defined (R5F_CORE)
+SDL_ESM_config DCC_Test_esmInitConfig_MCU =
+{
+     /**< All high priority events to error pin */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+};
+
+SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
+{
+
+  /**< All high priority events to error pin */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x000000078u, 0x00000000u,0x003f0000u,
+                 0x00000200u, 0x00040380u,
+
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000000u, 0x000000078u, 0x00000000u,0x003f0000u,
+                 0x00000200u, 0x00040380u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x000000078u, 0x00000000u,0x003f0000u,
+                 0x00000200u, 0x00040380u,
+
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+ };
+ #endif
+ #endif
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
@@ -239,7 +291,11 @@ void test_sdl_dcc_baremetal_test_app_runner(void)
 
 int32_t test_main(void)
 {
+	Drivers_open();
+	Board_driversOpen();
     test_sdl_dcc_baremetal_test_app_runner();
+	Board_driversClose();
+	Drivers_close();
 
     return 0;
 }

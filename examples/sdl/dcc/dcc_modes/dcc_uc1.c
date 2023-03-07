@@ -46,6 +46,8 @@
 #include <sdl/dpl/sdl_dpl.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 
 /*===========================================================================*/
@@ -56,11 +58,9 @@ volatile uint32_t isrFlag = 0U;
 volatile uint32_t doneIsrFlag = 0U;
 /**< Flag used to indecate occurrence of the completion interrupt */
 volatile SDL_DCC_Inst gCurDccInst;
-
-#if defined (SOC_AM64X)
-
+#if defined (SOC_AM64X) || defined(SOC_AM243X)
+#if defined (M4F_CORE)
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_m4fss0_core0.h>
-
 #define NUM_USE_CASES          (0x9U)
 
 static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
@@ -89,7 +89,7 @@ static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
         SDL_DCC_CLK1_SRC_CLOCK1,
         200000, /* 200 MHz for SYSCLK0 */
         SDL_DCC_MODE_SINGLE_SHOT_2,
-        SDLR_MCU_M4FSS0_CORE0_NVIC_MCU_DCC0_INTR_DONE_LEVEL_0,
+		SDLR_MCU_M4FSS0_CORE0_NVIC_MCU_DCC0_INTR_DONE_LEVEL_0,
         0xFFFF,
         0x0
     },
@@ -193,6 +193,141 @@ static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
     },
 };
 #endif
+#if defined (R5F_CORE)
+#include <sdl/include/am64x_am243x/sdlr_intr_r5fss0_core0.h>
+#define NUM_USE_CASES          (0x9U)
+
+static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
+{
+    /* Continuous - error generated */
+    {
+        "HFOSC0",
+        "SYSCLK0",
+        SDL_DCC_INST_MCU_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_0,
+        25000, /* 25 MHz for HFOSC0 */
+        SDL_DCC_CLK1_SRC_CLOCK1,
+        200000, /* 200 MHz for SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        APP_DCC_TEST_CLOCK_SRC_1_HIGHER,
+        0x1
+    },
+    /* Single Shot - No error */
+    {
+        "HFOSC0",
+        "SYSCLK0",
+        SDL_DCC_INST_MCU_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_0,
+        25000, /* 25 MHz for HFOSC0 */
+        SDL_DCC_CLK1_SRC_CLOCK1,
+        200000, /* 200 MHz for SYSCLK0 */
+        SDL_DCC_MODE_SINGLE_SHOT_2,
+        SDLR_R5FSS0_CORE0_INTR_MCU_DCC0_INTR_DONE_LEVEL_0,
+        0xFFFF,
+        0x0
+    },
+    /* Continuous - no error */
+    {
+        "HFOSC0",
+        "SYSCLK0",
+        SDL_DCC_INST_MCU_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_0,
+        25000, /* 25MHz for HFOSC0 */
+        SDL_DCC_CLK1_SRC_CLOCK1,
+        200000, /* 200 MHz for SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        0xFFFF,
+        0x0
+    },
+    /* Single Shot - No error */
+    {
+        "RC OSC",
+        "SYSCLK0",
+        SDL_DCC_INST_MCU_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_2,
+        12000, /* 12.5 MHz for RC OSC */
+        SDL_DCC_CLK1_SRC_CLOCK1,
+        200000, /* 200 MHz for SYSCLK0 */
+        SDL_DCC_MODE_SINGLE_SHOT_2,
+		SDLR_R5FSS0_CORE0_INTR_MCU_DCC0_INTR_DONE_LEVEL_0,
+        0xFFFF,
+        0x0
+    },
+    /* Continuous - error generated */
+    {
+        "RC OSC",
+        "SYSCLK0",
+        SDL_DCC_INST_MCU_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_2,
+        12000, /* 12.5 MHz for RC OSC */
+        SDL_DCC_CLK1_SRC_CLOCK1,
+        200000, /* 200 MHz for SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        APP_DCC_TEST_CLOCK_SRC_1_HIGHER,
+        0x1
+    },
+    /* Continuous - no error */
+    {
+        "RC OSC",
+        "SYSCLK0",
+        SDL_DCC_INST_MCU_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_2,
+        12000, /* 12.5 MHz for RC OSC */
+        SDL_DCC_CLK1_SRC_CLOCK1,
+        200000, /* 200 MHz for SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        0xFFFF,
+        0x0
+    },
+    /* Continuous - no error */
+    {
+        "HFOSC0",
+        "MAIN_SYSCLK0",
+        SDL_DCC_INST_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_0,
+        25000, /* 25 MHz for HSOSC0 */
+        SDL_DCC_CLK1_SRC_CLOCKSRC6,
+        500000, /* 500 MHz for MAIN_SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        0xFFFF,
+        0x0
+    },
+    /* Continuous - error generated */
+    {
+        "HFOSC0",
+        "MAIN_SYSCLK0",
+        SDL_DCC_INST_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_0,
+        25000, /* 25 MHz for HSOSC0 */
+        SDL_DCC_CLK1_SRC_CLOCKSRC6,
+        500000, /* 500 MHz for MAIN_SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        SDL_DCC2_DCCCLKSRC1_CLKSRC_OTHER,
+        0x1
+    },
+    /* Continuous - no error */
+    {
+        "RC OSC",
+        "MAIN_SYSCLK0",
+        SDL_DCC_INST_DCC0,
+        SDL_DCC_CLK0_SRC_CLOCK0_2,
+        12000, /* 12.5 MHz for RC OSC */
+        SDL_DCC_CLK1_SRC_CLOCKSRC6,
+        500000, /* 500 MHz for MAIN_SYSCLK0 */
+        SDL_DCC_MODE_CONTINUOUS,
+        0x0,
+        0xFFFF,
+        0x0
+    },
+};
+#endif
+#endif
 
 /*===========================================================================*/
 /*                         Macros                                            */
@@ -218,8 +353,8 @@ static int32_t SDL_DCCAppWaitForCompletion();
 /*===========================================================================*/
 /*                         Global Variables                                  */
 /*===========================================================================*/
-
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined(SOC_AM243X)
+#if defined (M4F_CORE)
 SDL_ESM_config DCC_Test_esmInitConfig_MCU =
 {
     .esmErrorConfig = {0u, 3u}, /* Self test error config - not used in this test*/
@@ -250,6 +385,63 @@ SDL_ESM_config DCC_Test_esmInitConfig_Main =
                       },
     /**< All high priority events to error pin */
 };
+#endif
+#if defined (R5F_CORE)
+
+SDL_ESM_config DCC_Test_esmInitConfig_MCU =
+{
+
+     /**< All high priority events to error pin */
+        .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000006bu, 0x00000000u, 0x00000000u,
+                 0x00000200u, 0x00400380u,
+
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+	 
+
+};
+
+SDL_ESM_config DCC_Test_esmInitConfig_Main =
+{
+
+
+  /**< All high priority events to error pin */
+        .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x000000078u, 0x00000000u,0x003f0000u,
+                 0x00000200u, 0x00040380u,
+
+                },
+     /**< All events enable: except clkstop events for unused clocks
+      *   and PCIE events */
+    .priorityBitmap = {0x00000000u, 0x000000078u, 0x00000000u,0x003f0000u,
+                 0x00000200u, 0x00040380u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x000000078u, 0x00000000u,0x003f0000u,
+                 0x00000200u, 0x00040380u,
+
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+	 
+
+ };
+#endif
 #endif
 
 /*===========================================================================*/
@@ -383,16 +575,17 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntTyp
 {
     int32_t retVal = SDL_PASS;
 
-    DebugP_log("\nInterrupt is generated to ESM\n");
-    DebugP_log("    ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
-                esmInst, esmIntrType, grpChannel, index, intSrc);
-    DebugP_log("    Take action \n\n");
+   DebugP_log("\nInterrupt is generated to ESM\n");
+   DebugP_log("    ESM Call back function called : instType 0x%x, intType 0x%x, " \
+               "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+               esmInst, esmIntrType, grpChannel, index, intSrc);
+   DebugP_log("    Take action \n\n");
 
     isrFlag = DCC_INTERRUPT;
 
     /* Clear DCC event */
     SDL_DCC_clearIntr(gCurDccInst, SDL_DCC_INTERRUPT_ERR);
+
 
     return retVal;
 }
@@ -471,6 +664,7 @@ void test_sdl_dcc_test_app (void)
     {
         DebugP_log("\nDCC_Test_init: Init MCU ESM complete \n\n");
         retVal = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_Main, SDL_ESM_applicationCallbackFunction, NULL);
+
         if (retVal != SDL_PASS)
         {
             /* print error and quit */
@@ -480,6 +674,7 @@ void test_sdl_dcc_test_app (void)
 
     for (i = 0; i < NUM_USE_CASES; i++)
     {
+
         DebugP_log("\nUSECASE: %d\n", i);
 
         DebugP_log("Source clock: %s \n", DCC_Test_UseCaseArray[i].srcStr);
@@ -504,6 +699,7 @@ void test_sdl_dcc_test_app (void)
                                   clk1Freq,
                                   &refClkRatioNum,
                                   &testClkRatioNum);
+								  
 
             configParams.mode    = DCC_Test_UseCaseArray[i].mode;
             configParams.clk0Src = DCC_Test_UseCaseArray[i].clk0;
@@ -516,13 +712,15 @@ void test_sdl_dcc_test_app (void)
                                   testClkRatioNum,
                                   APP_DCC_TEST_CLOCK_SRC_1_DRIFT,
                                   &configParams);
-
+								  
 
             retVal = SDL_DCC_configure(DCC_Test_UseCaseArray[i].dccInst, &configParams);
+			
 
             if (SDL_PASS == retVal)
             {
                 retVal = SDL_DCC_verifyConfig(DCC_Test_UseCaseArray[i].dccInst, &configParams);
+
             }
             else
             {
@@ -531,6 +729,8 @@ void test_sdl_dcc_test_app (void)
 
             if (retVal == SDL_PASS)
             {
+				
+
                 /* Enable ERROR interrupt */
                 SDL_DCC_enableIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_ERR);
 
@@ -540,6 +740,7 @@ void test_sdl_dcc_test_app (void)
                  */
                 if (DCC_Test_UseCaseArray[i].mode != SDL_DCC_MODE_CONTINUOUS)
                 {
+
                     pSDL_DPL_HwipHandle handle;
 
                     SDL_DCCAppRegisterIsr(i, &handle);
@@ -548,6 +749,7 @@ void test_sdl_dcc_test_app (void)
                     SDL_DCC_enableIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_DONE);
 
                     SDL_DCC_enable(DCC_Test_UseCaseArray[i].dccInst);
+					
 
                     if (SDL_PASS == SDL_DCCAppWaitForCompletion())
                     {
@@ -588,9 +790,13 @@ void test_sdl_dcc_test_app (void)
                         if (j > 0x0FFFFFF)
                         {
                             /* Timeout for the wait */
+
+							//DebugP_log("\nDebug dcc_uc1 line no %d (TIMEOUT) \n\n",__LINE__);
                             break;
                         }
+
                     } while (isrFlag == DCC_NO_INTERRUPT);
+
 
                     if (isrFlag == DCC_INTERRUPT)
                     {
@@ -645,7 +851,11 @@ void test_sdl_dcc_test_app (void)
 
 int32_t dcc_test_main(void)
 {
+	Drivers_open();
+	Board_driversOpen();
     test_sdl_dcc_test_app();
+	Board_driversClose();
+	Drivers_close();
     /* Stop the test and wait here */
     while (1);
 }

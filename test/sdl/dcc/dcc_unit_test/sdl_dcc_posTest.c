@@ -265,6 +265,53 @@ int32_t SDL_DCC_posTest(void)
         }
     }
 
+/*******************************************************************************
+ *     Call SDL API SDL_DCC_disableIntr
+ ******************************************************************************/	
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        for(i = 0x0u; i < SDL_DCC_INVALID_INSTANCE; i++)
+        {
+            sdlRet = SDL_DCC_disableIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_DONE);
+
+            if (sdlRet != SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("\n  SDL_DCC_disableIntr: positive test failed on line no: %d \n", __LINE__);
+            }
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        for(i = 0x0u; i < SDL_DCC_INVALID_INSTANCE; i++)
+        {
+            sdlRet = SDL_DCC_disableIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_ERR);
+
+            if (sdlRet != SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("\n  SDL_DCC_disableIntr: positive test failed on line no: %d \n", __LINE__);
+            }
+        }
+    }
+/*******************************************************************************
+ *     Call SDL API SDL_DCC_getBaseaddr
+ ******************************************************************************/
+	if (testStatus == SDL_APP_TEST_PASS)
+    {   
+		uint32_t baseAddr; 
+        for(i= 0x0u; i < SDL_DCC_INVALID_INSTANCE; i++)
+        {
+            sdlRet = SDL_DCC_getBaseaddr((SDL_DCC_Inst)i, &baseAddr);
+
+            if (sdlRet != SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("\n  SDL_DCC_getBaseaddr: positive test failed on line no: %d \n", __LINE__);
+            }
+        }
+    }
 
 /*******************************************************************************
  *     Call SDL API SDL_DCC_clearIntr

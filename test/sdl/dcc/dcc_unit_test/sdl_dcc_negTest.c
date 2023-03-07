@@ -649,6 +649,30 @@ int32_t SDL_DCC_negTest()
         }
     }
 
+/*******************************************************************************
+ *     Call SDL API SDL_DCC_getBaseaddr
+ ******************************************************************************/
+	 if (testStatus == SDL_APP_TEST_PASS)
+    {
+        sdlRet = SDL_DCC_getBaseaddr(invalidInstance, NULL);
+
+        if (sdlRet == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_DCC_getBaseaddr: Negative test failed on line no: %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        sdlRet = SDL_DCC_getBaseaddr(validInstance, NULL);
+
+        if (sdlRet == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_DCC_getBaseaddr: Negative test failed on line no: %d \n", __LINE__);
+        }
+    }
 
 /*******************************************************************************
  *     Call SDL API SDL_DCC_getStaticRegs

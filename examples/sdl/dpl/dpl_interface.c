@@ -127,6 +127,7 @@ int32_t SDL_TEST_deregisterInterrupt(pSDL_DPL_HwipHandle handle)
         gHwiAvail[objNum] = true;
     }
     HwiP_destruct(handle);
+
     return SDL_PASS;
 }
 

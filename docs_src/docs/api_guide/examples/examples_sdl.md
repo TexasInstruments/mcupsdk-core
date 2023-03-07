@@ -17,6 +17,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MTOG
 -# ECC
    -# \subpage EXAMPLES_SDL_ECC
+-# DCC
+   -# \subpage EXAMPLES_SDL_DCC
 \endcond
 
 \cond SOC_AM263X
@@ -93,4 +95,6 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_POK
 -# ECC
   -# \subpage EXAMPLES_SDL_ECC
+-# DCC
+   -# \subpage EXAMPLES_SDL_DCC
 \endcond

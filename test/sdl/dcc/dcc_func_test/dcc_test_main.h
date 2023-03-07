@@ -42,7 +42,7 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 /*===========================================================================*/
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X) 
 #include <sdl/sdl_esm.h>
 #endif
 #include <stdint.h>
@@ -114,7 +114,7 @@ extern "C" {
 /**< Maximum value that can be held in the COUNT1 register (test clock) */
 
 /* Defines that control the clock inputs to DCC and allowed variance */
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_1)
 #define APP_DCC_TEST_CLOCK_SRC_1        (SDL_DCC_CLK1_SRC_CLOCKSRC3)
 #endif
@@ -126,7 +126,7 @@ extern "C" {
 #define APP_DCC_TEST_CLOCK_SRC_1_DRIFT  (2U)
 /**< Allowed drift in percentage (+/-) */
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined(SOC_AM243X)
 #define APP_DCC_INST_STR                "MCU DCC0"
 #define APP_DCC_REF_SRC_CASE_0          SDL_DCC_CLK0_SRC_CLOCK0_0
 #define APP_DCC_REF_SRC_CASE_0_STR      "HFOSC0"
@@ -316,7 +316,7 @@ typedef struct sdlDccTest_s
 /*===========================================================================*/
 extern int32_t SDL_DCC_funcTest(void);
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
