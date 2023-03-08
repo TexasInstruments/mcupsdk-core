@@ -154,7 +154,7 @@ void sdl_test_ccm_test_app(void)
     uint32_t testId;
     int32_t  testResult;
 
-    for (testId = ((uint32_t)(1U)); testId < CCM_TOTAL_NUM_TESTS; testId++)
+    for (testId = ((uint32_t)(0U)); testId < CCM_TOTAL_NUM_TESTS; testId++)
     {
         testResult = CCM_appTest(testId);
         if (testResult != SDL_PASS)
