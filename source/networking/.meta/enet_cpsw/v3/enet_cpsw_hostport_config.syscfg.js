@@ -74,7 +74,7 @@ const enet_cpsw_hostport_config = {
             name: "hostporRxDscpIPv4RemapEn",
             longDescription: "RX DSCP IPv4 remap controls whether the hardware switch priority for IPv4 packets is determined from CPPI thread number (remap disabled) or via \ref ENET_HOSTPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP (remap enabled)",
             displayName: "Enable RX DSCP (IPv4) Re-Map",
-            default: false,
+            default: true,
         },
        {
             name: "hostporRxDscpIPv6RemapEn",

@@ -18,6 +18,10 @@ The example does below
 - Initializes the LwIP stack for TCP/UDP IP and Starts UDP (echo) IGMP Server task.
 - UDP Server task waits for a mg from with multicast IP address from client on port 2638 and echoes back the same message.
 
+\cond SOC_AM263X
+NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
+\endcond
+
 # Supported Combinations
 
 \cond SOC_AM64X

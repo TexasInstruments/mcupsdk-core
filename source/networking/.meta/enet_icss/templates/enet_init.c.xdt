@@ -208,6 +208,50 @@ static int32_t EnetApp_createPhyStateHandlerTask(EnetAppSysCfg_Obj *hEnetAppObj)
 }
 % }
 
+static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
+                                         uint32_t instId)
+{
+    Enet_IoctlPrms prms;
+    Enet_Handle hEnet;
+    EnetMacPort_SetIngressDscpPriorityMapInArgs inArgs;
+    int32_t status;
+    uint8_t numMacPorts;
+    Enet_MacPort macPortList[ENET_SYSCFG_MAX_MAC_PORTS];
+    uint32_t i;
+
+    EnetApp_getEnetInstMacInfo(enetType,
+                               instId,
+                               macPortList,
+                               &numMacPorts);
+
+    hEnet = Enet_getHandle(enetType, instId);
+    /*Configure FT3 filter and classifier and Enable DSCP*/
+    memset(&inArgs, 0, sizeof(inArgs));
+    /* mapped most used 8 dscp priority points to 8 qos levels remaining are routed to 0
+       Write a non zero value to required dscp from 0 to 63 in increasing priority order
+    */
+    inArgs.dscpPriorityMap.tosMap[0]  = 0U;
+    inArgs.dscpPriorityMap.tosMap[10] = 1U;
+    inArgs.dscpPriorityMap.tosMap[18] = 2U;
+    inArgs.dscpPriorityMap.tosMap[26] = 3U;
+    inArgs.dscpPriorityMap.tosMap[34] = 4U;
+    inArgs.dscpPriorityMap.tosMap[46] = 5U;
+    inArgs.dscpPriorityMap.tosMap[48] = 6U;
+    inArgs.dscpPriorityMap.tosMap[56] = 7U;
+
+    inArgs.dscpPriorityMap.dscpIPv4En = 1;
+    for (i = 0; i < numMacPorts; i++)
+    {
+        inArgs.macPort = macPortList[i];
+
+        ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
+        ENET_IOCTL(hEnet, EnetSoc_getCoreId(), ENET_MACPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP, &prms, status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to set dscp Priority map for Port %d - %d \r\n", macPortList[i], status);
+        }
+    }
+}
 
 int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 {
@@ -251,7 +295,7 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     EnetAppUtils_assert(NULL != gEnetAppSysCfgObj.hEnet);
     
     EnetApp_enablePorts(gEnetAppSysCfgObj.hEnet, enetType, instId, selfCoreId, macPortList, numMacPorts);
-
+    EnetApp_ConfigureDscpMapping(enetType, instId);
 % if(instance.McmEnable == true){
     enetMcmCfg.enetType           = enetType;
     enetMcmCfg.instId             = instId;

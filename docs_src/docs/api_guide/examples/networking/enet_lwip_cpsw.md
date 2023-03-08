@@ -25,6 +25,9 @@ The examples do below
 - Example is configured to run in Dual MAC mode.
 \endcond
 
+\cond SOC_AM263X
+Note: In this example, Different Priority Packets are received using a single channel by enabling the default thread Id (for this enChOverrideFlag is set in dmacfg), which allows packets with no classifer match to be received by the host.
+\endcond
 # Supported Combinations
 
 \cond SOC_AM64X

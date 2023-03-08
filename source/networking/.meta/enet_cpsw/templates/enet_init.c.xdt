@@ -2,6 +2,8 @@
     let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
 %%}
 % let instance = module.$instances[0];
+% let common = system.getScript("/common");
+% let device = common.getDeviceName();
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -112,6 +114,12 @@ static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                          Enet_Handle hEnet, 
                                          uint32_t coreKey,
                                          uint32_t coreId);
+
+static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
+                                         uint32_t instId,
+                                         uint32_t coreId,
+                                         Enet_MacPort macPortList[ENET_MAC_PORT_NUM],
+                                         uint8_t numMacPorts);
 
 %if(instance.RtosVariant == "NoRTOS"){
 void EnetApp_phyStateHandler();
@@ -290,6 +298,9 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     
     EnetApp_enablePorts(gEnetAppSysCfgObj.hEnet, enetType, instId, selfCoreId, macPortList, numMacPorts);
 
+%if(device != 'am273x-evm' && device != 'awr294x-evm'){
+    EnetApp_ConfigureDscpMapping(enetType, instId, selfCoreId, macPortList, numMacPorts);
+%}
 % if(instance.McmEnable == true){
     enetMcmCfg.enetType           = enetType;
     enetMcmCfg.instId             = instId;
@@ -327,6 +338,76 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
                             attachInfo.coreKey,
                             selfCoreId);
     return status;
+}
+
+static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
+                                         uint32_t instId,
+                                         uint32_t coreId,
+                                         Enet_MacPort macPortList[ENET_MAC_PORT_NUM],
+                                         uint8_t numMacPorts)
+{
+    Enet_IoctlPrms prms;
+    int32_t status;
+    EnetMacPort_SetIngressDscpPriorityMapInArgs setMacDscpInArgs;
+    EnetPort_DscpPriorityMap setHostDscpInArgs;
+%if(device == 'am263x-cc' || device == 'am263x-lp'){
+    CpswAle_DfltThreadCfg dfltThreadCfg;
+%}
+    uint32_t pri;
+    uint8_t i;
+
+    Enet_Handle hEnet = Enet_getHandle(enetType, instId);
+    memset(&setMacDscpInArgs, 0, sizeof(setMacDscpInArgs));
+    /* Each Port can have different dscp priority mapping values */
+    for (i = 0U; i < numMacPorts; i++)
+    {
+        setMacDscpInArgs.macPort = macPortList[i];
+        setMacDscpInArgs.dscpPriorityMap.dscpIPv4En = true;
+        /* Example Mapping: 0 to 7  dscp values are mapped to 0 priority
+         *                  8 to 15 dscp values are mapped to 1 priority
+         *                  and so on
+         *                  56 to 63 dscp values are mapped to 7 priority
+         */
+        for (pri = 0U; pri < 64U; pri++)
+        {
+            setMacDscpInArgs.dscpPriorityMap.tosMap[pri] = pri/8;
+        }
+        ENET_IOCTL_SET_IN_ARGS(&prms, &setMacDscpInArgs);
+        ENET_IOCTL(hEnet, coreId, ENET_MACPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP, &prms, status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to set dscp Priority map for Port %u - %d \r\n", macPortList[i], status);
+        }
+    }
+
+    /* Fill the dscp priority mapping reg of host port */
+    memset(&setHostDscpInArgs, 0, sizeof(setHostDscpInArgs));
+    setHostDscpInArgs.dscpIPv4En = true;
+    for (pri = 0U; pri < 64U; pri++)
+    {
+        setHostDscpInArgs.tosMap[pri] = pri/8;
+    }
+    ENET_IOCTL_SET_IN_ARGS(&prms, &setHostDscpInArgs);
+    ENET_IOCTL(hEnet, coreId, ENET_HOSTPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP, &prms, status);
+    if (status != ENET_SOK)
+    {
+        EnetAppUtils_print("Failed to set dscp Priority map for Host Port - %d\r\n", status);
+    }
+    /* Enable the p0_rx_remap_dscp_ipv4 in CPPI_P0_Control for host port, This is done through syscfg */
+
+%if(device == 'am263x-cc' || device == 'am263x-lp'){
+    /* Enable Channel override (in EnetApp_updateCpswInitCfg)*/
+    /* Configure the default threadId */
+    memset(&dfltThreadCfg, 0, sizeof(dfltThreadCfg));
+    dfltThreadCfg.dfltThreadEn = true;
+    dfltThreadCfg.threadId = 0;
+    ENET_IOCTL_SET_IN_ARGS(&prms, &dfltThreadCfg);
+    ENET_IOCTL(hEnet,
+               coreId,
+               CPSW_ALE_IOCTL_SET_DEFAULT_THREADCFG,
+               &prms,
+               status);
+%}
 }
 
 static int32_t EnetApp_enablePorts(Enet_Handle hEnet,

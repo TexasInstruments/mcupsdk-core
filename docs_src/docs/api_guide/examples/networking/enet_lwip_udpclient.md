@@ -19,6 +19,10 @@ The example does below
 - UDP Socket Client gets server IP using UART terminal menu from USER, sends data to
 the UDP Server and expects the data from server.
 
+\cond SOC_AM263X
+NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
+\endcond
+
 # Supported Combinations
 
 \cond SOC_AM64X

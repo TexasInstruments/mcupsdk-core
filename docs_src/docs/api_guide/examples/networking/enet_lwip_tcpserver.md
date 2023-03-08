@@ -22,6 +22,10 @@ The example does below
 - TCP Server task waits for connection from client on port 8888. When connection is established, it waits for any message from client.
 - TCP Server task sends back "Greetings from Texas Instruments!" message back to client and closes the connection.
 
+\cond SOC_AM263X
+NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
+\endcond
+
 # Supported Combinations
 
 \cond SOC_AM64X
