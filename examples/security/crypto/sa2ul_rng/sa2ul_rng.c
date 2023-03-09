@@ -41,15 +41,21 @@
 /* SA2UL RNG Output words length */
 #define APP_SA2ULRNG_OUTPUT_WORDS_LENGTH    (4U)
 
+/* Trng mask to enable Trng engine */
+uint32_t gSa2ulEngineEnableMask = CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK;
+
 void sa2ul_rng(void *args)
 {
     Drivers_open();
     Board_driversOpen();
     RNG_Handle     handle   = NULL;
-    uint32_t num_words = APP_SA2ULRNG_OUTPUT_WORDS_LENGTH, out[APP_SA2ULRNG_OUTPUT_WORDS_LENGTH]; 
+    uint32_t num_words = APP_SA2ULRNG_OUTPUT_WORDS_LENGTH, out[APP_SA2ULRNG_OUTPUT_WORDS_LENGTH];
     RNG_Return_t status;
 
     DebugP_log("[SA2UL] Sa2ul Rng example started ...\r\n");
+
+    /* For enable Trng engine */
+    SA2UL_engineEnable(gSa2ulEngineEnableMask);
 
     /* Open Sa2ul instance */
     handle = RNG_open(0);
@@ -92,10 +98,13 @@ void sa2ul_rng(void *args)
     {
         DebugP_log("[SA2UL] Sa2ul Rng output word %d -- 0x%X\r\n",i+1,out[i]);
     }
-    
+
     /* Close RNG instance */
     status = RNG_close(handle);
     DebugP_assert(RNG_RETURN_SUCCESS == status);
+
+    /* For disable Trng engine */
+    SA2UL_engineDisable(gSa2ulEngineEnableMask);
 
     DebugP_log("[SA2UL] Sa2ul Rng example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");

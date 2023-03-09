@@ -592,7 +592,6 @@ static uint32_t SA2UL_hwDeInit(SA2UL_Attrs  *attrs);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-
 void SA2UL_init(void)
 {
     return ;
@@ -600,6 +599,160 @@ void SA2UL_init(void)
 void SA2UL_deinit(void)
 {
     return ;
+}
+
+int32_t SA2UL_engineEnable(int32_t hwEnable)
+{
+    uint32_t        retVal      = SystemP_SUCCESS;
+    SA2UL_Config    *config     = NULL;
+    SA2UL_Attrs     *attrs      = NULL;
+    uint32_t        reg;
+
+    config = &gSa2ulConfig[0];
+    attrs  = config->attrs;
+
+    CSL_Cp_aceRegs *pSaRegs = (CSL_Cp_aceRegs *)attrs->saBaseAddr;
+    /* Is sha enabled in efuses */
+    reg = CSL_FEXT(CSL_REG_RD(&pSaRegs->MMR.EFUSE_EN), CP_ACE_EFUSE_EN_ENABLE);
+    if((reg & 1u) == 0u)
+    {
+        retVal = SystemP_FAILURE;
+    }
+    else
+    {
+        /* Enable specific SA2UL engine modules */
+        reg = CSL_REG_RD(&pSaRegs->UPDATES.ENGINE_ENABLE);
+        switch(hwEnable)
+        {
+            case CSL_CP_ACE_CMD_STATUS_CTXCACH_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CTX_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_CTXCACH_EN_MASK;
+            break;
+            case CSL_CP_ACE_CMD_STATUS_CDMA_IN_PORT_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_IN_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_CDMA_IN_PORT_EN_MASK;
+            break;
+            case CSL_CP_ACE_CMD_STATUS_CDMA_OUT_PORT_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_OUT_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_CDMA_OUT_PORT_EN_MASK;
+            break;
+            case CSL_CP_ACE_CMD_STATUS_PKA_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_PKA_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_PKA_EN_MASK;
+            break;
+            case CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_TRNG_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK;
+            break;
+            case CSL_CP_ACE_CMD_STATUS_AUTHSS_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_AUTHSS_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_AUTHSS_EN_MASK;
+            break;
+            case CSL_CP_ACE_CMD_STATUS_ENCSS_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_ENCSS_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_ENCSS_EN_MASK;
+            default:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CTX_EN, 1u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_IN_EN, 1u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_OUT_EN, 1u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_PKA_EN, 1u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_TRNG_EN, 1u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_AUTHSS_EN, 1u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_ENCSS_EN, 1u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+                reg = CSL_CP_ACE_CMD_STATUS_CTXCACH_EN_MASK       |
+                CSL_CP_ACE_CMD_STATUS_CDMA_IN_PORT_EN_MASK  |
+                CSL_CP_ACE_CMD_STATUS_CDMA_OUT_PORT_EN_MASK |
+                CSL_CP_ACE_CMD_STATUS_PKA_EN_MASK           |
+                CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK          |
+                CSL_CP_ACE_CMD_STATUS_ENCSS_EN_MASK         |
+                CSL_CP_ACE_CMD_STATUS_AUTHSS_EN_MASK;
+        }
+
+
+        /* Consider timeout */
+        while ((reg & CSL_REG_RD(&pSaRegs->MMR.CMD_STATUS)) != reg)
+        {
+        }
+        /* incase timeout */
+        if((reg & CSL_REG_RD(&pSaRegs->MMR.CMD_STATUS)) != reg)
+        {
+            retVal = SystemP_FAILURE;
+        }
+    }
+    return (retVal);
+}
+
+int32_t SA2UL_engineDisable(int32_t hwDisable)
+{
+    uint32_t        retVal  = SystemP_SUCCESS;
+    SA2UL_Config    *config = NULL;
+    SA2UL_Attrs     *attrs  = NULL;
+    uint32_t        reg;
+
+    config = &gSa2ulConfig[0];
+    attrs  = config->attrs;
+
+    CSL_Cp_aceRegs *pSaRegs = (CSL_Cp_aceRegs *)attrs->saBaseAddr;
+    /* Is sha enabled in efuses */
+    reg = CSL_FEXT(CSL_REG_RD(&pSaRegs->MMR.EFUSE_EN), CP_ACE_EFUSE_EN_ENABLE);
+    if((reg & 1u) == 0u)
+    {
+        retVal = SystemP_FAILURE;
+    }
+    else
+    {
+        /* Enable specific SA2UL engine modules */
+        reg = CSL_REG_RD(&pSaRegs->UPDATES.ENGINE_ENABLE);
+        switch(hwDisable)
+        {
+            case CSL_CP_ACE_CMD_STATUS_CTXCACH_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CTX_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            break;
+            case CSL_CP_ACE_CMD_STATUS_CDMA_IN_PORT_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_IN_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            break;
+            case CSL_CP_ACE_CMD_STATUS_CDMA_OUT_PORT_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_OUT_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            break;
+            case CSL_CP_ACE_CMD_STATUS_PKA_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_PKA_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            break;
+            case CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_TRNG_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            break;
+            case CSL_CP_ACE_CMD_STATUS_AUTHSS_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_AUTHSS_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            break;
+            case CSL_CP_ACE_CMD_STATUS_ENCSS_EN_MASK:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_ENCSS_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+            default:
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CTX_EN, 0u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_IN_EN, 0u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_CDMA_OUT_EN, 0u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_PKA_EN, 0u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_TRNG_EN, 0u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_AUTHSS_EN, 0u);
+                CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_ENCSS_EN, 0u);
+                CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
+        }
+
+    }
+    return (retVal);
 }
 
 SA2UL_Handle SA2UL_open(uint32_t index, const SA2UL_Params *params)

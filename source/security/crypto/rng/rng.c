@@ -51,9 +51,6 @@
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
 
-static RNG_Return_t RNG_hwInit(RNG_Attrs  *attrs);
-static RNG_Return_t RNG_hwDeInit(RNG_Attrs  *attrs);
-
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -92,9 +89,6 @@ RNG_Handle RNG_open(uint32_t index)
         }
         else
         {
-            #if defined(SOC_AM64X) || defined(SOC_AM243X)
-            status = RNG_hwInit(config->attrs);
-            #endif
             attrs->isOpen = TRUE;
             handle = (RNG_Handle) config;
         }
@@ -119,9 +113,6 @@ RNG_Return_t RNG_close(RNG_Handle handle)
         attrs->isOpen = FALSE;
         /* TO module disable */
         handle = NULL;
-        #if defined(SOC_AM64X) || defined(SOC_AM243X)
-        RNG_hwDeInit(config->attrs);
-        #endif
         status  = RNG_RETURN_SUCCESS;
     }
     return (status);
@@ -214,56 +205,4 @@ RNG_Return_t RNG_read(RNG_Handle handle, uint32_t *out)
         CSL_REG_WR(&pTrngRegs->TRNG_STATUS, (CSL_CP_ACE_TRNG_INTACK_READY_ACK_MASK << CSL_CP_ACE_TRNG_INTACK_READY_ACK_SHIFT));
     }
     return (retVal);
-}
-
-static RNG_Return_t RNG_hwInit(RNG_Attrs  *attrs)
-{
-    RNG_Return_t retVal = RNG_RETURN_SUCCESS;
-    uint32_t reg;
-    CSL_Cp_aceRegs *pSaRegs = (CSL_Cp_aceRegs *)attrs->caBaseAddr;
-    /* Is sha enabled in efuses */
-    reg = CSL_FEXT(CSL_REG_RD(&pSaRegs->MMR.EFUSE_EN), CP_ACE_EFUSE_EN_ENABLE);
-    if((reg & 1u) == 0u)
-    {
-        retVal = RNG_RETURN_FAILURE;
-    }
-    else
-    {
-        /* Enable specific SA2UL engine modules */
-        reg = CSL_REG_RD(&pSaRegs->UPDATES.ENGINE_ENABLE);
-        CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_TRNG_EN, 1u);
-        CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
-
-        reg = CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK;
-
-        /* incase timeout */
-        if((reg & CSL_REG_RD(&pSaRegs->MMR.CMD_STATUS)) != reg)
-        {
-            retVal = RNG_RETURN_FAILURE;
-        }
-    }
-    return (retVal);
-
-}
-
-static RNG_Return_t RNG_hwDeInit(RNG_Attrs  *attrs)
-{
-    RNG_Return_t retVal  = RNG_RETURN_SUCCESS;
-    uint32_t reg;
-    CSL_Cp_aceRegs *pSaRegs = (CSL_Cp_aceRegs *)attrs->caBaseAddr;
-    /* Is sha enabled in efuses */
-    reg = CSL_FEXT(CSL_REG_RD(&pSaRegs->MMR.EFUSE_EN), CP_ACE_EFUSE_EN_ENABLE);
-    if((reg & 1u) == 0u)
-    {
-        retVal = RNG_RETURN_FAILURE;
-    }
-    else
-    {
-        /* Disable specific SA2UL engine modules */
-        reg = CSL_REG_RD(&pSaRegs->UPDATES.ENGINE_ENABLE);
-        CSL_FINS(reg, CP_ACE_UPDATES_ENGINE_ENABLE_TRNG_EN, 0u);
-        CSL_REG_WR(&pSaRegs->UPDATES.ENGINE_ENABLE, reg);
-    }
-    return (retVal);
-
 }

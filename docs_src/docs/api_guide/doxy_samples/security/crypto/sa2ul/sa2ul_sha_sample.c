@@ -42,7 +42,7 @@ void sa2ul_Sha(void)
 
     /*deinit SA */
     SA2UL_deinit();
-    
+
     /* Kill warning of variable set but not used */
     (void) status;
 

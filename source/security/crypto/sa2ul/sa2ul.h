@@ -462,6 +462,8 @@ typedef struct
 extern SA2UL_Config         gSa2ulConfig[];
 /** \brief Externally defined driver configuration Num */
 extern uint32_t             gSa2ulConfigNum;
+/** \brief Externally defined driver engine configuration mask */
+extern uint32_t             gSa2ulEngineEnableMask;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -482,6 +484,20 @@ void SA2UL_init(void);
  *  \brief  This function de-initializes the SA2UL module
  */
 void SA2UL_deinit(void);
+
+/**
+ *  \brief  This function enable particular SA2UL engine based on user input mask.
+ *
+ *  \param  hwEnableMask Mask to enable user specific engine.
+ */
+int32_t SA2UL_engineEnable(int32_t hwEnableMask);
+
+/**
+ *  \brief  This function disable particular SA2UL engine based on user input mask.
+ *
+ *  \param  hwDisableMask Mask to disable user specific engine.
+ */
+int32_t SA2UL_engineDisable(int32_t hwDisableMask);
 
 /**
  *  \brief  This function opens a given SA2UL module

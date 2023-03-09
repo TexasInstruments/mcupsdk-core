@@ -52,6 +52,9 @@ uint32_t gSa2ulRngOutBuf[TEST_SA2ULRNG_TOTAL_OUT_LENGTH];
 static void test_sa2ulRng(void *args);
 static int32_t test_sa2ulRngOutPutCheck(uint32_t *outArray, uint32_t arrayLength);
 
+/* Trng mask to enable Trng engine */
+uint32_t gSa2ulEngineEnableMask = CSL_CP_ACE_CMD_STATUS_TRNG_EN_MASK;
+
 void test_main(void *args)
 {
     RUN_TEST(test_sa2ulRng, 2133, NULL);
@@ -62,10 +65,13 @@ void test_sa2ulRng(void *args)
     Drivers_open();
     Board_driversOpen();
     RNG_Handle    handle   = NULL;
-    uint32_t i = 0; 
+    uint32_t i = 0;
     RNG_Return_t status = RNG_RETURN_SUCCESS;
 
     DebugP_log("[SA2UL] Sa2ul Rng test started ...\r\n");
+
+    /* For enable Trng engine */
+    SA2UL_engineEnable(gSa2ulEngineEnableMask);
 
     handle = RNG_open(0);
     DebugP_assert(handle != NULL);
@@ -79,9 +85,12 @@ void test_sa2ulRng(void *args)
         TEST_ASSERT_EQUAL_UINT32(RNG_RETURN_SUCCESS, status);
     }
     test_sa2ulRngOutPutCheck((uint32_t *)&gSa2ulRngOutBuf, TEST_SA2ULRNG_TOTAL_OUT_LENGTH);
-    
+
     /* Close RNG instance */
     status = RNG_close(handle);
+
+    /* For disable Trng engine */
+    SA2UL_engineDisable(gSa2ulEngineEnableMask);
 
     DebugP_log("[SA2UL] Sa2ul Rng example completed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
