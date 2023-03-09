@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,14 +49,16 @@ extern "C"
  * @{
  */
 
-/** @brief GetVersion service type ID */ 
+/** @brief GetVersion service type ID */
 #define HSM_MSG_GET_VERSION                      (0x0002)
-/** @brief Boot Notify service type ID */ 
+/** @brief Boot Notify service type ID */
 #define HSM_MSG_BOOT_NOTIFY                      (0x000A)
-/** @brief Get UID service type ID */ 
+/** @brief Get UID service type ID */
 #define HSM_MSG_GET_UID                          (0x9021)
-/** @brief Open Debug Firewalls service type ID */ 
+/** @brief Open Debug Firewalls service type ID */
 #define HSM_MSG_OPEN_DBG_FIREWALLS               (0x900C)
+/** @brief Read Extended otp row type ID */
+#define HSM_MSG_READ_OTP_ROW                     (0x9022)
 
 
 /* message flags */
@@ -70,8 +72,8 @@ extern "C"
 
 /**
  * @brief
- *  HSM FLAG used by HSM client to indicate that it 
- *  does not expects an ACK messasge from HSM and will 
+ *  HSM FLAG used by HSM client to indicate that it
+ *  does not expects an ACK messasge from HSM and will
  *  not wait for a response message.
  */
 #define HSM_FLAG_NAOP                            (0x22)
@@ -90,7 +92,7 @@ extern "C"
  */
 #define HSM_FLAG_NACK                            (0x55)
 
-/** @brief HSM server SIPC client Id */ 
+/** @brief HSM server SIPC client Id */
 #define HSM_CLIENT_ID                            (0x01)
 
 /**
@@ -132,7 +134,7 @@ typedef enum HSM_ClientIds_
     HSM_CLIENT_ID_4,
 } HSM_ClientIds_t ;
 
-/** @} */ 
+/** @} */
 
 #ifdef __cplusplus
 }

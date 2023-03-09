@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -99,6 +99,17 @@ typedef struct HsmClient_t_
 
 /**
  * @brief
+ * This is a EfuseRead type which holds the information
+ * regarding eFuse row and row data corresponding to it .
+ */
+typedef struct EfuseRead_t_
+{
+    uint8_t  rowIdx ;      /** Points index of eFuse row to be read.*/
+    uint32_t rowData ;     /** Points to data retrieved from gp otp registers.*/
+}__attribute__((packed)) EfuseRead_t ;
+
+/**
+ * @brief
  * Initialize the HSM client for current core.
  *
  * @param params [IN] SIPC_notify params.
@@ -172,6 +183,21 @@ int32_t HsmClient_openDbgFirewall(HsmClient_t* HsmClient,
                                         uint8_t* cert,
                                         uint32_t cert_size,
                                         uint32_t timeout);
+
+/**
+ * @brief
+ *  The service issued to HSM Server retrieves the data of GP OTP row
+ *  based on row index provided as param.
+ *
+ * @param HsmClient [IN] HsmClient object.
+ * @param readRow   [IN] populates EfuseRead_t struct with rowData
+ *                       corresponding to rowIdx.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
+                                        EfuseRead_t* readRow);
 
 /**
  * @brief
