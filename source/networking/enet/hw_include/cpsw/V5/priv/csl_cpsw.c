@@ -66,6 +66,9 @@
 #define CPSW_EST_FETCH_ALLOW_SHIFT                      (0U)
 #define CPSW_EST_FETCH_ALLOW_MASK                       (0x000000FFU)
 
+#define CSL_CPSW_GET_HOSTPORT_STAT_START_ADDRESS(x)     (&(x->P0_STATS.RXGOODFRAMES))
+#define CSL_CPSW_GET_MACPORT_STAT_START_ADDRESS(x, y)   (&(x->PN_STATS[y].RXGOODFRAMES))
+
 /********************************************************************************
 ************************* Ethernet Switch (CPSW) Submodule **********************
 ********************************************************************************/
@@ -4032,7 +4035,7 @@ void CSL_CPSW_readEstFetchCmd(CSL_Xge_cpswRegs    *hCpswRegs,
  *
  *   @b Arguments
      @verbatim
-        pCpswStats              Array of CSL_CPSW_STATS structure that needs to be filled
+        pCpswStats              Union of CSL_CPSW_STATS structure that needs to be filled
                                 with the stats read from the hardware. This function expects
                                 that the array passed to it is big enough to hold the stats
                                 for all stat blocks, i.e., size of array passed to this
@@ -4148,14 +4151,17 @@ void CSL_CPSW_readEstFetchCmd(CSL_Xge_cpswRegs    *hCpswRegs,
  *
  *   @b Example
  *   @verbatim
- *      CSL_CPSW_STATS     stats [9];
+ *      union CSL_CPSW_STATS {
+            CSL_CPSW_P0_STATS p0_stats;
+            CSL_CPSW_PN_STATS pn_stats;
+        };
 
         CSL_CPSW_getStats (stats);
 	 @endverbatim
  * =============================================================================
  */
 void CSL_CPSW_getStats (CSL_Xge_cpswRegs *hCpswRegs,
-    CSL_CPSW_STATS*         pCpswStats
+                        union CSL_CPSW_STATS* pCpswStats
 )
 {
     Uint32                      numStats, numBlocks;
@@ -4165,15 +4171,26 @@ void CSL_CPSW_getStats (CSL_Xge_cpswRegs *hCpswRegs,
 
     pStatAddr   =   (Uint32 *)(pCpswStats);
 
-    /* Read the entire stats block for both the
-     * Host and the MAC ports and reset the stats
-     * block when done.
+    /* Read the entire CPSW HW stats block for the Host port, save it in pCpswStats reg and
+     * reset the stats block when done.
      */
-    for (numBlocks = 0; numBlocks < sizeof(hCpswRegs->STATS)/sizeof(hCpswRegs->STATS[0]);
+    pRegAddr    =	CSL_CPSW_GET_HOSTPORT_STAT_START_ADDRESS(hCpswRegs);
+    for (numStats = 0; numStats < sizeof(pCpswStats->p0_stats)/sizeof(Uint32); numStats++)
+    {
+        statval         =   *pRegAddr;
+        *pRegAddr++     =   statval;
+        statval         +=  *pStatAddr;
+        *pStatAddr++    =   statval;
+    }
+
+    /* Read the entire CPSW HW stats block for the MAC ports,  save it in pCpswStats reg and
+     * reset the stats block when done.
+     */
+    for (numBlocks = 0; numBlocks < sizeof(pCpswStats->pn_stats)/sizeof(hCpswRegs->PN_STATS[0]);
          numBlocks++)
     {
-	  pRegAddr    =	&hCpswRegs->STATS[numBlocks].RXGOODFRAMES;
-        for (numStats = 0; numStats < sizeof(CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
+	    pRegAddr    =	CSL_CPSW_GET_MACPORT_STAT_START_ADDRESS(hCpswRegs, numBlocks);
+        for (numStats = 0; numStats < sizeof(pCpswStats->pn_stats)/sizeof(Uint32); numStats++)
         {
             statval         =   *pRegAddr;
             *pRegAddr++     =   statval;
@@ -4187,7 +4204,7 @@ void CSL_CPSW_getStats (CSL_Xge_cpswRegs *hCpswRegs,
 
 void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                  portNum,
-    CSL_CPSW_STATS*         pCpswStats
+    union CSL_CPSW_STATS*   pCpswStats
 )
 {
     Uint32                      numStats;
@@ -4197,17 +4214,24 @@ void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
 
     pStatAddr   =   (Uint32 *)(pCpswStats);
 
-    /* Read the entire stats block for both the
-     * Host and the MAC ports and reset the stats
-     * block when done.
+    if(portNum == 0)
+    {
+        pRegAddr    =	CSL_CPSW_GET_HOSTPORT_STAT_START_ADDRESS(hCpswRegs);
+    }
+    else
+    {
+        pRegAddr    =	CSL_CPSW_GET_MACPORT_STAT_START_ADDRESS(hCpswRegs, portNum - 1);
+    }
+
+    /* Read the entire CPSW HW stats block for the Host/Mac port, save it in pCpswStats reg and
+     * reset the stats block when done.
      */
-	pRegAddr    =	&hCpswRegs->STATS[portNum].RXGOODFRAMES;
-	for (numStats = 0; numStats < sizeof(CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
-	{
-		statval         =   *pRegAddr;
-		*pRegAddr++     =   statval;
-		*pStatAddr++    =   statval;
-	}
+    for (numStats = 0; numStats < sizeof(union CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
+    {
+    	statval         =   *pRegAddr;
+    	*pRegAddr++     =   statval;
+    	*pStatAddr++    =   statval;
+    }
 
     return;
 }
@@ -4247,7 +4271,7 @@ void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
  *
  *   @b Arguments
      @verbatim
-        pCpswStats              Array of CSL_CPSW_STATS structure that needs to be filled
+        pCpswStats              Union of CSL_CPSW_STATS structure that needs to be filled
                                 with the stats read from the hardware. This function expects
                                 that the array passed to it is big enough to hold the stats
                                 for both stat blocks, i.e., size of array passed to this
@@ -4321,7 +4345,7 @@ void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
  * =============================================================================
  */
 void CSL_CPSW_getRawStats (CSL_Xge_cpswRegs *hCpswRegs,
-    CSL_CPSW_STATS*         pCpswStats
+                           union CSL_CPSW_STATS* pCpswStats
 )
 {
     Uint32                      numStats, numBlocks;
@@ -4330,13 +4354,22 @@ void CSL_CPSW_getRawStats (CSL_Xge_cpswRegs *hCpswRegs,
 
     pStatAddr   =   (Uint32 *)(pCpswStats);
 
-    /* Read the entire stats block for both the
-     * Host and the MAC ports
+    /* Read the entire CPSW HW stats block for the Hostport, save it in pCpswStats reg and
+     * reset the stats block when done.
      */
-    for (numBlocks = 0; numBlocks < sizeof(hCpswRegs->STATS)/sizeof(hCpswRegs->STATS[0]); numBlocks++)
+    pRegAddr    =	CSL_CPSW_GET_HOSTPORT_STAT_START_ADDRESS(hCpswRegs);
+    for (numStats = 0; numStats < sizeof(union CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
     {
-        pRegAddr    =	&hCpswRegs->STATS[numBlocks].RXGOODFRAMES;
-        for (numStats = 0; numStats < sizeof(CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
+        *pStatAddr++    =   *pRegAddr++;
+    }
+
+    /* Read the entire CPSW HW stats block for the Macport, save it in pCpswStats reg and
+     * reset the stats block when done.
+     */
+    for (numBlocks = 0; numBlocks < sizeof(hCpswRegs->PN_STATS)/sizeof(hCpswRegs->PN_STATS[0]); numBlocks++)
+    {
+        pRegAddr    =	CSL_CPSW_GET_MACPORT_STAT_START_ADDRESS(hCpswRegs, numBlocks);
+        for (numStats = 0; numStats < sizeof(union CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
         {
             *pStatAddr++    =   *pRegAddr++;
         }
@@ -4347,7 +4380,7 @@ void CSL_CPSW_getRawStats (CSL_Xge_cpswRegs *hCpswRegs,
 
 void CSL_CPSW_getPortRawStats (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                  portNum,
-    CSL_CPSW_STATS*         pCpswStats
+    union CSL_CPSW_STATS*         pCpswStats
 )
 {
     Uint32                      numStats;
@@ -4356,11 +4389,19 @@ void CSL_CPSW_getPortRawStats (CSL_Xge_cpswRegs *hCpswRegs,
 
     pStatAddr   =   (Uint32 *)(pCpswStats);
 
-    /* Read the entire stats block for both the
-     * Host and the MAC ports
+    if(portNum == 0)
+    {
+        pRegAddr    =	CSL_CPSW_GET_HOSTPORT_STAT_START_ADDRESS(hCpswRegs);
+    }
+    else
+    {
+        pRegAddr    =	CSL_CPSW_GET_MACPORT_STAT_START_ADDRESS(hCpswRegs, portNum - 1);
+    }
+
+    /* Read the entire CPSW HW stats block for the Host/Mac port, save it in pCpswStats reg and
+     * reset the stats block when done.
      */
-	pRegAddr    =	&hCpswRegs->STATS[portNum].RXGOODFRAMES;
-	for (numStats = 0; numStats < sizeof(CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
+    for (numStats = 0; numStats < sizeof(union CSL_CPSW_STATS)/sizeof(Uint32); numStats++)
 	{
 		*pStatAddr++    =   *pRegAddr++;
 	}

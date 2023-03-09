@@ -119,6 +119,66 @@ typedef struct {
     volatile uint32_t FETCH_LOC[128];            /* EST Fetch RAM */
 } CSL_Xge_cpswRegs_CPSW_NU_EST;
 
+typedef struct {
+    volatile uint32_t RXGOODFRAMES;              /* RxGoodFrames */
+    volatile uint32_t RXBROADCASTFRAMES;         /* RxBroadcastFrames */
+    volatile uint32_t RXMULTICASTFRAMES;         /* RxMulticastFrames */
+    volatile uint8_t  Resv_16[4];
+    volatile uint32_t RXCRCERRORS;               /* RxCRCErrors */
+    volatile uint8_t  Resv_24[4];
+    volatile uint32_t RXOVERSIZEDFRAMES;         /* RxOversizedFrames */
+    volatile uint8_t  Resv_32[4];
+    volatile uint32_t RXUNDERSIZEDFRAMES;        /* RxUndersizedFrames */
+    volatile uint8_t  Resv_40[4];
+    volatile uint32_t ALE_DROP;                  /* ALE_Drop */
+    volatile uint32_t ALE_OVERRUN_DROP;          /* ALE_Overrun_Drop */
+    volatile uint32_t RXOCTETS;                  /* RxOctets */
+    volatile uint32_t TXGOODFRAMES;              /* TxGoodFrames */
+    volatile uint32_t TXBROADCASTFRAMES;         /* TxBroadcastFrames */
+    volatile uint32_t TXMULTICASTFRAMES;         /* TxMulticastFrames */
+    volatile uint8_t  Resv_76[12];
+    volatile uint32_t TX_SOF_OVERRUN;            /* Tx Start of Frame Overrun */
+    volatile uint32_t TX_MOF_OVERRUN;            /* Tx Middle of Frame Overrun */
+    volatile uint8_t  Resv_100[16];
+    volatile uint32_t TXOCTETS;                  /* TxOctets */
+    volatile uint32_t OCTETFRAMES64;             /* OctetFrames64 */
+    volatile uint32_t OCTETFRAMES65T127;         /* OctetFrames65t127 */
+    volatile uint32_t OCTETFRAMES128T255;        /* OctetFrames128t255 */
+    volatile uint32_t OCTETFRAMES256T511;        /* OctetFrames256t511 */
+    volatile uint32_t OCTETFRAMES512T1023;       /* OctetFrames512t1023 */
+    volatile uint32_t OCTETFRAMES1024TUP;        /* OctetFrames1024tUP */
+    volatile uint32_t NETOCTETS;                 /* NetOctets */
+    volatile uint32_t RX_BOTTOM_OF_FIFO_DROP;    /* Rx_Bottom_of_FIFO_Drop */
+    volatile uint32_t PORTMASK_DROP;             /* Portmask_Drop */
+    volatile uint32_t RX_TOP_OF_FIFO_DROP;       /* Rx_Top_of_FIFO_Drop */
+    volatile uint32_t ALE_RATE_LIMIT_DROP;       /* ALE_Rate_Limit_Drop */
+    volatile uint32_t ALE_VID_INGRESS_DROP;      /* ALE_VID_Ingress_Drop */
+    volatile uint32_t ALE_DA_EQ_SA_DROP;         /* ALE_DA_EQ_SA_Drop */
+    volatile uint32_t ALE_BLOCK_DROP;            /* ALE_Block_Drop */
+    volatile uint32_t ALE_SECURE_DROP;           /* ALE_Secure_Drop */
+    volatile uint32_t ALE_AUTH_DROP;             /* ALE_Auth_Drop */
+    volatile uint32_t ALE_UNKN_UNI;              /* ALE_Unkn_Uni */
+    volatile uint32_t ALE_UNKN_UNI_BCNT;         /* ALE_Unkn_Uni_Bcnt */
+    volatile uint32_t ALE_UNKN_MLT;              /* ALE_Unkn_Mlt */
+    volatile uint32_t ALE_UNKN_MLT_BCNT;         /* ALE_Unkn_Mlt_Bcnt */
+    volatile uint32_t ALE_UNKN_BRD;              /* ALE_Unkn_Brd */
+    volatile uint32_t ALE_UNKN_BRD_BCNT;         /* ALE_Unkn_Brd_Bcnt */
+    volatile uint32_t ALE_POL_MATCH;             /* ALE_Pol_Match */
+    volatile uint32_t ALE_POL_MATCH_RED;         /* ALE_Pol_Match_Red */
+    volatile uint32_t ALE_POL_MATCH_YELLOW;      /* ALE_Pol_Match_Yellow */
+    volatile uint32_t ALE_MULT_SA_DROP;          /* ALE_MULT_SA_DROP */
+    volatile uint32_t ALE_DUAL_VLAN_DROP;        /* ALE_DUAL_VLAN_DROP */
+    volatile uint32_t ALE_LEN_ERROR_DROP;        /* ALE_LEN_ERROR_DROP */
+    volatile uint32_t ALE_IP_NEXT_HDR_DROP;      /* ALE_IP_NEXT_HDR_DROP */
+    volatile uint32_t ALE_IPV4_FRAG_DROP;        /* ALE_IPV4_FRAG_DROP */
+    volatile uint8_t  Resv_376[156];
+    volatile uint32_t TX_MEMORY_PROTECT_ERROR;   /* Tx_Memory_Protect_Error */
+    volatile uint32_t ENET_PN_TX_PRI_REG[8];     /* enet_pn_tx_pri */
+    volatile uint32_t ENET_PN_TX_PRI_BCNT_REG[8];   /* enet_pn_tx_pri_bcnt */
+    volatile uint32_t ENET_PN_TX_PRI_DROP_REG[8];   /* enet_pn_tx_pri_drop */
+    volatile uint32_t ENET_PN_TX_PRI_DROP_BCNT_REG[8];   /* enet_pn_tx_pri_drop_bcnt */
+} CSL_Xge_cpswP0StatsRegs;
+
 
 typedef struct {
     volatile uint32_t RXGOODFRAMES;              /* RxGoodFrames */
@@ -177,13 +237,20 @@ typedef struct {
     volatile uint32_t ALE_LEN_ERROR_DROP;        /* ALE_LEN_ERROR_DROP */
     volatile uint32_t ALE_IP_NEXT_HDR_DROP;      /* ALE_IP_NEXT_HDR_DROP */
     volatile uint32_t ALE_IPV4_FRAG_DROP;        /* ALE_IPV4_FRAG_DROP */
-    volatile uint8_t  Resv_380[156];
+    volatile uint8_t  Resv_320[96];
+    volatile uint32_t IET_RX_ASSEMBLY_ERROR;     /* IET Received Assembly Error */
+    volatile uint32_t IET_RX_ASSEMBLY_OK;        /* IET Received Assembly OK */
+    volatile uint32_t IET_RX_SMD_ERROR;          /* IET Received SMD Error */
+    volatile uint32_t IET_RX_FRAG;               /* IET Received Fragment */
+    volatile uint32_t IET_TX_HOLD;               /* IET Transmit Hold */
+    volatile uint32_t IET_TX_FRAG;               /* IET Transmit Fragment */
+    volatile uint8_t  Resv_380[36];
     volatile uint32_t TX_MEMORY_PROTECT_ERROR;   /* Tx_Memory_Protect_Error */
     volatile uint32_t ENET_PN_TX_PRI_REG[8];     /* enet_pn_tx_pri */
     volatile uint32_t ENET_PN_TX_PRI_BCNT_REG[8];   /* enet_pn_tx_pri_bcnt */
     volatile uint32_t ENET_PN_TX_PRI_DROP_REG[8];   /* enet_pn_tx_pri_drop */
     volatile uint32_t ENET_PN_TX_PRI_DROP_BCNT_REG[8];   /* enet_pn_tx_pri_drop_bcnt */
-} CSL_Xge_cpswStatsRegs;
+} CSL_Xge_cpswPnStatsRegs;
 
 
 typedef struct {
@@ -255,7 +322,8 @@ typedef struct {
     volatile uint8_t  Resv_73728[57344];
     CSL_Xge_cpswRegs_CPSW_NU_EST CPSW_NU_EST[2];
     volatile uint8_t  Resv_106496[31744];
-    CSL_Xge_cpswStatsRegs STATS[3];
+    CSL_Xge_cpswP0StatsRegs P0_STATS;
+    CSL_Xge_cpswPnStatsRegs PN_STATS[2];
 } CSL_Xge_cpswRegs;
 
 
@@ -1510,6 +1578,18 @@ typedef struct {
 #define CSL_XGE_CPSW_STATS_TXMULTICASTFRAMES_COUNT_MASK                        (0xFFFFFFFFU)
 #define CSL_XGE_CPSW_STATS_TXMULTICASTFRAMES_COUNT_SHIFT                       (0x00000000U)
 #define CSL_XGE_CPSW_STATS_TXMULTICASTFRAMES_COUNT_MAX                         (0xFFFFFFFFU)
+
+/* TXSOFOVERRUN */
+
+#define CSL_XGE_CPSW_STATS_TXSOFOVERRUN_COUNT_MASK                             (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_STATS_TXSOFOVERRUN_COUNT_SHIFT                            (0x00000000U)
+#define CSL_XGE_CPSW_STATS_TXSOFOVERRUN_COUNT_MAX                              (0xFFFFFFFFU)
+
+/* TXMOFOVERRUN */
+
+#define CSL_XGE_CPSW_STATS_TXMOFOVERRUN_COUNT_MASK                             (0xFFFFFFFFU)
+#define CSL_XGE_CPSW_STATS_TXMOFOVERRUN_COUNT_SHIFT                            (0x00000000U)
+#define CSL_XGE_CPSW_STATS_TXMOFOVERRUN_COUNT_MAX                              (0xFFFFFFFFU)
 
 /* TXPAUSEFRAMES */
 

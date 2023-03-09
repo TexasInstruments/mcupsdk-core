@@ -571,19 +571,22 @@ void EnetAppUtils_printIcssgPaStats(IcssgStats_Pa *st)
 
 void EnetAppUtils_printHostPortStats2G(CpswStats_HostPort_2g *st)
 {
+    uint32_t i;
+
     EnetAppUtils_printStatsNonZero("  rxGoodFrames            = %llu\r\n", st->rxGoodFrames);
     EnetAppUtils_printStatsNonZero("  rxBcastFrames           = %llu\r\n", st->rxBcastFrames);
     EnetAppUtils_printStatsNonZero("  rxMcastFrames           = %llu\r\n", st->rxMcastFrames);
     EnetAppUtils_printStatsNonZero("  rxCrcErrors             = %llu\r\n", st->rxCrcErrors);
     EnetAppUtils_printStatsNonZero("  rxOversizedFrames       = %llu\r\n", st->rxOversizedFrames);
     EnetAppUtils_printStatsNonZero("  rxUndersizedFrames      = %llu\r\n", st->rxUndersizedFrames);
-    EnetAppUtils_printStatsNonZero("  rxFragments             = %llu\r\n", st->rxFragments);
     EnetAppUtils_printStatsNonZero("  aleDrop                 = %llu\r\n", st->aleDrop);
     EnetAppUtils_printStatsNonZero("  aleOverrunDrop          = %llu\r\n", st->aleOverrunDrop);
     EnetAppUtils_printStatsNonZero("  rxOctets                = %llu\r\n", st->rxOctets);
     EnetAppUtils_printStatsNonZero("  txGoodFrames            = %llu\r\n", st->txGoodFrames);
     EnetAppUtils_printStatsNonZero("  txBcastFrames           = %llu\r\n", st->txBcastFrames);
     EnetAppUtils_printStatsNonZero("  txMcastFrames           = %llu\r\n", st->txMcastFrames);
+    EnetAppUtils_printStatsNonZero("  txSofOverrun            = %llu\r\n", st->txSofOverrun);
+    EnetAppUtils_printStatsNonZero("  txMofOverrun            = %llu\r\n", st->txMofOverrun);
     EnetAppUtils_printStatsNonZero("  txOctets                = %llu\r\n", st->txOctets);
     EnetAppUtils_printStatsNonZero("  octetsFrames64          = %llu\r\n", st->octetsFrames64);
     EnetAppUtils_printStatsNonZero("  octetsFrames65to127     = %llu\r\n", st->octetsFrames65to127);
@@ -610,7 +613,32 @@ void EnetAppUtils_printHostPortStats2G(CpswStats_HostPort_2g *st)
     EnetAppUtils_printStatsNonZero("  alePolicyMatch          = %llu\r\n", st->alePolicyMatch);
     EnetAppUtils_printStatsNonZero("  alePolicyMatchRed       = %llu\r\n", st->alePolicyMatchRed);
     EnetAppUtils_printStatsNonZero("  alePolicyMatchYellow    = %llu\r\n", st->alePolicyMatchYellow);
+    EnetAppUtils_printStatsNonZero("  aleMultSADrop           = %llu\r\n", st->aleMultSADrop);
+    EnetAppUtils_printStatsNonZero("  aleDualVlanDrop         = %llu\r\n", st->aleDualVlanDrop);
+    EnetAppUtils_printStatsNonZero("  aleLenErrorDrop         = %llu\r\n", st->aleLenErrorDrop);
+    EnetAppUtils_printStatsNonZero("  aleIpNextHdrDrop        = %llu\r\n", st->aleIpNextHdrDrop);
+    EnetAppUtils_printStatsNonZero("  aleIPv4FragDrop         = %llu\r\n", st->aleIPv4FragDrop);
     EnetAppUtils_printStatsNonZero("  txMemProtectError       = %llu\r\n", st->txMemProtectError);
+
+    for (i = 0U; i < ENET_ARRAYSIZE(st->txPri); i++)
+    {
+        EnetAppUtils_printStatsWithIdxNonZero("  txPri[%u]                = %llu\r\n", i, st->txPri[i]);
+    }
+
+    for (i = 0U; i < ENET_ARRAYSIZE(st->txPriBcnt); i++)
+    {
+        EnetAppUtils_printStatsWithIdxNonZero("  txPriBcnt[%u]            = %llu\r\n", i, st->txPriBcnt[i]);
+    }
+
+    for (i = 0U; i < ENET_ARRAYSIZE(st->txPriDrop); i++)
+    {
+        EnetAppUtils_printStatsWithIdxNonZero("  txPriDrop[%u]            = %llu\r\n", i, st->txPriDrop[i]);
+    }
+
+    for (i = 0U; i < ENET_ARRAYSIZE(st->txPriDropBcnt); i++)
+    {
+        EnetAppUtils_printStatsWithIdxNonZero("  txPriDropBcnt[%u]        = %llu\r\n", i, st->txPriDropBcnt[i]);
+    }
 }
 
 void EnetAppUtils_printMacPortStats2G(CpswStats_MacPort_2g *st)
@@ -668,6 +696,17 @@ void EnetAppUtils_printMacPortStats2G(CpswStats_MacPort_2g *st)
     EnetAppUtils_printStatsNonZero("  alePolicyMatch          = %llu\r\n", st->alePolicyMatch);
     EnetAppUtils_printStatsNonZero("  alePolicyMatchRed       = %llu\r\n", st->alePolicyMatchRed);
     EnetAppUtils_printStatsNonZero("  alePolicyMatchYellow    = %llu\r\n", st->alePolicyMatchYellow);
+    EnetAppUtils_printStatsNonZero("  aleMultSADrop           = %llu\r\n", st->aleMultSADrop);
+    EnetAppUtils_printStatsNonZero("  aleDualVlanDrop         = %llu\r\n", st->aleDualVlanDrop);
+    EnetAppUtils_printStatsNonZero("  aleLenErrorDrop         = %llu\r\n", st->aleLenErrorDrop);
+    EnetAppUtils_printStatsNonZero("  aleIpNextHdrDrop        = %llu\r\n", st->aleIpNextHdrDrop);
+    EnetAppUtils_printStatsNonZero("  aleIPv4FragDrop         = %llu\r\n", st->aleIPv4FragDrop);
+    EnetAppUtils_printStatsNonZero("  ietRxAssemblyErr        = %llu\r\n", st->ietRxAssemblyErr);
+    EnetAppUtils_printStatsNonZero("  ietRxAssemblyOk         = %llu\r\n", st->ietRxAssemblyOk);
+    EnetAppUtils_printStatsNonZero("  ietRxSmdError           = %llu\r\n", st->ietRxSmdError);
+    EnetAppUtils_printStatsNonZero("  ietRxFrag               = %llu\r\n", st->ietRxFrag);
+    EnetAppUtils_printStatsNonZero("  ietTxHold               = %llu\r\n", st->ietTxHold);
+    EnetAppUtils_printStatsNonZero("  ietTxFrag               = %llu\r\n", st->ietTxFrag);
     EnetAppUtils_printStatsNonZero("  txMemProtectError       = %llu\r\n", st->txMemProtectError);
 
     for (i = 0U; i < ENET_ARRAYSIZE(st->txPri); i++)
@@ -701,13 +740,14 @@ void EnetAppUtils_printHostPortStats9G(CpswStats_HostPort_Ng *st)
     EnetAppUtils_printStatsNonZero("  rxCrcErrors             = %llu\r\n", st->rxCrcErrors);
     EnetAppUtils_printStatsNonZero("  rxOversizedFrames       = %llu\r\n", st->rxOversizedFrames);
     EnetAppUtils_printStatsNonZero("  rxUndersizedFrames      = %llu\r\n", st->rxUndersizedFrames);
-    EnetAppUtils_printStatsNonZero("  rxFragments             = %llu\r\n", st->rxFragments);
     EnetAppUtils_printStatsNonZero("  aleDrop                 = %llu\r\n", st->aleDrop);
     EnetAppUtils_printStatsNonZero("  aleOverrunDrop          = %llu\r\n", st->aleOverrunDrop);
     EnetAppUtils_printStatsNonZero("  rxOctets                = %llu\r\n", st->rxOctets);
     EnetAppUtils_printStatsNonZero("  txGoodFrames            = %llu\r\n", st->txGoodFrames);
     EnetAppUtils_printStatsNonZero("  txBcastFrames           = %llu\r\n", st->txBcastFrames);
     EnetAppUtils_printStatsNonZero("  txMcastFrames           = %llu\r\n", st->txMcastFrames);
+    EnetAppUtils_printStatsNonZero("  txSofOverrun            = %llu\r\n", st->txSofOverrun);
+    EnetAppUtils_printStatsNonZero("  txMofOverrun            = %llu\r\n", st->txMofOverrun);
     EnetAppUtils_printStatsNonZero("  txOctets                = %llu\r\n", st->txOctets);
     EnetAppUtils_printStatsNonZero("  octetsFrames64          = %llu\r\n", st->octetsFrames64);
     EnetAppUtils_printStatsNonZero("  octetsFrames65to127     = %llu\r\n", st->octetsFrames65to127);
@@ -739,12 +779,6 @@ void EnetAppUtils_printHostPortStats9G(CpswStats_HostPort_Ng *st)
     EnetAppUtils_printStatsNonZero("  aleLenErrorDrop         = %llu\r\n", st->aleLenErrorDrop);
     EnetAppUtils_printStatsNonZero("  aleIpNextHdrDrop        = %llu\r\n", st->aleIpNextHdrDrop);
     EnetAppUtils_printStatsNonZero("  aleIPv4FragDrop         = %llu\r\n", st->aleIPv4FragDrop);
-    EnetAppUtils_printStatsNonZero("  ietRxAssemblyErr        = %llu\r\n", st->ietRxAssemblyErr);
-    EnetAppUtils_printStatsNonZero("  ietRxAssemblyOk         = %llu\r\n", st->ietRxAssemblyOk);
-    EnetAppUtils_printStatsNonZero("  ietRxSmdError           = %llu\r\n", st->ietRxSmdError);
-    EnetAppUtils_printStatsNonZero("  ietRxFrag               = %llu\r\n", st->ietRxFrag);
-    EnetAppUtils_printStatsNonZero("  ietTxHold               = %llu\r\n", st->ietTxHold);
-    EnetAppUtils_printStatsNonZero("  ietTxFrag               = %llu\r\n", st->ietTxFrag);
     EnetAppUtils_printStatsNonZero("  txMemProtectError       = %llu\r\n", st->txMemProtectError);
 
     for (i = 0U; i < ENET_ARRAYSIZE(st->txPri); i++)

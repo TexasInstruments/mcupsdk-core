@@ -1362,175 +1362,10 @@ typedef struct {
 
 } CSL_CPSW_ALE_POLICER_ENTRY;
 
-/** @brief
- *
- *  Holds the EMAC statistics.
- *
- *  The statistics structure is the used to retrieve the current count
- *  of various packet events in the system. These values represent the
- *  delta values from the last time the statistics were read.
- */
-typedef struct {
-    /** Good Frames Received                      */
-    Uint32      RxGoodFrames;
-
-    /** Good Broadcast Frames Received            */
-    Uint32      RxBCastFrames;
-
-    /** Good Multicast Frames Received            */
-    Uint32      RxMCastFrames;
-
-    /** PauseRx Frames Received                   */
-    Uint32      RxPauseFrames;
-
-    /** Frames Received with CRC Errors           */
-    Uint32      RxCRCErrors;
-
-    /** Frames Received with Alignment/Code Errors*/
-    Uint32      RxAlignCodeErrors;
-
-    /** Oversized Frames Received                 */
-    Uint32      RxOversized;
-
-    /** Jabber Frames Received                    */
-    Uint32      RxJabber;
-
-    /** Undersized Frames Received                */
-    Uint32      RxUndersized;
-
-    /** Rx Frame Fragments Received               */
-    Uint32      RxFragments;
-
-    /** Rx frames dropped by the ALE              */
-    Uint32      RxAleDrop;
-
-    /** Rx overrun frames dropped by the ALE      */
-    Uint32      RxAleOverrunDrop;
-
-    /** Total Received Bytes in Good Frames       */
-    Uint32      RxOctets;
-
-    /** Good Frames Sent                          */
-    Uint32      TxGoodFrames;
-
-    /** Good Broadcast Frames Sent                */
-    Uint32      TxBCastFrames;
-
-    /** Good Multicast Frames Sent                */
-    Uint32      TxMCastFrames;
-
-    /** PauseTx Frames Sent                       */
-    Uint32      TxPauseFrames;
-
-    /** Frames Where Transmission was Deferred    */
-    Uint32      TxDeferred;
-
-    /** Total Frames Sent With Collision          */
-    Uint32      TxCollision;
-
-    /** Frames Sent with Exactly One Collision    */
-    Uint32      TxSingleColl;
-
-    /** Frames Sent with Multiple Colisions       */
-    Uint32      TxMultiColl;
-
-    /** Tx Frames Lost Due to Excessive Collisions*/
-    Uint32      TxExcessiveColl;
-
-    /** Tx Frames Lost Due to a Late Collision    */
-    Uint32      TxLateColl;
-
-    /** Rx inter-packet gap errors (10G only)     */
-    Uint32      RxIpgError;
-
-    /** Tx Frames Lost Due to Carrier Sense Loss  */
-    Uint32      TxCarrierSLoss;
-
-    /** Total Transmitted Bytes in Good Frames    */
-    Uint32      TxOctets;
-
-    /** Total Tx&Rx with Octet Size of 64         */
-    Uint32      Frame64;
-
-    /** Total Tx&Rx with Octet Size of 65 to 127  */
-    Uint32      Frame65t127;
-
-    /** Total Tx&Rx with Octet Size of 128 to 255 */
-    Uint32      Frame128t255;
-
-    /** Total Tx&Rx with Octet Size of 256 to 511 */
-    Uint32      Frame256t511;
-
-    /** Total Tx&Rx with Octet Size of 512 to 1023*/
-    Uint32      Frame512t1023;
-
-    /** Total Tx&Rx with Octet Size of >=1024     */
-    Uint32      Frame1024tUp;
-
-    /** Sum of all Octets Tx or Rx on the Network */
-    Uint32      NetOctets;
-
-    /** Total Rx bottom of FIFO dropped frames    */
-    Uint32      RxDropBottom;
-
-    /** Total dropped frames due to portmask      */
-    Uint32      PortmaskFrop;
-
-    /** Total Rx top of FIFO dropped frames       */
-    Uint32      RxDropTop;
-
-    /** Total dropped frames due to ALE Rate Limiting */
-    Uint32      AleRateLimitDrop;
-
-    /** Total dropped frames due to ALE VID Ingress   */
-    Uint32      AleVidDrop;
-
-    /** Total dropped frames due to DA=SA             */
-    Uint32      AleAddrEqDrop;
-
-    /** Unused Statistics registers                   */
-    Uint32      Resv1[3];
-
-    /** Total ALE Unknown Unicast frames              */
-    Uint32      AleUnKnUni;
-
-    /** Total ALE Unknown Unicast byte count          */
-    Uint32      AleUnKnUniBytes;
-
-    /** Total ALE Unknown Multicast frames            */
-    Uint32      AleUnKnMulti;
-
-    /** Total ALE Unknown Multicast byte count        */
-    Uint32      AleUnKnMultiBytes;
-
-    /** Total ALE Unknown Broadcast frames            */
-    Uint32      AleUnKnBCast;
-
-    /** Total ALE Unknown Broadcast byte count        */
-    Uint32      AleUnKnBCastBytes;
-
-    /** Total ALE Policer Match frames                */
-    Uint32      AlePolMatch;
-
-    /** Unused Statistics registers                   */
-    Uint32      Resv2[46];
-
-    /** Total Tx Memory Protect CRC Error */
-    Uint32      TxMemProtectErr;
-
-    /** Tx Priority [0-7] Packet Count */
-    Uint32      TxPriPktCnt[8];
-
-    /** Tx Priority [0-7] Byte Count */
-    Uint32      TxPriByteCnt[8];
-
-    /** Tx Priority [0-7] Drop packet Count */
-    Uint32      TxPriDropPktCnt[8];
-
-    /** Tx Priority [0-7] Drop byte Count */
-    Uint32      TxPriDropByteCnt[8];
-
-} CSL_CPSW_STATS;
+union CSL_CPSW_STATS {
+    CSL_Xge_cpswP0StatsRegs p0_stats;
+    CSL_Xge_cpswPnStatsRegs pn_stats;
+};
 
 typedef enum {
     CSL_ALE_POLICER_CONTROL_POLICING_MATCH_MODE_NOMATCH_GREEN,
@@ -5010,7 +4845,7 @@ void CSL_CPSW_readEstFetchCmd(CSL_Xge_cpswRegs    *hCpswRegs,
  *
  *   @b Arguments
      @verbatim
-        pCpswStats              Array of CSL_CPSW_STATS structure that needs to be filled
+        pCpswStats              Union of CSL_CPSW_STATS structure that needs to be filled
                                 with the stats read from the hardware. This function expects
                                 that the array passed to it is big enough to hold the stats
                                 for all stat blocks, i.e., size of array passed to this
@@ -5133,13 +4968,12 @@ void CSL_CPSW_readEstFetchCmd(CSL_Xge_cpswRegs    *hCpswRegs,
  * =============================================================================
  */
 void CSL_CPSW_getStats (CSL_Xge_cpswRegs *hCpswRegs,
-    CSL_CPSW_STATS*         pCpswStats
+    union CSL_CPSW_STATS*         pCpswStats
 );
-
 
 void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                  portNum,
-    CSL_CPSW_STATS*         pCpswStats
+    union CSL_CPSW_STATS*         pCpswStats
 );
 
 
@@ -5178,7 +5012,7 @@ void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
  *
  *   @b Arguments
      @verbatim
-        pCpswStats              Array of CSL_CPSW_STATS structure that needs to be filled
+        pCpswStats              Union of CSL_CPSW_STATS structure that needs to be filled
                                 with the stats read from the hardware. This function expects
                                 that the array passed to it is big enough to hold the stats
                                 for both stat blocks, i.e., size of array passed to this
@@ -5252,13 +5086,13 @@ void CSL_CPSW_getPortStats (CSL_Xge_cpswRegs *hCpswRegs,
  * =============================================================================
  */
 void CSL_CPSW_getRawStats (CSL_Xge_cpswRegs *hCpswRegs,
-    CSL_CPSW_STATS*         pCpswStats
+    union CSL_CPSW_STATS*         pCpswStats
 );
 
 
 void CSL_CPSW_getPortRawStats (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                  portNum,
-    CSL_CPSW_STATS*         pCpswStats
+    union CSL_CPSW_STATS*         pCpswStats
 );
 
 
