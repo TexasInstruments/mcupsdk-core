@@ -3085,6 +3085,308 @@ Execute TPCC Parity Error injection
 \endcode
 \endcond
 
+\cond SOC_AM273X
+## Example Usage of DSS L2 Parity
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the ESM init and DSS DSP parity registers used to inject parity error
+\code{.c}
+#define SDL_ESM_MAX_DSS_EXAMPLE_AGGR				(1u)
+
+#define SDL_INTR_GROUP_NUM                          (1U)
+#define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_ENABLE_ERR_PIN                          (1U)
+
+#define SDL_INJECT_PARITY                           (0x01u)
+
+#define SDL_DSS_DSP_L2RAM_PARITY_ERR_STATUS_VB1     (0x06020074u)
+#define SDL_INITIAL_VALUE                           (0x11u)
+\endcode
+
+ESM callback function
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg)
+{ 
+
+    DebugP_log("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log(" \r\nTake action \r\n");
+    if(esmInstType == 1u){
+        DebugP_log("\r\nHigh Priority Interrupt Executed\r\n");
+    }
+    else{
+        DebugP_log("\r\nLow Priority Interrupt Executed\r\n");
+    }
+	
+    /*
+     *Disable the parity by clearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE
+     *Disable register field
+     */
+    SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_ECC_DSS_L2RAM_PARITY_ERROR_CLEAR);
+	
+	DebugP_log("\r\nclearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE\r\n");
+	
+    esmError = true;
+
+    return 0;
+}
+\endcode
+
+Event BitMap for Parity ESM callback for DSS L2 RAM
+\code{.c}
+SDL_ESM_NotifyParams Parity_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
+{
+     {
+           /* Event BitMap for ECC ESM callback for DSS Single bit*/
+           .groupNumber = SDL_INTR_GROUP_NUM,
+           .errorNumber = SDL_DSS_ESMG1_DSS_DSP_L2_PARITY_ERR_VB0_EVEN,
+           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+           .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+      },	
+};
+\endcode
+
+Enable the parity
+\code{.c}
+SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_ECC_DSS_L2RAM_PARITY_ENABLE);
+\endcode
+
+DSS L2 parity init*/
+\code{.c}
+SDL_ECC_dss_l2_parity_init();
+\endcode
+
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &Parity_TestparamsDSS[counter],NULL,NULL);
+\endcode
+
+On a parity error from a particular bank, reading the register DSS_CTRL.DSS_DSP_L2RAM_PARITY_ERR_STATUS_VBx gives the address location
+\code{.c}
+injectErrAdd = SDL_REG32_RD(SDL_DSS_DSP_L2RAM_PARITY_ERR_STATUS_VB1);
+\endcode
+
+DSS L2 parity error inject
+\code{.c}
+SDL_ECC_dss_l2_parity_errorInject(SDL_INJECT_PARITY, injectErrAdd, SDL_INITIAL_VALUE);
+\endcode
+
+Waiting for ESM Interrupt
+\code{.c}
+do
+{
+	timeOutCnt += 1;
+	if (timeOutCnt > maxTimeOutMilliSeconds)
+	{
+		result = SDL_EFAIL;
+		break;
+	}
+} while (esmError == false);
+\endcode
+
+## Example Usage of DSS EDC Errors
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the ESM init and DSS DSP parity registers used to inject parity error
+\code{.c}
+#define SDL_ESM_MAX_DSS_EXAMPLE_AGGR				(2u)
+
+#define SDL_INTR_GROUP_NUM                          (1U)
+#define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_ENABLE_ERR_PIN                          (1U)
+
+#define SDL_DSS_ECC_NC_ITERRUPT_ID					(111)
+#define SDL_DSS_ECC_C_ITERRUPT_ID					(112)
+
+#define SDL_ENABLE_L1D_DATA_MASK_FLG                (0x01u)
+#define SDL_ENABLE_L1D_TAG_MASK_FLG                 (0x02u)
+#define SDL_ENABLE_L2_TAG_MASK_FLG                  (0x04u)
+#define SDL_ENABLE_L2_SNOP_MASK_FLG                 (0x08u)
+#define SDL_ENABLE_L2_MPPA_MASK_FLG                 (0x10u)
+#define SDL_ENABLE_L2_LRU_MASK_FLG                  (0x20u)
+#define SDL_ENABLE_L1P_TAG_MASK_FLG                 (0x40u)
+
+/* To test above memories one by one then assign any of the above macro to SDL_MEMORY_ENABLE macro*/
+#define SDL_MEMORY_ENABLE							SDL_ENABLE_L1D_DATA_MASK_FLG
+\endcode
+
+ESM Callback Function
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg)
+{
+    
+	DebugP_log("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log("\r\nTake action \r\n");
+
+	/* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER 
+	 * TO disable PROPOGATION OF EXCEPTION
+	 */
+
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
+	
+    esmError = true;
+
+    return 0;
+}
+\endcode
+
+ECC DED Callback Function
+\code{.c}
+int32_t SDL_ECC_DED_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    DebugP_log("\r\nECC DED Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log("\r\nTake action \r\n");
+
+    /* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER
+     * TO disable PROPOGATION OF EXCEPTION
+     */
+
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
+
+    esmError = true;
+
+    return 0;
+}
+\endcode
+
+ECC SEC Callback Function
+\code{.c}
+int32_t SDL_ECC_SEC_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    DebugP_log("\r\nECC SEC Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log("\r\nTake action \r\n");
+
+    /* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER
+     * TO disable PROPOGATION OF EXCEPTION
+     */
+
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
+
+    esmError = true;
+
+    return 0;
+}
+\endcode
+
+Event BitMap for ESM callback for DSP EDC Errors
+\code{.c}
+SDL_ESM_NotifyParams EDC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
+{
+    {
+		/* Event BitMap for EDC ESM callback for DSS Single bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM,
+		.errorNumber = SDL_DSS_ESMG1_DSS_DSP_EDC_SEC_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+	{
+		/* Event BitMap for EDC ESM callback for DSS Double bit*/
+		.groupNumber = SDL_INTR_GROUP_NUM,
+		.errorNumber = SDL_DSS_ESMG1_DSS_DSP_EDC_DED_ERR,
+		.setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+		.enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+		.callBackFunction = &SDL_ESM_applicationCallbackFunction,
+	},
+};
+\endcode
+
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &EDC_TestparamsDSS[counter],NULL,NULL);
+\endcode
+
+Configuring the ESM
+\code{.c}
+intrParams.callbackArg = (uintptr_t)SDL_ESM_INST_DSS_ESM;
+\endcode
+
+Configuring the ECC DED interrupt, Register call back function for vector Config Interrupt and Enable the DED interrupt
+\code{.c}
+intrParams.intNum = SDL_DSS_ECC_NC_ITERRUPT_ID;
+intrParams.callback = (pSDL_DPL_InterruptCallbackFunction)SDL_ECC_DED_applicationCallbackFunction;
+
+SDL_DPL_registerInterrupt(&intrParams, &SDL_EDC_CfgHwiPHandle);
+
+SDL_DPL_enableInterrupt(SDL_DSS_ECC_NC_ITERRUPT_ID);
+\endcode
+
+Configuring the ECC SEC interrupt, Register call back function for vector Config Interrupt and Enable the SEC interrupt
+\code{.c}
+intrParams.intNum = SDL_DSS_ECC_C_ITERRUPT_ID;
+intrParams.callback = (pSDL_DPL_InterruptCallbackFunction)SDL_ECC_SEC_applicationCallbackFunction;
+
+SDL_DPL_registerInterrupt(&intrParams, &SDL_EDC_CfgHwiPHandle);
+
+SDL_DPL_enableInterrupt(SDL_DSS_ECC_C_ITERRUPT_ID);
+\endcode
+
+Write to DSP_ICFG__EDCINTMASK and DSP_ICFG__EDCINTFLG registers to enable and propagate an DSS DSP Memory
+\code{.c}
+SDL_ECC_DSP_Aggregated_EDC_Errors(SDL_MEMORY_ENABLE);
+\endcode
+
+Waiting for ESM Interrupt
+\code{.c}
+do
+{
+	timeOutCnt += 1;
+	if (timeOutCnt > maxTimeOutMilliSeconds)
+	{
+		result = SDL_EFAIL;
+		break;
+	}
+} while (esmError == false);
+\endcode
+
+Read MASK register value after ESM callback 
+\code{.c}
+readValue = SDL_REG32_RD(SDL_DSP_ICFG_EDCINTMASK);
+\endcode
+
+Read FLG register value after ESM callback 
+\code{.c}
+readValue = SDL_REG32_RD(SDL_DSP_ICFG_EDCINTFLG);
+\endcode
+\endcond
+
 ## API
 
 \ref SDL_ECC_AGGR_API

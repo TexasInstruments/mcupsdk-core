@@ -87,6 +87,81 @@ extern "C" {
 @defgroup SDL_ECC_AGGR_ENUM ECC_AGGR Enumerated Data Types
 @ingroup SDL_ECC_AGGR_API
 */
+/**
+@defgroup SDL_ECC_AGGR_MACROS ECC_AGGR Macros
+@ingroup SDL_ECC_AGGR_API
+*/
+/**
+ *  @addtogroup SDL_ECC_AGGR_MACROS
+    @{
+ *
+ */
+/** No interrupt */
+#define SDL_ECC_AGGR_INTR_SRC_NONE                      ((uint32_t) 0U)
+/** Single-bit Error Correcting (SEC) */
+#define SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT                ((uint32_t) 1U)
+/** Double-bit Error Detection (DED) */
+#define SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT                ((uint32_t) 2U)
+/** Two or more successive SEC errors */
+#define SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS  ((uint32_t) 3U)
+/** Denotes an invalid interrupt source */
+#define SDL_ECC_AGGR_INTR_SRC_INVALID                   ((uint32_t) 4U)
+
+/**
+ * @brief This defines the types of possible ECC error controller instances
+ *
+ *
+ */
+/** Error controller instance 1 */
+#define SDL_ECC_AGGR_SELECT_ERR_CTRL1                   (0U)
+/** Error Controller instance 2 */    
+#define SDL_ECC_AGGR_SELECT_ERR_CTRL2                   (1U)
+/** Maximum number of RAM Error Controller registers */    
+#define SDL_ECC_AGGR_MAX_NUM_RAM_ERR_CTRL               (2U)
+    
+/**
+ * @brief This defines the types of possible ECC error status instances
+ *
+ *
+ */
+/** Error Status instance 1 */
+#define SDL_ECC_AGGR_SELECT_ERR_STAT1                   (0U)
+/** Error Status instance 2 */
+#define SDL_ECC_AGGR_SELECT_ERR_STAT2                   (1U)
+/** Error Status instance 3 */
+#define SDL_ECC_AGGR_SELECT_ERR_STAT3                   (2U)
+/** Maximum number of RAM Error Status registers */    
+#define SDL_ECC_AGGR_MAX_NUM_RAM_ERR_STAT               (3U)
+    
+
+/**
+ * @brief This defines the number of enable registers
+ *
+ *
+ */
+#define SDL_ECC_AGGR_NUM_ENABLE_REGISTERS               (8U)
+/** Valid Timeout Error parameter */
+#define SDL_ECC_AGGR_VALID_TIMEOUT_ERR                  (1U)
+/** Valid Timeout Error parameter */
+#define SDL_ECC_AGGR_VALID_PARITY_ERR                   (2U)
+
+/** Zero inject pattern */
+#define SDL_ECC_AGGR_INJECT_PATTERN_ZERO                ((uint32_t) 0U)
+/** Inject pattern 0xF */
+#define SDL_ECC_AGGR_INJECT_PATTERN_F                   ((uint32_t) 1U)
+/** Inject pattern 0xA */
+#define SDL_ECC_AGGR_INJECT_PATTERN_A                   ((uint32_t) 2U)
+/** Inject pattern 0x5 */
+#define SDL_ECC_AGGR_INJECT_PATTERN_5                   ((uint32_t) 3U)
+/* Max Inject pattern */
+#define SDL_ECC_EGGR_INJECT_PATTERN_MAX                 (SDL_ECC_AGGR_INJECT_PATTERN_A)
+
+/** Normal errors */
+#define SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL               ((uint32_t) 0U)
+/** Inject errors */
+#define SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT               ((uint32_t) 1U)
+
+/** @} */
 
 /**
  *  @addtogroup SDL_ECC_AGGR_ENUM
@@ -104,79 +179,7 @@ extern "C" {
  * Design: PROC_SDL-1272
  */
 typedef uint32_t SDL_Ecc_AggrIntrSrc;
-    /** No interrupt */
-#define SDL_ECC_AGGR_INTR_SRC_NONE                      ((uint32_t) 0U)
-    /** Single-bit Error Correcting (SEC) */
-#define SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT                ((uint32_t) 1U)
-    /** Double-bit Error Detection (DED) */
-#define SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT                ((uint32_t) 2U)
-    /** Two or more successive SEC errors */
-#define SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS  ((uint32_t) 3U)
-    /** Denotes an invalid interrupt source */
-#define SDL_ECC_AGGR_INTR_SRC_INVALID                   ((uint32_t) 4U)
 
-/**
- * @brief This defines the types of possible ECC error controller instances
- *
- *
- */
-#define SDL_ECC_AGGR_SELECT_ERR_CTRL1                   (0U)
-    /** Error controller instance 1 */
-#define SDL_ECC_AGGR_SELECT_ERR_CTRL2                   (1U)
-    /** Error Controller instance 2 */
-#define SDL_ECC_AGGR_MAX_NUM_RAM_ERR_CTRL               (2U)
-    /** Maximum number of RAM Error Controller registers */
-
-/**
- * @brief This defines the types of possible ECC error status instances
- *
- *
- */
-#define SDL_ECC_AGGR_SELECT_ERR_STAT1                   (0U)
-    /** Error Status instance 1 */
-#define SDL_ECC_AGGR_SELECT_ERR_STAT2                   (1U)
-    /** Error Status instance 2 */
-#define SDL_ECC_AGGR_SELECT_ERR_STAT3                   (2U)
-    /** Error Status instance 3 */
-#define SDL_ECC_AGGR_MAX_NUM_RAM_ERR_STAT               (3U)
-    /** Maximum number of RAM Error Status registers */
-
-/**
- * @brief This defines the number of enable registers
- *
- *
- */
-#define SDL_ECC_AGGR_NUM_ENABLE_REGISTERS               (8U)
-
-
-/**
- * @brief This defines the valid ecc aggr error configuration
- *
- *
- */
-typedef uint8_t     SDL_ecc_aggrValid;
-#define SDL_ECC_AGGR_VALID_TIMEOUT_ERR                  (1U)
-    /** Valid Timeout Error parameter */
-#define SDL_ECC_AGGR_VALID_PARITY_ERR                   (2U)
-    /** Valid Timeout Error parameter */
-
-/**
- * @brief This enumerator defines the types of ECC patterns
- *
- * Design: PROC_SDL-1273
- *
- */
-typedef uint32_t SDL_Ecc_injectPattern;
-    /** Zero inject pattern */
-#define SDL_ECC_AGGR_INJECT_PATTERN_ZERO                 ((uint32_t) 0U)
-    /** Inject pattern 0xF */
-#define SDL_ECC_AGGR_INJECT_PATTERN_F                    ((uint32_t) 1U)
-    /** Inject pattern 0xA */
-#define SDL_ECC_AGGR_INJECT_PATTERN_A                    ((uint32_t) 2U)
-    /** Inject pattern 0x5 */
-#define SDL_ECC_AGGR_INJECT_PATTERN_5                    ((uint32_t) 3U)
-   /* Max Inject pattern */
-#define SDL_ECC_EGGR_INJECT_PATTERN_MAX                  (SDL_ECC_AGGR_INJECT_PATTERN_A)
 
 /**
  * @brief This enumerator defines the types of possible EDC errors
@@ -185,11 +188,22 @@ typedef uint32_t SDL_Ecc_injectPattern;
  *
  */
 typedef uint32_t SDL_Ecc_AggrEDCErrorSubType;
-    /** Normal errors */
-#define SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL                  ((uint32_t) 0U)
-    /** Inject errors */
-#define SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT                  ((uint32_t) 1U)
 
+
+/**
+ * @brief This defines the valid ecc aggr error configuration
+ *
+ *
+ */
+typedef uint8_t  SDL_ecc_aggrValid;
+
+/**
+ * @brief This enumerator defines the types of ECC patterns
+ *
+ * Design: PROC_SDL-1273
+ *
+ */
+typedef uint32_t SDL_Ecc_injectPattern;
 /** @} */
 
 /**

@@ -5022,6 +5022,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies DSS L2 memory parity CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_l2_parity_example",
+        "location": "../../examples/sdl/parity/sdl_dss_l2_parity/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dss_l2_parity",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies STC is Done for R5F core followed by DSP Core. CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stc",
         "location": "../../examples/sdl/stc/stc_mcu/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5609,6 +5642,105 @@
             "sdl",
             "parity",
             "sdl_dma_parity",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies single-bit and double-bit error detection errors from the DSP L1 and L2 memory using EDC registers CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_edc_example",
+        "location": "../../examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_dss_dsp_edc",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies EDC inject operations for DSS L2 memory in single and double bits CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_l2_edc_example",
+        "location": "../../examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "sdl_dss_l2_edc",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies Parity inject operations for DSS L1 memory CPU is C66SS0 running NORTOS.",
+        "name": "sdl_dss_l1_parity_example",
+        "location": "../../examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dss_l1_parity",
             "c66ss0_nortos"
         ],
         "mainCategories": [

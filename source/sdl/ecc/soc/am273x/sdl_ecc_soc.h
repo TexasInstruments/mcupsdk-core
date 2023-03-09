@@ -77,7 +77,6 @@
 #define SDL_R5FSS0_CORE0_TPCCA_PARITY_STATUS		(0x060200C8U)
 #define SDL_R5FSS0_CORE0_TPCCB_PARITY_STATUS		(0x060200CCU)
 #define SDL_R5FSS0_CORE0_TPCCC_PARITY_STATUS		(0x060200D0U)
-
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_R5FSS0_CORE0_ECC_AGGR
  * -----------------------------------------------------------------------------------

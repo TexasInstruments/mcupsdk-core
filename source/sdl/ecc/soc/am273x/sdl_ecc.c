@@ -48,19 +48,59 @@
 #include <sdl/ecc/sdl_ecc_priv.h>
 #include <sdl/dpl/sdl_dpl.h>
 
+/* ========================================================================== */
+/*                           Macros                                            */
+/* ========================================================================== */
 /* Local defines */
-#define SDL_ECC_INVALID_ERROR_SOURCE      (0xffffffffu)
-#define SDL_ECC_BITS_PER_WORD             (32U)
-#define ECC_AGGR_LINE_SIZE                (4U)
-#define SDL_ECC_INVALID_SELF_TEST_RAM_ID  (0xffffffffu)
-#define SDL_ECC_INVALID_CHECKER_TYPE      (0xffffffffu)
-#define SDL_ESM_MAX_MSS_PARAM_MAP_WORDS   (10U)
-#define SDL_ESM_MAX_DSS_PARAM_MAP_WORDS   (2U)
+#define SDL_ECC_INVALID_ERROR_SOURCE            (0xffffffffu)
+#define SDL_ECC_BITS_PER_WORD                   (32U)
+#define ECC_AGGR_LINE_SIZE                      (4U)
+#define SDL_ECC_INVALID_SELF_TEST_RAM_ID        (0xffffffffu)
+#define SDL_ECC_INVALID_CHECKER_TYPE            (0xffffffffu)
+#define SDL_ESM_MAX_MSS_PARAM_MAP_WORDS         (10U)
+#define SDL_ESM_MAX_DSS_PARAM_MAP_WORDS         (2U)
 
-#define SDL_INTR_GROUP_NUM                (1U)
-#define SDL_INTR_PRIORITY_LVL             (1U)
-#define SDL_ENABLE_ERR_PIN                (1U)
+#define SDL_INTR_GROUP_NUM                      (1U)
+#define SDL_INTR_PRIORITY_LVL                   (1U)
+#define SDL_ENABLE_ERR_PIN                      (1U)
 
+#define SDL_DSS_DSP_L2RAM_PARITY_MEMINIT_START  (0x0602008Cu)
+#define SDL_DSS_DSP_L2RAM_PARITY_MEMINIT_DONE   (0x06020094u)
+#define SDL_ECC_DSS_L2RAM_PARITY_MEM_INIT       (0xffu)
+
+#define SDL_DSS_DSP_L2RAM_PARITY_CTRL           (0x0602006Cu)
+#define SDL_ECC_DSS_L2RAM_PARITY_ENABLE         (0xffu)
+#define SDL_ECC_DSS_L2RAM_PARITY_ERROR_CLEAR    (0xff00u)
+
+#define SDL_DSP_ICFG_EDCINTMASK                 (0x01831100u) /*Error Detect and Correct Interrupt Mask Register*/
+#define SDL_DSP_ICFG_EDCINTFLG                  (0x01831104u) /*Error Detect and Correct Interrupt Flag Register*/
+
+/*DSS DSP L2 command Registers*/
+#define SDL_L1PEDCMD_EN                         (0x00000000U)
+#define SDL_L1PEDCMD_SUSP                       (0x00000003U)
+
+/*DSS DSP ICFG EDC Registers*/
+#define SDL_DSP_ICFG_L1PEDSTAT                  (0x01846404U) /*L1 Error Detection Status Register*/
+#define SDL_DSP_ICFG_L1PEDCMD                   (0x01846408U) /*L1 Error Detection Command Register*/
+
+/*DSS DSP L2 command Registers*/
+#define SDL_L2EDCMD_EN                          (0x00000000U)
+#define SDL_L2EDCMD_SUSP                        (0x00000003U)
+
+/*DSS DSP ICFG EDC Registers*/
+#define SDL_DSP_ICFG_L2EDSTAT                   (0x01846004U) /*L2 Error Detection Status Register*/
+#define SDL_DSP_ICFG_L2EDCMD                    (0x01846008U) /*L2 Error Detection Command Register*/
+
+#define SDL_DSP_ICFG_IDMA1_SOURCE               (0x01820108U) /*IDMA Channel 1 Source Address*/
+#define SDL_DSP_ICFG_IDMA1_DEST                 (0x0182010cU) /*IDMA Channel 1 Destination Address*/
+#define SDL_DSP_ICFG_IDMA1_COUNT                (0x01820110U) /*IDMA Channel 1 Count*/
+
+#define SDL_DSP_ICFG__IDMA1_COUNT__PRI__POS     (29)
+#define SDL_DSP_ICFG__IDMA1_COUNT__INT__POS     (28)
+#define SDL_DSP_ICFG_COUNT_VAL                  ((7 << SDL_DSP_ICFG__IDMA1_COUNT__PRI__POS) | (1 << SDL_DSP_ICFG__IDMA1_COUNT__INT__POS) | 0x1000)
+
+#define SDL_DSP_ICFG_STAT_EN                    (1)
+#define SDL_DSP_ICFG_STAT_SUSP                  (8)
 /* ========================================================================== */
 /*                           enums                                            */
 /* ========================================================================== */
@@ -137,6 +177,9 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 									 uint32_t setmask,
 									 uint32_t paramregs,
 									 uint32_t paramval);
+
+static void SDL_ECC_dss_l2_parity_memInit(void);
+
 /* Event BitMap for ECC ESM callback for MSS */
 SDL_ESM_NotifyParams paramsMSS[SDL_ESM_MAX_MSS_PARAM_MAP_WORDS] =
 {
@@ -1703,4 +1746,234 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 
 	return ((int32_t)result);
 
+}
+
+/***********************************************************************
+ *
+ * \brief   DSS L2 parity memory init
+ *
+ * \param1  void
+ * @return  void
+ **********************************************************************/
+static void SDL_ECC_dss_l2_parity_memInit(void)
+{
+    /* Initialization of DSS L2 memory*/
+    SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_MEMINIT_START, SDL_ECC_DSS_L2RAM_PARITY_MEM_INIT);
+
+    /*Poll till memory initialization*/
+    while(SDL_REG32_RD(SDL_DSS_DSP_L2RAM_PARITY_MEMINIT_DONE)!=SDL_ECC_DSS_L2RAM_PARITY_MEM_INIT);
+
+    /* Clear Done memory after MEM init*/
+    SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_MEMINIT_DONE, SDL_ECC_DSS_L2RAM_PARITY_MEM_INIT);
+
+}/*End of SDL_ECC_dss_l2_parity_memInit()*/
+
+/***********************************************************************
+ *
+ * \brief   DSS L2 parity init
+ *
+ * \param1  void
+ * @return  void
+ **********************************************************************/
+void SDL_ECC_dss_l2_parity_init(void)
+{
+    /*DSS L2 parity memory init*/
+    SDL_ECC_dss_l2_parity_memInit();
+
+    /*
+     * Write 0xFF to DSS_CTRL. DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE
+     * register field to enable parity. Each bit corresponds to an L2 Bank
+     */
+    SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_ECC_DSS_L2RAM_PARITY_ENABLE);
+
+}/*End of SDL_ECC_dss_l2_parity_init()*/
+
+/***********************************************************************
+ *
+ * \brief   DSS L2 parity error inject
+ *
+ * \param1  injectError : single bit inject for parity error
+ * \param2  injectErrAdd: Inject memory address
+ * \param3  value	    : Initial value before injecting
+ * @return  void
+ **********************************************************************/
+void SDL_ECC_dss_l2_parity_errorInject(uint32_t injectError, uint32_t injectErrAdd, uint32_t value)
+{
+    /*Write to a memory location "injectErrAdd" when the parity is enabled*/
+    SDL_REG32_WR(injectErrAdd, value);
+
+    /*
+     *Disable the parity by clearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE
+     *Disable register field
+     */
+    SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_ECC_DSS_L2RAM_PARITY_ERROR_CLEAR);
+
+    /*Toggle a single bit in DSS L2 memory*/
+    SDL_REG32_WR(injectErrAdd, injectError);
+
+    /*Read injected error address memory*/
+    SDL_REG32_RD(injectErrAdd);
+
+    /*
+     * Enable the parity
+     */
+    SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_ECC_DSS_L2RAM_PARITY_ENABLE);
+
+    /*Read injected error address memory*/
+    SDL_REG32_RD(injectErrAdd);
+
+}/*End of SDL_ECC_dss_l2_parity_errorInject()*/
+
+/***********************************************************************
+ *
+ * \brief   The single-bit error correction and double-bit error
+ *          detection errors from the memories of L1 and L2 using EDC
+ *          Mask and FLG registers
+ *
+ * \param1  exception_mask_flag : Register value used to enable
+ *                                propagation of particular exceptions
+ * @return  void
+ **********************************************************************/
+void SDL_ECC_DSP_Aggregated_EDC_Errors(uint32_t exception_mask_flag)
+{
+    /*Write to DSP_ICFG__EDCINTMASK REGISTER TO ENABLE PROPOGATION OF
+     *particular EXCEPTION
+     */
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, exception_mask_flag);
+
+    /*Write to DSP_ICFG__EDCINTFLG REGISTER TO PROPOGATE AN particular
+     * EXCEPTION
+     */
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, exception_mask_flag);
+
+}/*End of SDL_ECC_DSP_Aggregated_EDC_Errors()*/
+
+/***********************************************************************
+ *
+ * \brief   EDC Command Enable for L1P memory
+ *
+ * \param1  void
+ * @return  SDL_PASS or SDL_EFAIL
+ **********************************************************************/
+int32_t SDL_ECC_dss_l1p_edc_CMD_EN(void)
+{
+    int32_t retVal = SDL_PASS;
+    uint32_t maxTimeOutMilliSeconds = 1000000000u;
+    uint32_t timeOutCnt = 0u;
+    /*Enable the Error Detect logic by writing a 0x1 to DSP_ICFG.L1PEDCMD.EN bit*/
+    SDL_REG32_WR(SDL_DSP_ICFG_L1PEDCMD, (0x1 << SDL_L1PEDCMD_EN));
+
+    /*Poll till the bit DSP_ICFG.L1PEDSTAT.EN is set to 0x1*/
+    while(SDL_REG32_RD(SDL_DSP_ICFG_L1PEDSTAT)!=SDL_DSP_ICFG_STAT_EN)
+    {
+        if (timeOutCnt > maxTimeOutMilliSeconds)
+        {
+            retVal = SDL_EFAIL;
+            break;
+        }
+    }
+    return retVal;
+}/* End of SDL_ECC_dss_l1p_edc_CMD_EN() */
+
+/***********************************************************************
+ *
+ * \brief   EDC Command Suspend for L1P memory
+ *
+ * \param1  void
+ * @return  SDL_PASS or SDL_EFAIL
+ **********************************************************************/
+int32_t SDL_ECC_dss_l1p_CMD_SUSP(void)
+{
+    int32_t retVal = SDL_PASS;
+    uint32_t maxTimeOutMilliSeconds = 1000000000u;
+    uint32_t timeOutCnt = 0u;
+    /*Suspend the Error Detect logic by writing a 0x1 to DSP_ICFG.L1PEDCMD.SUSP bit*/
+    SDL_REG32_WR(SDL_DSP_ICFG_L1PEDCMD, (0x1 << SDL_L1PEDCMD_SUSP));
+
+    /*Poll till the bit DSP_ICFG.L1PEDSTAT.SUSP is set to 0x1*/
+    while(SDL_REG32_RD(SDL_DSP_ICFG_L1PEDSTAT)!=SDL_DSP_ICFG_STAT_SUSP)
+    {
+        if (timeOutCnt > maxTimeOutMilliSeconds)
+        {
+            retVal = SDL_EFAIL;
+            break;
+        }
+    }
+    return retVal;
+}/*End of SDL_ECC_dss_l1p_CMD_SUSP()*/
+
+/***********************************************************************
+ *
+ * \brief   EDC Command Enable for L2 memory
+ *
+ * \param1  void
+ * @return  SDL_PASS or SDL_EFAIL
+ **********************************************************************/
+int32_t SDL_ECC_dss_l2_edc_CMD_EN(void)
+{
+    int32_t retVal = SDL_PASS;
+    uint32_t maxTimeOutMilliSeconds = 1000000000u;
+    uint32_t timeOutCnt = 0u;
+    /*Enable the Error Detect logic by writing a 0x1 to DSP_ICFG.L2EDCMD.EN bit*/
+    SDL_REG32_WR(SDL_DSP_ICFG_L2EDCMD, (0x1 << SDL_L2EDCMD_EN));
+
+    /*Poll till the bit DSP_ICFG.L2EDSTAT.EN is set to 0x1*/
+    while(SDL_REG32_RD(SDL_DSP_ICFG_L2EDSTAT)!=SDL_DSP_ICFG_STAT_EN)
+    {
+        if (timeOutCnt > maxTimeOutMilliSeconds)
+        {
+            retVal = SDL_EFAIL;
+            break;
+        }
+    }
+    return retVal;
+}/* End of SDL_ECC_dss_l2_edc_CMD_EN() */
+
+/***********************************************************************
+ *
+ * \brief   EDC Command Suspend for L2 memory
+ *
+ * \param1  void
+ * @return  SDL_PASS or SDL_EFAIL
+ **********************************************************************/
+int32_t SDL_ECC_dss_l2_CMD_SUSP(void)
+{
+    int32_t retVal = SDL_PASS;
+    uint32_t maxTimeOutMilliSeconds = 1000000000u;
+    uint32_t timeOutCnt = 0u;
+    /*Suspend the Error Detect logic by writing a 0x1 to DSP_ICFG.L2EDCMD.SUSP bit*/
+    SDL_REG32_WR(SDL_DSP_ICFG_L2EDCMD, (0x1 << SDL_L2EDCMD_SUSP));
+
+    /*Poll till the bit DSP_ICFG.L2EDSTAT.SUSP is set to 0x1*/
+    while(SDL_REG32_RD(SDL_DSP_ICFG_L2EDSTAT)!=SDL_DSP_ICFG_STAT_SUSP)
+    {
+        if (timeOutCnt > maxTimeOutMilliSeconds)
+        {
+            retVal = SDL_EFAIL;
+            break;
+        }
+    }
+    return retVal;
+}/*End of SDL_ECC_dss_l2_CMD_SUSP()*/
+
+/***********************************************************************
+ *
+ * \brief   IDMA 1 Transfer function
+ *
+ * \param1  srcAddr : Source address of the IDMA 1 transfer
+ * \param2  destAddr: Destination address of the IDMA 1 transfer
+ *
+ * @return  void
+ **********************************************************************/
+void SDL_ECC_IDMA1_transfer(uint32_t srcAddr, uint32_t destAddr)
+{
+
+    /* Configure the IDMA1 Source address */
+    SDL_REG32_WR(SDL_DSP_ICFG_IDMA1_SOURCE, srcAddr);
+
+    /* Configure the IDMA1 Destination address */
+    SDL_REG32_WR(SDL_DSP_ICFG_IDMA1_DEST, destAddr);
+
+    /* Configure the IDMA1 Count value */
+    SDL_REG32_WR(SDL_DSP_ICFG_IDMA1_COUNT, SDL_DSP_ICFG_COUNT_VAL);
 }
