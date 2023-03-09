@@ -139,6 +139,12 @@ const enet_cpsw_phy1_config =
             displayName: "Strapped Mode",
             default: false,
         },
+        {
+            name: "disableRgmiiIntDelay1",
+            description: "Set for disabling RGMII port internal delay mode",
+            displayName: "Disable RGMII Internal delay",
+            default: false,
+        },
     ],
 };
 
@@ -182,6 +188,12 @@ const enet_cpsw_phy2_config =
             displayName: "Strapped Mode",
             default: false,
         },
+        {
+            name: "disableRgmiiIntDelay2",
+            description: "Set for disabling RGMII port internal delay mode",
+            displayName: "Disable RGMII Internal delay",
+            default: false,
+        },
     ],
 };
 
@@ -202,17 +214,21 @@ const enet_cpsw_board_config = {
                     ui.phyAddr1.hidden = true;
                     ui.isC45Phy1.hidden = true;
                     ui.isStrappedPhy1.hidden = true;
+                    ui.disableRgmiiIntDelay1.hidden = true;
                     ui.phyAddr2.hidden = true;
                     ui.isC45Phy2.hidden = true;
                     ui.isStrappedPhy2.hidden = true;
+                    ui.disableRgmiiIntDelay2.hidden = true;
                 }
                 else {
                     ui.phyAddr1.hidden = false;
                     ui.isC45Phy1.hidden = false;
                     ui.isStrappedPhy1.hidden = false;
+                    ui.disableRgmiiIntDelay1.hidden = false;
                     ui.phyAddr2.hidden = false;
                     ui.isC45Phy2.hidden = false;
                     ui.isStrappedPhy2.hidden = false;
+                    ui.disableRgmiiIntDelay2.hidden = false;
                 }
             },
         },
@@ -559,14 +575,14 @@ function validate(instance, report) {
         {
             report.logError(`Only one netif can be set as default`, instance, "netifInstance");
         }
-        
+
         if (getNetifCount(instance) === 2)
         {
             if ((instance.DisableMacPort1 === true) || (instance.DisableMacPort2 === true))
             {
                 report.logError("Both MAC ports in MAC PORT Config should be enabled to support two NetIfs", instance);
             }
-            
+
             if ((instance.macOnlyEn_hostPort === false) || (instance.macOnlyEn_macPort1 === false) || (instance.macOnlyEn_macPort2 === false))
             {
                 report.logError("All Ports in 'ALE Config -> ALE Port Config -> MAC-only mode config' should be in MAC-only mode in case of two NetIfs", instance);

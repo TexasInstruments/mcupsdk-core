@@ -1,6 +1,6 @@
 %%{
     let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
-    let pinMuxModule = system.modules['/networking/enet_cpsw/v3/enet_cpsw_v3_pinmux']; 
+    let pinMuxModule = system.modules['/networking/enet_cpsw/v3/enet_cpsw_v3_pinmux'];
 %%}
 % let instance = module.$instances[0];
 % let pinMuxInstance = pinMuxModule.$instances[0];
@@ -344,20 +344,22 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
 
     DebugP_assert(numEthPorts == 1);
     DebugP_assert(ethPorts->mii.sublayerType == ENET_MAC_SUBLAYER_REDUCED);
-    
+
     EnetBoard_enableExternalMux();
 
     switch(ethPorts->macPort)
     {
         case ENET_MAC_PORT_1:
-%if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {       
+%if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
+            CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_RGMII1_ID_MODE, `Number(instance.disableRgmiiIntDelay1)`U);
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT1_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RGMII);
 % } else {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT1_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RMII);
-%}           
+%}
             break;
         case ENET_MAC_PORT_2:
-%if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {       
+%if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
+            CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_RGMII2_ID_MODE, `Number(instance.disableRgmiiIntDelay2)`U);
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT2_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RGMII);
 % } else {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT2_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RMII);

@@ -132,6 +132,12 @@ const enet_cpsw_phy1_config =
             },
         },
         {
+            name: "disableRgmiiIntDelay",
+            description: "Set for disabling RGMII port internal delay mode",
+            displayName: "Disable RGMII Internal delay",
+            default: true,
+        },
+        {
             name: "isC45Phy1",
             description: "Set if this PHY supports MDIO Clause 45 data format",
             displayName: "Clause 45 Support",
@@ -157,10 +163,12 @@ const enet_cpsw_board_config = {
                 if(inst.customBoardEnable == true) {
                     ui.phyAddr1.hidden = true;
                     ui.isC45Phy1.hidden = true;
+                    ui.disableRgmiiIntDelay.hidden = true;
                 }
                 else {
                     ui.phyAddr1.hidden = false;
                     ui.isC45Phy1.hidden = false;
+                    ui.disableRgmiiIntDelay.hidden = false;
                 }
             },
         },
