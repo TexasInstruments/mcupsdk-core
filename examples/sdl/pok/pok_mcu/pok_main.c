@@ -84,13 +84,48 @@ sdlPokTest_t  sdlPokTestList[] = {
 SDL_ESM_config POK_Test_esmInitConfig_MCU =
 {
     .esmErrorConfig = {0u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000007u, 0x00000000u, 0x0007ffffu,0x00000000u   
+    .enableBitmap = {0x00000007u, 0x00000000u, 0x0007ffffu,0x00000000u
                 },
      /**< All events enable: except clkstop events for unused clocks */
-    .priorityBitmap = {0x00000007u, 0x00000000u, 0x0007ffffu,0x00000000u 
+    .priorityBitmap = {0x00000007u, 0x00000000u, 0x0007ffffu,0x00000000u
                         },
     /**< All events high priority: except clkstop events for unused clocks */
-    .errorpinBitmap = {0x00000007u, 0x00000000u, 0x0007ffffu,0x00000000u   
+    .errorpinBitmap = {0x00000007u, 0x00000000u, 0x0007ffffu,0x00000000u
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and selftest error events */
+};
+#endif
+#endif
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)
+SDL_ESM_config POK_Test_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {0u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks */
+    .priorityBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks */
+    .errorpinBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                      },
+    /**< All events high priority: except clkstop for unused clocks
+     *   and selftest error events */
+};
+
+
+SDL_ESM_config POK_Test_esmInitConfig_MCU =
+{
+    .esmErrorConfig = {0u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x0007ffffu, 0x00000000u,
+                },
+     /**< All events enable: except clkstop events for unused clocks */
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x0007ffffu, 0x00000000u,
+                        },
+    /**< All events high priority: except clkstop events for unused clocks */
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x0007ffffu, 0x00000000u,
                       },
     /**< All events high priority: except clkstop for unused clocks
      *   and selftest error events */
@@ -142,8 +177,20 @@ void test_sdl_pok_baremetal_test_app (void)
 #if defined (SOC_AM64X)
 #if defined (M4F_CORE)
     sdlRet = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &POK_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction,ptr);
-#endif   
 #endif
+#if defined (R5F_CORE)
+     sdlRet = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &POK_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction,ptr);
+	 sdlRet = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &POK_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction,ptr);
+#endif
+#endif
+
+#if defined (SOC_AM243X)
+#if defined (R5F_CORE)
+     sdlRet = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &POK_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction,ptr);
+	 sdlRet = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &POK_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction,ptr);
+#endif
+#endif
+
    if (sdlRet != SDL_PASS) {
         /* print error and quit */
         DebugP_log("sdlEsmSetupForPOK init: Error initializing MCU ESM: sdlRet = SDL_EFAIL \n");

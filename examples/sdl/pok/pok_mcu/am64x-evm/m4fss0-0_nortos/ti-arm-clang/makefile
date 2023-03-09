@@ -60,6 +60,7 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/pok/pok_mcu/ \
 	-Igenerated \
 
 DEFINES_common := \

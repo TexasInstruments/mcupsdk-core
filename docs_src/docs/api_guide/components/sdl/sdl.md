@@ -72,4 +72,5 @@ SDL consists of below sub-modules
 - \subpage SDL_DPL_PAGE
 - \subpage SDL_ESM_PAGE
 - \subpage SDL_VTM_PAGE
+- \subpage SDL_POK_PAGE
 \endcond

@@ -52,6 +52,12 @@
 #endif
 #endif
 
+#if defined (SOC_AM243X)
+#if defined (R5F_CORE)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif
+#endif
+
 /* delay for 1us*/
 #define DELAY 0
 
@@ -92,7 +98,7 @@ int32_t SDL_POK_getStaticRegisters(SDL_POK_Inst instance,SDL_POK_staticRegs *pSt
     {
         pStaticRegs->hystCtrlOV = (SDL_pwrss_hysteresis)0x0u;
     }
-    
+
 	if (shiftsNMasks.pokAddr != 0U)
     {
         pStaticRegs->voltDetMode = (SDL_pwrss_vd_mode)SDL_REG32_FEXT_RAW(shiftsNMasks.pokAddr, shiftsNMasks.vdDetMask, shiftsNMasks.vdDetShift);
@@ -101,7 +107,7 @@ int32_t SDL_POK_getStaticRegisters(SDL_POK_Inst instance,SDL_POK_staticRegs *pSt
     {
         pStaticRegs->voltDetMode = (SDL_pwrss_hysteresis)0x0u;
     }
-	
+
     if ((shiftsNMasks.pokAddr != 0U) && (shiftsNMasks.trimMask != 0U))
     {
         pStaticRegs->trim = (SDL_pwrss_trim)SDL_REG32_FEXT_RAW(shiftsNMasks.pokAddr, shiftsNMasks.trimMask, shiftsNMasks.trimShift);
@@ -168,7 +174,7 @@ static bool SDL_pokIsPPEnabled(SDL_POK_Inst instance)
         if ((shiftsNMasks.pokEnPPAddr != 0x0u) &&
             (SDL_REG32_FEXT_RAW(shiftsNMasks.pokEnPPAddr, shiftsNMasks.pokEnPPMask, shiftsNMasks.pokEnPPShift) == SDL_PWRSS_PP_MODE_ENABLE))
         {
-           isPPEnabled = (bool)TRUE; 
+           isPPEnabled = (bool)TRUE;
         }
     }
 
@@ -274,7 +280,7 @@ static int32_t SDL_POK_Thres_config_seq(SDL_POK_Inst instance, SDL_POK_config *p
         {
             SDL_ESM_clearIntrStatus(esmBaseAddr, esm_err_sig_ov);
             SDL_ESM_clearIntrStatus(esmBaseAddr, esm_err_sig_uv);
-			
+
             if (influenceOV == 1U)
             {
                 /* Re-enable the error pin */
@@ -284,7 +290,7 @@ static int32_t SDL_POK_Thres_config_seq(SDL_POK_Inst instance, SDL_POK_config *p
             {
                 (void)SDL_ESM_setInfluenceOnErrPin(esmBaseAddr, esm_err_sig_uv, (bool)true);
             }
-			
+
             (void)SDL_ESM_enableIntr(esmBaseAddr, esm_err_sig_ov);
             (void)SDL_ESM_enableIntr(esmBaseAddr, esm_err_sig_uv);
         }
@@ -400,7 +406,7 @@ static int32_t SDL_POR_Thres_config_seq(SDL_POK_Inst instance, SDL_POK_config *p
 /**
  * Design: PROC_SDL-3290
  */
- 
+
 int32_t SDL_POK_enablePP(SDL_PRG_Inst instance, bool enable)
 {
     int32_t retVal = SDL_PASS;

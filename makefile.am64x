@@ -472,6 +472,7 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/esm/mcu_esm0/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/esm/mcu_esm0/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pok/pok_mcu/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/pok/pok_mcu/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/mtog/mtog_example/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1511,6 +1512,7 @@ BUILD_COMBO_EXAMPLE_ALL += dfu_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcu_esm0_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcu_esm0_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pok_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pok_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang
@@ -2579,6 +2581,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  pok_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/pok/pok_mcu/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
 
+ pok_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/pok/pok_mcu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  sdl_stog_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -3088,6 +3093,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dfu_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcu_esm0_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcu_esm0_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -4156,6 +4162,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  pok_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pok/pok_mcu/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ pok_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/pok/pok_mcu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  sdl_stog_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4665,6 +4674,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dfu_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcu_esm0_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcu_esm0_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mtog_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
@@ -5732,6 +5742,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  pok_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/pok/pok_mcu/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pok_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/pok/pok_mcu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_stog_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub

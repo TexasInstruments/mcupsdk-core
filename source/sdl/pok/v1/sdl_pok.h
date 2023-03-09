@@ -45,11 +45,11 @@
 
 #ifndef SDL_POK_H_
 #define SDL_POK_H_
- 
+
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/pok/v1/sdl_pok_def.h>
 
-#if defined (SOC_AM64x)
+#if defined (SOC_AM64x) || defined (SOC_AM243X)
 #include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
 #include <sdl/include/am64x_am243x/sdlr_mcu_ctrl_mmr.h>
 #endif
@@ -58,7 +58,7 @@
 extern "C" {
 #endif
 
-/** 
+/**
  *
  * \ingroup  SDL_MODULE
  * \defgroup SDL_POK_API Power OK(POK)
@@ -78,22 +78,22 @@ extern "C" {
 *
 *                         Structures and Enums                               */
 
-/** 
+/**
  *  @addtogroup SDL_POK_FUNCTION
  *  @{
- * 
+ *
  */
 
-/** 
+/**
  * \brief POK Static Registers structure
  *
  * This structure defines the POK static configuration registers
- * 
+ *
  */
 
 
 
-/** 
+/**
  *
  * \brief   POK Function to enable or disable ping/pong mode for a specified PRG.
  *          Only supported for v1 version of the IP.
@@ -123,7 +123,7 @@ typedef struct SDL_Pok_Static_Reg_read{
 }SDL_POK_staticRegs;
 
 int32_t SDL_POK_getStaticRegisters(SDL_POK_Inst instance,SDL_POK_staticRegs *pStaticRegs);
-/** 
+/**
  *
  * \brief   POK module configuration API
  *
@@ -148,7 +148,7 @@ int32_t SDL_POK_init(SDL_POK_Inst instance, SDL_POK_config *pConfig);
  */
 int32_t SDL_POK_verifyConfig(SDL_POK_Inst instance, SDL_POK_config *pConfig);
 
-/** 
+/**
  *
  * \brief   POK Function to enable or diable ping/pong mode for a specified PRG.
  *          Only supported for v1 version of the IP.

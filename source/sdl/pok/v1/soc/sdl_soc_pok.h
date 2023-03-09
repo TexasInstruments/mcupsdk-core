@@ -42,6 +42,10 @@ extern "C" {
 #include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
 #endif /* SOC_AM64X */
 
+#if defined (SOC_AM243X)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif /* SOC_AM243X */
+
 #ifdef __cplusplus
 }
 #endif  /* extern "C" */

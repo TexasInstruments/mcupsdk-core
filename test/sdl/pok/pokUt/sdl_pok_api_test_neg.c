@@ -40,8 +40,16 @@
 
 #include "test_main.h"
 #include <kernel/dpl/DebugP.h>
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
 #include <sdl/pok/v1/sdl_pok.h>
+
+#if defined (SOC_AM64X)
+#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
+#endif
+
+#if defined (SOC_AM243X)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif
+
 int32_t sdl_pok_negTest(void)
 {
     int32_t              testStatus = SDL_APP_TEST_PASS;
@@ -247,7 +255,7 @@ int32_t sdl_pok_negTest(void)
         DebugP_log("SDLPok_api_Neg_Test: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         i=SDL_LAST_POK_ID;
@@ -264,7 +272,7 @@ int32_t sdl_pok_negTest(void)
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("SDLPok_api_Neg_Test: failure on line no. %d \n", __LINE__);
 
-        }	
+        }
         pConfig.trimOV = 46U;
 		pConfig.deglitch = SDL_PWRSS_DEGLITCH_20US;
 		pConfig.hystCtrlOV = 0U;
@@ -273,8 +281,8 @@ int32_t sdl_pok_negTest(void)
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("SDLPok_api_Neg_Test: failure on line no. %d \n", __LINE__);
 
-        }	
-		
+        }
+
 		if (testStatus == SDL_APP_TEST_PASS)
 		{
 			i= SDL_INVALID_POK_ID;
@@ -283,14 +291,14 @@ int32_t sdl_pok_negTest(void)
 				testStatus = SDL_APP_TEST_FAILED;
 			}
 		}
-	
+
 		if (testStatus != SDL_APP_TEST_PASS)
 		{
 			DebugP_log("SDLPok_api_Neg_Test: failure on line no. %d \n", __LINE__);
 			return (testStatus);
 		}
-		
-		
+
+
 		if (testStatus == SDL_APP_TEST_PASS)
 		{
 			i= SDL_INVALID_POK_ID;
@@ -299,12 +307,12 @@ int32_t sdl_pok_negTest(void)
 				testStatus = SDL_APP_TEST_FAILED;
 			}
 		}
-	
+
 		if (testStatus != SDL_APP_TEST_PASS)
 		{
 			DebugP_log("SDLPok_api_Neg_Test: failure on line no. %d \n", __LINE__);
 			return (testStatus);
 		}
-	}	
+	}
     return (testStatus);
 }

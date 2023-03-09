@@ -33,6 +33,10 @@ FILES_common := \
     sdl_vtm_pvt_sensor.c \
     sdl_vtm.c \
     sdl_soc_vtm.c \
+    sdl_pok.c \
+    sdl_ip_pok.c \
+    sdl_soc_pok.c \
+    sdl_ip_pok_defs.c \
 
 FILES_PATH_common = \
     dpl \
@@ -58,6 +62,9 @@ FILES_PATH_common = \
     pok/v1 \
     pok/v1/soc \
     pok/v1/soc/am64x \
+    mtog \
+    mtog/v0 \
+    mtog/soc/am64x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

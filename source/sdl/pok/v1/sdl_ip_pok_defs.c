@@ -44,12 +44,18 @@
 #include <stdbool.h>
 #include "sdl_ip_pok.h"
 #include <sdl/pok/v1/sdl_pok.h>
-#include <sdl/pok/v1/sdl_pok_def.h> 
+#include <sdl/pok/v1/sdl_pok_def.h>
 #include <sdl/include/am64x_am243x/sdlr_mcu_ctrl_mmr.h>
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_esm0.h>
 
 #if defined (SOC_AM64X)
 #include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
+#endif
+
+#if defined (SOC_AM243X)
+#if defined (R5F_CORE)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif
 #endif
 
 
@@ -125,23 +131,23 @@ void sdlGetErrSig(uint32_t id, SDL_POK_Inst *instance, uint32_t *esm_err_sig_uv,
             *esm_err_sig_uv = MCU_ESM_ERR_SIG_VDDA_MCU_UV;
             *esm_err_sig_ov = (uint32_t)(-1);
             break;
-			
+
 		case SDL_POR_VDD_MCU_UV_ID:
             *instance = SDL_POR_VDD_MCU_UV_ID;
             *usePorCfgFlag = TRUE;
             *esm_err_sig_uv = MCU_ESM_ERR_SIG_VDD_MCU_UV;
             *esm_err_sig_ov = (uint32_t)(-1);
             break;
-			
+
 		case SDL_POR_VDDA_MCU_OV_ID:
             *instance = SDL_POR_VDDA_MCU_OV_ID;
             *usePorCfgFlag = TRUE;
             *esm_err_sig_uv = (uint32_t)(-1);
             *esm_err_sig_ov = MCU_ESM_ERR_SIG_VDDA_MCU_OV;
             break;
-		
-      
-            
+
+
+
         default:
            *instance = (SDL_POK_Inst)(-1);
             break;
@@ -333,7 +339,7 @@ int32_t SDL_pok_GetShiftsAndMasks(SDL_mcuCtrlRegsBase_t     *pBaseAddress,
              pShMasks->detEnShift  = SDL_MCU_CTRL_MMR_CFG0_PRG_PP_1_CTRL_POK_VDDSHV_MCU_3P3_EN_SHIFT;
              pShMasks->ovSelMask   = SDL_MCU_CTRL_MMR_CFG0_PRG_PP_1_CTRL_POK_VDDSHV_MCU_3P3_OV_SEL_MASK;
              pShMasks->ovSelShift  = SDL_MCU_CTRL_MMR_CFG0_PRG_PP_1_CTRL_POK_VDDSHV_MCU_3P3_OV_SEL_SHIFT;
-             
+
              /* POK Enable Selection SRC */
              pShMasks->pokEnSelAddr = &pCtrlMMRCfgRegs->PRG_PP_1_CTRL;
              pShMasks->pokEnSelMask = SDL_MCU_CTRL_MMR_CFG0_PRG_PP_1_CTRL_POK_EN_SEL_MASK;
@@ -350,7 +356,7 @@ int32_t SDL_pok_GetShiftsAndMasks(SDL_mcuCtrlRegsBase_t     *pBaseAddress,
              pShMasks->pokEnPPShift = SDL_MCU_CTRL_MMR_CFG0_PRG_PP_1_CTRL_POK_PP_EN_SHIFT;
 	     break;
 
-         
+
 	 case     SDL_POK_VMON_CAP_MCU_GENERAL_ID:
 	         pShMasks->pokAddr     = &pCtrlMMRCfgRegs->POK_VMON_CAP_MCU_GENERAL_UV_CTRL;
              pShMasks->hystMask    = SDL_MCU_CTRL_MMR_CFG0_POK_VMON_CAP_MCU_GENERAL_UV_CTRL_HYST_EN_MASK;
@@ -511,12 +517,12 @@ int32_t SDL_pok_GetShiftsAndMasks(SDL_mcuCtrlRegsBase_t     *pBaseAddress,
              pShMasks->pokEnPPShift = SDL_MCU_CTRL_MMR_CFG0_PRG_PP_1_CTRL_POK_PP_EN_SHIFT;
 	     break;
 
-		 
+
 	 case     SDL_POK_VDD_MCU_OV_ID:
               pShMasks->pokAddr     = NULL;
-             
-			  
-			  
+
+
+
              pShMasks->pokOVAddr     = &pCtrlMMRCfgRegs->POK_VDD_CORE_OV_CTRL;
              pShMasks->hystOVMask    = SDL_MCU_CTRL_MMR_CFG0_POK_VDD_CORE_OV_CTRL_HYST_EN_MASK;
              pShMasks->hystOVShift   = SDL_MCU_CTRL_MMR_CFG0_POK_VDD_CORE_OV_CTRL_HYST_EN_SHIFT;
@@ -640,7 +646,7 @@ int32_t SDL_pok_GetShiftsAndMasks(SDL_mcuCtrlRegsBase_t     *pBaseAddress,
 
              /* POK Enable PP - Not supported for PRG_PP_POR_CTRL */
              pShMasks->pokEnPPAddr = NULL;
-			 
+
 
 	     break;
 

@@ -40,9 +40,16 @@
 
 #include "test_main.h"
 #include <sdl/sdl_pok.h>
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
 #include <sdl/include/am64x_am243x/sdlr_mcu_ctrl_mmr.h>
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_esm0.h>
+
+#if defined (SOC_AM64X)
+#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
+#endif
+
+#if defined (SOC_AM243X)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif
 
 #define POK_TEST_ID SDL_POR_VDD_MCU_UV_ID
 

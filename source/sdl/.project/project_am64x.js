@@ -51,6 +51,11 @@ const files_r5f = {
     	"sdl_vtm_pvt_sensor.c",
     	"sdl_vtm.c",
     	"sdl_soc_vtm.c",
+		"sdl_pok.c",
+		"sdl_ip_pok.c",
+		"sdl_soc_pok.c",
+		"sdl_ip_pok_defs.c",
+		
     ],
 };
 const filedirs = {

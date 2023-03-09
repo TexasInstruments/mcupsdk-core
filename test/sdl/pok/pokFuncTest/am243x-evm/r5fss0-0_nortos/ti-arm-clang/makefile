@@ -53,7 +53,7 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
-	../../../../../osal \
+	../../../../../dpl \
 	generated \
 
 INCLUDES_common := \
@@ -65,6 +65,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
 	-DSOC_AM243X \
+	-DR5F_CORE \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

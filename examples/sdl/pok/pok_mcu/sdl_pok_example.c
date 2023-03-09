@@ -42,11 +42,18 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "pok_main.h"
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_esm0.h>
 #include <sdl/pok/v1/sdl_ip_pok.h>
 #include <sdl/sdl_esm.h>
 #include <kernel/dpl/DebugP.h>
+
+#if defined (SOC_AM64X)
+#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
+#endif
+
+#if defined (SOC_AM243X)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif
 /*===========================================================================*/
 /*                         Macros                                            */
 /*===========================================================================*/
@@ -261,7 +268,7 @@ int32_t sdlPOK_func(void)
 static void sdlGetInstance(SDL_POK_Inst *instance, uint32_t *esm_err_sig)
 {
     switch (*esm_err_sig)
-    {   
+    {
 	    case MCU_ESM_ERR_SIG_VDDA_PMIC_IN_UV:
             *instance = SDL_POK_VDDA_PMIC_IN_ID;
             break;
@@ -296,7 +303,7 @@ static void sdlGetInstance(SDL_POK_Inst *instance, uint32_t *esm_err_sig)
         case MCU_ESM_ERR_SIG_VDDSHV_MAIN_3P3_OV:
             *instance = SDL_POK_VDDSHV_MAIN_3P3_ID;
             break;
-			
+
 		case MCU_ESM_ERR_SIG_VDDA_MCU_UV:
              *instance = SDL_POR_VDDA_MCU_UV_ID;
              break;

@@ -87,4 +87,6 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCU_ESM
 -# VTM
    -# \subpage EXAMPLES_SDL_VTM
+-# POK
+   -# \subpage EXAMPLES_SDL_POK
 \endcond

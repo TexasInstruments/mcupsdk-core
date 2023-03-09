@@ -10,12 +10,16 @@ const files_r5f = {
         "sdl_esm_core.c",
         "sdl_esm_priv.c",
         "sdl_ip_vtm.c",
-    		"sdl_vtm_pvt_sensor.c",
-    		"sdl_vtm.c",
-    		"sdl_soc_vtm.c",
+    	"sdl_vtm_pvt_sensor.c",
+    	"sdl_vtm.c",
+    	"sdl_soc_vtm.c",
         "sdl_ip_tog.c",
         "sdl_tog.c",
         "sdl_soc_tog.c",
+        "sdl_pok.c",
+		"sdl_ip_pok.c",
+		"sdl_soc_pok.c",
+		"sdl_ip_pok_defs.c",
     ],
 };
 const filedirs = {
@@ -32,6 +36,10 @@ const filedirs = {
         "stog/v0",
         "stog/v0/soc",
         "stog/v0/soc/am243x",
+        "pok",
+	    "pok/v1",
+		"pok/v1/soc",
+	    "pok/v1/soc/am243x",
     ],
 };
 

@@ -42,12 +42,18 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "pok_main.h"
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #include <sdl/pok/v1/sdl_ip_pok.h>
 #include <sdl/pok/v1/sdl_pok.h>
+
+#if defined (SOC_AM64X)
+#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
+#endif
+#if defined (SOC_AM243X)
+#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
+#endif
 
 /*===========================================================================*/
 /*                         Macros                                            */
@@ -178,10 +184,13 @@ void sdlEsmSetupForPOK(uint32_t esm_err_sig)
     esmInfo_t   appEsmInfo;
     uint32_t     esmBaseAddr;
 #if defined (SOC_AM64X)
-#if defined (M4F_CORE)
+#if defined (M4F_CORE)	
 	SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0,&esmBaseAddr);
 #endif
-#if defined (R5F_CORE)
+#endif
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (R5F_CORE)	
 	SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0,&esmBaseAddr);
 #endif
 #endif
@@ -210,7 +219,6 @@ void sdlEsmSetupForPOK(uint32_t esm_err_sig)
 static int32_t sdlPOK_Test(SDL_POK_Inst instance, SDL_POK_config *pPokCfg)
 {
     int32_t sdlRet;
-	volatile int32_t i = 0;
     SDL_POK_staticRegs pStaticRegs;
     pPokCfg->hystCtrl        = SDL_PWRSS_HYSTERESIS_NO_ACTION;
     pPokCfg->hystCtrlOV      = SDL_PWRSS_HYSTERESIS_NO_ACTION;
@@ -240,6 +248,7 @@ static int32_t sdlPOK_Test(SDL_POK_Inst instance, SDL_POK_config *pPokCfg)
 
    else
     {
+        volatile int32_t i = 0;
         DebugP_log("Waiting for ESM to report the error \n");
         /* Wait for the ESM interrupt to report the error */
         do {

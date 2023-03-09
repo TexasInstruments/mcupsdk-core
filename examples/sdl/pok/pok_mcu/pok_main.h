@@ -51,8 +51,8 @@
 #include <sdl/sdl_esm.h>
 
 
-#if !defined(TEST_MAIN_H)
-#define TEST_MAIN_H
+#if !defined(POK_MAIN_H)
+#define POK_MAIN_H
 
 #ifdef __cplusplus
 extern "C" {

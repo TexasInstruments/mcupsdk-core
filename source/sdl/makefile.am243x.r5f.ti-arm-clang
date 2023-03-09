@@ -28,6 +28,10 @@ FILES_common := \
     sdl_ip_tog.c \
     sdl_tog.c \
     sdl_soc_tog.c \
+    sdl_pok.c \
+    sdl_ip_pok.c \
+    sdl_soc_pok.c \
+    sdl_ip_pok_defs.c \
 
 FILES_PATH_common = \
     dpl \
@@ -42,6 +46,10 @@ FILES_PATH_common = \
     stog/v0 \
     stog/v0/soc \
     stog/v0/soc/am243x \
+    pok \
+    pok/v1 \
+    pok/v1/soc \
+    pok/v1/soc/am243x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

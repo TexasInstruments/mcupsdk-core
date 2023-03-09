@@ -1,4 +1,4 @@
-/* Copyright (c) 2023 Texas Instruments Incorporated
+/* Copyright (c) 2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -46,16 +46,15 @@
 #include <stdio.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/include/soc_config.h>
-#include <sdl/pok/v1/sdl_pok.h>
-#include <sdl/pok/v1/sdl_ip_pok.h>
 #include <sdl/sdl_esm.h>
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_esm0.h>
 #include <drivers/soc/am64x_am243x/soc.h>
 #include <sdl/dpl/sdl_dpl.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
-#if !defined(TEST_MAIN_H)
-#define TEST_MAIN_H
+#include <sdl/pok/v1/sdl_pok_def.h>
+#if !defined(POK_MAIN_H)
+#define POK_MAIN_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -95,8 +94,7 @@ void sdlApp_print(const char * str);
 extern int32_t sdlPOKInPor_funcTest(void);
 extern int32_t sdlPOK_funcTest(void);
 
-#if defined (SOC_AM64X)
-#if defined (M4F_CORE)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -111,7 +109,6 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    uint32_t intSrc,
                                                    void *arg);
 											
-#endif
 #endif
 
 

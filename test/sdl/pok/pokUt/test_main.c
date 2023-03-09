@@ -45,7 +45,8 @@
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/include/sdl_types.h>
-
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 /*===========================================================================*/
 /*                         Declarations                                      */
@@ -179,9 +180,13 @@ void test_sdl_pok_baremetal_test_app_runner(void)
 
 int32_t test_main(void)
 {
-    test_sdl_pok_baremetal_test_app_runner();
-
-	return 0;
+    Drivers_open();
+	Board_driversOpen();
+    test_sdl_pok_baremetal_test_app();
+    /* Stop the test and wait here */
+	Board_driversClose();
+	Drivers_close();
+    while (1);
 }
 
 /* Nothing past this point */
