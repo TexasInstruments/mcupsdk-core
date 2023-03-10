@@ -66,6 +66,9 @@ static void EnetApp_handleLinkChangeEvent(Enet_Handle hEnet,
                                           pLinkChangeInfo);
 
 
+#define MII_LINK0_EVENT      41
+#define MII_LINK1_EVENT      53
+
 #if (ENET_SYSCFG_ENABLE_EXTPHY == 1U)
 
 #define ENETAPP_MDIOLINKINT_HANDLER_TASK_PRIORITY        (7U)
@@ -248,26 +251,6 @@ void EnetApp_mdioLinkChangeISR(Icssg_MdioLinkStateChangeInfo *info,
     SemaphoreP_post(&linkIntCtx->linkIntSem);
 }
 
-
-#define MII_LINK0_EVENT      41
-#define MII_LINK1_EVENT      53
-
-static void EnetApp_updateMdioLinkIntCfg(Enet_Type enetType, uint32_t instId, Icssg_mdioLinkIntCfg *mdioLinkIntCfg)
-{
-    /*! INTC Module mapping data passed by application for configuring PRU to R5F interrupts */
-#if (ENET_SYSCFG_ICSSG0_ENABLED == 1)
-    mdioLinkIntCfg->prussIntcInitData =  &icss0_intc_initdata;
-#endif
-#if (ENET_SYSCFG_ICSSG1_ENABLED == 1)
-    mdioLinkIntCfg->prussIntcInitData =  &icss1_intc_initdata;
-#endif
-    mdioLinkIntCfg->coreIntrNum = 254;
-    mdioLinkIntCfg->pruEvtNum[0] = MII_LINK0_EVENT;
-    mdioLinkIntCfg->pruEvtNum[1] = MII_LINK1_EVENT;
-    mdioLinkIntCfg->isPulseIntr = 0;
-    mdioLinkIntCfg->intrPrio = 15;
-}
-
 static void EnetApp_initMdioLinkIntCfg(Enet_Type enetType, uint32_t instId, Icssg_Cfg *icssgCfg)
 {
 #if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
@@ -280,8 +263,6 @@ static void EnetApp_initMdioLinkIntCfg(Enet_Type enetType, uint32_t instId, Icss
     /*! Application data to be passed to the MDIO link state change callback */
     icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCbArg  = &gMdioLinkEventCtx;
 #endif
-
-    EnetApp_updateMdioLinkIntCfg(enetType, instId, &icssgCfg->mdioLinkIntCfg);
 }
 
 #if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
@@ -404,6 +385,23 @@ int32_t EnetApp_createPhyRegisterPollingTask(const uint32_t pollingPeriod_ms, co
 #endif /*#if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U) */
 
 #endif
+
+static void EnetApp_updateMdioLinkIntCfg(Enet_Type enetType, uint32_t instId, Icssg_mdioLinkIntCfg *mdioLinkIntCfg)
+{
+    /*! INTC Module mapping data passed by application for configuring PRU to R5F interrupts */
+#if (ENET_SYSCFG_ICSSG0_ENABLED == 1)
+    mdioLinkIntCfg->prussIntcInitData =  &icss0_intc_initdata;
+#endif
+#if (ENET_SYSCFG_ICSSG1_ENABLED == 1)
+    mdioLinkIntCfg->prussIntcInitData =  &icss1_intc_initdata;
+#endif
+    mdioLinkIntCfg->coreIntrNum = 254;
+    mdioLinkIntCfg->pruEvtNum[0] = MII_LINK0_EVENT;
+    mdioLinkIntCfg->pruEvtNum[1] = MII_LINK1_EVENT;
+    mdioLinkIntCfg->isPulseIntr = 0;
+    mdioLinkIntCfg->intrPrio = 15;
+}
+
 void EnetApp_updateIcssgInitCfg(Enet_Type enetType, uint32_t instId, Icssg_Cfg *icssgCfg)
 {
 #if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
@@ -416,6 +414,7 @@ void EnetApp_updateIcssgInitCfg(Enet_Type enetType, uint32_t instId, Icssg_Cfg *
         icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCb = &EnetApp_mdioLinkStatusChange;
         icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCbArg  = NULL;
     #endif
+    EnetApp_updateMdioLinkIntCfg(enetType, instId, &icssgCfg->mdioLinkIntCfg);
 #endif
 }
 
