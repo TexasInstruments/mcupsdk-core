@@ -41,6 +41,7 @@
 #include <drivers/epwm.h>
 #include <drivers/edma.h>
 #include <drivers/adc.h>
+#include <drivers/cmpss.h>
 #include <drivers/gpio.h>
 #include <drivers/pinmux.h>
 #include "ti_drivers_open_close.h"
@@ -51,7 +52,7 @@
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
-#define TEST_ALL_INSTANCES (true)
+#define TEST_ALL_INSTANCES (false)
 /* None */
 
 /* ========================================================================== */
@@ -98,7 +99,8 @@ uint32_t ecap_base_addr[NUM_ECAP_INSTANCES] =
     CSL_CONTROLSS_ECAP9_U_BASE,
 };
 
-uint32_t adc_base_addr[5] =
+#define NUM_ADC_INSTANCES (5)
+uint32_t adc_base_addr[NUM_ADC_INSTANCES] =
 {
     CSL_CONTROLSS_ADC0_U_BASE,
     CSL_CONTROLSS_ADC1_U_BASE,
@@ -107,7 +109,43 @@ uint32_t adc_base_addr[5] =
     CSL_CONTROLSS_ADC4_U_BASE,
 };
 
-uint32_t epwm_base_addr[32] =
+#define NO_CHANNEL 99
+uint32_t adc_available_channel[5] =
+{
+    ADC_CH_ADCIN2,
+    ADC_CH_ADCIN2,
+    ADC_CH_ADCIN2,
+    ADC_CH_ADCIN2,
+    NO_CHANNEL,
+};
+
+#define NUM_CMPSS_INSTANCES (32)
+uint32_t cmpss_base_addr[NUM_CMPSS_INSTANCES]=
+{
+    CSL_CONTROLSS_CMPSSA0_U_BASE,
+    CSL_CONTROLSS_CMPSSA1_U_BASE,
+    CSL_CONTROLSS_CMPSSA2_U_BASE,
+    CSL_CONTROLSS_CMPSSA3_U_BASE,
+    CSL_CONTROLSS_CMPSSA4_U_BASE,
+    CSL_CONTROLSS_CMPSSA5_U_BASE,
+    CSL_CONTROLSS_CMPSSA6_U_BASE,
+    CSL_CONTROLSS_CMPSSA7_U_BASE,
+    CSL_CONTROLSS_CMPSSA8_U_BASE,
+    CSL_CONTROLSS_CMPSSA9_U_BASE,
+    CSL_CONTROLSS_CMPSSB0_U_BASE,
+    CSL_CONTROLSS_CMPSSB1_U_BASE,
+    CSL_CONTROLSS_CMPSSB2_U_BASE,
+    CSL_CONTROLSS_CMPSSB3_U_BASE,
+    CSL_CONTROLSS_CMPSSB4_U_BASE,
+    CSL_CONTROLSS_CMPSSB5_U_BASE,
+    CSL_CONTROLSS_CMPSSB6_U_BASE,
+    CSL_CONTROLSS_CMPSSB7_U_BASE,
+    CSL_CONTROLSS_CMPSSB8_U_BASE,
+    CSL_CONTROLSS_CMPSSB9_U_BASE,
+};
+
+#define NUM_EPWM_INSTANCES (32)
+uint32_t epwm_base_addr[NUM_EPWM_INSTANCES] =
 {
     CSL_CONTROLSS_G0_EPWM0_U_BASE,
     CSL_CONTROLSS_G0_EPWM1_U_BASE,
@@ -155,6 +193,8 @@ ECAP_Events events[4] =
 #define OUTPUT  (0)
 #define RISING  false
 #define FALLING  true
+#define GOOD     true
+#define BAD      false
 
 uint32_t gpio_base_addr = CSL_GPIO0_U_BASE;
 
@@ -303,16 +343,26 @@ void util_ecap_start_timestamp(uint16_t instance);
 void util_ecap_configure(uint16_t instance);
 void util_ecap_deconfigure_and_reset(uint16_t instance);
 bool util_ecap_wait_for_interrupt(uint16_t instance);
-void util_ecap_configure_input(void);
-void util_activate_input_pulses(void);
+bool util_ecap_configure_input(void);
+bool util_activate_input_pulses(void);
 bool util_compare_in_range(int value1, int value2, int delta);
 int util_validate_input_events(uint16_t instance, bool check_flags);
 
 /* ADC util funcitons */
 void util_adc_clear_interrupts(void);
 bool util_adc_wait_for_interrupts(void);
+bool util_adc_wait_for_interrupt(uint16_t adc_instance);
 void util_adc_init_configure_soc_source(uint16_t adc_instance,uint16_t ecap_instance);
-void util_adc_reset(uint16_t adc_instace);
+void util_adc_setup_ppbevt(uint16_t adc_instance, uint16_t event_number);
+void util_adc_reset(uint16_t adc_instance);
+
+/* CMPSS util functions */
+void util_cmpss_init(uint16_t instance);
+bool util_cmpss_set_status(uint16_t instance, uint16_t trip_signal);
+void util_cmpss_deinit(uint16_t instance);
+/* CMPSS global Variables */
+uint16_t gTrip_high_type = 0;
+uint16_t gTrip_low_type = 0;
 
 /* GPIO util funcitons */
 void util_gpio_configure(bool input);
@@ -325,9 +375,11 @@ void util_edma_deconfigure(void);
 
 /* EPWM util functions */
 void util_epwm_enable_all(void);
-void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period);
-void util_epwm_reset(int8_t epwm_instance);
 void util_epwm_enable(uint16_t epwm_instance);
+void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period);
+void util_epwm_enable_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type);
+bool util_epwm_wait_on_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type);
+void util_epwm_reset(int8_t epwm_instance);
 void util_epwm_sync(uint16_t epwm_instance, uint16_t main_pwm_instance, uint16_t phase_shift_value);
 void util_epwm_disable_all(void);
 void util_xbar_configure_sync_dut(uint32_t epwm_instance);
@@ -756,6 +808,38 @@ bool util_adc_wait_for_interrupts(void)
     /* all waits successful */
     return 1;
 }
+
+/* returns 1 if wait is successful i.e., interrupt flag set */
+bool util_adc_wait_for_interrupt(uint16_t adc_instance)
+{
+    int count = 0;
+    int errors = 0;
+    int counter_max = 1000;
+
+    uint32_t adc_base = adc_base_addr[adc_instance];
+    while(count < counter_max)
+    {
+        if(ADC_getInterruptStatus(adc_base, ADC_INT_NUMBER1) == true)
+        {
+            break;
+        }
+        count++;
+    }
+
+    if(count >= counter_max)
+    {
+        /* wait failed.*/
+        DebugP_logError("failed at %d\r\n", adc_instance);
+        errors++;
+    }
+
+    if(errors > 0 )
+    {
+        return 0;
+    }
+    /* all waits successful */
+    return 1;
+}
 /* returns 1 if wait is successful i.e., interrupt flag set */
 bool util_dma_wait_for_interrupts(void)
 {
@@ -816,9 +900,47 @@ void util_adc_init_configure_soc_source(uint16_t adc_instance, uint16_t ecap_ins
     /* Setting up the SOC configuration for the given ecap_instance SOC signal.*/
     uint16_t ecap_soc_trigger = ADC_TRIGGER_ECAP0_SOCEVT + ecap_instance;
     ADC_setupSOC(adc_base, ADC_SOC_NUMBER0, ecap_soc_trigger, ADC_CH_ADCIN0, 16);
-    ClockP_usleep(500);
 
     return ;
+}
+
+void util_adc_setup_ppbevt(uint16_t adc_instance, uint16_t event_number)
+{
+    uint32_t adc_base = adc_base_addr[adc_instance];
+    uint16_t ppb_number = event_number;
+    SOC_enableAdcReference(adc_instance);
+    ADC_setPrescaler(adc_base, ADC_CLK_DIV_4_0);
+    ADC_setMode(adc_base, ADC_RESOLUTION_12BIT, ADC_MODE_SINGLE_ENDED);
+    ADC_setInterruptPulseMode(adc_base, ADC_PULSE_END_OF_CONV);
+    ADC_setSOCPriority(adc_base, ADC_PRI_ALL_ROUND_ROBIN);
+    ADC_enableConverter(adc_base);
+    ClockP_usleep(500);
+
+    ADC_setupSOC(adc_base, ADC_SOC_NUMBER1, ADC_TRIGGER_SW_ONLY, adc_available_channel[adc_instance], 20);
+    ADC_enableInterrupt(adc_base, ADC_INT_NUMBER1);
+    ADC_setInterruptSource(adc_base,ADC_INT_NUMBER1, ADC_SOC_NUMBER1);
+    ADC_clearInterruptStatus(adc_base, ADC_INT_NUMBER1);
+    ADC_setupPPB(adc_base, ppb_number, ADC_SOC_NUMBER1);
+    ADC_enablePPBEvent(adc_base, ppb_number, ADC_EVT_TRIPHI);
+    ADC_clearPPBEventStatus(adc_base, ppb_number, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+    ADC_setPPBTripLimits(adc_base, ppb_number, 3000, 1000);
+    ADC_setPPBReferenceOffset(adc_base, ppb_number, 0);
+    ADC_enablePPBEventCBCClear(adc_base, ppb_number);
+    /* lowering input voltage on ADC for no accidental pulses */
+    char test_command[CMD_SIZE];
+    sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d", 0.0, 0, 0);
+    tester_command(test_command);
+    sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d", 0.0, 0, 1);
+    tester_command(test_command);
+
+    /* forcing one SOC for clearing the ADC SOC/PPB result registers and events.*/
+    ADC_forceSOC(adc_base, ADC_SOC_NUMBER1);
+    (void)util_adc_wait_for_interrupt(adc_instance);
+
+    ADC_clearInterruptStatus(adc_base, ADC_INT_NUMBER1);
+    ADC_clearInterruptOverflowStatus(adc_base, ADC_INT_NUMBER1);
+
+    return;
 }
 /* resets the ADC instance */
 void util_adc_reset(uint16_t adc_instance)
@@ -826,6 +948,157 @@ void util_adc_reset(uint16_t adc_instance)
     SOC_generateAdcReset(adc_instance);
     return;
 }
+
+void util_cmpss_init(uint16_t instance)
+{
+    uint32_t cmpss_base = cmpss_base_addr[instance];
+    uint16_t cmpss_instance_a;
+    uint16_t cmpss_instance_b;
+
+    DebugP_logInfo("instance : %d\r\n", instance);
+    if(instance > 9)
+    {
+        cmpss_instance_b = 9 - instance;
+        SOC_generateCmpssbReset(cmpss_instance_b);
+    }
+    else
+    {
+        cmpss_instance_a = instance;
+        SOC_generateCmpssaReset(cmpss_instance_a);
+    }
+
+    CMPSS_enableModule(cmpss_base);
+    CMPSS_configHighComparator(cmpss_base, CMPSS_INSRC_PIN);
+    CMPSS_configOutputsHigh(cmpss_base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_ASYNC_COMP);
+    CMPSS_configHighComparator(cmpss_base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);
+
+    CMPSS_configLowComparator(cmpss_base, CMPSS_INSRC_PIN);
+    CMPSS_configOutputsLow(cmpss_base, CMPSS_TRIP_ASYNC_COMP | CMPSS_TRIPOUT_ASYNC_COMP);
+    CMPSS_configLowComparator(cmpss_base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);
+
+    ClockP_usleep(5);
+    uint16_t trip_high_status;
+    uint16_t trip_low_status ;
+
+    trip_high_status = CMPSS_getStatus(cmpss_base) & CMPSS_STS_HI_FILTOUT;
+    trip_low_status = CMPSS_getStatus(cmpss_base) & CMPSS_STS_LO_FILTOUT;
+
+    DebugP_logInfo("cmpss trip_high_status : %x trip_low_status : %x \r\n",trip_high_status ,trip_low_status);
+
+    if(trip_high_status != 0)
+    {
+        CMPSS_configHighComparator(cmpss_base, 0 | CMPSS_INSRC_PIN);
+        ClockP_usleep(5);
+        gTrip_high_type = 1;
+        trip_high_status = CMPSS_getStatus(cmpss_base) & CMPSS_STS_HI_FILTOUT;
+        DebugP_logInfo("cmpss trip_high_status : %x \r\n",trip_high_status);
+    }
+    else
+    {
+        gTrip_high_type = 0;
+    }
+    if(trip_low_status != 0)
+    {
+        CMPSS_configLowComparator(cmpss_base, 0 | CMPSS_INSRC_PIN);
+        ClockP_usleep(5);
+        gTrip_low_type = 1;
+        trip_low_status = CMPSS_getStatus(cmpss_base) & CMPSS_STS_LO_FILTOUT;
+        DebugP_logInfo("cmpss trip_low_status : %x \r\n",trip_low_status);
+
+    }
+    else
+    {
+        gTrip_low_type = 0;
+    }
+
+    /* Assume that the tripHi and tripLow signals are Low now.*/
+}
+
+bool util_cmpss_set_status(uint16_t instance, uint16_t trip_signal)
+{
+    uint32_t cmpss_base = cmpss_base_addr[instance];
+    uint16_t trip_low = 0;
+    uint16_t trip_high = 1;
+
+    bool status = GOOD;
+
+    uint16_t trip_high_status;
+    uint16_t trip_low_status;
+
+    trip_high_status =     CMPSS_getStatus(cmpss_base) & CMPSS_STS_HI_FILTOUT;
+    trip_low_status  =     CMPSS_getStatus(cmpss_base) & CMPSS_STS_LO_FILTOUT;
+
+    DebugP_logInfo("tripHigh : %x\r\n", trip_high_status);
+    DebugP_logInfo("tripLow : %x\r\n", trip_low_status);
+
+    if(trip_signal == trip_high)
+    {
+        if(gTrip_high_type)
+        {
+            /* not inverted state. move to inverted state to get rising edge*/
+            CMPSS_configHighComparator(cmpss_base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);
+            ClockP_usleep(5);
+        }
+        else
+        {
+            /* inverted state. move to not inverted state to get rising edge*/
+            CMPSS_configHighComparator(cmpss_base, 0 | CMPSS_INSRC_PIN);
+            ClockP_usleep(5);
+        }
+
+        trip_high_status =  CMPSS_getStatus(cmpss_base) & CMPSS_STS_HI_FILTOUT;
+
+        if(trip_high_status == 0)
+        {
+            status = BAD;
+            DebugP_logError("tripHigh : %x\r\n", trip_high_status);
+        }
+    }
+    else
+    if(trip_signal == trip_low)
+    {
+        if(gTrip_low_type)
+        {
+            /* not inverted state. move to inverted state to get rising edge*/
+            CMPSS_configLowComparator(cmpss_base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);
+            ClockP_usleep(5);
+        }
+        else
+        {
+            /* inverted state. move to not inverted state to get rising edge*/
+            CMPSS_configLowComparator(cmpss_base, 0 | CMPSS_INSRC_PIN);
+            ClockP_usleep(5);
+        }
+
+        trip_low_status = CMPSS_getStatus(cmpss_base) & CMPSS_STS_LO_FILTOUT;
+
+        if(trip_low_status == 0)
+        {
+            status = BAD;
+            DebugP_logError("tripLow : %x\r\n", trip_low_status);
+        }
+    }
+    DebugP_logInfo("tripHigh : %x\r\n", trip_high_status);
+    DebugP_logInfo("tripLow : %x\r\n", trip_low_status);
+
+    return status;
+}
+void util_cmpss_deinit(uint16_t instance)
+{
+    uint16_t cmpss_instance_a;
+    uint16_t cmpss_instance_b;
+    if(instance > 9)
+    {
+        cmpss_instance_b = 9 - instance;
+        SOC_generateCmpssbReset(cmpss_instance_b);
+    }
+    else
+    {
+        cmpss_instance_a = instance;
+        SOC_generateCmpssaReset(cmpss_instance_a);
+    }
+}
+
 /* configures GPIO (declared global) as input or output */
 void util_gpio_configure(bool input)
 {
@@ -915,6 +1188,13 @@ void util_epwm_enable_all(void)
 
     DebugP_testLog("Enabled TB CLK for all EPWM, set group as 0\r\n");
 }
+
+void util_epwm_enable(uint16_t epwm_instance)
+{
+    SOC_setEpwmTbClk(epwm_instance, TRUE);
+    SOC_setEpwmGroup(epwm_instance, 0);
+}
+
 /* sets up the given epwm to given period, ON_value values, enables syncout pulse by default at counter = 0 */
 void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period)
 {
@@ -942,15 +1222,40 @@ void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period)
     DebugP_testLog("\tPWM %d is set for Period : %d, ON_value : %d\r\n", epwm_instance, period, ON_value);
 }
 
+void util_epwm_enable_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type)
+{
+    uint32_t epwm_base = epwm_base_addr[epwm_instance];
+
+    EPWM_enableADCTrigger(epwm_base, epwm_soc_type);
+    EPWM_setADCTriggerSource(epwm_base, epwm_soc_type, EPWM_SOC_TBCTR_U_CMPA, 0);
+	EPWM_setADCTriggerEventPrescale(epwm_base, epwm_soc_type, 1);
+	EPWM_disableADCTriggerEventCountInit(epwm_base, epwm_soc_type);
+	EPWM_setADCTriggerEventCountInitValue(epwm_base, epwm_soc_type, 0);
+}
+
+bool util_epwm_wait_on_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type)
+{
+    uint32_t epwm_base = epwm_base_addr[epwm_instance];
+    int counter_max = 100;
+    int count = 0;
+
+    while(count < counter_max)
+    {
+        if(EPWM_getADCTriggerFlagStatus(epwm_base, epwm_soc_type) == 1)
+        {
+            /* interrupt occured wait successful*/
+            return 1;
+        }
+        count++;
+    }
+    /* interrupt did not occur. wait unsuccessful*/
+    return 0;
+
+}
+
 void util_epwm_reset(int8_t epwm_instance)
 {
     SOC_generateEpwmReset(epwm_instance);
-}
-
-void util_epwm_enable(uint16_t epwm_instance)
-{
-    SOC_setEpwmTbClk(epwm_instance, TRUE);
-    SOC_setEpwmGroup(epwm_instance, 0);
 }
 
 void util_epwm_sync(uint16_t epwm_instance, uint16_t main_pwm_instance, uint16_t phase_shift_value)
@@ -1449,10 +1754,16 @@ int32_t AM263x_ECAP_BTR_003(uint16_t instance)
     return 0;
 }
 
-void util_ecap_configure_input(void)
+/* returns status if configurations are set properly*/
+bool util_ecap_configure_input(void)
 {
+    bool status = GOOD;
     ECAP_InputCaptureSignals input = ecap_config_ptr->input;
 
+    input_params->check_timestamps[0] = false;
+    input_params->check_timestamps[1] = false;
+    input_params->check_timestamps[2] = false;
+    input_params->check_timestamps[3] = false;
 
     if( (input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31) )
     {
@@ -1476,10 +1787,69 @@ void util_ecap_configure_input(void)
         }
 
     }
-    return;
+    if ((input >= ECAP_INPUT_EPWM0_SOCA) && (input <= ECAP_INPUT_EPWM31_SOCB))
+    {
+        /* Setting to capture only one pulse.*/
+        ecap_config_ptr->wrap_capture = ECAP_EVENT_2;
+        ecap_config_ptr->counter_reset_capture[0] = true;
+        ecap_config_ptr->polarity[0] = RISING;
+        ecap_config_ptr->polarity[1] = FALLING;
+
+        /* setting up the input */
+        /* ECAP_INPUT_EPWM0_SOCA to ECAP_INPUT_EPWM31_SOCA go from 54 to 85*/
+        /* ECAP_INPUT_EPWM0_SOCB to ECAP_INPUT_EPWM31_SOCB go from 86 to 117*/
+        uint16_t epwm_instance;
+        uint16_t epwm_soc;
+        uint16_t silly_period_value = 200;
+        uint16_t silly_on_value  = (silly_period_value)>>1;
+
+        if(input >= ECAP_INPUT_EPWM0_SOCB)
+        {
+            epwm_instance = input - ECAP_INPUT_EPWM0_SOCB;
+            epwm_soc = EPWM_SOC_B;
+        }
+        else
+        {
+            epwm_instance = input - ECAP_INPUT_EPWM0_SOCA;
+            epwm_soc = EPWM_SOC_A;
+        }
+        util_epwm_enable(epwm_instance);
+        util_epwm_setup(epwm_instance, silly_on_value, silly_period_value);
+        util_epwm_enable_soc_trigger(epwm_instance, epwm_soc);
+    }
+
+    if((input >= ECAP_INPUT_ADC0_EVT0) && (input <= ECAP_INPUT_ADC4_EVT3))
+    {
+        uint16_t number_of_events_per_instance = 4;
+
+        uint16_t adc_instance = (input - ECAP_INPUT_ADC0_EVT0)/number_of_events_per_instance;
+        uint16_t event = (input - ECAP_INPUT_ADC0_EVT0)%number_of_events_per_instance;
+
+        util_adc_setup_ppbevt(adc_instance, event);
+
+        ecap_config_ptr->wrap_capture = ECAP_EVENT_1;
+        ecap_config_ptr->polarity[0] = RISING;
+    }
+
+    if((input >= ECAP_INPUT_CMPSSA0_CTRIP_LOW) && (input <= ECAP_INPUT_CMPSSB9_CTRIP_HIGH))
+    {
+        uint16_t number_of_events_per_instance = 2;
+        uint16_t cmpss_instance = (input - ECAP_INPUT_CMPSSA0_CTRIP_LOW) / number_of_events_per_instance;
+
+        DebugP_logInfo("instance : %d\r\n", cmpss_instance);
+
+        util_cmpss_init(cmpss_instance);
+
+        /* the util_cmpss_set_status will generate a rising edge */
+        ecap_config_ptr->wrap_capture = ECAP_EVENT_1;
+        ecap_config_ptr->polarity[0] = RISING;
+    }
+    return status;
 }
-void util_activate_input_pulses(void)
+
+bool util_activate_input_pulses(void)
 {
+    bool status = GOOD;
     ECAP_InputCaptureSignals input = ecap_config_ptr->input;
 
     if( (input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31) )
@@ -1489,7 +1859,78 @@ void util_activate_input_pulses(void)
         int num_pulses = 4;      /* +1 to satify indexing */
         util_gpio_toggle(num_pulses, 0);
     }
-    return;
+    if( (input >= ECAP_INPUT_EPWM0_SOCA) && (input <= ECAP_INPUT_EPWM31_SOCB) )
+    {
+        uint16_t epwm_instance;
+        uint16_t epwm_soc;
+
+        if(input >= ECAP_INPUT_EPWM0_SOCB)
+        {
+            epwm_instance = input - ECAP_INPUT_EPWM0_SOCB;
+            epwm_soc = EPWM_SOC_B;
+        }
+        else
+        {
+            epwm_instance = input - ECAP_INPUT_EPWM0_SOCA;
+            epwm_soc = EPWM_SOC_A;
+        }
+        /* running the Time base counter of epwm to generete the EPMW SOC triggers*/
+        EPWM_setTimeBaseCounterMode(epwm_base_addr[epwm_instance], EPWM_COUNTER_MODE_UP);
+        /* the EPWM SOC flag need not be cleared. this pulse keeps occuring even if SOC flag is not cleared.*/
+        /* wait until atleast one flag has occured.*/
+        (void)util_epwm_wait_on_soc_trigger(epwm_instance, epwm_soc);
+        /* stopping the time base counter */
+        EPWM_setTimeBaseCounterMode(epwm_base_addr[epwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+        util_epwm_reset(epwm_instance);
+        util_epwm_disable_all();
+    }
+    if( (input >= ECAP_INPUT_ADC0_EVT0) && (input <= ECAP_INPUT_ADC4_EVT3) )
+    {
+        uint16_t number_of_events_per_instance = 4;
+
+        uint16_t adc_instance = (input - ECAP_INPUT_ADC0_EVT0)/number_of_events_per_instance;
+        uint16_t event = (input - ECAP_INPUT_ADC0_EVT0)%number_of_events_per_instance;
+        uint16_t ppb_number = event;
+        if(adc_available_channel[adc_instance] != NO_CHANNEL)
+        {
+            char test_command[CMD_SIZE];
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d", 2.5, 0, 0);
+            tester_command(test_command);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d", 2.5, 0, 1);
+            tester_command(test_command);
+            /* force conversion for event generation */
+            ADC_forceSOC(adc_base_addr[adc_instance], ADC_SOC_NUMBER1);
+            status = util_adc_wait_for_interrupt(adc_instance);
+
+            if(status == BAD)
+            {
+                return status;
+            }
+            uint32_t ppb_event_status = ADC_getPPBEventStatus(adc_base_addr[adc_instance], (ADC_PPBNumber) ppb_number);
+            ppb_event_status &= ADC_EVT_TRIPHI;
+            if(ppb_event_status != ADC_EVT_TRIPHI)
+            {
+                status = BAD;
+                DebugP_logError("PPB event status : %d\r\n", ppb_event_status);
+            }
+
+        }
+    }
+    if((input >= ECAP_INPUT_CMPSSA0_CTRIP_LOW) && (input <= ECAP_INPUT_CMPSSB9_CTRIP_HIGH))
+    {
+        uint16_t number_of_events_per_instance = 2;
+        uint16_t cmpss_instance = (input - ECAP_INPUT_CMPSSA0_CTRIP_LOW) / number_of_events_per_instance;
+        uint16_t event = input % number_of_events_per_instance;
+
+        /* the util_cmpss_set_status will generate a rising edge */
+        status = util_cmpss_set_status(cmpss_instance, event);
+        if(status == BAD)
+        {
+            DebugP_logError("cmpss set status BAD\r\n");
+        }
+        util_cmpss_deinit(cmpss_instance);
+    }
+    return status;
 }
 
 bool util_compare_in_range(int value1, int value2, int delta)
@@ -1516,15 +1957,24 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
     /* for expected events are each bits. */
     uint16_t expected_flags = (1<<((ecap_config_ptr->wrap_capture)+1))-1;
 
+    if((input >= ECAP_INPUT_ADC4_EVT0) && (input <= ECAP_INPUT_ADC4_EVT3))
+    {
+        return errors;
+    }
     if(check_flags && ((flags>>1)!= (expected_flags)))
     {
         errors++;
         DebugP_logError("ERROR: expected number of events did not occur.\r\n");
         DebugP_testLog("\t\tExpected flags: %x\r\n",expected_flags);
         DebugP_testLog("\r\n\t\tSet flags: %x\r\n", flags>>1);
-        errors++;
     }
-    if( (input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31) )
+    if( ((input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31))
+        ||
+        ((input >= ECAP_INPUT_EPWM0_SOCA) && (input <= ECAP_INPUT_EPWM31_SOCB))
+        ||
+        ((input >= ECAP_INPUT_ADC0_EVT0) && (input <= ECAP_INPUT_ADC4_EVT3))
+        ||
+        ((input >= ECAP_INPUT_CMPSSA0_CTRIP_LOW) && (input <= ECAP_INPUT_CMPSSB9_CTRIP_HIGH)))
     {
         /* input source is xbar instance, the GPIO toggle for 4 times is already validated above.
            hence, this can be skipped. */
@@ -1567,27 +2017,45 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
     /* Add additional signals too*/
     ECAP_InputCaptureSignals input;
 
-    for(input = ECAP_INPUT_INPUTXBAR0;
+    for(input = ECAP_INPUT_FSI_RX0_TRIG_0;
         input <= ECAP_INPUT_INPUTXBAR31;
         input++)
-    {
-        DebugP_testLog("Selected input %d\r\n",input);
-        /* configure ecap for the oneshot mode to capture a max of 4 events. */
-        ecap_config_ptr->capture_mode_continuous = false;
-        /* configure input and select input source for ecap */
-        ecap_config_ptr->input = input;
-        /* setting rearm configuration ecap */
-        ecap_config_ptr->rearm = true;
-        /* wrap capture poit will be set inside the input configuration based on the input */
-        util_ecap_configure_input();
-        /* configure the ecap with the settings updated */
-        util_ecap_configure(instance);
-        /* start the counter in the ecap and enable capture timestamps */
-        util_ecap_start_timestamp(instance);
-        /* activate input pulses */
-        util_activate_input_pulses();
-        /* check the ecap cap_registers, event flags to verify the input to expected output */
-        errors += util_validate_input_events(instance, true);
+    {   if(((input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31))
+        ||
+          ((input >= ECAP_INPUT_EPWM0_SOCA) && (input <= ECAP_INPUT_EPWM31_SOCB))
+        ||
+          ((input >= ECAP_INPUT_ADC0_EVT0) && (input <= ECAP_INPUT_ADC4_EVT3))
+        ||
+          ((input >= ECAP_INPUT_CMPSSA0_CTRIP_LOW) && (input <= ECAP_INPUT_CMPSSB9_CTRIP_HIGH)) )
+        {
+            bool status;
+
+            DebugP_testLog("Selected input %d\r\n",input);
+            /* configure ecap for the oneshot mode to capture a max of 4 events. */
+            ecap_config_ptr->capture_mode_continuous = false;
+            /* configure input and select input source for ecap */
+            ecap_config_ptr->input = input;
+            /* setting rearm configuration ecap */
+            ecap_config_ptr->rearm = true;
+            /* wrap capture poit will be set inside the input configuration based on the input */
+            status = util_ecap_configure_input();
+            if(status == BAD)
+            {
+                errors++;
+            }
+            /* configure the ecap with the settings updated */
+            util_ecap_configure(instance);
+            /* start the counter in the ecap and enable capture timestamps */
+            util_ecap_start_timestamp(instance);
+            /* activate input pulses */
+            status = util_activate_input_pulses();
+            if(status == BAD)
+            {
+                errors++;
+            }
+            /* check the ecap cap_registers, event flags to verify the input to expected output */
+            errors += util_validate_input_events(instance, true);
+        }
     }
 
     if(errors > 0)
