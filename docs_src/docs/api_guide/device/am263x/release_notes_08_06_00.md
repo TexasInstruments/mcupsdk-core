@@ -22,6 +22,7 @@ EQEP example enhancements - Error check                                         
 Early Ethernet with PHY in strapped mode example                                                | Ethernet
 Receive packet Scatter-Gather feature support                                                   | Ethernet
 Support for custom modification receive packet buffer size                                      | Ethernet
+Mbed-TLS library support (software cryptography)                                                | Networking
 
 ## Device and Validation Information
 
@@ -41,6 +42,7 @@ SysConfig               | R5F            | @VAR_SYSCFG_VERSION_AM263X, build @VA
 TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
 FreeRTOS Kernel         | R5F            | @VAR_FREERTOS_KERNEL_VERSION
 LwIP                    | R5F            | @VAR_LWIP_VERSION
+Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
 
 \attention TI ARM CLANG @VAR_TI_ARM_CLANG_VERSION is not part of CCS by default, Follow steps at \ref INSTALL_TIARMCLANG to install the compiler
 
@@ -129,7 +131,6 @@ ETHPHY     | R5F            | YES               | Tested with ethercat_slave_bec
 FLASH      | R5F            | YES               | QSPI Flash                                                  | -
 LED        | R5F            | YES               | GPIO                                                        | -
 
-
 ### CMSIS
 
 Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                         | Key features not tested
@@ -155,7 +156,7 @@ Module                      | Supported CPUs | SysConfig Support | OS Support  |
 LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled,, TCP/UDP IP networking stack, DHCP, ping, TCP iperf, TCP/UDP IP, scatter-gather                         | Other LwIP features, checksum offload with VLAN_Tag, more robustness tests pending
 Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW and ICSS,Layer 2 MAC, Layer 2 PTP Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer, MDIO Manual Mode | -
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
-
+Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
 ### Demos
 
@@ -342,7 +343,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 </tr>
 </table>
 
-
 ## Known Issues
 <table>
 <tr>
@@ -484,6 +484,13 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> SDL
     <td> 8.5.0 onwards
     <td> Use Full CPU mode ot Auto mode.
+</tr>
+<tr>
+    <td> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0
+    <td> -
 </tr>
 </table>
 

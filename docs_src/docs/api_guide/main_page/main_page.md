@@ -95,6 +95,11 @@ The main software components in the block diagram are described below
     <td>TCP/UDP IP networking stack
 </tr>
 <tr>
+    <td>Mbed-TLS
+    <td> \ref EXAMPLES_CPSW_LWIP_HTTPS
+    <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
+</tr>
+<tr>
     <td>TinyUSB
     <td> \ref USB_DEVICE_DRIVER
     <td>USB device stack. Example, CDC device.
@@ -219,7 +224,7 @@ Given below is a overview of the directory structure to help you navigate the SD
 </tr>
 <tr>
     <td>networking/
-    <td>LwIP, ICSS-EMAC and ICSS Timesync</td>
+    <td>LwIP, ICSS-EMAC, ICSS Timesync and mbedtls_library</td>
 </tr>
 \if (SOC_AM64X || SOC_AM243X)
 <tr>

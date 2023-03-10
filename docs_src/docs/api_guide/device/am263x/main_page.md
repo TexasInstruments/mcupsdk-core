@@ -72,6 +72,11 @@ The main software components in the block diagram are described below
     <td> \ref INDUSTRIAL_COMMS
     <td>Industrial protocol stacks for protocols like EtherCAT
 </tr>
+<tr>
+    <td>Mbed-TLS
+    <td>\ref EXAMPLES_CPSW_LWIP_HTTPS
+    <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
+</tr>
 <tr><td colspan="3" bgcolor=#F0F0F0>**Software Diagnostics Library**</td></tr>
 <tr>
     <td>SDL

@@ -67,6 +67,13 @@ The main software components in the block diagram are described below
     <td>\ref EXAMPLES_ENET_LWIP_CPSW
     <td>TCP/UDP IP networking stack
 </tr>
+\cond SOC_AM273X
+<tr>
+    <td>Mbed-TLS
+    <td>\ref EXAMPLES_CPSW_LWIP_HTTPS
+    <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
+</tr>
+\endcond
 <tr><td colspan="3" bgcolor=#F0F0F0>**Examples and Demos**</td></tr>
 <tr>
     <td>Examples and Demos

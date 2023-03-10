@@ -23,6 +23,7 @@ Tamagawa Multi Channel                                                          
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
 EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
+Mbed-TLS library support (software cryptography)                                                | Networking
 \endcond
 
 \cond SOC_AM243X
@@ -32,6 +33,7 @@ Tamagawa Multi Channel                                                          
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
 EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
+Mbed-TLS library support (software cryptography)                                                | Networking
 \endcond
 
 ## Device and Validation Information
@@ -62,6 +64,7 @@ FreeRTOS Kernel         | R5F, M4F, A53  | @VAR_FREERTOS_KERNEL_VERSION
 FreeRTOS SMP Kernel     | A53            | @VAR_FREERTOS_SMP_KERNEL_VERSION
 Tiny USB                | R5F            | @VAR_TINYUSB_VERSION
 LwIP                    | R5F            | @VAR_LWIP_VERSION
+Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
 
 \attention TI ARM CLANG @VAR_TI_ARM_CLANG_VERSION is not part of CCS by default, Follow steps at \ref INSTALL_TIARMCLANG to install the compiler
 
@@ -223,6 +226,7 @@ LwIP                        | R5F            | YES               | FreeRTOS    |
 Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW and ICSS, Layer 2 MAC, Layer 2 PTP Timestamping, CPSW Switch, Policer, MDIO Manual Mode, independent ICSSG and CPSW drivers execution on different R5 cores| Independent ICSSG and CPSW drivers execution on same R5 cores not supported
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Tested switch mode with ethernetip_adapter_demo and hsr_prp_demo examples                                                                                                              | EMAC mode, VLAN/Multicast Filtering
 ICSS TimeSync               | R5F            | NO                | FreeRTOS    | Tested E2E mode with ethernetip_adapter_demo examples                                                                                                                                  | P2P mode, Transparent Clock mode
+Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
 ### USB
 
@@ -639,6 +643,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> OSPI
     <td> 8.4.0
     <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0
+    <td> AM64x, AM243x, AM263X, AM273X
     <td> -
 </tr>
 </table>

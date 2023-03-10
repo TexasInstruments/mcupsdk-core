@@ -13,13 +13,22 @@
 
 ## New in this Release
 
+\cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
-Early Ethernet with PHY in strapped mode example                                                | Ethernet
+Ethernet Fast Startup example                                                                   | Ethernet
 Receive packet Scatter-Gather feature support                                                   | Ethernet
 Support for custom modification receive packet buffer size                                      | Ethernet
+Mbed-TLS library support (software cryptography)                                                | Networking
+\endcond
 
-
+\cond SOC_AWR294X
+Feature                                                                                         | Module
+------------------------------------------------------------------------------------------------|--------------------------
+Ethernet Fast Startup example example                                                           | Ethernet
+Receive packet Scatter-Gather feature support                                                   | Ethernet
+Support for custom modification receive packet buffer size                                      | Ethernet
+\endcond
 
 ## Device and Validation Information
 
@@ -46,6 +55,7 @@ TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
 TI C6000 Compiler       | C66x           | @VAR_TI_C6000_CGT_VERSION
 FreeRTOS Kernel         | R5F, C66x      | @VAR_FREERTOS_KERNEL_VERSION
 DSP LIB                 | C66x           | @VAR_DSPLIB_VERSION
+Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
 
 DSP LIB package is modified to fix the build in Linux environment from the base version dsplib_c66x_3_4_0_0
 
@@ -144,11 +154,20 @@ Flash      | R5F            | YES               | QSPI based flash              
 LED        | R5F, C66x      | YES               | GPIO based LED control                                                        | -
 
 ### Networking
-
+\cond SOC_AWR294X
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
 LwIP                        | R5F            | NO                | FreeRTOS    | TCP/UDP IP networking stack, DHCP, ping, TCP iperf, TCP/UDP IP, scatter-gather                        | Other LwIP features, more robustness tests pending
 Ethernet driver (ENET)      | R5F            | NO                | FreeRTOS    | Ethernet as port using CPSW; MAC loopback and PHY loopback, interrupt pacing, MDIO Manual Mode       | Ethernet as switch
+\endcond
+
+\cond SOC_AM273X
+Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
+----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
+LwIP                        | R5F            | NO                | FreeRTOS    | TCP/UDP IP networking stack, DHCP, ping, TCP iperf, TCP/UDP IP, scatter-gather                        | Other LwIP features, more robustness tests pending
+Ethernet driver (ENET)      | R5F            | NO                | FreeRTOS    | Ethernet as port using CPSW; MAC loopback and PHY loopback, interrupt pacing, MDIO Manual Mode       | Ethernet as switch
+Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
+\endcond
 
 ### Safety Diagnostic Library
 
@@ -317,7 +336,15 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> 8.6.0 onwards
     <td> None.
 </tr>
-
+\cond SOC_AM273X
+<tr>
+    <td> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0 onwards
+    <td> -
+</tr>
+\endcond
 \endcond
 </table>
 
