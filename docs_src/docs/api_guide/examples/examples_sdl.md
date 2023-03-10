@@ -9,6 +9,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCU_ESM
 -# STOG
    -# \subpage EXAMPLES_SDL_STOG
+-# VTM
+   -# \subpage EXAMPLES_SDL_VTM
 \endcond
 
 \cond SOC_AM263X
@@ -79,4 +81,6 @@ This page lists all the examples related to usage of SDL.
 \cond SOC_AM243X
 -# ESM
    -# \subpage EXAMPLES_SDL_MCU_ESM
+-# VTM
+   -# \subpage EXAMPLES_SDL_VTM
 \endcond

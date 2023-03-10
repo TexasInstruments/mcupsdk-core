@@ -44,6 +44,7 @@ extern "C"
 #define IP_VERSION_MCRC_V0
 #define IP_VERSION_DCC_V0
 #define IP_VERSION_TOG_V0
+#define IP_VERSION_VTM_V0
 
 #ifdef __cplusplus
 }

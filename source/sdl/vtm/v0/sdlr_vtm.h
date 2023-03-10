@@ -1,0 +1,930 @@
+/********************************************************************
+ * Copyright (C) 2023 Texas Instruments Incorporated.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *  Name        : sdlr_vtm.h
+*/
+#ifndef SDLR_VTM_H_
+#define SDLR_VTM_H_
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
+#include <stdint.h>
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
+#endif
+/**************************************************************************
+* Module Base Offset Values
+**************************************************************************/
+
+#define SDL_VTM_CFG1_BASE          (SDL_VTM0_MMR_VBUSP_CFG1_BASE)
+#define SDL_VTM_CFG2_BASE          (SDL_VTM0_MMR_VBUSP_CFG2_BASE)
+#define SDL_VTM_CFG3_BASE		   (SDL_VTM0_ECCAGGR_CFG_BASE)
+
+#define SDL_VTM_TS_MAX_NUM                                   (8U)
+
+/**************************************************************************
+* Hardware Region  : MMRs in region 1
+**************************************************************************/
+
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct {
+    volatile uint32_t DEVINFO;
+    volatile uint32_t OPPVID;
+    volatile uint32_t EVT_STAT;
+    volatile uint32_t EVT_SEL_SET;
+    volatile uint32_t EVT_SEL_CLR;
+    volatile uint8_t  Resv_32[12];
+} SDL_VTM_cfg1Regs_VD;
+
+
+typedef struct {
+    volatile uint32_t CTRL;
+    volatile uint8_t  Resv_8[4];
+    volatile uint32_t STAT;
+    volatile uint32_t TH;
+    volatile uint32_t TH2;
+    volatile uint8_t  Resv_32[12];
+} SDL_VTM_cfg1Regs_TMPSENS;
+
+
+typedef struct {
+    volatile uint32_t PID;
+    volatile uint32_t DEVINFO_PWR0;
+    volatile uint8_t  Resv_256[248];
+    SDL_VTM_cfg1Regs_VD VD[8];
+    volatile uint8_t  Resv_516[4];
+    volatile uint32_t GT_TH1_INT_RAW_STAT_SET;
+    volatile uint32_t GT_TH1_INT_EN_STAT_CLR;
+    volatile uint8_t  Resv_532[8];
+    volatile uint32_t GT_TH1_INT_EN_SET;
+    volatile uint32_t GT_TH1_INT_EN_CLR;
+    volatile uint8_t  Resv_548[8];
+    volatile uint32_t GT_TH2_INT_RAW_STAT_SET;
+    volatile uint32_t GT_TH2_INT_EN_STAT_CLR;
+    volatile uint8_t  Resv_564[8];
+    volatile uint32_t GT_TH2_INT_EN_SET;
+    volatile uint32_t GT_TH2_INT_EN_CLR;
+    volatile uint8_t  Resv_580[8];
+    volatile uint32_t LT_TH0_INT_RAW_STAT_SET;
+    volatile uint32_t LT_TH0_INT_EN_STAT_CLR;
+    volatile uint8_t  Resv_596[8];
+    volatile uint32_t LT_TH0_INT_EN_SET;
+    volatile uint32_t LT_TH0_INT_EN_CLR;
+    volatile uint8_t  Resv_768[164];
+    SDL_VTM_cfg1Regs_TMPSENS TMPSENS[8];
+} SDL_VTM_cfg1Regs;
+
+
+/**************************************************************************
+* Register Macros
+**************************************************************************/
+
+#define SDL_VTM_CFG1_PID                                (0x00000000U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0                       (0x00000004U)
+#define SDL_VTM_CFG1_VD_DEVINFO(VTM_VD)                 (0x00000100U+((VTM_VD)*0x20U))
+#define SDL_VTM_CFG1_VD_OPPVID(VTM_VD)                  (0x00000104U+((VTM_VD)*0x20U))
+#define SDL_VTM_CFG1_VD_EVT_STAT(VTM_VD)                (0x00000108U+((VTM_VD)*0x20U))
+#define SDL_VTM_CFG1_VD_EVT_SET(VTM_VD)             (0x0000010CU+((VTM_VD)*0x20U))
+#define SDL_VTM_CFG1_VD_EVT_CLR(VTM_VD)             (0x00000110U+((VTM_VD)*0x20U))
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET            (0x00000204U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR             (0x00000208U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET                  (0x00000214U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR                  (0x00000218U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET            (0x00000224U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR             (0x00000228U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET                  (0x00000234U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR                  (0x00000238U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET            (0x00000244U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR             (0x00000248U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET                  (0x00000254U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR                  (0x00000258U)
+#define SDL_VTM_CFG1_TMPSENS_CTRL(TMPSENS)          (0x00000300U+((TMPSENS)*0x20U))
+#define SDL_VTM_CFG1_TMPSENS_STAT(TMPSENS)          (0x00000308U+((TMPSENS)*0x20U))
+#define SDL_VTM_CFG1_TMPSENS_TH(TMPSENS)            (0x0000030CU+((TMPSENS)*0x20U))
+#define SDL_VTM_CFG1_TMPSENS_TH2(TMPSENS)           (0x00000310U+((TMPSENS)*0x20U))
+
+/**************************************************************************
+* Field Definition Macros
+**************************************************************************/
+
+
+/* DEVINFO */
+
+#define SDL_VTM_CFG1_DEVINFO_VD_MAP_MASK             (0x00000F00U)
+#define SDL_VTM_CFG1_DEVINFO_VD_MAP_SHIFT            (0x00000008U)
+#define SDL_VTM_CFG1_DEVINFO_VD_MAP_MAX              (0x0000000FU)
+
+#define SDL_VTM_CFG1_DEVINFO_AVS0_SUP_MASK           (0x00001000U)
+#define SDL_VTM_CFG1_DEVINFO_AVS0_SUP_SHIFT          (0x0000000CU)
+#define SDL_VTM_CFG1_DEVINFO_AVS0_SUP_MAX            (0x00000001U)
+
+/* OPPVID */
+
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_0_MASK               (0x000000FFU)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_0_SHIFT              (0x00000000U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_0_MAX                (0x000000FFU)
+
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_1_MASK               (0x0000FF00U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_1_SHIFT              (0x00000008U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_1_MAX                (0x000000FFU)
+
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_2_MASK               (0x00FF0000U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_2_SHIFT              (0x00000010U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_2_MAX                (0x000000FFU)
+
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_3_MASK               (0xFF000000U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_3_SHIFT              (0x00000018U)
+#define SDL_VTM_CFG1_VTM_VD_OPPVID_OPP_3_MAX                (0x000000FFU)
+
+/* Additional field macros for backwards compatibility with prior SDL-RL implementations */
+
+#define SDL_VTM_CFG1_OPPVID_OPP_LOW_DFLT_MASK                           (0x000000FFU)
+#define SDL_VTM_CFG1_OPPVID_OPP_LOW_DFLT_SHIFT                          (0x00000000U)
+#define SDL_VTM_CFG1_OPPVID_OPP_LOW_DFLT_MAX                            (0x000000FFU)
+
+#define SDL_VTM_CFG1_OPPVID_OPP_NOM_DFLT_MASK                           (0x0000FF00U)
+#define SDL_VTM_CFG1_OPPVID_OPP_NOM_DFLT_SHIFT                          (0x00000008U)
+#define SDL_VTM_CFG1_OPPVID_OPP_NOM_DFLT_MAX                            (0x000000FFU)
+
+#define SDL_VTM_CFG1_OPPVID_OPP_ODR_DFLT_MASK                           (0x00FF0000U)
+#define SDL_VTM_CFG1_OPPVID_OPP_ODR_DFLT_SHIFT                          (0x00000010U)
+#define SDL_VTM_CFG1_OPPVID_OPP_ODR_DFLT_MAX                            (0x000000FFU)
+
+#define SDL_VTM_CFG1_OPPVID_OPP_TRB_DFLT_MASK                           (0xFF000000U)
+#define SDL_VTM_CFG1_OPPVID_OPP_TRB_DFLT_SHIFT                          (0x00000018U)
+#define SDL_VTM_CFG1_OPPVID_OPP_TRB_DFLT_MAX                            (0x000000FFU)
+
+/* EVT_STAT */
+
+#define SDL_VTM_CFG1_EVT_STAT_GT_TH1_ALERT_MASK      (0x00000001U)
+#define SDL_VTM_CFG1_EVT_STAT_GT_TH1_ALERT_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_EVT_STAT_GT_TH1_ALERT_MAX       (0x00000001U)
+
+#define SDL_VTM_CFG1_EVT_STAT_GT_TH2_ALERT_MASK      (0x00000002U)
+#define SDL_VTM_CFG1_EVT_STAT_GT_TH2_ALERT_SHIFT     (0x00000001U)
+#define SDL_VTM_CFG1_EVT_STAT_GT_TH2_ALERT_MAX       (0x00000001U)
+
+#define SDL_VTM_CFG1_EVT_STAT_LT_TH0_ALERT_MASK      (0x00000004U)
+#define SDL_VTM_CFG1_EVT_STAT_LT_TH0_ALERT_SHIFT     (0x00000002U)
+#define SDL_VTM_CFG1_EVT_STAT_LT_TH0_ALERT_MAX       (0x00000001U)
+
+/* EVT_SEL_SET */
+
+#define SDL_VTM_CFG1_EVT_SET_TSENS_EVT_SEL_MASK  (0x00FF0000U)
+#define SDL_VTM_CFG1_EVT_SET_TSENS_EVT_SEL_SHIFT (0x00000010U)
+#define SDL_VTM_CFG1_EVT_SET_TSENS_EVT_SEL_MAX   (0x000000FFU)
+
+/* EVT_SEL_CLR */
+
+#define SDL_VTM_CFG1_EVT_CLR_TSENS_EVT_SEL_MASK  (0x00FF0000U)
+#define SDL_VTM_CFG1_EVT_CLR_TSENS_EVT_SEL_SHIFT (0x00000010U)
+#define SDL_VTM_CFG1_EVT_CLR_TSENS_EVT_SEL_MAX   (0x000000FFU)
+
+/* CTRL */
+
+#define SDL_VTM_CFG1_TMPSENS_CTRL_GT_TH1_EN_MASK        (0x00000100U)
+#define SDL_VTM_CFG1_TMPSENS_CTRL_GT_TH1_EN_SHIFT       (0x00000008U)
+#define SDL_VTM_CFG1_TMPSENS_CTRL_GT_TH1_EN_MAX         (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_CTRL_GT_TH2_EN_MASK        (0x00000200U)
+#define SDL_VTM_CFG1_TMPSENS_CTRL_GT_TH2_EN_SHIFT       (0x00000009U)
+#define SDL_VTM_CFG1_TMPSENS_CTRL_GT_TH2_EN_MAX         (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_CTRL_LT_TH0_EN_MASK        (0x00000400U)
+#define SDL_VTM_CFG1_TMPSENS_CTRL_LT_TH0_EN_SHIFT       (0x0000000AU)
+#define SDL_VTM_CFG1_TMPSENS_CTRL_LT_TH0_EN_MAX         (0x00000001U)
+
+/* STAT */
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_DATA_OUT_MASK         (0x000003FFU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_DATA_OUT_SHIFT        (0x00000000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_DATA_OUT_MAX          (0x000003FFU)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_DATA_VALID_MASK       (0x00000400U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_DATA_VALID_SHIFT      (0x0000000AU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_DATA_VALID_MAX        (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_EOC_FC_UPDATE_MASK    (0x00000800U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_EOC_FC_UPDATE_SHIFT   (0x0000000BU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_EOC_FC_UPDATE_MAX     (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_GT_TH1_ALERT_MASK     (0x00001000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_GT_TH1_ALERT_SHIFT    (0x0000000CU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_GT_TH1_ALERT_MAX      (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_GT_TH2_ALERT_MASK     (0x00002000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_GT_TH2_ALERT_SHIFT    (0x0000000DU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_GT_TH2_ALERT_MAX      (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_LT_TH0_ALERT_MASK     (0x00004000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_LT_TH0_ALERT_SHIFT    (0x0000000EU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_LT_TH0_ALERT_MAX      (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_MAXT_OUTRG_ALERT_MASK (0x00008000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_MAXT_OUTRG_ALERT_SHIFT (0x0000000FU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_MAXT_OUTRG_ALERT_MAX  (0x00000001U)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_VD_MAP_MASK           (0x000F0000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_VD_MAP_SHIFT          (0x00000010U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_VD_MAP_MAX            (0x0000000FU)
+
+/* Additional field macros for backwards compatibility with prior SDL-RL implementations */
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_DTEMP_MASK                            (0x000003FFU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_DTEMP_SHIFT                           (0x00000000U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_DTEMP_MAX                             (0x000003FFU)
+
+#define SDL_VTM_CFG1_TMPSENS_STAT_EOCZ_MASK                             (0x00000400U)
+#define SDL_VTM_CFG1_TMPSENS_STAT_EOCZ_SHIFT                            (0x0000000AU)
+#define SDL_VTM_CFG1_TMPSENS_STAT_EOCZ_MAX                              (0x00000001U)
+
+/* TH */
+
+#define SDL_VTM_CFG1_TMPSENS_TH_TH0_VAL_MASK            (0x000003FFU)
+#define SDL_VTM_CFG1_TMPSENS_TH_TH0_VAL_SHIFT           (0x00000000U)
+#define SDL_VTM_CFG1_TMPSENS_TH_TH0_VAL_MAX             (0x000003FFU)
+
+#define SDL_VTM_CFG1_TMPSENS_TH_TH1_VAL_MASK            (0x03FF0000U)
+#define SDL_VTM_CFG1_TMPSENS_TH_TH1_VAL_SHIFT           (0x00000010U)
+#define SDL_VTM_CFG1_TMPSENS_TH_TH1_VAL_MAX             (0x000003FFU)
+
+/* TH2 */
+
+#define SDL_VTM_CFG1_TMPSENS_TH2_TH2_VAL_MASK           (0x000003FFU)
+#define SDL_VTM_CFG1_TMPSENS_TH2_TH2_VAL_SHIFT          (0x00000000U)
+#define SDL_VTM_CFG1_TMPSENS_TH2_TH2_VAL_MAX            (0x000003FFU)
+
+/* PID */
+
+#define SDL_VTM_CFG1_PID_Y_MINOR_MASK                   (0x0000003FU)
+#define SDL_VTM_CFG1_PID_Y_MINOR_SHIFT                  (0x00000000U)
+#define SDL_VTM_CFG1_PID_Y_MINOR_MAX                    (0x0000003FU)
+
+#define SDL_VTM_CFG1_PID_CUSTOM_MASK                    (0x000000C0U)
+#define SDL_VTM_CFG1_PID_CUSTOM_SHIFT                   (0x00000006U)
+#define SDL_VTM_CFG1_PID_CUSTOM_MAX                     (0x00000003U)
+
+#define SDL_VTM_CFG1_PID_X_MAJOR_MASK                   (0x00000700U)
+#define SDL_VTM_CFG1_PID_X_MAJOR_SHIFT                  (0x00000008U)
+#define SDL_VTM_CFG1_PID_X_MAJOR_MAX                    (0x00000007U)
+
+#define SDL_VTM_CFG1_PID_R_RTL_MASK                     (0x0000F800U)
+#define SDL_VTM_CFG1_PID_R_RTL_SHIFT                    (0x0000000BU)
+#define SDL_VTM_CFG1_PID_R_RTL_MAX                      (0x0000001FU)
+
+#define SDL_VTM_CFG1_PID_FUNC_MASK                      (0x0FFF0000U)
+#define SDL_VTM_CFG1_PID_FUNC_SHIFT                     (0x00000010U)
+#define SDL_VTM_CFG1_PID_FUNC_MAX                       (0x00000FFFU)
+
+#define SDL_VTM_CFG1_PID_BU_MASK                        (0x30000000U)
+#define SDL_VTM_CFG1_PID_BU_SHIFT                       (0x0000001CU)
+#define SDL_VTM_CFG1_PID_BU_MAX                         (0x00000003U)
+
+#define SDL_VTM_CFG1_PID_SCHEME_MASK                    (0xC0000000U)
+#define SDL_VTM_CFG1_PID_SCHEME_SHIFT                   (0x0000001EU)
+#define SDL_VTM_CFG1_PID_SCHEME_MAX                     (0x00000003U)
+
+/* DEVINFO_PWR0 */
+
+#define SDL_VTM_CFG1_DEVINFO_PWR0_CVD_CT_MASK           (0x0000000FU)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_CVD_CT_SHIFT          (0x00000000U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_CVD_CT_MAX            (0x0000000FU)
+
+#define SDL_VTM_CFG1_DEVINFO_PWR0_TMPSENS_CT_MASK       (0x000000F0U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_TMPSENS_CT_SHIFT      (0x00000004U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_TMPSENS_CT_MAX        (0x0000000FU)
+
+#define SDL_VTM_CFG1_DEVINFO_PWR0_VDD_RTC_MASK           (0x00001000U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_VDD_RTC_SHIFT          (0x0000000CU)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_VDD_RTC_MAX            (0x00000001U)
+
+#define SDL_VTM_CFG1_DEVINFO_PWR0_VTM_VD_MAP_MASK       (0x000F0000U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_VTM_VD_MAP_SHIFT      (0x00000010U)
+#define SDL_VTM_CFG1_DEVINFO_PWR0_VTM_VD_MAP_MAX        (0x0000000FU)
+
+/* GT_TH1_INT_RAW_STAT_SET */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD_MASK (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD_SHIFT (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD_MAX (0x000000FFU)
+
+/* GT_TH1_INT_EN_STAT_CLR */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD_MASK (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD_SHIFT (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD_MAX  (0x000000FFU)
+
+/* GT_TH1_INT_EN_SET */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD_MASK      (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD_MAX       (0x000000FFU)
+
+/* GT_TH1_INT_EN_CLR */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD_MASK      (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD_MAX       (0x000000FFU)
+
+/* GT_TH2_INT_RAW_STAT_SET */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD_MASK (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD_SHIFT (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD_MAX (0x000000FFU)
+
+/* GT_TH2_INT_EN_STAT_CLR */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD_MASK (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD_SHIFT (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD_MAX  (0x000000FFU)
+
+/* GT_TH2_INT_EN_SET */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD_MASK      (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD_MAX       (0x000000FFU)
+
+/* GT_TH2_INT_EN_CLR */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD_MASK      (0x000000FFU)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD_MAX       (0x000000FFU)
+
+/* LT_TH0_INT_RAW_STAT_SET */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD_MASK (0x000000FFU)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD_SHIFT (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD_MAX (0x000000FFU)
+
+/* LT_TH0_INT_EN_STAT_CLR */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD_MASK (0x000000FFU)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD_SHIFT (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD_MAX  (0x000000FFU)
+
+/* LT_TH0_INT_EN_SET */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD_MASK      (0x000000FFU)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD_MAX       (0x000000FFU)
+
+/* LT_TH0_INT_EN_CLR */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD_MASK      (0x000000FFU)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD_SHIFT     (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD_MAX       (0x000000FFU)
+
+/* Additional interrupt-related field macros for backwards compatibility with prior SDL-RL implementations */
+
+/* VTM_GT_TH1_INT_RAW_STAT_SET */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD0_MASK               (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD0_SHIFT              (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD0_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD1_MASK               (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD1_SHIFT              (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD1_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD2_MASK               (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD2_SHIFT              (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD2_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD3_MASK               (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD3_SHIFT              (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD3_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD4_MASK               (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD4_SHIFT              (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD4_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD5_MASK               (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD5_SHIFT              (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD5_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD6_MASK               (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD6_SHIFT              (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD6_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD7_MASK               (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD7_SHIFT              (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH1_INT_RAW_STAT_SET_INT_VD7_MAX                (0x00000001U)
+
+/* VTM_GT_TH1_INT_EN_STAT_CLR */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD0_MASK                (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD0_SHIFT               (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD0_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD1_MASK                (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD1_SHIFT               (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD1_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD2_MASK                (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD2_SHIFT               (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD2_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD3_MASK                (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD3_SHIFT               (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD3_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD4_MASK                (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD4_SHIFT               (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD4_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD5_MASK                (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD5_SHIFT               (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD5_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD6_MASK                (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD6_SHIFT               (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD6_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD7_MASK                (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD7_SHIFT               (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_STAT_CLR_INT_VD7_MAX                 (0x00000001U)
+
+/* VTM_GT_TH1_INT_EN_SET */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD0_MASK                     (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD0_SHIFT                    (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD0_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD1_MASK                     (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD1_SHIFT                    (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD1_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD2_MASK                     (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD2_SHIFT                    (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD2_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD3_MASK                     (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD3_SHIFT                    (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD3_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD4_MASK                     (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD4_SHIFT                    (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD4_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD5_MASK                     (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD5_SHIFT                    (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD5_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD6_MASK                     (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD6_SHIFT                    (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD6_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD7_MASK                     (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD7_SHIFT                    (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_SET_INT_VD7_MAX                      (0x00000001U)
+
+/* VTM_GT_TH1_INT_EN_CLR */
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD0_MASK                     (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD0_SHIFT                    (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD0_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD1_MASK                     (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD1_SHIFT                    (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD1_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD2_MASK                     (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD2_SHIFT                    (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD2_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD3_MASK                     (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD3_SHIFT                    (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD3_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD4_MASK                     (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD4_SHIFT                    (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD4_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD5_MASK                     (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD5_SHIFT                    (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD5_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD6_MASK                     (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD6_SHIFT                    (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD6_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD7_MASK                     (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD7_SHIFT                    (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH1_INT_EN_CLR_INT_VD7_MAX                      (0x00000001U)
+
+/* VTM_GT_TH2_INT_RAW_STAT_SET */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD0_MASK               (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD0_SHIFT              (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD0_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD1_MASK               (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD1_SHIFT              (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD1_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD2_MASK               (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD2_SHIFT              (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD2_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD3_MASK               (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD3_SHIFT              (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD3_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD4_MASK               (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD4_SHIFT              (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD4_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD5_MASK               (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD5_SHIFT              (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD5_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD6_MASK               (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD6_SHIFT              (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD6_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD7_MASK               (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD7_SHIFT              (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH2_INT_RAW_STAT_SET_INT_VD7_MAX                (0x00000001U)
+
+/* VTM_GT_TH2_INT_EN_STAT_CLR */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD0_MASK                (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD0_SHIFT               (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD0_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD1_MASK                (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD1_SHIFT               (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD1_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD2_MASK                (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD2_SHIFT               (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD2_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD3_MASK                (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD3_SHIFT               (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD3_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD4_MASK                (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD4_SHIFT               (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD4_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD5_MASK                (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD5_SHIFT               (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD5_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD6_MASK                (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD6_SHIFT               (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD6_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD7_MASK                (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD7_SHIFT               (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_STAT_CLR_INT_VD7_MAX                 (0x00000001U)
+
+/* VTM_GT_TH2_INT_EN_SET */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD0_MASK                     (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD0_SHIFT                    (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD0_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD1_MASK                     (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD1_SHIFT                    (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD1_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD2_MASK                     (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD2_SHIFT                    (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD2_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD3_MASK                     (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD3_SHIFT                    (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD3_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD4_MASK                     (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD4_SHIFT                    (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD4_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD5_MASK                     (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD5_SHIFT                    (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD5_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD6_MASK                     (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD6_SHIFT                    (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD6_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD7_MASK                     (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD7_SHIFT                    (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_SET_INT_VD7_MAX                      (0x00000001U)
+
+/* VTM_GT_TH2_INT_EN_CLR */
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD0_MASK                     (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD0_SHIFT                    (0x00000000U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD0_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD1_MASK                     (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD1_SHIFT                    (0x00000001U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD1_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD2_MASK                     (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD2_SHIFT                    (0x00000002U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD2_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD3_MASK                     (0x00000008U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD3_SHIFT                    (0x00000003U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD3_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD4_MASK                     (0x00000010U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD4_SHIFT                    (0x00000004U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD4_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD5_MASK                     (0x00000020U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD5_SHIFT                    (0x00000005U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD5_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD6_MASK                     (0x00000040U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD6_SHIFT                    (0x00000006U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD6_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD7_MASK                     (0x00000080U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD7_SHIFT                    (0x00000007U)
+#define SDL_VTM_CFG1_GT_TH2_INT_EN_CLR_INT_VD7_MAX                      (0x00000001U)
+
+/* VTM_LT_TH0_INT_RAW_STAT_SET */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD0_MASK               (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD0_SHIFT              (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD0_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD1_MASK               (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD1_SHIFT              (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD1_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD2_MASK               (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD2_SHIFT              (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD2_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD3_MASK               (0x00000008U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD3_SHIFT              (0x00000003U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD3_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD4_MASK               (0x00000010U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD4_SHIFT              (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD4_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD5_MASK               (0x00000020U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD5_SHIFT              (0x00000005U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD5_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD6_MASK               (0x00000040U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD6_SHIFT              (0x00000006U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD6_MAX                (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD7_MASK               (0x00000080U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD7_SHIFT              (0x00000007U)
+#define SDL_VTM_CFG1_LT_TH0_INT_RAW_STAT_SET_INT_VD7_MAX                (0x00000001U)
+
+/* VTM_LT_TH0_INT_EN_STAT_CLR */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD0_MASK                (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD0_SHIFT               (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD0_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD1_MASK                (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD1_SHIFT               (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD1_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD2_MASK                (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD2_SHIFT               (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD2_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD3_MASK                (0x00000008U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD3_SHIFT               (0x00000003U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD3_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD4_MASK                (0x00000010U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD4_SHIFT               (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD4_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD5_MASK                (0x00000020U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD5_SHIFT               (0x00000005U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD5_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD6_MASK                (0x00000040U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD6_SHIFT               (0x00000006U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD6_MAX                 (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD7_MASK                (0x00000080U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD7_SHIFT               (0x00000007U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_STAT_CLR_INT_VD7_MAX                 (0x00000001U)
+
+/* VTM_LT_TH0_INT_EN_SET */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD0_MASK                     (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD0_SHIFT                    (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD0_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD1_MASK                     (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD1_SHIFT                    (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD1_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD2_MASK                     (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD2_SHIFT                    (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD2_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD3_MASK                     (0x00000008U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD3_SHIFT                    (0x00000003U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD3_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD4_MASK                     (0x00000010U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD4_SHIFT                    (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD4_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD5_MASK                     (0x00000020U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD5_SHIFT                    (0x00000005U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD5_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD6_MASK                     (0x00000040U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD6_SHIFT                    (0x00000006U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD6_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD7_MASK                     (0x00000080U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD7_SHIFT                    (0x00000007U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_SET_INT_VD7_MAX                      (0x00000001U)
+
+/* VTM_LT_TH0_INT_EN_CLR */
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD0_MASK                     (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD0_SHIFT                    (0x00000000U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD0_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD1_MASK                     (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD1_SHIFT                    (0x00000001U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD1_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD2_MASK                     (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD2_SHIFT                    (0x00000002U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD2_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD3_MASK                     (0x00000008U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD3_SHIFT                    (0x00000003U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD3_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD4_MASK                     (0x00000010U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD4_SHIFT                    (0x00000004U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD4_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD5_MASK                     (0x00000020U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD5_SHIFT                    (0x00000005U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD5_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD6_MASK                     (0x00000040U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD6_SHIFT                    (0x00000006U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD6_MAX                      (0x00000001U)
+
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD7_MASK                     (0x00000080U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD7_SHIFT                    (0x00000007U)
+#define SDL_VTM_CFG1_LT_TH0_INT_EN_CLR_INT_VD7_MAX                      (0x00000001U)
+
+/**************************************************************************
+* Hardware Region  : MMRs in critical region 2
+**************************************************************************/
+
+
+/**************************************************************************
+* Register Overlay Structure
+**************************************************************************/
+
+typedef struct {
+    volatile uint32_t CTRL;
+    volatile uint32_t TRIM;
+    volatile uint8_t  Resv_32[24];
+} SDL_VTM_cfg2Regs_TMPSENS;
+
+
+typedef struct {
+    volatile uint8_t  Resv_8[8];
+    volatile uint32_t CLK_CTRL;
+    volatile uint32_t MISC_CTRL;
+    volatile uint32_t MISC_CTRL2;
+    volatile uint8_t  Resv_32[12];
+    volatile uint32_t SAMPLE_CTRL;
+    volatile uint8_t  Resv_768[732];
+    SDL_VTM_cfg2Regs_TMPSENS TMPSENS[8];
+} SDL_VTM_cfg2Regs;
+
+
+/**************************************************************************
+* Register Macros
+**************************************************************************/
+
+#define SDL_VTM_CFG2_CLK_CTRL                           (0x00000008U)
+#define SDL_VTM_CFG2_MISC_CTRL                          (0x0000000CU)
+#define SDL_VTM_CFG2_MISC_CTRL2                         (0x00000010U)
+#define SDL_VTM_CFG2_SAMPLE_CTRL                        (0x00000020U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL(TMPSENS)          (0x00000300U+((TMPSENS)*0x20U))
+#define SDL_VTM_CFG2_TMPSENS_TRIM(TMPSENS)          (0x00000304U+((TMPSENS)*0x20U))
+
+/**************************************************************************
+* Field Definition Macros
+**************************************************************************/
+
+
+/* CTRL */
+
+#define SDL_VTM_CFG2_TMPSENS_CTRL_CONT_MASK             (0x00000010U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_CONT_SHIFT            (0x00000004U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_CONT_MAX              (0x00000001U)
+
+#define SDL_VTM_CFG2_TMPSENS_CTRL_SOC_MASK              (0x00000020U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_SOC_SHIFT             (0x00000005U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_SOC_MAX               (0x00000001U)
+
+#define SDL_VTM_CFG2_TMPSENS_CTRL_CLRZ_MASK             (0x00000040U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_CLRZ_SHIFT            (0x00000006U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_CLRZ_MAX              (0x00000001U)
+
+#define SDL_VTM_CFG2_TMPSENS_CTRL_MAXT_OUTRG_EN_MASK    (0x00000800U)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_MAXT_OUTRG_EN_SHIFT   (0x0000000BU)
+#define SDL_VTM_CFG2_TMPSENS_CTRL_MAXT_OUTRG_EN_MAX     (0x00000001U)
+
+/* TRIM */
+
+#define SDL_VTM_CFG2_TMPSENS_TRIM_TRIMG_MASK            (0x0000001FU)
+#define SDL_VTM_CFG2_TMPSENS_TRIM_TRIMG_SHIFT           (0x00000000U)
+#define SDL_VTM_CFG2_TMPSENS_TRIM_TRIMG_MAX             (0x0000001FU)
+
+#define SDL_VTM_CFG2_TMPSENS_TRIM_TRIMO_MASK            (0x00003F00U)
+#define SDL_VTM_CFG2_TMPSENS_TRIM_TRIMO_SHIFT           (0x00000008U)
+#define SDL_VTM_CFG2_TMPSENS_TRIM_TRIMO_MAX             (0x0000003FU)
+
+/* CLK_CTRL */
+
+#define SDL_VTM_CFG2_CLK_CTRL_TSENS_CLK_SEL_MASK        (0x80000000U)
+#define SDL_VTM_CFG2_CLK_CTRL_TSENS_CLK_SEL_SHIFT       (0x0000001FU)
+#define SDL_VTM_CFG2_CLK_CTRL_TSENS_CLK_SEL_MAX         (0x00000001U)
+
+#define SDL_VTM_CFG2_CLK_CTRL_TSENS_CLK_DIV_MASK        (0x0000001FU)
+#define SDL_VTM_CFG2_CLK_CTRL_TSENS_CLK_DIV_SHIFT       (0x00000000U)
+#define SDL_VTM_CFG2_CLK_CTRL_TSENS_CLK_DIV_MAX         (0x0000001FU)
+
+/* MISC_CTRL */
+
+#define SDL_VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN_MASK (0x00000001U)
+#define SDL_VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN_SHIFT (0x00000000U)
+#define SDL_VTM_CFG2_MISC_CTRL_ANY_MAXT_OUTRG_ALERT_EN_MAX (0x00000001U)
+
+/* MISC_CTRL2 */
+
+#define SDL_VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR0_MASK (0x03FF0000U)
+#define SDL_VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR0_SHIFT (0x00000010U)
+#define SDL_VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR0_MAX (0x000003FFU)
+
+#define SDL_VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR_MASK (0x000003FFU)
+#define SDL_VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR_SHIFT (0x00000000U)
+#define SDL_VTM_CFG2_MISC_CTRL2_MAXT_OUTRG_ALERT_THR_MAX (0x000003FFU)
+
+/* SAMPLE_CTRL */
+
+#define SDL_VTM_CFG2_SAMPLE_CTRL_SAMPLE_PER_CNT_MASK    (0x0000FFFFU)
+#define SDL_VTM_CFG2_SAMPLE_CTRL_SAMPLE_PER_CNT_SHIFT   (0x00000000U)
+#define SDL_VTM_CFG2_SAMPLE_CTRL_SAMPLE_PER_CNT_MAX     (0x0000FFFFU)
+
+#ifdef __cplusplus
+}
+#endif
+#endif

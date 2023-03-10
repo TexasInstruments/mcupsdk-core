@@ -9,6 +9,10 @@ const files = {
         "sdl_ip_esm.c",
         "sdl_esm_core.c",
         "sdl_esm_priv.c",
+        "sdl_ip_vtm.c",
+		"sdl_vtm_pvt_sensor.c",
+		"sdl_vtm.c",
+		"sdl_soc_vtm.c",
     ],
 };
 
@@ -20,6 +24,9 @@ const filedirs = {
         "esm/soc/am243x",
         "esm/v0",
         "esm/v0/v0_0",
+        "vtm",
+        "vtm/v0",
+        "vtm/v0/soc/am243x",
     ],
 };
 

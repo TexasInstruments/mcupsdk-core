@@ -99,7 +99,7 @@ pSDL_DPL_HwipHandle SDL_TEST_registerInterrupt(SDL_DPL_HwipParams *pParams)
      */
 #if defined (R5F_CORE)
 	hwipParams.intNum = pParams->intNum;
-#else 
+#else
 	hwipParams.intNum = pParams->intNum + 16;
 #endif
 #else
