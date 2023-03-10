@@ -636,6 +636,9 @@ We can then boot this application without being connected to CCS via JTAG.
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
 ## see also 
 
 - \ref GETTING_STARTED_FLASH_DFU
+
+\endcond
