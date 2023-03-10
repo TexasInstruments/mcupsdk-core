@@ -4,20 +4,10 @@ import getopt
 import time
 import subprocess
 
-try:
-    import serial
-    from tqdm import tqdm
-    from xmodem import XMODEM, XMODEM1k
-except ImportError:
-    print('[ERROR] Dependant modules not installed, use below pip command to install them. MAKE sure proxy for pip is setup if needed.')
-    print('')
-    print('python -m pip install pyserial tqdm xmodem --proxy={http://your proxy server:port or leave blank if no proxy}')
-    sys.exit(2)
-
 usage_string = '''
-USAGE: python uart_bootloader.py [OPTIONS]
+USAGE: python usb_bootloader.py [OPTIONS]
 
--b, --bootloader=    Path to the UART Bootloader binary
+-b, --bootloader=    Path to the USB Bootloader binary
 
 -f, --file=          Path to the appimage binary
 
@@ -35,34 +25,8 @@ USAGE: python uart_bootloader.py [OPTIONS]
                      Default = 512
 '''
 
-mySerPort = "No Serial Port Chosen"
-myBaudRate = 115200
-ser = serial.Serial(timeout=3)
-
-
 # Max appimage size supported by SBL DFU bootloader
 MAX_APPIMAGE_SIZE = 0x60000
-
-# Parse response sent from EVM
-def parse_response_evm(filename):
-    f = open(filename, "rb")
-    resp_bytes = f.read(128)
-    f.close()
-
-    status = 0
-
-    response = int.from_bytes(resp_bytes[0:4], 'little')
-
-    if(response == BOOTLOADER_UART_STATUS_LOAD_SUCCESS):
-        status = "[STATUS] Application load SUCCESS !!!"
-    elif(response == BOOTLOADER_UART_STATUS_LOAD_FAIL):
-        status = "[STATUS] ERROR: Application load FAILED !!!"
-    elif(response == BOOTLOADER_UART_STATUS_APPIMAGE_SIZE_EXCEEDED):
-        status = "[STATUS] ERROR: Application load FAILED, file size exceeds LIMIT on the EVM !!!"
-    else:
-        status = "[STATUS] ERROR: Bad response from EVM !!!"
-
-    return status
 
 # Function to detect dfu device enumeration
 def wait_for_enumeration():
@@ -125,7 +89,6 @@ def dfu_fw_send(filename,intf=0,alt=0,xfer_size=512,reset_req=False):
         print ("Power cycle EVM and run this script again !!!")
         sys.exit(1)
 
-
     return status,timetaken
 
 def main(argv):
@@ -181,12 +144,12 @@ def main(argv):
     status = 0
 
     if(bootloader_file == None):
-        status = "[ERROR] Provide path to the uart bootloader binary with option -b or --bootloader=, use -h option to see detailed help !!!"
+        status = "[ERROR] Provide path to the usb bootloader binary with option -b or --bootloader=, use -h option to see detailed help !!!"
         print(status)
         sys.exit()
 
     if(appimage_file == None):
-        status = "[ERROR] Provide path to an appimage binary to be sent via UART with option -f or --file=, , use -h option to see detailed help !!!"
+        status = "[ERROR] Provide path to an appimage binary to be sent via USB DFU with option -f or --file=, , use -h option to see detailed help !!!"
         print(status)
         sys.exit()
 
@@ -234,7 +197,7 @@ def main(argv):
         print("----------------------------------------------------------------")
         print("Sending the application {} ...".format(appimage_file))
 
-        send_status, timetaken = dfu_fw_send(appimage_file, interface ,alt_setting,transfer_size,True)
+        send_status, timetaken = dfu_fw_send(appimage_file, interface ,alt_setting,transfer_size)
 
         print("----------------------------------------------------------------")
         print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
