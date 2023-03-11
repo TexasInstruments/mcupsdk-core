@@ -5,14 +5,15 @@ MCU_PLUS_SDK_PATH=$(abspath ../../../)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
-K3_RESPART_REPO=$(abspath .)/k3-resource-partitioning
+K3_RESPART_REPO=$(MCU_PLUS_SDK_PATH)/../k3-resource-partitioning
 K3_RESPART_PRODUCT=$(K3_RESPART_REPO)/.metadata/product.json
 
 SOC?=am64x
 SOC_RES=
 ifeq ($(SOC),$(filter $(SOC), am64x am243x))
-  SOC_FOLDER=am64x_am243x
-  SOC_RES=am64x
+  SOC_FOLDER=$(SOC)
+  SOC_RES=$(SOC)
+  SOC_PY=am64x
 endif
 
 # Certificate Generation script and other commands
@@ -136,6 +137,7 @@ configure:
 configure-gen:
 	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(K3_RESPART_PRODUCT) --output generated/ $(K3_RESPART_REPO)/out/$(SOC_RES)-evm.syscfg
 	$(COPY) generated/sciclient_defaultBoardcfg_rm_mcusdk.c $(CFG_DIR)/sciclient_defaultBoardcfg_rm.c
+	$(COPY) generated/sciclient_defaultBoardcfg_mcusdk.c $(CFG_DIR)/sciclient_defaultBoardcfg.c
 	$(RMDIR) generated/
 
 define CREATE_HEX_GEN
@@ -154,7 +156,7 @@ $(OBJDIR)/$(1).bin.unsigned : SHELL:=/bin/bash   # HERE: this is setting the she
 $(OBJDIR)/$(1).bin.unsigned : $(OBJDIR)/$(1).$(OBJEXT)
 	@echo "Create unsigned Board Configuration binary"
 	$(OBJCOPY) $(OBJDIR)/$(notdir $(2)).$(OBJEXT) $(OBJDIR)/$(1).bin.unsigned $(CGT_TI_ARM_CLANG_PATH)/bin/tiarmofd $(CGT_TI_ARM_CLANG_PATH)/bin/tiarmhex $(CCS_PATH)/utils/tiobj2bin/mkhex4bin
-	$(PYTHON) $(VALIDATOR_SCRIPT) -b $(OBJDIR)/$(1).bin.unsigned -s $(SOC) -l $(OBJDIR)/output_$(BRD_CFG).log -i -o $(OBJDIR)/$(1)_temp.bin.unsigned -r $(VALIDATOR_JSON)
+	$(PYTHON) $(VALIDATOR_SCRIPT) -b $(OBJDIR)/$(1).bin.unsigned -s $(SOC_PY) -l $(OBJDIR)/output_$(BRD_CFG).log -i -o $(OBJDIR)/$(1)_temp.bin.unsigned -r $(VALIDATOR_JSON)
 	$(MV) $(OBJDIR)/$(1)_temp.bin.unsigned $(OBJDIR)/$(1).bin.unsigned
 
 # If an HS signature is required, sign it with the HS key (will get deleted by make)

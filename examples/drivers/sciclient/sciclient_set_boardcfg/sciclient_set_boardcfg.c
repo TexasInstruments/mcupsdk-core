@@ -50,10 +50,17 @@
 #include "ti_board_open_close.h"
 
 /* Board Config Headers */
-#include <drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_hex.h>
-#include <drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_rm_hex.h>
-#include <drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_pm_hex.h>
-#include <drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_security_hex.h>
+#if defined(SOC_AM243X)
+#include <drivers/sciclient/sciclient_default_boardcfg/am243x/sciclient_defaultBoardcfg_hex.h>
+#include <drivers/sciclient/sciclient_default_boardcfg/am243x/sciclient_defaultBoardcfg_rm_hex.h>
+#include <drivers/sciclient/sciclient_default_boardcfg/am243x/sciclient_defaultBoardcfg_pm_hex.h>
+#include <drivers/sciclient/sciclient_default_boardcfg/am243x/sciclient_defaultBoardcfg_security_hex.h>
+#elif defined(SOC_AM64X)
+#include <drivers/sciclient/sciclient_default_boardcfg/am64x/sciclient_defaultBoardcfg_hex.h>
+#include <drivers/sciclient/sciclient_default_boardcfg/am64x/sciclient_defaultBoardcfg_rm_hex.h>
+#include <drivers/sciclient/sciclient_default_boardcfg/am64x/sciclient_defaultBoardcfg_pm_hex.h>
+#include <drivers/sciclient/sciclient_default_boardcfg/am64x/sciclient_defaultBoardcfg_security_hex.h>
+#endif
 
 const struct tisci_boardcfg gBoardConfigLow_debug
 __attribute__((aligned(128))) =
