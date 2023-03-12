@@ -331,10 +331,10 @@ function getSysCfgPart(board) {
 function getDevToolTirex(board) {
     switch (board) {
         case "am263x-lp":
-            return "AM263x_LAUNCHPAD";
+            return "LP-AM263";
         default:
         case "am263x-cc":
-            return "AM263x_CC";
+            return "TMDSCNCD263";
     }
 }
 
