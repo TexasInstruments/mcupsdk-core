@@ -1009,9 +1009,6 @@ send_header_encode_sec_subblock_end:
 	qbbc			transport_layer_send_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
 	jmp			transport_layer_send_msg
 transport_layer_send_msg_done:
-	qbbc			transport_layer_processing_1_done, H_FRAME.flags, FLAG_NORMAL_FLOW
-	jmp			transport_layer_processing_1
-transport_layer_processing_1_done:
 ;encoding end
 	;.if $defined(EXT_SYNC_ENABLE)
 	;.else
@@ -1238,15 +1235,10 @@ num_pulses_is_not_one2:
 comp_logic_ends:
 	qbeq			send_header_end, REG_FNC.b0, M_PAR_RESET
 	qbeq			send_header_end, REG_FNC.b0, M_PAR_SYNC
-
-
 	qbbc			transport_layer_recv_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
 ;HINT: we have processing time here (~168 cycles)
 	jmp			transport_layer_recv_msg
 transport_layer_recv_msg_done:
-	qbbc			transport_layer_processing_2_done, H_FRAME.flags, FLAG_NORMAL_FLOW
-	jmp			transport_layer_processing_2
-transport_layer_processing_2_done:
 	READ_CYCLCNT		REG_TMP1
 	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9)
 	sub			REG_TMP0, REG_TMP0, REG_TMP1

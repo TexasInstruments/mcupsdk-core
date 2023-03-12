@@ -236,23 +236,26 @@ uint8_t HDSL_get_rssi();
 /**
  *  \brief  Write Response of Short message parameters channel Read for safe1 channel(S_PC_DATA) with gPc_data and Short message control value(SLAVE_REG_CTRL) in hdsl interface
  *
- *  \param[in]  gPc_addr
- *  \param[in]  gPc_data
+ *  \param[in]  addr    Address
+ *  \param[in]  data    Data
+ *  \param[in]  timeout Timeout in microseconds
  *
- *  \retval    1 for successfully write of pc short messege in hdsl interface
+ *  \return     #SystemP_SUCCESS in case of success, #SystemP_TIMEOUT in case of timeout
  *
  */
-int HDSL_write_pc_short_msg(uint32_t gPc_addr,uint32_t gPc_data);
+int32_t HDSL_write_pc_short_msg(uint8_t addr, uint8_t data, uint64_t timeout);
 
 /**
  *  \brief  Read Response of Short message parameters channel Read for safe1 channel(S_PC_DATA) and write Short message control value(SLAVE_REG_CTRL) with gPc_addr in hdsl interface
  *
- *  \param[in]  gPc_addr
-
- *  \retval  S_PC_DATA from hdsl interface
+ *  \param[in]  addr    Address
+ *  \param[in]  data    Pointer to data buffer where read data will be stored
+ *  \param[in]  timeout Timeout in microseconds
+ *
+ *  \return     #SystemP_SUCCESS in case of success, #SystemP_TIMEOUT in case of timeout
  *
  */
-uint32_t HDSL_read_pc_short_msg(uint32_t gPc_addr);
+int32_t HDSL_read_pc_short_msg(uint8_t addr, uint8_t *data, uint64_t timeout);
 
 /**
  *  \brief  Write PC_AAD_L ,PC_ADD_H ,PC_OFF_L,PC_OFF_H and PC_CTRL values in hdsl interface

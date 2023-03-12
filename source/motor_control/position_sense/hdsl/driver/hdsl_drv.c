@@ -39,8 +39,7 @@ struct hdslInterface *gHdslInterface;
 void HDSL_iep_init(PRUICSS_Handle gPruIcss0Handle, void *gPru_cfg,void *gPru_dramx)
 
 {
-     gHdslInterface = (struct hdslInterface *)gPru_dramx;
-     //gHdslInterface2 = (struct hdslInterface *)(gPru_dramx + 0x90);
+    gHdslInterface = (struct hdslInterface *)gPru_dramx;
     void *pru_iep;
 
     pru_iep = (void *)(((PRUICSS_HwAttrs *)(gPruIcss0Handle->hwAttrs))->iep0RegBase);
@@ -135,8 +134,6 @@ uint64_t val;
 uint8_t HDSL_get_qm()
 {
     uint8_t ureg = gHdslInterface->MASTER_QM & 0xF;
-
-
     return ureg;
 }
 
@@ -149,32 +146,27 @@ uint16_t HDSL_get_events()
 
 uint8_t HDSL_get_safe_events()
 {
-    uint8_t ureg = gHdslInterface->EVENT_S;
-    return ureg;
+    return gHdslInterface->EVENT_S;
 }
 
 uint16_t HDSL_get_online_status_d()
 {
-    uint16_t ureg = gHdslInterface->ONLINE_STATUS_D;
-    return ureg;
+    return gHdslInterface->ONLINE_STATUS_D;
 }
 
 uint16_t HDSL_get_online_status_1()
 {
-    uint16_t ureg = gHdslInterface->ONLINE_STATUS_1;
-    return ureg;
+    return gHdslInterface->ONLINE_STATUS_1;
 }
 
 uint16_t HDSL_get_online_status_2()
 {
-    uint16_t ureg = gHdslInterface->ONLINE_STATUS_2;
-    return ureg;
+    return gHdslInterface->ONLINE_STATUS_2;
 }
 
 uint8_t HDSL_get_sum()
 {
-    uint8_t ureg = gHdslInterface->SAFE_SUM;
-    return ureg;
+    return gHdslInterface->SAFE_SUM;
 }
 
 uint8_t HDSL_get_acc_err_cnt()
@@ -189,19 +181,68 @@ uint8_t HDSL_get_rssi()
     return ureg;
 }
 
-int HDSL_write_pc_short_msg(uint32_t gPc_addr,uint32_t gPc_data)
+int32_t HDSL_write_pc_short_msg(uint8_t addr, uint8_t data, uint64_t timeout)
 {
-    gHdslInterface->S_PC_DATA = gPc_data;
-    gHdslInterface->SLAVE_REG_CTRL =  gPc_addr;
-    return 1;
+    uint64_t end;
+    end = ClockP_getTimeUsec() + timeout;
+
+    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    {
+        if(ClockP_getTimeUsec() > end)
+        {
+            return SystemP_TIMEOUT;
+        }
+    }
+    gHdslInterface->S_PC_DATA = data;
+    gHdslInterface->SLAVE_REG_CTRL =  addr;
+    while((gHdslInterface->EVENT_S & 0x1) != 0)
+    {
+        if(ClockP_getTimeUsec() > end)
+        {
+            return SystemP_TIMEOUT;
+        }
+    }
+    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    {
+        if(ClockP_getTimeUsec() > end)
+        {
+            return SystemP_TIMEOUT;
+        }
+    }
+    return SystemP_SUCCESS;
 }
 
-uint32_t HDSL_read_pc_short_msg(uint32_t gPc_addr)
+int32_t HDSL_read_pc_short_msg(uint8_t addr, uint8_t *data, uint64_t timeout)
 {
 
-    gHdslInterface->SLAVE_REG_CTRL =  gPc_addr;
-    return  gHdslInterface->S_PC_DATA;
+    uint64_t end;
+    end = ClockP_getTimeUsec() + timeout;
 
+    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    {
+        if(ClockP_getTimeUsec() > end)
+        {
+            return SystemP_TIMEOUT;
+        }
+    }
+    gHdslInterface->S_PC_DATA = 0;
+    gHdslInterface->SLAVE_REG_CTRL =  (addr | (1<<7));
+    while((gHdslInterface->EVENT_S & 0x1) != 0)
+    {
+        if(ClockP_getTimeUsec() > end)
+        {
+            return SystemP_TIMEOUT;
+        }
+    }
+    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    {
+        if(ClockP_getTimeUsec() > end)
+        {
+            return SystemP_TIMEOUT;
+        }
+    }
+    *data = gHdslInterface->S_PC_DATA;
+    return SystemP_SUCCESS;
 }
 
 uint8_t HDSL_read_pc_buffer(uint8_t buff)

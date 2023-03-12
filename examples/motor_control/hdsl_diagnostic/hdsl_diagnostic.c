@@ -88,6 +88,15 @@
 #define CTR_EN (1 << 3)
 #define MAX_WAIT 20000
 
+/*Timeout in micorseconds for short message read/write*/
+#define SHORT_MSG_TIMEOUT (1000)
+
+/*Register Addresses for Short Messages (Parameter Channel)*/
+
+#define ENCODER_STATUS0_REG_ADDRESS (0x40)
+#define ENCODER_RSSI_REG_ADDRESS    (0x7C)
+#define ENCODER_PING_REG_ADDRESS    (0x7F)
+
 extern PRUICSS_Config gPruicssConfig[2];
 
 struct hdslvariables *hdslvariables;
@@ -110,8 +119,7 @@ int get_pos=1;
 uint32_t gMulti_turn, gRes;
 uint64_t gMask;
 
-uint32_t gPc_addr;
-uint32_t gPc_data;
+uint8_t gPc_data;
 
 uint8_t gPc_addrh, gPc_addrl, gPc_offh, gPc_offl, gPc_buf0, gPc_buf1, gPc_buf2, gPc_buf3, gPc_buf4, gPc_buf5, gPc_buf6, gPc_buf7;
 
@@ -469,49 +477,64 @@ void hdsl_init()
 
 void TC_read_pc_short_msg(void)
 {
-    /* using 1ms delay */
-    HDSL_write_pc_short_msg(0x7f,0xab);
+    int32_t status = SystemP_FAILURE;
+    status = HDSL_read_pc_short_msg(ENCODER_RSSI_REG_ADDRESS, &gPc_data, SHORT_MSG_TIMEOUT);
+    if(SystemP_SUCCESS != status)
+    {
+        DebugP_log("\r\n FAIL: HDSL_read_pc_short_msg() did not return success");
+        return;
+    }
 
-    ClockP_usleep(1000);
+    DebugP_log("\r\n Parameter channel short message read  : Slave RSSI (address 0x7C) = %x (should be 0x7 which indicates best signal strength)", gPc_data);
 
-    gPc_data=HDSL_read_pc_short_msg(0xC0);
+    status = HDSL_read_pc_short_msg(ENCODER_STATUS0_REG_ADDRESS, &gPc_data, SHORT_MSG_TIMEOUT);
+    if(SystemP_SUCCESS != status)
+    {
+        DebugP_log("\r\n FAIL: HDSL_read_pc_short_msg() did not return success");
+        return;
+    }
 
-    DebugP_log("\r\n Parameter channel short message read 0x40 data should be 0x01 (in default state)= %u", gPc_data);
-    ClockP_usleep(1000);
-    gPc_data=HDSL_read_pc_short_msg(0xFF);
-
-    DebugP_log("\r\n Parameter channel short message read PING(0x7F) register = %x (should be 0xab)", gPc_data);
+    DebugP_log("\r\n Parameter channel short message read  : Address 0x40 = %x (should be 0x1)", gPc_data);
 }
 
 void TC_write_pc_short_msg(void)
 {
-    HDSL_write_pc_short_msg(0x7f,0xab);
+    int32_t status = SystemP_FAILURE;
 
-    ClockP_usleep(1000);
+    DebugP_log("\r\n Parameter channel short message write : 0xab to PING register (address 0x7F)");
 
-    gPc_data=HDSL_read_pc_short_msg(0xC0);
+    status = HDSL_write_pc_short_msg(ENCODER_PING_REG_ADDRESS, 0xab, SHORT_MSG_TIMEOUT);
+    if(SystemP_SUCCESS != status)
+    {
+        DebugP_log("\r\n FAIL: HDSL_write_pc_short_msg() did not return success");
+        return;
+    }
 
-    DebugP_log("\r\n Parameter channel short message read 0x40 data = %x (should be 0x01)", gPc_data);
+    status = HDSL_read_pc_short_msg(ENCODER_PING_REG_ADDRESS, &gPc_data, SHORT_MSG_TIMEOUT);
+    if(SystemP_SUCCESS != status)
+    {
+        DebugP_log("\r\n FAIL: HDSL_read_pc_short_msg() did not return success");
+        return;
+    }
+    DebugP_log("\r\n Parameter channel short message read  : PING register (address 0x7F) = %x (should be 0xab) ", gPc_data);
 
-    gPc_data=HDSL_read_pc_short_msg(0xFF);
 
-    DebugP_log("\r\n Parameter channel short message read PING(0x7F) register = %x (should be 0xab) ", gPc_data);
+    DebugP_log("\r\n Parameter channel short message write : 0xcd to PING register (address 0x7F)");
 
-    ClockP_usleep(1000);
+    status = HDSL_write_pc_short_msg(ENCODER_PING_REG_ADDRESS, 0xcd, SHORT_MSG_TIMEOUT);
+    if(SystemP_SUCCESS != status)
+    {
+        DebugP_log("\r\n FAIL: HDSL_write_pc_short_msg() did not return success");
+        return;
+    }
 
-    HDSL_write_pc_short_msg(0x7f,0xcd);
-
-    ClockP_usleep(1000);
-
-    gPc_data=HDSL_read_pc_short_msg(0xC0);
-
-    DebugP_log("\r\n Parameter channel short message read 0x40 data = %x (should be 0x01)", gPc_data);
-
-    ClockP_usleep(1000);
-
-    gPc_data=HDSL_read_pc_short_msg(0xFF);
-
-    DebugP_log("\r\n Parameter channel short message read PING(0x7F) register = %x (should be 0xcd)", gPc_data);
+    status = HDSL_read_pc_short_msg(ENCODER_PING_REG_ADDRESS, &gPc_data, SHORT_MSG_TIMEOUT);
+    if(SystemP_SUCCESS != status)
+    {
+        DebugP_log("\r\n FAIL: HDSL_read_pc_short_msg() did not return success");
+        return;
+    }
+    DebugP_log("\r\n Parameter channel short message read  : PING register (address 0x7F) = %x (should be 0xcd) ", gPc_data);
 }
 
 static void display_menu(void)

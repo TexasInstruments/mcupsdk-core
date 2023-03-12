@@ -411,8 +411,6 @@ transport_layer_no_prst:
 	qbbc		transport_layer_no_safe_prst, REG_TMP0.b0, SAFE_CTRL_PRST
 	jmp		datalink_abort
 transport_layer_no_safe_prst:
-;process only if drive cycle sync is enabled
-	qbbc		transport_layer_recv_msg_end, H_FRAME.flags, FLAG_NORMAL_FLOW
 ;are we already receiving a long message?
 	qbeq		transport_layer_check_for_new_msg, LONG_MSG_RECV.bits_left, 0
 	and		REG_TMP2.b0, CHANNEL.ch_paral, 0x0f
@@ -525,6 +523,20 @@ transport_layer_received_short_msg:
 	qbne		transport_layer_recv_msg_check_for_nak, REG_FNC.w0, REG_TMP11.w1
 ;we received a valid msg -> set ACK flag
 	or		SHORT_MSG.timeout, SHORT_MSG.timeout, (1<<FLAG_ACK)
+;set short msg channel to unbusy
+; Set EVENT_S_FRES in EVENT register
+	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
+	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_S_FRES
+	qbbc		update_events_no_int100, REG_TMP0.b1, EVENT_S_FRES
+; generate interrupt
+	ldi		r31.w0, PRU0_ARM_IRQ
+update_events_no_int100:
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
+	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
+    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 	qba		transport_layer_recv_msg_check_for_nak
 transport_layer_short_msg_recv_read:
 ;received read answer
@@ -666,7 +678,19 @@ update_events_no_int19:
 update_events_no_int20:
 ;save events
 	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
+    lbco		&REG_TMP0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 3
+    set         REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
+    set         REG_TMP0.b2, REG_TMP0.b2, (ONLINE_STATUS_1_MIN-8)
+	sbco		&REG_TMP0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 3
+    qba         transport_layer_min_update_done
 transport_layer_recv_msg_check_for_init_no_init:
+transport_layer_min_unset:
+	lbco		&REG_TMP0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 3
+    clr         REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
+    clr         REG_TMP0.b2, REG_TMP0.b2, (ONLINE_STATUS_1_MIN-8)
+	sbco		&REG_TMP0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 3
+transport_layer_min_update_done:
+
 ;check for timeout - count only down when bitsleft = 0 amnd timeout != 0
 	qbne		transport_layer_resend_msg_end, SHORT_MSG.bits_left, 0
 ;lower 6 bits is timeout value - MSB is ACK flag
@@ -682,22 +706,6 @@ transport_layer_resend_msg:
 transport_layer_resend_msg_read:
 transport_layer_resend_msg_end:
 transport_layer_recv_msg_end:
-; update MIN bits in ONLINE_STATUS_D and ONLINE_STATUS_1
-	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 1
-    qbbc        transport_layer_min_unset, REG_TMP0.b0, EVENT_S_MIN
-transport_layer_min_set:
-	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
-    set         REG_TMP0.w0, REG_TMP0.w0, ONLINE_STATUS_D_MIN
-    set         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_MIN
-	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
-    qba         transport_layer_min_update_done
-transport_layer_min_unset:
-	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
-    clr         REG_TMP0.w0, REG_TMP0.w0, ONLINE_STATUS_D_MIN
-    clr         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_MIN
-	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 4
-transport_layer_min_update_done:
-
 	jmp		transport_layer_recv_msg_done
 ;----------------------------------------------------
 ;transport_layer_send_msg
@@ -794,11 +802,11 @@ transport_layer_check_for_new_short_msg:
 	clr		REG_TMP0.b2, REG_TMP0.b2, EVENT_S_FRES
 	sbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
 ; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
-	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
-	clr		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
-    sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
+	lbco		&REG_TMP0.b2, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
+	clr		    REG_TMP0.b2, REG_TMP0.b2, (ONLINE_STATUS_1_FRES-8)
+    sbco		&REG_TMP0.b2, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 ;reset
-	ldi		REG_TMP0.b1, 0xff
+	ldi		REG_TMP0.b1, 0x3f
 	sbco		&REG_TMP0.b1, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
 ;only 6 bit address
 	and		SHORT_MSG.addr, REG_TMP0.b0, 0x3f
@@ -872,19 +880,7 @@ transport_layer_assemble_long_msg_no_llen:
 	ldi		SHORT_MSG.data, LONG_MSG_BUFFER
 	ldi		SHORT_MSG.crc, 0
 transport_layer_send_msg_end:
-	;RET
-	jmp		transport_layer_send_msg_done
 
-;----------------------------------------------------
-;Function: transport_layer_processing_1
-;
-; Cycle Budget : 60 cycles (at 225 MHz)
-; Available cycles : 3
-;input:
-;output:
-;modifies:
-;----------------------------------------------------
-transport_layer_processing_1:
 ; Check for Low QM value and update event registers if required
 ; Check EVENT_UPDATE_PENDING_QMLW to process a low QM value event update
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
@@ -956,20 +952,7 @@ transport_layer_no_pos_event:
 transport_layer_pos_update_done:
     sbco        &REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
 
-    jmp transport_layer_processing_1_done
-
-
-;----------------------------------------------------
-;Function: transport_layer_processing_2
-;
-; Cycle Budget : 70 cycles (at 225 MHz)
-; Available cycles : 63
-;input:
-;output:
-;modifies:
-;----------------------------------------------------
-transport_layer_processing_2:
-    jmp transport_layer_processing_2_done
+	jmp		transport_layer_send_msg_done
 
 ;----------------------------------------------------
 ;Function: transport_on_h_frame (RET_ADDR)
