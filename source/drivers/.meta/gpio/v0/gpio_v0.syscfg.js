@@ -49,7 +49,7 @@ function getPeripheralPinNames(inst) {
 }
 
 function validate(inst, report) {
-    common.validate.checkNumberRange(inst, report, "intrOut", 1, 53, "dec");
+    common.validate.checkNumberRange(inst, report, "intrOut", 1, soc.getMaxInterruptRouters(), "dec");
     validateInterruptRouter(inst, report, "intrOut");
 }
 

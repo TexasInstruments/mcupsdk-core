@@ -8,6 +8,15 @@ function getInterfaceName(inst) {
     return "GPIO";
 }
 
+function getMaxInterruptRouters(inst) {
+
+    let mcuRouterOutput = 11;
+    let mainRouterOutput = 53;
+    if(common.getSelfSysCfgCoreName().includes("m4f"))
+        return mcuRouterOutput
+    return mainRouterOutput;
+}
+
 function getInstanceString(moduleInstance) {
     let interfaceName = getInterfaceName(moduleInstance);
     let solution = moduleInstance[interfaceName].$solution
@@ -33,4 +42,5 @@ exports = {
     getInterfaceName,
     getInstanceString,
     getPinIndex,
+    getMaxInterruptRouters,
 };
