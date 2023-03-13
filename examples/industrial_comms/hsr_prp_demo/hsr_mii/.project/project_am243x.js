@@ -42,10 +42,9 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lib",
-        "${MCU_PLUS_SDK_PATH}/source/networking//icss_emac/lwipif/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_timesync/lib",
         "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/icss_fwhal/lib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib", /*Stack related*/
+        "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lib",
     ],
 };
 
@@ -59,7 +58,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x",
+        "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lwip-config/am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
     ],
@@ -71,12 +70,12 @@ const libs_freertos_r5f = {
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_emac.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "icss_emac_lwip_if.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "hsr_prp_icss_emac_lwip_if.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_timesync.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "hsr_mii_icss_fwhal.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         //stack related lib
-        "lwip-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwip-contrib-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "hsr_prp_lwip_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "hsr_prp_lwip_contrib.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

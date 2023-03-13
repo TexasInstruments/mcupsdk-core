@@ -36,7 +36,7 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/networking//icss_emac/lwipif/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_timesync/lib",
         "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/icss_fwhal/lib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib", /*Stack related*/
+        "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lib",
    ],
 };
 
@@ -50,7 +50,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x",
+        "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lwip-config/am64x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
   ],
@@ -62,12 +62,12 @@ const libs_freertos_r5f = {
         "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_emac.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "icss_emac_lwip_if.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "hsr_prp_icss_emac_lwip_if.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_timesync.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "prp_mii_icss_fwhal.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         //stack related lib
-        "lwip-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwip-contrib-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "hsr_prp_lwip_contrib.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "hsr_prp_lwip_freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
    ],
 };
 
