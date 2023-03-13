@@ -344,26 +344,37 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
 
 void RPMessage_unblock(RPMessage_Object *handle)
 {
-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
+    RPMessage_Struct *obj;
 
+    if(handle != NULL)
+    {
+    obj = (RPMessage_Struct *)handle;
     obj->doRecvUnblock = 1;
     SemaphoreP_post(&obj->newEndPtMsgSem);
+    }
 }
 
 uint16_t RPMessage_getLocalEndPt(const RPMessage_Object *handle)
 {
-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
+    RPMessage_Struct *obj;
 
+    DebugP_assert(handle != NULL);
+
+    obj = (RPMessage_Struct *)handle;
     return obj->localEndPt;
+
 }
 
 int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreateParams *createParams)
 {
-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
+    RPMessage_Struct *obj;
     int32_t status = SystemP_FAILURE;
 
     DebugP_assert(sizeof(RPMessage_Object) >= sizeof(RPMessage_Struct));
 
+    if((handle != NULL) && (createParams != NULL))
+    {
+    obj = (RPMessage_Struct *)handle;
     if(createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT
         && gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL)
     {
@@ -380,13 +391,17 @@ int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreatePara
 
         status = SystemP_SUCCESS;
     }
+    }
     return status;
 }
 
 void RPMessage_destruct(RPMessage_Object *handle)
 {
-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
+    RPMessage_Struct *obj;
 
+    if(handle != NULL)
+    {
+    obj = (RPMessage_Struct *)handle;
     if(obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT &&
         gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL)
     {
@@ -398,6 +413,7 @@ void RPMessage_destruct(RPMessage_Object *handle)
         obj->doRecvUnblock = 0;
         RPMessage_queueReset(&obj->endPtQ);
         SemaphoreP_destruct(&obj->newEndPtMsgSem);
+    }
     }
 }
 
@@ -414,6 +430,8 @@ void RPMessage_Params_init(RPMessage_Params *params)
 {
     uint16_t coreId;
 
+    if(params != NULL)
+    {
     memset(params, 0, sizeof(RPMessage_Params));
 
     for(coreId=0; coreId<CSL_CORE_ID_MAX; coreId++)
@@ -426,6 +444,7 @@ void RPMessage_Params_init(RPMessage_Params *params)
     params->vringSize = RPMESSAGE_VRING_SIZE(params->vringNumBuf, params->vringMsgSize);
     params->linuxCoreId = CSL_CORE_ID_MAX;
     params->linuxResourceTable = NULL;
+    }
 }
 
 int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params)
@@ -519,9 +538,11 @@ void RPMessage_controlEndPtDeInit(void)
 
 int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const char* name)
 {
-    int32_t status;
+    int32_t status = SystemP_FAILURE;
     RPMessage_AnnounceMsg msg;
 
+    if((remoteCoreId < CSL_CORE_ID_MAX) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) && (name != NULL))
+    {
     msg.type = 0;
     msg.remoteEndPt = localEndPt; /* local end point will be remote end point for the other side */
     strncpy(msg.name, name, RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1);
@@ -535,6 +556,7 @@ int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const ch
                 RPMESSAGE_CTRL_ENDPOINT_ID, /* reply or local end point, set also to control end point */
                 SystemP_WAIT_FOREVER /* wait until message is put in VRING */
     );
+    }
     return status;
 }
 
@@ -543,12 +565,15 @@ void RPMessage_controlEndPtCallback(RPMessage_ControlEndPtCallback controlEndPtC
 {
     uint32_t oldIntState;
 
+    if(controlEndPtCallback != NULL)
+    {
     oldIntState = HwiP_disable();
 
     gIpcRpmsgCtrl.controlEndPtCallback = controlEndPtCallback;
     gIpcRpmsgCtrl.controlEndPtCallbackArgs = controlEndPtCallbackArgs;
 
     HwiP_restore(oldIntState);
+    }
 }
 
 uint32_t RPMessage_isLinuxCore(uint16_t coreId)
@@ -622,6 +647,8 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
     int32_t status = SystemP_SUCCESS;
     uint16_t coreId, localEndPtId;
 
+    if(params != NULL)
+    {
     gIpcRpmsgCtrl.selfCoreId = IpcNotify_getSelfCoreId();
     gIpcRpmsgCtrl.controlEndPtCallback = NULL;
     gIpcRpmsgCtrl.controlEndPtCallbackArgs = NULL;
@@ -671,6 +698,7 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
         RPMessage_notifyCallback, NULL
         );
 
+    }
     return status;
 }
 

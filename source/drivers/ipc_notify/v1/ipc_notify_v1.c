@@ -224,6 +224,8 @@ int32_t IpcNotify_registerClient(uint16_t localClientId, IpcNotify_FxnCallback m
     int32_t status = SystemP_FAILURE;
     uint32_t oldIntState;
 
+    DebugP_assert(msgCallback != NULL);
+
     if(localClientId < IPC_NOTIFY_CLIENT_ID_MAX)
     {
         oldIntState = HwiP_disable();
@@ -241,16 +243,18 @@ int32_t IpcNotify_registerClient(uint16_t localClientId, IpcNotify_FxnCallback m
 int32_t IpcNotify_unregisterClient(uint16_t localClientId)
 {
     uint32_t oldIntState;
+    int32_t status = SystemP_FAILURE;
 
     oldIntState = HwiP_disable();
     if(localClientId < IPC_NOTIFY_CLIENT_ID_MAX)
     {
         gIpcNotifyCtrl.callback[localClientId] = NULL;
         gIpcNotifyCtrl.callbackArgs[localClientId] = NULL;
+        status = SystemP_SUCCESS;
     }
     HwiP_restore(oldIntState);
 
-    return SystemP_SUCCESS;
+    return status;
 }
 
 void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
@@ -282,7 +286,9 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
 
     IpcNotify_getConfig(&gIpcNotifyCtrl.interruptConfig, &gIpcNotifyCtrl.interruptConfigNum);
 
+    DebugP_assert(params->numCores != 0U);
     DebugP_assert(params->selfCoreId < CSL_CORE_ID_MAX);
+
     gIpcNotifyCtrl.selfCoreId = params->selfCoreId;
     for(i=0; i<IPC_NOTIFY_CLIENT_ID_MAX; i++)
     {
