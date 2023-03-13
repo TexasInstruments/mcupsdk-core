@@ -15,5 +15,8 @@
 #define `instance.$name.toUpperCase()`_PIN (`config.pinIndex`)
 #define `instance.$name.toUpperCase()`_DIR (GPIO_DIRECTION_`config.pinDir`)
 #define `instance.$name.toUpperCase()`_TRIG_TYPE (GPIO_TRIG_TYPE_`config.trigType`)
+% if(config.enableIntr){
+#define `instance.$name.toUpperCase()`_INTR_NUM     (CSLR_`config.coreId`_INTR_MAIN_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`)
+% }
 % }
 #define CONFIG_GPIO_NUM_INSTANCES (`module.$instances.length`U)

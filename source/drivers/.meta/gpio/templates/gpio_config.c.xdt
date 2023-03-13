@@ -7,7 +7,7 @@
  * GPIO
  */
 
-/* ----------- GPIO Direction and Trigger type initialization ----------- */
+/* ----------- GPIO Direction, Trigger, Interrupt initialization ----------- */
 
 void GPIO_init()
 {
@@ -23,7 +23,7 @@ void GPIO_init()
     % if(config.trigType != "NONE"){
     GPIO_setTrigType(baseAddr, `instance.$name.toUpperCase()`_PIN, `instance.$name.toUpperCase()`_TRIG_TYPE);
     % }
-    % if(config.advanced){
+    % if(config.enableIntr){
     GPIO_bankIntrEnable(baseAddr, GPIO_GET_BANK_INDEX(`instance.$name.toUpperCase()`_PIN));
     % }
 % }
@@ -32,16 +32,11 @@ void GPIO_init()
 %for(let i = 0; i < module.$instances.length; i++) {
    % let instance = module.$instances[i];
    % let config = module.getInstanceConfig(instance);
-%if(config.advanced){
+%if(config.enableIntr){
  /*
  * Board info
  */
 /* This is based on DMSC board config and core */
-#define BOARD_BUTTON_GPIO_INTR_NUM     (CSLR_`config.coreId`_INTR_MAIN_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`)
-
-/*GPIO Interrupt Macros */
-#define BOARD_BUTTON_GPIO_SWITCH_NUM    (5)
-
 /** \brief bank interrupt source index base */
 #define TISCI_BANK_SRC_IDX_BASE_GPIO0       (90U)
 #define TISCI_BANK_SRC_IDX_BASE_GPIO1       (90U)
@@ -62,16 +57,6 @@ void Board_gpioDeinit(void)
     Sciclient_gpioIrqRelease();
 }
 
-uint32_t Board_getGpioButtonIntrNum(void)
-{
-    return (BOARD_BUTTON_GPIO_INTR_NUM);
-}
-
-
-uint32_t Board_getGpioButtonSwitchNum(void)
-{
-    return (BOARD_BUTTON_GPIO_SWITCH_NUM);
-}
 
 static void Sciclient_gpioIrqSet(void)
 {
@@ -81,7 +66,7 @@ static void Sciclient_gpioIrqSet(void)
 %for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.advanced){
+    % if(config.enableIntr){
     rmIrqReq.valid_params           = 0U;
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
@@ -113,7 +98,7 @@ static void Sciclient_gpioIrqRelease(void)
 %for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.advanced){
+    % if(config.enableIntr){
     rmIrqReq.valid_params           = 0U;
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
@@ -141,21 +126,22 @@ static void Sciclient_gpioIrqRelease(void)
 % }
 % }
 
-
+/* ----------- GPIO Interrupt de-initialization ----------- */
 void GPIO_deinit()
 {
     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.advanced){
+    % if(config.enableIntr){
     uint32_t    baseAddr;
+    % break;
     % }
     % }
 
     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.advanced){
+    % if(config.enableIntr){
     /* Unregister interrupt Instance `i`*/
     baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(`instance.$name.toUpperCase()`_BASE_ADDR);
     GPIO_bankIntrDisable(baseAddr, GPIO_GET_BANK_INDEX(`instance.$name.toUpperCase()`_PIN));

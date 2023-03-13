@@ -49,6 +49,7 @@ function getPeripheralPinNames(inst) {
 }
 
 function validate(inst, report) {
+    common.validate.checkNumberRange(inst, report, "intrOut", 1, 53, "dec");
     validateInterruptRouter(inst, report, "intrOut");
 }
 
@@ -56,7 +57,7 @@ function validate(inst, report) {
 //Function to validate if same interrupt router is selected for other instances
 function validateInterruptRouter(instance, report, fieldname) {
     /* Verified by SYSCFG based on selected pin */
-    if (instance.advanced) {
+    if (instance.enableIntr) {
         let moduleInstances = instance.$module.$instances;
         let validOptions = instance.$module.$configByName.intrOut.options(instance);
         let selectedOptions = instance.intrOut;
@@ -65,8 +66,8 @@ function validateInterruptRouter(instance, report, fieldname) {
             report.logError("Selected option is invalid, please reselect.", instance, fieldname);
         }
         for (let i = 0; i < moduleInstances.length; i++) {
-            if (instance[fieldname] === moduleInstances[i][fieldname] &&
-                instance !== moduleInstances[i]) {
+            if (instance[fieldname] === moduleInstances[i][fieldname] && instance !== moduleInstances[i]
+                && instance.enableIntr === true && moduleInstances[i].enableIntr === true) {
                 report.logError("Same Interrupt Router lines cannot be selected", instance, fieldname);
                 return
             }
@@ -141,12 +142,12 @@ function getConfigurables() {
     if (common.isMcuDomainSupported()) {
         config.push(
             {
-                name: "advanced",
+                name: "enableIntr",
                 displayName: "Enable Interrupt Configuration",
                 default: false,
                 onChange: function (inst, ui) {
                     let hideConfigs = true;
-                    if (inst.advanced == true) {
+                    if (inst.enableIntr == true) {
                         hideConfigs = false;
                     }
                     ui.intrOut.hidden = hideConfigs;
