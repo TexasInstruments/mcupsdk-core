@@ -463,6 +463,64 @@ int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
     return status;
 }
 
+int32_t HsmClient_getOTPRowCount(HsmClient_t* HsmClient,
+                                        EfuseRowCount_t* rowCount)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+    uint32_t timeout = SystemP_WAIT_FOREVER;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_GET_OTP_ROW_COUNT;
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(rowCount);
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) rowCount, sizeof(EfuseRowCount_t));
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the rowCount has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Get OTP row count request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(EfuseRowCount_t));
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for get OTP Row count response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
 int32_t HsmClient_waitForBootNotify(HsmClient_t* HsmClient, uint32_t timeout)
 {
     int32_t status ;

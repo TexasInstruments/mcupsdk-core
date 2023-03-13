@@ -104,9 +104,22 @@ typedef struct HsmClient_t_
  */
 typedef struct EfuseRead_t_
 {
-    uint8_t  rowIdx ;      /** Points index of eFuse row to be read.*/
     uint32_t rowData ;     /** Points to data retrieved from gp otp registers.*/
-}__attribute__((packed)) EfuseRead_t ;
+    uint8_t  rowIdx ;      /** Points index of eFuse row to be read.*/
+    uint8_t  rsvd[3];      /** Reserved **/
+} EfuseRead_t;
+
+/**
+ * @brief
+ * This is a EfuseRowCount type which holds the information
+ * regarding eFuse row count and size of each row in bits.
+ */
+typedef struct EfuseRowCount_t_
+{
+    uint32_t rowCount ;     /** eFuse row count **/
+    uint8_t  rowSize ;      /** Size of an eFuse row in bits. **/
+    uint8_t  rsvd[3];       /** Reserved **/
+} EfuseRowCount_t;
 
 /**
  * @brief
@@ -198,6 +211,21 @@ int32_t HsmClient_openDbgFirewall(HsmClient_t* HsmClient,
  */
 int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
                                         EfuseRead_t* readRow);
+
+/**
+ * @brief
+ *  The service issued to HSM Server retrieves the count of extended OTP
+ *  rows.
+ *
+ * @param HsmClient [IN] HsmClient object.
+ * @param rowCount  [IN] Pointer to EfuseRowCount_t struct which is
+ *                       populated by HSM server with row count and row size
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_getOTPRowCount(HsmClient_t* HsmClient,
+                                        EfuseRowCount_t* rowCount);
 
 /**
  * @brief
