@@ -45,6 +45,9 @@
  * number of times the keys are pressed and exits.
  */
 
+/*GPIO Board button switch number */
+#define BOARD_BUTTON_GPIO_SWITCH_NUM    (5)
+
 uint32_t            gGpioBaseAddr = GPIO_PUSH_BUTTON_BASE_ADDR;
 HwiP_Object         gGpioHwiObject;
 volatile uint32_t   gGpioIntrDone = 0;
@@ -53,14 +56,13 @@ static void GPIO_bankIsrFxn(void *args);
 
 extern void Board_gpioInit(void);
 extern void Board_gpioDeinit(void);
-extern uint32_t Board_getGpioButtonIntrNum(void);
-extern uint32_t Board_getGpioButtonSwitchNum(void);
+
 
 void gpio_input_interrupt_main(void *args)
 {
     int32_t         retVal;
-    uint32_t        pinNum, intrNum;
-    uint32_t        bankNum, waitCount = 5;
+    uint32_t        pinNum, intrNum, buttonNum;
+    uint32_t        waitCount = 5;
     HwiP_Params     hwiPrms;
 
     /* Open drivers to open the UART driver for console */
@@ -72,16 +74,11 @@ void gpio_input_interrupt_main(void *args)
     DebugP_log("GPIO Interrupt Configured for Rising Edge (Button release will trigger interrupt) ...\r\n");
 
     pinNum          = GPIO_PUSH_BUTTON_PIN;
-    intrNum         = Board_getGpioButtonIntrNum();
-    bankNum         = GPIO_GET_BANK_INDEX(pinNum);
+    intrNum         = GPIO_PUSH_BUTTON_INTR_NUM;
+    buttonNum       = BOARD_BUTTON_GPIO_SWITCH_NUM;
 
     /* Address translate */
     gGpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(gGpioBaseAddr);
-
-    /* Setup GPIO for interrupt generation */
-    GPIO_setDirMode(gGpioBaseAddr, pinNum, GPIO_PUSH_BUTTON_DIR);
-    GPIO_setTrigType(gGpioBaseAddr, pinNum, GPIO_PUSH_BUTTON_TRIG_TYPE);
-    GPIO_bankIntrEnable(gGpioBaseAddr, bankNum);
 
     /* Register pin interrupt */
     HwiP_Params_init(&hwiPrms);
@@ -91,7 +88,7 @@ void gpio_input_interrupt_main(void *args)
     retVal = HwiP_construct(&gGpioHwiObject, &hwiPrms);
     DebugP_assert(retVal == SystemP_SUCCESS );
 
-    DebugP_log("Press and release SW%d button on EVM to trigger GPIO interrupt ...\r\n", Board_getGpioButtonSwitchNum());
+    DebugP_log("Press and release SW%d button on EVM to trigger GPIO interrupt ...\r\n", buttonNum);
     while(gGpioIntrDone < waitCount)
     {
         /* Keep printing the current GPIO value */
@@ -99,12 +96,6 @@ void gpio_input_interrupt_main(void *args)
         ClockP_sleep(1);
     }
     DebugP_log("Key is pressed %d times\r\n", gGpioIntrDone);
-
-    /* Unregister interrupt */
-    GPIO_bankIntrDisable(gGpioBaseAddr, bankNum);
-    GPIO_setTrigType(gGpioBaseAddr, pinNum, GPIO_TRIG_TYPE_NONE);
-    GPIO_clearIntrStatus(gGpioBaseAddr, pinNum);
-    HwiP_destruct(&gGpioHwiObject);
 
     DebugP_log("GPIO Input Interrupt Test Passed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
