@@ -29,6 +29,7 @@ const example_file_list = [
     "examples/drivers/boot/sbl_null/.project/project.js",
     "examples/drivers/boot/sbl_multicore_app/.project/project.js",
     "examples/drivers/boot/sbl_qspi/.project/project.js",
+    "examples/drivers/boot/sbl_qspi_enet/.project/project.js",
     "examples/drivers/boot/sbl_uart/.project/project.js",
     "examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
     "examples/drivers/crc/crc_16bit/.project/project.js",

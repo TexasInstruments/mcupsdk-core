@@ -205,6 +205,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Qspi Enet Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_qspi_enet",
+        "location": "../../examples/drivers/boot/sbl_qspi_enet/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_qspi_enet",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Uart Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_uart",
         "location": "../../examples/drivers/boot/sbl_uart/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
