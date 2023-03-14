@@ -228,8 +228,8 @@ int32_t RPMessage_send( void*    data,
 {
     int32_t status = SystemP_FAILURE;
 
-    if(remoteCoreId < CSL_CORE_ID_MAX && gIpcRpmsgCtrl.isCoreEnable[remoteCoreId]
-        && data != NULL && dataLen != 0
+    if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcRpmsgCtrl.isCoreEnable[remoteCoreId])
+        && (data != NULL) && (dataLen != 0) && (remoteEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
         )
     {
         uint16_t vringBufId;
@@ -325,12 +325,9 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
         }
         else
         {
-            if(status != SystemP_TIMEOUT)
-            {
-                DebugP_logError("[IPC RPMSG] Message recv @ %d local end point failed due to invalid end point Q !!!\r\n",
+            DebugP_logError("[IPC RPMSG] Message recv @ %d local end point failed due to invalid end point Q !!!\r\n",
                     obj->localEndPt
                     );
-            }
         }
     }
     else
@@ -563,6 +560,8 @@ int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const ch
 void RPMessage_controlEndPtCallback(RPMessage_ControlEndPtCallback controlEndPtCallback,
     void  *controlEndPtCallbackArgs)
 {
+    if(controlEndPtCallback != NULL)
+    {
     uint32_t oldIntState;
 
     if(controlEndPtCallback != NULL)

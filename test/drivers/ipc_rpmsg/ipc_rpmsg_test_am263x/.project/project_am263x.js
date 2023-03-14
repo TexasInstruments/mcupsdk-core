@@ -4,7 +4,7 @@ let device = "am263x";
 
 const files = {
     common: [
-        "test_ipc_rpmsg.c",
+        "test_ipc_rpmsg_am263.c",
         "ipc_rpmsg_pos.c",
         "ipc_rpmsg_neg.c",
         "main.c",

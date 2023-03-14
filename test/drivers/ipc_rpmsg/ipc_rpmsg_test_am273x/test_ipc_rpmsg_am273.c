@@ -39,7 +39,19 @@
 #include <drivers/ipc_rpmsg.h>
 #include <unity.h>
 #include "ti_drivers_open_close.h"
-#include "test_ipc_rpmsg.h"
+#include "test_ipc_rpmsg_am273.h"
+
+extern uint8_t gRPMessageVringMem[12][1312];
+
+RPMessage_Object gRecvMsgObject;
+
+#define MAIN_CORE_ACK_REPLY_END_PT  (16U)
+#define MAIN_CORE_ACK_REPLY_END_PT_DATALEN  (18U)
+
+uint16_t gRemoteServiceEndPt = 15U;
+uint16_t gdataLenServiceEndPt = 17U;
+/* RPMessage_Object MUST be global or static */
+//static RPMessage_Object gRecvMsgObject;
 
 /* number of iterations of message exchange to do, this is only used by some tests */
 uint32_t gMsgEchoCount = 10000;
@@ -132,6 +144,10 @@ RPMessage_Object gAckMsgObject;
 RPMessage_Object gNullRpmsgObj;
 /* RPMessage objects to receive ack messages in rx notify callback mode */
 RPMessage_Object gRxNotifyAckMsgObject;
+/* RPMessage_Object MUST be global or static */
+RPMessage_Object gAckReplyMsgObject;
+/* RPMessage_Object MUST be global or static */
+RPMessage_Object gAckReplyMsgDataLenObject;
 
 /* RPMessage end points for server, server acks, server acks in back to back mode */
 uint16_t gServerEndPt = 10;
@@ -243,6 +259,11 @@ void test_rpmsgCreateObjects()
     DebugP_assert(status==SystemP_SUCCESS);
 
     RPMessage_CreateParams_init(&createParams);
+    createParams.localEndPt = MAIN_CORE_ACK_REPLY_END_PT_DATALEN;
+    status = RPMessage_construct(&gAckReplyMsgDataLenObject, &createParams);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    RPMessage_CreateParams_init(&createParams);
     createParams.localEndPt = gAckEndPt;
     createParams.recvCallback = test_rpmsgAckHandler;
     createParams.recvCallbackArgs = &gAckDoneSem;
@@ -340,6 +361,7 @@ void test_rpmsgAnyToAny(void *args)
                     gRemoteCoreId[i], gServerEndPt,
                     RPMessage_getLocalEndPt(&gClientMsgObject),
                     ClockP_usecToTicks(RPMSG_SEND_TIMEOUT));
+                ClockP_usleep(100);
                 TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
             }
         }
@@ -357,6 +379,7 @@ void test_rpmsgAnyToAny(void *args)
                     ackMsgBuf, &ackMsgSize,
                     &remoteCoreId, &remoteCoreEndPt,
                     SystemP_WAIT_FOREVER);
+                 ClockP_usleep(100);
                 TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
                 TEST_ASSERT_EQUAL_UINT16(gServerEndPt, remoteCoreEndPt);
                 TEST_ASSERT_EQUAL_UINT16(msgSize, ackMsgSize);
@@ -421,6 +444,43 @@ void test_rpmsgOneToOne(void *args)
     gIpcPerfObj[gIpcPerfCnt].msgLatency = curTime;
     gIpcPerfCnt++;
     DebugP_assert(gIpcPerfCnt < MAX_IPC_RPMSG_PERF_CNT);
+
+}
+
+/* Test for dynamic coverage of RPMessage_recv for dataLen < header dataLen */
+void test_rpmsgOneToOneDataLenError(void *args)
+{
+    Test_Args *pTestArgs = (Test_Args*)args;
+    uint16_t remoteCoreId = pTestArgs->remoteCoreId;
+    uint16_t msgSize = pTestArgs->msgSize;
+    static char msgBuf[MAX_MSG_SIZE];
+    static char ackMsgBuf[2];
+    int32_t status;
+    uint16_t remoteCoreEndPt, ackMsgSize;
+    remoteCoreEndPt = 0U;
+
+    TEST_ASSERT_LESS_OR_EQUAL_UINT16(MAX_MSG_SIZE, msgSize);
+
+    /* fill with known data, we dont check data integrity in this test since
+     * we want to focus on performance here
+     *
+     * Data integrity is tested in test_rpmsgAnyToAny
+     */
+    memset(msgBuf, 0xAA, MAX_MSG_SIZE);
+
+        status = RPMessage_send(
+            msgBuf, msgSize,
+            remoteCoreId, gServerEndPt,
+            RPMessage_getLocalEndPt(&gClientMsgObject),
+            SystemP_WAIT_FOREVER);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+        ackMsgSize = sizeof(ackMsgBuf);
+        status = RPMessage_recv(&gClientMsgObject,
+            ackMsgBuf, &ackMsgSize,
+            &remoteCoreId, &remoteCoreEndPt,
+            SystemP_WAIT_FOREVER);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
 
 }
 
@@ -645,6 +705,28 @@ void test_rpmsgErrorChecks(void *args)
     DebugP_logZoneRestore(oldDebugLogZone);
 }
 
+/*Test for MCDC coverage of RPMessage_send API */
+void test_ipc_rpmsg_sendmsgto_core0_1_errorcheck(void *args)
+{
+    char msgBuf[MAX_MSG_SIZE];
+    int32_t status;
+    uint32_t i;
+    uint16_t msgSize;
+    Test_Args *pTestArgs = (Test_Args*)args;
+    uint16_t remoteCoreId = pTestArgs->remoteCoreId;
+    msgBuf[MAX_MSG_SIZE-1] = 0;
+    msgSize = strlen(msgBuf) + 1; /* count the terminating char as well */
+
+    for(i=0; i<9; i++){
+        status = RPMessage_send(
+            msgBuf, msgSize,
+            remoteCoreId, gRemoteServiceEndPt,
+            RPMessage_getLocalEndPt(&gAckReplyMsgObject),
+            SystemP_WAIT_FOREVER);
+    }
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+}
+
 /* This code executes on remote core, i.e not on main core */
 void test_ipc_remote_core_start()
 {
@@ -672,6 +754,8 @@ void test_ipc_main_core_start()
     Test_Args testArgs;
 
     UNITY_BEGIN();
+    testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;
+    RUN_TEST(test_ipc_rpmsg_sendmsgto_core0_1_errorcheck, 10616, &testArgs);
 
     /* These MUST be the first tests to run */
     RUN_TEST(test_rpmsgControlEndPt, 296, NULL);
@@ -770,6 +854,9 @@ void test_ipc_main_core_start()
 
     /* error condition checks */
     RUN_TEST(test_rpmsgErrorChecks, 306, NULL);
+
+    testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;
+    RUN_TEST(test_rpmsgOneToOneDataLenError, 10615, &testArgs);
 
     /* Print performance numbers. */
     DebugP_log("\n[TEST IPC RPMSG] Performance Numbers Print Start\r\n\n");

@@ -32,7 +32,7 @@ BOOTIMAGE_RPRC_NAME_XIP:=ipc_rpmsg_ut.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ipc_rpmsg_ut.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	test_ipc_rpmsg.c \
+	test_ipc_rpmsg_am263.c \
 	ipc_rpmsg_pos.c \
 	ipc_rpmsg_neg.c \
 	main.c \

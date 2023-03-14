@@ -6,12 +6,12 @@ export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
-CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+CG_TOOL_ROOT=$(CGT_TI_C6000_PATH)
 
-CC=$(CG_TOOL_ROOT)/bin/tiarmclang
-LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
-STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
-OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+CC=$(CG_TOOL_ROOT)/bin/cl6x
+LNK=$(CG_TOOL_ROOT)/bin/lnk6x
+STRIP=$(CG_TOOL_ROOT)/bin/strip6x
+OBJCOPY=$(CG_TOOL_ROOT)/bin/
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -32,7 +32,7 @@ BOOTIMAGE_RPRC_NAME_XIP:=ipc_rpmsg_ut.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ipc_rpmsg_ut.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	test_ipc_rpmsg_am263.c \
+	test_ipc_rpmsg_am273.c \
 	ipc_rpmsg_pos.c \
 	ipc_rpmsg_neg.c \
 	main.c \
@@ -50,71 +50,61 @@ FILES_PATH_common = \
 	generated \
 
 INCLUDES_common := \
-	-I${CG_TOOL_ROOT}/include/c \
+	-I${CG_TOOL_ROOT}/include \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-Igenerated \
 
 DEFINES_common := \
-	-DSOC_AM263X \
+	-DSOC_AM273X \
 
 CFLAGS_common := \
-	-mcpu=cortex-r5 \
-	-mfloat-abi=hard \
-	-mfpu=vfpv3-d16 \
-	-mthumb \
-	-Wall \
-	-Werror \
-	-g \
-	-Wno-gnu-variable-sized-type-not-at-end \
-	-Wno-unused-function \
-
-CFLAGS_cpp_common := \
-	-Wno-c99-designator \
-	-Wno-extern-c-compat \
-	-Wno-c++11-narrowing \
-	-Wno-reorder-init-list \
-	-Wno-deprecated-register \
-	-Wno-writable-strings \
-	-Wno-enum-compare \
-	-Wno-reserved-user-defined-literal \
-	-Wno-unused-const-variable \
-	-x c++ \
+	-mv6600 \
+	--abi=eabi \
+	-q \
+	-mi10 \
+	-mo \
+	-pden \
+	-pds=238 \
+	-pds=880 \
+	-pds1110 \
+	--emit_warnings_as_errors \
 
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
 
 CFLAGS_release := \
-	-Os \
+	--program_level_compile \
+	-o3 \
+	-mf3 \
 
 LNK_FILES_common = \
 	linker.cmd \
 
 LIBS_PATH_common = \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
-	-Wl,-i${CG_TOOL_ROOT}/lib \
+	-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
+	-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
+	-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lnortos.am273x.c66.ti-c6000.${ConfigName}.lib \
+	-ldrivers.am273x.c66.ti-c6000.${ConfigName}.lib \
+	-lunity.am273x.c66.ti-c6000.${ConfigName}.lib \
 	-llibc.a \
-	-llibsysbm.a \
 
 LFLAGS_common = \
-	-Wl,--diag_suppress=10063 \
-	-Wl,--ram_model \
-	-Wl,--reread_libs \
+	--warn_sections \
+	--emit_warnings_as_errors \
+	--rom_model \
+	-x \
 
 
 LIBS_NAME = \
-	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	nortos.am273x.c66.ti-c6000.${ConfigName}.lib \
+	drivers.am273x.c66.ti-c6000.${ConfigName}.lib \
+	unity.am273x.c66.ti-c6000.${ConfigName}.lib \
 	libc.a \
-	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
@@ -131,7 +121,6 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
 LIBS_PATH := $(LIBS_PATH_common) $(LIBS_PATH_$(PROFILE))
 LFLAGS := $(LFLAGS_common) $(LFLAGS_$(PROFILE))
-LNKOPTFLAGS := $(LNKOPTFLAGS_common) $(LNKOPTFLAGS_$(PROFILE))
 LNK_FILES := $(LNK_FILES_common) $(LNK_FILES_$(PROFILE))
 
 OBJDIR := obj/$(PROFILE)/
@@ -146,12 +135,12 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am263x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME): $<
-	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+	@echo  Compiling: am273x:c66ss0:nortos:ti-c6000 $(OUTNAME): $<
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fc=$<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am263x:r5fss0-1:nortos:ti-arm-clang $(LIBNAME): $<
-	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
+	@echo  Compiling: am273x:c66ss0:nortos:ti-c6000 $(LIBNAME): $<
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fa=$<
 
 all: $(BOOTIMAGE_NAME)
 
@@ -164,13 +153,13 @@ SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.
 
 $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
-	@echo  Linking: am263x:r5fss0-1:nortos:ti-arm-clang $@ ...
-	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
-	@echo  Linking: am263x:r5fss0-1:nortos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am273x:c66ss0:nortos:ti-c6000 $@ ...
+	$(LNK) $(LFLAGS) $(LIBS_PATH) -m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
+	@echo  Linking: am273x:c66ss0:nortos:ti-c6000 $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am263x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am273x:c66ss0:nortos:ti-c6000 $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -181,7 +170,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-1:nortos:ti-arm-clang ipc_rpmsg_ut ...
+	@echo  Scrubing: am273x:c66ss0:nortos:ti-c6000 ipc_rpmsg_ut ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -213,10 +202,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM263x --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context c66ss0 --part Default --package ZCE --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263x_beta --context r5fss0-1 --part AM263x --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM273x --context c66ss0 --part Default --package ZCE --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -234,9 +223,8 @@ BOOTIMAGE_TEMP_OUT_FILE=temp_stdout_$(PROFILE).txt
 
 BOOTIMAGE_CORE_ID_r5fss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-1 = 1
-BOOTIMAGE_CORE_ID_r5fss1-0 = 2
-BOOTIMAGE_CORE_ID_r5fss1-1 = 3
-SBL_RUN_ADDRESS=0x70002000
+BOOTIMAGE_CORE_ID_c66ss0   = 2
+SBL_RUN_ADDRESS=0x10200000
 SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
@@ -249,25 +237,25 @@ else
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
-	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_c66ss0) \
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
-	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_c66ss0) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am263x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am273x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
 	$(OUTRPRC_CMD) $(OUTNAME) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(COPY) $(BOOTIMAGE_RPRC_NAME) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
-	$(XIPGEN_CMD) -i $(BOOTIMAGE_RPRC_NAME_TMP) -o $(BOOTIMAGE_RPRC_NAME) -x $(BOOTIMAGE_RPRC_NAME_XIP) --flash-start-addr 0x60000000 -v > $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(XIPGEN_CMD) -i $(BOOTIMAGE_RPRC_NAME_TMP) -o $(BOOTIMAGE_RPRC_NAME) -x $(BOOTIMAGE_RPRC_NAME_XIP) --flash-start-addr 0xc6000000 -v > $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME) $(MULTI_CORE_IMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am263x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am273x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

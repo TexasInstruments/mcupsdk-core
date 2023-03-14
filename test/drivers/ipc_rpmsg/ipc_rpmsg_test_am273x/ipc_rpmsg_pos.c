@@ -272,6 +272,27 @@ void posTest_RPMessage_send_mcdcSix(void *args)
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_FAILURE);
 }
 
+/*Test for dynamic coverage of RPMessage_send API with a dataLen around 1200*/
+void posTest_RPMessage_send_datalen(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    Msg_Back2Back *data;
+    uint16_t dataLen = 1200;
+    uint16_t remoteCoreId = 1U;
+    uint16_t remoteEndPt = 9;
+    uint16_t localEndPt = 14;
+
+   if (testStatus == SystemP_SUCCESS)
+    {
+        if(RPMessage_send(&data, dataLen, remoteCoreId, remoteEndPt, localEndPt, SystemP_WAIT_FOREVER) != SystemP_SUCCESS)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
 void test_pos_main(void *args)
 {
     Drivers_open();
@@ -286,6 +307,7 @@ void test_pos_main(void *args)
     RUN_TEST(posTest_RPMessage_send_mcdcFour, 10621, NULL);
     RUN_TEST(posTest_RPMessage_send_mcdcFive, 10622, NULL);
     RUN_TEST(posTest_RPMessage_send_mcdcSix, 10623, NULL);
+    RUN_TEST(posTest_RPMessage_send_datalen, 10718, NULL);
 
     UNITY_END();
     Drivers_close();
