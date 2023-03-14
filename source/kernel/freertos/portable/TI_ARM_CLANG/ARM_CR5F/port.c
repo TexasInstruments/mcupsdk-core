@@ -25,7 +25,7 @@
  * 1 tab == 4 spaces!
  */
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,7 +89,7 @@
 #define portNO_FLOATING_POINT_CONTEXT    ( ( StackType_t ) 0 )
 
 /* Refer arm_acle spec for the defines */
-#define SY       (15U)       /*   Full system Any-Any                    */ 
+#define SY       (15U)       /*   Full system Any-Any                    */
 #define ST       (14U)       /*   Full system Store-Store                */
 #define LD       (13U)       /*   Full system Load-Load, Load-Store      */
 #define ISH      (11U)       /*   Inner shareable Any-Any                */
@@ -243,6 +243,9 @@ void vPortYeildFromISR( uint32_t xSwitchRequired )
 
 void vPortTimerTickHandler()
 {
+    /* Disable IRQ to prevent preemption */
+    portENTER_CRITICAL();
+
     if( ulPortSchedularRunning == pdTRUE )
     {
         /* Increment the RTOS tick. */
@@ -251,6 +254,9 @@ void vPortTimerTickHandler()
             ulPortYieldRequired = pdTRUE;
         }
     }
+
+    /* Enable IRQ */
+    portEXIT_CRITICAL();
 }
 
 void vPortTaskUsesFPU( void )
