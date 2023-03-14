@@ -258,6 +258,12 @@ struct CUSBD_Req_s
     uint32_t status;
     /** number of actually processed bytes */
     uint32_t actual;
+   /**
+     * Defer status stage for control transfer. It's optional parameter and
+     * should be used if application want to split data in control data
+     * stage into several TDs (usb requests).
+     */
+    uint8_t deferStatusStage;
 };
 
 /** Set of functions allowing to operate on endpoints */

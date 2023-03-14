@@ -355,6 +355,7 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
       ep0DataXferRequest.buf = buffer;
       ep0DataXferRequest.dma =  (uintptr_t)buffEp0;
       ep0DataXferRequest.complete = outEp0XferCmplCb;
+	  ep0DataXferRequest.deferStatusStage = 1;
       usb_handle.pD->ep0NextState = CH9_EP0_DATA_PHASE;
       usb_handle.pD->ep0DataDirFlag = 0;
       TU_LOG2("[dcd_edpt_xfer] request for ep:%02X, %d bytes, CompCb=%08X\n", ep_addr,

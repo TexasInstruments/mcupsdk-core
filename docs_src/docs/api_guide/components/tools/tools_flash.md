@@ -531,9 +531,6 @@ The detailed sequence of steps that happen when flashing files is listed below, 
   in a single configuration file which is provided as input to the tool.
 \endcond
 
-
-\note As of now the max data per setup transaction is set to 64 Bytes by default. Due to this you can see throughput degradation. The upcoming release will enable USB DFU at its full potential i.e 512 Bytes data transfer per setup transaction. It is recomended to not change the --transfer-size parameter in the tool . 
-
 - see also \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH 
 
 \endcond

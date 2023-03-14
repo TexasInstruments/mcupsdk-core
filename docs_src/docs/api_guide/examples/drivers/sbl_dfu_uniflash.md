@@ -28,11 +28,7 @@ This example is more or less like a **flashing server, and will never terminate 
 
 - Refer to \htmllink{https://www.usb.org/sites/default/files/DFU_1.1.pdf, DFU_1.1.pdf} to know more about USB DFU class. 
 
-\note As of now the max data per setup transaction is set to 64 Bytes by default. Due to this you can see throughput degradation. The upcoming release will enable USB DFU at its full potential i.e 512 Bytes data transfer per setup transaction. It is recomended to not change the --transfer-size parameter in the \ref TOOLS_FLASH_DFU_UNIFLASH. 
-
-
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH_COMBOS}
-
 
 \cond SOC_AM64X
 

@@ -6,15 +6,6 @@ import struct
 import argparse
 import subprocess
 
-try:
-    import serial
-    from tqdm import tqdm
-except ImportError:
-    print('[ERROR] Dependant modules not installed, use below pip command to install them. MAKE sure proxy for pip is setup if needed.')
-    print('')
-    print('python -m pip install pyserial tqdm --proxy={http://your proxy server:port or leave blank if no proxy}')
-    sys.exit()
-
 BOOTLOADER_UNIFLASH_BUF_SIZE                         = 1024*1024 # 1 MB This has to be a 256 KB aligned value, because flash writes will be block oriented
 BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
 
@@ -171,7 +162,7 @@ def wait_for_enumeration():
     temp_file.close()
     os.remove('temp_file')
 
-def dfu_fw_send(filename,intf=0,alt=0,xfer_size=64,isFlashWriter=False):
+def dfu_fw_send(filename,intf=0,alt=0,xfer_size=512,isFlashWriter=False):
     status = False
     timetaken = 0
     if not os.path.exists(filename):
@@ -207,7 +198,7 @@ def dfu_fw_send(filename,intf=0,alt=0,xfer_size=64,isFlashWriter=False):
 
     return status,timetaken
 
-def send_file_by_parts(l_cfg, s_port):
+def send_file_by_parts(l_cfg):
     orig_f_name = l_cfg.filename
     orig_offset = l_cfg.offset
 
@@ -246,8 +237,8 @@ def send_file_by_parts(l_cfg, s_port):
         status, timetaken = dfu_fw_send(tempfilename,intf_num,alt_setting,xfer_size)
 
         print("Time Elapsed = {}".format(timetaken))
-        # status, timetaken = xmodem_send_receive_file(tempfilename, s_port)
         total_time_taken += timetaken
+
 
         # delete the temporary file
         os.remove(part_filename)
@@ -273,7 +264,6 @@ def send_file_by_parts(l_cfg, s_port):
         # send the partial file normally
         tempfilename = create_temp_file(l_cfg)
         status, timetaken = dfu_fw_send(tempfilename,intf_num,alt_setting,xfer_size)
-        # status, timetaken = xmodem_send_receive_file(tempfilename, s_port)
         print("Time Elapsed = {}".format(timetaken))
         total_time_taken += timetaken
 
@@ -289,7 +279,6 @@ def send_file_by_parts(l_cfg, s_port):
 
 def main(argv):
 
-    serialport = None
     config_file = None
     cmd_flash_writer_found = False
     ops_invalid = False
@@ -300,7 +289,7 @@ def main(argv):
     my_parser.add_argument('-a', '--alt', required=False,type=int, help="The alt setting used for DFU transfer. An alt setting number defines the target memory on SOC. Default value = 0 ")
 
     my_parser.add_argument('-i', '--interface', required=False,type=int, help=" Selects the interface number used for DFU. Default value = 0 ")
-    my_parser.add_argument('-t', '--transfer-size', required=False,type=int, help="Defines the number of bytes that will be transfered per setup transaction. Default transfer_size = 64 Bytes ")
+    my_parser.add_argument('-t', '--transfer-size', required=False,type=int, help="Defines the number of bytes that will be transfered per setup transaction. Default transfer_size = 512 Bytes ")
     my_parser.add_argument('-f', '--file', required=False, help="Filename to send for an operation. Not required if using config mode (--cfg)")
     my_parser.add_argument('-o', '--flash-offset', required=False, help="Offset (in hexadecimal format starting with a 0x) at which the flash/verify flash is to be done. Not required if using config mode (--cfg)")
     my_parser.add_argument('--operation', required=False, help='Operation to be done on the file => "flash" or "flashverify" or "erase" or "flash-xip" or "flashverify-xip" or "flash-phy-tuning-data" or "flash-emmc" or "flashverify-emmc". Not required if using config mode (--cfg)')
@@ -378,13 +367,12 @@ def main(argv):
 
                     if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE) and (linecfg.optype in ["flash", "flashverify"])):
                         # Send by parts
-                        status, timetaken = send_file_by_parts(linecfg, serialport)
+                        status, timetaken = send_file_by_parts(linecfg)
                     else:
                         # Send normally
                         tempfilename = create_temp_file(linecfg)
 
                         status, timetaken = dfu_fw_send(tempfilename,linecfg.intf_num,linecfg.alt_setting,linecfg.xfer_size)
-                        # status, timetaken = xmodem_send_receive_file(tempfilename, serialport, get_response=True)
 
                     orig_filename = linecfg.filename
                     if(linecfg.optype == "erase"):
@@ -429,12 +417,11 @@ def main(argv):
 
             if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE) and (cmdlinecfg.optype in ["flash", "flashverify"])):
                 # Send by parts
-                status, timetaken = send_file_by_parts(cmdlinecfg, serialport)
+                status, timetaken = send_file_by_parts(cmdlinecfg )
             else:
                 # Send normally
                 tempfilename = create_temp_file(cmdlinecfg)
                 status, timetaken = dfu_fw_send(tempfilename,intf_num, alt_setting,xfer_size)
-                # status, timetaken = xmodem_send_receive_file(tempfilename, serialport)
                 # Delete the tempfile if it exists
                 if(os.path.exists(tempfilename)):
                     os.remove(tempfilename)
@@ -451,7 +438,7 @@ def main(argv):
 
 # Class definitions used
 class LineCfg():
-    def __init__(self, line=None, filename=None, optype=None, offset=None, erase_size=None, flashwriter=None, cfg_src="cfg",alt_setting=0,intf_num=0,xfer_size=64):
+    def __init__(self, line=None, filename=None, optype=None, offset=None, erase_size=None, flashwriter=None, cfg_src="cfg",alt_setting=0,intf_num=0,xfer_size=512):
         self.line = line
         self.filename = filename
         self.optype = optype
@@ -591,7 +578,7 @@ class LineCfg():
             if((self.xfer_size % 64 != 0) or (self.xfer_size > 512)):
                 # Invalid argument user should exit
                 self.exit_now = True
-                status = "[ERROR] Invalid transfer size. It should be multiple of 64 and less than 512 !!!"
+                status = "[ERROR] Invalid transfer size. It should be multiple of 64 and less than or equal to 512 !!!"
                 return status
 
             if(self.optype == None):
@@ -667,7 +654,7 @@ class FileCfg():
         self.cfgs = list()
         self.errors = list()
         self.flash_writer_index = None
-        self.xfer_size = 64
+        self.xfer_size = 512
         self.alt_setting = 0
         self.intf_num = 0
 
@@ -702,7 +689,7 @@ class FileCfg():
 
                     elif ( linecfg.found_dfu_cmd == True ):
                         # check what command it is
-                        if(linecfg.xfer_size != 64):
+                        if(linecfg.xfer_size != 512):
                             self.xfer_size = linecfg.xfer_size
 
                         if(linecfg.alt_setting != 0 ):
