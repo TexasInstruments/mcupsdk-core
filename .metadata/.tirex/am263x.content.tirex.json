@@ -10064,7 +10064,7 @@
         ],
         "description": "A Dthe Rng Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_rng",
-        "location": "../../examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
         ],
@@ -10078,6 +10078,41 @@
             "security",
             "crypto",
             "dthe_rng",
+            "rng",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Rng Drbg Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_rng_drbg",
+        "location": "../../examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_rng",
+            "rng_drbg",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

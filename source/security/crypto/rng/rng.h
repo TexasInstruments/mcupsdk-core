@@ -62,6 +62,20 @@ extern "C" {
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+/** Rng drbg mode macro */
+#define RNG_DRBG_MODE                                           (TRUE)
+/** Rng control request data mask */
+#define RNG_CONTROL_REQUEST_DATA_MASK                           (0x00010000U)
+/** Rng control data block mask */
+#define RNG_CONTROL_DATA_BLOCKS_MASK                            (0xFFF00000U)
+/** Rng control drbg enable shift */
+#define RNG_CONTROL_DRBG_EN_SHIFT                               (0x0000000CU)
+/** Rng control enable trng shift */
+#define RNG_CONTROL_ENABLE_TRNG_SHIFT                           (0x0000000AU)
+/** Rng satus reseed Ai mask */
+#define RNG_STATUS_RESEED_AI_MASK                               (0x00000400U)
+/** Maximum seed array size in dword */
+#define RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD                    (12U)
 /** \brief Handle to the RNG driver */
 typedef void *RNG_Handle;
 
@@ -95,6 +109,10 @@ typedef struct
     /**< Flag to indicate whether the instance is opened already */
     uint32_t                faultStatus;
     /**< Flag to ascertain whether the handle was opened successfully */
+    uint32_t                *seedValue;
+    /**< pointer to hold seeding value from user*/
+    uint32_t                seedSizeInDwords;
+    /**< seed size in words*/
 } RNG_Attrs;
 
 /** \brief RNG driver context */

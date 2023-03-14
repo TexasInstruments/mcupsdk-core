@@ -48,9 +48,11 @@
 #include <security/crypto/pka/hw_include/cslr_cp_ace.h>
 #include <drivers/hw_include/cslr_soc.h>
 /* ========================================================================== */
-/*                 Internal Function Declarations                             */
+/*                          Global variables                                  */
 /* ========================================================================== */
-
+uint32_t gRngDrbgDefaultSeed[RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD]={0x425F4941, 0x37CCE532, 0x2C07C03E, 0x14CAEA55,
+                               0x57DF93B5, 0xC277D946, 0xAE4728C1, 0x7FEBA982,
+                               0xB3E156DA, 0xE7993855, 0x45EE2421, 0x506F53D1 };
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -120,7 +122,7 @@ RNG_Return_t RNG_close(RNG_Handle handle)
 
 RNG_Return_t RNG_setup(RNG_Handle handle)
 {
-    uint32_t val    = 0;
+    uint32_t val = 0, updated_bits = 0, i = 0;
     RNG_Return_t retVal = RNG_RETURN_FAILURE;
     RNG_Config *config  = (RNG_Config *)handle;
     CSL_Cp_aceTrngRegs *pTrngRegs;
@@ -150,11 +152,68 @@ RNG_Return_t RNG_setup(RNG_Handle handle)
         val = ((uint32_t) 0xFFU);
         CSL_REG_WR(&pTrngRegs->TRNG_FROENABLE, val);
 
-        /* Start the actual engine by setting the TRNG_CONTROL[10] ENABLE_TRNG register bit*/
-        val = ((((uint32_t) 1U) << CSL_CP_ACE_TRNG_CONTROL_ENABLE_TRNG_SHIFT));
-        CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, val);
+        if(config->attrs->mode == RNG_DRBG_MODE)
+        {
+            /* Enable DRBG first */
+            val = (((uint32_t) 1U) << RNG_CONTROL_DRBG_EN_SHIFT);
+            CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, val);
 
-        retVal = RNG_RETURN_SUCCESS;
+            /* Enable TRNG and DRBG  Section 5.2.5 */
+            val = ((((uint32_t) 1U) << RNG_CONTROL_ENABLE_TRNG_SHIFT) |
+                (((uint32_t) 1U) << RNG_CONTROL_DRBG_EN_SHIFT));
+            CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, val);
+
+            /* Loop until the reseed_ai bit is 1 */
+            do {
+                val = CSL_REG_RD(&pTrngRegs->TRNG_STATUS);
+            } while ((val & RNG_STATUS_RESEED_AI_MASK) != RNG_STATUS_RESEED_AI_MASK);
+
+            /*
+            * Write the personalization string (384 bits). This does not
+            * need to be secret but must be unique. So we use the UID.
+            * UID is only 256 bits long. So we cycle through the UID.
+            */
+            /* Not doing a verify as the register is write only */
+            if((config->attrs->seedSizeInDwords != 0) && (config->attrs->seedSizeInDwords <= RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD))
+            {
+                for(i = 0; i< config->attrs->seedSizeInDwords; i++)
+                {
+                    CSL_REG_WR(&pTrngRegs->TRNG_PS_AI[i], config->attrs->seedValue[i]);
+                }
+                if(config->attrs->seedSizeInDwords < RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD)
+                {
+                    while(i < RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD)
+                    {
+                        CSL_REG_WR(&pTrngRegs->TRNG_PS_AI[i], gRngDrbgDefaultSeed[i]);
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+                for(i = 0; i< RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD; i++)
+                {
+                    CSL_REG_WR(&pTrngRegs->TRNG_PS_AI[i], gRngDrbgDefaultSeed[i]);
+                }
+            }
+            /* Setting the engine to generate DRBG with requested bit */
+            val = CSL_REG_RD(&pTrngRegs->TRNG_CONTROL);
+            /* We always request the maximum number of blocks possible */
+            updated_bits |= RNG_CONTROL_DATA_BLOCKS_MASK;
+            /* Set the request data bit */
+            updated_bits |= RNG_CONTROL_REQUEST_DATA_MASK;
+
+            val |= updated_bits;
+            CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, val);
+            retVal = RNG_RETURN_SUCCESS;
+        }
+        else
+        {
+            /* Start the actual engine by setting the TRNG_CONTROL[10] ENABLE_TRNG register bit*/
+            val = ((((uint32_t) 1U) << CSL_CP_ACE_TRNG_CONTROL_ENABLE_TRNG_SHIFT));
+            CSL_REG_WR(&pTrngRegs->TRNG_CONTROL, val);
+            retVal = RNG_RETURN_SUCCESS;
+        }
     }
     return (retVal);
 }

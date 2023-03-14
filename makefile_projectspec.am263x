@@ -275,6 +275,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_ecdsa_signing_verification_am2
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dcc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -1135,7 +1136,10 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+	$(MAKE) -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1529,6 +1533,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_ecdsa_signing_verification_am2
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dcc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2389,7 +2394,10 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+	$(MAKE) -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -2783,6 +2791,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_ecdsa_signing_verification_am
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dcc_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3643,7 +3652,10 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+	$(MAKE) -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4052,7 +4064,8 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

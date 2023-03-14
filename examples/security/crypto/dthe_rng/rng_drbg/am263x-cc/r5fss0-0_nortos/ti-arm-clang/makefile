@@ -2,7 +2,7 @@
 # Auto generated makefile
 #
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
@@ -21,18 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dthe_rng.$(PROFILE).out
+OUTNAME:=dthe_rng_drbg.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dthe_rng.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dthe_rng.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=dthe_rng.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=dthe_rng.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dthe_rng.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dthe_rng.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=dthe_rng_drbg.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dthe_rng_drbg.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=dthe_rng_drbg.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dthe_rng_drbg.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dthe_rng_drbg.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dthe_rng_drbg.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	crypto_rng.c \
+	crypto_rng_drbg.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -182,7 +182,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang dthe_rng ...
+	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang dthe_rng_drbg ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
