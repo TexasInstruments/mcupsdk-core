@@ -35,3 +35,7 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
    -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
 \endcond
+
+\cond SOC_AWR294X
+   -# \subpage EXAMPLES_DRIVERS_SBL_QSPI_ENET
+\endcond

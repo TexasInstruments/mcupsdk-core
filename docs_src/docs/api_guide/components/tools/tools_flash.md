@@ -8,9 +8,12 @@ Flashing tools allow to flash binaries to the flash on a EVM.
 
 - \ref TOOLS_FLASH_UART_UNIFLASH
 \cond SOC_AM64X || SOC_AM243X
-- \ref TOOLS_FLASH_DFU_UNIFLASH 
+- \ref TOOLS_FLASH_DFU_UNIFLASH
 \endcond
 - \ref TOOLS_FLASH_JTAG_UNIFLASH
+\cond SOC_AWR294X
+- \ref TOOLS_FLASH_ENET_UNIFLASH
+\endcond
 
 ## UART Uniflash {#TOOLS_FLASH_UART_UNIFLASH}
 
@@ -378,35 +381,35 @@ There is also a log area which will show detailed logs in addition to the pop up
 
 ## USB DFU Uniflash{#TOOLS_FLASH_DFU_UNIFLASH}
 
-- **usb_dfu_uniflash.py** is a tool which is used for flashing the images onto the flash memory using USB DFU protocol. 
-It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB. 
-- This tool is used in conjuction with \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH which is a flash-writer application. 
+- **usb_dfu_uniflash.py** is a tool which is used for flashing the images onto the flash memory using USB DFU protocol.
+It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB.
+- This tool is used in conjuction with \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH which is a flash-writer application.
 
-- refer \ref EXAMPLES_USB_DFU for more information on DFU. 
+- refer \ref EXAMPLES_USB_DFU for more information on DFU.
 
 ### USB DFU bootflow using dfu based flash-writer.
 
-- Following diagram explains boot flow using USB DFU and SBL OSPI. 
-- Its a three step process. 
-	1. Put the device into DFU BOOT mode refer \ref BOOTMODE_DFU. After this ROM Bootoader will accept a valid SBL image 
-	via USB and boot it. In this case we will boot \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH which is a flash-writer binary. 
-	2. Once flash-writer is booted a new USB DFU capable device will be enumerated. After this using **usb_dfu_uniflash.py** tool 
-	we will send **SBL_OSPI** or **SBL_QSPI** along with multicore appimage. Flash-writer SBL will flash the received files onto 
-	flash memory. 
-	3. Change the boot mode to \ref BOOTMODE_OSPI and power cycle the board. First **SBL_OSPI** or **SBL_QSPI** will be booted from flash 
-	and later it is responsible to boot the multicore appimages. 
+- Following diagram explains boot flow using USB DFU and SBL OSPI.
+- Its a three step process.
+	1. Put the device into DFU BOOT mode refer \ref BOOTMODE_DFU. After this ROM Bootoader will accept a valid SBL image
+	via USB and boot it. In this case we will boot \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH which is a flash-writer binary.
+	2. Once flash-writer is booted a new USB DFU capable device will be enumerated. After this using **usb_dfu_uniflash.py** tool
+	we will send **SBL_OSPI** or **SBL_QSPI** along with multicore appimage. Flash-writer SBL will flash the received files onto
+	flash memory.
+	3. Change the boot mode to \ref BOOTMODE_OSPI and power cycle the board. First **SBL_OSPI** or **SBL_QSPI** will be booted from flash
+	and later it is responsible to boot the multicore appimages.
 
 
   \imageStyle{dfu_flash_bootflow.png,width:40%}
-  \image html dfu_flash_bootflow.png 
+  \image html dfu_flash_bootflow.png
 
 
 ### Tool requirements on host PC
 
 - The tool is implemented using python and needs python version 3.x
 - Refer to the page, \ref INSTALL_PYTHON3 , to install python and the required python packages on your PC.
-- It uses **dfu-util** tool to execute dfu commands from the host PC.  
-- Refer to the page \ref INSTALL_DFU_UTIL , to install **dfu-util** tool. 
+- It uses **dfu-util** tool to execute dfu commands from the host PC.
+- Refer to the page \ref INSTALL_DFU_UTIL , to install **dfu-util** tool.
 
 ### Important files and folders
 
@@ -477,8 +480,8 @@ It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB.
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_QSPI and power ON the EVM to run the flashed application.
 \endcond
 
-- If flashing is not successful, then DFU device i.e EVM must have send error status in **GET_STATUS** phase of **SETUP** transfer. This error condition 
-will be detected by **dfu-util** tool and will be displayed on console. 
+- If flashing is not successful, then DFU device i.e EVM must have send error status in **GET_STATUS** phase of **SETUP** transfer. This error condition
+will be detected by **dfu-util** tool and will be displayed on console.
 
 #### Flash tool options
 
@@ -487,7 +490,7 @@ will be detected by **dfu-util** tool and will be displayed on console.
         cd ${SDK_INSTALL_PATH}/tools/boot
         python usb_dfu_uniflash.py --help
 
-### Detailed sequence of steps that happen when flashing files using usb_dfu_uniflash tool 
+### Detailed sequence of steps that happen when flashing files using usb_dfu_uniflash tool
 
 \note This section has more detailed sequence of steps that happen underneath the tools and on the EVM for reference.
 
@@ -531,7 +534,7 @@ The detailed sequence of steps that happen when flashing files is listed below, 
   in a single configuration file which is provided as input to the tool.
 \endcond
 
-- see also \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH 
+- see also \ref EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
 
 \endcond
 
@@ -561,7 +564,96 @@ Refer the example \ref EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
 
 \cond SOC_AM64X || SOC_AM243X
 
-### See also 
+### See also
 
 - \ref EXAMPLES_USB_DFU
-\endcond 
+\endcond
+
+\cond SOC_AWR294X
+
+## ENET Uniflash {#TOOLS_FLASH_ENET_UNIFLASH}
+
+UDP over ethernet is used as the transport or interface to send the file to flash to the EVM.
+
+### Tool requirements on host PC
+
+- The tool is implemented using python and needs python version 3.x
+- The tool uses additional python packages as listed below.
+  - tqdm for progress bar when the tool is run
+- Refer to the page, \ref INSTALL_PYTHON3 , to install python and the required python packages on your PC.
+
+### Important files and folders
+
+<table>
+<tr>
+    <th>Folder/Files
+    <th>Description
+</tr>
+<tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/tools/boot/</td></tr>
+<tr>
+    <td>enet_uniflash.py
+    <td>Flashing tool
+</tr>
+<tr>
+    <td>sbl_prebuilt/@VAR_BOARD_NAME_LOWER
+    <td>Pre-built bootloader images and default flash configuration files for a supported EVM
+</tr>
+<tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/examples/drivers/boot/</td></tr>
+<tr>
+    <td>sbl_qspi_enet
+    <td>QSPI bootloader application and Flashing application that is run on the EVM to receive files to flash. To be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
+    will boot the user application file for all the CPUs
+</tr>
+</table>
+
+### Basic steps to flash files over ethernet {#BASIC_STEPS_TO_FLASH_FILES_OVER_ENET}
+
+#### Getting ready to flash
+
+- Make sure the QSPI Ethernet bootloader (`sbl_qspi_enet`) has been flashed using the steps provided in \ref BASIC_STEPS_TO_FLASH_FILES.
+- Make sure the user application (`*.appimage`) you want to flash over ethernet is built for the EVM.
+
+#### Flash configuration file
+
+- Create a flash configuration file, using the default flash configuration file present
+
+        ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
+
+- In this config file, modify the paths to the application to be flashed only.
+
+   Remove or comment out the flash-writer path
+
+        --flash-writer={path to flash application .tiimage}
+
+   Remove or comment out the bootloader path
+
+        --file={path to QSPI bootloader .tiimage} --operation=flash --flash-offset=0x0
+
+   Edit below line to point to the user application (`.appimage`) file
+
+        --file={path to your application .appimage file} --operation=flash --flash-offset=0xA0000
+
+#### Flashing the files over ethernet
+
+- Run below python command on the Windows command prompt (`cmd.exe`) or Linux bash shell to flash the files.
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python enet_uniflash.py --cfg={path to your edited config file}
+
+- When the python script starts, it will display the message "Starting Linkup ...".
+
+  Based on the MACRO ENETSBL_TRANSFER_START_MODE set in sbl_enet.h of the sbl_qspi_enet bootloader, do either of the below when the above message is observed,
+    - If in ENETSBL_TIMER_MODE, Press the reset button SW1 on the EVM.
+    - If in ENETSBL_BUTTON_MODE, Press the reset button SW1 while holding down the user switch SW2.
+
+- After flashing is successful, the flashed application code will be automatically run after the SBL completes. See \ref SBL_QSPI_ENET_OUTPUT_SAMPLE for a sample of the python script output after a successful flash.
+
+#### Flash tool options
+
+- Type below to see all the possible options with the flashing tool and also see the default .cfg file for syntax and options possible in the config file
+
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python enet_uniflash.py --help
+
+
+\endcond
