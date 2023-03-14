@@ -1119,8 +1119,8 @@ void util_ECAP_init(uint32_t base, uint32_t input)
 int32_t test_cmpss_analog(uint32_t base, uint16_t ref_in)
 {
     uint32_t error=0;
-    char inh_cmd_str[64] = "provide analog volatge of 0.0000V on ADC 0 Channel 0";
-    char inl_cmd_str[64] = "provide analog volatge of 0.0000V on ADC 0 Channel 1";
+    char inh_cmd_str[64] = "provide analog voltage of 0.0000V on ADC 0 Channel 0";
+    char inl_cmd_str[64] = "provide analog voltage of 0.0000V on ADC 0 Channel 1";
 
     uint16_t test_vec[2][NUM_COMBO][8] =
     {
@@ -1508,7 +1508,7 @@ int32_t AM263x_CMPSS_BTR_0004(uint32_t base)
 
         uint16_t i;
         uint16_t input_voltage;
-        char inh_cmd_str[64] = "provide analog volatge of 0.0000V on ADC 0 Channel 0";
+        char inh_cmd_str[64] = "provide analog voltage of 0.0000V on ADC 0 Channel 0";
         uint16_t prev_status;
         bool ramp_up = true; //true - up
 
@@ -2219,24 +2219,24 @@ int32_t AM263x_CMPSS_ITR_0001(uint32_t base)
         {
             //Check 2 and 3
             // tester_command("gen pwm-dac voltage 13A 0.500");
-            tester_command("provide analog volatge of 0.5000V on ADC 0 Channel 0");
+            tester_command("provide analog voltage of 0.5000V on ADC 0 Channel 0");
             result1 = getAdc(CSL_CONTROLSS_ADC0_U_BASE + (0x1000*adc_inst), CSL_CONTROLSS_ADC0_RESULT_U_BASE + (0x1000*adc_inst), ADC_CH_ADCIN2);
-            tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 0");
+            tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 0");
 
-            tester_command("provide analog volatge of 1.0000V on ADC 0 Channel 1");
+            tester_command("provide analog voltage of 1.0000V on ADC 0 Channel 1");
             result2 = getAdc(CSL_CONTROLSS_ADC0_U_BASE + (0x1000*adc_inst), CSL_CONTROLSS_ADC0_RESULT_U_BASE + (0x1000*adc_inst), ADC_CH_ADCIN3);
-            tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 1");
+            tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 1");
         }
         else
         {
             //Check 0 and 1
-            tester_command("provide analog volatge of 1.5000V on ADC 0 Channel 0");
+            tester_command("provide analog voltage of 1.5000V on ADC 0 Channel 0");
             result1 = getAdc(CSL_CONTROLSS_ADC0_U_BASE + (0x1000*adc_inst), CSL_CONTROLSS_ADC0_RESULT_U_BASE + (0x1000*adc_inst), ADC_CH_ADCIN0);
-            tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 0");
+            tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 0");
 
-            tester_command("provide analog volatge of 2.0000V on ADC 0 Channel 1");
+            tester_command("provide analog voltage of 2.0000V on ADC 0 Channel 1");
             result2 = getAdc(CSL_CONTROLSS_ADC0_U_BASE + (0x1000*adc_inst), CSL_CONTROLSS_ADC0_RESULT_U_BASE + (0x1000*adc_inst), ADC_CH_ADCIN1);
-            tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 1");
+            tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 1");
         }
 
         if(enableLog)
@@ -2253,16 +2253,16 @@ int32_t AM263x_CMPSS_ITR_0001(uint32_t base)
         if((cmpss_inst-10)&0x1)
         {
             //Check 5
-            tester_command("provide analog volatge of 2.5000V on ADC 0 Channel 1");
+            tester_command("provide analog voltage of 2.5000V on ADC 0 Channel 1");
             result1 = getAdc(CSL_CONTROLSS_ADC0_U_BASE + (0x1000*adc_inst), CSL_CONTROLSS_ADC0_RESULT_U_BASE + (0x1000*adc_inst), ADC_CH_ADCIN5);
-            tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 1");
+            tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 1");
         }
         else
         {
             //Check 4
-            tester_command("provide analog volatge of 3.0000V on ADC 0 Channel 0");
+            tester_command("provide analog voltage of 3.0000V on ADC 0 Channel 0");
             result1 = getAdc(CSL_CONTROLSS_ADC0_U_BASE + (0x1000*adc_inst), CSL_CONTROLSS_ADC0_RESULT_U_BASE + (0x1000*adc_inst), ADC_CH_ADCIN4);
-            tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 0");
+            tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 0");
         }
 
         if(enableLog)
@@ -2498,7 +2498,7 @@ int32_t AM263x_CMPSS_ITR_0005(uint32_t base)
 
 
         //Force output to 1
-        char inh_cmd_str[64] = "provide analog volatge of 3.0000V on ADC 0 Channel 0";
+        char inh_cmd_str[64] = "provide analog voltage of 3.0000V on ADC 0 Channel 0";
         tester_command(inh_cmd_str);
         //CMPSS_configHighComparator(base, CMPSS_INV_INVERTED | CMPSS_INSRC_PIN);  //Source: Pin, Inversion: Yes, Async or with filter: No
 
@@ -2857,7 +2857,7 @@ void util_set_sts(uint32_t base)
 {
     //Generate non-zero comparator digital filter output (sts)
     CMPSS_enableModule(base);
-    tester_command("provide analog volatge of 1.0000V on ADC 0 Channel 0");                //Generate 1v at INH
+    tester_command("provide analog voltage of 1.0000V on ADC 0 Channel 0");                //Generate 1v at INH
     CMPSS_configHighComparator(base, CMPSS_INSRC_DAC);      //INH vs DACH
     CMPSS_configLowComparator(base, CMPSS_INSRC_PIN_INH);   //INH vs DACL
     CMPSS_setDACValueHigh(base, 0x100);
@@ -2867,7 +2867,7 @@ void util_set_sts(uint32_t base)
 void util_clr_sts(uint32_t base)
 {
     //Generate zero comparator digital filter output (sts)
-    tester_command("provide analog volatge of 0.0000V on ADC 0 Channel 0");                //Generate 0v at INH
+    tester_command("provide analog voltage of 0.0000V on ADC 0 Channel 0");                //Generate 0v at INH
 }
 
 void util_load_ramp_regs(uint32_t base)

@@ -1576,7 +1576,7 @@ int test_adc_operational_mode(uint32_t base, int mode)
             voltage = 1.000;
         }
 
-        sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, adc_instance, channel);
+        sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, adc_instance, channel);
         tester_command(test_command);   // even channels
 
         for (soc_number = ADC_SOC_NUMBER0;
@@ -2378,9 +2378,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             }
 
             voltage = 1.500;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
             ADC_forceSOC(base, soc_number);
@@ -2409,9 +2409,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             }
 
             voltage = 3.1000;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
 
@@ -2441,9 +2441,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             }
 
             voltage = 1.500;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
 
@@ -2478,9 +2478,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             }
 
             voltage = 1.500;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
 
@@ -2509,9 +2509,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
             }
 
             voltage = 3.1000;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
             ADC_forceSOC(base, soc_number);
@@ -2541,9 +2541,9 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
 
 
             voltage = 1.500;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
             ADC_forceSOC(base, soc_number);
@@ -2738,9 +2738,9 @@ int32_t AM263x_ADC_BTR_011(uint32_t base)
             int16_t offset;
 
             voltage = 1.6500;
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
             tester_command(test_command);
-            sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+            sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
             tester_command(test_command);
 
             for(offset = -512; offset <= 511; offset++)
@@ -3269,9 +3269,9 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
             else
             {
                 voltage = 3.000;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+                sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
                 tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+                sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
                 tester_command(test_command);
             }
 
@@ -3314,9 +3314,9 @@ int32_t AM263_ADC_ITR_0002(uint32_t base)
             else
             {
                 voltage = 1.000;
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 0);
+                sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 0);
                 tester_command(test_command);
-                sprintf(test_command, "provide analog volatge of %.4fV on ADC %d Channel %d",voltage, 0, 1);
+                sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d",voltage, 0, 1);
                 tester_command(test_command);
             }
 

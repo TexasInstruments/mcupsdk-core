@@ -219,10 +219,10 @@ void test_main(void *args)
             DebugP_log("Tester Initialized!!\r\n ");
         }
 
-        /* "provide analog volatge of 2.0000V on ADC 0 Channel 1" */
-        else if (startsWith((char *)gCmdRxBuffer, "provide analog volatge"))
+        /* "provide analog voltage of 2.0000V on ADC 0 Channel 1" */
+        else if (startsWith((char *)gCmdRxBuffer, "provide analog voltage"))
         {
-            /* "provide analog volatge of 2.0000V on ADC 0 Channel 1" */
+            /* "provide analog voltage of 2.0000V on ADC 0 Channel 1" */
             /* "provide analog voltage of a.bcdeV on ADC X Channel Y" */
 
             /* take voltage values. */
@@ -240,7 +240,7 @@ void test_main(void *args)
             else
             {
                 char channel[1];
-                // memcpy(channel, &gCmdRxBuffer[strlen("provide analog volatge of 2.0000V on ADC 0 Channel ")], 1);
+                // memcpy(channel, &gCmdRxBuffer[strlen("provide analog voltage of 2.0000V on ADC 0 Channel ")], 1);
                 channel[0] = gCmdRxBuffer[51];
                 // DebugP_log("%s\r\n", channel);
                 int32_t channel_number = atoi(channel);
@@ -275,7 +275,7 @@ void test_main(void *args)
                         Need to add a PinMux Configuration read, verify the set or skip this step.*/
 
                     char voltage_str[7];
-                    memcpy(voltage_str, &gCmdRxBuffer[strlen("provide analog volatge of")], 6);
+                    memcpy(voltage_str, &gCmdRxBuffer[strlen("provide analog voltage of")], 6);
                     Float32 voltage = atof(voltage_str);
                     uint16_t duty_cycle = (uint16_t) (voltage*100)/(MAX_ANALOG_VOLTAGE);
 
