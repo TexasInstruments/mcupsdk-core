@@ -51,6 +51,8 @@ uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(1
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
 
+uint32_t gRunApp;
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -88,11 +90,9 @@ int main()
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    DebugP_log("\r\n");
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-
-    DebugP_log("Starting CAN Bootloader ... \r\n");
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Bootloader...");
 
     status = Board_driversOpen();
 
@@ -123,7 +123,7 @@ int main()
         {
             uint32_t fileSize;
             /* CAN Receive */
-            status = Bootloader_CANReceiveFile(&fileSize, gAppImageBuf);
+            status = Bootloader_CANReceiveFile(&fileSize, gAppImageBuf, &gRunApp);
 
             if(SystemP_SUCCESS == status && fileSize == BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
             {
@@ -138,18 +138,20 @@ int main()
             }
         }
 
-        if((bootHandle != NULL) && (SystemP_SUCCESS == status))
+        if((bootHandle != NULL) && (SystemP_SUCCESS == status) && (gRunApp == CSL_TRUE))
         {
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
             /* Load CPUs */
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
+                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
+                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
             }
             if(status == SystemP_SUCCESS && ((TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)) || (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))))
@@ -158,8 +160,13 @@ int main()
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
 
+                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
+                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
+
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
+                Bootloader_profileAddProfilePoint("CPU load");
+
                 if(status == SystemP_SUCCESS)
                 {
                     status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
@@ -184,6 +191,7 @@ int main()
             {
                 /* do nothing */
             }
+
             if(status == SystemP_SUCCESS)
             {
                 Bootloader_profileAddProfilePoint("SBL End");

@@ -34,7 +34,9 @@
 #include <kernel/dpl/AddrTranslateP.h>
 #include <stdio.h>
 #include <string.h>
+#include <kernel/dpl/ClockP.h>
 #include <drivers/mcan.h>
+#include <drivers/soc.h>
 
 uint32_t gMcanBaseAddr;
 
@@ -66,7 +68,9 @@ char gCANMsgsList[][9U] = {
     "MSGACK",
     "LSTMSG",
     "LSTMSGAK",
-    "LSTMSGCF"
+    "LSTMSGCF",
+    "RUN",
+    "RESET"
 };
 
 int32_t Bootloader_CANTransmitResp(uint8_t *src)
@@ -75,11 +79,14 @@ int32_t Bootloader_CANTransmitResp(uint8_t *src)
     MCAN_ProtocolStatus     protStatus;
     uint32_t                txStatus;
 
+    /* Delay of 5 ms to sync-up with the device */
+    ClockP_usleep(5000);
+
     /* Configure Tx Msg to transmit */
     mcanConfigTxMsg(&gtxMsg, 0U);
 
-    /* Data Payload */
-    memcpy(&gtxMsg.data[0], src, 8U);
+    /* Data Payload is used as 16 bytes for the response */
+    memcpy(&gtxMsg.data[0], src, 16U);
 
     /* Write message to Msg RAM */
     MCAN_writeMsgRam(gMcanBaseAddr, MCAN_MEM_TYPE_FIFO, 0U, &gtxMsg);
@@ -107,7 +114,7 @@ int32_t Bootloader_CANTransmitResp(uint8_t *src)
     return status;
 }
 
-int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf)
+int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf, uint32_t *run)
 {
     int32_t status = SystemP_SUCCESS;
     bool done = FALSE;
@@ -117,7 +124,7 @@ int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf)
     MCAN_ProtocolStatus     protStatus;
     uint8_t seq_No = 0;
 
-    /**********************  Ping from Script to am263x-cc Board  ***************************/
+        /**********************  Ping from Script to am263x-cc Board  ***************************/
     /* Poll for Rx completion */
     rxFifoStatus.num = MCAN_RX_FIFO_NUM_0;
     do
@@ -300,6 +307,62 @@ int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf)
                 done = FALSE;
             }
         }
+    }
+
+    /* Poll for RESET or RUN Command */
+    rxFifoStatus.num = MCAN_RX_FIFO_NUM_0;
+    do
+    {
+        MCAN_getRxFIFOStatus(gMcanBaseAddr, &rxFifoStatus);
+        fifoFillLvl = rxFifoStatus.fillLvl;
+    }while(fifoFillLvl != APP_MCAN_FIFO_0_CNT);
+
+    /* Checking for Rx Errors */
+    MCAN_getErrCounters(gMcanBaseAddr, &errCounter);
+    DebugP_assert((0U == errCounter.recErrCnt) &&
+                    (0U == errCounter.canErrLogCnt));
+
+    MCAN_getRxFIFOStatus(gMcanBaseAddr, &rxFifoStatus);
+
+    MCAN_readMsgRam(gMcanBaseAddr, MCAN_MEM_TYPE_FIFO, rxFifoStatus.getIdx,
+                    rxFifoStatus.num, &grxMsg);
+
+    (void) MCAN_writeRxFIFOAck(gMcanBaseAddr, rxFifoStatus.num,
+                                rxFifoStatus.getIdx);
+
+    if(!strcmp((const char *)&grxMsg.data[0], &gCANMsgsList[6][0]))
+    {
+        (*run) = CSL_TRUE;
+    }
+
+    /**********************  ACK from am263x-cc Board to Script ***************************/
+    /* Configure Tx Msg to transmit */
+    mcanConfigTxMsg(&gtxMsg, 0U);
+
+    /* Data Payload */
+    memcpy(&gtxMsg.data[0], &gCANMsgsList[2][0], sizeof(gCANMsgsList[2]));
+
+    /* Write message to Msg RAM */
+    MCAN_writeMsgRam(gMcanBaseAddr, MCAN_MEM_TYPE_FIFO, 0U, &gtxMsg);
+
+    /* Add request for transmission, This function will trigger transmission */
+    status = MCAN_txBufAddReq(gMcanBaseAddr, 0U);
+
+    /* Poll for Tx completion */
+    do
+    {
+        txStatus = MCAN_getTxBufTransmissionStatus(gMcanBaseAddr);
+    }while((txStatus & (1U << 0U)) != (1U << 0U));
+
+    MCAN_getProtocolStatus(gMcanBaseAddr, &protStatus);
+    /* Checking for Tx Errors */
+    if (((MCAN_ERR_CODE_NO_ERROR != protStatus.lastErrCode) ||
+            (MCAN_ERR_CODE_NO_CHANGE != protStatus.lastErrCode)) &&
+        ((MCAN_ERR_CODE_NO_ERROR != protStatus.dlec) ||
+            (MCAN_ERR_CODE_NO_CHANGE != protStatus.dlec)) &&
+        (0U != protStatus.pxe))
+    {
+        DebugP_assert(FALSE);
     }
 
     return status;

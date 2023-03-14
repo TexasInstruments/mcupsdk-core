@@ -1,20 +1,22 @@
-# SBL CAN {#EXAMPLES_DRIVERS_SBL_CAN}
+# SBL CAN UNIFLASH {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH}
 
 [TOC]
 
 # Introduction
 
-This bootloader does SOC initializations and attempts to boot a multicore appimage received over CAN via custom-made protocol (see below). The image file is sent using a python script (See \ref CAN_BOOTLOADER_PYTHON_SCRIPT). Once image is received, the SBL then parses it, splits it into RPRCs for each core applicable. Each core is then initialized, RPRC image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
+This is a flash-writer application which can boot the application as well. This works in conjunction with the can_uniflash.py python script. It uses bootloader APIs to do basic SOC initialization required to be able to flash binaries to the QSPI flash. Like other SBLs, this is also booted by the ROM bootloader.
+
+Once the example starts running it attempts to receive files via CAN interface and process them in a loop. Once it receives a file (this is sent by the can_uniflash.py script), it finds out what to do with the received file from the file header. This can be primarily used for Flashing the received file at the given offset.
 
 \imageStyle{am263x_sbl_can_uniflash_process.PNG,width:60%}
 \image html am263x_sbl_can_uniflash_process.PNG MCAN SBL CAN UNIFLASH Process
 
 This bootloader runs in two steps:
-- Flashing the SBL CAN at offset 0x0 (Setup the EVM in UART Boot Mode)
-- Running the python script (See \ref CAN_BOOTLOADER_PYTHON_SCRIPT) for sending the application image file. (Setup the EVM in QSPI Boot Mode)
+- Flashing the SBL CAN UNIFLASH at offset 0x0 (Setup the EVM in UART Boot Mode)
+- Running the can_uniflash.py python script for sending the application image file. (Setup the EVM in QSPI Boot Mode)
 
-\imageStyle{am263x_sbl_can_flow.png,width:15%}
-\image html am263x_sbl_can_flow.png MCAN SBL CAN Flow Overview
+\imageStyle{am263x_sbl_can_uniflash_flow.png,width:15%}
+\image html am263x_sbl_can_uniflash_flow.png MCAN SBL CAN UNIFLASH Flow Overview
 
 # Protocol
 A simple custom made protocol is created for communication between the Host Machine and the Board. Messages between a CAN bootloader host and the target use a simple command and acknowledge
@@ -68,7 +70,8 @@ In this application, the CAN settings are:
     - BitrateFD : f_clock_mhz=80, nom_brp=1, nom_tseg1=67, nom_tseg2=12, nom_sjw=12, data_brp=1, data_tseg1=13, data_tseg2=2, data_sjw=1
 - CAN-FD is supported
 - Refer to \subpage DRIVERS_MCAN_PAGE, for MCAN dependencies.
-# Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_COMBOS}
+
+# Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_COMBOS}
 
 \cond SOC_AM263X
 
@@ -77,7 +80,7 @@ In this application, the CAN settings are:
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_can
+ Example folder | examples/drivers/boot/sbl_can_uniflash
 
 **NOTE: Tested on Windows, using PCAN-USB Peripheral.**
 \endcond
@@ -149,7 +152,21 @@ https://www.peak-system.com/Drivers.523.0.html?&L=1
 
     - Refer to the page \ref BASIC_STEPS_TO_FLASH_FILES for more information
 
-    - After flashing the bootloader, the application image file is sent using a python script (see \ref CAN_BOOTLOADER_PYTHON_SCRIPT).
+    - After flashing the bootloader, Setup the EVM in QSPI Boot Mode.
+
+    - **CAN Uniflash Python Script**
+    - The application image file is sent using a python script:
+
+        \code
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python can_uniflash.py --cfg={path to your edited config file}
+        \endcode
+
+    - cfg file contains only one command with arguments like --file, --operation and --flash-offset. For example
+
+    \code
+    --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am263x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0x80000
+    \endcode
 
 
 # See Also

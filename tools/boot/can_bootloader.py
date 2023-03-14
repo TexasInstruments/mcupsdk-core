@@ -139,7 +139,7 @@ def WriteMessages(canobj, msg):
     return stsResult
 
 # Sends the file to EVM via CAN, receives response from EVM and returns the response status
-def send_receive_file(filename, get_response=True):
+def send_receive_file(filename, get_response=True,reset=False,run=True):
     status = False
     timetaken = 0
     dataSize = 0
@@ -170,17 +170,17 @@ def send_receive_file(filename, get_response=True):
     '''
     Initiating ping between Board and PC.
     '''
-    s="PING"
-    b=s.encode('ascii')
+    cmd="PING"
+    encoded=cmd.encode('ascii')
 
-    status = WriteMessages(ser, b)
+    status = WriteMessages(ser, encoded)
     time.sleep(0.005)
     in_data = str(ReadMessages(ser)).replace("'","",2).replace("b","",1)
 
     cnt=0
     #"PONG" interpreted in Byte Array
     while(CAN_PONG not in in_data):
-        status = WriteMessages(ser, b)
+        status = WriteMessages(ser, encoded)
         if(status == 0):
             cnt = cnt+1
         if(cnt == 29):
@@ -240,10 +240,10 @@ def send_receive_file(filename, get_response=True):
     #tstart = time.time()
 
     while(filesize==0):
-        s="LSTMSG"
-        b=s.encode('ascii')
+        cmd="LSTMSG"
+        encoded=cmd.encode('ascii')
 
-        WriteMessages(ser, b)
+        WriteMessages(ser, encoded)
         time.sleep(0.005)
         in_data = str(ReadMessages(ser)).replace("'","",2).replace("b","",1)
 
@@ -251,10 +251,10 @@ def send_receive_file(filename, get_response=True):
             filesize = -1
 
     while(filesize==-1):
-        s="LSTMSGCF"
-        b=s.encode('ascii')
+        cmd="LSTMSGCF"
+        encoded=cmd.encode('ascii')
 
-        WriteMessages(ser, b)
+        WriteMessages(ser, encoded)
         time.sleep(0.005)
 
         in_data = str(ReadMessages(ser)).replace("'","",2).replace("b","",1)
@@ -266,9 +266,11 @@ def send_receive_file(filename, get_response=True):
     tstop = time.time()
     timetaken = timetaken + round(tstop-tstart, 2)
 
+    if(run == True):
+        run_cmd(ser)
+
     # Don't do the receive if get_response is False
     if(get_response):
-        respfilename = "resp.dat"
         try:
             while(resp_status==0):
                 in_data = str(ReadMessages(ser)).replace("'","",2).replace("b","",1)
@@ -295,6 +297,34 @@ def send_receive_file(filename, get_response=True):
     bar.close()
 
     return resp_status, timetaken
+
+def run_cmd(gSer):
+    if IsFD:
+        dataSize = 63
+    else:
+        dataSize = 7
+    '''
+    Initiating Run CMD between Board and PC.
+
+    '''
+    cmd="RUN"
+    encoded=cmd.encode('ascii')
+
+    status = WriteMessages(gSer, encoded)
+    time.sleep(0.005)
+    in_data = str(ReadMessages(gSer)).replace("'","",2).replace("b","",1)
+    #"ACK" interpreted in Byte Array
+    while(CAN_MSG_ACK not in in_data):
+        status = WriteMessages(gSer, encoded)
+        if(status == 0):
+            cnt = cnt+1
+        if(cnt == 29):
+            print("")
+            print ("Reset Failed ...")
+            print ("        Power cycle EVM and run this script again !!!")
+            sys.exit()
+        time.sleep(0.005)
+        in_data = str(ReadMessages(gSer)).replace("'","",2).replace("b","",1)
 
 def main(argv):
 
@@ -334,7 +364,7 @@ def main(argv):
         print("Sending the application {} ...".format(appimage_file))
         send_status, timetaken = send_receive_file(appimage_file, get_response=True)
         print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
-        if(send_status == 0):
+        if(send_status == 1):
             print("Connect to UART to see logs from UART !!!")
 
 

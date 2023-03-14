@@ -67,6 +67,10 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     <td>CAN bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file for all the CPUs
 </tr>
 <tr>
+    <td>sbl_can_uniflash
+    <td>CAN Uniflash application that needs to be flashed at offset 0x0. When in QSPI boot mode, this uniflash application will wait for CAN packets to flash the user application file via CAN using the can_uniflash python script. This application has capability to boot the application as well.
+</tr>
+<tr>
     <td>sbl_sd
     <td>SD bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application will boot the user application file from SD card for all the CPUs
 </tr>
@@ -558,34 +562,16 @@ JTAG is used as the transport or interface to send the file to flash to the EVM.
     <td>sbl_jtag_uniflash
     <td> Flash-writer example which uses JTAG to write files or erase flash
 </tr>
-
 </table>
 
 ### Basic steps to flash files
 
 Refer the example \ref EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
 
+\cond SOC_AM263X
+## CAN Uniflash {#TOOLS_FLASH_CAN_UNIFLASH}
 
-\cond SOC_AM64X || SOC_AM243X
-
-### See also
-
-- \ref EXAMPLES_USB_DFU
-\endcond
-
-\cond SOC_AWR294X
-
-## ENET Uniflash {#TOOLS_FLASH_ENET_UNIFLASH}
-
-UDP over ethernet is used as the transport or interface to send the file to flash to the EVM.
-
-### Tool requirements on host PC
-
-- The tool is implemented using python and needs python version 3.x
-- The tool uses additional python packages as listed below.
-  - tqdm for progress bar when the tool is run
-- Refer to the page, \ref INSTALL_PYTHON3 , to install python and the required python packages on your PC.
-
+CAN is used as the transport or interface to send the file to flash to the EVM.
 ### Important files and folders
 
 <table>
@@ -593,71 +579,14 @@ UDP over ethernet is used as the transport or interface to send the file to flas
     <th>Folder/Files
     <th>Description
 </tr>
-<tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/tools/boot/</td></tr>
-<tr>
-    <td>enet_uniflash.py
-    <td>Flashing tool
-</tr>
-<tr>
-    <td>sbl_prebuilt/@VAR_BOARD_NAME_LOWER
-    <td>Pre-built bootloader images and default flash configuration files for a supported EVM
-</tr>
 <tr><td colspan="2" bgcolor=#F0F0F0> ${SDK_INSTALL_PATH}/examples/drivers/boot/</td></tr>
 <tr>
-    <td>sbl_qspi_enet
-    <td>QSPI bootloader application and Flashing application that is run on the EVM to receive files to flash. To be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
-    will boot the user application file for all the CPUs
+    <td>sbl_can_uniflash
+    <td> Flash-writer example which uses CAN to write files
 </tr>
 </table>
 
-### Basic steps to flash files over ethernet {#BASIC_STEPS_TO_FLASH_FILES_OVER_ENET}
+### Basic steps to flash files
 
-#### Getting ready to flash
-
-- Make sure the QSPI Ethernet bootloader (`sbl_qspi_enet`) has been flashed using the steps provided in \ref BASIC_STEPS_TO_FLASH_FILES.
-- Make sure the user application (`*.appimage`) you want to flash over ethernet is built for the EVM.
-
-#### Flash configuration file
-
-- Create a flash configuration file, using the default flash configuration file present
-
-        ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
-
-- In this config file, modify the paths to the application to be flashed only.
-
-   Remove or comment out the flash-writer path
-
-        --flash-writer={path to flash application .tiimage}
-
-   Remove or comment out the bootloader path
-
-        --file={path to QSPI bootloader .tiimage} --operation=flash --flash-offset=0x0
-
-   Edit below line to point to the user application (`.appimage`) file
-
-        --file={path to your application .appimage file} --operation=flash --flash-offset=0xA0000
-
-#### Flashing the files over ethernet
-
-- Run below python command on the Windows command prompt (`cmd.exe`) or Linux bash shell to flash the files.
-
-        cd ${SDK_INSTALL_PATH}/tools/boot
-        python enet_uniflash.py --cfg={path to your edited config file}
-
-- When the python script starts, it will display the message "Starting Linkup ...".
-
-  Based on the MACRO ENETSBL_TRANSFER_START_MODE set in sbl_enet.h of the sbl_qspi_enet bootloader, do either of the below when the above message is observed,
-    - If in ENETSBL_TIMER_MODE, Press the reset button SW1 on the EVM.
-    - If in ENETSBL_BUTTON_MODE, Press the reset button SW1 while holding down the user switch SW2.
-
-- After flashing is successful, the flashed application code will be automatically run after the SBL completes. See \ref SBL_QSPI_ENET_OUTPUT_SAMPLE for a sample of the python script output after a successful flash.
-
-#### Flash tool options
-
-- Type below to see all the possible options with the flashing tool and also see the default .cfg file for syntax and options possible in the config file
-
-        cd ${SDK_INSTALL_PATH}/tools/boot
-        python enet_uniflash.py --help
-
-
+Refer the example \ref EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH
 \endcond

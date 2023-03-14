@@ -49,6 +49,7 @@ const example_file_list = [
     "examples/drivers/adc/adc_high_priority_soc/.project/project.js",
     "examples/drivers/adc/adc_sw_interleaved_averaging/.project/project.js",
     "examples/drivers/boot/sbl_can/.project/project.js",
+    "examples/drivers/boot/sbl_can_uniflash/.project/project.js",
     "examples/drivers/boot/sbl_jtag_uniflash/.project/project.js",
     "examples/drivers/boot/sbl_null/.project/project.js",
     "examples/drivers/boot/sbl_qspi/.project/project.js",

@@ -33,6 +33,7 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
    -# \subpage EXAMPLES_DRIVERS_SBL_QSPI
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
    -# \subpage EXAMPLES_DRIVERS_SBL_CAN
+   -# \subpage EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_SD

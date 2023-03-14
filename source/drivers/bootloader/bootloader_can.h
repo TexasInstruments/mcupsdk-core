@@ -86,7 +86,7 @@ extern "C"
 /* Classic Bit Mask Filter */
 #define APP_MCAN_CLASSIC_BIT_MASK                (0xFFFFFFFFU)
 
-int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf);
+int32_t Bootloader_CANReceiveFile(uint32_t *fileSize, uint8_t *dstBuf, uint32_t *run);
 
 int32_t Bootloader_CANTransmitResp(uint8_t *src);
 

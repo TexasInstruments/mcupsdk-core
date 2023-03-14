@@ -34,17 +34,14 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_can.h>
+#include <drivers/bootloader/bootloader_uniflash.h>
 #include <drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
 
-#define BOOTLOADER_CAN_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
-#define BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
-#define BOOTLOADER_CAN_STATUS_APPIMAGE_SIZE_EXCEEDED (0x45584344) /* EXCD */
+#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x1C0000) /* This has to match the size of MSRAM1 section in linker.cmd */
+uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
-#define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x80000) /* Size of section MSRAM_2 specified in linker.cmd */
-uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
-
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
-    = HSMRT_IMG;
+#define BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE (32*1024)
+uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
 
 uint32_t gRunApp;
 
@@ -62,6 +59,10 @@ void loop_forever()
 int main()
 {
     int32_t status;
+    uint32_t done = 0U;
+    uint32_t fileSize;
+    Bootloader_UniflashConfig uniflashConfig;
+    Bootloader_UniflashResponseHeader respHeader;
 
     Bootloader_socConfigurePll();
     Bootloader_socInitL2MailBoxMemory();
@@ -72,19 +73,52 @@ int main()
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     DebugP_log("\r\n");
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
-    Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
 
-    DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
-    if(SystemP_SUCCESS == status)
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Flashwriter...\r\n");
+
+    while(!done)
+    {
+        /* CAN Receive */
+        status = Bootloader_CANReceiveFile(&fileSize, gUniflashFileBuf, &gRunApp);
+
+        if(fileSize >= BOOTLOADER_UNIFLASH_MAX_FILE_SIZE)
+        {
+            /* Possible overflow, send error to host side */
+            status = SystemP_FAILURE;
+
+            respHeader.magicNumber = BOOTLOADER_UNIFLASH_RESP_HEADER_MAGIC_NUMBER;
+            respHeader.statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERROR;
+
+            Bootloader_CANTransmitResp((uint8_t *)&respHeader);
+        }
+
+        if(status == SystemP_SUCCESS)
+        {
+            uniflashConfig.flashIndex = CONFIG_FLASH0;
+            uniflashConfig.buf = gUniflashFileBuf;
+            uniflashConfig.bufSize = 0; /* Actual fileSize will be parsed from the header */
+            uniflashConfig.verifyBuf = gUniflashVerifyBuf;
+            uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
+
+            /* Process the flash commands and return a response */
+            Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+            status = Bootloader_CANTransmitResp((uint8_t *)&respHeader);
+            done = 1U;
+        }
+    }
+
+    DebugP_log("\r\n");
+
+    if(SystemP_SUCCESS == status && gRunApp == CSL_TRUE)
     {
         Bootloader_BootImageInfo bootImageInfo;
         Bootloader_Params bootParams;
@@ -93,84 +127,40 @@ int main()
         Bootloader_Params_init(&bootParams);
         Bootloader_BootImageInfo_init(&bootImageInfo);
 
-        bootParams.bufIoTempBuf     = gAppImageBuf;
-        bootParams.bufIoTempBufSize = BOOTLOADER_APPIMAGE_MAX_FILE_SIZE;
-        bootParams.bufIoDeviceIndex = CONFIG_MCAN0;
-        bootParams.memArgsAppImageBaseAddr = (uintptr_t)gAppImageBuf;
-
-        bootHandle = Bootloader_open(CONFIG_BOOTLOADER_0, &bootParams);
-
-        if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
-        {
-            uint32_t fileSize;
-            /* CAN Receive */
-            status = Bootloader_CANReceiveFile(&fileSize, gAppImageBuf, &gRunApp);
-
-            if(SystemP_SUCCESS == status && fileSize == BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
-            {
-                /* A file larger than 384 KB was sent, and xmodem probably dropped bytes */
-                status = SystemP_FAILURE;
-
-                /* Send response to the script that file size exceeded */
-                uint32_t response;
-                response = BOOTLOADER_CAN_STATUS_APPIMAGE_SIZE_EXCEEDED;
-
-                Bootloader_CANTransmitResp((uint8_t *)&response);
-            }
-        }
-
-        if((bootHandle != NULL) && (SystemP_SUCCESS == status) && (gRunApp == CSL_TRUE))
+        bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
+        if(bootHandle != NULL)
         {
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
             /* Load CPUs */
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
             }
-            if(status == SystemP_SUCCESS && ((TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)) || (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
             {
-                /* Set clocks for self cluster */
-                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
-                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
-
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
-                Bootloader_profileAddProfilePoint("CPU load");
-
-                if(status == SystemP_SUCCESS)
-                {
-                    status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-                }
             }
-            if(BOOTLOADER_MEDIA_BUFIO == Bootloader_getBootMedia(bootHandle))
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
-                BufIo_sendTransferComplete(CONFIG_MCAN0);
+                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
+                Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
+                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
             }
-            else if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
-            {
-                uint32_t response = BOOTLOADER_CAN_STATUS_LOAD_SUCCESS;
+            Bootloader_profileAddProfilePoint("CPU load");
+            Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+            QSPI_Handle qspiHandle = QSPI_getHandle(CONFIG_QSPI0);
+            Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, QSPI_getInputClk(qspiHandle));
 
-                if(status != SystemP_SUCCESS)
-                {
-                    response = BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL;
-                }
-
-                Bootloader_CANTransmitResp((uint8_t *)&response);
-            }
-            else
-            {
-                /* do nothing */
-            }
             if(status == SystemP_SUCCESS)
             {
                 Bootloader_profileAddProfilePoint("SBL End");
@@ -180,21 +170,21 @@ int main()
             }
 
             /* Run CPUs */
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
             }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
-            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
+                /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
 
@@ -202,10 +192,11 @@ int main()
             Bootloader_close(bootHandle);
         }
     }
-    if(status != SystemP_SUCCESS)
+    if(status != SystemP_SUCCESS )
     {
         DebugP_log("Some tests have failed!!\r\n");
     }
+
     Drivers_close();
     System_deinit();
 
