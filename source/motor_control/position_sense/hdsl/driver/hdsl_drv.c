@@ -39,7 +39,25 @@
     HDSL_Config hdslConfig1;
     HDSL_Config hdslConfig2;
 
-HDSL_Handle HDSL_open(PRUICSS_Handle icssgHandle, uint32_t icssCore)
+void hdsl_enable_load_share_mode(void *gPru_cfg ,uint32_t  PRU_SLICE)
+{
+    //HW_WR_REG32(0x30026104) |= 0x0800;
+    uint32_t rgval;
+    if(PRU_SLICE==1)
+    {
+       rgval = HW_RD_REG32((uint8_t *)gPru_cfg + CSL_ICSSCFG_EDPRU1TXCFGREGISTER);
+       rgval |= CSL_ICSSCFG_EDPRU1TXCFGREGISTER_PRU1_ENDAT_SHARE_EN_MASK;
+       HW_WR_REG32((uint8_t *)gPru_cfg + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, rgval);
+    }
+    else
+    {
+        rgval = HW_RD_REG32((uint8_t *)gPru_cfg + CSL_ICSSCFG_EDPRU0TXCFGREGISTER);
+        rgval |= CSL_ICSSCFG_EDPRU0TXCFGREGISTER_PRU0_ENDAT_SHARE_EN_MASK;
+      HW_WR_REG32((uint8_t *)gPru_cfg + CSL_ICSSCFG_EDPRU0TXCFGREGISTER, rgval);
+    }
+
+}
+HDSL_Handle HDSL_open(PRUICSS_Handle icssgHandle, uint32_t icssCore,uint8_t PRU_mode)
 {
     /*
         HDSL memory map:
@@ -47,25 +65,36 @@ HDSL_Handle HDSL_open(PRUICSS_Handle icssgHandle, uint32_t icssCore)
         PRU core:       0x0700 - 0x0DFF
         TX_PRU core:    0x0E00 - 0x1500
     */
+    uint32_t DMEM_BASE_OFFSET_RTU_PRU1=0;
+    uint32_t DMEM_BASE_OFFSET_PRU1=0x700;
+    uint32_t DMEM_BASE_OFFSET_TX_PRU1=0xE00;
     HDSL_Handle hdslHandle;
-    if(icssCore == PRUICSS_RTU_PRU1)
+    if (PRU_mode==0)
     {
         hdslHandle = &hdslConfig0;
         hdslHandle->baseMemAddr = (uint32_t *)(((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase);
     }
-    else if(icssCore == PRUICSS_PRU1)
-    {
-        hdslHandle = &hdslConfig1;
-        hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase) + 0x700);
-    }
-    else if(icssCore == PRUICSS_TX_PRU1)
-    {
-        hdslHandle = &hdslConfig2;
-        hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase) + 0xE00);
-    }
     else
     {
-        hdslHandle = NULL;
+        if(icssCore == PRUICSS_RTU_PRU1)
+        {
+            hdslHandle = &hdslConfig0;
+            hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase)+DMEM_BASE_OFFSET_RTU_PRU1);
+        }
+        else if(icssCore == PRUICSS_PRU1)
+        {
+            hdslHandle = &hdslConfig1;
+            hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase) + DMEM_BASE_OFFSET_PRU1);
+        }
+        else if(icssCore == PRUICSS_TX_PRU1)
+        {
+            hdslHandle = &hdslConfig2;
+            hdslHandle->baseMemAddr = (uint32_t *)((((PRUICSS_HwAttrs *)(icssgHandle->hwAttrs))->pru1DramBase) + DMEM_BASE_OFFSET_TX_PRU1);
+        }
+        else
+        {
+            hdslHandle = NULL;
+        }
     }
 
     if (hdslHandle != NULL)
@@ -166,41 +195,45 @@ uint64_t HDSL_get_pos(HDSL_Handle hdslHandle, int position_id)
 
 uint8_t HDSL_get_qm(HDSL_Handle hdslHandle)
 {
-    uint8_t ureg = gHdslInterface->MASTER_QM & 0xF;
+    uint8_t ureg = hdslHandle->hdslInterface->MASTER_QM & 0xF;
     return ureg;
 }
 
 
-uint16_t HDSL_get_events()
+uint16_t HDSL_get_events(HDSL_Handle hdslHandle)
 {
-    uint16_t ureg = gHdslInterface->EVENT_L | (gHdslInterface->EVENT_H << 8);
+    uint16_t ureg = hdslHandle->hdslInterface->EVENT_L | (hdslHandle->hdslInterface->EVENT_H << 8);
     return ureg;
 }
 
-uint8_t HDSL_get_safe_events()
+uint8_t HDSL_get_safe_events(HDSL_Handle hdslHandle)
 {
-    return gHdslInterface->EVENT_S;
+    return hdslHandle->hdslInterface->EVENT_S;
 }
 
-uint16_t HDSL_get_online_status_d()
+uint16_t HDSL_get_online_status_d(HDSL_Handle hdslHandle)
 {
-    return gHdslInterface->ONLINE_STATUS_D;
+    uint16_t ureg = hdslHandle->hdslInterface->ONLINE_STATUS_D;
+    return ureg;
 }
 
-uint16_t HDSL_get_online_status_1()
+uint16_t HDSL_get_online_status_1(HDSL_Handle hdslHandle)
 {
-    return gHdslInterface->ONLINE_STATUS_1;
+    uint16_t ureg =hdslHandle->hdslInterface->ONLINE_STATUS_1;
+    return ureg;
 }
 
-uint16_t HDSL_get_online_status_2()
+uint16_t HDSL_get_online_status_2(HDSL_Handle hdslHandle)
 {
-    return gHdslInterface->ONLINE_STATUS_2;
+    uint16_t ureg = hdslHandle->hdslInterface->ONLINE_STATUS_2;
+    return ureg;
+}
+uint8_t HDSL_get_sum(HDSL_Handle hdslHandle)
+{
+    uint8_t ureg = hdslHandle->hdslInterface->SAFE_SUM;
+    return ureg;
 }
 
-uint8_t HDSL_get_sum()
-{
-    return gHdslInterface->SAFE_SUM;
-}
 
 uint8_t HDSL_get_acc_err_cnt(HDSL_Handle hdslHandle)
 {
@@ -209,32 +242,32 @@ uint8_t HDSL_get_acc_err_cnt(HDSL_Handle hdslHandle)
 
 uint8_t HDSL_get_rssi(HDSL_Handle hdslHandle)
 {
-    uint8_t ureg = (gHdslInterface->DELAY & 0xF0) >> 4;
+    uint8_t ureg = (hdslHandle->hdslInterface->DELAY & 0xF0) >> 4;
     return ureg;
 }
 
-int32_t HDSL_write_pc_short_msg(uint8_t addr, uint8_t data, uint64_t timeout)
+int32_t HDSL_write_pc_short_msg(HDSL_Handle hdslHandle,uint8_t addr, uint8_t data, uint64_t timeout)
 {
     uint64_t end;
     end = ClockP_getTimeUsec() + timeout;
 
-    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    while((hdslHandle->hdslInterface->EVENT_S & 0x1) != 1)
     {
         if(ClockP_getTimeUsec() > end)
         {
             return SystemP_TIMEOUT;
         }
     }
-    gHdslInterface->S_PC_DATA = data;
-    gHdslInterface->SLAVE_REG_CTRL =  addr;
-    while((gHdslInterface->EVENT_S & 0x1) != 0)
+    hdslHandle->hdslInterface->S_PC_DATA = data;
+    hdslHandle->hdslInterface->SLAVE_REG_CTRL =  addr;
+    while((hdslHandle->hdslInterface->EVENT_S & 0x1) != 0)
     {
         if(ClockP_getTimeUsec() > end)
         {
             return SystemP_TIMEOUT;
         }
     }
-    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    while((hdslHandle->hdslInterface->EVENT_S & 0x1) != 1)
     {
         if(ClockP_getTimeUsec() > end)
         {
@@ -244,36 +277,36 @@ int32_t HDSL_write_pc_short_msg(uint8_t addr, uint8_t data, uint64_t timeout)
     return SystemP_SUCCESS;
 }
 
-int32_t HDSL_read_pc_short_msg(uint8_t addr, uint8_t *data, uint64_t timeout)
+int32_t HDSL_read_pc_short_msg(HDSL_Handle hdslHandle,uint8_t addr, uint8_t *data, uint64_t timeout)
 {
 
     uint64_t end;
     end = ClockP_getTimeUsec() + timeout;
 
-    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    while((hdslHandle->hdslInterface->EVENT_S & 0x1) != 1)
     {
         if(ClockP_getTimeUsec() > end)
         {
             return SystemP_TIMEOUT;
         }
     }
-    gHdslInterface->S_PC_DATA = 0;
-    gHdslInterface->SLAVE_REG_CTRL =  (addr | (1<<7));
-    while((gHdslInterface->EVENT_S & 0x1) != 0)
+    hdslHandle->hdslInterface->S_PC_DATA = 0;
+    hdslHandle->hdslInterface->SLAVE_REG_CTRL =  (addr | (1<<7));
+    while((hdslHandle->hdslInterface->EVENT_S & 0x1) != 0)
     {
         if(ClockP_getTimeUsec() > end)
         {
             return SystemP_TIMEOUT;
         }
     }
-    while((gHdslInterface->EVENT_S & 0x1) != 1)
+    while((hdslHandle->hdslInterface->EVENT_S & 0x1) != 1)
     {
         if(ClockP_getTimeUsec() > end)
         {
             return SystemP_TIMEOUT;
         }
     }
-    *data = gHdslInterface->S_PC_DATA;
+    *data = hdslHandle->hdslInterface->S_PC_DATA;
     return SystemP_SUCCESS;
 }
 
@@ -387,3 +420,4 @@ uint32_t HDSL_get_length(HDSL_Handle hdslHandle)
 {
     return sizeof(*(hdslHandle->hdslInterface));
 }
+

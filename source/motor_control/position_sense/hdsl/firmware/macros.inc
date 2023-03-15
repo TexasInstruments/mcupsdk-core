@@ -232,45 +232,12 @@ PUSH_FIFO_CONST .macro dat
 PUSH_FIFO .macro dat
     mov         r30.b0, dat
     .endm
-
-PUSH_FIFO_CONST_8x .macro dat
-
-    ldi r27.b0,dat
-    loop l1?, 6
-    qbbs l2?, r27, 7 ; check bit 0
-    WAIT_TX_FIFO_FREE
-    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
-    qba    l3?
-l2?:
-    WAIT_TX_FIFO_FREE
-    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
-l3?:
-    lsl   r27.b0, r27.b0, 1 ; Drop least significant bit
-l1?:
-
-    qbbs L2_1?, r27.b0, 7 ; check bit 0
-    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
-    qba    L3_1?
-L2_1?:
-    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
-L3_1?:
-    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
-
-    qbbs L2_2?, r27.b0, 7 ; check bit 0
-    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
-    qba    L3_2?
-L2_2?:
-    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
-L3_2?:
-    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
-
-
-    .endm
-
+    .if $defined(HDSL_MULTICHANNEL)
 PUSH_FIFO_8x .macro dat
-    mov r27.b0,dat
+    ;sbco &dat,MASTER_REGS_CONST,0x90,1
+   ; mov dat,dat
     loop L1?, 4
-    qbbs L2_0?, r27.b0, 7 ; check bit 0
+    qbbs L2_0?, dat, 7 ; check bit 0
     WAIT_TX_FIFO_FREE
     ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
     qba    L3_0?
@@ -278,49 +245,95 @@ L2_0?:
     WAIT_TX_FIFO_FREE
     ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
 L3_0?:
-    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
+    lsl   dat,dat, 1 ; Drop least significant bit
 
-    qbbs L2_1?, r27.b0, 7 ; check bit 0
+    qbbs L2_1?, dat, 7 ; check bit 0
     ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
     qba    L3_1?
 L2_1?:
     ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
 L3_1?:
-    lsl   r27.b0,r27.b0, 1 ; Drop least significant bit
-
-
-L1?:
-    .endm
-
-PUSH_FIFO_CONST_4x .macro dat
-
-    ldi r27.b0,dat
-    loop l1?, 4
-    qbbs l2?, r27, 7 ; check bit 0
-    WAIT_TX_FIFO_FREE
-    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
-    qba    l3?
-l2?:
-    WAIT_TX_FIFO_FREE
-    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
-l3?:
-    lsl   r27.b0, r27.b0, 1 ; Drop least significant bit
-l1?:
-    .endm
-
-PUSH_FIFO_4x .macro dat
-    loop L1?, 4
-    qbbs L2?, dat, 7 ; check bit 0
-    WAIT_TX_FIFO_FREE
-    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
-    qba    L3?
-L2?:
-    WAIT_TX_FIFO_FREE
-    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
-L3?:
     lsl   dat,dat, 1 ; Drop least significant bit
+
+
 L1?:
     .endm
+
+
+PUSH_FIFO_2B_8x .macro
+    ;mov FIFO_L,dat
+    qbbs L2_0?, FIFO_L, 7 ; check bit 0
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_0?
+L2_0?:
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_0?:
+    lsl   FIFO_L,FIFO_L, 1 ; Drop least significant bit
+
+    qbbs L2_1?, FIFO_L, 7 ; check bit 0
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_1?
+L2_1?:
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_1?:
+    lsl   FIFO_L,FIFO_L, 1 ; Drop least significant bit
+
+    .endm
+
+
+PUSH_FIFO_1_8x .macro
+    ;mov FIFO_L,dat
+    qbbs L2_0?, FIFO_L, 7 ; check bit 0
+
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_0?
+L2_0?:
+
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_0?:
+    lsl   FIFO_L,FIFO_L, 1 ; Drop least significant bit
+
+    qbbs L2_1?, FIFO_L, 7 ; check bit 0
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_1?
+L2_1?:
+    WAIT_TX_FIFO_FREE
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+
+L3_1?:
+    lsl   FIFO_L,FIFO_L, 1 ; Drop least significant bit
+
+    .endm
+
+PUSH_FIFO_2_8x .macro
+   ; mov FIFO_L,dat
+    qbbs L2_0?, FIFO_L, 7 ; check bit 0
+
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_0?
+L2_0?:
+
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+L3_0?:
+    lsl   FIFO_L,FIFO_L, 1 ; Drop least significant bit
+
+    qbbs L2_1?, FIFO_L, 7 ; check bit 0
+
+    ldi   r30.b0, 0x0 ; Push oversampled 0s on the wire
+    qba    L3_1?
+L2_1?:
+
+    ldi   r30.b0, 0xff ; Push oversampled 1s on the wire
+
+L3_1?:
+    lsl   FIFO_L,FIFO_L, 1 ; Drop least significant bit
+
+    .endm
+
+    .endif
 
 POP_FIFO .macro dst
 	.if $defined(CHANNEL_2)

@@ -1,8 +1,8 @@
-/* 
+/*
  * hdsl_master_icssg_sync_bin.h
- * 
- * 
- * Copyright (c) 2015 - 2016, Texas Instruments Incorporated
+ *
+ *
+ * Copyright (c) 2021 - 2023, Texas Instruments Incorporated
  * All rights reserved not granted herein.
  *
  * Limited License.
@@ -21,7 +21,7 @@
  * code license limitations below) in the documentation and/or other materials provided
  * with the distribution
  *
- * Redistribution and use in binary form, without modification, are permitted provided 
+ * Redistribution and use in binary form, without modification, are permitted provided
  * that the following conditions are met:
  *       No reverse engineering, decompilation, or disassembly of this software is
  *       permitted with respect to any software provided in binary form.
@@ -36,19 +36,19 @@
  *       Any redistribution and use of any object code compiled from the source code and
  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
  *
- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
- * may be used to endorse or  promote products derived from this software without 
+ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+ * may be used to endorse or  promote products derived from this software without
  * specific prior written permission.
  *
  * DISCLAIMER.
  *
  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *

@@ -14,8 +14,8 @@
         name = "hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TI"

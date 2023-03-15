@@ -84,11 +84,11 @@
 /* Oversample rate 8*/
 #define OVERSAMPLE_RATE 7
 
-#define ENDAT_EN (0x1 << 26)
+#define HDSL_EN (0x1 << 26)
 /* OCP as clock, div 32 */
-#define ENDAT_TX_CFG (0x10 | (DIV_FACTOR_NORMAL << 16))
+#define HDSL_TX_CFG (0x10 | (DIV_FACTOR_NORMAL << 16))
 /* OCP as clock, div 4, 8x OSR */
-#define ENDAT_RX_CFG (0x10 | (DIV_FACTOR_OVERSAMPLED << 16) | OVERSAMPLE_RATE | 0x08)
+#define HDSL_RX_CFG (0x10 | (DIV_FACTOR_OVERSAMPLED << 16) | OVERSAMPLE_RATE | 0x08)
 #define CTR_EN (1 << 3)
 #define MAX_WAIT 20000
 
@@ -119,7 +119,7 @@ uint32_t temp_count_arr[NUM_RESOURCES];
 uint32_t v_frames_count_arr[NUM_RESOURCES];
 
 /* To copy HDSL Interface structure ddr location */
-struct hdslInterface gHdslInterface_ddr[NUM_RESOURCES] __attribute__((aligned(128), section(".hdslInterface_ddr_mem")));
+HDSL_Interface gHdslInterface_ddr[NUM_RESOURCES] __attribute__((aligned(128), section(".hdslInterface_ddr_mem")));
 
 HwiP_Object         gPRUHwiObject;
 /** \brief Global Structure pointer holding PRUSS1 memory Map. */
@@ -127,6 +127,8 @@ PRUICSS_Handle gPruIcss0Handle;
 PRUICSS_IntcInitData gPruss0_intc_initdata = PRU_ICSS0_INTC_INITDATA;
 PRUICSS_Handle gPruIcss1Handle;
 PRUICSS_IntcInitData gPruss1_intc_initdata = PRU_ICSS1_INTC_INITDATA;
+
+HDSL_Handle     gHdslHandleCh0;
 
 static void *gPru_cfg, *gPru_ctrl;
 
@@ -171,7 +173,7 @@ void sync_calculation(void)
     uint32_t cycles_left, additional_bits, minm_cycles, time_gRest, extra_edge, extra_size, num_of_stuffing, extra_size_remainder, stuffing_remainder, bottom_up_cycles;
 
     /*measure of SYNC period starts*/
-    ES =  HDSL_get_sync_ctrl();
+    ES =  HDSL_get_sync_ctrl(gHdslHandleCh0);
     volatile uint32_t* carp6_rise_addr =   (uint32_t*)(CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_IEP1_SLV_REGS_BASE + CSL_ICSS_G_PR1_IEP0_SLV_CAPR6_REG0);
     volatile uint32_t* carp6_fall_addr =   (uint32_t*)(CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + CSL_ICSS_G_PR1_IEP1_SLV_REGS_BASE + CSL_ICSS_G_PR1_IEP0_SLV_CAPF6_REG0);
     cap6_rise0 = *(carp6_rise_addr);
@@ -375,11 +377,8 @@ void process_request(int menu){
 
 void hdsl_pruss_init(void)
 {
-    gPruIcss0Handle = PRUICSS_open(CONFIG_PRU_ICSS0);
 
-    gPruIcss1Handle = PRUICSS_open(CONFIG_PRU_ICSS1);
-
-    PRUICSS_disableCore(gPruIcss0Handle, PRUICSS_PRUx);
+    PRUICSS_disableCore(gPruIcss0Handle, gHdslHandleCh0->icssCore);
 
     /* clear ICSS0 PRU data RAM */
     gPru_dramx = (void *)((((PRUICSS_HwAttrs *)(gPruIcss0Handle->hwAttrs))->baseAddr) + PRUICSS_DATARAM(PRUICSS_PRUx));
@@ -387,11 +386,11 @@ void hdsl_pruss_init(void)
 
     gPru_cfg = (void *)(((PRUICSS_HwAttrs *)(gPruIcss0Handle->hwAttrs))->cfgRegBase);
 
-    HW_WR_REG32(gPru_cfg + CSL_ICSSCFG_GPCFG1, ENDAT_EN);
+    HW_WR_REG32(gPru_cfg + CSL_ICSSCFG_GPCFG1, HDSL_EN);
 
-    HW_WR_REG32(gPru_cfg + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, ENDAT_TX_CFG);
+    HW_WR_REG32(gPru_cfg + CSL_ICSSCFG_EDPRU1TXCFGREGISTER, HDSL_TX_CFG);
 
-    HW_WR_REG32(gPru_cfg + CSL_ICSSCFG_EDPRU1RXCFGREGISTER, ENDAT_RX_CFG);
+    HW_WR_REG32(gPru_cfg + CSL_ICSSCFG_EDPRU1RXCFGREGISTER, HDSL_RX_CFG);
 
     PRUICSS_intcInit(gPruIcss0Handle, &gPruss0_intc_initdata);
 
@@ -410,11 +409,11 @@ void hdsl_pruss_init(void)
 
 }
 
-void hdsl_pruss_load_run_fw(void)
+void hdsl_pruss_load_run_fw(HDSL_Handle hdslHandle)
 {
-    PRUICSS_disableCore(gPruIcss0Handle, PRUICSS_PRUx);
+    PRUICSS_disableCore(gPruIcss0Handle, hdslHandle->icssCore);
 
-    if(HDSL_get_sync_ctrl() == 0)
+    if(HDSL_get_sync_ctrl(hdslHandle) == 0)
     {
         /*free run*/
         PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx),
@@ -423,21 +422,20 @@ void hdsl_pruss_load_run_fw(void)
     }
     else
     {
-#if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ!=300000000)
-        /*sync_mode*/
-        PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx),
-                        0, (uint32_t *) Hiperface_DSL_SYNC2_0,
-                        sizeof(Hiperface_DSL_SYNC2_0));
-#endif
+        #if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ!=300000000)
+            /*sync_mode*/
+            PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx),
+                            0, (uint32_t *) Hiperface_DSL_SYNC2_0,
+                            sizeof(Hiperface_DSL_SYNC2_0));
+        #endif
     }
 
-    PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);
-
+    PRUICSS_resetCore(gPruIcss0Handle, hdslHandle->icssCore);
     /*Run firmware*/
-    PRUICSS_enableCore(gPruIcss0Handle, PRUICSS_PRUx);
+    PRUICSS_enableCore(gPruIcss0Handle, hdslHandle->icssCore);
 }
 
-void hdsl_init()
+void hdsl_init(void)
 {
     uint8_t ES;
     uint32_t period;
@@ -453,30 +451,39 @@ void hdsl_init()
     hwiPrms.callback = (void*)&HDSL_IsrFxn;
     HwiP_construct(&gPRUHwiObject, &hwiPrms);
 
-    HDSL_iep_init(gPruIcss0Handle, gPru_cfg,gPru_dramx);
-    DebugP_log("\r\n Enter ES(number of frames per sync period), note ES=0 for FREE RUN mode: ");
-    DebugP_scanf("%d", &ES);
-    HDSL_set_sync_ctrl(ES);
+    HDSL_iep_init(gHdslHandleCh0);
+    DebugP_log("\r\nPress Enter to start application\n");
+    DebugP_scanf("%d",&ES);
+    ClockP_usleep(5000);
+
+    if(CONFIG_HDSL0_MODE==0)
+    {
+     ES=0;
+    }
+    else
+    {
+     ES=1;
+    }
+
+    HDSL_set_sync_ctrl(gHdslHandleCh0, ES);
+
     if(ES != 0)
     {
-#if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ==300000000)
+    #if (CONFIG_PRU_ICSS0_CORE_CLK_FREQ_HZ==300000000)
         DebugP_log("\r\n Sync mode with 300 MHz is not available");
         while(1);
-#endif
-        DebugP_log("\r\nSYNC MODE\n");
-        DebugP_log("\r\nEnter period for SYNC PULSE in unit of cycles(1 cycle = 4.44ns):");
-        DebugP_scanf("%d",&period);
-
-        HDSL_enable_sync_signal(ES,period);
-        HDSL_generate_memory_image();
-        sync_calculation();
-        hdsl_pruss_load_run_fw();
+    #endif
+    DebugP_log("\r\nSYNC MODE\n");
+    DebugP_log("\r\nEnter period for SYNC PULSE in unit of cycles(1 cycle = 4.44ns):");
+    DebugP_scanf("%d",&period);
+    HDSL_enable_sync_signal(ES,period);
+    HDSL_generate_memory_image(gHdslHandleCh0);
+    sync_calculation();
     }
     else
     {
         DebugP_log( "\r\nFREE RUN MODE\n");
-        HDSL_generate_memory_image();
-        hdsl_pruss_load_run_fw();
+        HDSL_generate_memory_image(gHdslHandleCh0);
     }
 }
 
@@ -488,8 +495,8 @@ static void HDSL_IsrFxn()
     uint8_t        *destBuf = (uint8_t*)&gHdslInterface_ddr[0U];
     uint32_t        length;// = sizeof(hdslInterface);
 
-    srcBuf = (uint8_t*)HDSL_get_src_loc();
-    length = HDSL_get_length();
+    srcBuf = (uint8_t*)HDSL_get_src_loc(gHdslHandleCh0);
+    length = HDSL_get_length(gHdslHandleCh0);
     PRUICSS_clearEvent(gPruIcss0Handle, HDSL_DDR_TRACE_ICSS_INTC_EVENT_NUM);
     /* No of v-frames count */
     v_frames_count++;
@@ -531,7 +538,7 @@ void traces_into_ddr(void)
 {
     int i= 0;
     uint32_t length;
-    length = HDSL_get_length();
+    length = HDSL_get_length(gHdslHandleCh0);
 
     DebugP_log("\r\n sizeof(hdslInterface)_count = %u", length);
     DebugP_log("\r\n Start address of DDR location = %u", DDR_START_OFFSET);
@@ -699,27 +706,31 @@ void hdsl_diagnostic_main(void *arg)
     DebugP_assert(SystemP_SUCCESS == status);
 
     #ifndef HDSL_AM64xE1_TRANSCEIVER
-    /* Configure g_mux_en to 1 in ICSSG_SA_MX_REG Register. This is required to remap EnDAT signals correctly via Interface card.*/
-    HW_WR_REG32((CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE+0x40), (0x80));
+        /* Configure g_mux_en to 1 in ICSSG_SA_MX_REG Register. This is required to remap EnDAT signals correctly via Interface card.*/
+        HW_WR_REG32((CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE+0x40), (0x80));
 
-    /*Configure GPIO42 for HDSL mode.*/
-    GPIO_setDirMode(CONFIG_GPIO0_BASE_ADDR, CONFIG_GPIO0_PIN, CONFIG_GPIO0_DIR);
-    GPIO_pinWriteHigh(CONFIG_GPIO0_BASE_ADDR, CONFIG_GPIO0_PIN);
+        /*Configure GPIO42 for HDSL mode.*/
+        GPIO_setDirMode(CONFIG_GPIO0_BASE_ADDR, CONFIG_GPIO0_PIN, CONFIG_GPIO0_DIR);
+        GPIO_pinWriteHigh(CONFIG_GPIO0_BASE_ADDR, CONFIG_GPIO0_PIN);
     #else
-    /* Configure g_mux_en to 0 in ICSSG_SA_MX_REG Register. */
-    HW_WR_REG32((CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE+0x40), (0x00));
-    /*Configure GPIO42 for HDSL mode. New transceiver card needs the pin to be configured as input*/
-    HW_WR_REG32(0x000F41D4, 0x00050001);   /* PRG0_PRU1_GPI9 as input */
-    hdsl_i2c_io_expander(NULL);
+        /* Configure g_mux_en to 0 in ICSSG_SA_MX_REG Register. */
+        HW_WR_REG32((CSL_PRU_ICSSG0_PR1_CFG_SLV_BASE+0x40), (0x00));
+        /*Configure GPIO42 for HDSL mode. New transceiver card needs the pin to be configured as input*/
+        HW_WR_REG32(0x000F41D4, 0x00050001);   /* PRG0_PRU1_GPI9 as input */
+        hdsl_i2c_io_expander(NULL);
     #endif
+
+    gPruIcss0Handle = PRUICSS_open(CONFIG_PRU_ICSS0);
+    gHdslHandleCh0 = HDSL_open(gPruIcss0Handle, PRUICSS_PRUx,0);
 
     DebugP_log("\r\n Hiperface DSL Diagnostic");
     hdsl_init();
     DebugP_log("\r\n HDSL Setup finished");
     /*need some extra time for SYNC mode since frames are longer*/
-    ClockP_sleep(1);
+    hdsl_pruss_load_run_fw(gHdslHandleCh0);
+    ClockP_usleep(1000);
 
-    for (ureg = HDSL_get_master_qm(), val = 0; !(ureg & 0x80); ureg = HDSL_get_master_qm(), val++, ClockP_usleep(10))
+    for (ureg = HDSL_get_master_qm(gHdslHandleCh0), val = 0; !(ureg & 0x80); ureg = HDSL_get_master_qm(gHdslHandleCh0), val++, ClockP_usleep(10))
     {
         if (val > 100)
         { /* wait 1ms to detect, increase if reqd. */
@@ -737,14 +748,14 @@ void hdsl_diagnostic_main(void *arg)
     DebugP_log("\r\n |-------------------------------------------------------------------------------|");
     DebugP_log("\r\n | Quality monitoring value: %u                                                  |", ureg & 0xF);
 
-    ureg = HDSL_get_edges();
+    ureg = HDSL_get_edges(gHdslHandleCh0);
     DebugP_log("\r\n | Edges: 0x%x                                                                    |", ureg);
 
-    ureg = HDSL_get_delay();
+    ureg = HDSL_get_delay(gHdslHandleCh0);
     DebugP_log("\r\n | Cable delay: %u                                                                |", ureg & 0xF);
     DebugP_log("\r\n | RSSI: %u                                                                       |", (ureg & 0xF0) >> 4);
 
-    val = HDSL_get_enc_id(0) | (HDSL_get_enc_id(1) << 8) | (HDSL_get_enc_id(2) << 16);
+    val = HDSL_get_enc_id(gHdslHandleCh0, 0) | (HDSL_get_enc_id(gHdslHandleCh0, 1) << 8) | (HDSL_get_enc_id(gHdslHandleCh0, 2) << 16);
 
     acc_bits = val & 0xF;
     acc_bits += 8;
@@ -770,7 +781,6 @@ void hdsl_diagnostic_main(void *arg)
     {
         DebugP_log("\r\n Multi turn bits: %u", gMulti_turn);
     }
-
     while(1)
     {
 

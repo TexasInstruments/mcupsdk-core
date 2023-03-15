@@ -30,7 +30,6 @@
 ; (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ;
-
 	.include "memory.inc"
 	.include "defines.inc"
 	.include "macros.inc"
@@ -51,6 +50,11 @@
 	.ref datalink_reset
 	.ref send_01
 	.ref int_div
+
+	.ref transport_on_v_frame_2
+    .ref transport_layer_processing_1
+    .ref transport_layer_processing_2
+
 	;.ref transport_layer_assemble_msg
 	;.global transport_layer_assemble_msg_done
 	.global transport_layer_send_msg_done
@@ -63,6 +67,9 @@
 	.global datalink_transport_on_v_frame_done_2
     .global transport_layer_processing_1_done
     .global transport_layer_processing_2_done
+    .if !$defined("HDSL_MULTICHANNEL")
+    .global update_events
+    .endif
 	.global datalink_init
 	.global qm_add
 	.global calc_rssi
@@ -94,7 +101,6 @@ datalink_loadfw_loop:
 	WAIT_TX_DONE
 ;slave transmits answer here (61 bits)
 	READ_IEPCNT		SPEED
-
 ;we switch to tx again
 	TX_EN
 ;wait 12bits - delay
@@ -171,9 +177,7 @@ update_events_no_int1:
     sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 ;--------------------------------------------------------------------------------------------------
 ;State RX0-RX7
-
 	ldi			LOOP_CNT.w2, 8
-	ldi			LOOP_CNT.b3, 0
 	ldi			SEND_PARA, M_PAR_IDLE
 	ldi			CRC, 0
 datalink_rx0_7:
@@ -191,9 +195,7 @@ datalink_rx0_7_not_rx7:
 	and			BYTE_ERROR, BYTE_ERROR, 0x80
 ;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=1,vsync=1,reserved=0
 	mov			REG_FNC.b0, SEND_PARA
-	;PUSH_FIFO_CONST_8x		0xff
 	qbeq           modified_header, MODIFIED_HEADER_STARTED, 1
-
 	CALL		   send_header
 	ldi            MODIFIED_HEADER_STARTED, 1
 	qba            header_send_done
@@ -217,84 +219,112 @@ datalink_rx0_7_vsync_inc_qm:
 datalink_rx0_7_vsync_continue:
 	;reset flags
 	clr			H_FRAME.flags, H_FRAME.flags, FLAG_ERR_ACC
-	;CALL1			send_stuffing
-;TEST1:
-;	qbeq TEST1,LOOP_CNT.b2,7
+	CALL1			send_stuffing
 ;sending sync and 2 bits of sample early to buy processing time for h frame processing
 	qbeq			modified_header_early_data_push_free_run, EXTRA_SIZE, 0
-
-	;;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST_8x		0x2f
+    .if $defined("HDSL_MULTICHANNEL")
+;	PUSH 8 bytes for 1 byte data (0x2f) in FIFO
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x00
+	PUSH_FIFO_CONST		0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
 	;qbeq			modified_header_early_data_push_done, EXTRA_SIZE, 0
-	;;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST_8x		0xff
+	;PUSH 8 bytes for 1 byte data (0xff) in FIFO
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+    .else
+    WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x2f
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+    .endif
 	RESET_CYCLCNT
 	qba modified_header_early_data_push_done
 modified_header_early_data_push_free_run:
-	;;WAIT_TX_FIFO_FREE
-	;;PUSH_FIFO_CONST_8x		0x2f
+
+    .if $defined("HDSL_MULTICHANNEL")
+	;;PUSH 8 bytes for 1 byte data (0x2f) in FIFO
+	;;last 6 bytes not being pushed in continous manner(some PRU code being executed and then PUSH a byte to stop FIFO underrun issue)
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0x00
-	;WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0x00
-	PUSH_FIFO_CONST  0xff
-	;WAIT_TX_FIFO_FREE
-	;PUSH_FIFO_CONST  0xff
-	;WAIT_TX_FIFO_FREE
-	;PUSH_FIFO_CONST  0x00
-	;WAIT_TX_FIFO_FREE
-	;PUSH_FIFO_CONST  0xff
-	;WAIT_TX_FIFO_FREE
-	;PUSH_FIFO_CONST  0xff
-	;WAIT_TX_FIFO_FREE
-
-
-	;PUSH_FIFO_CONST  0xff
-
-
 modified_header_early_data_push_done:
      ;READ_CYCLCNT		r19
 ;go to H-Frame callback on transport layer (max. 120-50=70 cycles)
+ 	CALL			transport_on_h_frame
+	sub		LOOP_CNT.b2, LOOP_CNT.b2, 1
+	qbeq 	Safety_fifo_push,LOOP_CNT.b2,7
+	qblt 	Hframe_fifo_push, LOOP_CNT.b2, 0
+	jmp 	Vframe_fifo_push
 
-	CALL			transport_on_h_frame
-	;READ_CYCLCNT		REG_TMP2
-
-	sub			LOOP_CNT.b2, LOOP_CNT.b2, 1
-	qblt			A, LOOP_CNT.b2, 0
-	jmp B
-
-A:
-
-	PUSH_FIFO_CONST  0x00
+Hframe_fifo_push:
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0xff
 	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0x00
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
 	PUSH_FIFO_CONST  0xff
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0xff
 	PUSH_FIFO_CONST  0xff
 	qba			datalink_rx0_7
 ;V-Frame ends here
-	;HALT
 ;reset BYTE_ERROR
-B:
+Vframe_fifo_push:
 	ldi			BYTE_ERROR, 0x00
-;debug cnt
-	;add			LOOP_CNT.b3, LOOP_CNT.b3, 1
 	ldi			LOOP_CNT.b2, 8
 	set			H_FRAME.flags, H_FRAME.flags, FLAG_NORMAL_FLOW
-	;PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+	qba			datalink_rx0_7
+Safety_fifo_push:
+	qbbc			Hframe_fifo_push, H_FRAME.flags, FLAG_NORMAL_FLOW
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
 	PUSH_FIFO_CONST  0x00
 	qba			datalink_rx0_7
 
+    .else   ;not a multi channel
+    WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x2f
+modified_header_early_data_push_done:
+     ;READ_CYCLCNT		r19
+;go to H-Frame callback on transport layer (max. 120-50=70 cycles)
+ 	CALL			transport_on_h_frame
+	 ;READ_CYCLCNT		REG_TMP2
+
+	sub			LOOP_CNT.b2, LOOP_CNT.b2, 1
+	qblt			datalink_rx0_7, LOOP_CNT.b2, 0
+;V-Frame ends here
+;reset BYTE_ERROR
+	ldi			BYTE_ERROR, 0x00
+;debug cnt
+	add			LOOP_CNT.b3, LOOP_CNT.b3, 1
+	ldi			LOOP_CNT.b2, 8
+	set			H_FRAME.flags, H_FRAME.flags, FLAG_NORMAL_FLOW
+	qba			datalink_rx0_7
+    .endif  ;HDSL_MULTICHANNEL
 ;--------------------------------------------------------------------------------------------------
 ;Reroute data link abort to avoid branching error.
 datalink_abort_jmp:
-;	PUSH_FIFO_CONST  0xff
-;	TX_CHANNEL
-;	PUSH_FIFO_CONST_8x  0xff
-;test02:
-;	jmp test02
     jmp datalink_abort
 ;--------------------------------------------------------------------------------------------------
 
@@ -325,7 +355,6 @@ recv_dec_10b_6b:
 	qbbc			recv_dec_10b_6b_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, LOOP_CNT.b0
 recv_dec_10b_6b_received_0:
-
 recv_dec_10b_6b_skip_acc:
 ;get edges
 	lsr			REG_TMP1.b0, REG_TMP0.w0, 1
@@ -651,10 +680,8 @@ recv_dec_acc_no_special_character:
 	ldi			REG_FNC.b1, 5
 	ldi			LOOP_CNT.b0, 6
 	CALL1			srecv_dec_10b
-
 ;switch to TX
 	TX_EN
-
 ;wait 61+1sw+12delay bits - slave delay
 	ldi			REG_TMP1, (74*CYCLES_BIT+9)  ; -9 for 100m
 	READ_CYCLCNT		REG_TMP0
@@ -700,10 +727,10 @@ datalink_receive_signal_no_error_5:
 ;	REG_TMP0, REG_FNC
 ;--------------------------------------------------------------------------------------------------
 send_header:
-	;WAIT_TX_FIFO_FREE
 ;push SYNC and first 2 bits of SAMPLE
 
-	;;PUSH_FIFO_CONST_8x		0x2f
+    .if $defined("HDSL_MULTICHANNEL")
+	;PUSH 8 bytes for 1 byte data (0x2f) in FIFO
 	WAIT_TX_FIFO_FREE
 	PUSH_FIFO_CONST  0x00
 	WAIT_TX_FIFO_FREE
@@ -723,12 +750,37 @@ send_header:
 ;check if we have an EXTRA period
 ;if we have a EXTRA period: do TX FIFO synchronization here to gain processing time
 	qbeq			send_header_no_extra_wait, EXTRA_SIZE, 0
-	;;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST_8x		0xff
+;	PUSH 8 bytes for 1 byte data (0xff) in FIFO
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+	.else
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST		0x2f
+	;check if we have an EXTRA period
+;if we have a EXTRA period: do TX FIFO synchronization here to gain processing time
+	qbeq			send_header_no_extra_wait, EXTRA_SIZE, 0
+	PUSH_FIFO_CONST		0xff
+	.endif  ;HDSL_MULTICHANNEL
 	RESET_CYCLCNT
 
 send_header_modified:
 send_header_no_extra_wait:
+
+    .if $defined("HDSL_MULTICHANNEL")
+	qbne dont_push_for_non7_hframe,LOOP_CNT.b2,7
+	PUSH_FIFO_CONST  0xff
+dont_push_for_non7_hframe:
+    .endif
 ;calculate EQUALIZATION
 	add			DISPARITY, DISPARITY, EXTRA_SIZE
 	qbbs			send_header_disp_neg, DISPARITY, 7
@@ -775,20 +827,28 @@ send_header_end_disp:
 ; V-frame processing is split into two parts : transport_on_v_frame and
 ; transport_on_v_frame_2.
 	qbne			datalink_transport_no_v_frame, LOOP_CNT.b2, 8
+    .if $defined("HDSL_MULTICHANNEL")
+	PUSH_FIFO_CONST  0x00
 	PUSH_FIFO_CONST  0xff
-	PUSH_FIFO_CONST  0xff
-	.if !$defined(ICSS_G_V_1_0)
-	jmp			(transport_on_v_frame-DYNAMIC_CODE_OFFSET-CODE_TRANSPORT_LAYER*CODE_SIZE)
-	.else
+    .endif
 	jmp			transport_on_v_frame
 datalink_transport_on_v_frame_done:
+
 datalink_transport_no_v_frame:
 ; Check if the first H-Frame is complete (and currently the header for second H-Frame
 ; is being sent). If yes, perform the remaining part of V-frame processing
 	qbne			datalink_transport_no_v_frame_2, LOOP_CNT.b2, 7
+ 	.if $defined("HDSL_MULTICHANNEL")
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+	.endif
     jmp             transport_on_v_frame_2
+
 datalink_transport_on_v_frame_done_2:
 datalink_transport_no_v_frame_2:
+
 ;check if we have an EXTRA period
 	qbeq			send_header_no_extra, EXTRA_SIZE, 0
 
@@ -803,14 +863,12 @@ num_pulses_is_one3:
 	mov EXTRA_EDGE_SELF, EXTRA_EDGE_COMP
 extra_value_decided:
 	;extra value decide ends
-
 	;remainder increament logic starts
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYNC_EXTRA_REMAINDER, 1 ;reload ES
 	qbgt        remainder_increament_done1, REG_TMP0.b0, NUM_PULSES
 	add         EXTRA_SIZE_SELF, EXTRA_SIZE_SELF, 1
 remainder_increament_done1:
 	;remainder increament logic ends
-
 	qbne        extra_edge_calculation_for_self_done1, EXTRA_EDGE_SELF, 0
 	sub         EXTRA_SIZE_SELF, EXTRA_SIZE_SELF, 1
 	ldi         EXTRA_EDGE_SELF, 0xFF
@@ -823,8 +881,6 @@ send_header_extra_not_too_large:
 	ldi			NUM_STUFFING, MAX_STUFFING
 send_header_no_cap_stuffing:
 	;qba			send_header_encode
-
-
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
 	lbco        &REG_TMP0, c25, 0, 4
 	add         REG_TMP0,REG_TMP0,4
@@ -844,41 +900,44 @@ modified_header_wait:
 	ldi			REG_TMP0, (11*(CLKDIV_NORMAL+1))
 modified_header_wait_done:
 	.else
-	;ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9-4-4)
+	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9-4-4)
 	.endif
-	;sub			REG_TMP0, REG_TMP0, REG_TMP1
-	;;WAIT			REG_TMP0
+	sub			REG_TMP0, REG_TMP0, REG_TMP1
+	WAIT			REG_TMP0
 ;reset ECAP INT
-	.if !$defined(ICSS_G_V_1_0) ;not using ecap for latching extra edge in AM65xx
-	ldi			REG_TMP0.w0, 0xffff
-	ldi			REG_TMP0.w2, (ECAP+ECAP_ECCLR)
-	sbco			&REG_TMP0.w0, PWMSS2_CONST, REG_TMP0.w2, 2
-	.endif
-
 send_header_extra_no_wait:
-	;TX_CLK_DIV_WAIT		CLKDIV_FAST, REG_TMP0
-	.if !$defined(ICSS_G_V_1_0)
-	sub			REG_TMP1.b0, EXTRA_SIZE, 1
-	.else
+    .if !$defined("HDSL_MULTICHANNEL")
+	TX_CLK_DIV		CLKDIV_FAST, REG_TMP0
+    .endif
 	sub			REG_TMP1.b0, EXTRA_SIZE_SELF, 1
 send_header_extra_loop:
-	;;WAIT_TX_FIFO_FREE
+    .if !$defined("HDSL_MULTICHANNEL")
+	WAIT_TX_FIFO_FREE
+    .endif
 	PUSH_FIFO_CONST		0xff
 	sub			REG_TMP1.b0, REG_TMP1.b0, 1
 	qbne			send_header_extra_loop, REG_TMP1.b0, 0
-	;ldi			REG_TMP0, (11*(CLKDIV_FAST+1)-0)
+	ldi			REG_TMP0, (11*(CLKDIV_FAST+1)-0)
 ;send last extra with fine granularity
+    .if !$defined("HDSL_MULTICHANNEL")
 	WAIT_TX_FIFO_FREE
+    .endif
 	PUSH_FIFO		EXTRA_EDGE_SELF
+
 send_header_extra_no_edge:
 ;reset clock to normal frequency
-	;;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_8x		REG_TMP11.b0
-
+    .if $defined("HDSL_MULTICHANNEL")
+	mov FIFO_L,REG_TMP11.b0
+	PUSH_FIFO_8x		FIFO_L
+    .else
+	WAIT_TX_FIFO_FREE
+	PUSH_FIFO		REG_TMP11.b0
 ;skip synch pulse measurement if we generate pulse ourself
-	;;WAIT			REG_TMP0
+	WAIT			REG_TMP0
 send_header_no_wait_after_synch:
-	;TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
+	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
+    .endif ;HDSL_MULTICHANNEL
+
 
 	.if $defined(EXT_SYNC_ENABLE)
 ;**********************************************************************************************;
@@ -973,19 +1032,18 @@ send_header_extra_drive_cycle_check_end:
 	qba			send_header_encode
 send_header_no_extra:
 ;push last bit of SAMPLE, 3 bits of CYCLE RESET and 4 bits EQUALIZATION
-	PUSH_FIFO_8x		REG_TMP11.b0
-	;;;;;;qbeq HALT_0 , LEARN_STATE_STARTED, 1
-
-	;;;;;;For multichannel after that it goes bad (after some V-frames)
+    .if $defined("HDSL_MULTICHANNEL")
+	mov FIFO_L,REG_TMP11.b0
+	PUSH_FIFO_2B_8x
+	PUSH_FIFO_2B_8x
+    .else
+    PUSH_FIFO		REG_TMP11.b0
+    .endif ;HDSL_MULTICHANNEL
 send_header_encode:
 ;encode data
 	ldi			REG_TMP11, (PDMEM00+LUT_5b6b_ENC)
 	lbbo			&REG_FNC.b3, REG_TMP11, REG_FNC.b0, 1
 	LOOKUP_BITCNT		REG_TMP0, REG_FNC.b3
-
-
-
-
 	ldi			REG_TMP11, (PDMEM00+LUT_3b4b_ENC)
 	lbbo			&REG_FNC.b2, REG_TMP11, REG_FNC.b1, 1
 	LOOKUP_BITCNT		REG_TMP1, REG_FNC.b2
@@ -1016,25 +1074,26 @@ send_header_encode_sec_subblock_end:
 	lsr			REG_TMP0.b0, REG_FNC.b2, 2
 	or			REG_FNC.b3, REG_FNC.b3, REG_TMP0.b0
 	lsl			REG_FNC.b2, REG_FNC.b2, 6
-
-;;check for long message data
-	sbco &REG_FNC.b3,MASTER_REGS_CONST, 0x78, 1
-;	lbco		&r27.b0, MASTER_REGS_CONST, PC_CTRL, 1
-;	qbbc CONTINUE,r27.b0,0
-;LONG_MSG:
-;	ldi REG_FNC.b3,0x91
-;CONTINUE:
-
-	qbbc			transport_layer_send_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
+	qbbc			transport_layer_send_msg_done1, H_FRAME.flags, FLAG_NORMAL_FLOW
+    .if $defined("HDSL_MULTICHANNEL")
+	PUSH_FIFO_1_8x
+	PUSH_FIFO_2_8x
+    .endif
 	jmp			transport_layer_send_msg
+transport_layer_send_msg_done1:
+    .if $defined("HDSL_MULTICHANNEL")
+	PUSH_FIFO_2B_8x
+	PUSH_FIFO_2B_8x
+    .endif
 transport_layer_send_msg_done:
 ;encoding end
-	;.if $defined(EXT_SYNC_ENABLE)
-	;.else
-	;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_8x		REG_FNC.b3
-	;.endif
-
+    .if $defined("HDSL_MULTICHANNEL")
+	mov FIFO_L,REG_FNC.b3
+	PUSH_FIFO_8x		FIFO_L
+    .else
+    WAIT_TX_FIFO_FREE
+	PUSH_FIFO		REG_FNC.b3
+    .endif ;HDSL_MULTICHANNEL
 	;check if we receive or send 01 pattern
 	qbeq			send_header_send_01_pattern, REG_FNC.b0, M_PAR_RESET
 	qbeq			send_header_send_01_pattern, REG_FNC.b0, M_PAR_SYNC
@@ -1045,9 +1104,8 @@ send_header_send_01_pattern:
 	qba			send_header_end
 send_header_dont_send_01:
 ;send last 2 parameter bits
-	;;WAIT_TX_FIFO_FREE
+    WAIT_TX_FIFO_FREE
 ;overclock
-	;halt
 	qbbs			send_header_dont_send_01_send_1, REG_FNC.b2, 7
 	PUSH_FIFO_CONST		0x00
 	qba			send_header_dont_send_01_send_next
@@ -1060,8 +1118,6 @@ send_header_dont_send_01_send_next:
 	lbco        &REG_TMP0, c25, 0, 4
 	add         REG_TMP0,REG_TMP0,4
 	qble        log_done1, REG_TMP0,255
-	;READ_CYCLCNT		REG_TMP1
-	;lbco        &REG_TMP1, c1, 0x10, 4
 	sbco        &REG_FNC, c25, REG_TMP0, 4
 	sbco        &REG_TMP0, c25, 0, 4
 log_done1:
@@ -1117,7 +1173,6 @@ comp_logic_starts:
 	sbco        &REG_TMP1, c25, REG_TMP0, 4
 	sbco        &REG_TMP0, c25, 0, 4
 	.endif
-
 	mov         EXTRA_EDGE_COMP, EXTRA_EDGE
 	mov         EXTRA_SIZE_COMP, EXTRA_SIZE
 	mov         NUM_STUFFING_COMP, NUM_STUFFING
@@ -1136,7 +1191,6 @@ comp_logic_starts:
 	sbco        &REG_TMP1, c25, 0, 4
 log_1_done:
 	.endif
-
 	ldi         REG_TMP2, MAX_ALLOWED_CYCLE_DIFF
 	qble        cycle_diff_more_than_max_allowed, REG_TMP0 ,REG_TMP2
 	qbge        no_capping1, REG_TMP0 ,CAPPING_CYCLE_DIFF
@@ -1157,20 +1211,16 @@ no_reminder1:
 extra_edge_ahead:
 	mov         REG_TMP2, REG_TMP0
 	sub         REG_TMP0, REG_TMP0, REG_TMP1
-
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
 	lbco        &REG_TMP1, c25, 0, 4
 	add         REG_TMP1,REG_TMP1,4
 	sbco        &REG_TMP0, c25, REG_TMP1, 4
 	sbco        &REG_TMP1, c25, 0, 4
 	.endif
-
 	ldi         REG_TMP2, MAX_ALLOWED_CYCLE_DIFF
 	qble        cycle_diff_more_than_max_allowed, REG_TMP0 ,REG_TMP2
 	qbge        no_capping2, REG_TMP0 ,CAPPING_CYCLE_DIFF
 	ldi         REG_TMP0 , CAPPING_CYCLE_DIFF
-	;qbge        compensation_not_needed_this_cycle, REG_TMP0 ,2
-
 no_capping2:
 	mov         REG_TMP1, REG_FNC ;taking backup
 	mov			REG_FNC.w0, REG_TMP0
@@ -1253,8 +1303,11 @@ num_pulses_is_not_one2:
 	.endif
 ;***********************************************************************************************************;
 comp_logic_ends:
+
 	qbeq			send_header_end, REG_FNC.b0, M_PAR_RESET
 	qbeq			send_header_end, REG_FNC.b0, M_PAR_SYNC
+
+    .if !$defined("HDSL_MULTICHANNEL")
 	qbbc			transport_layer_recv_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
 ;HINT: we have processing time here (~168 cycles)
 	jmp			transport_layer_recv_msg
@@ -1262,12 +1315,10 @@ transport_layer_recv_msg_done:
 	READ_CYCLCNT		REG_TMP1
 	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9)
 	sub			REG_TMP0, REG_TMP0, REG_TMP1
-	;WAIT			REG_TMP0
-	NOP_2
-	NOP_2
-	NOP_2
-	TX_CLK_DIV_WAIT		CLKDIV_FAST, r0
-DL0:
+	WAIT			REG_TMP0
+	TX_CLK_DIV		CLKDIV_FAST, r0
+    .endif ;HDSL_MULTICHANNEL
+
 	qbbs			send_header_dont_send_01_send_11, REG_FNC.b2, 6
 	PUSH_FIFO_CONST		0x00
 	ldi			LAST_BIT_SENT, 0
@@ -1286,11 +1337,23 @@ send_header_dont_send_01_send_11:
 	sbco &REG_TMP2.b0, ICSS_CFGx, EDRXCFG, 1
 	.endif
 send_header_dont_send_01_send_next1:
+    .if $defined("HDSL_MULTICHANNEL")
+	qbbc			transport_layer_recv_msg_done, H_FRAME.flags, FLAG_NORMAL_FLOW
+;HINT: we have processing time here (~168 cycles)
+	jmp			transport_layer_recv_msg
+transport_layer_recv_msg_done:
+	READ_CYCLCNT		REG_TMP1
+	ldi			REG_TMP0, (9*(CLKDIV_NORMAL+1)-9)
+	sub			REG_TMP0, REG_TMP0, REG_TMP1
+	;WAIT			REG_TMP0
+	NOP_2
+	NOP_2
+	NOP_2
+	TX_CLK_DIV_WAIT		CLKDIV_FAST, r0
 ;leave overclocked to be able to reduce transmission delay
+    .endif ;single channel
 send_header_sync_wait:
 send_header_end:
-	;lsl		REG_TMP0, LOOP_CNT.b2, 2
-	;sbco	&REG_TMP1, c25,REG_TMP0, 4
 	RET
 ;--------------------------------------------------------------------------------------------------
 ;Function: send_stuffing (RET_ADDR)
@@ -1304,7 +1367,6 @@ send_stuffing:
 	.if $defined(EXT_SYNC_ENABLE)
 	mov			REG_TMP11, RET_ADDR1
 	;do calc
-
 	;stuffing value decide starts
 	qbeq        num_pulses_is_one, NUM_PULSES, 1
 	mov			REG_FNC.b3, NUM_STUFFING
@@ -1313,21 +1375,18 @@ num_pulses_is_one:
 	mov			REG_FNC.b3, NUM_STUFFING_COMP
 stuffing_value_decided:
 	;stuffing value decide ends
-
 	;remainder increament logic starts
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SYNC_STUFFING_REMAINDER, 1 ;reload ES
 	qbgt        remainder_increament_done, REG_TMP0.b0, NUM_PULSES
 	add			REG_FNC.b3, REG_FNC.b3, 1
 remainder_increament_done:
 	;remainder increament logic ends
-
 	;ES reload starts
 	sub			NUM_PULSES, NUM_PULSES, 1
 	qbne        num_pulses_non_zero, NUM_PULSES, 0
 	lbco		&NUM_PULSES, MASTER_REGS_CONST, SYNC_CTRL, 1 ;reload ES
 num_pulses_non_zero:
 	;ES reload ends
-
 	qbeq		send_stuffing_no_stuffing, REG_FNC.b3, 0
 ;check if we have stuffing
 	READ_CYCLCNT		REG_TMP0
@@ -1365,7 +1424,11 @@ send_stuffing_sync_clk:
 	qbbc			send_stuffing_sync_clk, REG_TMP1, 8
 	.endif
 send_stuffing_first:
+    .if $defined("HDSL_MULTICHANNEL")
 	TX_CLK_DIV_WAIT		CLKDIV_DOUBLE, REG_TMP1
+    .else
+    TX_CLK_DIV	        CLKDIV_DOUBLE, REG_TMP1
+    .endif ;HDSL_MULTICHANNEL
 ;wait 4 cycles
 	ldi			REG_FNC.w0, CLKDIV_NORMAL
 	ldi			REG_FNC.b2, 4
@@ -1402,70 +1465,52 @@ send_trailer:
 ;already overclocked
 ;reduce trailer length by a few ns to compensate for a slightly transmission start delay < 30ns
 ;so: first reduce from higher clockrate to lower clock rate for 1 cycle, then set to normal clockrate again
-;;;;;;;;;;;;;
-	NOP_2
-	NOP_2
-	NOP_2
-	NOP_2
-	NOP_2
-	NOP_2
-	NOP_2
-	;;
-	NOP_2
-	NOP_2
-	NOP_2
-	;;
-
-
 ;send TRAILER
-	;;PUSH_FIFO_CONST		0x03   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-
-	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	;PUSH 8 bytes for 1 byte data (0x03) in FIFO
+    .if $defined("HDSL_MULTICHANNEL")
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	PUSH_FIFO_CONST		0x00
 	TX_CHANNEL
-	;WAIT_TX_FIFO_FREE
-	;PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-	;WAIT_TX_FIFO_FREE
-	;PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-;	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	PUSH_FIFO_CONST		0x00
 	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-	;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0x00   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
+	PUSH_FIFO_CONST		0x00
+	PUSH_FIFO_CONST		0x00
 	WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-	;WAIT_TX_FIFO_FREE
-	PUSH_FIFO_CONST		0xff   ;;As here clock speed was 8x so, PUSH_FIFO_CONST macro is unchanged
-
-
-
-
-
-
-	;;PUSH_FIFO_CONST		0x03
-	;;TX_CHANNEL
+	PUSH_FIFO_CONST		0xff
+	PUSH_FIFO_CONST		0xff
+    .else
+    PUSH_FIFO_CONST		0x03
+	TX_CHANNEL
+    .endif ;HDSL_MULTICHANNEL
 	;determine DELAY Master Register (also used as 2 dummy cycles)
 	lsl			REG_TMP1.b0, RSSI, 4
 	or			REG_TMP1.b0, REG_TMP1.b0, SLAVE_DELAY
 
 ;  additional delay here shortens the the first trailer byte
-	;NOP_2
-	;NOP_2
-	;NOP_2
-	;;new addition
-	;NOP_2
-	;;
+	NOP_2
+	NOP_2
+	NOP_2
+    .if !$defined("HDSL_MULTICHANNEL")
     .if $defined("FREERUN_300_MHZ")
-	;NOP_2
-	;NOP_2
-	;NOP_2
-	;NOP_2
-	;NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
+	NOP_2
     .endif
-;   when to use slow (48) or slower (62)??
-;	TX_CLK_DIV		CLKDIV_SLOWER, REG_TMP0
-	;TX_CLK_DIV_WAIT		CLKDIV_SLOW, REG_TMP0
-
+    .endif
+    .if !$defined("HDSL_MULTICHANNEL")
+	TX_CLK_DIV		CLKDIV_SLOW, REG_TMP0
+    .endif
 ;reset DISPARITY
 	ldi			DISPARITY, 0
 	;store RSSI/DELAY (also used as 2 dummy cycles)
@@ -1478,9 +1523,13 @@ send_trailer:
 ;restore return addr
 	mov			RET_ADDR1, REG_TMP11.w0
 send_trailer_dont_update_qm:
-	;TX_CLK_DIV_WAIT		CLKDIV_NORMAL, REG_TMP0
+    .if !$defined("HDSL_MULTICHANNEL")
+	TX_CLK_DIV		CLKDIV_NORMAL, REG_TMP0
+    .endif
 ;syn with clock before resetting counter
-	;WAIT_CLK_LOW		REG_TMP0
+	.if !$defined("HDSL_MULTICHANNEL")
+	WAIT_CLK_LOW		REG_TMP0
+	.endif
 	RESET_CYCLCNT
 	RET1
 ;--------------------------------------------------------------------------------------------------
@@ -1516,7 +1565,6 @@ update_events_no_int18:
     set         REG_TMP0.w2, REG_TMP0.w2, ONLINE_STATUS_1_PRST
     set         REG_TMP1.w0, REG_TMP1.w0, ONLINE_STATUS_2_PRST
 	sbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 6
-
 	jmp			datalink_reset
 ;--------------------------------------------------------------------------------------------------
 ;Function: switch_clk (RET_ADDR1)
@@ -1597,16 +1645,16 @@ wait_delay:
 	NOP_2
 	NOP_2
 	NOP_2
-	;
+	.endif
+    .if $defined("HDSL_MULTICHANNEL")
 	NOP_2
 	NOP_2
 	NOP_2
-	;
 	NOP_2
-    .endif
+    .endif  ;HDSL_MULTICHANNEL
+
 ; same code as in learn
 ; with 4 or 3 bit encoder does not respond after time, starts working with 2 set it to 1
-
 wait_on_rx_transtion_in_wait_delay:
         RX_EN
  	;measure passed time during receive and wait appropriately at the end -> reset cyclecount
@@ -1614,12 +1662,6 @@ wait_on_rx_transtion_in_wait_delay:
 
 ;reset RSSI
 	ldi			RSSI, 12
-
-;wait_delay_recv_switch_bit:
-;	qbbc			wait_delay_recv_switch_bit, r31, 26
-;	POP_FIFO		REG_TMP0.b0
-;	CLEAR_VAL
-
 ; wait for slave delay in bits
 	qbeq		wait_delay_no_wait, SLAVE_DELAY, 0
 	mov			REG_TMP1.b0, SLAVE_DELAY
@@ -1628,8 +1670,6 @@ wait_delay_recv_wire:
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub				REG_TMP1.b0,REG_TMP1.b0,1
-;	xor				R10.b0, R10.b0, (1<<6)
-;	sbbo			&R10.b0, R24, 0, 1
 	qbne			wait_delay_recv_wire, REG_TMP1.b0, 0
 
 wait_delay_no_wait:

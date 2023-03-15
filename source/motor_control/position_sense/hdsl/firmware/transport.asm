@@ -82,7 +82,6 @@ transport_init_abs_err_loop:
 exit_transport_init:
 ;return back to datalink
 	RET
-
 ;--------------------------------------------------
 ;v_frame calculations
 ;102+20=122 cycles
@@ -178,12 +177,17 @@ transport_on_v_frame_diff_pos:
 	mov		REG_TMP0.b2, REG_TMP0.b3
 	mov		REG_TMP0.b3, REG_TMP0.b0
 ;check if it is larger
+	lbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
 	qbge		transport_on_v_frame_dont_update_maxdev, REG_TMP2, REG_TMP0.w2
 	mov		REG_TMP0.b0, REG_TMP2.b1
 	mov		REG_TMP0.b1, REG_TMP2.b0
 	sbco		&REG_TMP0, MASTER_REGS_CONST, MAXDEV_H, 2
 transport_on_v_frame_dont_update_maxdev:
 ;load MAXDEV_TRESH_H/L
+    .if $defined("HDSL_MULTICHANNEL")
+	PUSH_FIFO_CONST  0xff
+	PUSH_FIFO_CONST  0xff
+    .endif
 	lbco		&REG_TMP0.w2, MASTER_REGS_CONST, MAXDEV_TRESH_H, 2
 	mov		REG_TMP0.b0, REG_TMP0.b2
 	mov		REG_TMP0.b2, REG_TMP0.b3
@@ -207,6 +211,7 @@ transport_on_v_frame_dont_update_dte:
     clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_DTE
 	sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
 ;check for diff. is 0 -> estimate if not
+
 	qbne		transport_on_v_frame_estimate, REG_TMP1, 0
 	qbne		transport_on_v_frame_estimate, VERT_H.b2, FAST_POSL
 ;reset MAXDEV_H/L
@@ -219,8 +224,7 @@ transport_on_v_frame_estimate:
 	CALL1		estimator_fpos
 transport_on_v_frame_no_pos_mismatch:
 ;store SAFE POS
-	PUSH_FIFO_CONST  0xff
-	PUSH_FIFO_CONST  0xff
+
 	mov		REG_TMP0.b0, VERT_H.b2
 	mov		REG_TMP0.b1, VERT_H.b1
 	mov		REG_TMP0.b2, VERT_H.b0
@@ -248,6 +252,9 @@ transport_on_v_frame_no_pos_mismatch:
 transport_on_v_frame_exit:
 ;we are in RX0
 ;reset rel. pos
+    .if $defined("HDSL_MULTICHANNEL")
+	PUSH_FIFO_CONST  0xff
+    .endif
 	ldi		REG_TMP0, 0
 	sbco		&REG_TMP0, MASTER_REGS_CONST, REL_POS0, 4
 ;store last FAST_POS
@@ -349,7 +356,6 @@ transport_on_v_frame_2_exit:
 ; generate interrupt PRU0_ARM_IRQ1
 	ldi		    r31.w0, PRU0_ARM_IRQ1
 transport_skip_vpos_update:
-
 ; Set POSTX to 3
     ldi         REG_TMP0.b0, 0x3
     sbco		&REG_TMP0.b0, MASTER_REGS_CONST, POSTX, 1
@@ -392,7 +398,6 @@ summary_no_int:
 	mov		REG_FNC.w0, REG_TMP11.w1
 
 	jmp		datalink_transport_on_v_frame_done_2
-
 ;----------------------------------------------------
 ;transport_layer_recv_msg
 ;Handles Hiperface DSL messages receiving
@@ -430,23 +435,31 @@ transport_layer_recving_long_msg_dont_flip_nibble:
 	lbbo		&REG_TMP1.w0, REG_TMP0, REG_TMP1.w0, 2
 	lsl		LONG_MSG_RECV.crc, LONG_MSG_RECV.crc, 4
 	xor		LONG_MSG_RECV.crc, LONG_MSG_RECV.crc, REG_TMP1.w0
+
 ;are we receiving crc?
 	qbge		transport_layer_recving_long_msg_crc, LONG_MSG_RECV.bits_left, 16
 ;still receiving data
 	qbbs		transport_layer_recving_long_msg_data_low_nibble, LONG_MSG_RECV.bits_left, 2
+
 transport_layer_recving_long_msg_data_high_nibble:
+
 	lsl		REG_TMP0.b0, REG_TMP2.b0, 4
 	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, LONG_MSG_RECV.ptr, 1
+	;160
+
 	qba		transport_layer_recving_long_msg_data_nibble_end
 transport_layer_recving_long_msg_data_low_nibble:
+
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, LONG_MSG_RECV.ptr, 1
 	or		REG_TMP0.b0, REG_TMP0.b0, REG_TMP2.b0
 	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, LONG_MSG_RECV.ptr, 1
 	add		LONG_MSG_RECV.ptr, LONG_MSG_RECV.ptr, 1
 transport_layer_recving_long_msg_data_nibble_end:
+
 	qba		transport_layer_recving_long_msg_end
 transport_layer_recving_long_msg_crc:
 ;we are receiving crc
+
 	qbne		transport_layer_recving_long_msg_end, LONG_MSG_RECV.bits_left, 4
 ;set long msg channel to unbusy
 ; Set EVENT_FREL in EVENT register
@@ -516,7 +529,6 @@ transport_layer_reassemble_msg_loop:
 ;identify message type
 	;jmp transport_layer_received_long_msg
 	qbbs		transport_layer_received_long_msg, REG_TMP11.b3, 7
-	halt
 transport_layer_received_short_msg:
 ;check crc
 	ldi		REG_TMP1.b0, &r12.b0
@@ -568,6 +580,7 @@ update_events_no_int10:
     sbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 	qba		transport_layer_recv_msg_check_for_nak
 transport_layer_received_long_msg:
+
 ;process long message
 ;calculate number of bits we still need to receive
 	lsr		REG_TMP0.b0, REG_TMP11.b3, 2
@@ -695,7 +708,6 @@ transport_layer_min_unset:
     clr         REG_TMP0.b2, REG_TMP0.b2, (ONLINE_STATUS_1_MIN-8)
 	sbco		&REG_TMP0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 3
 transport_layer_min_update_done:
-
 ;check for timeout - count only down when bitsleft = 0 amnd timeout != 0
 	qbne		transport_layer_resend_msg_end, SHORT_MSG.bits_left, 0
 ;lower 6 bits is timeout value - MSB is ACK flag
@@ -711,6 +723,7 @@ transport_layer_resend_msg:
 transport_layer_resend_msg_read:
 transport_layer_resend_msg_end:
 transport_layer_recv_msg_end:
+
 	jmp		transport_layer_recv_msg_done
 ;----------------------------------------------------
 ;transport_layer_send_msg
@@ -722,9 +735,6 @@ transport_layer_recv_msg_end:
 ;modifies:
 ;----------------------------------------------------
 transport_layer_send_msg:
-	;lbco &r27.b0,MASTER_REGS_CONST, PC_ADD_H, 1
-	;clr r27.b0,r27.b0,5
-	;sbco &r27.b0,MASTER_REGS_CONST, PC_ADD_H, 1
 ;TODO: reduce cycles
 	ldi		SEND_PARA, M_PAR_IDLE
 ;check if we discard any messages and reset parameter channel
@@ -737,7 +747,6 @@ transport_layer_send_msg:
 	ldi		SEND_PARA, M_PAR_INIT
 	zero		&SHORT_MSG, (6)
 	clr		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
-
 	qba		transport_layer_send_msg_end
 transport_layer_send_msg_no_reset_sys_ctrl:
 ;check if we discard any messages and reset parameter channel
@@ -756,11 +765,13 @@ transport_layer_send_msg_no_reset_safe_ctrl:
 
 	qbbc		transport_layer_check_for_new_short_msg, H_FRAME.flags, FLAG_PARA_BUSY
 	sub		SHORT_MSG.bits_left, SHORT_MSG.bits_left, 4
+
 ;check if we still need to calculate crc or if we send crc
 	qblt		transport_layer_send_dont_send_crc, SHORT_MSG.bits_left, 12
 ;send crc
 	lsr		SEND_PARA, SHORT_MSG.crc, SHORT_MSG.bits_left
 	and		SEND_PARA, SEND_PARA, 0x0f
+
 ;last nibble?
 	qbne		transport_layer_send_not_last_nibble, SHORT_MSG.bits_left, 0
 ;it is the last nibble
@@ -770,6 +781,7 @@ transport_layer_send_not_last_nibble:
 	qba		transport_layer_send_msg_end
 transport_layer_send_dont_send_crc:
 ;are we sending short or long message?
+
 	qbbc		transport_layer_send_sending_short_msg, SHORT_MSG.addr, 7
 ;we are still sending long message
 ;For long message, data is ptr to memory buffer
@@ -805,9 +817,8 @@ transport_layer_send_sending_msg_crc_dont_flip:
 	qba		transport_layer_send_msg_end
 transport_layer_check_for_new_short_msg:
 ;check for SLAVE_REG_CTRL if we read/write data
-	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
-	;PUSH_FIFO_CONST_8x		0xff
 
+	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, SLAVE_REG_CTRL, 1
 	qbeq		transport_layer_no_short_msg, REG_TMP0.b0, 0x3f
 ;set short msg channel to busy (reset EVENT_S_FRES)
 	lbco		&REG_TMP0.b2, MASTER_REGS_CONST, EVENT_S, 1
@@ -834,8 +845,6 @@ transport_layer_check_for_new_short_msg:
 	ldi		SHORT_MSG.bits_left, (8*3)
 	qba		transport_layer_short_msg_dir_end
 transport_layer_short_msg_write:
-	;PUSH_FIFO_CONST_8x		0xff
-	;PUSH_FIFO_8x		REG_FNC.b3
 ;we write slave register -> DIR=0
 ;load data from S_PC_DATA for writing
 	lbco		&REG_TMP0.b1, MASTER_REGS_CONST, S_PC_DATA, 1
@@ -848,7 +857,6 @@ transport_layer_short_msg_dir_end:
 	set		H_FRAME.flags, H_FRAME.flags, FLAG_PARA_BUSY
 	qba		transport_layer_send_msg_end
 transport_layer_no_short_msg:
-	;PUSH_FIFO_8x		REG_FNC.b3
 ;check for new long msg
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, PC_CTRL, 1
 	qbbc		transport_layer_send_msg_end, REG_TMP0.b0, 0
@@ -867,6 +875,8 @@ transport_layer_no_short_msg:
 	lbco		&REG_TMP1, MASTER_REGS_CONST, PC_ADD_H, 4
 	mov		SHORT_MSG.addr, REG_TMP1.b0
 	ldi		SHORT_MSG.bits_left, 16
+
+
 ;using PC_OFF?
 	qbbc		transport_layer_assemble_long_msg_no_pc_off, REG_TMP1.b0, LOFF
 	add		SHORT_MSG.bits_left, SHORT_MSG.bits_left, 16
@@ -896,6 +906,8 @@ transport_layer_assemble_long_msg_no_llen:
 ;load ptr for memory buffer
 	ldi		SHORT_MSG.data, LONG_MSG_BUFFER
 	ldi		SHORT_MSG.crc, 0
+
+
 transport_layer_send_msg_end:
 
 ; Check for Low QM value and update event registers if required
@@ -968,7 +980,6 @@ transport_layer_no_pos_event:
     clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_POS
 transport_layer_pos_update_done:
     sbco        &REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_D, 1
-
 	jmp		transport_layer_send_msg_done
 
 ;----------------------------------------------------

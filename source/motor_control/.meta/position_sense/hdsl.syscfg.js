@@ -65,6 +65,34 @@ let hdsl_module = {
             description: "Only for Booster Pack",
             default: false,
         },
+        {
+            name: "Mode",
+            displayName: "Select Mode",
+            description: "Mode selection",
+            default: "FREE_RUN",
+            options: [
+                {
+                    name: "FREE_RUN",
+                },
+                {
+                    name: "SYNC",
+                },
+            ],
+        },
+        {
+            name: "channel_0",
+            displayName: "Select Channel 0",
+            description: "Channel 0 Selection ",
+            default: true,
+
+        },
+        {
+            name: "channel_1",
+            displayName: "Select Channel 1",
+            description: "Channel 1 Selection ",
+            default: false,
+
+        },
     ],
     moduleStatic: {
         modules: function(inst) {

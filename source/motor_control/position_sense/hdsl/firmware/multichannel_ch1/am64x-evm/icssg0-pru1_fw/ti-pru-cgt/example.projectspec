@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="PRU"
+                deviceId="AM64x_GP_EVM"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Hdsl Master Multichannel Ch1"
+        name = "hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt"
+        products="com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+                Debug,
+                Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TI"
+        cgtVersion="2.3.3"
+        device="AM64x_GP_EVM"
+        deviceCore="ICSS_G0_PRU_1"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware
+            -DICSSG0
+            -DPRU1
+            -DSLICE1
+            -DSOC_AM64X
+            -Dicss1
+            -DPRU1
+            -DCHANNEL_1
+            -DICSS_G_V_1_0
+            -DFREERUN_300_MHZ
+            -DHDSL_MULTICHANNEL
+        "
+        linkerBuildOptions="
+            -m=hdsl_master_multichannel_ch1.${ConfigName}.map
+            --disable_auto_rts
+            --entry_point=main
+        "
+
+        postBuildStep="
+            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_hexpru.cmd hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.b00 hdsl_master_icssg_multichannel_ch1_bin.h Hiperface_DSL2_0_PRU 4;  move  hdsl_master_icssg_multichannel_ch1_bin.h  ${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware/hdsl_master_icssg_multichannel_ch1_bin.h ;
+        "
+
+        description="A Hdsl Master Multichannel Ch1 FW project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../../main.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../datalink.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../datalink_init.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../transport.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../utils.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../hdsl_master_icssg_hexpru.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../../hdsl_master_icssg.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am64x/HDSL_DESIGN.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+    </project>
+</projectSpec>

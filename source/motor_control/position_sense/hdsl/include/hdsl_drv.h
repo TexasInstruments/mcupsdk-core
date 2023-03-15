@@ -150,7 +150,7 @@ typedef struct {
     volatile uint8_t VEL2;        /**< Speed, byte 2 */
     volatile uint8_t VEL1;        /**< Speed, byte 1 */
     volatile uint8_t VEL0;        /**< Speed, byte 0 */
-    volatile uint8_t SUMMARY;     /**< Summarized slave status */
+    volatile uint8_t resvd2;      /**< Reserved 2 */
     volatile uint8_t VPOS4;       /**< Safe position, byte 4 */
     volatile uint8_t VPOS3;       /**< Safe position, byte 3 */
     volatile uint8_t VPOS2;       /**< Safe position, byte 2 */
@@ -174,21 +174,21 @@ typedef struct {
     volatile uint8_t PIPE_S;      /**< Sensor hub channel status */
     volatile uint8_t PIPE_D;      /**< Sensor hub channel data */
     volatile uint8_t PC_DATA;     /**< Short message parameters channel data */
-    volatile uint8_t resvd2;      /**< Reserved 2 */
     volatile uint8_t resvd3;      /**< Reserved 3 */
     volatile uint8_t resvd4;      /**< Reserved 4 */
     volatile uint8_t resvd5;      /**< Reserved 5 */
     volatile uint8_t resvd6;      /**< Reserved 6 */
     volatile uint8_t resvd7;      /**< Reserved 7 */
     volatile uint8_t resvd8;      /**< Reserved 8 */
+    volatile uint8_t SAFE_SUM;    /**< Summarized slave status */
     volatile uint8_t S_PC_DATA;   /**< Response of Short message parameters channel Read for safe1 channel */
     volatile uint8_t ACC_ERR_CNT; /**< Fast position error counter */
     volatile uint8_t MAXACC;      /**< Fast position acceleration boundary */
     volatile uint8_t MAXDEV_H;    /**< Fast position estimator deviation high byte */
     volatile uint8_t MAXDEV_L;    /**< Fast position estimator deviation low byte */
+    volatile uint8_t resvd9;     /**< Reserved 9 */
+    volatile uint8_t EVENT_S;     /**< Safe Events */
     volatile uint8_t resvd10;     /**< Reserved 10 */
-    volatile uint8_t resvd11;     /**< Reserved 11 */
-    volatile uint8_t resvd12;     /**< Reserved 12 */
     volatile uint8_t DUMMY;       /**< Dummy, no data */
     volatile uint8_t SLAVE_REG_CTRL;    /**< Short message control */
     volatile uint8_t ACC_ERR_CNT_THRES; /**< Fast position error counter threshold */
@@ -244,24 +244,31 @@ typedef struct HDSL_Config_s {
 /* ========================================================================== */
 /*                       Function Declarations                                */
 /* ========================================================================== */
-
+/**
+ *  \brief     enable load share mode for multi-channel HDSL
+ *
+ *  \param[in]  gPru_cfg    Cfg base register address
+ *  \param[in]  PRU_SLICE   PRU slice, 1 for PRU1 and 0 for PRU0
+ *
+ */
+void hdsl_enable_load_share_mode(void *gPru_cfg ,uint32_t  PRU_SLICE);
 /**
  *  \brief      Open HDSL handle for the specified core
  *              (interrupt mapping should already be completed)
  *
  *  \param[in]  icssgHandle #PRUICSS_Handle for the ICSS instance
  *  \param[in]  icssCore    Core to map in ICSSG instance
+ *  \param[in]  PRU_mode    0 for dissabled load share mode, 1 for enabled load share mode
  *  \retval     HDSL_Handle
  *
  */
 // HDSL_ICSSG0_INST, HDSL_ICSSG1_INST
-HDSL_Handle HDSL_open(PRUICSS_Handle icssgHandle, uint32_t icssCore);
+HDSL_Handle HDSL_open(PRUICSS_Handle icssgHandle, uint32_t icssCore,uint8_t PRU_mode);
 
 /**
  *  \brief      Initialize IEP and Use OCP as IEP CLK src
  *
  *  \param[in]  hdslHandle
- *  \retval     None
  *
  */
 void HDSL_iep_init(HDSL_Handle hdslHandle);
@@ -310,46 +317,46 @@ uint16_t HDSL_get_events(HDSL_Handle hdslHandle);
 /**
 *  \brief       Taking values of Safe Event (EVENT_S) register
  *
- *  \param[in]  None
+ *  \param[in]  hdslHandle
 
  *  \retval       8 bit integer values of EVENT_S
  *
  */
-uint8_t HDSL_get_safe_events();
+uint8_t HDSL_get_safe_events(HDSL_Handle hdslHandle);
 
 
 /**
 *  \brief       Taking values of Online Status D (ONLINE_STATUS_D) register
  *
- *  \param[in]  None
+ *  \param[in]  hdslHandle
 
  *  \retval       16 bit integer value of ONLINE_STATUS_D
  *
  */
-uint16_t HDSL_get_online_status_d();
+uint16_t HDSL_get_online_status_d(HDSL_Handle hdslHandle);
 
 /**
 *  \brief       Taking values of Online Status D (ONLINE_STATUS_D) register
  *
- *  \param[in]  None
+ *  \param[in]  hdslHandle
 
  *  \retval       16 bit integer value of ONLINE_STATUS_D
  *
  */
-uint16_t HDSL_get_online_status_1();
+uint16_t HDSL_get_online_status_1(HDSL_Handle hdslHandle);
 
 /**
 *  \brief       Taking values of Online Status D (ONLINE_STATUS_D) register
  *
- *  \param[in]  None
+ *  \param[in]  hdslHandle
 
  *  \retval       16 bit integer value of ONLINE_STATUS_D
  *
  */
-uint16_t HDSL_get_online_status_2();
+uint16_t HDSL_get_online_status_2(HDSL_Handle hdslHandle);
 
 /**
-*  \brief   Getting Summarized slave status
+*  \brief       Getting Summarized slave status
  *
  *  \param[in]  hdslHandle
  *  \retval     8 bit integer value of summarized status
@@ -378,6 +385,7 @@ uint8_t HDSL_get_rssi(HDSL_Handle hdslHandle);
 /**
  *  \brief  Write Response of Short message parameters channel Read for safe1 channel(S_PC_DATA) with gPc_data and Short message control value(SLAVE_REG_CTRL) in hdsl interface
  *
+ *  \param[in]  hdslHandle
  *  \param[in]  addr    Address
  *  \param[in]  data    Data
  *  \param[in]  timeout Timeout in microseconds
@@ -385,11 +393,12 @@ uint8_t HDSL_get_rssi(HDSL_Handle hdslHandle);
  *  \return     #SystemP_SUCCESS in case of success, #SystemP_TIMEOUT in case of timeout
  *
  */
-int32_t HDSL_write_pc_short_msg(uint8_t addr, uint8_t data, uint64_t timeout);
+int32_t HDSL_write_pc_short_msg(HDSL_Handle hdslHandle,uint8_t addr, uint8_t data, uint64_t timeout);
 
 /**
  *  \brief      Read Response of Short message parameters channel Read for safe1 channel(S_PC_DATA) and write Short message control value(SLAVE_REG_CTRL) with gPc_addr in hdsl interface
  *
+ *  \param[in]  hdslHandle
  *  \param[in]  addr    Address
  *  \param[in]  data    Pointer to data buffer where read data will be stored
  *  \param[in]  timeout Timeout in microseconds
@@ -397,7 +406,7 @@ int32_t HDSL_write_pc_short_msg(uint8_t addr, uint8_t data, uint64_t timeout);
  *  \return     #SystemP_SUCCESS in case of success, #SystemP_TIMEOUT in case of timeout
  *
  */
-int32_t HDSL_read_pc_short_msg(uint8_t addr, uint8_t *data, uint64_t timeout);
+int32_t HDSL_read_pc_short_msg(HDSL_Handle hdslHandle,uint8_t addr, uint8_t *data, uint64_t timeout);
 
 /**
  *  \brief      Write PC_AAD_L ,PC_ADD_H ,PC_OFF_L,PC_OFF_H and PC_CTRL values in hdsl interface
@@ -407,7 +416,6 @@ int32_t HDSL_read_pc_short_msg(uint8_t addr, uint8_t *data, uint64_t timeout);
  *  \param[in]  pc_addrl
  *  \param[in]  pc_offh
  *  \param[in]  pc_offl
- *  \retval     None
  *
  */
 void HDSL_set_pc_addr(HDSL_Handle hdslHandle, uint8_t pc_addrh, uint8_t pc_addrl, uint8_t pc_offh, uint8_t pc_offl);
@@ -417,7 +425,6 @@ void HDSL_set_pc_addr(HDSL_Handle hdslHandle, uint8_t pc_addrh, uint8_t pc_addrl
  *
  *  \param[in]  hdslHandle
  *  \param[in]  value
- *  \retval     None
  *
  */
 void HDSL_set_pc_ctrl(HDSL_Handle hdslHandle, uint8_t value);
@@ -434,7 +441,6 @@ void HDSL_set_pc_ctrl(HDSL_Handle hdslHandle, uint8_t value);
  *  \param[in]  pc_buf5
  *  \param[in]  pc_buf6
  *  \param[in]  pc_buf7
- *  \retval     None
  *
  */
 void HDSL_write_pc_buffer(HDSL_Handle hdslHandle, uint8_t pc_buf0, uint8_t pc_buf1, uint8_t pc_buf2, uint8_t pc_buf3, uint8_t pc_buf4, uint8_t pc_buf5, uint8_t pc_buf6, uint8_t pc_buf7);
@@ -464,7 +470,6 @@ uint8_t HDSL_get_sync_ctrl(HDSL_Handle hdslHandle);
  *
  *  \param[in]  hdslHandle
  *  \param[in]  val
- *  \retval     None
  *
  */
 void HDSL_set_sync_ctrl(HDSL_Handle hdslHandle, uint8_t val);
@@ -510,7 +515,6 @@ uint8_t HDSL_get_enc_id(HDSL_Handle hdslHandle, int byte);
  *  \brief      Generates memory image
  *
  *  \param[in]  hdslHandle
- *  \retval     None
  *
  */
 void HDSL_generate_memory_image(HDSL_Handle hdslHandle);

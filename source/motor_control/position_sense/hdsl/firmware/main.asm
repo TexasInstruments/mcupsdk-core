@@ -41,11 +41,7 @@
 	.ref load_code
 	.ref datalink_init_start
 	.global	main
-	.if !$defined(ICSS_G_V_1_0)
-	.sect	".text: 0x00000000"
-	.else
 	.sect	".text"
-	.endif
 
 main:
 ;init code

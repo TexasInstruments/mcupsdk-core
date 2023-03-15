@@ -82,17 +82,17 @@ EDCH2CFG1 .set                          P0EDCH2CFG1
     .endif
 
 ; Each HDSL channel will use a portion of DMEM for HDSL shared/local data storage for that channel.
-; ENDAT_CHANNEL_0: 0x0000 - 0x06FF
-; ENDAT_CHANNEL_1: 0x0700 - 0x0DFF
-; ENDAT_CHANNEL_2: 0x0E00 - 0x0~FF
+; CHANNEL_0: 0x0000 - 0x06FF
+; CHANNEL_1: 0x0700 - 0x0DFF
+; CHANNEL_2: 0x0E00 - 0x0~FF
 
-    .if $defined(ENDAT_CHANNEL_2)   ; TX_PRU
+    .if $defined(CHANNEL_2)   ; TX_PRU
 PDMEM00	                  .set					   0x0E00
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)   ; PRU
+	.if $defined(CHANNEL_1)   ; PRU
 PDMEM00		              .set					   0x0700
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)   ; RTU_PRU
+	.if $defined(CHANNEL_0)   ; RTU_PRU
 PDMEM00			          .set					   0x0000
 	.endif
 
@@ -220,12 +220,14 @@ LONG_MSG_RECV .sassign r28, long_msg_recv_s
 	;.asg							r10.w0, TIME_COMP
 	;.asg							r10.w2, LAST_TIME_COMP
 	.asg							r10.w0, SYNC_DIFF0
+    .asg							r10.w2, LOOP_CNT_0
 	.asg							r12.b0, EXTRA_SIZE
 	.asg							r12.b1, NUM_STUFFING
 	.asg							r12.b2, EXTRA_EDGE
 	.asg							r12.b3, TIME_REST
 	.asg							r27.b2, NUM_PULSES
-	.asg							r25.w2, TIME_EXTRA_WINDOW ;free for am65xx use case
+	.asg							r25.b2, TIME_EXTRA_WINDOW ;free for am65xx use case
+	.asg							r25.b3,FIFO_L ;load fifo
 	.asg							r25.b2, MODIFIED_HEADER_STARTED
 	.asg							r27.b3, LEARN_STATE_STARTED
 	.asg							r25.b0, ALIGN_PH
@@ -377,6 +379,7 @@ SYNC_JITTER	.set						0xe8;2bytes
 SYNC_DIFF_HIST_CNT	.set						0xea;2bytes
 SYNC_DIFF_HIST	.set						0xec;2*8bytes
 DUMMY_END	.set						0xff
+ADDR .set 0x15ff
 ;--------------------------------------------------------------------------------------------------
 ;Memory offsets
 ;--------------------------------------------------------------------------------------------------

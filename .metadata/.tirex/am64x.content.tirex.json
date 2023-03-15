@@ -11728,9 +11728,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Hdsl Diagnostic Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "hdsl_diagnostic",
-        "location": "../../examples/motor_control/hdsl_diagnostic/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Hdsl Diagnostic Multi Channel Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hdsl_diagnostic_multi_channel",
+        "location": "../../examples/motor_control/hdsl_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -11743,6 +11743,40 @@
         "subCategories": [
             "motor_control",
             "hdsl_diagnostic",
+            "multi_channel",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Hdsl Diagnostic Single Channel Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hdsl_diagnostic_single_channel",
+        "location": "../../examples/motor_control/hdsl_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "motor_control",
+            "hdsl_diagnostic",
+            "single_channel",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
