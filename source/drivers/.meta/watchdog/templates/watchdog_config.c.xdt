@@ -18,7 +18,12 @@ static Watchdog_HwAttrs gWatchdogHwAttrs[CONFIG_WATCHDOG_NUM_INSTANCES] =
     {
         .instance        = `config.wdtInstance`,
         .baseAddr        = `config.baseAddr`,
+        %if(common.getSocName() == "am263x"){
         .wdtClkFrequency = `wdt_config.wdt_func_clk`U,
+        %}
+        %else{
+        .wdtClkFrequency = `config.funcClk`U,
+        %}
     },
 % }
 };

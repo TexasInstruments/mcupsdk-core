@@ -1,7 +1,11 @@
-
 let common = system.getScript("/common");
-let clockSourcesInfo = system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).SOC_RcmClkSrcInfo;
 let srcclkfreq = 200000000;
+let clockSourcesInfo;
+
+if(common.getSocName() == "am263x")
+{
+    clockSourcesInfo = system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).SOC_RcmClkSrcInfo;
+}
 
 function getConfigArr() {
     return system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).getConfigArr();
@@ -24,8 +28,11 @@ function getClockEnableIds(instance) {
 
 function getClockFrequencies(inst) {
     let instConfig = getInstanceConfig(inst);
-    instConfig.clockFrequencies[0].clkRate = inst["wdt_func_clk"];
-    instConfig.clockFrequencies[0].clkId = inst["wdt_clk_src"];
+    if(common.getSocName() == "am263x")
+    {
+        instConfig.clockFrequencies[0].clkRate = inst["wdt_func_clk"];
+        instConfig.clockFrequencies[0].clkId = inst["wdt_clk_src"];
+    }
     return instConfig.clockFrequencies;
 }
 
@@ -77,21 +84,115 @@ function validateInputClkFreq(instance, report)
 function validate(instance, report) {
     common.validate.checkSameInstanceName(instance, report);
     common.validate.checkNumberRange(instance, report, "expirationTime", 0, 60000, "dec");
-    validatePair(instance, report);
-    validateInputClkFreq(instance, report);
+    if(common.getSocName() == "am263x")
+    {
+        validatePair(instance, report);
+        validateInputClkFreq(instance, report);
+    }
 }
 
 let clock_sources = []
 
-for (let arg of clockSourcesInfo)
+if(common.getSocName() == "am263x")
 {
-    let list = {name: arg.name, displayName: arg.displayName}
+    for (let arg of clockSourcesInfo)
+    {
+        let list = {name: arg.name, displayName: arg.displayName}
 
-    clock_sources =clock_sources.concat(list);
+        clock_sources =clock_sources.concat(list);
+    }
 }
 
 let watchdog_module_name = "/drivers/watchdog/watchdog";
+let gconfig = [];
+gconfig = gconfig.concat([
+    common.ui.makeInstanceConfig(getConfigArr()),
+    {
+        name: "resetMode",
+        displayName: "WDT Reset Mode",
+        default: "Watchdog_RESET_ON",
+        options: [
+            {
+                name: "Watchdog_RESET_ON",
+                displayName: "trigger warm reset"
+            },
+            {
+                name: "Watchdog_RESET_OFF",
+                displayName: "trigger NMI interrupt"
+            },
+        ],
+        description: "Reaction to select on WDT expiry, currently supporting only to trigger warm reset",
+    },
+    {
+        name: "windowSize",
+        displayName: "Digital WDT Window Size",
+        default: "Watchdog_WINDOW_100_PERCENT",
+        options: [
+            {
+                name: "Watchdog_WINDOW_100_PERCENT",
+                displayName: "100 Percent"
+            },
+            {
+                name: "Watchdog_WINDOW_50_PERCENT",
+                displayName: "50 Percent"
+            },
+            {
+                name: "Watchdog_WINDOW_25_PERCENT",
+                displayName: "25 Percent"
+            },
+            {
+                name: "Watchdog_WINDOW_12_5_PERCENT",
+                displayName: "12.5 Percent"
+            },
+            {
+                name: "Watchdog_WINDOW_6_25_PERCENT",
+                displayName: "6.25 Percent"
+            },
+            {
+                name: "Watchdog_WINDOW_3_125_PERCENT",
+                displayName: "3.125 Percent"
+            },
+        ],
+        description: "WDT Window size",
+    },
+])
 
+if(common.getSocName() == "am263x")
+{
+    gconfig = gconfig.concat([
+    {
+        name: "expirationTime",
+        displayName: "WDT Expiry Time In Millisecond(ms)",
+        default: 165,
+        description: "Expiration time in millisecond (ms)",
+    },
+    {
+        name: "wdt_clk_src",
+        displayName: "WDT Clock Source",
+        default: clock_sources[1].name,
+        description: "WDT Clock Source",
+        options : clock_sources,
+        onChange: utilfunction
+        },
+        {
+            name: "wdt_func_clk",
+            displayName: "WDT Input Clock Frequency (Hz)",
+            hidden: false,
+            default: 200000000,
+            description: "WDT Input Clock frequency (Hz)",
+        },
+    ])
+}
+else{
+    gconfig = gconfig.concat([
+    {
+        name: "expirationTime",
+        displayName: "WDT Expiry Time In Millisecond(ms)",
+        default: 1000,
+        description: "Expiration time in millisecond (ms)",
+    },
+   ])
+}
 let watchdog_module = {
     displayName: "WDT",
     templates: {
@@ -118,78 +219,7 @@ let watchdog_module = {
         },
     },
     defaultInstanceName: "CONFIG_WDT",
-    config: [
-        {
-            name: "resetMode",
-            displayName: "WDT Reset Mode",
-            default: "Watchdog_RESET_ON",
-            options: [
-                {
-                    name: "Watchdog_RESET_ON",
-                    displayName: "trigger warm reset"
-                },
-                {
-                    name: "Watchdog_RESET_OFF",
-                    displayName: "trigger NMI interrupt"
-                },
-            ],
-            description: "Reaction to select on WDT expiry, currently supporting only to trigger warm reset",
-        },
-        {
-            name: "windowSize",
-            displayName: "Digital WDT Window Size",
-            default: "Watchdog_WINDOW_100_PERCENT",
-            options: [
-                {
-                    name: "Watchdog_WINDOW_100_PERCENT",
-                    displayName: "100 Percent"
-                },
-                {
-                    name: "Watchdog_WINDOW_50_PERCENT",
-                    displayName: "50 Percent"
-                },
-                {
-                    name: "Watchdog_WINDOW_25_PERCENT",
-                    displayName: "25 Percent"
-                },
-                {
-                    name: "Watchdog_WINDOW_12_5_PERCENT",
-                    displayName: "12.5 Percent"
-                },
-                {
-                    name: "Watchdog_WINDOW_6_25_PERCENT",
-                    displayName: "6.25 Percent"
-                },
-                {
-                    name: "Watchdog_WINDOW_3_125_PERCENT",
-                    displayName: "3.125 Percent"
-                },
-            ],
-            description: "WDT Window size",
-        },
-        {
-            name: "wdt_clk_src",
-            displayName: "WDT Clock Source",
-            default: clock_sources[1].name,
-            description: "WDT Clock Source",
-            options : clock_sources,
-            onChange: utilfunction
-        },
-        {
-            name: "wdt_func_clk",
-            displayName: "WDT Input Clock Frequency (Hz)",
-            hidden: false,
-            default: 200000000,
-            description: "WDT Input Clock frequency (Hz)",
-        },
-        {
-            name: "expirationTime",
-            displayName: "WDT Expiry Time In Millisecond(ms)",
-            default: 165,
-            description: "Expiration time in millisecond (ms)",
-        },
-        common.ui.makeInstanceConfig(getConfigArr()),
-    ],
+    config : gconfig,
     validate: validate,
     maxInstances: getConfigArr().length,
     moduleStatic: {
