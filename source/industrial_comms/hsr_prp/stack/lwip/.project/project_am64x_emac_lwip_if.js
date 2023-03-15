@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am243x";
+let device = "am64x";
 
 const files = {
     common: [
@@ -20,16 +20,16 @@ const filedirs = {
 
 const includes = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source",
+
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f",
 
-       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x",
-       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
-       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
-       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
+        "${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lwip-config/am64x",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
     ],
 };
 
@@ -54,7 +54,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
     property.name = "hsr_prp_icss_emac_lwip_if";
-    property.tag = "icss_emac";
+    property.tag = "icss_emac_lwip_if";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -69,7 +69,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.cflags = cflags;
     build_property.includes = includes;
     build_property.defines = defines_r5f;
-
 
     return build_property;
 }

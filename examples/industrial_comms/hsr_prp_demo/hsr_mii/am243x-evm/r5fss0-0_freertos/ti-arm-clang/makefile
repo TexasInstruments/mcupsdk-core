@@ -70,7 +70,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x \
+	-I${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lwip-config/am243x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
 	-Igenerated \
@@ -119,10 +119,9 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking//icss_emac/lwipif/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/icss_timesync/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/icss_fwhal/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -130,11 +129,11 @@ LIBS_common = \
 	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-licss_emac.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-licss_emac_lwip_if.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lhsr_prp_icss_emac_lwip_if.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-licss_timesync.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lhsr_mii_icss_fwhal.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-contrib-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lhsr_prp_lwip_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lhsr_prp_lwip_contrib.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -151,11 +150,11 @@ LIBS_NAME = \
 	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	icss_emac.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	icss_emac_lwip_if.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	hsr_prp_icss_emac_lwip_if.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	icss_timesync.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	hsr_mii_icss_fwhal.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-contrib-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	hsr_prp_lwip_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	hsr_prp_lwip_contrib.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -164,10 +163,9 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lib \
-	${MCU_PLUS_SDK_PATH}/source/networking//icss_emac/lwipif/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/icss_timesync/lib \
 	${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/icss_fwhal/lib \
-	${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
+	${MCU_PLUS_SDK_PATH}/source/industrial_comms/hsr_prp/stack/lwip/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
