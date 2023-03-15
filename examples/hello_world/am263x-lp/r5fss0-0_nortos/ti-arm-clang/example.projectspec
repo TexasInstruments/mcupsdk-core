@@ -14,8 +14,8 @@
         name = "hello_world_am263x-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
             Release,
+            Debug,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"

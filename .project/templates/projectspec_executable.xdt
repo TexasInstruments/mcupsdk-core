@@ -52,8 +52,16 @@
         name = "`obj.name`_`obj.board`_`obj.cpu`_`obj.os`_`obj.cgt`"
         products="`products`"
         configurations="
-        % for (profile of profile_list) {
-            `args.utils.capitalize(profile)`,
+        % if(args.project.device == "am263x") 
+        %{
+            `args.utils.capitalize(profile_list[1])`,
+            `args.utils.capitalize(profile_list[0])`,
+        %}
+        % else 
+        %{
+            % for (profile of profile_list) {
+                `args.utils.capitalize(profile)`,
+            % }
         % }
         "
         connection="TIXDS110_Connection.xml"

@@ -14,8 +14,8 @@
         name = "empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
             Release,
+            Debug,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TI"
