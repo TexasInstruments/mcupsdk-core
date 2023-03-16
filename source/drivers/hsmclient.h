@@ -100,7 +100,7 @@ typedef struct HsmClient_t_
 /**
  * @brief
  * This is a EfuseRead type which holds the information
- * regarding eFuse row and row data corresponding to it .
+ * of eFuse row index and row data corresponding to it .
  */
 typedef struct EfuseRead_t_
 {
@@ -120,6 +120,19 @@ typedef struct EfuseRowCount_t_
     uint8_t  rowSize ;      /** Size of an eFuse row in bits. **/
     uint8_t  rsvd[3];       /** Reserved **/
 } EfuseRowCount_t;
+
+/**
+ * @brief
+ * This is a EfuseRowProt type which holds the information
+ * of eFuse row index and protection status corresponding
+ * to the row index.
+ */
+typedef struct EfuseRowProt_t_
+{
+    uint8_t  rowidx ;       /** Index of eFuse row. **/
+    uint8_t  rowProt ;      /** Row protection information to be written or read from an eFuse row **/
+    uint8_t  rsvd[2];       /** Reserved **/
+} EfuseRowProt_t ;
 
 /**
  * @brief
@@ -226,6 +239,21 @@ int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
  */
 int32_t HsmClient_getOTPRowCount(HsmClient_t* HsmClient,
                                         EfuseRowCount_t* rowCount);
+
+/**
+ * @brief
+ *  The service issued to HSM Server retrieves the extended otp efuse row
+ *  protection status
+ *
+ * @param HsmClient [IN] HsmClient object.
+ * @param rowProt  [IN]  Pointer to EfuseRowProt_t struct which is
+ *                       populated by HSM server with row protection status
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_getOTPRowProtection(HsmClient_t* HsmClient,
+                                        EfuseRowProt_t* rowProt);
 
 /**
  * @brief

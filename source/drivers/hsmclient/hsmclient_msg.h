@@ -59,6 +59,8 @@ extern "C"
 #define HSM_MSG_OPEN_DBG_FIREWALLS               (0x900C)
 /** @brief Read Extended otp row type ID */
 #define HSM_MSG_READ_OTP_ROW                     (0x9022)
+/** @brief Get Extended otp row protection type ID */
+#define HSM_MSG_GET_OTP_ROW_PROT                 (0x9026)
 /** @brief Get Extended otp row count */
 #define HSM_MSG_GET_OTP_ROW_COUNT                (0x9027)
 
