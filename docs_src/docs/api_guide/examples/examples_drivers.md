@@ -268,6 +268,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING
 -# WATCHDOG
+   -# \subpage EXAMPLES_DRIVERS_WATCHDOG_INTERRUPT_MODE
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_RESET_MODE
 \endcond
 

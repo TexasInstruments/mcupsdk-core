@@ -123,6 +123,7 @@ const example_file_list = [
     "examples/drivers/uart/uart_echo_low_latency_interrupt/.project/project.js",
     "examples/drivers/uart/uart_echo_low_latency_polling/.project/project.js",
     "examples/drivers/watchdog/watchdog_reset/.project/project.js",
+    "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",
     "examples/hello_world/.project/project.js",

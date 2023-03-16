@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,28 +39,72 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#if defined(SOC_AM263X)
+#include <sdl/esm/sdlr_esm.h>
+#include <sdl/include/sdl_types.h>
+#include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/dpl/sdl_dpl.h>
+#include <dpl_interface.h>
+#define WATCHDOG_CLEAR_DWWD_ST 0x20U
+# endif
+
+#define NUM_OF_ITERATIONS (10U)
+
 volatile uint32_t   gWatchdogInt = 0;
 
 void   watchdogCallback(void *arg);
 /*
  * This example uses the WDT module in non reset mode to generate NMI Interrupt.
- * 
+ *
  * The Watchdog interrupt is configured as a non-maskable interrupt and the user-defined
- * callback function is registered. ESM module is configured with ESM Group 2 number and
- * ESM NMI number to generate a non-maskable interrupt to the CPU.
+ * callback function is registered. ESM module is configured with ESM NMI number to generate a non-maskable interrupt to the CPU.
  *
  * The callback function in the application handles the watchdog interrupt
  */
 
+#if defined(SOC_AM263X)
+
+static int32_t sdlApp_dplInit(void)
+{
+    SDL_ErrType_t ret = SDL_PASS;
+
+    ret = SDL_TEST_dplInit();
+    if (ret != SDL_PASS)
+    {
+        DebugP_log("Error: Init Failed\r\n");
+    }
+
+    return ret;
+}
+
+int32_t SDL_ESM_WDTCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
+{
+    int32_t retVal = SDL_PASS;
+
+    if (gWatchdogInt < NUM_OF_ITERATIONS)
+    {
+        Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
+        //Clearing of the status flags will deassert the non-maskable interrupt generated due to violation of the DWWD.
+        HW_WR_REG32(CSL_WDT0_U_BASE + CSL_RTI_RTIWDSTATUS, WATCHDOG_CLEAR_DWWD_ST);
+        gWatchdogInt++;
+    }
+
+    return retVal;
+}
+
+#elif defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM273X)
+
 void watchdogCallback(void *arg)
 {
     gWatchdogInt++;
-    if (gWatchdogInt < 10)
+    if (gWatchdogInt < NUM_OF_ITERATIONS)
     {
         Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
     }
     return;
 }
+# endif
 
 void watchdog_interrupt_main(void *args)
 {
@@ -79,14 +123,32 @@ void watchdog_interrupt_main(void *args)
     status              = HwiP_construct(&gRtiHwiObject, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 #endif
+#if defined(SOC_AM263X)
+    sdlApp_dplInit();
+
+    SDL_ESM_config WDT_esmInitConfig =
+    {
+        .esmErrorConfig = {1u, 8u}, /* Self test error config */
+        .enableBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                    },
+        /* RTI0_WWD_NMI */
+        .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                            },
+        /**< RTI0_WWD_NMI events high priority:**/
+        .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                        },
+    };
+    SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &WDT_esmInitConfig, SDL_ESM_WDTCallbackFunction, NULL);
+# endif
+
     DebugP_log("Watchdog interrupt Mode Test Started ...\r\n");
 
-    while (gWatchdogInt == 0);
-  
+    while (gWatchdogInt < NUM_OF_ITERATIONS);
+
     DebugP_log("Watchdog Driver NMI received\r\n");
-    
+
     DebugP_log("All tests have passed!!\r\n");
-    
+
     Board_driversClose();
     Drivers_close();
 
