@@ -149,10 +149,13 @@ class Flasher(QtCore.QObject):
         # Send the last part, if there were residual bytes
         if(remain_size > 0):
             start = num_parts*uu.BOOTLOADER_UNIFLASH_BUF_SIZE
-            end = -1 # Read till the end of original file
-
-            part_data = f_bytes[start:end]
-            part_filename = orig_f_name + f".part{num_parts+1}"
+            # Read till the end of original file
+            part_data = bytearray(f_bytes[start:])
+            padding = 256 - (remain_size % 256) # page size adjustment
+            # there should be a better way :)
+            for i in range(0, padding):
+                part_data.append(0)
+            part_filename = orig_f_name + ".part{}".format(num_parts+1)
 
             # make the partial file
             f = open(part_filename, "wb")
