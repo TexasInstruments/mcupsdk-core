@@ -60,7 +60,6 @@
 
 #include <pbist_test_cfg.h>
 
-
 /* This is to power up the cores before test and power down afterwards */
 #define POWERUP_CORES_BEFORE_TEST
 #define APP_PBIST_TIMEOUT   (0x400000U)

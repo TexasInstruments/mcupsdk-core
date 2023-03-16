@@ -21,6 +21,9 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_DCC
 -# RTI
    -# \subpage EXAMPLES_SDL_RTI
+
+-# PBIST
+   -# \subpage EXAMPLES_SDL_PBIST
 \endcond
 
 \cond SOC_AM263X
@@ -104,4 +107,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
 -# RTI
    -# \subpage EXAMPLES_SDL_RTI
+
+-# PBIST
+   -# \subpage EXAMPLES_SDL_PBIST
 \endcond

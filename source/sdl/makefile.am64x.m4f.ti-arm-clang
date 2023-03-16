@@ -45,6 +45,9 @@ FILES_common := \
     sdl_rti.c \
     sdl_ip_rti.c \
     sdl_soc_rti.c \
+    sdl_ip_pbist.c \
+    sdl_pbist_soc.c \
+    sdl_pbist.c \
 
 FILES_PATH_common = \
     dpl \
@@ -79,6 +82,10 @@ FILES_PATH_common = \
     rti \
     rti/v0 \
     rti/v0/soc/am64x \
+    pbist \
+    pbist/v0 \
+    pbist/v0/soc \
+    pbist/v0/soc/am64x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

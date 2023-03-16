@@ -40,6 +40,12 @@ const r5_macro = {
 
 };
 
+const projectspecfiles = {
+    common: [
+        "pbist_test_main.h",
+    ]
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -90,6 +96,9 @@ const templates_nortos_m4f =
     {
         input: ".project/templates/am64x/common/linker_m4f.cmd.xdt",
         output: "linker.cmd",
+        options: {
+            isSingleCore: true,
+        },
     },
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
@@ -105,6 +114,9 @@ const templates_nortos_r5f =
     {
         input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
+        options: {
+            isSingleCore: true,
+        },
     },
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
@@ -120,7 +132,7 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
 ];
 
-function getComponentProperty() {
+function getComponentProperty(device) {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
@@ -142,7 +154,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
+	build_property.projectspecfiles = projectspecfiles;
 	build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+	
 
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;

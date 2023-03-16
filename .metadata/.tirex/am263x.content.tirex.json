@@ -1199,7 +1199,7 @@
         "name": "sbl_can_uniflash",
         "location": "../../examples/drivers/boot/sbl_can_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM263x_CC"
+            "TMDSCNCD263"
         ],
         "kernel": [
             "nortos"
@@ -1232,7 +1232,7 @@
         "name": "sbl_can_uniflash",
         "location": "../../examples/drivers/boot/sbl_can_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM263x_LAUNCHPAD"
+            "LP-AM263"
         ],
         "kernel": [
             "nortos"
@@ -10624,7 +10624,7 @@
         ],
         "description": "A Dthe Rng Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_rng",
-        "location": "../../examples/security/crypto/dthe_rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
         ],
@@ -10638,6 +10638,7 @@
             "security",
             "crypto",
             "dthe_rng",
+            "rng",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -10691,7 +10692,7 @@
         ],
         "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_pbist_example",
-        "location": "../../examples/sdl/pbist/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/pbist/pbist_mcu/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
         ],
@@ -10704,7 +10705,41 @@
         "subCategories": [
             "sdl",
             "pbist",
+            "pbist_mcu",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the PBIST CPU is R5FSS1-0 running NORTOS.",
+        "name": "sdl_pbist_example",
+        "location": "../../examples/sdl/pbist/pbist_mcu/am263x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pbist",
+            "pbist_mcu",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -11220,7 +11255,7 @@
         "name": "sdl_dma_parity",
         "location": "../../examples/sdl/parity/sdl_dma_parity/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM263x_CC"
+            "TMDSCNCD263"
         ],
         "kernel": [
             "nortos"
@@ -11253,7 +11288,7 @@
         "name": "sdl_vim_example",
         "location": "../../examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM263x_CC"
+            "TMDSCNCD263"
         ],
         "kernel": [
             "nortos"

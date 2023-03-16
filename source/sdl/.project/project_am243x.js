@@ -4,8 +4,7 @@ let device = "am243x";
 
 const files_r5f = {
     common: [
-      "sdl_dpl.c",
-      "sdl_dpl.c",
+        "sdl_dpl.c",
         "sdl_esm.c",
         "sdl_ip_esm.c",
         "sdl_esm_core.c",
@@ -27,9 +26,9 @@ const files_r5f = {
         "sdl_interrupt.c",
         "sdl_exception.c",
         "sdl_interrupt_handlers.c",
-    		"sdl_interrupt_register.c",
-         "sdl_dcc.c",
-            "sdl_soc_dcc.c",
+    	"sdl_interrupt_register.c",
+        "sdl_dcc.c",
+        "sdl_soc_dcc.c",
         "sdl_mcrc.c",
         "sdl_ip_mcrc.c",
         "sdl_mcrc_soc.c",

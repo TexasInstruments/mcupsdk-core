@@ -158,6 +158,7 @@ const filedirs_r5f = {
         "rti",
         "rti/v0",
 		"rti/v0/soc/am64x",
+		"pbist",
         "pbist/v0",
         "pbist/v0/soc",
         "pbist/v0/soc/am64x",
@@ -176,6 +177,12 @@ const m4_macro = {
         "M4F_CORE",
     ],
 
+};
+const asmfiles_r5f = {
+    common: [
+		"sdl_ecc_utils.S",
+		"sdl_r5_utils.S",
+	],
 };
 
 const cflags_r5f = {

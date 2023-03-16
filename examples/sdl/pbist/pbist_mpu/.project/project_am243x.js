@@ -31,6 +31,12 @@ const r5_macro = {
 
 };
 
+const projectspecfiles = {
+    common: [
+        "pbist_test_main.h",
+    ]
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -72,6 +78,9 @@ const templates_nortos_r5f =
     {
         input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
+		 options: {
+            isSingleCore: true,
+        },
     },
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
@@ -107,6 +116,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
+	build_property.projectspecfiles = projectspecfiles;
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
