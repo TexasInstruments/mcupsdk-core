@@ -13,7 +13,7 @@ function getInstanceConfig(moduleInstance) {
     let configArr = getConfigArr();
     let config = configArr.find(o => o.name === solution.peripheralName);
 
-    config.clockFrequencies[0].clkRate = moduleInstance.clkFreq;
+    config.clockFrequencies[0].clkRate = moduleInstance.inputClkFreq;
 
     return {
         ...config,
@@ -79,6 +79,16 @@ function getClockFrequencies(inst) {
     return instConfig.clockFrequencies;
 }
 
+function getActualBaudrateError(inst) {
+    let clock = inst.inputClkFreq;
+    let baudRate = inst.baudRate;
+    let op = parseInt(inst.operMode.split('X')[0]);
+    let div = Math.round(clock/(baudRate * op));
+    let actualBaud = Math.round(clock/(op * div));
+    let errorP = Math.abs(Math.round(100*(actualBaud/baudRate - 1)));
+
+    return [actualBaud, errorP];
+}
 
 let uart_module_name = "/drivers/uart/uart";
 let uart_driver_config_file = "/drivers/uart/templates/uart_config_am64x_am243x.c.xdt";
@@ -156,6 +166,13 @@ function getConfigurables()
 
     config.push(
         {
+            name: "baudRate",
+            displayName: "Baudrate",
+            default: 115200,
+            description: "UART Baudrate",
+            displayFormat: "dec",
+        },
+        {
             name: "operMode",
             displayName: "Operational Mode",
             default: "16X",
@@ -179,18 +196,12 @@ function getConfigurables()
             description: "Operational Mode",
         },
         {
-            name: "baudRate",
-            displayName: "Baudrate",
-            default: 115200,
-            description: "UART Baudrate",
-            displayFormat: "dec",
-        },
-        {
-            name: "clkFreq",
-            displayName: "Clock Freq",
+            name: "inputClkFreq",
+            displayName: "Clock Frequency",
             default: soc.getDefaultClkRate(),
             description: "Source Clock Frequency",
             displayFormat: "dec",
+            options: soc.getClockOptions()
         },
         {
             name: "dataLength",
@@ -501,6 +512,17 @@ function getConfigurables()
     return config;
 }
 
+function validateBaudrate(inst, report) {
+    let baudrateError = getActualBaudrateError(inst);
+    let br = baudrateError[0];
+    let errP = baudrateError[1];
+    if(errP > 5) {
+        report.logError(`Actual baudrate error over tolerance limit (${br}, ${errP} % error), try a different clock/operational mode!!`, inst, "baudRate");
+    } else {
+        report.logInfo(`Actual Baudrate Possible: ${br} (${errP} % error)`, inst, "baudRate");
+    }
+}
+
 function validate(inst, report) {
     common.validate.checkValidCName(inst, report, "readCallbackFxn");
     common.validate.checkValidCName(inst, report, "writeCallbackFxn");
@@ -525,27 +547,32 @@ function validate(inst, report) {
         report.logError("Partial Mode is not supported in DMA", inst, "readReturnMode");
     }
     switch(inst.operMode) {
-      case "16X":
-    if((inst.baudRate > Number(230400)) && (inst.baudRate != Number(3000000))) {
-        report.logError("Operating mode should be 13X for the configured baudrate", inst, "operMode");
+    case "16X":
+        if((inst.baudRate > Number(230400)) && (inst.baudRate != Number(3000000)) && (inst.inputClkFreq == Number(48000000))) {
+            report.logError("Operating mode should be 13X for the configured baudrate at this clock", inst, "operMode");
+        } else {
+            validateBaudrate(inst, report);
         }
         break;
-      case "16X_AUTO_BAUD":
-    if((inst.baudRate < Number(1200)) || (inst.baudRate > Number(115200))) {
-        report.logError("Configured baudrate range should be 1200 to 115200 for 16X_AUTO_BAUD mode", inst, "operMode");
+    case "16X_AUTO_BAUD":
+        if((inst.baudRate < Number(1200)) || (inst.baudRate > Number(115200))) {
+            report.logError("Configured baudrate range should be 1200 to 115200 for 16X_AUTO_BAUD mode", inst, "operMode");
         }
         break;
-      case "13X":
-    if(inst.baudRate <= Number(230400)) {
-        report.logError("Operating mode should be 16X for the configured baudrate", inst, "operMode");
+    case "13X":
+        if(inst.baudRate <= Number(230400)) {
+            report.logError("Operating mode should be 16X for the configured baudrate", inst, "operMode");
         }
-    if(inst.baudRate == Number(3000000)) {
-        report.logError("Operating mode should be 16X for the configured baudrate", inst, "operMode");
+        if(inst.baudRate == Number(3000000)) {
+            report.logError("Operating mode should be 16X for the configured baudrate", inst, "operMode");
+        }
+        if((inst.baudRate > Number(230400)) && (inst.baudRate != Number(3000000))) {
+            validateBaudrate(inst, report);
         }
         break;
     }
     common.validate.checkNumberRange(inst, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
-    common.validate.checkNumberRange(inst, report, "baudRate", 300, 3692300, "dec");
+    common.validate.checkNumberRange(inst, report, "baudRate", 300, 12000000, "dec");
 }
 
 exports = uart_module;

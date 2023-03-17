@@ -223,7 +223,17 @@ function getDefaultClkRate() {
     return uart_input_clk_freq;
 }
 
+function getClockOptions() {
+    return [
+        {name: 48000000, displayName: "48 MHz"},
+        {name: 96000000, displayName: "96 MHz"},
+        {name: 192000000, displayName: "192 MHz"},
+        {name: 160000000, displayName: "160 MHz"},
+    ]
+}
+
 exports = {
     getConfigArr,
     getDefaultClkRate,
+    getClockOptions
 };

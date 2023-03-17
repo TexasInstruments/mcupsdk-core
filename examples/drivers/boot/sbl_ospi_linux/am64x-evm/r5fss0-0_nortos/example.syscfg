@@ -53,7 +53,6 @@ flash1.peripheralDriver.udmaDriver = udma1;
 debug_log.enableUartLog        = true;
 debug_log.enableCssLog         = false;
 debug_log.uartLog.$name        = "CONFIG_UART0";
-debug_log.uartLog.clkFreq      = 48000000;
 debug_log.uartLog.intrEnable   = "DISABLE";
 debug_log.uartLog.UART.$assign = "USART0";
 

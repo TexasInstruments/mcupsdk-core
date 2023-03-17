@@ -32,7 +32,6 @@ ddr1.$name = "CONFIG_DDR0";
 
 uart1.$name        = "CONFIG_UART0";
 uart1.intrEnable   = "DISABLE";
-uart1.clkFreq      = 48000000;
 uart1.UART.$assign = "USART0";
 
 debug_log.enableCssLog      = false;

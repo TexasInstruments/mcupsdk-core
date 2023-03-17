@@ -106,7 +106,33 @@ function getDefaultClkRate() {
     return uart_input_clk_freq;
 }
 
+function getClockSourceOptions() {
+    return [
+        {name: "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1"},
+        {name: "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0"},
+    ];
+}
+
+function getClockOptions(clkSrc) {
+    let res = []
+    if(clkSrc === "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1") {
+        res = [
+            {name: 48000000, displayName: "48 MHz"},
+            {name: 96000000, displayName: "96 MHz"},
+            {name: 192000000, displayName: "192 MHz"},
+        ];
+    } else if (clkSrc === "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0") {
+        res = [{name: 160000000, displayName: "160 MHz"}];
+    } else {
+        /* Bad clk source */
+    }
+
+    return res;
+}
+
 exports = {
     getConfigArr,
     getDefaultClkRate,
+    getClockSourceOptions,
+    getClockOptions
 };
