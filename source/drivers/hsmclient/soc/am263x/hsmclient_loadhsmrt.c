@@ -305,24 +305,26 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
         /* Compute the checksum: */
         loadHSMResult.header.checksum = Hsmclient_computeIPCChecksum ((uint8_t*)&loadHSMResult, sizeof(loadHSMResult));
         /* Check for checksum match and firmware load status signature */
-        if ((loadHSMResult.header.checksum != orgChecksum) && (loadHSMResult.status != Hsmclient_ipcLoadHSMStatus_SUCCESS))
+        if ((loadHSMResult.header.checksum != orgChecksum) || (loadHSMResult.status != Hsmclient_ipcLoadHSMStatus_SUCCESS))
         {
             /* Error: Invalid checksum */
             status = SystemP_FAILURE;
         }
 
         HwiP_destruct(&hwiObjReadReq);
-        
-        /* once loaded hsmrt firmware wait for bootnotify message  */ 
-        status = HsmClient_waitForBootNotify(&NotifyClient,SystemP_WAIT_FOREVER);
-    
+
+        if(status == SystemP_SUCCESS)
+        {
+            /* once loaded hsmrt firmware wait for bootnotify message  */
+            status = HsmClient_waitForBootNotify(&NotifyClient,SystemP_WAIT_FOREVER);
+        }
     }
     else
     {
         /* Error: Invalid load address */
         status = SystemP_FAILURE;
     }
-    /* Unregister bootnotify client */ 
+    /* Unregister bootnotify client */
     HsmClient_unregister(&NotifyClient,HSM_BOOT_NOTIFY_CLIENT_ID);
     return status;
 }

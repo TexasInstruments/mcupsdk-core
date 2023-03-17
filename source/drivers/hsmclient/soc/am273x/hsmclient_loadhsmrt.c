@@ -237,7 +237,7 @@ static void Hsmclient_mboxRxISR(void *args)
     CSL_FINSR (ptrMSSCtrlRegs->MSS_CR5A_MBOX_READ_REQ, 8, 8, 1U);
 
     /* Copy the HSM Result */
-    memcpy ((void*)ploadHSMResult, (void*)CSL_HSM_MBOX_U_BASE, sizeof(Hsmclient_ipcLoadHSMResult));
+    memcpy ((void*)ploadHSMResult, (void*)CSL_MSS_MBOX_U_BASE, sizeof(Hsmclient_ipcLoadHSMResult));
 
     /* clear Read done */
     CSL_FINSR (ptrMSSCtrlRegs->MSS_CR5A_MBOX_READ_DONE, 8, 8, 1U);
@@ -305,7 +305,7 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
         /* Compute the checksum: */
         loadHSMResult.header.checksum = Hsmclient_computeIPCChecksum ((uint8_t*)&loadHSMResult, sizeof(loadHSMResult));
         /* Check for checksum match and firmware load status signature */
-        if ((loadHSMResult.header.checksum != orgChecksum) && (loadHSMResult.status != Hsmclient_ipcLoadHSMStatus_SUCCESS))
+        if ((loadHSMResult.header.checksum != orgChecksum) || (loadHSMResult.status != Hsmclient_ipcLoadHSMStatus_SUCCESS))
         {
             /* Error: Invalid checksum */
             status = SystemP_FAILURE;
@@ -313,8 +313,11 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
 
         HwiP_destruct(&hwiObjReadReq);
 
-        /* once loaded hsmrt firmware wait for bootnotify message  */
-        status = HsmClient_waitForBootNotify(&NotifyClient,SystemP_WAIT_FOREVER);
+        if(status == SystemP_SUCCESS)
+        {
+            /* once loaded hsmrt firmware wait for bootnotify message  */
+            status = HsmClient_waitForBootNotify(&NotifyClient,SystemP_WAIT_FOREVER);
+        }
 
     }
     else
