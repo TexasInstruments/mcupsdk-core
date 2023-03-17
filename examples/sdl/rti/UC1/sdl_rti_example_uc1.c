@@ -40,6 +40,7 @@
 
 
 #include "rti_app_main.h"
+
 /*===========================================================================*/
 /*                         Macros                                            */
 /*===========================================================================*/
@@ -48,6 +49,7 @@
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #define SDL_WDT_BASE SDL_MCU_RTI0_CFG_BASE
 #endif
+
 #if defined (SOC_AM263X)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE

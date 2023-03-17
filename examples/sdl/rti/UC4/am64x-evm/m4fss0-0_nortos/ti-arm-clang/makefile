@@ -60,10 +60,12 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/rti/UC4/ \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM64X \
+	-DM4F_CORE \
 
 CFLAGS_common := \
 	-mcpu=cortex-m4 \

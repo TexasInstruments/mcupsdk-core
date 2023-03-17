@@ -53,6 +53,10 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#if defined (SOC_AM64X)
+#include <drivers/sciclient.h>
+#include <sdl/sdl_esm.h>
+#endif
 #if defined (SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>

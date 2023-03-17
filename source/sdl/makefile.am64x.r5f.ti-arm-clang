@@ -24,9 +24,6 @@ FILES_common := \
     sdl_ip_esm.c \
     sdl_esm_core.c \
     sdl_esm_priv.c \
-    sdl_rti.c \
-    sdl_ip_rti.c \
-    sdl_soc_rti.c \
     sdl_dcc.c \
     sdl_soc_dcc.c \
     sdl_ip_tog.c \

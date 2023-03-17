@@ -34,6 +34,7 @@ const libdirs_nortos = {
 const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
+		"${MCU_PLUS_SDK_PATH}/examples/sdl/rti/UC1/",
     ],
 };
 
@@ -50,6 +51,13 @@ const lnkfiles = {
     common: [
         "linker.cmd",
     ]
+};
+
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
 };
 
 const syscfgfile = "../example.syscfg"
@@ -113,6 +121,7 @@ function getComponentBuildProperty(buildOption) {
     {
         build_property.libs = libs_nortos_m4f;
         build_property.templates = templates_nortos_m4f;
+		build_property.defines = m4_macro;
     }
 
     return build_property;

@@ -44,11 +44,6 @@
 /*===========================================================================*/
 #include "rti_app_main.h"
 #include <dpl_interface.h>
-#if defined (SOC_AM64X)
-#include <drivers/sciclient.h>
-#include <sdl/sdl_esm.h>
-#endif
-
 #include <sdl/sdl_rti.h>
 
 /*===========================================================================*/

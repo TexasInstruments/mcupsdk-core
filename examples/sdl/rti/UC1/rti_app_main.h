@@ -60,7 +60,10 @@
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-
+#if defined (SOC_AM64X)
+#include <drivers/sciclient.h>
+#include <sdl/sdl_esm.h>
+#endif
 
 #if !defined(SDL_RTI_TEST_H)
 #define SDL_RTI_TEST_H

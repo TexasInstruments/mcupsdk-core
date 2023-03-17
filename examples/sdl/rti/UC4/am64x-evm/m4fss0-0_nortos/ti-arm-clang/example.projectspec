@@ -14,8 +14,8 @@
         name = "sdl_rti_example_uc4_am64x-evm_m4fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
@@ -32,6 +32,7 @@
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/
+            -I${MCU_PLUS_SDK_PATH}/examples/sdl/rti/UC4/
             -mcpu=cortex-m4
             -mfloat-abi=hard
             -mthumb
@@ -41,6 +42,7 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM64X
+            -DM4F_CORE
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib

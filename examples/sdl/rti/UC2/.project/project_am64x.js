@@ -34,6 +34,7 @@ const libdirs_nortos = {
 const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
+		"${MCU_PLUS_SDK_PATH}/examples/sdl/rti/UC2/",
     ],
 };
 
@@ -44,6 +45,13 @@ const libs_nortos_m4f = {
         "board.am64x.m4f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am64x.m4f.ti-arm-clang.${ConfigName}.lib",
     ],
+};
+
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
 };
 
 const lnkfiles = {
@@ -113,6 +121,7 @@ function getComponentBuildProperty(buildOption) {
     {
         build_property.libs = libs_nortos_m4f;
         build_property.templates = templates_nortos_m4f;
+		build_property.defines = m4_macro;
     }
 
     return build_property;
