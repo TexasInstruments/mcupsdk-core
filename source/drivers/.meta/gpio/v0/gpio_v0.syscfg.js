@@ -49,8 +49,7 @@ function getPeripheralPinNames(inst) {
 }
 
 function validate(inst, report) {
-    common.validate.checkNumberRange(inst, report, "intrOut", 1, soc.getMaxInterruptRouters(), "dec");
-    validateInterruptRouter(inst, report, "intrOut");
+        validateInterruptRouter(inst, report, "intrOut");
 }
 
 
@@ -58,6 +57,7 @@ function validate(inst, report) {
 function validateInterruptRouter(instance, report, fieldname) {
     /* Verified by SYSCFG based on selected pin */
     if (instance.enableIntr) {
+        common.validate.checkNumberRange(instance, report, fieldname, 0, soc.getMaxInterruptRouters(), "dec");
         let moduleInstances = instance.$module.$instances;
         let validOptions = instance.$module.$configByName.intrOut.options(instance);
         let selectedOptions = instance.intrOut;
