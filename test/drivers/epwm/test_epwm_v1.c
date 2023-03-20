@@ -40,6 +40,7 @@
 #include <drivers/epwm.h>
 #include <drivers/ecap.h>
 #include <drivers/dac.h>
+#include <drivers/adc.h>
 #include <drivers/cmpss.h>
 #include <drivers/gpio.h>
 #include "ti_drivers_open_close.h"
@@ -87,6 +88,10 @@ void util_deinit_dac();
 void ECAP_inApwmMode(uint32_t base);
 uint32_t util_CMPSS_getInstanceFromBase(uint32_t base);
 void util_deinit_cmpss(uint32_t base);
+void util_adc_init_configure_soc_source(uint16_t adc_instance, uint16_t epwm_instance);
+void util_adc_reset(uint16_t adc_instance);
+void util_EPWM_setup_adc_trigger(uint32_t epwm_base, EPWM_ADCStartOfConversionType adc_soc_type,
+                                 uint32_t trigger_source, uint16_t prescale);
 void EnablePinMux(void);
 void EnableEPWMClk(void);
 void ECAP_UART_read();
@@ -830,6 +835,78 @@ void util_deinit_cmpss(uint32_t base)
     HW_WR_REG32(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_CMPSSA0_RST + (i*4),0x00);
 
 
+}
+/* configures the given adc instance with the ECAP trigger */
+void util_adc_init_configure_soc_source(uint16_t adc_instance, uint16_t epwm_instance)
+{
+    uint32_t adc_base = CSL_CONTROLSS_ADC0_U_BASE;
+
+    SOC_enableAdcReference((adc_base & 0x0000F000)>>12);
+    /*
+     * this util function is meant to..
+     * Set Prescalar to ADC_CLK_DIV_3_0
+     * Set Mode to signal_mode
+     * Set interrupt Pulse Mode to interrupt_pulse_mode
+     */
+    ADC_setPrescaler(adc_base, ADC_CLK_DIV_3_0);
+    ADC_setMode(adc_base, ADC_RESOLUTION_12BIT, ADC_MODE_SINGLE_ENDED);
+    ADC_setInterruptPulseMode(adc_base, ADC_PULSE_END_OF_CONV);
+    ADC_setSOCPriority(adc_base, ADC_PRI_ALL_ROUND_ROBIN);
+    ADC_enableConverter(adc_base);
+    ClockP_usleep(500);
+
+    /* disabling and enabling the interrupt, setting the interrupt source as the epwm socA signal*/
+    ADC_disableInterrupt(adc_base, ADC_INT_NUMBER1);
+    ADC_enableInterrupt(adc_base, ADC_INT_NUMBER1);
+    ADC_setInterruptSource(adc_base, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
+    ADC_clearInterruptStatus(adc_base, ADC_INT_NUMBER1);
+    ADC_clearInterruptOverflowStatus(adc_base, ADC_INT_NUMBER1);
+
+    /* disabling and enabling the interrupt, setting the interrupt source as the epwm socB signal*/
+    ADC_disableInterrupt(adc_base, ADC_INT_NUMBER2);
+    ADC_enableInterrupt(adc_base, ADC_INT_NUMBER2);
+    ADC_setInterruptSource(adc_base, ADC_INT_NUMBER2, ADC_SOC_NUMBER1);
+    ADC_clearInterruptStatus(adc_base, ADC_INT_NUMBER2);
+    ADC_clearInterruptOverflowStatus(adc_base, ADC_INT_NUMBER2);
+
+    /* Setting up the SOC configuration for the given ecap_instance SOC signal.*/
+    uint16_t epwm_socA_trigger = ADC_TRIGGER_EPWM0_SOCA + (2*epwm_instance);
+    ADC_setupSOC(adc_base, ADC_SOC_NUMBER0, epwm_socA_trigger, ADC_CH_ADCIN0, 16);
+
+    uint16_t epwm_socB_trigger = ADC_TRIGGER_EPWM0_SOCA + (2*epwm_instance+1);
+    ADC_setupSOC(adc_base, ADC_SOC_NUMBER1, epwm_socB_trigger, ADC_CH_ADCIN0, 16);
+
+    return ;
+}
+/* resets the ADC instance */
+void util_adc_reset(uint16_t adc_instance)
+{
+    SOC_generateAdcReset(adc_instance);
+    return;
+}
+void util_EPWM_setup_adc_trigger(uint32_t epwm_base, EPWM_ADCStartOfConversionType adc_soc_type,
+                                 uint32_t trigger_source, uint16_t prescale)
+{
+    //Clearing the previous selection
+
+    EPWM_setADCTriggerSource(epwm_base, adc_soc_type, 0, 0);
+    /* ADC trigger is set at counter == compare C while incrementing*/
+    if(trigger_source != EPWM_SOC_TBCTR_MIXED_EVENT)
+        {
+            EPWM_setADCTriggerSource(epwm_base, adc_soc_type, trigger_source, 0);
+        }
+    else
+        {
+            EPWM_setADCTriggerSource(epwm_base, adc_soc_type, EPWM_SOC_TBCTR_MIXED_EVENT, 0x3FF);
+        }
+    /* enabling the ADC soc trigger from EPWM */
+    EPWM_enableADCTrigger( epwm_base, adc_soc_type);
+
+    EPWM_setADCTriggerEventPrescale(epwm_base, adc_soc_type, prescale);
+	EPWM_enableADCTriggerEventCountInit(epwm_base, adc_soc_type);
+	EPWM_setADCTriggerEventCountInitValue(epwm_base, adc_soc_type, 0);
+
+    return;
 }
 
 /* Testcase 1 - Check the EPWM_setClockPrescaler API */
@@ -2778,117 +2855,128 @@ int32_t AM263x_EPWM_xTR_0015(uint32_t base)
         return 1;
     }
 }
+
+static HwiP_Object  gAdcHwiObject1, gAdcHwiObject2;
+int32_t gAdc_ISR1_count =0 , gAdc_ISR2_count =0, gnumIsrCnt = 0;
+static void Adc_epwmIntrISR(void *handle)
+{
+    uint32_t base = (uint32_t )handle;
+    volatile bool status;
+    status = EPWM_getEventTriggerInterruptStatus(base);
+    if(status)
+    {
+        SemaphoreP_post(&gEpwmSyncSemObject);
+        gnumIsrCnt++;
+        EPWM_clearEventTriggerInterruptFlag(base);
+    }
+
+    return;
+}
+void Adc_IntrISR1(void *args)
+{
+    gAdc_ISR1_count++;
+    ADC_clearInterruptStatus(CSL_CONTROLSS_ADC0_U_BASE, ADC_INT_NUMBER1);
+}
+void Adc_IntrISR2(void *args)
+{
+    gAdc_ISR2_count++;
+    ADC_clearInterruptStatus(CSL_CONTROLSS_ADC0_U_BASE, ADC_INT_NUMBER2);
+}
 /*  EPWM_adc_conversion_with_pwm_event */
 int32_t AM263x_EPWM_xTR_0016(uint32_t base, uint32_t i)
 {
-    //TBD
+    /*
+    Configure event trigger to issue interrupt and ADC start of conversion at every 5th CMPC match event when timer is incrementing
+    */
+    int32_t error = 0, diffA =0 , diffB = 0;
+    gAdc_ISR1_count = 0;
+    gAdc_ISR2_count = 0;
+    gnumIsrCnt = 0;
+    //----------------------------------------Configuring the Interrupt---------------------------------------------------------------
+    /* Register & enable interrupt */
+    /* setting up epwm interrupt to route through int xbar 0*/
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 0, ( 1<<i ), 0, 0, 0, 0, 0, 0);
 
-    int32_t error = 0;
+    uint32_t status = SemaphoreP_constructBinary(&gEpwmSyncSemObject, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = (CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_0);
+    hwiPrms.callback    = &Adc_epwmIntrISR;
+    hwiPrms.args        = (void *)base;
+    hwiPrms.isPulse     = 1;
+    status              = HwiP_construct(&gEpwmHwiObject, &hwiPrms);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* setting up ADCINT1 to route through int xbar 1*/
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 1, 0, 0,(INT_XBAR_ADC0_INT1),0, 0, 0, 0);
+
+    /* Initialising a Interrupt parameter
+     * setting up the interrupt, callbacks.*/
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_1;
+    hwiPrms.callback    = &Adc_IntrISR1;
+    hwiPrms.isPulse     = 1;
+    status              = HwiP_construct(&gAdcHwiObject1, &hwiPrms);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* setting up ADCINT2 to route through int xbar 2*/
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 2, 0, 0,(INT_XBAR_ADC0_INT2),0, 0, 0, 0);
+
+    /* Initialising a Interrupt parameter
+     * setting up the interrupt, callbacks.*/
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_2;
+    hwiPrms.callback    = &Adc_IntrISR2;
+    hwiPrms.isPulse     = 1;
+    status              = HwiP_construct(&gAdcHwiObject2, &hwiPrms);
+    DebugP_assert(status == SystemP_SUCCESS);
+    //---------------------------------------------------------------------------------------------------------------------------------
+
+    /* configuring EPWM */
+    uint16_t prescale = 5;
+    util_EPWM_setup_adc_trigger(base, EPWM_SOC_A, EPWM_INT_TBCTR_U_CMPC, prescale);
+    util_EPWM_setup_adc_trigger(base, EPWM_SOC_B, EPWM_INT_TBCTR_U_CMPC, prescale);
+    util_setEPWMTB(base, EPWM_EMULATION_FREE_RUN, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1, 1000, EPWM_COUNTER_MODE_STOP_FREEZE);
+    EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_C, 300);
+    EPWM_setInterruptSource(base, EPWM_INT_TBCTR_PERIOD, EPWM_INT_TBCTR_PERIOD);
+    EPWM_setInterruptEventCount(base, 1);
+    EPWM_clearEventTriggerInterruptFlag(base);
     EPWM_enableInterrupt(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_INTEN_MASK) >> CSL_EPWM_ETSEL_INTEN_SHIFT, 0x1);
 
-	EPWM_setInterruptSource(base, EPWM_INT_TBCTR_ZERO, EPWM_INT_TBCTR_ZERO);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_INTSEL_MASK) >> CSL_EPWM_ETSEL_INTSEL_SHIFT, EPWM_INT_TBCTR_ZERO);
+    /* configuring ADC */
+    uint32_t adc_instance = 0;
+    util_adc_reset(adc_instance);
+    util_adc_init_configure_soc_source(adc_instance, i);
 
-	EPWM_setInterruptEventCount(base, 15);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETPS)
-    & CSL_EPWM_ETPS_INTPSSEL_MASK) >> CSL_EPWM_ETPS_INTPSSEL_SHIFT, CSL_EPWM_ETPS_INTPSSEL_MAX);
+    EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP);  /* Start the counter */
+    while(gnumIsrCnt < 10)
+    {
+        SemaphoreP_pend(&gEpwmSyncSemObject, SystemP_WAIT_FOREVER);
+    }
+    EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_STOP_FREEZE);  /* Stop the counter */
 
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETINTPS)
-    & CSL_EPWM_ETINTPS_INTPRD2_MASK) >> CSL_EPWM_ETINTPS_INTPRD2_SHIFT, 15);
+    diffA = gnumIsrCnt - 5 * gAdc_ISR1_count;
+    diffB = gnumIsrCnt - 5 * gAdc_ISR2_count;
 
-    EPWM_enableInterruptEventCountInit(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK) >> CSL_EPWM_ETCNTINITCTL_INTINITEN_SHIFT, 0x1);
+    if(enableLog)
+    {
+        DebugP_log("gnumIsrCnt = %d, gAdc_ISR1_count = %d, gAdc_ISR2_count = %d\r\n ", gnumIsrCnt, gAdc_ISR1_count, gAdc_ISR2_count);
+        DebugP_log("diffA = %d, diffB = %d\r\n ", diffA, diffB);
+    }
 
-	EPWM_setInterruptEventCountInitValue(base, 0xC);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_INTINIT_MASK) >> CSL_EPWM_ETCNTINIT_INTINIT_SHIFT, 0xC);
-
-	EPWM_enableADCTrigger(base, EPWM_SOC_A);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCAEN_MASK) >> CSL_EPWM_ETSEL_SOCAEN_SHIFT, 0x1);
-
-	EPWM_setADCTriggerSource(base, EPWM_SOC_A, EPWM_SOC_TBCTR_PERIOD, EPWM_SOC_TBCTR_PERIOD);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCASEL_MASK) >> CSL_EPWM_ETSEL_SOCASEL_SHIFT, EPWM_SOC_TBCTR_PERIOD);
-
-	EPWM_setADCTriggerEventPrescale(base, EPWM_SOC_A, 7);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSOCPS)
-    & CSL_EPWM_ETSOCPS_SOCAPRD2_MASK) >> CSL_EPWM_ETSOCPS_SOCAPRD2_SHIFT, 7);
-
-	EPWM_enableADCTriggerEventCountInit(base, EPWM_SOC_A);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK) >> CSL_EPWM_ETCNTINITCTL_SOCAINITEN_SHIFT, CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MAX);
-
-	EPWM_setADCTriggerEventCountInitValue(base, EPWM_SOC_A, 10);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_SOCAINIT_MASK) >> CSL_EPWM_ETCNTINIT_SOCAINIT_SHIFT, 0xA);
-
-	EPWM_forceADCTriggerEventCountInit(base, EPWM_SOC_A);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSOCPS)
-    & CSL_EPWM_ETSOCPS_SOCACNT2_MASK) >> CSL_EPWM_ETSOCPS_SOCACNT2_SHIFT,
-    (HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_SOCAINIT_MASK) >> CSL_EPWM_ETCNTINIT_SOCAINIT_SHIFT);
-
-	EPWM_enableADCTrigger(base, EPWM_SOC_B);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCBEN_MASK) >> CSL_EPWM_ETSEL_SOCBEN_SHIFT, 0x1);
-
-	EPWM_setADCTriggerSource(base, EPWM_SOC_B, EPWM_SOC_TBCTR_D_CMPA, EPWM_SOC_TBCTR_D_CMPA);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCBSEL_MASK) >> CSL_EPWM_ETSEL_SOCBSEL_SHIFT, EPWM_SOC_TBCTR_D_CMPA);
-
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCBSELCMP_MASK) >> CSL_EPWM_ETSEL_SOCBSELCMP_SHIFT, 0x0);
-
-	EPWM_setADCTriggerEventPrescale(base, EPWM_SOC_B, 9);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSOCPS)
-    & CSL_EPWM_ETSOCPS_SOCBPRD2_MASK) >> CSL_EPWM_ETSOCPS_SOCBPRD2_SHIFT, 9);
-
-	EPWM_enableADCTriggerEventCountInit(base, EPWM_SOC_B);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK) >> CSL_EPWM_ETCNTINITCTL_SOCBINITEN_SHIFT, CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MAX);
-
-	EPWM_setADCTriggerEventCountInitValue(base, EPWM_SOC_B, 5);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_SOCBINIT_MASK) >> CSL_EPWM_ETCNTINIT_SOCBINIT_SHIFT, 5);
-
-	EPWM_forceADCTriggerEventCountInit(base, EPWM_SOC_B);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSOCPS)
-    & CSL_EPWM_ETSOCPS_SOCBCNT2_MASK) >> CSL_EPWM_ETSOCPS_SOCBCNT2_SHIFT,
-    (HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_SOCBINIT_MASK) >> CSL_EPWM_ETCNTINIT_SOCBINIT_SHIFT);
-
-    //*************************************De-initializing*************************************//
-    EPWM_disableInterrupt(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_INTEN_MASK) >> CSL_EPWM_ETSEL_INTEN_SHIFT, 0x0);
-
-    EPWM_disableInterruptEventCountInit(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK), 0x0);
-
-    EPWM_disableADCTrigger(base, EPWM_SOC_A);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCAEN_MASK) >> CSL_EPWM_ETSEL_SOCAEN_SHIFT, 0x0);
-
-    EPWM_disableADCTrigger(base, EPWM_SOC_B);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_SOCAEN_MASK) >> CSL_EPWM_ETSEL_SOCAEN_SHIFT, 0x0);
-
-    EPWM_disableADCTriggerEventCountInit(base, EPWM_SOC_B);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK) >> CSL_EPWM_ETCNTINITCTL_SOCBINITEN_SHIFT, 0x0);
-
-    EPWM_disableADCTriggerEventCountInit(base, EPWM_SOC_A);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK) >> CSL_EPWM_ETCNTINITCTL_SOCAINITEN_SHIFT, 0x0);
-
-    /*util_deinit_epwms(i);*/
+    if( diffA > 1 || diffB > 1)
+    {
+        error++;
+    }
     //****************************************************************************************//
+    HwiP_destruct(&gEpwmHwiObject);
+    HwiP_destruct(&gAdcHwiObject1);
+    HwiP_destruct(&gAdcHwiObject2);
+    SemaphoreP_destruct(&gEpwmSyncSemObject);
+    util_deinit_epwms(i);
+    util_adc_reset(adc_instance);
+
     if(error==0)
     {
         if(enableLog)
@@ -3417,40 +3505,138 @@ int32_t AM263x_EPWM_xTR_0036(uint32_t base, uint32_t i)
         return 1;
     }
 }
+void util_EPWM_setup_int_trigger(uint32_t epwm_base, uint32_t trigger_source, uint16_t prescale)
+{
+    if(trigger_source != EPWM_INT_TBCTR_ETINTMIX)
+    {
+        EPWM_setInterruptSource(epwm_base, trigger_source, 0);
+    }
+    else
+    {
+        EPWM_setInterruptSource(epwm_base, EPWM_INT_TBCTR_ETINTMIX, 0x3FF);  // Select all the sources
+    }
+    EPWM_setInterruptEventCount(epwm_base, prescale);
+    EPWM_clearEventTriggerInterruptFlag(epwm_base);
+    EPWM_enableInterrupt(epwm_base);
+}
 /* EPWM_generation_of_adc_soc_and_cpu_interrupt_on_all_events */
 int32_t AM263x_EPWM_xTR_0037(uint32_t base, uint32_t i)
 {
-    //TBD
-    int32_t error=0;
+    /* Iterating through all the sources for triggering Interrupt from EPWM and triggering SOCA and SOCB.
+       EPWM to generate interrupt on occurence of an event and the same event is used to trigger SOCA and SOCB.
+       After doing all the configurations, the EPWM counter is allowed to count for 1 period cycle.
+       Inside EPWM ISR we maintain a counter to check the number of times interrupt has been issued which implies
+       the number of times the event has occured in the duration of 1 TBPRD (after 1 TBPRD we stop the counter and disable interrupts and SOCs).
+       Similarly, on the ADC side, on EOCA and EOCB, ADC generates interrupts and their corresponding ISRs also increment their
+       respective counters.
+       At the end of one Period, we compare deviation in the counters incremented inside both EPWM and ADC ISRs. They shouldn't be
+       differing by more than 1 as the events triggering all interrupts are same.
+    */
 
-    EPWM_enableInterrupt(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_INTEN_MASK) >> CSL_EPWM_ETSEL_INTEN_SHIFT, 0x1);
+    int32_t error=0, itr, adc_event, int_event, diffA =0 , diffB = 0;
 
-	EPWM_setInterruptSource(base, EPWM_INT_TBCTR_ETINTMIX, EPWM_INT_TBCTR_ETINTMIX);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETSEL)
-    & CSL_EPWM_ETSEL_INTSEL_MASK) >> CSL_EPWM_ETSEL_INTSEL_SHIFT, EPWM_INT_TBCTR_ETINTMIX);
-    TEST_ASSERT_EQUAL_INT32(HW_RD_REG16(base + CSL_EPWM_ETINTMIXEN), EPWM_INT_TBCTR_ETINTMIX);
+    //----------------------------------------Configuring the Interrupt---------------------------------------------------------------
+    /* Register & enable interrupt */
+    /* setting up epwm interrupt to route through int xbar 0*/
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 0, ( 1<<i ), 0, 0, 0, 0, 0, 0);
 
-	EPWM_setInterruptEventCount(base, 6);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETINTPS)
-    & CSL_EPWM_ETINTPS_INTPRD2_MASK) >> CSL_EPWM_ETINTPS_INTPRD2_SHIFT, 6);
+    uint32_t status = SemaphoreP_constructBinary(&gEpwmSyncSemObject, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-	EPWM_enableInterruptEventCountInit(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)
-    & CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK) >> CSL_EPWM_ETCNTINITCTL_INTINITEN_SHIFT, CSL_EPWM_ETCNTINITCTL_INTINITEN_MAX);
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = (CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_0);
+    hwiPrms.callback    = &Adc_epwmIntrISR;
+    hwiPrms.args        = (void *)base;
+    hwiPrms.isPulse     = 1;
+    status              = HwiP_construct(&gEpwmHwiObject, &hwiPrms);
+    DebugP_assert(status == SystemP_SUCCESS);
 
-	EPWM_setInterruptEventCountInitValue(base, 11);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_INTINIT_MASK) >> CSL_EPWM_ETCNTINIT_INTINIT_SHIFT, 0xB);
+    /* setting up ADCINT1 to route through int xbar 1*/
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 1, 0, 0,(INT_XBAR_ADC0_INT1),0, 0, 0, 0);
 
-	EPWM_forceInterruptEventCountInit(base);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_ETINTPS)
-    & CSL_EPWM_ETINTPS_INTCNT2_MASK) >> CSL_EPWM_ETINTPS_INTCNT2_SHIFT,
-    (HW_RD_REG16(base + CSL_EPWM_ETCNTINIT)
-    & CSL_EPWM_ETCNTINIT_INTINIT_MASK) >> CSL_EPWM_ETCNTINIT_INTINIT_SHIFT);
+    /* Initialising a Interrupt parameter
+     * setting up the interrupt, callbacks.*/
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_1;
+    hwiPrms.callback    = &Adc_IntrISR1;
+    hwiPrms.isPulse     = 1;
+    status              = HwiP_construct(&gAdcHwiObject1, &hwiPrms);
+    DebugP_assert(status == SystemP_SUCCESS);
 
-    util_deinit_epwms(i);
+    /* setting up ADCINT2 to route through int xbar 2*/
+    SOC_xbarSelectInterruptXBarInputSource(CSL_CONTROLSS_INTXBAR_U_BASE, 2, 0, 0,(INT_XBAR_ADC0_INT2),0, 0, 0, 0);
+
+    /* Initialising a Interrupt parameter
+     * setting up the interrupt, callbacks.*/
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_2;
+    hwiPrms.callback    = &Adc_IntrISR2;
+    hwiPrms.isPulse     = 1;
+    status              = HwiP_construct(&gAdcHwiObject2, &hwiPrms);
+    DebugP_assert(status == SystemP_SUCCESS);
+    //---------------------------------------------------------------------------------------------------------------------------------
+
+
+    /* configuring EPWM */
+    uint32_t int_trigger_sources[11] = {EPWM_INT_TBCTR_ZERO, EPWM_INT_TBCTR_PERIOD, EPWM_INT_TBCTR_U_CMPA,
+                        EPWM_INT_TBCTR_U_CMPC, EPWM_INT_TBCTR_D_CMPA, EPWM_INT_TBCTR_D_CMPC,
+                        EPWM_INT_TBCTR_U_CMPB, EPWM_INT_TBCTR_U_CMPD, EPWM_INT_TBCTR_D_CMPB,
+                        EPWM_INT_TBCTR_D_CMPD, EPWM_INT_TBCTR_ETINTMIX};
+
+    uint32_t adc_soc_sources[12] = {EPWM_SOC_TBCTR_ZERO, EPWM_SOC_TBCTR_PERIOD, EPWM_SOC_TBCTR_U_CMPA,
+                        EPWM_SOC_TBCTR_U_CMPC, EPWM_SOC_TBCTR_D_CMPA, EPWM_SOC_TBCTR_D_CMPC,
+                        EPWM_SOC_TBCTR_U_CMPB, EPWM_SOC_TBCTR_U_CMPD, EPWM_SOC_TBCTR_D_CMPB,
+                        EPWM_SOC_TBCTR_D_CMPD, EPWM_SOC_TBCTR_MIXED_EVENT, EPWM_SOC_DCxEVT1};
+
+    /* configuring ADC */
+    uint32_t adc_instance = 0;
+    util_adc_reset(adc_instance);
+    util_adc_init_configure_soc_source(adc_instance, i);
+
+    for(itr = 0 ; itr < 11; itr++)
+    {
+        gAdc_ISR1_count = 0;
+        gAdc_ISR2_count = 0;
+        gnumIsrCnt = 0;
+
+        util_setEPWMTB(base, EPWM_EMULATION_FREE_RUN, EPWM_CLOCK_DIVIDER_128, EPWM_HSCLOCK_DIVIDER_14, 65535, EPWM_COUNTER_MODE_STOP_FREEZE);
+        util_setEPWMCC(base, 15000, 25000);
+        EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_C, 35000);
+        EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_D, 45000);
+
+        int_event = int_trigger_sources[itr];
+        adc_event = adc_soc_sources[itr];
+
+        if(enableLog)
+        {
+            DebugP_log("---------------------------Event is %d---------------------------\r\n", int_event);
+        }
+
+        util_EPWM_setup_adc_trigger(base, EPWM_SOC_A, adc_event, 1);
+        util_EPWM_setup_adc_trigger(base, EPWM_SOC_B, adc_event, 1);
+        util_EPWM_setup_int_trigger(base, int_event, 1);
+
+        EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP_DOWN);  /* Start the counter */
+        ClockP_usleep(1200000); //Wait for ~1 TBPRD
+
+        EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_STOP_FREEZE);  /* Stop the counter */
+
+        diffA = abs(gnumIsrCnt - gAdc_ISR1_count);
+        diffB = abs(gnumIsrCnt - gAdc_ISR2_count);
+
+        if(enableLog)
+        {
+            DebugP_log("gnumIsrCnt = %d, gAdc_ISR1_count = %d, gAdc_ISR2_count = %d\r\n ", gnumIsrCnt, gAdc_ISR1_count, gAdc_ISR2_count);
+            DebugP_log("diffA = %d, diffB = %d\r\n ", diffA, diffB);
+        }
+
+        if(diffA > 1 || diffB > 1)
+        {
+            error++;
+        }
+
+        util_deinit_epwms(i);
+    }
 
     if(error==0)
     {
