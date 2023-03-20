@@ -45,8 +45,6 @@
  * number of times the keys are pressed and exits.
  */
 
-/*GPIO Board button switch number */
-#define BOARD_BUTTON_GPIO_SWITCH_NUM    (5)
 
 uint32_t            gGpioBaseAddr = GPIO_PUSH_BUTTON_BASE_ADDR;
 HwiP_Object         gGpioHwiObject;
@@ -56,7 +54,8 @@ static void GPIO_bankIsrFxn(void *args);
 
 extern void Board_gpioInit(void);
 extern void Board_gpioDeinit(void);
-
+extern uint32_t Board_getGpioButtonIntrNum(void);
+extern uint32_t Board_getGpioButtonSwitchNum(void);
 
 void gpio_input_interrupt_main(void *args)
 {
@@ -74,8 +73,8 @@ void gpio_input_interrupt_main(void *args)
     DebugP_log("GPIO Interrupt Configured for Rising Edge (Button release will trigger interrupt) ...\r\n");
 
     pinNum          = GPIO_PUSH_BUTTON_PIN;
-    intrNum         = GPIO_PUSH_BUTTON_INTR_NUM;
-    buttonNum       = BOARD_BUTTON_GPIO_SWITCH_NUM;
+    intrNum         = Board_getGpioButtonIntrNum();
+    buttonNum       = Board_getGpioButtonSwitchNum();
 
     /* Address translate */
     gGpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(gGpioBaseAddr);
