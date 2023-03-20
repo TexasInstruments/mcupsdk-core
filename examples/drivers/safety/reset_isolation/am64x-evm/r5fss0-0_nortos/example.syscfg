@@ -24,7 +24,7 @@ const mpu_armv76 = mpu_armv7.addInstance();
  */
 gpio1.$name                = "GPIO_PUSH_BUTTON";
 gpio1.trigType             = "RISE_EDGE";
-gpio1.advanced             = true;
+gpio1.enableIntr           = true;
 gpio1.intrOut              = "8";
 gpio1.GPIO.$assign         = "GPIO1";
 gpio1.GPIO.gpioPin.$assign = "ball.C13";
