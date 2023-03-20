@@ -1570,13 +1570,13 @@ int8_t AM263x_EPWM_xTR_0005(uint32_t dummy)
     uint8_t i;
     int32_t error=0;
 
-    for(i = 0 ; i< 5; i++)
+    for(i = 0 ; i< 31; i++)
     {
         uint32_t base = CSL_CONTROLSS_G0_EPWM0_U_BASE + i * 0x1000;
 
         if(!(i%2))
         {
-            /* EPWM0 links to EPWM1, EPWM2 links to EPWM3 and EPWM4 links to EPWM5 */
+            /* EPWM0 links to EPWM1, EPWM2 links to EPWM3 and EPWM4 links to EPWM5 and so on.. */
             EPWM_setupEPWMLinks(base, i+1, EPWM_LINK_TBPRD);
             EPWM_setupEPWMLinks(base, i+1, EPWM_LINK_COMP_A);
             EPWM_setupEPWMLinks(base, i+1, EPWM_LINK_COMP_B);
@@ -1584,21 +1584,21 @@ int8_t AM263x_EPWM_xTR_0005(uint32_t dummy)
         else
         {
             /* Calling these APIs will simultaneously write to corresponding regsiters of the EPWM it is linked to.
-            Eg: EPWM0_TBPRD will get tb_clk_vector[i/2][3] = 0xFFFF as it's linked to EPWM1. */
-            EPWM_setTimeBasePeriod(base, tb_clk_vector[i/2][2]);
-            EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_A, cc_values_vector[i/2]);
-            EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_B, cc_values_vector[ (i/2 + 1 )%3]);
+            Eg: EPWM0_TBPRD will get 0xFEDC as it's linked to EPWM1. */
+            EPWM_setTimeBasePeriod(base, 0xFEDC);
+            EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_A, 0xABCD);
+            EPWM_setCounterCompareValue(base, EPWM_COUNTER_COMPARE_B, 0x9876);
 
-            TEST_ASSERT_EQUAL_INT32(HW_RD_REG16(base - 0x1000 + CSL_EPWM_TBPRD), tb_clk_vector[i/2][2]);
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG16(base - 0x1000 + CSL_EPWM_TBPRD), 0xFEDC);
             TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(base - 0x1000 + CSL_EPWM_CMPA)
-            & 0xFFFF0000) >> 0x10 , cc_values_vector[i/2]);
+            & 0xFFFF0000) >> 0x10 , 0xABCD);
             TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(base - 0x1000 + CSL_EPWM_CMPB)
-            & 0xFFFF0000) >> 0x10 , cc_values_vector[ (i/2 + 1 )%3]);
+            & 0xFFFF0000) >> 0x10 , 0x9876);
         }
     }
     //*************************************De-initializing*************************************//
 
-    for(i=0; i<5 ; i++)
+    for(i=0; i<32 ; i++)
     {
         /*util_deinit_epwms(i);*/
         uint32_t base = CSL_CONTROLSS_G0_EPWM0_U_BASE + i * 0x1000;
@@ -3006,28 +3006,142 @@ int32_t AM263x_EPWM_xTR_0019(uint32_t base)
 /*  EPWM_epwmxlinkxload_feature */
 int32_t AM263x_EPWM_xTR_0020(uint32_t base)
 {
-    //TBD
-    int32_t error=0;
-    EPWM_setupEPWMLinks(CSL_CONTROLSS_G0_EPWM0_U_BASE, EPWM_LINK_WITH_EPWM_27, EPWM_LINK_XLOAD);
-    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(CSL_CONTROLSS_G0_EPWM0_U_BASE + CSL_EPWM_EPWMXLINKXLOAD), EPWM_LINK_WITH_EPWM_27);
+    /*
+    ePWMs are grouped into odd and even. Initally all are configured with some value
+    in TBPRD, CMP and XTBPRD and XCMP.
+    The even ePWMs will be linked to their immediate next odd ePWMs.
+    So writing 1 to XLOAD_STARTLD of odd ePWMs will simultaneously write to the
+    even ones.
+    Setting XLOAD_STARTLD means triggering the loading from shadow to active registers.
+    We check this functionality by testing the value of active registers once BEFORE forcing this
+    reload event in the odd ePWMs and once AFTER the forcing.
+    BEFORE forcing odd ePWMs, even ePWMs should have XTBPRD_ACTIVE --> TBPRD and XCMP1_ACTIVE --> CMPA.
+    AFTER forcing odd ePWMs, even ePWMs should have XTBPRD_SHDWx --> TBPRD and XCMP1_SHDWx --> CMPA.
+    */
 
-    EPWM_setupEPWMLinks(CSL_CONTROLSS_G0_EPWM0_U_BASE, EPWM_LINK_WITH_EPWM_0, EPWM_LINK_XLOAD);
-    /* util_deinit_epwms(); */
+    int32_t i, j, error=0, shdwlevel;
+
+    for(i = 0 ; i< 32; i++)
+    {
+        uint32_t base = CSL_CONTROLSS_G0_EPWM0_U_BASE + i * 0x1000;
+        EPWM_setTimeBasePeriod(base, 3); //The shadow to active loading occurs 3 cycles before CNT_ZERO event
+        EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP);
+
+        EPWM_enableXCMPMode(base);
+        EPWM_allocAXCMP(base, EPWM_XCMP_1_CMPA);
+        EPWM_setXCMPLoadMode(base, EPWM_XCMP_XLOADCTL_LOADMODE_LOADONCE);
+        EPWM_setXCMPShadowLevel(base, EPWM_XCMP_XLOADCTL_SHDWLEVEL_3);
+        EPWM_setXCMPShadowRepeatBufxCount(base, EPWM_XCMP_SHADOW3, 1);
+        EPWM_setXCMPShadowRepeatBufxCount(base, EPWM_XCMP_SHADOW2, 1);
+
+        for(shdwlevel = 0; shdwlevel <= 3*(EPWM_XCMP1_SHADOW2-EPWM_XCMP1_SHADOW1); shdwlevel+=(EPWM_XCMP1_SHADOW2-EPWM_XCMP1_SHADOW1))
+        {
+            uint16_t cmp_val = 100*(shdwlevel + 10 + EPWM_XCMP1_ACTIVE); //equation to generate some random value
+            uint16_t tbprd_val = 100*(shdwlevel + 10 + EPWM_XTBPRD_ACTIVE); //equation to generate some random value
+            EPWM_setXCMPRegValue(base,(shdwlevel + EPWM_XCMP1_ACTIVE), cmp_val);
+            EPWM_setXCMPRegValue(base,(shdwlevel + EPWM_XTBPRD_ACTIVE), tbprd_val);
+        }
+
+        if(i%2 == 0)  //Link the even instances to odd ones
+            EPWM_setupEPWMLinks(base, i+1, EPWM_LINK_XLOAD);
+    }
+
+    ClockP_usleep(1000);
+
+    /* Check the value of the active registers for the even ePWMs*/
+    if(enableLog)
+    {
+        DebugP_log("***************** For Active register set *****************\r\n");
+    }
+
+    for(i = 0 ; i< 32; i+=2)
+    {
+        shdwlevel= 0;
+        uint16_t expected_cmp_val = 100*(shdwlevel + 10 + EPWM_XCMP1_ACTIVE);
+        uint16_t expected_tbprd_val = 100*(shdwlevel + 10 + EPWM_XTBPRD_ACTIVE);
+        uint32_t base = CSL_CONTROLSS_G0_EPWM0_U_BASE + i * 0x1000;
+        uint16_t tbprd = EPWM_getTimeBasePeriod(base);
+        uint16_t cmpA = EPWM_getCounterCompareValue(base, EPWM_COUNTER_COMPARE_A);
+        if(enableLog)
+        {
+            DebugP_log("EPWM %u, Expected TBPRD = %u , observed TBPRD = %u, Expected CMPA = %u , Observed CMPA = %u \r\n",
+                i, expected_tbprd_val, tbprd, expected_cmp_val, cmpA);
+        }
+        if( tbprd != expected_tbprd_val )
+        {
+            error++;
+        }
+        if( cmpA != expected_cmp_val)
+        {
+            error++;
+        }
+    }
+
+    if(enableLog)
+    {
+        DebugP_log("***************** For Shadow register set *****************\r\n");
+    }
+
+    /* start reload event */
+    for(i = 1 ; i< 32; i+=2)
+    {
+        uint32_t odd_base = CSL_CONTROLSS_G0_EPWM0_U_BASE + i * 0x1000;
+        uint32_t even_base = CSL_CONTROLSS_G0_EPWM0_U_BASE + (i-1) * 0x1000;
+
+        /*Setting XLOAD_STARTLD bit of odd ePWMs will also write 1 to the
+        corresponding even ePWMs being linked to
+        */
+
+        for(j = 3; j>=1; j--)
+        {
+            EPWM_setXCMPShadowBufPtrLoadOnce(even_base, j);
+            EPWM_enableXLoad(odd_base);
+
+            /* Check the value of the active registers of even ePWMs to see
+            if the shadow to active loading has happened on each reload event triggered in odd ePWMs*/
+            {
+                shdwlevel = j *(EPWM_XCMP1_SHADOW2-EPWM_XCMP1_SHADOW1);
+                uint16_t expected_cmp_val = 100*(shdwlevel + 10 + EPWM_XCMP1_ACTIVE);
+                uint16_t expected_tbprd_val = 100*(shdwlevel + 10 + EPWM_XTBPRD_ACTIVE);
+                ClockP_usleep(1000);
+                uint16_t tbprd = EPWM_getTimeBasePeriod(even_base);
+                uint16_t cmpA = EPWM_getCounterCompareValue(even_base, EPWM_COUNTER_COMPARE_A);
+                if(enableLog)
+                {
+                    DebugP_log("EPWM %u, Expected TBPRD = %u , observed TBPRD = %u, Expected CMPA = %u , Observed CMPA = %u \r\n",
+                (i-1), expected_tbprd_val, tbprd, expected_cmp_val, cmpA);
+                }
+
+                if( tbprd != expected_tbprd_val )
+                {
+                    error++;
+                }
+                if(cmpA != expected_cmp_val)
+                {
+                    error++;
+                }
+            }
+        }
+        if(enableLog)
+        {
+            DebugP_log("**************************************************\r\n");
+        }
+        util_deinit_epwms(i-1);
+        util_deinit_epwms(i);
+    }
+
+
 
     if(error==0)
     {
-        if(enableLog)
-        {
-            DebugP_log("\r\nPass");
-        }
+        if(enableLog) DebugP_log("\r\nPass");
+
         return 0;
     }
     else
     {
-        if(enableLog)
-        {
-            DebugP_log("\r\nFail");
-        }
+        if(enableLog) DebugP_log("\r\nFail");
+
         return 1;
     }
 }
