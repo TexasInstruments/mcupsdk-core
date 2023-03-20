@@ -23,10 +23,21 @@ Use Cases
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | m4fss0-0 nortos
+ CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/sdl/stog/
+ Example folder | examples/sdl/stog_r5f/
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/stog_r5f/
 
 \endcond
 
@@ -52,6 +63,8 @@ Use Cases
 TOG Sample Example
 
 Init MCU ESM complete
+
+Init MAIN ESM complete
 
 SDL_TOG_setIntrEnable complete
 

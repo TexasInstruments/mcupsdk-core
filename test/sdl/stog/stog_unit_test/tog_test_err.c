@@ -502,6 +502,16 @@ static int32_t TOG_errNegativeTest(uint32_t instanceIndex)
             testResult = -1;
         }
     }
+
+    if (testResult == 0)
+    {
+        sdlResult = SDL_TOG_getBaseaddr(SDL_TOG_INSTANCE_TIMEOUT0_CFG, NULL);
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("\n  SDL_TOG_getBaseaddr negative test failed on line no: %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
     return (testResult);
 }
 

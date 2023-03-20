@@ -634,72 +634,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Dfu Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_dfu",
-        "location": "../../examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "boot",
-            "sbl_dfu",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Sbl Dfu Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_dfu",
-        "location": "../../examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_LAUNCHPAD"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "boot",
-            "sbl_dfu",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Sbl Dfu Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_dfu_uniflash",
         "location": "../../examples/drivers/boot/sbl_dfu_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -749,6 +683,72 @@
             "drivers",
             "boot",
             "sbl_dfu_uniflash",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Dfu Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_dfu",
+        "location": "../../examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_dfu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Dfu Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_dfu",
+        "location": "../../examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_dfu",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -12412,6 +12412,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_stog_r5f",
+        "location": "../../examples/sdl/stog_r5f/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog_r5f",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_stog_r5f",
+        "location": "../../examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog_r5f",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ipc Notify Echo System Example.",
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am243x-evm/system_freertos_nortos/system.projectspec",
@@ -13016,6 +13080,35 @@
             "device",
             "cdc_echo",
             "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) System project.",
+        "name": "sdl_stog_r5f",
+        "location": "../../examples/sdl/stog_r5f/am243x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog_r5f",
+            "system_nortos"
         ],
         "mainCategories": [
             [

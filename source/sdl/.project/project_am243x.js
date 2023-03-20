@@ -2,7 +2,7 @@ let path = require('path');
 
 let device = "am243x";
 
-const files = {
+const files_r5f = {
     common: [
         "sdl_dpl.c",
         "sdl_esm.c",
@@ -10,12 +10,14 @@ const files = {
         "sdl_esm_core.c",
         "sdl_esm_priv.c",
         "sdl_ip_vtm.c",
-		"sdl_vtm_pvt_sensor.c",
-		"sdl_vtm.c",
-		"sdl_soc_vtm.c",
+    		"sdl_vtm_pvt_sensor.c",
+    		"sdl_vtm.c",
+    		"sdl_soc_vtm.c",
+        "sdl_ip_tog.c",
+        "sdl_tog.c",
+        "sdl_soc_tog.c",
     ],
 };
-
 const filedirs = {
     common: [
         "dpl",
@@ -27,6 +29,9 @@ const filedirs = {
         "vtm",
         "vtm/v0",
         "vtm/v0/soc/am243x",
+        "stog/v0",
+        "stog/v0/soc",
+        "stog/v0/soc/am243x",
     ],
 };
 
@@ -57,8 +62,8 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
-    build_property.files = files;
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.files = files_r5f;
         build_property.defines = r5_macro;
     }
 

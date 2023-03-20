@@ -32,7 +32,7 @@ const component_file_list = [
     "source/networking/icss_emac/lwipif/.project/project.js",
     "source/networking/icss_timesync/.project/project.js",
     "source/pru_io/.project/project.js",
-	"source/sdl/.project/project.js",
+	  "source/sdl/.project/project.js",
     "source/security/.project/project.js",
     "source/usb/cdn/.project/project_nortos.js",
     "source/usb/cdn/.project/project_freertos.js",
@@ -118,7 +118,7 @@ const example_file_list = [
     "examples/drivers/safety/reset_isolation_ipc/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
     "examples/drivers/sciclient/sciclient_set_boardcfg/.project/project.js",
-	"examples/drivers/sciclient/sciclient_ccs_init/.project/project",
+	  "examples/drivers/sciclient/sciclient_ccs_init/.project/project",
     "examples/drivers/uart/uart_echo/.project/project.js",
     "examples/drivers/uart/uart_echo_callback/.project/project.js",
     "examples/drivers/uart/uart_echo_dma/.project/project.js",
@@ -255,6 +255,9 @@ const example_file_list = [
     "examples/pru_io/adc/ads127/firmware/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",
     "examples/pru_io/mdio_fw/.project/project.js",
+    "examples/sdl/stog_r5f/.project/project.js",
+    "test/sdl/stog/stog_func_test_r5f/.project/project.js",
+    "test/sdl/stog/stog_unit_test/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {
