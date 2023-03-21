@@ -111,6 +111,19 @@ typedef struct EfuseRead_t_
 
 /**
  * @brief
+ * This is a EfuseRowWrite type which holds the information
+ * regarding programming eFuse row.
+ */
+typedef struct EfuseRowWrite_t_
+{
+    uint32_t  rowData ;           /** Data to be written in eFuse row **/
+    uint32_t  rowBitMask ;        /** Bit mask to apply to eFuse row data bits **/
+    uint8_t   rowIdx ;            /** Index of eFuse row. **/
+    uint8_t   rsvd[3];            /** Reserved **/
+} EfuseRowWrite_t;
+
+/**
+ * @brief
  * This is a EfuseRowCount type which holds the information
  * regarding eFuse row count and size of each row in bits.
  */
@@ -129,9 +142,10 @@ typedef struct EfuseRowCount_t_
  */
 typedef struct EfuseRowProt_t_
 {
-    uint8_t  rowidx ;       /** Index of eFuse row. **/
-    uint8_t  rowProt ;      /** Row protection information to be written or read from an eFuse row **/
-    uint8_t  rsvd[2];       /** Reserved **/
+    uint8_t  rowidx ;         /** Index of eFuse row. **/
+    uint8_t  readProt ;       /** Read row protection information used in getting or setting an eFuse row protection **/
+    uint8_t  writeProt ;      /** Write row protection information used in getting or setting an eFuse row protection **/
+    uint8_t  rsvd[1];         /** Reserved **/
 } EfuseRowProt_t ;
 
 /**
@@ -224,6 +238,36 @@ int32_t HsmClient_openDbgFirewall(HsmClient_t* HsmClient,
  */
 int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
                                         EfuseRead_t* readRow);
+
+/**
+ * @brief
+ *  The service issued to HSM Server writes the data to extended
+ *  OTP efuse row based on row index provided as param.
+ *
+ * @param HsmClient  [IN] HsmClient object.
+ * @param writeRow   [IN] populates EfuseRowWrite_t struct with rowData
+ *                       corresponding to rowIdx.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_writeOTPRow(HsmClient_t* HsmClient,
+                                        EfuseRowWrite_t* writeRow);
+
+/**
+ * @brief
+ *  The service issued to HSM Server sets the protection status bit of
+ *  the specified row to 1.
+ *
+ * @param HsmClient [IN] HsmClient object.
+ * @param rowProt   [IN] Pointer to EfuseRowProt_t struct which contains
+ *                       the row index and row protection status
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_lockOTPRow(HsmClient_t* HsmClient,
+                                        EfuseRowProt_t* rowProt);
 
 /**
  * @brief
