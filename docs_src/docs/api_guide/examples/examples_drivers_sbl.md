@@ -13,6 +13,7 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
    -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_DFU_UNIFLASH
+   -# \subpage EXAMPLES_DRIVERS_SBL_DFU
    \cond SOC_AM64X
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI_LINUX
    -# \subpage EXAMPLES_DRIVERS_SBL_EMMC_LINUX

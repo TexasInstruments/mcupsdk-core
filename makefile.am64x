@@ -161,6 +161,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/crc/crc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/crc/crc_full_cpu/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ddr/ddr_ecc_test_main_esm/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1616,6 +1617,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  sbl_dfu_uniflash_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sbl_dfu_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  crc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/crc/crc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3135,6 +3139,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sbl_dfu_uniflash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ sbl_dfu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  crc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/crc/crc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -4653,6 +4660,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sbl_dfu_uniflash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ sbl_dfu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  crc_full_cpu_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/crc/crc_full_cpu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -5755,6 +5765,7 @@ sbl: libs
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -5776,6 +5787,7 @@ sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -5797,6 +5809,7 @@ sbl-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -5818,6 +5831,7 @@ sbl-hs:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 
@@ -5839,6 +5853,7 @@ sbl-hs-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 
@@ -5860,6 +5875,7 @@ sbl-hs-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 

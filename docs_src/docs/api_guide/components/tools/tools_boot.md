@@ -292,7 +292,67 @@ and waits for 5 seconds before running the application binary
   Connect to UART in 2 seconds to see logs from UART !!!
   \endcode
 
+
+\cond SOC_AM243X || SOC_AM64X 
+
+## USB Bootloader Python Script {#USB_BOOTLOADER}
+
+- This script is used in DFU boot mode for sending the SBL and appimage binaries to the EVM via USB DFU. 
+- Make sure that \ref INSTALL_DFU_UTIL tool is installed properly and the DFU enumeration is verified. 
+- Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
+- Change the boot mode to DFU boot mode \ref EVM_SETUP_PAGE
+- **POWER cycle the EVM**
+- Open a command prompt and run the below command to send the SBL and application binary to the EVM
+  \code
+  cd ${SDK_INSTALL_PATH}/tools/boot
+  python usb_bootloader.py --bootloader=sbl_prebuilt/{board}/sbl_dfu.release.hs_fs.tiimage --file=< path to multicore appimage of application binary
+  \endcode
+- When you execute this, the script first sends the SBL USB bootloader, and then the multicore appimage
+- Connect to the UART terminal to see the booting information 
+- Below are the logs of the script after all the files have been sent
+
+\code 
+	INFO: Bootloader_loadSelfCpu:207: CPU r5f0-0 is initialized to 800000000 Hz !!!
+	INFO: Bootloader_loadSelfCpu:207: CPU r5f0-1 is initialized to 800000000 Hz !!!
+	[BOOTLOADER_PROFILE] Boot Media       : USB DFU
+	[BOOTLOADER_PROFILE] Boot Image Size  : 114 KB
+	[BOOTLOADER_PROFILE] Cores present    :
+	m4f0-0
+	r5f1-0
+	r5f1-1
+	r5f0-0
+	r5f0-1
+	[BOOTLOADER PROFILE] CPU load                         :     200191us
+	[BOOTLOADER_PROFILE] SBL Total Time Taken             :     200192us
+
+	Image loading done, switching to application ...
+	INFO: Bootloader_runCpu:155: CPU m4f0-0 is initialized to 400000000 Hz !!!
+	INFO: Bootloader_runCpu:155: CPU r5f1-0  is initialized to 800000000 Hz !!!
+	INFO: Bootloader_runCpu:155: CPU r5f1-1 is initialized to 800000000 Hz !!!
+	INFO: Bootloader_runSelfCpu:217: All done, reseting self ...
+
+	[IPC NOTIFY ECHO] Message exchange started by main core !!!
+	[m4f0-0]     0.030020s : [IPC NOTIFY ECHO] Remote Core waiting for messages from main core ... !!!
+	[r5f0-1]     0.002099s : [IPC NOTIFY ECHO] Remote Core waiting for messages from main core ... !!!
+	[r5f0-1]     2.338054s : [IPC NOTIFY ECHO] Remote core has echoed all messages !!!
+	[r5f1-0]     0.022147s : [IPC NOTIFY ECHO] Remote Core waiting for messages from main core ... !!!
+	[r5f1-0]     2.358900s : [IPC NOTIFY ECHO] Remote core has echoed all messages !!!
+	[r5f1-1]     0.015147s : [IPC NOTIFY ECHO] Remote Core waiting for messages from main core ... !!!
+	[r5f1-1]     2.351658s : [IPC NOTIFY ECHO] Remote core has echoed all messages !!!
+	[IPC NOTIFY ECHO] All echoed messages received by main core from 4 remote cores !!!
+	[IPC NOTIFY ECHO] Messages sent to each core = 1000000
+	[IPC NOTIFY ECHO] Number of remote cores = 4
+	All tests have passed!!
+	[m4f0-0]     3.568946s : [IPC NOTIFY ECHO] Remote core has echoed all messages !!!
+\endcode
+
+- Refer \ref EXAMPLES_DRIVERS_SBL_DFU
+
+\endcond
+
+
 \cond SOC_AM64X
+
 ## Linux Appimage Generator Tool {#LINUX_APPIMAGE_GEN_TOOL}
 
 - This tool generates a Linux Appimage by taking the Linux binaries (ATF, OPTEE, SPL) as input and generates a Linux appimage containing the input Linux binaries.

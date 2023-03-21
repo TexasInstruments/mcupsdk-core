@@ -37,7 +37,7 @@ This example is more or less like a **flashing server, and will never terminate 
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_uart_uniflash
+ Example folder | examples/drivers/boot/sbl_dfu_uniflash
 
 \endcond
 
@@ -48,7 +48,7 @@ This example is more or less like a **flashing server, and will never terminate 
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/boot/sbl_uart_uniflash
+ Example folder | examples/drivers/boot/sbl_dfu_uniflash
 
 \endcond
 
@@ -61,12 +61,14 @@ Since this is mainly a flash-writer application, **this is sent via the USB DFU*
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 
-
 # See Also
 
 \ref DRIVERS_BOOTLOADER_PAGE
+
 \ref TOOLS_FLASH_DFU_UNIFLASH. 
+
 \ref TOOLS_FLASH 
+
 \ref GETTING_STARTED_FLASH_DFU
 
 # Sample Output
