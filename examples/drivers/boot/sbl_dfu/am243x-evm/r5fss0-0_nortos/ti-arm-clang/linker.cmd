@@ -24,6 +24,12 @@ SECTIONS
     .bss:    {} palign(8) > MSRAM_1
     RUN_START(__BSS_START)
     RUN_END(__BSS_END)
+	
+	/* memory location of DFU context data struct */ 
+	.bss._dfu_ctx: {} align(8) > MSRAM_1
+	RUN_START(__DFU_CTX_START)
+	RUN_END(__DFU_CTX_END)
+
     .sysmem: {} palign(8) > MSRAM_1
     .stack:  {} palign(8) > MSRAM_1
     GROUP {

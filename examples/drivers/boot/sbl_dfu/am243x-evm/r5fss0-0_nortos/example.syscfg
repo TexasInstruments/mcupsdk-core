@@ -27,10 +27,11 @@ const tinyusb1    = tinyusb.addInstance();
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_0";
 
-debug_log.enableCssLog      = false;
-debug_log.enableLogZoneInfo = true;
-debug_log.enableUartLog     = true;
-debug_log.uartLog.$name     = "CONFIG_UART0";
+debug_log.enableCssLog       = false;
+debug_log.enableUartLog      = true;
+debug_log.enableLogZoneInfo  = true;
+debug_log.uartLog.$name      = "CONFIG_UART0";
+debug_log.uartLog.intrEnable = "DISABLE";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

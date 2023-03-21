@@ -30,7 +30,8 @@ bootloader1.$name     = "CONFIG_BOOTLOADER_0";
 debug_log.enableCssLog         = false;
 debug_log.enableLogZoneInfo    = true;
 debug_log.enableUartLog        = true;
-debug_log.uartLog.$name        = "CONFIG_UART1";
+debug_log.uartLog.intrEnable   = "DISABLE";
+debug_log.uartLog.$name        = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign = "USART0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";

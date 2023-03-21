@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,9 +49,6 @@
 
 #define MANIFEST_DONE     (0xA1) 
 #define MANIFEST_PENDING  (0xB2) 
-#define MANIFEST_ERROR    (0xC3) 
-#define DETACH_NOT_RECV   (0x55) 
-#define DETACH_RECV       (0xAA) 
 
 #define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x60000) /* Size of section MSRAM_2 specified in linker.cmd */
 uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
@@ -65,12 +62,34 @@ uint32_t recvFileSize = 0 ;
 /* flag to indicate manifest done or not */ 
 uint8_t gManifestDone = MANIFEST_PENDING; 
 
-uint8_t gDetachFlag = DETACH_NOT_RECV ; 
+extern char __DFU_CTX_START, __DFU_CTX_END ; 
+
+/* TinyUSB dfu context struct */ 
+typedef struct
+{
+  uint8_t attrs;
+  uint8_t alt;
+
+  dfu_state_t state;
+  dfu_status_t status;
+
+  bool flashing_in_progress;
+  uint16_t block;
+  uint16_t length;
+
+  CFG_TUSB_MEM_ALIGN uint8_t transfer_buf[CFG_TUD_DFU_XFER_BUFSIZE];
+} dfu_state_ctx_t;
+
+/* This pointer will point to the DFU state machine context variable 
+ * The _dfu_ctx defined in TinyUSB DFU class driver is a static variable 
+ * and we need to identify the state of DFU state machine after the manifest stage 
+ * is completed. */ 
+dfu_state_ctx_t *dfu_ctx = (dfu_state_ctx_t*)(&__DFU_CTX_START);
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
  */
-
 void loop_forever(void)
 {
     volatile uint32_t loop = 1;
@@ -81,26 +100,16 @@ void loop_forever(void)
 /* Main DFU task */ 
 int dfu_task(void)
 {
-	/* 1s delay */ 
-	uint32_t maxTics = 800000000;
-	uint32_t startTicks = CycleCounterP_getCount32(); 
-	uint32_t endTicks = CycleCounterP_getCount32() ;
-
-    while ( (endTicks - startTicks) < maxTics) 
+    while (1) 
     {
 	    cusbd_dsr(); /* Cadence DSR task */
         tud_task(); /* tinyusb device task */
 		
-		/* If this condition occurs wait for 10ms to complete the reset sequence */ 
-		if(gManifestDone == MANIFEST_DONE && gDetachFlag == DETACH_RECV)
+		/* Remain in this forever loop till DFU manifest stage is complete
+		 * and then the device return DFU state = DFU_IDLE and status = DFU_STATUS_OK */ 
+		if(gManifestDone == MANIFEST_DONE && dfu_ctx->state == DFU_IDLE ) 
 		{
-			endTicks = CycleCounterP_getCount32(); 
-		}
-		else 
-		{
-			/* prevent overflow */ 
-			startTicks = CycleCounterP_getCount32(); 
-			endTicks = CycleCounterP_getCount32() ;  	
+			break ; 
 		}
     }
     return 0;
@@ -135,15 +144,18 @@ int main(void)
     Bootloader_socNotifyFirewallOpen();
 
     System_init();
+	
     Drivers_open();
 
     status = Board_driversOpen();
+
     DebugP_assert(status == SystemP_SUCCESS);
 	
 
 	/* exit once DFU download is completed */ 
 	dfu_task() ; 
 
+    Bootloader_profileReset();
 	Bootloader_BootImageInfo bootImageInfo;
 	Bootloader_Params bootParams;
 	Bootloader_Handle bootHandle;
@@ -169,17 +181,20 @@ int main(void)
 			if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
 			{
 				bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_M4FSS0_0);
+				Bootloader_profileAddCore(CSL_CORE_ID_M4FSS0_0);
 				status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_M4FSS0_0]);
 			}
 		}
 		if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
 		{
 			bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
+			Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
 			status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
 		}
 		if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
 		{
 			bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
+			Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
 			status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
 		}
 
@@ -189,13 +204,24 @@ int main(void)
 			bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
 			bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
 
+			Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
 			/* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
 			status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
 			if((status == SystemP_SUCCESS) && (TRUE == Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
 			{
+				Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
 				status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
 			}
 		}
+
+		Bootloader_profileAddProfilePoint("CPU load");
+		Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+		Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_USB,0);
+
+		Bootloader_profileAddProfilePoint("SBL End");
+		Bootloader_profilePrintProfileLog();
+		DebugP_log("Image loading done, switching to application ...\r\n");
+		UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
 
 		/* Run CPUs */
 		/* Do not run M4 when MCU domain is reset isolated */
@@ -289,11 +315,3 @@ void tud_dfu_manifest_cb(uint8_t alt)
 	tud_dfu_finish_flashing(DFU_STATUS_OK);
 }
 
-/* Invoked when a DFU_DETACH request is received */ 
-void tud_dfu_detach_cb(void)
-{
-	/* Set a flag to indicate that detach is received */ 
-	/* so that SBL and go ahead and boot the received appimage */ 
-	gDetachFlag = DETACH_RECV ; 
-	
-}
