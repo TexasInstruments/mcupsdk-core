@@ -82,6 +82,7 @@ extern "C"
 #define BOOTLOADER_MEDIA_SD        (0xB0070004)
 #define BOOTLOADER_MEDIA_BUFIO     (0xB0070005)
 #define BOOTLOADER_MEDIA_PCIE      (0xB0070006)
+#define BOOTLOADER_MEDIA_USB       (0xB0070007)
 
 /**
  * \brief Handle to the Bootloader driver returned by Bootloader_open()

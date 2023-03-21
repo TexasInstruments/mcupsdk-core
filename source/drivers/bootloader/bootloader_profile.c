@@ -170,9 +170,9 @@ void Bootloader_profilePrintProfileLog(void)
         case BOOTLOADER_MEDIA_SD:
             bootMediaName = "SD Card";
             break;
-        case BOOTLOADER_MEDIA_PCIE:
-            bootMediaName = "PCIE";
-            break;
+        case BOOTLOADER_MEDIA_USB:
+            bootMediaName = "USB DFU";
+			break ;
         default:
             bootMediaName = "undefined";
             break;
