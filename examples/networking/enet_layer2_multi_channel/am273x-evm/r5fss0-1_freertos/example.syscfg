@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM273x" --package "NZN" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -66,15 +66,14 @@ mpu_armv76.attributes = "NonCached";
 enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
 enet_cpsw1.LargePoolPktCount               = 96;
 enet_cpsw1.txDmaChannel.create(2);
-enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
-enet_cpsw1.txDmaChannel[1].$name           = "ENET_DMA_TX_CH_PTP";
+enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH_PTP";
+enet_cpsw1.txDmaChannel[1].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel.create(2);
-enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
-enet_cpsw1.rxDmaChannel[1].$name           = "ENET_DMA_RX_CH_PTP";
-enet_cpsw1.rxDmaChannel[1].AllocMacAddr    = false;
+enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH_PTP";
+enet_cpsw1.rxDmaChannel[0].AllocMacAddr    = false;
+enet_cpsw1.rxDmaChannel[1].$name           = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].phyToMacInterfaceMode = "MSS_RGMII";
-
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

@@ -104,6 +104,9 @@ extern "C" {
 /** \brief VLAN tag's Tag Protocol Identifier (TPID) */
 #define ETHERTYPE_VLAN_TAG              (0x8100U)
 
+/** \brief PTP V2 Protocol Identifier */
+#define ETHERTYPE_PTP_V2_FRAME_TYPE     (0x88F7U)
+
 /** \brief MAC address length in bytes */
 #define ETH_MAC_ADDR_LEN              (6U)
 

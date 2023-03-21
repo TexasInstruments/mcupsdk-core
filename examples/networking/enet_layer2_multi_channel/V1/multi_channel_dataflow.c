@@ -197,13 +197,13 @@ static void EnetApp_addMCastEntry(Enet_Handle hEnet,
 int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
 {
     EnetApp_GetDmaHandleInArgs     txRegularInArgs;
-    EnetApp_GetTxDmaHandleOutArgs  txRegularChInfo; 
+    EnetApp_GetTxDmaHandleOutArgs  txRegularChInfo;
     EnetApp_GetDmaHandleInArgs     txPtpInArgs;
-    EnetApp_GetTxDmaHandleOutArgs  txPtpChInfo; 
+    EnetApp_GetTxDmaHandleOutArgs  txPtpChInfo;
     EnetApp_GetDmaHandleInArgs     rxRegularInArgs;
-    EnetApp_GetRxDmaHandleOutArgs  rxRegularChInfo; 
+    EnetApp_GetRxDmaHandleOutArgs  rxRegularChInfo;
     EnetApp_GetDmaHandleInArgs     rxPtpInArgs;
-    EnetApp_GetRxDmaHandleOutArgs  rxPtpChInfo; 
+    EnetApp_GetRxDmaHandleOutArgs  rxPtpChInfo;
     int32_t status = ENET_SOK;
 
     txRegularInArgs.cbArg    = NULL;
@@ -256,7 +256,7 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
             status = EnetDma_enableTxEvent(perCtxt->hTxPtpCh);
         }
     }
-    
+
 
     /*Opening RX  flow for frames*/
     if (status == ENET_SOK)
@@ -268,7 +268,7 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
                               &rxRegularInArgs,
                               &rxRegularChInfo);
 
- 
+
         perCtxt->rxChNum = rxRegularChInfo.rxChNum;
         perCtxt->hRxCh   = rxRegularChInfo.hRxCh;
         EnetAppUtils_assert(rxRegularChInfo.macAddressValid == true);
@@ -365,7 +365,7 @@ void EnetApp_closeDma(EnetApp_PerCtxt *perCtxt)
     EnetAppUtils_freePktInfoQ(&fqPktInfoQ);
     EnetAppUtils_freePktInfoQ(&cqPktInfoQ);
     EnetAppUtils_freePktInfoQ(&gEnetApp.txFreePktInfoQ);
-	
+
 	/* Close PTP TX channel */
     EnetQueue_initQ(&fqPktInfoQ);
     EnetQueue_initQ(&cqPktInfoQ);
@@ -390,10 +390,10 @@ void EnetApp_initTxFreePktQ(EnetDma_PktQ *freePktInfoQ, uint32_t txCh)
     EnetDma_Pkt *pPktInfo;
     uint32_t i;
     uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
-    const uint32_t txChNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] = 
+    const uint32_t txChNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] =
                               {
-                                  [ENET_DMA_TX_CH0] = ENET_DMA_TX_CH0_NUM_PKTS, 
-                                  [ENET_DMA_TX_CH_PTP] =  ENET_DMA_TX_CH_PTP_NUM_PKTS 
+                                  [ENET_DMA_TX_CH0] = ENET_DMA_TX_CH0_NUM_PKTS,
+                                  [ENET_DMA_TX_CH_PTP] =  ENET_DMA_TX_CH_PTP_NUM_PKTS
                               };
 
     /* Initialize TX EthPkts and queue them to freePktInfoQ */
@@ -421,10 +421,10 @@ void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh, uint32_t rxCh)
     uint32_t i;
     int32_t status;
     uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
-    const uint32_t rxChNumPkts[ENET_SYSCFG_RX_FLOWS_NUM] = 
+    const uint32_t rxChNumPkts[ENET_SYSCFG_RX_FLOWS_NUM] =
                               {
-                                  [ENET_DMA_RX_CH0]    = ENET_DMA_RX_CH0_NUM_PKTS, 
-                                  [ENET_DMA_RX_CH_PTP] =  ENET_DMA_RX_CH_PTP_NUM_PKTS 
+                                  [ENET_DMA_RX_CH0]    = ENET_DMA_RX_CH0_NUM_PKTS,
+                                  [ENET_DMA_RX_CH_PTP] =  ENET_DMA_RX_CH_PTP_NUM_PKTS
                               };
 
 
@@ -832,7 +832,7 @@ int32_t EnetApp_addPTPMcastAddr(EnetApp_PerCtxt *perCtxt)
         EnetAppUtils_print("EnetApp_addPTPMcastAddr() failed CPSW_ALE_IOCTL_ADD_MCAST: %d\n",
                            status);
     }
-	
+
     return status;
 }
 
@@ -870,7 +870,7 @@ int32_t EnetApp_setCpswAleClassifier(EnetApp_PerCtxt *perCtxt,
         dfltThreadCfg.dfltThreadEn = true;
         dfltThreadCfg.threadId     = dfltThreadId;
         ENET_IOCTL_SET_IN_ARGS(&prms, &dfltThreadCfg);
-        
+
         ENET_IOCTL(perCtxt->hEnet,
                 gEnetApp.coreId,
                 CPSW_ALE_IOCTL_SET_DEFAULT_THREADCFG,
@@ -982,9 +982,18 @@ int32_t EnetApp_getPtpFrame(EnetApp_PerCtxt* enet_perctxt,
                                     ENET_PKTSTATE_APP_WITH_FREEQ);
 
             rxFrame = (EthFrame *)pktInfo->sgList.list[0].bufPtr;
-            *size = pktInfo->sgList.list[0].segmentFilledLen;
-            memcpy(frame, rxFrame, *size);
-            *rxPort = (uint8_t)pktInfo->rxPortNum;
+
+            if(rxFrame->hdr.etherType == Enet_htons(ETHERTYPE_PTP_V2_FRAME_TYPE))
+            {
+                *size = pktInfo->sgList.list[0].segmentFilledLen;
+                memcpy(frame, rxFrame, *size);
+                *rxPort = (uint8_t)pktInfo->rxPortNum;
+            }
+            else
+            {
+                *size = 0U;
+                status = TIMESYNC_FRAME_NOT_AVAILABLE;
+            }
 
             /* Release the received packet */
             EnetQueue_enq(&rxFreeQ, &pktInfo->node);
