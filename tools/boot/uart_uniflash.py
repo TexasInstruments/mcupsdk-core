@@ -13,7 +13,11 @@ except ImportError:
     print('[ERROR] Dependant modules not installed, use below pip command to install them. MAKE sure proxy for pip is setup if needed.')
     print('')
     print('python -m pip install pyserial tqdm xmodem --proxy={http://your proxy server:port or leave blank if no proxy}')
-    sys.exit()
+    sys.exit(2)
+
+ERROR_BAD_ARGS      = 1
+ERROR_BAD_PORT      = 2
+ERROR_BAD_RESPONSE  = 3
 
 BOOTLOADER_UNIFLASH_BUF_SIZE                         = 1024*1024 # 1 MB This has to be a 256 KB aligned value, because flash writes will be block oriented
 BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
@@ -82,7 +86,7 @@ def open_serial_port(serial_port, baudrate, timeout=10):
         ser = serial.Serial(port=serial_port, baudrate=baudrate, timeout=10)
     except serial.serialutil.SerialException:
         print('[ERROR] Serial port [' + serial_port + '] not found or not accessible !!!')
-        sys.exit()
+        sys.exit(ERROR_BAD_PORT)
     return ser
 
 def close_serial_port(ser):
@@ -142,7 +146,7 @@ def create_temp_file(linecfg):
     # Determine the offset if applicable
     offset_val = rsv_word
     if(linecfg.optype not in ("flash-xip", "flashverify-xip", "flash-phy-tuning-data")):
-        offset_val = get_numword(linecfg.offset) 
+        offset_val = get_numword(linecfg.offset)
 
     # Determine the erase size if applicable
     erase_size_val = rsv_word
@@ -154,7 +158,7 @@ def create_temp_file(linecfg):
     if(linecfg.optype not in ("erase","flash-phy-tuning-data")):
         actual_file_size = os.path.getsize(linecfg.filename)
 
-    file_header = struct.pack(file_header_str, 
+    file_header = struct.pack(file_header_str,
                               BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER,
                               optypewords[linecfg.optype],
                               offset_val,
@@ -204,7 +208,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
     timetaken = 0
     if not os.path.exists(filename):
         print('[ERROR] File [' + filename + '] not found !!!')
-        sys.exit()
+        sys.exit(ERROR_BAD_ARGS)
 
     stream = open(filename, 'rb')
 
@@ -216,7 +220,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
         return ser.read(size) or None
 
     def putc(data, timeout=1):
-        bar.update(len(data))  
+        bar.update(len(data))
         bar.refresh()
         return ser.write(data)
 
@@ -235,7 +239,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
         print("")
         print ("[ERROR] XMODEM send failed, no response OR incorrect response from EVM OR cancelled by user,")
         print ("Power cycle EVM and run this script again !!!")
-        sys.exit()
+        sys.exit(ERROR_BAD_RESPONSE)
 
     resp_status = 0
 
@@ -254,7 +258,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
             print("")
             print ("[ERROR] XMODEM recv failed, no response OR incorrect response from EVM OR cancelled by user,")
             print ("Power cycle EVM and run this script again !!!")
-            sys.exit()
+            sys.exit(ERROR_BAD_RESPONSE)
 
     close_serial_port(ser)
 
@@ -350,7 +354,7 @@ def main(argv):
     my_parser.add_argument('--cfg', required=False, help=g_cfg_file_description)
 
     args = my_parser.parse_args()
-    
+
     serialport = args.serial_port
     config_file = args.cfg
     cmdlinecfg.filename = args.file
@@ -363,7 +367,7 @@ def main(argv):
         # Check if file exists
         if not os.path.exists(config_file):
             print('[ERROR] Configuration file [' + config_file + '] not found !!!')
-            sys.exit()
+            sys.exit(ERROR_BAD_ARGS)
 
         print("")
         print("Parsing config file ...")
@@ -372,7 +376,7 @@ def main(argv):
 
         if(parse_status != 0):
             print(parse_status)
-            sys.exit()
+            sys.exit(ERROR_BAD_ARGS)
         else:
             # No errors, can proceed to flash
             print("Parsing config file ... SUCCESS. Found {} command(s) !!!".format(len(filecfg.cfgs)))
@@ -398,7 +402,7 @@ def main(argv):
                     f_size = 0
                     if linecfg.filename is not None:
                         f_size = os.path.getsize(linecfg.filename)
-                    
+
                     if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE) and (linecfg.optype in ["flash", "flashverify"])):
                         # Send by parts
                         status, timetaken = send_file_by_parts(linecfg, serialport)
@@ -427,7 +431,7 @@ def main(argv):
         if(status != 0):
             print(status)
             if(cmdlinecfg.exit_now == True):
-                sys.exit(2)
+                sys.exit(ERROR_BAD_ARGS)
         # If flash writer was found, send it first
         if(cmdlinecfg.found_flashwriter_cmd == True):
             print("Found flash writer ... sending {}".format(cmdlinecfg.flashwriter))
