@@ -82,6 +82,7 @@ mpu_armv75.attributes = "NonCached";
 enet_cpsw1.$name                            = "CONFIG_ENET_CPSW0";
 enet_cpsw1.BoardType                        = "am263x-lp";
 enet_cpsw1.DisableMacPort2                  = true;
+enet_cpsw1.hostportRxCsumOffloadEn          = false; /* Due to a AM263x SOC HW errata, checksum offload on Rx side is disabled */
 enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";

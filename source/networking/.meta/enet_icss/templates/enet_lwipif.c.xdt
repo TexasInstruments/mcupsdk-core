@@ -164,6 +164,8 @@ void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const 
 {
     if(netifIdx < ENET_SYSCFG_NETIF_COUNT)
     {
+        /* Enable all Flags. */
+        const uint32_t lwIPChcksumSetFlags = (NETIF_CHECKSUM_ENABLE_ALL);
         netif_add(&gNetif[netifIdx],
                     ipaddr, 
                     netmask,
@@ -181,6 +183,8 @@ void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const 
         {
             netif_set_default(&gNetif[netifIdx]);
         }
+        NETIF_SET_CHECKSUM_CTRL(&gNetif[netifIdx], lwIPChcksumSetFlags);
+
     }
     else
     {

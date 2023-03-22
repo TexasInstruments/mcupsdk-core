@@ -379,7 +379,7 @@ extern "C"
 /* Enables ARP*/
 #define LWIP_ARP			  1
 
-/* Checksum on copy from app buffers to pbufs, boosts performance */
+/* Checksum on copy from app buffers to pbufs, boosts performance. It is set to zero as checksum offload is not enabled on both Rx and Tx side.*/
 #define LWIP_CHECKSUM_ON_COPY			0
 
 /* Enable Checksum ctrl per netif */

@@ -59,10 +59,17 @@ const enet_cpsw_hostport_config = {
             default: false,
         },
         {
-            name: "hostportcsumOffloadEn",
-            longDescription: "Enable checksum offload feature which allows TCP/UDP checksum computation to be offloaded to the CPSW for frames transmitted by any core. The Protocol specific info needs to be populated in the descriptor to indicate the location in the packet where the computed checksum should be inserted",
+            name: "hostportTxCsumOffloadEn",
+            longDescription: "Enable checksum offload feature which enables both TCP/UDP checksum computation (transmit side) and validation (receive side) to be offloaded to the CPSW HW. The Protocol specific info needs to be populated in the descriptor to indicate the location in the packet where the computed checksum should be inserted",
             displayName: "Enable Checksum Offload",
             default: true,
+        },
+        {
+            name: "hostportRxCsumOffloadEn",
+            longDescription: "(Not used in AM243x and AM64x. Hence hidden)",
+            displayName: "Enable Checksum Offload",
+            default: true,
+            hidden: true,
         },
         {
             name: "hostportRxVlanRemapEn",

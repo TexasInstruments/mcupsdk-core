@@ -379,15 +379,11 @@ extern "C"
 /* Enables ARP*/
 #define LWIP_ARP			  1
 
-/* Enables Checksum Offload */
-#define LWIP_CHECKSUM_CTRL_PER_NETIF    1
-#define CHECKSUM_CHECK_UDP              0
-#define CHECKSUM_CHECK_TCP              0
-#define CHECKSUM_GEN_UDP                0
-#define CHECKSUM_GEN_TCP                0
+/* Checksum on copy from app buffers to pbufs, boosts performance. It is set to zero as checksum offload is not enabled on both Rx and Tx side.*/
+#define LWIP_CHECKSUM_ON_COPY			0
 
-/* Checksum on copy from app buffers to pbufs, boosts performance */
-#define LWIP_CHECKSUM_ON_COPY			((CHECKSUM_CHECK_UDP == 1) || (CHECKSUM_CHECK_TCP == 1) || (CHECKSUM_GEN_UDP == 1) || (CHECKSUM_GEN_TCP == 1))
+/* Enable Checksum ctrl per netif */
+#define LWIP_CHECKSUM_CTRL_PER_NETIF    1
 
 /* Enables a routine to be called when netif is deleted. Used to close CPSW*/
 #define LWIP_NETIF_REMOVE_CALLBACK      1

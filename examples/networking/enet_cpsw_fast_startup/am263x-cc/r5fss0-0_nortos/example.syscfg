@@ -79,6 +79,7 @@ enet_cpsw1.macOnlyEn_macPort1           = true;
 enet_cpsw1.macOnlyEn_macPort2           = true;
 enet_cpsw1.isStrappedPhy1               = true;
 enet_cpsw1.isStrappedPhy2               = true;
+enet_cpsw1.hostportRxCsumOffloadEn      = false; /* Due to a AM263x SOC HW errata, checksum offload on Rx side is disabled */
 enet_cpsw1.txDmaChannel[0].$name        = "ENET_DMA_TX_CH0";
 enet_cpsw1.txDmaChannel[0].PacketsCount = 5;
 enet_cpsw1.rxDmaChannel[0].$name        = "ENET_DMA_RX_CH0";

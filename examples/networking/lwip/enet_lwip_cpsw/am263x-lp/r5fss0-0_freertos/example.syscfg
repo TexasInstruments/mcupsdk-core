@@ -86,6 +86,7 @@ enet_cpsw1.LargePoolPktCount                = 32;
 enet_cpsw1.macOnlyEn_hostPort               = true;
 enet_cpsw1.macOnlyEn_macPort1               = true;
 enet_cpsw1.macOnlyEn_macPort2               = true;
+enet_cpsw1.hostportRxCsumOffloadEn          = false; /* Due to a AM263x SOC HW errata, checksum offload on Rx side is disabled */
 enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";

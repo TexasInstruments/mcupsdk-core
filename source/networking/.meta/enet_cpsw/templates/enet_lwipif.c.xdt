@@ -1,8 +1,44 @@
 %%{
     let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
-%%}
-% let instance = module.$instances[0];
+    let instance = module.$instances[0];
+    let common = system.getScript("/common");
+    let device = common.getDeviceName();
+    let soc = common.getSocName();
 
+    function getLwipChecksumDisableFlags(instance)
+    {
+        let disableFlag = '0U';
+        if ((soc === "am273x") || (soc === "awr294x"))
+        {
+            // checksum offload is not supported on AM273x and AWR294x
+            console.log(soc)
+            disableFlag = '0U';
+        }
+        else
+        {
+           if (instance.hostportTxCsumOffloadEn == true)
+           {
+                disableFlag = disableFlag + ' | NETIF_CHECKSUM_GEN_TCP | NETIF_CHECKSUM_GEN_UDP';
+                if ((soc === "am64x") || (soc === "am243x"))
+                {
+                    // On AM243x and AM64x, txCsumOffload enables Checksum offload on both the Rx and Tx side 
+                    disableFlag = disableFlag + ' | NETIF_CHECKSUM_CHECK_TCP | NETIF_CHECKSUM_CHECK_UDP';
+                }
+            }
+
+            if (instance.hostportRxCsumOffloadEn == true)
+            {
+                if ((soc !== "am64x") && (soc !== "am243x"))
+                {
+                    // On AM243x and AM64x, rxCsumOffload is not used. txCsumOffload enables Checksum offload on both the Rx and Tx side.
+                    disableFlag = disableFlag + ' | NETIF_CHECKSUM_CHECK_TCP | NETIF_CHECKSUM_CHECK_TCP';
+                }
+            }
+        }
+        return disableFlag;
+    }
+
+%%}
 %if(module.getNetifCount(instance) >= 1)
 %{
 /* ========================================================================== */
@@ -44,6 +80,12 @@
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+#if ENET_CFG_IS_ON(CPSW_CSUM_OFFLOAD_SUPPORT)
+#if !LWIP_CHECKSUM_CTRL_PER_NETIF
+#error "LWIP_CHECKSUM_CTRL_PER_NETIF is not set in lwipopts.h"
+#endif
+#endif
+
 #define ENETLWIP_PACKET_POLL_PERIOD_US (1000U)
 
 #define ENETLWIP_APP_POLL_PERIOD       (500U)
@@ -171,14 +213,15 @@ static void LwipifEnetApp_postRxPktEvent(void* pArg);
 static void LwipifEnetApp_postTxPktEvent(void* pArg);
 %}
 
-
 void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const ip4_addr_t *netmask, const ip4_addr_t *gw)
 {
     if(netifIdx < ENET_SYSCFG_NETIF_COUNT)
     {
 #if ENET_CFG_IS_ON(CPSW_CSUM_OFFLOAD_SUPPORT)
-        const uint32_t checksum_offload_flags = (NETIF_CHECKSUM_GEN_UDP | NETIF_CHECKSUM_GEN_TCP | NETIF_CHECKSUM_CHECK_TCP | NETIF_CHECKSUM_CHECK_UDP);
-        const uint32_t checksum_flags = (NETIF_CHECKSUM_ENABLE_ALL & ~checksum_offload_flags);
+
+        /* Enable all Flags except below checksumflags. */
+        const uint32_t lwIPChcksumDisableFlags = `getLwipChecksumDisableFlags(instance)`;
+        const uint32_t lwIPChcksumSetFlags = (NETIF_CHECKSUM_ENABLE_ALL & ~lwIPChcksumDisableFlags);
 #endif
         netif_add(&gNetif[netifIdx],
                     ipaddr, 
@@ -198,7 +241,7 @@ void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const 
             netif_set_default(&gNetif[netifIdx]);
         }
 #if ENET_CFG_IS_ON(CPSW_CSUM_OFFLOAD_SUPPORT)
-       NETIF_SET_CHECKSUM_CTRL(&gNetif[netifIdx], checksum_flags);
+        NETIF_SET_CHECKSUM_CTRL(&gNetif[netifIdx], lwIPChcksumSetFlags);
 #endif
     }
     else
