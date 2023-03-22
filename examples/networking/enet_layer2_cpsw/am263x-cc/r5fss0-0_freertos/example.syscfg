@@ -18,6 +18,7 @@ const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
 const mpu_armv73 = mpu_armv7.addInstance();
 const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
 const enet_cpsw  = scripting.addModule("/networking/enet_cpsw/enet_cpsw", {}, false);
 const enet_cpsw1 = enet_cpsw.addInstance();
 
@@ -56,6 +57,11 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
+
+mpu_armv75.$name      = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr   = 0x70080000;
+mpu_armv75.size       = 14;
+mpu_armv75.attributes = "NonCached";
 
 enet_cpsw1.$name                 = "CONFIG_ENET_CPSW0";
 enet_cpsw1.DisableMacPort2       = true;

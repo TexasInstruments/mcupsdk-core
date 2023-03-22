@@ -66,7 +66,10 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 
-mpu_armv75.$name = "CONFIG_MPU_REGION4";
+mpu_armv75.$name      = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr   = 0x70080000;
+mpu_armv75.size       = 14;
+mpu_armv75.attributes = "NonCached";
 
 enet_cpsw1.$name                        = "CONFIG_ENET_CPSW0";
 enet_cpsw1.LargePoolPktCount            = 10;
