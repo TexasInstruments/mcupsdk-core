@@ -12,8 +12,6 @@ const flash       = scripting.addModule("/board/flash/flash", {}, false);
 const flash1      = flash.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
-const ddr         = scripting.addModule("/drivers/ddr/ddr", {}, false);
-const ddr1        = ddr.addInstance();
 const mmcsd       = scripting.addModule("/drivers/mmcsd/mmcsd", {}, false);
 const mmcsd1      = mmcsd.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
@@ -36,8 +34,6 @@ flash1.peripheralDriver.dmaEnable = true;
 
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
-
-ddr1.$name = "CONFIG_DDR0";
 
 mmcsd1.$name        = "CONFIG_MMCSD0";
 mmcsd1.moduleSelect = "MMC0";
