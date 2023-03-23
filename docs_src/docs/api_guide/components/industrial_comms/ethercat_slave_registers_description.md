@@ -3534,8 +3534,7 @@ TI ESC is fully register compatible with ET1100 ASIC, for any exceptions to this
     <td> R/W
     <td> R/W
     <td> 0
-    <td> PDI ISR DIGIO pin selection register, selects one of pr1_edio_data_outN pins as PDI ISR hw pin, configure 255 to disable. Set corresponding bitmask to enable. Application needs to configure pinmux correctly for this to work. <br/>
-         **This feature is not available in SoCs with PRU-ICSSG**
+    <td> PDI ISR DIGIO pin selection register, selects one of pr1_edio_data_out(24+N), N=0-7 pins as PDI ISR hw pin, configure 255 to disable. Set corresponding bitmask to enable. Application needs to configure pinmux correctly for this to work. <br/>
 </tr>
 <tr>
     <td> PRU MII RX LINK Polarity

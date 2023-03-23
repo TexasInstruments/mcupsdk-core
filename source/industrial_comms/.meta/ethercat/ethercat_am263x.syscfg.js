@@ -43,6 +43,8 @@ function getInterfacePinList(inst, peripheralName)
     {
         pinList.push("PR0_IEP0_EDC_SYNC_OUT0");
         pinList.push("PR0_IEP0_EDC_SYNC_OUT1");
+        pinList.push("PR0_IEP0_EDIO_DATA_IN_OUT30");
+        pinList.push("PR0_IEP0_EDIO_DATA_IN_OUT31");
     }
     else
     {

@@ -332,6 +332,14 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-8983
+    <td> EtherCAT : EDIO pins for AL event is not supported in firmware.
+    <td> EtherCAT
+    <td> 7.3.0 onwards
+    <td> AM263x
+    <td> Fixed
+</tr>
 </table>
 
 

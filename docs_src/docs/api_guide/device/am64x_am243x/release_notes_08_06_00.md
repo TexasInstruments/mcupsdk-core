@@ -387,6 +387,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-8983
+    <td> EtherCAT : EDIO pins for AL event is not supported in firmware.
+    <td> EtherCAT
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
 </table>
 
 ## Known Issues

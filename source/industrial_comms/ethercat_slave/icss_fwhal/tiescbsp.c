@@ -495,7 +495,7 @@ inline void bsp_set_digio_out(PRUICSS_Handle pruIcssHandle, uint8_t num)
 {
     uint32_t regval;
     regval = HW_RD_REG32(((PRUICSS_HwAttrs *)(pruIcssHandle->hwAttrs))->iep0RegBase + CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_OUT_REG);
-    regval |= (1 << num);
+    regval |= (1 << (num+24));
     HW_WR_REG32(((PRUICSS_HwAttrs *)(pruIcssHandle->hwAttrs))->iep0RegBase + CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_OUT_REG, regval);
     ASSERT_DMB();
 
@@ -505,7 +505,7 @@ inline void bsp_clear_digio_out(PRUICSS_Handle pruIcssHandle, uint8_t num)
 {
     uint32_t regval;
     regval = HW_RD_REG32(((PRUICSS_HwAttrs *)(pruIcssHandle->hwAttrs))->iep0RegBase + CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_OUT_REG);
-    regval &= ~(1 << num);
+    regval &= ~(1 << (num + 24));
     HW_WR_REG32(((PRUICSS_HwAttrs *)(pruIcssHandle->hwAttrs))->iep0RegBase + CSL_ICSS_PR1_IEP0_SLV_DIGIO_DATA_OUT_REG, regval);
     ASSERT_DMB();
 
