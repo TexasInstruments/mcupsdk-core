@@ -216,7 +216,7 @@ typedef struct
     bool capture_mode_continuous;
     uint16_t wrap_capture;
     uint16_t prescaler;
-    /* todo add: qual_prd; */
+    uint16_t qual_prd;
     bool polarity[4];
     bool int_en;
     uint16_t int_source;
@@ -254,8 +254,8 @@ void util_ecap_config_reset(void)
     /* minimum prescale DIV_BY_1*/
     ecap_config_ptr->prescaler = PARAMS_RESET_VAL_PRESCALER;
 
-    /* TBD */
-    /* ecap_config_ptr->qual_prd ; */
+    /* reset value of qual period is byPass */
+    ecap_config_ptr->qual_prd = ECAP_PULSE_WIDTH_FILTER_BYPASS;
 
     /* all to the falling edge polarity */
     for (int iter = 0; iter < 4; iter++)
@@ -328,7 +328,7 @@ Info: Procedure to configure the peripheral modes and interrupts
 static void ECAP_setEventPrescalerApiCheck(void *args);
 static void ECAP_selection_of_sync_in_source(void *args);
 static void ECAP_high_resolution_functions_for_ecap(void *args);
-static void ECAP_capture_event_polarity(void *args);
+static void ECAP_input_evaluation_block(void *args);
 static void ECAP_capture_mode_tests(void *args);
 static void ECAP_add_additional_input_trigger_sources(void *args);
 static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args);
@@ -338,15 +338,17 @@ static void ECAP_selection_of_dma_trigger_source(void *args);
 int32_t test_ecap_cases(uint8_t in);
 
 /* ECAP util functions */
+void util_ecap_reset(uint16_t instance);
 void util_ecap_reset_all(void);
 void util_ecap_start_timestamp(uint16_t instance);
+void util_ecap_stop_timestamp(uint16_t instance);
 void util_ecap_configure(uint16_t instance);
 void util_ecap_deconfigure_and_reset(uint16_t instance);
 bool util_ecap_wait_for_interrupt(uint16_t instance);
 bool util_ecap_configure_input(void);
 bool util_activate_input_pulses(void);
 bool util_compare_in_range(int value1, int value2, int delta);
-int util_validate_input_events(uint16_t instance, bool check_flags);
+int util_validate_input_events(uint16_t instance, bool check_flags, int delta);
 
 /* ADC util funcitons */
 void util_adc_clear_interrupts(void);
@@ -391,6 +393,8 @@ int32_t AM263x_ECAP_BTR_003(uint16_t instance);
 int32_t AM263x_ECAP_BTR_004(uint16_t instance);
 int32_t AM263x_ECAP_BTR_005(uint16_t instance);
 int32_t AM263x_ECAP_BTR_006(void);
+int32_t AM263x_ECAP_BTR_007(uint16_t instance);
+
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -591,7 +595,7 @@ void test_main(void *args)
         {0, 3330,  ECAP_setEventPrescalerApiCheck,                         "ECAP_setEventPrescalerApiCheck"},
         {0, 9476,  ECAP_selection_of_dma_trigger_source,                   "ECAP_selection_of_dma_trigger_source"},
         {0, 7906,  ECAP_selection_of_soc_trigger_source,                   "ECAP_selection_of_soc_trigger_source"},
-        {0, 3403,  ECAP_capture_event_polarity,                            "ECAP_capture_event_polarity"},
+        {0, 3403,  ECAP_input_evaluation_block,                            "ECAP_input_evaluation_block"},
         {0, 3404,  ECAP_capture_mode_tests,                                "ECAP_capture_mode_tests"},
         {0, 3406,  ECAP_add_additional_input_trigger_sources,              "ECAP_add_additional_input_trigger_sources"},
         {0, 3407,  ECAP_support_interrupt_generation_on_either_of_4_events,"ECAP_support_interrupt_generation_on_either_of_4_events"},
@@ -626,6 +630,10 @@ void tearDown(void)
     util_ecap_reset_all();
 }
 
+void util_ecap_reset(uint16_t instance)
+{
+    SOC_generateEcapReset(instance);
+}
 void util_ecap_reset_all(void)
 {
     for (uint32_t instance = 0; instance < 10; instance++)
@@ -636,7 +644,8 @@ void util_ecap_reset_all(void)
 
 /* resets ecap. sets the config_ptr to given configuration */
 void util_ecap_configure(uint16_t instance)
-{
+{   
+    util_ecap_reset(instance);
     uint32_t base = ecap_base_addr[instance];
 
     /* Disables time stamp capture */
@@ -695,6 +704,7 @@ void util_ecap_configure(uint16_t instance)
 
         /* Select eCAP input */
         ECAP_selectECAPInput(base, ecap_config_ptr->input);
+        ECAP_selectQualPeriod(base, ecap_config_ptr->qual_prd);
     }
     /* Sets a phase shift value count */
     ECAP_setPhaseShiftCount(base, ecap_config_ptr->phase_shift_count);
@@ -706,14 +716,12 @@ void util_ecap_configure(uint16_t instance)
     /* Configures emulation mode */
     ECAP_setEmulationMode(base, ecap_config_ptr->emu_mode);
 
-
     /* Set up the source for sync-in pulse */
     ECAP_setSyncInPulseSource(base, ecap_config_ptr->sync_in_source);
 
     if((ecap_config_ptr->load_counter_en) == 0)
     {
-        /* Disable counter loading with phase shift vaSelect sync-in event to be the sync-out signal pass
-throughlue */
+        /* Disable counter loading with phase shift value when selected sync-in event occurs*/
         ECAP_disableLoadCounter(base);
     }
     else
@@ -738,6 +746,14 @@ void util_ecap_start_timestamp(uint16_t instance)
     uint32_t base = ecap_base_addr[instance];
     ECAP_enableTimeStampCapture(base);
     ECAP_startCounter(base);
+    return;
+}
+
+void util_ecap_stop_timestamp(uint16_t instance)
+{
+    uint32_t base = ecap_base_addr[instance];
+    ECAP_disableTimeStampCapture(base);
+    ECAP_stopCounter(base);
     return;
 }
 /* resets given instance */
@@ -1327,9 +1343,10 @@ static void ECAP_selection_of_sync_in_source(void *args)
     DebugP_testLog("Test : Sync In Sources from EPWM tests\r\n");
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(6), 0);
 }
-static void ECAP_capture_event_polarity(void *args)
+static void ECAP_input_evaluation_block(void *args)
 {
-    UNITY_TEST_IGNORE("","TODO");
+    DebugP_testLog("Test : Input Evaluation block tests - glitch filter and Prescaler checks\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(7), 0);
 }
 static void ECAP_high_resolution_functions_for_ecap(void *args)
 {
@@ -1946,7 +1963,7 @@ bool util_compare_in_range(int value1, int value2, int delta)
     return true;
 }
 
-int util_validate_input_events(uint16_t instance, bool check_flags)
+int util_validate_input_events(uint16_t instance, bool check_flags, int delta)
 {
     int errors = 0;
     uint32_t ecap_base = ecap_base_addr[instance];
@@ -1967,6 +1984,7 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
         DebugP_logError("ERROR: expected number of events did not occur.\r\n");
         DebugP_testLog("\t\tExpected flags: %x\r\n",expected_flags);
         DebugP_testLog("\r\n\t\tSet flags: %x\r\n", flags>>1);
+       
     }
     if( ((input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31))
         ||
@@ -1987,8 +2005,10 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
                 continue;
             }
             uint32_t timestamp = ECAP_getEventTimeStamp(ecap_base, events[iter]);
+            
+            DebugP_testLog("Timestamp %d is %d\r\n", iter, timestamp);
 
-            if(util_compare_in_range(input_params->timestamps[iter], timestamp, 50))
+            if(util_compare_in_range(input_params->timestamps[iter], timestamp, delta))
             {
                 continue;
             }
@@ -1996,6 +2016,7 @@ int util_validate_input_events(uint16_t instance, bool check_flags)
             DebugP_logError("\tTimeStamps for event %d donot match\r\n",iter);
             DebugP_testLog("\t\tExpected: %d\r\n", input_params->timestamps[iter]);
             DebugP_testLog("\t\tReturned: %d\r\n", timestamp);
+    
         }
 
     }
@@ -2054,7 +2075,7 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
                 errors++;
             }
             /* check the ecap cap_registers, event flags to verify the input to expected output */
-            errors += util_validate_input_events(instance, true);
+            errors += util_validate_input_events(instance, true, 50);
         }
     }
 
@@ -2169,6 +2190,8 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
 
             int num_times = 8;
             util_gpio_toggle(num_times, 0);
+            util_ecap_stop_timestamp(instance);
+
             HwiP_destruct(&gEcapHwiObject1);
 
             if(capture_mode == ECAP_CONTINUOUS_CAPTURE_MODE)
@@ -2187,7 +2210,7 @@ int32_t AM263x_ECAP_BTR_005(uint16_t instance)
                     DebugP_logError("ISR count didn't match. Expected 4 recieved %d\r\n", ecap_isr_count);
                 }
             }
-            errors += util_validate_input_events(instance, false);
+            errors += util_validate_input_events(instance, false, 50);
         }
 
     }
@@ -2330,6 +2353,8 @@ int32_t AM263x_ECAP_BTR_006(void)
         {
             DebugP_logError("Error : no flags set  %b\r\n", flags_set);
         }
+        util_ecap_stop_timestamp(ecap_instance);
+
         /* Halt the input PWM */
         tester_command(tester_cmd_stop_input);
 
@@ -2408,6 +2433,284 @@ int32_t AM263x_ECAP_BTR_006(void)
     return 0;
 }
 
+
+bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t input_period, ECAP_QualPeriodSelect qual_prd)
+{
+    bool status = GOOD;
+
+    uint32_t base = ecap_base_addr[instance];
+    int errors = 0;
+    /* toggle x times and expect x/prescaler number of events and their timestamps should be stretched accordingly */
+
+    uint32_t pwm_on = 0;
+    uint32_t pwm_period = 0;
+
+    char     tester_cmd_stop_input[CMD_SIZE] = "halt pwm input";
+    char     tester_cmd_start_input[CMD_SIZE];
+
+    sprintf(tester_cmd_start_input, "generate pwm with duty cycle %02d period %05d on GPIO ", input_duty_cycle, input_period);
+
+    util_gpio_pwm_input_configure();
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
+    
+    util_input_params_init();
+    input_params->check_timestamps[1] = true;
+    input_params->check_timestamps[2] = true;
+    input_params->timestamps[1] = 0;
+    input_params->timestamps[2] = 0;
+
+    util_ecap_config_reset();
+    ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;
+    ecap_config_ptr->capture_mode_continuous = false;
+    ecap_config_ptr->qual_prd = ECAP_PULSE_WIDTH_FILTER_BYPASS;
+
+    ecap_config_ptr->polarity[0] = RISING;
+    ecap_config_ptr->polarity[1] = FALLING;
+    ecap_config_ptr->polarity[2] = RISING;
+    ecap_config_ptr->polarity[3] = FALLING;
+
+    ecap_config_ptr->rearm = true;
+
+
+    ecap_config_ptr->counter_reset_capture[0] = true;
+    ecap_config_ptr->counter_reset_capture[1] = false;
+    ecap_config_ptr->counter_reset_capture[2] = false;
+    ecap_config_ptr->counter_reset_capture[3] = false;
+    
+    int while_breaker_count = 5;
+    do
+    {
+        tester_command(tester_cmd_stop_input);
+        tester_command(tester_cmd_start_input);
+
+        util_ecap_configure(instance);
+        util_ecap_start_timestamp(instance);
+        
+        /* small delay */
+        ClockP_usleep(5);
+
+        util_ecap_stop_timestamp(instance);
+
+        tester_command(tester_cmd_stop_input);
+        
+        pwm_on = ECAP_getEventTimeStamp(base, events[1]) + 1;
+        pwm_period = ECAP_getEventTimeStamp(base, events[2]) + 1;
+
+        if(while_breaker_count > 1)
+        {
+            while_breaker_count--;
+        }
+        else
+        {
+            break;
+            DebugP_testLog("input reception fail. check input PWM\r\n");
+            return BAD;
+        }
+    }while(pwm_on != (input_duty_cycle + 1));
+    
+    ecap_config_ptr->qual_prd = qual_prd;
+    
+    DebugP_testLog("\tpwm_on %d, pwm_period %d\r\n", pwm_on, pwm_period);
+
+    for(int iter = 0; iter < 4; iter++)
+    {
+        input_params->timestamps[iter] = ECAP_getEventTimeStamp(base, events[iter]);
+    }
+
+    DebugP_testLog("pwm_on\t:\t%d\r\n",pwm_on);
+    DebugP_testLog("pwm_period\t:\t%d\r\n",pwm_period);
+
+    
+    for(uint16_t prescale_value = 1; prescale_value < ECAP_MAX_PRESCALER_VALUE; prescale_value++)
+    {
+        DebugP_testLog("\r\nqual_period : %d\r\n", qual_prd);
+        DebugP_testLog("\r\nprescale_value : %d\r\n", prescale_value);
+        
+        ecap_config_ptr->prescaler = prescale_value;
+        
+        input_params->timestamps[1] = (pwm_period * prescale_value) - 1 ;
+        input_params->timestamps[2] = (pwm_period * 2 * prescale_value) - 1;
+        
+        DebugP_testLog("expected timestamps[1] = (pwm_period * prescale_value) - 1 : %d\r\n",input_params->timestamps[1]);
+        DebugP_testLog("expected timestamps[2] = (pwm_period * 2 * prescale_value) - 1 : %d\r\n",input_params->timestamps[2]);
+
+
+        tester_command(tester_cmd_start_input);
+
+        util_ecap_configure(instance);
+        util_ecap_start_timestamp(instance);
+    
+        /* small delay */
+            ClockP_usleep(10);
+        util_ecap_stop_timestamp(instance);
+        
+        tester_command(tester_cmd_stop_input);
+        
+        DebugP_testLog("\treturned timestamps\r\n\t%d\t%d\t%d\t%d\r\n",
+                        ECAP_getEventTimeStamp(base, events[0]),
+                        ECAP_getEventTimeStamp(base, events[1]),
+                        ECAP_getEventTimeStamp(base, events[2]),
+                        ECAP_getEventTimeStamp(base, events[3])
+                        );
+        errors += util_validate_input_events(instance, false, 2);
+    }
+    
+    if (errors > 0)
+    {
+        status = BAD;
+    }
+
+    return status;
+}
+
+bool qual_period_tests(uint16_t instance)
+{
+    bool status = GOOD;
+    uint16_t event_flags = 0;
+    /* Negative tests */
+    /* 
+        Set qual_prd to a value and send in the pwm wave with pulses smaller than the qual_prd 
+        if the pulses are detected then its a fail.
+    */
+    uint16_t input_duty_cycle = 0;
+    uint16_t input_period = 100;        
+    /* 100 -> 101 TBCLKs -> 101 sysclk or 200MHz/101 is the frequency
+        each TBCLK is */
+    
+    char     tester_cmd_stop_input[CMD_SIZE] = "halt pwm input";
+    char     tester_cmd_start_input[CMD_SIZE];
+
+
+    util_gpio_pwm_input_configure();
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
+    
+    util_ecap_config_reset();
+    ecap_config_ptr->rearm = true;
+    ecap_config_ptr->capture_mode_continuous = false;
+    ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;
+    
+    ecap_config_ptr->polarity[0] = RISING;
+    ecap_config_ptr->polarity[1] = RISING;
+    ecap_config_ptr->polarity[2] = RISING;
+    ecap_config_ptr->polarity[3] = RISING;
+
+    for(uint16_t qual_period = ECAP_PULSE_WIDTH_FILTER_CYCLE1; qual_period <= ECAP_PULSE_WIDTH_FILTER_CYCLE15;  qual_period++ )
+    {
+        ecap_config_ptr->qual_prd = qual_period;
+        /* setting a pwm_pulse just less than the qual_period*/
+
+        input_duty_cycle = qual_period-1;
+
+        DebugP_testLog("qual_prd : %d\tinput duty cycle : %d\r\n", qual_period, input_duty_cycle);
+
+        sprintf(tester_cmd_start_input, "generate pwm with duty cycle %02d period %05d on GPIO ", input_duty_cycle, input_period);
+        
+        tester_command(tester_cmd_stop_input);
+        tester_command(tester_cmd_start_input);
+        
+        util_ecap_configure(instance);
+        util_ecap_start_timestamp(instance);
+        /* small delay */
+        ClockP_usleep(2);
+        util_ecap_stop_timestamp(instance);
+        event_flags = ECAP_getInterruptSource(ecap_base_addr[instance]);
+
+        DebugP_testLog( 
+                        "\t%x\t%x\t%x\t%x\r\n",
+                        ECAP_getEventTimeStamp(ecap_base_addr[instance],events[0]),
+                        ECAP_getEventTimeStamp(ecap_base_addr[instance],events[1]),
+                        ECAP_getEventTimeStamp(ecap_base_addr[instance],events[2]),
+                        ECAP_getEventTimeStamp(ecap_base_addr[instance],events[3])
+                    );
+
+        /* expecting there shouldn't be any event happening other than the counter overflow. 
+            so let's check the event flags :)*/
+        event_flags &= ~ECAP_ISR_SOURCE_COUNTER_OVERFLOW;
+        tester_command(tester_cmd_stop_input);
+
+        DebugP_testLog("%x\r\n", event_flags);
+        if(event_flags > 0)
+        {
+            status = BAD;
+            DebugP_testLog("tests failed at level 1, qual_period value : %d\tinput_duty_cycle : %d\r\n", qual_period, input_duty_cycle);
+            break;
+        }
+    }
+    if(status == BAD)
+    {   
+        return status;
+    }
+    /* negative tests with prescaler included.*/
+    for(uint16_t qual_period = ECAP_PULSE_WIDTH_FILTER_CYCLE1; qual_period <= ECAP_PULSE_WIDTH_FILTER_CYCLE15;  qual_period++ )
+    {
+        
+        if(qual_period < 1)
+        {
+            continue;
+        }
+
+        input_duty_cycle = qual_period - 1;
+        /* same as above. But here, the tests run with the prescalers set combinations and are expected to fail */
+        status = prescaler_tests(   
+                                instance, 
+                                input_duty_cycle, 
+                                input_period, 
+                                qual_period
+                                );
+        if(status == !BAD)
+        {
+            DebugP_logError("Negative Prescale Test With Glitch Filter Fail For Input-Duty-Cycle : %d \r\n",input_duty_cycle);
+            return BAD;
+        }
+        else
+        {
+            status = GOOD;
+        }
+    }
+
+    return status;
+}
+
+/* Input evaluation tests */
+int32_t AM263x_ECAP_BTR_007(uint16_t instance)
+{   
+    /* the input evaluation tests 
+        1. Prescaler tests
+            - API void ECAP_setEventPrescaler(uint32_t base, uint16_t preScalerValue)
+            - this API can take the inputs from 0 and till < ECAP_MAX_PRESCALER_VALUE 
+            - input will be prescaled for such number of the values and will be taken for consideration 
+                on the event polarity later.
+        2. Glitch filter tests
+            - filters out pulses with width less than given number of system cycles.
+    */
+    bool status;
+    int errors = 0;
+    uint16_t qual_prd = 0; 
+    uint16_t input_period = 100;
+    uint16_t input_duty_cycle = 50;
+
+    status = prescaler_tests(   
+                            instance, 
+                            input_duty_cycle, 
+                            input_period, 
+                            qual_prd
+                            );
+    
+    status = qual_period_tests(instance);
+
+    if(status == BAD)
+    {
+        errors++;
+    }
+    if(errors > 0)
+    {
+        /* fail criteria*/
+        return 1;
+    }
+    /* Pass criteria */
+    return 0;
+}
+
 int32_t test_ecap_cases(uint8_t in)
 {
     int32_t failcount = 0;
@@ -2427,9 +2730,7 @@ int32_t test_ecap_cases(uint8_t in)
             ECAP_setEventPrescaler(base, val);
 
             /* Check if the value was written correctly */
-            if((HW_RD_REG16(base + CSL_ECAP_ECCTL1) &
-                             CSL_ECAP_ECCTL1_PRESCALE_MASK) >>
-                                CSL_ECAP_ECCTL1_PRESCALE_SHIFT != val)
+            if((HW_RD_REG16(base + CSL_ECAP_ECCTL1) & CSL_ECAP_ECCTL1_PRESCALE_MASK) >> CSL_ECAP_ECCTL1_PRESCALE_SHIFT != val)
             {
                 failcount++;
             }
@@ -2467,6 +2768,12 @@ int32_t test_ecap_cases(uint8_t in)
             single_instance_test = true;
             break;
         }
+        case 7:
+        {
+            failcount += AM263x_ECAP_BTR_007(instance);
+            single_instance_test = true;
+            break;
+        }
         // case n:
         // {
         //     failcount += error returning
@@ -2474,7 +2781,9 @@ int32_t test_ecap_cases(uint8_t in)
         }
 
         if((!TEST_ALL_INSTANCES) || single_instance_test)
-        break;
+        {
+            break;
+        }
     }
 
     DebugP_testLog("%d is the failcount FYI\r\n", failcount);
