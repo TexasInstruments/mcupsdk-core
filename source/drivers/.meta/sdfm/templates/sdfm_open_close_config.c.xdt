@@ -1,11 +1,12 @@
 void Drivers_sdfmOpen()
 {
-    SDFM_CompEventFilterConfig CEVT1,CEVT2;
 % let module = system.modules['/drivers/sdfm/sdfm'];
 % let common   = system.getScript("/common");
 % let nameOfPeripheral = module.peripheralName;
 % let device_peripheral = system.getScript("/drivers/sdfm/soc/sdfm_am263x.syscfg.js");
 %let sd_definition = system.getScript("/drivers/sdfm/v0/sdfm_math.syscfg.js");
+% let flag_cevt_1 = false;
+% let flag_cevt_2 = false;
 %if (module != null)
 %{
 	% for(let i = 0; i < module.$instances.length; i++) {
@@ -59,7 +60,10 @@ void Drivers_sdfmOpen()
 		%
 		%   if(instance["Ch" + channel.toString() + "_Use_CEVT1_Digital_Filter"])
 		%   {
-
+            %if(!flag_cevt_1){
+    SDFM_CompEventFilterConfig CEVT1;
+        %        flag_cevt_1 = true;
+        %    }
 	//
 	// CEVT1 Digital Filter settings
 	//
@@ -77,7 +81,10 @@ void Drivers_sdfmOpen()
 		%
 		%   if(instance["Ch" + channel.toString() + "_Use_CEVT2_Digital_Filter"])
 		%   {
-
+             %if(!flag_cevt_2){
+    SDFM_CompEventFilterConfig CEVT2;
+            %    flag_cevt_2 = true;
+            %}
 	//
 	// CEVT2 Digital Filter settings
 	//
@@ -230,6 +237,7 @@ void Drivers_sdfmOpen()
 	    %} // //if(instance["Use_FilterChannel_1"] || instance["Use_FilterChannel_2"] || instance["Use_FilterChannel_3"] || instance["Use_FilterChannel_4"])
 		%}//for(let i = 0; i < module.$instances.length; i++)
         %}//if (module != null)
+
 }
 %
 %
