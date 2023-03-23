@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) Texas Instruments Incorporated 2020
+ *  Copyright (c) Texas Instruments Incorporated 2020-23
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -92,6 +92,9 @@ extern "C" {
 
 /*! \brief CPSW Host Traffic Shaping support */
 #define ENET_CFG_CPSW_HOSTPORT_TRAFFIC_SHAPING      (ENET_ON)
+
+/*! \brief CPSW Mac Traffic Shaping support */
+#define ENET_CFG_CPSW_MACPORT_TRAFFIC_SHAPING       (ENET_ON)
 
 /*! \brief CPSW interVLAN support */
 #define ENET_CFG_CPSW_MACPORT_INTERVLAN             (ENET_OFF)
