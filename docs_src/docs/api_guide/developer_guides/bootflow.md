@@ -355,6 +355,8 @@ some details regarding those.
 
 - To boot an application using the `sbl_uart`, you can refer to \ref UART_BOOTLOADER_PYTHON_SCRIPT subsection. Detailed steps on the usage is mentioned in the same subsection.
 
+\cond SOC_AM64x || SOC_AM243x
+
 ### SBL DFU 
 
 - The SBL DFU is a secondary bootloader which receives the multicore appimage via USB DFU. It Stores the received appimage in RAM memory and boots the application. 
@@ -363,6 +365,7 @@ some details regarding those.
 
 - To boot an application using the `sbl_uart`, you can refer to \ref USB_BOOTLOADER subsection. Detailed steps on the usage is mentioned in the same subsection.
 
+\endcond
 
 \cond SOC_AM263X
 ### SBL CAN
