@@ -36,7 +36,6 @@ freertos_fat1.peripheralDriver.cardType = "SD";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
-debug_log.uartLog.clkFreq          = 96000000;
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "ball.A7";
 debug_log.uartLog.UART.TXD.$assign = "ball.A6";
