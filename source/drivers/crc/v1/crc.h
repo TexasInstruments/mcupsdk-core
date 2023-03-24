@@ -124,7 +124,7 @@ extern "C" {
 /**
  * \brief  Macro defines the shift value.
  */
-#define SHIFT_BY_EIGHT                   (0x08U)
+#define CRC_SHIFT_BY_EIGHT              (0x08U)
 
 /**
  *  \anchor CRC_OperationMode_t

@@ -46,7 +46,7 @@ extern "C" {
  *
  * This module define's generic APIs to configure and control a timer
  * Depending on the SOC there can be different timer implementation's
- * 
+ *
  * For more details and example usage, see \ref KERNEL_DPL_TIMER_PAGE
  *
  * Timer is used by \ref KERNEL_DPL_CLOCK_PAGE to generate system ticks.
@@ -117,7 +117,7 @@ typedef struct TimerP_Params_ {
 /**
 *  Macro defines the shift by eight
 */
-#define SHIFT_BY_EIGHT    (8U)
+#define TIMERP_SHIFT_BY_EIGHT    (8U)
 /**
 *  Macro defines the maximum number of cycles
 */

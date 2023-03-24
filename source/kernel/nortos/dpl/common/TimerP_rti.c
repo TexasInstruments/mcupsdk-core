@@ -129,13 +129,13 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     {
         /* enable interrupt */
         addr = (volatile uint32_t *)(baseAddr + RTI_RTISETINT);
-        *addr = ((uint32_t)0x1 << SHIFT_BY_EIGHT);
+        *addr = ((uint32_t)0x1 << TIMERP_SHIFT_BY_EIGHT);
     }
     else
     {
         /* disable interrupt */
         addr = (volatile uint32_t *)(baseAddr + RTI_RTICLEARINT);
-        *addr = ((uint32_t)0x1 << SHIFT_BY_EIGHT );
+        *addr = ((uint32_t)0x1 << TIMERP_SHIFT_BY_EIGHT );
     }
 }
 

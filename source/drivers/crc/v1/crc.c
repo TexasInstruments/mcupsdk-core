@@ -494,7 +494,7 @@ int32_t CRC_getIntrStatus(uint32_t      baseAddr,
                 intVal = intVal & (CRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL << 0x00U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = intVal & (CRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL << SHIFT_BY_EIGHT);
+                intVal = intVal & (CRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL << CRC_SHIFT_BY_EIGHT);
                 break;
             default:
                 /* Invalid input */
@@ -531,7 +531,7 @@ int32_t CRC_enableIntr(uint32_t     baseAddr,
                 intVal = (intrMask << 0x00U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = (intrMask << SHIFT_BY_EIGHT);
+                intVal = (intrMask << CRC_SHIFT_BY_EIGHT);
                 break;
             default:
                 status = CSL_EBADARGS;
@@ -567,7 +567,7 @@ int32_t CRC_disableIntr(uint32_t     baseAddr,
                 intVal = (intrMask << 0x00U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = (intrMask << SHIFT_BY_EIGHT);
+                intVal = (intrMask << CRC_SHIFT_BY_EIGHT);
                 break;
             default:
                 status = CSL_EBADARGS;
@@ -603,7 +603,7 @@ int32_t CRC_clearIntr(uint32_t     baseAddr,
                 intVal = (intrMask << 0x0U);
                 break;
             case CRC_CHANNEL_2:
-                intVal = (intrMask << SHIFT_BY_EIGHT);
+                intVal = (intrMask << CRC_SHIFT_BY_EIGHT);
                 break;
             default:
                 status = CSL_EBADARGS;
