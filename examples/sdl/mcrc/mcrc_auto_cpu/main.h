@@ -82,17 +82,9 @@ typedef struct sdlMCRCApp_s
 #define SDL_APP_FAILED         			 (-(int32_t) (1))
 #define SDL_APP_PASS           			 ( (int32_t) (0))
 
-/*      Default values      */
-#define MCRC_DEF_PATTERN_COUNT           ((uint32_t) 0U)
-#define MCRC_DEF_SECTOR_COUNT            ((uint32_t) 1U)
 #define MCRC_DEF_WATCHDOG_PRELOAD        ((uint32_t) 0U)
 #define MCRC_DEF_BLOCK_PRELOAD           ((uint32_t) 0U)
-
-#define MCRC_DDR_1080P_BUF_SIZE          (4147200U)
-#define MCRC_DDR_720P_BUF_SIZE           (1843200U)
-#define MCRC_DDR_SMALL_BUF_SIZE          (200000U)
-#define MCRC_DDR_BUF_MAX_SIZE            (MCRC_DDR_1080P_BUF_SIZE)
-#define MCRC_MSMC_BUF_MAX_SIZE           (1024U)
+#define MCRC_DEF_INTR_MASK               ((uint32_t)0x1U)
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */

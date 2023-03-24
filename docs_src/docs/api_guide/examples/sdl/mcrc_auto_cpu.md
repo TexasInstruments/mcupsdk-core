@@ -56,18 +56,96 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)||(SOC_AWR294X)||(SOC_AM273X)
+\cond (SOC_AM263X)
 \code
 
- MCRC AUTO CPU mode: Transfer Test Started...
- Copied reference data into memory.
- Using Pre-Defined Reference MCRC signature Value.
- Configuration verified
+ MCRC Test Application
 
- Test is completed
- Sector signature matches - Passed
- EDMA Data transfer completed !!
- All tests have passed!!
+MCRC AUTO CPU mode on Channel 1: Transfer Test Started...
 
+Calculating Reference MCRC signature Value.
+ MCRC signature value : 0x1c133adab4dd50fU
+MCRC Full Mode Computation Time: 1085us
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Auto Mode Computation Time: 10us
+
+MCRC AUTO CPU mode on Channel 2: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Auto Mode Computation Time: 10us
+
+MCRC AUTO CPU mode on Channel 3: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Auto Mode Computation Time: 10us
+
+MCRC AUTO CPU mode on Channel 4: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Auto Mode Computation Time: 10us
+
+Test Name: MCRCAutoCPUfunctest_main  PASSED 
+
+ All tests have passed. 
+\endcode
+\endcond
+
+\cond (SOC_AWR294X)||(SOC_AM273X)
+\code
+[Cortex_R5_0] 
+ MCRC Test Application
+
+MCRC AUTO CPU mode on Channel 1: Transfer Test Started...
+
+Calculating Reference MCRC signature Value.
+ MCRC signature value : 0x1c133adab4dd50fU
+MCRC Full Mode Computation Time: 4619us
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Auto Mode Computation Time: 8us
+
+MCRC AUTO CPU mode on Channel 2: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Auto Mode Computation Time: 8us
+
+Test Name: MCRCAutoCPU_main  PASSED 
+
+ All tests have passed. 
 \endcode
 \endcond

@@ -40,6 +40,14 @@
 
 #include "mcrc_main.h"
 
+#if defined(SOC_AM263X)|| defined (SOC_AM64X)
+#define SDL_MCRC_CHANNEL_MAXIMUM 4;
+#endif
+
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#define SDL_MCRC_CHANNEL_MAXIMUM 2;
+#endif
+
 int32_t sdl_mcrc_posTest(void)
 {
     int32_t               testStatus = SDL_APP_TEST_PASS;
@@ -47,16 +55,26 @@ int32_t sdl_mcrc_posTest(void)
     SDL_MCRC_InstType     instance = MCRC0;
 	SDL_MCRC_InstType     start_instance = MCRC0;
 	SDL_MCRC_InstType     end_instance = MCRC0;
+	SDL_MCRC_Channel_t    channelNum=4;
 #endif
 #if defined (SOC_AM64X)
     SDL_MCRC_InstType     instance = MCRC_MCU_NAVSS;
 	SDL_MCRC_InstType     start_instance = MCRC_MCU_NAVSS;
 	SDL_MCRC_InstType     end_instance = MCRC_MCU_NAVSS;
+	SDL_MCRC_Channel_t    channelNum=4;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined(R5F_INPUTS)
 	SDL_MCRC_InstType     instance = MSS_MCRC;
 	SDL_MCRC_InstType     start_instance = MSS_MCRC;
+	SDL_MCRC_InstType     end_instance = MSS_MCRC;
+#endif
+#if defined(C66_INPUTS)
+	SDL_MCRC_InstType     instance = DSS_MCRC;
+	SDL_MCRC_InstType     start_instance = DSS_MCRC;
 	SDL_MCRC_InstType     end_instance = DSS_MCRC;
+#endif
+	SDL_MCRC_Channel_t    channelNum=2;
 #endif
     SDL_MCRC_Channel_t    channel = SDL_MCRC_CHANNEL_1;
     uint32_t              watchdogPreload = MCRC_WATCHDOG_PRELOAD;
@@ -119,7 +137,7 @@ int32_t sdl_mcrc_posTest(void)
             return (testStatus);
         }
 
-        for (channel = SDL_MCRC_CHANNEL_1; channel <= SDL_MCRC_CHANNEL_4; channel++)
+        for (channel = SDL_MCRC_CHANNEL_1; channel <= channelNum; channel++)
         {            
             /*  positive test of init API*/
             if (testStatus == SDL_APP_TEST_PASS)
@@ -388,6 +406,63 @@ int32_t sdl_mcrc_posTest(void)
             {
                 SDL_MCRC_SignatureRegAddr_t pMCRCregAddr;
                 if ((SDL_MCRC_getPSASigRegAddr(instance,channel, &pMCRCregAddr)) != SDL_PASS)
+                {
+                    testStatus = SDL_APP_TEST_FAILED;
+                }
+            }
+            
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+			
+			if (testStatus == SDL_APP_TEST_PASS)
+            {
+                SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
+                if ((SDL_MCRC_getCRCRegAddr(instance,channel, &pCRCRegAddr)) != SDL_PASS)
+                {
+                    testStatus = SDL_APP_TEST_FAILED;
+                }
+            }
+            
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+			
+			if (testStatus == SDL_APP_TEST_PASS)
+            {
+                if ((SDL_MCRC_configType(instance,channel, SDL_MCRC_OPERATION_MODE_AUTO)) != SDL_PASS)
+                {
+                    testStatus = SDL_APP_TEST_FAILED;
+                }
+            }
+            
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+			
+			if (testStatus == SDL_APP_TEST_PASS)
+            {
+                if ((SDL_MCRC_configType(instance,channel, SDL_MCRC_OPERATION_MODE_SEMICPU)) != SDL_PASS)
+                {
+                    testStatus = SDL_APP_TEST_FAILED;
+                }
+            }
+            
+            if (testStatus != SDL_APP_TEST_PASS)
+            {
+                DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+                return (testStatus);
+            }
+			
+			if (testStatus == SDL_APP_TEST_PASS)
+            {
+                if ((SDL_MCRC_configType(instance,channel, SDL_MCRC_OPERATION_MODE_FULLCPU)) != SDL_PASS)
                 {
                     testStatus = SDL_APP_TEST_FAILED;
                 }

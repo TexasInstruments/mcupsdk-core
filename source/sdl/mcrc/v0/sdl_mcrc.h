@@ -67,6 +67,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include "sdl_mcrc_hw.h"
+#include <sdl/include/sdlr.h>
 #include <sdl/mcrc/v0/soc/sdl_mcrc_soc.h>
 
 #ifdef _cplusplus
@@ -108,6 +109,15 @@ extern "C" {
  */
 #define SDL_MCRC_WDTOPLD_MAX                (0x00FFFFFFU)
 
+/**
+ * \brief  Macro defines value of MCRC Control Register.
+ */
+ 
+#define SDL_MCRC_TYPE_16BIT                 (0x4CU)
+
+#define SDL_MCRC_TYPE_32BIT                 (0x54U)
+
+#define SDL_MCRC_TYPE_64BIT                 (0x44U)
 /**
  * \brief  Max number of channels supported in MCRC.
  */
@@ -592,8 +602,37 @@ int32_t SDL_MCRC_computeSignCPUmode (SDL_MCRC_InstType instance,
                                      SDL_MCRC_Channel_t channel,
                                      const SDL_MCRC_DataConfig_t *pDataConfig,
                                      SDL_MCRC_Signature_t *sectSignVal);
-
-
+/**
+ * \brief   This API is used to get the MCRC register address for given Channel.
+ *
+ * \param   instance        MCRC instance either MCU or Main.
+ * \param   channel         Channel number for which MCRC register address is
+ *                          to get.
+ *                          Values given by #SDL_MCRC_Channel_t.
+ * \param   pMCRCregAddr    Pointer to MCRC register address structure.
+ *                          Refer structure #SDL_MCRC_SignatureRegAddr_t.
+ *
+ * \return  status          MCRC channel get MCRC signature register address status
+ *                          SDL_PASS:     success
+ *                          SDL_EBADARGS: failure, indicate the bad input arguments
+ *
+ */
+int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
+                          SDL_MCRC_Channel_t           channel,
+                          SDL_MCRC_SignatureRegAddr_t *pMCRCregAddr);
+/**
+ * \brief   This API is used to configure the MCRC type for given Channel.
+ *
+ * \param   instance        MCRC instance either MCU or Main.
+ * \param   channel         Channel number 
+ *
+ * \return  status          SDL_PASS:     success
+ *                          SDL_EBADARGS: failure, indicate the bad input arguments
+ *
+ */
+int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
+					 SDL_MCRC_Channel_t       channel);
+					 
 #ifdef _cplusplus
 }
 

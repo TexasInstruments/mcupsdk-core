@@ -1156,7 +1156,7 @@ int32_t sdl_mcrc_negTest(void)
         return (testStatus);
     }
     
-        if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if ((SDL_MCRC_computeSignCPUmode(instance,channel, NULL, &pSecSign)) != SDL_EBADARGS)
         {
@@ -1226,6 +1226,77 @@ int32_t sdl_mcrc_negTest(void)
         mcrcData.dataBitSize = SDL_MCRC_DATA_32_BIT;
         mcrcData.pMCRCData        = (uint32_t *)SDL_mcrcTestData;
         if ((SDL_MCRC_computeSignCPUmode(SDL_MCRC_INVALID,channel, &mcrcData, &pSecSign)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+	
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_getCRCRegAddr(instance,channel, NULL)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+	
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+		SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
+        if ((SDL_MCRC_getCRCRegAddr(SDL_MCRC_INVALID,channel, &pCRCRegAddr)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+		SDL_MCRC_SignatureRegAddr_t pCRCRegAddr;
+        if ((SDL_MCRC_getCRCRegAddr(instance, 5u, &pCRCRegAddr)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+	
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_configType(SDL_MCRC_INVALID,channel, SDL_MCRC_OPERATION_MODE_FULLCPU)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLmcrc_api_Neg_Test: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+	
+	if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if ((SDL_MCRC_configType(instance, 5u, SDL_MCRC_OPERATION_MODE_FULLCPU)) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

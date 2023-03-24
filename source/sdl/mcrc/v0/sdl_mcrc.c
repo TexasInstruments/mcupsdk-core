@@ -1124,3 +1124,83 @@ int32_t SDL_MCRC_computeSignCPUmode (SDL_MCRC_InstType instance,
     }
     return (result);
 }
+
+int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
+                          SDL_MCRC_Channel_t           channel,
+                          SDL_MCRC_SignatureRegAddr_t *pCRCRegAddr)
+{
+    int32_t status = SDL_PASS;
+    uint32_t baseAddr;
+
+    if ((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)   ||
+            (pCRCRegAddr == (NULL_PTR)))
+    {
+        status = SDL_EBADARGS;
+    }
+    else
+    {
+        switch (channel)
+        {
+            case SDL_MCRC_CHANNEL_1:
+                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH1);
+                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL1);
+                break;
+            case SDL_MCRC_CHANNEL_2:
+                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH2);
+                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL2);
+                break;
+#if defined(SOC_AM263X)
+			case SDL_MCRC_CHANNEL_3:
+			    pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH3);
+			    pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL3);
+                break;
+            case SDL_MCRC_CHANNEL_4:
+                pCRCRegAddr->regH = (baseAddr + SDL_MCRC_REGH4);
+                pCRCRegAddr->regL = (baseAddr + SDL_MCRC_REGL4);
+                break;
+#endif
+            default:
+                status = SDL_EBADARGS;
+                break;
+        }
+    }
+
+    return (status);
+}
+
+int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
+					 SDL_MCRC_Channel_t       channel)
+{
+	int32_t status = SDL_PASS;
+	uint32_t baseAddr;
+	
+	if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)))
+	{
+		status = SDL_EBADARGS;
+	}
+	else
+	{
+		switch (channel)
+        {
+            case SDL_MCRC_CHANNEL_1:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, SDL_MCRC_TYPE_64BIT);
+				break;
+			case SDL_MCRC_CHANNEL_2:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 8U));
+				break;
+#if defined(SOC_AM263X)
+			case SDL_MCRC_CHANNEL_3:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 16U));
+				break;
+			case SDL_MCRC_CHANNEL_4:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0, (SDL_MCRC_TYPE_64BIT << 24U));
+				break;
+#endif
+			default:
+                status = SDL_EBADARGS;
+                break;
+		}
+	}
+    return (status);
+}
+						 
