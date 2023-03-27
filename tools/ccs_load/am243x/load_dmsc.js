@@ -327,7 +327,7 @@ if (!withinCCS)
     if(!File(fileCcxml).isFile())
     {
         print("[ERROR] File "+fileCcxml+" not found !!!");
-        print("Seems like the script is not run from within CCS. Please edit the load_dmsc_hsfs.js script to add a path to your CCXML configuration file in this case.")
+        print("Seems like the script is not run from within CCS. Please edit the load_dmsc.js script to add a path to your CCXML configuration file in this case.")
     }
     else
     {

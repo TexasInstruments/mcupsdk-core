@@ -42,23 +42,17 @@ Usage:
 2. Launch AM243x target connection in CCS, however DO NOT connect to any CPUs.
 
 3. From CCS Scripting console do (CCS Tool Bar > View > Scripting Console)
-    js:> loadJSFile "<path/to/sdk>/tools/ccs_load/am243x/load_dmsc.js"
+    js:> loadJSFile "<path/to/sdk>/tools/ccs_load/am243x/load_dmsc_hsfs.js"
 
 4. After successful execution you should see a log like below
 
   On the CCS scripting console in CCS,
 
-    js:> loadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/am243x/load_dmsc.js"
-    Connecting to DMSC_Cortex_M3_0!
-    Fill R5F ATCM memory...
-    Writing While(1) for R5F
-    Loading DMSC Firmware ... C:/ti/mcu_plus_sdk/source/drivers/sciclient/soc/am64x_am243x/sysfw.bin
-    DMSC Firmware Load Done...
-    DMSC Firmware run starting now...
+    js:> LoadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/am243x/load_dmsc_hsfs.js"
     Connecting to MCU Cortex_R5_0!
-    Main Boot Mode is 120
+    Writing While(1) for R5F
     Running the board configuration initialization from R5!
-    Happy Debugging!!
+    Happy Debugging
 
     js:>
 
@@ -82,33 +76,6 @@ Usage:
 
     All tests have passed!!
 
-  On the AM243x.ccxml console in CCS, i.e the GEL output console,
-
-    DMSC_Cortex_M3_0: GEL Output: This GEL is currently only supported for use from the Cortex-M3 inside the DMSC.
-    DMSC_Cortex_M3_0: GEL Output: Do not run this GEL from any other CPU on the SoC.
-    DMSC_Cortex_M3_0: GEL Output: This script sets the first address translation region to [0x8000_0000, 0x0000_0000].
-    DMSC_Cortex_M3_0: GEL Output: It also sets the second address translation region to    [0x6000_0000, 0x4000_0000].
-    DMSC_Cortex_M3_0: GEL Output: This is consistent with the SoC DV assumptions.
-    DMSC_Cortex_M3_0: GEL Output: Configuring ATCM for the R5Fs
-    DMSC_Cortex_M3_0: GEL Output: ATCM Configured.
-    ...
-    DMSC_Cortex_M3_0: GEL Output: Powering up all PSC power domains in progress...
-    DMSC_Cortex_M3_0: GEL Output: Powering up MAIN domain peripherals...
-    ...
-    DMSC_Cortex_M3_0: GEL Output: Powering up LPSC_A53_CLUSTER_0
-    DMSC_Cortex_M3_0: GEL Output: Power domain and module state changed successfully.
-    ...
-    DMSC_Cortex_M3_0: GEL Output:
-    DMSC_Cortex_M3_0: GEL Output: *****DDR is configured using R5 or A53 GELs
-    DMSC_Cortex_M3_0: GEL Output: M4F WFI Vector set into IRAM.
-    MAIN_Cortex_R5_0_0: GEL Output: Running from R5
-    MAIN_Cortex_R5_0_0: GEL Output:
-
-    DDR not initialized with R5 connect.
-
-    Go to menu Scripts --> AM24 DDR Initialization -> AM24_DDR_Initialization_ECC_Disabled to initialize DDR.
-
-    ====
 
 5. If any of the logs in step 4 show "fail" or "error" messages then
    check your EVM, CCS, SDK setup and try again.
