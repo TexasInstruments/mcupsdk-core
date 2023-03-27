@@ -535,7 +535,7 @@ int32_t HsmClient_lockOTPRow(HsmClient_t* HsmClient,
 
     /* Always expect acknowledgement from HSM server */
     HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
-    HsmClient->ReqMsg.serType = HSM_MSG_WRITE_OTP_ROW;
+    HsmClient->ReqMsg.serType = HSM_MSG_PROT_OTP_ROW;
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(protRow);
 
     /* Add arg crc */
