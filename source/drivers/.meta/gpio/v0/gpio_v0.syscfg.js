@@ -7,23 +7,25 @@ let errorFlag = 0;
 let errorLog = '';
 
 function getInstanceConfig(moduleInstance) {
+    let coreId = undefined;
+    let routerId = undefined;
+    if (common.isMcuDomainSupported()) {
+        coreId = soc.getTisciDestCoreID();
+        routerId = soc.getCpuRouterId();
+    }
     let additionalConfig = {
         baseAddr: `CSL_${soc.getInstanceString(moduleInstance)}_BASE`,
         moduleIndex: soc.getInstanceString(moduleInstance),
         pinIndex: soc.getPinIndex(moduleInstance),
-        coreId: getSelfCoreID(),
     }
 
     return {
         ...moduleInstance,
         ...additionalConfig,
+        coreId,
+        routerId,
     };
 };
-
-//function to get Core ID of the core.
-function getSelfCoreID() {
-    return system.getScript(`/drivers/soc/drivers_${common.getSocName()}`).getSelfCoreID();
-}
 
 function getInterfaceName(inst) {
     return soc.getInterfaceName(inst);
