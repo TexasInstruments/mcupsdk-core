@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -26,24 +26,17 @@ const mpu_armv77 = mpu_armv7.addInstance();
  * Write custom configuration values to the imported modules.
  */
 gpio1.$name                = "CONFIG_GPIO0";
-gpio1.pinDir               = "OUTPUT";
 gpio1.GPIO.gpioPin.pu_pd   = "pu";
 gpio1.GPIO.gpioPin.$assign = "ball.B16";
 
 mmcsd1.$name                = "CONFIG_MMCSD0";
 mmcsd1.MMC.$assign          = "MMC";
 mmcsd1.MMC.MMC_CLK.$assign  = "ball.B6";
-mmcsd1.MMC.MMC_SDWP.pu_pd   = "nopull";
 mmcsd1.MMC.MMC_SDWP.$assign = "ball.C6";
-mmcsd1.MMC.MMC_CMD.pu_pd    = "pu";
 mmcsd1.MMC.MMC_CMD.$assign  = "ball.A4";
-mmcsd1.MMC.MMC_DAT0.pu_pd   = "pu";
 mmcsd1.MMC.MMC_DAT0.$assign = "ball.B5";
-mmcsd1.MMC.MMC_DAT1.pu_pd   = "pu";
 mmcsd1.MMC.MMC_DAT1.$assign = "ball.B4";
-mmcsd1.MMC.MMC_DAT2.pu_pd   = "pu";
 mmcsd1.MMC.MMC_DAT2.$assign = "ball.A3";
-mmcsd1.MMC.MMC_DAT3.pu_pd   = "pu";
 mmcsd1.MMC.MMC_DAT3.$assign = "ball.A2";
 mmcsd1.MMC.MMC_SDCD.$assign = "ball.A5";
 

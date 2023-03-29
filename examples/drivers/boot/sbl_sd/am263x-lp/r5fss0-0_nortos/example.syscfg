@@ -2,47 +2,41 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const flash       = scripting.addModule("/board/flash/flash", {}, false);
-const flash1      = flash.addInstance();
-const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
-const bootloader1 = bootloader.addInstance();
-const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
-const hsmclient1  = hsmclient.addInstance();
-const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-
+const flash         = scripting.addModule("/board/flash/flash", {}, false);
+const flash1        = flash.addInstance();
+const bootloader    = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
+const bootloader1   = bootloader.addInstance();
+const gpio          = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1         = gpio.addInstance();
+const hsmclient     = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
+const hsmclient1    = hsmclient.addInstance();
 const freertos_fat  = scripting.addModule("/fs/freertos_fat/freertos_fat", {}, false);
 const freertos_fat1 = freertos_fat.addInstance();
-const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1      = gpio.addInstance();
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
-const mpu_armv75 = mpu_armv7.addInstance();
+const debug_log     = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7     = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71    = mpu_armv7.addInstance();
+const mpu_armv72    = mpu_armv7.addInstance();
+const mpu_armv73    = mpu_armv7.addInstance();
+const mpu_armv74    = mpu_armv7.addInstance();
+const mpu_armv75    = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-gpio1.$name                = "CONFIG_GPIO0";
-gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.pu_pd   = "pu";
-gpio1.GPIO.gpioPin.$assign = "ball.B16";
-
-bootloader1.bootMedia = "MEM";
-bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
-
 flash1.$name                               = "CONFIG_FLASH0";
 flash1.peripheralDriver.$name              = "CONFIG_QSPI0";
 flash1.peripheralDriver.dmaEnable          = true;
 flash1.peripheralDriver.QSPI.QSPI_D2.pu_pd = "pu";
 flash1.peripheralDriver.QSPI.QSPI_D3.pu_pd = "pu";
+
+bootloader1.bootMedia = "MEM";
+bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -53,11 +47,14 @@ edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
+gpio1.$name                = "CONFIG_GPIO0";
+gpio1.GPIO.gpioPin.pu_pd   = "pu";
+gpio1.GPIO.gpioPin.$assign = "ball.B16";
+
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
-freertos_fat1.$name                     = "CONFIG_FREERTOS_FAT0";
-freertos_fat1.peripheralDriver.$name    = "CONFIG_MMCSD0";
-freertos_fat1.peripheralDriver.cardType = "SD";
+freertos_fat1.$name                  = "CONFIG_FREERTOS_FAT0";
+freertos_fat1.peripheralDriver.$name = "CONFIG_MMCSD0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -97,28 +94,21 @@ mpu_armv75.size         = 24;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-gpio1.GPIO.$suggestSolution = "GPIO0";
-flash1.peripheralDriver.QSPI.$suggestSolution           = "QSPI";
-flash1.peripheralDriver.QSPI.QSPI_D0.$suggestSolution   = "ball.N1";
-flash1.peripheralDriver.QSPI.QSPI_D1.$suggestSolution   = "ball.N4";
-flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution   = "ball.M4";
-flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution   = "ball.P3";
-flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution  = "ball.N2";
-flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution = "ball.P1";
-debug_log.uartLog.UART.$suggestSolution                 = "UART0";
-
-freertos_fat1.peripheralDriver.MMC.$suggestSolution       = "MMC";
-freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution   = "ball.B6";
-freertos_fat1.peripheralDriver.MMC.MMC_CMD.pu_pd = "pu";
-freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution   = "ball.A4";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT0.pu_pd = "pu";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution  = "ball.B5";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT1.pu_pd = "pu";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution  = "ball.B4";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT2.pu_pd = "pu";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution  = "ball.A3";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT3.pu_pd = "pu";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution  = "ball.A2";
-freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution  = "ball.A5";
-freertos_fat1.peripheralDriver.MMC.MMC_SDWP.pu_pd = "nopull";
-freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution  = "ball.C6";
+flash1.peripheralDriver.QSPI.$suggestSolution                = "QSPI";
+flash1.peripheralDriver.QSPI.QSPI_D0.$suggestSolution        = "ball.N1";
+flash1.peripheralDriver.QSPI.QSPI_D1.$suggestSolution        = "ball.N4";
+flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution        = "ball.M4";
+flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution        = "ball.P3";
+flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution       = "ball.N2";
+flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution      = "ball.P1";
+gpio1.GPIO.$suggestSolution                                  = "GPIO0";
+freertos_fat1.peripheralDriver.MMC.$suggestSolution          = "MMC";
+freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution  = "ball.B6";
+freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution = "ball.C6";
+freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution  = "ball.A4";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution = "ball.B5";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution = "ball.B4";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution = "ball.A3";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution = "ball.A2";
+freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution = "ball.A5";
+debug_log.uartLog.UART.$suggestSolution                      = "UART0";
