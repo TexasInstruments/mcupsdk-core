@@ -437,6 +437,10 @@ int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
         }
         else
         {
+
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(EfuseRead_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
@@ -495,6 +499,9 @@ int32_t HsmClient_writeOTPRow(HsmClient_t* HsmClient,
         }
         else
         {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(EfuseRowWrite_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
@@ -553,6 +560,9 @@ int32_t HsmClient_lockOTPRow(HsmClient_t* HsmClient,
         }
         else
         {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(EfuseRowProt_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
@@ -611,6 +621,9 @@ int32_t HsmClient_getOTPRowCount(HsmClient_t* HsmClient,
         }
         else
         {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(EfuseRowCount_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
@@ -669,6 +682,9 @@ int32_t HsmClient_getOTPRowProtection(HsmClient_t* HsmClient,
         }
         else
         {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(EfuseRowProt_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
