@@ -62,7 +62,7 @@ volatile bool Erroresm = false;
  /**< R5F0 CCM Interrupt source Self test error */
 #define SDL_ESM_CCM_VIM_COMPARE_ERR_INT   12U
  /**< R5F0 VIM Interrupt source Self test error */ 
-
+#define SDL_MCU_ARMSS_VIM_NULL_ADDR       ((void *) 0 )
 /** ---------------------------------------------------------------------------
  * \enum SDL_CCM_ErrorFlag
  * \brief Defines the values for CCM test error flag used to track self test
@@ -794,4 +794,171 @@ int32_t SDL_CCM_getErrorType(SDL_CCM_Inst instance, uint32_t intSrc, SDL_CCM_Mon
     return retVal;
 }
 
+/**
+ * Design: PROC_SDL-2119
+ */
+int32_t SDL_VIM_cfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL_VimIntrMap intrMap, SDL_VimIntrType intrType, uint32_t vecAddr )
+{
+    int32_t     retVal = SDL_EFAIL;
+    uint32_t    bitNum, groupNum, regVal, regMask;
+    void       *pChkRegs = (void *) pRegs;
+    uint32_t    maxIntrs = 0;
+
+    if (pChkRegs != SDL_MCU_ARMSS_VIM_NULL_ADDR)
+    {
+        maxIntrs   = pRegs->INFO;
+		groupNum = intrNum / SDL_VIM_NUM_INTRS_PER_GROUP;
+		/* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
+		if( (intrNum  < maxIntrs)                             &&
+			(pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
+			(intrMap <= SDL_VIM_INTR_MAP_FIQ)                 &&
+			(intrType <= SDL_VIM_INTR_TYPE_PULSE)             &&
+			(((vecAddr & SDL_VIM_VEC_INT_VAL_MASK) == vecAddr) ||
+				(((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))) )
+		{
+			bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
+	
+			/* Configure INTMAP */
+			regMask = (uint32_t)(1U) << bitNum;
+			regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
+			regVal &= ~regMask;
+			regVal |= intrMap;
+			SDL_REG32_WR( &pRegs->GRP[groupNum].INTMAP, regVal );
+	
+			/* Configure INTTYPE */
+			regMask = (uint32_t)(1U) << bitNum;
+			regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
+			regVal &= ~regMask;
+			regVal |= intrType << bitNum;
+			SDL_REG32_WR( &pRegs->GRP[groupNum].INTTYPE, regVal );
+	
+			/* Configure PRI */
+			SDL_REG32_WR( &pRegs->PRI[intrNum].INT, SDL_FMK( VIM_PRI_INT_VAL, pri ) );
+	
+			/* Configure VEC */
+			SDL_REG32_WR( &pRegs->VEC[intrNum].INT, vecAddr );
+				retVal = SDL_PASS;
+		}
+    }
+
+    return retVal;
+}
+/**
+ * Design: PROC_SDL-2120
+ */
+int32_t SDL_VIM_verifyCfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL_VimIntrMap intrMap, SDL_VimIntrType intrType, uint32_t vecAddr )
+{
+    int32_t  retVal = SDL_EFAIL;
+    uint32_t bitNum, groupNum;
+    uint32_t intrMapVal, intrTypeVal, priVal, vecVal;
+    void       *pChkRegs = (void *) pRegs;
+    uint32_t    maxIntrs = 0;
+
+    if (pChkRegs != SDL_MCU_ARMSS_VIM_NULL_ADDR)
+    {
+        maxIntrs   = pRegs->INFO;
+        groupNum = intrNum / SDL_VIM_NUM_INTRS_PER_GROUP;
+    
+		/* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
+		if( (intrNum < maxIntrs)                              &&
+			(pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
+			(intrMap <= SDL_VIM_INTR_MAP_FIQ)                 &&
+			(intrType <= SDL_VIM_INTR_TYPE_PULSE)             &&
+			(((vecAddr & SDL_VIM_VEC_INT_VAL_MASK) == vecAddr) ||
+				(((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))))
+		{
+			bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
+	
+			/* Read INTMAP */
+			intrMapVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
+			/* Get the interrupt map value */
+			intrMapVal  = intrMapVal >> bitNum;
+			intrMapVal &= (uint32_t)(0x1U);
+	
+			/* Read INTTYPE */
+			intrTypeVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
+			/* Get the interrupt type value */
+			intrTypeVal  = intrTypeVal >> bitNum;
+			intrTypeVal &= (uint32_t)(0x1U);
+	
+			/* Read PRI */
+			priVal = SDL_REG32_RD( &pRegs->PRI[intrNum].INT);
+	
+			/* Read VEC */
+			vecVal = SDL_REG32_RD( &pRegs->VEC[intrNum].INT);
+				retVal = SDL_PASS;
+		}
+    }
+
+    if (retVal != SDL_EFAIL)
+    {
+        /* verify if parameter matches */
+        if ((intrMapVal != intrMap) || 
+			(intrTypeVal != (uint32_t)intrType) ||
+			(priVal != pri) ||
+			(vecVal != vecAddr))
+        {
+            retVal = SDL_EFAIL;
+        }
+    }
+
+    return retVal;
+}
+/**
+ * Design: PROC_SDL-2121
+ */
+int32_t SDL_VIM_getStaticRegs( SDL_vimRegs *pRegs, SDL_vimStaticRegs *pStaticRegs)
+{
+    int32_t  retVal = SDL_PASS;
+    uint32_t i, maxIntrs, num_groups;
+    void    *pChkRegs = (void *) pRegs;
+
+    if ( (pChkRegs == SDL_MCU_ARMSS_VIM_NULL_ADDR) ||
+         (pStaticRegs == SDL_MCU_ARMSS_VIM_NULL_ADDR) )
+    {
+        /* No actions - API fails to read back */
+        retVal = SDL_EFAIL;
+    }
+
+    if (retVal == SDL_PASS)
+    {
+        pStaticRegs->PID  = SDL_REG32_RD(&pRegs->PID);
+        pStaticRegs->INFO = SDL_REG32_RD(&pRegs->INFO);
+        pStaticRegs->IRQVEC = SDL_REG32_RD(&pRegs->IRQVEC);
+        pStaticRegs->FIQVEC = SDL_REG32_RD(&pRegs->FIQVEC);
+
+        maxIntrs = pRegs->INFO;
+        num_groups = maxIntrs / SDL_VIM_NUM_INTRS_PER_GROUP;
+
+        for (i = ((uint32_t) (0u)); i < num_groups; i++)
+        {
+            pStaticRegs->GRP[i].INTMAP      = SDL_REG32_RD(&pRegs->GRP[i].INTMAP);
+            pStaticRegs->GRP[i].INTR_EN_CLR = SDL_REG32_RD(&pRegs->GRP[i].INTR_EN_CLR);
+            pStaticRegs->GRP[i].INTR_EN_SET = SDL_REG32_RD(&pRegs->GRP[i].INTR_EN_SET);
+            pStaticRegs->GRP[i].INTTYPE     = SDL_REG32_RD(&pRegs->GRP[i].INTTYPE);
+        }
+
+        for (i = ((uint32_t) (0u)); i < maxIntrs; i++)
+        {
+            pStaticRegs->PRI[i].INT         = SDL_REG32_RD(&pRegs->PRI[i].INT);
+            pStaticRegs->VEC[i].INT         = SDL_REG32_RD(&pRegs->VEC[i].INT);
+        }
+        /* Remaining values zero it */
+        for (i = num_groups; i < SDL_VIM_MAX_INTR_GROUPS; i++)
+        {
+            pStaticRegs->GRP[i].INTMAP      = (uint32_t)0u;
+            pStaticRegs->GRP[i].INTR_EN_CLR = (uint32_t)0u;
+            pStaticRegs->GRP[i].INTR_EN_SET = (uint32_t)0u;
+            pStaticRegs->GRP[i].INTTYPE     = (uint32_t)0u;
+        }
+        for (i = maxIntrs; i < (SDL_VIM_MAX_INTR_GROUPS * SDL_VIM_NUM_INTRS_PER_GROUP); i++)
+        {
+            pStaticRegs->PRI[i].INT         = (uint32_t)0u;
+            pStaticRegs->VEC[i].INT         = (uint32_t)0u;
+        }
+
+    }
+
+    return (retVal);
+}
 /* Nothing past this point */

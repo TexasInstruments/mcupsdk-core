@@ -42,7 +42,9 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include "ccm_test_main.h"
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
@@ -133,9 +135,9 @@ int32_t CCM_appTest(uint32_t testId)
                 DebugP_log(" Failed.\r\n");
             }
             break;
-		case CCM_SDL_TEST_ID:
-            testResult = CCM_sdlApiTest();
-            DebugP_log("\n CCM SDL Test");
+		case CCM_SDL_IP_API_TEST_ID:
+            testResult = CCM_ipApiTest();
+            DebugP_log("\n CCM SDL IP API Test");
             if (testResult == SDL_PASS)
             {
                 DebugP_log(" Passed.\r\n");
@@ -145,9 +147,9 @@ int32_t CCM_appTest(uint32_t testId)
                 DebugP_log(" Failed.\r\n");
             }
             break;
-		case CCM_SDL_ERR_ID:
-            testResult = CCM_sdlErrTest();
-            DebugP_log("\n CCM ERROR SDL Test");
+		case CCM_SDL_IP_ERROR_TEST_ID:
+            testResult = CCM_ipErrTest();
+            DebugP_log("\n CCM SDL IP Error Test");
             if (testResult == SDL_PASS)
             {
                 DebugP_log(" Passed.\r\n");
@@ -193,6 +195,8 @@ void test_sdl_ccm_test_app(void)
         TEST_FAIL();
 #endif
     }
+	Board_driversClose();
+    Drivers_close();
 }
 
 void test_sdl_ccm_test_app_runner(void)
@@ -213,6 +217,9 @@ void test_main(void *args)
     /* Declaration of variables */
     int32_t  testResult;
 
+	Drivers_open();
+    Board_driversOpen();
+	
     /* Initialize DPL module */
     testResult = sdlApp_dplInit();
 

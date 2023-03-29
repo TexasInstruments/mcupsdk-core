@@ -54,6 +54,8 @@ extern "C"
 #include <kernel/dpl/DebugP.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ccm.h>
+#include <sdl/r5/v0/sdlr_vim.h>
+#include <sdl/r5/v0/sdl_ip_ccm.h>
 #if defined (SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
@@ -66,25 +68,27 @@ extern "C"
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define  CCM_FUNC_TEST_ID         (0U)
-#define  CCM_SDL_API_TEST_ID      (1U)
-#define  CCM_SDL_ERROR_TEST_ID    (2U)
-#define  CCM_SDL_TEST_ID          (3U)
-#define  CCM_SDL_ERR_ID           (4U)
-#define  CCM_IP_API_TEST_ID       (0U)
-#define  CCM_IP_ERROR_TEST_ID     (1U)
-#define  CCM_TOTAL_NUM_TESTS      (2U)
+#define  CCM_FUNC_TEST_ID         	 (0U)
+#define  CCM_SDL_API_TEST_ID      	 (1U)
+#define  CCM_SDL_ERROR_TEST_ID    	 (2U)
+#define  CCM_SDL_IP_API_TEST_ID      (3U)
+#define  CCM_SDL_IP_ERROR_TEST_ID    (4U)
+#define  CCM_TOTAL_NUM_TESTS      (5U)
 #if defined (SOC_AM263X)
 #define  CCM_NUM_INSTANCE         (3U)
+#define  INSTANCE 				  SDL_R5SS0_CCM
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
 #define  CCM_NUM_INSTANCE         (2U)
+#define  INSTANCE 				  SDL_MSS_CCMR
 #endif
 /* ========================================================================== */
 /*                 External Function Declarations                             */
 /* ========================================================================== */
 extern int32_t CCM_sdlApiTest(void);
 extern int32_t CCM_sdlErrTest(void);
+extern int32_t CCM_ipApiTest(void);
+extern int32_t CCM_ipErrTest(void);
 
 #ifdef __cplusplus
 }

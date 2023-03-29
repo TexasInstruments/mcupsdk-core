@@ -46,7 +46,7 @@
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/include/sdl_types.h>
-#include "ccm_test_main.h"
+#include "ccm_ip_test_main.h"
 #include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
 
 /* ========================================================================== */
@@ -74,7 +74,17 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 	int32_t     metaInfo;
     SDL_McuArmssCcmR5OpModeKey    opModeKey;
     uint32_t      cmpError;
-
+	SDL_vimRegs *pRegs; 
+#if defined(SOC_AM273X)||defined(SOC_AWR294X)
+	uint32_t intrNum = SDL_ESMG1_HSM_ESM_HI_INT;
+	/* initialize the address */
+	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_MSS_VIM_R5A_U_BASE;
+#endif
+#if defined(SOC_AM263X)
+	uint32_t intrNum = SDL_R5FSS0_CORE0_INTR_ESM0_ESM_INT_HI;
+	/* initialize the address */
+	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_VIM_U_BASE;
+#endif	
     for(i = SDL_MCU_ARMSS_CCMR5_CCMSR1_REGID; i <= 	SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID; i++)
 	{
 		if(testResult == 0)
@@ -262,20 +272,67 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 			}
 		}
 	}
+	if (testResult == 0)
+	{
+		sdlResult = SDL_VIM_cfgIntr(pRegs, intrNum, 0xFU, 0x1U, 0x1U, 1u);
+		if (sdlResult != SDL_PASS)
+		{
+			testResult = -1;
+			DebugP_log("\n  VIM API test failed on line no: %d \n", __LINE__);
+		}
+	}
+	if (sdlResult == 0)
+	{
+		sdlResult = SDL_VIM_cfgIntr(pRegs, intrNum, 0xFU, 0x0U, 0x1U, 1u);
+		if (sdlResult != SDL_PASS)
+		{
+			testResult = -1;
+			DebugP_log("\n  VIM API test failed on line no: %d \n", __LINE__);
+		}
+	}
+    if (sdlResult == 0)
+    {
+        sdlResult = SDL_VIM_cfgIntr(pRegs, 0xFFU, 0xFU, 0x1U, 0x1U, 0xFFFFFFFDU);
 
-    return (testResult);
+        if (sdlResult != SDL_PASS)
+        {
+			testResult = -1;
+            DebugP_log("\n  VIM API test failed on line no: %d \n", __LINE__);
+        }
+    }
+	if (sdlResult == 0)
+	{
+		sdlResult = SDL_VIM_verifyCfgIntr(pRegs, intrNum, 0xFU, 0x0U, 0x1U, 0u);
+		if (sdlResult != SDL_PASS)
+		{
+			testResult = -1;
+			DebugP_log("\n  VIM API test failed on line no: %d \n", __LINE__);
+		}
+	}
+	if (sdlResult == 0)
+    {
+		SDL_vimStaticRegs staticRegs;
+        sdlResult = SDL_VIM_getStaticRegs(pRegs, &staticRegs);
+
+        if (sdlResult != SDL_PASS)
+        {
+			testResult = -1;
+            DebugP_log("\n  VIM API test failed on line no: %d \n", __LINE__);
+        }
+    }
+    return (sdlResult);
 }
 
 /* CCM Functional test */
 int32_t CCM_ipApiTest(void)
 {
-    int32_t    testResult = 0;
+    int32_t    sdlResult = 0;
     int i = 0;
 
 	/* Run the test for diagnostics first */
 	/* Run test on selected instance */
-	testResult = CCM_IP_test(i);
+	sdlResult = CCM_IP_test(i);
 
-    return (testResult);
+    return (sdlResult);
 }
 /* Nothing past this point */

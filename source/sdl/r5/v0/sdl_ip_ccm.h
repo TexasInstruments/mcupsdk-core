@@ -53,11 +53,19 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "sdl/sdl_ccm.h"
+#include "sdl/r5/v0/sdlr_vim.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/* ========================================================================== */
+/*                            Macros                                          */
+/* ========================================================================== */
+/** This enumerator defines the maximum interrupt groups in VIM.*/
+#define SDL_VIM_MAX_INTR_GROUPS     (32U)
+/** This enumerator defines the number of interrupts per group in VIM. */
+#define SDL_VIM_NUM_INTRS_PER_GROUP (32U)
 /* ========================================================================== */
 /*                             Enums & Typedefs                                 */
 /* ========================================================================== */
@@ -122,6 +130,67 @@ typedef struct SDL_CCM_ErrorStatus_s
     /**< CCM self test error type flag: true indicates error */
 
 } SDL_CCM_ErrorStatus_t;
+
+/**
+ * @brief This enumerator defines the possible output interrupt types. Each
+ *        source interrupt can be configured to drive either the IRQ or FIQ
+ *        output signal.
+ *
+ *
+ */
+typedef uint32_t SDL_VimIntrMap;
+
+/** Output interrupt is mapped to IRQ  */
+#define SDL_VIM_INTR_MAP_IRQ    ((uint32_t)0U)
+
+/** Output interrupt is mapped to FIQ  */
+#define SDL_VIM_INTR_MAP_FIQ    ((uint32_t)1U)
+
+/** Output interrupt is mapped to IRQ or FIQ */
+#define SDL_VIM_INTR_MAP_ALL    ((uint32_t)2U)
+
+/**
+ * @brief This enumerator defines the possible interrupt types. Each source
+ *        interrupt is either an active high level or active high pulse.
+ *
+ *
+ */
+typedef uint32_t SDL_VimIntrType;
+
+/** Interrupt source is a level interrupt type */
+#define SDL_VIM_INTR_TYPE_LEVEL ((uint32_t)0U)
+
+/** Interrupt source is a pulse interrupt type */
+#define SDL_VIM_INTR_TYPE_PULSE ((uint32_t)1U)
+
+/**
+ * @brief This structure defines the group registers identified for VIM static
+ * registers
+ *
+ *
+ */
+typedef struct {
+    volatile uint32_t INTR_EN_SET;               /** Interrupt Enable Set Register */
+    volatile uint32_t INTR_EN_CLR;               /** Interrupt Enabled Clear Register */
+    volatile uint32_t INTMAP;                    /** Interrupt Map Register */
+    volatile uint32_t INTTYPE;                   /** Interrupt Type Register */
+} SDL_vimStaticRegs_GRP;
+/**
+  * @brief This structure defines the static register groups identified for VIM
+ *
+ *
+ */
+typedef struct {
+    SDL_vimStaticRegs_GRP GRP[SDL_VIM_MAX_INTR_GROUPS]; /** Group Registers */
+    SDL_vimRegs_PRI PRI[SDL_VIM_MAX_INTR_GROUPS*SDL_VIM_NUM_INTRS_PER_GROUP]; /** Priority Regs */
+    SDL_vimRegs_VEC VEC[SDL_VIM_MAX_INTR_GROUPS*SDL_VIM_NUM_INTRS_PER_GROUP]; /** Vec addr regs */
+    volatile uint32_t PID;                       /** Revision Register */
+    volatile uint32_t INFO;                      /** Info Register */
+    volatile uint32_t IRQVEC;                    /** IRQ Vector Address Register */
+    volatile uint32_t FIQVEC;                    /** FIQ Vector Address Register */
+    volatile uint32_t DEDVEC;                    /** DED Vector Address Register */
+} SDL_vimStaticRegs;
+
 /* ========================================================================== */
 /*                            Function Declarations                               */
 /* ========================================================================== */
@@ -247,6 +316,62 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  */
  int32_t SDL_CCM_clearError(SDL_CCM_Inst instance, SDL_CCM_MonitorType monitorType);
 
+/**
+ *  \brief Configure a source interrupt using VIM
+ *
+ *  This function configures the specified source interrupt per the provided
+ *  parameters.
+ *
+ *  \param pRegs        [IN]    Pointer to the SDL_vimRegs register structure
+ *  \param intrNum      [IN]    Interrupt number
+ *  \param pri          [IN]    Interrupt priority (0(highest)..15(lowest))
+ *  \param intrMap      [IN]    Interrupt mapping 
+ *  \param intrType     [IN]    Interrupt type 
+ *  \param vecAddr      [IN]    32-bit vector address (forced to 32-bit alignment)
+ *
+ *  \return  0 = success
+ *          -1 = intrNum or pri parameters are out of range
+ */
+int32_t SDL_VIM_cfgIntr(SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL_VimIntrMap intrMap, 
+						SDL_VimIntrType intrType, uint32_t vecAddr );
+/**
+ *  \brief Read back Verify Configure a source interrupt
+ *
+ *  This function verifies the writetn configuration of
+ *  interrupt for the specified source interrupt per the provided
+ *  parameters.
+ *
+ *  \param pRegs        [IN]    Pointer to the SDL_vimRegs register structure
+ *  \param intrNum      [IN]    Interrupt number 
+ *  \param pri          [IN]    Interrupt priority (0(highest)..15(lowest))
+ *  \param intrMap      [IN]    Interrupt mapping 
+ *  \param intrType     [IN]    Interrupt type 
+ *  \param vecAddr      [IN]    32-bit vector address (forced to 32-bit alignment)
+ *
+ *  \return  0 = success (matches to expected values)
+ *          -1 = VIM register configuration is not matching expected value
+ */
+int32_t SDL_VIM_verifyCfgIntr(SDL_vimRegs     *pRegs,
+                                uint32_t         intrNum, uint32_t  pri,
+                                SDL_VimIntrMap   intrMap,
+                                SDL_VimIntrType  intrType,
+                                uint32_t         vecAddr);						
+/**
+ *  \brief Read back of static registers for VIM
+ *
+ *  The function is used to acknowlege that the specified interrupt type has been
+ *  serviced. The VIM will then re-evaluate the new highest priority interrupt.
+ *
+ *  \param pRegs        [IN]    Pointer to the SDL_vimRegs register structure
+ *  \param pStaticRegs  [IN]    Pointer to the SDL_vimStaticRegs structure to hold
+ *                              the static register values
+ *                              The static register set is defined to be the list
+ *                              of registers that hardware does not update by itself
+ *
+ *  \return  0 = success
+ *          -1 = failure (could not read back the static registers)
+ */
+int32_t SDL_VIM_getStaticRegs( SDL_vimRegs *pRegs, SDL_vimStaticRegs *pStaticRegs);
 #ifdef __cplusplus
 }
 #endif /*extern "C" */

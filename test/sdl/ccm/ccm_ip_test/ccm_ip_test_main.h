@@ -32,26 +32,33 @@
  */
 
  /**
- *  \file     ccm_sdl_api_test.c
+ *  \file     ccm_test_main.h
  *
- *  \brief    This file contains CCM SDL API test code.
+ *  \brief    This file contains CCM main test defines.
  *
- *  \details  CCM API tests
+ *  \details  CCM unit tests
  **/
+#ifndef CCM_TEST_MAIN_H
+#define CCM_TEST_MAIN_H
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-
 #include <stdint.h>
 #include <string.h>
-#include <sdl/include/sdl_types.h>
 #include <kernel/dpl/DebugP.h>
-#include <ccm_test_main.h>
-#include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
+#include <sdl/include/sdl_types.h>
+#include <sdl/sdl_ccm.h>
+#include <sdl/r5/v0/sdlr_vim.h>
 #include <sdl/r5/v0/sdl_ip_ccm.h>
 #if defined (SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
 #endif
 #if defined (SOC_AM273X)
 #include <sdl/esm/v1/sdl_esm.h>
@@ -59,88 +66,31 @@
 #if defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
 
-/* ========================================================================== */
-/*                 Internal Function Declarations                             */
-/* ========================================================================== */
-
-/* ========================================================================== */
-/*                            Global Variables                                */
-/* ========================================================================== */
-								   												   
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
-
-static int32_t CCM_API_test(uint32_t instanceId)
-{
-    int32_t       testResult = 0;
-    SDL_ErrType_t sdlResult;
-    int i;
-
-	sdlResult = SDL_CCM_init(instanceId,0U);
-	if (sdlResult != SDL_PASS)
-	{
-		DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
-		testResult = -1;
-	}
-	if(testResult == 0)
-	{
-    	sdlResult = SDL_CCM_verifyConfig(instanceId);
-    	if (sdlResult != SDL_PASS)
-    	{
-    		DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
-    		testResult = -1;
-    	}
-	}
-	if(testResult == 0)
-	{
-        for(i = SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK; i <= 	SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR; i++)
-    	{
-			sdlResult = SDL_CCM_clearError(instanceId, (SDL_CCM_MonitorType)i);
-			if (sdlResult != SDL_PASS)
-			{
-				DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
-				testResult = -1;
-				break;
-			}
-    	}
-    }
-
-    if (testResult == 0)
-    {
-        sdlResult = SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
-		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1000U);
-        if (sdlResult != SDL_PASS)
-        {
-            DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
-            testResult = -1;
-        }
-    }
-	
-    return (testResult);
-}
-
-/* CCM Functional test */
-int32_t CCM_sdlApiTest(void)
-{
-    int32_t    testResult = 0;
-	int32_t    j = 0;
+#define  CCM_IP_API_TEST_ID       (0U)
+#define  CCM_IP_ERROR_TEST_ID     (1U)
+#define  CCM_TOTAL_NUM_TESTS      (2U)
 #if defined (SOC_AM263X)
-	int32_t loop=2;
+#define  CCM_NUM_INSTANCE         (3U)
+#define INSTANCE 		SDL_R5SS0_CCM
 #endif
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
-	int32_t loop=1;
+#if defined (SOC_AM273X) || (SOC_AWR294X)
+#define  CCM_NUM_INSTANCE         (2U)
+#define INSTANCE 		SDL_MSS_CCMR
 #endif
-	for(j=0;j<loop;j++)
-	{
-		/* Run the test for diagnostics first */
-		testResult = CCM_API_test(j);
-	}
-    return (testResult);
+/* ========================================================================== */
+/*                 External Function Declarations                             */
+/* ========================================================================== */
+extern int32_t CCM_ipApiTest(void);
+extern int32_t CCM_ipErrTest(void);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* CCM_TEST_MAIN_H */
+
 /* Nothing past this point */

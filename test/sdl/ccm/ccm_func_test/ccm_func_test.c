@@ -45,6 +45,9 @@
 
 #include <stdint.h>
 #include <string.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include <kernel/dpl/DebugP.h>
 #include <sdl/r5/v0/sdl_ip_ccm.h>
 #include <sdl/include/sdl_types.h>
@@ -156,7 +159,7 @@ int32_t SDL_TEST_CCMSelfTest(uint32_t ccmcore)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM self test: starting");
+    DebugP_log("\n CCM self test: starting\r\n");
 
     result = SDL_CCM_selfTest(ccmcore,
 	                          SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK,
@@ -164,10 +167,10 @@ int32_t SDL_TEST_CCMSelfTest(uint32_t ccmcore)
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM self test failed");
+        DebugP_log("\n CCM self test failed\r\n");
         retVal = -1;
     } else {
-        DebugP_log("\n CCM Self Test complete");
+        DebugP_log("\n CCM Self Test complete\r\n");
     }
 
     return retVal;
@@ -188,7 +191,7 @@ int32_t SDL_TEST_CCMSelfTestErrorForce(uint32_t INSTID)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM self test with error forcing: starting");
+    DebugP_log("\n CCM self test with error forcing: starting\r\n");
 
     result = SDL_CCM_selfTest(INSTID,
 	                          SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK,
@@ -196,10 +199,10 @@ int32_t SDL_TEST_CCMSelfTestErrorForce(uint32_t INSTID)
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM self test with error forcing failed");
+        DebugP_log("\n CCM self test with error forcing failed\r\n");
         retVal = -1;
     } else {
-        DebugP_log("\n CCM Self Test with error forcing complete");
+        DebugP_log("\n CCM Self Test with error forcing complete\r\n");
     }
 
     return retVal;
@@ -210,7 +213,7 @@ int32_t SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(uint32_t CORE_INST)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM Inactivity self test with error forcing: starting");
+    DebugP_log("\n CCM Inactivity self test with error forcing: starting\r\n");
 
     result = SDL_CCM_selfTest(CORE_INST,
                               SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR,
@@ -218,10 +221,10 @@ int32_t SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(uint32_t CORE_INST)
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM Inactivity self test with error forcing failed");
+        DebugP_log("\n CCM Inactivity self test with error forcing failed\r\n");
         retVal = -1;
     } else {
-        DebugP_log("\n CCM Inactivity Self Test with error forcing complete");
+        DebugP_log("\n CCM Inactivity Self Test with error forcing complete\r\n");
     }
 
     return retVal;
@@ -232,7 +235,7 @@ int32_t SDL_TEST_CCMSelfTest_VIM_ErrorForce(uint32_t Instance_CORE)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM VIM self test with error forcing: starting");
+    DebugP_log("\n CCM VIM self test with error forcing: starting\r\n");
 
     result = SDL_CCM_selfTest(Instance_CORE,
                               SDL_CCM_MONITOR_TYPE_VIM,
@@ -240,10 +243,10 @@ int32_t SDL_TEST_CCMSelfTest_VIM_ErrorForce(uint32_t Instance_CORE)
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM VIM self test with error forcing failed");
+        DebugP_log("\n CCM VIM self test with error forcing failed\r\n");
         retVal = -1;
     } else {
-        DebugP_log("\n CCM VIM Self Test with error forcing complete");
+        DebugP_log("\n CCM VIM Self Test with error forcing complete\r\n");
     }
 
     return retVal;
@@ -263,15 +266,15 @@ int32_t SDL_TEST_CCMInjectError(uint32_t InstanceCCM)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM inject  error: test starting");
+    DebugP_log("\n CCM inject  error: test starting\r\n");
 
     result = SDL_CCM_injectError(InstanceCCM, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM inject failed");
+        DebugP_log("\n CCM inject failed\r\n");
        retVal = -1;
     } else {
-        DebugP_log("\n CCM inject Test complete");
+        DebugP_log("\n CCM inject Test complete\r\n");
     }
 
     return retVal;
@@ -282,15 +285,15 @@ int32_t SDL_TEST_CCMInjectVIMError(uint32_t InstanceIDccm)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM inject VIM error: test starting");
+    DebugP_log("\n CCM inject VIM error: test starting\r\n");
 
     result = SDL_CCM_injectError(InstanceIDccm, SDL_CCM_MONITOR_TYPE_VIM);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM inject VIM failed");
+        DebugP_log("\n CCM inject VIM failed\r\n");
        retVal = -1;
     } else {
-        DebugP_log("\n CCM inject VIM Test complete");
+        DebugP_log("\n CCM inject VIM Test complete\r\n");
     }
 
     return retVal;
@@ -301,15 +304,15 @@ int32_t SDL_TEST_CCMInjectInactivityError(uint32_t Instccm)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM inject inactivity monitor error: test starting");
+    DebugP_log("\n CCM inject inactivity monitor error: test starting\r\n");
 
     result = SDL_CCM_injectError(Instccm, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM inject failed");
+        DebugP_log("\n CCM inject failed\r\n");
        retVal = -1;
     } else {
-        DebugP_log("\n CCM inject inactivity monitor Test complete");
+        DebugP_log("\n CCM inject inactivity monitor Test complete\r\n");
     }
 
     return retVal;
@@ -329,7 +332,7 @@ int32_t SDL_TEST_CCMSelftestPolarityInvert(uint32_t ccmInst)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM polarity invert self test: starting");
+    DebugP_log("\n CCM polarity invert self test: starting\r\n");
 
     result = SDL_CCM_selfTest(ccmInst,
 	                          SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK,
@@ -337,10 +340,10 @@ int32_t SDL_TEST_CCMSelftestPolarityInvert(uint32_t ccmInst)
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM polarity invert self test failed");
+        DebugP_log("\n CCM polarity invert self test failed\r\n");
        retVal = -1;
     } else {
-        DebugP_log("\n CCM polarity invert self test complete");
+        DebugP_log("\n CCM polarity invert self test complete\r\n");
     }
 
     return retVal;
@@ -360,17 +363,17 @@ int32_t SDL_TEST_CCMVIMSelfTest(uint32_t ccmInstance)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM VIM self test: starting");
+    DebugP_log("\n CCM VIM self test: starting\r\n");
 
     result = SDL_CCM_selfTest(ccmInstance, SDL_CCM_MONITOR_TYPE_VIM,
                               SDL_CCM_SELFTEST_TYPE_NORMAL, 0U,
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM VIM self test failed");
+        DebugP_log("\n CCM VIM self test failed\r\n");
         retVal = -1;
     } else {
-        DebugP_log("\n CCM VIM Self Test complete");
+        DebugP_log("\n CCM VIM Self Test complete\r\n");
     }
 
     return retVal;
@@ -390,17 +393,17 @@ int32_t SDL_TEST_CCMInactivitySelfTest(uint32_t ccmInstanceID)
     int32_t result;
     int32_t retVal=0;
 
-    DebugP_log("\n CCM inactivity monitor self test: starting");
+    DebugP_log("\n CCM inactivity monitor self test: starting\r\n");
 
     result = SDL_CCM_selfTest(ccmInstanceID, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR,
                               SDL_CCM_SELFTEST_TYPE_NORMAL, 0U,
                               10000000);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n CCM inactivity monitor self test failed");
+        DebugP_log("\n CCM inactivity monitor self test failed\r\n");
         retVal = -1;
     } else {
-        DebugP_log("\n CCM inactivity monitor Self Test complete");
+        DebugP_log("\n CCM inactivity monitor Self Test complete\r\n");
     }
 
     return retVal;
@@ -416,7 +419,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMSelfTest(instanceId);
 	if (sdlResult != SDL_PASS)
 	{
-		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
 		testResult = -1;
 	}
     }
@@ -425,7 +428,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMSelfTestErrorForce(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    	 	DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    	 	DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -434,7 +437,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMInjectError(instanceId);
         if (sdlResult != SDL_PASS)
     	{
-            DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
             testResult = -1;
         }
     }
@@ -443,7 +446,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMInactivitySelfTest(instanceId);
 			if (sdlResult != SDL_PASS)
 			{
-				DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+				DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
 				testResult = -1;
 			}
     	}
@@ -452,7 +455,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMSelfTest_Inactivity_ErrorForce(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -461,7 +464,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMInjectInactivityError(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -470,7 +473,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMSelftestPolarityInvert(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -479,7 +482,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMVIMSelfTest(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -488,7 +491,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMSelfTest_VIM_ErrorForce(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -497,7 +500,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_TEST_CCMInjectVIMError(instanceId);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -506,7 +509,7 @@ static int32_t CCM_runTest(uint32_t instanceId)
         sdlResult = SDL_CCM_injectError(instanceId, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK);
     	if (sdlResult != SDL_PASS)
     	{
-    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \n", __LINE__);
+    		DebugP_log("sdlCcm_funcTest: failure on line no. %d \r\n", __LINE__);
     		testResult = -1;
     	}
 	}
@@ -529,11 +532,11 @@ int32_t CCM_Test_init (int32_t instNum, uint32_t indexNum)
 #endif
         if (result != SDL_PASS) {
             /* print error and quit */
-            DebugP_log("CCM_Test_init: Error initializing MAIN ESM: result = %d\n", result);
+            DebugP_log("CCM_Test_init: Error initializing MAIN ESM: result = %d\r\n", result);
 
             retValue = -1;
         } else {
-            DebugP_log("\nCCM_Test_init: Init MAIN ESM complete \n");
+            DebugP_log("\nCCM_Test_init: Init MAIN ESM complete \r\n");
         }
     }
 
@@ -542,21 +545,21 @@ int32_t CCM_Test_init (int32_t instNum, uint32_t indexNum)
         result = SDL_CCM_init(instNum, indexNum);
         if (result != SDL_PASS) {
             /* print error and quit */
-            DebugP_log("CCM_Test_init: Error result = %d\n", result);
+            DebugP_log("CCM_Test_init: Error result = %d\r\n", result);
 
             retValue = -1;
         } else {
-            DebugP_log("\nCCM_Test_init: CCM Init complete \n");
+            DebugP_log("\nCCM_Test_init: CCM Init complete\r\n");
         }
 		        /* Initialize CCM */
         result = SDL_CCM_verifyConfig(instNum);
         if (result != SDL_PASS) {
             /* print error and quit */
-            DebugP_log("CCM_Test_init: Error result = %d\n", result);
+            DebugP_log("CCM_Test_init: Error result = %d\r\n", result);
 
             retValue = -1;
         } else {
-            DebugP_log("\nCCM_Test_init: CCM Init complete \n");
+            DebugP_log("\nCCM_Test_init: CCM Init complete\r\n");
         }
     }
 
@@ -581,7 +584,7 @@ int32_t CCM_funcTest(void)
 
 		if (testResult != 0)
 		{
-			DebugP_log("\n CCM SDL API tests: unsuccessful");
+			DebugP_log("\n CCM SDL API tests: unsuccessful\r\n");
 			return SDL_EFAIL;
 		}
 
@@ -596,23 +599,31 @@ int32_t CCM_funcTest(void)
 			DebugP_log("\r\nCCM Init failed. Exiting the app.\r\n");
 		}	
 	}
-		return (testResult);
+	Board_driversClose();
+    Drivers_close();
+	
+	return (testResult);
 }
 
 void func_test_main(void *args)
 {
 	SDL_ErrType_t ret = SDL_PASS;
-
+	
+	Drivers_open();
+    Board_driversOpen();
+	
     ret = SDL_TEST_dplInit();
+	
     if (ret != SDL_PASS)
     {
-        DebugP_log("Error: DPL Init Failed\n");
+        DebugP_log("Error: DPL Init Failed\r\n");
     }
 	ret = CCM_funcTest();
 	if (ret != SDL_PASS)
     {
-        DebugP_log("Error: Function Test Failed\n");
+        DebugP_log("Error: Function Test Failed\r\n");
     }
+
 }
 /* ========================================================================== */
 /*                            Internal Function Definition                    */

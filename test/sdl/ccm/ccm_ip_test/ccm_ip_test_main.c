@@ -42,8 +42,10 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-
-#include "ccm_test_main.h"
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ccm_ip_test_main.h"
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #ifdef UNITY_INCLUDE_CONFIG_H
@@ -54,9 +56,17 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
-
-
+#define  CCM_IP_API_TEST_ID       (0U)
+#define  CCM_IP_ERROR_TEST_ID     (1U)
+#define  CCM_TOTAL_NUM_TESTS      (2U)
+#if defined (SOC_AM263X)
+#define  CCM_NUM_INSTANCE         (3U)
+#define INSTANCE 		SDL_R5SS0_CCM
+#endif
+#if defined (SOC_AM273X) || (SOC_AWR294X)
+#define  CCM_NUM_INSTANCE         (2U)
+#define INSTANCE 		SDL_MSS_CCMR
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -167,13 +177,18 @@ void sdl_test_ccm_test_app(void)
         TEST_FAIL();
 #endif
     }
+	Board_driversClose();
+    Drivers_close();
 }
 
 void ccm_test_main(void *args)
 {
     /* Declaration of variables */
     int32_t  testResult;
-
+	
+	Drivers_open();
+    Board_driversOpen();
+	
     /* Initialize DPL module */
     testResult = sdlApp_dplInit();
 
