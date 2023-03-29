@@ -47,7 +47,7 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 /*Macros for instances*/
-#if defined(SOC_AM273X)
+#if defined(SOC_AM273X)||defined(SOC_AWR294X)
 #if defined (R5F_INPUTS)
 #define MCRC_INSTANCE  MSS_MCRC
 #define MCRC_DMCH_VALUE0 EDMA_MSS_TPCC_A_EVT_MCRC_DMA_REQ0
@@ -83,7 +83,7 @@
 
 #if defined(SOC_AM263X)
 #define MCRC_USECASES	(4U)
-#elif defined(SOC_AM273X)
+#elif defined(SOC_AM273X)||defined(SOC_AWR294X)
 #define MCRC_USECASES	(2U)
 #endif
 /* Semaphore to indicate transfer completion */
@@ -109,7 +109,7 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 #if defined(SOC_AM263X)
      MCRC0,
 #endif
-#if defined(SOC_AM273X)||(SOC_AWR294X)
+#if defined(SOC_AM273X)||defined(SOC_AWR294X)
      MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_1,
@@ -128,7 +128,7 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 #if defined(SOC_AM263X)
      MCRC0,
 #endif
-#if defined(SOC_AM273X)||(SOC_AWR294X)
+#if defined(SOC_AM273X)||defined(SOC_AWR294X)
      MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_2,
@@ -311,7 +311,7 @@ int32_t mcrcAutoCPU_main(void)
 			regionId = EDMA_getRegionId(gEdmaHandle[0]);
 			DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
 
-#if defined(SOC_AM273X)
+#if defined(SOC_AM273X)||defined(SOC_AWR294X)
 			if(testCase==0)
 			{
 				dmaCh0 = MCRC_DMCH_VALUE0;

@@ -109,7 +109,7 @@ static    SDL_MCRC_ConfigParams_t testparams[MCRC_USECASES] =
 #if defined(SOC_AM263X)
      MCRC0,
 #endif
-#if defined(SOC_AM273X)||(SOC_AWR294X)
+#if defined(SOC_AM273X)
      MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_1,
@@ -128,7 +128,7 @@ static    SDL_MCRC_ConfigParams_t testparams[MCRC_USECASES] =
 #if defined(SOC_AM263X)
      MCRC0,
 #endif
-#if defined(SOC_AM273X)||(SOC_AWR294X)
+#if defined(SOC_AM273X)
      MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_2,

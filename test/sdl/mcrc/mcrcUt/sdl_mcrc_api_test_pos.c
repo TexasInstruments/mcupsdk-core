@@ -434,7 +434,7 @@ int32_t sdl_mcrc_posTest(void)
 			
 			if (testStatus == SDL_APP_TEST_PASS)
             {
-                if ((SDL_MCRC_configType(instance,channel, SDL_MCRC_OPERATION_MODE_AUTO)) != SDL_PASS)
+                if ((SDL_MCRC_configCRCType(instance,channel)) != SDL_PASS)
                 {
                     testStatus = SDL_APP_TEST_FAILED;
                 }
@@ -448,7 +448,7 @@ int32_t sdl_mcrc_posTest(void)
 			
 			if (testStatus == SDL_APP_TEST_PASS)
             {
-                if ((SDL_MCRC_configType(instance,channel, SDL_MCRC_OPERATION_MODE_SEMICPU)) != SDL_PASS)
+                if ((SDL_MCRC_configCRCType(instance,channel)) != SDL_PASS)
                 {
                     testStatus = SDL_APP_TEST_FAILED;
                 }
@@ -462,7 +462,7 @@ int32_t sdl_mcrc_posTest(void)
 			
 			if (testStatus == SDL_APP_TEST_PASS)
             {
-                if ((SDL_MCRC_configType(instance,channel, SDL_MCRC_OPERATION_MODE_FULLCPU)) != SDL_PASS)
+                if ((SDL_MCRC_configCRCType(instance,channel)) != SDL_PASS)
                 {
                     testStatus = SDL_APP_TEST_FAILED;
                 }

@@ -1282,7 +1282,7 @@ int32_t sdl_mcrc_negTest(void)
 	
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if ((SDL_MCRC_configType(SDL_MCRC_INVALID,channel, SDL_MCRC_OPERATION_MODE_FULLCPU)) != SDL_EBADARGS)
+        if ((SDL_MCRC_configCRCType(SDL_MCRC_INVALID,channel)) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1296,7 +1296,7 @@ int32_t sdl_mcrc_negTest(void)
 	
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if ((SDL_MCRC_configType(instance, 5u, SDL_MCRC_OPERATION_MODE_FULLCPU)) != SDL_EBADARGS)
+        if ((SDL_MCRC_configCRCType(instance, 5u)) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
