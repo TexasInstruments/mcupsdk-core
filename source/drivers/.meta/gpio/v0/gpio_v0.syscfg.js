@@ -9,7 +9,6 @@ function getInstanceConfig(moduleInstance) {
         moduleIndex: soc.getInstanceString(moduleInstance),
         pinIndex: soc.getPinIndex(moduleInstance),
         coreId: getSelfCoreID(),
-        cfg: boardConfig,
     }
 
     return {
@@ -162,6 +161,7 @@ function getConfigurables() {
                 buttonText: "GET RM DATA",
                 hidden: true,
                 onLaunch: (inst) => {
+                    let nodeCmd = common.getNodePath()
                     let products = system.getProducts()
                     let sdkPath = products[0].path.split("/.metadata/product.json")[0]
                     let filePath = sdkPath + "/source/drivers/.meta/gpio/soc/getBoardConfigRm.js"
@@ -171,7 +171,7 @@ function getConfigurables() {
                         filePath = sdkPath + "//source//drivers//.meta//gpio//soc//getBoardConfigRm.js"
                     }
                     return {
-                        command: "node",
+                        command: nodeCmd,
                         args: [filePath, "$comFile", socName],
                         initialData: "initialData",
                         inSystemPath: true,

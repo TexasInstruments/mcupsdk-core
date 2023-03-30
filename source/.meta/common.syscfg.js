@@ -34,6 +34,11 @@ function isSciClientSupported() {
     }
 };
 
+
+function getNodePath() {
+    return system.getNodePath()
+}
+
 function getSocName() {
     if(system.deviceData.device == "AM64x_beta")
         return "am64x";
@@ -288,6 +293,7 @@ exports = {
     findDuplicates,
     stringOrEmpty,
     typeMatches,
+    getNodePath,
 
     validate: {
         checkSameInstanceName : function (instance, report) {
