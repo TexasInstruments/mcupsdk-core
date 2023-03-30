@@ -174,7 +174,7 @@ function getConfigurables() {
                     }
                     return {
                         command: nodeCmd,
-                        args: [filePath, "$comFile"],
+                        args: [filePath, "$comFile", socName],
                         initialData: "initialData",
                         inSystemPath: true,
                     };

@@ -1,11 +1,5 @@
 let common = system.getScript("/common");
 let soc = system.getScript(`/board/flash/flash_${common.getSocName()}`);
-let nodeCmd = "node";
-
-if(system.getOS() == "win")
-{
-    nodeCmd = "node.exe";
-}
 
 let regDataDescription = `
 Certain attributes of the flash are sometimes configured by writing to a register.
@@ -825,6 +819,7 @@ let flash_module = {
                     nonSerializable: true,
                     onLaunch: (inst) => {
                         let products=system.getProducts()
+                        let nodeCmd=common.getNodePath()
                         let sdkPath = ""
                         let copyScriptPath = ""
                         if(system.getOS() == "win") {

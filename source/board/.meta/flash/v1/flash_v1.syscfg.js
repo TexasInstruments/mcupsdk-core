@@ -1,11 +1,5 @@
 let common = system.getScript("/common");
 let soc = system.getScript(`/board/flash/flash_${common.getSocName()}`);
-let nodeCmd = "node";
-
-if(system.getOS() == "win")
-{
-    nodeCmd = "node.exe";
-}
 
 let addressingModeDescription = `
 In flashes with size more than 16 MB, we need 4 address bytes to access memory. But most
@@ -486,6 +480,7 @@ let flash_module = {
                     nonSerializable: true,
                     onLaunch: (inst) => {
                         let products=system.getProducts()
+                        let nodeCmd=common.getNodePath()
                         let sdkPath = ""
                         let copyScriptPath = ""
                         if(system.getOS() == "win") {
