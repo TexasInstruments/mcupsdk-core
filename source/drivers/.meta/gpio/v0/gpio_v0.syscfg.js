@@ -1,7 +1,10 @@
 let common = system.getScript("/common");
 let pinmux = system.getScript("/drivers/pinmux/pinmux");
 let soc = system.getScript(`/drivers/gpio/soc/gpio_${common.getSocName()}`);
-let boardConfig = system.getScript(`/drivers/gpio/soc/k3BoardConfig.json`)
+let boardConfig = system.getScript(`/drivers/gpio/soc/k3BoardConfig.json`);
+
+let errorFlag = 0;
+let errorLog = '';
 
 function getInstanceConfig(moduleInstance) {
     let additionalConfig = {
@@ -57,6 +60,9 @@ function validateInterruptRouter(instance, report, fieldname) {
     /* Verified by SYSCFG based on selected pin */
     if (instance.enableIntr) {
         common.validate.checkNumberRange(instance, report, fieldname, 0, soc.getMaxInterruptRouters(), "dec");
+        if(errorFlag == 1) {
+            report.logWarning(errorLog, instance, fieldname);
+        }
         let moduleInstances = instance.$module.$instances;
         let validOptions = instance.$module.$configByName.intrOut.options(instance);
         let selectedOptions = instance.intrOut;
@@ -74,18 +80,14 @@ function validateInterruptRouter(instance, report, fieldname) {
     }
 }
 
-//To  get long description
-function getLongDescription(data) {
-    let routerDescription = `The interrupt router input to the Core are shared for different resources. Although many output pins were available for the GPIO MUX interrupt router, only resource pin that are allocated in board configuration is available for use`;
-    let buttonDescription = 'If you manually changed the resource management (RM) data in source/drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_rm.c, click this button to reflect it in SysConfig.'
-    if (data == "router") {
-        return routerDescription;
-    }
-    if (data == "button") {
-        return buttonDescription;
-    }
-    return "";
-}
+let routerDescription =
+`The interrupt router input to the Core are shared for different resources.
+ Although many output pins were available for the GPIO MUX interrupt router,
+ only resource pin that are allocated in board configuration is available for use`;
+let buttonDescription =
+`If you manually changed the resource management (RM) data in
+source/drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/sciclient_defaultBoardcfg_rm.c,
+click this button to reflect it in SysConfig`;
 
 //function to get router pin data from boardConfig
 function getRouterPins() {
@@ -157,7 +159,7 @@ function getConfigurables() {
                 name: "getBoardCfg",
                 displayName: "Fetch Board Configuration",
                 description: 'Click this button to fetch GPIO RM data automatically',
-                longDescription: getLongDescription("button"),
+                longDescription: buttonDescription,
                 buttonText: "GET RM DATA",
                 hidden: true,
                 onLaunch: (inst) => {
@@ -172,7 +174,7 @@ function getConfigurables() {
                     }
                     return {
                         command: nodeCmd,
-                        args: [filePath, "$comFile", socName],
+                        args: [filePath, "$comFile"],
                         initialData: "initialData",
                         inSystemPath: true,
                     };
@@ -184,8 +186,11 @@ function getConfigurables() {
                         return;
                     } else {
                         try {
+                            errorFlag = 0;
                             boardConfig = JSON.parse(result.data);
                         } catch (e) {
+                            errorFlag = 1;
+                            errorLog = result.data;
                             return;
                         }
                         return;
@@ -196,7 +201,7 @@ function getConfigurables() {
                 name: "intrOut",
                 displayName: "Interrupt Router Output",
                 description: 'GPIO-MUX interrupt Router Output to the destination Core',
-                longDescription: getLongDescription("router"),
+                longDescription: routerDescription,
                 hidden: true,
                 default: getRouterPins()[0].name,
                 options: getRouterPins,
