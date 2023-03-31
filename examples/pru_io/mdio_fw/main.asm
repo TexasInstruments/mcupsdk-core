@@ -184,6 +184,17 @@ MDIO_MAIN_LOOP:
     ; Extract PHY1 Address from userPhySelReg1
     and             userPhySel_phyAddr1, tempReg, MASK_5_BITS
 
+    ; Copy the MDIO_LINK_INT_MASKED_REG at MMR from emulated register location to clear interrupt
+    lbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+    sbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+
+    ; Perform Updates for MLINK mode, if enabled
+    qbbs            SKIP_MLINK_BASED_LINK_UPDATE?, FW_CONFIG_REG, 0
+    ; Copy the MDIO_LINK_REG at new emulated register location from MMR
+    lbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_REG_OFFSET, 4
+    sbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_REG_OFFSET, 4
+SKIP_MLINK_BASED_LINK_UPDATE?:
+
 ;---------------------------------------------------------------------------------------
 ; MDIO_USER_ACCESS_0_REG emulation
 ; Reads and checks 1st User Access Reg if we need to perform PHY register read/write
@@ -200,6 +211,11 @@ UPDATE_USERACCESS0_REG?:        ; Update userAccess0Reg at emulated register spa
     sbbo            &userAccessReg, DEFINED_MDIO_BASE_ADDR, MDIO_USER_ACCESS_0_REG_OFFSET, 4    ; Update userAccess0Reg at emulated register space
 
 END_USERACCESS0_OPERATION?:
+
+    ; Doing Again for quicker interrupt clearing
+    ; Copy the MDIO_LINK_INT_MASKED_REG at MMR from emulated register location to clear interrupt
+    lbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+    sbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_INT_MASKED_REG_OFFSET, 1
 
 ;---------------------------------------------------------------------------------------
 ; MDIO_USER_ACCESS_1_REG emulation
@@ -218,6 +234,11 @@ UPDATE_USERACCESS1_REG?:        ; Update userAccess1Reg at emulated register spa
 
 END_USERACCESS1_OPERATION?:
 
+    ; Doing Again for quicker interrupt clearing
+    ; Copy the MDIO_LINK_INT_MASKED_REG at MMR from emulated register location to clear interrupt
+    lbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+    sbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+
 ;---------------------------------------------------------------------------------------
 ; MDIO_LINK_REG & MDIO_ALIVE_REG emulation
 ; Polling based LINK update configuration:
@@ -228,7 +249,7 @@ END_USERACCESS1_OPERATION?:
     ; Update counter which maintains value for link status update
     ; When counter reaches VALUE_TO_UPDATE_LINK_ON_CONST we update MDIO_LINK_REG
     add             counter_for_link_status_update_reg, counter_for_link_status_update_reg, 1
-    qbgt            SKIP_LINK_UPDATE_BY_POLLING?, counter_for_link_status_update_reg, value_to_update_link_status_on_reg
+    qbgt            SKIP_ALIVE_AND_LINK_UPDATE_BY_POLLING?, counter_for_link_status_update_reg, value_to_update_link_status_on_reg
 
     ; For PHY0 from MDIO_USER_PHY_SEL_0_REG
     mov             phyAddr, userPhySel_phyAddr0
@@ -236,24 +257,26 @@ END_USERACCESS1_OPERATION?:
     jal             RET_LINK_STATUS_UPDATE, UPDATE_LINK_STATUS      ; Update link status
     ; jal             RET_LINK_STATUS_UPDATE, UPDATE_LINK_STATUS    ; Uncomment if we need to read 2 times
 
+    ; Doing Again for quicker interrupt clearing
+    ; Copy the MDIO_LINK_INT_MASKED_REG at MMR from emulated register location to clear interrupt
+    lbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+    sbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+
     ; For PHY1 from MDIO_USER_PHY_SEL_1_REG
     mov             phyAddr, userPhySel_phyAddr1
     ldi             miiEventNumReg, 53                ; Interrupt event 53: MDIO_MII_LINK[1]
     jal             RET_LINK_STATUS_UPDATE, UPDATE_LINK_STATUS      ; Update link status
     ; jal             RET_LINK_STATUS_UPDATE, UPDATE_LINK_STATUS    ; Uncomment if we need to read 2 times
 
+    ; Doing Again for quicker interrupt clearing
+    ; Copy the MDIO_LINK_INT_MASKED_REG at MMR from emulated register location to clear interrupt
+    lbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+    sbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_INT_MASKED_REG_OFFSET, 1
+
     ; Reset counter for link status update to 0
     ldi             counter_for_link_status_update_reg, 0
-    qba             SKIP_LINK_UPDATE_BY_POLLING?
 
-SKIP_LINK_UPDATE_BY_POLLING?:
-
-    ; Perform MLINK based LINK Update, if enabled
-    qbbs            SKIP_MLINK_BASED_LINK_UPDATE?, FW_CONFIG_REG, 0
-    ; Copy the MDIO_LINK_REG at new emulated register location from MMR
-    lbbo            &tempReg, ACTUAL_MDIO_BASE_ADDR,  MDIO_LINK_REG_OFFSET, 4
-    sbbo            &tempReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_REG_OFFSET, 4
-SKIP_MLINK_BASED_LINK_UPDATE?:
+SKIP_ALIVE_AND_LINK_UPDATE_BY_POLLING?:
 
     qba             MDIO_MAIN_LOOP  ; loop
 ; ---------------------------------------------- ××× -----------------------------------------------
@@ -292,6 +315,7 @@ UPDATE_LOCAL_USER_ACCESS_REG?:
 
 ;---------------------------------------------------------------------------------------------------
 ; UPDATE_LINK_STATUS
+; Here we update both alive register and link register
 ; Triggers PHY status register read operation to get LINK status
 ; --------------------------------------------------------------------------------------------------
 ; DP83869HM:
@@ -326,6 +350,10 @@ UPDATE_LINK_STATUS:
     ; ----------------------------------------------------------------------- ;
 
     ; ---------------- Update MDIO link Reg & Interrupt --------------------- ;
+
+    ; Skip updating MDIO_LINK_REG if we are using MLINK based link detection
+    qbbc            SKIP_LINK_UPDATE_USING_POLLING?, FW_CONFIG_REG, 0
+
     mov             tempReg, mdioLinkReg                ; Store previous Link Reg Value
     ; Update status of PHY link in Link Reg:
     clr             mdioLinkReg, mdioLinkReg, phyAddr
@@ -335,9 +363,6 @@ PHY_LINK_DOWN?:
 
     ; Update MDIO_LINK_REG at emulated register space offset
     sbbo            &mdioLinkReg, DEFINED_MDIO_BASE_ADDR, MDIO_LINK_REG_OFFSET, 4
-
-    ; Skip updating MDIO_LINK_REG if we are using MLINK based link detection
-    qbbc            SKIP_LINK_UPDATE_USING_POLLING?, FW_CONFIG_REG, 0
 
     ; Interrupt on link status change
     ; No interrupt if link status is unchanged (Check linkReg value with previous value)
