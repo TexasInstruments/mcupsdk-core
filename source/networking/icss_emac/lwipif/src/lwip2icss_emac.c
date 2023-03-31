@@ -170,13 +170,17 @@ int32_t Lwip2Emac_getDriverLinkStatus(Lwip2Emac_Handle hLwip2Emac)
     uint8_t portNumber = 0;
     if(1 == ((ICSS_EMAC_Object *)hLwip2Emac->emacHandle->object)->linkStatus[0])
     {
-        hLwip2Emac->linkIsUp = 1;
+        hLwip2Emac->linkIsUp = 1;   /* update link status */
         portNumber = 1;
     }
     else if(1 == ((ICSS_EMAC_Object *)hLwip2Emac->emacHandle->object)->linkStatus[1])
     {
-        hLwip2Emac->linkIsUp = 1;
+        hLwip2Emac->linkIsUp = 1;   /* update link status */
         portNumber = 2;
+    }
+    else
+    {
+        hLwip2Emac->linkIsUp = 0;   /* set linkIsUp to 0 by default (link down) */
     }
 
     return (portNumber);
