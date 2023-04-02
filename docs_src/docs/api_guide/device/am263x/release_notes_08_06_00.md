@@ -234,7 +234,7 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Flash
     <td> 8.4.0 onwards
     <td> AM263x
-    <td> Updated the sysconfig to use OS agnostic copy funtion
+    <td> Updated the sysconfig to use OS agnostic copy function
 </tr>
 <tr>
     <td> MCUSDK-7320
@@ -559,6 +559,56 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     - removed register offsets and related CSL for HRCAP in ECAP.
     <td> removed
     <td> HRCAP is not supported in AM263x.
+</tr>
+
+</table>
+
+<table>
+<tr>
+    <th> Module
+    <th> Affected API
+    <th> Change
+    <th> Additional Remarks
+</tr>
+<tr>
+    <td> FSI
+    <td> Macro FSI_RX_MASTER_CORE_RESET, FSI_TX_MASTER_CORE_RESET
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **MASTER** to **MAIN**
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> I2C
+    <td> Structure I2C_Transaction member slaveAddress, masterMode
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **target**, for example..\n
+    slaveAddress->targetAddress
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> LIN
+    <td> Enum LIN_LINMode member LIN_MODE_LIN_SLAVE, LIN_MODE_LIN_MASTER\n
+    Enum LIN_MessageFilter member LIN_MSG_FILTER_IDSLAVE\n
+    Function LIN_setIDSlaveTask
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **commander** and **slave** to **responder**, for example..\n
+    LIN_setIDSlaveTask->LIN_setIDResponderTask         
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> McSPI
+    <td> MACRO MCSPI_MS_MODE_MASTER, MCSPI_MS_MODE_SLAVE
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **peripheral**, for example..\n
+    MCSPI_MS_MODE_MASTER->MCSPI_MS_MODE_CONTROLLER         
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> SDFM
+    <td> MACRO SDFM_MASTER_INTERRUPT_FLAG\n
+    Function SDFM_enableMasterInterrupt\n
+    Function SDFM_disableMasterInterrupt\n
+    Function SDFM_enableMasterFilter\n
+    Function SDFM_disableMasterFilter
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **main**, for example..\n
+    SDFM_enableMasterFilter->SDFM_enableMainFilter         
+    <td> Updated to use the inclusive naming
 </tr>
 
 </table>

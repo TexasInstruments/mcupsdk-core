@@ -321,7 +321,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Flash
     <td> 8.4.0 onwards
     <td> AM64x, AM243x
-    <td> Updated the sysconfig to use OS agnostic copy funtion
+    <td> Updated the sysconfig to use OS agnostic copy function
 </tr>
 <tr>
     <td> MCUSDK-8106
@@ -721,7 +721,38 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
-</table>
+<tr>
+    <td> FSI
+    <td> Macro FSI_RX_MASTER_CORE_RESET, FSI_TX_MASTER_CORE_RESET
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **MASTER** to **MAIN**
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> I2C
+    <td> Structure I2C_Transaction member slaveAddress, masterMode
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **target**, for example..\n
+    slaveAddress->targetAddress
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> McASP
+    <td> MACRO MCASP_OPMODE_MASTER, MCASP_OPMODE_SLAVE
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller**, for example..\n
+    MCASP_OPMODE_MASTER->MCASP_OPMODE_CONTROLLER         
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> MibSPI
+    <td> MACRO MIBSPI_SLAVEMODE_TRANS_GROUP, MIBSPI_SLAVE_MAX \n
+    Enum MIBSPI_Mode members MIBSPI_MASTER, MIBSPI_SLAVE\n
+    Structure MIBSPI_SlaveProfile\n
+    Structure MIBSPI_SlaveModeParams\n
+    Structure MIBSPI_Transaction member slaveIndex\n
+    Structure MIBSPI_MasterModeParams
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **peripheral**, for example..\n
+    MIBSPI_SlaveProfile->MIBSPI_PeripheralProfile         
+    <td> Updated to use the inclusive naming
+</tr>
 
 ### Motor Control
 

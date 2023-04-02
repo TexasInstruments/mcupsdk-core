@@ -188,7 +188,7 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> Load from JSON feature fails in SysConfig in Windows PC
     <td> Flash
     <td> 8.4.0 onwards
-    <td> Updated the sysconfig to use OS agnostic copy funtion
+    <td> Updated the sysconfig to use OS agnostic copy function
 </tr>
 <tr>
     <td> MCUSDK-9304
@@ -369,7 +369,32 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
-</table>
+<tr>
+    <td> FSI
+    <td> Macro FSI_RX_MASTER_CORE_RESET, FSI_TX_MASTER_CORE_RESET
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **MASTER** to **MAIN**
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> I2C
+    <td> Structure I2C_Transaction member slaveAddress, masterMode
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity  from **master** to **controller** and **slave** to **target**, for example..\n
+    slaveAddress->targetAddress
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> McSPI
+    <td> MACRO MCSPI_MS_MODE_MASTER, MCSPI_MS_MODE_SLAVE
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **peripheral**, for example..\n
+    MCSPI_MS_MODE_MASTER->MCSPI_MS_MODE_CONTROLLER         
+    <td> Updated to use the inclusive naming
+</tr>
+<tr>
+    <td> UDMA
+    <td> Structure Udma_EventPrms member masterEventHandle
+    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **masterEventHandle** to **controllerEventHandle**
+    <td> Updated to use the inclusive naming
+</tr>
 
 ### Networking
 
