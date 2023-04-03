@@ -3870,13 +3870,13 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void)
 int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_SEC_Test(void)
 {
   return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_MBOX,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_MBOX,SDL_MBOX_SRAM_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_DED_Test(void)
 {
   return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0,&ECC_Bus_Safety_Test_esmInitConfig_MAIN,\
-                                      SDL_ECC_BUS_SAFETY_MSS_MBOX,0U));
+                                      SDL_ECC_BUS_SAFETY_MSS_MBOX,SDL_MBOX_SRAM_U_BASE));
 }
 
 int32_t SDL_ECC_BUS_SAFETY_MSS_MBOX_RED_Test(void)

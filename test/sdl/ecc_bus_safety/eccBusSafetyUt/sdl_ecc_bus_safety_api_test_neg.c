@@ -474,7 +474,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         }
     if (testStatus == SDL_APP_TEST_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MBOX,0U, 0) != SDL_PASS)
+            if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MBOX,SDL_MBOX_SRAM_U_BASE, 0) != SDL_PASS)
             {
                 testStatus = SDL_APP_TEST_FAILED;
             }
@@ -554,7 +554,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
 
     if (testStatus == SDL_APP_TEST_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MBOX,0U, 0) != SDL_PASS)
+            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MBOX,SDL_MBOX_SRAM_U_BASE, 0) != SDL_PASS)
             {
                 testStatus = SDL_APP_TEST_FAILED;
             }

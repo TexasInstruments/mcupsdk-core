@@ -16,10 +16,10 @@
 
 /* This is the size of stack when R5 is in IRQ mode
  * In NORTOS,
- * - Here interrupt nesting is disabled as of now
+ * - Here interrupt nesting is enabled
  * - This is the stack used by ISRs registered as type IRQ
  * In FreeRTOS,
- * - Here interrupt nesting is enabled
+ * - Here interrupt nesting is disabled
  * - This is stack that is used initally when a IRQ is received
  * - But then the mode is switched to SVC mode and SVC stack is used for all user ISR callbacks
  * - Hence in FreeRTOS, IRQ stack size is less and SVC stack size is more
@@ -38,29 +38,18 @@ SECTIONS
     /* This has the R5F entry point and vector table, this MUST be at 0x0 */
     .vectors:{} palign(8) > R5F_VECS
 
-    /* This has the R5F boot code until MPU is enabled,  this MUST be at a address < 0x80000000
-     * i.e this cannot be placed in DDR
-     */
-    GROUP {
-        .text.hwi: palign(8)
-        .text.cache: palign(8)
-        .text.mpu: palign(8)
-        .text.boot: palign(8)
-        .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
-    } > MSS_L2
-
-    /* This is rest of code. This can be placed in DDR if DDR is available and needed */
+    /* This is rest of code. This can be placed in MSS_L2 */
     GROUP {
         .text:   {} palign(8)   /* This is where code resides */
         .rodata: {} palign(8)   /* This is where const's go */
     } > MSS_L2
 
-    /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
+    /* This is rest of initialized data. This can be placed in MSS_L2 */
     GROUP {
         .data:   {} palign(8)   /* This is where initialized globals and static go */
     } > MSS_L2
 
-    /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
+    /* This is rest of uninitialized data. This can be placed in MSS_L2 */
     GROUP {
         .bss:    {} palign(8)   /* This is where uninitialized globals go */
         RUN_START(__BSS_START)
@@ -104,6 +93,9 @@ SECTIONS
     .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
     /* this is used only when IPC RPMessage is enabled, else this is not used */
     .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
+    /* this is used only when Secure IPC is enabled */
+    .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
+    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
 }
 
 MEMORY
@@ -118,7 +110,7 @@ MEMORY
     MSS_L2     : ORIGIN = 0x10260000 , LENGTH = 0x40000
 
     /* This is typically used to hold data IO buffers from accelerators like CSI, HWA, DSP */
-    DSS_L3:   ORIGIN = 0x88000000, LENGTH = 0x00200000
+    DSS_L3:   ORIGIN = 0x88000000, LENGTH = 0x00390000
 
     /* shared memories that are used by RTOS/NORTOS cores */
     /* On R5F,
@@ -126,7 +118,8 @@ MEMORY
      */
     USER_SHM_MEM            : ORIGIN = 0x102E8000, LENGTH = 0x00004000
     LOG_SHM_MEM             : ORIGIN = 0x102EC000, LENGTH = 0x00004000
-    /* 1st 512 B of DSS mailbox memory and MSS mailbox memory is used for IPC with R4 and should not be used by application */
     /* MSS mailbox memory is used as shared memory, we dont use bottom 32*6 bytes, since its used as SW queue by ipc_notify */
-    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xC5000200, LENGTH = 0x1D40
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xC5000000, LENGTH = 0x1F40
+    MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
+    MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
 }

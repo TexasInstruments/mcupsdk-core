@@ -100,11 +100,11 @@ const templates_nortos_c66 =
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/awr294x/common/linker_r5f.cmd.xdt",
+        input: ".project/templates/am273x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
     },
     {
-        input: ".project/templates/awr294x/nortos/main_nortos.c.xdt",
+        input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
             entryFunction: "sdl_ecc_bus_safety_test_main",

@@ -252,17 +252,16 @@ UC-59    | ICSSM_S_RED_Test in Interrupt  Method.
 UC-60    | DAP_SEC_Test in Interrupt  Method.
 UC-61    | DAP_DED_Test in Interrupt  Method.
 UC-62    | DAP_RED_Test in Interrupt  Method.
-
-UC-33    | MSS_MMC_S_SEC_Test in Interrupt Method.
-UC-34    | MSS_MMC_S_DED_Test in Interrupt Method.
-UC-35    | MSS_MMC_S_RED_Test in Interrupt Method.
-UC-36    | MSS_GPMC_SEC_Test in Interrupt Method.
-UC-37    | MSS_L2_A_DED_Test in Interrupt Method.
-UC-38    | MSS_L2_B_RED_Test in Interrupt Method.
-UC-39    | MSS_L2_C_RED_Test in Interrupt Method.
-UC-40    | MSS_L2_D_RED_Test in Interrupt Method.
-UC-41    | MAIN_VBUSP_RED_Test in Interrupt Method.
-UC-42    | PERI_VBUSP_RED_Test in Interrupt Method.
+UC-63    | MSS_MMC_S_SEC_Test in Interrupt Method.
+UC-64    | MSS_MMC_S_DED_Test in Interrupt Method.
+UC-65    | MSS_MMC_S_RED_Test in Interrupt Method.
+UC-66    | MSS_GPMC_SEC_Test in Interrupt Method.
+UC-67    | MSS_L2_A_DED_Test in Interrupt Method.
+UC-68    | MSS_L2_B_RED_Test in Interrupt Method.
+UC-69    | MSS_L2_C_RED_Test in Interrupt Method.
+UC-70    | MSS_L2_D_RED_Test in Interrupt Method.
+UC-71    | MAIN_VBUSP_RED_Test in Interrupt Method.
+UC-72    | PERI_VBUSP_RED_Test in Interrupt Method.
 
 Use Cases On AM273X in R5 Core
 ---------
