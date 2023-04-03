@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId="Cortex R.AM64x"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Ncm Nortos"
+        name = "ncm_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang"
+        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+                Debug,
+                Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TICLANG"
+        cgtVersion="2.1.2"
+        device="Cortex R.AM64x"
+        deviceCore="MAIN_PULSAR_Cortex_R5_0_0"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${CG_TOOL_ROOT}/include/c
+            -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x/ncm_config
+            -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src
+            -I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/lib/networking
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include/
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x/usb/
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include/lwip/apps
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/dpl
+            -mcpu=cortex-r5
+            -mfloat-abi=hard
+            -mfpu=vfpv3-d16
+            -mthumb
+            -Wall
+            -Werror
+            -g
+            -Wno-gnu-variable-sized-type-not-at-end
+            -Wno-unused-function
+            -DSOC_AM64X
+            -DTINYUSB_INTEGRATION
+        "
+        linkerBuildOptions="
+            -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/source/usb/cdn/lib
+            -i${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/lib
+            -i${CG_TOOL_ROOT}/lib
+            -m=ncm_nortos.${ConfigName}.map
+            --diag_suppress=10063
+            --ram_model
+            --reread_libs
+        "
+
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"
+
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --context r5fss0-0 --part Default --package ALV
+        "
+
+        description="A Ncm Nortos NORTOS project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+                -lnortos.am243x.r5f.ti-arm-clang.debug.lib
+                -lboard.am243x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am243x.r5f.ti-arm-clang.debug.lib
+                -lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.debug.lib
+                -lusbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.debug.lib
+                -llibc.a
+                -llibsysbm.a
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                -Os
+            "
+            linkerBuildOptions="
+                -lnortos.am243x.r5f.ti-arm-clang.release.lib
+                -lboard.am243x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am243x.r5f.ti-arm-clang.release.lib
+                -lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.release.lib
+                -lusbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.release.lib
+                -llibc.a
+                -llibsysbm.a
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../usb_descriptors.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../ncm_main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="makefile_ccs_bootimage_gen" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+    </project>
+</projectSpec>
