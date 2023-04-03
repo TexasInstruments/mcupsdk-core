@@ -159,6 +159,7 @@ let mmcsd_module = {
 			default: "SD",
             options: [
                 { name: "SD" },
+                { name: "EMMC" },
                 { name: "NO_DEVICE" },
             ],
 		},
