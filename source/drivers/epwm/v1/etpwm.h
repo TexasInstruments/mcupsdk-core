@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -2092,8 +2092,6 @@ typedef enum
     EPWM_XCMP8_ACTIVE = 28,
     //! XTBPRD_ACTIVE
     EPWM_XTBPRD_ACTIVE = 32,
-    //! XMINMAX_ACTIVE
-    EPWM_XMINMAX_ACTIVE = 68,
 
     //! XCMP1_SHADOW1
     EPWM_XCMP1_SHADOW1 = 128,
@@ -2113,8 +2111,6 @@ typedef enum
     EPWM_XCMP8_SHADOW1 = 156,
      //! XTBPRD_SHADOW1
     EPWM_XTBPRD_SHADOW1 = 160,
-    //! XMINMAX_SHADOW1
-    EPWM_XMINMAX_SHADOW1 = 196,
 
     //! XCMP1_SHADOW2
     EPWM_XCMP1_SHADOW2 = 256,
@@ -2134,8 +2130,6 @@ typedef enum
     EPWM_XCMP8_SHADOW2 = 284,
     //! XTBPRD_SHADOW2
     EPWM_XTBPRD_SHADOW2 = 288,
-    //! XMINMAX_SHADOW2
-    EPWM_XMINMAX_SHADOW2 = 324,
 
     //! XCMP1_SHADOW3
     EPWM_XCMP1_SHADOW3 = 384,
@@ -2155,10 +2149,35 @@ typedef enum
     EPWM_XCMP8_SHADOW3 = 412,
     //! XTBPRD_SHADOW3
     EPWM_XTBPRD_SHADOW3 = 416,
-    //! XMINMAX_SHADOW3
-    EPWM_XMINMAX_SHADOW3 = 452
 
 }EPWM_XCMPReg;
+
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_setXMINMAXRegValue() as the
+//! \e xminmaxReg parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    //! XMAX_ACTIVE
+    EPWM_XMAX_ACTIVE = 0x0U,
+    //! XMIN_ACTIVE
+    EPWM_XMIN_ACTIVE = 0x2U,
+      //! XMAX_SHADOW1
+    EPWM_XMAX_SHADOW1 = 0x80U,
+    //! XMIN_SHADOW1
+    EPWM_XMIN_SHADOW1 = 0x82U,
+    //! XMAX_SHADOW2
+    EPWM_XMAX_SHADOW2 = 0x100U,
+    //! XMIN_SHADOW2
+    EPWM_XMIN_SHADOW2 = 0x102U,
+    //! XMAX_SHADOW3
+    EPWM_XMAX_SHADOW3 = 0x180U,
+    //! XMIN_SHADOW3
+    EPWM_XMIN_SHADOW3 = 0x182U,
+
+}EPWM_XMinMaxReg;
 
 //*****************************************************************************
 //
@@ -9619,13 +9638,9 @@ EPWM_allocBXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPB alloctype)
 //! Valid values for xcmpReg are:
 //!    EPWM_XCMP[1-8]_[ACTIVE/SHADOW1/SHADOW2/SHADOW3]  -XCMP[1-8]_[ACTIVE/SHADOW1/SHADOW2/SHADOW3]
 //!    EPWM_XTBPRD_ACTIVE                               -XTBPRD_ACTIVE
-//!    EPWM_XMINMAX_ACTIVE                              -XMINMAX_ACTIVE
 //!    EPWM_XTBPRD_SHADOW1                              -XTBPRD_SHADOW1
-//!    EPWM_XMINMAX_SHADOW1                             -XMINMAX_SHADOW1
 //!    EPWM_XTBPRD_SHADOW2                              -XTBPRD_SHADOW2
-//!    EPWM_XMINMAX_SHADOW2                             -XMINMAX_SHADOW2
 //!    EPWM_XTBPRD_SHADOW3                              -XTBPRD_SHADOW3
-//!    EPWM_XMINMAX_SHADOW3                             -XMINMAX_SHADOW3
 //! \return None.
 //
 //*****************************************************************************
@@ -9647,6 +9662,41 @@ EPWM_setXCMPRegValue(uint32_t base, EPWM_XCMPReg xcmpReg,
     HW_WR_REG16(registerOffset + 0x2U, xcmpvalue);
 }
 
+//*****************************************************************************
+//
+//! Writes values to XMINMAX registers
+//!
+//! \param base is the base address of the EPWM module.
+//! \param xminmaxReg is the XCMP register offset
+//! \param xcmpvalue is the value to be written to XCMP registers
+//! This function writes xcmpvalue to XCMP registers.
+//! Valid values for xminmaxReg are:
+//!    EPWM_XMIN_ACTIVE                              -XMIN_ACTIVE
+//!    EPWM_XMAX_ACTIVE                              -XMAX_ACTIVE
+//!    EPWM_XMIN_SHADOW1                             -XMIN_SHADOW1
+//!    EPWM_XMAX_SHADOW1                             -XMAX_SHADOW1
+//!    EPWM_XMIN_SHADOW2                             -XMIN_SHADOW2
+//!    EPWM_XMAX_SHADOW2                             -XMAX_SHADOW2
+//!    EPWM_XMIN_SHADOW3                             -XMIN_SHADOW3
+//!    EPWM_XMAX_SHADOW3                             -XMAX_SHADOW3
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_setXMINMAXRegValue(uint32_t base, EPWM_XMinMaxReg xminmaxReg,
+                            uint16_t xcmpvalue)
+{
+    //
+    // Check the arguments
+    //
+    uint32_t registerOffset;
+    registerOffset = base +  CSL_EPWM_XMINMAX_ACTIVE + (uint16_t)xminmaxReg;
+
+    //
+    // Write to the XMINMAX register.
+    //
+    HW_WR_REG16(registerOffset, xcmpvalue);
+}
 //*****************************************************************************
 //
 //! Set up Action qualifier outputs based on XAQ registers
