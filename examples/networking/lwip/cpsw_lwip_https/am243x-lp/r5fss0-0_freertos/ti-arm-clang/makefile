@@ -38,6 +38,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
+	altcp_tls_mbedtls_ti.c \
 	httpd.c \
 	main.c \
 	app_main.c \
@@ -80,8 +81,11 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/apps/altcp_tls \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/dpl/ \
 	-Igenerated \
 
 DEFINES_common := \

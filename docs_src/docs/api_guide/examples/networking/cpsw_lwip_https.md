@@ -36,7 +36,7 @@ The example does below
 - This showcases the ability of the TI device to act as an HTTPS server
 # Supported Combinations
 
-\note In this implementation of HTTPS server, we have used PBUF_RAM to allocate pbufs instead of PBUF_POOLS. This is subject to change in the future releases. The lwip-stack/src/apps/altcp_tls files have also been moved out to the example for the aforementioned reason.
+\note In this implementation of HTTPS server, we have used PBUF_RAM to allocate pbufs instead of PBUF_POOLS. This is subject to change in the future releases. The lwip-stack/src/apps/altcp_tls/altcp_tls_mbedtls.c file has also been moved out to the example for the aforementioned reason.
 
 \cond SOC_AM243X
 

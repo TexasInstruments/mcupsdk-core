@@ -48,8 +48,11 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/apps/altcp_tls
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x
             -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/dpl/
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -125,6 +128,8 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../altcp_tls_mbedtls_ti.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
         <file path="../../../httpd.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">

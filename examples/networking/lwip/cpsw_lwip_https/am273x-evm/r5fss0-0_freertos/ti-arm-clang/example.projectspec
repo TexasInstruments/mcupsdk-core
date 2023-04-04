@@ -14,8 +14,8 @@
         name = "cpsw_lwip_https_am273x-evm_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
@@ -48,8 +48,11 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/apps/altcp_tls
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x
             -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/dpl/
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -126,6 +129,8 @@
         ></configuration>
         <pathVariable name="DSPLIB_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/source/dsplib_c66x_3_4_0_0" scope="project" />
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../altcp_tls_mbedtls_ti.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
         <file path="../../../httpd.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">

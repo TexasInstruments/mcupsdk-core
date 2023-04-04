@@ -4,6 +4,7 @@ let device = "am263x";
 
 const files = {
     common: [
+        "altcp_tls_mbedtls_ti.c",
         "httpd.c",
         "main.c",
         "app_main.c",
@@ -30,7 +31,6 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/lib",
-
     ],
 };
 
@@ -53,8 +53,11 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/apps/altcp_tls",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
         "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/dpl/"
     ],
 };
 
@@ -74,7 +77,6 @@ const libs_freertos_r5f = {
 const linker_includePath_freertos = {
     common: [
         "${PROJECT_BUILD_DIR}/syscfg",
-
     ],
 };
 
