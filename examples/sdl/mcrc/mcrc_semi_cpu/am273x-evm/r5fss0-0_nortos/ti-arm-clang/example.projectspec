@@ -14,8 +14,8 @@
         name = "sdl_mcrc_semi_cpu_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
@@ -105,9 +105,6 @@
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am273x/EXAMPLES_SDL_MCRC_SEMI_CPU.html"
-                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

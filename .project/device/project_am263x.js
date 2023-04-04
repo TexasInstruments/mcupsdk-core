@@ -250,6 +250,7 @@ const example_file_list = [
     "test/sdl/mcrc/mcrcUt/.project/project.js",
     "test/sdl/mcrc/mcrcFuncTest/.project/project.js",
 	"test/sdl/mcrc/mcrcAutomodeTest/.project/project.js",
+	"test/sdl/mcrc/mcrcSemimodeTest/.project/project.js",
     "examples/sdl/mcrc/mcrc_auto_cpu/.project/project.js",
     "examples/sdl/mcrc/mcrc_full_cpu/.project/project.js",
     "examples/sdl/mcrc/mcrc_semi_cpu/.project/project.js",

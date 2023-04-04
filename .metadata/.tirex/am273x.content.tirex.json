@@ -4560,7 +4560,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "This example verifies CRC in semi CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "description": "This example verifies MCRC in semi CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_mcrc_semi_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -4577,6 +4577,39 @@
             "mcrc",
             "mcrc_semi_cpu",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies MCRC in semi CPU mode of operation CPU is C66SS0 running NORTOS.",
+        "name": "sdl_mcrc_semi_cpu_example",
+        "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_semi_cpu",
+            "c66ss0_nortos"
         ],
         "mainCategories": [
             [

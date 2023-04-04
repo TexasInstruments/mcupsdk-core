@@ -57,20 +57,100 @@ Use Cases
 Shown below is a sample output when the application is run,
 
 
-\cond (SOC_AM263X) || (SOC_AWR294X) || (SOC_AM273X)
+\cond (SOC_AM263X)
 \code
- MCRC Application
- MCRC SEMI CPU mode: Transfer Test Started...
- Copied reference data into memory.
- Using Pre-Defined Reference MCRC signature Value.
- Configuration verified
+MCRC Test Application
 
- MCRC Compression completed
+MCRC SEMI CPU mode on Channel 1: Transfer Test Started...
 
- Test is completed
- Sector signature matches - Passed
- EDMA Data transfer completed !!
- All tests have passed!!
+Calculating Reference MCRC signature Value.
+ MCRC signature value : 0x1c133adab4dd50fU
+MCRC Full Mode Computation Time: 1363us
+MCRC Semi CPU intrrupt status : 1
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 15us
+
+MCRC SEMI CPU mode on Channel 2: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+MCRC Semi CPU intrrupt status : 100
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 15us
+
+MCRC SEMI CPU mode on Channel 3: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+MCRC Semi CPU intrrupt status : 10000
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 14us
+
+MCRC SEMI CPU mode on Channel 4: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+MCRC Semi CPU intrrupt status : 1000000
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 14us
+
+Test Name: MCRC_semiCPU_mode  PASSED 
+
+ All tests have passed. 
 \endcode
 \endcond
 
+\cond (SOC_AWR294X) || (SOC_AM273X)
+\code
+ MCRC Test Application
+
+MCRC SEMI CPU mode on Channel 1: Transfer Test Started...
+
+Calculating Reference MCRC signature Value.
+ MCRC signature value : 0x1c133adab4dd50fU
+MCRC Full Mode Computation Time: 4993us
+MCRC Semi CPU intrrupt status : 1
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 13us
+
+MCRC SEMI CPU mode on Channel 2: Transfer Test Started...
+
+Using Pre-Defined Reference MCRC signature Value.
+
+Pre-defined MCRC signature value : 0x1c133adab4dd50fU
+MCRC Semi CPU intrrupt status : 100
+
+Sector signature matches - Passed
+Calculated MCRC signature value : 0x01c133adab4dd50fU
+
+EDMA Data transfer completed !!
+MCRC Semi Mode Computation Time: 12us
+
+Test Name: MCRC_semiCPU_mode  PASSED 
+
+ All tests have passed. 
+\endcode
+\endcond

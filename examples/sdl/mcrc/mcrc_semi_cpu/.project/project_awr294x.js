@@ -40,6 +40,15 @@ const libs_nortos_r5f = {
     ],
 };
 
+const libs_nortos_c66 = {
+    common: [
+        "nortos.awr294x.c66.ti-c6000.${ConfigName}.lib",
+        "drivers.awr294x.c66.ti-c6000.${ConfigName}.lib",
+        "board.awr294x.c66.ti-c6000.${ConfigName}.lib",
+        "sdl.awr294x.c66.ti-c6000.${ConfigName}.lib",
+    ],
+};
+
 const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
@@ -50,6 +59,13 @@ const includes_nortos = {
 const r5_macro = {
     common: [
         "R5F_INPUTS",
+    ],
+
+};
+
+const c66_macro = {
+    common: [
+        "C66_INPUTS",
     ],
 
 };
@@ -79,8 +95,24 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_nortos_c66 =
+[
+    {
+        input: ".project/templates/awr294x/common/linker_c66.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/awr294x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "sdl_mcrc_semicpu_test_app",
+        },
+    }
+];
+
 const buildOptionCombos = [
 	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
+	{ device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "awr294x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -105,12 +137,17 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.includes = includes_nortos;
-    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
 	if(buildOption.cpu.match(/r5f*/)) {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
             build_property.defines = r5_macro;
+    }
+	else
+    {
+        build_property.libs = libs_nortos_c66;
+        build_property.templates = templates_nortos_c66;
+        build_property.defines = c66_macro;
     }
 
     return build_property;
