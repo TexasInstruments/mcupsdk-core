@@ -2001,10 +2001,6 @@ typedef enum
     HRPWM_XCMP8_SHADOW1 = 156,
     //! XTBPRD_SHADOW1
     HRPWM_XTBPRD_SHADOW1 = 160,
-    //! CMPC_SHADOW1
-    HRPWM_CMPC_SHADOW1 =  186,
-    //! CMPD_SHADOW1
-    HRPWM_CMPD_SHADOW1 = 190,
 
     //! XCMP1_SHADOW2
     HRPWM_XCMP1_SHADOW2 = 256,
@@ -2024,10 +2020,6 @@ typedef enum
     HRPWM_XCMP8_SHADOW2 = 284,
     //! XTBPRD_SHADOW2
     HRPWM_XTBPRD_SHADOW2 = 288,
-    //! CMPC_SHADOW2
-    HRPWM_CMPC_SHADOW2 =  314,
-    //! CMPD_SHADOW2
-    HRPWM_CMPD_SHADOW2 = 318,
 
     //! XCMP1_SHADOW3
     HRPWM_XCMP1_SHADOW3 = 384,
@@ -2047,10 +2039,6 @@ typedef enum
     HRPWM_XCMP8_SHADOW3 = 412,
     //! XTBPRD_SHADOW3
     HRPWM_XTBPRD_SHADOW3 = 416,
-    //! CMPC_SHADOW3
-    HRPWM_CMPC_SHADOW3 =  442,
-    //! CMPD_SHADOW3
-    HRPWM_CMPD_SHADOW3 = 446,
 }HRPWM_XCMPReg;
 //
 //! Values that can be passed to EPWM_setXCMPActionQualifierAction()
@@ -2151,6 +2139,29 @@ typedef enum
     EPWM_XTBPRD_SHADOW3 = 416,
 
 }EPWM_XCMPReg;
+
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_setCMPShadowRegValue() as the
+//! \e cmpReg parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    //! CMPC_SHADOW1
+    EPWM_CMPC_SHADOW1 = 0x0U,
+    //! CMPD_SHADOW1
+    EPWM_CMPD_SHADOW1 = 0x4U,
+    //! CMPC_SHADOW2
+    EPWM_CMPC_SHADOW2 = 0x80U,
+    //! CMPD_SHADOW2
+    EPWM_CMPD_SHADOW2 = 0x84U,
+    //! CMPC_SHADOW3
+    EPWM_CMPC_SHADOW3 = 0x100U,
+    //! CMPD_SHADOW3
+    EPWM_CMPD_SHADOW3 = 0x104U
+
+}EPWM_XCompareReg;
 
 //*****************************************************************************
 //
@@ -9661,6 +9672,39 @@ EPWM_setXCMPRegValue(uint32_t base, EPWM_XCMPReg xcmpReg,
     //
     HW_WR_REG16(registerOffset + 0x2U, xcmpvalue);
 }
+//*****************************************************************************
+//
+//! Writes values to CMPx Shadow registers
+//!
+//! \param base is the base address of the EPWM module.
+//! \param cmpReg is the CMP register offset
+//! \param cmpvalue is the value to be written to CMPC/D shadow registers
+//! This function writes cmpvalue to CMPC/D shadow registers.
+//! Valid values for cmpReg are:
+//!    EPWM_CMPC_SHADOW1                             -CMPC_SHADOW1
+//!    EPWM_CMPD_SHADOW1                             -CMPD_SHADOW1
+//!    EPWM_CMPC_SHADOW2                             -CMPC_SHADOW2
+//!    EPWM_CMPD_SHADOW2                             -CMPD_SHADOW2
+//!    EPWM_CMPC_SHADOW3                             -CMPC_SHADOW3
+//!    EPWM_CMPD_SHADOW3                             -CMPD_SHADOW3
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_setCMPShadowRegValue(uint32_t base, EPWM_XCompareReg cmpReg,
+                            uint16_t cmpvalue)
+{
+    //
+    // Check the arguments
+    //
+    uint32_t registerOffset;
+    registerOffset = base + CSL_EPWM_CMPC_SHDW1 + (uint32_t)cmpReg;
+
+    //
+    // Write to the CMPC/D Shadow registers.
+    //
+    HW_WR_REG16(registerOffset, cmpvalue);
+}
 
 //*****************************************************************************
 //
@@ -9827,7 +9871,30 @@ EPWM_disableXLoad(uint32_t base)
     HW_WR_REG32(registerOffset,
         (HW_RD_REG32(registerOffset) & ~CSL_EPWM_XLOAD_STARTLD_MASK ));
 }
+//*****************************************************************************
+//
+//! Forces register loading from shadow buffers.
+//!
+//! \param base is the base address of the EPWM module.
+//!
+//! This function is used for software force loading of the events in
+//! global load mode.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_forceXLoad(uint32_t base)
+{
+    //
+    // Check the arguments
+    //
+    uint32_t registerOffset;
+    registerOffset = base + CSL_EPWM_XLOAD;
 
+    HW_WR_REG32(registerOffset,
+        (HW_RD_REG32(registerOffset) | CSL_EPWM_XLOAD_FRCLD_MASK ));
+}
 //*****************************************************************************
 //
 //! Selects the mode for the XCMP Shadow registers
