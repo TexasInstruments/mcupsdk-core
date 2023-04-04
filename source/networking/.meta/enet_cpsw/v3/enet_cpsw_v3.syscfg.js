@@ -142,7 +142,7 @@ const enet_cpsw_phy1_config =
         {
             name: "disableRgmiiIntDelay1",
             description: "Set for disabling RGMII port internal delay mode",
-            displayName: "Disable RGMII Internal delay",
+            displayName: "Disable RGMII Internal Delay",
             default: false,
         },
     ],
@@ -191,7 +191,7 @@ const enet_cpsw_phy2_config =
         {
             name: "disableRgmiiIntDelay2",
             description: "Set for disabling RGMII port internal delay mode",
-            displayName: "Disable RGMII Internal delay",
+            displayName: "Disable RGMII Internal Delay",
             default: false,
         },
     ],
