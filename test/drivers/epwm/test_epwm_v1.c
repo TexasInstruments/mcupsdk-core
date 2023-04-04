@@ -2699,8 +2699,8 @@ int32_t AM263x_EPWM_xTR_0014(uint32_t base, uint32_t i)
                 EPWM_setFallingEdgeDeadBandDelayInput(base, EPWM_DB_INPUT_DB_RED);   // S8 = 1
                 EPWM_setDeadBandDelayPolarity(base, EPWM_DB_RED, EPWM_DB_POLARITY_ACTIVE_HIGH); // S2 =0
                 EPWM_setDeadBandDelayPolarity(base, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_HIGH);  //S3 =0
-                EPWM_setDeadBandOutputSwapMode(base, EPWM_DB_OUTPUT_A, false);
-                EPWM_setDeadBandOutputSwapMode(base, EPWM_DB_OUTPUT_B, true);  // // S7 = 0, S6 = 1
+                EPWM_setDeadBandOutputSwapMode(base, EPWM_DB_OUTPUT_A, true);
+                EPWM_setDeadBandOutputSwapMode(base, EPWM_DB_OUTPUT_B, false);
                 break;
         }
         ClockP_usleep(10000);
