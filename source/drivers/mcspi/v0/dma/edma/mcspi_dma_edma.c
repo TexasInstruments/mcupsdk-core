@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -556,6 +556,8 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
     MCSPI_ChObject     *chObj;
     uint32_t           chNum;
     MCSPI_Transaction  *transaction;
+    uint32_t           baseAddr;
+    volatile uint32_t  chStat;
 
     if(NULL != args)
     {
@@ -565,6 +567,8 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
         DebugP_assert(NULL != config->attrs);
         attrs = config->attrs;
         transaction = obj->currTransaction;
+        baseAddr = obj->baseAddr;
+
         if (transaction != NULL)
         {
             chNum = transaction->channel;
@@ -574,6 +578,11 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
 
             if (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg.trMode)
             {
+                do{
+                    /* Wait for end of transfer. */
+                    chStat = CSL_REG32_RD(baseAddr + MCSPI_CHSTAT(chNum));
+                }while ((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0);
+
                 /* Stop MCSPI Channel */
                 MCSPI_edmaStop(obj, attrs, chObj, chNum);
                 /* Update the driver internal status. */
