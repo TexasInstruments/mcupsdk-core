@@ -33,7 +33,8 @@ let device_peripheral = system.getScript("/drivers/epwm/soc/epwm_am263x.syscfg.j
                                        config[12].config[8] --> "epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP5_SHADOW_3"
                                        config[12].config[11] --> "epwmXAQCTL_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_XCMP8_SHADOW_3"
 
-    config [13]  --> "GROUP_XMINMAX";  config[13].config[0] --> "epwmXMinMax_Active" ... config[13].config[4] --> "epwmXMinMax_Shdw3"
+    config [13]  --> "GROUP_XMINMAX";  config[13].config[0] --> "epwmXMin_Active", config[13].config[1] --> "epwmXMax_Active"
+                                       ..config[13].config[6] --> "epwmXMin_Shdw3", config[13].config[7] --> "epwmXMax_Shdw3"
     config [14]  --> "GROUP_XTBPRD";   config[14].config[0] --> "epwmXTBPRD_Active" ... config[14].config[4] --> "epwmXTBPRD_Shdw3"
     config [15]  --> "GROUP_XLOADCTL"  config[15].config[0] --> "epwmXLOADCTL_Loadmode",
                                        config[15].config[1] --> "epwmXLOADCTL_Shadowlevel",
@@ -59,7 +60,11 @@ function onClickEnable(inst, ui)
                 || configName.startsWith("GROUP_XLOADCTL"))
             {
                 let groupLen= config[uiConfigIndex].config.length;
-                for(let i = 0; i < 1; i++)  //Displaying only the ACTIVE set
+                let active_configurables_count = 1;
+                if(configName.startsWith("GROUP_XMINMAX"))
+                    active_configurables_count =2;
+
+                for(let i = 0; i < active_configurables_count; i++)  //Displaying only the ACTIVE set
                     {
                         let subConfigName = config[uiConfigIndex].config[i].name;
                         ui[subConfigName].hidden = false;
@@ -69,15 +74,25 @@ function onClickEnable(inst, ui)
     }
     else if(inst.epwmXCMP_enableMode == false)
     {
-        ui["epwmXCMP_SplitCheck"].hidden = true;
-        ui["epwmXCMP_No_Split"].hidden = true;
 
         inst["epwmXCMP_No_Split"] = device_peripheral.EPWM_XCMP_ALLOC_CMPA[0].name; //Resetting to default value : "Allocate 0 XCMP registers to CMPA"
-        ui["epwmXLOADCTL_Loadmode"].hidden = true;
+        inst["epwmXCMP_SplitCheck"] = false;//Resetting to default value : false
+        inst["epwmXCMP_Split_A"] = device_peripheral.EPWM_XCMP_ALLOC_CMPA[0].name; //Resetting to default value : "Allocate 0 XCMP registers to CMPA"
+        inst["epwmXCMP_Split_B"] = device_peripheral.EPWM_XCMP_ALLOC_CMPB[0].name; //Resetting to default value : "Allocate XCMP5 registers to CMPB"
         inst["epwmXLOADCTL_Loadmode"] = device_peripheral.EPWM_XCMPXloadCtlLoadMode[0].name; //Resetting to default value : "LOAD ONCE"
-        ui["epwmXLOADCTL_Shadowlevel"].hidden = true;
         inst["epwmXLOADCTL_Shadowlevel"] = device_peripheral.EPWM_XCMP_XLOADCTL_SHDWLEVEL[0].name; //Resetting to default value : "SHADOW LEVEL ZERO"
         inst["epwmXLOADCTL_Loadonce"] = device_peripheral.EPWM_XCMP_XLOADCTL_SHDWBUFPTR[0].name; //Resetting to default value : "EPWM_XCMP_XLOADCTL_SHDWBUFPTR_NULL"
+
+        ui["epwmXCMP_SplitCheck"].hidden = true;
+        ui["epwmXCMP_Split_A"].hidden = true;
+        ui["epwmXCMP_Split_B"].hidden = true;
+        ui["epwmXCMP_No_Split"].hidden = true;
+        ui["epwmXLOADCTL_Loadmode"].hidden = true;
+        ui["epwmXLOADCTL_Shadowlevel"].hidden = true;
+
+        onSelectNoSplit(inst, ui);
+        onSelectShadowLevel(inst, ui);
+
         for(let uiConfigIndex = 1; uiConfigIndex < config.length; uiConfigIndex++)
         {
             let configName = config[uiConfigIndex].name;
@@ -85,7 +100,11 @@ function onClickEnable(inst, ui)
             ||  configName.startsWith("GROUP_XTBPRD"))
             {
                 let groupLen= config[uiConfigIndex].config.length;
-                for(let i = 0; i < 1; i++)  //Hiding only the ACTIVE set
+                let active_configurables_count = 1;
+                if(configName.startsWith("GROUP_XMINMAX"))
+                    active_configurables_count =2;
+
+                for(let i = 0; i < active_configurables_count; i++)  //Hiding all the registers set
                     {
                         let subConfigName = config[uiConfigIndex].config[i].name;
                         ui[subConfigName].hidden = true;
@@ -239,12 +258,23 @@ function utilityDisplayShadowRegisters(inst, ui,bool)
             }
 
     for(let i=13; i<15; i++)    //XMINMAX and XTBPRD
-        for(let j=1; j<4; j++)
+    {
+        let shadow_configurables_start_ind = 1;
+        let shadow_configurables_end_ind = 3;
+
+        if(i == 13) // XMINMAX
+            {
+                shadow_configurables_start_ind = 2;
+                shadow_configurables_end_ind = 7;
+            }
+
+        for(let j=shadow_configurables_start_ind; j<=shadow_configurables_end_ind; j++)
             {
                 ui[config[i].config[j].name].hidden = true;
                 //Resetting to default value. For indices refer the comment at top of file
                 inst[config[i].config[j].name] = 0;
             }
+     }
 
     if(inst.epwmXLOADCTL_Shadowlevel == device_peripheral.EPWM_XCMP_XLOADCTL_SHDWLEVEL[3].name)
         {
@@ -252,9 +282,12 @@ function utilityDisplayShadowRegisters(inst, ui,bool)
             ui["epwmXTBPRD_Shdw1"].hidden = false;
             ui["epwmXTBPRD_Shdw2"].hidden = false;
             ui["epwmXTBPRD_Shdw3"].hidden = false;
-            ui["epwmXMinMax_Shdw1"].hidden = false;
-            ui["epwmXMinMax_Shdw2"].hidden = false;
-            ui["epwmXMinMax_Shdw3"].hidden = false;
+            ui["epwmXMin_Shdw1"].hidden = false;
+            ui["epwmXMin_Shdw2"].hidden = false;
+            ui["epwmXMin_Shdw3"].hidden = false;
+            ui["epwmXMax_Shdw1"].hidden = false;
+            ui["epwmXMax_Shdw2"].hidden = false;
+            ui["epwmXMax_Shdw3"].hidden = false;
             ui["epwmXLOADCTL_RepeatBuf2"].hidden = false;
             ui["epwmXLOADCTL_RepeatBuf3"].hidden = false;
         }
@@ -263,15 +296,18 @@ function utilityDisplayShadowRegisters(inst, ui,bool)
             level = 1;
             ui["epwmXTBPRD_Shdw1"].hidden = false;
             ui["epwmXTBPRD_Shdw2"].hidden = false;
-            ui["epwmXMinMax_Shdw1"].hidden = false;
-            ui["epwmXMinMax_Shdw2"].hidden = false;
+            ui["epwmXMin_Shdw1"].hidden = false;
+            ui["epwmXMin_Shdw2"].hidden = false;
+            ui["epwmXMax_Shdw1"].hidden = false;
+            ui["epwmXMax_Shdw2"].hidden = false;
             ui["epwmXLOADCTL_RepeatBuf2"].hidden = false;
         }
     else if(inst.epwmXLOADCTL_Shadowlevel == device_peripheral.EPWM_XCMP_XLOADCTL_SHDWLEVEL[1].name)
         {
             level = 2;
             ui["epwmXTBPRD_Shdw1"].hidden = false;
-            ui["epwmXMinMax_Shdw1"].hidden = false;
+            ui["epwmXMin_Shdw1"].hidden = false;
+            ui["epwmXMax_Shdw1"].hidden = false;
         }
 
     if((!inst.epwmXCMP_SplitCheck && inst.epwmXCMP_No_Split == device_peripheral.EPWM_XCMP_ALLOC_CMPA[0].name) ||
@@ -567,9 +603,9 @@ let xminmax_config=[];
 
 xminmax_config = xminmax_config.concat([
     {
-        name: "epwmXMinMax_Active",
-        displayName : "XMinMax Active",
-        description : 'XMinMax Active Register value',
+        name: "epwmXMin_Active",
+        displayName : "XMin Active",
+        description : 'XMin Active Register value',
         hidden      : true,
         default     : 0,
     }
@@ -577,9 +613,9 @@ xminmax_config = xminmax_config.concat([
 
 xminmax_config = xminmax_config.concat([
     {
-        name: "epwmXMinMax_Shdw1",
-        displayName : "XMinMax Shadow 1",
-        description : 'XMinMax Shadow 1 Register value',
+        name: "epwmXMax_Active",
+        displayName : "XMax Active",
+        description : 'XMax Active Register value',
         hidden      : true,
         default     : 0,
     }
@@ -587,9 +623,9 @@ xminmax_config = xminmax_config.concat([
 
 xminmax_config = xminmax_config.concat([
     {
-        name: "epwmXMinMax_Shdw2",
-        displayName : "XMinMax Shadow 2",
-        description : 'XMinMax Shadow 2 Register value',
+        name: "epwmXMin_Shdw1",
+        displayName : "XMin Shadow 1",
+        description : 'XMin Shadow 1 Register value',
         hidden      : true,
         default     : 0,
     }
@@ -597,9 +633,49 @@ xminmax_config = xminmax_config.concat([
 
 xminmax_config = xminmax_config.concat([
     {
-        name: "epwmXMinMax_Shdw3",
-        displayName : "XMinMax Shadow 3",
-        description : 'XMinMax Shadow 3 Register value',
+        name: "epwmXMax_Shdw1",
+        displayName : "XMax Shadow 1",
+        description : 'XMax Shadow 1 Register value',
+        hidden      : true,
+        default     : 0,
+    }
+]);
+
+xminmax_config = xminmax_config.concat([
+    {
+        name: "epwmXMin_Shdw2",
+        displayName : "XMin Shadow 2",
+        description : 'XMin Shadow 2 Register value',
+        hidden      : true,
+        default     : 0,
+    }
+]);
+
+xminmax_config = xminmax_config.concat([
+    {
+        name: "epwmXMax_Shdw2",
+        displayName : "XMax Shadow 2",
+        description : 'XMax Shadow 2 Register value',
+        hidden      : true,
+        default     : 0,
+    }
+]);
+
+xminmax_config = xminmax_config.concat([
+    {
+        name: "epwmXMin_Shdw3",
+        displayName : "XMin Shadow 3",
+        description : 'XMin Shadow 3 Register value',
+        hidden      : true,
+        default     : 0,
+    }
+]);
+
+xminmax_config = xminmax_config.concat([
+    {
+        name: "epwmXMax_Shdw3",
+        displayName : "XMax Shadow 3",
+        description : 'XMax Shadow 3 Register value',
         hidden      : true,
         default     : 0,
     }

@@ -2868,58 +2868,109 @@
 			]
 		},
         {
-			"name" :  "epwmXMinMax_Active",
-		    "driverlibFunction" : "EPWM_setXCMPRegValue",
+			"name" :  "epwmXMin_Active",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
 			"driverlibFunctionArg" : {
 				"base" : "",
-				"xcmpReg" : "EPWM_XMINMAX_ACTIVE",
+				"xminmaxReg" : "EPWM_XMIN_ACTIVE",
 				"xcmpvalue": "this"
 			},
-			"register": "XMINMAX_ACTIVE.XMINMAX_ACTIVE",
+			"register": "XMINMAX_ACTIVE.XMIN_ACTIVE",
 			"devices" : [
                 "am263x"
 			]
 		},
         {
-			"name" :  "epwmXMinMax_Shdw1",
-		    "driverlibFunction" : "EPWM_setXCMPRegValue",
+			"name" :  "epwmXMax_Active",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
 			"driverlibFunctionArg" : {
 				"base" : "",
-				"xcmpReg" : "EPWM_XMINMAX_SHADOW1",
+				"xminmaxReg" : "EPWM_XMAX_ACTIVE",
 				"xcmpvalue": "this"
 			},
-			"register": "XMINMAX_SHDW1.XMINMAX_SHDW1",
+			"register": "XMINMAX_ACTIVE.XMAX_ACTIVE",
 			"devices" : [
                 "am263x"
 			]
 		},
         {
-			"name" :  "epwmXMinMax_Shdw2",
-		    "driverlibFunction" : "EPWM_setXCMPRegValue",
+			"name" :  "epwmXMin_Shdw1",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
 			"driverlibFunctionArg" : {
 				"base" : "",
-				"xcmpReg" : "EPWM_XMINMAX_SHADOW2",
+				"xminmaxReg" : "EPWM_XMIN_SHADOW1",
 				"xcmpvalue": "this"
 			},
-			"register": "XMINMAX_SHDW2.XMINMAX_SHDW2",
+			"register": "XMINMAX_SHDW1.XMIN_SHDW1",
 			"devices" : [
                 "am263x"
 			]
 		},
         {
-			"name" :  "epwmXMinMax_Shdw3",
-		    "driverlibFunction" : "EPWM_setXCMPRegValue",
+			"name" :  "epwmXMax_Shdw1",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
 			"driverlibFunctionArg" : {
 				"base" : "",
-				"xcmpReg" : "EPWM_XMINMAX_SHADOW3",
+				"xminmaxReg" : "EPWM_XMAX_SHADOW1",
 				"xcmpvalue": "this"
 			},
-			"register": "XMINMAX_SHDW3.XMINMAX_SHDW3",
+			"register": "XMINMAX_SHDW1.XMAX_SHDW1",
 			"devices" : [
                 "am263x"
 			]
 		},
-
+        {
+			"name" :  "epwmXMin_Shdw2",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
+			"driverlibFunctionArg" : {
+				"base" : "",
+				"xcmpReg" : "EPWM_XMIN_SHADOW2",
+				"xcmpvalue": "this"
+			},
+			"register": "XMINMAX_SHDW2.XMIN_SHDW2",
+			"devices" : [
+                "am263x"
+			]
+		},
+        {
+			"name" :  "epwmXMax_Shdw2",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
+			"driverlibFunctionArg" : {
+				"base" : "",
+				"xcmpReg" : "EPWM_XMAX_SHADOW2",
+				"xcmpvalue": "this"
+			},
+			"register": "XMINMAX_SHDW2.XMAX_SHDW2",
+			"devices" : [
+                "am263x"
+			]
+		},
+        {
+			"name" :  "epwmXMin_Shdw3",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
+			"driverlibFunctionArg" : {
+				"base" : "",
+				"xcmpReg" : "EPWM_XMIN_SHADOW3",
+				"xcmpvalue": "this"
+			},
+			"register": "XMINMAX_SHDW3.XMIN_SHDW3",
+			"devices" : [
+                "am263x"
+			]
+		},
+        {
+			"name" :  "epwmXMax_Shdw3",
+		    "driverlibFunction" : "EPWM_setXMINMAXRegValue",
+			"driverlibFunctionArg" : {
+				"base" : "",
+				"xcmpReg" : "EPWM_XMAX_SHADOW3",
+				"xcmpvalue": "this"
+			},
+			"register": "XMINMAX_SHDW3.XMAX_SHDW3",
+			"devices" : [
+                "am263x"
+			]
+		},
         {
 			"name" :  "epwmXAQCTL_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_XCMP1_ACTIVE",
 			"driverlibFunction" : "EPWM_setXCMPActionQualifierAction",

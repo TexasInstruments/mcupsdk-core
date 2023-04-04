@@ -196,6 +196,36 @@ let epwm_validation = [
 			{
 		         validation.logError(name, inst, "epwmMDB_delayMDLB");
 			}
+
+            /* --------------- XCMP --------------- */
+            let register_set = ["_Active","_Shdw1","_Shdw2","_Shdw3"];
+
+            for(let i = 1; i< 9; i++)  //XCMP[1-8]
+            {
+                for(let j = 0; j< 4; j++)
+                {
+                    let str = "epwmXCMP" + i + register_set[j];
+                    if (inst[str] < 0 || inst[str] > 65535)
+                        {
+                            validation.logError(name, inst, str);
+                        }
+                }
+            }
+
+            let array = ["epwmXMin", "epwmXMax", "epwmXTBPRD"];
+
+            for(let i = 0; i< array.length; i++)
+            {
+                for(let j = 0; j< 4; j++)
+                {
+                    let str = array[i] + register_set[j];
+                    if (inst[str] < 0 || inst[str] > 65535)
+                        {
+                            validation.logError(name, inst, str);
+                        }
+                }
+            }
+            /* --------------- ---- --------------- */
 		},
 		devices : [
                 "am263x"
@@ -1240,6 +1270,20 @@ let epwm_validation = [
 				"am263x"
 			]
 		},
+    //Validation #64
+    {
+        type: validation_error,
+        name: "On enabling XCMP mode, the configurations for normal Counter Compare and Action Qualifier submodule will get suppressed",
+        func : (inst, validation, name) => {
+            if(inst["epwmXCMP_enableMode"])
+            {
+                validation.logInfo(name, inst, "epwmXCMP_enableMode");
+            }
+        },
+        devices : [
+            "am263x"
+        ]
+    }
 ]
 
 exports = {

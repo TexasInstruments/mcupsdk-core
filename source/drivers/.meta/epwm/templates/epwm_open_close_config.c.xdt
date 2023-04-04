@@ -308,10 +308,14 @@ void Drivers_epwmOpen(void)
     `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Shdw1")`
     `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Shdw2")`
     `epwm_json_resolver.getCode(instance, instance,"epwmXTBPRD_Shdw3")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Active")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Shdw1")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Shdw2")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXMinMax_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMin_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMax_Active")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMin_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMax_Shdw1")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMin_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMax_Shdw2")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMin_Shdw3")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmXMax_Shdw3")`
 
     /* Events */
 
