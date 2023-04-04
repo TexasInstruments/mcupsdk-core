@@ -216,6 +216,7 @@ process path latency improvement can be achieved by disabling below define */
 #define ESC_ADDR_TI_PHY_RX_ER_REG               0xE28
 #define ESC_ADDR_TI_PRU_CLK_FREQUENCY           0xE34
 #define ESC_ADDR_TI_MDIO_MANUAL_MODE            0xE35
+#define ESC_ADDR_TI_ENHANCED_LINK_DETECT        0xE36
 #define TI_ESC_RST_CMD_U    0x545352
 #define TI_ESC_RST_CMD_L    0x747372
 
