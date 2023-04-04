@@ -2,7 +2,7 @@
 
 This page lists all the examples related to Ethernet Communication.
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM243X
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
@@ -14,7 +14,6 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_VLAN_ICSSG
 -# \subpage EXAMPLES_ENET_ICSSG_TAS
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
--# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
@@ -23,20 +22,25 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_ICSSG
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
-\endcond
 
-\cond SOC_AM243X
 ### Layer 2 Examples on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP
 \endcond
 
-\cond SOC_AM273X || SOC_AWR294X
+\cond SOC_AM64X
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
+-# \subpage EXAMPLES_ENET_CPSW_EST
+-# \subpage EXAMPLES_ENET_LAYER2_ICSSG
+-# \subpage EXAMPLES_ENET_VLAN_ICSSG
+-# \subpage EXAMPLES_ENET_ICSSG_TAS
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
@@ -45,6 +49,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
+-# \subpage EXAMPLES_ENET_LWIP_ICSSG
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 \endcond
@@ -61,7 +67,44 @@ This page lists all the examples related to Ethernet Communication.
 ### Layer 2 Examples on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
+-# \subpage EXAMPLES_ENET_LWIP_CPSW
+-# \subpage ENET_LWIP_CPSW_OPERATING_MODES
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS
+### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+\endcond
+
+
+\cond SOC_AM273X
+### Layer 2 Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
+-# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
+-# \subpage EXAMPLES_ENET_CPSW_EST
+### TCP/IP Examples using LwIP Stack on FreeRTOS
+-# \subpage EXAMPLES_ENET_LWIP_CPSW
+-# \subpage ENET_LWIP_CPSW_OPERATING_MODES
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
+### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+\endcond
+
+\cond SOC_AWR294X
+### Layer 2 Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
+-# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
+### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
@@ -71,8 +114,4 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
-\endcond
-\cond  SOC_AM273X
-### TCP/IP Examples using LwIP Stack on FreeRTOS
--# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 \endcond

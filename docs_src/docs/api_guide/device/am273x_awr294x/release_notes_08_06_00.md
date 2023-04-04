@@ -16,12 +16,11 @@
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
-Ethernet Fast Startup example                                                                   | Ethernet
 Receive packet Scatter-Gather feature support                                                   | Ethernet
 Support for custom modification receive packet buffer size                                      | Ethernet
 Mbed-TLS library support (software cryptography)                                                | Networking
+ENET driver (enet-lld) APIs added to support IEEE 802.1Qav (TSN Credit Based Shapper) in CPSW   | Ethernet
 \endcond
-
 \cond SOC_AWR294X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
@@ -164,8 +163,8 @@ Ethernet driver (ENET)      | R5F            | NO                | FreeRTOS    |
 \cond SOC_AM273X
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
-LwIP                        | R5F            | NO                | FreeRTOS    | TCP/UDP IP networking stack, DHCP, ping, TCP iperf, TCP/UDP IP, scatter-gather                        | Other LwIP features, more robustness tests pending
-Ethernet driver (ENET)      | R5F            | NO                | FreeRTOS    | Ethernet as port using CPSW; MAC loopback and PHY loopback, interrupt pacing, MDIO Manual Mode       | Ethernet as switch
+LwIP                        | R5F            | NO                | FreeRTOS    | TCP/UDP IP networking stack, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather,                         | Other LwIP features
+Ethernet driver (ENET)      | R5F            | NO                | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback,  Layer 2 MAC, Packet Timestamping, interrupt pacing, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav)       | Ethernet as switch, MII and RMII modes
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 \endcond
 
@@ -211,7 +210,7 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
 </tr>
 <tr>
     <td> MCUSDK-9304
-    <td> LWIP CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
+    <td> LWIP Ethernet CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
     <td> ENET
     <td> 8.4.0 onwards
     <td> Fixed the udp examples and added udp client socket example
@@ -266,15 +265,15 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
 </tr>
 <tr>
     <td> MCUSDK-7811
-    <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
-    <td> CPSW
+    <td> Ethernet CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
+    <td> Ethernet CPSW
     <td> 8.03.00 onwards
     <td> Ensure from application side single ethernet packet does not span across memory banks
 </tr>
 <tr>
     <td> MCUSDK-8854
     <td> Enet_cpsw_tcpclient failing to send large sized data, no warning/assert
-    <td> CPSW
+    <td> Ethernet CPSW
     <td> 8.04.00 onwards
     <td> -
 </tr>
@@ -432,7 +431,13 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
+<tr>
+    <td> Ethernet CPSW
+    <td> Structure \ref EnetCpdma_Cfg in \ref Cpsw_Cfg \n
+    Function Enet_open
+    <td> Removed the parameter 'isCacheable'.
+    <td> Support to place descriptor in cached memory is removed. CPDMA descriptiors has be placed un-cached memory section always.
+</tr>
 </table>
-
 
 

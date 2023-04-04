@@ -8,6 +8,9 @@
 - \subpage enetphy_guide_top
 - \subpage enet_integration_guide_top
 - \subpage enetmdio_manualmode
+\cond SOC_AM263X || SOC_AM273X
+- \subpage enetlld_performance
+\endcond
 \cond SOC_AM263X || SOC_AM243X || SOC_AM64X
 - \subpage enet_tas_top
 \endcond

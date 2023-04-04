@@ -51,22 +51,27 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
+\cond SOC_AM263X || SOC_AM273X
+### Performance
+You can find ethernet performance data **[here](\ref enetlld_performance)**.
+\endcond
+
 ### Driver
 
-There are two separate drivers based on the use-case :
-- \subpage ENET_LLD
-- \subpage ICSS_EMAC
+There are separate drivers based on the use-case :
 
-## Enet LLD
+##### Enet LLD
 
 Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an unified interface for standard Ethernet MAC and switch using CPSW and PRU-ICSSG Peripherals.
+- \subpage ENET_LLD
 
-## ICSS-EMAC
+##### ICSS-EMAC
 
 Industrial Communications Subsystem Ethernet Media Access Controller (\ref ICSS_EMAC) driver provide APIs to transmit and receive packets with a firmware based Ethernet switch that has been implemented on PRU-ICSS cores. It is used for 100M Industrial Ethernet Protocols like EtherNet/IP, Profinet etc.
+- \subpage ICSS_EMAC
 
 \cond SOC_AM64X || SOC_AM243X
-### ICSS TimeSync
+#### ICSS TimeSync
 \subpage ICSS_TIMESYNC is a separate driver based on ICSS-EMAC, which provides APIs for PTP/1588 v2 receiver implementation on PRU-ICSSG.
 \endcond
 
@@ -111,9 +116,14 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
+\cond SOC_AM263X || SOC_AM273X
+### Performance
+You can find ethernet performance data **[here](\ref enetlld_performance)**.
+\endcond
+
 ### Driver
 
 Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an unified interface for the different Ethernet peripherals found in TI SoCs.
-
+- \subpage ENET_LLD
 \endcond
 

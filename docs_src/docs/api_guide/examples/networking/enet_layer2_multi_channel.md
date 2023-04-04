@@ -51,7 +51,9 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 3.	Separate RX task and RX packet callback need to be implemented for each channel creation. Existing flows for channels can be referred.
 4.	Set the vlanLType1 field of macport stats in EnetApp_setPortTsEventPrms () api to 0x8100, to make CPTS aware of VLAN tagging enabled for packets.
 5.  The CPDMA supports upto 8 TX/RX channels, but by default applications has only create 3 TX/RX channels and this can be changed by modifying the macros ENET_CFG_CPDMA_CPSW_MAX_TX_CH/ENET_CFG_CPDMA_CPSW_MAX_RX_CH in enet_cfg.h file.
-
+\cond SOC_AM273X || SOC_AWR294X
+6.  On @VAR_SOC_NAME, Multiple CPDMA channels open is necessary to receive packets with different VLAN priority. Else, CPDMA cannot forward any packet with priority non-zero to R5F core.
+\endcond
 ## Configuring the Packeth tool to send vlan tagged packets
 
 In packeth tool select the 802.1q field to configure vlan parameters(priority).

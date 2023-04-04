@@ -23,6 +23,8 @@ Early Ethernet with PHY in strapped mode example                                
 Receive packet Scatter-Gather feature support                                                   | Ethernet
 Support for custom modification receive packet buffer size                                      | Ethernet
 Mbed-TLS library support (software cryptography)                                                | Networking
+DSCP priority mapping support in CPSW                                                           | Ethernet
+ENET driver (enet-lld) APIs added to support IEEE 802.1Qav (TSN Credit Based Shapper) in CPSW   | Ethernet
 
 ## Device and Validation Information
 
@@ -30,7 +32,7 @@ Mbed-TLS library support (software cryptography)                                
 SOC   | Supported CPUs  | EVM                                                                          | Host PC
 ------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
 AM263x| R5F             | AM263x ControlCard Revision E1  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
-AM263x| R5F             | AM263x LaunchPad Revision E1  (referred to as am263x-lp in code)             | Windows 10 64b or Ubuntu 18.04 64b
+AM263x| R5F             | AM263x LaunchPad Revision E2  (referred to as am263x-lp in code)             | Windows 10 64b or Ubuntu 18.04 64b
 \endcond
 
 ## Dependent Tools and Compiler Information
@@ -96,7 +98,7 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 ADC          | R5F            | YES               | Yes. Example:  adc_soc_continuous_dma | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA, EPWM trip through PPB limit, PPB limits, PPB offsets, burst mode oversampling, differential mode, Offset, EPWM triggered conversion                | -
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL QSPI         | Boot modes: QSPI, UART. All R5F's                                                                                                                               | -
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip                                                                                                                                           | -
-CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and CPSW Switch support                                        | -
+CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support                               | -
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | No                                    | ECAP APWM mode, PWM capture                                                                                                                                     | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
@@ -153,8 +155,8 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
-LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled,, TCP/UDP IP networking stack, DHCP, ping, TCP iperf, TCP/UDP IP, scatter-gather                         | Other LwIP features, checksum offload with VLAN_Tag, more robustness tests pending
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW and ICSS,Layer 2 MAC, Layer 2 PTP Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer, MDIO Manual Mode | -
+LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
+Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav), Strapped PHY (Early Ethernet) | RMII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
@@ -255,7 +257,7 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 </tr>
 <tr>
     <td> MCUSDK-9304
-    <td> LWIP CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
+    <td> LWIP Ethernet CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
     <td> ENET
     <td> 8.4.0 onwards
     <td> AM263x
@@ -263,7 +265,7 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 </tr>
 <tr>
     <td> MCUSDK-9185
-    <td> Enet Lwip CPSW example: Correct MAC address not available from EEPROM on custom board and Pg1.0 lp causes example crash
+    <td> Enet Lwip Ethernet CPSW example: Correct MAC address not available from EEPROM on custom board and Pg1.0 lp causes example crash
     <td> ENET
     <td> 8.4.0 onwards
     <td> AM263x
@@ -397,7 +399,7 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 <tr>
     <td> MCUSDK-7811
     <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
-    <td> CPSW
+    <td> Ethernet CPSW
     <td> 8.3.0 onwards
     <td> Ensure from application side single ethernet packet does not span across memory banks.
 </tr>
@@ -483,7 +485,7 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> MCRC Semi CPU mode is not supported.
     <td> SDL
     <td> 8.5.0 onwards
-    <td> Use Full CPU mode ot Auto mode.
+    <td> Use Full CPU mode to Auto mode.
 </tr>
 <tr>
     <td> MCUSDK-9082
@@ -505,11 +507,11 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Workaround
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-9471
+    <td> Ethernet CPSW CPDMA stuck with SOF overrun when TCP/DUP checksum offload is enabled.
+    <td> Ethernet CPSW
+    <td> 08.05.00 onwards
+    <td> Disable TCPUDP checksum offload in receive (THOST) direction.
 </tr>
 </table>
 
@@ -602,9 +604,8 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 <tr>
     <td> McSPI
     <td> MACRO MCSPI_MS_MODE_MASTER, MCSPI_MS_MODE_SLAVE
-    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **peripheral**, for example..\n
-    MCSPI_MS_MODE_MASTER->MCSPI_MS_MODE_CONTROLLER         
-    <td> Updated to use the inclusive naming
+    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn and rxCsumOffloadEn. 
+    <td> This enables support to control TXP/DUP checksum offload along Rx and Tx seperatly.
 </tr>
 <tr>
     <td> SDFM
@@ -614,10 +615,8 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     Function SDFM_enableMasterFilter\n
     Function SDFM_disableMasterFilter
     <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **main**, for example..\n
-    SDFM_enableMasterFilter->SDFM_enableMainFilter         
+    SDFM_enableMasterFilter->SDFM_enableMainFilter
     <td> Updated to use the inclusive naming
-</tr>
-
 </table>
 
 ### Networking
@@ -629,5 +628,18 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Change
     <th> Additional Remarks
 </tr>
-
+<tr>
+    <td> Ethernet CPSW
+    <td> Structure \ref CpswHostPort_Cfg in \ref Cpsw_Cfg \n
+    Function Enet_open
+    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn and rxCsumOffloadEn
+    <td> This enables support to control TXP/DUP checksum offload along Rx and Tx separately
+</tr>
+<tr>
+    <td> Ethernet CPSW
+    <td> Structure \ref EnetCpdma_Cfg in \ref Cpsw_Cfg \n
+    Function Enet_open
+    <td> Removed the parameter isCacheable.
+    <td> Support to place descriptor in cached memory is removed. CPDMA descriptiors has be placed un-cached memory section always.
+</tr>
 </table>
