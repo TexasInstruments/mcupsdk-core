@@ -133,7 +133,6 @@ FILES_common := \
     netbiosns.c \
     tftp_server.c \
     mqtt.c \
-    altcp_tls_mbedtls.c \
     altcp_tls_mbedtls_mem.c \
     snmpv3_mbedtls.c \
     sys_arch.c \

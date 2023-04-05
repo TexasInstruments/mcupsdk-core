@@ -155,7 +155,6 @@ const files = {
         "mqtt.c"                     ,
 
         /* lwipmbedtls_SRCS */
-        "altcp_tls_mbedtls.c"        ,
         "altcp_tls_mbedtls_mem.c"    ,
         "snmpv3_mbedtls.c"           ,
 
