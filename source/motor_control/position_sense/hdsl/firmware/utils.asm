@@ -63,7 +63,7 @@ update_events_no_int:
 	RET1
 ;--------------------------------------------------------------------------------------------------
 ;Function: calc_16bit_crc (RET_ADD1)
-;This function checks the crc for the acceleration channel
+;This function checks the crc for the acceleration channel (polynomial is x^5 + x^2 + 1)
 ;11*REG_FNC.b2+3 cycles -> 69 cycles for 6 bytes data
 ;input:
 ;	REG_FNC.b0: num bytes
