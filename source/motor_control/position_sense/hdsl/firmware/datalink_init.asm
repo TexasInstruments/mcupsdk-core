@@ -268,7 +268,7 @@ datalink_learn_recv_oloop:
 ; this loop executes one DSL bit in 8x oversample mode
 datalink_learn_recv_loop:
 ; this is after 7 cycles ~30 ns on first VAL
-	qbbc			datalink_learn_recv_loop, r31, ENDAT_RX_VALID_FLAG
+	qbbc			datalink_learn_recv_loop, r31, RX_VALID_FLAG
 	POP_FIFO		REG_TMP0.b0
 ; after clearing VAL there needs to be 2 PRU cycles before we can poll for VAL again!
 	CLEAR_VAL
@@ -324,7 +324,7 @@ datalink_learn_skip_one_bit_1:
     .endif
 
 datalink_learn_recv_loop_last_bit:
-	qbbc			datalink_learn_recv_loop_last_bit, r31, ENDAT_RX_VALID_FLAG
+	qbbc			datalink_learn_recv_loop_last_bit, r31, RX_VALID_FLAG
 
 ; now finisch with last bit sample and store
 	POP_FIFO		REG_TMP0.b0
@@ -450,7 +450,7 @@ datalink_learn_end:
 ;--------------------------------------------------------------------------------------------------
 datalink_abort2:
     	halt
-	qbbs			datalink_abort2_no_wait, r30, ENDAT_RX_ENABLE						;changed here from 24 to 26
+	qbbs			datalink_abort2_no_wait, r30, RX_ENABLE						;changed here from 24 to 26
 	WAIT_TX_DONE
     .if $defined("FREERUN_300_MHZ")
 	NOP_2
@@ -607,7 +607,7 @@ receive:
 	ldi			REG_TMP11, (PDMEM00+0x5a4);LUT_B2B)
 	zero		&r18, (4*5)
 datalink_receive_signal_0_31_1:
-	qbbc			datalink_receive_signal_0_31_1, r31, ENDAT_RX_VALID_FLAG
+	qbbc			datalink_receive_signal_0_31_1, r31, RX_VALID_FLAG
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 
@@ -626,7 +626,7 @@ datalink_receive_signal_0_31_received_0_1:
 ;receive next bits
 	ldi			LOOP_CNT.b0, 29
 datalink_receive_signal_32_60_1:
-	qbbc			datalink_receive_signal_32_60_1, r31, ENDAT_RX_VALID_FLAG					;changed here from 24 to 26
+	qbbc			datalink_receive_signal_32_60_1, r31, RX_VALID_FLAG					;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
@@ -641,7 +641,7 @@ datalink_receive_signal_32_60_received_0_1:
 	qbne			datalink_receive_signal_32_60_1, LOOP_CNT.b0, 1
 
 datalink_receive_signal_last_1:
-	qbbc			datalink_receive_signal_last_1, r31, ENDAT_RX_VALID_FLAG					;changed here from 24 to 26
+	qbbc			datalink_receive_signal_last_1, r31, RX_VALID_FLAG					;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	qbbc			datalink_receive_signal_last_received_0_1, REG_TMP0.w0, SAMPLE_EDGE
 	set			r19, r19, 0

@@ -287,7 +287,7 @@ recv_dec_10b:
 	ldi			REG_FNC.w2, 0
 ;receive first 6 bits (abcdei)
 recv_dec_10b_6b:
-	qbbc			recv_dec_10b_6b, r31, ENDAT_RX_VALID_FLAG
+	qbbc			recv_dec_10b_6b, r31, RX_VALID_FLAG
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
@@ -333,7 +333,7 @@ recv_dec_10b_6b_no_error:
 	lsl			REG_FNC.w2, REG_FNC.w2, 3
 	ldi			LOOP_CNT.b0, 3
 recv_dec_10b_4b_0_2:
-	qbbc			recv_dec_10b_4b_0_2, r31, ENDAT_RX_VALID_FLAG ;changed here from 24 to 26
+	qbbc			recv_dec_10b_4b_0_2, r31, RX_VALID_FLAG ;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
@@ -369,7 +369,7 @@ recv_dec_10b_eifgh_no_error:
 ;get next 1 bits (j)
 	lsl			REG_FNC.w2, REG_FNC.w2, 1
 recv_dec_10b_4b_3:
-	qbbc			recv_dec_10b_4b_3, r31, ENDAT_RX_VALID_FLAG ;changed here from 24 to 26
+	qbbc			recv_dec_10b_4b_3, r31, RX_VALID_FLAG ;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	qbbc			recv_dec_10b_4b_3_received_0, REG_TMP0.w0, SAMPLE_EDGE
@@ -431,7 +431,7 @@ srecv_dec_10b:
 	ldi			REG_FNC.w2, 0
 ;receive first 6 bits (abcdei)
 srecv_dec_10b_6b:
-	qbbc			srecv_dec_10b_6b, r31, ENDAT_RX_VALID_FLAG
+	qbbc			srecv_dec_10b_6b, r31, RX_VALID_FLAG
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
@@ -477,7 +477,7 @@ srecv_dec_10b_6b_no_error:
 	lsl			REG_FNC.w2, REG_FNC.w2, 3
 	ldi			LOOP_CNT.b0, 3
 srecv_dec_10b_4b_0_2:
-	qbbc			srecv_dec_10b_4b_0_2, r31, ENDAT_RX_VALID_FLAG ;changed here from 24 to 26
+	qbbc			srecv_dec_10b_4b_0_2, r31, RX_VALID_FLAG ;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
@@ -513,7 +513,7 @@ srecv_dec_10b_eifgh_no_error:
 ;get next 1 bits (j)
 	lsl			REG_FNC.w2, REG_FNC.w2, 1
 srecv_dec_10b_4b_3:
-	qbbc			srecv_dec_10b_4b_3, r31, ENDAT_RX_VALID_FLAG ;changed here from 24 to 26
+	qbbc			srecv_dec_10b_4b_3, r31, RX_VALID_FLAG ;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	qbbc			srecv_dec_10b_4b_3_received_0, REG_TMP0.w0, SAMPLE_EDGE
@@ -624,7 +624,7 @@ recv_dec_vertical_not_rx7:
 ;one switch bit - always opposite of last bit
 	ldi			REG_TMP0.w2, 0
 datalink_receive_signal_swb_0:
-	qbbc			datalink_receive_signal_swb_0, r31, ENDAT_RX_VALID_FLAG ;changed here from 24 to 26
+	qbbc			datalink_receive_signal_swb_0, r31, RX_VALID_FLAG ;changed here from 24 to 26
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	qbbc			datalink_receive_signal_swb_received_0_0, REG_TMP0.w0, SAMPLE_EDGE
@@ -1330,13 +1330,13 @@ calculation_for_wait_done:
 send_stuffing_sync_clk:
 	;ldi     		REG_SCRATCH, P0EDTXCFG
 	lbco			&REG_TMP1, ICSS_CFGx, EDTXCFG, 4
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	qbbc			send_stuffing_sync_clk, REG_TMP1, 10
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	qbbc			send_stuffing_sync_clk, REG_TMP1, 9
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	qbbc			send_stuffing_sync_clk, REG_TMP1, 8
 	.endif
 send_stuffing_first:
@@ -1417,7 +1417,7 @@ send_trailer_dont_update_qm:
 	RET1
 ;--------------------------------------------------------------------------------------------------
 datalink_abort:
-	qbbs			datalink_abort_no_wait, r30, ENDAT_RX_ENABLE ;changed here from 24 to 26
+	qbbs			datalink_abort_no_wait, r30, RX_ENABLE ;changed here from 24 to 26
 	WAIT_TX_DONE
 datalink_abort_no_wait:
 	lbco			&REG_TMP0.b0, MASTER_REGS_CONST, NUM_RESETS, 1
@@ -1556,7 +1556,7 @@ wait_on_rx_transtion_in_wait_delay:
 	qbeq		wait_delay_no_wait, SLAVE_DELAY, 0
 	mov			REG_TMP1.b0, SLAVE_DELAY
 wait_delay_recv_wire:
-	qbbc			wait_delay_recv_wire, r31, ENDAT_RX_VALID_FLAG
+	qbbc			wait_delay_recv_wire, r31, RX_VALID_FLAG
 	POP_FIFO		REG_TMP0.b0
 	CLEAR_VAL
 	sub				REG_TMP1.b0,REG_TMP1.b0,1

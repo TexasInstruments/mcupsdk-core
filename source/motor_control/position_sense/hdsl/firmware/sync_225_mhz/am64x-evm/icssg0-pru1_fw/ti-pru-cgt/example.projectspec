@@ -36,7 +36,7 @@
             -DSOC_AM64X
             -Dicss1
             -DPRU1
-            -DENDAT_CHANNEL_0
+            -DCHANNEL_0
             -DEXT_SYNC_ENABLE
             -DICSS_G_V_1_0
         "

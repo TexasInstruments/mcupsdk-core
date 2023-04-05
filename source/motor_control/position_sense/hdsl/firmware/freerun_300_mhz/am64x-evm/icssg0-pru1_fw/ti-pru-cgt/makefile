@@ -56,7 +56,7 @@ ASM_SRCS__QUOTED += \
 main.obj: $(MCU_PLUS_SDK_PATH)/source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/main.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
 	@echo 'Building file: "$<"'
 	@echo 'Invoking: PRU Compiler'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=ENDAT_CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ --include_path="$(CCS_PATH)" --include_path="$(SYSCFG_DIR)" --include_path="${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
+	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ --include_path="$(CCS_PATH)" --include_path="$(SYSCFG_DIR)" --include_path="${MCU_PLUS_SDK_PATH}/source/motor_control/position_sense/hdsl/firmware"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
 	@echo 'Finished building: "$<"'
 	@echo ' '
 
@@ -86,7 +86,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=ENDAT_CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU1 -DSLICE1 --define=SOC_AM64X --define=icss1 --define=PRU1 --define=CHANNEL_0 --define=ICSS_G_V_1_0 --define=FREERUN_300_MHZ  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build

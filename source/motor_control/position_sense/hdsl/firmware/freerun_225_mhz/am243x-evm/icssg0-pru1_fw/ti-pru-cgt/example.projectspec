@@ -36,7 +36,7 @@
             -DSOC_AM243X
             -Dicss1
             -DPRU1
-            -DENDAT_CHANNEL_0
+            -DCHANNEL_0
             -DICSS_G_V_1_0
         "
         linkerBuildOptions="

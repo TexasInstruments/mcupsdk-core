@@ -35,7 +35,7 @@ const defines = {
     common: [
         "icss1",
         "PRU1",
-        "ENDAT_CHANNEL_0",
+        "CHANNEL_0",
         "ICSS_G_V_1_0",
         "FREERUN_300_MHZ",
     ],

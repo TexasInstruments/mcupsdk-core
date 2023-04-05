@@ -60,14 +60,6 @@ CLKDIV_SLOW .set                        47;50;47
 
     .endif
 
-
-;ENDAT CFG
-ENDAT_CH0CFG0 .set						(0<<16)
-ENDAT_CH0CFG1 .set						0
-
-ENDAT_CH2CFG0 .set						((0<<16)| (1<<17))
-ENDAT_CH2CFG1 .set						0
-
 ;6 bits sync + 2 bits sample
 SYNC .set								0x2f
 ;1 bit sample + 3 bit cycle_reset

@@ -398,34 +398,34 @@ DYNAMIC_CODE_OFFSET .set				0x1000 ;0x2100
 ;--------------------------------------------------------------------------------------------------
 ;R31 flags for RX
 ;--------------------------------------------------------------------------------------------------
-	.if $defined(ENDAT_CHANNEL_2)
-ENDAT_RX_OVERFLOW_FLAG		      .set				       29
-ENDAT_RX_VALID_FLAG               .set                     26
+	.if $defined(CHANNEL_2)
+RX_OVERFLOW_FLAG		      .set				       29
+RX_VALID_FLAG               .set                     26
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_1)
-ENDAT_RX_OVERFLOW_FLAG		      .set					   28
-ENDAT_RX_VALID_FLAG               .set                     25
+	.if $defined(CHANNEL_1)
+RX_OVERFLOW_FLAG		      .set					   28
+RX_VALID_FLAG               .set                     25
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_0)
-ENDAT_RX_OVERFLOW_FLAG		      .set					   27
-ENDAT_RX_VALID_FLAG               .set                     24
+	.if $defined(CHANNEL_0)
+RX_OVERFLOW_FLAG		      .set					   27
+RX_VALID_FLAG               .set                     24
 	.endif
 
 ;--------------------------------------------------------------------------------------------------
 ;R30 flags for RX
 ;--------------------------------------------------------------------------------------------------
-	.if $defined(ENDAT_CHANNEL_2)
-ENDAT_RX_ENABLE	                  .set					   26
+	.if $defined(CHANNEL_2)
+RX_ENABLE	                  .set					   26
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_1)
-ENDAT_RX_ENABLE		              .set					   25
+	.if $defined(CHANNEL_1)
+RX_ENABLE		              .set					   25
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_0)
-ENDAT_RX_ENABLE			          .set					   24
+	.if $defined(CHANNEL_0)
+RX_ENABLE			          .set					   24
 	.endif
 
 ;--------------------------------------------------------------------------------------------------
@@ -433,38 +433,38 @@ ENDAT_RX_ENABLE			          .set					   24
 ;--------------------------------------------------------------------------------------------------
 
 ;global flags
-ENDAT_TX_GLOABL_TX_GO             .set                     20
-ENDAT_TX_GLOABL_REINIT            .set                     19
-ENDAT_TX_CHANNEL_GO               .set                     18
+TX_GLOBAL_TX_GO             .set                     20
+TX_GLOBAL_REINIT            .set                     19
+TX_CHANNEL_GO               .set                     18
 
-	.if $defined(ENDAT_CHANNEL_2)
-ENDAT_TX_GLOABL_REINIT_ACTIVE     .set                     21
-ENDAT_TX_UNDERRUN                 .set                     17
-ENDAT_TX_OVERRUN                  .set                     16
+	.if $defined(CHANNEL_2)
+TX_GLOBAL_REINIT_ACTIVE     .set                     21
+TX_UNDERRUN                 .set                     17
+TX_OVERRUN                  .set                     16
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_1)
-ENDAT_TX_GLOABL_REINIT_ACTIVE     .set                     13
-ENDAT_TX_UNDERRUN                 .set                      9
-ENDAT_TX_OVERRUN                  .set                      8
+	.if $defined(CHANNEL_1)
+TX_GLOBAL_REINIT_ACTIVE     .set                     13
+TX_UNDERRUN                 .set                      9
+TX_OVERRUN                  .set                      8
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_0)
-ENDAT_TX_GLOABL_REINIT_ACTIVE     .set                      5
-ENDAT_TX_UNDERRUN                 .set                      1
-ENDAT_TX_OVERRUN                  .set                      0
+	.if $defined(CHANNEL_0)
+TX_GLOBAL_REINIT_ACTIVE     .set                      5
+TX_UNDERRUN                 .set                      1
+TX_OVERRUN                  .set                      0
 	.endif
 
 ;--------------------------------------------------------------------------------------------------
 ;R30 flags for TX
 ;--------------------------------------------------------------------------------------------------
 
-	.if $defined(ENDAT_CHANNEL_2)
-ENDAT_CHANNEL_NUM                 .set                     1
+	.if $defined(CHANNEL_2)
+CHANNEL_NUM                 .set                     1
 	.endif
 
-	.if $defined(ENDAT_CHANNEL_1)
-ENDAT_CHANNEL_NUM                 .set                     0
+	.if $defined(CHANNEL_1)
+CHANNEL_NUM                 .set                     0
 	.endif
 
 VERSION2    .set                        0x44

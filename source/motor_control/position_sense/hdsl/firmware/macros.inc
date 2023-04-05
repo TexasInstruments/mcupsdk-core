@@ -110,13 +110,13 @@ l?:
 	.endm
 
 TX_EN .macro
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	clr		r30.b3, r30.b3, 2
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	clr		r30.b3, r30.b3, 1
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	clr		r30.b3, r30.b3, 0
 	.endif
 	.endm
@@ -125,15 +125,15 @@ TX_EN .macro
 ;tx delay is always 0
 TX_FRAME_SIZE .macro bits, tmp0
 	ldi		tmp0, (bits<<11)
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	;ldi     	REG_SCRATCH, P0EDCH2CFG0
 	sbco		&tmp0, ICSS_CFGx, EDCH2CFG0, 2
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	;ldi     	REG_SCRATCH, P0EDCH1CFG0
 	sbco		&tmp0, ICSS_CFGx, EDCH1CFG0, 2
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	;ldi     	REG_SCRATCH, P0EDCH0CFG0
 	sbco		&tmp0, ICSS_CFGx, EDCH0CFG0, 2
 	.endif
@@ -149,27 +149,27 @@ TX_CLK_DIV .macro div, tmp0
 WAIT_TX_DONE .macro
 	;WAIT_TX_FIFO_CLEAR
 l?:
-	qbbs		l?, r31, ENDAT_TX_GLOABL_REINIT_ACTIVE
+	qbbs		l?, r31, TX_GLOBAL_REINIT_ACTIVE
 	.endm
 
 ;WAIT_TX_FIFO_CLEAR .macro
 ;l?:
-;	qbbs		l?, r31, ENDAT_TX_GLOABL_TX_GO
-;	qbbs		l?, r31, ENDAT_TX_GLOABL_REINIT
-;	qbbs		l?, r31, ENDAT_TX_CHANNEL_GO
+;	qbbs		l?, r31, TX_GLOBAL_TX_GO
+;	qbbs		l?, r31, TX_GLOBAL_REINIT
+;	qbbs		l?, r31, TX_CHANNEL_GO
 ;	.endm
 
 WAIT_TX_FIFO_FREE .macro
 l?:
-	.if $defined(ENDAT_CHANNEL_2)
-	qbbs		l?, r31, ENDAT_TX_GLOABL_TX_GO
-	qbbs		l?, r31, ENDAT_TX_GLOABL_REINIT
+	.if $defined(CHANNEL_2)
+	qbbs		l?, r31, TX_GLOBAL_TX_GO
+	qbbs		l?, r31, TX_GLOBAL_REINIT
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	qbbs		l?, r31, 12
 	qbbs		l?, r31, 11
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	qbbs		l?, r31, 4 ;fill level 4
 	qbbs		l?, r31, 3 ;fill level 2
 	.endif
@@ -177,8 +177,8 @@ l?:
 
 SET_TX_CH0 .macro
 	and				r30.b2, r30.b2, 0xfc ;clear the channel select bits
-	.if !$defined(ENDAT_CHANNEL_0)
-	set				r30.b2, r30.b2, ENDAT_CHANNEL_NUM
+	.if !$defined(CHANNEL_0)
+	set				r30.b2, r30.b2, CHANNEL_NUM
 	.endif
 	.endm
 
@@ -192,9 +192,9 @@ CLKMODE .macro
 	.endm
 
 REINIT_TX .macro
-	set			r31, r31, ENDAT_TX_GLOABL_REINIT
+	set			r31, r31, TX_GLOBAL_REINIT
 	TX_EN
-	set			r31, r31, ENDAT_TX_GLOABL_REINIT
+	set			r31, r31, TX_GLOBAL_REINIT
 l?:
 	;qbbs		l?, r31, 21
 	loop	loop1?, 50
@@ -206,17 +206,17 @@ loop1?:
 
 REINIT_TX_CNT .macro reg
 	ldi			reg, 6
-	set			r31, r31, ENDAT_TX_GLOABL_REINIT
+	set			r31, r31, TX_GLOBAL_REINIT
 	TX_EN
-	set			r31, r31, ENDAT_TX_GLOABL_REINIT
+	set			r31, r31, TX_GLOBAL_REINIT
 l?:
 	add			reg, reg, 2
-	qbbs		l?, r31, ENDAT_TX_GLOABL_REINIT_ACTIVE
+	qbbs		l?, r31, TX_GLOBAL_REINIT_ACTIVE
 	CLKMODE
 	.endm
 
 TX_CHANNEL .macro
-	set			r31, r31, ENDAT_TX_CHANNEL_GO
+	set			r31, r31, TX_CHANNEL_GO
 	.endm
 
 PUSH_FIFO_CONST .macro dat
@@ -228,13 +228,13 @@ PUSH_FIFO .macro dat
 	.endm
 
 POP_FIFO .macro dst
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	mov			dst, r31.b2
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	mov			dst, r31.b1
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	mov			dst, r31.b0
 
 	.if $defined(EXT_SYNC_ENABLE_DEBUG)
@@ -248,31 +248,31 @@ POP_FIFO .macro dst
 	.endm
 
 RX_EN .macro
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	set				r30.b3, r30.b3, 2
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	set				r30.b3, r30.b3, 1
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	set				r30.b3, r30.b3, 0
 	.endif
 	.endm
 
 REINIT_RX .macro
-	set			r31, r31, ENDAT_TX_GLOABL_REINIT
+	set			r31, r31, TX_GLOBAL_REINIT
 l?:
-	qbbs		l?, r31, ENDAT_TX_GLOABL_REINIT_ACTIVE
+	qbbs		l?, r31, TX_GLOBAL_REINIT_ACTIVE
 	RX_EN
 	CLKMODE
 	.endm
 
 CLEAR_VAL .macro
-	set			r31, r31, ENDAT_RX_VALID_FLAG
+	set			r31, r31, RX_VALID_FLAG
 	.endm
 
 CLEAR_OVF .macro
-	set			r31, r31, ENDAT_RX_OVERFLOW_FLAG
+	set			r31, r31, RX_OVERFLOW_FLAG
 	.endm
 
 ;CLEAR_VAL_OVF .macro
@@ -297,13 +297,13 @@ l?:
 	;ldi     		REG_SCRATCH, P0EDTXCFG
 	lbco			&tmp, ICSS_CFGx, EDTXCFG, 4
 	;//here 8 for endat0, 9 for endat1 and 10 for endat2
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	qbbc			l?, tmp, 10
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	qbbc			l?, tmp, 9
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	qbbc			l?, tmp, 8
 	.endif
 	.endm
@@ -313,13 +313,13 @@ l?:
 	;ldi     		REG_SCRATCH, P0EDTXCFG
 	lbco			&tmp, ICSS_CFGx, EDTXCFG, 4
 	;//here 8 for endat0, 9 for endat1 and 10 for endat2
-	.if $defined(ENDAT_CHANNEL_2)
+	.if $defined(CHANNEL_2)
 	qbbs			l?, tmp, 10
 	.endif
-	.if $defined(ENDAT_CHANNEL_1)
+	.if $defined(CHANNEL_1)
 	qbbs			l?, tmp, 9
 	.endif
-	.if $defined(ENDAT_CHANNEL_0)
+	.if $defined(CHANNEL_0)
 	qbbs			l?, tmp, 8
 	.endif
 	.endm
