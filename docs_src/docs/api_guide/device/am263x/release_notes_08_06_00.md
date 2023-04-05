@@ -25,6 +25,7 @@ Support for custom modification receive packet buffer size                      
 Mbed-TLS library support (software cryptography)                                                | Networking
 DSCP priority mapping support in CPSW                                                           | Ethernet
 ENET driver (enet-lld) APIs added to support IEEE 802.1Qav (TSN Credit Based Shapper) in CPSW   | Ethernet
+R5 PMU driver and example added                                                                 | PMU
 
 ## Device and Validation Information
 
@@ -114,7 +115,8 @@ MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
 MPU Firewall | R5F            | YES               | NA                                    | Only compiled (Works only on HS-SE  device)                                                                                                                     | -
 MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write                                                                                                  | - file IO, eMMC
-PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes                                                                                                                        | -
+PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes
+PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                   | Counter overflow detection is not enabled                                                                                                                        | -
 PRUICSS      | R5F            | YES               | NA                                    | Tested with Ethercat FW HAL                                                                                                                                     | -
 QSPI         | R5F            | YES               | Yes. Example: qspi_flash_dma_transfer | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selction, comparator setup for Interrupt, DMA requests                                                                                   | Capture feature, fast enabling/disabling of events not tested
@@ -336,12 +338,63 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Fixed
 </tr>
 <tr>
+    <td> MCUSDK-8403
+    <td> 1000000(1MHz) baud rate not working on UART
+    <td> UART
+    <td> 8.4.0
+    <td> Fixed
+</tr>
+<tr>
     <td> MCUSDK-8983
     <td> EtherCAT : EDIO pins for AL event is not supported in firmware.
     <td> EtherCAT
     <td> 7.3.0 onwards
     <td> AM263x
     <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9051
+    <td> CAN : Sampling Point Calculation For Default Nominal and Data baud rate configuration not present in SysCfg
+    <td> CAN
+    <td> 8.5.0
+    <td> AM263x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9523
+    <td> ENET : PhyState polling frequency is incorrectly set
+    <td> ENET
+    <td> 8.5.0
+    <td> AM263x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-6909
+    <td> EPWM: Emulation mode doesn't work
+    <td> EPWM
+    <td> 8.4.0 onwards
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-7915
+    <td> SDFM: EPWM filter sync example does not configure and check the PWM synchronization
+    <td> SDFM
+    <td> 8.3.0 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-8348
+    <td> EnetDma_initPktInfo does not initialized chkSumInfo member
+    <td> Enet
+    <td> 8.4.0 onwards
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-8989
+    <td> WDT Reset example takes more than expiration time to reset.
+    <td> WDT
+    <td> 8.5.0
+    <td> None
 </tr>
 </table>
 
@@ -376,13 +429,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Edit gel file as mentioned in  \ref PREREQUISITES while running  multi core applications.
 </tr>
 <tr>
-    <td> MCUSDK-6909
-    <td> EPWM: Emulation mode doesn't work
-    <td> EPWM
-    <td> 8.4.0
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-7030
     <td> Interrupt nesting is not functional as expected when you have 2 or more interrupts with different priorities
     <td> MCAN
@@ -404,13 +450,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Ensure from application side single ethernet packet does not span across memory banks.
 </tr>
 <tr>
-    <td> MCUSDK-7915
-    <td> SDFM: EPWM filter sync example does not configure and check the PWM synchronization
-    <td> SDFM
-    <td> 8.3.0 onwards
-    <td> None
-</tr>
-<tr>
     <td> MCUSDK-8072
     <td> EnetBoard_setupPorts does not provide config option to enable internal delay for RGMII
     <td> Enet
@@ -425,23 +464,9 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> UART1 configuration from other core should be done after UART0 is configured and initialized
 </tr>
 <tr>
-    <td> MCUSDK-8348
-    <td> EnetDma_initPktInfo does not initialized chkSumInfo member
-    <td> Enet
-    <td> 8.4.0 onwards
-    <td> All L2 based applications need to explicitly set EnetDma_initPktInfo.chkSumInfo = 0
-</tr>
-<tr>
     <td> MCUSDK-8391
     <td> PRU Pin Mux configuration missing in syscfg am263x
     <td> PRU
-    <td> 8.4.0
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8403
-    <td> 1000000(1MHz) baud rate not working on UART
-    <td> UART
     <td> 8.4.0
     <td> -
 </tr>
@@ -451,13 +476,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> MCAN
     <td> 8.4.0
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8989
-    <td> WDT Reset example takes more than expiration time to reset.
-    <td> WDT
-    <td> 8.5.0
-    <td> None
 </tr>
 <tr>
     <td> PROC_SDL-4558
@@ -492,6 +510,20 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
     <td> 8.6.0
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9800
+    <td> ENET: Connection reset while running HTTPS server due to insufficient packet buffers
+    <td> ENET
+    <td> 8.6.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9813
+    <td> WDT: Time to reset or generate interrupt is incorrect when run on CCS
+    <td> WDT
+    <td> 8.6.0 onwards
     <td> -
 </tr>
 </table>

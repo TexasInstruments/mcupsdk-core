@@ -20,6 +20,7 @@ Receive packet Scatter-Gather feature support                                   
 Support for custom modification receive packet buffer size                                      | Ethernet
 Mbed-TLS library support (software cryptography)                                                | Networking
 ENET driver (enet-lld) APIs added to support IEEE 802.1Qav (TSN Credit Based Shapper) in CPSW   | Ethernet
+R5 PMU driver and example added                                                                 | PMU
 \endcond
 \cond SOC_AWR294X
 Feature                                                                                         | Module
@@ -27,6 +28,7 @@ Feature                                                                         
 Ethernet Fast Startup example example                                                           | Ethernet
 Receive packet Scatter-Gather feature support                                                   | Ethernet
 Support for custom modification receive packet buffer size                                      | Ethernet
+R5 PMU driver and example added                                                                 | PMU
 \endcond
 
 ## Device and Validation Information
@@ -133,6 +135,7 @@ MCAN       | R5F            | YES               | NA            | RX, TX, interr
 MIBSPI     | R5F, C66x      | YES               | YES           | Controller/Peripheral mode, basic read/write, Interrupt/Polled, icount enable/disable, CPU/DMA mode                  | -
 MCASP      | R5F, C66x      | YES               | YES           | Controller mode, transmit/receive, Interrupt/DMA, serializer config                                             | -
 Pinmux     | R5F, C66x      | YES               | NA            | Tested with multiple peripheral pinmuxes                                                                    | -
+PMU        | R5F            | NO                | NA            | Tested various PMU events                                                                                   | Counter overflow detection is not enabled
 QSPI       | R5F            | YES               | YES           | Read direct, Write indirect, Read/Write commands                                                            | Interrupt mode not supported, Dual and Quad writes are not supported
 SOC        | R5F, C66x      | YES               | NA            | Lock/unlock MMRs, get CPU clock, CPU name, clock enable, set frequency, SW Warm Reset, Address Translation  | -
 UART       | R5F, C66x      | YES               | YES           | Basic read/write, polling, interrupt mode, CPU/DMA mode                                                     | -
@@ -230,7 +233,13 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> Error Forcing and self test error forcing more support added.
 </tr>
 \cond SOC_AM273X
-
+<tr>
+    <td> MCUSDK-8854
+    <td> Enet_cpsw_tcpclient failing to send large sized data, no warning/assert
+    <td> Ethernet CPSW
+    <td> 8.04.00 onwards
+    <td> Fixed
+</tr>
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
 \endcond
@@ -269,13 +278,6 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> Ethernet CPSW
     <td> 8.03.00 onwards
     <td> Ensure from application side single ethernet packet does not span across memory banks
-</tr>
-<tr>
-    <td> MCUSDK-8854
-    <td> Enet_cpsw_tcpclient failing to send large sized data, no warning/assert
-    <td> Ethernet CPSW
-    <td> 8.04.00 onwards
-    <td> -
 </tr>
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
@@ -340,6 +342,13 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> MCUSDK-9082
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
+    <td> 8.6.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9800
+    <td> ENET: Connection reset while running HTTPS server due to insufficient packet buffers
+    <td> ENET
     <td> 8.6.0 onwards
     <td> -
 </tr>
