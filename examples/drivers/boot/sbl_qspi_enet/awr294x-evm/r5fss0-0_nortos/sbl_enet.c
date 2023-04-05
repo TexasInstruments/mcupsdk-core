@@ -1368,7 +1368,6 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId, Cpsw_Cfg *c
     CpswCpts_Cfg *cptsCfg = &cpswCfg->cptsCfg;
     EnetCpdma_Cfg *dmaCfg = (EnetCpdma_Cfg *)cpswCfg->dmaCfg;
 
-    dmaCfg->isCacheable = false;
     dmaCfg->rxInterruptPerMSec = 8;
     dmaCfg->txInterruptPerMSec = 2;
     /* Peripheral config */
