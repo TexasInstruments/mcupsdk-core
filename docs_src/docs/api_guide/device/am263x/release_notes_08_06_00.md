@@ -625,13 +625,13 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     Enum LIN_MessageFilter member LIN_MSG_FILTER_IDSLAVE\n
     Function LIN_setIDSlaveTask
     <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **commander** and **slave** to **responder**, for example..\n
-    LIN_setIDSlaveTask->LIN_setIDResponderTask         
+    LIN_setIDSlaveTask->LIN_setIDResponderTask
     <td> Updated to use the inclusive naming
 </tr>
 <tr>
     <td> McSPI
     <td> MACRO MCSPI_MS_MODE_MASTER, MCSPI_MS_MODE_SLAVE
-    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn and rxCsumOffloadEn. 
+    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn and rxCsumOffloadEn.
     <td> This enables support to control TXP/DUP checksum offload along Rx and Tx seperatly.
 </tr>
 <tr>

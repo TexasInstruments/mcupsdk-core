@@ -7,6 +7,8 @@
 This example uses the WDT module in reset mode to trigger SOC warm reset.
 Servicing the WDT for few iterations before triggering the warm reset.
 It will reset the device once it reaches the expiry time set by user.
+Note that this example won't work in the debug mode as the user must not service the watchdog while in debug mode.
+For it to work, we can flash the image to get the expected result.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_WATCHDOG_RESET_MODE_COMBOS}
 \cond SOC_AM273X || SOC_AWR294X
