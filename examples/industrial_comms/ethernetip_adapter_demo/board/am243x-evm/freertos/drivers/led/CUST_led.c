@@ -43,7 +43,6 @@
 #include <board/led.h>
 #include <drivers/i2c.h>
 
-#include <api/EI_API_CIP.h>
 #include <drivers/led/CUST_led.h>
 #include "ti_board_config.h"
 #include "ti_board_open_close.h"
@@ -66,9 +65,10 @@
  */
 uint32_t CUST_LED_init(void)
 {
+    uint32_t   result = (uint32_t) CUST_LED_eERR_NOERROR;
+
     LED_Handle handle = NULL;
     LED_Attrs* pAttrs = NULL;
-    uint32_t   result = CUST_LED_eERR_NOERROR;
     int32_t    status = SystemP_FAILURE;
     int32_t    ledCnt = 0;
 
@@ -77,7 +77,7 @@ uint32_t CUST_LED_init(void)
     if(NULL == handle)
     {
         OSAL_printf("No led handle available.\n");
-        result = CUST_LED_eERR_HANDLE_INVALID;
+        result = (uint32_t) CUST_LED_eERR_HANDLE_INVALID;
     }
     else
     {
@@ -85,7 +85,7 @@ uint32_t CUST_LED_init(void)
         if(NULL == pAttrs)
         {
             OSAL_printf("Can not get LED attributes.\n");
-            result = CUST_LED_eERR_ATTRIBUTES_INVALID;
+            result = (uint32_t) CUST_LED_eERR_ATTRIBUTES_INVALID;
         }
         else
         {
@@ -95,7 +95,7 @@ uint32_t CUST_LED_init(void)
                 if(SystemP_SUCCESS != status)
                 {
                     OSAL_printf("Can not set LED Mask.\n");
-                    result = CUST_LED_eERR_SET_MASK;
+                    result = (uint32_t) CUST_LED_eERR_SET_MASK;
                 }
                 else
                 {
@@ -107,7 +107,7 @@ uint32_t CUST_LED_init(void)
                         if (SystemP_SUCCESS != status)
                         {
                             OSAL_printf("LED off failed.\n");
-                            result = CUST_LED_eERR_OFF;
+                            result = (uint32_t) CUST_LED_eERR_OFF;
 
                             break;
                         }
@@ -136,16 +136,17 @@ uint32_t CUST_LED_init(void)
  */
 uint32_t CUST_LED_deInit(void)
 {
-    LED_Handle handle = NULL;
-    uint32_t   result = CUST_LED_eERR_NOERROR;
+    uint32_t   result = (uint32_t) CUST_LED_eERR_NOERROR;
+
     int32_t    status = SystemP_FAILURE;
+    LED_Handle handle = NULL;
 
     // Get LED handle from sys config
     handle = gLedHandle[CONFIG_LED0];
     if(NULL == handle)
     {
         OSAL_printf("No led handle available.\n");
-        result = CUST_LED_eERR_HANDLE_INVALID;
+        result = (uint32_t) CUST_LED_eERR_HANDLE_INVALID;
     }
 
     status = LED_setMask(handle, 0x0U);
@@ -153,7 +154,7 @@ uint32_t CUST_LED_deInit(void)
     if (SystemP_FAILURE == status)
     {
         OSAL_printf("Can not set LED Mask.\n");
-        result = CUST_LED_eERR_SET_MASK;
+        result = (uint32_t) CUST_LED_eERR_SET_MASK;
     }
 
     return result;

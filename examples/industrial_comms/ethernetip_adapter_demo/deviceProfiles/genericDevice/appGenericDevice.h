@@ -28,55 +28,29 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
-#ifndef _KBTRACE_H_INC
-#define _KBTRACE_H_INC
 
-#include <stdint.h>
-#include <stdarg.h>
 
-#define KBT_MAX_TEXT_LEN      50
-
-typedef struct KBT_StrTraceEntry
-{
-    char acText[KBT_MAX_TEXT_LEN];
-    const char *pcFile;
-    int iLine;
-} KBT_TTraceEntry;
-
-#define KBT_MAX_ENTRIES         100
-
-typedef struct KBT_StrTrace
-{
-    int iHead;
-    int iTail;
-    KBT_TTraceEntry atTrace[KBT_MAX_ENTRIES];
-} KBT_TTrace;
-
+#ifndef APPGENERICDEVICE_H
+#define APPGENERICDEVICE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// For Debugging
-#define KBT_addEntry(a,...) KBT_addEntryFL(__FILE__, __LINE__, a, ##__VA_ARGS__)
+extern bool EI_APP_init(APP_SParams_t* pParams_p);
+extern void EI_APP_run(void);
+extern void EI_APP_stackInit(APP_SParams_t* pParams_p);
 
-// For Release 
-//#define KBT_addEntry(a,...)
+extern void EI_APP_osPrintfCb(void* pContext_p, const char* __restrict pFormat_p, va_list argptr_p);
+extern void EI_APP_stackErrorHandlerCb(uint32_t i32uErrorCode_p, uint8_t bFatal_p, uint8_t i8uNumOfPara_p, va_list argptr_p);
 
+extern void EI_APP_adpInit(void);
 
-    extern void KBT_traceInit (void);
-    extern void KBT_addEntryFL (const char *pcFile_p, int iLine_p, char *pcFormat_p, ...);
-    extern uint32_t KBT_getTimeStampUs (void);
-    extern uint64_t KBT_getTimeStampNs (void);
-    extern uint64_t KBT_getTimeStampRaw (void);
+extern void EI_APP_cipAttributeCb(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p, uint16_t attrId_p, EI_API_CIP_EAr_t accessRight_p);
+extern void EI_APP_cipGenerateContent(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p);
 
-    extern KBT_TTrace KBT_tTrace_g;
-
-
-
-#ifdef __cplusplus
+#ifdef  __cplusplus
 }
 #endif
 
-#endif   // _KBTRACE_H_INC
+#endif // APPGENERICDEVICE_H

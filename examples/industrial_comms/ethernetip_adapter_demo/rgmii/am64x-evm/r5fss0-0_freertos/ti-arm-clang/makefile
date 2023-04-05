@@ -39,11 +39,8 @@ endif
 
 FILES_common := \
 	app.c \
-	appClass71.c \
-	appPerm.c \
-	appProduct.c \
+	appNV.c \
 	appWebServer.c \
-	appPhyReset.c \
 	CUST_drivers.c \
 	CUST_eeprom.c \
 	CUST_phy.c \
@@ -52,9 +49,11 @@ FILES_common := \
 	CUST_uart.c \
 	CUST_PHY_base.c \
 	CUST_PHY_dp83869.c \
+	appGenericDevice.c \
 	CMN_CPU_main.c \
 	CMN_app.c \
 	CMN_board.c \
+	CMN_mem.c \
 	CMN_os.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -74,6 +73,7 @@ FILES_PATH_common = \
 	../../../../board/am64x-evm/freertos/drivers/flash \
 	../../../../board/am64x-evm/freertos/drivers/led \
 	../../../../board/am64x-evm/freertos/drivers/uart \
+	../../../../deviceProfiles/genericDevice \
 	../../../../customPhy/src \
 	../../../../os/freertos \
 	generated \
@@ -89,6 +89,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/examples/industrial_comms/ethernetip_adapter_demo/customPhy/inc \
 	-I${MCU_PLUS_SDK_PATH}/examples/industrial_comms/ethernetip_adapter_demo/os/freertos \
 	-I${MCU_PLUS_SDK_PATH}/source/industrial_comms/ethernetip_adapter/stack \
+	-I${MCU_PLUS_SDK_IND_COMMS_LIBS_PATH}/ethernetip_adapter \
 	-I${MCU_PLUS_SDK_PATH}/source/industrial_comms/ethernetip_adapter/stack/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/industrial_comms/ethernetip_adapter/stack/lwip/lwip-config/am64x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \

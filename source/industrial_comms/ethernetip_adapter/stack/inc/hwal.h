@@ -65,6 +65,14 @@
 
 /*!
  *  \brief
+ *  Each ICSSG has two TX PRU's
+ */
+#define MAX_ICSSG_TX_PRU        2U
+#define IDX_ICSSG_TX_PRU0       0U
+#define IDX_ICSSG_TX_PRU1       1U
+
+/*!
+ *  \brief
  *  Performance counter precision settings.
   */
 typedef enum HWAL_PRFCNT_EPrecision
@@ -104,6 +112,12 @@ typedef enum HWAL_eMEM_type {
     HWAL_UMT_debug1,
     HWAL_UMT_iram0,
     HWAL_UMT_iram1,
+#if !defined(SOC_AM263X)
+    HWAL_UMT_TxPru0_CtlReg,
+    HWAL_UMT_TxPru1_CtlReg,
+    HWAL_UMT_TxPru0_iram,
+    HWAL_UMT_TxPru1_iram,
+#endif // !SOC_AM263X
 } HWAL_eMEM_type_t;
 
 typedef struct HWAL_MEM_SBarDescriptor
@@ -129,6 +143,10 @@ typedef struct HWAL_PRU_SPhysical
     HWAL_MEM_SBarDescriptor_t   control[2];
     HWAL_MEM_SBarDescriptor_t   debug[2];
     HWAL_MEM_SBarDescriptor_t   iram[2];
+#if !defined(SOC_AM263X)
+    HWAL_MEM_SBarDescriptor_t   txPruIram[MAX_ICSSG_TX_PRU];
+    HWAL_MEM_SBarDescriptor_t   txPruCtlReg[MAX_ICSSG_TX_PRU];
+#endif // !SOC_AM263X
 } HWAL_PRU_SPhysical_t;
 
 typedef uint32_t (*HWAL_PRFCNT_CBPrfCntOverflowHandler_t) (void);

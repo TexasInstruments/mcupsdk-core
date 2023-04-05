@@ -46,6 +46,19 @@ static TaskP_Params CMN_APP_mainParam_s;
 
 static StackType_t CMN_APP_aMainStack_s[CMN_APP_MAIN_STACK_SIZE] __attribute__((aligned(32), section(".threadstack"))) = {0};
 
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Creates main application thread.
+ *
+ *  <!-- Parameters and return values: -->
+ *  \param[in]  cbTask_p     Function pointer to main task function of application.
+ *  \param[in]  pArg_p       Pointer to main task arguments.
+ *  \param[in]  prio_p       Specifies priority level of application main task.
+ *
+ *
+ */
 void CMN_APP_mainCreate (CMN_APP_CBTask_t               cbTask_p
                         ,void*                          pArg_p
                         ,uint32_t                       prio_p)
@@ -67,10 +80,20 @@ void CMN_APP_mainCreate (CMN_APP_CBTask_t               cbTask_p
     if (SystemP_SUCCESS != err)
     {
         OSAL_printf("Error setting create thread of %s (%ld)\r\n", CMN_APP_mainParam_s.name, err);
-        OSAL_error(__FILE__, __LINE__, OSAL_STACK_INIT_ERROR, true, 0);
+        OSAL_error(__func__, __LINE__, OSAL_STACK_INIT_ERROR, true, 0);
     }
 }
 
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Frees memory allocated by task in time of creation.
+ *
+ *  \detail
+ *  Needs to be called at the end of each created task.
+ *
+ */
 void CMN_APP_mainExit (void)
 {
     TaskP_destruct(NULL);

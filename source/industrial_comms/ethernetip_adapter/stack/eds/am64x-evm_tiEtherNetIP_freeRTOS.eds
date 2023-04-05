@@ -1,12 +1,12 @@
-$ EZ-EDS Version 3.29.1.20210209 Generated Electronic Data Sheet
+$ EZ-EDS Version 3.31.1.20220811 Generated Electronic Data Sheet
 
 [File]
         DescText = "EtherNet/IP(tm) Adapter am64x-evm freeRTOS";
         CreateDate = 11-21-2019;
         CreateTime = 08:00:00;
-        ModDate = 05-19-2022;
-        ModTime = 10:26:07;
-        Revision = 2.1;
+        ModDate = 28-03-2023;
+        ModTime = 09:00:00;
+        Revision = 3.2;
         HomeURL = "www.ti.com";
 
 
@@ -16,8 +16,8 @@ $ EZ-EDS Version 3.29.1.20210209 Generated Electronic Data Sheet
         ProdType = 43;
         ProdTypeStr = "Generic Device";
         ProdCode = 25601;
-        MajRev = 2;
-        MinRev = 1;
+        MajRev = 3;
+        MinRev = 2;
         ProdName = "EtherNet/IP(tm) ADPT am64x-evm";
         Catalog = "CatNo25601";
         Icon = "ti.ico";
@@ -490,5 +490,21 @@ $ EZ-EDS Version 3.29.1.20210209 Generated Electronic Data Sheet
         MaxInst = 1;
         Number_Of_Static_Instances = 1;
         Max_Number_Of_Dynamic_Instances = 0;
+
+[LLDP Management Class]
+        Revision = 1;
+        Object_Name = "LLDP Management Object";
+        Object_Class_Code = 0x109;
+        MaxInst = 1;
+        Number_Of_Static_Instances = 1;
+        Max_Number_Of_Dynamic_Instances = 0;
+
+[LLDP Data Table Class]
+        Revision = 1;
+        Object_Name = "LLDP Data Table Object";
+        Object_Class_Code = 0x10A;
+        MaxInst = 48;
+        Number_Of_Static_Instances = 0;
+        Max_Number_Of_Dynamic_Instances = 48;
 
 

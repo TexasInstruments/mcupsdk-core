@@ -55,7 +55,7 @@
 uint32_t CUST_UART_init(void)
 {
     // nothing needs to be done for this board
-    return CUST_UART_eERR_NOERROR;
+    return (uint32_t) CUST_UART_eERR_NOERROR;
 }
 
 /*!
@@ -73,5 +73,5 @@ uint32_t CUST_UART_init(void)
 uint32_t CUST_UART_deInit (void)
 {
     // nothing needs to be done for this board
-    return CUST_UART_eERR_NOERROR;
+    return (uint32_t) CUST_UART_eERR_NOERROR;
 }

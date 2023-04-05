@@ -42,8 +42,13 @@
 
 #include <drivers/mdio/v0/mdio.h>
 
-#include <CUST_PHY_base.h>
 #include <drivers/ethphy/CUST_phy.h>
+
+#include <drivers/pinmux/am64x_am243x/pinmux.h>
+
+#include <drivers/CUST_drivers.h>
+
+#include <CUST_PHY_base.h>
 
 ETHPHY_Fxns gEthPhyFxns_DP83869_0 = { .openFxn    = NULL,
                                       .closeFxn   = NULL,
@@ -67,17 +72,19 @@ ETHPHY_Fxns gEthPhyFxns_DP83869_1 = { .openFxn    = NULL,
 */
 uint32_t CUST_PHY_init(CUST_PHY_SParams_t* pParams_p)
 {
+    uint32_t error = (uint32_t) CUST_PHY_eERR_GENERALERROR;
+	
     int32_t  status          = SystemP_FAILURE;
     uint32_t mdioBaseAddress = 0;
 
     if (NULL == pParams_p->pPruIcssCfg)
     {
-        return CUST_PHY_eERR_GENERALERROR;
+        goto laError;
     }
 
     if (NULL == pParams_p->pEthPhy0Cfg)
     {
-        return CUST_PHY_eERR_GENERALERROR;
+        goto laError;
     }
 
     pParams_p->pEthPhy0Cfg->fxns->openFxn    = NULL;
@@ -86,25 +93,44 @@ uint32_t CUST_PHY_init(CUST_PHY_SParams_t* pParams_p)
 
     if (NULL == pParams_p->pEthPhy1Cfg)
     {
-        return CUST_PHY_eERR_GENERALERROR;
+        goto laError;
     }
 
     pParams_p->pEthPhy1Cfg->fxns->openFxn    = NULL;
     pParams_p->pEthPhy1Cfg->fxns->closeFxn   = NULL;
     pParams_p->pEthPhy1Cfg->fxns->commandFxn = NULL;
 
-    mdioBaseAddress = (uint32_t) pParams_p->pPruIcssCfg->hwAttrs->miiMdioRegBase;
-
-    status = MDIO_initClock(mdioBaseAddress);
-
-    if (SystemP_SUCCESS != status)
+    if (true == CUST_DRIVERS_getMdioManualMode())
     {
-        return CUST_PHY_eERR_GENERALERROR;
+        // Pinmux for the link interrupt pins, we will set it to MLINK later.
+        Pinmux_PerCfg_t tempPinMuxCfg[] = {
+            /* PR1_MII0_RXLINK -> PRG1_PRU0_GPO8 (W13) */
+            { PIN_PRG1_PRU0_GPO8, (PIN_MODE(1) | PIN_INPUT_ENABLE | PIN_PULL_DISABLE) },
+            /* PR1_MII1_RXLINK -> PRG1_PRU1_GPO8 (U12) */
+            { PIN_PRG1_PRU1_GPO8, (PIN_MODE(1) | PIN_INPUT_ENABLE | PIN_PULL_DISABLE) },
+            {PINMUX_END, PINMUX_END}
+        };
+
+        Pinmux_config(tempPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
+    }
+    else
+    {
+        mdioBaseAddress = (uint32_t) pParams_p->pPruIcssCfg->hwAttrs->miiMdioRegBase;
+
+        status = MDIO_initClock(mdioBaseAddress);
+
+        if (SystemP_SUCCESS != status)
+        {
+            goto laError;
+        }
     }
 
     CUST_PHY_CBregisterLibDetect(CUST_PHY_detect, NULL);
 
-    return CUST_PHY_eERR_NOERROR;
+    error = (uint32_t) CUST_PHY_eERR_NOERROR;
+	
+laError:
+    return error;
 }
 
 /*!
@@ -121,5 +147,5 @@ uint32_t CUST_PHY_init(CUST_PHY_SParams_t* pParams_p)
 */
 uint32_t CUST_PHY_deInit(void)
 {
-    return CUST_PHY_eERR_NOERROR;
+    return (uint32_t) CUST_PHY_eERR_NOERROR;
 }

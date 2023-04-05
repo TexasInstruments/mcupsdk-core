@@ -5,11 +5,8 @@ let device = "am243x";
 const files = {
     common: [
         "app.c",
-        "appClass71.c",
-        "appPerm.c",
-        "appProduct.c",
+        "appNV.c",
         "appWebServer.c",
-        "appPhyReset.c",
         "CUST_drivers.c",
         "CUST_eeprom.c",
         "CUST_phy.c",
@@ -18,12 +15,15 @@ const files = {
         "CUST_uart.c",
         "CUST_PHY_base.c",
         "CUST_PHY_dp83869.c",
+        "appGenericDevice.c",
         "CMN_CPU_main.c",
         "CMN_app.c",
         "CMN_board.c",
+        "CMN_mem.c",
         "CMN_os.c",
     ],
 };
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -38,6 +38,7 @@ const filedirs_evm = {
         "../../../../board/am243x-evm/freertos/drivers/flash",
         "../../../../board/am243x-evm/freertos/drivers/led",
         "../../../../board/am243x-evm/freertos/drivers/uart",
+        "../../../../deviceProfiles/genericDevice",
         "../../../../customPhy/src",
         "../../../../os/freertos",
     ],
@@ -54,6 +55,7 @@ const filedirs_lp = {
         "../../../../board/am243x-lp/freertos/drivers/flash",
         "../../../../board/am243x-lp/freertos/drivers/led",
         "../../../../board/am243x-lp/freertos/drivers/uart",
+        "../../../../deviceProfiles/genericDevice",
         "../../../../customPhy/src",
         "../../../../os/freertos",
     ],

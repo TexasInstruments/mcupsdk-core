@@ -5,11 +5,8 @@ let device = "am64x";
 const files = {
     common: [
         "app.c",
-        "appClass71.c",
-        "appPerm.c",
-        "appProduct.c",
+        "appNV.c",
         "appWebServer.c",
-        "appPhyReset.c",
         "CUST_drivers.c",
         "CUST_eeprom.c",
         "CUST_phy.c",
@@ -18,9 +15,11 @@ const files = {
         "CUST_uart.c",
         "CUST_PHY_base.c",
         "CUST_PHY_dp83869.c",
+        "appGenericDevice.c",
         "CMN_CPU_main.c",
         "CMN_app.c",
         "CMN_board.c",
+        "CMN_mem.c",
         "CMN_os.c",
     ],
 };
@@ -39,6 +38,7 @@ const filedirs = {
         "../../../../board/am64x-evm/freertos/drivers/flash",
         "../../../../board/am64x-evm/freertos/drivers/led",
         "../../../../board/am64x-evm/freertos/drivers/uart",
+        "../../../../deviceProfiles/genericDevice",
         "../../../../customPhy/src",
         "../../../../os/freertos",
     ],

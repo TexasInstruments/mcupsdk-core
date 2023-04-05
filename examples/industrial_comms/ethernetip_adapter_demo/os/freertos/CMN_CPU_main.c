@@ -162,7 +162,6 @@ void CMN_CPU_API_generateReport (CMN_CPU_API_EOutput_t out_p)
     }
 }
 
-
 /*!
  *  <!-- Description: -->
  *
@@ -242,8 +241,7 @@ static TaskP_Object* CMN_CPU_mcuAddTask(TaskHandle_t pTaskHandle_p)
 
     if (pTaskHandle == NULL)
     {
-        OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __FUNCTION__, __LINE__, sizeof(TaskP_Object));
-
+        OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __func__, __LINE__, sizeof(TaskP_Object));
         return NULL;
     }
 
@@ -317,7 +315,7 @@ static TaskP_Object* CMN_CPU_mcuFindTask(TaskHandle_t pTaskHandle_p)
 
     if (pTask == NULL)
     {
-        if (strncmp(pTaskHandle_p->pcTaskName, "IDLE", 32) != 0)
+        if (pTaskHandle_p != NULL)
         {
             pTask = CMN_CPU_mcuAddTask(pTaskHandle_p);
         }
@@ -467,7 +465,7 @@ static void CMN_CPU_loadTask (void *pArg_p)
 
         if (pxStatusArray == NULL)
         {
-            OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __FUNCTION__, __LINE__, statusArraySize * sizeof(TaskStatus_t));
+            OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __func__, __LINE__, statusArraySize * sizeof(TaskStatus_t));
             break;
         }
 
@@ -482,7 +480,7 @@ static void CMN_CPU_loadTask (void *pArg_p)
             data_s.tasks[i].exists = false;
         }
 
-        for (i = 0; i < CMN_CPU_API_MAX_TASKS_NUM; i++)
+        for (i = 0; i < statusArraySize; i++)
         {
             pTask = CMN_CPU_mcuFindTask(pxStatusArray[i].xHandle);
 

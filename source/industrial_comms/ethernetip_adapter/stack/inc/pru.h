@@ -147,9 +147,18 @@ static inline void PRU_WR_REG32(uint32_t addr_p, uint32_t value_p)
 
 typedef enum PRU_eFW_type
 {
-  PRUFW_ethercat    = 0x1000,
-  PRUFW_profinet    = 0x1001,
+  PRUFW_ethercat        = 0x1000,
+  PRUFW_profinet        = 0x1001,
+  PRUFW_ethernetip      = 0x1002,
+  PRUFW_Mdio            = 0x1003,
 } PRU_eFW_type_t;
+
+typedef enum PRU_eIndex
+{
+    PRU_eIdx_primary    = 0,
+    PRU_eIdx_secondary  = 1,
+    PRU_eIdx_mdio       = 2,
+} PRU_eIndex_t;
 
 /**
  * @brief Struct for host to PRU-ICSS command interface
@@ -210,9 +219,14 @@ extern void         PRU_errReadIncrement    (void);
 extern void         PRU_prepare             (void);
 extern void         PRU_init                (uint32_t                   logicPruSelect_p
                                             ,int32_t                    irqBaseOffset_p);
+extern uint32_t     PRU_enableMdioManualMode(uint32_t                   manualMdioAddress_p);
 extern void         PRU_FB_startPhy         (void);
 extern void         PRU_exit                (void);
 extern void         PRU_FW_determine        (PRU_eFW_type_t             targetFirmware_p);
+extern uint32_t     PRU_FW_insertPruFirmware(uint8_t                    pruIdx_p
+                                            ,PRU_eFW_type_t             firmwareType_p
+                                            ,uint32_t*                  pFirmware_p
+                                            ,uint32_t                   firmwareSize_p);
 extern void         PRU_FW_load             (void);
 extern PRU_API void PRU_FW_start            (void);
 extern void         PRU_FW_stop             (void);

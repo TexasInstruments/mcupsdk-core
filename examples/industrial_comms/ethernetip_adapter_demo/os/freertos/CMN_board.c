@@ -38,22 +38,30 @@
  *
  */
 
+#if (defined CMN_MEM_TRACE) && (1==CMN_MEM_TRACE)
+#include <CMN_mem.h>
+#endif
+
 #include <CMN_board.h>
 
 /*!
 * <!-- Description: -->
 *
 * \brief
-* Common board initialization.
+* Common board initialization for FreeRTOS.
 *
-*  \return     uint32_t                      Error code.
+*  \return     uint32_t                       Error code.
 *
-*  \retval     CMN_BOARD_eERR_NOERROR        Success.
-*  \retval     CMN_BOARD_eERR_GENERALERROR   Initialization failed.
+*  \retval     #CMN_BOARD_eERR_NOERROR        Success.
+*  \retval     #CMN_BOARD_eERR_GENERALERROR   Initialization failed.
 *
 */
 uint32_t CMN_BOARD_init(void)
 {
+#if (defined CMN_MEM_TRACE) && (1==CMN_MEM_TRACE)
+    CMN_MEM_traceInit();
+#endif
+
     Board_init();
 
     return CMN_BOARD_eERR_NOERROR;
@@ -63,12 +71,12 @@ uint32_t CMN_BOARD_init(void)
 * <!-- Description: -->
 *
 * \brief
-* Common board deinitialization.
+* Common board deinitialization for FreeRTOS.
 *
 * \return     uint32_t                      Error code.
 *
-* \retval     CMN_BOARD_eERR_NOERROR       Success.
-* \retval     CMN_BOARD_eERR_GENERALERROR  Deinitialization failed.
+* \retval     #CMN_BOARD_eERR_NOERROR       Success.
+* \retval     #CMN_BOARD_eERR_GENERALERROR  Deinitialization failed.
 *
 */
 uint32_t CMN_BOARD_deinit(void)

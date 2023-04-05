@@ -47,7 +47,7 @@ extern PRUICSS_Config gPruIcssConfig[];
 extern ETHPHY_Config  gEthPhyConfig[];
 extern ETHPHY_Handle  gEthPhyHandle[];
 
-#define WRITE_STACK_SIZE_BYTE     4096
+#define WRITE_STACK_SIZE_BYTE     1024
 #define WRITE_FLASH_STACK_SIZE    (WRITE_STACK_SIZE_BYTE/sizeof(configSTACK_DEPTH_TYPE))
 
 typedef struct CUST_DRIVERS_SPermWriteParam
@@ -58,10 +58,8 @@ typedef struct CUST_DRIVERS_SPermWriteParam
     uint32_t     length;
 }CUST_DRIVERS_SPermWriteParam_t;
 
-void CUST_DRIVERS_flashWriteTask  (void *pArg_p);
-void CUST_DRIVERS_eepromWriteTask (void *pArg_p);
-void CUST_DRIVERS_UART_printf     (void* pContext_p, const char* __restrict pFormat_p, va_list argptr_p);
-void CUST_DRIVERS_LOG_printf      (void* pContext_p, const char* __restrict pFormat_p, va_list argptr_p);
+static void CUST_DRIVERS_flashWriteTask  (void *pArg_p);
+static void CUST_DRIVERS_eepromWriteTask (void *pArg_p);
 
 static OSAL_TASK_EPriority_t    eepromTaskPrio_s;
 static OSAL_TASK_EPriority_t    flashTaskPrio_s;
@@ -92,6 +90,7 @@ static StackType_t                     writeTaskStack_s[WRITE_FLASH_STACK_SIZE] 
 */
 uint32_t CUST_DRIVERS_init(CUST_DRIVERS_SInit_t* pParams_p)
 {
+    uint32_t error = (uint32_t) CUST_DRIVERS_eERR_NOERROR;
     CUST_PHY_SParams_t phyParams = { .pPruIcssCfg = CUST_DRIVERS_getPruIcssCfg(pParams_p->pruIcss.instance),
                                      .pEthPhy0Cfg = CUST_DRIVERS_getEthPhyCfg (pParams_p->pruIcss.ethPhy.instance_0),
                                      .pEthPhy1Cfg = CUST_DRIVERS_getEthPhyCfg (pParams_p->pruIcss.ethPhy.instance_1)
@@ -106,42 +105,49 @@ uint32_t CUST_DRIVERS_init(CUST_DRIVERS_SInit_t* pParams_p)
 
     if (CUST_UART_eERR_NOERROR != CUST_UART_init())
     {
-        return CUST_DRIVERS_eERR_UART;
+        error = (uint32_t) CUST_DRIVERS_eERR_UART;
+        goto initErr;
     }
 
     if (CUST_PHY_eERR_NOERROR != CUST_PHY_init(&phyParams))
     {
-        return CUST_DRIVERS_eERR_PHY;
+        error = (uint32_t) CUST_DRIVERS_eERR_PHY;
+        goto initErr;
     }
 
     if (SystemP_SUCCESS != Board_driversOpen())
     {
-        return CUST_DRIVERS_eERR_GENERALERROR;
+        error = (uint32_t) CUST_DRIVERS_eERR_GENERALERROR;
+        goto initErr;
     }
 
     if (CUST_LED_eERR_NOERROR != CUST_LED_init())
     {
-        return CUST_DRIVERS_eERR_LED;
+        error = (uint32_t) CUST_DRIVERS_eERR_LED;
+        goto initErr;
     }
 
     if (PERMANENT_DATA_MEMORY_TYPE == CUST_DRIVERS_PRM_eTYPE_FLASH)
     {
         if (CUST_FLASH_eERR_NOERROR != CUST_FLASH_init())
         {
-            return CUST_DRIVERS_eERR_FLASH;
+            error = (uint32_t) CUST_DRIVERS_eERR_FLASH;
+            goto initErr;
         }
     }
     else if (PERMANENT_DATA_MEMORY_TYPE == CUST_DRIVERS_PRM_eTYPE_EEPROM)
     {
         if (CUST_EEPROM_eERR_NOERROR != CUST_EEPROM_init())
         {
-            return CUST_DRIVERS_eERR_EEPROM;
+            error = (uint32_t) CUST_DRIVERS_eERR_EEPROM;
+            goto initErr;
         }
     }
     else
-        return CUST_DRIVERS_eERR_GENERALERROR;
+        error = (uint32_t) CUST_DRIVERS_eERR_NO_PERMANENT_STORAGE;
 
-    return CUST_DRIVERS_eERR_NOERROR;
+initErr:
+    return error;
 }
 
 /*!
@@ -161,31 +167,38 @@ uint32_t CUST_DRIVERS_init(CUST_DRIVERS_SInit_t* pParams_p)
 */
 uint32_t CUST_DRIVERS_deinit(void)
 {
+    uint32_t error = (uint32_t) CUST_DRIVERS_eERR_NOERROR;
+
     if (CUST_LED_eERR_NOERROR != CUST_LED_deInit())
     {
-        return CUST_DRIVERS_eERR_LED;
+        error = (uint32_t) CUST_DRIVERS_eERR_LED;
+        goto deinitErr;
     }
 
     if (CUST_FLASH_eERR_NOERROR != CUST_FLASH_deInit())
     {
-        return CUST_DRIVERS_eERR_FLASH;
+        error = (uint32_t) CUST_DRIVERS_eERR_FLASH;
+        goto deinitErr;
     }
 
     if (CUST_PHY_eERR_NOERROR != CUST_PHY_deInit())
     {
-        return CUST_DRIVERS_eERR_PHY;
+        error = (uint32_t) CUST_DRIVERS_eERR_PHY;
+        goto deinitErr;
     }
 
     Board_driversClose();
 
     if (CUST_UART_eERR_NOERROR != CUST_UART_deInit())
     {
-        return CUST_DRIVERS_eERR_UART;
+        error = (uint32_t) CUST_DRIVERS_eERR_UART;
+        goto deinitErr;
     }
 
     Drivers_close();
 
-    return CUST_DRIVERS_eERR_NOERROR;
+deinitErr:
+    return error;
 }
 
 /*!
@@ -202,7 +215,11 @@ uint32_t CUST_DRIVERS_deinit(void)
 */
 PRUICSS_Config* CUST_DRIVERS_getPruIcssCfg (uint32_t instance_p)
 {
-    return &gPruIcssConfig[instance_p];
+    PRUICSS_Config* pPruIcssCfg = NULL;
+
+    pPruIcssCfg = &gPruIcssConfig[instance_p];
+
+    return pPruIcssCfg;
 }
 
 /*!
@@ -219,7 +236,11 @@ PRUICSS_Config* CUST_DRIVERS_getPruIcssCfg (uint32_t instance_p)
 */
 ETHPHY_Config*  CUST_DRIVERS_getEthPhyCfg (uint32_t instance_p)
 {
-    return &gEthPhyConfig[instance_p];
+    ETHPHY_Config* pEthPhyCfg = NULL;
+
+    pEthPhyCfg = &gEthPhyConfig[instance_p];
+
+    return pEthPhyCfg;
 }
 
 /*!
@@ -236,7 +257,59 @@ ETHPHY_Config*  CUST_DRIVERS_getEthPhyCfg (uint32_t instance_p)
 */
 ETHPHY_Handle CUST_DRIVERS_getEthPhyHandle (uint32_t instance_p)
 {
-    return gEthPhyHandle[instance_p];
+    ETHPHY_Handle ethPhyHandle = NULL;
+
+    ethPhyHandle = gEthPhyHandle[instance_p];
+
+    return ethPhyHandle;
+}
+
+/*!
+* <!-- Description: -->
+*
+* \brief
+* Provides MDIO manual mode SysConfig setting.
+*
+*  <!-- Parameters and return values: -->
+*
+*  \return     MDIO manual mode ON/OFF setting
+*
+*  \retval     true   MDIO Manual Mode is ON.
+*  \retval     false  MDIO Manual Mode is OFF.
+*/
+bool CUST_DRIVERS_getMdioManualMode (void)
+{
+    bool result = false;
+
+#if (defined MDIO_MANUAL_MODE_ENABLED)
+    result = true;
+#endif
+
+    return result;
+}
+
+/*!
+* <!-- Description: -->
+*
+* \brief
+* Provides MDIO manual mode base address as defined in SysConfig.
+*
+*  <!-- Parameters and return values: -->
+*
+*  \return     MDIO manual mode base address
+*
+*  \retval     0      MDIO Manual Mode Base Address is not defined.
+*  \retval     other  MDIO Manual Mode Base Address as defined.
+*/
+uint32_t CUST_DRIVERS_getMdioManualModeBaseAddress (void)
+{
+    uint32_t result = 0;
+
+#if (defined MDIO_MANUAL_MODE_ENABLED) && (defined MDIO_MANUAL_MODE_BASE_ADDRESS)
+    result = MDIO_MANUAL_MODE_BASE_ADDRESS;
+#endif
+
+    return result;
 }
 
 /*!
@@ -321,7 +394,7 @@ void CUST_DRIVERS_LOG_printf(void* pContext_p, const char* __restrict pFormat_p,
 */
 void* CUST_DRIVERS_PRM_getHandle (uint32_t type_p, uint32_t instance_p)
 {
-    void*   pHandle;
+    void*   pHandle = NULL;
 
     switch(type_p)
     {
@@ -368,14 +441,15 @@ void* CUST_DRIVERS_PRM_getHandle (uint32_t type_p, uint32_t instance_p)
 uint32_t CUST_DRIVERS_PRM_read (void* handler_p, uint32_t type_p, uint32_t offset_p, uint8_t* pBuf_p, uint32_t length_p)
 {
     int32_t  ret = SystemP_FAILURE;
-    uint32_t err = CUST_DRIVERS_eERR_GENERALERROR;
+    uint32_t err = (uint32_t) CUST_DRIVERS_eERR_GENERALERROR;
 
     switch(type_p)
     {
         case CUST_DRIVERS_PRM_eTYPE_FLASH:
+        {
             if (NULL == handler_p)
             {
-                err = CUST_DRIVERS_eERR_FLASH_HANDLE_INVALID;
+                err = (uint32_t) CUST_DRIVERS_eERR_FLASH_HANDLE_INVALID;
                 break;
             }
 
@@ -383,16 +457,17 @@ uint32_t CUST_DRIVERS_PRM_read (void* handler_p, uint32_t type_p, uint32_t offse
 
             if (SystemP_SUCCESS != ret)
             {
-                err = CUST_DRIVERS_eERR_FLASH_READ;
+                err = (uint32_t) CUST_DRIVERS_eERR_FLASH_READ;
                 break;
             }
 
-            err = CUST_DRIVERS_eERR_NOERROR;
-            break;
+            err = (uint32_t) CUST_DRIVERS_eERR_NOERROR;
+        }break;
         case CUST_DRIVERS_PRM_eTYPE_EEPROM:
+        {
             if (NULL == handler_p)
             {
-                err = CUST_DRIVERS_eERR_EEPROM_HANDLE_INVALID;
+                err = (uint32_t) CUST_DRIVERS_eERR_EEPROM_HANDLE_INVALID;
                 break;
             }
 
@@ -400,12 +475,12 @@ uint32_t CUST_DRIVERS_PRM_read (void* handler_p, uint32_t type_p, uint32_t offse
 
             if (SystemP_SUCCESS != ret)
             {
-                err = CUST_DRIVERS_eERR_EEPROM_READ;
+                err = (uint32_t) CUST_DRIVERS_eERR_EEPROM_READ;
                 break;
             }
 
-            err = CUST_DRIVERS_eERR_NOERROR;
-            break;
+            err = (uint32_t) CUST_DRIVERS_eERR_NOERROR;
+        }break;
         default:
             break;
     }
@@ -438,11 +513,12 @@ uint32_t CUST_DRIVERS_PRM_read (void* handler_p, uint32_t type_p, uint32_t offse
 */
 uint32_t CUST_DRIVERS_PRM_write (void* handler_p, uint32_t type_p, uint32_t offset_p, uint8_t* pBuf_p, uint32_t length_p, bool blocking_p)
 {
-    uint32_t err = CUST_DRIVERS_eERR_GENERALERROR;
+    uint32_t err = (uint32_t) CUST_DRIVERS_eERR_GENERALERROR;
 
     switch(type_p)
     {
         case CUST_DRIVERS_PRM_eTYPE_FLASH:
+        {
             writeOperationPendingCnt_s++;
 
             // Wait until last write to flash is done
@@ -459,10 +535,10 @@ uint32_t CUST_DRIVERS_PRM_write (void* handler_p, uint32_t type_p, uint32_t offs
 
             if (NULL == writeParam_s.pData)
             {
-                OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __FUNCTION__, __LINE__, length_p);
+                OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __func__, __LINE__, length_p);
 
                 writeOperationPendingCnt_s--;
-                err = CUST_DRIVERS_eERR_FLASH_DATA_INVALID;
+                err = (uint32_t) CUST_DRIVERS_eERR_FLASH_DATA_INVALID;
                 break;
             }
 
@@ -488,9 +564,10 @@ uint32_t CUST_DRIVERS_PRM_write (void* handler_p, uint32_t type_p, uint32_t offs
                 }
             }
 
-            err = CUST_DRIVERS_eERR_NOERROR;
-            break;
+            err = (uint32_t) CUST_DRIVERS_eERR_NOERROR;
+        }break;
         case CUST_DRIVERS_PRM_eTYPE_EEPROM:
+        {
             writeOperationPendingCnt_s++;
 
             // Wait until last write to eeprom is done
@@ -507,10 +584,10 @@ uint32_t CUST_DRIVERS_PRM_write (void* handler_p, uint32_t type_p, uint32_t offs
 
             if (NULL == writeParam_s.pData)
             {
-                OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __FUNCTION__, __LINE__, length_p);
+                OSAL_printf("Func: %s, Line: %lu: Memory allocation of %lu bytes failed.\r\n", __func__, __LINE__, length_p);
 
                 writeOperationPendingCnt_s--;
-                err = CUST_DRIVERS_eERR_EEPROM_DATA_INVALID;
+                err = (uint32_t) CUST_DRIVERS_eERR_EEPROM_DATA_INVALID;
                 break;
             }
 
@@ -536,8 +613,8 @@ uint32_t CUST_DRIVERS_PRM_write (void* handler_p, uint32_t type_p, uint32_t offs
                 }
             }
 
-            err = CUST_DRIVERS_eERR_NOERROR;
-            break;
+            err = (uint32_t) CUST_DRIVERS_eERR_NOERROR;
+        }break;
         default:
             break;
     }
@@ -583,7 +660,7 @@ bool CUST_DRIVERS_PRM_isWritePending (void)
 *  \param[in]  pArg_p          Pointer to task argument of CUST_DRIVERS_SPermWriteParam_t type.
 *
 */
-void CUST_DRIVERS_flashWriteTask (void *pArg_p)
+static void CUST_DRIVERS_flashWriteTask (void *pArg_p)
 {
     CUST_DRIVERS_SPermWriteParam_t* pParam = (CUST_DRIVERS_SPermWriteParam_t*) pArg_p;
 
@@ -595,19 +672,19 @@ void CUST_DRIVERS_flashWriteTask (void *pArg_p)
 
     if (NULL == pParam->handle)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_FLASH_HANDLE_INVALID, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_FLASH_HANDLE_INVALID, true, 0);
         goto laError;
     }
 
     if (NULL == pParam->pData)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_FLASH_DATA_INVALID, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_FLASH_DATA_INVALID, true, 0);
         goto laError;
     }
 
     if (0 == pParam->length)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_FLASH_LENGTH_INVALID, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_FLASH_LENGTH_INVALID, true, 0);
         goto laError;
     }
 
@@ -618,14 +695,14 @@ void CUST_DRIVERS_flashWriteTask (void *pArg_p)
         err = Flash_offsetToBlkPage ((Flash_Handle) pParam->handle, iOffset, &block, &page);
         if (SystemP_SUCCESS != err)
         {
-            OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_FLASH_OFFSET, true, 0);
+            OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_FLASH_OFFSET, true, 0);
             goto laError;
         }
 
         err = Flash_eraseBlk ((Flash_Handle) pParam->handle, block);
         if (SystemP_SUCCESS != err)
         {
-            OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_FLASH_ERASE, true, 0);
+            OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_FLASH_ERASE, true, 0);
             goto laError;
         }
     }
@@ -633,7 +710,7 @@ void CUST_DRIVERS_flashWriteTask (void *pArg_p)
     err = Flash_write ((Flash_Handle) pParam->handle, pParam->offset, pParam->pData, pParam->length);
     if (SystemP_SUCCESS != err)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_FLASH_WRITE, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_FLASH_WRITE, true, 0);
         goto laError;
     }
 
@@ -657,7 +734,7 @@ laError:
 *  \param[in]  pArg_p          Pointer to task argument of CUST_DRIVERS_SPermWriteParam_t type.
 *
 */
-void CUST_DRIVERS_eepromWriteTask (void *pArg_p)
+static void CUST_DRIVERS_eepromWriteTask (void *pArg_p)
 {
     CUST_DRIVERS_SPermWriteParam_t* pParam = (CUST_DRIVERS_SPermWriteParam_t*) pArg_p;
 
@@ -665,26 +742,26 @@ void CUST_DRIVERS_eepromWriteTask (void *pArg_p)
 
     if (NULL == pParam->handle)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_EEPROM_HANDLE_INVALID, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_EEPROM_HANDLE_INVALID, true, 0);
         goto laError;
     }
 
     if (NULL == pParam->pData)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_EEPROM_DATA_INVALID, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_EEPROM_DATA_INVALID, true, 0);
         goto laError;
     }
 
     if (0 == pParam->length)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_EEPROM_LENGTH_INVALID, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_EEPROM_LENGTH_INVALID, true, 0);
         goto laError;
     }
 
     err = EEPROM_write ((EEPROM_Handle) pParam->handle, pParam->offset, pParam->pData, pParam->length);
     if (SystemP_SUCCESS != err)
     {
-        OSAL_error (__FUNCTION__, __LINE__, CUST_DRIVERS_eERR_EEPROM_WRITE, true, 0);
+        OSAL_error (__func__, __LINE__, CUST_DRIVERS_eERR_EEPROM_WRITE, true, 0);
         goto laError;
     }
 
@@ -754,4 +831,4 @@ void CUST_DRIVERS_LED_setIndustrialLeds (uint32_t value_p)
 
         value_p >>= 1;
     }
- }
+}

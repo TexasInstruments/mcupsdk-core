@@ -126,15 +126,9 @@
         <pathVariable name="MCU_PLUS_SDK_IND_COMMS_LIBS_PATH" path="${COM_TI_MCU_PLUS_IND_COMMS_LIBS}" scope="project" />
         <file path="../../../../app.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../../appClass71.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../../appPerm.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../../appProduct.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../../appNV.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../appWebServer.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../../appPhyReset.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../board/am64x-evm/freertos/drivers/CUST_drivers.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
@@ -152,11 +146,15 @@
         </file>
         <file path="../../../../customPhy/src/CUST_PHY_dp83869.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
+        <file path="../../../../deviceProfiles/genericDevice/appGenericDevice.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
         <file path="../../../../os/freertos/CMN_CPU_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../os/freertos/CMN_app.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../os/freertos/CMN_board.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../../os/freertos/CMN_mem.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../os/freertos/CMN_os.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>

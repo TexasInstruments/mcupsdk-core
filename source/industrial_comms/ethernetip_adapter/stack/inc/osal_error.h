@@ -515,7 +515,7 @@
 #define OSAL_CONTAINER_NOTSUPPORTED             0x40800005u     //!< Implementation not yet done
 
 // if expression is false, handle error by trap into OSALrror(...)
-#define OSAL_ASSERT(expr, errCode)   if (!(expr)) OSAL_error ( __FUNCTION__, __LINE__, errCode, true, 0)
+#define OSAL_ASSERT(expr, errCode)   if (!(expr)) OSAL_error ( __func__, __LINE__, errCode, true, 0)
 
 #if (defined __cplusplus)
 extern "C" {

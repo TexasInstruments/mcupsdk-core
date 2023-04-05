@@ -179,7 +179,9 @@ a lot of data that needs to be copied, this should be set high. */
 
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
-#define PBUF_POOL_SIZE          16U*3U
+// 14 is the lowest value for the pool size, otherwise there is a lwip_sanity_check error
+// which depends on the current TCP_WND setting
+#define PBUF_POOL_SIZE          8   // decreased due to decreasing TCP_WND size
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 #define PBUF_POOL_BUFSIZE       1536
@@ -229,7 +231,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define TCP_SNDLOWAT           (TCP_SND_BUF/2)
 
 /* TCP receive window. */
-#define TCP_WND                 (20 * 1024)
+#define TCP_WND                 6208 // based on PRU-ICSS queue size to prevent overflows
 
 /* Maximum number of retransmissions of data segments. */
 #define TCP_MAXRTX              12
@@ -274,6 +276,7 @@ a lot of data that needs to be copied, this should be set high. */
 /* 1 if you want to do an ARP check on the offered address
    (recommended). */
 #define DHCP_DOES_ARP_CHECK     0 //(LWIP_DHCP)
+#define DHCP_OPTIONS_LEN        100
 
 
 /* ---------- AUTOIP options ------- */

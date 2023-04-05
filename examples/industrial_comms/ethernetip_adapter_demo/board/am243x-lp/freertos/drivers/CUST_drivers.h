@@ -1,5 +1,5 @@
 /*!
- *  \file CUST_drivers.h
+*  \file CUST_drivers.h
  *
  *  \brief
  *  Custom drivers support.
@@ -8,10 +8,10 @@
  *  KUNBUS GmbH
  *
  *  \date
- *  2021-05-18
+ *  2022-05-18
  *
  *  \copyright
- *  Copyright (c) 2021, KUNBUS GmbH<br /><br />
+ *  Copyright (c) 2022, KUNBUS GmbH<br /><br />
  *  All rights reserved.<br />
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:<br />
@@ -51,6 +51,9 @@
 #include <board.h>
 #include <board/flash.h>
 #include <board/eeprom.h>
+#include <board/ethphy.h>
+
+#include <drivers/pruicss/g_v0/pruicss.h>
 
 #include <drivers/ethphy/CUST_phy.h>
 #include <drivers/led/CUST_led.h>
@@ -58,15 +61,25 @@
 #include <drivers/flash/CUST_flash.h>
 #include <drivers/eeprom/CUST_eeprom.h>
 
+/*!
+ *  \brief
+ *  Custom driver permanent data storage types.
+ */
 typedef enum CUST_DRIVERS_PRM_EType
 {
-    CUST_DRIVERS_PRM_eTYPE_FLASH,   /*!< FLASH permanent data memory type. */
-    CUST_DRIVERS_PRM_eTYPE_EEPROM   /*!< EEPROM permanent data memory type. */
+    CUST_DRIVERS_PRM_eTYPE_UNDEFINED,   /*!< No permanent data memory defined.  */
+    CUST_DRIVERS_PRM_eTYPE_FLASH,       /*!< FLASH permanent data memory type. */
+    CUST_DRIVERS_PRM_eTYPE_EEPROM       /*!< EEPROM permanent data memory type. */
 }CUST_DRIVERS_PRM_EType_t;
 
+/*!
+ *  \brief
+ *  Custom driver error codes.
+ */
 typedef enum CUST_DRIVERS_EError
 {
     CUST_DRIVERS_eERR_NOERROR               =  0,   /*!< No error, everything is fine. */
+    CUST_DRIVERS_eERR_NO_PERMANENT_STORAGE  = -19,  /*!< No permanent data storage defined */
     CUST_DRIVERS_eERR_EEPROM_HANDLE_INVALID = -18,  /*!< EEPROM handle is invalid */
     CUST_DRIVERS_eERR_EEPROM_DATA_INVALID   = -17,  /*!< Pointer to data for eeprom write is invalid. */
     CUST_DRIVERS_eERR_EEPROM_LENGTH_INVALID = -16,  /*!< Length of data for eeprom write is invalid. */
@@ -87,31 +100,38 @@ typedef enum CUST_DRIVERS_EError
     CUST_DRIVERS_eERR_GENERALERROR          = -1    /*!< General error */
 } CUST_DRIVERS_EError_t;
 
-typedef struct CUST_DRIVERS_SInitTimeSync
-{
-    OSAL_TASK_EPriority_t   taskPrioDelayRqTx;      /* Task priority for TX Delay Request */
-    OSAL_TASK_EPriority_t   taskPrioTxTimeStamp;    /* Task priority for TX Time Stamp P1 and P2 */
-    OSAL_TASK_EPriority_t   taskPrioNRT;            /* Task priority for NRT */
-    OSAL_TASK_EPriority_t   taskPrioBackground;     /* Task priority for Background thread*/
-}CUST_DRIVERS_SInitTimeSync_t;
-
+/*!
+ *  \brief
+ *  PRU-ICSS configuration parameters.
+ */
 typedef struct CUST_DRIVERS_SInitPruIcss
 {
     uint32_t                        instance;       /* Instance of PRU-ICSS block used by stack (as defined by SysConfig) */
     CUST_PHY_SInit_t                ethPhy;         /* PRU-ICSS PHY parameters */
-    CUST_DRIVERS_SInitTimeSync_t    timeSync;       /* TimeSync driver parameters */
 }CUST_DRIVERS_SInitPruIcss_t;
 
+/*!
+ *  \brief
+ *  EEPROM configuration parameters.
+ */
 typedef struct CUST_DRIVERS_SEepromParams
 {
     OSAL_TASK_EPriority_t   taskPrio;         /* EEPROM write task priority */
 }CUST_DRIVERS_SEepromParams_t;
 
+/*!
+ *  \brief
+ *  FLASH configuration parameters.
+ */
 typedef struct CUST_DRIVERS_SFlashParams
 {
     OSAL_TASK_EPriority_t   taskPrio;         /* EEPROM write task priority */
 }CUST_DRIVERS_SFlashParams_t;
 
+/*!
+ *  \brief
+ *  Custom drivers initialization parameters.
+ */
 typedef struct CUST_DRIVERS_SInit
 {
     CUST_DRIVERS_SInitPruIcss_t     pruIcss;        /* PRUICSS init parameters */
@@ -123,18 +143,23 @@ typedef struct CUST_DRIVERS_SInit
 extern "C" {
 #endif
 
-extern uint32_t        CUST_DRIVERS_init            (CUST_DRIVERS_SInit_t* pParams_p);
-extern uint32_t        CUST_DRIVERS_deinit          (void);
-extern PRUICSS_Config* CUST_DRIVERS_getPruIcssCfg   (uint32_t instance);
-extern ETHPHY_Config*  CUST_DRIVERS_getEthPhyCfg    (uint32_t instance);
-extern ETHPHY_Handle   CUST_DRIVERS_getEthPhyHandle (uint32_t instance);
+extern uint32_t        CUST_DRIVERS_init                            (CUST_DRIVERS_SInit_t* pParams_p);
+extern uint32_t        CUST_DRIVERS_deinit                          (void);
+extern PRUICSS_Config* CUST_DRIVERS_getPruIcssCfg                   (uint32_t instance);
+extern ETHPHY_Config*  CUST_DRIVERS_getEthPhyCfg                    (uint32_t instance);
+extern ETHPHY_Handle   CUST_DRIVERS_getEthPhyHandle                 (uint32_t instance);
+extern bool            CUST_DRIVERS_getMdioManualMode               (void);
+extern uint32_t        CUST_DRIVERS_getMdioManualModeBaseAddress    (void);
 
-extern void*    CUST_DRIVERS_PRM_getHandle      (uint32_t type_p, uint32_t instance_p);
-extern uint32_t CUST_DRIVERS_PRM_read           (void* handler_p, uint32_t type_p, uint32_t offset_p, uint8_t* pBuf_p, uint32_t length_p);
-extern uint32_t CUST_DRIVERS_PRM_write          (void* handler_p, uint32_t type_p, uint32_t offset_p, uint8_t* pBuf_p, uint32_t length_p, bool blocking_p);
-extern bool     CUST_DRIVERS_PRM_isWritePending (void);
+extern void            CUST_DRIVERS_UART_printf           (void* pContext_p, const char* __restrict pFormat_p, va_list argptr_p);
+extern void            CUST_DRIVERS_LOG_printf            (void* pContext_p, const char* __restrict pFormat_p, va_list argptr_p);
 
-extern void     CUST_DRIVERS_LED_setIndustrialLeds (uint32_t value);
+extern void*           CUST_DRIVERS_PRM_getHandle         (uint32_t type_p, uint32_t instance_p);
+extern uint32_t        CUST_DRIVERS_PRM_read              (void* handler_p, uint32_t type_p, uint32_t offset_p, uint8_t* pBuf_p, uint32_t length_p);
+extern uint32_t        CUST_DRIVERS_PRM_write             (void* handler_p, uint32_t type_p, uint32_t offset_p, uint8_t* pBuf_p, uint32_t length_p, bool blocking_p);
+extern bool            CUST_DRIVERS_PRM_isWritePending    (void);
+
+extern void            CUST_DRIVERS_LED_setIndustrialLeds (uint32_t value);
 
 #if (defined __cplusplus)
 }

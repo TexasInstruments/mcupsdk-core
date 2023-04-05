@@ -55,7 +55,7 @@
 uint32_t CUST_FLASH_init (void)
 {
     // nothing needs to be done for this board
-    return CUST_FLASH_eERR_NOERROR;
+    return (uint32_t) CUST_FLASH_eERR_NOERROR;
 }
 
 /*!
@@ -73,5 +73,5 @@ uint32_t CUST_FLASH_init (void)
 uint32_t CUST_FLASH_deInit(void)
 {
     // nothing needs to be done for this board
-    return CUST_FLASH_eERR_NOERROR;
+    return (uint32_t) CUST_FLASH_eERR_NOERROR;
 }

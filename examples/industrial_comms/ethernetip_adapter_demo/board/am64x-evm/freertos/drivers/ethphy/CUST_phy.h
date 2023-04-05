@@ -43,6 +43,10 @@
 
 #include <osal.h>
 
+#include <board/ethphy.h>
+
+#include <drivers/pruicss/g_v0/pruicss.h>
+
 typedef enum CUST_PHY_EError
 {
     CUST_PHY_eERR_NOERROR           = 0,    /*!< No error, everything is fine. */

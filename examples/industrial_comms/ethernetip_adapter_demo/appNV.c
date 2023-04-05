@@ -44,9 +44,10 @@
 #include <ti_board_open_close.h>
 
 #include <api/EI_API.h>
+#include <api/EI_API_def.h>
 #include <drivers/CUST_drivers.h>
 #include "board.h"
-#include "appPerm.h"
+#include "appNV.h"
 
 bool EI_APP_PERM_factoryReset(int16_t serviceFlag_p);
 
@@ -112,7 +113,10 @@ static EI_APP_PERM_SCfgData_t defaultPermData_s =
 #else
     .quickConnectEnabled       = false,
 #endif
-
+    .lldpParameter.enableArrayLength   = 3,
+    .lldpParameter.enableArray.allBits = 7,
+    .lldpParameter.msgTxInterval       = 30,
+    .lldpParameter.msgTxHold           = 4,
 };
 
 /*!
@@ -146,6 +150,13 @@ bool EI_APP_PERM_write(bool blocking_p)
 {
     void*    prmHandle = NULL;
     uint32_t err       = CUST_DRIVERS_eERR_NOERROR;
+
+    CUST_DRIVERS_PRM_EType_t memType = PERMANENT_DATA_MEMORY_TYPE;
+
+    if (memType == CUST_DRIVERS_PRM_eTYPE_UNDEFINED)
+    {
+        return false;
+    }
 
     permData_s.permHdr.magicNumber = (('M' << 8) | 'R');
     permData_s.permHdr.version     = APP_PERM_DATA_VERSION;
@@ -186,15 +197,26 @@ bool EI_APP_PERM_read(void)
     uint32_t checkSum;
     EIP_SConfigurationControl_t configurationControl;
 
-    prmHandle = CUST_DRIVERS_PRM_getHandle(PERMANENT_DATA_MEMORY_TYPE, PERMANENT_DATA_MEMORY_INSTANCE);
+    CUST_DRIVERS_PRM_EType_t memType = PERMANENT_DATA_MEMORY_TYPE;
 
-    err = CUST_DRIVERS_PRM_read (prmHandle,
-                                 PERMANENT_DATA_MEMORY_TYPE,
-                                 PERMANENT_DATA_MEMORY_OFFSET,
-                                 (uint8_t *)&permData_s,
-                                 sizeof (EI_APP_PERM_SCfgData_t));
+    if ( (memType == CUST_DRIVERS_PRM_eTYPE_FLASH) ||
+         (memType == CUST_DRIVERS_PRM_eTYPE_EEPROM) )
+    {
+        prmHandle = CUST_DRIVERS_PRM_getHandle(PERMANENT_DATA_MEMORY_TYPE, PERMANENT_DATA_MEMORY_INSTANCE);
 
-    if (CUST_DRIVERS_eERR_NOERROR != err)
+        err = CUST_DRIVERS_PRM_read (prmHandle,
+                                     PERMANENT_DATA_MEMORY_TYPE,
+                                     PERMANENT_DATA_MEMORY_OFFSET,
+                                     (uint8_t *)&permData_s,
+                                     sizeof (EI_APP_PERM_SCfgData_t));
+    }
+    else
+    {
+        err = CUST_DRIVERS_eERR_NO_PERMANENT_STORAGE;
+    }
+
+    if ( (CUST_DRIVERS_eERR_NOERROR              != err) &&
+         (CUST_DRIVERS_eERR_NO_PERMANENT_STORAGE != err) )
     {
         OSAL_printf ("\r\nPermanent data read failed");
         goto laError;
@@ -254,6 +276,7 @@ bool EI_APP_PERM_read(void)
     configurationControl.reserved = 0;
     EI_API_ADP_setIpConfig(pAdp_s, configurationControl, permData_s.ipAddr, permData_s.ipNwMask, permData_s.ipGateway,
                            permData_s.nameServer1, permData_s.nameServer2, permData_s.aDomainName, false);
+    EI_API_ADP_setLldpParameter(pAdp_s, permData_s.lldpParameter);
     return true;
 
     //-------------------------------------------------------------------------------------------------
@@ -305,6 +328,8 @@ bool EI_APP_PERM_factoryReset(int16_t serviceFlag_p)
         permData_s.portLogAnnounceInterval  = defaultPermData_s.portLogAnnounceInterval;
         permData_s.domainNumber             = defaultPermData_s.domainNumber;
         OSAL_MEMORY_memcpy(permData_s.aUserDescription, defaultPermData_s.aUserDescription, 128);
+
+        OSAL_MEMORY_memcpy(&permData_s.lldpParameter, &defaultPermData_s.lldpParameter, sizeof(defaultPermData_s.lldpParameter));
 
 #if defined(QUICK_CONNECT)
         permData_s.quickConnectEnabled = defaultPermData_s.quickConnectEnabled;
@@ -590,6 +615,27 @@ void EI_APP_PERM_configCb(EI_API_CIP_NODE_T *pCipNode_p, uint16_t classId_p, uin
            configChanged_s = false;
        }
    }
+
+   else if (classId_p == 0x0109)
+   {
+       EI_API_ADP_SLldp_Parameter_t lldpParameter;
+       switch (attrId_p)
+       {
+       case 1:
+       case 2:
+       case 3:
+           EI_API_ADP_getLldpParameter(pAdp_s, &lldpParameter);
+           if(OSAL_MEMORY_memcmp(&permData_s.lldpParameter, &lldpParameter, sizeof(EI_API_ADP_SLldp_Parameter_t)) != 0)
+           {
+               OSAL_MEMORY_memcpy (&permData_s.lldpParameter, &lldpParameter, sizeof(EI_API_ADP_SLldp_Parameter_t));
+               configChanged_s = true;
+           }
+           break;
+       default:
+           configChanged_s = false;
+       }
+   }
+
    else
    {
        // Nothing has changed.

@@ -7,7 +7,7 @@
  *   uses this stack.
  * - After vTaskStartScheduler() each task created in FreeRTOS has its own stack
  */
- --stack_size=0x06000
+ --stack_size=0x00400
 /*--stack_size=0x400*/
 /* This is the heap size for malloc() API in NORTOS and FreeRTOS
  * This is also the heap used by pvPortMalloc in FreeRTOS
@@ -48,14 +48,14 @@ SECTIONS
         .ARM.exidx:  {} palign(8)   /* Needed for C++ exception handling */
         .init_array: {} palign(8)   /* Contains function pointers called before main */
         .fini_array: {} palign(8)   /* Contains function pointers called after main */
-    } > MSRAM
+    } > R5F_TCMA
     GROUP {
         .text.hwi: palign(8)
         .text.cache: palign(8)
         .text.mpu: palign(8)
         .text.boot: palign(8)
         .text:abort: palign(8)
-    } > MSRAM
+    } > R5F_TCMA
 
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
     GROUP {
@@ -70,12 +70,21 @@ SECTIONS
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
+        .stack:  {} palign(8) FILL(0x00000000) /* This is where the main() stack goes */
+    } > R5F_TCMA
+
+    GROUP {
+        .threadstack:  {} palign(8) FILL(0x00000000) /* This is where the EIP thread stacks go */
+    } > R5F_TCMB0
+
+    GROUP {
         .bss:    {} palign(8) FILL(0x00000000)  /* This is where uninitialized globals go */
         RUN_START(__BSS_START)
         RUN_END(__BSS_END)
         .sysmem: {} palign(8) /* This is where the malloc heap goes */
-        .stack:  {} palign(8) FILL(0x00000000) /* This is where the main() stack goes */
-        .threadstack:  {} palign(8) FILL(0x00000000) /* This is where the main() stack goes */
+        RUN_START(__HEAP_START)
+        RUN_END(__HEAP_END)
+        .fbtlthreadstack:  {} palign(8) FILL(0x00000000) /* This is where the FBTL thread stacks go */
     } > MSRAM
 
     /* This is where the stacks for different R5F modes go */
@@ -95,7 +104,7 @@ SECTIONS
         .undefinedstack: {. = . + __UNDEFINED_STACK_SIZE;} align(8)
         RUN_START(__UNDEFINED_STACK_START)
         RUN_END(__UNDEFINED_STACK_END)
-    } > MSRAM
+    } > R5F_TCMA
 
     /* Packet buffer memory used by ICCS */
     .bss.icss_emac_pktbuf_mem (NOLOAD): {} palign(8) FILL(0x00000000) > ICSS_PKT_BUF_MEM

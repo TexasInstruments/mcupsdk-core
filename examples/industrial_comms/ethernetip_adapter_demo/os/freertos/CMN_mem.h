@@ -1,14 +1,14 @@
 /*!
- *  \file hwal_ipprotection.h
+ *  \file CMN_mem.h
  *
  *  \brief
- *  HWAL IP protection interfaces.
+ *  Dynamic memory allocation trace.
  *
  *  \author
  *  KUNBUS GmbH
  *
  *  \date
- *  2021-11-01
+ *  2022-10-27
  *
  *  \copyright
  *  Copyright (c) 2021, KUNBUS GmbH<br /><br />
@@ -38,22 +38,26 @@
  *
  */
 
-#if !(defined PROTECT_HWAL_IPPROTECTION_H)
-#define PROTECT_HWAL_IPPROTECTION_H		1
+#if !(defined PROTECT_CMN_MEM_H)
 
-#include <osal.h>
-#include "hwal_ipprotection_types.h"
+#include <stdint.h>
+
+#define PROTECT_CMN_MEM_H
+
+#define CMN_MEM_DESCRIPTOR_POSITION       8             // Relative position of memory allocation descriptor against of object pointer in bytes
+
+#define CMN_MEM_DESCRIPTOR_SIZE_MASK      0xFFFFFFFE    // Descriptor mask related to allocated space
+#define CMN_MEM_DESCRIPTOR_USED_FLAG_MASK 0x00000001    // Descriptor mask of allocated/deallocated flag
 
 #if (defined __cplusplus)
 extern "C" {
 #endif
 
-extern uint32_t HWAL_IPP_init           (HWAL_SHandle_t* pHwalHandle_p);
-extern uint32_t HWAL_IPP_watchDog       (HWAL_SHandle_t* pHwalHandle_p);
-extern uint32_t HWAL_IPP_stopOp         (HWAL_SHandle_t* pHwalHandle_p);
+extern void CMN_MEM_traceInit      (void);
+extern void CMN_MEM_traceHeapCheck (uint32_t heapStart_p, uint32_t size_p);
 
 #if (defined __cplusplus)
 }
 #endif
 
-#endif /* PROTECT_HWAL_IPPROTECTION_H */
+#endif /* PROTECT_CMN_MEM_H */

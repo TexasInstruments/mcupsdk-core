@@ -62,7 +62,7 @@
  *  \brief Application Webserver task's stack.
  */
 static uint8_t 
-APP_aWebSrvTaskStack_g[APP_WEBSRV_TASK_STACK_SIZE] __attribute__((__aligned__ (32))) = { 0 };
+APP_aWebSrvTaskStack_g[APP_WEBSRV_TASK_STACK_SIZE] __attribute__((aligned(32), section(".threadstack"))) = {0};
 
 /*!
  *  \brief Application Webserver task's object.
@@ -283,8 +283,41 @@ static int APP_WebSrvProcessGetAndRespond(int clientFd_p, const char *const pBuf
         int snprintfRes = 0;
         uint32_t lineValue = 0;
         uint32_t textSize = 0;
+        uint32_t idIdle = -1;
+        CMN_CPU_API_SLoad_t idleLoad;
+
 
         memset(&cpuLoad[0], 0, sizeof(cpuLoad));
+
+        for (int i = 0; i < data->tasksNum + 1; i++)
+        {
+            if (strncmp(data->tasks[i].name, "IDLE", 32) == 0)
+            {
+                idleLoad.cpuLoad    = data->tasks[i].cpuLoad;
+                idleLoad.exists     = data->tasks[i].exists;
+                idleLoad.taskHandle = data->tasks[i].taskHandle;
+
+                memcpy(idleLoad.name, data->tasks[i].name, 32);
+
+                idIdle = i;
+                break;
+            }
+        }
+
+        if (idIdle != -1)
+        {
+            data->tasks[idIdle].cpuLoad    = data->tasks[0].cpuLoad;
+            data->tasks[idIdle].exists     = data->tasks[0].exists;
+            data->tasks[idIdle].taskHandle = data->tasks[0].taskHandle;
+
+            memcpy(data->tasks[idIdle].name, data->tasks[0].name, 32);
+
+            data->tasks[0].cpuLoad    = idleLoad.cpuLoad;
+            data->tasks[0].exists     = idleLoad.exists;
+            data->tasks[0].taskHandle = idleLoad.taskHandle;
+
+            memcpy(data->tasks[0].name, idleLoad.name, 32);
+        }
 
         for (int i = 0; i < data->tasksNum + 1; i++)
         {

@@ -55,7 +55,7 @@
 uint32_t CUST_EEPROM_init (void)
 {
     // nothing needs to be done for this board
-    return CUST_EEPROM_eERR_NOERROR;
+    return (uint32_t) CUST_EEPROM_eERR_NOERROR;
 }
 
 /*!
@@ -73,5 +73,5 @@ uint32_t CUST_EEPROM_init (void)
 uint32_t CUST_EEPROM_deInit(void)
 {
     // nothing needs to be done for this board
-    return CUST_EEPROM_eERR_NOERROR;
+    return (uint32_t) CUST_EEPROM_eERR_NOERROR;
 }

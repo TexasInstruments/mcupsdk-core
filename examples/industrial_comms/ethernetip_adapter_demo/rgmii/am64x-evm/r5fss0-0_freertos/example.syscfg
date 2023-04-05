@@ -72,7 +72,6 @@ ethernetip1.icss_emac[0].linkTaskPriority = 24;
 ethernetip1.icss_emac[0].rxTaskPriority   = 20;
 ethernetip1.icss_emac[0].txTaskPriority   = 20;
 ethernetip1.ethphy1[0].$name              = "CONFIG_ETHPHY0";
-ethernetip1.ethphy1[0].mdioPort           = scripting.forceWrite(15);
 ethernetip1.ethphy1[0].name               = "CUSTOM";
 ethernetip1.ethphy1[0].customDeviceName   = "DP83869_0";
 ethernetip1.ethphy2[0].$name              = "CONFIG_ETHPHY1";

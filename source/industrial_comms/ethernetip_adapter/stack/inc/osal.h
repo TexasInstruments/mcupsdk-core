@@ -103,8 +103,8 @@
     (void)(x)
 
 #if (defined __GNUC__) || (defined __TI_ARM__)
-#define OSAL_ASSERT_DMB()               __asm__ __volatile__ ("    dmb" "\n\t": : : "memory")
-#define OSAL_ASSERT_DSB()               __asm__ __volatile__ ("    dsb" "\n\t": : : "memory")
+#define OSAL_ASSERT_DMB()               __asm("    dmb")
+#define OSAL_ASSERT_DSB()               __asm("    dsb")
 #else
 #define OSAL_ASSERT_DMB()
 #define OSAL_ASSERT_DSB()
@@ -177,11 +177,11 @@ typedef enum OSAL_TASK_EPriority
     OSAL_TASK_ePRIO_31,                 /* Highest (RT) priority */
 
     /// @cond INTERNAL
-    OSAL_TASK_ePRIO_Force32Bit          = 0xffffffff  /* 32Bit */
+    OSAL_TASK_ePRIO_Force32Bit          = 0x7fffffff  /* 32Bit */
     /// @endcond
 } OSAL_TASK_EPriority_t;
 
-        /* Generic */                                               /* Linux    TiRTOS  FreeRTOS    */
+/* Generic */                                                       /* Linux    TiRTOS  FreeRTOS    */
 #define OSAL_TASK_ePRIO_Lowest          (OSAL_TASK_ePRIO_2)         /* 26       2       1           */
 #define OSAL_TASK_ePRIO_Idle            (OSAL_TASK_ePRIO_Lowest)    /* 26       2       1           */
 #define OSAL_TASK_ePRIO_Normal          (OSAL_TASK_ePRIO_8)         /* 38       8       4           */
@@ -190,7 +190,11 @@ typedef enum OSAL_TASK_EPriority
 #define OSAL_TASK_ePRIO_Interrupt       (OSAL_TASK_ePRIO_Highest)   /* 82       30      15          */
 #define OSAL_TASK_ePRIO_OSALTimer       (OSAL_TASK_ePRIO_21)        /* 64       21      10          */
 
-        /* EtherCAT */
+/* HWAL */
+#define OSAL_TASK_ePRIO_HWAL_WATCHDOG 	(OSAL_TASK_ePRIO_Interrupt)
+#define OSAL_TASK_ePRIO_HWAL_LICENSE 	(OSAL_TASK_ePRIO_Normal)
+
+/* EtherCAT */
 #define OSAL_TASK_ePRIO_ECEEPROM        (OSAL_TASK_ePRIO_4)         /* 30       4       2           */
 #define OSAL_TASK_ePRIO_ECRestart       (OSAL_TASK_ePRIO_10)        /* 42       10      5           */
 #define OSAL_TASK_ePRIO_ECReboot        (OSAL_TASK_ePRIO_11)        /* 44       11      5           */
@@ -200,7 +204,7 @@ typedef enum OSAL_TASK_EPriority
 #define OSAL_TASK_ePRIO_ECPDI           (OSAL_TASK_ePRIO_16)        /* 54       16      8           */
 #define OSAL_TASK_ePRIO_ECDemoThread    (OSAL_TASK_ePRIO_29)        /* 80       29      14          */
 
-        /* FBTL */
+/* FBTL */
 #define OSAL_TASK_ePRIO_FBTLSync        (OSAL_TASK_ePRIO_Interrupt)
 #define OSAL_TASK_ePRIO_FBTLAcycIST     (OSAL_TASK_ePRIO_Interrupt)
 #define OSAL_TASK_ePRIO_FBTLCyclic      (OSAL_TASK_ePRIO_InterruptSub1)
@@ -223,21 +227,20 @@ typedef enum OSAL_TASK_EPriority
 #define OSAL_TASK_ePRIO_IOL_Port        (OSAL_TASK_ePRIO_29)
 
 /* EtherNet/IP */
-#define OSAL_TASK_ePRIO_EIP_MAIN         (OSAL_TASK_ePRIO_8)
-#define OSAL_TASK_ePRIO_EIP_HWAL_HIGH    (OSAL_TASK_ePRIO_Interrupt)
-#define OSAL_TASK_ePRIO_EIP_HWAL_LOW     (OSAL_TASK_ePRIO_2)
-#define OSAL_TASK_ePRIO_EIP_FLASH        (OSAL_TASK_ePRIO_8)
-#define OSAL_TASK_ePRIO_EIP_EEPROM	     (OSAL_TASK_ePRIO_8)
-#define OSAL_TASK_ePRIO_EIP_CPULOAD      (OSAL_TASK_ePRIO_2)
-#define OSAL_TASK_ePRIO_EIP_PACKET       (OSAL_TASK_ePRIO_20)
-#define OSAL_TASK_ePRIO_EIP_STATISTIC    (OSAL_TASK_ePRIO_14)
-#define OSAL_TASK_ePRIO_EIP_PHYMDIX      (OSAL_TASK_ePRIO_12)
-#define OSAL_TASK_ePRIO_EIP_TIMESYNC_DEL (OSAL_TASK_ePRIO_20)
-#define OSAL_TASK_ePRIO_EIP_TIMESYNC_TS  (OSAL_TASK_ePRIO_20)
-#define OSAL_TASK_ePRIO_EIP_TIMESYNC_NRT (OSAL_TASK_ePRIO_16)
-#define OSAL_TASK_ePRIO_EIP_TIMESYNC_BAC (OSAL_TASK_ePRIO_14)
-#define OSAL_TASK_ePRIO_EIP_LWIP_TCPIP   (OSAL_TASK_ePRIO_14)
-#define OSAL_TASK_ePRIO_EIP_WEBSERVER    (OSAL_TASK_ePRIO_2)
+#define OSAL_TASK_ePRIO_EIP_MAIN          (OSAL_TASK_ePRIO_8)
+#define OSAL_TASK_ePRIO_EIP_FLASH         (OSAL_TASK_ePRIO_8)
+#define OSAL_TASK_ePRIO_EIP_EEPROM        (OSAL_TASK_ePRIO_8)
+#define OSAL_TASK_ePRIO_EIP_CPULOAD       (OSAL_TASK_ePRIO_2)
+#define OSAL_TASK_ePRIO_EIP_CYCLICIO      (OSAL_TASK_ePRIO_20)
+#define OSAL_TASK_ePRIO_EIP_PACKET        (OSAL_TASK_ePRIO_20)
+#define OSAL_TASK_ePRIO_EIP_STATISTIC     (OSAL_TASK_ePRIO_14)
+#define OSAL_TASK_ePRIO_EIP_PHYMDIX       (OSAL_TASK_ePRIO_12)
+#define OSAL_TASK_ePRIO_EIP_TIMESYNC_DEL  (OSAL_TASK_ePRIO_20)
+#define OSAL_TASK_ePRIO_EIP_TIMESYNC_TS   (OSAL_TASK_ePRIO_20)
+#define OSAL_TASK_ePRIO_EIP_TIMESYNC_NRT  (OSAL_TASK_ePRIO_16)
+#define OSAL_TASK_ePRIO_EIP_TIMESYNC_BAC  (OSAL_TASK_ePRIO_14)
+#define OSAL_TASK_ePRIO_EIP_LWIP_TCPIP    (OSAL_TASK_ePRIO_14)
+#define OSAL_TASK_ePRIO_EIP_WEBSERVER     (OSAL_TASK_ePRIO_2)
 
 /*!
  *  \brief
@@ -299,9 +302,21 @@ typedef enum OSAL_ELinkState
     OSAL_eLINK_DOWN,
     OSAL_eLINK_UP,
     /// @cond INTERNAL
-    OSAL_eLINK_FORCE_32BIT = 0xffffffff
+    OSAL_eLINK_FORCE_32BIT = 0x7fffffff
     /// @endcond
 } OSAL_ELinkState_t;
+
+typedef enum OSAL_EMemoryError
+{
+    OSAL_eMEM_CALLOC,
+    OSAL_eMEM_FREE,
+    OSAL_eMEM_MEMSET,
+    OSAL_eMEM_MEMCPY,
+    OSAL_eMEM_MEMCMP,
+    /// @cond INTERNAL
+    OSAL_eLMEM_FORCE_32BIT = 0x7fffffff
+    /// @endcond
+} OSAL_EMemoryError_t;
 
 #define OSAL_OS_START_TASK_FLG_NONE          0x00000000
 #define OSAL_OS_START_TASK_FLG_FPU           0x00000001          // Task uses floating point processor
@@ -361,10 +376,8 @@ typedef long long OSAL_PJumpBuf_t[64] __attribute__((__aligned__ (8)));
  *  <!-- Parameters and return values: -->
  *
  *  \param[in]  pContext_p      call context
- *  \param[in]  __format_p      Format string.
- *  \param[in]  ...             Parameter list.
- *
- *  <!-- Example: -->
+ *  \param[in]  pFormat_p       Format string.
+ *  \param[in]  arg_p           Parameter list.
  *
  *  <!-- Group: -->
  *
@@ -376,6 +389,192 @@ typedef void (*OSAL_printfOut_t)(void*                          pContext_p
                                  /* @cppcheck_justify{misra-c2012-17.1} dynamic printf is only possible with use of stdarg */
                                  //cppcheck-suppress misra-c2012-17.1
                                 ,va_list                        arg_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Calloc trace, called after memory allocation to show memory usage
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]  pContext_p  Call context.
+ *  \param[in]  nmemb_p     number of allocated elements
+ *  \param[in]  size_p      size of single allocated element
+ *  \param[in]  pPtr_p      pointer to allocated memory
+ *
+ *  \note can be provided by the application layer, and registered with \ref OSAL_MEMORY_traceCallocRegister
+ *
+ *  <!-- Example: -->
+ *
+ *  \par Example
+ *  \code{.c}
+ *  #include <osal.h>
+ *
+ *  // required variables
+ *  void* pvVariable = NULL;
+ *
+ *  // the call
+ *  OSAL_MEMORY_traceCalloc(NULL, 123, 456, pvVariable);
+ *  \endcode
+ *
+ *  <!-- References: -->
+ *
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister
+ *      OSAL_MEMORY_errorRegister
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup OSALAPI_MEMORY
+ *
+ * */
+typedef void (*OSAL_MEMORY_traceCallocCB_t)(
+                                 void*                          pContext_p
+                                ,size_t                         nmemb_p
+                                ,size_t                         size_p
+                                ,void*                          pPtr_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  free trace, called before memory decommission to show memory usage
+ *
+ *  \note can be provided by the application layer, and registered with \ref OSAL_MEMORY_traceFreeRegister
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]  pContext_p  Call context.
+ *  \param[in]  pPtr_p      pointer to memory that is decommitted
+ *
+ *  <!-- Example: -->
+ *
+ *  \par Example
+ *  \code{.c}
+ *  #include <osal.h>
+ *
+ *  // required variables
+ *  void* pvVariable = NULL;
+ *
+ *  // the call
+ *  OSAL_MEMORY_traceCalloc(NULL, 123, 456, pvVariable);
+ *
+ *  OSAL_MEMORY_traceFree(NULL, pvVariable);
+ *
+ *  \endcode
+ *
+ *  <!-- References: -->
+ *
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister
+ *      OSAL_MEMORY_errorRegister
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup OSALAPI_MEMORY
+ *
+ * */
+typedef void (*OSAL_MEMORY_traceFreeCB_t)(
+                                 void*                          pContext_p
+                                ,void*                          pPtr_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Hook to be called on memory operation error in OSAL
+ *
+ *  \details
+ *  The error callback is called in different situations with different parameters. Not all parameters are
+ *  necessarily valid at the same time.
+ *
+ *  \note can be provided by the application layer, and registered with \ref OSAL_MEMORY_errorRegister
+ *
+ *  <table>
+ *  <tr><td><b>errType_p</b></td><td><b>Valid parameters</b></td><td><b>Description</b></td></tr>
+ *  <tr><td>OSAL_eMEM_CALLOC</td><td>size_p - size of requested memory</td><td>Calloc did return NULL</td></tr>
+ *  <tr><td>OSAL_eMEM_FREE</td><td>pPtr1_p - pointer to buffer to be freed</td><td>Free did hit an error</td></tr>
+ *  <tr><td>OSAL_eMEM_MEMSET</td><td>pPtr1_p - destination pointer<br>data_p - value to be set<br>size_p - set width (in bytes)</td><td>memset did hit a error</td></tr>
+ *  <tr><td>OSAL_eMEM_MEMCPY</td><td>pPtr1_p - destination pointer<br>pPtr2_p - source pointer<br>size_p - copy length</td><td>Memcpy did hit an error</td></tr>
+ *  <tr><td>OSAL_eMEM_MEMCMP</td><td>pPtr1_p - reference pointer<br>pPtr2_p - comparison pointer<br>size_p - comparison length</td><td>Memcmp did hit an error</td></tr>
+ *  </table>
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]  pContext_p  Call context.
+ *  \param[in]  errType_p   Type of error
+ *  \param[in]  pPtr1_p     pointer 1
+ *  \param[in]  pPtr2_p     pointer 2
+ *  \param[in]  data_p      fixed value
+ *  \param[in]  size_p      size of working range
+ *
+ *  <!-- References: -->
+ *
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister
+ *      OSAL_MEMORY_errorRegister
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup OSALAPI_MEMORY
+ *
+ * */
+typedef void (*OSAL_MEMORY_errorCB_t)(
+                                 void*                          pContext_p
+                                ,OSAL_EMemoryError_t            errType_p
+                                ,void*                          pPtr1_p
+                                ,void*                          pPtr2_p
+                                ,uint32_t                       data_p
+                                ,size_t                         size_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Trace thread handling
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]  pContext_p  Call context.
+ *  \param[in]  pTask_p     Thread handle
+ *  \param[in]  pThreadOp_p Thread state operation
+ *  \param[in]  prio_p      Thread priority
+ *  \param[in]  pName_p     Thread name
+ *  \param[in]  stackSize_p size of stack
+ *  \param[in]  stackPtr_p  stack base address
+ *  \param[in]  flags_p     thread flags
+ *
+ *  \note can be provided by the application layer, and registered with \ref OSAL_SCHED_traceThreadRegister
+ *
+ *  <!-- Example: -->
+ *
+ *  \par Example
+ *  \code{.c}
+ *  #include <osal.h>
+ *
+ *  // required variables
+ *
+ *  // the call
+ *  OSAL_SCHED_traceThread(NULL, "START", 0, "ImportantThread");
+ *  \endcode
+ *
+ *  <!-- References: -->
+ *
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister OSAL_MEMORY_errorRegister
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup OSALAPI_SCHEDULER
+ *
+ * */
+typedef void (*OSAL_SCHED_traceThreadCB_t)(
+                                 void*                          pContext_p
+                                ,void*                          pTasp_p
+                                ,const char*                    pThreadOp_p
+                                ,uint32_t                       prio_p
+                                ,const char*                    pName_p
+                                ,uint32_t                       stackSize_p
+                                ,uint32_t                       stackPtr_p
+                                ,uint32_t                       flags_p);
+
 
 #if (defined __cplusplus)
 extern "C" {
@@ -390,7 +589,7 @@ extern OSAL_API uint32_t            OSAL_getVersionStr          (uint32_t       
                                                                 ,char*                          pBuffer_p
                                                                 ,uint32_t*                      pUsedLen_p);
 extern OSAL_API uint32_t            OSAL_getVersionId           (uint32_t                       bufLen_p
-                                                                ,const char*                    pBuffer_p
+                                                                ,char*                          pBuffer_p
                                                                 ,uint32_t*                      pUsedLen_p);
 
 extern OSAL_API void                OSAL_setExceptionPoint      (OSAL_PJumpBuf_t*               pJumpBuf_p);
@@ -448,6 +647,9 @@ extern OSAL_API void                OSAL_SCHED_killTask         (void*          
 extern OSAL_API void                OSAL_SCHED_exitTask         (void*                          pTask_p);
 extern OSAL_API volatile void*      OSAL_SCHED_getOwnTcb        (void);
 extern OSAL_API bool                OSAL_SCHED_isRunning        (void);
+extern OSAL_API void                OSAL_SCHED_traceThreadRegister
+                                                                (OSAL_SCHED_traceThreadCB_t     cbFunc_p
+                                                                ,void*                          pCbFuncContext_p);
 
 extern OSAL_API volatile OSAL_PJumpBuf_t*
                                     OSAL_getExceptPointFromTcb  (volatile void*                 pTcb_p);
@@ -571,6 +773,14 @@ extern OSAL_API void                OSAL_MEMORY_memset          (void*          
 extern OSAL_API int32_t             OSAL_MEMORY_memcmp          (void*                          pPtr1_p
                                                                 ,void*                          pPtr2_p
                                                                 ,size_t                         size_p);
+extern OSAL_API void                OSAL_MEMORY_traceCallocRegister
+                                                                (OSAL_MEMORY_traceCallocCB_t    cbFunc_p
+                                                                ,void*                          pCbFuncContext_p);
+extern OSAL_API void                OSAL_MEMORY_traceFreeRegister
+                                                                (OSAL_MEMORY_traceFreeCB_t      cbFunc_p
+                                                                ,void*                          pCbFuncContext_p);
+extern OSAL_API void                OSAL_MEMORY_errorRegister   (OSAL_MEMORY_errorCB_t          cbFunc_p
+                                                                ,void*                          pCbFuncContext_p);
 
 extern OSAL_API uint32_t            OSAL_VNET_create            (char*                          pDev_p);
 extern OSAL_API uint32_t            OSAL_VNET_remove            (char*                          pDev_p);

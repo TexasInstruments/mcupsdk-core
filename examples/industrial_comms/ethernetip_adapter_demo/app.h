@@ -30,8 +30,8 @@
  */
 
 
-#ifndef KBEI_APP_H_INC
-#define KBEI_APP_H_INC
+#ifndef APP_H
+#define APP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,7 +47,8 @@ typedef struct APP_SApplication
 
 typedef struct APP_SHwal
 {
-    OSAL_TASK_EPriority_t taskPrio;
+    OSAL_TASK_EPriority_t taskPrioWatchDog;
+    OSAL_TASK_EPriority_t taskPrioLicense;
 }APP_SHwal_t;
 
 typedef struct APP_SLwip
@@ -57,8 +58,16 @@ typedef struct APP_SLwip
 
 typedef struct APP_SAdapter
 {
+    OSAL_TASK_EPriority_t taskPrioCyclicIo;
     OSAL_TASK_EPriority_t taskPrioPacket;
     OSAL_TASK_EPriority_t taskPrioStatistic;
+
+    OSAL_TASK_EPriority_t taskPrioPtpDelayRqTx;      /* Task priority for TX Delay Request */
+    OSAL_TASK_EPriority_t taskPrioPtpTxTimeStamp;    /* Task priority for TX Time Stamp P1 and P2 */
+    OSAL_TASK_EPriority_t taskPrioPtpNRT;            /* Task priority for NRT */
+    OSAL_TASK_EPriority_t taskPrioPtpBackground;     /* Task priority for Background thread */
+
+    OSAL_TASK_EPriority_t taskPrioLldpReceive;       /* Task priority for receive thread */
 }APP_SAdapter_t;
 
 typedef struct APP_SParams
@@ -75,22 +84,18 @@ typedef struct APP_SParams
 #endif
 }APP_SParams_t;
 
-bool EI_APP_init(APP_SParams_t* pParams_p);
-void EI_APP_run(void);
-void EI_APP_mainTask(void* pvTaskArg_p);
-void EI_APP_stackInit(APP_SParams_t* pParams_p);
+typedef struct APP_SInstance
+{
+    APP_SParams_t                   config;
 
-void EI_APP_osErrorHandlerCb(uint32_t errorCode_p, bool fatal_p, uint8_t paraCnt_p, va_list argptr_p);
-void EI_APP_osPrintfCb(void* pContext_p, const char* __restrict pFormat_p, va_list argptr_p);
-void EI_APP_stackErrorHandlerCb(uint32_t i32uErrorCode_p, uint8_t bFatal_p, uint8_t i8uNumOfPara_p, va_list argptr_p);
+    void*                           remoteHandle;
+}APP_SInstance_t;
 
-void EI_APP_adpInit(void);
-
-void EI_APP_cipAttributeCb(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p, uint16_t attrId_p, EI_API_CIP_EAr_t accessRight_p);
-void EI_APP_cipGenerateContent(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p);
+extern void EI_APP_mainTask         (void* pvTaskArg_p);
+extern void EI_APP_osErrorHandlerCb (uint32_t errorCode_p, bool fatal_p, uint8_t paraCnt_p, va_list argptr_p);
 
 #ifdef  __cplusplus
 }
 #endif
 
-#endif // KBEI_APP_H_INC
+#endif // APP_H

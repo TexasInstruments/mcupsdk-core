@@ -244,6 +244,28 @@ typedef struct EI_API_ADP_SMcastConfig
     uint32_t mcastStartAddr;                    /*!< Starting multi-cast address from which to begin allocation. */
 } EI_API_ADP_SMcastConfig_t;
 
+/*!
+ *  \brief Nonvolatile attribute parameter of LLDP Management object
+ */
+typedef struct EI_API_ADP_SLldp_Parameter
+{
+    uint16_t enableArrayLength;                 /*!< Number of bits defined in the LLDP Enable Array member of this structure. */
+    union
+    {
+        uint8_t allBits;
+        struct
+        {
+            uint8_t global_enable   : 1;
+            uint8_t port1_tx_enable : 1;
+            uint8_t port2_tx_enable : 1;
+        };
+    } enableArray;                              /*!< Enable generation of LLDP Frames both Globally and per Port and the processing of received
+                                                        LLDP frames globally. */
+    uint16_t msgTxInterval;                     /*!< From IEEE 802.1AB-2016, 9.2.5.7. The interval in seconds at which LLDP frames
+                                                     are transmitted from this device. */
+    uint8_t msgTxHold;                          /*!< From IEEE 802.1AB-2016, 9.2.5.6. A multiplier of msgTxInterval to determine the value
+                                                     of the TTL TLV sent to neighboring devices */
+} EI_API_ADP_SLldp_Parameter_t;
 
 /*!
  *  \brief Definition for ConnectionManager callback functions
@@ -309,11 +331,30 @@ typedef void(*EI_API_CIP_CBService)(EI_API_CIP_NODE_T *pCipNode_p, uint16_t clas
  *  \ingroup EI_API_CIP_CALLBACK
  */
 typedef uint32_t(*EI_API_CIP_CBGetAttr)(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p, uint16_t attrId_p, uint16_t *len_p, void* pvValue_p);
+
+/*!
+ *  \brief Function prototype for CIP get attribute callback function for Routed objects.
+ *  \ingroup EI_API_CIP_CALLBACK
+ */
+typedef uint32_t(*EI_API_CIP_CBGetAttr_CIPRouting)(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p, uint16_t attrId_p, uint16_t *len_p, void* pvValue_p, uint16_t linkAddress_p);
+
+/*!
+ *  \brief Function prototype for CIP get configuration assembly data callback function.
+ *  \ingroup EI_API_CIP_CALLBACK
+ */
+typedef uint32_t(*EI_API_CIP_CBCfgAssembly)(EI_API_CIP_NODE_T* pCipNode_p, uint16_t o2t_p, uint16_t t2o_p, uint16_t cfg_inst_p, const uint8_t* const cfg_data, uint16_t cfg_data_size, uint16_t linkAddress_p);
 /*!
  *  \brief Function prototype for CIP set attribute callback function.
  *  \ingroup EI_API_CIP_CALLBACK
  */
 typedef uint32_t(*EI_API_CIP_CBSetAttr)(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p, uint16_t attrId_p, uint16_t len_p, void* pvValue_p);
+
+/*!
+ *  \brief Function prototype for CIP set attribute callback function for Routed objects.
+ *  \ingroup EI_API_CIP_CALLBACK
+ */
+typedef uint32_t(*EI_API_CIP_CBSetAttr_CIPRouting)(EI_API_CIP_NODE_T* pCipNode_p, uint16_t classId_p, uint16_t instanceId_p, uint16_t attrId_p, uint16_t len_p, void* pvValue_p, uint16_t linkAddress_p);
+
 #undef T
 
 #define T EI_API_ADP_T

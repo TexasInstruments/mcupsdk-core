@@ -30,14 +30,13 @@
  */
 
 
-#ifndef APPPERM_H_INC
-#define APPPERM_H_INC
+#ifndef APPNV_H
+#define APPNV_H
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <api/EI_API_ADP.h>
 
-#define APP_PERM_DATA_VERSION     4
+#define APP_PERM_DATA_VERSION     5
 
 typedef struct EI_APP_PERM_SCfgHeader
 {
@@ -86,6 +85,7 @@ typedef struct EI_APP_PERM_SCfgData
 
     bool quickConnectEnabled;
 
+    EI_API_ADP_SLldp_Parameter_t lldpParameter;
 } EI_APP_PERM_SCfgData_t;
 
 #ifdef __cplusplus
@@ -105,4 +105,4 @@ bool    EI_APP_PERM_getConfigChanged (void);
 }
 #endif 
 
-#endif // APPPERM_H_INC
+#endif // APPNV_H

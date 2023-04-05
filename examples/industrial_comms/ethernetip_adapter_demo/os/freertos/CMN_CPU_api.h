@@ -39,9 +39,9 @@
  */
 
 #if !(defined PROTECT_CMN_CPU_API_H)
-#define PROTECT_CMN_CPU_H     1
+#define PROTECT_CMN_CPU_API_H     1
 
-#define CMN_CPU_API_MAX_TASKS_NUM       16
+#define CMN_CPU_API_MAX_TASKS_NUM       32
 #define CMN_CPU_API_LOAD_NAME_MAX_CHARS 32
 
 typedef enum CMN_CPU_API_EOutput
@@ -79,7 +79,6 @@ extern "C" {
 extern void                 CMN_CPU_API_startMonitor   (CMN_CPU_API_SParams_t* pParams_p);
 extern void                 CMN_CPU_API_generateReport (CMN_CPU_API_EOutput_t out_p);
 extern CMN_CPU_API_SData_t* CMN_CPU_API_getData        (void);
-
 
 #if (defined __cplusplus)
 }
