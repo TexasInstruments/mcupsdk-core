@@ -122,11 +122,6 @@ datalink_loadfw_no_wait:
 
 ;--------------------------------------------------------------------------------------------------
 ;State WAIT VSYNC
-; debug
-;	ldi32			R24, 0x40000+0x2E000+0x310
-;	lbbo			&R10.b0, R24, 0, 1
-;	xor				R10.b0, R10.b0, (1<<6)
-;	sbbo			&R10.b0, R24, 0, 1
 ;Send M_PAR_IDLE and wait for VSYNC=1
 	ldi			LOOP_CNT.b1, 7
 datalink_wait_vsynch:
@@ -140,12 +135,6 @@ datalink_wait_vsynch:
 	sub			LOOP_CNT.b1, LOOP_CNT.b1, 1
 	qbeq			datalink_abort_jmp, LOOP_CNT.b1, 0
 	CALL1			send_stuffing
-; debug - toggle
-; debug
-;	ldi32			R24, 0x40000+0x2E000+0x310
-;	lbbo			&R10.b0, R24, 0, 1
-;	xor				R10.b0, R10.b0, (1<<6)
-;	sbbo			&R10.b0, R24, 0, 1
 
 ;check for error in parameter channel (byte 1)
 	qbbs			datalink_wait_vsynch, BYTE_ERROR, BYTE_CH_PARAMETER
@@ -293,22 +282,7 @@ recv_dec_10b_6b:
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
 	qbbc			recv_dec_10b_6b_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, LOOP_CNT.b0
-	;add			DISPARITY, DISPARITY, 2
 recv_dec_10b_6b_received_0:
-	;sub			DISPARITY, DISPARITY, 1
-; for byte 5 (secondary info) we can process acc while waiting for bits
-;    qbne		recv_dec_10b_6b_skip_acc,REG_FNC.b1, 5
-;    qbne		recv_dec_10b_6b_skip_acc,LOOP_CNT.b0, 5
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
 
 recv_dec_10b_6b_skip_acc:
 ;get edges
@@ -339,9 +313,7 @@ recv_dec_10b_4b_0_2:
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
 	qbbc			recv_dec_10b_4b_0_2_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, LOOP_CNT.b0
-	;add			DISPARITY, DISPARITY, 2
 recv_dec_10b_4b_0_2_received_0:
-	;sub			DISPARITY, DISPARITY, 1
 ;get edges
 	lsr			REG_TMP1.b0, REG_TMP0.w0, 1
 	xor			CUR_EDGES, REG_TMP1.b0, REG_TMP0.b0
@@ -374,12 +346,10 @@ recv_dec_10b_4b_3:
 	CLEAR_VAL
 	qbbc			recv_dec_10b_4b_3_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, 0
-	;add			DISPARITY, DISPARITY, 2
 recv_dec_10b_4b_3_received_0:
 	lsr			REG_TMP1.b1, REG_TMP0.w0, 1
 	xor			CUR_EDGES, REG_TMP1.b1, REG_TMP0.b0
 	CALL1			calc_rssi
-	;sub			DISPARITY, DISPARITY, 1
 recv_dec_10b_4b_not_last_byte:
 ;decode
 	and			REG_TMP0.w2, REG_FNC.w2, 0x0f
@@ -398,17 +368,7 @@ recv_dec_10b_special_character1:
 	set			SPECIAL_CHARACTER, SPECIAL_CHARACTER, REG_FNC.b1
 recv_dec_10b_no_special_character1:
 	xor			REG_FNC.b0, REG_FNC.b0, REG_TMP1.b0
-	.if 0
-;check for error: f=g=h=j
-	and			REG_TMP0.b0, REG_FNC.w2, 0x0f
-	qbeq			recv_dec_10b_fghj_error, REG_TMP0.b0, 0x0f
-	qbeq			recv_dec_10b_fghj_error, REG_TMP0.b0, 0x00
-	qba			recv_dec_10b_fghj_no_error
-recv_dec_10b_fghj_error:
-	set			BYTE_ERROR, BYTE_ERROR, REG_FNC.b1
-recv_dec_10b_fghj_no_error:
-	.endif
-;resotore RET1
+;restore RET1
 	mov			RET_ADDR1, REG_TMP2.w0
 	RET1
 ;--------------------------------------------------------------------------------------------------
@@ -437,22 +397,8 @@ srecv_dec_10b_6b:
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
 	qbbc			srecv_dec_10b_6b_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, LOOP_CNT.b0
-	;add			DISPARITY, DISPARITY, 2
 srecv_dec_10b_6b_received_0:
-	;sub			DISPARITY, DISPARITY, 1
-; for byte 5 (secondary info) we can process acc while waiting for bits
-;    qbne		recv_dec_10b_6b_skip_acc,REG_FNC.b1, 5
-;    qbne		recv_dec_10b_6b_skip_acc,LOOP_CNT.b0, 5
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
-;	add		r0,r0,0
+
 
 srecv_dec_10b_6b_skip_acc:
 ;get edges
@@ -483,9 +429,7 @@ srecv_dec_10b_4b_0_2:
 	sub			LOOP_CNT.b0, LOOP_CNT.b0, 1
 	qbbc			srecv_dec_10b_4b_0_2_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, LOOP_CNT.b0
-	;add			DISPARITY, DISPARITY, 2
 srecv_dec_10b_4b_0_2_received_0:
-	;sub			DISPARITY, DISPARITY, 1
 ;get edges
 	lsr			REG_TMP1.b0, REG_TMP0.w0, 1
 	xor			CUR_EDGES, REG_TMP1.b0, REG_TMP0.b0
@@ -518,12 +462,10 @@ srecv_dec_10b_4b_3:
 	CLEAR_VAL
 	qbbc			srecv_dec_10b_4b_3_received_0, REG_TMP0.w0, SAMPLE_EDGE
 	set			REG_FNC.w2, REG_FNC.w2, 0
-	;add			DISPARITY, DISPARITY, 2
 srecv_dec_10b_4b_3_received_0:
 	lsr			REG_TMP1.b1, REG_TMP0.w0, 1
 	xor			CUR_EDGES, REG_TMP1.b1, REG_TMP0.b0
 	CALL1			calc_rssi
-	;sub			DISPARITY, DISPARITY, 1
 srecv_dec_10b_4b_not_last_byte:
 ;decode
 	and			REG_TMP0.w2, REG_FNC.w2, 0x0f
@@ -542,16 +484,6 @@ srecv_dec_10b_special_character1:
 	set			SPECIAL_CHARACTER, SPECIAL_CHARACTER, REG_FNC.b1
 srecv_dec_10b_no_special_character1:
 	xor			REG_FNC.b0, REG_FNC.b0, REG_TMP1.b0
-	.if 0
-;check for error: f=g=h=j
-	and			REG_TMP0.b0, REG_FNC.w2, 0x0f
-	qbeq			srecv_dec_10b_fghj_error, REG_TMP0.b0, 0x0f
-	qbeq			srecv_dec_10b_fghj_error, REG_TMP0.b0, 0x00
-	qba			srecv_dec_10b_fghj_no_error
-srecv_dec_10b_fghj_error:
-	set			BYTE_ERROR, BYTE_ERROR, REG_FNC.b1
-srecv_dec_10b_fghj_no_error:
-	.endif
 ;restore RET1
 	mov			RET_ADDR1, REG_TMP2.w0
 	RET1
@@ -691,10 +623,6 @@ recv_dec_acc_no_special_character:
 datalink_receive_signal_no_delay_wait_0:
 ;send TRAILER
 	CALL1			send_trailer
-; write delay value to mem for debug
-;   lsl			REG_TMP0, LOOP_CNT.b2, 2
-;	sbco		&R28.w2, c25,REG_TMP0, 2
-;	halt
 ;put data to CHANNEL - secondary channel
 	mov			H_FRAME.secondary, REG_FNC.b0
 	lsl			CHANNEL.ch_sech, CHANNEL.ch_sech, 8
@@ -1518,12 +1446,6 @@ qm_add_end:
 ;modifies:
 ;--------------------------------------------------------------------------------------------------
 wait_delay:
-; toggle
-;	ldi32			R24, 0x40000+0x2E000+0x310
-;	lbbo			&R10.b0, R24, 0, 1
-;	xor				R10.b0, R10.b0, (1<<6)
-;	sbbo			&R10.b0, R24, 0, 1
-;	mov				REG_TMP0.b0,r31.b2
 	WAIT_TX_DONE
     .if $defined("FREERUN_300_MHZ")
     NOP_2
@@ -1565,12 +1487,6 @@ wait_delay_recv_wire:
 	qbne			wait_delay_recv_wire, REG_TMP1.b0, 0
 
 wait_delay_no_wait:
-;	ldi32			R24, 0x40000+0x2E000+0x310
-;	lbbo			&R10.b0, R24, 0, 1
-;	xor				R10.b0, R10.b0, (1<<6)
-;	sbbo			&R10.b0, R24, 0, 1
-;	mov				REG_TMP0.b0,r31.b2
-;	sbco	&REG_TMP0.b0, c25,LOOP_CNT.b2, 1
 	RET1
 
 ;--------------------------------------------------------------------------------------------------

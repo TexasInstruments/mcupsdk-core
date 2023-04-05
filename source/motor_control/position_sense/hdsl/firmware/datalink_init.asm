@@ -57,15 +57,6 @@ datalink_init_start:
 	zero			&r0, 124
 ;send 2 times
 datalink_reset:
-;debug
-	ldi			REG_TMP0.w2, SYNC_DIFF_HIST
-	sbco			&REG_TMP0.w2, MASTER_REGS_CONST, SYNC_DIFF_HIST_CNT, 2
-	ldi32			R24, 0x2E000+0x310 ;IEP0
-	lbbo			&R10.b0, R24, 0, 1
-	xor				R10.b0, R10.b0, (1<<6)
-;	sbbo			&R10.b0, R24, 0, 1
-	; clr			R30, R30, 5				;for debug when communication resets
-;debug end
 	;zero			&r0, 124
 ;setup ICSS encoder peripheral for Hiperface DSL
 	ldi			DISPARITY, 0x00
@@ -174,13 +165,6 @@ datalink_reset2:
 	PUSH_FIFO_CONST		0x00
 	PUSH_FIFO_CONST		0x00
 	TX_CHANNEL
-	;debug starts
-;debug_fun:
-	;PUSH_FIFO_CONST		0xF5
-	;PUSH_FIFO_CONST		0x50
-	;WAIT_TX_FIFO_FREE
-	;jmp debug_fun
-	;sebug ends
 	;send RESET 2 times to reset protocol
 	loop			datalink_reset2_end, 2
 	;send m_par_reset 8b/10b: 5b/6b and 3b/4b, first=0,vsync=0,reserved=0
@@ -436,11 +420,6 @@ datalink_learn_end_test:
 	CALL1			send_stuffing
 	.endif
 datalink_learn_end:
-;write the slave answer sampled data into memory
-;    	lsl         r24, LOOP_CNT.b1, 2
-;	mov			r6.b1, r25.b0
-;	sbco		&r6, c25, r24, 4
-
 
 	sub			LOOP_CNT.b1, LOOP_CNT.b1, 1
 	qblt		datalink_learn, LOOP_CNT.b1, 0
@@ -488,14 +467,6 @@ update_events_no_int15:
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int22:
 ;we need rel. jump here
-	;here toggling a EDIO pin, when communication resets(for debugging)
-	;ldi32			R24, 0x40000+0x2E000+0x310
-	;lbbo			&R10.b0, R24, 0, 1
-	;xor				R10.b0, R10.b0, (1<<6)
-	;sbbo			&R10.b0, R24, 0, 1
-	;sbco		&r18, c25, r24, 12
-	;add			r24, r24, 12
-	;halt
 	qba			datalink_reset
 ;--------------------------------------------------------------------------------------------------
 ;M_PAR_LEARN does not seem to have further meaning...
