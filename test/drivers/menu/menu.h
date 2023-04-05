@@ -353,7 +353,7 @@ void menu(uint16_t total_test_cases, menu_input* test_list, char* test_title)
         {
             case 0:
             {
-                DebugP_log("case 1 entered!\r\n");
+                DebugP_log("Running All tests and exit\r\n");
                 for(int iter = 0; iter < total_test_cases; iter++)
                 {
                     UnityDefaultTestRun(test_list[iter].function_ptr, test_list[iter].function_name, __LINE__, test_list[iter].function_ID, NULL);
@@ -376,7 +376,7 @@ void menu(uint16_t total_test_cases, menu_input* test_list, char* test_title)
                         }
                         break;
                     }
-                    if((option-1) > total_test_cases)
+                    if((option-1) >= total_test_cases)
                     {
                         DebugP_log("Invalid option\r\n");
                         break;

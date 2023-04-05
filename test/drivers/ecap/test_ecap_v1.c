@@ -181,12 +181,28 @@ uint32_t epwm_base_addr[NUM_EPWM_INSTANCES] =
     CSL_CONTROLSS_G0_EPWM31_U_BASE,
 };
 
+volatile uint32_t epwm_pinmux_restore_values[NUM_EPWM_INSTANCES*2] = {0};
+
 ECAP_Events events[4] =
 {
     ECAP_EVENT_1,
     ECAP_EVENT_2,
     ECAP_EVENT_3,
     ECAP_EVENT_4,
+};
+
+int XBAR_ecap_output_selects[10]=
+{
+    OUTPUT_XBAR_ECAP0_OUT,
+    OUTPUT_XBAR_ECAP1_OUT,
+    OUTPUT_XBAR_ECAP2_OUT,
+    OUTPUT_XBAR_ECAP3_OUT,
+    OUTPUT_XBAR_ECAP4_OUT,
+    OUTPUT_XBAR_ECAP5_OUT,
+    OUTPUT_XBAR_ECAP6_OUT,
+    OUTPUT_XBAR_ECAP7_OUT,
+    OUTPUT_XBAR_ECAP8_OUT,
+    OUTPUT_XBAR_ECAP9_OUT,
 };
 
 #define INPUT   (1)
@@ -199,16 +215,17 @@ ECAP_Events events[4] =
 uint32_t gpio_base_addr = CSL_GPIO0_U_BASE;
 
 /* GPIO59 -> EPWM8_A (G3) */
-uint32_t gpio_pin = (PIN_EPWM8_A)>>2;
-uint32_t pwm_input = (PIN_EPWM13_A)>>2;
+volatile uint32_t gpio_pin = (PIN_EPWM8_A)>>2;
+volatile uint32_t pwm_input = (PIN_EPWM13_A)>>2;
 
 
-uint32_t inputxbar_base_addr = CSL_CONTROLSS_INPUTXBAR_U_BASE;
+volatile uint32_t inputxbar_base_addr = CSL_CONTROLSS_INPUTXBAR_U_BASE;
 
 typedef struct
 {
     uint8_t emu_mode;
     bool ecap_mode_apwm;
+    bool apwm_shadow_enable;
     uint32_t apwm_period;
     uint32_t apwm_compare;
     uint16_t apwm_polarity;
@@ -245,6 +262,11 @@ void util_ecap_config_reset(void)
     ecap_config_ptr->emu_mode = PARAMS_RESET_VAL_EMU_MODE;
     /* to capture mode */
     ecap_config_ptr->ecap_mode_apwm = PARAMS_RESET_VAL_ECAP_MODE_APWM;
+    /* shadow mode */
+    ecap_config_ptr->apwm_shadow_enable = false;
+    ecap_config_ptr->apwm_period = 0;
+    ecap_config_ptr->apwm_compare = 0;
+    ecap_config_ptr->apwm_polarity = ECAP_APWM_ACTIVE_HIGH;
     /* to oneshot mode */
     ecap_config_ptr->capture_mode_continuous = PARAMS_RESET_VAL_CAPTURE_MODE_CONTINUOUS;
     /* select the reset value of the input*/
@@ -327,7 +349,7 @@ Info: Procedure to configure the peripheral modes and interrupts
 /* Testcases */
 static void ECAP_setEventPrescalerApiCheck(void *args);
 static void ECAP_selection_of_sync_in_source(void *args);
-static void ECAP_high_resolution_functions_for_ecap(void *args);
+static void ECAP_pwm_mode_features(void *args);
 static void ECAP_input_evaluation_block(void *args);
 static void ECAP_capture_mode_tests(void *args);
 static void ECAP_add_additional_input_trigger_sources(void *args);
@@ -349,6 +371,8 @@ bool util_ecap_configure_input(void);
 bool util_activate_input_pulses(void);
 bool util_compare_in_range(int value1, int value2, int delta);
 int util_validate_input_events(uint16_t instance, bool check_flags, int delta);
+void util_setup_capture_module(uint16_t instance, uint32_t input, bool continuous_mode);
+
 
 /* ADC util funcitons */
 void util_adc_clear_interrupts(void);
@@ -370,6 +394,7 @@ uint16_t gTrip_low_type = 0;
 void util_gpio_configure(bool input);
 void util_gpio_toggle(uint16_t times, uint32_t uSec_delay);
 void util_gpio_pwm_input_configure(void);
+void util_outputXbar_configure_loopback(uint16_t instance);
 
 /* EDMA util funcitons */
 void util_edma_configure(uint16_t ecap_instance);
@@ -384,6 +409,8 @@ bool util_epwm_wait_on_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConver
 void util_epwm_reset(int8_t epwm_instance);
 void util_epwm_sync(uint16_t epwm_instance, uint16_t main_pwm_instance, uint16_t phase_shift_value);
 void util_epwm_disable_all(void);
+void util_epmw_pinmux_configure(uint32_t epwm_instance);
+void util_epmw_pinmux_restore(uint32_t epwm_instance);
 void util_xbar_configure_sync_dut(uint32_t epwm_instance);
 
 /* test implementing functions */
@@ -593,14 +620,14 @@ void test_main(void *args)
     menu_input test_list_input_independent[TOTAL_TEST_CASES] =
     {
         {0, 3330,  ECAP_setEventPrescalerApiCheck,                         "ECAP_setEventPrescalerApiCheck"},
-        {0, 9476,  ECAP_selection_of_dma_trigger_source,                   "ECAP_selection_of_dma_trigger_source"},
-        {0, 7906,  ECAP_selection_of_soc_trigger_source,                   "ECAP_selection_of_soc_trigger_source"},
-        {0, 3403,  ECAP_input_evaluation_block,                            "ECAP_input_evaluation_block"},
-        {0, 3404,  ECAP_capture_mode_tests,                                "ECAP_capture_mode_tests"},
-        {0, 3406,  ECAP_add_additional_input_trigger_sources,              "ECAP_add_additional_input_trigger_sources"},
-        {0, 3407,  ECAP_support_interrupt_generation_on_either_of_4_events,"ECAP_support_interrupt_generation_on_either_of_4_events"},
-        {0, 3402,  ECAP_high_resolution_functions_for_ecap,                "ECAP_high_resolution_functions_for_ecap"},
-        {1, 3401,  ECAP_selection_of_sync_in_source,                       "ECAP_selection_of_sync_in_source"},
+        {1, 9476,  ECAP_selection_of_dma_trigger_source,                   "ECAP_selection_of_dma_trigger_source"},
+        {1, 7906,  ECAP_selection_of_soc_trigger_source,                   "ECAP_selection_of_soc_trigger_source"},
+        {1, 3407,  ECAP_support_interrupt_generation_on_either_of_4_events,"ECAP_support_interrupt_generation_on_either_of_4_events"},
+        {2, 3406,  ECAP_add_additional_input_trigger_sources,              "ECAP_add_additional_input_trigger_sources"},
+        {2, 3403,  ECAP_input_evaluation_block,                            "ECAP_input_evaluation_block"},
+        {3, 3401,  ECAP_selection_of_sync_in_source,                       "ECAP_selection_of_sync_in_source"},
+        {4, 3404,  ECAP_capture_mode_tests,                                "ECAP_capture_mode_tests"},
+        {4, 9423,  ECAP_pwm_mode_features,                                 "ECAP_pwm_mode_features"},
     };
 
     menu(TOTAL_TEST_CASES, test_list_input_independent, test_title);
@@ -644,7 +671,7 @@ void util_ecap_reset_all(void)
 
 /* resets ecap. sets the config_ptr to given configuration */
 void util_ecap_configure(uint16_t instance)
-{   
+{
     util_ecap_reset(instance);
     uint32_t base = ecap_base_addr[instance];
 
@@ -670,10 +697,20 @@ void util_ecap_configure(uint16_t instance)
     {
 	    /* Sets eCAP in PWM mode. */
         ECAP_enableAPWMMode(base);
-        /* Set eCAP APWM period */
-        ECAP_setAPWMPeriod(base, ecap_config_ptr->apwm_period);
-        /* Set eCAP APWM on or off time count */
-        ECAP_setAPWMCompare(base, ecap_config_ptr->apwm_compare);
+        if(ecap_config_ptr->apwm_shadow_enable)
+        {
+            /* Set eCAP APWM period shadow */
+            ECAP_setAPWMShadowPeriod(base, ecap_config_ptr->apwm_period);
+            /* Set eCAP APWM on or off time count */
+            ECAP_setAPWMShadowCompare(base, ecap_config_ptr->apwm_compare);
+        }
+        else
+        {
+            /* Set eCAP APWM period */
+            ECAP_setAPWMPeriod(base, ecap_config_ptr->apwm_period);
+            /* Set eCAP APWM on or off time count */
+            ECAP_setAPWMCompare(base, ecap_config_ptr->apwm_compare);
+        }
         /* Set eCAP APWM polarity */
         ECAP_setAPWMPolarity(base, ecap_config_ptr->apwm_polarity);
     }
@@ -709,7 +746,7 @@ void util_ecap_configure(uint16_t instance)
     /* Sets a phase shift value count */
     ECAP_setPhaseShiftCount(base, ecap_config_ptr->phase_shift_count);
 
-    uint16_t syncout_source = (ecap_config_ptr->sync_out_mode) >> 3;
+    uint16_t syncout_source = (ecap_config_ptr->sync_out_mode);
     /* Configures Sync out signal mode */
     ECAP_setSyncOutMode(base, syncout_source);
 
@@ -1172,7 +1209,6 @@ void util_gpio_toggle(uint16_t times, uint32_t uSec_delay)
 /* Configures the Input Pinmux and sets as GPIO input for PWM input */
 void util_gpio_pwm_input_configure(void)
 {
-
     Pinmux_PerCfg_t gPinMuxMainDomainCfg[] = {
                 /* GPIO0 pin config */
         /* GPIO69 -> EPWM13_A (K4) */
@@ -1192,6 +1228,33 @@ void util_gpio_pwm_input_configure(void)
 
     GPIO_setDirMode(gpio_base_addr, pwm_input, INPUT);
     GPIO_setDirMode(gpio_base_addr, (PIN_I2C1_SDA)>>2, INPUT);
+}
+
+/* configures the XbarOut3 to be the ECAPx output and configures the pinMux and loopsback to inputXbar-0 via GPIO [no external LoopBack]*/
+void util_outputXbar_configure_loopback(uint16_t instance)
+{
+    /* OUTPUT XBAR */
+    SOC_xbarSelectOutputXBarInputSource(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, ( XBAR_ecap_output_selects[instance] ), 0);
+    SOC_xbarInvertOutputXBarOutputSignalBeforeLatch(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+    SOC_xbarInvertOutputXBarOutputSignal(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+    SOC_xbarSelectLatchOutputXBarOutputSignal(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+    SOC_xbarSelectStretchedPulseOutputXBarOutputSignal(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+    SOC_xbarSelectStretchedPulseLengthOutputXBarOutputSignal(CSL_CONTROLSS_OUTPUTXBAR_U_BASE, 0);
+
+    Pinmux_PerCfg_t gPinMuxMainDomainCfg[] = {
+            /* OUTPUTXBAR3 pin config */
+    /* OUTPUTXBAR3 -> SPI1_D0 (B10) */
+    {
+        PIN_SPI1_D0,
+        ( PIN_MODE(5) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
+    },
+
+    {PINMUX_END, PINMUX_END}
+    };
+    Pinmux_config(gPinMuxMainDomainCfg, PINMUX_DOMAIN_ID_MAIN);
+
+    /* configuring the inputXbar0 to take in the GPIO 17 that reads the outputxbar 3*/
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, (PIN_SPI1_D0 >> 2), 0);
 }
 
 void util_epwm_enable_all(void)
@@ -1291,6 +1354,46 @@ void util_epwm_disable_all(void)
     }
 }
 
+void util_epmw_pinmux_configure(uint32_t epwm_instance)
+{
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
+    HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK1,0x95A4F1E0);
+
+    uint32_t baseA = CSL_IOMUX_EPWM0_A_CFG_REG + 8*epwm_instance;
+    uint32_t baseB = CSL_IOMUX_EPWM0_B_CFG_REG + 8*epwm_instance;
+
+    epwm_pinmux_restore_values[2*epwm_instance] = HW_RD_REG32(CSL_IOMUX_U_BASE + baseA);
+    epwm_pinmux_restore_values[2*epwm_instance + 1] = HW_RD_REG32(CSL_IOMUX_U_BASE + baseB);
+
+    if(epwm_instance < 16)
+    {
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, 0x500) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, 0x500) ;
+    }
+    else
+    {
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, 0x505) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, 0x505) ;
+    }
+}
+
+void util_epmw_pinmux_restore(uint32_t epwm_instance)
+{
+    if( (epwm_pinmux_restore_values[2*epwm_instance] != 0) &&
+        (epwm_pinmux_restore_values[2*epwm_instance + 1] !=0))
+    {
+        uint32_t baseA = CSL_IOMUX_EPWM0_A_CFG_REG + 8*epwm_instance;
+        uint32_t baseB = CSL_IOMUX_EPWM0_B_CFG_REG + 8*epwm_instance;
+
+        HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
+        HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK1,0x95A4F1E0);
+
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, epwm_pinmux_restore_values[2*epwm_instance]) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, epwm_pinmux_restore_values[2*epwm_instance + 1]) ;
+
+    }
+}
+
 /* Configures xbar instance to route the syncout signal from given EPWM to GPIO to sync at TESTER */
 void util_xbar_configure_sync_dut(uint32_t epwm_instance)
 {
@@ -1348,9 +1451,10 @@ static void ECAP_input_evaluation_block(void *args)
     DebugP_testLog("Test : Input Evaluation block tests - glitch filter and Prescaler checks\r\n");
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(7), 0);
 }
-static void ECAP_high_resolution_functions_for_ecap(void *args)
+static void ECAP_pwm_mode_features(void *args)
 {
-    UNITY_TEST_IGNORE("","TODO");
+    DebugP_testLog("Test : PWM mode features of the ECAP\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(8), 0);
 }
 /*
 configure and test the interrupt sources.
@@ -1984,7 +2088,7 @@ int util_validate_input_events(uint16_t instance, bool check_flags, int delta)
         DebugP_logError("ERROR: expected number of events did not occur.\r\n");
         DebugP_testLog("\t\tExpected flags: %x\r\n",expected_flags);
         DebugP_testLog("\r\n\t\tSet flags: %x\r\n", flags>>1);
-       
+
     }
     if( ((input >= ECAP_INPUT_INPUTXBAR0) && (input <= ECAP_INPUT_INPUTXBAR31))
         ||
@@ -2005,7 +2109,7 @@ int util_validate_input_events(uint16_t instance, bool check_flags, int delta)
                 continue;
             }
             uint32_t timestamp = ECAP_getEventTimeStamp(ecap_base, events[iter]);
-            
+
             DebugP_testLog("Timestamp %d is %d\r\n", iter, timestamp);
 
             if(util_compare_in_range(input_params->timestamps[iter], timestamp, delta))
@@ -2016,7 +2120,7 @@ int util_validate_input_events(uint16_t instance, bool check_flags, int delta)
             DebugP_logError("\tTimeStamps for event %d donot match\r\n",iter);
             DebugP_testLog("\t\tExpected: %d\r\n", input_params->timestamps[iter]);
             DebugP_testLog("\t\tReturned: %d\r\n", timestamp);
-    
+
         }
 
     }
@@ -2038,6 +2142,10 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
     /* Add additional signals too*/
     ECAP_InputCaptureSignals input;
 
+    bool is_constant_voltage_set = false;
+    char test_command[CMD_SIZE];
+    sprintf(test_command, "provide analog voltage of %.4fV on ADC %d Channel %d", 1.5, 0, 0);
+    /* expected to fail for the CMPSS instances that do not have Channel Outputs available on the EVM*/
     for(input = ECAP_INPUT_FSI_RX0_TRIG_0;
         input <= ECAP_INPUT_INPUTXBAR31;
         input++)
@@ -2049,6 +2157,12 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance)
         ||
           ((input >= ECAP_INPUT_CMPSSA0_CTRIP_LOW) && (input <= ECAP_INPUT_CMPSSB9_CTRIP_HIGH)) )
         {
+            if ((is_constant_voltage_set != true) || ((input >= ECAP_INPUT_CMPSSA0_CTRIP_LOW) && (input <= ECAP_INPUT_CMPSSB9_CTRIP_HIGH)))
+            {
+                /* need a constant voltage on the CMPSS channels */
+                tester_command(test_command);
+                is_constant_voltage_set = true;
+            }
             bool status;
 
             DebugP_testLog("Selected input %d\r\n",input);
@@ -2452,7 +2566,7 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
 
     util_gpio_pwm_input_configure();
     SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
-    
+
     util_input_params_init();
     input_params->check_timestamps[1] = true;
     input_params->check_timestamps[2] = true;
@@ -2476,7 +2590,7 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
     ecap_config_ptr->counter_reset_capture[1] = false;
     ecap_config_ptr->counter_reset_capture[2] = false;
     ecap_config_ptr->counter_reset_capture[3] = false;
-    
+
     int while_breaker_count = 5;
     do
     {
@@ -2485,14 +2599,14 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
 
         util_ecap_configure(instance);
         util_ecap_start_timestamp(instance);
-        
+
         /* small delay */
         ClockP_usleep(5);
 
         util_ecap_stop_timestamp(instance);
 
         tester_command(tester_cmd_stop_input);
-        
+
         pwm_on = ECAP_getEventTimeStamp(base, events[1]) + 1;
         pwm_period = ECAP_getEventTimeStamp(base, events[2]) + 1;
 
@@ -2507,9 +2621,9 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
             return BAD;
         }
     }while(pwm_on != (input_duty_cycle + 1));
-    
+
     ecap_config_ptr->qual_prd = qual_prd;
-    
+
     DebugP_testLog("\tpwm_on %d, pwm_period %d\r\n", pwm_on, pwm_period);
 
     for(int iter = 0; iter < 4; iter++)
@@ -2520,17 +2634,17 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
     DebugP_testLog("pwm_on\t:\t%d\r\n",pwm_on);
     DebugP_testLog("pwm_period\t:\t%d\r\n",pwm_period);
 
-    
+
     for(uint16_t prescale_value = 1; prescale_value < ECAP_MAX_PRESCALER_VALUE; prescale_value++)
     {
         DebugP_testLog("\r\nqual_period : %d\r\n", qual_prd);
         DebugP_testLog("\r\nprescale_value : %d\r\n", prescale_value);
-        
+
         ecap_config_ptr->prescaler = prescale_value;
-        
+
         input_params->timestamps[1] = (pwm_period * prescale_value) - 1 ;
         input_params->timestamps[2] = (pwm_period * 2 * prescale_value) - 1;
-        
+
         DebugP_testLog("expected timestamps[1] = (pwm_period * prescale_value) - 1 : %d\r\n",input_params->timestamps[1]);
         DebugP_testLog("expected timestamps[2] = (pwm_period * 2 * prescale_value) - 1 : %d\r\n",input_params->timestamps[2]);
 
@@ -2539,13 +2653,13 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
 
         util_ecap_configure(instance);
         util_ecap_start_timestamp(instance);
-    
+
         /* small delay */
             ClockP_usleep(10);
         util_ecap_stop_timestamp(instance);
-        
+
         tester_command(tester_cmd_stop_input);
-        
+
         DebugP_testLog("\treturned timestamps\r\n\t%d\t%d\t%d\t%d\r\n",
                         ECAP_getEventTimeStamp(base, events[0]),
                         ECAP_getEventTimeStamp(base, events[1]),
@@ -2554,7 +2668,7 @@ bool prescaler_tests(uint16_t instance, uint16_t input_duty_cycle, uint16_t inpu
                         );
         errors += util_validate_input_events(instance, false, 2);
     }
-    
+
     if (errors > 0)
     {
         status = BAD;
@@ -2568,27 +2682,27 @@ bool qual_period_tests(uint16_t instance)
     bool status = GOOD;
     uint16_t event_flags = 0;
     /* Negative tests */
-    /* 
-        Set qual_prd to a value and send in the pwm wave with pulses smaller than the qual_prd 
+    /*
+        Set qual_prd to a value and send in the pwm wave with pulses smaller than the qual_prd
         if the pulses are detected then its a fail.
     */
     uint16_t input_duty_cycle = 0;
-    uint16_t input_period = 100;        
+    uint16_t input_period = 100;
     /* 100 -> 101 TBCLKs -> 101 sysclk or 200MHz/101 is the frequency
         each TBCLK is */
-    
+
     char     tester_cmd_stop_input[CMD_SIZE] = "halt pwm input";
     char     tester_cmd_start_input[CMD_SIZE];
 
 
     util_gpio_pwm_input_configure();
     SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
-    
+
     util_ecap_config_reset();
     ecap_config_ptr->rearm = true;
     ecap_config_ptr->capture_mode_continuous = false;
     ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;
-    
+
     ecap_config_ptr->polarity[0] = RISING;
     ecap_config_ptr->polarity[1] = RISING;
     ecap_config_ptr->polarity[2] = RISING;
@@ -2604,10 +2718,10 @@ bool qual_period_tests(uint16_t instance)
         DebugP_testLog("qual_prd : %d\tinput duty cycle : %d\r\n", qual_period, input_duty_cycle);
 
         sprintf(tester_cmd_start_input, "generate pwm with duty cycle %02d period %05d on GPIO ", input_duty_cycle, input_period);
-        
+
         tester_command(tester_cmd_stop_input);
         tester_command(tester_cmd_start_input);
-        
+
         util_ecap_configure(instance);
         util_ecap_start_timestamp(instance);
         /* small delay */
@@ -2615,7 +2729,7 @@ bool qual_period_tests(uint16_t instance)
         util_ecap_stop_timestamp(instance);
         event_flags = ECAP_getInterruptSource(ecap_base_addr[instance]);
 
-        DebugP_testLog( 
+        DebugP_testLog(
                         "\t%x\t%x\t%x\t%x\r\n",
                         ECAP_getEventTimeStamp(ecap_base_addr[instance],events[0]),
                         ECAP_getEventTimeStamp(ecap_base_addr[instance],events[1]),
@@ -2623,7 +2737,7 @@ bool qual_period_tests(uint16_t instance)
                         ECAP_getEventTimeStamp(ecap_base_addr[instance],events[3])
                     );
 
-        /* expecting there shouldn't be any event happening other than the counter overflow. 
+        /* expecting there shouldn't be any event happening other than the counter overflow.
             so let's check the event flags :)*/
         event_flags &= ~ECAP_ISR_SOURCE_COUNTER_OVERFLOW;
         tester_command(tester_cmd_stop_input);
@@ -2637,13 +2751,13 @@ bool qual_period_tests(uint16_t instance)
         }
     }
     if(status == BAD)
-    {   
+    {
         return status;
     }
     /* negative tests with prescaler included.*/
     for(uint16_t qual_period = ECAP_PULSE_WIDTH_FILTER_CYCLE1; qual_period <= ECAP_PULSE_WIDTH_FILTER_CYCLE15;  qual_period++ )
     {
-        
+
         if(qual_period < 1)
         {
             continue;
@@ -2651,10 +2765,10 @@ bool qual_period_tests(uint16_t instance)
 
         input_duty_cycle = qual_period - 1;
         /* same as above. But here, the tests run with the prescalers set combinations and are expected to fail */
-        status = prescaler_tests(   
-                                instance, 
-                                input_duty_cycle, 
-                                input_period, 
+        status = prescaler_tests(
+                                instance,
+                                input_duty_cycle,
+                                input_period,
                                 qual_period
                                 );
         if(status == !BAD)
@@ -2673,29 +2787,29 @@ bool qual_period_tests(uint16_t instance)
 
 /* Input evaluation tests */
 int32_t AM263x_ECAP_BTR_007(uint16_t instance)
-{   
-    /* the input evaluation tests 
+{
+    /* the input evaluation tests
         1. Prescaler tests
             - API void ECAP_setEventPrescaler(uint32_t base, uint16_t preScalerValue)
-            - this API can take the inputs from 0 and till < ECAP_MAX_PRESCALER_VALUE 
-            - input will be prescaled for such number of the values and will be taken for consideration 
+            - this API can take the inputs from 0 and till < ECAP_MAX_PRESCALER_VALUE
+            - input will be prescaled for such number of the values and will be taken for consideration
                 on the event polarity later.
         2. Glitch filter tests
             - filters out pulses with width less than given number of system cycles.
     */
     bool status;
     int errors = 0;
-    uint16_t qual_prd = 0; 
+    uint16_t qual_prd = 0;
     uint16_t input_period = 100;
     uint16_t input_duty_cycle = 50;
 
-    status = prescaler_tests(   
-                            instance, 
-                            input_duty_cycle, 
-                            input_period, 
+    status = prescaler_tests(
+                            instance,
+                            input_duty_cycle,
+                            input_period,
                             qual_prd
                             );
-    
+
     status = qual_period_tests(instance);
 
     if(status == BAD)
@@ -2708,6 +2822,389 @@ int32_t AM263x_ECAP_BTR_007(uint16_t instance)
         return 1;
     }
     /* Pass criteria */
+    return 0;
+}
+
+bool active_shadow_tests(uint16_t instance)
+{
+    bool status = GOOD;
+    uint32_t active_period = 1000;
+    uint32_t active_cmp = 100;
+    uint32_t shadow_period = 10000;
+    uint32_t shadow_cmp = 500;
+
+    /* shadow register tests*/
+    /* Cap 1 : active APRD */
+    /* Cap 2 : active ACMP */
+    /* Cap 3 : shadow APRD */
+    /* Cap 4 : shadow ACMP */
+
+    util_outputXbar_configure_loopback(instance);
+
+
+    util_ecap_config_reset();
+    ecap_config_ptr->ecap_mode_apwm = true;
+    ecap_config_ptr->apwm_period = 0;
+    ecap_config_ptr->apwm_compare = 0;
+    util_ecap_configure(instance);
+
+    ECAP_setAPWMPeriod(ecap_base_addr[instance], active_period);
+    if(active_period != ECAP_getEventTimeStamp(ecap_base_addr[instance], events[0]))
+    {
+        status = BAD;
+        DebugP_logError("Active Period register load failed\r\n");
+    }
+    ECAP_setAPWMCompare(ecap_base_addr[instance], active_cmp);
+    if(active_cmp != ECAP_getEventTimeStamp(ecap_base_addr[instance], events[1]))
+    {
+        status = BAD;
+        DebugP_logError("Active Compare register load failed\r\n");
+    }
+
+    ECAP_setAPWMShadowPeriod(ecap_base_addr[instance], shadow_period);
+    if(shadow_period != ECAP_getEventTimeStamp(ecap_base_addr[instance], events[2]))
+    {
+        status = BAD;
+        DebugP_logError("Shadow Period register load fail!\r\n");
+    }
+    else
+    {
+        active_period = ECAP_getEventTimeStamp(ecap_base_addr[instance], events[0]);
+        if(active_period == shadow_period)
+        {   status = BAD;
+            DebugP_logError("Active Period register loaded with shadow!\r\n");
+        }
+    }
+
+    ECAP_setAPWMShadowCompare(ecap_base_addr[instance], shadow_cmp);
+    if(shadow_cmp != ECAP_getEventTimeStamp(ecap_base_addr[instance], events[3]))
+    {
+        status = BAD;
+        DebugP_logError("Shadow Compare register load fail!\r\n");
+    }
+    else
+    {
+        active_cmp = ECAP_getEventTimeStamp(ecap_base_addr[instance], events[1]);
+        if(active_cmp == shadow_cmp)
+        {   status = BAD;
+            DebugP_logError("Active Compare register loaded with shadow!\r\n");
+        }
+    }
+
+    /*run the counter, wait until the Period had occured */
+    ECAP_startCounter(ecap_base_addr[instance]);
+
+    volatile uint16_t flags = 0;
+    do
+    {
+        flags = 0;
+        flags = (ECAP_ISR_SOURCE_COUNTER_PERIOD & ECAP_getInterruptSource(ecap_base_addr[instance]));
+    } while(flags != ECAP_ISR_SOURCE_COUNTER_PERIOD);
+
+    // ECAP_clearInterrupt(ecap_base_addr[instance],ECAP_ISR_SOURCE_ALL);
+    // do
+    // {
+    //     flags = 0;
+    //     flags = (ECAP_ISR_SOURCE_COUNTER_PERIOD & ECAP_getInterruptSource(ecap_base_addr[instance]));
+    // } while(flags != ECAP_ISR_SOURCE_COUNTER_PERIOD);
+
+    // ClockP_usleep(10);
+    DebugP_testLog("flags : %x\r\n",ECAP_ISR_SOURCE_COUNTER_PERIOD & ECAP_getInterruptSource(ecap_base_addr[instance]));
+    /* stop the counter to make sure only one period occured*/
+    ECAP_stopCounter(ecap_base_addr[instance]);
+
+
+    /* check shadow to active load*/
+    active_period = ECAP_getEventTimeStamp(ecap_base_addr[instance], events[0]);
+    active_cmp = ECAP_getEventTimeStamp(ecap_base_addr[instance], events[1]);
+    if((shadow_period != active_period) || (shadow_cmp != active_cmp))
+    {
+        status = BAD;
+        DebugP_logError("Shadow to Active load failed at the Counter = Period event\r\n");
+        DebugP_logInfo("active period : %d\r\n", active_period);
+        DebugP_logInfo("shadow period : %d\r\n", shadow_period);
+        DebugP_logInfo("active cmp : %d\r\n", active_cmp);
+        DebugP_logInfo("shadow cmp : %d\r\n", shadow_cmp);
+    }
+
+    util_ecap_deconfigure_and_reset(instance);
+    return status;
+}
+
+void util_setup_capture_module(uint16_t instance, uint32_t input, bool continuous_mode)
+{
+    util_ecap_config_reset();
+    ecap_config_ptr->rearm = true;
+    ecap_config_ptr->capture_mode_continuous = continuous_mode;
+    ecap_config_ptr->input = input;
+
+    ecap_config_ptr->polarity[0] = RISING;
+    ecap_config_ptr->polarity[1] = RISING;
+    ecap_config_ptr->polarity[2] = FALLING;
+    ecap_config_ptr->polarity[3] = RISING;
+
+    for(int iter = 0; iter < 4; iter++)
+    {
+        ecap_config_ptr->counter_reset_capture[iter] = true;
+    }
+    util_ecap_configure(instance);
+    util_ecap_config_reset();
+
+    return;
+}
+
+bool apwm_generation_test(uint16_t instance)
+{
+    bool status = GOOD;
+    uint32_t period = 2000;     /* 2000*5ns : 10000nS or 10 uS*/
+    uint32_t compare = 500;
+    /*
+    - setup the ECAP in the APWM mode
+    - setup the OutputXbar to take the ECAP output
+    - setup inputXbar to take in the InputXbar that loopsback the Xbar output via GPIO
+    */
+    util_outputXbar_configure_loopback(instance);
+
+    /*
+    - setup ecap 9 to take in the inputxbar 0 to validate the PWM output
+    */
+
+    ECAP_APWMPolarity test_runs[2] = {ECAP_APWM_ACTIVE_HIGH, ECAP_APWM_ACTIVE_LOW};
+    for(int iter = 0; iter < 2; iter++)
+    {
+        util_setup_capture_module(9, ECAP_INPUT_INPUTXBAR0, true);
+        util_ecap_config_reset();
+        ecap_config_ptr->ecap_mode_apwm = true;
+        ecap_config_ptr->apwm_period = period;
+        ecap_config_ptr->apwm_compare = compare;
+        ecap_config_ptr->apwm_polarity = test_runs[iter];
+
+        util_ecap_configure(instance);
+
+        /* start capturing on the ecap 9*/
+        util_ecap_start_timestamp(9);
+
+        /* start PWM on the given instance*/
+        ECAP_startCounter(ecap_base_addr[instance]);
+
+        /* some delay */
+        ClockP_usleep(20);
+
+        /*stop the timestamping*/
+        util_ecap_stop_timestamp(9);
+
+        /*stop the PWM*/
+        ECAP_stopCounter(ecap_base_addr[instance]);
+
+        /* timestamp 2 -> ON time */
+        /* timestamp 3 -> OFF time */
+        uint32_t on_time = ECAP_getEventTimeStamp(ecap_base_addr[9], events[2]);
+        uint32_t off_time = ECAP_getEventTimeStamp(ecap_base_addr[9], events[3]);
+
+        DebugP_testLog("\tpolarity : %x\ton_time : %d\toff_time : %d\tcompare : %d\r\n", test_runs[iter], on_time, off_time, compare);
+
+        status = util_compare_in_range(on_time + off_time, period, 5);
+        if(status == BAD)
+        {
+            break;
+        }
+
+        if(test_runs[iter] == ECAP_APWM_ACTIVE_HIGH)
+        {
+            status = util_compare_in_range(on_time, compare, 5);
+        }
+        else if(test_runs[iter] == ECAP_APWM_ACTIVE_LOW)
+        {
+            status = util_compare_in_range(off_time, compare, 5);
+        }
+
+
+        util_ecap_deconfigure_and_reset(instance);
+    }
+
+    /* deconfiguring and resetting instance 9 for future use.*/
+    util_ecap_deconfigure_and_reset(9);
+
+return status;
+}
+
+bool apwm_sync_in_sync_out_tests (uint16_t instance)
+{
+    /*
+    setup an EPWM, say pwm_to_sync with long period=1000 that goes high at ctr=0 and low at cmp=10
+    get a delta capture on RRFR edges. read the period (t1).
+    note:
+        this pwm doesn't take any syncin signal yet. but the phase shift will be 0 when there is a signal, which will be configured later.
+
+    setup the above epwm to sync with ecap_instance_syncout which has smaller period, say 100, produces the syncout when its ctr=period.
+
+    now repeat the above with tester, read the new period. the period should be smaller and note the period. the period should be smaller and equal to the ecap period. this confirms the sync event occured.
+    */
+    bool status = GOOD;
+    uint16_t test_pwm_instance = 13; /* we have a configuration that sets the input */
+    uint16_t pwm_monitor_instance = 9;
+    /* arbitary on_time */
+    uint16_t on_time = 10;
+    uint16_t apwm_on_time = 10;
+
+    /* large period */
+    uint16_t period = 10000; /* 10000*5nS -> 50 uS*/
+    uint16_t apwm_period = 100; /* considerably small pwm period */
+
+    /* configuring the PWM input*/
+    // util_gpio_pwm_input_configure();
+    util_epmw_pinmux_configure(test_pwm_instance);
+
+    /* configuring the InputXbar*/
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
+
+    /* setup without sync pulse */
+    util_epwm_enable(test_pwm_instance);
+    util_epwm_setup(test_pwm_instance, on_time, period);
+
+    /* configuring ECAP instance (9) to monitor the PWM input */
+    util_setup_capture_module(pwm_monitor_instance, ECAP_INPUT_INPUTXBAR0, false);
+
+    /* configure the ECAP module in APWM mode*/
+    util_ecap_config_reset();
+    ecap_config_ptr->ecap_mode_apwm = true;
+    ecap_config_ptr->apwm_compare = 10;
+    ecap_config_ptr->apwm_period = 100;
+    ecap_config_ptr->sync_out_mode = ECAP_SYNC_OUT_DISABLED; /* dusabling the ECAP_SYNCOUT*/
+    util_ecap_configure(instance);
+    ECAP_startCounter(ecap_base_addr[instance]); /* Starting the ECAP counter to enable APWM*/
+
+    /* setting the PWM to run */
+    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_UP);
+
+    /* starting the pwm capture module*/
+    util_ecap_start_timestamp(pwm_monitor_instance);
+
+    /* wait for atleast a Period */
+    ClockP_usleep(1000);
+
+    util_ecap_stop_timestamp(pwm_monitor_instance);
+    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+    ECAP_stopCounter(ecap_base_addr[instance]); /* Stoping the ECAP counter to enable APWM*/
+
+    /* read the timestamps of the pwm_monitor_instance */
+    uint32_t timestamp1 = 0;
+    uint32_t timestamp2 = 0;
+
+    /* uint32_t timestamp0 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 0); // not usable */
+    timestamp1 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 1); // period
+    timestamp2 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 2); // on_time
+    /* uint32_t timestamp3 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 3); // off_time // not needed to be used */
+
+    DebugP_testLog("on time : %d\ttimestamp2 : %d\tperiod : %d\ttimestamp1 : %d\t\r\n",on_time, timestamp2, period, timestamp1);
+
+    /*sanity check*/
+    if((!util_compare_in_range(timestamp1, period, 5))
+        ||
+       (!util_compare_in_range(timestamp2, on_time, 5)))
+    {
+        /* sanity failed test abort*/
+        status = BAD;
+        DebugP_logError("sanity failed\r\n");
+    }
+    else
+    {
+        /* enabling the sync_out_mode and setting to ECAP_SYNC_OUT_COUNTER_PRD sync.*/
+        ECAP_setSyncOutMode(ecap_base_addr[instance], ECAP_SYNC_OUT_COUNTER_PRD);
+
+        /* force EPWM TBCTR to 0 and set its sync in source to be the ECAPx SYNCO*/
+        EPWM_setTimeBaseCounter(epwm_base_addr[test_pwm_instance], 0);
+        EPWM_setSyncInPulseSource(epwm_base_addr[test_pwm_instance], EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP0 + instance);
+        EPWM_enablePhaseShiftLoad(epwm_base_addr[test_pwm_instance]);
+        EPWM_setPhaseShift(epwm_base_addr[test_pwm_instance], 0);
+
+        /* configuring ECAP instance (9) to monitor the PWM input */
+        util_setup_capture_module(pwm_monitor_instance, ECAP_INPUT_INPUTXBAR0, false);
+
+        /* Running the ECAP APWM to generate the SyncOuts*/
+        ECAP_startCounter(ecap_base_addr[instance]);
+
+        /* Running the EPWM to recieve the SyncOuts*/
+        EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_UP);
+
+        /* Starting the Capture Module to generate timestamps*/
+        util_ecap_start_timestamp(pwm_monitor_instance);
+
+        /* wait for atleast a Period */
+        ClockP_usleep(100);
+
+        /* stop capture module, PWM and ECAP APWM*/
+        util_ecap_stop_timestamp(pwm_monitor_instance);
+        EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+        ECAP_stopCounter(ecap_base_addr[instance]); /* Stoping the ECAP counter to enable APWM*/
+
+        /* read the timestamps of the pwm_monitor_instance */
+        timestamp1 = 0;
+        timestamp2 = 0;
+
+        /* uint32_t timestamp0 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 0); // not usable */
+        timestamp1 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 1); // period
+        timestamp2 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 2); // on_time
+        /* uint32_t timestamp3 = ECAP_getEventTimeStamp(ecap_base_addr[pwm_monitor_instance], 3); // off_time // not needed to be used */
+
+        DebugP_testLog("on time : %d\ttimestamp2 : %d\tperiod : %d\ttimestamp1 : %d\t\r\n",on_time, timestamp2, period, timestamp1);
+
+        if((!util_compare_in_range(timestamp1, apwm_period, 5))
+            ||
+           (!util_compare_in_range(timestamp2, apwm_on_time, 5)))
+        {
+            /* sync failed test abort*/
+            status = BAD;
+            DebugP_logError("sync failed\r\n");
+        }
+    }
+    util_ecap_deconfigure_and_reset(pwm_monitor_instance);
+    util_ecap_deconfigure_and_reset(instance);
+    util_epwm_reset(test_pwm_instance);
+    util_epwm_disable_all();
+    util_epmw_pinmux_restore(test_pwm_instance);
+
+
+    return status;
+}
+
+int32_t AM263x_ECAP_BTR_008(uint16_t instance)
+{
+    /* Test : APWM features of ECAP*/
+    /* Features :
+        - Active and shadow loads to period and compare
+        - Emulation mode                 (covered in other tests)
+        - Interrupt, ADCSOC, DMA trigger (covered in other test cases)
+        - Phase shift on Sync IN         (covered in other test cases)
+        - PWM generation                 (Period and Compare)
+        - Sync Out
+        */
+    int errors = 0;
+    bool status = GOOD;
+
+    status = active_shadow_tests(instance);
+    if(status == BAD)
+    {
+        DebugP_logError("active shadow load tests failed. Returning\r\n");
+        errors++;
+    }
+    status = apwm_generation_test(instance);
+    if(status == BAD)
+    {
+        DebugP_logError("apwm generation tests failed. Returning\r\n");
+        errors++;
+    }
+    status = apwm_sync_in_sync_out_tests(instance);
+    if(status == BAD)
+    {
+        DebugP_logError("apwm syncin syncout tests failed. Returning\r\n");
+        errors++;
+    }
+
+    if(errors > 0)
+    {
+        return 1;
+    }
     return 0;
 }
 
@@ -2771,6 +3268,18 @@ int32_t test_ecap_cases(uint8_t in)
         case 7:
         {
             failcount += AM263x_ECAP_BTR_007(instance);
+            single_instance_test = true;
+            break;
+        }
+        case 8:
+        {
+            if(instance == 9)
+            {
+                DebugP_logError("resource busy for instance 9");
+                failcount++;
+                break;
+            }
+            failcount += AM263x_ECAP_BTR_008(instance);
             single_instance_test = true;
             break;
         }
