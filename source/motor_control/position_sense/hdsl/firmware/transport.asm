@@ -112,8 +112,7 @@ transport_on_v_frame:
 ;transmission error?
 	qbbs		transport_on_v_frame_dont_update_qm, H_FRAME.flags, FLAG_ERR_VERT
     lbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
-    clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_SCE
-    clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_VPOS
+    and         REG_TMP1.b0, REG_TMP1.b0, (~((1<<ONLINE_STATUS_1_SCE) | (1<<ONLINE_STATUS_1_VPOS)) & 0xF)
 ;checking for crc error
 	qbeq		check_for_slave_error_on_v_frame, CRC_VERT, 0
 ; Set EVENT_S_SCE in EVENT register
