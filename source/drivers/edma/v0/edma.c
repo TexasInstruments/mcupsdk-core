@@ -1364,6 +1364,7 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
             hwiPrms.intNum   = config->attrs->compIntrNumber;
             hwiPrms.callback = &EDMA_transferCompletionMasterIsrFxn;
             hwiPrms.args     = object->handle;
+            hwiPrms.isPulse     = 1;
             status = HwiP_construct(&object->hwiObj, &hwiPrms);
             DebugP_assert(status == SystemP_SUCCESS);
             object->hwiHandle = &object->hwiObj;
