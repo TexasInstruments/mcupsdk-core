@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -104,9 +104,6 @@ uint32_t gRemoteCoreId[] = {
 
 /* name of server that is annoucned */
 #define SERVER_NAME "rpmsg.server"
-
-/* Temporary define for RPMsg send timeout(2 seconds) to fix code hang issue */
-#define RPMSG_SEND_TIMEOUT (2 * 1000000)
 
 /* semaphore that is set from callback handler when all sent messages in back to back mode are ack'ed */
 SemaphoreP_Object gAckDoneSem;
@@ -340,15 +337,11 @@ void test_rpmsgAnyToAny(void *args)
         {
             if(gRemoteCoreId[i] != IpcNotify_getSelfCoreId())
             {
-                /*
-                 * Temporary fix for code hang issue.
-                 * Replaced "SystemP_WAIT_FOREVER" with 2 second timeout.
-                 */
                 status = RPMessage_send(
                     msgBuf, msgSize,
                     gRemoteCoreId[i], gServerEndPt,
                     RPMessage_getLocalEndPt(&gClientMsgObject),
-                    ClockP_usecToTicks(RPMSG_SEND_TIMEOUT));
+                    SystemP_WAIT_FOREVER);
                 TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
             }
         }
