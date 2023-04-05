@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,6 +61,8 @@ typedef struct MCSPI_DmaChConfig_s
     /**< EDMA Param ID used for McSPI RX transfer */
     uint32_t        edmaTxParam;
     /**< EDMA Param ID used for McSPI TX transfer */
+    uint32_t        edmaDummyParam;
+    /**< EDMA Param ID used for McSPI TX Dummy transfer */
     uint32_t        edmaRegionId;
     /**< EDMA Region used for McSPI transfer */
     uint32_t        edmaBaseAddr;

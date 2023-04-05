@@ -110,7 +110,7 @@ static int32_t MCSPI_edmaChInit(MCSPI_Handle handle, const MCSPI_ChConfig *chCfg
                                 const MCSPI_DmaChConfig *dmaChCfg)
 {
     uint32_t            baseAddr, regionId;
-    uint32_t            dmaRxCh,dmaTxCh, tccRx, tccTx, paramRx, paramTx;
+    uint32_t            dmaRxCh,dmaTxCh, tccRx, tccTx, paramDummy, paramRx, paramTx;
     int32_t             status = SystemP_FAILURE;
     uint32_t            isEdmaInterruptEnabled;
     MCSPI_Config        *config;
@@ -205,6 +205,10 @@ static int32_t MCSPI_edmaChInit(MCSPI_Handle handle, const MCSPI_ChConfig *chCfg
                 paramTx = EDMA_RESOURCE_ALLOC_ANY;
                 status += EDMA_allocParam(mcspiEdmaHandle, &paramTx);
 
+                /* Allocate a Param ID for McSPI TX Dummy transfer */
+                paramDummy = EDMA_RESOURCE_ALLOC_ANY;
+                status += EDMA_allocParam(mcspiEdmaHandle, &paramDummy);
+
                 if(status == SystemP_SUCCESS)
                 {
                     EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
@@ -222,6 +226,7 @@ static int32_t MCSPI_edmaChInit(MCSPI_Handle handle, const MCSPI_ChConfig *chCfg
                 {
                     /* Store the EDMA parameters for McSPI TX*/
                     dmaChConfig->edmaTxParam = paramTx;
+                    dmaChConfig->edmaDummyParam = paramDummy;
                     dmaChConfig->edmaTxChId  = dmaTxCh;
                     dmaChConfig->edmaTccTx   = tccTx;
                 }
@@ -348,8 +353,8 @@ static int32_t MCSPI_edmaTransfer(MCSPI_Object *obj,
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            baseAddr, regionId;
-    uint32_t            dmaRxCh, dmaTxCh, tccRx, tccTx, paramRx, paramTx;
-    EDMACCPaRAMEntry    edmaTxParam, edmaRxParam;
+    uint32_t            dmaRxCh, dmaTxCh, tccRx, tccTx, paramRx, paramTx, paramDummy;
+    EDMACCPaRAMEntry    edmaTxParam, edmaRxParam, edmaDummyParam;
     MCSPI_DmaChConfig   *dmaChConfig;
 
     dmaChConfig = &chObj->dmaChCfg;
@@ -400,6 +405,7 @@ static int32_t MCSPI_edmaTransfer(MCSPI_Object *obj,
         dmaTxCh    = dmaChConfig->edmaTxChId;
         tccTx      = dmaChConfig->edmaTccTx;
         paramTx    = dmaChConfig->edmaTxParam;
+        paramDummy = dmaChConfig->edmaDummyParam;
 
         /* Initialize TX Param Set */
         EDMA_ccPaRAMEntry_init(&edmaTxParam);
@@ -425,6 +431,19 @@ static int32_t MCSPI_edmaTransfer(MCSPI_Object *obj,
 
         /* Write Tx param set */
         EDMA_setPaRAM(baseAddr, paramTx, &edmaTxParam);
+
+        /* Initialize TX Param Set */
+        EDMA_ccPaRAMEntry_init(&edmaDummyParam);
+
+        /* Dummy param set configuration */
+        edmaDummyParam.aCnt          = (uint16_t) 1;
+        edmaDummyParam.linkAddr      = 0xFFFFU;
+
+        /* Write Tx dummy param set */
+        EDMA_setPaRAM(baseAddr, paramDummy, &edmaDummyParam);
+
+        /* Link  dummy param ID */
+        EDMA_linkChannel(baseAddr, paramTx, paramDummy);
 
         /* Set event trigger to start McSPI TX transfer */
         EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
