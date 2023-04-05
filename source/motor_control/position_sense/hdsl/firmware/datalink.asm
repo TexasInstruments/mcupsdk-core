@@ -158,12 +158,12 @@ datalink_wait_vsynch:
 ; Set EVENT_S_FRES in EVENT_S register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_FRES
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int0, REG_TMP0.b1, EVENT_S_FRES
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int0:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
@@ -171,12 +171,12 @@ update_events_no_int0:
 ; Set EVENT_FREL in EVENT_L register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_FREL
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int1, REG_TMP0.w2, EVENT_FREL
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int1:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set ONLINE_STATUS_D_FREL in ONLINE_STATUS_D register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_FREL-8)
@@ -1426,21 +1426,21 @@ datalink_abort_no_wait:
 ; Set EVENT_PRST in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_PRST
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int2, REG_TMP0.w2, EVENT_PRST
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int2:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set EVENT_S_PRST in EVENT_S register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_PRST
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int18, REG_TMP0.b1, EVENT_S_PRST
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int18:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 
 ; Set PRST bits in ONLINE_STATUS registers
 	lbco		&REG_TMP0, MASTER_REGS_CONST, ONLINE_STATUS_D, 6

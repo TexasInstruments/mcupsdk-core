@@ -472,21 +472,21 @@ datalink_abort2_no_wait:
 ; Set EVENT_PRST in EVENT_H register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_PRST
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int15, REG_TMP0.w2, EVENT_PRST
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int15:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set EVENT_S_PRST in EVENT_S register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_PRST
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int22, REG_TMP0.b1, EVENT_S_PRST
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int22:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ;we need rel. jump here
 	;here toggling a EDIO pin, when communication resets(for debugging)
 	;ldi32			R24, 0x40000+0x2E000+0x310

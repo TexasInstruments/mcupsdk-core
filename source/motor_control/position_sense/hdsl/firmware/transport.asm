@@ -119,12 +119,12 @@ transport_on_v_frame:
 ; Set EVENT_S_SCE in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_SCE
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int4, REG_TMP0.b1, EVENT_S_SCE
 ; generate interrupt_s
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int4:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ; Set ONLINE_STATUS_1_SCE in ONLINE_STATUS_1 register
     set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_SCE
     sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
@@ -146,12 +146,12 @@ check_for_slave_error_on_v_frame:
 ; Set EVENT_S_VPOS in EVENT register, due to encoder internal error
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_VPOS
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int5, REG_TMP0.b1, EVENT_S_VPOS
 ; generate interrupt_s
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int5:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ; Set ONLINE_STATUS_1_VPOS in ONLINE_STATUS_1 register
     set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_1_VPOS
     sbco		&REG_TMP1.b0, MASTER_REGS_CONST, ONLINE_STATUS_1, 1
@@ -196,12 +196,12 @@ transport_on_v_frame_dont_update_maxdev:
 ; Set EVENT_DTE in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_DTE
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int6, REG_TMP0.w2, EVENT_DTE
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int6:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 transport_on_v_frame_dont_update_dte:
 ; Clear EVENT_DTE in ONLINE_STATUS_D register
     clr         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_DTE
@@ -366,21 +366,21 @@ transport_skip_vpos_update:
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	;set		REG_TMP0.w0, REG_TMP0.w0, REG_FNC.b0
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_SUM
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int7, REG_TMP0.w2, REG_TMP0.w2
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int7:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ;set event_s and generate interrupt_s
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 2
 	set         REG_TMP0.b0, REG_TMP0.b0, EVENT_S_SSUM
+;save events
+	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 2
 	qbbc		update_events_no_int17, REG_TMP0.b1, EVENT_S_SSUM
 ; generate interrupt_s
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int17:
-;save events
-	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 2
     set         REG_TMP2.b0, REG_TMP2.b0, ONLINE_STATUS_D_SUM
     set         REG_TMP2.b2, REG_TMP2.b0, ONLINE_STATUS_1_SSUM
 summary_no_int:
@@ -448,12 +448,12 @@ transport_layer_recving_long_msg_crc:
 ; Set EVENT_FREL in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_FREL
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int8, REG_TMP0.w2, EVENT_FREL
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int8:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set ONLINE_STATUS_D_FREL in ONLINE_STATUS_D register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_FREL-8)
@@ -463,12 +463,12 @@ update_events_no_int8:
 ; Set EVENT_ANS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_ANS
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int9, REG_TMP0.w2, EVENT_ANS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int9:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set ANS in ONLINE_STATUS_D register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
@@ -527,12 +527,12 @@ transport_layer_received_short_msg:
 ; Set EVENT_S_FRES in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_S_FRES
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int100, REG_TMP0.b1, EVENT_S_FRES
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int100:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
@@ -551,12 +551,12 @@ transport_layer_short_msg_recv_read:
 ; Set EVENT_S_FRES in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_S_FRES
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int10, REG_TMP0.b1, EVENT_S_FRES
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int10:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ; Set ONLINE_STATUS_1_FRES in ONLINE_STATUS_1 register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_1+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_1_FRES-8)
@@ -598,12 +598,12 @@ transport_layer_received_long_msg_no_loffset_crc:
 ; Set EVENT_FREL in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_FREL
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int11, REG_TMP0.w2, EVENT_FREL
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int11:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set ONLINE_STATUS_D_FREL in ONLINE_STATUS_D register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_FREL-8)
@@ -621,12 +621,12 @@ transport_layer_received_long_msg_loffset_end:
 ; Set EVENT_ANS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_ANS
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int12, REG_TMP0.w2, EVENT_ANS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int12:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set ANS in ONLINE_STATUS_D register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
@@ -645,12 +645,12 @@ transport_layer_recv_msg_check_for_nak:
 ; Set EVENT_ANS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_ANS
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int13, REG_TMP0.w2, EVENT_ANS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int13:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set ANS in ONLINE_STATUS_D register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 1
 	set		    REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
@@ -664,20 +664,20 @@ transport_layer_recv_msg_check_for_nak_no_lnak:
 ; set MIN bit in EVENT_L and EVENT_S registers
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_MIN
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int19, REG_TMP0.w2, EVENT_MIN
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int19:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_S, 2
 	set		REG_TMP0.b0, REG_TMP0.b0, EVENT_S_MIN
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int20, REG_TMP0.b1, EVENT_S_MIN
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int20:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
     lbco		&REG_TMP0, MASTER_REGS_CONST, (ONLINE_STATUS_D+1), 3
     set         REG_TMP0.b0, REG_TMP0.b0, (ONLINE_STATUS_D_MIN-8)
     set         REG_TMP0.b2, REG_TMP0.b2, (ONLINE_STATUS_1_MIN-8)
@@ -888,21 +888,21 @@ transport_layer_send_msg_end:
 ; Set EVENT_QMLW in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_QMLW
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int3, REG_TMP0.w2, EVENT_QMLW
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int3:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 ; Set EVENT_S_QMLW in EVENT_S register
 	lbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_S, 2
 	set		    REG_TMP0.b0, REG_TMP0.b0, EVENT_S_QMLW
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 	qbbc		update_events_no_int16, REG_TMP0.b1, EVENT_S_QMLW
 ; generate interrupt_s
 	ldi		r31.w0, PRU0_ARM_IRQ4
 update_events_no_int16:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_S, 1
 ;Clear EVENT_UPDATE_PENDING_QMLW
 	clr         REG_TMP0.w0, REG_TMP0.w0, EVENT_UPDATE_PENDING_QMLW
 	sbco		&REG_TMP0.b0, MASTER_REGS_CONST, EVENT_UPDATE_PENDING, 1
@@ -939,12 +939,12 @@ transport_layer_online_status_qm_update_done:
 ; Set EVENT_POS in EVENT register
 	lbco		&REG_TMP0, MASTER_REGS_CONST, EVENT_H, 4
 	set		REG_TMP0.w0, REG_TMP0.w0, EVENT_POS
+;save events
+	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
 	qbbc		update_events_no_int14, REG_TMP0.w2, EVENT_POS
 ; generate interrupt
 	ldi		r31.w0, PRU0_ARM_IRQ
 update_events_no_int14:
-;save events
-	sbco		&REG_TMP0.w0, MASTER_REGS_CONST, EVENT_H, 2
     set         REG_TMP1.b0, REG_TMP1.b0, ONLINE_STATUS_D_POS
     qba         transport_layer_pos_update_done
 transport_layer_no_pos_event:
