@@ -48,5 +48,4 @@ extern uint32_t EC_SLV_APP_FILE_copy    (const char*    pFromName_p
 }
 #endif
 
-
 #endif /* __ESL_FILEHANDLING_H__ */

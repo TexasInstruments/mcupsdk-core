@@ -141,9 +141,54 @@ typedef enum FBTL_API_EInterruptStatus
     /// @endcond
 } FBTL_API_EInterruptStatus_t;
 
+/*!
+    \brief FBTL header of process data buffer on double buffer
+
+    \ingroup FBTL_API
+*/
+typedef struct FBTL_API_SCyclicHeader_Double
+{
+    uint32_t                        lastWrittenBuffer;          ///!< Last written buffer
+    uint32_t                        bufferOffset[2];            ///!< buffer offsets
+} FBTL_API_SCyclicHeader_Double_t;
+
+/*!
+    \brief FBTL header of process data buffer on triple buffer
+
+    \ingroup FBTL_API
+*/
+typedef struct FBTL_API_SCyclicHeader_Triple
+{
+#if (defined TRIPLEBUFFER_ATOMIC) && (1==TRIPLEBUFFER_ATOMIC)
+    atomic_uint_least32_t           producerLocked;             ///!< locked by producer
+    atomic_uint_least32_t           unLocked;                   ///!< next buffer
+    atomic_uint_least32_t           consumerLocked;             ///!< locked by consumer
+    atomic_uint_least32_t           lastProduced;               ///!< last written by producer
+#else
+    volatile uint32_t               producerLocked;             ///!< locked by producer
+    volatile uint32_t               unLocked;                   ///!< next buffer
+    volatile uint32_t               consumerLocked;             ///!< locked by consumer
+    volatile uint32_t               lastProduced;               ///!< last written by producer
+#endif
+    uint64_t                        bufferOffset[3];            ///!< buffer offsets
+} FBTL_API_SCyclicHeader_Triple_t;
+
+/**
+\brief Simpson buffer management structure for IRQ status
+
+\ingroup grp_gen_service
+*/
+typedef struct FBTL_API_SCyclicHeader_Simpson
+{
+    volatile    uint32_t                    latest;             ///!< Simpson latest
+    volatile    uint32_t                    reading;            ///!< Simpson reading
+    volatile    uint32_t                    aSlot[2];           ///!< Simpson buffer matrix
+
+    volatile    uint64_t                    bufferOffset[4];    ///!< buffer offsets
+} FBTL_API_SCyclicHeader_Simpson_t;
+
 /**
 \brief Service Type
-
 
 \ingroup grp_gen_service
 */
@@ -286,7 +331,6 @@ extern FBTL_DLL_EXPORT uint32_t FBTL_API_IRQ_exitHandler(void*                  
 extern FBTL_DLL_EXPORT uint32_t FBTL_API_IRQ_irqHandler (void*                          pFbtlHandle_p
                                                         ,FBTL_API_EInterruptStatus_t    workIrq_p
                                                         ,uint32_t                       waitTimeout_p);
-
 
 extern FBTL_DLL_EXPORT void     FBTL_API_workInterrupt  (void*                          pFbtlHandle_p);
 

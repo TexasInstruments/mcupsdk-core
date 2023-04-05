@@ -53,6 +53,8 @@
 #include <stdatomic.h>
 #endif
 
+#define FUNCLOC /*static*/
+
 #define FBTL_NUM_OF_PENDING_REQ  0x20
 
 #ifdef FBTL_CPU_COMMUNICATION
@@ -66,7 +68,6 @@
 #else
 #define FBTL_PROTOCOL FBTL_eSRV_General
 #endif
-
 
 #else
 // application cpu
@@ -86,47 +87,6 @@ typedef struct FBTL_API_SIrqDefinition
 } FBTL_API_SIrqDefinition_t;
 
 /*!
-    \brief FBTL header of process data buffer on double buffer
-
-    \ingroup FBTL_API
-*/
-typedef struct FBTL_API_SCyclicHeader_Double
-{
-    uint32_t                        lastWrittenBuffer;          ///!< Last written buffer
-    uint32_t                        bufferOffset[2];            ///!< buffer offsets
-} FBTL_API_SCyclicHeader_Double_t;
-
-/*!
-    \brief FBTL header of process data buffer on triple buffer
-
-    \ingroup FBTL_API
-*/
-typedef struct FBTL_API_SCyclicHeader_Triple
-{
-#if (defined TRIPLEBUFFER_ATOMIC) && (1==TRIPLEBUFFER_ATOMIC)
-    atomic_uint_least32_t           producerLocked;             ///!< locked by producer
-    atomic_uint_least32_t           unLocked;                   ///!< next buffer
-    atomic_uint_least32_t           consumerLocked;             ///!< locked by consumer
-    atomic_uint_least32_t           lastProduced;               ///!< last written by producer
-#else
-    volatile uint32_t               producerLocked;             ///!< locked by producer
-    volatile uint32_t               unLocked;                   ///!< next buffer
-    volatile uint32_t               consumerLocked;             ///!< locked by consumer
-    volatile uint32_t               lastProduced;               ///!< last written by producer
-#endif
-    uint32_t                        bufferOffset[3];            ///!< buffer offsets
-} FBTL_API_SCyclicHeader_Triple_t;
-
-typedef struct FBTL_API_SCyclicHeader_Simpson
-{
-    volatile    uint32_t                    latest;             ///!< Simpson latest
-    volatile    uint32_t                    reading;            ///!< Simpson reading
-    volatile    uint32_t                    aSlot[2];           ///!< Simpson buffer matrix
-
-    volatile    uint32_t                    bufferOffset[4];    ///!< buffer offsets
-} FBTL_API_SCyclicHeader_Simpson_t;
-
-/*!
     \brief FBTL instance handle
 
     \ingroup FBTL_API
@@ -135,18 +95,22 @@ typedef struct FBTL_SHandle
 {
     void*                           sysIf;                      ///!<   System underlay library instance
 
-    /* underlay */
-    FBTL_SChannelBar_t              ramHead;                    ///!<   RAM header BAR
-    FBTL_SChannelBar_t              ramToBusStatCtrlBar;        ///!<   ToBus StatusControl BAR
-    FBTL_SChannelBar_t              ramFromBusStatCtrlBar;      ///!<   FromBus StatusControl BAR
-    FBTL_SChannelBar_t              ramChannelDesc;             ///!<   Channel descriptor BAR
+    /* underlay locations */
+    FBTL_SChannelBar_t              metaBar;                    ///!<   RAM header BAR
+    FBTL_SChannelBar_t              toBusStatCtrlBar;           ///!<   ToBus StatusControl BAR
+    FBTL_SChannelBar_t              fromBusStatCtrlBar;         ///!<   FromBus StatusControl BAR
+    FBTL_SChannelBar_t              channelDescBar;             ///!<   Channel descriptors BAR
 
     FBTL_SChannelDefinition_t       channelDesc[FBTL_eCT_max];  ///!<   Channel descriptors
 
-    FBTL_SChannelBar_t*             pRamReadStatCtrlBar;        ///!<   Directioned BAR read
-    FBTL_SChannelBar_t*             pRamWriteStatCtrlBar;       ///!<   Directioned BAR write
+    /* IRQ directional bars */
+    FBTL_SChannelBar_t*             pReadStatCtrlBar;           ///!<   Directioned BAR read
+    FBTL_SChannelBar_t*             pWriteStatCtrlBar;          ///!<   Directioned BAR write
+
     FBTL_SChannelDefinition_t*      pReadAcycBar;               ///!<   Acyclic Read Channel BAR
     FBTL_SChannelDefinition_t*      pWriteAcycBar;              ///!<   Acyclic Write Channel BAR
+    FBTL_SChannelDefinition_t*      pReadCycBar;                ///!<   Cyclic Read Channel BAR
+    FBTL_SChannelDefinition_t*      pWriteCycBar;               ///!<   Cyclic Write Channel BAR
 
 #if (defined FBTL_USE_INTERRUPT) && (1==FBTL_USE_INTERRUPT)
     void*                           triggerRun;                 ///!<   Run trigger
@@ -181,11 +145,11 @@ typedef struct FBTL_SHandle
 
         bool                        pdInDataDirect;             ///!<   Current process data in is direct access
         uint8_t*                    pdInData;                   ///!<   Current process data in
-        uint32_t                    pdInDataOffset;             ///!<   Current process data in offset
+        uint64_t                    pdInDataOffset;             ///!<   Current process data in offset
 
         bool                        pdOutDataDirect;            ///!<   Current process data out is direct access
         uint8_t*                    pdOutData;                  ///!<   Current process data out
-        uint32_t                    pdOutDataOffset;            ///!<   Current process data out offset
+        uint64_t                    pdOutDataOffset;            ///!<   Current process data out offset
 
         void*                       pProcessDataHandlerCtxt;    ///!<   Process data changed handler context
         FBTL_SVC_CBpdChange_t       cbProcessDataHandler;       ///!<   Process data changed handler
@@ -246,6 +210,7 @@ extern FBTL_SVC_CBdataReceive_t FBTL_API_getCallback        (FBTL_SHandle_t* pFb
 extern void                     FBTL_API_releaseObject      (FBTL_SHandle_t* pFbtlHandle_p, FBTL_SVC_SElement_t* pObject_p);
 extern bool                     FBTL_API_procInterrupt      (FBTL_SHandle_t* pFbtlHandle_p);
 extern void                     FBTL_API_emitInterrupt      (FBTL_SHandle_t* pFbtlHandle_p);
+void                            FBTL_API_internalTriggerRun (void* pFbtlHandle_p);
 
 #if (defined __cplusplus)
 }

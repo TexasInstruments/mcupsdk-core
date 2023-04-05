@@ -200,7 +200,7 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
         goto Exit;
     }
 
-    error = (EC_API_EError_t)EC_API_SLV_setRevisionNumber(ptSlave, ECAT_REVISION);
+    error = (EC_API_EError_t)EC_API_SLV_setRevisionNumber(ptSlave, EC_REVISION);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -249,7 +249,7 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     /* Former Project.h */
-    error = (EC_API_EError_t)EC_API_SLV_setPDOSize(ptSlave, KBEC_MAX_PD_LEN, KBEC_MAX_PD_LEN);
+    error = (EC_API_EError_t)EC_API_SLV_setPDOSize(ptSlave, EC_MAX_PD_LEN, EC_MAX_PD_LEN);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -264,8 +264,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setBootStrapMailbox(ptSlave,
-                                                            ET1100_BOOT_MBXOUT_START, ET1100_BOOT_MBXOUT_DEF_LENGTH,
-                                                            ET1100_BOOT_MBXIN_START,  ET1100_BOOT_MBXIN_DEF_LENGTH);
+                                                            EC_BOOTSTRAP_MBXOUT_START, EC_BOOTSTRAP_MBXOUT_DEF_LENGTH,
+                                                            EC_BOOTSTRAP_MBXIN_START, EC_BOOTSTRAP_MBXIN_DEF_LENGTH);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -273,8 +273,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setStandardMailbox(ptSlave,
-                                                           ET1100_MBXOUT_START, ET1100_MBXOUT_DEF_LENGTH,
-                                                           ET1100_MBXIN_START,  ET1100_MBXIN_DEF_LENGTH);
+                                                           EC_MBXOUT_START, EC_MBXOUT_DEF_LENGTH,
+                                                           EC_MBXIN_START, EC_MBXIN_DEF_LENGTH);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -282,8 +282,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         0, ET1100_MBXOUT_START,   ET1100_MBXOUT_DEF_LENGTH,
-                                                         ET1100_MBXOUT_CONTROLREG, ET1100_MBXOUT_ENABLE);
+                                                         0, EC_MBXOUT_START, EC_MBXOUT_DEF_LENGTH,
+                                                         EC_MBXOUT_CONTROLREG, EC_MBXOUT_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -291,8 +291,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         1, ET1100_MBXIN_START,   ET1100_MBXIN_DEF_LENGTH,
-                                                         ET1100_MBXIN_CONTROLREG, ET1100_MBXIN_ENABLE);
+                                                         1, EC_MBXIN_START, EC_MBXIN_DEF_LENGTH,
+                                                         EC_MBXIN_CONTROLREG, EC_MBXIN_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -300,8 +300,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         2, ET1100_OUTPUT_START,   ET1100_OUTPUT_DEF_LENGTH,
-                                                         ET1100_OUTPUT_CONTROLREG, ET1100_OUTPUT_ENABLE);
+                                                         2, EC_OUTPUT_START, EC_OUTPUT_DEF_LENGTH,
+                                                         EC_OUTPUT_CONTROLREG, EC_OUTPUT_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -309,8 +309,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         3, ET1100_INPUT_START,   ET1100_INPUT_DEF_LENGTH,
-                                                         ET1100_INPUT_CONTROLREG, ET1100_INPUT_ENABLE);
+                                                         3, EC_INPUT_START, EC_INPUT_DEF_LENGTH,
+                                                         EC_INPUT_CONTROLREG, EC_INPUT_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);

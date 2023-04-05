@@ -68,7 +68,6 @@ typedef struct FBTL_PHYS_RAM_SHeader
     uint32_t    chanListOffset;         ///!< Offset to a list of \ref DPR_SChannelDef
 } FBTL_STRUCT_PACKED FBTL_PHYS_RAM_SHeader_t;
 
-
 /*!
     \brief Control/Status buffer control structure
 
@@ -90,6 +89,17 @@ typedef struct FBTL_PHYS_RAM_SIrqManager
 #if (defined __cplusplus)
 extern "C" {
 #endif
+
+extern uint32_t FBTL_PHYS_RAM_initCtrl                  (void*                      pFbtlHandle_p
+                                                        ,void*                      pFbtlConfig_p);
+extern void     FBTL_PHYS_RAM_run                       (void*                      pFbtlHandle_p);
+
+extern void     FBTL_PHYS_RAM_getCurrentStatusControl   (void*                      pFbtlHandle_p
+                                                        ,FBTL_PHYS_SCtrlStatus_t*   pIrqStatus_p);
+
+extern void     FBTL_PHYS_RAM_setCurrentStatusControl   (void*                      pFbtlHandle_p
+                                                        ,FBTL_PHYS_SCtrlStatus_t*   pIrqStatus_p);
+extern uint32_t FBTL_PHYS_RAM_getAcycChannelSize        (void*                      pFbtlHandle_p);
 
 #if (defined __cplusplus)
 }

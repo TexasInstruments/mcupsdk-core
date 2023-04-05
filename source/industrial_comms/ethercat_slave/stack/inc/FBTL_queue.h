@@ -76,7 +76,6 @@ typedef struct FBTL_QUEUE_SHeader
     retVal = FBTL_QUEUE_push((sysLib), (queue), (hook)); \
     FBTL_QUEUE_unLock((sysLib), (queue));
 
-
 #if (defined __cplusplus)
 extern "C" {
 #endif

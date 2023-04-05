@@ -1,46 +1,20 @@
 /*!
-* \file FBTL_phys.h
-*
-* \brief
-* FBTL Physical underlay interface.
-*
-* \author
-* KUNBUS GmbH
-*
-* \date
-* 2021-05-19
-*
-* \copyright
-* Copyright (c) 2021, KUNBUS GmbH<br /><br />
-* All rights reserved.<br />
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:<br />
-* <ol>
-* <li>Redistributions of source code must retain the above copyright notice, this
-* list of conditions and the following disclaimer.</li>
-* <li>Redistributions in binary form must reproduce the above copyright notice,
-* this list of conditions and the following disclaimer in the documentation
-* and/or other materials provided with the distribution.</li>
-* <li>Neither the name of the copyright holder nor the names of its
-* contributors may be used to endorse or promote products derived from
-* this software without specific prior written permission.</li>
-* </ol>
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * \file FBTL_phys.c
+ *
+ * \brief
+ * FBTL physical layer common part.
+ *
+ * \author
+ * KUNBUS GmbH
+ *
+ * \copyright
+ * Copyright (c) 2023, KUNBUS GmbH<br /><br />
+ * @KUNBUS_LICENSE@
+ *
+ */
 
 #if !(defined __FBTL_PHYS_H__)
 #define __FBTL_PHYS_H__		1
-
 
 #include <system/FBTL_sys.h>
 #include <FBTL_api.h>
@@ -72,8 +46,8 @@ typedef enum FBTL_EChanType
 */
 typedef struct FBTL_SChannelBar
 {
-    uint32_t                offset;         ///!< Offset of BAR
-    uint32_t                length;         ///!< Length of BAR
+    uint64_t                offset;         ///!< Offset of BAR
+    uint64_t                length;         ///!< Length of BAR
 } FBTL_SChannelBar_t;
 
 /*!
@@ -86,8 +60,8 @@ typedef struct FBTL_SChannelDefinition
     uint8_t     chanType;                   ///!< Channel Type according \ref FBTL_EChanType_t
     uint8_t     reserved0;                  ///!< reserved
     uint16_t    reserved1;                  ///!< reserved
-    uint32_t    offset;                     ///!< Offset in FBTL
-    uint32_t    length;                     ///!< Length of this Channel
+    uint64_t    offset;                     ///!< Offset in FBTL
+    uint64_t    length;                     ///!< Length of this Channel
 } FBTL_STRUCT_PACKED FBTL_SChannelDefinition_t;
 
 /*!
@@ -131,6 +105,12 @@ typedef struct FBTL_PHYS_SCtrlStatus
 #define STATUS_FLAG_LED0        ((uint32_t)(1u<<0u))
 #define STATUS_FLAG_LED1        ((uint32_t)(1u<<1u))
 
+typedef struct FBTL_PHYS_SHandle
+{
+    FBTL_SYS_EUnderlayIf_t  underlayType;
+    void*                   pPhysics;
+} FBTL_PHYS_SHandle_t;
+
 #if (defined __cplusplus)
 extern "C" {
 #endif
@@ -144,6 +124,8 @@ extern void     FBTL_PHYS_getCurrentStatusControl   (void*                      
 
 extern void     FBTL_PHYS_setCurrentStatusControl   (void*                      pFbtlHandle_p
                                                     ,FBTL_PHYS_SCtrlStatus_t*   pIrqStatus_p);
+
+extern uint32_t FBTL_PHYS_getAcycChannelSize        (void*                      pFbtlHandle_p);
 
 #if (defined __cplusplus)
 }

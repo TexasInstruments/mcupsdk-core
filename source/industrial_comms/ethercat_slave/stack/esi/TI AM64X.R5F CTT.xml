@@ -123,7 +123,7 @@
                         </DataType>
                         <DataType>
                             <Name>DT1600</Name>
-                            <BitSize>1040</BitSize>
+                            <BitSize>8144</BitSize>
                             <SubItem>
                                 <SubIdx>0</SubIdx>
                                 <Name>SubIndex 000</Name>
@@ -457,7 +457,7 @@
                         </DataType>
                         <DataType>
                             <Name>DT1A00</Name>
-                            <BitSize>1040</BitSize>
+                            <BitSize>8144</BitSize>
                             <SubItem>
                                 <SubIdx>0</SubIdx>
                                 <Name>SubIndex 000</Name>
@@ -1715,14 +1715,14 @@
                             <Index>#x1600</Index>
                             <Name>RxPDO</Name>
                             <Type>DT1600</Type>
-                            <BitSize>1040</BitSize>
+                            <BitSize>8144</BitSize>
                             <Properties />
                         </Object>
                         <Object>
                             <Index>#x1a00</Index>
                             <Name>TxPDO</Name>
                             <Type>DT1A00</Type>
-                            <BitSize>1040</BitSize>
+                            <BitSize>8144</BitSize>
                             <Properties />
                         </Object>
                         <Object>

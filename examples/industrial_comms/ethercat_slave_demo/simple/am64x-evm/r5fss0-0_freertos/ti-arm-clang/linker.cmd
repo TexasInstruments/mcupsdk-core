@@ -29,9 +29,9 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+/* kb_fieldbus_tc/FreeRtos/ti/am64xx/am64xx.cmd */
 --stack_size=0x1000
---heap_size=0x18000
+--heap_size=0x10000
 
 -e_vectors
 
@@ -43,7 +43,7 @@ __UNDEFINED_STACK_SIZE = 0x1000;
 
 SECTIONS
 {
-	.vectors:{} palign(8) > R5F_VECS
+    .vectors:{} palign(8) > R5F_VECS
     .init_array: palign(8) > MSRAM
     .fini_array: palign(8) > MSRAM
 
@@ -55,25 +55,25 @@ SECTIONS
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
     } > MSRAM
 
-	GROUP {
-		.text:   {} palign(8)
-		.rodata: {} palign(8)
-	} > MSRAM
-
-	 GROUP {
-		.data:   {} palign(8)
-	} > MSRAM
-
-	GROUP {
-    	.bss:    {} palign(8) FILL(0x00000000)
-    	RUN_START(__BSS_START)
-    	RUN_END(__BSS_END)
-    	.threadstack:  {} palign(8) FILL(0x00000000)
-    	.stack:  {} palign(8) FILL(0x00000000)
+    GROUP {
+        .text:   {} palign(8)
+        .rodata: {} palign(8)
     } > MSRAM
 
-	GROUP {
-    	.sysmem: {} palign(8)
+     GROUP {
+        .data:   {} palign(8)
+    } > MSRAM
+
+    GROUP {
+        .bss:    {} palign(8) FILL(0x00000000)
+        RUN_START(__BSS_START)
+        RUN_END(__BSS_END)
+        .threadstack:  {} palign(8) FILL(0x00000000)
+        .stack:  {} palign(8) FILL(0x00000000)
+    } > MSRAM
+
+    GROUP {
+        .sysmem: {} palign(8)
     } > MSRAM
 
     GROUP {
@@ -123,13 +123,13 @@ MEMORY
     R5F_TCMA : ORIGIN = 0x00000040 , LENGTH = 0x00007FC0
     R5F_TCMB0: ORIGIN = 0x41010000 , LENGTH = 0x00008000
 
-    MSRAM    : ORIGIN = 0x70100000 , LENGTH = 0x000C0000
+    MSRAM    : ORIGIN = 0x70100000 , LENGTH = 0x00080000
 
     /* shared memories that are used by all cores */
     /* On R5F,
      * - make sure there is a MPU entry which maps below regions as non-cache
      */
-    USER_SHM_MEM 			: ORIGIN = 0x701D0000, LENGTH = 0x00004000
-    LOG_SHM_MEM  			: ORIGIN = 0x701D4000, LENGTH = 0x00004000
-    RTOS_NORTOS_IPC_SHM_MEM	: ORIGIN = 0x701D8000, LENGTH = 0x00008000
+    USER_SHM_MEM             : ORIGIN = 0x701D0000, LENGTH = 0x00004000
+    LOG_SHM_MEM              : ORIGIN = 0x701D4000, LENGTH = 0x00004000
+    RTOS_NORTOS_IPC_SHM_MEM    : ORIGIN = 0x701D8000, LENGTH = 0x00008000
 }

@@ -205,7 +205,6 @@ typedef struct FBTL_SVC_SElement
     FBTL_QUEUE_SHook_t*                     pTimeout;       ///!<   Timeout hook
 } FBTL_SVC_SElement_t;
 
-
 #if (defined __cplusplus)
 extern "C" {
 #endif

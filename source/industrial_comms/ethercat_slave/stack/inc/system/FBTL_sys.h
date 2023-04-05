@@ -170,6 +170,11 @@ typedef enum SYS_IF_EError
     FBTL_eSYS_timedOut      = 0x7E00006E,
 
     /**
+    \brief Transaction layer state invalid.
+    */
+    FBTL_eSYS_transactInvalid   = 0x7E00006F,
+
+    /**
     \brief Unkown error value
     */
     FBTL_eSYS_unknownErr    = 0x7EFFFFFF,
@@ -186,103 +191,129 @@ typedef enum FBTL_SYSLIB_EIrq
     FBTL_SL_IRQ_app2cpu     = 0x2000,                           ///!<   IRQ remote to provider
 } FBTL_SYSLIB_EIrq_t;
 
+/*!
+    \brief SysLib memory sections (virtual ident)
+
+    \ingroup FBTL_SYS
+*/
+typedef enum FBTL_SYSLIB_eMemorySection
+{
+    sysLib_ms_metaHeader        = 0x0000,                       ///!<   Memory header containing meta info
+    sysLib_ms_irqManagerDtkIn   = 0x0001,                       ///!<   IRQ manager to bus
+    sysLib_ms_irqManagerDtkOut  = 0x0002,                       ///!<   IRQ manager from bus
+    sysLib_ms_channelDefinition = 0x0003,                       ///!<   channel definition space
+    sysLib_ms_acycFromBus       = 0x0004,                       ///!<   acyclic channel
+    sysLib_ms_acycToBus         = 0x0005,                       ///!<   acyclic channel
+    sysLib_ms_cyclicFromBus     = 0x0006,                       ///!<   cyclic channel
+    sysLib_ms_cyclicToBus       = 0x0007,                       ///!<   cyclic channel
+    sysLib_ms_max,
+} FBTL_SYSLIB_eMemorySection_t;
+
 /* Underlay */
-typedef uint32_t        (*FBTL_SYS_underLaySize_t)          (void*                  pContext_p);
+typedef uint32_t        (*FBTL_SYS_underLaySize_t)          (void*                  pContext);
 typedef volatile
-        uint8_t*        (*FBTL_SYS_getUnderLay_t)           (void*                  pContext_p
-                                                            ,uint32_t               offset_p
-                                                            ,uint32_t               size_p
-                                                            ,bool*                  pIsDirectAccess_p);
-typedef uint32_t        (*FBTL_SYS_setUnderLay_t)           (void*                  pContext_p
-                                                            ,volatile uint8_t*      pBuffer_p
-                                                            ,uint32_t               offset_p
-                                                            ,uint32_t               size_p);
+        uint8_t*        (*FBTL_SYS_getUnderLay_t)           (void*                  pContext
+                                                            ,uint64_t               offset
+                                                            ,uint64_t               size
+                                                            ,bool*                  pIsDirectAccess);
+typedef uint32_t        (*FBTL_SYS_setUnderLay_t)           (void*                  pContext
+                                                            ,volatile uint8_t*      pBuffer
+                                                            ,uint64_t               offset
+                                                            ,uint64_t               size);
+
+/* Memory manager */
+typedef uint64_t        (*FBTL_SYS_getSectionBase_t)        (void*                  pContext
+                                                            ,FBTL_SYSLIB_eMemorySection_t
+                                                                                    memSection);
+typedef uint64_t        (*FBTL_SYS_getSectionSize_t)        (void*                  pContext
+                                                            ,FBTL_SYSLIB_eMemorySection_t
+                                                                                    memSection);
 
 /* Memory */
-typedef uint8_t*        (*FBTL_SYS_malloc_t)                (void*                  pContext_p
-                                                            ,uint32_t               size_p);
-typedef void            (*FBTL_SYS_free_t)                  (void*                  pContext_p
-                                                            ,uint8_t*               pPtr_p);
-typedef void            (*FBTL_SYS_memset_t)                (void*                  pContext_p
-                                                            ,uint8_t*               pPtr_p
-                                                            ,uint8_t                value_p
-                                                            ,uint32_t               num_p);
-typedef void            (*FBTL_SYS_memcpy_t)                (void*                  pContext_p
-                                                            ,uint8_t*               pDestination_p
-                                                            ,const uint8_t*         pSource_p
-                                                            ,uint32_t               num_p);
+typedef uint8_t*        (*FBTL_SYS_malloc_t)                (void*                  pContext
+                                                            ,uint32_t               size);
+typedef void            (*FBTL_SYS_free_t)                  (void*                  pContext
+                                                            ,uint8_t*               pPtr);
+typedef void            (*FBTL_SYS_memset_t)                (void*                  pContext
+                                                            ,uint8_t*               pPtr
+                                                            ,uint8_t                value
+                                                            ,uint32_t               num);
+typedef void            (*FBTL_SYS_memcpy_t)                (void*                  pContext
+                                                            ,uint8_t*               pDestination
+                                                            ,const uint8_t*         pSource
+                                                            ,uint32_t               num);
 
 /* Interrupts */
-typedef void*           (*FBTL_SYS_IRQ_create_t)            (void*                  pContext_p
-                                                            ,bool                   outNotIn_p
-                                                            ,FBTL_SYSLIB_EIrq_t     irqType_p);
-typedef void            (*FBTL_SYS_IRQ_cbHookIsr_t)         (void*                  pContext_p);
-typedef void            (*FBTL_SYS_IRQ_registerISR_t)       (void*                  pIrq_p
-                                                            ,void*                  pIsrContext_p
+typedef void*           (*FBTL_SYS_IRQ_create_t)            (void*                  pContext
+                                                            ,bool                   outNotIn
+                                                            ,FBTL_SYSLIB_EIrq_t     irqType);
+typedef void            (*FBTL_SYS_IRQ_cbHookIsr_t)         (void*                  pContext);
+typedef void            (*FBTL_SYS_IRQ_registerISR_t)       (void*                  pIrq
+                                                            ,void*                  pIsrContext
                                                             ,FBTL_SYS_IRQ_cbHookIsr_t
-                                                                                    cbIsrCallback_p);
-typedef void            (*FBTL_SYS_IRQ_delete_t)            (void*                  pContext_p
-                                                            ,void*                  pIrq_p);
-typedef uint32_t        (*FBTL_SYS_IRQ_wait_t)              (void*                  pContext_p
-                                                            ,void*                  pIrq_p
-                                                            ,uint32_t               timeout_p);
-typedef void            (*FBTL_SYS_IRQ_post_t)              (void*                  pContext_p
-                                                            ,void*                  pIrq_p);
-typedef void            (*FBTL_SYS_IRQ_handshake_t)         (void*                  pContext_p);
-typedef bool            (*FBTL_SYS_IRQ_inISR_t)             (void*                  pContext_p);
+                                                                                    cbIsrCallback);
+typedef void            (*FBTL_SYS_IRQ_delete_t)            (void*                  pContext
+                                                            ,void*                  pIrq);
+typedef uint32_t        (*FBTL_SYS_IRQ_wait_t)              (void*                  pContext
+                                                            ,void*                  pIrq
+                                                            ,uint32_t               timeout);
+typedef void            (*FBTL_SYS_IRQ_post_t)              (void*                  pContext
+                                                            ,void*                  pIrq);
+typedef void            (*FBTL_SYS_IRQ_handshake_t)         (void*                  pContext);
+typedef bool            (*FBTL_SYS_IRQ_inISR_t)             (void*                  pContext);
 
 /* Signals */
-typedef void*           (*FBTL_SYS_SIG_create_t)            (void*                  pContext_p
-                                                            ,uint8_t                spawn_p
-                                                            ,char*                  pName_p);
-typedef void            (*FBTL_SYS_SIG_delete_t)            (void*                  pContext_p
-                                                            ,void*                  pSignal_p);
-typedef uint32_t        (*FBTL_SYS_SIG_wait_t)              (void*                  pContext_p
-                                                            ,void*                  pSignal_p
-                                                            ,uint32_t               timeout_p);
-typedef void            (*FBTL_SYS_SIG_post_t)              (void*                  pContext_p
-                                                            ,void*                  pSignal_p);
-typedef void*           (*FBTL_SYS_CSIG_create_t)           (void*                  pContext_p
-                                                            ,uint32_t               countStart_p
-                                                            ,uint32_t               countMax_p);
+typedef void*           (*FBTL_SYS_SIG_create_t)            (void*                  pContext
+                                                            ,uint8_t                spawn
+                                                            ,char*                  pName);
+typedef void            (*FBTL_SYS_SIG_delete_t)            (void*                  pContext
+                                                            ,void*                  pSignal);
+typedef uint32_t        (*FBTL_SYS_SIG_wait_t)              (void*                  pContext
+                                                            ,void*                  pSignal
+                                                            ,uint32_t               timeout);
+typedef void            (*FBTL_SYS_SIG_post_t)              (void*                  pContext
+                                                            ,void*                  pSignal);
+typedef void*           (*FBTL_SYS_CSIG_create_t)           (void*                  pContext
+                                                            ,uint32_t               countStart
+                                                            ,uint32_t               countMax);
 
 /* Mutex */
-typedef void*           (*FBTL_SYS_MTX_create_t)            (void*                  pContext_p
-                                                            ,uint8_t                spawn_p
-                                                            ,char*                  pName_p);
-typedef void            (*FBTL_SYS_MTX_delete_t)            (void*                  pContext_p
-                                                            ,void*                  pSignal_p);
-typedef uint32_t        (*FBTL_SYS_MTX_lock_t)              (void*                  pContext_p
-                                                            ,void*                  pSignal_p
-                                                            ,uint32_t               timeout_p);
-typedef void            (*FBTL_SYS_MTX_unLock_t)            (void*                  pContext_p
-                                                            ,void*                  pSignal_p);
+typedef void*           (*FBTL_SYS_MTX_create_t)            (void*                  pContext
+                                                            ,uint8_t                spawn
+                                                            ,char*                  pName);
+typedef void            (*FBTL_SYS_MTX_delete_t)            (void*                  pContext
+                                                            ,void*                  pSignal);
+typedef uint32_t        (*FBTL_SYS_MTX_lock_t)              (void*                  pContext
+                                                            ,void*                  pSignal
+                                                            ,uint32_t               timeout);
+typedef void            (*FBTL_SYS_MTX_unLock_t)            (void*                  pContext
+                                                            ,void*                  pSignal);
 
-typedef void*           (*FBTL_SYS_CS_create_t)             (void*                  pContext_p);
-typedef void            (*FBTL_SYS_CS_delete_t)             (void*                  pContext_p
-                                                            ,void*                  pCritSect_p);
-typedef uint32_t        (*FBTL_SYS_CS_enter_t)              (void*                  pContext_p
-                                                            ,void*                  pCritSect_p
-                                                            ,uint32_t               timeout_p);
-typedef void            (*FBTL_SYS_CS_leave_t)              (void*                  pContext_p
-                                                            ,void*                  pCritSect_p);
+typedef void*           (*FBTL_SYS_CS_create_t)             (void*                  pContext);
+typedef void            (*FBTL_SYS_CS_delete_t)             (void*                  pContext
+                                                            ,void*                  pCritSect);
+typedef uint32_t        (*FBTL_SYS_CS_enter_t)              (void*                  pContext
+                                                            ,void*                  pCritSect
+                                                            ,uint32_t               timeout);
+typedef void            (*FBTL_SYS_CS_leave_t)              (void*                  pContext
+                                                            ,void*                  pCritSect);
 
 /* Scheduler */
-typedef void            (*FBTL_SYS_SCHED_yield_t)           (void*                  pContext_p);
-typedef void            (*FBTL_SYS_SCHED_sleep_t)           (void*                  pContext_p
-                                                            ,uint32_t               msTimeout_p);
-typedef uint32_t        (*FBTL_SYS_SCHED_getThreadId_t)     (void*                  pContext_p);
-typedef bool            (*FBTL_SYS_SCHED_isIdentThrdId_t)   (void*                  pContext_p
+typedef void            (*FBTL_SYS_SCHED_yield_t)           (void*                  pContext);
+typedef void            (*FBTL_SYS_SCHED_sleep_t)           (void*                  pContext
+                                                            ,uint32_t               msTimeout);
+typedef uint32_t        (*FBTL_SYS_SCHED_getThreadId_t)     (void*                  pContext);
+typedef bool            (*FBTL_SYS_SCHED_isIdentThrdId_t)   (void*                  pContext
                                                             ,uint32_t               threadId);
-typedef uint32_t        (*FBTL_SYS_getSysTickMs_t)          (void*                  pContext_p);
-typedef uint32_t        (*FBTL_SYS_setCpuSpeed_t)           (void*                  pContext_p
-                                                            ,uint32_t               frequency_p);
-typedef uint32_t        (*FBTL_SYS_getCpuSpeed_t)           (void*                  pContext_p
-                                                            ,uint32_t*              pFrequency_p);
+typedef uint32_t        (*FBTL_SYS_getSysTickMs_t)          (void*                  pContext);
+typedef uint32_t        (*FBTL_SYS_setCpuSpeed_t)           (void*                  pContext
+                                                            ,uint32_t               frequency);
+typedef uint32_t        (*FBTL_SYS_getCpuSpeed_t)           (void*                  pContext
+                                                            ,uint32_t*              pFrequency);
 
-typedef void            (*FBTL_SYS_printf_t)                (void*                  pContext_p
-                                                            ,const char* __restrict pFormat_p
-                                                            ,va_list                vaarg_p);
+typedef void            (*FBTL_SYS_printf_t)                (void*                  pContext
+                                                            ,const char* __restrict pFormat
+                                                            ,va_list                vaarg);
 
 /*!
     \brief Underlay interface
@@ -297,19 +328,54 @@ typedef struct FBTL_SYSLIB_SUnderlay
     FBTL_SYS_setUnderLay_t              setUnderlayBuffer;      ///!<   set buffer chunk from underlay
 } FBTL_SYSLIB_SUnderlay_t;
 
+typedef struct FBTL_SYSLIB_SMemoryManager
+{
+    FBTL_SYS_getSectionBase_t           sectionBase;            ///!<   get virtual memory section base address
+    FBTL_SYS_getSectionSize_t           sectionSize;            ///!<   get virtual memory section size
+} FBTL_SYSLIB_SMemoryManager_t;
+
 /*!
     \brief Underlay RAM parameters
 
     \ingroup FBTL_SYS
 */
-typedef struct FBTL_SYSLIB_SRamUnterlay
+typedef struct FBTL_SYSLIB_SRamUnderlay
 {
     /* portType == RAM */
     volatile uint8_t*                   pVirtualRamBase;        ///!<   base of shared RAM
     uint32_t                            ramSize;                ///!<   size of shared RAM
     void*                               shmFileHdl;             ///!<   shared memory access file
     /* /portType == RAM */
-} FBTL_SYSLIB_SRamUnterlay_t;
+} FBTL_SYSLIB_SRamUnderlay_t;
+
+/*!
+ * \brief UART message fifo type
+ *
+ * \ingroup FBTL_SYS
+ */
+typedef struct FBTL_SYSLIB_SLineMessage
+{
+    uint32_t    msgSize;
+    uint8_t*    message;
+
+    struct FBTL_SYSLIB_SLineMessage*    pNext;
+} FBTL_SYSLIB_SLineMessage_t;
+
+/*!
+    \brief Underlay RAM parameters
+
+    \ingroup FBTL_SYS
+*/
+typedef struct FBTL_SYSLIB_SLineUnderlay
+{
+    /* portType == LINE */
+    void*                               pUartHandle;            ///!<   COM interface handle
+    uint8_t*                            pLocalPDBuffer;         ///!<   Process data buffer
+
+    FBTL_SYSLIB_SLineMessage_t*         pendMessage;            ///!<   Pending message fifo
+    /* /portType == LINE*/
+} FBTL_SYSLIB_SLineUnderlay_t;
+
 
 /*!
     \brief Dynamic memory functions
@@ -410,7 +476,6 @@ typedef struct FBTL_SYSLIB_SThreading
     bool                            stopThread;             ///!<   on true, terminate threads
     void*                           pFbtlHandle;            ///!<   FBTL handle for threads
 
-
     void*                           fbtlRunThread;          ///!<   Cyclic thread of FBTL
     void*                           fbtlSyncThread;         ///!<   Sync execution thread of FBTL
     void*                           fbtlAcycISTThread;      ///!<   Acyclic IST thread
@@ -433,7 +498,9 @@ typedef struct FBTL_SYSLIB_SHandle
     bool                                verbose;                ///!<   Trace output enable
 
     FBTL_SYSLIB_SUnderlay_t             underlay;               ///!<   Underlay depending functions and values
-    FBTL_SYSLIB_SRamUnterlay_t          ramUnderLay;            ///!<   RAM depending functions and values
+    FBTL_SYSLIB_SMemoryManager_t        memManager;             ///!<   Memory map support functions
+    FBTL_SYSLIB_SRamUnderlay_t          ramUnderLay;            ///!<   RAM depending functions and values
+    FBTL_SYSLIB_SLineUnderlay_t         lineUnderLay;           ///!<   Line depending functions and values
     FBTL_SYSLIB_SMemory_t               heap;                   ///!<   Heap control functions
     FBTL_SYSLIB_SIrq_t                  irqHandler;             ///!<   Interrupt handling functions
     FBTL_SYSLIB_SSignal_t               signal;                 ///!<   Signal handling functions
@@ -449,118 +516,124 @@ typedef struct FBTL_SYSLIB_SHandle
 extern "C" {
 #endif
 
-extern uint32_t                 FBTL_SYS_checkLibrary   (void*                  pSysLibHandle_p);
+extern uint32_t                 FBTL_SYS_checkLibrary   (void*                  pSysLibHandle);
 
-extern void                     FBTL_SYS_printf         (void*                  pSysLibHandle_p
-                                                        ,const char* __restrict pFormat_p
+extern void                     FBTL_SYS_printf         (void*                  pSysLibHandle
+                                                        ,const char* __restrict pFormat
                                                         ,...);
 
 /* Underlay */
-extern FBTL_SYS_EUnderlayIf_t   FBTL_SYS_getULType      (void*                  pSysLibHandle_p);
-extern uint32_t                 FBTL_SYS_getUnderLaySize(void*                  pSysLibHandle_p);
-extern volatile uint8_t*        FBTL_SYS_getUnderLay    (void*                  pSysLibHandle_p
-                                                        ,uint32_t               offset_p
-                                                        ,uint32_t               size_p
-                                                        ,bool*                  pIsDirectAccess_p);
-extern uint32_t                 FBTL_SYS_setUnderLay    (void*                  pSysLibHandle_p
-                                                        ,volatile uint8_t*      pBuffer_p
-                                                        ,uint32_t               offset_p
-                                                        ,uint32_t               size_p);
+extern FBTL_SYS_EUnderlayIf_t   FBTL_SYS_getULType      (void*                  pSysLibHandle);
+extern uint32_t                 FBTL_SYS_getUnderLaySize(void*                  pSysLibHandle);
+extern volatile uint8_t*        FBTL_SYS_getUnderLay    (void*                  pSysLibHandle
+                                                        ,uint64_t               offset
+                                                        ,uint64_t               size
+                                                        ,bool*                  pIsDirectAccess);
+extern uint32_t                 FBTL_SYS_setUnderLay    (void*                  pSysLibHandle
+                                                        ,volatile uint8_t*      pBuffer
+                                                        ,uint64_t               offset
+                                                        ,uint64_t               size);
+
+
+extern uint64_t                 FBTL_SYS_getSectionBase (void*                  pSysLibHandle
+                                                        ,FBTL_SYSLIB_eMemorySection_t
+                                                                                memSection);
+extern uint64_t                 FBTL_SYS_getSectionSize (void*                  pSysLibHandle
+                                                        ,FBTL_SYSLIB_eMemorySection_t
+                                                                                memSection);
 
 /* memory */
-extern uint8_t*                 FBTL_SYS_malloc         (void*                  pSysLibHandle_p
-                                                        ,uint32_t               length_p);
-extern void                     FBTL_SYS_free           (void*                  pSysLibHandle_p
-                                                        ,uint8_t*               pData_p);
-extern void                     FBTL_SYS_memset         (void*                  pSysLibHandle_p
-                                                        ,uint8_t*               pPtr_p
-                                                        ,uint8_t                value_p
-                                                        ,uint32_t               num_p);
-extern void                     FBTL_SYS_memcpy         (void*                  pSysLibHandle_p
-                                                        ,uint8_t*               pDestination_p
-                                                        ,const uint8_t*         pSource_p
-                                                        ,uint32_t               num_p);
+extern uint8_t*                 FBTL_SYS_malloc         (void*                  pSysLibHandle
+                                                        ,uint32_t               length);
+extern void                     FBTL_SYS_free           (void*                  pSysLibHandle
+                                                        ,uint8_t*               pData);
+extern void                     FBTL_SYS_memset         (void*                  pSysLibHandle
+                                                        ,uint8_t*               pPtr
+                                                        ,uint8_t                value
+                                                        ,uint32_t               num);
+extern void                     FBTL_SYS_memcpy         (void*                  pSysLibHandle
+                                                        ,uint8_t*               pDestination
+                                                        ,const uint8_t*         pSource
+                                                        ,uint32_t               num);
 
 /* Interrupts */
-extern void*                    FBTL_SYS_IRQ_create     (void*                  pSysLibHandle_p
-                                                        ,bool                   outNotIn_p
-                                                        ,FBTL_SYSLIB_EIrq_t     irqType_p);
-extern void                     FBTL_SYS_IRQ_delete     (void*                  pSysLibHandle_p
-                                                        ,void*                  pIrq_p);
-extern uint32_t                 FBTL_SYS_IRQ_wait       (void*                  pSysLibHandle_p
-                                                        ,void*                  pIrq_p
-                                                        ,uint32_t               timeout_p);
-extern void                     FBTL_SYS_IRQ_post       (void*                  pSysLibHandle_p
-                                                        ,void*                  pIrq_p);
-extern void                     FBTL_SYS_IRQ_handshake  (void*                  pSysLibHandle_p);
-extern bool                     FBTL_SYS_IRQ_inIsr      (void*                  pSysLibHandle_p);
-extern void                     FBTL_SYS_IRQ_register   (void*                  pSysLibHandle_p
-                                                        ,void*                  pIrq_p
-                                                        ,void*                  pIsrContext_p
+extern void*                    FBTL_SYS_IRQ_create     (void*                  pSysLibHandle
+                                                        ,bool                   outNotIn
+                                                        ,FBTL_SYSLIB_EIrq_t     irqType);
+extern void                     FBTL_SYS_IRQ_delete     (void*                  pSysLibHandle
+                                                        ,void*                  pIrq);
+extern uint32_t                 FBTL_SYS_IRQ_wait       (void*                  pSysLibHandle
+                                                        ,void*                  pIrq
+                                                        ,uint32_t               timeout);
+extern void                     FBTL_SYS_IRQ_post       (void*                  pSysLibHandle
+                                                        ,void*                  pIrq);
+extern void                     FBTL_SYS_IRQ_handshake  (void*                  pSysLibHandle);
+extern bool                     FBTL_SYS_IRQ_inIsr      (void*                  pSysLibHandle);
+extern void                     FBTL_SYS_IRQ_register   (void*                  pSysLibHandle
+                                                        ,void*                  pIrq
+                                                        ,void*                  pIsrContext
                                                         ,FBTL_SYS_IRQ_cbHookIsr_t
-                                                                                cbIsr_p);
-
-
+                                                                                cbIsr);
 
 /* Signals */
-extern void*                    FBTL_SYS_SIG_create     (void*                  pSysLibHandle_p
-                                                        ,uint8_t                spawn_p
-                                                        ,char*                  pName_p);
-extern void                     FBTL_SYS_SIG_delete     (void*                  pSysLibHandle_p
-                                                        ,void*                  pSignal_p);
-extern uint32_t                 FBTL_SYS_SIG_wait       (void*                  pSysLibHandle_p
-                                                        ,void*                  pSignal_p
-                                                        ,uint32_t               timeout_p);
-extern void                     FBTL_SYS_SIG_post       (void*                  pSysLibHandle_p
-                                                        ,void*                  pSignal_p);
+extern void*                    FBTL_SYS_SIG_create     (void*                  pSysLibHandle
+                                                        ,uint8_t                spawn
+                                                        ,char*                  pName);
+extern void                     FBTL_SYS_SIG_delete     (void*                  pSysLibHandle
+                                                        ,void*                  pSignal);
+extern uint32_t                 FBTL_SYS_SIG_wait       (void*                  pSysLibHandle
+                                                        ,void*                  pSignal
+                                                        ,uint32_t               timeout);
+extern void                     FBTL_SYS_SIG_post       (void*                  pSysLibHandle
+                                                        ,void*                  pSignal);
 
-extern void*                    FBTL_SYS_CSIG_create    (void*                  pSysLibHandle_p
-                                                        ,uint32_t               countStart_p
-                                                        ,uint32_t               countMax_p);
-extern void                     FBTL_SYS_CSIG_delete    (void*                  pSysLibHandle_p
-                                                        ,void*                  pSignal_p);
-extern uint32_t                 FBTL_SYS_CSIG_wait      (void*                  pSysLibHandle_p
-                                                        ,void*                  pSignal_p
-                                                        ,uint32_t               timeout_p);
-extern void                     FBTL_SYS_CSIG_post      (void*                  pSysLibHandle_p
-                                                        ,void*                  pSignal_p);
+extern void*                    FBTL_SYS_CSIG_create    (void*                  pSysLibHandle
+                                                        ,uint32_t               countStart
+                                                        ,uint32_t               countMax);
+extern void                     FBTL_SYS_CSIG_delete    (void*                  pSysLibHandle
+                                                        ,void*                  pSignal);
+extern uint32_t                 FBTL_SYS_CSIG_wait      (void*                  pSysLibHandle
+                                                        ,void*                  pSignal
+                                                        ,uint32_t               timeout);
+extern void                     FBTL_SYS_CSIG_post      (void*                  pSysLibHandle
+                                                        ,void*                  pSignal);
 
 /* Mutex */
-extern void*                    FBTL_SYS_MTX_create     (void*                  pSysLibHandle_p
-                                                        ,uint8_t                spawn_p
-                                                        ,char*                  pName_p);
-extern void                     FBTL_SYS_MTX_delete     (void*                  pSysLibHandle_p
-                                                        ,void*                  pMutex_p);
-extern uint32_t                 FBTL_SYS_MTX_lock       (void*                  pSysLibHandle_p
-                                                        ,void*                  pMutex_p
-                                                        ,uint32_t               timeout_p);
-extern void                     FBTL_SYS_MTX_unLock     (void*                  pSysLibHandle_p
-                                                        ,void*                  pMutex_p);
+extern void*                    FBTL_SYS_MTX_create     (void*                  pSysLibHandle
+                                                        ,uint8_t                spawn
+                                                        ,char*                  pName);
+extern void                     FBTL_SYS_MTX_delete     (void*                  pSysLibHandle
+                                                        ,void*                  pMutex);
+extern uint32_t                 FBTL_SYS_MTX_lock       (void*                  pSysLibHandle
+                                                        ,void*                  pMutex
+                                                        ,uint32_t               timeout);
+extern void                     FBTL_SYS_MTX_unLock     (void*                  pSysLibHandle
+                                                        ,void*                  pMutex);
 
 /* Cirtical section */
-extern void*                    FBTL_SYS_CS_create      (void*                  pSysLibHandle_p);
-extern void                     FBTL_SYS_CS_delete      (void*                  pSysLibHandle_p
-                                                        ,void*                  pCritSect_p);
-extern uint32_t                 FBTL_SYS_CS_enter       (void*                  pSysLibHandle_p
-                                                        ,void*                  pCritSect_p
-                                                        ,uint32_t               timeout_p);
-extern void                     FBTL_SYS_CS_leave       (void*                  pSysLibHandle_p
-                                                        ,void*                  pCritSect_p);
+extern void*                    FBTL_SYS_CS_create      (void*                  pSysLibHandle);
+extern void                     FBTL_SYS_CS_delete      (void*                  pSysLibHandle
+                                                        ,void*                  pCritSect);
+extern uint32_t                 FBTL_SYS_CS_enter       (void*                  pSysLibHandle
+                                                        ,void*                  pCritSect
+                                                        ,uint32_t               timeout);
+extern void                     FBTL_SYS_CS_leave       (void*                  pSysLibHandle
+                                                        ,void*                  pCritSect);
 
 /* Scheduler */
-extern uint32_t                 FBTL_SYS_getMsTick      (void*                  pSysLibHandle_p);
+extern uint32_t                 FBTL_SYS_getMsTick      (void*                  pSysLibHandle);
 
-extern uint32_t                 FBTL_SYS_setCpuSpeed    (void*                  pSysLibHandle_p
-                                                        ,uint32_t               frequency_p);
-extern uint32_t                 FBTL_SYS_getCpuSpeed    (void*                  pSysLibHandle_p
-                                                        ,uint32_t*              pFrequency_p);
-extern void                     FBTL_SYS_yield          (void*                  pSysLibHandle_p);
-extern void                     FBTL_SYS_sleep          (void*                  pSysLibHandle_p
-                                                        ,uint32_t               msTimeout_p);
-extern uint32_t                 FBTL_SYS_getThreadId    (void*                  pSysLibHandle_p);
-extern bool                     FBTL_SYS_isIdentThrdId  (void*                  pSysLibHandle_p
-                                                        ,uint32_t               threadId_p);
-extern bool                     FBTL_SYS_isVerbose      (void*                  pSysLibHandle_p);
+extern uint32_t                 FBTL_SYS_setCpuSpeed    (void*                  pSysLibHandle
+                                                        ,uint32_t               frequency);
+extern uint32_t                 FBTL_SYS_getCpuSpeed    (void*                  pSysLibHandle
+                                                        ,uint32_t*              pFrequency);
+extern void                     FBTL_SYS_yield          (void*                  pSysLibHandle);
+extern void                     FBTL_SYS_sleep          (void*                  pSysLibHandle
+                                                        ,uint32_t               msTimeout);
+extern uint32_t                 FBTL_SYS_getThreadId    (void*                  pSysLibHandle);
+extern bool                     FBTL_SYS_isIdentThrdId  (void*                  pSysLibHandle
+                                                        ,uint32_t               threadId);
+extern bool                     FBTL_SYS_isVerbose      (void*                  pSysLibHandle);
 
 #if (defined __cplusplus)
 }

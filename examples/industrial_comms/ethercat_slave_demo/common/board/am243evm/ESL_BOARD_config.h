@@ -44,8 +44,8 @@
 #include <ESL_OS_os.h>
 #include <ESL_BOARD_OS_config.h>
 
-#define ECAT_PHYADDR_IN                     (3u)
-#define ECAT_PHYADDR_OUT                    (15u)
+#define ECAT_PHYADDR_IN                     (15u)
+#define ECAT_PHYADDR_OUT                    (3u)
 #define ECAT_PHYPOLINVERT_IN                (true)
 #define ECAT_PHYPOLINVERT_OUT               (true)
 #define ECAT_PHYUSERXLINK_IN                (true)

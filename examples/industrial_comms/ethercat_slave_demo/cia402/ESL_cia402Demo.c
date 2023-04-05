@@ -398,8 +398,9 @@ uint32_t EC_SLV_APP_setSupportedDriveModes(EC_SLV_APP_Sapplication_t*  pApplicat
 {
     uint32_t err;
     uint32_t driveMode = DRIVE_MODE_CSP | DRIVE_MODE_CSV | DRIVE_MODE_CST;
+    uint8_t axisNo;
 
-    for(uint8_t axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
+    for( axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
     {
         err = EC_SLV_APP_setCiA402ObjectValue(pApplication_p,
                                               &pApplication_p->CiA402_axisData[axisNo].supportedDriveModesIndex,
@@ -443,12 +444,13 @@ void EC_SLV_APP_setObdValues(void* pCtxt_p)
 {
     EC_SLV_APP_Sapplication_t*  pApplicationInstance    = (EC_SLV_APP_Sapplication_t*)pCtxt_p;
     int32_t                     posMaxLimit             = POSITION_MAX_LIMIT;
+    uint8_t                     axisNo;
 
     OSAL_printf("+%s\r\n", __func__);
 
     EC_SLV_APP_setSupportedDriveModes(pApplicationInstance);
 
-    for(uint8_t axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
+    for(axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
     {
         EC_SLV_APP_setCiA402ObjectEntryValue(pApplicationInstance->ptEcSlvApi, OBD_SW_POSITION_LIMIT_INDEX(axisNo), 2, sizeof(posMaxLimit), (uint16_t*) &posMaxLimit);
     }
@@ -492,6 +494,7 @@ EC_API_SLV_EUserRetCodes_t EC_SLV_APP_startInputHandler(void* pCtxt_p, uint16_t*
     EC_API_SLV_SHandle_t*       pEcApiSlv               = NULL;
     uint32_t                    sync0CycleTime          = 0;
     EC_API_SLV_EUserRetCodes_t  retVal                  = EC_USR_eRET_ERROR;
+    uint8_t                     axisNo;
 
     OSALUNREF_PARM(pIntMask_p);
 
@@ -506,7 +509,7 @@ EC_API_SLV_EUserRetCodes_t EC_SLV_APP_startInputHandler(void* pCtxt_p, uint16_t*
 
     sync0CycleTime = sync0CycleTime / NSEC_TO_USEC; //get cycle time in us
 
-    for(uint8_t axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
+    for(axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
     {
         localAxes_s[axisNo].id = axisNo;
 
@@ -876,6 +879,7 @@ void EC_SLV_APP_cia402Application(void* pCtxt_p)
     EC_API_SLV_SHandle_t*       pEcApiSlv               = NULL;
     static
     bool                        gotOffsets              = false;
+    uint8_t                     axisNo;
 
     uint16_t controlWord, statusWord, errorCode;
     int16_t quickStopOptionCode, shutdownOptionCode, disableOperationCode, faultReactionCode;
@@ -942,7 +946,7 @@ void EC_SLV_APP_cia402Application(void* pCtxt_p)
         EC_API_SLV_preSeqOutputPDBuffer(pApplication_p->ptEcSlvApi, pApplication_p->realPdoOutLen, (void**)&(pApplication_p->pdRxBuffer));
     }
 
-    for(uint8_t axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
+    for(axisNo = 0; axisNo < AXES_NUMBER; axisNo++)
     {
         //Read drive control and status objects
         EC_SLV_APP_CIA_GETAXISVALUE(uint16_t, controlWord, pApplication_p->CiA402_axisData[axisNo].controlWordIndex);

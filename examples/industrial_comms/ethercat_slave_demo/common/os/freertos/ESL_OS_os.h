@@ -75,11 +75,14 @@
 #define FBTLRECEIVER_TASK_SIZE_BYTE     FBTL_GENERAL_STACK_SIZE_BYTE
 #define FBTLSERVICE_TASK_SIZE_BYTE      FBTL_GENERAL_STACK_SIZE_BYTE
 #define FBTLSLOWSERVICE_TASK_SIZE_BYTE  FBTL_GENERAL_STACK_SIZE_BYTE
+#define FBTLUART_TASK_SIZE_BYTE         FBTL_GENERAL_STACK_SIZE_BYTE
+
 #endif
 
 #if (defined FBTL_REMOTE) && (1==FBTL_REMOTE)
 #define FBTLSYNCIST_TASK_SIZE_BYTE      FBTL_GENERAL_STACK_SIZE_BYTE
 #define FBTLLEDIST_TASK_SIZE_BYTE       FBTL_GENERAL_STACK_SIZE_BYTE
+#define FBTLUART_TASK_SIZE_BYTE         FBTL_GENERAL_STACK_SIZE_BYTE
 #endif
 
 #if (defined DPRAM_REMOTE)
@@ -104,6 +107,8 @@ typedef struct ESL_GPIO_STestPinCfg
 #define FBTLRECEIVER_TASK_SIZE          (FBTLRECEIVER_TASK_SIZE_BYTE/sizeof(configSTACK_DEPTH_TYPE))
 #define FBTLSERVICE_TASK_SIZE           (FBTLSERVICE_TASK_SIZE_BYTE/sizeof(configSTACK_DEPTH_TYPE))
 #define FBTLSLOWSERVICE_TASK_SIZE       (FBTLSLOWSERVICE_TASK_SIZE_BYTE/sizeof(configSTACK_DEPTH_TYPE))
+#define FBTLUART_TASK_SIZE              (FBTLUART_TASK_SIZE_BYTE/sizeof(configSTACK_DEPTH_TYPE))
+
 #endif
 
 #if (defined FBTL_REMOTE) && (1==FBTL_REMOTE)
@@ -126,11 +131,14 @@ extern StackType_t SYSLIB_fbtlSyncExecTaskStack_g[];
 extern StackType_t SYSLIB_fbtlReceiverTaskStack_g[];
 extern StackType_t SYSLIB_fbtlServiceTaskStack_g[];
 extern StackType_t SYSLIB_fbtlSlowServiceTaskStack_g[];
+extern StackType_t SYSLIB_fbtlUartTaskStack_g[];
+
 #endif
 
 #if (defined FBTL_REMOTE) && (1==FBTL_REMOTE)
 extern StackType_t SYSLIB_fbtlSyncIstTaskStack_g[];
 extern StackType_t SYSLIB_fbtlLedIstTaskStack_g[];
+extern StackType_t SYSLIB_fbtlUartTaskStack_g[];
 #endif
 
 #if (defined DPRAM_REMOTE)

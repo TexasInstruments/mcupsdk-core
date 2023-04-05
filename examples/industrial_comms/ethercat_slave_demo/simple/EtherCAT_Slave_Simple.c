@@ -51,7 +51,11 @@
   #include <dprLib_sharedMemory.h>
  #endif
 #elif (defined FBTL_REMOTE) && (FBTL_REMOTE==1)
- #include <sysLib_sharedMemory.h>
+#if (defined FBTLIMPL_LINEUART) && (1==FBTLIMPL_LINEUART)
+ #include "sysLib_lineUart.h"
+#else
+ #include "sysLib_sharedMemory.h"
+#endif
  #include <FBTL_api.h>
 #endif
 
@@ -65,6 +69,21 @@
 
 /* stack */
 #include <ecSlvApi.h>
+
+#define FrameProc   ECAT_FrameProcAPP
+// FREERTOS contained FW #include <source/networking/ethercat_slave/icss_fwhal/ecat_frame_handler_bin.h>
+#include <industrial_comms/ethercat_slave/icss_fwhal/firmware/g_v1.3/ecat_frame_handler_bin.h>
+#undef FrameProc
+#define HostProc   ECAT_HostProcAPP
+// FREERTOS contained FW #include <source/networking/ethercat_slave/icss_fwhal/ecat_host_interface_bin.h>
+#include <industrial_comms/ethercat_slave/icss_fwhal/firmware/g_v1.3/ecat_host_interface_bin.h>
+#undef HostProc
+
+#if (defined INCLUDE_MDIO_MANUAL_MODE_WORKAROUND) && (!defined SOC_AM263X)
+#define PRUFirmware   PRUMDIOFirmwareECATAPP
+#include <industrial_comms/ethercat_slave/icss_fwhal/firmware/g_v1.3/mdio_fw_bin.h>
+#undef PRUFirmware
+#endif
 
 #define TIESC_HW	0
 #define PRU_200MHZ  1
@@ -114,6 +133,26 @@ void EC_SLV_APP_loopTask(void* pArg_p)
 
     EC_SLV_APP_initBoardFunctions(pApplicationInstance);
     EC_SLV_APP_registerStacklessBoardFunctions(pApplicationInstance);
+
+#if !(defined FBTL_REMOTE) && !(defined DPRAM_REMOTE)
+    /* inject firmware */
+    error = EC_API_SLV_stackInsertPruFirmware((uint32_t*)ECAT_FrameProcAPP, sizeof(ECAT_FrameProcAPP),
+                                              (uint32_t*)ECAT_HostProcAPP, sizeof(ECAT_HostProcAPP));
+    if (error != EC_API_eERR_NONE)
+    {
+        OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
+        OSAL_error(__func__, __LINE__, OSAL_STACK_INIT_ERROR, true, 0);
+    }
+
+#if (defined INCLUDE_MDIO_MANUAL_MODE_WORKAROUND) && (!defined SOC_AM263X)
+    error = EC_API_SLV_stackInsertMdioManualFirmware((uint32_t*)PRUMDIOFirmwareECATAPP, sizeof(PRUMDIOFirmwareECATAPP));
+    if (error != EC_API_eERR_NONE)
+    {
+        OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
+        OSAL_error(__func__, __LINE__, OSAL_STACK_INIT_ERROR, true, 0);
+    }
+#endif
+#endif
 
     error = EC_API_SLV_stackInit(); // EtherCAT stack init
     if (error != EC_API_eERR_NONE)
@@ -364,6 +403,18 @@ static uint32_t EC_SLV_APP_remoteInit(EC_SLV_APP_Sapplication_t *pApplicationIns
 #if (defined DPRAM_REMOTE) && (DPRAM_REMOTE==1)
     retVal = DPRLIB_init(pApplicationInstance_p->gpioHandle, false);
 #elif (defined FBTL_REMOTE) && (FBTL_REMOTE==1)
+#if (defined FBTLIMPL_LINEUART) && (FBTLIMPL_LINEUART==1)
+    retVal = SYSLIB_createLibInstanceLine(  FBTL_LINE_UART_NAME,
+                                            FBTL_MAX_ASYNC_LEN, FBTL_MAX_ASYNC_LEN,
+                                            FBTL_MAX_PD_LEN, FBTL_MAX_PD_LEN
+#if (defined FBTLTRACECALLS) && (FBTLTRACECALLS==1)
+                                      ,true
+#else
+                                      ,false
+#endif
+                                      ,&(pApplicationInstance_p->remoteHandle)
+    );
+#else
     retVal = SYSLIB_createLibInstance(FBTLSHARED_MEM_NAME, FBTLSHARED_MEM_SIZE, false,
                                       FBTL_MAX_ASYNC_LEN, FBTL_MAX_ASYNC_LEN, FBTL_MAX_PD_LEN, FBTL_MAX_PD_LEN
 #if (defined FBTLTRACECALLS) && (FBTLTRACECALLS==1)
@@ -373,6 +424,7 @@ static uint32_t EC_SLV_APP_remoteInit(EC_SLV_APP_Sapplication_t *pApplicationIns
 #endif
                                       ,&(pApplicationInstance_p->remoteHandle)
     );
+#endif
 #else
     OSALUNREF_PARM(pApplicationInstance_p);
     retVal = OSAL_CONTAINER_LOCALIMPLEMENTATION;
@@ -409,5 +461,9 @@ static uint32_t EC_SLV_APP_remoteInit(EC_SLV_APP_Sapplication_t *pApplicationIns
 #endif
 
 Exit:
+    if (OSAL_eERR_NOERROR != retVal && OSAL_CONTAINER_LOCALIMPLEMENTATION != retVal)
+    {
+        OSAL_printf("%s:%d::> err ret = 0x%x\r\n", __func__, __LINE__, retVal);
+    }
     return retVal;
 }

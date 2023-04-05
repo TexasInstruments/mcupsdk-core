@@ -213,9 +213,9 @@ typedef enum FBTL_ECSLV_EService
     FBTL_SVC_eECSLV_getPdoEntryData,
 
     /**
-    \brief Fixed PDO Mapping
+    \brief Fixed PDO
     */
-    FBTL_SVC_eECSLV_fixedPdoMapping,
+    FBTL_SVC_eECSLV_fixedPdo,
 
     /**
     \brief PDO Assignment
@@ -786,6 +786,50 @@ typedef enum FBTL_ECSLV_EService
     \brief CoE get object entry length
     */
     FBTL_SVC_eECSLV_CoEGetObjectEntryLength,
+    /**
+    \brief Register Pdo assignment change Callback
+    */
+    FBTL_SVC_eECSLV_registerPdoAssignmentChangesCb,
+
+    /**
+    \brief Pdo assignment change call
+    */
+    FBTL_SVC_eECSLV_PdoAssignmentChangeCall,
+
+    /**
+    \brief Register Pdo mapping change Callback
+    */
+    FBTL_SVC_eECSLV_registerPdoMappingChangesCb,
+
+    /**
+    \brief Pdo mapping change call
+    */
+    FBTL_SVC_eECSLV_PdoMappingChangeCall,
+
+    /**
+    \brief Pdo max subIndex
+    */
+    FBTL_SVC_eECSLV_PdoMaxSubIndex,
+
+    /**
+    \brief Get PDO List
+    */
+    FBTL_SVC_eECSLV_GetPdoAssigmentInfo,
+
+    /**
+    \brief Get PDO entry mapping
+    */
+    FBTL_SVC_eECSLV_GetPdoMappingInfo,
+
+    /**
+    \brief Enable Diagnosis
+    */
+    FBTL_SVC_eECSLV_DiagnosisEnable,
+
+    /**
+    \brief New Diagnosis Message
+    */
+    FBTL_SVC_eECSLV_DiagnosisNewMessage,
 
     FBTL_SVC_eECSLV_Max,
 } FBTL_ECSLV_EService_t;

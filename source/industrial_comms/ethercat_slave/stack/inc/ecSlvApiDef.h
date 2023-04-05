@@ -46,5 +46,6 @@
 #include <ecSlvApiDef_CiA402.h>
 #include <ecSlvApiDef_CoE.h>
 #include <ecSlvApiDef_SoE.h>
+#include <ecSlvApiDef_Diagnosis.h>
 
 #endif /* __ECSLVAPIDEF_H__ */

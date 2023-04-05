@@ -41,7 +41,7 @@
 #define SHOW_LOOPCOUNT  0
 #define SHOW_ESCSTATUS  0
 
-#define ENABLE_I2CLEDS  1
+ #define ENABLE_I2CLEDS 1
 
 #define BIT2BYTE(x)                     (((x)+7) >> 3)
 
@@ -82,6 +82,10 @@
 ------
 -----------------------------------------------------------------------------------------*/
 #define I2C_IOEXP_ADDR 0x60                  // The I2C address for GPIO expander
+
+// object indices
+#define SLS_OBJIDX_DIAGNOSIS 0x2018
+
 
 static void EC_SLV_APP_applicationRun(void* pAppCtxt_p);
 
@@ -143,6 +147,58 @@ uint8_t EC_SLV_APP_getValueFromMaster(void* pApplicationCtxt_p, uint16_t index_p
     OSALUNREF_PARM(completeAccess_p);
 
 Exit:
+    return (uint8_t)error;
+}
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Callback for diagnosis example. It Sends a new Diagnosis message with the received data.
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]  pApplicationCtxt_p  application instance
+ *  \param[in]  index_p             object index
+ *  \param[in]  subindex_p          object subIndex
+ *  \param[in]  size_p              size of data buffer
+ *  \param[in]  pData_p             buffer to be read from
+ *  \param[in]  completeAccess_p    using complete access
+ *  \return     CoE ErrorCode
+ *
+ *  \remarks
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup EC_SLV_APP
+ *
+ * */
+uint8_t EC_SLV_APP_writeDiagnosis(void* pApplicationCtxt_p, uint16_t index_p, uint8_t subindex_p
+        ,uint32_t size_p, uint16_t MBXMEM * pData_p, uint8_t completeAccess_p)
+{
+    EC_API_EError_t                 error           = (EC_API_EError_t)ABORT_NOERROR;
+    EC_SLV_APP_Sapplication_t*      pAppInstance    = NULL;
+    EC_API_SLV_SDIAG_parameter_t    param           = {DEFTYPE_UNSIGNED8,
+                                                       DIAG_MSG_PARAM_TYPE_DATA,
+                                                       sizeof(uint8_t),
+                                                       (uint8_t*) pData_p};
+
+    OSALUNREF_PARM(completeAccess_p);
+
+    if((pApplicationCtxt_p != NULL) && (pData_p != NULL))
+    {
+        OSAL_printf("%s ==> Idx: 0x%04x:%d | Size: %d | Value: %d\r\n", __func__
+                    ,index_p, subindex_p, size_p, pData_p[0]);
+
+            pAppInstance = (EC_SLV_APP_Sapplication_t*) pApplicationCtxt_p;
+            EC_API_SLV_DIAG_newMessage(pAppInstance->ptEcSlvApi,
+                                       DIAG_CODE_EMCY(pData_p[0]),
+                                       DIAG_MSG_TYPE_ERROR,
+                                       pData_p[0],
+                                       1,
+                                       &param);
+
+    }
     return (uint8_t)error;
 }
 
@@ -249,7 +305,7 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
         goto Exit;
     }
 
-    error = (EC_API_EError_t)EC_API_SLV_setRevisionNumber(ptSlave, ECAT_REVISION);
+    error = (EC_API_EError_t)EC_API_SLV_setRevisionNumber(ptSlave, EC_REVISION);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -298,7 +354,7 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     /* Former Project.h */
-    error = (EC_API_EError_t)EC_API_SLV_setPDOSize(ptSlave, KBEC_MAX_PD_LEN, KBEC_MAX_PD_LEN);
+    error = (EC_API_EError_t)EC_API_SLV_setPDOSize(ptSlave, EC_MAX_PD_LEN, EC_MAX_PD_LEN);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -313,8 +369,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setBootStrapMailbox(ptSlave,
-                                                            ET1100_BOOT_MBXOUT_START, ET1100_BOOT_MBXOUT_DEF_LENGTH,
-                                                            ET1100_BOOT_MBXIN_START,  ET1100_BOOT_MBXIN_DEF_LENGTH);
+                                                            EC_BOOTSTRAP_MBXOUT_START, EC_BOOTSTRAP_MBXOUT_DEF_LENGTH,
+                                                            EC_BOOTSTRAP_MBXIN_START, EC_BOOTSTRAP_MBXIN_DEF_LENGTH);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -322,8 +378,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setStandardMailbox(ptSlave,
-                                                           ET1100_MBXOUT_START, ET1100_MBXOUT_DEF_LENGTH,
-                                                           ET1100_MBXIN_START,  ET1100_MBXIN_DEF_LENGTH);
+                                                           EC_MBXOUT_START, EC_MBXOUT_DEF_LENGTH,
+                                                           EC_MBXIN_START, EC_MBXIN_DEF_LENGTH);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -331,8 +387,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         0, ET1100_MBXOUT_START,   ET1100_MBXOUT_DEF_LENGTH,
-                                                         ET1100_MBXOUT_CONTROLREG, ET1100_MBXOUT_ENABLE);
+                                                         0, EC_MBXOUT_START, EC_MBXOUT_DEF_LENGTH,
+                                                         EC_MBXOUT_CONTROLREG, EC_MBXOUT_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -340,8 +396,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         1, ET1100_MBXIN_START,   ET1100_MBXIN_DEF_LENGTH,
-                                                         ET1100_MBXIN_CONTROLREG, ET1100_MBXIN_ENABLE);
+                                                         1, EC_MBXIN_START, EC_MBXIN_DEF_LENGTH,
+                                                         EC_MBXIN_CONTROLREG, EC_MBXIN_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -349,8 +405,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         2, ET1100_OUTPUT_START,   ET1100_OUTPUT_DEF_LENGTH,
-                                                         ET1100_OUTPUT_CONTROLREG, ET1100_OUTPUT_ENABLE);
+                                                         2, EC_OUTPUT_START, EC_OUTPUT_DEF_LENGTH,
+                                                         EC_OUTPUT_CONTROLREG, EC_OUTPUT_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -358,8 +414,8 @@ static EC_API_EError_t EC_SLV_APP_populateSlaveInfo(EC_SLV_APP_Sapplication_t* p
     }
 
     error = (EC_API_EError_t)EC_API_SLV_setSyncManConfig(ptSlave,
-                                                         3, ET1100_INPUT_START,   ET1100_INPUT_DEF_LENGTH,
-                                                         ET1100_INPUT_CONTROLREG, ET1100_INPUT_ENABLE);
+                                                         3, EC_INPUT_START, EC_INPUT_DEF_LENGTH,
+                                                         EC_INPUT_CONTROLREG, EC_INPUT_ENABLE);
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("%s:%d Error code: 0x%08x\r\n", __func__, __LINE__, error);
@@ -657,6 +713,7 @@ static EC_API_EError_t EC_SLV_APP_populateInOutObjects(EC_SLV_APP_Sapplication_t
         OSAL_printf("Object 0x200F SubIndex 8 Error code: 0x%08x\r\n", error);
         goto Exit;
     }
+
     error = (EC_API_EError_t)EC_API_SLV_CoE_odAddVariable(ptSlave, 0x2015, "FoE File Downloaded"
                                                          ,DEFTYPE_BOOLEAN, 1, ACCESS_READ, NULL, NULL, NULL, NULL);
     if (error != EC_API_eERR_NONE)
@@ -680,6 +737,15 @@ static EC_API_EError_t EC_SLV_APP_populateInOutObjects(EC_SLV_APP_Sapplication_t
     if (error != EC_API_eERR_NONE)
     {
         OSAL_printf("Object 0x2001 Error code: 0x%08x\r\n", error);
+        goto Exit;
+    }
+
+    error = (EC_API_EError_t)EC_API_SLV_CoE_odAddVariable(ptSlave, SLS_OBJIDX_DIAGNOSIS, "Test Diagnosis", DEFTYPE_UNSIGNED8, 8
+                                                            ,ACCESS_READWRITE, NULL
+                                                            ,NULL, EC_SLV_APP_writeDiagnosis, pApplicationInstance);
+    if (error != EC_API_eERR_NONE)
+    {
+        OSAL_printf("Object 0x%04X Error code: 0x%08x\r\n", SLS_OBJIDX_DIAGNOSIS, error);
         goto Exit;
     }
 
@@ -1963,6 +2029,96 @@ Exit:
  *  <!-- Description: -->
  *
  *  \brief
+ *  Change on PDO assignment configuration
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]      pContext_p          The pointer to the EtherCAT API instance.
+ *  \param[in]      rx_p                Change on RX or TX PDOs.
+ *  \param[in]      count_p             Number of PDOs assigned to SyncManager.
+ *  \param[in]      pPdoIndexArray_p    Array of PDO indexes assigned to SyncManager.
+  *  \return     DTK error code
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup EC_SLV_APP
+ *
+ * */
+uint32_t EC_SLAVE_APP_assignmentChangedHandler(void* pContext_p, bool rx_p, uint8_t count_p, uint16_t* pPdoIndexArray_p)
+{
+    uint32_t error  = EC_API_eERR_NONE;
+    uint8_t i       = 0;
+    OSALUNREF_PARM(pContext_p);
+
+    if(pPdoIndexArray_p != NULL)
+    {
+        OSAL_printf("**************************************\r\n");
+        if(rx_p == true)
+        {
+            OSAL_printf("New assignments for SyncManager 2:\r\n");
+        }
+        else
+        {
+            OSAL_printf("New assignments for SyncManager 3:\r\n");
+        }
+        for(i = 0; i < count_p; i++)
+        {
+            OSAL_printf("PDO: 0x%04x\r\n", pPdoIndexArray_p[i]);
+        }
+        OSAL_printf("**************************************\r\n");
+    }
+    if (count_p == 0)
+    {
+        error = EC_API_eERR_ABORT;
+    }
+    return error;
+}
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Change on PDO mapping configuration
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]      pContext_p          The pointer to the EtherCAT API instance.
+ *  \param[in]      pdoIndex_p          PDO index number.
+ *  \param[in]      count_p             Number of objects mapped as PDO.
+ *  \param[in]      pPdoMap_p           PDO mapping entries.
+  *  \return     DTK error code
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup EC_SLV_APP
+ *
+ * */
+uint32_t EC_SLAVE_APP_mappingChangedHandler(void* pContext_p, uint16_t pdoIndex_p, uint8_t count_p, EC_SLV_API_PDO_SEntryMap_t* pPdoMap_p)
+{
+    uint32_t error  = EC_API_eERR_NONE;
+    uint8_t i       = 0;
+    OSALUNREF_PARM(pContext_p);
+    if(pPdoMap_p != NULL)
+    {
+        OSAL_printf("**************************************\r\n");
+        OSAL_printf("New mapping for PDO 0x%04x: \r\n", pdoIndex_p);
+        for(i = 0; i < count_p; i++)
+        {
+            OSAL_printf("0x%04x:%d\r\n", pPdoMap_p[i].index, pPdoMap_p[i].subIndex);
+        }
+        OSAL_printf("**************************************\r\n");
+    }
+    if (count_p == 0)
+    {
+        error = EC_API_eERR_ABORT;
+    }
+    return error;
+}
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
  *  AoE read request handler
  *
  *  <!-- Parameters and return values: -->
@@ -2345,6 +2501,11 @@ void EC_SLV_APP_applicationInit(EC_SLV_APP_Sapplication_t* pAppInstance_p)
         OSAL_printf("Create Description Object Error code: 0x%08x\r\n", error);
         goto Exit;
     }
+
+    /*PDO Mapping Changes*/
+    EC_API_SLV_PDO_registerAssignmentChanges(pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLAVE_APP_assignmentChangedHandler);
+    EC_API_SLV_PDO_registerMappingChanges(pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLAVE_APP_mappingChangedHandler);
+
     /*AoE*/
     EC_API_SLV_AoE_cbRegisterReadRequestHandler (pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLV_APP_AoE_readRequest);
     EC_API_SLV_AoE_cbRegisterWriteRequestHandler(pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLV_APP_AoE_writeRequest);
@@ -2358,6 +2519,9 @@ void EC_SLV_APP_applicationInit(EC_SLV_APP_Sapplication_t* pAppInstance_p)
     EC_API_SLV_FoE_cbRegisterReadFileHandler    (pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLV_APP_FoE_fileRead);
     EC_API_SLV_FoE_cbRegisterWriteFileHandler   (pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLV_APP_FoE_fileWrite);
     EC_API_SLV_FoE_cbRegisterCloseFileHandler   (pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLV_APP_FoE_fileClose);
+
+    /*Diagnosis support */
+    EC_API_SLV_DIAG_enable(pAppInstance_p->ptEcSlvApi);
 
 #if !(defined DPRAM_REMOTE) && !(defined FBTL_REMOTE) && !(defined OSAL_FREERTOS_JACINTO) /* first omit flash */
     EC_API_SLV_cbRegisterFlashInit              (pAppInstance_p->ptEcSlvApi, pAppInstance_p->ptEcSlvApi, EC_SLV_APP_EEP_initFlash);
@@ -2599,6 +2763,8 @@ static void EC_SLV_APP_applicationRun(void* pAppCtxt_p)
             lastLed = ledPDData;
 #if (defined ENABLE_I2CLEDS) && (ENABLE_I2CLEDS == 1)
             ESL_OS_ioexp_leds_write(pApplicationInstace->ioexpLedHandle, lastLed);
+#else
+            OSAL_printf("Update I2C to 0x%x\r\n", lastLed);
 #endif
         }
 
@@ -2632,6 +2798,8 @@ static void EC_SLV_APP_applicationRun(void* pAppCtxt_p)
 
 #if (defined ENABLE_I2CLEDS) && (ENABLE_I2CLEDS == 1)
             ESL_OS_ioexp_leds_write(pApplicationInstace->ioexpLedHandle, lastLed);
+#else
+            OSAL_printf("Update I2C to 0x%x\r\n", lastLed);
 #endif
 
             pApplicationInstace->prev = now;

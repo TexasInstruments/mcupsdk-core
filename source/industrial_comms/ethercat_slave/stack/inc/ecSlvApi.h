@@ -55,6 +55,7 @@
 
 #include <osal.h>
 #include <ecSlvApi_Error.h>
+#include <ecSlvApiDef_Diagnosis.h>
 
 #if !(defined FBTL_REMOTE) && !(defined DPRAM_REMOTE)
 #include <custom_phy.h>
@@ -132,6 +133,13 @@ typedef enum EC_API_SLV_EPhy_Index
     EC_API_SLV_ePHY_OUT                     = 1,        ///< Phy index for OUT Phy
 } EC_API_SLV_EPhy_Index_t;
 
+
+/// EC_SLV_API_PDO_SEntryMap_t describes the EtherCAT Slave API
+typedef struct EC_SLV_API_PDO_SEntryMap
+{
+    uint16_t    index;
+    uint8_t     subIndex;
+} OSAL_STRUCT_PACKED  EC_SLV_API_PDO_SEntryMap_t;
 
 /// TEntry describes an Entry of a PDO Mapping.
 typedef struct EC_API_SLV_SPdoEntry EC_API_SLV_SPdoEntry_t;
@@ -409,6 +417,50 @@ typedef void (*EC_API_SLV_CBPostSeqInputPD_t)(void* pContext_p, void* pData_p, u
  *
  * */
 typedef void (*EC_API_SLV_CBPostSeqOutputPD_t)(void* pContext_p, void* pData_p, uint32_t length_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Inform about PDO assignment changes.
+ *
+ *  <!-- Parameters and return values: -->
+ *  \param[in]  pContext_p          Function context.
+ *  \param[in]  rx_p                True if PDO assignment description belongs to Rx, false otherwise.
+ *  \param[in]  count_p             Number of PDOs assigned to the SyncManager.
+ *  \param[in]  pPdoIndexArray_p    Array of PDO indexes.
+ *  \return     Returns the API error code.
+ *  \retval     EC_API_eERR_NONE    Allow the assignment changes.
+ *  \retval     EC_API_eERR_ABORT   Refuse the assignment changes.
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup SLVAPI
+ *
+ * */
+typedef uint32_t (*EC_API_SLV_PDO_CBAssignmentChanges_t)(void* pContext_p, bool rx_p, uint8_t count_p, uint16_t* pPdoIndexArray_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Inform about PDO mapping changes.
+ *
+ *  <!-- Parameters and return values: -->
+ *  \param[in]  pContext_p          Function context.
+ *  \param[in]  pdoIndex_p          PDO index.
+ *  \param[in]  count_p             Number of entries mapped into the PDO.
+ *  \param[in]  pPdoMap_p           PDO mapping configuration array.
+ *  \return     Returns the API error code.
+ *  \retval     EC_API_eERR_NONE    Allow PDO mapping changes.
+ *  \retval     EC_API_eERR_ABORT   Refuse PDO mapping changes.
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup SLVAPI
+ *
+ * */
+typedef uint32_t (*EC_API_SLV_PDO_CBMappingChanges_t)(void* pContext_p, uint16_t pdoIndex_p, uint8_t count_p, EC_SLV_API_PDO_SEntryMap_t* pPdoMap_p);
 
 /*!
  *  <!-- Description: -->
@@ -980,6 +1032,16 @@ extern ECATSLV_API  EC_API_SLV_SHandle_t*   EC_API_SLV_new                      
 extern ECATSLV_API  uint32_t                EC_API_SLV_obdCleanUp                           (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
 extern ECATSLV_API  uint32_t                EC_API_SLV_delete                               (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
 extern ECATSLV_API  uint32_t                EC_API_SLV_init                                 (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
+
+#if !(defined FBTL_REMOTE) && !(defined DPRAM_REMOTE)
+extern ECATSLV_API  uint32_t                EC_API_SLV_stackInsertPruFirmware               (uint32_t*                      pFirmwareIn_p
+                                                                                            ,uint32_t                       lenFirmwareIn_p
+                                                                                            ,uint32_t*                      pFirmwareOut_p
+                                                                                            ,uint32_t                       lenFirmwareOut_p);
+extern ECATSLV_API  uint32_t                EC_API_SLV_stackInsertMdioManualFirmware        (uint32_t*                      pFirmware_p
+                                                                                            ,uint32_t                       lenFirmware_p);
+#endif
+
 extern ECATSLV_API  uint32_t                EC_API_SLV_run                                  (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
 extern ECATSLV_API  uint32_t                EC_API_SLV_stop                                 (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
 extern ECATSLV_API  uint32_t                EC_API_SLV_reset                                (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
@@ -1249,7 +1311,8 @@ extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_getEntryData         
                                                                                             ,uint8_t                        subIndex_p
                                                                                             ,uint32_t                       length_p
                                                                                             ,uint8_t*                       pData_p);
-extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_setFixedMapping                  (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_setFixed                         (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,EC_API_SLV_SPdo_t*             pPdo_p
                                                                                             ,bool                           fixed_p);
 extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_enable                           (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
                                                                                             ,EC_API_SLV_SPdo_t*             pPdo_p);
@@ -1263,6 +1326,28 @@ extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_setAssignment        
 extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_addPadding                       (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
                                                                                             ,EC_API_SLV_SPdo_t*             pPdo_p
                                                                                             ,uint8_t                        length_p);
+extern ECATSLV_API  void                    EC_API_SLV_PDO_registerAssignmentChanges        (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,void*                          pContext_p
+                                                                                            ,EC_API_SLV_PDO_CBAssignmentChanges_t
+                                                                                                                            cbFunc_p);
+
+extern ECATSLV_API  void                    EC_API_SLV_PDO_registerMappingChanges           (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,void*                          pContext_p
+                                                                                            ,EC_API_SLV_PDO_CBMappingChanges_t
+                                                                                                                            cbFunc_p);
+
+extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_getMappingInfo                   (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,EC_API_SLV_SPdo_t*             pPdo_p
+                                                                                            ,uint8_t*                       pCount_p
+                                                                                            ,EC_SLV_API_PDO_SEntryMap_t*    pPdoMapArray_p);
+extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_getAssignmentInfo                (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,bool                           rx_p
+                                                                                            ,uint8_t*                       pCount_p
+                                                                                            ,uint16_t*                      pPdoIndexArray_p);
+
+extern ECATSLV_API  uint32_t                EC_API_SLV_PDO_setMaxSubIndex                   (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,EC_API_SLV_SPdo_t*             pPdo_p
+                                                                                            ,uint8_t                        maxSubIndex_p);
 
 extern ECATSLV_API  uint32_t                EC_API_SLV_CoE_getObject                        (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
                                                                                             ,uint16_t                       index_p
@@ -1345,6 +1430,14 @@ extern ECATSLV_API  uint32_t                EC_API_SLV_CoE_configRecordSubIndex 
 extern ECATSLV_API  uint32_t                EC_API_SLV_CoE_subIdx0WrFlag                    (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
                                                                                             ,EC_API_SLV_SCoE_Object_t*      pObject_p
                                                                                             ,bool                           readWriteFlag_p);
+
+extern ECATSLV_API  uint32_t                EC_API_SLV_DIAG_enable                          (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
+extern ECATSLV_API  uint32_t                EC_API_SLV_DIAG_newMessage                      (EC_API_SLV_SHandle_t*          pEcSlaveApi_p
+                                                                                            ,uint32_t                       diagCode_p
+                                                                                            ,uint8_t                        type_p
+                                                                                            ,uint16_t                       textID_p
+                                                                                            ,uint8_t                        numParams_p
+                                                                                            ,EC_API_SLV_SDIAG_parameter_t*  pParams_p);
 
 extern ECATSLV_API  uint32_t                EC_API_SLV_getConfigStatus                      (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);
 extern ECATSLV_API  uint32_t                EC_API_SLV_getCyclicStatus                      (EC_API_SLV_SHandle_t*          pEcSlaveApi_p);

@@ -68,6 +68,8 @@ StackType_t SYSLIB_fbtlSyncExecTaskStack_g[FBTLSYNCEXEC_TASK_SIZE] __attribute__
 StackType_t SYSLIB_fbtlReceiverTaskStack_g[FBTLRECEIVER_TASK_SIZE] __attribute__((aligned(32), section(".threadstack"))) = {0};
 StackType_t SYSLIB_fbtlServiceTaskStack_g[FBTLSERVICE_TASK_SIZE] __attribute__((aligned(32), section(".threadstack"))) = {0};
 StackType_t SYSLIB_fbtlSlowServiceTaskStack_g[FBTLSLOWSERVICE_TASK_SIZE] __attribute__((aligned(32), section(".threadstack"))) = {0};
+StackType_t SYSLIB_fbtlUartTaskStack_g[FBTLUART_TASK_SIZE]     __attribute__((aligned(32), section(".threadstack")))           = {0};
+
 #endif
 
 #if (defined FBTL_REMOTE) && (1==FBTL_REMOTE)

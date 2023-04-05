@@ -52,6 +52,4 @@ extern bool EC_SLV_APP_EEP_loadEeprom       (void*      pContext_p
 }
 #endif
 
-
-
 #endif /* __ESL_EEPROM_H__ */

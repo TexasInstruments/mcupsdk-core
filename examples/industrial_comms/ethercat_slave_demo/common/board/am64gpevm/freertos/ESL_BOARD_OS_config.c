@@ -272,8 +272,10 @@ void ESL_BOARD_OS_registerPhys(uint32_t selectedPru_p)
 #error "EtherCAT without PHY is useless"
 #endif
 
+#if !(defined DPRAM_REMOTE) && !(defined FBTL_REMOTE)
     EC_API_SLV_registerPhy(EC_API_SLV_ePHY_IN,  ECAT_PHYADDR_IN,  ECAT_PHYPOLINVERT_IN,  ECAT_PHYUSERXLINK_IN);
     EC_API_SLV_registerPhy(EC_API_SLV_ePHY_OUT, ECAT_PHYADDR_OUT, ECAT_PHYPOLINVERT_OUT, ECAT_PHYUSERXLINK_OUT);
+#endif
 }
 
 //*************************************************************************************************

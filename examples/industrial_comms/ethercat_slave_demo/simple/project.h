@@ -45,11 +45,11 @@
 
 /* EtherCAT Slave configuration*/
 
-#define KBEC_MAX_PD_LEN                     1024
-#define KBEC_DEFAULT_PD_LEN                 256
+#define EC_MAX_PD_LEN                       1024
+#define EC_DEFAULT_PD_LEN                   256
 
-#define ECAT_REVISION                       0x00010000
-#define ECAT_DEVICE_SERIALNUMBER            0xFFFFFFFF //replace with serial number from uboot
+#define EC_REVISION                         0x00010000
+#define EC_DEVICE_SERIALNUMBER              0xFFFFFFFF //replace with serial number from uboot
 
 #define ESC_EE_PDI_CONTROL                  0x0C80 // 0x80 = On Chip PDI Type
 #define ESC_EE_PDI_CONFIG                   0x88E0 // ?? copy from TI
@@ -60,31 +60,31 @@
 #define COE_PDO_UPLOAD_SUPPORTED            0x10
 #define COE_SDO_COMPLETE_ACCESS_SUPPORTED   0x20
 
-#define ET1100_BOOT_MBXOUT_START            0x1000
-#define ET1100_BOOT_MBXOUT_DEF_LENGTH       256
+#define EC_BOOTSTRAP_MBXOUT_START           0x1000
+#define EC_BOOTSTRAP_MBXOUT_DEF_LENGTH      256
 
-#define ET1100_BOOT_MBXIN_START             0x1200
-#define ET1100_BOOT_MBXIN_DEF_LENGTH        256
+#define EC_BOOTSTRAP_MBXIN_START            0x1200
+#define EC_BOOTSTRAP_MBXIN_DEF_LENGTH       256
 
-#define ET1100_MBXOUT_START                 0x1000
-#define ET1100_MBXOUT_DEF_LENGTH            256
-#define ET1100_MBXOUT_CONTROLREG            0x26
-#define ET1100_MBXOUT_ENABLE                1
+#define EC_MBXOUT_START                     0x1000
+#define EC_MBXOUT_DEF_LENGTH                256
+#define EC_MBXOUT_CONTROLREG                0x26
+#define EC_MBXOUT_ENABLE                    1
 
-#define ET1100_MBXIN_START                  ET1100_MBXOUT_START + ET1100_MBXOUT_DEF_LENGTH
-#define ET1100_MBXIN_DEF_LENGTH             256
-#define ET1100_MBXIN_CONTROLREG             0x22
-#define ET1100_MBXIN_ENABLE                 1
+#define EC_MBXIN_START                      EC_MBXOUT_START + EC_MBXOUT_DEF_LENGTH
+#define EC_MBXIN_DEF_LENGTH                 256
+#define EC_MBXIN_CONTROLREG                 0x22
+#define EC_MBXIN_ENABLE                     1
 
-#define ET1100_OUTPUT_START                 ET1100_MBXIN_START + ET1100_MBXIN_DEF_LENGTH
-#define ET1100_OUTPUT_CONTROLREG            0x64
-#define ET1100_OUTPUT_DEF_LENGTH            (KBEC_MAX_PD_LEN * 3) //in Bytes
-#define ET1100_OUTPUT_ENABLE                1
+#define EC_OUTPUT_START                     EC_MBXIN_START + EC_MBXIN_DEF_LENGTH
+#define EC_OUTPUT_CONTROLREG                0x64
+#define EC_OUTPUT_DEF_LENGTH                (EC_MAX_PD_LEN * 3) //in Bytes
+#define EC_OUTPUT_ENABLE                    1
 
-#define ET1100_INPUT_START                  ET1100_OUTPUT_START + ET1100_OUTPUT_DEF_LENGTH
-#define ET1100_INPUT_CONTROLREG             0x20
-#define ET1100_INPUT_DEF_LENGTH             (KBEC_MAX_PD_LEN * 3) //in Bytes
-#define ET1100_INPUT_ENABLE                 1
+#define EC_INPUT_START                      EC_OUTPUT_START + EC_OUTPUT_DEF_LENGTH
+#define EC_INPUT_CONTROLREG                 0x20
+#define EC_INPUT_DEF_LENGTH                 (EC_MAX_PD_LEN * 3) //in Bytes
+#define EC_INPUT_ENABLE                     1
 
 /* pru/ecat address settings of shared ram */
 #define MIN_PD_READ_ADDRESS                 0x1000      // ti register offset

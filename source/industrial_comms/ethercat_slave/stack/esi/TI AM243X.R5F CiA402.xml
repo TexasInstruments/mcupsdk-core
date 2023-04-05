@@ -128,7 +128,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1600</Name>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -192,7 +192,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1601</Name>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -256,7 +256,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1602</Name>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -320,7 +320,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1A00</Name>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -384,7 +384,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1A01</Name>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -448,7 +448,7 @@
 							</DataType>
 							<DataType>
 								<Name>DT1A02</Name>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<SubItem>
 									<SubIdx>0</SubIdx>
 									<Name>SubIndex 000</Name>
@@ -1890,42 +1890,42 @@
 								<Index>#x1600</Index>
 								<Name>RxPDO</Name>
 								<Type>DT1600</Type>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<Properties />
 							</Object>
 							<Object>
 								<Index>#x1601</Index>
 								<Name>RxPDO</Name>
 								<Type>DT1601</Type>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<Properties />
 							</Object>
 							<Object>
 								<Index>#x1602</Index>
 								<Name>RxPDO</Name>
 								<Type>DT1602</Type>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<Properties />
 							</Object>
 							<Object>
 								<Index>#x1a00</Index>
 								<Name>TxPDO</Name>
 								<Type>DT1A00</Type>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<Properties />
 							</Object>
 							<Object>
 								<Index>#x1a01</Index>
 								<Name>TxPDO</Name>
 								<Type>DT1A01</Type>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<Properties />
 							</Object>
 							<Object>
 								<Index>#x1a02</Index>
 								<Name>TxPDO</Name>
 								<Type>DT1A02</Type>
-								<BitSize>176</BitSize>
+								<BitSize>8144</BitSize>
 								<Properties />
 							</Object>
 							<Object>
