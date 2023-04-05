@@ -500,13 +500,13 @@ transport_layer_check_for_new_msg:
 	or		REG_TMP11.b3, REG_TMP11.b3, REG_TMP0.b0
 
 	mov		REG_TMP2, CHANNEL.ch_paral
-	ldi		r1.b0, &REG_TMP11.b0
+	ldi		REG_TMP1.b0, &REG_TMP11.b0
 	loop		transport_layer_reassemble_msg_loop, 3
 	and		REG_TMP0.b1, REG_TMP2.b0, 0x0f
 	lsr		REG_TMP0.b2, REG_TMP2, 1
 	and		REG_TMP0.b2, REG_TMP0.b2, 0xf0
 	or		REG_TMP0.b0, REG_TMP0.b1, REG_TMP0.b2
-	mvib		*r1.b0++, REG_TMP0.b0
+	mvib		*REG_TMP1.b0++, REG_TMP0.b0
 	lsr		REG_TMP2, REG_TMP2, 10
 transport_layer_reassemble_msg_loop:
 ;identify message type
@@ -514,7 +514,7 @@ transport_layer_reassemble_msg_loop:
 	qbbs		transport_layer_received_long_msg, REG_TMP11.b3, 7
 transport_layer_received_short_msg:
 ;check crc
-	ldi		r1.b0, &r12.b0
+	ldi		REG_TMP1.b0, &r12.b0
 ;read or write?
 	qbbs		transport_layer_short_msg_recv_read, REG_TMP11.b3, 6
 ;received write ack

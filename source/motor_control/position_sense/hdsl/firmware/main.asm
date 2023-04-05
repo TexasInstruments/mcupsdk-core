@@ -55,30 +55,3 @@ main:
 	sbco		&REG_TMP2, PRU_CTRL_CONST, 0x00, 4
 	;skip code loading since there is no edma overlay in ICSSG
 	jmp datalink_init_start
-;--------------------------------------------------------------------------------------------------
-;load init code
-
-;copy pseudo instrution memory to L3
-	ldi32		REG_TMP2, CODE_BASE
-	ldi32		REG_TMP1, 0x2100
-	ldi		REG_TMP11, CODE_SIZE*2
-load_loop:
-	sub		REG_TMP11, REG_TMP11, 4
-	lbbo		&REG_TMP0, REG_TMP1, REG_TMP11, 4
-	sbbo		&REG_TMP0, REG_TMP2, REG_TMP11, 4
-	qbne		load_loop, REG_TMP11, 0
-
-
-GPIO_4_BA .set					0x48320000
-GPIO_CLRDATAOUT .set			0x190
-GPIO_SETDATAOUT .set			0x194
-GPIO_OE .set					0x134
-SWITCH3 .set					0x2
-GPIO_DATAIN .set				0x138
-
-
-	.if !$defined(ICSS_G_V_1_0)
-	LOAD_CODE	CODE_DATALINK_INIT, 0x00, 0x00, CODE_SIZE
-	.endif
-
-	jmp datalink_init
