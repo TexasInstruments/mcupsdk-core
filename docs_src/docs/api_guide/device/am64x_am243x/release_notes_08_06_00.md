@@ -150,7 +150,7 @@ Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes
 
 Peripheral | Supported CPUs | SysConfig Support |DMA Supported | Key features tested                                                                        | Key features not tested / NOT supported
 -----------|----------------|-------------------|--------------|--------------------------------------------------------------------------------------------|----------------------------------------
-ADC        | R5F            | YES               | No           | Single conversion (one-shot mode), interrupt mode, DMA mode                                | Continuous conversion not tested
+ADC        | R5F            | YES               | Yes          | Single conversion (one-shot mode), interrupt mode, DMA mode                                | Continuous conversion not tested
 CRC        | R5F            | YES               | No           | CRC in full CPU mode                                                                       | -
 DDR        | R5F            | YES               | No           | Tested LPDDR4 at 400MHz frequency.                                                         | -
 ECAP       | R5F            | YES               | No           | Frequency, Duty cycle, interrupt mode                                                      | PWM mode not tested
