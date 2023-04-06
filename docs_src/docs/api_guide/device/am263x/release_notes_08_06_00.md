@@ -172,7 +172,7 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 
 Module            | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                                            | Key features not tested / NOT supported
 ------------------|-----------------|-------------------|------------------|------------------------------------------------------------------------------------------------|----------------------------------------
-MCRC              | R5F             | NA                |  NORTOS | Full CPU, Auto CPU Mode                                                          | Semi CPU Auto Mode.
+MCRC              | R5F             | NA                |  NORTOS | Full CPU, Auto CPU Mode and Semi CPU Auto Mode                                                          | -
 DCC               | R5F             | NA                |  NORTOS | Single Shot and Continuous modes                                    | -
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
@@ -274,53 +274,12 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Fixed
 </tr>
 <tr>
-    <td> PROC_SDL-4558
-    <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
+    <td> PROC_SDL-5739
+    <td> MCRC Auto mode was not implemented correctly.
     <td> SDL
     <td> 8.5.0 onwards
-    <td> Fixed the example.
-</tr>
-<tr>
-    <td> PROC_SDL-4751
-    <td> In CCM mode, only self test mode tested.Error Forcing Mode and Self Test Error Forcing Mode are not yet supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> Error Forcing and self test error forcing more support added.
-</tr>
-<tr>
-    <td> PROC_SDL-4749
-    <td> AXI DED Bus Safety fail.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4755
-    <td> MCRC Semi CPU mode is not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> Use Full CPU mode ot Auto mode.
-</tr>
-<tr>
-    <td> PROC_SDL-5159
-    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-5616
-    <td> For ECC Bus Safety, SEC and DED are not supported for CPSW.
-    <td> SDL
-    <td> 8.6.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-5617
-    <td> ECC Bus safety for SEC and DED not supported for MSS_L2.
-    <td> SDL
-    <td> 8.6.0 onwards
-    <td> None.
+	<td> AM263x
+    <td> Fixed the source and example.
 </tr>
 <tr>
     <td> MCUSDK-9578
@@ -478,11 +437,32 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> -
 </tr>
 <tr>
-    <td> PROC_SDL-4558
-    <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
+    <td> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0
+    <td> -
+</tr>
+<tr>
+    <td> PROC_SDL-5159
+    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
     <td> SDL
     <td> 8.5.0 onwards
-    <td> Add the resetvecs.S manually in to CCS project / Use the binary generated from gmake.
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5616
+    <td> For ECC Bus Safety, SEC and DED are not supported for CPSW.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5617
+    <td> ECC Bus safety for SEC and DED not supported for MSS_L2.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
 </tr>
 <tr>
     <td> PROC_SDL-4749
@@ -490,27 +470,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> SDL
     <td> 8.5.0 onwards
     <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4751
-    <td> In CCM mode, only self test mode tested.Error Forcing Mode and Self Test Error Forcing Mode are not yet supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4755
-    <td> MCRC Semi CPU mode is not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> Use Full CPU mode to Auto mode.
-</tr>
-<tr>
-    <td> MCUSDK-9082
-    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
-    <td> Mbed-TLS
-    <td> 8.6.0
-    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9800

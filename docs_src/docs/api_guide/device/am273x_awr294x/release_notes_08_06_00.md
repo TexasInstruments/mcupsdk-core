@@ -175,7 +175,7 @@ Mbed-TLS                    | R5F            | NO                | FreeRTOS    |
 
 Module            | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                                            | Key features not tested / NOT supported
 ------------------|-----------------|-------------------|------------------|------------------------------------------------------------------------------------------------|----------------------------------------
-MCRC              | R5F, C66        | NA                |  NORTOS | Full CPU Mode, Auto CPU Mode.                                                         | Semi CPU Auto Mode on R5F and C66X
+MCRC              | R5F, C66        | NA                |  NORTOS | Full CPU Mode, Auto CPU Mode and Semi CPU Mode.                                                            | -
 DCC               | R5F, C66        | NA                |  NORTOS | Single Shot Mode, Continuous Mode                                   |-
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS and DSS PBIST controller.          |-
 ESM               | R5F, C66        | NA                |  NORTOS | Tested in combination with RTI, DCC, ECC                                        |-
@@ -219,18 +219,11 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> Fixed the udp examples and added udp client socket example
 </tr>
 <tr>
-    <td> PROC_SDL-4558
-    <td> Binary generated from MSS ECC CCS based example(sdl_ecc_r5_atcm0) does not work.
+    <td> PROC_SDL-5739
+    <td> MCRC Auto mode was not implemented correctly.
     <td> SDL
     <td> 8.5.0 onwards
-    <td> Fixed the example.
-</tr>
-<tr>
-    <td> PROC_SDL-4751
-    <td> In CCM mode, only self test mode tested.Error Forcing Mode and Self Test Error Forcing Mode are not yet supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> Error Forcing and self test error forcing more support added.
+    <td> Fixed the source and example.
 </tr>
 \cond SOC_AM273X
 <tr>
@@ -294,13 +287,6 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> SDL
     <td> 8.5.0 onwards
     <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4755
-    <td> MCRC Semi CPU mode is not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> Use Full CPU mode ot Auto mode.
 </tr>
 <tr>
     <td> PROC_SDL-5159
