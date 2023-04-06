@@ -50,6 +50,7 @@
 /* ========================================================================== */
 /*                          Global variables                                  */
 /* ========================================================================== */
+/** Rng drbg default seed array */
 uint32_t gRngDrbgDefaultSeed[RNG_DRBG_SEED_MAX_ARRY_SIZE_IN_DWORD]={0x425F4941, 0x37CCE532, 0x2C07C03E, 0x14CAEA55,
                                0x57DF93B5, 0xC277D946, 0xAE4728C1, 0x7FEBA982,
                                0xB3E156DA, 0xE7993855, 0x45EE2421, 0x506F53D1 };
