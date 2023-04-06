@@ -131,7 +131,11 @@ void gpio_input_interrupt_main(void *args)
     retVal = HwiP_construct(&gGpioHwiObject, &hwiPrms);
     DebugP_assert(retVal == SystemP_SUCCESS );
 
+#if defined(SOC_AM273X)
+    DebugP_log("Press and release SW2 button on EVM to trigger GPIO interrupt ...\r\n");
+#else
     DebugP_log("Press and release SW%d button on EVM to trigger GPIO interrupt ...\r\n", pinNum);
+#endif
     while(gGpioIntrDone <= waitCount)
     {
         /* Keep printing the current GPIO value */
