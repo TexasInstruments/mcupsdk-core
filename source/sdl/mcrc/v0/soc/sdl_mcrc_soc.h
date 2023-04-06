@@ -54,6 +54,9 @@ extern "C" {
 #if defined (SOC_AWR294X)
 #include <sdl/mcrc/v0/soc/awr294x/sdl_mcrc_soc.h>
 #endif /* SOC_AWR294X */
+#if defined (SOC_AM243X)
+#include <sdl/mcrc/v0/soc/am243x/sdl_mcrc_soc.h>
+#endif /* SOC_AM243X */
 
 #if defined (SOC_AM243X)
 #include <sdl/mcrc/v0/soc/am243x/sdl_mcrc_soc.h>

@@ -45,6 +45,9 @@ extern "C" {
 #if defined (SOC_AM64X)
 #include <sdl/stog/v0/soc/am64x/sdl_soc_tog.h>
 #endif /* SOC_AM64X */
+#if defined (SOC_AM243X)
+#include <sdl/stog/v0/soc/am243x/sdl_soc_tog.h>
+#endif /* SOC_AM243x */
 
 #if defined (SOC_AM243X)
 #include <sdl/stog/v0/soc/am243x/sdl_soc_tog.h>

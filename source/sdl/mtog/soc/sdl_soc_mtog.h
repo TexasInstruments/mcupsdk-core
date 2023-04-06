@@ -1,5 +1,9 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ * SDL TOG
+ *
+ * SDL SoC Header file for TOG
+ *
+ *  Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,53 +35,22 @@
  *
  */
 
-/**
- *  \file     sdl_mcrc_soc.c
- *
- *  \brief    This file contains the soc-specific implementation of the API's present in the
- *            device abstraction layer file of MCRC.
- */
+#ifndef INCLUDE_SDL_MTOG_SOC_H_
+#define INCLUDE_SDL_MTOG_SOC_H_
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <sdl/include/sdl_types.h>
-#include <sdl/include/hw_types.h>
-#include <sdl/dpl/sdl_dpl.h>
-#include <sdl/mcrc/v0/sdl_ip_mcrc.h>
-#include <sdl/mcrc/v0/sdl_mcrc_hw.h>
-#include <sdl/mcrc/v0/soc/sdl_mcrc_soc.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/**
- *  Design: PROC_SDL-2101
- */
-int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
-                             uint32_t *baseAddr)
-{
-    int32_t status = SDL_PASS;
-    uint32_t size = 0;
+#if defined (SOC_AM64X)
+#include <sdl/mtog/soc/am64x/sdl_soc_mtog.h>
+#endif /* SOC_AM64X */
+#if defined (SOC_AM243X)
+#include <sdl/mtog/soc/am243x/sdl_soc_mtog.h>
+#endif /* SOC_AM243x */
 
-    if (baseAddr == NULL)
-    {
-        status = SDL_EBADARGS;
-    }
-    else
-    {
-        if (instance == MCU_MCRC64_0)
-        {
-            *baseAddr = (uint32_t)SDL_MCU_MCRC64_0_REGS_BASE;
-            size = SDL_MCU_MCRC64_0_REGS_SIZE;
-        }
-        else
-        {
-            status = SDL_EBADARGS;
-        }
-    }
-
-    if (status == SDL_PASS)
-    {
-        *baseAddr = (uint32_t)SDL_DPL_addrTranslate((uint64_t)*baseAddr, size);
-    }
-
-    return (status);
+#ifdef __cplusplus
 }
+#endif  /* extern "C" */
 
+#endif /* INCLUDE_SDL_MTOG_SOC_H_ */

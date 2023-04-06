@@ -36,7 +36,7 @@
  *
  *  Header file containing various enumerations, structure definitions and function
  *  declarations for the VBUSM Slave Timeout Gasket IP.
- *  
+ *
  *  This is the SDL-FL API documentation for the VBUSM Master Timeout Gasket module.
  *
  *  The following procedure describes how to properly use this SDL-FL API:
@@ -62,7 +62,6 @@
  * @{
  */
 /** @} */
- 
 #ifndef SDL_MTOG_H_
 #define SDL_MTOG_H_
 
@@ -74,7 +73,7 @@ extern "C" {
 #include <stdbool.h>
 
 #include <sdl/mtog/v0/sdl_ip_mtog.h>
-#include <sdl/mtog/soc/am64x/sdl_soc_mtog.h>
+#include <sdl/mtog/soc/sdl_soc_mtog.h>
 
 /* Magic value used to force a timeout */
 #define SDL_MTOG_FORCE_KEY       ((uint32_t) 0x95U)
@@ -107,7 +106,6 @@ typedef struct {
  *  @section MTOG Functions
  *  @{
  */
- 
 /**
  *  \brief Initialize Master TOG module with respect of instance
  *

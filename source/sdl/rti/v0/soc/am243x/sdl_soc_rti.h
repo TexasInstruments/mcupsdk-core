@@ -40,11 +40,11 @@
 extern "C" {
 #endif
 
-/** 
+/**
  *
  * @ingroup  SDL_MODULE
  * @defgroup SDL_RTI_API APIs for SDL RTI
- * 
+ *
  */
 /**
 @defgroup SDL_RTI_ENUM RTI Enumerated Data Types

@@ -45,6 +45,10 @@ extern "C" {
 #include <sdl/dcc/v0/soc/am243x/sdl_soc_dcc.h>
 #endif /* SOC_AM243X */
 
+#if defined (SOC_AM243X)
+#include <sdl/dcc/v0/soc/am243x/sdl_soc_dcc.h>
+#endif /* SOC_AM243X */
+
 #ifdef __cplusplus
 }
 #endif  /* extern "C" */

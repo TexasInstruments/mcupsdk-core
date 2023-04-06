@@ -53,27 +53,10 @@ extern "C" {
 
 #include <sdl/include/sdl_types.h>
 
-#if defined (SOC_AM64X)
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
-#endif
 
-#if defined (SOC_AM64X)
-#if defined (M4F_CORE)
+#include <sdl/pok/v1/soc/sdl_soc_pok.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
-#endif
-#endif
 
-#if defined (SOC_AM243X)
-#if defined (R5F_CORE)
-#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
-#endif
-#endif
-
-#if defined (SOC_AM64X) || defined (SOC_AM243X)
-#if defined (R5F_CORE)
-#include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
-#endif
-#endif
 
 
 /**

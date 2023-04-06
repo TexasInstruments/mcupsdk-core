@@ -44,10 +44,9 @@
 #include "sdl/include/sdl_types.h"
 #include <sdl/mtog/v0/sdlr_mtog.h>
 #include "sdl/include/sdl_types.h"
-#include "soc/am64x/sdl_soc_mtog.h"
 #include "v0/sdl_ip_mtog.h"
 #if defined (SOC_AM64X)
-#include "sdl/mtog/soc/am64x/sdl_soc_mtog.h"
+#include <sdl/mtog/soc/sdl_soc_mtog.h>
 #endif
 
 
@@ -59,7 +58,6 @@ int32_t SDL_MTOG_init(SDL_MTOG_Inst instance, const SDL_MTOG_config *pConfig)
     int32_t sdlResult = SDL_EBADARGS;
     int32_t  retVal;
 	uint32_t mtog_base_addr=0x0u;
-	
     SDL_MTOG_getBaseaddr(SDL_INSTANCE_MCU_MTOG0, &mtog_base_addr);
     if((instance <= SDL_INSTANCE_MTOG_MAX) && (pConfig != NULL_PTR))
     {
@@ -84,7 +82,6 @@ int32_t SDL_MTOG_verifyConfig(SDL_MTOG_Inst instance, const SDL_MTOG_config *pCo
     SDL_MTOG_config cfg;
     int32_t sdlResult = SDL_EBADARGS;
 	uint32_t mtog_base_addr=0x0u;
-	
     SDL_MTOG_getBaseaddr(SDL_INSTANCE_MCU_MTOG0, &mtog_base_addr);
     if( (instance <= SDL_INSTANCE_MTOG_MAX) && (pConfig != NULL_PTR))
     {
@@ -109,7 +106,6 @@ int32_t SDL_MTOG_start( SDL_MTOG_Inst instance )
 {
     int32_t  sdlResult = SDL_EBADARGS;
 	uint32_t mtog_base_addr=0x0u;
-	
     SDL_MTOG_getBaseaddr(SDL_INSTANCE_MCU_MTOG0, &mtog_base_addr);
     if (instance <= SDL_INSTANCE_MTOG_MAX)
     {
@@ -126,7 +122,6 @@ int32_t SDL_MTOG_stop( SDL_MTOG_Inst instance )
 {
     int32_t  sdlResult = SDL_EBADARGS;
 	uint32_t mtog_base_addr=0x0u;
-	
     SDL_MTOG_getBaseaddr(SDL_INSTANCE_MCU_MTOG0, &mtog_base_addr);
     if (instance <= SDL_INSTANCE_MTOG_MAX)
     {
@@ -143,7 +138,6 @@ int32_t SDL_MTOG_forceTimeout( SDL_MTOG_Inst instance )
 {
     int32_t sdlResult = SDL_EBADARGS;
 	uint32_t mtog_base_addr=0x0u;
-	
     SDL_MTOG_getBaseaddr(SDL_INSTANCE_MCU_MTOG0, &mtog_base_addr);
     if (instance <= SDL_INSTANCE_MTOG_MAX)
     {
@@ -187,7 +181,6 @@ int32_t SDL_MTOG_getStaticRegisters( SDL_MTOG_Inst instance,  SDL_MTOG_staticReg
 {
     int32_t sdlResult = SDL_EBADARGS;
 	uint32_t mtog_base_addr=0x0u;
-	
     SDL_MTOG_getBaseaddr(SDL_INSTANCE_MCU_MTOG0, &mtog_base_addr);
     if( (instance <= SDL_INSTANCE_MTOG_MAX) && (pStaticRegs != NULL_PTR) )
     {

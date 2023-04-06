@@ -54,8 +54,6 @@ extern "C"
 #define IP_VERSION_ECC_BUS_SAFETY_V0
 #define IP_VERSION_STC_V0
 #define IP_VERSION_ECC_V1
-
-
 #ifdef __cplusplus
 }
 #endif

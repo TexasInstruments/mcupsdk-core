@@ -37,7 +37,7 @@
  *  \brief    This file contains the soc-specific implementation of the API's present in the
  *            device abstraction layer file of DCC.
  */
- 
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <sdl/include/sdl_types.h>

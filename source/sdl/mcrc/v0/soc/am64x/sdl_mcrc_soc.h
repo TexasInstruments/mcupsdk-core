@@ -58,7 +58,7 @@ extern "C" {
  */
 
 typedef enum {
-   MCRC_MCU_NAVSS = 1,
+   MCU_MCRC64_0 = 1,
     /**< MCU_NAVSS0_MCRC_0 Instance */
    SDL_MCRC_INVALID = 0xffff,
     /**< Invalid instance  */

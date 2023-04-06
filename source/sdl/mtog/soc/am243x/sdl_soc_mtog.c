@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,25 +32,36 @@
  */
 
 /**
- *  \file     sdl_mcrc_soc.c
+ *  \file     sdl_soc_mtog.c
  *
  *  \brief    This file contains the soc-specific implementation of the API's present in the
- *            device abstraction layer file of MCRC.
+ *            device abstraction layer file of MTOG.
  */
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "sdl_soc_mtog.h"
 #include <sdl/include/sdl_types.h>
 #include <sdl/include/hw_types.h>
+#include <sdl/mtog/v0/sdl_ip_mtog.h>
+#include <sdl/sdl_mtog.h>
 #include <sdl/dpl/sdl_dpl.h>
-#include <sdl/mcrc/v0/sdl_ip_mcrc.h>
-#include <sdl/mcrc/v0/sdl_mcrc_hw.h>
-#include <sdl/mcrc/v0/soc/sdl_mcrc_soc.h>
+#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
+#include <sdl/include/am64x_am243x/sdlr_mcu_ctrl_mmr.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#define SDL_BASE_MCU_MTOG0_CTRL  (SDL_MCU_CTRL_MMR0_CFG0_BASE +SDL_MCU_CTRL_MMR_CFG0_MCU_MTOG_CTRL)
+
+/* Defines for TOG base addresses */
 
 /**
- *  Design: PROC_SDL-2101
+ *  Design:
  */
-int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
+int32_t SDL_MTOG_getBaseaddr(SDL_MTOG_Inst instance,
                              uint32_t *baseAddr)
 {
     int32_t status = SDL_PASS;
@@ -62,10 +73,10 @@ int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
     }
     else
     {
-        if (instance == MCU_MCRC64_0)
+	    if (instance == SDL_INSTANCE_MCU_MTOG0)
         {
-            *baseAddr = (uint32_t)SDL_MCU_MCRC64_0_REGS_BASE;
-            size = SDL_MCU_MCRC64_0_REGS_SIZE;
+			*baseAddr =	SDL_BASE_MCU_MTOG0_CTRL;
+            size =(uint32_t)SDL_MCU_CTRL_MMR0_CFG0_SIZE ;
         }
         else
         {
@@ -75,9 +86,12 @@ int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
 
     if (status == SDL_PASS)
     {
-        *baseAddr = (uint32_t)SDL_DPL_addrTranslate((uint64_t)*baseAddr, size);
+        *baseAddr = (uint32_t)SDL_DPL_addrTranslate(*baseAddr, size);
     }
 
     return (status);
 }
 
+#ifdef __cplusplus
+}
+#endif

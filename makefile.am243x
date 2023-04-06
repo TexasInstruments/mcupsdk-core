@@ -54,7 +54,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am243x profinet_device_irt_rgmii_icss_fwhal_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x profinet_device_rt_mrp_mii_icss_fwhal_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x profinet_device_rt_mrp_rgmii_icss_fwhal_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am243x sdl_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x sdl_m4f.ti-arm-clang sdl_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x mathlib_r5f.ti-arm-clang
@@ -107,7 +107,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am243x profinet_device_irt_rgmii_icss_fwhal_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x profinet_device_rt_mrp_mii_icss_fwhal_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x profinet_device_rt_mrp_rgmii_icss_fwhal_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am243x sdl_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x sdl_m4f.ti-arm-clang_clean sdl_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x mathlib_r5f.ti-arm-clang_clean
@@ -526,7 +526,7 @@ BUILD_COMBO_profinet_device_irt_mii_icss_fwhal = profinet_device_irt_mii_icss_fw
 BUILD_COMBO_profinet_device_irt_rgmii_icss_fwhal = profinet_device_irt_rgmii_icss_fwhal_r5f.ti-arm-clang
 BUILD_COMBO_profinet_device_rt_mrp_mii_icss_fwhal = profinet_device_rt_mrp_mii_icss_fwhal_r5f.ti-arm-clang
 BUILD_COMBO_profinet_device_rt_mrp_rgmii_icss_fwhal = profinet_device_rt_mrp_rgmii_icss_fwhal_r5f.ti-arm-clang
-BUILD_COMBO_sdl = sdl_r5f.ti-arm-clang
+BUILD_COMBO_sdl = sdl_m4f.ti-arm-clang sdl_r5f.ti-arm-clang
 BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang
 BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang
 BUILD_COMBO_mathlib = mathlib_r5f.ti-arm-clang
@@ -744,7 +744,7 @@ BUILD_COMBO_CLEAN_profinet_device_irt_mii_icss_fwhal = profinet_device_irt_mii_i
 BUILD_COMBO_CLEAN_profinet_device_irt_rgmii_icss_fwhal = profinet_device_irt_rgmii_icss_fwhal_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_profinet_device_rt_mrp_mii_icss_fwhal = profinet_device_rt_mrp_mii_icss_fwhal_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_profinet_device_rt_mrp_rgmii_icss_fwhal = profinet_device_rt_mrp_rgmii_icss_fwhal_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_sdl = sdl_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_sdl = sdl_m4f.ti-arm-clang_clean sdl_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mathlib = mathlib_r5f.ti-arm-clang_clean
@@ -957,7 +957,7 @@ BUILD_COMBO_SCRUB_profinet_device_irt_mii_icss_fwhal = profinet_device_irt_mii_i
 BUILD_COMBO_SCRUB_profinet_device_irt_rgmii_icss_fwhal = profinet_device_irt_rgmii_icss_fwhal_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_profinet_device_rt_mrp_mii_icss_fwhal = profinet_device_rt_mrp_mii_icss_fwhal_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_profinet_device_rt_mrp_rgmii_icss_fwhal = profinet_device_rt_mrp_rgmii_icss_fwhal_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_sdl = sdl_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_sdl = sdl_m4f.ti-arm-clang_scrub sdl_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mathlib = mathlib_r5f.ti-arm-clang_scrub_scrub

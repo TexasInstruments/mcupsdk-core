@@ -37,7 +37,7 @@
  *  \brief    This file contains the soc-specific implementation of the API's present in the
  *            device abstraction layer file of MCRC.
  */
- 
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <sdl/include/sdl_types.h>
@@ -48,7 +48,7 @@
 #include <sdl/mcrc/v0/soc/sdl_mcrc_soc.h>
 
 /**
- *  Design: PROC_SDL-2101 
+ *  Design: PROC_SDL-2101
  */
 int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
                              uint32_t *baseAddr)
@@ -62,7 +62,7 @@ int32_t SDL_MCRC_getBaseaddr(SDL_MCRC_InstType instance,
     }
     else
     {
-        if (instance == MCRC_MCU_NAVSS)
+        if (instance == MCU_MCRC64_0)
         {
             *baseAddr = (uint32_t)SDL_MCU_MCRC64_0_REGS_BASE;
             size = SDL_MCU_MCRC64_0_REGS_SIZE;

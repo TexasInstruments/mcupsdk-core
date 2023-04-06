@@ -48,9 +48,7 @@ extern "C"
 #define IP_VERSION_VTM_V0
 #define IP_VERSION_POK_V1
 #define IP_VERSION_ECC_V0
-#define IP_VERSION_RTI_V0
 #define IP_VERSION_PBIST_V0_1
-
 #ifdef __cplusplus
 }
 #endif

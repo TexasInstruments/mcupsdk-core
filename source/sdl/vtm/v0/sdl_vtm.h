@@ -44,8 +44,8 @@
 #ifndef SDL_IP_VTM_TOP_H_
 #define SDL_IP_VTM_TOP_H_
 
-#if defined (SOC_AM64X)
-#include <sdl/vtm/v0/soc/am64x/sdl_soc_vtm.h>
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#include <sdl/vtm/v0/soc/sdl_soc_vtm.h>
 #include <sdl/vtm/v0/sdl_ip_vtm.h>
 #endif
 

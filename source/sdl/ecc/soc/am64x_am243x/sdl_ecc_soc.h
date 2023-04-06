@@ -54,11 +54,11 @@
  #include <sdl/sdl_ecc.h>
  #include <sdl/ecc/sdl_ip_ecc.h>
  #include <sdl/include/sdl_types.h>
- #if defined(SOC_AM243X)
- #include <sdl/esm/soc/am243x/sdl_esm_core.h>
- #endif
  #if defined(SOC_AM64X)
  #include <sdl/esm/soc/am64x/sdl_esm_core.h>
+ #endif
+ #if defined(SOC_AM243X)
+ #include <sdl/esm/soc/am243x/sdl_esm_core.h>
  #endif
  #include <sdl/ecc/sdl_ecc_priv.h>
  #include <sdl/include/am64x_am243x/sdlr_soc_ecc_aggr.h>

@@ -49,10 +49,9 @@
 
 
 
-#if defined (SOC_AM64X)
+
 #include <sdl/pok/v1/sdl_pok_def.h>
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
-#endif
+#include <sdl/pok/v1/soc/sdl_soc_pok.h>
 
 #if defined (SOC_AM243X)
 #if defined (R5F_CORE)
@@ -60,6 +59,8 @@
 #include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
 #endif
 #endif
+
+
 
 /**
  *
