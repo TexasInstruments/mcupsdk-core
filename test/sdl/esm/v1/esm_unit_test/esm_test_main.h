@@ -50,6 +50,8 @@
 #include <sdl/include/hw_types.h>
 #include <dpl_interface.h>
 #include <sdl/esm/v1/v1_0/sdlr_esm.h>
+#include "dcc_uc1.h"
+#include "parity_main.h"
 
 #define BITS_PER_WORD (32u)
 

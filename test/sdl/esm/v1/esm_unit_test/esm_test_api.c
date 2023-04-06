@@ -43,13 +43,42 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/AddrTranslateP.h>
+#include <sdl/r5/v0/sdl_r5_utils.h>
+#include <sdl/ecc/sdl_ecc_utils.h>
+#include <sdl/sdl_ccm.h>
+#include <sdl/r5/v0/sdl_ip_ccm.h>
+#include <sdl/sdl_ecc.h>
+#include "dcc_uc1.h"
 
 #define SDTF_NUM_RUNALL_TEST_COMMANDS 3
 #define MASK_BIT (1u)
 #define STATUS_NUM (1u)
 #define SDL_ESM_EN_KEY_ENBALE_VAL (0xFU)
 
-SDL_ESM_NotifyParams params = 
+#define SDL_ATCM_MAX_MEM_SECTIONS                  (1u)
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+volatile bool ESMError = false;
+SDL_ESM_Inst         inst = SDL_ESM_INSTANCE_MAX;
+
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg);
+#endif
+extern int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
+                             SDL_CCM_MonitorType monitorType,
+                             SDL_CCM_SelfTestType testType,
+                             uint32_t polarityInversionMask,
+                             uint32_t timeoutCnt);
+
+
+SDL_ESM_NotifyParams params =
 {
 	.groupNumber = 1U,
 	.errorNumber = 1U,
@@ -58,7 +87,7 @@ SDL_ESM_NotifyParams params =
 	.callBackFunction = NULL,
 };
 
-SDL_ESM_OpenParams openPerams = 
+SDL_ESM_OpenParams openPerams =
 {
 	.bClearErrors = FALSE
 };
@@ -77,6 +106,7 @@ int32_t sdl_Esm_posTest(void)
     uint32_t status;
 	SDL_ESM_GroupIntrStatus intrstatus;
     uint32_t New_SDL_TEST_ESM_BASE;
+
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
     if (testStatus == SDL_APP_TEST_PASS)
@@ -118,7 +148,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -298,7 +328,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -318,7 +348,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
     /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -328,7 +358,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
 	    /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -338,7 +368,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
 	    /* Verify config API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -348,6 +378,81 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
+
+
+
+    /* CCM CALLBACK TEST*/
+        /* SDL_ESM_init API CCM  test */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_registerCCMCallback(SDL_ESM_INST_MSS_ESM,0,
+                                    SDL_ESM_applicationCallback,
+                                    NULL) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    /*ECC CALLBACK TEST*/
+    if (testStatus == SDL_APP_TEST_PASS)
+        {
+            if (SDL_ESM_registerECCCallback(SDL_ESM_INST_MSS_ESM,0,
+                                        SDL_ESM_applicationCallback,
+                                        NULL) != SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
+            }
+        }
+
+      /* Parity test integrate to enject ESM error*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        DebugP_log("Parity Test cases Started...\r\n");
+        parity_main(NULL);
+        DebugP_log("Parity Test cases Finished.\r\n");
+    }
+
+    /* DCC test integrate to enject ESM error*/
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        DebugP_log("DCC Test cases Started...\r\n");
+        dcc_test_main(NULL);
+        DebugP_log("DCC Test cases Finished.\r\n");
+    }
+
+    /* ESMSetInfluenceOnErrPin positive test */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        inst=SDL_ESM_INST_DSS_ESM;
+        if (SDL_ESM_setNError(inst) == SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    /* ESMGetInfluenceOnErrPin positive test */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        inst=SDL_ESM_INST_DSS_ESM;
+        if (SDL_ESM_clrNError(inst) == SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+
 
 return (testStatus);
 }
@@ -366,3 +471,38 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
             DebugP_log("\nESM_ECC_Example_init: Init MAIN ESM complete \n");
         }
 }
+
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg)
+{
+
+    SDL_ECC_MemType eccmemtype;
+    SDL_Ecc_AggrIntrSrc eccIntrSrc;
+    SDL_ECC_ErrorInfo_t eccErrorInfo;
+    int32_t retVal;
+
+    retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
+
+    /* Any additional customer specific actions can be added here */
+    retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
+
+
+    if (eccErrorInfo.injectBitErrCnt != 0)
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);
+    }
+    else
+    {
+        SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_NORMAL, eccErrorInfo.bitErrCnt);
+    }
+
+    retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
+
+    ESMError = true;
+
+    return retVal;
+}
+#endif

@@ -145,18 +145,6 @@ void test_sdl_esm_baremetal_test_app (void *args)
         }
     }
 
-
-    if (testResult == SDL_APP_TEST_PASS)
-    {
-
-        DebugP_log("\n All tests have passed. \n");
-    }
-    else
-    {
-
-        DebugP_log("\n Few/all tests Failed \n");
-    }
-
 }
 
 void test_sdl_esm_baremetal_test_app_runner(void)

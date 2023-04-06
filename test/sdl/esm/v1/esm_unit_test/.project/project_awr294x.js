@@ -8,6 +8,9 @@ const files = {
         "esm_test_err.c",
         "esm_test_main.c",
         "dpl_interface.c",
+        "dcc_uc1.c",
+        "parity_main.c",
+        "parity_trigger.c",
         "main.c",
     ],
 };
@@ -22,6 +25,15 @@ const filedirs = {
         "../../../../../../dpl", /* SDL SDL base */
     ],
 };
+
+const r5_macro = {
+    common: [
+        "R5F_INPUTS",
+    ],
+
+};
+
+
 
 const libdirs_nortos = {
     common: [
@@ -72,7 +84,7 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    
+
 	{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
 ];
 
@@ -102,6 +114,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
+        build_property.defines = r5_macro;
     }
 
     return build_property;

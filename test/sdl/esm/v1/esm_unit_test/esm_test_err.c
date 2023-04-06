@@ -48,7 +48,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             void *arg);
 
 
-SDL_ESM_NotifyParams esmParams = 
+SDL_ESM_NotifyParams esmParams =
 {
 	.groupNumber = 1U,
 	.errorNumber = 1U,
@@ -57,7 +57,7 @@ SDL_ESM_NotifyParams esmParams =
 	.callBackFunction = NULL,
 };
 
-SDL_ESM_NotifyParams verifyEsmParams = 
+SDL_ESM_NotifyParams verifyEsmParams =
 {
 	.groupNumber = 1U,
 	.errorNumber = 1U,
@@ -66,7 +66,7 @@ SDL_ESM_NotifyParams verifyEsmParams =
 	.callBackFunction = NULL,
 };
 
-SDL_ESM_NotifyParams verifyParams = 
+SDL_ESM_NotifyParams verifyParams =
 {
 	.groupNumber = 1U,
 	.errorNumber = 1U,
@@ -81,7 +81,7 @@ int32_t sdl_Esm_negTest(void)
     SDL_ESM_Inst         instance = SDL_ESM_INSTANCE_MAX;
     int32_t              testStatus = SDL_APP_TEST_PASS;
     int32_t apparg;
-    uint32_t             val;
+    uint32_t             pStatus;
     SDL_ESM_staticRegs         staticRegs;
     SDL_ESM_Inst         i;
     uint32_t esmBaseAddr;
@@ -92,7 +92,7 @@ int32_t sdl_Esm_negTest(void)
     uint32_t status;
 	SDL_ESM_GroupIntrStatus intrstatus;
     uint32_t New_SDL_TEST_ESM_BASE;
-	
+
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
     SDL_ESM_NotifyParams pCofnig;
@@ -142,7 +142,8 @@ int32_t sdl_Esm_negTest(void)
    /* ESMGetErrPinStatus negative test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ESM_getNErrorStatus(instance,&val) != SDL_EBADARGS)
+        pStatus=0x12345678;
+        if (SDL_ESM_getNErrorStatus(instance,&pStatus) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -171,8 +172,8 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        instance = SDL_ESM_INSTANCE_MAX;
-        if (SDL_ESM_getNErrorStatus(instance, NULL) != SDL_EBADARGS)
+        instance = SDL_ESM_INST_MSS_ESM;
+        if (SDL_ESM_getNErrorStatus(instance, &pStatus) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -343,7 +344,7 @@ int32_t sdl_Esm_negTest(void)
         DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ESM_init((SDL_ESM_Inst)SDL_ESM_INSTANCE_INVLD, NULL,NULL, &apparg) != SDL_EBADARGS)
@@ -370,7 +371,7 @@ int32_t sdl_Esm_negTest(void)
         DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
 	/* Verify config API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -380,7 +381,7 @@ int32_t sdl_Esm_negTest(void)
             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
 		/* Verify config API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -391,7 +392,7 @@ int32_t sdl_Esm_negTest(void)
             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
 		SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &esmParams,NULL, &apparg);
@@ -706,6 +707,33 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        if (SDL_ESM_getGroupIntrStatus(New_SDL_TEST_ESM_BASE, 3u, NULL) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getGroupIntrStatus(New_SDL_TEST_ESM_BASE, 4u, &intrstatus) != SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+     if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_clearGroupIntrStatus(New_SDL_TEST_ESM_BASE, 4u) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
         if (SDL_ESM_clearIntrStatus(0U, 5U) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -721,6 +749,52 @@ int32_t sdl_Esm_negTest(void)
             DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
         }
     }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getLowPriorityLvlIntrStatus((uint32_t)(0u), NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getHighPriorityLvlIntrStatus((uint32_t)(0u), NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getIntrPriorityLvl((uint32_t)(0u), 1025u,((void *) 0u)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getIntrPriorityLvl(New_SDL_TEST_ESM_BASE, 1025u,((void *) 0u)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getIntrPriorityLvl(New_SDL_TEST_ESM_BASE, 0u,((void *) 0u)) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
 /* sdl_ip_esm.c APIs end     */
 
 
