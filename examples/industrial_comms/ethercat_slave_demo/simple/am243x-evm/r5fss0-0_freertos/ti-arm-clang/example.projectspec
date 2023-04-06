@@ -87,6 +87,7 @@
         <configuration name="Debug"
             compilerBuildOptions="
                 -D_DEBUG_=1
+                -Og
             "
             linkerBuildOptions="
                 -lfreertos.am243x.r5f.ti-arm-clang.debug.lib

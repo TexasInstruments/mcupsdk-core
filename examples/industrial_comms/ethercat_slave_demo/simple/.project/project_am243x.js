@@ -133,6 +133,9 @@ const cflags_r5f = {
     common: [
         "-Wno-unused-but-set-variable",
     ],
+    debug: [
+        "-Og",
+    ],
 };
 
 const lflags_r5f = {

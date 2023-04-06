@@ -105,6 +105,10 @@ CFLAGS_common := \
 	-Wno-unused-function \
 	-Wno-unused-but-set-variable \
 
+CFLAGS_debug := \
+	-D_DEBUG_=1 \
+	-Og \
+
 CFLAGS_cpp_common := \
 	-Wno-c99-designator \
 	-Wno-extern-c-compat \
@@ -116,9 +120,6 @@ CFLAGS_cpp_common := \
 	-Wno-reserved-user-defined-literal \
 	-Wno-unused-const-variable \
 	-x c++ \
-
-CFLAGS_debug := \
-	-D_DEBUG_=1 \
 
 CFLAGS_release := \
 	-Os \
