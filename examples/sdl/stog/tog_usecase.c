@@ -61,7 +61,8 @@ __attribute((section(".text:TOG_test"))) void TOG_eventHandler(uint32_t instance
 /*                                Macros                                      */
 /* ========================================================================== */
 
-#if defined (M4F_CORE) && defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
 #define HWI_SECTION __attribute__((section(".text.hwi")))
 #define HwiP_MAX_INTERRUPTS     (16u+64u)
 #define ICSR            (volatile uint32_t *)(0xE000ED04u)
@@ -185,6 +186,7 @@ uint32_t __attribute__((section(".vectors"), aligned(32))) gHwiP_vectorTable[Hwi
      * the 'external' NVIC interrupts
      */
 };
+#endif
 #endif
 
 #define TOG_TEST_TIMEOUTVAL 0x10000U
@@ -360,7 +362,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     instance = instanceIndex;
     cfg.cfgCtrl = SDL_TOG_CFG_TIMEOUT;
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
     /* Initialize MCU ESM module */
     status = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &TOG_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, ptr);

@@ -63,7 +63,7 @@
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/sciclient.h>
 #include <sdl/sdl_esm.h>
 #endif

@@ -54,11 +54,11 @@
 #include "esm0_main.h"
 #include <sdl/include/sdl_types.h>
 #include <sdl/esm/soc/sdl_esm_soc.h>
-#include "ti_dpl_config.h"
 #include <drivers/sciclient.h>
 #include <sdl/dpl/sdl_dpl.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
+#include "ti_dpl_config.h"
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */

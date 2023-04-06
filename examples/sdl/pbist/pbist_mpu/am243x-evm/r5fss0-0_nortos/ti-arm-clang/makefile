@@ -40,7 +40,9 @@ endif
 FILES_common := \
 	pbist_test_func.c \
 	pbist_test_main.c \
+	power_seq.c \
 	dpl_interface.c \
+	armv8_power_utils.c \
 	pbist_test_cfg.c \
 	main.c \
 	ti_drivers_config.c \

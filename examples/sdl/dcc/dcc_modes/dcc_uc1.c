@@ -411,7 +411,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_MCU =
                       },
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
-	 
+
 
 };
 
@@ -438,7 +438,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_Main =
                       },
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
-	 
+
 
  };
 #endif
@@ -699,7 +699,7 @@ void test_sdl_dcc_test_app (void)
                                   clk1Freq,
                                   &refClkRatioNum,
                                   &testClkRatioNum);
-								  
+
 
             configParams.mode    = DCC_Test_UseCaseArray[i].mode;
             configParams.clk0Src = DCC_Test_UseCaseArray[i].clk0;
@@ -712,10 +712,10 @@ void test_sdl_dcc_test_app (void)
                                   testClkRatioNum,
                                   APP_DCC_TEST_CLOCK_SRC_1_DRIFT,
                                   &configParams);
-								  
+
 
             retVal = SDL_DCC_configure(DCC_Test_UseCaseArray[i].dccInst, &configParams);
-			
+
 
             if (SDL_PASS == retVal)
             {
@@ -729,7 +729,7 @@ void test_sdl_dcc_test_app (void)
 
             if (retVal == SDL_PASS)
             {
-				
+
 
                 /* Enable ERROR interrupt */
                 SDL_DCC_enableIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_ERR);
@@ -749,7 +749,7 @@ void test_sdl_dcc_test_app (void)
                     SDL_DCC_enableIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_DONE);
 
                     SDL_DCC_enable(DCC_Test_UseCaseArray[i].dccInst);
-					
+
 
                     if (SDL_PASS == SDL_DCCAppWaitForCompletion())
                     {

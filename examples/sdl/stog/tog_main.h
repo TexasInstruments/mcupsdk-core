@@ -46,7 +46,7 @@
 
 #define TOG_MAX_USECASE                 2
 #define TOG_MAX_TEST_TIMEOUT_VALUE      (10000000u)
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #define MCU_ESM_BASE                    (SDL_MCU_ESM0_CFG_BASE)
 #elif defined (SOC_AM62X)
 #define MCU_ESM_BASE                    (SDL_WKUP_ESM0_CFG_BASE)

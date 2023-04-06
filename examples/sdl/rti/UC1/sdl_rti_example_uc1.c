@@ -45,7 +45,7 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 /* None */
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #define SDL_WDT_BASE SDL_MCU_RTI0_CFG_BASE
@@ -121,7 +121,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
 {
     uint32_t closedWindowstatus, currentDownCounter, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
 	baseAddr=getBaseAddr;
@@ -314,7 +314,7 @@ int32_t SDL_RTI_exampleTest(void)
 
 static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size)
 {
-	#if defined (SOC_AM64X)
+	#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(rtiModule,&getBaseAddr);
 	rtiModule=getBaseAddr;
@@ -367,7 +367,11 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
     uint32_t baseAddr;
 
 	switch (rtiModuleSelect) {
+#if defined (R5F_CORE)
         case SDL_RTI8_CFG_BASE:
+#elif defined (M4F_CORE)
+        case SDL_MCU_RTI0_CFG_BASE:
+#endif
 			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_MCU_CTRL_MMR0_CFG0_SIZE);
             HW_WR_FIELD32(baseAddr,
                           SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL_CLK_SEL,
@@ -422,7 +426,7 @@ static void IntrDisable(uint32_t intsrc)
         SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
         SDL_ESM_disableIntr(SDL_INSTANCE_ESM0, intsrc);
     #endif
-	#if defined (SOC_AM64X)
+    #if defined (SOC_AM64X) || defined (SOC_AM243X)
     #if defined (M4F_CORE)
 	/* clear the ERROR pin */
     SDL_ESM_clrNError(SDL_ESM_INST_MCU_ESM0);

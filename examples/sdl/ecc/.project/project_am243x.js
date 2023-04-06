@@ -17,6 +17,13 @@ const r5_macro = {
 
 };
 
+const m4_macro = {
+    common: [
+        "M4F_CORE",
+    ],
+
+};
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -42,6 +49,14 @@ const includes_nortos = {
     ],
 };
 
+const libs_m4f = {
+    common: [
+        "nortos.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
 const libs_r5f = {
     common: [
         "nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -57,6 +72,21 @@ const lnkfiles = {
 };
 
 const syscfgfile = "../example.syscfg"
+
+const templates_nortos_m4f =
+[
+    {
+        input: ".project/templates/am243x/common/linker_m4f.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "ecc_main",
+        },
+    }
+];
 
 const templates_nortos_r5f =
 [
@@ -74,7 +104,9 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
+    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+
 ];
 
 function getComponentProperty() {
@@ -82,7 +114,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ecc";
+    property.name = "ecc_example";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -99,6 +131,11 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
 
+    if(buildOption.cpu.match(/m4f*/)) {
+        build_property.libs = libs_m4f;
+        build_property.templates = templates_nortos_m4f;
+        build_property.defines = m4_macro;
+    }
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;

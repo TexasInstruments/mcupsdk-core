@@ -130,8 +130,8 @@ static uint8_t gMCRCSrcBuffer[MCRC_BUF_MAX_SIZE] __attribute__((aligned(128), se
 static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
 {
     {
-#if defined(SOC_AM64X)
-     MCRC_MCU_NAVSS,
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+    MCU_MCRC64_0,
 #elif defined(SOC_AM263X)
 	 MCRC0,
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
@@ -153,8 +153,8 @@ static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
      (uint32_t) &gMCRCSrcBuffer[0],
     },
     {
-#if defined(SOC_AM64X)
-     MCRC_MCU_NAVSS,
+#if defined(SOC_AM64X) || defined (SOC_AM243X)
+     MCU_MCRC64_0 ,
 #elif defined(SOC_AM263X)
 	 MCRC0,
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
@@ -250,21 +250,15 @@ static int32_t sdl_mcrc_full_cpu_test(void)
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC0 \n\n");
             }
-#elif defined (SOC_AM64X)
-            if (params[useCase].instance == MCRC_MCU_NAVSS )
+#elif defined (SOC_AM64X) || defined (SOC_AM243X)
+            if (params[useCase].instance == MCU_MCRC64_0  )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC_MCU_NAVSS \n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0  \n\n");
             }
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
             if (params[useCase].instance == MCRC_INSTANCE )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification failed\n\n");
-            }
-#endif
-#if defined (SOC_AM243X)
-            if (params[useCase].instance == MCU_MCRC64_0 )
-            {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \n\n");
             }
 #endif
             retVal = SDL_EFAIL;
@@ -276,10 +270,10 @@ static int32_t sdl_mcrc_full_cpu_test(void)
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC0 \n\n ");
             }
-#elif defined (SOC_AM64X)
-            if (params[useCase].instance == MCRC_MCU_NAVSS  )
+#elif defined (SOC_AM64X) || defined (SOC_AM243X)
+            if (params[useCase].instance == MCU_MCRC64_0  )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC_MCU_NAVSS  \n\n ");
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0   \n\n ");
             }
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
             if (params[useCase].instance == MCRC_INSTANCE )

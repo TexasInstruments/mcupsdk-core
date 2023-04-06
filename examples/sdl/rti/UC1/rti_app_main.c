@@ -171,7 +171,7 @@ SDL_ESM_NotifyParams params =
 };
 #endif
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 SDL_ESM_config RTI_Test_esmInitConfig_MCU =
 {
@@ -304,7 +304,7 @@ void test_sdl_rti_baremetal_test_app (void)
     #elif defined (SOC_AWR294X)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);
     #endif
-	#if defined (SOC_AM64X)
+	#if defined (SOC_AM64X) || defined (SOC_AM243X)
     #if defined (M4F_CORE)
 	sdlApp_initRTI();
 	result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &RTI_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, ptr);

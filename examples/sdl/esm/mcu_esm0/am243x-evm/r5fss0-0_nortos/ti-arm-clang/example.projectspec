@@ -14,8 +14,8 @@
         name = "mcu_esm0_am243x-evm_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"

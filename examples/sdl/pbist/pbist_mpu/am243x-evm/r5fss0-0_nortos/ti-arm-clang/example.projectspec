@@ -98,7 +98,11 @@
         </file>
         <file path="../../../pbist_test_main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="../../../power_seq.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="../../../../../dpl/dpl_interface.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../soc/am243x/armv8_power_utils.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../soc/am243x/pbist_test_cfg.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
@@ -109,6 +113,9 @@
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am243x/EXAMPLES_SDL_PBIST.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
