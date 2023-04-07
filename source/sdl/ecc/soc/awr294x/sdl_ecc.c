@@ -136,7 +136,7 @@ static int32_t SDL_ECC_searchMemEntryTable(SDL_ECC_MemSubType memSubType,
 static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 									 uint32_t setmask,
 									 uint32_t paramregs,
-									 uint32_t paramval);											  
+									 uint32_t paramval);
 /* Event BitMap for ECC ESM callback for MSS */
 SDL_ESM_NotifyParams paramsMSS[SDL_ESM_MAX_MSS_PARAM_MAP_WORDS] =
 {
@@ -735,7 +735,7 @@ int32_t SDL_ECC_initEsm (const SDL_ESM_Inst esmInstType)
         }
     }
     else { /* Nothing */
-	    
+
     }
 
     return SDL_PASS;
@@ -1564,18 +1564,23 @@ static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrR
 }
 /** ============================================================================
  *
- * \brief   Injects ECC TCM Parity error 
+ * \brief   Injects ECC TCM Parity error
  *
  * \param1  memSubType: Memory subtype
  * \param1  bitValue  : Bit Value to set particular register
  *
  * \return  SDL_PASS : Success; SDL_EFAIL for failures
  */
+
+ /**
+ * Design: PROC_SDL-5796
+ */
+
 int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
 							  uint32_t bitValue)
 {
 	int32_t retValue= SDL_PASS;
-	
+
 	/* Set the MSS TCM parity error force bits for parity error injection */
 	switch(memSubType)
 	{
@@ -1591,18 +1596,22 @@ int32_t SDL_ECC_tcmParity(SDL_ECC_MemSubType memSubType,
 		default :
 			retValue = SDL_EFAIL;
 			break;
-	}	
-	
+	}
+
 	return retValue;
 }
 
+/**
+* Design: PROC_SDL-5796
+*/
+
 int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
-							  uint32_t bitValue, 
+							  uint32_t bitValue,
 							  uint32_t paramregvalue,
 							  uint32_t regval)
 {
 	int32_t result=0;
-	
+
 	switch(eccMemType)
 	{
 		/* EDMA Parity */
@@ -1619,9 +1628,9 @@ int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
 			result=0;
 			break;
 	}
-	
+
 	return 	result;
-}	
+}
 /** ============================================================================
  *
  * \brief   Enable dma parity for given memory type
@@ -1639,7 +1648,7 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 {
 	uint32_t result=0u;
 	uint32_t disabletestmode = 0x01u;
-	
+
 	switch(eccMemType)
 	{
 		case SDL_TPCC0A:
@@ -1690,7 +1699,7 @@ static int32_t SDL_ECC_enableParityerr(SDL_ECC_MemType eccMemType,
 		default:
 			break;
 	}
-	
+
 	return ((int32_t)result);
-	
+
 }

@@ -43,13 +43,10 @@
 #include <sdl/include/sdl_types.h>
 
 /**
- * Design: PROC_SDL-1149
+ * Design: PROC_SDL-5805
  */
 SDL_DPL_Interface *gSDL_DPL_Interface = (SDL_DPL_Interface *)NULL_PTR;
 
-/**
- * Design: PROC_SDL-1148
- */
 int32_t SDL_DPL_init(SDL_DPL_Interface *dplInterface)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -67,7 +64,7 @@ int32_t SDL_DPL_init(SDL_DPL_Interface *dplInterface)
 }
 
 /**
- * Design: PROC_SDL-1135,PROC_SDL-1136,PROC_SDL-1137
+ * Design: PROC_SDL-5803
  */
 int32_t SDL_DPL_enableInterrupt(int32_t intNum)
 {
@@ -86,9 +83,7 @@ int32_t SDL_DPL_enableInterrupt(int32_t intNum)
     return ret;
 }
 
-/**
- * Design: PROC_SDL-1138,PROC_SDL-1139,PROC_SDL-1140
- */
+
 int32_t SDL_DPL_disableInterrupt(int32_t intNum)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -106,9 +101,7 @@ int32_t SDL_DPL_disableInterrupt(int32_t intNum)
     return ret;
 }
 
-/**
- * Design: PROC_SDL-1145,PROC_SDL-1146
- */
+
 int32_t SDL_DPL_registerInterrupt(SDL_DPL_HwipParams *pParams, pSDL_DPL_HwipHandle *handle)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -130,9 +123,7 @@ int32_t SDL_DPL_registerInterrupt(SDL_DPL_HwipParams *pParams, pSDL_DPL_HwipHand
     return ret;
 }
 
-/**
- * Design: PROC_SDL-1147
- */
+
 int32_t SDL_DPL_deregisterInterrupt(pSDL_DPL_HwipHandle handle)
 {
     SDL_ErrType_t ret = SDL_PASS;

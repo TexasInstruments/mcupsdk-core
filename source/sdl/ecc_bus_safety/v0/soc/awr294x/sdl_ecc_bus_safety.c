@@ -152,7 +152,7 @@ static void SDL_ECC_BUS_SAFETY_DSS_SAFETY_CTRL_enable (void)
 *   API to clear SEC error on DSS Node
 *********************************************************************************************************/
 /**
- *  Design:  PROC_SDL-3713
+ *  Design:  PROC_SDL-3713, PROC_SDL-3745
  */
 int32_t SDL_ECC_BUS_SAFETY_DSS_secErrorClear(uint32_t busSftyNode)
 {
@@ -212,7 +212,7 @@ int32_t SDL_ECC_BUS_SAFETY_DSS_getSecErrorStatus(uint32_t busSftyNode , uint32_t
 *   API to clear DED error on DSS Node
 *********************************************************************************************************/
 /**
- *  Design: PROC_SDL-3716
+ *  Design: PROC_SDL-3716, PROC_SDL-3748
  */
 int32_t SDL_ECC_BUS_SAFETY_DSS_dedErrorClear(uint32_t busSftyNode)
 {

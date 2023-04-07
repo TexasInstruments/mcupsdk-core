@@ -39,6 +39,10 @@
  *            This also contains some related macros and Helper APIs.
  */
 
+ /**
+ * Design: PROC_SDL-5821
+ */
+
 #include <sdl/reset/sdl_reset.h>
 
 /********************************************************************************************************
