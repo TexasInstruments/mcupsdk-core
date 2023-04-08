@@ -149,6 +149,7 @@ void pmu_multievent(void *args)
     PMU_profilePrint();
 
     DebugP_log("[PMU Multievent] Done...\r\n");
+    DebugP_log("All tests have passed!!\r\n");
 
     Drivers_close();
 }
