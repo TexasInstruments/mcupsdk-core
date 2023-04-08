@@ -330,7 +330,21 @@ some details regarding those.
 
 - To boot an application using the `sbl_ospi`, the application image needs to be flashed at a particular location in the OSPI flash memory.
 
-- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x80000. In most cases you wouldn't need to change this.
+- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x80000
+
+- To flash an application (or any file in fact) to a location in the OSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
+
+### SBL OSPI MULTI-PARTITION
+
+- The `sbl_ospi_multipartition` is a secondary bootloader which reads and parses core-specific application images for a system project from pre-defined locations
+  in the OSPI flash and then moves on to core initialization and other steps
+
+- To boot an application using the `sbl_ospi_multipartition`, the application images needs to be flashed at specific locations in the OSPI flash memory. The default 
+  offsets are 512 KB apart.
+
+- This locations or offsets are specified in the SysConfig of the `sbl_ospi_multipartition` application.
+
+- For more information please refer to the example documentation of `sbl_ospi_multipartition` here: \ref EXAMPLES_DRIVERS_SBL_OSPI_MULTI_PARTITION
 
 - To flash an application (or any file in fact) to a location in the OSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
 

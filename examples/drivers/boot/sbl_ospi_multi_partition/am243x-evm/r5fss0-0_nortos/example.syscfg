@@ -2,12 +2,14 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.12.1+2446"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const flash       = scripting.addModule("/board/flash/flash", {}, false);
+const flash1      = flash.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
 const bootloader2 = bootloader.addInstance();
@@ -25,29 +27,32 @@ const mpu_armv74  = mpu_armv7.addInstance();
  * Write custom configuration values to the imported modules.
  */
 bootloader1.appImageOffset      = "0x80000";
-bootloader1.bootMedia           = "MEM";
 bootloader1.appImageBaseAddress = "0x60080000";
 bootloader1.$name               = "CONFIG_BOOTLOADER_FLASH_R5FSS0_0";
 
 bootloader2.$name               = "CONFIG_BOOTLOADER_FLASH_R5FSS0_1";
-bootloader2.appImageOffset      = "0x60100000";
-bootloader2.bootMedia           = "MEM";
 bootloader2.appImageBaseAddress = "0x60100000";
+bootloader2.appImageOffset      = "0x100000";
 
 bootloader3.$name               = "CONFIG_BOOTLOADER_FLASH_R5FSS1_0";
-bootloader3.appImageOffset      = "0x60180000";
-bootloader3.bootMedia           = "MEM";
 bootloader3.appImageBaseAddress = "0x60180000";
+bootloader3.appImageOffset      = "0x180000";
 
 bootloader4.$name               = "CONFIG_BOOTLOADER_FLASH_R5FSS1_1";
-bootloader4.appImageOffset      = "0x60200000";
-bootloader4.bootMedia           = "MEM";
 bootloader4.appImageBaseAddress = "0x60200000";
+bootloader4.appImageOffset      = "0x200000";
 
 bootloader5.$name               = "CONFIG_BOOTLOADER_FLASH_M4FSS0_0";
-bootloader5.appImageOffset      = "0x60280000";
-bootloader5.bootMedia           = "MEM";
-bootloader5.appImageBaseAddress = "0x60280000";
+bootloader5.appImageBaseAddress = "0x6280000";
+bootloader5.appImageOffset      = "0x280000";
+
+flash1.$name                  = "CONFIG_FLASH0";
+bootloader1.flashDriver       = flash1;
+bootloader2.flashDriver       = flash1;
+bootloader3.flashDriver       = flash1;
+bootloader4.flashDriver       = flash1;
+bootloader5.flashDriver       = flash1;
+flash1.peripheralDriver.$name = "CONFIG_OSPI0";
 
 debug_log.enableUartLog        = true;
 debug_log.enableCssLog         = false;
@@ -81,5 +86,17 @@ mpu_armv74.size              = 21;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.RXD.$suggestSolution = "ball.D15";
-debug_log.uartLog.UART.TXD.$suggestSolution = "ball.C16";
+flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "ball.N20";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "ball.L19";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "ball.N19";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "ball.M17";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "ball.N18";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "ball.P20";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "ball.P21";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "ball.M21";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "ball.M20";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "ball.M18";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "ball.M19";
+debug_log.uartLog.UART.RXD.$suggestSolution        = "ball.D15";
+debug_log.uartLog.UART.TXD.$suggestSolution        = "ball.C16";

@@ -132,6 +132,24 @@ int main(void)
         Bootloader_socResetWorkaround();
     }
 #endif
+    if (!Bootloader_socIsMCUResetIsoEnabled())
+    {
+        /* Update devGrp to ALL to initialize MCU domain when reset isolation is
+        not enabled */
+        Sciclient_BoardCfgPrms_t boardCfgPrms_pm =
+            {
+                .boardConfigLow = (uint32_t)0,
+                .boardConfigHigh = 0,
+                .boardConfigSize = 0,
+                .devGrp = DEVGRP_ALL,
+            };
+
+        status = Sciclient_boardCfgPm(&boardCfgPrms_pm);
+
+        /* Enable MCU PLL. MCU PLL will not be enabled by DMSC when devGrp is set
+        to Main in boardCfg */
+        Bootloader_enableMCUPLL();
+    }
 
     Bootloader_socOpenFirewalls();
 
@@ -150,14 +168,24 @@ int main(void)
     if(SystemP_SUCCESS == status)
     {
         /* load and run all CPUs, if a application is not found, the core is run with a while(1); loop */
-        status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_0, CSL_CORE_ID_R5FSS1_0 );
-        if(SystemP_SUCCESS == status)
+        uint32_t coreVariant = Bootloader_socGetCoreVariant();
+        if((coreVariant == BOOTLOADER_DEVICE_VARIANT_QUAD_CORE) || (coreVariant == BOOTLOADER_DEVICE_VARIANT_DUAL_CORE))
         {
-            status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_1, CSL_CORE_ID_R5FSS1_1 );
+            if(status == SystemP_SUCCESS)
+            {
+                status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_0, CSL_CORE_ID_R5FSS1_0 );
+            }
+            if((Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS1) == TRUE) && (status == SystemP_SUCCESS))
+            {
+                status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_1, CSL_CORE_ID_R5FSS1_1 );
+            }
         }
-        if(SystemP_SUCCESS == status)
+        if (!Bootloader_socIsMCUResetIsoEnabled())
         {
-            status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_M4FSS0_0, CSL_CORE_ID_M4FSS0_0 );
+            if(SystemP_SUCCESS == status)
+            {
+                status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_M4FSS0_0, CSL_CORE_ID_M4FSS0_0 );
+            }
         }
         if(SystemP_SUCCESS == status)
         {

@@ -59,6 +59,8 @@
     A53SS0-0 flash at offset 0x300000
  */
 
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -124,14 +126,51 @@ int main(void)
 {
     int32_t status;
 
-
     Bootloader_socWaitForFWBoot();
+
+#ifndef DISABLE_WARM_REST_WA
+    /* Warm Reset Workaround to prevent CPSW register lockup */
+    if (!Bootloader_socIsMCUResetIsoEnabled())
+    {
+        Bootloader_socResetWorkaround();
+    }
+#endif
+
+    Bootloader_profileAddProfilePoint("SYSFW init");
+
+    if (!Bootloader_socIsMCUResetIsoEnabled())
+    {
+        /* Update devGrp to ALL to initialize MCU domain when reset isolation is
+        not enabled */
+        Sciclient_BoardCfgPrms_t boardCfgPrms_pm =
+            {
+                .boardConfigLow = (uint32_t)0,
+                .boardConfigHigh = 0,
+                .boardConfigSize = 0,
+                .devGrp = DEVGRP_ALL,
+            };
+
+        status = Sciclient_boardCfgPm(&boardCfgPrms_pm);
+
+        /* Enable MCU PLL. MCU PLL will not be enabled by DMSC when devGrp is set
+        to Main in boardCfg */
+        Bootloader_enableMCUPLL();
+    }
+
+    Bootloader_socOpenFirewalls();
+
+    Bootloader_socNotifyFirewallOpen();
 
     System_init();
     Drivers_open();
 
     DebugP_log("\r\n");
     DebugP_log("Starting OSPI Multi-Partition Bootloader ... \r\n");
+
+    /* ROM doesn't reset the OSPI flash. This can make the flash initialization
+    troublesome because sequences are very different in Octal DDR mode. So for a
+    moment switch OSPI controller to 8D mode and do a flash reset. */
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0], gFlashHandle[CONFIG_FLASH0]);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -140,14 +179,24 @@ int main(void)
     if(SystemP_SUCCESS == status)
     {
         /* load and run all CPUs, if a application is not found, the core is run with a while(1); loop */
-        status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_0, CSL_CORE_ID_R5FSS1_0 );
-        if(SystemP_SUCCESS == status)
+        uint32_t coreVariant = Bootloader_socGetCoreVariant();
+        if((coreVariant == BOOTLOADER_DEVICE_VARIANT_QUAD_CORE) || (coreVariant == BOOTLOADER_DEVICE_VARIANT_DUAL_CORE))
         {
-            status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_1, CSL_CORE_ID_R5FSS1_1 );
+            if(status == SystemP_SUCCESS)
+            {
+                status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_0, CSL_CORE_ID_R5FSS1_0 );
+            }
+            if((Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS1) == TRUE) && (status == SystemP_SUCCESS))
+            {
+                status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_R5FSS1_1, CSL_CORE_ID_R5FSS1_1 );
+            }
         }
-        if(SystemP_SUCCESS == status)
+        if (!Bootloader_socIsMCUResetIsoEnabled())
         {
-            status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_M4FSS0_0, CSL_CORE_ID_M4FSS0_0 );
+            if(SystemP_SUCCESS == status)
+            {
+                status = App_bootCpu( CONFIG_BOOTLOADER_FLASH_M4FSS0_0, CSL_CORE_ID_M4FSS0_0 );
+            }
         }
         if(SystemP_SUCCESS == status)
         {
@@ -175,5 +224,16 @@ int main(void)
     System_deinit();
 
     return 0;
+}
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle)
+{
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8,8,8,1));
+    OSPI_enableDDR(oHandle);
+    OSPI_setDualOpCodeMode(oHandle);
+    Flash_reset(fHandle);
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
 
