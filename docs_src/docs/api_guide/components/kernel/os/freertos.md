@@ -21,7 +21,7 @@ MCU+ SDK supports FreeRTOS on below CPUS
   - Tasks, semaphores, mutex, queues, timers, list, heap, event groups
   - preemptive priority based scheduler
   - static and/or dynamic memory allocation mode
-\cond !SOC_AM62X
+\cond SOC_AM64X
 - FreeRTOS SMP Kernel @VAR_FREERTOS_SMP_KERNEL_VERSION
   - Tasks, semaphores, mutex, queues, timers, list, heap, event groups
   - preemptive priority based scheduler for multiple cores
@@ -112,7 +112,7 @@ FreeRTOS source is distributed along with MCU+ SDK and given below are some impo
     <td>FreeRTOS-Kernel/
     <td>FreeRTOS Kernel source code. MCU+ SDK simply clones the code from FreeRTOS github and does not modify anything in this folder</td>
 </tr>
-\cond !SOC_AM62X
+\cond SOC_AM64X
 <tr>
     <td>FreeRTOS-Kernel-smp/
     <td>FreeRTOS Kernel source code for SMP. MCU+ SDK simply clones the code from FreeRTOS github and does not modify anything in this folder</td>
@@ -182,7 +182,7 @@ Given below are some references to learn more about FreeRTOS.
     <td>FreeRTOS core kernel source code
     <td>https://github.com/FreeRTOS/FreeRTOS-Kernel
 </tr>
-\cond !SOC_AM62X
+\cond SOC_AM64X
 <tr>
     <td>FreeRTOS core kernel source code for SMP
     <td>https://github.com/FreeRTOS/FreeRTOS-Kernel/tree/smp

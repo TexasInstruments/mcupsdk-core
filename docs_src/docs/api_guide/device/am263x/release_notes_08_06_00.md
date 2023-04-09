@@ -15,6 +15,7 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 CAN SBL (basic CAN) support                                                                     | SBL
+MMCSD SBL support                                                                               | SBL
 MCAN transceiver based example                                                                  | MCAN
 ECAP Type 3 driver and syconfig                                                                 | ECAP
 EPWM TYpe 5 sysconfig enhancement                                                               | EPWM
@@ -355,6 +356,34 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> 8.5.0
     <td> None
 </tr>
+<tr>
+    <td> MCUSDK-8072
+    <td> EnetBoard_setupPorts does not provide config option to enable internal delay for RGMII
+    <td> Enet
+    <td> 8.4.0 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-9480
+    <td> EPWM : HR Updown example crashing on AM263x-LP
+    <td> EPWM
+    <td> 8.5.0
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-9595
+    <td> MCPSI Lookback DMA example locks up when the Bit Rate is set to < 12.5Mhz
+    <td> McSPI
+    <td> 8.4.0 onwards
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-9651
+    <td> Enet - Host port statistics driver and CSL overlay is not correct
+    <td> Enet
+    <td> 8.5.0
+    <td> None
+</tr>
 </table>
 
 ## Known Issues
@@ -407,13 +436,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Ethernet CPSW
     <td> 8.3.0 onwards
     <td> Ensure from application side single ethernet packet does not span across memory banks.
-</tr>
-<tr>
-    <td> MCUSDK-8072
-    <td> EnetBoard_setupPorts does not provide config option to enable internal delay for RGMII
-    <td> Enet
-    <td> 8.4.0 onwards
-    <td> None
 </tr>
 <tr>
     <td> MCUSDK-8073
@@ -484,6 +506,20 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> WDT
     <td> 8.6.0 onwards
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9662
+    <td> QSPI LLD EDMA Transfer fails for size (Unaligned) > MAX EDMA CNT
+    <td> QSPI
+    <td> 8.4.0 onwards
+    <td> Initiate trasfer with aligned data
+</tr>
+<tr>
+    <td> MCUSDK-9813
+    <td> WDT takes incorrect time to reset or generate interrupt when run on CCS
+    <td> WDT
+    <td> 8.6.0
+    <td> None. Works when run with sbl
 </tr>
 </table>
 
