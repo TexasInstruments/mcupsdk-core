@@ -8,7 +8,7 @@ SOC Details           | Values          |
 ----------------------|-----------------|
 Core                  | R5F             |
 Core Operating Speed  | 400 MHz         |
-Memory Type           | DDR             |
+Memory Type           | MSS L2 RAM             |
 Cache status          | Enabled         |
 
 # TCP/IP Performance
@@ -19,7 +19,7 @@ Configuration          | Value                    |
 Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 400 MHz                  |
 Ethernet Interface Type         | RGMII at 100 Mbps           |
-Packet buffer memory      | OCMC (cached)                      |
+Packet buffer memory      | MSS L2 RAM (cached)                      |
 Hardware checksum offload | Disabled on Tx side \n Disabled on Rx Side |
 Scatter-gather TX         | Yes                      |
 Scatter-gather RX         | Yes                      |

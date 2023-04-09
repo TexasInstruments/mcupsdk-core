@@ -8,7 +8,7 @@ SOC Details           | Values          |
 ----------------------|-----------------|
 Core                  | R5F             |
 Core Operating Speed  | 400 MHz         |
-Memory Type           | DDR             |
+Memory Type           | MSRAM             |
 Cache status          | Enabled         |
 
 # Layer 2 Performance
@@ -21,7 +21,7 @@ Configuration          | Value                    |
 Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 400 MHz                  |
 Ethernet Interface Type         | RGMII at 1 Gbps           |
-Packet buffer memory      | DDR (un-cached)                      |
+Packet buffer memory      | MSRAM (un-cached)                      |
 Scatter-gather TX         | Yes                      |
 Scatter-gather RX         | Yes                      |
 CPDMA interrupt pacing    | Yes                      |
@@ -62,7 +62,7 @@ Configuration          | Value                    |
 Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 400 MHz                  |
 Ethernet Interface Type         | RGMII at 1 Gbps           |
-Packet buffer memory      | DDR (cached)                      |
+Packet buffer memory      | MSRAM (cached)                      |
 Hardware checksum offload | Enabled on Tx side \n Disabled on Rx Side |
 Scatter-gather TX         | Yes                      |
 Scatter-gather RX         | Yes                      |
