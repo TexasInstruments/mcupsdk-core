@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -448,7 +448,7 @@ static int32_t Flash_norQspiSetProtocol(Flash_Config *config, Flash_Params *para
             }
         }
 
-        if(SystemP_SUCCESS == status)
+        if((SystemP_SUCCESS == status) && (protocol <= FLASH_CFG_PROTO_1S_1S_4S))
         {
             QSPI_setRxLines(obj->qspiHandle, gFlashToSpiProtocolMap[protocol]);
         }
