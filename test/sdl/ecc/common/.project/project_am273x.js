@@ -29,6 +29,7 @@ const files_c66 = {
         "ecc_test_main.c",
 		"dss_ecc_ip_test_func.c",
 		"dss_ecc_sdl_test_func.c",
+		"dss_parity_edc_test_func.c",
 		"dss_ecc_ip_test_err.c",
 		"dss_ecc_test_err.c",
     ],
@@ -124,10 +125,6 @@ const templates_nortos_r5f =
 
 const templates_nortos_c66 =
 [
-    {
-        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",

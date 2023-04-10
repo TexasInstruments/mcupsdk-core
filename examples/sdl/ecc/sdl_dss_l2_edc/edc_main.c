@@ -50,12 +50,18 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
+#include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR         (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR      (0x060A0020)
+
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES   22
+
 /*L2 Error Detection Address Register*/
-#define SDL_DSP_ICFG_L2EDADDR     (0x01846008U)
+#define SDL_DSP_ICFG_L2EDADDR                   (0x01846008U)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -90,7 +96,6 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
         printf("\r\nLow Priority Interrupt Executed\r\n");
     }
 	
-	printf("\r\nError Detection Address Register having 0x%x value\r\n", SDL_REG32_RD(SDL_DSP_ICFG_L2EDADDR));
 	
 	/*Clear Error Detection Address Register*/
     SDL_REG32_WR(SDL_DSP_ICFG_L2EDADDR, 0x00u);
@@ -98,26 +103,35 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     esmError = true;
 
     return 0;
-}
+}/* End of SDL_ESM_applicationCallbackFunction() */
 
 int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                            int32_t grpChannel,
                                            int32_t intSrc,
                                            void *arg)
 {
-    printf("\r\nIDMA1 Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n",
-                esmInstType, grpChannel, intSrc);
-    printf(" \r\nTake action \r\n");
+    printf("\r\nIDMA1 call back function called. \r\n");
 
     idmaTransferComplete = true;
 
     return 0;
-}
+}/* End of SDL_IDMA1_applicationCallbackFunction() */
 
 void EDC_Example_app(void)
 {
     int32_t    testResult;
+    uint8_t i;
+
+    /* Clear all status registers.*/
+    for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
 	DebugP_log("\r\nEDC UC-1 Example\r\n");
 	testResult = EDC_funcTest();
 

@@ -54,6 +54,16 @@
 #include <kernel/dpl/DebugP.h>
 #include "ecc_func.h"
 
+#if defined(C66_INPUTS)
+#include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
+#endif
+
+#if defined(R5F_INPUTS)
+#include <sdl/include/am273x/sdlr_mss_ecc_agga.h>
+#include <sdl/include/am273x/sdlr_mss_ecc_aggb.h>
+#include <sdl/include/am273x/sdlr_mss_ecc_agg_mss.h>
+#endif
+
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
@@ -62,25 +72,58 @@
 /*                                Macros                                      */
 /* ========================================================================== */
 /* delay*/
-#define SDL_DELAY               			1000000
+#define SDL_DELAY               			                1000000
 
-#define R5FSS0_CORE0_ECC_AGGR_SEC_STATUS    0x02F7B840u
-#define R5FSS0_CORE0_ECC_AGGR_DED_STATUS    0x02F7B940u 
-#define R5FSS0_CORE1_ECC_AGGR_SEC_STATUS    0x02F7BC40u
-#define R5FSS0_CORE1_ECC_AGGR_DED_STATUS    0x02F7BD40u
-#define MSS_ECC_AGG_SEC_STATUS				0x02F7C040u
-#define MSS_ECC_AGG_DED_STATUS				0x02F7C140u
-#define MSS_MCANA_ECC_AGG_SEC_STATUS	    0x02F7F840u
-#define MSS_MCANA_ECC_AGG_DED_STATUS		0x02F7F940u
-#define MSS_MCANB_ECC_AGG_SEC_STATUS		0x03F7F840u
-#define MSS_MCANB_ECC_AGG_DED_STATUS		0x03F7F940u
+#define R5FSS0_CORE0_ECC_AGGR_SEC_STATUS                    0x02F7B840u
+#define R5FSS0_CORE0_ECC_AGGR_DED_STATUS                    0x02F7B940u
+#define R5FSS0_CORE1_ECC_AGGR_SEC_STATUS                    0x02F7BC40u
+#define R5FSS0_CORE1_ECC_AGGR_DED_STATUS                    0x02F7BD40u
+#define MSS_ECC_AGG_SEC_STATUS				                0x02F7C040u
+#define MSS_ECC_AGG_DED_STATUS				                0x02F7C140u
+#define MSS_MCANA_ECC_AGG_SEC_STATUS	                    0x02F7F840u
+#define MSS_MCANA_ECC_AGG_DED_STATUS		                0x02F7F940u
+#define MSS_MCANB_ECC_AGG_SEC_STATUS		                0x03F7F840u
+#define MSS_MCANB_ECC_AGG_DED_STATUS		                0x03F7F940u
 
-#define UNKNOW_MEMTYPE						49783896u
+#define UNKNOW_MEMTYPE						                49783896u
 
+#define SDL_DSP_ICFG_DISABLE                                (0)
+/*L2 Error Detection Address Register*/
+#define SDL_DSP_ICFG_L2EDADDR                               (0x01846008U)
+
+/*Error Detect and Correct Interrupt Mask Register*/
+#define SDL_DSP_ICFG_EDCINTMASK                             (0x01831100u)
+/*Error Detect and Correct Interrupt Flag Register*/
+#define SDL_DSP_ICFG_EDCINTFLG                              (0x01831104u)
+
+#define SDL_DSS_DSP_L2RAM_PARITY_CTRL                       (0x0602006Cu)
+#define SDL_DSS_L2RAM_PARITY_ENABLE                         (0xffu)
+#define SDL_DSS_L2RAM_PARITY_ERROR_CLEAR                    (0xff00u)
+
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR                     (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR                  (0x060A0020)
+
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES               22
+
+#define SDL_MSS_ECC_AGGA_ECC_VECTOR_ADDR                    (0x02F7B808)
+#define SDL_MSS_ECC_AGGA_ERROR_STATUS1_ADDR                 (0x02F7B820)
+
+#define SDL_MSS_ECC_AGGA_RAM_IDS_TOTAL_ENTRIES              28U
+
+#define SDL_MSS_ECC_AGGB_ECC_VECTOR_ADDR                    (0x02F7BC08)
+#define SDL_MSS_ECC_AGGB_ERROR_STATUS1_ADDR                 (0x02F7BC20)
+
+#define SDL_MSS_ECC_AGGB_RAM_IDS_TOTAL_ENTRIES              28U
+
+#define SDL_MSS_ECC_AGG_MSS_ECC_VECTOR_ADDR                 (0x02F7C008)
+#define SDL_MSS_ECC_AGG_MSS_ERROR_STATUS1_ADDR              (0x02F7C020)
+
+#define SDL_MSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES               8U
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 volatile bool gMsmcMemParityInterrupt = false;
+volatile bool idmaTransferComplete = false;
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -101,6 +144,7 @@ extern int32_t ECC_sdl_funcTest(void);
 extern int32_t DSS_ECC_funcTest(void);
 extern int32_t DSS_ECC_ip_funcTest(void);
 extern int32_t DSS_ECC_sdl_funcTest(void);
+extern int32_t DSS_sdl_funcTest(void);
 #endif
 /* ========================================================================== */
 /*                 Internal Function Definitions                              */
@@ -232,6 +276,114 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
 
 }
 
+int32_t SDL_ESM_DSP_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    DebugP_log("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log("\r\nTake action \r\n");
+
+    /* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER
+     * TO disable PROPOGATION OF EXCEPTION
+     */
+    if((intSrc == SDL_DSS_ESMG1_DSS_DSP_EDC_SEC_ERR) || (intSrc == SDL_DSS_ESMG1_DSS_DSP_EDC_DED_ERR))
+    {
+        SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
+        SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
+        gMsmcMemParityInterrupt = true;
+    }
+    else if((intSrc == SDL_DSS_ESMG1_DSS_DSP_L2_SEC_ERR) || (intSrc == SDL_DSS_ESMG1_DSS_DSP_L2_DED_ERR))
+    {
+        /*Clear Error Detection Address Register*/
+        SDL_REG32_WR(SDL_DSP_ICFG_L2EDADDR, 0x00u);
+        gMsmcMemParityInterrupt = true;
+    }
+    else if(intSrc == SDL_DSS_ESMG1_DSS_DSP_L1P_PARITY)
+    {
+        gMsmcMemParityInterrupt = true;
+    }
+    else if(intSrc == SDL_DSS_ESMG1_DSS_DSP_L2_PARITY_ERR_VB0_EVEN)
+    {
+        /*
+         *Disable the parity by clearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE
+         *Disable register field
+         */
+        SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_DSS_L2RAM_PARITY_ERROR_CLEAR);
+        SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_DSS_L2RAM_PARITY_ERROR_CLEAR);
+
+        DebugP_log("\r\nclearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE\r\n");
+        gMsmcMemParityInterrupt = true;
+    }
+    else
+    {
+        /*Nothing*/
+    }
+
+    return 0;
+}/* End of SDL_ESM_DSP_applicationCallbackFunction() */
+
+int32_t SDL_ECC_DED_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    DebugP_log("\r\nECC DED Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log("\r\nTake action \r\n");
+
+    /* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER
+     * TO disable PROPOGATION OF EXCEPTION
+     */
+
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
+
+    gMsmcMemParityInterrupt = true;
+
+    return 0;
+}/* End of SDL_ECC_DED_applicationCallbackFunction() */
+
+int32_t SDL_ECC_SEC_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+
+    DebugP_log("\r\nECC SEC Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    DebugP_log("\r\nTake action \r\n");
+
+    /* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER
+     * TO disable PROPOGATION OF EXCEPTION
+     */
+
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
+    SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
+
+    gMsmcMemParityInterrupt = true;
+
+    return 0;
+}/* End of SDL_ECC_SEC_applicationCallbackFunction() */
+
+int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+    printf("\r\nIDMA1 call back function called. \r\n");
+
+    idmaTransferComplete = true;
+
+    return 0;
+}/* End of SDL_IDMA1_applicationCallbackFunction() */
+
 static int32_t sdlApp_dplInit(void)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -247,9 +399,39 @@ static int32_t sdlApp_dplInit(void)
 
 void ECC_func_app(void)
 {
-
+    int32_t testResult = 0;
+    uint8_t i;
 #if defined(R5F_INPUTS)
-    int32_t    testResult = 0;
+    /* Clear all status registers of MSS AGGRA ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGGA_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGGA_ECC_VECTOR_ADDR, MSS_ECC_AGGA_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGGA_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
+    /* Clear all status registers of MSS AGGRB ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGGB_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGGB_ECC_VECTOR_ADDR, MSS_ECC_AGGB_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGGB_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
+    /* Clear all status registers of MSS ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGG_MSS_ECC_VECTOR_ADDR, MSS_ECC_AGG_MSS_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGG_MSS_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
     testResult = ECC_ip_funcTest();
     DebugP_log("\r\nECC ip func Test\r\n");
     if (testResult == SDL_PASS)
@@ -281,9 +463,17 @@ void ECC_func_app(void)
         DebugP_log("\r\nSome sdl tests failed. \r\n");
     }
 #elif defined(C66_INPUTS)
-    int32_t    testResult = 0;
-	testResult = DSS_ECC_sdl_funcTest();
-	DebugP_log("\nDSS ECC sdl func Test");
+    /* Clear all status registers.*/
+    for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+    testResult = DSS_ECC_sdl_funcTest();
+    DebugP_log("\nDSS ECC sdl func Test");
     if (testResult == SDL_PASS)
     {
         DebugP_log("\r\nAll sdl DSS ECC tests passed. \r\n");
@@ -292,14 +482,25 @@ void ECC_func_app(void)
     {
         DebugP_log("\r\nSome sdl DSS ECC tests failed. \r\n");
     }
-	testResult = DSS_ECC_ip_funcTest();
-	if (testResult == SDL_PASS)
+
+    testResult = DSS_ECC_ip_funcTest();
+    if (testResult == SDL_PASS)
     {
         DebugP_log("\r\nAll ip DSS ECC tests passed. \r\n");
     }
     else
     {
         DebugP_log("\r\nSome ip DSS ECC tests failed. \r\n");
+    }
+
+    testResult = DSS_sdl_funcTest();
+    if (testResult == SDL_PASS)
+    {
+        DebugP_log("\r\nAll DSS Parity and EDC tests passed. \r\n");
+    }
+    else
+    {
+        DebugP_log("\r\nSome DSS Parity and EDC tests failed. \r\n");
     }
 #endif
 }

@@ -58,21 +58,34 @@ extern "C"
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define SDL_APP_TEST_NOT_RUN        (-(int32_t) (2))
-#define SDL_APP_TEST_FAILED         (-(int32_t) (1))
-#define SDL_APP_TEST_PASS           ( (int32_t) (0))
+#define SDL_APP_TEST_NOT_RUN                        (-(int32_t) (2))
+#define SDL_APP_TEST_FAILED                         (-(int32_t) (1))
+#define SDL_APP_TEST_PASS                           ( (int32_t) (0))
 
 #if defined (SOC_AM64X)
-#define  ECC_FUNC_TEST_ID         (0U)
-#define  ECC_ERROR_TEST_ID        (1U)
-#define  ECC_TOTAL_NUM_TESTS      (2U)
+#define  ECC_FUNC_TEST_ID         					(0U)
+#define  ECC_ERROR_TEST_ID        					(1U)
+#define  ECC_TOTAL_NUM_TESTS      					(2U)
 #else
-#define  ECC_ERROR_TEST_ID          (0U)
-#define  ECC_FUNC_TEST_ID           (1U)
-#define  ECC_TOTAL_NUM_TESTS        (2U)
+#define  ECC_ERROR_TEST_ID          				(0U)
+#define  ECC_FUNC_TEST_ID           				(1U)
+#define  ECC_TOTAL_NUM_TESTS        				(2U)
 #endif
+#define  ECC_ERROR_TEST_ID                          (0U)
+#define  ECC_FUNC_TEST_ID                           (1U)
+#define  ECC_TOTAL_NUM_TESTS                        (2U)
+
+#define SDL_DSS_DSP_L2RAM_PARITY_CTRL               (0x0602006Cu)
+#define SDL_DSS_L2RAM_PARITY_ENABLE                 (0xffu)
+#define SDL_DSS_L2RAM_PARITY_ERROR_CLEAR            (0xff00u)
+
+/*Error Detect and Correct Interrupt Mask Register*/
+#define SDL_DSP_ICFG_EDCINTMASK                     (0x01831100u)
+/*Error Detect and Correct Interrupt Flag Register*/
+#define SDL_DSP_ICFG_EDCINTFLG                      (0x01831104u)
 
 extern volatile bool gMsmcMemParityInterrupt;
+extern volatile bool idmaTransferComplete;
 /* ========================================================================== */
 /*                 External Function Declarations                             */
 /* ========================================================================== */
@@ -92,6 +105,9 @@ extern int32_t DSS_ECC_sdl_funcTest(void);
 extern int32_t DSS_ECC_funcTest(void);
 extern int32_t DSS_ECC_ip_errTest(void);
 extern int32_t DSS_ECC_errTest(void);
+#if defined(SOC_AM273X)
+extern int32_t DSS_sdl_funcTest(void);
+#endif
 #endif
 #else
 extern int32_t ECC_funcTest(void);

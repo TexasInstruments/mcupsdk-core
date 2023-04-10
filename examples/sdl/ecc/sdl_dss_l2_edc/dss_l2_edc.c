@@ -48,9 +48,10 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
-#include <sdl/sdl_exception.h>
 #include "edc_main.h"
 #include <sdl/dpl/sdl_dpl.h>
+
+#pragma CODE_SECTION(EDC_dummyFunction, ".func");
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -64,8 +65,7 @@
 #define SDL_EDC_SEC                       			(0x01u)
 #define SDL_EDC_DED                       			(0x03u)
 
-#define SDL_DSS_L2_ORIGIN                           (0x00800000u) /*try next 0x80800000*/
-
+#define SDL_DSS_L2_ORIGIN                           (0x00800000u)
 #define SDL_DSS_INTH_INT_ID_IDMAINT1                (14)
 
 #define SDL_DSS_ICFGF_L1PCFG                        (0x01840020U)
@@ -80,7 +80,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 													int32_t grpChannel,
 													int32_t intSrc,
 													void *arg);
-int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+extern int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                            int32_t grpChannel,
                                            int32_t intSrc,
                                            void *arg);
@@ -111,20 +111,26 @@ SDL_ESM_NotifyParams EDC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
 /* ========================================================================== */
 static int32_t EDC_sdlFuncTest(uint32_t injectType);
 int32_t EDC_dummyFunction(void);
-#pragma CODE_SECTION(EDC_dummyFunction, ".func");
+
+/*********************************************************************
+* @fn      EDC_dummyFunction
+*
+* @param   None
+*
+* @return  dummy operation value
+**********************************************************************/
 int32_t EDC_dummyFunction(void)
 {
-    int a = 0;
-    int b = 4;
-    int i;
+    int32_t a = 0;
+    int32_t b = 4;
+    int32_t i;
     for (i = 0; i <= 3; i++)
     {
-     b = b + 7;
-     a = a + b;
+        b = b + 7;
+        a = a + b;
     }
-    printf("dummy function\n");
     return a;
-}
+}/* End of EDC_dummyFunction() */
 
 /*********************************************************************
 * @fn      EDC_Example_init
@@ -153,7 +159,7 @@ int32_t EDC_Example_init (void)
         }
     }
     return retValue;
-}
+}/* End of EDC_Example_init() */
 
 /*********************************************************************
  * @fn      EDC_sdlFuncTest
@@ -194,7 +200,7 @@ static int32_t EDC_sdlFuncTest(uint32_t injectType)
 
         DebugP_log("\r\nEnable the Error Detect logic...\r\n");
         retVal = SDL_ECC_dss_l2_edc_CMD_EN();
-        if (retVal == 0)
+        if (retVal == SDL_PASS)
         {
             SDL_ECC_IDMA1_transfer(SDL_DSS_L2_ORIGIN, SDL_DSS_L2_ORIGIN);
             DebugP_log("\r\nWaiting for IDMA1 transfer Interrupt\r\n");
@@ -215,7 +221,7 @@ static int32_t EDC_sdlFuncTest(uint32_t injectType)
 
             DebugP_log("\r\nSuspend the Error Detect logic...\r\n");
             retVal = SDL_ECC_dss_l2_CMD_SUSP();
-            if (retVal == 0)
+            if (retVal == SDL_PASS)
             {
                 if(injectType == SDL_EDC_SEC)
                 {
@@ -237,7 +243,7 @@ static int32_t EDC_sdlFuncTest(uint32_t injectType)
 
                 DebugP_log("\r\nEnable the Error Detect logic...\r\n");
                 retVal = SDL_ECC_dss_l2_edc_CMD_EN();
-                if (retVal == 0)
+                if (retVal == SDL_PASS)
                 {
                     DebugP_log("\r\nCall dummy function\r\n");
                     EDC_dummyFunction();
@@ -253,10 +259,19 @@ static int32_t EDC_sdlFuncTest(uint32_t injectType)
                             break;
                         }
                     } while (esmError == false);
-                    if(retVal == SDL_PASS)
+                    if(esmError == true)
                     {
-                        DebugP_log("\r\nAll tests have passed!!\r\n");
+                        DebugP_log("\r\nESM Interrupt has occurred!!\r\n");
+                        if(injectType == SDL_EDC_SEC)
+                        {
+                            DebugP_log("\r\nSEC test has passed!!\r\n");
+                        }
+                        else
+                        {
+                            DebugP_log("\r\nDED test has passed!!\r\n");
+                        }
                         esmError = false;
+                        retVal = SDL_PASS;
                     }
                 }
                 else
@@ -278,9 +293,7 @@ static int32_t EDC_sdlFuncTest(uint32_t injectType)
         }
     }
     return(retVal);
-}
-
-
+}/* End of EDC_sdlFuncTest() */
 
 static int32_t sdlApp_dplInit(void)
 {
@@ -293,7 +306,8 @@ static int32_t sdlApp_dplInit(void)
     }
 
     return ret;
-}
+}/* End of sdlApp_dplInit() */
+
 /* EDC Function module test */
 int32_t EDC_funcTest(void)
 {
@@ -301,8 +315,10 @@ int32_t EDC_funcTest(void)
 	 /*Initializing the DPL*/
     sdlApp_dplInit();
 
-    SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1PCFG is set to 0*/
-    SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1DCFG is set to 0*/
+    /*L1PCFG is set to 0*/
+    SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00);
+    /*L1DCFG is set to 0*/
+    SDL_REG32_WR(SDL_DSS_ICFGF_L1DCFG, 0x00);
 
     testResult = EDC_Example_init();
 
@@ -319,6 +335,10 @@ int32_t EDC_funcTest(void)
         return SDL_EFAIL;
     }
 
+    /*L1PCFG is set to 0*/
+    SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00);
+    /*L1DCFG is set to 0*/
+    SDL_REG32_WR(SDL_DSS_ICFGF_L1DCFG, 0x00);
     testResult = EDC_sdlFuncTest(SDL_EDC_DED);
     if (testResult != 0)
     {
@@ -327,6 +347,6 @@ int32_t EDC_funcTest(void)
     }
 
     return (testResult);
-}
+}/* End of EDC_funcTest() */
 
 /* Nothing past this point */

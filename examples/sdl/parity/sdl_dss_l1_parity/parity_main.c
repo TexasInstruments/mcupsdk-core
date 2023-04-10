@@ -92,22 +92,18 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     esmError = true;
 
     return 0;
-}
+}/* End of SDL_ESM_applicationCallbackFunction() */
 
 int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                            int32_t grpChannel,
                                            int32_t intSrc,
                                            void *arg)
 {
-    printf("\r\nIDMA1 Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n",
-                esmInstType, grpChannel, intSrc);
-    printf(" \r\nTake action \r\n");
-
     idmaTransferComplete = true;
 
     return 0;
-}
+}/* End of SDL_IDMA1_applicationCallbackFunction() */
+
 void Parity_Example_app(void)
 {
     int32_t    testResult;
@@ -125,7 +121,7 @@ void Parity_Example_app(void)
 	/* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
-}
+}/* End of Parity_Example_app() */
 
 void parity_main(void *args)
 {
@@ -134,6 +130,6 @@ void parity_main(void *args)
 	Board_driversOpen();
     DebugP_log("\r\nParity Example Application\r\n");
     (void)Parity_Example_app();
-}
+}/* End of parity_main() */
 
 /* Nothing past this point */

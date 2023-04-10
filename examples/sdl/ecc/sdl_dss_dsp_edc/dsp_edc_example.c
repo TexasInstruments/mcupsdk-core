@@ -146,7 +146,7 @@ int32_t EDC_Example_init (void)
         }
     }
     return retValue;
-}
+}/* End of EDC_Example_init() */
 
 /*********************************************************************
  * @fn      EDC_sdlFuncTest

@@ -55,10 +55,36 @@
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
 
+#if defined(SOC_AM273X)
+#include <sdl/include/am273x/sdlr_mss_ecc_agga.h>
+#include <sdl/include/am273x/sdlr_mss_ecc_aggb.h>
+#include <sdl/include/am273x/sdlr_mss_ecc_agg_mss.h>
+#endif
+
+#if defined(SOC_AWR294X)
+#include <sdl/include/awr294x/sdlr_mss_ecc_agga.h>
+#include <sdl/include/awr294x/sdlr_mss_ecc_aggb.h>
+#include <sdl/include/awr294x/sdlr_mss_ecc_agg_mss.h>
+#endif
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
+#if defined(SOC_AM273X) || defined(SOC_AWR294X)
+#define SDL_MSS_ECC_AGGA_ECC_VECTOR_ADDR                    (0x02F7B808)
+#define SDL_MSS_ECC_AGGA_ERROR_STATUS1_ADDR                 (0x02F7B820)
 
+#define SDL_MSS_ECC_AGGA_RAM_IDS_TOTAL_ENTRIES              28U
+
+#define SDL_MSS_ECC_AGGB_ECC_VECTOR_ADDR                    (0x02F7BC08)
+#define SDL_MSS_ECC_AGGB_ERROR_STATUS1_ADDR                 (0x02F7BC20)
+
+#define SDL_MSS_ECC_AGGB_RAM_IDS_TOTAL_ENTRIES              28U
+
+#define SDL_MSS_ECC_AGG_MSS_ECC_VECTOR_ADDR                 (0x02F7C008)
+#define SDL_MSS_ECC_AGG_MSS_ERROR_STATUS1_ADDR              (0x02F7C020)
+
+#define SDL_MSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES               8U
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -173,11 +199,45 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 
 void ecc_main(void *args)
 {
-	int32_t    testResult;
+	int32_t testResult = 0;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+
+#if defined(SOC_AM273X) || defined(SOC_AWR294X)
+    uint8_t i;
+
+    /* Clear all status registers of MSS AGGRA ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGGA_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGGA_ECC_VECTOR_ADDR, MSS_ECC_AGGA_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGGA_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
+    /* Clear all status registers of MSS AGGRB ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGGB_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGGB_ECC_VECTOR_ADDR, MSS_ECC_AGGB_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGGB_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
+    /* Clear all status registers of MSS ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGG_MSS_ECC_VECTOR_ADDR, MSS_ECC_AGG_MSS_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGG_MSS_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+#endif
 
     DebugP_log("\r\nECC Example Application\r\n");
     DebugP_log("\r\nECC UC-1 and UC-2 Test \r\n");

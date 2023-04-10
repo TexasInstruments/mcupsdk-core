@@ -54,6 +54,16 @@
 #include <kernel/dpl/DebugP.h>
 #include "ecc_func.h"
 
+#if defined(C66_INPUTS)
+#include <sdl/include/awr294x/sdlr_dss_ecc_agg.h>
+#endif
+
+#if defined(R5F_INPUTS)
+
+#include <sdl/include/awr294x/sdlr_mss_ecc_agga.h>
+#include <sdl/include/awr294x/sdlr_mss_ecc_aggb.h>
+#include <sdl/include/awr294x/sdlr_mss_ecc_agg_mss.h>
+#endif
 #ifdef UNITY_INCLUDE_CONFIG_H
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
@@ -62,21 +72,40 @@
 /*                                Macros                                      */
 /* ========================================================================== */
 /* delay*/
-#define SDL_DELAY               			1000000
+#define SDL_DELAY               			                1000000
 
-#define R5FSS0_CORE0_ECC_AGGR_SEC_STATUS    0x02F7B840u
-#define R5FSS0_CORE0_ECC_AGGR_DED_STATUS    0x02F7B940u 
-#define R5FSS0_CORE1_ECC_AGGR_SEC_STATUS    0x02F7BC40u
-#define R5FSS0_CORE1_ECC_AGGR_DED_STATUS    0x02F7BD40u
-#define MSS_ECC_AGG_SEC_STATUS				0x02F7C040u
-#define MSS_ECC_AGG_DED_STATUS				0x02F7C140u
-#define MSS_MCANA_ECC_AGG_SEC_STATUS	    0x02F7F840u
-#define MSS_MCANA_ECC_AGG_DED_STATUS		0x02F7F940u
-#define MSS_MCANB_ECC_AGG_SEC_STATUS		0x03F7F840u
-#define MSS_MCANB_ECC_AGG_DED_STATUS		0x03F7F940u
+#define R5FSS0_CORE0_ECC_AGGR_SEC_STATUS                    0x02F7B840u
+#define R5FSS0_CORE0_ECC_AGGR_DED_STATUS                    0x02F7B940u
+#define R5FSS0_CORE1_ECC_AGGR_SEC_STATUS                    0x02F7BC40u
+#define R5FSS0_CORE1_ECC_AGGR_DED_STATUS                    0x02F7BD40u
+#define MSS_ECC_AGG_SEC_STATUS				                0x02F7C040u
+#define MSS_ECC_AGG_DED_STATUS				                0x02F7C140u
+#define MSS_MCANA_ECC_AGG_SEC_STATUS	                    0x02F7F840u
+#define MSS_MCANA_ECC_AGG_DED_STATUS		                0x02F7F940u
+#define MSS_MCANB_ECC_AGG_SEC_STATUS		                0x03F7F840u
+#define MSS_MCANB_ECC_AGG_DED_STATUS		                0x03F7F940u
 
-#define UNKNOW_MEMTYPE						49783896u
+#define UNKNOW_MEMTYPE						                49783896u
 
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR                     (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR                  (0x060A0020)
+
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES               22
+
+#define SDL_MSS_ECC_AGGA_ECC_VECTOR_ADDR                    (0x02F7B808)
+#define SDL_MSS_ECC_AGGA_ERROR_STATUS1_ADDR                 (0x02F7B820)
+
+#define SDL_MSS_ECC_AGGA_RAM_IDS_TOTAL_ENTRIES              28U
+
+#define SDL_MSS_ECC_AGGB_ECC_VECTOR_ADDR                    (0x02F7BC08)
+#define SDL_MSS_ECC_AGGB_ERROR_STATUS1_ADDR                 (0x02F7BC20)
+
+#define SDL_MSS_ECC_AGGB_RAM_IDS_TOTAL_ENTRIES              28U
+
+#define SDL_MSS_ECC_AGG_MSS_ECC_VECTOR_ADDR                 (0x02F7C008)
+#define SDL_MSS_ECC_AGG_MSS_ERROR_STATUS1_ADDR              (0x02F7C020)
+
+#define SDL_MSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES               8U
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -247,9 +276,40 @@ static int32_t sdlApp_dplInit(void)
 
 void ECC_func_app(void)
 {
+    int32_t testResult = 0;
+    uint8_t i;
 
 #if defined(R5F_INPUTS)
-    int32_t    testResult = 0;
+    /* Clear all status registers of MSS AGGRA ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGGA_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGGA_ECC_VECTOR_ADDR, MSS_ECC_AGGA_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGGA_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
+    /* Clear all status registers of MSS AGGRB ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGGB_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGGB_ECC_VECTOR_ADDR, MSS_ECC_AGGB_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGGB_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
+    /* Clear all status registers of MSS ECC AGGR.*/
+    for(i=0;i<=SDL_MSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_MSS_ECC_AGG_MSS_ECC_VECTOR_ADDR, MSS_ECC_AGG_MSS_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_MSS_ECC_AGG_MSS_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
     testResult = ECC_ip_funcTest();
     DebugP_log("\r\nECC ip func Test\r\n");
     if (testResult == SDL_PASS)
@@ -281,7 +341,15 @@ void ECC_func_app(void)
         DebugP_log("\r\nSome sdl tests failed. \r\n");
     }
 #elif defined(C66_INPUTS)
-    int32_t    testResult = 0;
+    /* Clear all status registers.*/
+    for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
 	testResult = DSS_ECC_sdl_funcTest();
 	DebugP_log("\nDSS ECC sdl func Test");
     if (testResult == SDL_PASS)

@@ -3195,6 +3195,382 @@ do
 } while (esmError == false);
 \endcode
 
+## Example Usage of DSS L1 Parity
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the ESM init and DSS DSP L1 parity registers used to inject parity error
+\code{.c}
+#define SDL_ESM_MAX_DSS_EXAMPLE_AGGR                (1u)
+
+#define SDL_INTR_GROUP_NUM                          (1U)
+#define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_ENABLE_ERR_PIN                          (1U)
+
+#define SDL_SEC                                     (0x01u)
+
+#define SDL_DSS_L2_ORIGIN                           (0x00800000u)
+#define SDL_DSS_L1P_ORIGIN                          (0x00E00000U)
+
+#define SDL_DSS_INTH_INT_ID_IDMAINT1                (14)
+
+#define SDL_DSS_ICFGF_L1PCFG                        (0x01840020U)
+#define SDL_DSS_ICFGF_L1DCFG                        (0x01840040U)
+\endcode
+
+ESM Callback Function
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg)
+{ 
+
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    printf(" \r\nTake action \r\n");
+    if(esmInstType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+    }
+
+    esmError = true;
+
+    return 0;
+}
+\endcode
+
+IDMA Callback Function
+\code{.c}
+int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+    idmaTransferComplete = true;
+
+    return 0;
+}
+\endcode
+
+Event BitMap for ESM callback for DSP L1 Parity Errors
+\code{.c}
+SDL_ESM_NotifyParams Parity_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
+{
+     {
+           /* Event BitMap for Parity ESM callback for DSS Single bit*/
+           .groupNumber = SDL_INTR_GROUP_NUM,
+           .errorNumber = SDL_DSS_ESMG1_DSS_DSP_L1P_PARITY,
+           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+           .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+      },
+};
+\endcode
+
+Dummy Function
+\code{.c}
+#pragma CODE_SECTION(EDC_dummyFunction, ".func");
+int32_t EDC_dummyFunction(void)
+{
+    int32_t a = 0;
+    int32_t b = 4;
+    int32_t i;
+    for (i = 0; i <= 3; i++)
+    {
+        b = b + 7;
+        a = a + b;
+    }
+    return a;
+}
+\endcode
+
+Disable the L1P and L1D Cache
+\code{.c}
+SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1PCFG is set to 0*/
+SDL_REG32_WR(SDL_DSS_ICFGF_L1DCFG, 0x00); /*L1DCFG is set to 0*/
+\endcode
+
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &Parity_TestparamsDSS[counter],NULL,NULL);
+\endcode
+
+Configuring the IDMA
+\code{.c}
+/* Configuring the ESM */
+intrParams.callbackArg = (uintptr_t)SDL_ESM_INST_DSS_ESM;
+
+/* Configuring the IDMA1 DED interrupt */
+intrParams.intNum = SDL_DSS_INTH_INT_ID_IDMAINT1;
+intrParams.callback = (pSDL_DPL_InterruptCallbackFunction)SDL_IDMA1_applicationCallbackFunction;
+
+/* Register call back function for vector Config Interrupt */
+SDL_DPL_registerInterrupt(&intrParams, &SDL_Parity_CfgHwiPHandle);
+
+/*Enable the IDMA 1 interrupt*/
+SDL_DPL_enableInterrupt(SDL_DSS_INTH_INT_ID_IDMAINT1);
+\endcode
+
+Enable L1P EDC command
+\code{.c}
+retVal = SDL_ECC_dss_l1p_edc_CMD_EN();
+\endcode
+
+IDMA transfer
+\code{.c}
+SDL_ECC_IDMA1_transfer(SDL_DSS_L2_ORIGIN, SDL_DSS_L1P_ORIGIN);
+\endcode
+
+Call Dummy function
+\code{.c}
+EDC_dummyFunction()
+\endcode
+
+Suspend L1P EDC command
+\code{.c}
+retVal = SDL_ECC_dss_l1p_CMD_SUSP();
+\endcode
+
+Read and Toggle single bit
+\code{.c}
+rd_data = SDL_REG32_RD(SDL_DSS_L2_ORIGIN);
+rd_data = rd_data ^ SDL_SEC;
+SDL_REG32_WR(SDL_DSS_L2_ORIGIN, rd_data);
+\endcode				
+
+IDMA transfer
+\code{.c}
+SDL_ECC_IDMA1_transfer(SDL_DSS_L2_ORIGIN, SDL_DSS_L1P_ORIGIN);
+\endcode
+
+Enable L1P EDC command
+\code{.c}
+retVal = SDL_ECC_dss_l1p_edc_CMD_EN();
+\endcode
+
+IDMA transfer
+\code{.c}
+SDL_ECC_IDMA1_transfer(SDL_DSS_L2_ORIGIN, SDL_DSS_L1P_ORIGIN);
+\endcode
+
+Waiting for ESM Interrupt
+\code{.c}
+do
+{
+	timeOutCnt += 1;
+	if (timeOutCnt > maxTimeOutMilliSeconds)
+	{
+		result = SDL_EFAIL;
+		break;
+	}
+} while (esmError == false);
+\endcode
+
+## Example Usage of DSS L2 EDC
+
+Include the below file to access the APIs
+
+\code{.c}
+#include "ecc_main.h"
+\endcode
+
+Below are the macros specifies the ESM init and DSS DSP L1 parity registers used to inject parity error
+\code{.c}
+#define SDL_ESM_MAX_DSS_EXAMPLE_AGGR				(2u)
+
+#define SDL_INTR_GROUP_NUM                          (1U)
+#define SDL_INTR_PRIORITY_LVL_LOW                   (0U)
+#define SDL_INTR_PRIORITY_LVL_HIGH                  (1U)
+#define SDL_ENABLE_ERR_PIN                          (1U)
+
+#define SDL_EDC_SEC                       			(0x01u)
+#define SDL_EDC_DED                       			(0x03u)
+
+#define SDL_DSS_L2_ORIGIN                           (0x00800000u)
+#define SDL_DSS_INTH_INT_ID_IDMAINT1                (14)
+
+#define SDL_DSS_ICFGF_L1PCFG                        (0x01840020U)
+#define SDL_DSS_ICFGF_L1DCFG                        (0x01840040U)
+\endcode
+
+ESM Callback Function
+\code{.c}
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+										   int32_t grpChannel,
+										   int32_t intSrc,
+										   void *arg)
+{ 
+
+    printf("\r\nESM Call back function called : instType 0x%x, " \
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
+                esmInstType, grpChannel, intSrc);
+    printf(" \r\nTake action \r\n");
+    if(esmInstType == 1u){
+        printf("\r\nHigh Priority Interrupt Executed\r\n");
+    }
+    else{
+        printf("\r\nLow Priority Interrupt Executed\r\n");
+    }
+	
+	
+	/*Clear Error Detection Address Register*/
+    SDL_REG32_WR(SDL_DSP_ICFG_L2EDADDR, 0x00u);
+
+    esmError = true;
+
+    return 0;
+}
+\endcode
+
+IDMA Callback Function
+\code{.c}
+int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                           int32_t grpChannel,
+                                           int32_t intSrc,
+                                           void *arg)
+{
+    printf("\r\nIDMA1 call back function called. \r\n");
+
+    idmaTransferComplete = true;
+
+    return 0;
+}
+\endcode
+
+Event BitMap for ESM callback for DSP EDC Errors
+\code{.c}
+SDL_ESM_NotifyParams EDC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
+{
+     {
+           /* Event BitMap for EDC ESM callback for DSS Single bit*/
+           .groupNumber = SDL_INTR_GROUP_NUM,
+           .errorNumber = SDL_DSS_ESMG1_DSS_DSP_L2_SEC_ERR,
+           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+           .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+      },
+      {
+           /* Event BitMap for EDC ESM callback for DSS Double bit*/
+           .groupNumber = SDL_INTR_GROUP_NUM,
+           .errorNumber = SDL_DSS_ESMG1_DSS_DSP_L2_DED_ERR,
+           .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+           .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+           .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+      },
+	
+};
+\endcode
+
+Dummy Function
+\code{.c}
+#pragma CODE_SECTION(EDC_dummyFunction, ".func");
+int32_t EDC_dummyFunction(void)
+{
+    int32_t a = 0;
+    int32_t b = 4;
+    int32_t i;
+    for (i = 0; i <= 3; i++)
+    {
+        b = b + 7;
+        a = a + b;
+    }
+    return a;
+}
+\endcode
+
+Disable the L1P and L1D Cache
+\code{.c}
+SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1PCFG is set to 0*/
+SDL_REG32_WR(SDL_DSS_ICFGF_L1DCFG, 0x00); /*L1DCFG is set to 0*/
+\endcode
+	
+Initialize ESM module
+\code{.c}
+result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &Parity_TestparamsDSS[counter],NULL,NULL);
+\endcode
+
+Configuring the IDMA
+\code{.c}
+/* Configuring the ESM */
+intrParams.callbackArg = (uintptr_t)SDL_ESM_INST_DSS_ESM;
+
+/* Configuring the IDMA1 DED interrupt */
+intrParams.intNum = SDL_DSS_INTH_INT_ID_IDMAINT1;
+intrParams.callback = (pSDL_DPL_InterruptCallbackFunction)SDL_IDMA1_applicationCallbackFunction;
+
+/* Register call back function for vector Config Interrupt */
+SDL_DPL_registerInterrupt(&intrParams, &SDL_Parity_CfgHwiPHandle);
+
+/*Enable the IDMA 1 interrupt*/
+SDL_DPL_enableInterrupt(SDL_DSS_INTH_INT_ID_IDMAINT1);
+\endcode
+
+Enable L2 EDC command
+\code{.c}
+retVal = SDL_ECC_dss_l2_edc_CMD_EN();
+\endcode
+
+IDMA transfer
+\code{.c}
+SDL_ECC_IDMA1_transfer(SDL_DSS_L2_ORIGIN, SDL_DSS_L2_ORIGIN);
+\endcode
+
+Call Dummy function
+\code{.c}
+EDC_dummyFunction();
+\endcode
+
+Suspend L2 EDC command
+\code{.c}
+retVal = SDL_ECC_dss_l2_CMD_SUSP();
+\endcode
+
+Read and Toggle single bit
+\code{.c}
+rd_data = SDL_REG32_RD(SDL_DSS_L2_ORIGIN);
+rd_data = rd_data ^ SDL_SEC;
+SDL_REG32_WR(SDL_DSS_L2_ORIGIN, rd_data);
+\endcode
+
+Read and Toggle double bit
+\code{.c}
+rd_data = SDL_REG32_RD(SDL_DSS_L2_ORIGIN);
+rd_data = rd_data ^ SDL_EDC_DED;
+SDL_REG32_WR(SDL_DSS_L2_ORIGIN, rd_data);
+\endcode
+
+Enable L2 EDC command
+\code{.c}
+retVal = SDL_ECC_dss_l2_edc_CMD_EN();
+\endcode
+
+Call Dummy function
+\code{.c}
+EDC_dummyFunction();
+\endcode
+
+Waiting for ESM Interrupt
+\code{.c}
+do
+{
+	timeOutCnt += 1;
+	if (timeOutCnt > maxTimeOutMilliSeconds)
+	{
+		result = SDL_EFAIL;
+		break;
+	}
+} while (esmError == false);
+\endcode
+
 ## Example Usage of DSS EDC Errors
 
 Include the below file to access the APIs
@@ -3203,7 +3579,7 @@ Include the below file to access the APIs
 #include "ecc_main.h"
 \endcode
 
-Below are the macros specifies the ESM init and DSS DSP parity registers used to inject parity error
+Below are the macros specifies the ESM init and DSS DSP EDC registers used to inject EDC error
 \code{.c}
 #define SDL_ESM_MAX_DSS_EXAMPLE_AGGR				(2u)
 

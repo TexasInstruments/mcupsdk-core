@@ -4,7 +4,7 @@
 
 # Introduction
 
-This example demonstrates the usage of the SDL DSS DSP EDC errors. The example shows how to setup and use the Parity Safety Diagnostic operation.
+This example demonstrates the usage of the SDL DSS DSP EDC errors. The example shows how to setup and use the EDC SEC/DED Safety Diagnostic operation.
 This shows the DSS DSP EDC error injection.
 
 # Supported Combinations {#EXAMPLES_SDL_DSS_DSP_EDC_COMBOS}

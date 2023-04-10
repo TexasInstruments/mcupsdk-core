@@ -54,7 +54,6 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
-
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -64,6 +63,7 @@
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u) 
 
 #define SDL_CLEAR_STATUS									(0x6u) 
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -126,8 +126,8 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
 int32_t ecc_main(void)
 {
-	int32_t    testResult;
-	
+	int32_t testResult = 0;
+
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();

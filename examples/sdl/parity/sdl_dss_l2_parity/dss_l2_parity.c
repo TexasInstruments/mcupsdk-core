@@ -48,7 +48,6 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
-#include <sdl/sdl_exception.h>
 #include "parity_main.h"
 #include <sdl/dpl/sdl_dpl.h>
 /* ========================================================================== */
@@ -118,7 +117,7 @@ int32_t Parity_Example_init (void)
         }
     }
     return retValue;
-}
+}/* End of Parity_Example_init() */
 
 /*********************************************************************
  * @fn      parity_sdlFuncTest
@@ -202,7 +201,7 @@ static int32_t Parity_sdlFuncTest(void)
     }
 
     return retVal;
-}
+}/* End of parity_sdlFuncTest() */
 
 static int32_t sdlApp_dplInit(void)
 {
@@ -215,7 +214,8 @@ static int32_t sdlApp_dplInit(void)
     }
 
     return ret;
-}
+}/* End of sdlApp_dplInit() */
+
 /* Parity Function module test */
 int32_t Parity_funcTest(void)
 {
@@ -226,6 +226,6 @@ int32_t Parity_funcTest(void)
 
 
     return (testResult);
-}
+}/* End of Parity_funcTest() */
 
 /* Nothing past this point */

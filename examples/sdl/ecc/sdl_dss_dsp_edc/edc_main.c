@@ -50,11 +50,17 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
+#include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define SDL_DSP_ICFG_DISABLE      (0)
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR         (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR      (0x060A0020)
+
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES   22
+
+#define SDL_DSP_ICFG_DISABLE                    (0)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -92,7 +98,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     esmError = true;
 
     return 0;
-}
+}/* End of SDL_ESM_applicationCallbackFunction() */
 
 int32_t SDL_ECC_DED_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                            int32_t grpChannel,
@@ -115,7 +121,7 @@ int32_t SDL_ECC_DED_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     esmError = true;
 
     return 0;
-}
+}/* End of SDL_ECC_DED_applicationCallbackFunction() */
 
 int32_t SDL_ECC_SEC_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                            int32_t grpChannel,
@@ -138,11 +144,23 @@ int32_t SDL_ECC_SEC_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     esmError = true;
 
     return 0;
-}
+}/* End of SDL_ECC_SEC_applicationCallbackFunction() */
 
 void EDC_Example_app(void)
 {
     int32_t    testResult;
+
+    uint8_t i;
+    /* Clear all status registers.*/
+    for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
 	DebugP_log("\r\nEDC UC-1 Example\r\n");
 	testResult = EDC_funcTest();
 
@@ -157,7 +175,7 @@ void EDC_Example_app(void)
 	/* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
-}
+}/* End of EDC_Example_app() */
 
 void edc_main(void *args)
 {
@@ -166,6 +184,6 @@ void edc_main(void *args)
 	Board_driversOpen();
     DebugP_log("\r\nEDC Example Application\r\n");
     (void)EDC_Example_app();
-}
+}/* end of edc_main() */
 
 /* Nothing past this point */

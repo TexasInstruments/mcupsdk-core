@@ -37,6 +37,7 @@ FILES_common := \
 	ecc_test_main.c \
 	dss_ecc_ip_test_func.c \
 	dss_ecc_sdl_test_func.c \
+	dss_parity_edc_test_func.c \
 	dss_ecc_ip_test_err.c \
 	dss_ecc_test_err.c \
 	ti_drivers_config.c \

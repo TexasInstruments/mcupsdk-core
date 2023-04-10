@@ -14,8 +14,8 @@
         name = "sdl_dss_l2_parity_example_am273x-evm_c66ss0_nortos_ti-c6000"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TI"

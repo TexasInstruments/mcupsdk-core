@@ -51,11 +51,15 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
+#include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR         (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR      (0x060A0020)
 
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES   22
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -119,6 +123,18 @@ void ecc_app_runner(void)
 {
     int32_t    testResult;
 	
+    uint8_t i;
+
+    /* Clear all status registers.*/
+    for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
 	DebugP_log("\r\nECC UC-1 and UC-2 Test\r\n");
 	testResult = ECC_funcTest();
 

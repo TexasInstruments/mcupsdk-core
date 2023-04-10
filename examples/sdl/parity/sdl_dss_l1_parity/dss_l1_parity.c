@@ -48,9 +48,10 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
-#include <sdl/sdl_exception.h>
 #include "parity_main.h"
 #include <sdl/dpl/sdl_dpl.h>
+
+#pragma CODE_SECTION(EDC_dummyFunction, ".func");
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -63,8 +64,8 @@
 
 #define SDL_SEC                                     (0x01u)
 
-#define SDL_DSS_L2_ORIGIN                           (0x00800000u) /*try next 0x80800000*/
-#define SDL_DSS_L1P_ORIGIN                          (0x80E00000U)
+#define SDL_DSS_L2_ORIGIN                           (0x00800000u)
+#define SDL_DSS_L1P_ORIGIN                          (0x00E00000U)
 
 #define SDL_DSS_INTH_INT_ID_IDMAINT1                (14)
 
@@ -80,7 +81,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                     int32_t grpChannel,
                                                     int32_t intSrc,
                                                     void *arg);
-int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+extern int32_t SDL_IDMA1_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                            int32_t grpChannel,
                                            int32_t intSrc,
                                            void *arg);
@@ -103,7 +104,15 @@ SDL_ESM_NotifyParams Parity_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
 int32_t Parity_Example_init (void);
 
 int32_t EDC_dummyFunction(void);
-#pragma CODE_SECTION(EDC_dummyFunction, ".func");
+
+
+/*********************************************************************
+* @fn      EDC_dummyFunction
+*
+* @param   None
+*
+* @return  dummy operation value
+**********************************************************************/
 int32_t EDC_dummyFunction(void)
 {
     int32_t a = 0;
@@ -115,7 +124,7 @@ int32_t EDC_dummyFunction(void)
         a = a + b;
     }
     return a;
-}
+}/* End of EDC_dummyFunction() */
 
 /*********************************************************************
 * @fn      Parity_Example_init
@@ -144,7 +153,7 @@ int32_t Parity_Example_init (void)
         }
     }
     return retValue;
-}
+}/* End of Parity_Example_init() */
 
 /*********************************************************************
  * @fn      Parity_sdlFuncTest
@@ -157,7 +166,7 @@ int32_t Parity_Example_init (void)
  **********************************************************************/
 static int32_t Parity_sdlFuncTest(void)
 {
-    int32_t retVal = 0;
+    int32_t retVal = SDL_PASS;
     uint32_t maxTimeOutMilliSeconds = 1000000000;
     uint32_t timeOutCnt = 0;
     SDL_DPL_HwipParams intrParams;
@@ -166,7 +175,7 @@ static int32_t Parity_sdlFuncTest(void)
 
     DebugP_log("\r\nParity Safety Example tests: starting\r\n");
 
-    if (retVal == 0)
+    if (retVal == SDL_PASS)
     {
         /* Configuring the ESM */
         intrParams.callbackArg = (uintptr_t)SDL_ESM_INST_DSS_ESM;
@@ -185,7 +194,7 @@ static int32_t Parity_sdlFuncTest(void)
 
         DebugP_log("\r\nEnable the Error Detect logic...\r\n");
         retVal = SDL_ECC_dss_l1p_edc_CMD_EN();
-        if (retVal == 0)
+        if (retVal == SDL_PASS)
         {
             SDL_ECC_IDMA1_transfer(SDL_DSS_L2_ORIGIN, SDL_DSS_L1P_ORIGIN);
             DebugP_log("\r\nWaiting for IDMA1 transfer Interrupt\r\n");
@@ -199,12 +208,13 @@ static int32_t Parity_sdlFuncTest(void)
                     break;
                 }
             } while (idmaTransferComplete == false);
+            idmaTransferComplete = false;
 
             DebugP_log("\r\nIDMA1 transfer is done and got interrupt !!\r\n");
             EDC_dummyFunction();
             DebugP_log("\r\nSuspend the Error Detect logic...\r\n");
             retVal = SDL_ECC_dss_l1p_CMD_SUSP();
-            if (retVal == 0)
+            if (retVal == SDL_PASS)
             {
                 DebugP_log("\r\nToggle a single bit in the Dummy function\r\n");
                 rd_data = SDL_REG32_RD(SDL_DSS_L2_ORIGIN);
@@ -223,10 +233,24 @@ static int32_t Parity_sdlFuncTest(void)
                         break;
                     }
                 } while (idmaTransferComplete == false);
-
+                idmaTransferComplete = false;
+                DebugP_log("\r\nIDMA1 transfer is done and got interrupt !!\r\n");
                 DebugP_log("\r\nEnable the Error Detect logic...\r\n");
                 retVal = SDL_ECC_dss_l1p_edc_CMD_EN();
-                if (retVal == 0)
+                SDL_ECC_IDMA1_transfer(SDL_DSS_L1P_ORIGIN, SDL_DSS_L2_ORIGIN);
+                DebugP_log("\r\nWaiting for IDMA1 transfer Interrupt\r\n");
+                do
+                {
+                    timeOutCnt += 10;
+                    if (timeOutCnt > maxTimeOutMilliSeconds)
+                    {
+                        retVal = SDL_EFAIL;
+                        DebugP_log("\r\nIDMA1 interrupt is not occurred.... Example is failed!!\r\n");
+                        break;
+                    }
+                } while (idmaTransferComplete == false);
+                DebugP_log("\r\nIDMA1 transfer is done and got interrupt !!\r\n");
+                if (retVal == SDL_PASS)
                 {
                     DebugP_log("\r\nWaiting for ESM Interrupt\r\n");
                     do
@@ -264,7 +288,7 @@ static int32_t Parity_sdlFuncTest(void)
         }
     }
     return(retVal);
-}
+}/* End of Parity_sdlFuncTest() */
 
 static int32_t sdlApp_dplInit(void)
 {
@@ -277,7 +301,8 @@ static int32_t sdlApp_dplInit(void)
     }
 
     return ret;
-}
+}/* End of sdlApp_dplInit() */
+
 /* Parity Function module test */
 int32_t Parity_funcTest(void)
 {
@@ -286,7 +311,7 @@ int32_t Parity_funcTest(void)
     sdlApp_dplInit();
 
     SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1PCFG is set to 0*/
-    SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1DCFG is set to 0*/
+    SDL_REG32_WR(SDL_DSS_ICFGF_L1DCFG, 0x00); /*L1DCFG is set to 0*/
 
     testResult = Parity_Example_init();
 
@@ -304,6 +329,6 @@ int32_t Parity_funcTest(void)
     }
 
     return (testResult);
-}
+}/* End of Parity_funcTest() */
 
 /* Nothing past this point */

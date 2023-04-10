@@ -16,7 +16,8 @@
 SECTIONS
 {
     /* hard addresses forces vecs to be allocated there */
-    .text:vectors: {. = align(1024); } > 0x00800000
+	.func: 		{} > DSS_L2
+    .text:vectors: {. = align(1024); } > 0x00800400
     .text:      {} > DSS_L2
     .const:     {} > DSS_L2
     .cinit:     {} > DSS_L2

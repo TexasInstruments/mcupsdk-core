@@ -88,26 +88,26 @@ extern "C" {
 #define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
 
 /* Parity */
-#define SDL_R5SS0_CPU0_TCM        									(0U)
-#define SDL_R5SS1_CPU0_TCM        									(1U)
+#define SDL_R5SS0_CPU0_TCM                                          (0U)
+#define SDL_R5SS1_CPU0_TCM                                          (1U)
 /* SDL_R5SS0_CPU0_TCM */
-#define SDL_R5FSS0_CORE0_ATCM0										(1U)
-#define SDL_R5FSS0_CORE0_B0TCM0										(3U)
-#define SDL_R5FSS0_CORE0_B1TCM0										(5U)
+#define SDL_R5FSS0_CORE0_ATCM0                                      (1U)
+#define SDL_R5FSS0_CORE0_B0TCM0                                     (3U)
+#define SDL_R5FSS0_CORE0_B1TCM0                                     (5U)
 /* SDL_R5SS0_CPU10_TCM */
-#define SDL_R5FSS0_CORE1_ATCM1										(2U)
-#define SDL_R5FSS0_CORE1_B0TCM1										(4U)
-#define SDL_R5FSS0_CORE1_B1TCM1										(6U)
+#define SDL_R5FSS0_CORE1_ATCM1                                      (2U)
+#define SDL_R5FSS0_CORE1_B0TCM1                                     (4U)
+#define SDL_R5FSS0_CORE1_B1TCM1                                     (6U)
 /* SDL_R5SS1_CPU0_TCM */
-#define SDL_R5FSS1_CORE0_ATCM0										(7U)
-#define SDL_R5FSS1_CORE0_B0TCM0										(9U)
-#define SDL_R5FSS1_CORE0_B1TCM0										(11U)
+#define SDL_R5FSS1_CORE0_ATCM0                                      (7U)
+#define SDL_R5FSS1_CORE0_B0TCM0                                     (9U)
+#define SDL_R5FSS1_CORE0_B1TCM0                                     (11U)
 /* SDL_R5SS1_CPU1_TCM */
-#define SDL_R5FSS1_CORE1_ATCM1										(8U)
-#define SDL_R5FSS1_CORE1_B0TCM1										(10U)
-#define SDL_R5FSS1_CORE1_B1TCM1										(12U)
+#define SDL_R5FSS1_CORE1_ATCM1                                      (8U)
+#define SDL_R5FSS1_CORE1_B0TCM1                                     (10U)
+#define SDL_R5FSS1_CORE1_B1TCM1                                     (12U)
 /* TPCC */
-#define SDL_TPCC0        											(2)
+#define SDL_TPCC0                                                   (2)
 #endif
 
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -120,24 +120,74 @@ extern "C" {
 #define SDL_CPSW3GCSS_ECC_AGGR                                      (6U)
 #define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
 /* TCM PARITY */
-#define SDL_TCM_PARITY_ATCM0										(1U)
-#define SDL_TCM_PARITY_ATCM1										(2U)
-#define SDL_TCM_PARITY_B0TCM0										(3U)
-#define SDL_TCM_PARITY_B0TCM1										(4U)
-#define SDL_TCM_PARITY_B1TCM0										(5U)
-#define SDL_TCM_PARITY_B1TCM1										(6U)
+#define SDL_TCM_PARITY_ATCM0                                        (1U)
+#define SDL_TCM_PARITY_ATCM1                                        (2U)
+#define SDL_TCM_PARITY_B0TCM0                                       (3U)
+#define SDL_TCM_PARITY_B0TCM1                                       (4U)
+#define SDL_TCM_PARITY_B1TCM0                                       (5U)
+#define SDL_TCM_PARITY_B1TCM1                                       (6U)
 
 /* TPCC */
-#define SDL_TPCC0A        											(2U)
-#define SDL_TPCC0B        											(3U)
-#define SDL_DSS_TPCCA       										(4U)
-#define SDL_DSS_TPCCB       										(5U)
-#define SDL_DSS_TPCCC       										(6U)
+#define SDL_TPCC0A                                                  (2U)
+#define SDL_TPCC0B                                                  (3U)
+#define SDL_DSS_TPCCA                                               (4U)
+#define SDL_DSS_TPCCB                                               (5U)
+#define SDL_DSS_TPCCC                                               (6U)
 #endif
+
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#define SDL_PSRAMECC0_PSRAM256X32E_ECC_AGGR                                                                                 (0u)
+#define SDL_MMCSD1_EMMCSD4SS_ECC_AGGR_RXMEM                                                                                 (1u)
+#define SDL_ADC0_ADC12_CORE_FIFO_RAM_ECC_AGGR                                                                               (2u)
+#define SDL_ECC_AGGR1                                                                                                       (3u)
+#define SDL_ECC_AGGR0                                                                                                       (4u)
+#define SDL_SA2_UL0_SA2_UL_SA2_UL_ECC_AGGR                                                                                  (5u)
+#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR                                                                               (6u)
+#define SDL_DMASS0_DMSS_AM64_ECCAGGR                                                                                        (7u)
+#define SDL_MMCSD1_EMMCSD4SS_ECC_AGGR_TXMEM                                                                                 (8u)
+#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                                                                               (9u)
+#define SDL_PRU_ICSSG1_ICSS_G_16FF_CORE_BORG_ECC_AGGR                                                                       (10u)
+#define SDL_PRU_ICSSG0_ICSS_G_16FF_CORE_BORG_ECC_AGGR                                                                       (11u)
+#define SDL_MSRAM_256K2_MSRAM32KX64E_ECC_AGGR                                                                               (12u)
+#define SDL_FSS0_FSS_UL_OSPI0_OSPI_WRAP_ECC_AGGR                                                                            (13u)
+#define SDL_CPSW0_CPSW_3GUSS_CORE_ECC_CPSW_ECC_AGGR                                                                         (14u)
+#define SDL_GICSS0_GIC500SS_1_2_ECC_AGGR                                                                                    (15u)
+#define SDL_PCIE0_PCIE_G2X1_64_CORE_AXI_ECC_AGGR                                                                            (16u)
+#define SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR                                                                           (17u)
+#define SDL_USB0_USB3P0SS64_16FFC_USB3P0SS64_CORE_A__ECC_AGGR                                                               (18u)
+#define SDL_PDMA1_PDMA_AM64_MAIN1_ECCAGGR                                                                                   (19u)
+#define SDL_DMSC0_DMSC_LITE_ECC_AGGR_TXMEM                                                                                  (20u)
+#define SDL_MSRAM_256K1_MSRAM32KX64E_ECC_AGGR_TXMEM                                                                         (21u)
+#define SDL_MSRAM_256K0_MSRAM32KX64E_ECC_AGGR                                                                               (22u)
+#define SDL_MSRAM_256K3_MSRAM32KX64E_ECC_AGGR                                                                               (23u)
+#define SDL_MSRAM_256K5_MSRAM32KX64E_ECC_AGGR                                                                               (24u)
+#define SDL_MSRAM_256K4_MSRAM32KX64E_ECC_AGGR                                                                               (25u)
+#define SDL_MSRAM_256K7_MSRAM32KX64E_ECC_AGGR                                                                               (26u)
+#define SDL_MSRAM_256K6_MSRAM32KX64E_ECC_AGGR                                                                               (27u)
+#define SDL_MCU_M4FSS0_BLAZAR_ECCAGGR                                                                                       (28u)
+#define SDL_PDMA0_PDMA_AM64_MAIN0_ECCAGGR                                                                                   (29u)
+#define SDL_MMCSD0_EMMC8SS_16FFC_ECC_AGGR_RXMEM                                                                             (30u)
+#define SDL_MMCSD0_EMMC8SS_16FFC_ECC_AGGR_TXMEM                                                                             (31u)
+#define SDL_VTM0_K3VTM_N16FFC_ECCAGGR                                                                                       (32u)
+#define SDL_R5FSS1_PULSAR_LITE_CPU0_ECC_AGGR                                                                                (33u)
+#define SDL_R5FSS1_PULSAR_LITE_CPU1_ECC_AGGR                                                                                (34u)
+#define SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR                                                                                (35u)
+#define SDL_R5FSS0_PULSAR_LITE_CPU1_ECC_AGGR                                                                                (36u)
+#if defined(SOC_AM64X)
+#define SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE0           (37u)
+#define SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_COREPAC         (38u)
+#define SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE1           (39u)
+#define SDL_ECC_MEMTYPE_MAX                                                                                                 (SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE1 + 1U)
+#endif
+#if defined(SOC_AM243X)
+#define SDL_ECC_MEMTYPE_MAX                                                                                                 (SDL_R5FSS0_PULSAR_LITE_CPU1_ECC_AGGR + 1U)
+#endif
+#endif
+
 /* The following are the memory sub type for Memory type
    SDL_ECC_MEMTYPE_MCU_R5F0_CORE & SDL_ECC_MEMTYPE_MCU_R5F1_CORE */
 /* Keeping for backward-compatibility. Recommend to use RAM_ID directly from sdlr_soc_ecc_aggr.h file */
-
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
 /** \brief Select memory subtype ATCM0 BANK0 */
 #define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID)
 /** \brief Select memory subtype ATCM0 BANK1 */
@@ -152,7 +202,23 @@ extern "C" {
 #define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID)
 /** \brief Select memory subtype VIM RAM */
 #define SDL_ECC_R5F_MEM_SUBTYPE_KS_VIM_RAM_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID)
+#endif
 
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_ATCM0_BANK0_RAM_ID)
+/** \brief Select memory subtype ATCM0 BANK1 */
+#define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK1_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_ATCM0_BANK1_RAM_ID)
+/** \brief Select memory subtype B0TCM0 BANK0 */
+#define SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK0_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B0TCM0_BANK0_RAM_ID)
+/** \brief Select memory subtype B0TCM0 BANK1 */
+#define SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B0TCM0_BANK1_RAM_ID)
+/** \brief Select memory subtype B1TCM0 BANK0 */
+#define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK0_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B1TCM0_BANK0_RAM_ID)
+/** \brief Select memory subtype B1TCM0 BANK1 */
+#define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B1TCM0_BANK1_RAM_ID)
+/** \brief Select memory subtype VIM RAM */
+#define SDL_ECC_R5F_MEM_SUBTYPE_KS_VIM_RAM_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID)
+#endif
 /** @} */
 
 
@@ -224,155 +290,6 @@ typedef uint32_t SDL_ECC_MemSubType;
  * ----------------------------------------------------------------------------
  */
 typedef uint32_t SDL_ECC_MemType;
-
-#if defined(SOC_AM263X)
-
-#define SDL_SOC_ECC_AGGR                                            (0U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (2U)
-#define SDL_R5FSS1_CORE0_ECC_AGGR                                   (3U)
-#define SDL_R5FSS1_CORE1_ECC_AGGR                                   (4U)
-#define SDL_HSM_ECC_AGGR                                            (5U)
-#define SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR                         (6U)
-#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (7U)
-#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (8U)
-#define SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (9U)
-#define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (10U)
-#define SDL_CPSW3GCSS_ECC_AGGR                                      (11U)
-#define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
-
-/* Parity */
-#define SDL_R5SS0_CPU0_TCM        									(0U)
-#define SDL_R5SS1_CPU0_TCM        									(1U)
-/* SDL_R5SS0_CPU0_TCM */
-#define SDL_R5FSS0_CORE0_ATCM0										(1U)
-#define SDL_R5FSS0_CORE0_B0TCM0										(3U)
-#define SDL_R5FSS0_CORE0_B1TCM0										(5U)
-/* SDL_R5SS0_CPU10_TCM */
-#define SDL_R5FSS0_CORE1_ATCM1										(2U)
-#define SDL_R5FSS0_CORE1_B0TCM1										(4U)
-#define SDL_R5FSS0_CORE1_B1TCM1										(6U)
-/* SDL_R5SS1_CPU0_TCM */
-#define SDL_R5FSS1_CORE0_ATCM0										(7U)
-#define SDL_R5FSS1_CORE0_B0TCM0										(9U)
-#define SDL_R5FSS1_CORE0_B1TCM0										(11U)
-/* SDL_R5SS1_CPU1_TCM */
-#define SDL_R5FSS1_CORE1_ATCM1										(8U)
-#define SDL_R5FSS1_CORE1_B0TCM1										(10U)
-#define SDL_R5FSS1_CORE1_B1TCM1										(12U)
-/* TPCC */
-#define SDL_TPCC0        											(2)
-#endif
-
-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
-#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (0U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (1U)
-#define SDL_MSS_ECC_AGG_MSS                                         (2U)
-#define SDL_DSS_ECC_AGG                                             (3U)
-#define SDL_MSS_MCANA_ECC                                           (4U)
-#define SDL_MSS_MCANB_ECC                                           (5U)
-#define SDL_CPSW3GCSS_ECC_AGGR                                      (6U)
-#define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
-/* TCM PARITY */
-#define SDL_TCM_PARITY_ATCM0										(1U)
-#define SDL_TCM_PARITY_ATCM1										(2U)
-#define SDL_TCM_PARITY_B0TCM0										(3U)
-#define SDL_TCM_PARITY_B0TCM1										(4U)
-#define SDL_TCM_PARITY_B1TCM0										(5U)
-#define SDL_TCM_PARITY_B1TCM1										(6U)
-
-/* TPCC */
-#define SDL_TPCC0A        											(2U)
-#define SDL_TPCC0B        											(3U)
-#define SDL_DSS_TPCCA       										(4U)
-#define SDL_DSS_TPCCB       										(5U)
-#define SDL_DSS_TPCCC       										(6U)
-#endif
-
-#if defined(SOC_AM64X) || defined(SOC_AM243X)
-#define SDL_PSRAMECC0_PSRAM256X32E_ECC_AGGR 				        														(0u)
-#define SDL_MMCSD1_EMMCSD4SS_ECC_AGGR_RXMEM 																				(1u)
-#define SDL_ADC0_ADC12_CORE_FIFO_RAM_ECC_AGGR 					    														(2u)
-#define SDL_ECC_AGGR1  								                														(3u)
-#define SDL_ECC_AGGR0                      																					(4u)
-#define SDL_SA2_UL0_SA2_UL_SA2_UL_ECC_AGGR 																					(5u)
-#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR																				(6u)
-#define SDL_DMASS0_DMSS_AM64_ECCAGGR 									                                                    (7u)
-#define SDL_MMCSD1_EMMCSD4SS_ECC_AGGR_TXMEM 								                                                (8u)
-#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR 							                                                    (9u)
-#define SDL_PRU_ICSSG1_ICSS_G_16FF_CORE_BORG_ECC_AGGR 								                                        (10u)
-#define SDL_PRU_ICSSG0_ICSS_G_16FF_CORE_BORG_ECC_AGGR 								                                        (11u)
-#define SDL_MSRAM_256K2_MSRAM32KX64E_ECC_AGGR 									                                            (12u)
-#define SDL_FSS0_FSS_UL_OSPI0_OSPI_WRAP_ECC_AGGR 							                                                (13u)
-#define SDL_CPSW0_CPSW_3GUSS_CORE_ECC_CPSW_ECC_AGGR  								                                        (14u)
-#define SDL_GICSS0_GIC500SS_1_2_ECC_AGGR                      				                                                (15u)
-#define SDL_PCIE0_PCIE_G2X1_64_CORE_AXI_ECC_AGGR  								                                            (16u)
-#define SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR 								                                            (17u)
-#define SDL_USB0_USB3P0SS64_16FFC_USB3P0SS64_CORE_A__ECC_AGGR 						                                        (18u)
-#define SDL_PDMA1_PDMA_AM64_MAIN1_ECCAGGR 							                                                        (19u)
-#define SDL_DMSC0_DMSC_LITE_ECC_AGGR_TXMEM 							                                                        (20u)
-#define SDL_MSRAM_256K1_MSRAM32KX64E_ECC_AGGR_TXMEM 								                                        (21u)
-#define SDL_MSRAM_256K0_MSRAM32KX64E_ECC_AGGR 								                                                (22u)
-#define SDL_MSRAM_256K3_MSRAM32KX64E_ECC_AGGR 									                                            (23u)
-#define SDL_MSRAM_256K5_MSRAM32KX64E_ECC_AGGR						                                                        (24u)
-#define SDL_MSRAM_256K4_MSRAM32KX64E_ECC_AGGR 							                                                    (25u)
-#define SDL_MSRAM_256K7_MSRAM32KX64E_ECC_AGGR  								                                                (26u)
-#define SDL_MSRAM_256K6_MSRAM32KX64E_ECC_AGGR                      				                                            (27u)
-#define SDL_MCU_M4FSS0_BLAZAR_ECCAGGR 								                                                        (28u)
-#define SDL_PDMA0_PDMA_AM64_MAIN0_ECCAGGR								                                                    (29u)
-#define SDL_MMCSD0_EMMC8SS_16FFC_ECC_AGGR_RXMEM                                                                           	(30u)
-#define SDL_MMCSD0_EMMC8SS_16FFC_ECC_AGGR_TXMEM                                                                           	(31u)
-#define SDL_VTM0_K3VTM_N16FFC_ECCAGGR                                                                                     	(32u)
-#define SDL_R5FSS1_PULSAR_LITE_CPU0_ECC_AGGR                                                                              	(33u)
-#define SDL_R5FSS1_PULSAR_LITE_CPU1_ECC_AGGR                                                                              	(34u)
-#define SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR                                                                              	(35u)
-#define SDL_R5FSS0_PULSAR_LITE_CPU1_ECC_AGGR                                                                              	(36u)
-#if defined(SOC_AM64X)
-#define SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE0 		 	(37u)
-#define SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_COREPAC 		(38u)
-#define SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE1 			(39u)
-#define SDL_ECC_MEMTYPE_MAX                                                                                               	(SDL_COMPUTE_CLUSTER0_SAM64_A53_256KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE1 + 1U)
-#endif
-#if defined(SOC_AM243X)
-#define SDL_ECC_MEMTYPE_MAX                                                                                               	(SDL_R5FSS0_PULSAR_LITE_CPU1_ECC_AGGR + 1U)
-#endif
-#endif
-
-/* The following are the memory sub type for Memory type
-   SDL_ECC_MEMTYPE_MCU_R5F0_CORE & SDL_ECC_MEMTYPE_MCU_R5F1_CORE */
-/* Keeping for backward-compatibility. Recommend to use RAM_ID directly from sdlr_soc_ecc_aggr.h file */
-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
-/** \brief Select memory subtype ATCM0 BANK0 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID)
-/** \brief Select memory subtype ATCM0 BANK1 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK1_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK1_RAM_ID)
-/** \brief Select memory subtype B0TCM0 BANK0 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK0_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID)
-/** \brief Select memory subtype B0TCM0 BANK1 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID)
-/** \brief Select memory subtype B1TCM0 BANK0 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK0_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID)
-/** \brief Select memory subtype B1TCM0 BANK1 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID)
-/** \brief Select memory subtype VIM RAM */
-#define SDL_ECC_R5F_MEM_SUBTYPE_KS_VIM_RAM_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID)
-#endif
-
-#if defined(SOC_AM64X) || defined(SOC_AM243X)
-#define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_ATCM0_BANK0_RAM_ID)
-/** \brief Select memory subtype ATCM0 BANK1 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK1_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_ATCM0_BANK1_RAM_ID)
-/** \brief Select memory subtype B0TCM0 BANK0 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK0_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B0TCM0_BANK0_RAM_ID)
-/** \brief Select memory subtype B0TCM0 BANK1 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B0TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B0TCM0_BANK1_RAM_ID)
-/** \brief Select memory subtype B1TCM0 BANK0 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK0_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B1TCM0_BANK0_RAM_ID)
-/** \brief Select memory subtype B1TCM0 BANK1 */
-#define SDL_ECC_R5F_MEM_SUBTYPE_B1TCM0_BANK1_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_PULSAR_LITE_B1TCM0_BANK1_RAM_ID)
-/** \brief Select memory subtype VIM RAM */
-#define SDL_ECC_R5F_MEM_SUBTYPE_KS_VIM_RAM_VECTOR_ID (SDL_R5FSS0_PULSAR_LITE_CPU0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID)
-#endif
 
 /** @} */
 

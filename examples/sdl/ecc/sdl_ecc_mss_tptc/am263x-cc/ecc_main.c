@@ -124,12 +124,11 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
 void ecc_main(void *args)
 {
-	int32_t    testResult;
-
+	int32_t testResult = 0;
 	/* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-	
+
     DebugP_log("\r\nECC Example Application\r\n");
     DebugP_log("\r\nECC UC-1 and UC-2 Test \r\n");
     testResult = ECC_funcTest();

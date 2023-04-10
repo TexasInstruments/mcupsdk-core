@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -51,9 +51,21 @@
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
 
+#if defined(SOC_AM273X)
+#include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
+#endif
+
+#if defined(SOC_AWR294X)
+#include <sdl/include/awr294x/sdlr_dss_ecc_agg.h>
+#endif
+
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR         (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR      (0x060A0020)
+
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES   22
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -128,6 +140,18 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
 void ECC_Example_app(void)
 {
     int32_t    testResult;
+    uint8_t i;
+
+    /* Clear all status registers.*/
+    for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+    {
+        /* Write the RAM ID in to Vector register*/
+        SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+        /* Clear pending interrupts.*/
+        SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+        ClockP_usleep(100);
+    }
+
 	DebugP_log("\n ECC UC-1 and UC-2 Test");
 	testResult = ECC_funcTest();
 

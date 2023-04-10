@@ -54,8 +54,6 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-/*L2 Error Detection Address Register*/
-#define SDL_DSP_ICFG_L2EDADDR     (0x01846008U)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -101,7 +99,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     esmError = true;
 
     return 0;
-}
+}/* End of SDL_ESM_applicationCallbackFunction() */
 
 void Parity_Example_app(void)
 {
@@ -120,7 +118,7 @@ void Parity_Example_app(void)
 	/* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
-}
+}/* End of Parity_Example_app() */
 
 void parity_main(void *args)
 {
@@ -129,6 +127,6 @@ void parity_main(void *args)
 	Board_driversOpen();
     DebugP_log("\r\nParity Example Application\r\n");
     (void)Parity_Example_app();
-}
+}/* End of parity_main() */
 
 /* Nothing past this point */

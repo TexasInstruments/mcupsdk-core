@@ -102,6 +102,8 @@ This page lists all the examples related to usage of SDL.
 \cond SOC_AM273X
 -# PARITY
    -# \subpage EXAMPLES_SDL_DSS_L2_PARITY
+   -# \subpage EXAMPLES_SDL_DSS_L1_PARITY
 -# ECC
    -# \subpage EXAMPLES_SDL_DSS_DSP_EDC
+   -# \subpage EXAMPLES_SDL_DSS_DSP_L2_EDC
 \endcond

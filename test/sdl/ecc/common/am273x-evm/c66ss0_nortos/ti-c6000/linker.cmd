@@ -16,31 +16,33 @@
 SECTIONS
 {
     /* hard addresses forces vecs to be allocated there */
-    .text:vectors: {. = align(1024); } > 0x00800000
-    .text:      {} > DSS_L2
-    .const:     {} > DSS_L2
-    .cinit:     {} > DSS_L2
-    .data:      {} > DSS_L2
-    .stack:     {} > DSS_L2
-    .switch:    {} > DSS_L2
-    .cio:       {} > DSS_L2
-    .sysmem:    {} > DSS_L2
-    .fardata:   {} > DSS_L2
-    .far:       {} > DSS_L2
+    .text:vectors: {. = align(1024); } > 0x88000000
+    .text:      {} > DSS_L3
+    .const:     {} > DSS_L3
+    .cinit:     {} > DSS_L3
+    .data:      {} > DSS_L3
+    .stack:     {} > DSS_L3
+    .switch:    {} > DSS_L3
+    .cio:       {} > DSS_L3
+    .sysmem:    {} > DSS_L3
+    .fardata:   {} > DSS_L3
+    .far:       {} > DSS_L3
+	
+	.func:      {} > DSS_L2
 
     /* These should be grouped together to avoid STATIC_BASE relative relocation linker error */
     GROUP {
         .rodata:    {}
         .bss:       {}
         .neardata:  {}
-    } > DSS_L2
+    } > DSS_L3
 
     /* Sections needed for C++ projects */
     GROUP {
         .c6xabi.exidx:  {} palign(8)   /* Needed for C++ exception handling */
         .init_array:    {} palign(8)   /* Contains function pointers called before main */
         .fini_array:    {} palign(8)   /* Contains function pointers called after main */
-    } > DSS_L2
+    } > DSS_L3
 
     /* any data buffer needed to be put in L3 can be assigned this section name */
     .bss.dss_l3 {} > DSS_L3

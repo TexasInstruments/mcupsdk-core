@@ -97,7 +97,7 @@
 
 #define SDL_DSP_ICFG__IDMA1_COUNT__PRI__POS     (29)
 #define SDL_DSP_ICFG__IDMA1_COUNT__INT__POS     (28)
-#define SDL_DSP_ICFG_COUNT_VAL                  ((7 << SDL_DSP_ICFG__IDMA1_COUNT__PRI__POS) | (1 << SDL_DSP_ICFG__IDMA1_COUNT__INT__POS) | 0x1000)
+#define SDL_DSP_ICFG_COUNT_VAL                  ((7 << SDL_DSP_ICFG__IDMA1_COUNT__PRI__POS) | (1 << SDL_DSP_ICFG__IDMA1_COUNT__INT__POS) | 0x100)
 
 #define SDL_DSP_ICFG_STAT_EN                    (1)
 #define SDL_DSP_ICFG_STAT_SUSP                  (8)
@@ -1864,13 +1864,14 @@ int32_t SDL_ECC_dss_l1p_edc_CMD_EN(void)
     SDL_REG32_WR(SDL_DSP_ICFG_L1PEDCMD, (0x1 << SDL_L1PEDCMD_EN));
 
     /*Poll till the bit DSP_ICFG.L1PEDSTAT.EN is set to 0x1*/
-    while(SDL_REG32_RD(SDL_DSP_ICFG_L1PEDSTAT)!=SDL_DSP_ICFG_STAT_EN)
+    while((SDL_REG32_RD(SDL_DSP_ICFG_L1PEDSTAT) & SDL_DSP_ICFG_STAT_EN) !=SDL_DSP_ICFG_STAT_EN)
     {
         if (timeOutCnt > maxTimeOutMilliSeconds)
         {
             retVal = SDL_EFAIL;
             break;
         }
+        timeOutCnt++;
     }
     return retVal;
 }/* End of SDL_ECC_dss_l1p_edc_CMD_EN() */
@@ -1891,13 +1892,14 @@ int32_t SDL_ECC_dss_l1p_CMD_SUSP(void)
     SDL_REG32_WR(SDL_DSP_ICFG_L1PEDCMD, (0x1 << SDL_L1PEDCMD_SUSP));
 
     /*Poll till the bit DSP_ICFG.L1PEDSTAT.SUSP is set to 0x1*/
-    while(SDL_REG32_RD(SDL_DSP_ICFG_L1PEDSTAT)!=SDL_DSP_ICFG_STAT_SUSP)
+    while((SDL_REG32_RD(SDL_DSP_ICFG_L1PEDSTAT) & SDL_DSP_ICFG_STAT_SUSP) !=SDL_DSP_ICFG_STAT_SUSP)
     {
         if (timeOutCnt > maxTimeOutMilliSeconds)
         {
             retVal = SDL_EFAIL;
             break;
         }
+        timeOutCnt++;
     }
     return retVal;
 }/*End of SDL_ECC_dss_l1p_CMD_SUSP()*/
@@ -1918,13 +1920,14 @@ int32_t SDL_ECC_dss_l2_edc_CMD_EN(void)
     SDL_REG32_WR(SDL_DSP_ICFG_L2EDCMD, (0x1 << SDL_L2EDCMD_EN));
 
     /*Poll till the bit DSP_ICFG.L2EDSTAT.EN is set to 0x1*/
-    while(SDL_REG32_RD(SDL_DSP_ICFG_L2EDSTAT)!=SDL_DSP_ICFG_STAT_EN)
+    while((SDL_REG32_RD(SDL_DSP_ICFG_L2EDSTAT) & SDL_DSP_ICFG_STAT_EN)!=SDL_DSP_ICFG_STAT_EN)
     {
         if (timeOutCnt > maxTimeOutMilliSeconds)
         {
             retVal = SDL_EFAIL;
             break;
         }
+        timeOutCnt++;
     }
     return retVal;
 }/* End of SDL_ECC_dss_l2_edc_CMD_EN() */
@@ -1945,13 +1948,14 @@ int32_t SDL_ECC_dss_l2_CMD_SUSP(void)
     SDL_REG32_WR(SDL_DSP_ICFG_L2EDCMD, (0x1 << SDL_L2EDCMD_SUSP));
 
     /*Poll till the bit DSP_ICFG.L2EDSTAT.SUSP is set to 0x1*/
-    while(SDL_REG32_RD(SDL_DSP_ICFG_L2EDSTAT)!=SDL_DSP_ICFG_STAT_SUSP)
+    while((SDL_REG32_RD(SDL_DSP_ICFG_L2EDSTAT) & (SDL_DSP_ICFG_STAT_SUSP))!=SDL_DSP_ICFG_STAT_SUSP)
     {
         if (timeOutCnt > maxTimeOutMilliSeconds)
         {
             retVal = SDL_EFAIL;
             break;
         }
+        timeOutCnt++;
     }
     return retVal;
 }/*End of SDL_ECC_dss_l2_CMD_SUSP()*/
