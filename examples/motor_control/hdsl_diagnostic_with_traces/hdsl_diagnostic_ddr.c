@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -139,8 +139,7 @@ int get_pos=1;
 uint32_t gMulti_turn, gRes;
 uint64_t gMask;
 
-uint32_t gPc_addr;
-uint32_t gPc_data;
+uint8_t gPc_data;
 
 uint8_t gPc_addrh, gPc_addrl, gPc_offh, gPc_offl, gPc_buf0, gPc_buf1, gPc_buf2, gPc_buf3, gPc_buf4, gPc_buf5, gPc_buf6, gPc_buf7;
 
@@ -192,7 +191,7 @@ void sync_calculation(void)
             counter++;
             if(counter > MAX_WAIT)
             {
-                DebugP_log("\rSYNC PULSE NOT FOUND, WAITING FOR SYNC PULSE\n");
+                DebugP_log("\r\n SYNC PULSE NOT FOUND, WAITING FOR SYNC PULSE");
                 counter = 0;
             }
         }
@@ -229,21 +228,22 @@ void sync_calculation(void)
     wait_before_start = wait_before_start - 51;
     if(extra_size < 4 || extra_size > 9)
     {
-        DebugP_log("\rERROR: ES or period selected is Invalid \n");
+        DebugP_log("\r\n ERROR: ES or period selected is Invalid ");
     }
-    DebugP_log("\r********************************************************************\n");
-    DebugP_log("\rSYNC MODE: period = %d\n", period);
-    DebugP_log("\rSYNC MODE: ES = %d\n", ES);
-    DebugP_log("\rSYNC MODE: counter = %d\n", counter);
-    DebugP_log("\rSYNC MODE: wait_before_start = %d\n", wait_before_start);
-    DebugP_log("\rSYNC MODE: bottom_up_cycles = %d\n", bottom_up_cycles);
-    DebugP_log("\rSYNC MODE: extra_size = %d\n", extra_size);
-    DebugP_log("\rSYNC MODE: temp_gRest = %d\n", time_gRest);
-    DebugP_log("\rSYNC MODE: extra_edge = %d\n", extra_edge);
-    DebugP_log("\rSYNC MODE: num_of_stuffing = %d\n", num_of_stuffing);
-    DebugP_log("\rSYNC MODE: extra_size_remainder = %d\n", extra_size_remainder);
-    DebugP_log("\rSYNC MODE: stuffing_remainder = %d\n", stuffing_remainder);
-    DebugP_log("\r********************************************************************\n");
+
+    DebugP_log("\r\n ********************************************************************");
+    DebugP_log("\r\n SYNC MODE: period = %d", period);
+    DebugP_log("\r\n SYNC MODE: ES = %d", ES);
+    DebugP_log("\r\n SYNC MODE: counter = %d", counter);
+    DebugP_log("\r\n SYNC MODE: wait_before_start = %d", wait_before_start);
+    DebugP_log("\r\n SYNC MODE: bottom_up_cycles = %d", bottom_up_cycles);
+    DebugP_log("\r\n SYNC MODE: extra_size = %d", extra_size);
+    DebugP_log("\r\n SYNC MODE: temp_gRest = %d", time_gRest);
+    DebugP_log("\r\n SYNC MODE: extra_edge = %d", extra_edge);
+    DebugP_log("\r\n SYNC MODE: num_of_stuffing = %d", num_of_stuffing);
+    DebugP_log("\r\n SYNC MODE: extra_size_remainder = %d", extra_size_remainder);
+    DebugP_log("\r\n SYNC MODE: stuffing_remainder = %d", stuffing_remainder);
+    DebugP_log("\r\n ********************************************************************");
 
     sync_param_mem_start =sync_param_mem_start + (uint32_t)gPru_dramx;
     HWREGB(sync_param_mem_start) = extra_size;
@@ -368,7 +368,7 @@ void process_request(int menu){
             TC_input_start_copy();
             break;
         default:
-            DebugP_log( "\r| ERROR: invalid request\n");
+            DebugP_log( "\r\n ERROR: invalid request");
             break;
     }
 }
@@ -454,7 +454,7 @@ void hdsl_init()
     HwiP_construct(&gPRUHwiObject, &hwiPrms);
 
     HDSL_iep_init(gPruIcss0Handle, gPru_cfg,gPru_dramx);
-    DebugP_log( "\r\nEnter ES(number of frames per sync period), note ES=0 for FREE RUN mode: \n");
+    DebugP_log("\r\n Enter ES(number of frames per sync period), note ES=0 for FREE RUN mode: ");
     DebugP_scanf("%d", &ES);
     HDSL_set_sync_ctrl(ES);
     if(ES != 0)
@@ -463,7 +463,7 @@ void hdsl_init()
         DebugP_log("\r\n Sync mode with 300 MHz is not available");
         while(1);
 #endif
-        DebugP_log( "\r\nSYNC MODE\n");
+        DebugP_log("\r\nSYNC MODE\n");
         DebugP_log("\r\nEnter period for SYNC PULSE in unit of cycles(1 cycle = 4.44ns):");
         DebugP_scanf("%d",&period);
 
@@ -517,13 +517,14 @@ static void HDSL_IsrFxn()
 
 static void display_menu(void)
 {
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r|                                    MENU                                      |\n");
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r| %2d : HDSL registers into DDR                                                 |\n", MENU_HDSL_REG_INTO_DDR);
-    DebugP_log("\r| %2d : HDSL registers into DDR using GPIO                                                |\n", MENU_HDSL_REG_INTO_DDR_GPIO);
-    DebugP_log("\r|------------------------------------------------------------------------------|\n");
-    DebugP_log("\r| enter value: ");
+    DebugP_log("\r\n");
+    DebugP_log("\r\n |------------------------------------------------------------------------------|");
+    DebugP_log("\r\n |                                    MENU                                      |");
+    DebugP_log("\r\n |------------------------------------------------------------------------------|");
+    DebugP_log("\r\n | %2d : HDSL registers into DDR                                                 |", MENU_HDSL_REG_INTO_DDR);
+    DebugP_log("\r\n | %2d : HDSL registers into DDR using GPIO                                                |", MENU_HDSL_REG_INTO_DDR_GPIO);
+    DebugP_log("\r\n |------------------------------------------------------------------------------|");
+    DebugP_log("\r\n Enter value: ");
 }
 
 void traces_into_ddr(void)
@@ -594,32 +595,31 @@ static int get_menu(void)
 
     if(DebugP_scanf("%d\n", &cmd) < 0 || cmd >= MENU_LIMIT)
     {
-        DebugP_log( "| WARNING: invalid option, Safe position selected\r\n");
-        cmd = MENU_HDSL_REG_INTO_DDR;
-        DebugP_log( "\r| Enter 0 :Fast Position \n Enter 1: Safe Position 1 \n Enter 2: Safe Position 2 \r\n ");
+        DebugP_log("\r\n WARNING: invalid option, Safe position selected");
+        cmd = MENU_SAFE_POSITION;
+        DebugP_log( "\r\n Enter 0 :Fast Position \r\n Enter 1: Safe Position 1 \r\n Enter 2: Safe Position 2 \r");
 
-           if((DebugP_scanf("%d\n", &get_pos) < 0) || get_pos > 2)
-           {
-                   DebugP_log( "\r| WARNING: invalid position value\n");
-
-           }
+        if((DebugP_scanf("%d", &get_pos) < 0) || get_pos > 2)
+        {
+            DebugP_log("\r\n  WARNING: invalid position value");
+        }
     }
 
     if (cmd == MENU_HDSL_REG_INTO_DDR)
     {
-       DebugP_log("\r| How many traces you want to copy : ");
+       DebugP_log("\r\n| How many traces you want to copy : ");
        if(DebugP_scanf("%u\n", &ddr_trace_count) < 0 || ddr_trace_count >= NUM_RESOURCES)
        {
-           DebugP_log("\r| WARNING: invalid data\n|\n|\n");
+           DebugP_log("\r\n| WARNING: invalid data\n|\n|\n");
            return MENU_INVALID;
        }
     }
     if (cmd == MENU_HDSL_REG_INTO_DDR_GPIO)
     {
-       DebugP_log("\r| How many traces you want to copy : ");
+       DebugP_log("\r\n| How many traces you want to copy : ");
        if(DebugP_scanf("%u\n", &ddr_trace_count) < 0 || ddr_trace_count >= NUM_RESOURCES)
        {
-           DebugP_log("\r| WARNING: invalid data\n|\n|\n");
+           DebugP_log("\r\n| WARNING: invalid data\n|\n|\n");
            return MENU_INVALID;
        }
     }
@@ -713,9 +713,9 @@ void hdsl_diagnostic_main(void *arg)
     hdsl_i2c_io_expander(NULL);
     #endif
 
-    DebugP_log( "\n\n Hiperface DSL diagnostic\n");
+    DebugP_log("\r\n Hiperface DSL Diagnostic");
     hdsl_init();
-    DebugP_log( "\r\n HDSL setup finished\n");
+    DebugP_log("\r\n HDSL Setup finished");
     /*need some extra time for SYNC mode since frames are longer*/
     ClockP_sleep(1);
 
@@ -725,49 +725,50 @@ void hdsl_diagnostic_main(void *arg)
         { /* wait 1ms to detect, increase if reqd. */
             while(1)
             {
-                DebugP_log( "\r\nHiperface DSL encoder not detected\n\n");
+                DebugP_log( "\r\n Hiperface DSL encoder not detected\n");
                 ClockP_usleep(5000);
             }
         }
     }
 
-    DebugP_log( "\r\n");
-    DebugP_log( "\r|------------------------------------------------------------------------------|\n");
-    DebugP_log( "\r|                            Hiperface DSL diagnostic                          |\n");
-    DebugP_log( "\r|------------------------------------------------------------------------------|\n");
-    DebugP_log( "\r|\n");
-    DebugP_log( "\r| Quality monitoring value: %u\n", ureg & 0xF);
+    DebugP_log("\r\n ");
+    DebugP_log("\r\n |-------------------------------------------------------------------------------|");
+    DebugP_log("\r\n |                            Hiperface DSL diagnostic                           |");
+    DebugP_log("\r\n |-------------------------------------------------------------------------------|");
+    DebugP_log("\r\n | Quality monitoring value: %u                                                  |", ureg & 0xF);
 
     ureg = HDSL_get_edges();
-    DebugP_log( "\r| Edges: 0x%x\n", ureg);
+    DebugP_log("\r\n | Edges: 0x%x                                                                    |", ureg);
 
     ureg = HDSL_get_delay();
-    DebugP_log( "\r| Cable delay: %u\tRSSI: %u\n", ureg & 0xF, (ureg & 0xF0) >> 4);
+    DebugP_log("\r\n | Cable delay: %u                                                                |", ureg & 0xF);
+    DebugP_log("\r\n | RSSI: %u                                                                       |", (ureg & 0xF0) >> 4);
 
-    val =HDSL_get_enc_id(0) | (HDSL_get_enc_id(1) << 8) |
-              (HDSL_get_enc_id(2) << 16);
+    val = HDSL_get_enc_id(0) | (HDSL_get_enc_id(1) << 8) | (HDSL_get_enc_id(2) << 16);
+
     acc_bits = val & 0xF;
     acc_bits += 8;
     pos_bits = (val & 0x3F0) >> 4;
     pos_bits += acc_bits;
-    DebugP_log( "\r| Encoder ID: 0x%x", val);
-    DebugP_log( "(");
-    DebugP_log( "Acceleration bits: %u ,", acc_bits);
-    DebugP_log( "Position bits: %u,", pos_bits);
-    DebugP_log( "%s", val & 0x400 ? " Bipolar position" : " Unipolar position");
-    DebugP_log( ")\r|\n");
+    DebugP_log("\r\n | Encoder ID: 0x%x", val);
+    DebugP_log("(");
+    DebugP_log("Acceleration bits: %u, ", acc_bits);
+    DebugP_log("Position bits: %u,", pos_bits);
+    DebugP_log("%s", val & 0x400 ? " Bipolar position" : " Unipolar position");
+    DebugP_log(")|");
+    DebugP_log("\r\n |-------------------------------------------------------------------------------|");
 
-    DebugP_log( "\r| Enter single turn bits: ");
-    if((DebugP_scanf("%d\n", &gRes) < 0) || gRes > pos_bits)
+    DebugP_log("\r\n Enter single turn bits: ");
+    if((DebugP_scanf("%d", &gRes) < 0) || gRes > pos_bits)
     {
-            DebugP_log( "\r| WARNING: invalid single turn bits, assuming single turn encoder\n");
+            DebugP_log("\r\n WARNING: invalid single turn bits, assuming single turn encoder");
             gRes = pos_bits;
     }
     gMulti_turn = pos_bits - gRes;
     gMask = pow(2, gRes) - 1;
     if (gMulti_turn)
     {
-        DebugP_log( "\r| Multi turn bits: %u\n", gMulti_turn);
+        DebugP_log("\r\n Multi turn bits: %u", gMulti_turn);
     }
 
     while(1)
@@ -778,9 +779,7 @@ void hdsl_diagnostic_main(void *arg)
 
         menu = get_menu();
         process_request(menu);
-        DebugP_log( "|\r \n");
         DebugP_log( "\r%s", gUart_buffer);
-        DebugP_log( "\r|\n\r|\n\r|\n");
     }
 
     Board_driversClose();
