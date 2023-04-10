@@ -24,7 +24,7 @@ UC-1     | Configuration of VTM to trigger early warning, then alter the thresho
 
 # Supported Combinations {#EXAMPLES_SDL_VTM_COMBOS}
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
@@ -36,16 +36,6 @@ UC-1     | Configuration of VTM to trigger early warning, then alter the thresho
 
 \endcond
 
-\cond SOC_AM243X
-
- Parameter      | Value
- ---------------|-----------
- CPU + OS       | r5fss0-0 nortos
- Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/sdl/vtm/
-
-\endcond
 
 # Steps to Run the Example
 

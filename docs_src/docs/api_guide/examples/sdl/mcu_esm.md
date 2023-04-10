@@ -25,7 +25,7 @@ UC-2     | Configuration of Low Priority ESM
 
 # Supported Combinations {#EXAMPLES_SDL_MCU_ESM_COMBOS}
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
@@ -37,16 +37,6 @@ UC-2     | Configuration of Low Priority ESM
 
 \endcond
 
-\cond SOC_AM243X
-
- Parameter      | Value
- ---------------|-----------
- CPU + OS       | r5fss0-0 nortos
- Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/sdl/mcu_esm0/
-
-\endcond
 
 # Steps to Run the Example
 

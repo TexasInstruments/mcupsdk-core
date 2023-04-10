@@ -35,7 +35,7 @@ associated with:
 * DSS WDT is dedicated to C66 DSP core (C66SS0)
 \endcond
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 There are 7 RTI Modules in the device – 1 in the MCU domain and 6 in the Main domain
 
 Instances in MCU domain:
@@ -81,7 +81,7 @@ All WWDT instances that are provisioned for a particular CPU core should not be 
 • NTU input to FRC0
 \endcond
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 - None
 \endcond
 
@@ -98,7 +98,7 @@ Include the below file to access the APIs
 #include <sdl/sdl_rti.h>
 \endcode
 
-\cond SOC_AM263X || SOC_AM64X
+\cond SOC_AM263X || SOC_AM64X || SOC_AM243X
 Config an RTI Instance
 \code{.c}
 SDL_RTI_configParms pConfig;

@@ -44,7 +44,7 @@ Include the below file to access the APIs
 
 Initialize the ESM to report DCC errors
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 \code{.c}
 SDL_ESM_config DCC_Test_esmInitConfig_MCU =
 {
@@ -147,7 +147,7 @@ SDL_ESM_OpenParams esmOpenParams=
 \endcode
 \endcond
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 Configure MCU DCC Instance 0 seed values and clocks
 
 \code{.c}

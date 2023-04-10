@@ -43,7 +43,7 @@ Include the below file to access the APIs
 #include <sdl/sdlr_mtog.h>
 \endcode
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 \code{.c}
 Initialization structure for MCU ESM instance
 static SDL_ESM_config MTOG_Example_esmInitConfig_MCU =
@@ -66,10 +66,10 @@ Event handler API
 void MTOG_eventHandler( uint32_t instanceIndex )
 {
     int32_t status = SDL_PASS;
-    
+
     /* Reset the Timeout gasket */
     status = SDL_MTOG_reset( instanceIndex );
-        
+
     if (status == SDL_PASS)
     {
         DebugP_log("\n MTOG Reset done\n");
@@ -78,7 +78,6 @@ void MTOG_eventHandler( uint32_t instanceIndex )
         DebugP_log("\n MTOG Reset failed");
     }
     doneFlag = true;
-    
     return;
 }
 \endcode
@@ -115,7 +114,7 @@ SDL_MTOG_config config;
 int32_t status=0;
 uint32_t ESMEventNumber;
 
-ESMEventNumber	   = SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_MASTER_SAFETY_GASKET0_TIMED_OUT_0; 
+ESMEventNumber	   = SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_MASTER_SAFETY_GASKET0_TIMED_OUT_0;
 config.timeOut 	   = SDL_MTOG_VAL_1K;
 instanceIndex 	   = SDL_INSTANCE_MCU_MTOG0;
 

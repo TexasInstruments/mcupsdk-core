@@ -93,7 +93,7 @@ Additionally, application should define the callback function through which it w
 \endcode
 
 Now we can call the SDL_ESM_init API:
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 \code{.c}
 
         ret = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &esmInitConfig, SDL_ESM_applicationCallbackFunction,ptr);

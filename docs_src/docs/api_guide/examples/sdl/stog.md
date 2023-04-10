@@ -19,7 +19,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_STC_COMBOS}
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
@@ -30,16 +30,6 @@ Use Cases
 
 \endcond
 
-\cond SOC_AM243X
-
- Parameter      | Value
- ---------------|-----------
- CPU + OS       | r5fss0-0 nortos
- Toolchain      | ti-arm-clang
- Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/sdl/stog_r5f/
-
-\endcond
 
 
 
@@ -57,7 +47,7 @@ Use Cases
 
 # Sample Output
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 \code{.c}
 
 TOG Sample Example

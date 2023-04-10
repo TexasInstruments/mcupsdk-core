@@ -61,7 +61,7 @@ Run the PBIST test-for-diagnostic:
 \code{.c}
 
 bool PBISTResult;
-        
+
 status = SDL_PBIST_selfTest(SDL_PBIST_INST_MPU, SDL_PBIST_NEG_TEST, timeoutVal, &PBISTResult);
 if ((status != SDL_PASS) || (PBISTResult == false))
 {

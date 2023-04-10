@@ -2,7 +2,7 @@
 
 This page lists all the examples related to usage of SDL.
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 -# MCRC
    -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
 -# ESM
@@ -13,15 +13,14 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_VTM
 -# POK
    -# \subpage EXAMPLES_SDL_POK
+-# DCC
+   -# \subpage EXAMPLES_SDL_DCC
 -# MTOG
    -# \subpage EXAMPLES_SDL_MTOG
 -# ECC
    -# \subpage EXAMPLES_SDL_ECC
--# DCC
-   -# \subpage EXAMPLES_SDL_DCC
 -# RTI
    -# \subpage EXAMPLES_SDL_RTI
-
 -# PBIST
    -# \subpage EXAMPLES_SDL_PBIST
 \endcond
@@ -92,22 +91,4 @@ This page lists all the examples related to usage of SDL.
 \endcond
 
 
-\cond SOC_AM243X
--# ESM
-   -# \subpage EXAMPLES_SDL_MCU_ESM
--# VTM
-   -# \subpage EXAMPLES_SDL_VTM
--# POK
-   -# \subpage EXAMPLES_SDL_POK
--# ECC
-  -# \subpage EXAMPLES_SDL_ECC
--# DCC
-   -# \subpage EXAMPLES_SDL_DCC
--# MCRC
-   -# \subpage EXAMPLES_SDL_MCRC_FULL_CPU
--# RTI
-   -# \subpage EXAMPLES_SDL_RTI
 
--# PBIST
-   -# \subpage EXAMPLES_SDL_PBIST
-\endcond

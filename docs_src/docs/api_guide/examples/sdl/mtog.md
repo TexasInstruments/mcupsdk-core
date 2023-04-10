@@ -17,7 +17,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_MTOG_COMBOS}
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
@@ -46,18 +46,18 @@ Shown below is a sample output when the application is run,
 
 \code
 
-TIMER_ESM_init: Init MCU ESM complete 
+TIMER_ESM_init: Init MCU ESM complete
 
  Starting MTOG test on MCU MTOG0, index 1...
  MTOG Reset done
 
- Delta MTOG prep time in micro secs 17 
- 
- Delta MTOG execution time in micro secs 1490 
- 
-  Delta MTOG restore time in micro secs 2 
-  MTOG complete for MCU MTOG0 
- 
- MTOG Saftey Example passed. 
+ Delta MTOG prep time in micro secs 17
+
+ Delta MTOG execution time in micro secs 1490
+
+  Delta MTOG restore time in micro secs 2
+  MTOG complete for MCU MTOG0
+
+ MTOG Saftey Example passed.
 
 \endcode

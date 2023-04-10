@@ -38,7 +38,7 @@ The Software Diagnostics Library provides the functionality for implementing har
 \endcond
 SDL consists of below sub-modules
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 - \subpage SDL_MCRC_PAGE
 - \subpage SDL_DCC_PAGE
 - \subpage SDL_DPL_PAGE
@@ -71,14 +71,3 @@ SDL consists of below sub-modules
 - \subpage SDL_RESET_PAGE
 \endcond
 
-\cond SOC_AM243X
-- \subpage SDL_DPL_PAGE
-- \subpage SDL_ESM_PAGE
-- \subpage SDL_VTM_PAGE
-- \subpage SDL_POK_PAGE
-- \subpage SDL_DCC_PAGE
-- \subpage SDL_ECC_PAGE
-- \subpage SDL_MCRC_PAGE
-- \subpage SDL_RTI_PAGE
-- \subpage SDL_PBIST_PAGE
-\endcond

@@ -23,11 +23,12 @@ UC-2     | Parity error injection on Main ESM for interconnect RAM ID type
 
 # Supported Combinations {#EXAMPLES_SDL_ECC_COMBOS}
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | m4fss0-0 nortos
+ ^              | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ecc/
