@@ -197,13 +197,14 @@ void test_main(void *args)
 {
 	Drivers_open();
     Board_driversOpen();
-	
+
     /* Declaration of variables */
  	sdlApp_dplInit();
-	
+
     DebugP_log("\nMTOG Test Applications\r\n");
-	
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 1);
+
     test_sdl_mtog_test_app_runner();
- 
+
 }
 /* Nothing past this point */

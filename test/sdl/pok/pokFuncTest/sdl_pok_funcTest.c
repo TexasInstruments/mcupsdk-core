@@ -42,24 +42,19 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 #include "pok_main.h"
+#include <sdl/pok/v1/soc/sdl_soc_pok.h>
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #include <sdl/pok/v1/sdl_ip_pok.h>
 #include <sdl/pok/v1/sdl_pok.h>
 
-#if defined (SOC_AM64X)
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
-#endif
-#if defined (SOC_AM243X)
-#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
-#endif
 
 /*===========================================================================*/
 /*                         Macros                                            */
 /*===========================================================================*/
 /* None */
- 
+
 /* Global variables */
 
 volatile Bool ESM_Error = false;
@@ -133,19 +128,19 @@ uint32_t deactivate_trigger(uint32_t *esm_err_sig )
 
     }
     else if(pPokVal.voltDetMode == SDL_PWRSS_SET_OVER_VOLTAGE_DET_ENABLE)
-		
+
     {
-        
+
         pPokCfg.trimOV = 45;
         pPokCfg.trim = SDL_PWRSS_TRIM_NO_ACTION;
-      
+
 
     }
     else
 	{
         pPokCfg.trim = 0;
     }
-    
+
     pPokCfg.hystCtrl = SDL_PWRSS_HYSTERESIS_NO_ACTION;
     pPokCfg.voltDetMode = pPokVal.voltDetMode;
     pPokCfg.detectionCtrl = SDL_POK_DETECTION_NO_ACTION;
@@ -160,8 +155,8 @@ uint32_t deactivate_trigger(uint32_t *esm_err_sig )
 static void sdlPOKGetUVOV(uint32_t id, uint32_t *isOV)
 {
     switch (id)
-    {   
-	     
+    {
+
         case SDL_POR_VDDA_MCU_UV_ID:
         case SDL_POR_VDD_MCU_UV_ID:
             *isOV = 0x0;
@@ -170,27 +165,27 @@ static void sdlPOKGetUVOV(uint32_t id, uint32_t *isOV)
         case SDL_POR_VDDA_MCU_OV_ID:
             *isOV = 0x1;
             break;
-     
+
         default:
             *isOV = 0x2;
 	    break;
     }
     return;
 }
-	
+
 void sdlEsmSetupForPOK(uint32_t esm_err_sig)
 {
     /* ESM Variables */
     esmInfo_t   appEsmInfo;
     uint32_t     esmBaseAddr;
-#if defined (SOC_AM64X)
-#if defined (M4F_CORE)	
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
 	SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0,&esmBaseAddr);
 #endif
 #endif
 
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
-#if defined (R5F_CORE)	
+#if defined (R5F_CORE)
 	SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0,&esmBaseAddr);
 #endif
 #endif
@@ -342,7 +337,7 @@ int32_t sdlPOKInPor_funcTest(void)
                 pPokCfg.trim = 0;
                 pPokCfg.trimOV = SDL_PWRSS_TRIM_NO_ACTION;
 			}
-            
+
             sdlPOK_Test(instance, &pPokCfg);
             /* Un register the Interrupt */
 
@@ -375,7 +370,7 @@ int32_t sdlPOK_funcTest(void)
     uint32_t                     isOV;
     SDL_POK_staticRegs           pStaticRegs;
 
-    
+
     DebugP_log(" Below are the POK ID values \n");
     DebugP_log("  SDL_POK_VDDA_PMIC_IN_ID is:            0 \n");
 	DebugP_log("  SDL_POK_VDDS_DDRIO_ID is:              1 \n");
@@ -386,8 +381,8 @@ int32_t sdlPOK_funcTest(void)
     DebugP_log("  SDL_POK_VDDSHV_MAIN_1P8_ID is:         6 \n");
 	DebugP_log("  SDL_POK_VDDSHV_MAIN_3P3_ID is:         7 \n");
 	DebugP_log("  SDL_POK_VDD_MCU_OV_ID is:              8 \n");
-				   
-				   
+
+
 
     DebugP_log(" Enter the Voltage Detection (0: UV, 1: OV, 2: PP) for the POK ID to monitor for the test  \n");
 	DebugP_log("\n\nDefault test cycles through POKs, monitoring set to OV \n");
@@ -412,7 +407,7 @@ int32_t sdlPOK_funcTest(void)
 		}
 	else
 	{
-           
+
 	    SDL_POK_enablePP(SDL_POK_PRG_PP_1_ID, true);
             /* This is Ping/Pong */
             pPokCfg.voltDetMode = SDL_PWRSS_SET_PP_VOLTAGE_DET_ENABLE;
@@ -472,7 +467,7 @@ int32_t sdlPOK_funcTest(void)
 static void sdlGetInstance(SDL_POK_Inst *instance, uint32_t *esm_err_sig)
 {
     switch (*esm_err_sig)
-    {   
+    {
 	    case MCU_ESM_ERR_SIG_VDDA_PMIC_IN_UV:
             *instance = SDL_POK_VDDA_PMIC_IN_ID;
             break;

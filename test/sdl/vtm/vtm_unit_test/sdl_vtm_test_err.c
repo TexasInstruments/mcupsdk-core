@@ -844,6 +844,16 @@ int32_t sdlVTM_errTest(void)
         }
     }
 
+    if(testResult == 0)
+    {
+        sdlResult = (uint32_t) SDL_VTM_getBaseAddr(SDL_VTM_CONFIG_REG_1, NULL);
+
+        if (sdlResult == 1u)
+        {
+            DebugP_log("SDL_VTM_getBaseAddr negative test failed on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
     return (testResult);
 }
 /* Nothing past this point */

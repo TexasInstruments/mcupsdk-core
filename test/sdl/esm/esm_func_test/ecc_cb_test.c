@@ -45,7 +45,7 @@
 
 #define SDTF_NUM_RUNALL_TEST_COMMANDS 3
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {

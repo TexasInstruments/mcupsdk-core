@@ -44,11 +44,6 @@
 #include "esm_test_main.h"
 #include <dpl_interface.h>
 #include <unity.h>
-#if defined (SOC_AM64X)
-#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
-#include <sdl/esm/soc/am64x/sdl_esm_core.h>
-#define SDL_TEST_ESM_BASE  SDL_MCU_ESM0_CFG_BASE
-#endif
 #include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/DebugP.h>
 #include<sdl/esm/v0/sdl_esm.h>

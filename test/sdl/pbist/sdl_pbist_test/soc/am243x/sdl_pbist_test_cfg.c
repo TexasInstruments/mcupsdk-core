@@ -207,18 +207,5 @@ int32_t PBIST_McuAuxInitRestore(bool init)
     return testResult;
 }
 
-/* Custom core power down sequence contains any core-custom powerdown steps
- * needed to be properly powered down, outside of device/power domain controls */
-int32_t customPowerDownSequence(uint8_t processorId)
-{
-    return 0;
-}
-
-/* Custom core power restore sequence contains any core-custom power steps
- * needed prior to powering up, outside of device/power domain controls */
-int32_t customPrepareForPowerUpSequence(uint8_t processorId)
-{
-    return 0;
-}
 
 /* Nothing past this point */

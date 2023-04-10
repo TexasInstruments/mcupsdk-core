@@ -57,6 +57,11 @@
 #include <sdl/esm/soc/am64x/sdl_esm_core.h>
 #define SDL_TEST_ESM_BASE  SDL_MCU_ESM0_CFG_BASE
 #endif
+#if defined (SOC_AM243X)
+#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
+#include <sdl/esm/soc/am243x/sdl_esm_core.h>
+#define SDL_TEST_ESM_BASE  SDL_MCU_ESM0_CFG_BASE
+#endif
 
 #if defined (SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_baseaddress.h>

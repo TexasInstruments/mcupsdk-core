@@ -72,7 +72,7 @@ int32_t SDL_DCC_posTest(void)
     SDL_DCC_StaticRegs  staticRegs;
     SDL_DCC_Status      status;
     SDL_DCC_Inst        validInstance = SDL_DCC_INST_DCC0;
-    
+
     config.mode             = SDL_DCC_MODE_SINGLE_SHOT_1;
     config.clk0Src          = SDL_DCC_CLK0_SRC_CLOCK0_0;
     config.clk1Src          = SDL_DCC_CLK1_SRC_CLOCKSRC0;
@@ -114,9 +114,9 @@ int32_t SDL_DCC_posTest(void)
             }
         }
     }
-     
-     
-     
+
+
+
 /*******************************************************************************
  *     Call SDL API SDL_DCC_verifyConfig
  ******************************************************************************/
@@ -143,7 +143,7 @@ int32_t SDL_DCC_posTest(void)
         config.clk0Seed         = 0xffu;
         config.clk0ValidSeed    = 3u;
         config.clk1Seed         = 0xffu;
-        
+
         sdlRet = SDL_DCC_configure(validInstance, &config);
 
         if (sdlRet != SDL_PASS)
@@ -152,7 +152,7 @@ int32_t SDL_DCC_posTest(void)
             DebugP_log("SDL_DCC_configure: failure on line no. %d \n", __LINE__);
         }
     }
-    
+
     if (testStatus == SDL_APP_TEST_PASS)
     {
         config.mode             = SDL_DCC_MODE_SINGLE_SHOT_1;
@@ -161,7 +161,7 @@ int32_t SDL_DCC_posTest(void)
         config.clk0Seed         = 0xffu;
         config.clk0ValidSeed    = 4u;
         config.clk1Seed         = 0xffu;
-        
+
         sdlRet = SDL_DCC_verifyConfig(validInstance, &config);
 
         if (sdlRet != SDL_PASS)
@@ -330,7 +330,7 @@ int32_t SDL_DCC_posTest(void)
             }
         }
     }
-    
+
     if (testStatus == SDL_APP_TEST_PASS)
     {
         for(i = 0x0u; i < SDL_DCC_INVALID_INSTANCE; i++)
@@ -345,6 +345,38 @@ int32_t SDL_DCC_posTest(void)
         }
     }
 
+
+/*******************************************************************************
+ *     Call SDL API SDL_DCC_disableIntr
+ ******************************************************************************/
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        for(i = 0x0u; i < SDL_DCC_INVALID_INSTANCE; i++)
+        {
+            sdlRet = SDL_DCC_disableIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_DONE);
+
+            if (sdlRet != SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("\n  SDL_DCC_disableIntr: positive test failed on line no: %d \n", __LINE__);
+            }
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        for(i = 0x0u; i < SDL_DCC_INVALID_INSTANCE; i++)
+        {
+            sdlRet = SDL_DCC_disableIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_ERR);
+
+            if (sdlRet != SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("\n  SDL_DCC_disableIntr: positive test failed on line no: %d \n", __LINE__);
+            }
+        }
+    }
 
 
 /*******************************************************************************

@@ -40,16 +40,11 @@
 
 #include "test_main.h"
 #include <sdl/sdl_pok.h>
+#include <sdl/pok/v1/soc/sdl_soc_pok.h>
 #include <sdl/include/am64x_am243x/sdlr_mcu_ctrl_mmr.h>
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_esm0.h>
 
-#if defined (SOC_AM64X)
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
-#endif
 
-#if defined (SOC_AM243X)
-#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
-#endif
 
 #define POK_TEST_ID SDL_POR_VDD_MCU_UV_ID
 
@@ -126,7 +121,7 @@ int32_t sdl_ip_pokNegTest(void)
     {
         DebugP_log("sdlPOK_ip_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
-    }	
+    }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_pokPorCfg_t    pPorCfg;
@@ -238,7 +233,7 @@ int32_t sdl_ip_pokNegTest(void)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
-		
+
     }
 
     if (testStatus != SDL_APP_TEST_PASS)
@@ -270,7 +265,7 @@ int32_t sdl_ip_pokNegTest(void)
         DebugP_log("sdlPOK_ip_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
 		SDL_pokPorCfg_t pPorCfg;
@@ -288,7 +283,7 @@ int32_t sdl_ip_pokNegTest(void)
         DebugP_log("sdlPOK_ip_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
 		SDL_pokPorCfg_t pPorCfg;
@@ -306,7 +301,7 @@ int32_t sdl_ip_pokNegTest(void)
         DebugP_log("sdlPOK_ip_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_POK_config               pPokCfg;
@@ -316,11 +311,11 @@ int32_t sdl_ip_pokNegTest(void)
 		pPokCfg.hystCtrlOV   = (SDL_PWRSS_GET_HYSTERESIS_VALUE-1U);
 		pPokCfg.voltDetMode  = (SDL_PWRSS_GET_VOLTAGE_DET_MODE-1U);
 		pPokCfg.trim         = (SDL_PWRSS_GET_TRIM_VALUE-1U);
-		pPokCfg.trimOV       = (SDL_PWRSS_GET_TRIM_VALUE-1U);     
-		pPokCfg.detectionCtrl = (SDL_POK_GET_DETECTION_VALUE-1U); 
-		pPokCfg.pokEnSelSrcCtrl  = (SDL_POK_GET_ENSEL_VALUE-1U); 
+		pPokCfg.trimOV       = (SDL_PWRSS_GET_TRIM_VALUE-1U);
+		pPokCfg.detectionCtrl = (SDL_POK_GET_DETECTION_VALUE-1U);
+		pPokCfg.pokEnSelSrcCtrl  = (SDL_POK_GET_ENSEL_VALUE-1U);
 		pPokCfg.deglitch     = (SDL_PWRSS_DEGLITCH_GET_VALUE-1U);
- 
+
         if(SDL_pokGetControl (pBaseAddr,&pPokCfg, &pPokVal, i) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -559,7 +554,7 @@ int32_t sdl_ip_pokNegTest(void)
         DebugP_log("sdlPOK_ip_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
     if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_POK_config               pPokCfg;
@@ -631,7 +626,7 @@ int32_t sdl_ip_pokNegTest(void)
         DebugP_log("sdlPok_ip_negTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         SDL_POK_config               pPokCfg;
@@ -797,24 +792,24 @@ int32_t sdl_ip_pokPosTest(void)
 		pPokCfg.hystCtrl        = SDL_PWRSS_HYSTERESIS_NO_ACTION;
 		pPokCfg.hystCtrlOV      = SDL_PWRSS_HYSTERESIS_NO_ACTION;
 		pPokCfg.voltDetMode     = SDL_PWRSS_VOLTAGE_DET_NO_ACTION;
-		pPokCfg.trim            = SDL_PWRSS_TRIM_NO_ACTION;      
-		pPokCfg.trimOV          = SDL_PWRSS_TRIM_NO_ACTION;        
-		pPokCfg.detectionCtrl   =  SDL_POK_GET_DETECTION_VALUE - 1U;   
-		pPokCfg.pokEnSelSrcCtrl =  SDL_POK_GET_ENSEL_VALUE - 1U;        
+		pPokCfg.trim            = SDL_PWRSS_TRIM_NO_ACTION;
+		pPokCfg.trimOV          = SDL_PWRSS_TRIM_NO_ACTION;
+		pPokCfg.detectionCtrl   =  SDL_POK_GET_DETECTION_VALUE - 1U;
+		pPokCfg.pokEnSelSrcCtrl =  SDL_POK_GET_ENSEL_VALUE - 1U;
 		pPokCfg.deglitch        = SDL_PWRSS_DEGLITCH_NO_ACTION;
-		
+
 		if (SDL_pokSetControl(pBaseAddr, &pPokCfg, i) != SDL_PASS)
 		{
 		        testStatus = SDL_APP_TEST_FAILED;
         }
-		
+
 		if (testStatus != SDL_APP_TEST_PASS)
         {
             DebugP_log("sdlPok_ip_posTest: failure on line no. %d \n", __LINE__);
             return (testStatus);
         }
     }
-	
+
 	if (testStatus == SDL_APP_TEST_PASS)
     {
         i = POK_TEST_ID;
@@ -1046,10 +1041,10 @@ int32_t sdl_ip_pokPosTest(void)
         DebugP_log("sdlPok_ip_posTest: failure on line no. %d \n", __LINE__);
         return (testStatus);
     }
-	
+
     SDL_PRG_Inst instance;
     SDL_pokPRGInfo_t pPRGInfo;
-	
+
 	for(instance = SDL_POK_PRG_PP_0_ID; instance <= SDL_POK_PRG_LAST_ID; instance++)
 	{
 
@@ -1063,7 +1058,7 @@ int32_t sdl_ip_pokPosTest(void)
     {
         DebugP_log("sdlPok_ip_posTest: failure on line no. %d \n", __LINE__);
     }
-	
+
 	if (SDL_pok_getPRGInfo(pBaseAddr, SDL_POK_PRG_FIRST_ID, &pPRGInfo)!= SDL_EFAIL)
 		{
 			testStatus = SDL_APP_TEST_FAILED;
@@ -1073,7 +1068,7 @@ int32_t sdl_ip_pokPosTest(void)
     {
         DebugP_log("sdlPok_ip_posTest: failure on line no. %d \n", __LINE__);
     }
-		
+
         return (testStatus);
 }
 

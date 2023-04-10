@@ -55,7 +55,7 @@ FILES_PATH_common = \
 	../../.. \
 	../../../../common \
 	../../../../../dpl \
-	../../../../ecc_sdl_funcTest/soc/am64x \
+	../../../../ecc_sdl_funcTest/soc/am243x \
 	../../../../ecc_sdl_funcTest/am243x-evm \
 	generated \
 
@@ -66,7 +66,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/common/ \
 	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/am243x-evm/ \
-	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/soc/am64x/ \
+	-I${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/soc/am243x/ \
 	-Igenerated \
 
 DEFINES_common := \

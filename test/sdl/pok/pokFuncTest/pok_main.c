@@ -75,7 +75,8 @@ sdlPokTest_t  sdlPokTestList[] = {
     {sdlPOKInPor_funcTest,  "POR FUNCTION TEST",     SDL_APP_TEST_NOT_RUN },
     {NULL,                  "TERMINATING CONDITION", SDL_APP_TEST_NOT_RUN }
 };
-#if defined (SOC_AM64X)
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 SDL_ESM_config POK_Test_esmInitConfig_MCU =
 {
@@ -179,7 +180,7 @@ void test_sdl_pok_baremetal_test_app (void)
     int32_t    i;
     int32_t    sdlRet;
     void *ptr = (void *)&arg;
-   
+
 
     /* Init dpl */
     sdlApp_dplInit();
@@ -187,11 +188,11 @@ void test_sdl_pok_baremetal_test_app (void)
     DebugP_log("\n POK Test Application\r\n");
 
 
-  
+
      SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU,6 );
     /* ESM Setup for POK tests */
     /* Initialize MCU ESM module */
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
     sdlRet = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &POK_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction,ptr);
 #endif
@@ -200,7 +201,6 @@ void test_sdl_pok_baremetal_test_app (void)
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (R5F_CORE)
     sdlRet = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &POK_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction,ptr);
-	sdlRet = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &POK_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction,ptr);
 #endif
 #endif
     if (sdlRet != SDL_PASS) {

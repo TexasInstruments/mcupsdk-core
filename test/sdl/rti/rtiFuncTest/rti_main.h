@@ -56,7 +56,7 @@
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
-#if defined (SOC_AM64X) || (SOC_AM243X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <sdl/sdl_esm.h>
 #endif
 #include <sdl/sdl_rti.h>
@@ -87,7 +87,7 @@
 #define SDL_ESM_U_BASE SDL_TOP_ESM_U_BASE
 #define SDL_INSTANCE_ESM0 SDL_ESM_INST_MAIN_ESM0
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_MCU_RTI0_CFG
 #define SDL_WDT_BASE  SDL_INSTANCE_MCU_RTI0_CFG

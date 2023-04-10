@@ -109,10 +109,10 @@ static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
 #if defined (SOC_AM263X)
-        status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
+    status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
-        status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);
+    status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);
 #endif
         DebugP_assertNoLog(status == SystemP_SUCCESS);
 
@@ -130,7 +130,7 @@ static int32_t Sdl_Module_clockSetFrequency()
   return status;
 }
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 #define RTI_NUM_DEVICES 1
 uint32_t RTI_devices[RTI_NUM_DEVICES] =
@@ -174,6 +174,7 @@ uint32_t RTI_devices[RTI_NUM_DEVICES] =
     TISCI_DEV_RTI10,
     TISCI_DEV_RTI11
 };
+
 static int32_t sdlApp_initRTI(void)
 {
     int32_t status = SDL_PASS;
@@ -199,7 +200,7 @@ static int32_t sdlApp_initRTI(void)
 #endif
 #endif
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 SDL_ESM_config RTI_Test_esmInitConfig_MCU =
 {
@@ -299,7 +300,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
 {
     uint32_t closedWindowstatus, currentDownCounter=0, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
 	baseAddr=getBaseAddr;
@@ -435,7 +436,7 @@ void test_sdl_rti_baremetal_test_app (void)
     #elif defined (SOC_AWR294X)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);
     #endif
-	#if defined (SOC_AM64X)
+    #if defined (SOC_AM64X) || defined (SOC_AM243X)
     #if defined (M4F_CORE)
 	sdlApp_initRTI();
 	result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &RTI_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, ptr);

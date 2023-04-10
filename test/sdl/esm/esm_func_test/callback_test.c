@@ -46,7 +46,7 @@
 
 volatile uint8_t cfg_triggered = 0x0u;
 
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 SDL_ESM_config SDTF_esmInitConfig_MCU_appcallback =
 {
@@ -208,13 +208,13 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
             DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\n", result);
         }
 #endif
-    } 
+    }
 	else {
         if(esmType == SDL_ESM_INST_MAIN_ESM0)
         {
             DebugP_log("\nESM_ECC_Example_init: Init MAIN ESM complete \n");
 
-        } 
+        }
 #if defined (SOC_AM64X)	|| defined (SOC_AM243X)
 		else {
             DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
@@ -288,7 +288,7 @@ int32_t SDTF_runESMInjectCfg_MCU(void)
     cfg_triggered = 0x0;
     return retVal;
 }
-#endif	
+#endif
 int32_t SDTF_runESMInjectCfg_MAIN(void)
 {
     int32_t retVal = 0x0;
@@ -409,7 +409,7 @@ int32_t Negative_test_priv_file(void)
     int32_t retVal=0;
     uint32_t esmInstBaseAddr;
     SDL_ErrType_t result;
-#if defined(SOC_AM263X)	
+#if defined(SOC_AM263X)
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &SDTF_esmInitConfig_MAIN_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
 #elif defined(SOC_AM64X)|| defined (SOC_AM243X)
 result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &SDTF_esmInitConfig_MCU_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
@@ -451,7 +451,7 @@ result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &SDTF_esmInitConfig_MCU_appcallback
     retVal =SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 1, 8);
 #elif defined(SOC_AM64X)|| defined (SOC_AM243X)
     retVal =SDTF_runESMInjectInstance(SDL_ESM_INST_MCU_ESM0, 1, 8);
-#endif 
+#endif
     return retVal;
 }
 

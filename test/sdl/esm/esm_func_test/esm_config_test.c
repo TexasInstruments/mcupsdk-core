@@ -21,7 +21,7 @@ SDL_ESM_config SDTF_esmInitConfig_MCU_config =
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
 };
 #endif
-#if defined (SOC_AM64X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
 SDL_ESM_config SDTF_esmInitConfig_MAIN =
 {
@@ -134,7 +134,7 @@ void  esm_init(SDL_ESM_Inst esmType)
     {
         result = SDL_ESM_init(esmType, &SDTF_esmInitConfig_MCU_config,SDL_ESM_applicationCallbackFunction,ptr);
     }
-#endif	
+#endif
     if (result != SDL_PASS) {
         /* print error and quit */
         if(esmType == SDL_ESM_INST_MAIN_ESM0){
@@ -152,7 +152,7 @@ void  esm_init(SDL_ESM_Inst esmType)
 #if defined (SOC_AM64X)|| defined (SOC_AM243X)
 		else{
 			DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
-            
+
         }
 #endif
 	}

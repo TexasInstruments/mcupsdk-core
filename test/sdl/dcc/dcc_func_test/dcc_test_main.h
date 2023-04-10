@@ -42,7 +42,7 @@
 /*                         Include files                                     */
 /*===========================================================================*/
 /*===========================================================================*/
-#if defined (SOC_AM64X) || defined (SOC_AM243X) 
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <sdl/sdl_esm.h>
 #endif
 #include <stdint.h>
@@ -141,12 +141,12 @@ extern "C" {
 /**< Instance of DCC. While changing the instance, ensure update clock sources*/
 
 #define APP_DCC_REF_CLOCK_FREQ_IN_KHZ   (25000U)
-/**< Clock source for Counter 0, 25 MHz for AM64x */
+/**< Clock source for Counter 0, 25 MHz for AM64x, AM243x */
 #define APP_DCC_REF_CLOCK_CASE_1_FREQ_IN_KHZ  (32U)
-/**< Clock source for Counter 0, 32 KHz for AM64x */
+/**< Clock source for Counter 0, 32 KHz for AM64x, AM243x */
 #define APP_DCC_TEST_CLOCK_FREQ_IN_KHZ  (200000U)
 /**< Expected test clock frequency in KHz */
-/**< Clock source for Counter 1, 200 MHz for AM64x */
+/**< Clock source for Counter 1, 200 MHz for AM64x, AM243x */
 #define APP_DCC_TEST_CLOCK_SRC_1_HIGHER (SDL_DCC2_DCCCLKSRC1_CLKSRC_2)
 /**< Clock source for Counter 1, expected to be higher than
         APP_DCC_TEST_CLOCK_SRC_1, in this Test to simulate an error*/

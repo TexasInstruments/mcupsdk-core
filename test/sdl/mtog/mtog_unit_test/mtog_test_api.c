@@ -49,7 +49,7 @@
 #include <sdl/sdl_mtog.h>
 #include <kernel/dpl/DebugP.h>
 #include <sdl/dpl/sdl_dpl.h>
-#include <sdl/mtog/soc/am64x/sdl_soc_mtog.h>
+#include <sdl/mtog/soc/sdl_soc_mtog.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -152,10 +152,20 @@ static int32_t MTOG_apiTestLocal(uint32_t instanceIndex)
 			DebugP_log("\n  SDL_MTOG_getStaticRegisters API test failed on line no: %d \r\n", __LINE__);
 			testResult = -1;
 		}
-		
+
     }
-	
-    return (testResult);	
+
+    if (testResult == SDL_PASS)
+    {
+       testResult = SDL_MTOG_reset(SDL_INSTANCE_MCU_MTOG0);
+        if (testResult != SDL_PASS)
+        {
+            DebugP_log("\n  SDL_MTOG_reset error test failed on line no: %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+
+    return (testResult);
 }
 
 
@@ -163,9 +173,9 @@ static int32_t MTOG_apiTestLocal(uint32_t instanceIndex)
 int32_t MTOG_apiTest(void)
 {
     int32_t testResult;
-	
+
     testResult = MTOG_apiTestLocal(SDL_INSTANCE_MCU_MTOG0);
-	
+
     return (testResult);
 }
 /* Nothing past this point */

@@ -51,11 +51,11 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_mtog.h>
 #include <sdl/esm/v0/sdl_esm.h>
-#include <sdl/mtog/soc/am64x/sdl_soc_mtog.h>
+#include <sdl/mtog/soc/sdl_soc_mtog.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #include <sdl/include/am64x_am243x/sdlr_intr_mcu_esm0.h>
 #include <sdl/esm/v0/esm.h>
-#include <sdl/esm/soc/am64x/sdl_esm_soc.h>
+#include <sdl/esm/soc/sdl_esm_soc.h>
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -70,14 +70,13 @@ void MTOG_datAbortExceptionHandler(void *param);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-												  
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                                    SDL_ESM_IntType esmIntrType,
                                                    uint32_t grpChannel,
                                                    uint32_t index,
                                                    uint32_t intSrc,
-                                                   void *arg);	
-												   
+                                                   void *arg);
+
 typedef void (*MTOG_handlerPtr)(uint32_t instanceIndex);
 
 int32_t apparg;
@@ -122,10 +121,10 @@ int32_t MTOG_runTest(uint32_t instanceIndex);
 void MTOG_eventHandler( uint32_t instanceIndex )
 {
     int32_t status = SDL_PASS;
-    
+
     /* Reset the Timeout gasket */
     status = SDL_MTOG_reset( instanceIndex );
-        
+
     if (status == SDL_PASS)
     {
         DebugP_log("\n MTOG Reset done\n");
@@ -134,7 +133,6 @@ void MTOG_eventHandler( uint32_t instanceIndex )
         DebugP_log("\n MTOG Reset failed");
     }
     doneFlag = true;
-    
     return;
 }
 
@@ -150,8 +148,8 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
     SDL_MTOG_config config;
     config.timeOut = SDL_MTOG_VAL_1K;
     SDL_MTOG_staticRegs staticRegs;
-	
-	ESMEventNumber         = SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_MASTER_SAFETY_GASKET0_TIMED_OUT_0 ;	
+
+	ESMEventNumber         = SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_MASTER_SAFETY_GASKET0_TIMED_OUT_0 ;
     doneFlag               = false;
 
     DebugP_log("\n Starting MTOG test on %s, index %d...",
@@ -250,7 +248,6 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
             result = -1;
         }
     }
-    
     /* Get end time of test */
      testEndTime = ClockP_getTimeUsec();
 
@@ -324,14 +321,13 @@ int32_t MTOG_functest(void)
 {
     int32_t    result = 0;
 	uint32_t instanceIndex;
-	
     result = MTOG_PrepareForTest();
     if (result != 0)
     {
         DebugP_log("   MTOG_PrepareForTest failed \n");
     }
     if (result == 0)
-    { 
+    {
       instanceIndex = SDL_INSTANCE_MCU_MTOG0;
 	  result = MTOG_runTest(instanceIndex);
     }

@@ -101,14 +101,14 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             uint32_t index,
                                             uint32_t intSrc,
                                             void *arg);
-											
+
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
                                                    uint32_t index,
                                                    uint32_t intSrc,
                                                    void *arg);
-											
+
 #endif
 
 

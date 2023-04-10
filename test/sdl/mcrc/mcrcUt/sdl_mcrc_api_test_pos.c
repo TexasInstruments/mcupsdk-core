@@ -40,7 +40,7 @@
 
 #include "mcrc_main.h"
 
-#if defined(SOC_AM263X)|| defined (SOC_AM64X)|| defined (SOC_AM243X)
+#if defined(SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X)
 #define SDL_MCRC_CHANNEL_MAXIMUM 4;
 #endif
 
@@ -57,16 +57,10 @@ int32_t sdl_mcrc_posTest(void)
 	SDL_MCRC_InstType     end_instance = MCRC0;
 	SDL_MCRC_Channel_t    channelNum=4;
 #endif
-#if defined (SOC_AM64X)
-    SDL_MCRC_InstType     instance = MCRC_MCU_NAVSS;
-	SDL_MCRC_InstType     start_instance = MCRC_MCU_NAVSS;
-	SDL_MCRC_InstType     end_instance = MCRC_MCU_NAVSS;
-	SDL_MCRC_Channel_t    channelNum=4;
-#endif
-#if defined (SOC_AM243X)
-    SDL_MCRC_InstType     instance = MCU_MCRC64_0;
-	SDL_MCRC_InstType     start_instance = MCU_MCRC64_0;
-	SDL_MCRC_InstType     end_instance = MCU_MCRC64_0;
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    SDL_MCRC_InstType     instance = MCU_MCRC64_0 ;
+	SDL_MCRC_InstType     start_instance = MCU_MCRC64_0 ;
+	SDL_MCRC_InstType     end_instance = MCU_MCRC64_0 ;
 	SDL_MCRC_Channel_t    channelNum=4;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -123,7 +117,18 @@ int32_t sdl_mcrc_posTest(void)
                 return (testStatus);
             }
         }
-
+        /* Giving Data bit size wrong for failing SDL_MCRC_dataWrite API */
+        mcrcData.dataBitSize     =(SDL_MCRC_DataBitSize) (SDL_MCRC_DATA_32_BIT + 1);
+        if ((SDL_MCRC_computeSignCPUmode(instance,SDL_MCRC_CHANNEL_1, &mcrcData, &sectSignVal)) == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+        if (testStatus != SDL_APP_TEST_PASS)
+        {
+            DebugP_log("SDL_mcrc_api_pos_Test: failure on line no. %d \n", __LINE__);
+            return (testStatus);
+        }
+        mcrcData.dataBitSize     = SDL_MCRC_DATA_32_BIT;
     }
 	for (instance = start_instance; instance <= end_instance; instance++)
     {

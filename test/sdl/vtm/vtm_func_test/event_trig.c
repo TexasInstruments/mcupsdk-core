@@ -446,7 +446,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
         case 0:
             /* TC-1: Low Priority interrupt on mcu ESM -
              * VTM greater than THR1 */
-            #if defined (SOC_AM64X)
+            #if defined (SOC_AM64X) || defined (SOC_AM243X)
             #if defined (M4F_CORE)
             currEsmInstance = SDL_ESM_INST_MCU_ESM0;
             #endif
@@ -472,7 +472,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
 
         case 1:
              /* TC-2: High Priority interrupt on mcu ESM */
-            #if defined (SOC_AM64X)
+            #if defined (SOC_AM64X) || defined (SOC_AM243X)
             #if defined (M4F_CORE)
             currEsmInstance = SDL_ESM_INST_MCU_ESM0;
             #endif
@@ -497,7 +497,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
 
         case 2:
             /* TC-3: High Priority interrupt on mcu ESM */
-            #if defined (SOC_AM64X)
+            #if defined (SOC_AM64X) || defined (SOC_AM243X)
             #if defined (M4F_CORE)
             currEsmInstance = SDL_ESM_INST_MCU_ESM0;
             #endif

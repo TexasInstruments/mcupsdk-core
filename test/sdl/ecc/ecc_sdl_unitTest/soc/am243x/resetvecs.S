@@ -29,13 +29,13 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-	
+
 /****************************************************************************
 * Setup reserved Handler
 ****************************************************************************/
     .global	_sdlRsvdHandler
 _sdlRsvdHandler:
-    
+
      b   _sdlRsvdHandler
 
 /****************************************************************************

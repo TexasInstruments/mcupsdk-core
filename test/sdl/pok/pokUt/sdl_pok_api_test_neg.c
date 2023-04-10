@@ -40,15 +40,9 @@
 
 #include "test_main.h"
 #include <kernel/dpl/DebugP.h>
+#include <sdl/pok/v1/soc/sdl_soc_pok.h>
 #include <sdl/pok/v1/sdl_pok.h>
 
-#if defined (SOC_AM64X)
-#include <sdl/pok/v1/soc/am64x/sdl_soc_pok.h>
-#endif
-
-#if defined (SOC_AM243X)
-#include <sdl/pok/v1/soc/am243x/sdl_soc_pok.h>
-#endif
 
 int32_t sdl_pok_negTest(void)
 {
