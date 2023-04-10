@@ -53,6 +53,7 @@ typedef struct ESL_GPIO_SHandle
     uint32_t                dummy;
 } ESL_GPIO_SHandle_t;
 
+
 #if (defined GPIO_TEST_PINS) && (1==GPIO_TEST_PINS)
 static void ESL_GPIO_testPins_init(void);
 #endif

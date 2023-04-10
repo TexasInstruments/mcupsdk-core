@@ -41,7 +41,7 @@
 #define SHOW_LOOPCOUNT  0
 #define SHOW_ESCSTATUS  0
 
- #define ENABLE_I2CLEDS 1
+#define ENABLE_I2CLEDS 1
 
 #define BIT2BYTE(x)                     (((x)+7) >> 3)
 
