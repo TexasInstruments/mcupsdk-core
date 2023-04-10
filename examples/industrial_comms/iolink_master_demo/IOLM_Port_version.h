@@ -1,17 +1,19 @@
+/* Automatically generated do not modify */
 /*!
- *  \file hwal_ipprotection.h
+ *  \example IOLM_Port_version.h
  *
  *  \brief
- *  HWAL IP protection interfaces.
+ *  Configuration file for the IOL8M-Sitara-Example-Project to be filled automatically by cmake.
+ *  Get the information from Git to the IOL8M-Sitara-Example-Project
  *
  *  \author
  *  KUNBUS GmbH
  *
  *  \date
- *  2021-11-01
+ *  2022-12-06
  *
  *  \copyright
- *  Copyright (c) 2021, KUNBUS GmbH<br /><br />
+ *  Copyright (c) 2022, KUNBUS GmbH<br /><br />
  *  All rights reserved.<br />
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:<br />
@@ -37,23 +39,23 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+#ifndef _IOL8M_SITARA_VERSION_INFO_H_
+#define _IOL8M_SITARA_VERSION_INFO_H_
 
-#if !(defined PROTECT_HWAL_IPPROTECTION_H)
-#define PROTECT_HWAL_IPPROTECTION_H		1
-
-#include <osal.h>
-#include "hwal_ipprotection_types.h"
-
-#if (defined __cplusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
-extern uint32_t HWAL_IPP_init           (void* pVoidHandle_p);
-extern uint32_t HWAL_IPP_watchDog       (void* pVoidHandle_p);
-extern uint32_t HWAL_IPP_stopOp         (void* pVoidHandle_p);
+#define IOL8M_SITARA_VERSION_TAG "v1.09.04"
 
-#if (defined __cplusplus)
+#define IOL8M_SITARA_VERSION_VERSION_MAJOR 1
+#define IOL8M_SITARA_VERSION_VERSION_MINOR 9
+#define IOL8M_SITARA_VERSION_VERSION_PATCH 4
+
+#define IOL8M_SITARA_VERSION_COMMIT_U16 0x518c
+
+#ifdef __cplusplus
 }
 #endif
 
-#endif /* PROTECT_HWAL_IPPROTECTION_H */
+#endif  // _IOL8M_SITARA_VERSION_INFO_H_

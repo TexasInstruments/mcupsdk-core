@@ -52,8 +52,6 @@
 
 /* IO-Link Master example setup */
 /* Please set these following definitions according to your desired application! */
-/* Switch to enable the automatic setup of all ports to auto-start. */
-#define IOLM_EXMPL_ENABLE_AUTO_START            (0U)
 /* Switch to enable the automatic setup, which is done in this example. */
 #define IOLM_EXMPL_ENABLE_STATE_MACHINE         (0U)
 /* Number of ports used which should be included in the auto setup state machine */
@@ -88,6 +86,9 @@ typedef enum IOLM_EXMPL_EExampleState
     /*---Establishment of the COMMUNICATION---*/
     IOLM_eExampleState_Init,
     IOLM_eExampleState_PortStatusWait,
+    IOLM_eExampleState_Config,
+    IOLM_eExampleState_ConfigWait,
+    IOLM_eExampleState_PortStatusRequest,
     /*--------------COMMUNICATION-------------*/
     IOLM_eExampleState_ReadVendor,
     IOLM_eExampleState_ReadVendorWait,
@@ -119,6 +120,7 @@ void IOLM_EXMPL_stateMachine(void);
 void IOLM_EXMPL_setPortToPortMode(uint8_t portNumber_p, IOLM_SMI_EPortMode targetPortMode_p);
 
 /* Prototype callbacks */
+void IOLM_EXMPL_cbChipInfo(INT8U u8Instance_p, INT8U *pu8Data_p, INT16U u16Length_p);
 /* Master Identification */
 void IOLM_EXMPL_cbMasterIdentificationCnf(uint8_t clientID_p, uint16_t error_p, uint16_t argBlockLength_p, uint8_t* pArgBlock_p);
 /* Event handling(acyclic) */

@@ -184,6 +184,19 @@ void IOLM_MAIN_cbMainLoopRequest(void)
  */
 void OSAL_FUNC_NORETURN IOLM_MAIN_loop()
 {
+    while (1)
+    {
+        IOLM_SMI_vRun();
+        OSAL_waitSignal(pMainLoopRequested_g, 2);
+    }
+}
+
+/*!
+ *  \brief
+ *  Initialize stack and demo application.
+ */
+void IOLM_MAIN_init()
+{
     uint8_t portNumber;
 
     pMainLoopRequested_g = OSAL_createSignal("IOLM_mainLoopRequest");
@@ -198,11 +211,6 @@ void OSAL_FUNC_NORETURN IOLM_MAIN_loop()
 
     /* Create a task for the IO-Link main execution */
     IOLM_MAIN_exampleStart();
-    while (1)
-    {
-        IOLM_SMI_vRun();
-        OSAL_waitSignal(pMainLoopRequested_g, 2);
-    }
 }
 
 /*!
@@ -233,6 +241,8 @@ void IOLM_MAIN_startupTask()
             OSAL_error(__FILE__, __LINE__, OSAL_eERR_INVALIDSTATE, true, 1,
                        "Creating LED Task failed.\r\n");
         }
+        IOLM_MAIN_init();
+
         /* Create a task for the IO-Link main execution */
         IOLM_pMainTaskHandle_s = OSAL_SCHED_startTask((OSAL_SCHED_CBTask_t)IOLM_MAIN_loop
                                                      ,NULL

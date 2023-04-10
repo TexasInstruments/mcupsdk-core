@@ -42,6 +42,9 @@
 #define __HWAL_H__		1
 
 #include <osal.h>
+#if (defined OSAL_TIRTOS)
+#include <ti/drv/pruss/pruicss_ver.h>
+#endif
 
 #if ((defined ECATSLAVE_SO) && (ECATSLAVE_SO==1) || ((defined ETHERNETIP_SO) && (ETHERNETIP_SO==1)) || ((defined PROFINETIO_SO) && (PROFINETIO_SO==1))) // defined if ECATSLV is compiled as a DLL
 #if (defined HWALAPI_EXPORTS) || (defined ECSLVAPI_EXPORTS) // defined if we are building the ECATSLAVE DLL (instead of using it)
@@ -67,7 +70,7 @@
  *  \brief
  *  Each ICSSG has two TX PRU's
  */
-#define MAX_ICCSG_TX_PRU        2U
+#define MAX_ICSSG_TX_PRU        2U
 #define IDX_ICSSG_TX_PRU0       0U
 #define IDX_ICSSG_TX_PRU1       1U
 
@@ -144,8 +147,8 @@ typedef struct HWAL_PRU_SPhysical
     HWAL_MEM_SBarDescriptor_t   debug[2];
     HWAL_MEM_SBarDescriptor_t   iram[2];
 #if !defined(SOC_AM263X)
-    HWAL_MEM_SBarDescriptor_t   txPruIram[MAX_ICCSG_TX_PRU];
-    HWAL_MEM_SBarDescriptor_t   txPruCtlReg[MAX_ICCSG_TX_PRU];
+    HWAL_MEM_SBarDescriptor_t   txPruIram[MAX_ICSSG_TX_PRU];
+    HWAL_MEM_SBarDescriptor_t   txPruCtlReg[MAX_ICSSG_TX_PRU];
 #endif // !SOC_AM263X
 } HWAL_PRU_SPhysical_t;
 

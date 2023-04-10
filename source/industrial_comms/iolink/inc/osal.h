@@ -177,7 +177,7 @@ typedef enum OSAL_TASK_EPriority
     OSAL_TASK_ePRIO_31,                 /* Highest (RT) priority */
 
     /// @cond INTERNAL
-    OSAL_TASK_ePRIO_Force32Bit          = 0xffffffff  /* 32Bit */
+    OSAL_TASK_ePRIO_Force32Bit          = 0x7fffffff  /* 32Bit */
     /// @endcond
 } OSAL_TASK_EPriority_t;
 
@@ -302,7 +302,7 @@ typedef enum OSAL_ELinkState
     OSAL_eLINK_DOWN,
     OSAL_eLINK_UP,
     /// @cond INTERNAL
-    OSAL_eLINK_FORCE_32BIT = 0xffffffff
+    OSAL_eLINK_FORCE_32BIT = 0x7fffffff
     /// @endcond
 } OSAL_ELinkState_t;
 
@@ -314,7 +314,7 @@ typedef enum OSAL_EMemoryError
     OSAL_eMEM_MEMCPY,
     OSAL_eMEM_MEMCMP,
     /// @cond INTERNAL
-    OSAL_eLMEM_FORCE_32BIT = 0xffffffff
+    OSAL_eLMEM_FORCE_32BIT = 0x7fffffff
     /// @endcond
 } OSAL_EMemoryError_t;
 
@@ -420,7 +420,8 @@ typedef void (*OSAL_printfOut_t)(void*                          pContext_p
  *
  *  <!-- References: -->
  *
- *  \sa OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister OSAL_MEMORY_errorRegister
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister
+ *      OSAL_MEMORY_errorRegister
  *
  *  <!-- Group: -->
  *
@@ -464,7 +465,8 @@ typedef void (*OSAL_MEMORY_traceCallocCB_t)(
  *
  *  <!-- References: -->
  *
- *  \sa OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister OSAL_MEMORY_errorRegister
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister
+ *      OSAL_MEMORY_errorRegister
  *
  *  <!-- Group: -->
  *
@@ -507,7 +509,8 @@ typedef void (*OSAL_MEMORY_traceFreeCB_t)(
  *
  *  <!-- References: -->
  *
- *  \sa OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister OSAL_MEMORY_errorRegister
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister
+ *      OSAL_MEMORY_errorRegister
  *
  *  <!-- Group: -->
  *
@@ -521,6 +524,57 @@ typedef void (*OSAL_MEMORY_errorCB_t)(
                                 ,void*                          pPtr2_p
                                 ,uint32_t                       data_p
                                 ,size_t                         size_p);
+
+/*!
+ *  <!-- Description: -->
+ *
+ *  \brief
+ *  Trace thread handling
+ *
+ *  <!-- Parameters and return values: -->
+ *
+ *  \param[in]  pContext_p  Call context.
+ *  \param[in]  pTask_p     Thread handle
+ *  \param[in]  pThreadOp_p Thread state operation
+ *  \param[in]  prio_p      Thread priority
+ *  \param[in]  pName_p     Thread name
+ *  \param[in]  stackSize_p size of stack
+ *  \param[in]  stackPtr_p  stack base address
+ *  \param[in]  flags_p     thread flags
+ *
+ *  \note can be provided by the application layer, and registered with \ref OSAL_SCHED_traceThreadRegister
+ *
+ *  <!-- Example: -->
+ *
+ *  \par Example
+ *  \code{.c}
+ *  #include <osal.h>
+ *
+ *  // required variables
+ *
+ *  // the call
+ *  OSAL_SCHED_traceThread(NULL, "START", 0, "ImportantThread");
+ *  \endcode
+ *
+ *  <!-- References: -->
+ *
+ *  \sa OSAL_SCHED_traceThreadRegister OSAL_MEMORY_traceCallocRegister OSAL_MEMORY_traceFreeRegister OSAL_MEMORY_errorRegister
+ *
+ *  <!-- Group: -->
+ *
+ *  \ingroup OSALAPI_SCHEDULER
+ *
+ * */
+typedef void (*OSAL_SCHED_traceThreadCB_t)(
+                                 void*                          pContext_p
+                                ,void*                          pTasp_p
+                                ,const char*                    pThreadOp_p
+                                ,uint32_t                       prio_p
+                                ,const char*                    pName_p
+                                ,uint32_t                       stackSize_p
+                                ,uint32_t                       stackPtr_p
+                                ,uint32_t                       flags_p);
+
 
 #if (defined __cplusplus)
 extern "C" {
@@ -593,6 +647,9 @@ extern OSAL_API void                OSAL_SCHED_killTask         (void*          
 extern OSAL_API void                OSAL_SCHED_exitTask         (void*                          pTask_p);
 extern OSAL_API volatile void*      OSAL_SCHED_getOwnTcb        (void);
 extern OSAL_API bool                OSAL_SCHED_isRunning        (void);
+extern OSAL_API void                OSAL_SCHED_traceThreadRegister
+                                                                (OSAL_SCHED_traceThreadCB_t     cbFunc_p
+                                                                ,void*                          pCbFuncContext_p);
 
 extern OSAL_API volatile OSAL_PJumpBuf_t*
                                     OSAL_getExceptPointFromTcb  (volatile void*                 pTcb_p);

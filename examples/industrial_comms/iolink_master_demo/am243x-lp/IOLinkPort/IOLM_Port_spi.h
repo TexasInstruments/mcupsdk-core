@@ -123,7 +123,7 @@ int32_t IOLM_SPI_mcspiTransfer(uint32_t mcspiInstance_p, uint32_t mcspiChannel_p
  * \brief  Transfer and Receive data to a specific MCSPI instance/channel
  *
  * WARNING: DEPRECATED!
- * This function is only used in obsolete TIRtos and Linux ports.
+ * This function is only used in Linux ports.
  * If this is touched for any reason, please use IOLM_SPI_mcspiTransfer instead!
  *
  * \param[in]   spiInstance_p       MCSPI instance as defined in SysConfig

@@ -117,6 +117,9 @@ typedef IOL_ENUM_DECL IOLM_ESettingsId
     IOLM_eSettingsId_ReadChipTemperature, // read the chip temperature (BAT Monitoring sensor) from MM
     IOLM_eSettingsId_ChanUplinkRssi, // Uplink Rssi of each channel
     IOLM_eSettingsId_ResetChanUplinkRssi, // Reset Cmd for Rssi of each channel
+    IOLM_eSettingsId_SetFreqSpacing, // sets the frequency spacing (for a single track only)
+    IOLM_eSettingsId_GetFreqSpacing, // reads the frequency spacing of the track
+    IOLM_eSettingsId_AHTTest, // For testing of Adaptive Hopping Table (AHT)
 }IOLM_ESettingsId;
 
 typedef IOL_ENUM_DECL IOLM_EHWParamIdx

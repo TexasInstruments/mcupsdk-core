@@ -39,12 +39,14 @@
 */
 
 #include <stdint.h>
+#include "IOLM_Port_version.h"
 #include "IOLM_Port_smiExample.h"
 #include "IOLinkPort/IOLM_Port_SMI.h"
 
 IOLM_SMI_SCallbacks IOLM_EXMPL_SSmiCallbacks_g =
 {
     /* Generic channel for SMI over UART */
+    .cbChipInfo                 =       IOLM_EXMPL_cbChipInfo,
     .cbGenericCnf               =       IOLM_SMI_cbGenericCnf,
     /* Confirmation for port status request */
     .cbPortStatusCnf            =       IOLM_EXMPL_cbPortStatusCnf,
@@ -182,14 +184,6 @@ void OSAL_FUNC_NORETURN IOLM_EXMPL_mainLoop(void)
     IOLM_SMI_vMasterIdentificationReq(IOLM_SMI_CLIENT_APP);
     OSAL_SCHED_sleep(5); /*Wait for answer*/
     IOLM_EXMPL_printf("\n");
-
-#if (IOLM_EXMPL_ENABLE_AUTO_START == 1) || (IOLM_EXMPL_ENABLE_STATE_MACHINE == 1)
-    for (portNumber = IOLM_EXMPL_SMI_PORTS_NUMBER_START; portNumber <= IOLM_PORT_COUNT; portNumber++)
-    {
-        IOLM_EXMPL_setPortToPortMode(portNumber, IOLM_SMI_ePortMode_IOL_AUTOSTART);
-    }
-
-#endif
     while (1)
     {
         /* get port status periodically for setting the LEDs */
@@ -270,10 +264,36 @@ void IOLM_EXMPL_stateMachine(void)
         {
             case IOLM_eExampleState_Init:                                                                         /*  wait for port status response */
                 IOLM_EXMPL_printf("IO-Link port %u: Port is waiting for port status request.\n", portNumber);
-                port[portNumber].exampleState = IOLM_eExampleState_PortStatusWait;
-            case IOLM_eExampleState_PortStatusWait:                                                                         /*  wait for port status response */
-                IOLM_EXMPL_printf("IO-Link port %u: Port is waiting for port status request.\n", portNumber);
+                port[portNumber].exampleState = IOLM_eExampleState_Config;
                 break;
+            case IOLM_eExampleState_Config:
+            {
+                IOLM_SMI_SPortConfigList portConfig;
+                memset(&portConfig, 0, sizeof(portConfig));
+                portConfig.u8PortMode = IOLM_SMI_ePortMode_IOL_AUTOSTART;
+                portConfig.u16ArgBlockID = IOLM_SMI_ENDIAN_16(IOLM_SMI_eArgBlockID_PortConfigList);
+                IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Config\" mode\n", portNumber);
+                IOLM_SMI_vPortConfigurationReq(IOLM_SMI_CLIENT_APP, portNumber, sizeof(portConfig), (INT8U*)&portConfig);
+                port[portNumber].exampleState = IOLM_eExampleState_ConfigWait;
+            }
+                break;
+            case IOLM_eExampleState_ConfigWait: /* wait for read response */
+            {
+                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"ConfigWait\" mode\n", portNumber);
+            }
+                 break;
+             case IOLM_eExampleState_PortStatusRequest: /* start check port status */
+             {
+             IOLM_SMI_vPortStatusReq(IOLM_SMI_CLIENT_APP, portNumber);
+             IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Port request\" mode\n", portNumber);
+             port[portNumber].exampleState = IOLM_eExampleState_PortStatusWait;
+             }
+                break;
+             case IOLM_eExampleState_PortStatusWait: /*  wait for port status response */
+             {
+                IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"PortStatusWait\" mode\n", portNumber);
+             }
+                 break;
             case IOLM_eExampleState_ReadVendor:                                                                             /* start reading vendor name */
             {
                 /* Allocate ArgBlock Memory */
@@ -338,10 +358,13 @@ void IOLM_EXMPL_stateMachine(void)
             case IOLM_eExampleState_ReadSerialnumberWait:                                                                   /* wait for read response */
                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"ReadSerialnumberWait\" mode\n", portNumber);
                 break;
-/*          SPECIFIC DEVICE PROCESS DATA WRITE CALL:  
+            /*
+            SPECIFIC DEVICE PROCESS DATA WRITE CALL:
             For different devices there a different process data write commands. For example: one will turn on a LED, an other will change 
             a specific temperature measurement mode and so on, so this following comments are just for inspiration, 
             you need to check your device manual first before write process data.
+            */
+            /*
             case IOLM_eExampleState_WriteProcessDataValue:
             {
                 //Allocate ArgBlock Memory 
@@ -352,7 +375,7 @@ void IOLM_EXMPL_stateMachine(void)
                 pReq->u16ArgBlockID = IOLM_SMI_ENDIAN_16(IOLM_SMI_eArgBlockID_PDOut);
                 pReq->u8OE = 0x01;
                 pReq->u8OutputDataLength = 0x01;                                                                            
-                pReq->au8CurrenData[0]= 0x02;                  
+                pReq->au8Data[0]= 0x02;
 
                 //Send PD Request
                 IOLM_SMI_vPDOutReq(IOLM_SMI_CLIENT_APP, portNumber, IOLM_SMI_ARGBLOCK_ONREQ_LEN(2), (INT8U*)aMem);
@@ -367,21 +390,26 @@ void IOLM_EXMPL_stateMachine(void)
                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Wait Write Process Data\" mode\n", portNumber);
             }
                 break;
-*/
+            */
             case IOLM_eExampleState_PortStatusRequestPD:                                                                      /* start check port status */
+                IOLM_SMI_vPortStatusReq(IOLM_SMI_CLIENT_APP, portNumber);
                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Process Data Exchange \" mode\n", portNumber);
                 port[portNumber].exampleState = IOLM_eExampleState_PortStatusWaitPD;
                 break;
             case IOLM_eExampleState_PortStatusWaitPD:                                                                         /*  wait for port status response */
                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Process Data Exchange wait \" mode\n", portNumber);
                 break;
-            case IOLM_eExampleState_ReadProcessDataValue:                                                                   /* start reading process data */
+            case IOLM_eExampleState_ReadProcessDataValue: /* start reading process data */
+            {
                 IOLM_SMI_vPDInReq(IOLM_SMI_CLIENT_APP, portNumber);
                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Port Read Process Data\" mode\n", portNumber);
                 port[portNumber].exampleState = IOLM_eExampleState_ReadProcessDataValueWait;
+            }
                 break;
             case IOLM_eExampleState_ReadProcessDataValueWait:
+            {
                 IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"Wait Read Process Data\" mode\n", portNumber);
+            }
                 break;
             default:
                 break;
@@ -479,26 +507,29 @@ void IOLM_EXMPL_DeviceEventInd(uint8_t port_p, uint16_t argBlockLength_p, uint8_
 }
 
 /*!
- * \brief
- * Port configuration confirmation callback.
- *
- * This function is called if a device configuration request has finished.
- *
- * \param[in]  clientID_p              Client ID.
- * \param[in]  port_p                  Port ID.
- * \param[in]  error_p                 Error message as #IOL_EErrorType.
- *
- * \return void
- *
- */
+* \brief
+* Port configuration confirmation callback.
+*
+* This function is called if a device configuration request has finished.
+*
+* \param[in] clientID_p Client ID.
+* \param[in] port_p Port ID.
+* \param[in] error_p Error message as #IOL_EErrorType.
+*
+* \return void
+*
+*/
 void IOLM_EXMPL_cbPortConfigurationCnf(uint8_t clientID_p, uint8_t port_p, uint16_t error_p)
 {
-    (void)clientID_p;
-
-    if (error_p != IOL_eErrorType_NONE)
-    {
-        IOLM_EXMPL_PortErrorHandler(port_p, error_p);
-    }
+     if (error_p != IOL_eErrorType_NONE)
+     {
+         IOLM_EXMPL_printf("IO-Link port %u: Port is now in \"IOL_eErrorType_NONE\" mode\n", port_p);
+         port[port_p].exampleState = IOLM_EXMPL_PortErrorHandler(port_p, error_p);
+     }
+     else
+     {
+         port[port_p].exampleState = IOLM_eExampleState_ReadVendor;
+     }
 }
 
 /*!
@@ -531,7 +562,7 @@ void IOLM_EXMPL_cbPortStatusCnf(uint8_t clientID_p, uint8_t port_p, uint16_t err
     {
         IOLM_EXMPL_PortErrorHandler(port_p, error_p);
     }
-    else if  (port[port_p].currentStackPortStatus == IOLM_SMI_ePortStatus_OPERATE)
+    else if (port[port_p].currentStackPortStatus == IOLM_SMI_ePortStatus_OPERATE)
     {
         if (port[port_p].exampleState == IOLM_eExampleState_PortStatusWait)
         {
@@ -542,62 +573,6 @@ void IOLM_EXMPL_cbPortStatusCnf(uint8_t clientID_p, uint8_t port_p, uint16_t err
         {
             port[port_p].exampleState = IOLM_eExampleState_ReadProcessDataValue;
         }
-    }
-    else
-    {
-        /*
-        *     IOLM_SMI_ePortStatus_NO_DEVICE      = 0,
-              IOLM_SMI_ePortStatus_DEACTIVATED    = 1,
-              IOLM_SMI_ePortStatus_PORT_DIAG      = 2,
-              IOLM_SMI_ePortStatus_PREOPERATE     = 3,
-              IOLM_SMI_ePortStatus_OPERATE        = 4,
-              IOLM_SMI_ePortStatus_DI_CQ          = 5,
-              IOLM_SMI_ePortStatus_DO_CQ          = 6,
-              IOLM_SMI_ePortStatus_OSSDE          = 7,
-              IOLM_SMI_ePortStatus_SPDU_EXCHANGE  = 8,
-              IOLM_SMI_ePortStatus_PAIRING_FAULT  = 10,
-              IOLM_SMI_ePortStatus_PORT_POWER_OFF = 254,
-              IOLM_SMI_ePortStatus_NOT_AVAILABLE  = 255
-        */
-        switch (port[port_p].currentStackPortStatus)
-        {
-        case IOLM_SMI_ePortStatus_NO_DEVICE:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_NO_DEVICE:-------------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_DEACTIVATED:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_DEACTIVATED:-----------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_PORT_DIAG:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_PORT_DIAG:-------------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_PREOPERATE:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_PREOPERATE:------------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_DI_CQ:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_DI_CQ:-----------------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_DO_CQ:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_DO_CQ:-----------------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_OSSDE:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_OSSDE:-----------------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_SPDU_EXCHANGE:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_SPDU_EXCHANGE:---------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_PAIRING_FAULT:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_PAIRING_FAULT:---------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_PORT_POWER_OFF:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_PORT_POWER_OFF:--------------\n");
-            break;
-        case IOLM_SMI_ePortStatus_NOT_AVAILABLE:
-            IOLM_EXMPL_printf("---------------IOLM_SMI_ePortStatus_NOT_AVAILABLE:---------------\n");
-            break;
-        default:
-            break;
-        }
-        port[port_p].exampleState = IOLM_eExampleState_Init;
     }
 #endif
 }
@@ -752,6 +727,39 @@ void IOLM_EXMPL_cbPDInCnf(uint8_t clientID_p, uint8_t port_p, uint16_t error_p, 
             }
         }
         port[port_p].exampleState = IOLM_eExampleState_PortStatusRequestPD;
+    }
+}
+
+/*!
+ * \brief
+ * Get the versioning from IOL8M-Sitara-Example-Project.
+ *
+ * This function is used to get information about the version of the master.
+ *
+ * \param[in]  u8Instance_p              Client ID.
+ * \param[in]  pu8Data_p                 Data(unused).
+ * \param[in]  u16Length_p               Data length(unused).
+ *
+ * \return     void
+ */
+void IOLM_EXMPL_cbChipInfo(INT8U u8Instance_p, INT8U *pu8Data_p, INT16U u16Length_p)
+{
+    if (u8Instance_p == 0x00)
+    {
+        IOLM_SMI_SStackInformation suInfo;
+        suInfo.u16ArgBlockID = IOLM_SMI_ENDIAN_16(IOLM_SMI_eArgBlockID_StackInformation);
+        suInfo.u8Version0 = IOL8M_SITARA_VERSION_VERSION_MAJOR;
+        suInfo.u8Version1 = IOL8M_SITARA_VERSION_VERSION_MINOR;
+        suInfo.u8Version2 = IOL8M_SITARA_VERSION_VERSION_PATCH;
+        suInfo.u8Version3 = 0;
+        suInfo.u16TagVersion = IOL8M_SITARA_VERSION_COMMIT_U16;
+        suInfo.u16HWRev = 0;
+        suInfo.u32Reserved = 0;
+        IOLM_SMI_vExtRsp(IOL_eErrorType_NONE, (INT8U *)&suInfo, sizeof(suInfo));
+    }
+    else
+    {
+        IOLM_SMI_vExtRsp(IOL_eErrorType_IDX_NOTAVAIL, NULL, 0);
     }
 }
 

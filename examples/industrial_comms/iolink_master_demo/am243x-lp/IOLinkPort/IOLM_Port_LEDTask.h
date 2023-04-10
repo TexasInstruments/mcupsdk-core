@@ -81,7 +81,7 @@ typedef struct IOLM_LED_sLedCfg
     /** \brief close LED communication interface */
     void (*cbClose)();
     /** \brief set LEDs on add on board via 16 Bit bitmask.
-     * With Bit0=port0-red, Bit1=port0-green, CID200238_t2=port1-red, ... */
+     * With Bit0=port0-red, Bit1=port0-green,... */
     int32_t (*cbSetLEDs)(uint16_t bitmask_p);
     /** \brief set individual LEDs on the base board */
     int32_t (*cbBaseBoardLED)(uint32_t portNum_p, bool targetLedState_p);

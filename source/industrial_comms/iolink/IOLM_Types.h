@@ -130,32 +130,26 @@ extern "C" {
 #undef IOLM_SMI_ENABLED
 #define IOLM_SMI_ENABLED  1
 
-
-#ifndef IOLM_CRITICAL_DECL
-#ifndef UNIT_TESTS
+#ifdef UNIT_TESTS
 #define IOLM_CRITICAL_DECL(level)
-#else
-#define IOLM_CRITICAL_DECL(level)
-#endif
-#endif
-
-#ifndef IOLM_CRITICAL_END
-#ifndef UNIT_TESTS
-#define IOLM_CRITICAL_END(level) IOLM_Port_vCriticalEnd()
-#else
+#define IOLM_CRITICAL_START(level)
 #define IOLM_CRITICAL_END(level)
 #endif
+
+
+#ifndef IOLM_CRITICAL_DECL
+#define IOLM_CRITICAL_DECL(level)       INT32U (level)
 #endif
 
 #ifndef IOLM_CRITICAL_START
-#ifndef UNIT_TESTS
-#define IOLM_CRITICAL_START(level) IOLM_Port_vCriticalStart()
-#else
-#define IOLM_CRITICAL_START(level)
-#endif
+#define IOLM_CRITICAL_START(level)      (level) = IOLM_Port_vCriticalStart()
 #endif
 
+#ifndef IOLM_CRITICAL_END
+#define IOLM_CRITICAL_END(level)        IOLM_Port_vCriticalEnd((level))
+#endif
 
+                                                
 
 
 /**

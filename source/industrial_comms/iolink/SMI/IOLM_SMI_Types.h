@@ -233,7 +233,6 @@ typedef IOL_ENUM_DECL IOLM_SMI_EServiceID
     IOLM_SMI_V113_eServiceID_WPortPairing =                 0x24, // new SMI_WPortPairing service in V1.1.3
     IOLM_SMI_V113_eServiceID_WTrackStatus =                 0x25, // new SMI_WTrackStatus service in V1.1.3
     IOLM_SMI_V113_eServiceID_WQualityStatus =               0x26, // new SMI_WQualityStatus service in V1.1.3
-    IOLM_SMI_V113_eServiceID_PortStatus =                   0x27, // new SMI_WPortStatus service in V1.1.3
     
     // KUNBUS specific services
     IOLM_SMI_eServiceID_GetChipInfo =                       0x80,
@@ -331,7 +330,7 @@ typedef IOL_ENUM_DECL IOLM_SMI_EArgBlockID
     IOLM_SMI_eArgBlockID_PortConfigList =               0x8000,
     IOLM_SMI_eArgBlockID_FSPortConfigList =             0x8100,
     IOLM_SMI_eArgBlockID_WTrackConfigList =             0x8200,     //outdated: left for compatibility
-    IOLM_SMI_eArgBlockID_WPortConfigList =              0x8201,
+    IOLM_SMI_eArgBlockID_WPortConfigList =              0x8201,     //outdated: left for compatibility
     IOLM_SMI_eArgBlockID_WScan =                        0x8202,     //outdated: left for compatibility
 
     // Status Information
@@ -436,6 +435,25 @@ typedef IOL_ENUM_DECL IOLM_SMI_EPortMode
     IOLM_SMI_ePortMode_ROAMING_AUTO =                   54,
     IOLM_SMI_ePortMode_ROAMING =                        55,
 }IOLM_SMI_EPortMode;
+
+/**
+\brief SMI port mode (only used for compatibility to old V1.1).
+*/
+typedef IOL_ENUM_DECL IOLM_SMI_EPortModeOld
+{
+    IOLM_SMI_ePortModeOld_DEACTIVATED =                 0,
+    IOLM_SMI_ePortModeOld_IOL_MANUAL =                  1,
+    IOLM_SMI_ePortModeOld_IOL_AUTOSTART =               2,
+    IOLM_SMI_ePortModeOld_DI_CQ =                       3,
+    IOLM_SMI_ePortModeOld_DO_CQ =                       4,
+
+    IOLM_SMI_ePortModeOld_SAFETYCOM =                   49,
+    IOLM_SMI_ePortModeOld_MIXEDSAFETYCOM =              50,
+    IOLM_SMI_ePortModeOld_OSSDE =                       51,
+
+    IOLM_SMI_ePortModeOld_CYCLIC =                      52,
+    IOLM_SMI_ePortModeOld_ROAMING =                     53,
+}IOLM_SMI_EPortModeOld;
 
 /**
 \brief SMI pairing commands.
@@ -643,9 +661,9 @@ typedef struct IOLM_SMI_SWMasterConfigListOld
 #endif
 
 /**
-\brief This structure is used to store wireless port configuration.
+\brief This structure is used for the wireless port configuration.
 
-The ArgBlockID(#IOLM_SMI_EArgBlockID) for this struct is IOLM_SMI_eArgBlockID_WPortConfigList = 0x8002.
+The ArgBlockID(#IOLM_SMI_EArgBlockID) for this struct is IOLM_SMI_V113_eArgBlockID_WPortConfigList = 0x8200.
 */
 typedef struct IOLM_SMI_SWPortConfigList
 {
@@ -671,7 +689,13 @@ typedef struct IOLM_SMI_SWPortConfigList
     INT8U au8UniqueID[9];
 }IOLM_SMI_SWPortConfigList;
 
-typedef struct IOLM_SMI_SWPortConfigListCompability
+#if IOLM_SMI_SUPPORT_OLD_SERVICES == 1
+/**
+\brief This structure is obsolete.  It used for the wireless port configuration before V1.1.3 release.
+
+The ArgBlockID(#IOLM_SMI_EArgBlockID) for this struct is IOLM_SMI_eArgBlockID_WPortConfigList = 0x8201.
+*/
+typedef struct IOLM_SMI_SWPortConfigListOld
 {
     INT16U u16ArgBlockID; /**< \brief Big endian. */
     INT8U u8PortMode;
@@ -690,7 +714,9 @@ typedef struct IOLM_SMI_SWPortConfigListCompability
     INT8U u8LowPowerDevice; /**< \brief 0 = Normal Device / 1 = Low Power. */
     INT8U u8MaxPDSegLength;
     INT8U au8UniqueID[9];
-}IOLM_SMI_SWPortConfigListCompability;
+}IOLM_SMI_SWPortConfigListOld;
+#endif
+
 /**
 \brief This structure is used to store FS port configuration.
 

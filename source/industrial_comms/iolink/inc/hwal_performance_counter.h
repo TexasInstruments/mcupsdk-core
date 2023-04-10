@@ -7,11 +7,8 @@
 * \author
 * KUNBUS GmbH
 *
-* \date
-* 2021-05-20
-*
 * \copyright
-* Copyright (c) 2021, KUNBUS GmbH<br /><br />
+* Copyright (c) 2023, KUNBUS GmbH<br /><br />
 * All rights reserved.<br />
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are met:<br />
@@ -68,14 +65,6 @@ typedef uint32_t (*HWAL_PRFCNT_registerCallback_t)   (void*                     
 
 typedef struct HWAL_PRFCNT_SHandle
 {
-    struct HWAL_PRFCNT_S
-    {
-        HWAL_PRFCNT_init_t              init;
-        HWAL_PRFCNT_getMpuCycles_t      getMpuCycles;
-        HWAL_PRFCNT_getTimeFromCycles_t getTimeFromCycles;
-        HWAL_PRFCNT_getDeltaTime_t      getDeltaTime;
-        HWAL_PRFCNT_registerCallback_t  registerCallback;
-    }                                   counter;
     uint32_t                            mcuFreqInHz;
     uint32_t                            divider;
 }HWAL_PRFCNT_SHandle_t;
