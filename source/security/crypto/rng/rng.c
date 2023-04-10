@@ -89,15 +89,15 @@ RNG_Handle RNG_open(uint32_t index)
             /* Handle is already opened */
             status = RNG_close((RNG_Handle) config);
             status = RNG_RETURN_FAILURE;
+            attrs->faultStatus = status;
         }
         else
         {
             attrs->isOpen = TRUE;
             handle = (RNG_Handle) config;
+            attrs->faultStatus = status;
         }
     }
-
-    attrs->faultStatus = status;
 
     return (handle);
 }

@@ -191,9 +191,9 @@ DTHE_SHA_Return_t DTHE_SHA_compute(DTHE_Handle handle, DTHE_SHA_Params* ptrShaPa
     DTHE_Attrs              *attrs  = NULL;
     CSL_EIP57T_SHARegs      *ptrShaRegs;
 
-    if((NULL != handle) && (NULL != ptrShaParams))
+    if((NULL == handle) || (NULL == ptrShaParams))
     {
-        status = DTHE_SHA_RETURN_SUCCESS;
+        status = DTHE_SHA_RETURN_FAILURE;
     }
 
     if(status == DTHE_SHA_RETURN_SUCCESS)
@@ -208,7 +208,7 @@ DTHE_SHA_Return_t DTHE_SHA_compute(DTHE_Handle handle, DTHE_SHA_Params* ptrShaPa
     }
     /* Sanity Checking: Any data buffer except the last block should be aligned as per
      * the SHA Size. For SHA256 this is 64byte while for SHA512 this should be 128byte */
-    if (isLastBlock == FALSE)
+    if((status == DTHE_SHA_RETURN_SUCCESS) && (isLastBlock == FALSE))
     {
         if (ptrShaParams->algoType == DTHE_SHA_ALGO_SHA256)
         {

@@ -91,6 +91,7 @@ DTHE_Handle DTHE_open(uint32_t index)
         {
             /* Handle is already opened */
             status = DTHE_RETURN_FAILURE;
+            attrs->faultStatus = status;
         }
     }
 
@@ -98,6 +99,7 @@ DTHE_Handle DTHE_open(uint32_t index)
     {
         attrs->isOpen = TRUE;
         handle = (DTHE_Handle) config;
+        attrs->faultStatus = status;
     }
     else
     {
@@ -107,7 +109,6 @@ DTHE_Handle DTHE_open(uint32_t index)
          */
         status = DTHE_close(handle);
     }
-    attrs->faultStatus = status;
     return (handle);
 }
 
