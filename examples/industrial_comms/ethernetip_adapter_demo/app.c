@@ -1,5 +1,5 @@
 /*!
- *  \example appProduct.c
+ *  \example app.c
  *
  *  \brief
  *  EtherNet/IP&trade; Adapter Example Application.
