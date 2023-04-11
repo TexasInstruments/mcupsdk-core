@@ -80,6 +80,28 @@ For information about supported features and key performance parameters, see \ht
 
 For more details regarding the pre-integrated stack and example applications, see \ref EXAMPLES_INDUSTRIAL_COMMS_IOLINK_MASTER_DEMO.
 
+## EtherCAT-IOLink Gateway
+
+EtherCAT-IOLink gateway solution which combines EtherCAT industrial Ethernet fieldbus technology and IO-Link intelligent communication technology.
+
+### Data Sheet
+
+\cond SOC_AM64X
+
+For information about supported features and key performance parameters, see \htmllink{../industrial_protocol_docs/am64x/ethercat_iolink_gateway/ethercat_datasheet.html, EtherCAT-IOLink Gateway Data Sheet}
+
+\endcond
+
+\cond SOC_AM243X
+
+For information about supported features and key performance parameters, see \htmllink{../industrial_protocol_docs/am243x/ethercat_iolink_gateway/ethercat_datasheet.html, EtherCAT-IOLink Gateway Data Sheet}
+
+\endcond
+
+### Examples
+
+For more details regarding the pre-integrated stack and example applications, see \ref EXAMPLES_INDUSTRIAL_COMMS_ETHERCAT_IOLINK_GATEWAY_DEMO.
+
 ## Profinet Device {#INDUSTRIAL_COMMS_TI_STACK_PROFINET}
 
 PROFINET is a real-time Ethernet standard for the high-speed, deterministic communications required for a wide range of industrial applications including factory automation, process automation and building automation. Originally developed under the leadership of Siemens GmbH as a network extension to the popular PROFIBUS fieldbus technology, PROFINET is now supported by PROFIBUS & PROFINET International. In 2003, PROFINET was integrated into the IEC 61158 and IEC 61784 standards.
