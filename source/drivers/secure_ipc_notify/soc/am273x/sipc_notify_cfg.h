@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -132,7 +132,7 @@ typedef enum SIPC_SecCoreId_
 static uint32_t SIPC_readSelfCoreID(void)
 {
     uint32_t coreId ;
-    CSL_ArmR5CPUInfo cpuId;
+    CSL_ArmR5CPUInfo cpuId = {0,0};
     CSL_armR5GetCpuID(&cpuId);
     /* both cpuId and greId fields can be either 0 or 1
      * ex for R5FSS1-0 core grpId = 1 and cpu id = 0 */

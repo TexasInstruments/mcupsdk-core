@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -255,14 +255,14 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
 {
     int32_t  status   = SystemP_SUCCESS;
     Hsmclient_ipcLoadHSM         loadHSMImage;
-    Hsmclient_ipcLoadHSMResult   loadHSMResult;
+    Hsmclient_ipcLoadHSMResult   loadHSMResult = {{0}};
     uint16_t            orgChecksum;
     HwiP_Params hwiParams;
     HwiP_Object hwiObjReadReq;
-    HsmClient_t NotifyClient ; 
+    HsmClient_t NotifyClient ;
     uint8_t *ptrMessage = (uint8_t *) CSL_HSM_MBOX_SRAM_U_BASE;
-    
-    /* register a hsm client to detect boonotify message from HSM */ 
+
+    /* register a hsm client to detect boonotify message from HSM */
     HsmClient_register(&NotifyClient,HSM_BOOT_NOTIFY_CLIENT_ID);
 
     if (pHSMRt_firmware != NULL)

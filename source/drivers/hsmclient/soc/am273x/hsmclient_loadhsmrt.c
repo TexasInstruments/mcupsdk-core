@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -255,7 +255,7 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
 {
     int32_t  status   = SystemP_SUCCESS;
     Hsmclient_ipcLoadHSM         loadHSMImage;
-    Hsmclient_ipcLoadHSMResult   loadHSMResult;
+    Hsmclient_ipcLoadHSMResult   loadHSMResult = {{0}};
     uint16_t            orgChecksum;
     HwiP_Params hwiParams;
     HwiP_Object hwiObjReadReq;

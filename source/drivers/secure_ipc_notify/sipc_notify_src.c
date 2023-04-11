@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -123,7 +123,7 @@ static inline void SIPC_getWriteMailbox(uint32_t remoteSecCoreId, uint32_t *mail
 {
     SIPC_MailboxConfig *pMailboxConfig;
     /* If it is HSM */
-    if (gSIPC_ctrl.selfCoreId == CORE_ID_HSM0_0)
+    if (gSIPC_ctrl.selfCoreId == CORE_ID_HSM0_0 && remoteSecCoreId < 2)
     {
         /* Read the necessary fields */
         pMailboxConfig = &gSIPC_HsmMboxConfig[gSIPC_ctrl.secHostCoreId[remoteSecCoreId]];
@@ -238,9 +238,17 @@ void SIPC_isr(void *args)
 
             do
             {
-                /* If both rdid and wrid == 0 then status will be failure which indicates thats there
-                  is nothing in the queue. */
-                status = SIPC_mailboxRead(swQ, readMsgData);
+                if(swQ == NULL)
+                {
+                    status = SystemP_FAILURE;
+                }
+                else
+                {
+                    /* If both rdid and wrid == 0 then status will be failure which indicates thats there
+                       is nothing in the queue. */
+                    status = SIPC_mailboxRead(swQ, readMsgData);
+                }
+
                 if(status == SystemP_SUCCESS)
                 {
                     /* Get the client IDs */
@@ -349,7 +357,7 @@ void SIPC_Params_init(SIPC_Params *params)
 
     params->numCores = 0;
     /* for non registered cores.*/
-    for(i = 0; i < CORE_ID_MAX; i++)
+    for(i = 0; i < MAX_SEC_CORES_WITH_HSM; i++)
     {
         params->coreIdList[i] = CORE_ID_MAX;
     }
@@ -372,7 +380,7 @@ int32_t SIPC_init(SIPC_Params *params)
     /* check if current core who is doing sipc init is a secure host or not if not.
      * if not then return init failure */
 
-    for( secMaster = 0 ; secMaster < MAX_SEC_CORES_WITH_HSM ; secMaster ++)
+    for( secMaster = 0 ; secMaster < MAX_SEC_CORES_WITH_HSM - 1 ; secMaster ++)
     {
         if((selfCoreId == params->secHostCoreId[secMaster]) || (selfCoreId == CORE_ID_HSM0_0))
         {
@@ -518,7 +526,7 @@ uint32_t SIPC_isCoreEnabled(uint32_t coreId)
 {
     uint32_t isEnabled = 0;
 
-    if(coreId < CORE_ID_MAX)
+    if(coreId < MAX_SEC_CORES_WITH_HSM)
     {
         isEnabled = gSIPC_ctrl.isCoreEnabled[coreId];
     }
