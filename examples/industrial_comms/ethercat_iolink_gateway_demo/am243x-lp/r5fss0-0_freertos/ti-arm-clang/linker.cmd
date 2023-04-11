@@ -1,0 +1,122 @@
+/*
+ * Copyright (c) 2020, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+--stack_size=0x4000
+--heap_size=0x28000
+
+-e_vectors
+
+__IRQ_STACK_SIZE = 0x400;
+__FIQ_STACK_SIZE = 0x400;
+__SVC_STACK_SIZE = 0x400;
+__ABORT_STACK_SIZE = 0x400;
+__UNDEFINED_STACK_SIZE = 0x400;
+
+SECTIONS
+{
+    .vectors:{} palign(8) > R5F_VECS
+    .init_array: palign(8) > MSRAM
+    .fini_array: palign(8) > MSRAM
+
+    GROUP {
+        .text.hwi: palign(8)
+        .text.cache: palign(8)
+        .text.mpu: palign(8)
+        .text.boot: palign(8)
+        .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
+    } > MSRAM
+
+    GROUP {
+        .text:   {} palign(8)
+        .rodata: {} palign(8)
+    } > MSRAM
+
+     GROUP {
+        .data:   {} palign(8)
+    } > MSRAM
+
+    GROUP {
+        .bss:    {} palign(8) FILL(0x00000000)
+        RUN_START(__BSS_START)
+        RUN_END(__BSS_END)
+         /* main stack */
+        .stack:  {} palign(8) FILL(0x00000000)
+        /*stack for all OS threads */
+        .threadstack:  {} palign(8) FILL(0x00000000)
+    } > MSRAM
+
+    GROUP {
+        .sysmem: {} palign(8)
+    } > MSRAM
+
+    GROUP {
+        .irqstack: {. = . + __IRQ_STACK_SIZE;} align(8)
+        RUN_START(__IRQ_STACK_START)
+        RUN_END(__IRQ_STACK_END)
+        .fiqstack: {. = . + __FIQ_STACK_SIZE;} align(8)
+        RUN_START(__FIQ_STACK_START)
+        RUN_END(__FIQ_STACK_END)
+        .svcstack: {. = . + __SVC_STACK_SIZE;} align(8)
+        RUN_START(__SVC_STACK_START)
+        RUN_END(__SVC_STACK_END)
+        .abortstack: {. = . + __ABORT_STACK_SIZE;} align(8)
+        RUN_START(__ABORT_STACK_START)
+        RUN_END(__ABORT_STACK_END)
+        .undefinedstack: {. = . + __UNDEFINED_STACK_SIZE;} align(8)
+        RUN_START(__UNDEFINED_STACK_START)
+        RUN_END(__UNDEFINED_STACK_END)
+    } > MSRAM
+
+}
+
+/*
+NOTE: Below memory is reserved for DMSC usage
+ - During Boot till security handoff is complete
+   0x701E0000 - 0x701FFFFF (128KB)
+ - After "Security Handoff" is complete (i.e at run time)
+   0x701FC000 - 0x701FFFFF (16KB)
+
+ Security handoff is complete when this message is sent to the DMSC,
+   TISCI_MSG_SEC_HANDOVER
+
+ This should be sent once all cores are loaded and all application
+ specific firewall calls are setup.
+*/
+
+MEMORY
+{
+    R5F_VECS : ORIGIN = 0x00000000 , LENGTH = 0x00000040
+    R5F_TCMA : ORIGIN = 0x00000040 , LENGTH = 0x00007FC0
+    R5F_TCMB0: ORIGIN = 0x41010000 , LENGTH = 0x00008000
+
+    MSRAM    : ORIGIN = 0x70080000 , LENGTH = 0x00100000
+}

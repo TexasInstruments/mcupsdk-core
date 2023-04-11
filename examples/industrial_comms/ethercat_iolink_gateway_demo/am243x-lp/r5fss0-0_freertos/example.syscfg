@@ -1,0 +1,522 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01" --product "MCU_PLUS_IND_COMMS_LIBS@01.00.00.00"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const flash      = scripting.addModule("/board/flash/flash", {}, false);
+const flash1     = flash.addInstance();
+const led        = scripting.addModule("/board/led/led", {}, false);
+const led1       = led.addInstance();
+const led2       = led.addInstance();
+const led3       = led.addInstance();
+const led4       = led.addInstance();
+const led5       = led.addInstance();
+const led6       = led.addInstance();
+const led7       = led.addInstance();
+const led8       = led.addInstance();
+const led9       = led.addInstance();
+const led10      = led.addInstance();
+const led11      = led.addInstance();
+const led12      = led.addInstance();
+const led13      = led.addInstance();
+const led14      = led.addInstance();
+const led15      = led.addInstance();
+const led16      = led.addInstance();
+const led17      = led.addInstance();
+const led18      = led.addInstance();
+const led19      = led.addInstance();
+const led20      = led.addInstance();
+const led21      = led.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const gpio3      = gpio.addInstance();
+const gpio4      = gpio.addInstance();
+const gpio5      = gpio.addInstance();
+const gpio6      = gpio.addInstance();
+const gpio7      = gpio.addInstance();
+const gpio8      = gpio.addInstance();
+const gpio9      = gpio.addInstance();
+const gpio10     = gpio.addInstance();
+const gpio11     = gpio.addInstance();
+const gpio12     = gpio.addInstance();
+const gpio13     = gpio.addInstance();
+const gpio14     = gpio.addInstance();
+const gpio15     = gpio.addInstance();
+const gpio16     = gpio.addInstance();
+const gpio17     = gpio.addInstance();
+const gpio18     = gpio.addInstance();
+const gpio19     = gpio.addInstance();
+const gpio20     = gpio.addInstance();
+const gpio21     = gpio.addInstance();
+const gpio22     = gpio.addInstance();
+const gpio23     = gpio.addInstance();
+const gpio24     = gpio.addInstance();
+const gpio25     = gpio.addInstance();
+const gpio26     = gpio.addInstance();
+const gpio27     = gpio.addInstance();
+const gpio28     = gpio.addInstance();
+const gpio29     = gpio.addInstance();
+const gpio30     = gpio.addInstance();
+const gpio31     = gpio.addInstance();
+const gpio32     = gpio.addInstance();
+const gpio33     = gpio.addInstance();
+const gpio34     = gpio.addInstance();
+const gpio35     = gpio.addInstance();
+const gpio36     = gpio.addInstance();
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const i2c2       = i2c.addInstance();
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
+const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1   = pruicss.addInstance();
+const pruicss2   = pruicss.addInstance();
+const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1      = uart.addInstance();
+const uart2      = uart.addInstance();
+const ethercat   = scripting.addModule("/industrial_comms/ethercat/ethercat", {}, false);
+const ethercat1  = ethercat.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+flash1.$name                         = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
+flash1.peripheralDriver.inputClkFreq = 200000000;
+
+led1.$name = "CONFIG_LED_STATUS";
+
+led2.$name = "CONFIG_LED_ERROR";
+
+led3.$name = "CONFIG_PHY0_RESET";
+
+led4.$name = "CONFIG_PHY1_RESET";
+
+led5.name  = "TPIC2810";
+led5.$name = "CONFIG_LED0";
+
+led6.name  = "Ioexp";
+led6.$name = "CONFIG_LED_R_1";
+
+led7.$name   = "CONFIG_LED_G_1";
+led7.name    = "Ioexp";
+led7.ioIndex = 1;
+
+led8.name    = "Ioexp";
+led8.ioIndex = 2;
+led8.$name   = "CONFIG_LED_R_2";
+
+led9.name    = "Ioexp";
+led9.$name   = "CONFIG_LED_G_2";
+led9.ioIndex = 3;
+
+led10.name    = "Ioexp";
+led10.$name   = "CONFIG_LED_R_3";
+led10.ioIndex = 4;
+
+led11.$name   = "CONFIG_LED_G_3";
+led11.name    = "Ioexp";
+led11.ioIndex = 5;
+
+led12.$name   = "CONFIG_LED_R_4";
+led12.name    = "Ioexp";
+led12.ioIndex = 7;
+
+led13.$name   = "CONFIG_LED_G_4";
+led13.name    = "Ioexp";
+led13.ioIndex = 6;
+
+led14.$name   = "CONFIG_LED_R_5";
+led14.name    = "Ioexp";
+led14.ioIndex = 8;
+
+led15.$name   = "CONFIG_LED_G_5";
+led15.name    = "Ioexp";
+led15.ioIndex = 9;
+
+led16.$name   = "CONFIG_LED_R_6";
+led16.name    = "Ioexp";
+led16.ioIndex = 10;
+
+led17.$name   = "CONFIG_LED_G_6";
+led17.name    = "Ioexp";
+led17.ioIndex = 11;
+
+led18.$name   = "CONFIG_LED_R_7";
+led18.name    = "Ioexp";
+led18.ioIndex = 12;
+
+led19.$name   = "CONFIG_LED_G_7";
+led19.name    = "Ioexp";
+led19.ioIndex = 13;
+
+led20.$name   = "CONFIG_LED_R_8";
+led20.name    = "Ioexp";
+led20.ioIndex = 14;
+
+led21.$name   = "CONFIG_LED_G_8";
+led21.name    = "Ioexp";
+led21.ioIndex = 15;
+
+gpio1.$name                = "CONFIG_IOL_TX1";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.gpioPin.rx      = false;
+gpio1.GPIO.gpioPin.$assign = "ball.L1";
+
+gpio2.$name                = "CONFIG_IOL_TX2";
+gpio2.pinDir               = "OUTPUT";
+gpio2.GPIO.gpioPin.rx      = false;
+gpio2.GPIO.gpioPin.$assign = "ball.K1";
+
+gpio3.$name                = "CONFIG_IOL_TX3";
+gpio3.pinDir               = "OUTPUT";
+gpio3.GPIO.gpioPin.rx      = false;
+gpio3.GPIO.gpioPin.$assign = "ball.N1";
+
+gpio4.$name                = "CONFIG_IOL_TX4";
+gpio4.pinDir               = "OUTPUT";
+gpio4.GPIO.gpioPin.pu_pd   = "pd";
+gpio4.GPIO.gpioPin.rx      = false;
+gpio4.GPIO.gpioPin.$assign = "ball.N2";
+
+gpio5.$name                = "CONFIG_IOL_TX5";
+gpio5.pinDir               = "OUTPUT";
+gpio5.GPIO.gpioPin.rx      = false;
+gpio5.GPIO.gpioPin.$assign = "ball.N4";
+
+gpio6.$name                = "CONFIG_IOL_TX6";
+gpio6.pinDir               = "OUTPUT";
+gpio6.GPIO.gpioPin.rx      = false;
+gpio6.GPIO.gpioPin.$assign = "ball.N3";
+
+gpio7.$name                = "CONFIG_IOL_TX7";
+gpio7.pinDir               = "OUTPUT";
+gpio7.GPIO.gpioPin.$assign = "ball.E1";
+
+gpio8.$name                = "CONFIG_IOL_TX8";
+gpio8.pinDir               = "OUTPUT";
+gpio8.GPIO.gpioPin.rx      = false;
+gpio8.GPIO.gpioPin.$assign = "ball.K4";
+
+gpio9.$name                = "CONFIG_IOL_RX1";
+gpio9.GPIO.gpioPin.$assign = "ball.J3";
+
+gpio10.$name                = "CONFIG_IOL_RX2";
+gpio10.GPIO.gpioPin.$assign = "ball.J4";
+
+gpio11.$name                = "CONFIG_IOL_RX3";
+gpio11.GPIO.gpioPin.$assign = "ball.G1";
+
+gpio12.$name                = "CONFIG_IOL_RX4";
+gpio12.GPIO.gpioPin.$assign = "ball.H1";
+
+gpio13.$name                = "CONFIG_IOL_RX5";
+gpio13.GPIO.gpioPin.$assign = "ball.K2";
+
+gpio14.$name                = "CONFIG_IOL_RX6";
+gpio14.GPIO.gpioPin.$assign = "ball.F2";
+
+gpio15.$name                = "CONFIG_IOL_RX7";
+gpio15.GPIO.gpioPin.$assign = "ball.H2";
+
+gpio16.$name                = "CONFIG_IOL_RX8";
+gpio16.GPIO.gpioPin.$assign = "ball.E2";
+
+gpio17.$name                = "CONFIG_IOL_TXEN1";
+gpio17.pinDir               = "OUTPUT";
+gpio17.GPIO.gpioPin.rx      = false;
+gpio17.GPIO.gpioPin.$assign = "ball.M4";
+
+gpio18.$name                = "CONFIG_IOL_TXEN2";
+gpio18.pinDir               = "OUTPUT";
+gpio18.GPIO.gpioPin.rx      = false;
+gpio18.GPIO.gpioPin.$assign = "ball.T3";
+
+gpio19.$name                = "CONFIG_IOL_TXEN3";
+gpio19.pinDir               = "OUTPUT";
+gpio19.GPIO.gpioPin.rx      = false;
+gpio19.GPIO.gpioPin.$assign = "ball.E4";
+
+gpio20.$name                = "CONFIG_IOL_TXEN4";
+gpio20.pinDir               = "OUTPUT";
+gpio20.GPIO.gpioPin.rx      = false;
+gpio20.GPIO.gpioPin.$assign = "ball.D2";
+
+gpio21.$name                = "CONFIG_IOL_TXEN5";
+gpio21.pinDir               = "OUTPUT";
+gpio21.GPIO.gpioPin.rx      = false;
+gpio21.GPIO.gpioPin.$assign = "ball.A8";
+
+gpio22.$name                = "CONFIG_IOL_TXEN6";
+gpio22.pinDir               = "OUTPUT";
+gpio22.GPIO.gpioPin.rx      = false;
+gpio22.GPIO.gpioPin.$assign = "ball.T2";
+
+gpio23.$name                = "CONFIG_IOL_TXEN7";
+gpio23.pinDir               = "OUTPUT";
+gpio23.GPIO.gpioPin.rx      = false;
+gpio23.GPIO.gpioPin.$assign = "ball.Y4";
+
+gpio24.$name                = "CONFIG_IOL_TXEN8";
+gpio24.pinDir               = "OUTPUT";
+gpio24.GPIO.gpioPin.rx      = false;
+gpio24.GPIO.gpioPin.$assign = "ball.U3";
+
+gpio25.$name                = "CONFIG_IOL_ENL1";
+gpio25.pinDir               = "OUTPUT";
+gpio25.GPIO.gpioPin.rx      = false;
+gpio25.GPIO.gpioPin.$assign = "ball.G2";
+
+gpio26.$name                = "CONFIG_IOL_ENL2";
+gpio26.pinDir               = "OUTPUT";
+gpio26.GPIO.gpioPin.rx      = false;
+gpio26.GPIO.gpioPin.$assign = "ball.L5";
+
+gpio27.$name                = "CONFIG_IOL_ENL3";
+gpio27.pinDir               = "OUTPUT";
+gpio27.GPIO.gpioPin.rx      = false;
+gpio27.GPIO.gpioPin.$assign = "ball.J2";
+
+gpio28.$name                = "CONFIG_IOL_ENL4";
+gpio28.pinDir               = "OUTPUT";
+gpio28.GPIO.gpioPin.rx      = false;
+gpio28.GPIO.gpioPin.$assign = "ball.M2";
+
+gpio29.$name                = "CONFIG_IOL_ENL5";
+gpio29.pinDir               = "OUTPUT";
+gpio29.GPIO.gpioPin.rx      = false;
+gpio29.GPIO.gpioPin.$assign = "ball.F5";
+
+gpio30.$name                = "CONFIG_IOL_ENL6";
+gpio30.pinDir               = "OUTPUT";
+gpio30.GPIO.gpioPin.rx      = false;
+gpio30.GPIO.gpioPin.$assign = "ball.P1";
+
+gpio31.$name                = "CONFIG_IOL_ENL7";
+gpio31.pinDir               = "OUTPUT";
+gpio31.GPIO.gpioPin.rx      = false;
+gpio31.GPIO.gpioPin.$assign = "ball.P2";
+
+gpio32.$name                = "CONFIG_IOL_ENL8";
+gpio32.pinDir               = "OUTPUT";
+gpio32.GPIO.gpioPin.rx      = false;
+gpio32.GPIO.gpioPin.$assign = "ball.T4";
+
+gpio33.$name                = "CONFIG_GPIO_LED_STATUS";
+gpio33.pinDir               = "OUTPUT";
+led1.peripheralDriver       = gpio33;
+gpio33.GPIO.gpioPin.rx      = false;
+gpio33.GPIO.gpioPin.$assign = "ball.U19";
+
+gpio34.$name                = "CONFIG_GPIO_LED_ERROR";
+gpio34.pinDir               = "OUTPUT";
+led2.peripheralDriver       = gpio34;
+gpio34.GPIO.gpioPin.rx      = false;
+gpio34.GPIO.gpioPin.$assign = "ball.B13";
+
+gpio35.$name                = "CONFIG_GPIO0_PHY0_RESET";
+gpio35.pinDir               = "OUTPUT";
+led3.peripheralDriver       = gpio35;
+gpio35.GPIO.$assign         = "GPIO0";
+gpio35.GPIO.gpioPin.rx      = false;
+gpio35.GPIO.gpioPin.$assign = "ball.Y19";
+
+gpio36.$name                = "CONFIG_GPIO0_PHY1_RESET";
+gpio36.pinDir               = "OUTPUT";
+led4.peripheralDriver       = gpio36;
+gpio36.GPIO.$assign         = "GPIO0";
+gpio36.GPIO.gpioPin.rx      = false;
+gpio36.GPIO.gpioPin.$assign = "ball.Y15";
+
+i2c1.$name            = "CONFIG_I2C0";
+led5.peripheralDriver = i2c1;
+i2c1.I2C.$assign      = "I2C0";
+
+i2c2.$name             = "CONFIG_I2C1";
+led6.peripheralDriver  = i2c2;
+led7.peripheralDriver  = i2c2;
+led8.peripheralDriver  = i2c2;
+led9.peripheralDriver  = i2c2;
+led10.peripheralDriver = i2c2;
+led11.peripheralDriver = i2c2;
+led12.peripheralDriver = i2c2;
+led13.peripheralDriver = i2c2;
+led14.peripheralDriver = i2c2;
+led15.peripheralDriver = i2c2;
+led16.peripheralDriver = i2c2;
+led17.peripheralDriver = i2c2;
+led18.peripheralDriver = i2c2;
+led19.peripheralDriver = i2c2;
+led20.peripheralDriver = i2c2;
+led21.peripheralDriver = i2c2;
+i2c2.I2C.$assign       = "I2C1";
+i2c2.I2C.SCL.$assign   = "ball.A17";
+i2c2.I2C.SDA.$assign   = "ball.B18";
+
+mcspi1.$name                 = "CONFIG_MCSPI_IOL";
+mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+
+pruicss1.$name                           = "CONFIG_PRU_ICSS0";
+pruicss1.iepSyncMode                     = scripting.forceWrite(true);
+pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
+
+uart1.$name            = "CONFIG_UART_SMI";
+uart1.readMode         = "CALLBACK";
+uart1.readCallbackFxn  = "vUartRxCallback";
+uart1.writeMode        = "CALLBACK";
+uart1.writeCallbackFxn = "vUartTxCallback";
+uart1.UART.$assign     = "USART0";
+uart1.UART.RXD.$assign = "ball.B10";
+uart1.UART.TXD.$assign = "ball.B11";
+
+uart2.$name            = "CONFIG_UART_CONSOLE";
+uart2.UART.$assign     = "USART1";
+uart2.UART.RXD.$assign = "ball.B12";
+uart2.UART.TXD.$assign = "ball.A12";
+
+ethercat1.$name                                   = "CONFIG_ETHERCAT0";
+ethercat1.instance                                = "ICSSG1";
+ethercat1.ethphy[0].$name                         = "CONFIG_ETHPHY0";
+ethercat1.ethphy[0].mdioPort                      = 3;
+ethercat1.ethphy[1].$name                         = "CONFIG_ETHPHY1";
+ethercat1.PRU_ICSSG1_IEP.EDC_LATCH_IN0.$used      = false;
+ethercat1.PRU_ICSSG1_IEP.EDC_SYNC_OUT0.$used      = false;
+ethercat1.PRU_ICSSG1_IEP.EDC_SYNC_OUT1.$used      = false;
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXLINK.$assign = "ball.W11";
+
+pruicss2.$name                           = "CONFIG_PRU_ICSS1";
+ethercat1.icss                           = pruicss2;
+pruicss2.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO1";
+
+debug_log.enableLogZoneInfo = true;
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.size         = 31;
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+timer1.$name         = "CONFIG_TIMER0";
+timer1.usecPerTick   = 100;
+timer1.startTimer    = true;
+timer1.timerCallback = "OSAL_FREERTOS_callbackTimer";
+timer1.TIMER.$assign = "DMTIMER0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.OSPI.$suggestSolution                = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution            = "ball.P20";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution           = "ball.L20";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution             = "ball.N19";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution             = "ball.L21";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution             = "ball.N20";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution             = "ball.L19";
+gpio1.GPIO.$suggestSolution                                  = "GPIO1";
+gpio2.GPIO.$suggestSolution                                  = "GPIO1";
+gpio3.GPIO.$suggestSolution                                  = "GPIO1";
+gpio4.GPIO.$suggestSolution                                  = "GPIO1";
+gpio5.GPIO.$suggestSolution                                  = "GPIO1";
+gpio6.GPIO.$suggestSolution                                  = "GPIO1";
+gpio7.GPIO.$suggestSolution                                  = "GPIO1";
+gpio8.GPIO.$suggestSolution                                  = "GPIO1";
+gpio9.GPIO.$suggestSolution                                  = "GPIO1";
+gpio10.GPIO.$suggestSolution                                 = "GPIO1";
+gpio11.GPIO.$suggestSolution                                 = "GPIO1";
+gpio12.GPIO.$suggestSolution                                 = "GPIO1";
+gpio13.GPIO.$suggestSolution                                 = "GPIO1";
+gpio14.GPIO.$suggestSolution                                 = "GPIO1";
+gpio15.GPIO.$suggestSolution                                 = "GPIO1";
+gpio16.GPIO.$suggestSolution                                 = "GPIO1";
+gpio17.GPIO.$suggestSolution                                 = "GPIO1";
+gpio18.GPIO.$suggestSolution                                 = "GPIO1";
+gpio19.GPIO.$suggestSolution                                 = "GPIO1";
+gpio20.GPIO.$suggestSolution                                 = "GPIO1";
+gpio21.GPIO.$suggestSolution                                 = "GPIO1";
+gpio22.GPIO.$suggestSolution                                 = "GPIO0";
+gpio23.GPIO.$suggestSolution                                 = "GPIO0";
+gpio24.GPIO.$suggestSolution                                 = "GPIO0";
+gpio25.GPIO.$suggestSolution                                 = "GPIO1";
+gpio26.GPIO.$suggestSolution                                 = "GPIO1";
+gpio27.GPIO.$suggestSolution                                 = "GPIO1";
+gpio28.GPIO.$suggestSolution                                 = "GPIO1";
+gpio29.GPIO.$suggestSolution                                 = "GPIO1";
+gpio30.GPIO.$suggestSolution                                 = "GPIO1";
+gpio31.GPIO.$suggestSolution                                 = "GPIO1";
+gpio32.GPIO.$suggestSolution                                 = "GPIO1";
+gpio33.GPIO.$suggestSolution                                 = "GPIO0";
+gpio34.GPIO.$suggestSolution                                 = "GPIO1";
+i2c1.I2C.SCL.$suggestSolution                                = "ball.B16";
+i2c1.I2C.SDA.$suggestSolution                                = "ball.B15";
+mcspi1.SPI.$suggestSolution                                  = "SPI4";
+mcspi1.SPI.CLK.$suggestSolution                              = "ball.B9";
+mcspi1.SPI.D0.$suggestSolution                               = "ball.A9";
+mcspi1.SPI.D1.$suggestSolution                               = "ball.C11";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution                  = "ball.A11";
+ethercat1.PRU_ICSSG1_MDIO.$suggestSolution                   = "PRU_ICSSG1_MDIO0";
+ethercat1.PRU_ICSSG1_MDIO.MDC.$suggestSolution               = "ball.W1";
+ethercat1.PRU_ICSSG1_MDIO.MDIO.$suggestSolution              = "ball.V2";
+ethercat1.PRU_ICSSG1_IEP.$suggestSolution                    = "PRU_ICSSG1_IEP0";
+ethercat1.PRU_ICSSG1_IEP.EDC_LATCH_IN1.$suggestSolution      = "ball.V13";
+ethercat1.PRU_ICSSG1_IEP.EDIO_DATA_IN_OUT28.$suggestSolution = "ball.W16";
+ethercat1.PRU_ICSSG1_IEP.EDIO_DATA_IN_OUT29.$suggestSolution = "ball.W13";
+ethercat1.PRU_ICSSG1_IEP.EDIO_DATA_IN_OUT30.$suggestSolution = "ball.Y16";
+ethercat1.PRU_ICSSG1_IEP.EDIO_DATA_IN_OUT31.$suggestSolution = "ball.U13";
+ethercat1.PRU_ICSSG1_MII_G_RT.$suggestSolution               = "PRU_ICSSG1_MII_G_RT";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD0.$suggestSolution     = "ball.V4";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD1.$suggestSolution     = "ball.W5";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD2.$suggestSolution     = "ball.AA4";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXD3.$suggestSolution     = "ball.Y5";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXDV.$suggestSolution     = "ball.AA5";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXER.$suggestSolution     = "ball.U14";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_RXLINK.$suggestSolution   = "ball.Y13";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD0.$suggestSolution     = "ball.V5";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD1.$suggestSolution     = "ball.W2";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD2.$suggestSolution     = "ball.V6";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXD3.$suggestSolution     = "ball.AA7";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII0_TXEN.$suggestSolution     = "ball.Y7";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD0.$suggestSolution     = "ball.AA10";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD1.$suggestSolution     = "ball.Y10";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD2.$suggestSolution     = "ball.Y11";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXD3.$suggestSolution     = "ball.V12";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXDV.$suggestSolution     = "ball.Y12";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_RXER.$suggestSolution     = "ball.AA11";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD0.$suggestSolution     = "ball.Y6";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD1.$suggestSolution     = "ball.AA8";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD2.$suggestSolution     = "ball.Y9";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXD3.$suggestSolution     = "ball.W9";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII1_TXEN.$suggestSolution     = "ball.V9";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII_MR0_CLK.$suggestSolution   = "ball.Y2";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII_MR1_CLK.$suggestSolution   = "ball.V10";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII_MT0_CLK.$suggestSolution   = "ball.W6";
+ethercat1.PRU_ICSSG1_MII_G_RT.MII_MT1_CLK.$suggestSolution   = "ball.Y8";

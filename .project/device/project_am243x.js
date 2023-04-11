@@ -134,6 +134,7 @@ const example_file_list = [
     "examples/empty/.project/project_nortos.js",
     "examples/hello_world/.project/project.js",
     "examples/hello_world_cpp/.project/project.js",
+    "examples/industrial_comms/ethercat_iolink_gateway_demo/.project/project.js",
     "examples/industrial_comms/ethercat_slave_beckhoff_ssc_demo/.project/project.js",
     "examples/industrial_comms/ethercat_slave_demo/cia402/.project/project.js",
     "examples/industrial_comms/ethercat_slave_demo/ctt/.project/project.js",

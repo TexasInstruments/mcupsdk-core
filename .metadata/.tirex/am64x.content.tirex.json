@@ -9689,6 +9689,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ethercat Iolink Gateway Demo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ethercat_iolink_gateway_demo",
+        "location": "../../examples/industrial_comms/ethercat_iolink_gateway_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "industrial_comms",
+            "ethercat_iolink_gateway_demo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ethercat Slave Cia402 Demo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ethercat_slave_cia402_demo",
         "location": "../../examples/industrial_comms/ethercat_slave_demo/cia402/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
