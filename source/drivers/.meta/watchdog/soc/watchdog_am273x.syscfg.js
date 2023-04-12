@@ -1,7 +1,7 @@
 
 let common = system.getScript("/common");
 
-let wdt_func_clk = 5000000;
+let wdt_func_clk = 20000000;
 
 const watchdog_config_r5fss = [
     {
@@ -50,6 +50,25 @@ function getConfigArr() {
     return watchdog_config;
 }
 
+const SOC_RcmClkSrcInfo = [
+    {
+        name: "SOC_RcmPeripheralClockSource_XTAL_CLK",
+        displayName: "XTALCLK  (40 MHz)",
+        freq: 40000000
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_SYS_CLK",
+        freq: 200000000,
+        displayName: "SYS_CLK (200 MHz)"
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1",
+        freq: 192000000,
+        displayName: "DPLL_CORE_HSDIV0_CLKOUT1 (192 MHz)",
+    },
+]
+
 exports = {
     getConfigArr,
+    SOC_RcmClkSrcInfo
 };

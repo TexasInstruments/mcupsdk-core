@@ -1,8 +1,9 @@
 let common = system.getScript("/common");
 let srcclkfreq = 200000000;
 let clockSourcesInfo;
+let soc_name = common.getSocName();
 
-if(common.getSocName() == "am263x")
+if( soc_name == "am263x" || soc_name == "am273x")
 {
     clockSourcesInfo = system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).SOC_RcmClkSrcInfo;
 }
@@ -28,7 +29,7 @@ function getClockEnableIds(instance) {
 
 function getClockFrequencies(inst) {
     let instConfig = getInstanceConfig(inst);
-    if(common.getSocName() == "am263x")
+    if( soc_name == "am263x" || soc_name == "am273x")
     {
         instConfig.clockFrequencies[0].clkRate = inst["wdt_func_clk"];
         instConfig.clockFrequencies[0].clkId = inst["wdt_clk_src"];
@@ -84,7 +85,7 @@ function validateInputClkFreq(instance, report)
 function validate(instance, report) {
     common.validate.checkSameInstanceName(instance, report);
     common.validate.checkNumberRange(instance, report, "expirationTime", 0, 60000, "dec");
-    if(common.getSocName() == "am263x")
+    if( soc_name == "am263x" || soc_name == "am273x")
     {
         validatePair(instance, report);
         validateInputClkFreq(instance, report);
@@ -93,7 +94,7 @@ function validate(instance, report) {
 
 let clock_sources = []
 
-if(common.getSocName() == "am263x")
+if( soc_name == "am263x" || soc_name == "am273x")
 {
     for (let arg of clockSourcesInfo)
     {
@@ -157,7 +158,7 @@ gconfig = gconfig.concat([
     },
 ])
 
-if(common.getSocName() == "am263x")
+if( soc_name == "am263x" || soc_name == "am273x")
 {
     gconfig = gconfig.concat([
     {

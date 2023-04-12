@@ -96,10 +96,10 @@ int32_t SDL_ESM_WDTCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmInt
 #else
 void watchdogCallback(void *arg)
 {
-    gWatchdogInt++;
     if (gWatchdogInt < NUM_OF_ITERATIONS)
     {
         Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
+        gWatchdogInt++;
     }
     return;
 }

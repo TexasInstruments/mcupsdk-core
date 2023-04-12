@@ -4,6 +4,7 @@
     let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
     let driverVer = soc.getDriverVer("watchdog");
     let wdt_module = system.getScript(`/drivers/watchdog/${driverVer}/watchdog_${driverVer}`);
+    let soc_name = common.getSocName();
 %%}
 /*
  * watchdog
@@ -18,7 +19,7 @@ static Watchdog_HwAttrs gWatchdogHwAttrs[CONFIG_WATCHDOG_NUM_INSTANCES] =
     {
         .instance        = `config.wdtInstance`,
         .baseAddr        = `config.baseAddr`,
-        %if(common.getSocName() == "am263x"){
+        %if( soc_name == "am263x" || soc_name == "am273x"){
         .wdtClkFrequency = `wdt_config.wdt_func_clk`U,
         %}
         %else{
