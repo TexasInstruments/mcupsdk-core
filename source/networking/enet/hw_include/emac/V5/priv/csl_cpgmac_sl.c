@@ -329,7 +329,10 @@ void CSL_CPGMAC_SL_disableLoopback
     Uint32                      portNum
 )
 {
-    CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_MAC_CONTROL_REG, XGE_CPSW_PN_MAC_CONTROL_REG_LOOPBACK, 0);
+    if (portNum < CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
+    {
+        CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_MAC_CONTROL_REG, XGE_CPSW_PN_MAC_CONTROL_REG_LOOPBACK, 0);
+    }
 
     return;
 }
@@ -1378,7 +1381,10 @@ void CSL_CPGMAC_SL_enableCastagnoliCRC
     Uint32                      portNum
 )
 {
-    CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_MAC_CONTROL_REG, XGE_CPSW_PN_MAC_CONTROL_REG_CRC_TYPE, 1);
+    if (portNum < CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
+    {
+        CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_MAC_CONTROL_REG, XGE_CPSW_PN_MAC_CONTROL_REG_CRC_TYPE, 1);
+    }
 
     return;
 }
@@ -1421,7 +1427,7 @@ void CSL_CPGMAC_SL_disableCastagnoliCRC
     Uint32                      portNum
 )
 {
-	if (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
+	if (portNum < CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
 	{
 		CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_MAC_CONTROL_REG, XGE_CPSW_PN_MAC_CONTROL_REG_CRC_TYPE, 0);
 	}
@@ -3001,13 +3007,16 @@ Uint32 CSL_CPGMAC_SL_getRxMaxLen
      @endverbatim
  * =============================================================================
  */
-Uint32 CSL_CPGMAC_SL_setRxMaxLen
+void CSL_CPGMAC_SL_setRxMaxLen
 (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                  portNum,
     Uint32                  rxMaxLen
 )
 {
-    return CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_RX_MAXLEN_REG, XGE_CPSW_PN_RX_MAXLEN_REG_RX_MAXLEN, rxMaxLen);
+    if (portNum < CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
+    {
+        CSL_FINS (hCpswRegs->ENETPORT[portNum].PN_RX_MAXLEN_REG, XGE_CPSW_PN_RX_MAXLEN_REG_RX_MAXLEN, rxMaxLen);
+    }
 }
 
 

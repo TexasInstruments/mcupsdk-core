@@ -2845,7 +2845,7 @@ Uint32 CSL_CPGMAC_SL_getRxMaxLen
      @endverbatim
  * =============================================================================
  */
-Uint32 CSL_CPGMAC_SL_setRxMaxLen
+void CSL_CPGMAC_SL_setRxMaxLen
 (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                  portNum,
     Uint32                  rxMaxLen
