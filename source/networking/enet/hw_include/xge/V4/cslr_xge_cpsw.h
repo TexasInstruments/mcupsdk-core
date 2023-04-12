@@ -115,7 +115,9 @@ typedef struct {
     volatile uint32_t PN_INTERVLAN_OPX_B_REG;    /* pn_opx_b_reg */
     volatile uint32_t PN_INTERVLAN_OPX_C_REG;    /* pn_opx_c_reg */
     volatile uint32_t PN_INTERVLAN_OPX_D_REG;    /* pn_opx_d_reg */
-    volatile uint8_t  Resv_4096[3136];
+    volatile uint32_t PN_CUT_THRU_REG;
+    volatile uint32_t PN_SPEED;
+    volatile uint8_t  Resv_4096[3128];
 } CSL_Xge_cpswEnetportRegs;
 
 
@@ -278,7 +280,10 @@ typedef struct {
     volatile uint8_t  Resv_80[8];
     volatile uint32_t VLAN_LTYPE_REG;            /* vlan_ltype_reg */
     volatile uint32_t EST_TS_DOMAIN_REG;         /* est_ts_domain_reg */
-    volatile uint8_t  Resv_256[168];
+    volatile uint32_t CUT_THRESHOLD;             /* cut-thru threshold */
+    volatile uint32_t FREQUENCY;                 /* VBUSP_GCLK frequency */
+    volatile uint32_t IET_HOLD_CNT_LD_VAL;       /* IET hold counter load value */
+    volatile uint8_t  Resv_256[156];
     volatile uint32_t TX_PRI0_MAXLEN_REG;        /* tx_pri0_maxlen_reg */
     volatile uint32_t TX_PRI1_MAXLEN_REG;        /* tx_pri1_maxlen_reg */
     volatile uint32_t TX_PRI2_MAXLEN_REG;        /* tx_pri2_maxlen_reg */
@@ -869,6 +874,27 @@ typedef struct {
 #define CSL_XGE_CPSW_PN_EST_CONTROL_REG_EST_FILL_MARGIN_MASK          (0x03FF0000U)
 #define CSL_XGE_CPSW_PN_EST_CONTROL_REG_EST_FILL_MARGIN_SHIFT         (0x00000010U)
 #define CSL_XGE_CPSW_PN_EST_CONTROL_REG_EST_FILL_MARGIN_MAX           (0x000003FFU)
+
+/* PN_CUT_THRU_REG */
+
+#define CSL_XGE_CPSW_PN_CUT_THRU_REG_TX_PRI_CUT_THRU_EN_MASK          (0x000000FFU)
+#define CSL_XGE_CPSW_PN_CUT_THRU_REG_TX_PRI_CUT_THRU_EN_SHIFT         (0x00000000U)
+#define CSL_XGE_CPSW_PN_CUT_THRU_REG_TX_PRI_CUT_THRU_EN_MAX           (0x000000FFU)
+
+#define CSL_XGE_CPSW_PN_CUT_THRU_REG_RX_PRI_CUT_THRU_EN_MASK          (0x0000FF00U)
+#define CSL_XGE_CPSW_PN_CUT_THRU_REG_RX_PRI_CUT_THRU_EN_SHIFT         (0x00000008U)
+#define CSL_XGE_CPSW_PN_CUT_THRU_REG_RX_PRI_CUT_THRU_EN_MAX           (0x000000FFU)
+
+/* PN_SPEED */
+
+#define CSL_XGE_CPSW_PN_SPEED_REG_MASK                                (0x0000000FU)
+#define CSL_XGE_CPSW_PN_SPEED_REG_SHIFT                               (0x00000000U)
+#define CSL_XGE_CPSW_PN_SPEED_REG_MAX                                 (0x0000000FU)
+
+
+#define CSL_XGE_CPSW_PN_SPEED_REG_AUTO_ENABLE_MASK                    (0x00000100U)
+#define CSL_XGE_CPSW_PN_SPEED_REG_AUTO_ENABLE_SHIFT                   (0x00000008U)
+#define CSL_XGE_CPSW_PN_SPEED_REG_AUTO_ENABLE_MAX                     (0x00000001U)
 
 /* PN_RX_DSCP_MAP_REG */
 
@@ -2072,6 +2098,10 @@ typedef struct {
 #define CSL_XGE_CPSW_CONTROL_REG_EST_ENABLE_SHIFT                              (0x00000012U)
 #define CSL_XGE_CPSW_CONTROL_REG_EST_ENABLE_MAX                                (0x00000001U)
 
+#define CSL_XGE_CPSW_CONTROL_REG_CUT_THRU_ENABLE_MASK                          (0x00080000U)
+#define CSL_XGE_CPSW_CONTROL_REG_CUT_THRU_ENABLE_SHIFT                         (0x00000013U)
+#define CSL_XGE_CPSW_CONTROL_REG_CUT_THRU_ENABLE_MAX                           (0x00000001U)
+
 #define CSL_XGE_CPSW_CONTROL_REG_ECC_CRC_MODE_MASK                             (0x80000000U)
 #define CSL_XGE_CPSW_CONTROL_REG_ECC_CRC_MODE_SHIFT                            (0x0000001FU)
 #define CSL_XGE_CPSW_CONTROL_REG_ECC_CRC_MODE_MAX                              (0x00000001U)
@@ -2349,6 +2379,12 @@ typedef struct {
 #define CSL_XGE_CPSW_VLAN_LTYPE_REG_VLAN_LTYPE_OUTER_MASK                      (0xFFFF0000U)
 #define CSL_XGE_CPSW_VLAN_LTYPE_REG_VLAN_LTYPE_OUTER_SHIFT                     (0x00000010U)
 #define CSL_XGE_CPSW_VLAN_LTYPE_REG_VLAN_LTYPE_OUTER_MAX                       (0x0000FFFFU)
+
+/* FREQUENCY */
+
+#define CSL_XGE_CPSW_FREQUENCY_REG_MASK                                        (0x000003FFU)
+#define CSL_XGE_CPSW_FREQUENCY_REG_SHIFT                                       (0x00000000U)
+#define CSL_XGE_CPSW_FREQUENCY_REG_MAX                                         (0x000003FFU)
 
 /* EST_TS_DOMAIN_REG */
 

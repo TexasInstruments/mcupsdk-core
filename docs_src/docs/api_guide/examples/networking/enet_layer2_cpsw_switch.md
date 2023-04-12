@@ -38,6 +38,28 @@ This example do below:
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+
+### Cut-thru Switching
+
+- Cut Through feature allows forwarding packet from one external port to another without being stored in Port FIFOs thus reducing overall latency for packet forwarding.
+
+#### Limitations:
+
+- Cut Through forwarding is only supported between external ports and no support for Cut Through to host port currently.
+- Cut-Thru is not supported with 10/100 half-duplex.
+- Cut-Thru is not supported with any form of flow control.
+- If Intersperced Express Traffic (IET) is enabled, then Cut Through can only be enabled on an express priority queue and not on preemptible queues.
+
+#### Steps to enable Cut-thru switching:
+
+- Set cutThruEnable Control register.
+- Set rxPriCutThruEn(RX priority queue) and txPriCutThruEn(TX priority queue) which represents the priorties queues for which cut through feature needs to be enabled.
+- Set portSpeedAutoEn for automatic detection of speed.
+- Set CPSW frequency in Mhz which is used in auto speed detection for cut-thru operations
+
+\endcond
+
 # Supported Combinations
 
 \cond SOC_AM64X
@@ -133,7 +155,6 @@ This example do below:
 
 \endcond
 
-
 ## Run the example
 
 \attention If you need to reload and run again, a CPU power-cycle is MUST
@@ -157,7 +178,7 @@ This example do below:
 \code
 
 ==========================
- Layer 2 CPSW SWITCH Test 
+ Layer 2 CPSW SWITCH Test
 ==========================
 
 Init all peripheral clocks
@@ -171,16 +192,16 @@ cpsw-3g: Create RX task
 Open all peripherals
 ----------------------------------------------
 cpsw-3g: Open enet
-EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2 
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2
 
 Init all configs
 ----------------------------------------------
 cpsw-3g: init config
-Mdio_open:282 
+Mdio_open:282
 cpsw-3g: Open port 1
-EnetPhy_bindDriver:1718 
+EnetPhy_bindDriver:1718
 cpsw-3g: Open port 2
-EnetPhy_bindDriver:1718 
+EnetPhy_bindDriver:1718
 PHY 0 is alive
 PHY 3 is alive
 
@@ -190,9 +211,9 @@ cpsw-3g: Attach core
 cpsw-3g: Open DMA
 initQs() txFreePktInfoQ initialized with 16 pkts
 cpsw-3g: Waiting for link up...
-Cpsw_handleLinkUp:1369 
+Cpsw_handleLinkUp:1369
 MAC Port 2: link up
-Cpsw_handleLinkUp:1369 
+Cpsw_handleLinkUp:1369
 MAC Port 1: link up
 cpsw-3g: Port 1 link is up
 cpsw-3g: Port 2 link is up
@@ -269,7 +290,7 @@ Print statistics
   txPriBcnt[0]            = 50900000
 
 �
-Starting NULL Bootloader ... 
+Starting NULL Bootloader ...
 
 DMSC Firmware Version 8.4.7--v08.04.07 (Jolly Jellyfi
 DMSC Firmware revision 0x8
@@ -283,7 +304,7 @@ INFO: Bootloader_loadSelfCpu:207: CPU r5f0-1 is initialized to 800000000 Hz !!!
 INFO: Bootloader_runSelfCpu:217: All done, reseting self ...
 
 ==========================
- Layer 2 CPSW SWITCH Test 
+ Layer 2 CPSW SWITCH Test
 ==========================
 
 Init all peripheral clocks
@@ -297,16 +318,16 @@ cpsw-3g: Create RX task
 Open all peripherals
 ----------------------------------------------
 cpsw-3g: Open enet
-EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2 
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2
 
 Init all configs
 ----------------------------------------------
 cpsw-3g: init config
-Mdio_open:282 
+Mdio_open:282
 cpsw-3g: Open port 1
-EnetPhy_bindDriver:1718 
+EnetPhy_bindDriver:1718
 cpsw-3g: Open port 2
-EnetPhy_bindDriver:1718 
+EnetPhy_bindDriver:1718
 PHY 0 is alive
 PHY 3 is alive
 
@@ -316,8 +337,8 @@ cpsw-3g: Attach core
 cpsw-3g: Open DMA
 initQs() txFreePktInfoQ initialized with 16 pkts
 cpsw-3g: Waiting for link up...
-Cpsw_handleLinkUp:1369 
-Cpsw_handleLinkUp:1369 
+Cpsw_handleLinkUp:1369
+Cpsw_handleLinkUp:1369
 MAC Port 1: link up
 MAC Port 2: link up
 cpsw-3g: Port 1 link is up
@@ -412,7 +433,7 @@ Print statistics
     - Ether_type = 0x8600
     - Data rate - more than 25 mbps
 
-- Observe that packets are switched by limiting data rate to 25 mpbs. 
+- Observe that packets are switched by limiting data rate to 25 mpbs.
 - Observe that the dropped packets are marked with 'alePolicyMatchRed' in CPSW statistics print.
 
 # See Also

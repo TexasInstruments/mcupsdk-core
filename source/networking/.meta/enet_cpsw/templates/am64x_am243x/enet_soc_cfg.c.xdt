@@ -136,7 +136,8 @@ Cpsw_Obj gEnetSoc_cpsw3g =
         .physAddr2    = (CSL_CPSW0_NUSS_BASE + CPSW_NUSS_OFFSET),
         .features     = (ENET_FEAT_BASE |
                          CPSW_FEATURE_EST |
-                         CPSW_FEATURE_INTERVLAN),
+                         CPSW_FEATURE_INTERVLAN |
+                         CPSW_FEATURE_CUTTHRU ),
         .errata       = ENET_ERRATA_NONE,
         .initCfg      = &Cpsw_initCfg,
         .open         = &Cpsw_open,

@@ -67,7 +67,7 @@ extern "C" {
 #define ENET_CFG_CPSW_INTERVLAN                     (ENET_OFF)
 
 /*! \brief CPSW 2G (2 Port Switch) support. */
-#define ENET_CFG_CPSW_2PORTSWITCH                   (ENET_OFF) 
+#define ENET_CFG_CPSW_2PORTSWITCH                   (ENET_OFF)
 
 /*! \brief CPDMA Channel Override support. */
 #define ENET_CFG_CPDMA_CH_OVERRIDE                  (ENET_ON)
@@ -131,6 +131,9 @@ extern "C" {
 /*! \brief CPSW EST support */
 #define ENET_CFG_CPSW_EST                           (ENET_ON)
 #define ENET_CFG_CPSW_MACPORT_EST                   (ENET_ON)
+
+/*! \brief Cut-thru switching support. This feature is not supported by the hardware */
+#define ENET_CFG_CPSW_CUTTHRU                       (ENET_OFF)
 
 /*! \brief MDIO Clause-45 frame support. */
 #define ENET_CFG_MDIO_CLAUSE45                      (ENET_ON)

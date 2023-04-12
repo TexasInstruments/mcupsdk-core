@@ -198,6 +198,9 @@ typedef struct {
 
     /**  Intersperced Express Traffic enable (IET) */
     Uint32      ietEnable;
+
+    /** Cut Thru Switching Enable */
+    Uint32      cutThruEnable;
 } CSL_CPSW_CONTROL;
 
 /** @brief  CPSW_THRU_RATE register
@@ -1844,6 +1847,141 @@ void CSL_CPSW_setVlanType (CSL_Xge_cpswRegs *hCpswRegs,Uint32 vlanType);
  */
 void CSL_CPSW_disableVlanAware (CSL_Xge_cpswRegs *hCpswRegs);
 
+/** ============================================================================
+ *   @n@b CSL_CPSW_enableCutThru
+ *
+ *   @b Description
+ *   @n This function configures the CPSW control register to enable cut-thru
+ *      switching.
+ *
+ *   @b Arguments
+ *   @n None
+ *
+ *   <b> Return Value </b>
+ *	 @n	 None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_CONTROL_REG_CUT_THRU_ENABLE=1
+ *
+ *   @b Example
+ *   @verbatim
+
+        CSL_CPSW_enableCutThru ();
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_enableCutThru (CSL_Xge_cpswRegs *hCpswRegs);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_disableCutThru
+ *
+ *   @b Description
+ *   @n This function configures the CPSW control register to disable cut-thru
+ *      switching.
+ *
+ *   @b Arguments
+ *   @n None
+ *
+ *   <b> Return Value </b>
+ *	 @n	 None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_CONTROL_REG_CUT_THRU_ENABLE=0
+ *
+ *   @b Example
+ *   @verbatim
+
+        CSL_CPSW_disableCutThru ();
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_disableCutThru (CSL_Xge_cpswRegs *hCpswRegs);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setCpswFrequency
+ *
+ *   @b Description
+ *   @n This function configures the CPSW frequency used for enabling auto speed
+ *      register for cut-thru switching.
+ *
+ *   @b Arguments
+ *   @verbatim
+        pCpswFrequency      CPSW_FREQUENCY that needs to be set.
+ *	 @endverbatim
+ *
+ *   <b> Return Value </b>
+ *	 @n	 None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_FREQUENCY_REG
+ *
+ *   @b Example
+ *   @verbatim
+
+        CSL_CPSW_setCpswFrequency ();
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_setCpswFrequency (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      pCpswFrequency
+);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getCpswFrequency
+ *
+ *   @b Description
+ *   @n This function gets the RX Cut thru priority
+ *
+ *   @b Arguments
+     @verbatim
+        pCpswFrequency   CPSW frequency
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n XGE_CPSW_FREQUENCY_REG
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      pCpswFrequency;
+
+        pCpswFrequency = CSL_CPSW_getCpswFrequency ();
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_getCpswFrequency (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32*                     pCpswFrequency
+);
 
 /** ============================================================================
  *   @n@b CSL_CPSW_isPort0Enabled
@@ -3554,6 +3692,345 @@ void CSL_CPSW_getPortRxDscpMap (CSL_Xge_cpswRegs *hCpswRegs,
 void CSL_CPSW_setPortRxDscpMap (CSL_Xge_cpswRegs *hCpswRegs,
     Uint32                      portNum,
     Uint32*                     pRxDscpPriMap
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setPortRxCutThruPri
+ *
+ *   @b Description
+ *   @n This function sets up the RX Cut thru priority
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the RX Cut thru priority
+                            must be set.
+        pPortRxCutThruPri   RX Cut thru priority
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_PN_CUT_THRU_REG_RX_PRI_CUT_THRU_EN
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortRxCutThruPri;
+
+        portNum           = 1;
+        pPortRxCutThruPri = 1;
+
+        CSL_CPSW_setPortRxCutThruPri (portNum, pPortRxCutThruPri);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_setPortRxCutThruPri (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    Uint32                      pPortRxCutThruPri
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getPortRxCutThruPri
+ *
+ *   @b Description
+ *   @n This function gets the RX Cut thru priority
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the RX Cut thru priority
+                            must be retrieved.
+        pPortRxCutThruPri   RX Cut thru priority
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n XGE_CPSW_PN_CUT_THRU_REG_RX_PRI_CUT_THRU_EN
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortRxCutThruPri;
+
+        portNum           = 1;
+
+        pPortRxCutThruPri = CSL_CPSW_getPortRxCutThruPri (portNum);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_getPortRxCutThruPri (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    Uint32*                     pPortRxCutThruPri
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setPortTxCutThruPri
+ *
+ *   @b Description
+ *   @n This function sets up the TX Cut thru priority
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the TX Cut thru priority
+                            must be set.
+        pPortTxCutThruPri   TX Cut thru priority
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_PN_CUT_THRU_REG_TX_PRI_CUT_THRU_EN
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortRxCutThruPri;
+
+        portNum           = 1;
+        pPortTxCutThruPri = 1;
+
+        CSL_CPSW_setPortTxCutThruPri (portNum, pPortTxCutThruPri);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_setPortTxCutThruPri (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    Uint32                      pPortTxCutThruPri
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getPortTxCutThruPri
+ *
+ *   @b Description
+ *   @n This function gets the TX Cut thru priority
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the TX Cut thru priority
+                            must be retrieved.
+        pPortRxCutThruPri   TX Cut thru priority
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n XGE_CPSW_PN_CUT_THRU_REG_TX_PRI_CUT_THRU_EN
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortTxCutThruPri;
+
+        portNum           = 1;
+
+        pPortTxCutThruPri = CSL_CPSW_getPortTxCutThruPri (portNum);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_getPortTxCutThruPri (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    Uint32*                     pPortTxCutThruPri
+);
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setPortSpeedReg
+ *
+ *   @b Description
+ *   @n This function sets up the port speed
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the speed
+                            must be set.
+        pPortSpeed          Port Speed
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_PN_SPEED_REG
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortSpeed;
+
+        portNum           = 1;
+        pPortSpeed        = 1;
+
+        CSL_CPSW_setPortSpeedReg (portNum, pPortSpeed);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_setPortSpeedReg (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    Uint32                      pPortSpeed
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getPortSpeedReg
+ *
+ *   @b Description
+ *   @n This function gets the port speed
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the port speed
+                            must be retrieved.
+        pPortSpeed          Port Speed
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n XGE_CPSW_PN_SPEED_REG
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortSpeed;
+
+        portNum           = 1;
+
+        pPortSpeed = CSL_CPSW_getPortSpeedReg (portNum);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_getPortSpeedReg (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    Uint32*                     pPortSpeed
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_setPortSpeedAutoEnable
+ *
+ *   @b Description
+ *   @n This function sets up the port's speed for auto enable
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the speed
+                            must be auto enabled.
+        pPortSpeedAutoEn    Port Speed
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Writes
+ *   @n XGE_CPSW_PN_SPEED_REG_AUTO_ENABLE
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortSpeedAutoEn;
+
+        portNum           = 1;
+        pPortSpeedAutoEn  = 1;
+
+        CSL_CPSW_setPortSpeedAutoEnable (portNum, pPortSpeedAutoEn);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_setPortSpeedAutoEnable (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    bool                        pPortSpeedAutoEn
+);
+
+
+/** ============================================================================
+ *   @n@b CSL_CPSW_getPortSpeedAutoEnable
+ *
+ *   @b Description
+ *   @n This function gets the auto enable speed status of the port
+ *
+ *   @b Arguments
+     @verbatim
+        portNum             CPSW port number for which the auto enable status
+                            must be retrieved.
+        pPortSpeed          Port Speed
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Reads
+ *   @n XGE_CPSW_PN_SPEED_REG_AUTO_ENABLE
+ *
+ *   @b Example
+ *   @verbatim
+ *      Uint32      portNum, pPortSpeedAutoEn;
+
+        portNum           = 1;
+
+        pPortSpeedAutoEn = CSL_CPSW_getPortSpeedAutoEnable (portNum);
+
+     @endverbatim
+ * =============================================================================
+ */
+void CSL_CPSW_getPortSpeedAutoEnable (CSL_Xge_cpswRegs *hCpswRegs,
+    Uint32                      portNum,
+    bool*                       pPortSpeedAutoEn
 );
 
 
