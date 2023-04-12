@@ -167,6 +167,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/crc/crc_full_cpu/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/crc/crc_full_cpu/am243x-lp/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ddr/ddr_ecc_test_main_esm/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1145,6 +1149,10 @@ BUILD_COMBO_EXAMPLE_ALL += crc_full_cpu_am243x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crc_full_cpu_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crc_full_cpu_am243x-lp_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ddr_ecc_test_main_esm_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecap_apwm_mode_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecap_apwm_mode_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecap_apwm_mode_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ecap_apwm_mode_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -1555,6 +1563,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  ddr_ecc_test_main_esm_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ddr/ddr_ecc_test_main_esm/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecap_apwm_mode_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecap_apwm_mode_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ ecap_apwm_mode_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ecap_apwm_mode_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  ecap_epwm_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2520,6 +2540,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += crc_full_cpu_am243x-evm_m4fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crc_full_cpu_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crc_full_cpu_am243x-lp_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ddr_ecc_test_main_esm_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_apwm_mode_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_apwm_mode_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_apwm_mode_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_apwm_mode_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2930,6 +2954,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  ddr_ecc_test_main_esm_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ddr/ddr_ecc_test_main_esm/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecap_apwm_mode_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecap_apwm_mode_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ ecap_apwm_mode_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecap_apwm_mode_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  ecap_epwm_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3895,6 +3931,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += crc_full_cpu_am243x-evm_m4fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crc_full_cpu_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crc_full_cpu_am243x-lp_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ddr_ecc_test_main_esm_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_apwm_mode_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_apwm_mode_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_apwm_mode_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_apwm_mode_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4305,6 +4345,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ddr_ecc_test_main_esm_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ddr/ddr_ecc_test_main_esm/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecap_apwm_mode_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecap_apwm_mode_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ ecap_apwm_mode_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecap_apwm_mode_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  ecap_epwm_loopback_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
