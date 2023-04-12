@@ -35,7 +35,7 @@ This example is an EtherCAT-IOLink Gateway application based on evaluation stack
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos
- ICSSG          | ICSSG0
+ ICSSG          | ICSSG0 and ICSSG1
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/industrial_comms/ethercat_iolink_gateway_demo
@@ -47,7 +47,7 @@ This example is an EtherCAT-IOLink Gateway application based on evaluation stack
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos
- ICSSG          | ICSSG0
+ ICSSG          | ICSSG0 and ICSSG1
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER (E1/E2 Revision)
  Example folder | examples/industrial_comms/ethercat_iolink_gateway_demo
