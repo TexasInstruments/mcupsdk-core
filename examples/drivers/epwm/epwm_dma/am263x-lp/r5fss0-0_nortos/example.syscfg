@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -41,7 +41,6 @@ edma1.edmaChannel[1].xbarConfig.instance            = "DMA_TRIG_XBAR_EDMA_MODULE
 edma1.edmaChannel[1].xbarConfig.xbarConfig.$name    = "CONFIG_DMA_XBAR1";
 edma1.edmaChannel[1].xbarConfig.xbarConfig.instance = "DMA_XBAR_DMA_TRIG_XBAR_1";
 
-epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION_STOP_AFTER_FULL_CYCLE";
 epwm1.epwmTimebase_period                                      = 20000;
 epwm1.epwmCounterCompare_cmpA                                  = 10000;
 epwm1.epwmCounterCompare_cmpB                                  = 10000;
@@ -57,6 +56,7 @@ epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable                = true;
 epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource                = "EPWM_SOC_TBCTR_ZERO";
 epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar        = "1";
 epwm1.$name                                                    = "CONFIG_EPWMx";
+epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
