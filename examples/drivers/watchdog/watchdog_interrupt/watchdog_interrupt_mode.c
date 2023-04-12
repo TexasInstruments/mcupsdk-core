@@ -93,8 +93,7 @@ int32_t SDL_ESM_WDTCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmInt
     return retVal;
 }
 
-#elif defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM273X)
-
+#else
 void watchdogCallback(void *arg)
 {
     gWatchdogInt++;
