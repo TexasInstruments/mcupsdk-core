@@ -299,7 +299,7 @@ static int32_t UART_edmaTransferWrite(UART_Object *obj, const UART_Attrs *attrs,
     /* Dummy param set configuration */
     edmaDummyParam.aCnt          = (uint16_t) 1;
     edmaDummyParam.linkAddr      = 0xFFFFU;
-    edmaDummyParam.opt          |= (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_STATIC_MASK |
+    edmaDummyParam.opt           = (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_STATIC_MASK |
                                    ((tccDummy << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
     /* Write Tx param set */
@@ -373,8 +373,7 @@ static int32_t UART_edmaTransferRead(UART_Object *obj, const UART_Attrs *attrs,
     edmaRxParam.linkAddr      = 0xFFFFU;
     edmaRxParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(0);
     edmaRxParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(edmaRxParam.aCnt);
-    edmaRxParam.opt          |=
-    (EDMA_OPT_TCINTEN_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+    edmaRxParam.opt           = (EDMA_OPT_TCINTEN_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
     /* Write Rx param set */
     EDMA_setPaRAM(baseAddr, paramRx, &edmaRxParam);

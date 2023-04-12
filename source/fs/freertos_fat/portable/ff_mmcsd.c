@@ -114,8 +114,9 @@ FF_Disk_t * FF_MMCSDDiskInit( char * pcName,
 {
     FF_Error_t xError;
     FF_CreationParameters_t xParameters;
+    uint32_t ulSectorCount;
 
-    if( (pxDisk != NULL) && (config != NULL) )
+    if( (pxDisk != NULL) && (config != NULL) && (pcName != NULL) )
     {
         /* Start with every member of the structure set to zero. */
         memset( pxDisk, '\0', sizeof( FF_Disk_t ) );
@@ -124,7 +125,11 @@ FF_Disk_t * FF_MMCSDDiskInit( char * pcName,
         pxDisk->pvTag = ( void * )config;
 
         MMCSD_Handle deviceHandle = MMCSD_getHandle(config->mmcsdInstance);
-        uint32_t ulSectorCount = MMCSD_getBlockCount(deviceHandle);
+
+        if(deviceHandle != NULL)
+        {
+            ulSectorCount = MMCSD_getBlockCount(deviceHandle);
+        }
 
         /* The signature is used by the disk read and disk write functions to
          * ensure the disk being accessed is a MMCSD disk. */
@@ -242,7 +247,7 @@ FF_Error_t FF_MMCSDMountPartition( FF_Disk_t *pxDisk , char* partitionName )
 {
     FF_Error_t xError = pdPASS;
 
-    if(pxDisk != NULL)
+    if(pxDisk != NULL && partitionName != NULL)
     {
         uint32_t partitionNum = pxDisk->xStatus.bPartitionNumber;
 
@@ -336,45 +341,43 @@ static int32_t prvWriteMmcsd( uint8_t * pucSource,
                             uint32_t ulSectorCount,
                             FF_Disk_t * pxDisk )
 {
-    int32_t lReturn = FF_ERR_NONE;
+    int32_t lReturn = FF_ERR_NULL_POINTER | FF_ERRFLAG;
 
-    if( pxDisk != NULL )
+    if( (pxDisk != NULL) && (pucSource != NULL))
     {
         FF_MMCSD_Config *cfg = (FF_MMCSD_Config *)(pxDisk->pvTag);
         MMCSD_Handle deviceHandle = MMCSD_getHandle(cfg->mmcsdInstance);
 
-        if( pxDisk->ulSignature != MMCSD_SIGNATURE )
+        if(deviceHandle != NULL)
         {
-            /* The disk structure is not valid because it doesn't contain a
-             * magic number written to the disk when it was created. */
-            lReturn = FF_ERR_IOMAN_DRIVER_FATAL_ERROR | FF_ERRFLAG;
+            if( pxDisk->ulSignature != MMCSD_SIGNATURE )
+            {
+                /* The disk structure is not valid because it doesn't contain a
+                    * magic number written to the disk when it was created. */
+                lReturn = FF_ERR_IOMAN_DRIVER_FATAL_ERROR | FF_ERRFLAG;
+            }
+            else if( pxDisk->xStatus.bIsInitialised == pdFALSE )
+            {
+                /* The disk has not been initialized. */
+                lReturn = FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG;
+            }
+            else if( ulSectorNumber >= pxDisk->ulNumberOfSectors )
+            {
+                /* The start sector is not within the bounds of the disk. */
+                lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
+            }
+            else if( ( pxDisk->ulNumberOfSectors - ulSectorNumber ) < ulSectorCount )
+            {
+                /* The end sector is not within the bounds of the disk. */
+                lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
+            }
+            else
+            {
+                /* Copy the data to the MMCSD Device */
+                MMCSD_write(deviceHandle, ( uint8_t * ) pucSource, ulSectorNumber, ulSectorCount );
+                lReturn = FF_ERR_NONE;
+            }
         }
-        else if( pxDisk->xStatus.bIsInitialised == pdFALSE )
-        {
-            /* The disk has not been initialized. */
-            lReturn = FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG;
-        }
-        else if( ulSectorNumber >= pxDisk->ulNumberOfSectors )
-        {
-            /* The start sector is not within the bounds of the disk. */
-            lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
-        }
-        else if( ( pxDisk->ulNumberOfSectors - ulSectorNumber ) < ulSectorCount )
-        {
-            /* The end sector is not within the bounds of the disk. */
-            lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
-        }
-        else
-        {
-            /* Copy the data to the MMCSD Device */
-            MMCSD_write(deviceHandle, ( uint8_t * ) pucSource, ulSectorNumber, ulSectorCount );
-
-            lReturn = FF_ERR_NONE;
-        }
-    }
-    else
-    {
-        lReturn = FF_ERR_NULL_POINTER | FF_ERRFLAG;
     }
 
     return lReturn;
@@ -385,40 +388,42 @@ static int32_t prvReadMmcsd( uint8_t * pucDestination,
                            uint32_t ulSectorCount,
                            FF_Disk_t * pxDisk )
 {
-    int32_t lReturn;
+    int32_t lReturn = FF_ERR_NULL_POINTER | FF_ERRFLAG;
 
-    if( pxDisk != NULL )
+    if((pxDisk != NULL) && (pucDestination != NULL))
     {
         FF_MMCSD_Config *cfg = (FF_MMCSD_Config *)(pxDisk->pvTag);
         MMCSD_Handle deviceHandle = MMCSD_getHandle(cfg->mmcsdInstance);
 
-        if( pxDisk->ulSignature != MMCSD_SIGNATURE )
+        if(deviceHandle != NULL)
         {
-            /* The disk structure is not valid because it doesn't contain a
-             * magic number written to the disk when it was created. */
-            lReturn = FF_ERR_IOMAN_DRIVER_FATAL_ERROR | FF_ERRFLAG;
-        }
-        else if( pxDisk->xStatus.bIsInitialised == pdFALSE )
-        {
-            /* The disk has not been initialized. */
-            lReturn = FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG;
-        }
-        else if( ulSectorNumber >= pxDisk->ulNumberOfSectors )
-        {
-            /* The start sector is not within the bounds of the disk. */
-            lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
-        }
-        else if( ( pxDisk->ulNumberOfSectors - ulSectorNumber ) < ulSectorCount )
-        {
-            /* The end sector is not within the bounds of the disk. */
-            lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
-        }
-        else
-        {
-            /* Copy the data from the SD card */
-            MMCSD_read(deviceHandle, ( uint8_t * ) pucDestination, ulSectorNumber, ulSectorCount);
-
-            lReturn = FF_ERR_NONE;
+            if( pxDisk->ulSignature != MMCSD_SIGNATURE )
+            {
+                /* The disk structure is not valid because it doesn't contain a
+                * magic number written to the disk when it was created. */
+                lReturn = FF_ERR_IOMAN_DRIVER_FATAL_ERROR | FF_ERRFLAG;
+            }
+            else if( pxDisk->xStatus.bIsInitialised == pdFALSE )
+            {
+                /* The disk has not been initialized. */
+                lReturn = FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG;
+            }
+            else if( ulSectorNumber >= pxDisk->ulNumberOfSectors )
+            {
+                /* The start sector is not within the bounds of the disk. */
+                lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
+            }
+            else if( ( pxDisk->ulNumberOfSectors - ulSectorNumber ) < ulSectorCount )
+            {
+                /* The end sector is not within the bounds of the disk. */
+                lReturn = ( FF_ERR_IOMAN_OUT_OF_BOUNDS_WRITE | FF_ERRFLAG );
+            }
+            else
+            {
+                /* Copy the data from the SD card */
+                MMCSD_read(deviceHandle, ( uint8_t * ) pucDestination, ulSectorNumber, ulSectorCount);
+                lReturn = FF_ERR_NONE;
+            }
         }
     }
     else
