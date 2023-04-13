@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-00030000001F}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..30] OF BYTE</Name>
+			<BitSize>248</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>31</Elements>
+			</ArrayInfo>
+		</DataType>
+	</DataTypes>
+	<ImageDatas>
+		<ImageData Id="1000">424de6000000000000007600000028000000100000000e000000010004000000000070000000130b0000130b000010000000100000000707ff003434fc004e4efd007474f3009f9fde008a8af000b1b1d400b8b8fc00ccccd700d0d0ef00f9f9fc000000000000000000000000000000000000000000aaaaaaaaa628aaaaaaaaaaaa6126aaaaaaaaaa941014aaaaaaaa8841053148aaaaa533014a84138aaa81000295562038a8200002a229200262000003a22a300255531016a32a6218aaaa2014a879415aaaaa20015a9577aaaaaa20002a12aaaaaaaa20014aa9aaaaaaaa2002aaaaaaaa</ImageData>
+	</ImageDatas>
+	<Project ProjectGUID="{38C384E4-2817-4DAE-8AE1-C53A04D445BF}" Target64Bit="true" ShowHideConfigurations="#x3c7">
+		<System>
+			<Settings MaxCpus="4" NonWinCpus="1">
+				<Cpu CpuId="1"/>
+			</Settings>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{B4DD8E2F-300A-4C23-A4C9-62F328736168}" Name="GatewayPlc" PrjFilePath="GatewayPlc\GatewayPlc.plcproj" TmcFilePath="GatewayPlc\GatewayPlc.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="GatewayPlc\GatewayPlc.tmc">
+					<Name>GatewayPlc Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.pos1</Name>
+							<Comment><![CDATA[ Autosen AI402 measure position PDV1, upper BYTE 
+       Bind with the TxPDO Module 2.TxPDO 001.TxPDO 001[0]]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.pos2</Name>
+							<Comment><![CDATA[ Autosen AI402 measure position PDV1, lower BYTE
+	   Bind with the TxPDO Module 2.TxPDO 001.TxPDO 001[1]]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.ctrled</Name>
+							<Comment><![CDATA[ Balluff smart light BNI IOL-800-000-Z036 control BYTE 
+       Bind with the RxPDO Module 1.RxPDO 001.RxPDO 001[0]]]></Comment>
+							<Type>BYTE</Type>
+						</Var>
+					</Vars>
+					<Contexts>
+						<Context>
+							<Id NeedCalleeCall="true">0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+		<Io>
+			<Device Id="2" DevType="111" DevFlags="#x0003" AmsPort="28674" AmsNetId="169.254.142.229.3.1" RemoteName="Device 2 (EtherCAT)" InfoImageId="2">
+				<Name>Device 2 (EtherCAT)</Name>
+				<AddressInfo>
+					<Pnp>
+						<DeviceDesc>Ethernet (TwinCAT-Intel PCI Ethernet Adapter (Gigab</DeviceDesc>
+						<DeviceName>\DEVICE\{7D91A5E7-C1EF-4EBF-AF13-6E76DC890D42}</DeviceName>
+						<DeviceData>d8bbc14b7a2a</DeviceData>
+					</Pnp>
+				</AddressInfo>
+				<Image Id="1" AddrType="9" ImageType="3">
+					<Name>Image</Name>
+				</Image>
+				<Box Id="1" BoxType="9099" BoxFlags="#x00000020">
+					<Name>Box 1 (TI EC-IOL-Gateway for AM64X.R5F)</Name>
+					<ImageId>1000</ImageId>
+					<EtherCAT SlaveType="3" PdiType="#x0c80" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="59" VendorId="#xe000059d" ProductCode="#x54491000" RevisionNo="#x00010000" InfoDataAddr="true" InfoDataNetId="true" PortPhys="17" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="TI EC-IOL-Gateway for AM64X.R5F" Desc="TI EC-IOL-Gateway for AM64X.R5F" PortABoxInfo="#x00ffffff">
+						<SyncMan>001000012600010001000000000000000001001026010000</SyncMan>
+						<SyncMan>001100012200010002000000000000000001001122010000</SyncMan>
+						<SyncMan>0012f8006400010003000000000000000000001264030000</SyncMan>
+						<SyncMan>001e00012000010004000000000000000000001e20030000</SyncMan>
+						<Fmmu>0000000000000000001200020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000001e00010100000002000000000000000000000000000000</Fmmu>
+						<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+						<BootStrapData>0010000100120001</BootStrapData>
+						<Pdo Name="TxPDO Module 1" Index="#x1a00" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6000" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 2" Index="#x1a01" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6010" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 3" Index="#x1a02" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6020" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 4" Index="#x1a03" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6030" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 5" Index="#x1a04" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6040" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 6" Index="#x1a05" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6050" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 7" Index="#x1a06" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6060" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Module 8" Index="#x1a07" Flags="#x0001" SyncMan="3">
+							<Entry Name="TxPDO 001" Index="#x6070" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="TxPDO Status" Index="#x1a80" Flags="#x0001" SyncMan="3">
+							<Entry Name="Device Status 1" Index="#xf100" Sub="#x01">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 2" Index="#xf100" Sub="#x02">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 3" Index="#xf100" Sub="#x03">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 4" Index="#xf100" Sub="#x04">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 5" Index="#xf100" Sub="#x05">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 6" Index="#xf100" Sub="#x06">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 7" Index="#xf100" Sub="#x07">
+								<Type>USINT</Type>
+							</Entry>
+							<Entry Name="Device Status 8" Index="#xf100" Sub="#x08">
+								<Type>USINT</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 1" Index="#x1600" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7000" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 2" Index="#x1601" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7010" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 3" Index="#x1602" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7020" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 4" Index="#x1603" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7030" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 5" Index="#x1604" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7040" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 6" Index="#x1605" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7050" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 7" Index="#x1606" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7060" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+						<Pdo Name="RxPDO Module 8" Index="#x1607" InOut="1" Flags="#x0001" SyncMan="2">
+							<Entry Name="RxPDO 001" Index="#x7070" Sub="#x01">
+								<Type GUID="{18071995-0000-0000-0000-00030000001F}">ARRAY [0..30] OF BYTE</Type>
+							</Entry>
+						</Pdo>
+					</EtherCAT>
+				</Box>
+				<EtherCAT/>
+			</Device>
+		</Io>
+	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{00000000-2001-0850-0020-500810000403}" Id="#x02030010"/>
+		<OwnerA Name="TIPC^GatewayPlc^GatewayPlc Instance">
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (TI EC-IOL-Gateway for AM64X.R5F)">
+				<Link VarA="PlcTask Inputs^MAIN.pos1" VarB="TxPDO Module 2^TxPDO 001[0]"/>
+				<Link VarA="PlcTask Inputs^MAIN.pos2" VarB="TxPDO Module 2^TxPDO 001[2]"/>
+				<Link VarA="PlcTask Outputs^MAIN.ctrled" VarB="RxPDO Module 1^RxPDO 001[0]"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmProject>
