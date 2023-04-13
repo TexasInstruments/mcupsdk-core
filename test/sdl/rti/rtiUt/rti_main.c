@@ -203,9 +203,7 @@ void test_sdl_rti_baremetal_test_app (void)
     int32_t    testResult = SDL_APP_TEST_PASS;
     int32_t    i;
 
-    /* Open drivers to open the UART driver for console */
-    Drivers_open();
-    Board_driversOpen();
+
 
     /* Init dpl */
     sdlApp_dplInit();
@@ -248,8 +246,7 @@ void test_sdl_rti_baremetal_test_app (void)
         DebugP_log("\n Few/all tests Failed \r\n");
     }
 
-    Board_driversClose();
-    Drivers_close();
+
 #if defined (UNITY_INCLUDE_CONFIG_H)
     TEST_ASSERT_EQUAL_INT32(SDL_APP_TEST_PASS, testResult);
 #endif

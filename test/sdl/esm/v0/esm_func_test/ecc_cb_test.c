@@ -143,17 +143,17 @@ static int32_t SDTF_runESMInjectInstance(SDL_ESM_Inst esmType,
     esmErrorConfig.groupNumber = groupNumber;
     esmErrorConfig.bitNumber = bitNumber;
 
-    DebugP_log("\n ESM inject: test starting for Esm instance %d \n", esmType);
+    DebugP_log("\r\n ESM inject: test starting for Esm instance %d \r\n", esmType);
 
 
     /* Run esm test 2*/
     result = SDR_ESM_errorInsert(esmType, &esmErrorConfig);
 
     if (result != SDL_PASS ) {
-        DebugP_log("\n ESM inject test for Esm instance %d failed \n", esmType);
+        DebugP_log("\r\n ESM inject test for Esm instance %d failed \r\n", esmType);
         retVal = -1;
     } else {
-        DebugP_log("\n ESM inject test for Esm instance %d Done \n", esmType);
+        DebugP_log("\r\n ESM inject test for Esm instance %d Done \r\n", esmType);
 
     }
     SDL_ESM_clrNError(esmType);
@@ -189,7 +189,7 @@ extern int32_t SDL_ESM_CCMapplicationCallbackFunction(SDL_ESM_Inst esmInstType,
 int32_t ecc_cb_test(void)
 {
     int32_t retVal=0;
-    DebugP_log("\n inside ecc testcase \n");
+    DebugP_log("\r\n inside ecc testcase \r\n");
     SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_ECCapplicationCallbackFunction, (void*)0x1);
     SDL_ESM_registerECCCallback(SDL_ESM_INST_MAIN_ESM0,eventBitMapMAIN,
                                     SDL_ESM_ECCapplicationCallbackFunction,
@@ -224,7 +224,7 @@ int32_t sdl_ecc_cb_test(void)
     int32_t retVal = 0;
     int32_t i;
 
-    DebugP_log("\n Running all sdr test commands supported");
+    DebugP_log("\r\n Running all sdr test commands supported");
     for(i = 0u; i< SDTF_NUM_RUNALL_TEST_COMMANDS; i++) {
         if (SDTF_commandList_ecc_cb[i].commandFunction!= ((void *)(0u))) {
             retVal = (*SDTF_commandList_ecc_cb[i].commandFunction)();
@@ -236,11 +236,11 @@ int32_t sdl_ecc_cb_test(void)
 
     if (retVal == 0)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\r\n All tests have passed. \r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\r\n Few/all tests Failed \r\n");
     }
 
 return retVal;

@@ -62,9 +62,9 @@
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D18094u)
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D18098u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
-#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u) 
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
 
-#define SDL_CLEAR_STATUS									(0xffu) 
+#define SDL_CLEAR_STATUS									(0xffu)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -235,7 +235,7 @@ void ECC_func_app(void)
     {
         DebugP_log("\r\nAll ip tests passed. \r\n");
     }
-    else 
+    else
     {
         DebugP_log("\r\nSome ip tests failed. \r\n");
     }
@@ -253,11 +253,11 @@ void ECC_func_app(void)
 	DebugP_log("\r\nECC sdl func Test\r\n");
 	if (testResult == SDL_PASS)
     {
-        DebugP_log("\r\nAll sdl tests passed. \r\n");
+        DebugP_log("\r\nAll tests have passed. \r\n");
     }
     else
     {
-        DebugP_log("\r\nSome sdl tests failed. \r\n");
+        DebugP_log("\r\nSome tests have failed. \r\n");
     }
 }
 
@@ -278,14 +278,14 @@ int32_t test_main(void)
 	/* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-	
+
     sdlApp_dplInit();
     ecc_app_runner();
 
 	/* Close drivers to close the UART driver for console */
     Board_driversClose();
     Drivers_close();
-	
+
     return (0);
 }
 

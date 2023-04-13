@@ -50,6 +50,11 @@
 #include <ti/build/unit-test/Unity/src/unity.h>
 #include <ti/build/unit-test/config/unity_config.h>
 #endif
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_board_config.h"
+#include "ti_dpl_config.h"
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -230,6 +235,9 @@ void test_sdl_pbist_test_app_runner(void)
 
 void test_main(void *args)
 {
+
+    Drivers_open();
+    Board_driversOpen();
     /* Declaration of variables */
     int32_t  testResult;
 #ifndef SDL_SOC_MCU_R5F
@@ -257,6 +265,8 @@ void test_main(void *args)
     }
 #endif
 
+    Board_driversClose();
+    Drivers_close();
 
 }
 

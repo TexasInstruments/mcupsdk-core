@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sdl_rti_test_app.$(PROFILE).out
+OUTNAME:=rti_func_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=sdl_rti_test_app.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=sdl_rti_test_app.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=sdl_rti_test_app.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=sdl_rti_test_app.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_rti_test_app.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_rti_test_app.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_rti_test_app.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_rti_test_app.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=rti_func_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=rti_func_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=rti_func_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=rti_func_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=rti_func_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=rti_func_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=rti_func_test_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=rti_func_test_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -193,7 +193,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang sdl_rti_test_app ...
+	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang rti_func_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

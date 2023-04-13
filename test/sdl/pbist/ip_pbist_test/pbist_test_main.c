@@ -51,6 +51,12 @@
 #include <ti/build/unit-test/config/unity_config.h>
 #endif
 
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_board_config.h"
+#include "ti_dpl_config.h"
+
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -188,6 +194,9 @@ void test_sdl_pbist_test_app_runner(void)
 
 int32_t test_main(void)
 {
+
+    Drivers_open();
+    Board_driversOpen();
     /* Declaration of variables */
     int32_t  testResult=SDL_PASS;
 
@@ -209,6 +218,9 @@ int32_t test_main(void)
     {
         DebugP_log("\r\nBoard Init failed. Exiting the app.\r\n");
     }
+
+    Board_driversClose();
+    Drivers_close();
 
     return (0);
 }

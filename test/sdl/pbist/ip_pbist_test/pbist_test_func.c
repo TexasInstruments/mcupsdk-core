@@ -99,26 +99,26 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
     if (runNegTest == true)
     {
-        DebugP_log("\n Starting PBIST failure insertion test on %s, index %d...\n",
+        DebugP_log("\r\n Starting PBIST failure insertion test on %s, index %d...\r\n",
                     PBIST_TestHandleArray[instanceId].testName,
                     instanceId);
         testType = SDL_PBIST_NEG_TEST;
     }
     else
     {
-        DebugP_log("\n Starting PBIST test on %s, index %d...\n",
+        DebugP_log("\r\n Starting PBIST test on %s, index %d...\r\n",
                     PBIST_TestHandleArray[instanceId].testName,
                     instanceId);
         testType = SDL_PBIST_TEST;
     }
 
 #ifdef DEBUG
-    DebugP_log("\n Press any key to continue...");
+    DebugP_log("\r\n Press any key to continue...");
     inputChar = UART_getChar();
 
     if (inputChar == 'n')
     {
-        DebugP_log("\n Skipping this test. on request \n");
+        DebugP_log("\r\n Skipping this test. on request \r\n");
         return 0;
     }
 #endif
@@ -131,7 +131,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         if (PBIST_TestHandleArray[instanceId].tisciProcId != 0u)
         {
 #ifdef DEBUG
-            DebugP_log("  Primary core: %s: Requesting processor \n",
+            DebugP_log("  Primary core: %s: Requesting processor \r\n",
                         PBIST_TestHandleArray[instanceId].coreName);
 #endif
             /* Request Primary core */
@@ -139,7 +139,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                         SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Primary core: Sciclient_procBootRequestProcessor, ProcId 0x%x...FAILED \n",
+                DebugP_log("   Primary core: Sciclient_procBootRequestProcessor, ProcId 0x%x...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciProcId);
                 testResult = -1;
             }
@@ -153,7 +153,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
 
 #ifdef DEBUG
-            DebugP_log("  Secondary core: %s: Requesting processor \n",
+            DebugP_log("  Secondary core: %s: Requesting processor \r\n",
                     PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
             /* Request secondary core */
@@ -161,7 +161,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                         SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Secondary core: Sciclient_procBootRequestProcessor, ProcId 0x%x...FAILED \n",
+                DebugP_log("   Secondary core: Sciclient_procBootRequestProcessor, ProcId 0x%x...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciSecProcId);
                 testResult = -1;
             }
@@ -174,7 +174,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* Set Local reset for Primary core */
 #ifdef DEBUG
-            DebugP_log("  %s: Primary core: Set module reset \n",
+            DebugP_log("  %s: Primary core: Set module reset \r\n",
                         PBIST_TestHandleArray[instanceId].coreName);
 #endif
             status =  Sciclient_pmSetModuleRst(PBIST_TestHandleArray[instanceId].tisciDeviceId,
@@ -182,7 +182,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Primary core: Sciclient_pmSetModuleRst...FAILED \n");
+                DebugP_log("   Primary core: Sciclient_pmSetModuleRst...FAILED \r\n");
                 testResult = -1;
             }
         }
@@ -195,7 +195,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* Set Local reset for Secondary core */
 #ifdef DEBUG
-            DebugP_log("  %s: Secondary core: Set Module reset \n",
+            DebugP_log("  %s: Secondary core: Set Module reset \r\n",
                         PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
             status =  Sciclient_pmSetModuleRst(PBIST_TestHandleArray[instanceId].tisciSecDeviceId,
@@ -203,7 +203,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Secondary core: Sciclient_pmSetModuleRst...FAILED \n");
+                DebugP_log("   Secondary core: Sciclient_pmSetModuleRst...FAILED \r\n");
                 testResult = -1;
             }
         }
@@ -219,7 +219,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         status = customPrepareForPowerUpSequence(PBIST_TestHandleArray[instanceId].tisciProcId);
         if (status != SDL_PASS)
         {
-            DebugP_log("  Custom core power restore sequence, ProcId 0x%x ...FAILED \n",
+            DebugP_log("  Custom core power restore sequence, ProcId 0x%x ...FAILED \r\n",
                         PBIST_TestHandleArray[instanceId].tisciProcId);
             testResult = -1;
         }
@@ -232,7 +232,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         for ( i = 0; i < PBIST_TestHandleArray[instanceId].numAuxDevices; i++)
         {
 #ifdef DEBUG
-            DebugP_log("  Powering on Device number %d Device Id %x\n",
+            DebugP_log("  Powering on Device number %d Device Id %x\r\n",
                         i, PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
 #endif
 
@@ -242,7 +242,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                 SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("  Sciclient_pmSetModuleState 0x%x ...FAILED \n",
+                DebugP_log("  Sciclient_pmSetModuleState 0x%x ...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
                 testResult = -1;
                 break;
@@ -255,7 +255,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     {
         /* power on Primary core*/
 #ifdef DEBUG
-        DebugP_log("  Primary core: Powering on %s \n",
+        DebugP_log("  Primary core: Powering on %s \r\n",
                     PBIST_TestHandleArray[instanceId].coreName);
 #endif
         status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciDeviceId,
@@ -265,7 +265,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
         if (status != SDL_PASS)
         {
-            DebugP_log("   Primary core: Sciclient_pmSetModuleState 0x%x ...FAILED \n",
+            DebugP_log("   Primary core: Sciclient_pmSetModuleState 0x%x ...FAILED \r\n",
                         PBIST_TestHandleArray[instanceId].tisciDeviceId);
             testResult = -1;
         }
@@ -278,7 +278,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* power on Secondary core*/
 #ifdef DEBUG
-            DebugP_log("  Secondary core: Powering on %s \n",
+            DebugP_log("  Secondary core: Powering on %s \r\n",
                         PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
             status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciSecDeviceId,
@@ -287,7 +287,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                 SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Secondary core: Sciclient_pmSetModuleState 0x%x ...FAILED \n",
+                DebugP_log("   Secondary core: Sciclient_pmSetModuleState 0x%x ...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciSecDeviceId);
                 testResult = -1;
                 return testResult;
@@ -304,7 +304,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
 #ifdef DEBUG
         DebugP_log(
-                        "  Double checking Powering on Device number %d Device Id %x\n",
+                        "  Double checking Powering on Device number %d Device Id %x\r\n",
                         i, PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
 #endif
             do
@@ -316,7 +316,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                     SystemP_WAIT_FOREVER);
                 if (status != SDL_PASS)
                 {
-                    DebugP_log("  Sciclient_pmGetModuleState 0x%x ...FAILED \n",
+                    DebugP_log("  Sciclient_pmGetModuleState 0x%x ...FAILED \r\n",
                                 PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
                     testResult = -1;
                     break;
@@ -331,7 +331,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         /* Double check power on Primary core*/
 #ifdef DEBUG
         DebugP_log(
-                        "  Primary core: Double checking Powering on %s \n",
+                        "  Primary core: Double checking Powering on %s \r\n",
                         PBIST_TestHandleArray[instanceId].coreName);
 #endif
         do
@@ -343,7 +343,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                 SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Primary core: Sciclient_pmGetModuleState 0x%x ...FAILED \n",
+                DebugP_log("   Primary core: Sciclient_pmGetModuleState 0x%x ...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciDeviceId);
                 testResult = -1;
                 break;
@@ -359,7 +359,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             /* Double check power on Secondary core*/
 #ifdef DEBUG
             DebugP_log(
-                            "  Secondary core: Double checking Powering on %s \n",
+                            "  Secondary core: Double checking Powering on %s \r\n",
                             PBIST_TestHandleArray[instanceId].coreName);
 #endif
             do
@@ -371,7 +371,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                     SystemP_WAIT_FOREVER);
                 if (status != SDL_PASS)
                 {
-                    DebugP_log("   Secondary core: Sciclient_pmGetModuleState 0x%x ...FAILED \n",
+                    DebugP_log("   Secondary core: Sciclient_pmGetModuleState 0x%x ...FAILED \r\n",
                                 PBIST_TestHandleArray[instanceId].tisciSecDeviceId);
                     testResult = -1;
                     break;
@@ -384,7 +384,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     if ((testResult == 0) && (PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId != 0u))
     {
 #ifdef DEBUG
-        DebugP_log("  Powering on PBIST %d \n",
+        DebugP_log("  Powering on PBIST %d \r\n",
                     PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId);
 #endif
         status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId,
@@ -394,7 +394,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
         if (status != SDL_PASS)
         {
-            DebugP_log("   PBIST Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\n",
+            DebugP_log("   PBIST Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\r\n",
                         PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId, status);
             testResult = -1;
         }
@@ -450,7 +450,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     if ((testResult == 0) && (PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId != 0u))
     {
 #ifdef DEBUG
-        DebugP_log("  Powering off PBIST %d \n",
+        DebugP_log("  Powering off PBIST %d \r\n",
                     PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId);
 #endif
         status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId,
@@ -460,7 +460,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
         if (status != SDL_PASS)
         {
-            DebugP_log("   PBIST Sciclient_pmSetModuleState 0x%x ...FAILED \n",
+            DebugP_log("   PBIST Sciclient_pmSetModuleState 0x%x ...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciPBISTDeviceId);
             testResult = -1;
         }
@@ -474,7 +474,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* power off Secondary core*/
 #ifdef DEBUG
-            DebugP_log("  Secondary core: Powering off %s \n",
+            DebugP_log("  Secondary core: Powering off %s \r\n",
                         PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
             status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciSecDeviceId,
@@ -483,7 +483,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                 SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Secondary core: Sciclient_pmSetModuleState Power off 0x%x ...FAILED \n",
+                DebugP_log("   Secondary core: Sciclient_pmSetModuleState Power off 0x%x ...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciSecDeviceId);
                 testResult = -1;
                 return testResult;
@@ -499,7 +499,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         status = customPowerDownSequence(PBIST_TestHandleArray[instanceId].tisciProcId);
         if (status != SDL_PASS)
         {
-            DebugP_log("  Custom core power down sequence, ProcId 0x%x ...FAILED \n",
+            DebugP_log("  Custom core power down sequence, ProcId 0x%x ...FAILED \r\n",
                         PBIST_TestHandleArray[instanceId].tisciProcId);
             testResult = -1;
         }
@@ -510,7 +510,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     {
         /* power off Primary core*/
 #ifdef DEBUG
-        DebugP_log("  Primary core: Powering off %s \n",
+        DebugP_log("  Primary core: Powering off %s \r\n",
                     PBIST_TestHandleArray[instanceId].coreName);
 #endif
         status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciDeviceId,
@@ -520,7 +520,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 
         if (status != SDL_PASS)
         {
-            DebugP_log("   Primary core: Sciclient_pmSetModuleState Power off 0x%x ...FAILED \n",
+            DebugP_log("   Primary core: Sciclient_pmSetModuleState Power off 0x%x ...FAILED \r\n",
                         PBIST_TestHandleArray[instanceId].tisciDeviceId);
             testResult = -1;
         }
@@ -533,7 +533,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         for ( i = 0; i < PBIST_TestHandleArray[instanceId].numAuxDevices; i++)
         {
 #ifdef DEBUG
-            DebugP_log("  Powering off Device number %d Device Id %x\n",
+            DebugP_log("  Powering off Device number %d Device Id %x\r\n",
                         i, PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
 #endif
             status = Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i],
@@ -542,7 +542,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                 SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("  Sciclient_pmSetModuleState 0x%x ...FAILED \n",
+                DebugP_log("  Sciclient_pmSetModuleState 0x%x ...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].auxDeviceIdsP[i]);
                 testResult = -1;
                 break;
@@ -559,7 +559,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         status = customPrepareForPowerUpSequence(PBIST_TestHandleArray[instanceId].tisciProcId);
         if (status != SDL_PASS)
         {
-            DebugP_log("  Custom core power restore sequence, ProcId 0x%x ...FAILED \n",
+            DebugP_log("  Custom core power restore sequence, ProcId 0x%x ...FAILED \r\n",
                         PBIST_TestHandleArray[instanceId].tisciProcId);
             testResult = -1;
         }
@@ -570,7 +570,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                           && (PBIST_TestHandleArray[instanceId].tisciDeviceId != 0U))
     {
 #ifdef DEBUG
-        DebugP_log("  Primary core: Taking out of local reset the core %s \n",
+        DebugP_log("  Primary core: Taking out of local reset the core %s \r\n",
                     PBIST_TestHandleArray[instanceId].coreName);
 #endif
         status = Sciclient_pmSetModuleRst(PBIST_TestHandleArray[instanceId].tisciDeviceId,
@@ -578,7 +578,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                           SystemP_WAIT_FOREVER);
         if (status != SDL_PASS)
         {
-             DebugP_log("  Sciclient_pmSetModuleRst 0x%x ...FAILED \n",
+             DebugP_log("  Sciclient_pmSetModuleRst 0x%x ...FAILED \r\n",
                          PBIST_TestHandleArray[instanceId].tisciDeviceId);
              testResult = -1;
         }
@@ -589,7 +589,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                           && (PBIST_TestHandleArray[instanceId].tisciSecDeviceId != 0U))
     {
 #ifdef DEBUG
-        DebugP_log("  Secondary core: Taking out of local reset the core %s \n",
+        DebugP_log("  Secondary core: Taking out of local reset the core %s \r\n",
                     PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
         status = Sciclient_pmSetModuleRst(PBIST_TestHandleArray[instanceId].tisciSecProcId,
@@ -597,7 +597,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                           SystemP_WAIT_FOREVER);
         if (status != SDL_PASS)
         {
-             DebugP_log("  Sciclient_pmSetModuleRst 0x%x ...FAILED \n",
+             DebugP_log("  Sciclient_pmSetModuleRst 0x%x ...FAILED \r\n",
                          PBIST_TestHandleArray[instanceId].tisciSecDeviceId);
              testResult = -1;
         }
@@ -611,7 +611,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* Set Software Reset Disable State for Primary core */
 #ifdef DEBUG
-            DebugP_log("  %s: Primary core: Put in Software Reset Disable \n",
+            DebugP_log("  %s: Primary core: Put in Software Reset Disable \r\n",
                         PBIST_TestHandleArray[instanceId].coreName);
 #endif
             status =  Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciDeviceId,
@@ -620,7 +620,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                  SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Primary core: Sciclient_pmSetModuleState...FAILED \n");
+                DebugP_log("   Primary core: Sciclient_pmSetModuleState...FAILED \r\n");
                 testResult = -1;
             }
         }
@@ -633,7 +633,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* Set Software Reset Disable State for Secondary core */
 #ifdef DEBUG
-            DebugP_log("  %s: Secondary Core Put in Software Reset Disable \n",
+            DebugP_log("  %s: Secondary Core Put in Software Reset Disable \r\n",
                         PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
             status =  Sciclient_pmSetModuleState(PBIST_TestHandleArray[instanceId].tisciSecDeviceId,
@@ -642,7 +642,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                  SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Secondary core Sciclient_pmSetModuleState...FAILED \n");
+                DebugP_log("   Secondary core Sciclient_pmSetModuleState...FAILED \r\n");
                 testResult = -1;
             }
         }
@@ -653,7 +653,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     {
         /* release processor Primary core */
 #ifdef DEBUG
-        DebugP_log("  Primary core: Releasing %s \n",
+        DebugP_log("  Primary core: Releasing %s \r\n",
                     PBIST_TestHandleArray[instanceId].coreName);
 #endif
 
@@ -662,7 +662,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                     SystemP_WAIT_FOREVER);
         if (status != SDL_PASS)
         {
-            DebugP_log("   Primary core: Sciclient_procBootReleaseProcessor, ProcId 0x%x...FAILED \n",
+            DebugP_log("   Primary core: Sciclient_procBootReleaseProcessor, ProcId 0x%x...FAILED \r\n",
                         PBIST_TestHandleArray[instanceId].tisciProcId);
             testResult = -1;
         }
@@ -676,7 +676,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             /* release processor Secondary core */
 #ifdef DEBUG
-            DebugP_log("  Secondary core: Releasing %s \n",
+            DebugP_log("  Secondary core: Releasing %s \r\n",
                         PBIST_TestHandleArray[instanceId].secCoreName);
 #endif
             status = Sciclient_procBootReleaseProcessor(PBIST_TestHandleArray[instanceId].tisciSecProcId,
@@ -684,7 +684,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
                                                         SystemP_WAIT_FOREVER);
             if (status != SDL_PASS)
             {
-                DebugP_log("   Secondary core: Sciclient_procBootReleaseProcessor, ProcId 0x%x...FAILED \n",
+                DebugP_log("   Secondary core: Sciclient_procBootReleaseProcessor, ProcId 0x%x...FAILED \r\n",
                             PBIST_TestHandleArray[instanceId].tisciSecProcId);
                 testResult = -1;
             }
@@ -699,13 +699,13 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
       #if defined (R5F0_INPUTS) || defined (R5F1_INPUTS)
       if (gInst == SDL_PBIST_INST_TOP)
       {
-        DebugP_log("\n Starting PBIST failure insertion test on TOP PBIST\n",
+        DebugP_log("\r\n Starting PBIST failure insertion test on TOP PBIST\r\n",
                     PBIST_TestHandleArray[instanceId].testName,
                     instanceId);
       }
       else if (gInst == SDL_PBIST_INST_DSS)
        {
-         DebugP_log("\n Starting PBIST failure insertion test on DSS PBIST\n",
+         DebugP_log("\r\n Starting PBIST failure insertion test on DSS PBIST\r\n",
                    PBIST_TestHandleArray[instanceId].testName,
                    instanceId);
        }
@@ -714,7 +714,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
       #elif defined (SOC_AM263X)
 
         {
-          DebugP_log("\n Starting PBIST failure insertion test on TOP PBIST\n",
+          DebugP_log("\r\n Starting PBIST failure insertion test on TOP PBIST\r\n",
                       PBIST_TestHandleArray[instanceId].testName,
                       instanceId);
         }
@@ -727,19 +727,19 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
       #if defined (SOC_AM273X) || defined (SOC_AWR294X)
       if (gInst == SDL_PBIST_INST_TOP)
       {
-        DebugP_log("\n Starting PBIST test on TOP PBIST\n",
+        DebugP_log("\r\n Starting PBIST test on TOP PBIST\r\n",
                     PBIST_TestHandleArray[instanceId].testName,
                     instanceId);
       }
       else if (gInst == SDL_PBIST_INST_DSS)
        {
-         DebugP_log("\n Starting PBIST test on DSS PBIST\n",
+         DebugP_log("\r\n Starting PBIST test on DSS PBIST\r\n",
                      PBIST_TestHandleArray[instanceId].testName,
                      instanceId);
        }
        #elif defined (SOC_AM263X)
        {
-         DebugP_log("\n Starting PBIST test on TOP PBIST\n",
+         DebugP_log("\r\n Starting PBIST test on TOP PBIST\r\n",
                      PBIST_TestHandleArray[instanceId].testName,
                      instanceId);
        }
@@ -748,12 +748,12 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     }
 
 #ifdef DEBUG
-    DebugP_log("\n Press any key to continue...");
+    DebugP_log("\r\n Press any key to continue...");
     inputChar = UART_getChar();
 
     if (inputChar == 'n')
     {
-        DebugP_log("\n Skipping this test. on request \n");
+        DebugP_log("\r\n Skipping this test. on request \r\n");
         return 0;
     }
 #endif
@@ -788,10 +788,10 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     prepTime = testStartTime - startTime;
     diffTime = testEndTime - testStartTime;
     restoreTime = endTime - testEndTime;
-    DebugP_log("  Delta Cores prep time in micro secs %d \n", (uint32_t)prepTime );
-    DebugP_log("  Delta PBIST execution time in micro secs %d \n", (uint32_t)diffTime );
-    DebugP_log("  Delta Cores restore time in micro secs %d \n", (uint32_t)restoreTime );
-    DebugP_log(" PBIST complete %s, test index %d\n",
+    DebugP_log("  Delta Cores prep time in micro secs %d \r\n", (uint32_t)prepTime );
+    DebugP_log("  Delta PBIST execution time in micro secs %d \r\n", (uint32_t)diffTime );
+    DebugP_log("  Delta Cores restore time in micro secs %d \r\n", (uint32_t)restoreTime );
+    DebugP_log(" PBIST complete %s, test index %d\r\n",
                 PBIST_TestHandleArray[instanceId].testName,
                 instanceId);
 #if defined (SOC_AWR294X)
@@ -801,70 +801,70 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         if (gInst == SDL_PBIST_INST_TOP)
         {
 
-              DebugP_log(" PBIST complete for ADCBUF\n");
-              DebugP_log(" PBIST complete for TPCC\n");
-              DebugP_log(" PBIST complete for MAILBOX\n");
-              DebugP_log(" PBIST complete for COREB VIM\n");
-              DebugP_log(" PBIST complete for MCAN\n");
-              DebugP_log(" PBIST complete for SPIA\n");
-              DebugP_log(" PBIST complete for SPIB\n");
-              DebugP_log(" PBIST complete for CORE B R5FSS RAM\n");
-              DebugP_log(" PBIST complete for MSS_L2_1\n");
-              DebugP_log(" PBIST complete for CPSW\n");
-              DebugP_log(" PBIST complete for GPADC\n");
-              DebugP_log(" PBIST complete for RETRAM\n");
-              DebugP_log(" PBIST complete for STCROM\n");
-              DebugP_log(" PBIST complete for CORE B ATCM\n");
-              DebugP_log(" PBIST complete for CORE B BTCM\n");
+              DebugP_log(" PBIST complete for ADCBUF\r\n");
+              DebugP_log(" PBIST complete for TPCC\r\n");
+              DebugP_log(" PBIST complete for MAILBOX\r\n");
+              DebugP_log(" PBIST complete for COREB VIM\r\n");
+              DebugP_log(" PBIST complete for MCAN\r\n");
+              DebugP_log(" PBIST complete for SPIA\r\n");
+              DebugP_log(" PBIST complete for SPIB\r\n");
+              DebugP_log(" PBIST complete for CORE B R5FSS RAM\r\n");
+              DebugP_log(" PBIST complete for MSS_L2_1\r\n");
+              DebugP_log(" PBIST complete for CPSW\r\n");
+              DebugP_log(" PBIST complete for GPADC\r\n");
+              DebugP_log(" PBIST complete for RETRAM\r\n");
+              DebugP_log(" PBIST complete for STCROM\r\n");
+              DebugP_log(" PBIST complete for CORE B ATCM\r\n");
+              DebugP_log(" PBIST complete for CORE B BTCM\r\n");
 
         }
         else if (gInst == SDL_PBIST_INST_DSS)
         {
-          DebugP_log(" PBIST complete for DSS C66 STCROM\n");
-          DebugP_log(" PBIST complete for HWA STCROM\n");
-          DebugP_log(" PBIST complete for DSS PBISTROM\n");
-          DebugP_log(" PBIST complete for C66 L1D\n");
-          DebugP_log(" PBIST complete for C66 L1P\n");
-          DebugP_log(" PBIST complete for PBIST C66 L2 TAG\n");
-          DebugP_log(" PBIST complete for DSS HWA\n");
-          DebugP_log(" PBIST complete for DSS HWA MBOX\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB0\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB0\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB0\n");
-          DebugP_log(" PBIST complete for DSS MBOX RAM\n");
-          DebugP_log(" PBIST complete for DSS TPCC RAM\n");
-          DebugP_log(" PBIST complete for DSS L2 BANK0\n");
-          DebugP_log(" PBIST complete for DSS L2 BANK1\n");
-          DebugP_log(" PBIST complete for DSS L2 PARITY\n");
-          DebugP_log(" PBIST complete for HWA RAM\n");
-          DebugP_log(" PBIST complete for DSS CBUF\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB1\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB1\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB2\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB1\n");
+          DebugP_log(" PBIST complete for DSS C66 STCROM\r\n");
+          DebugP_log(" PBIST complete for HWA STCROM\r\n");
+          DebugP_log(" PBIST complete for DSS PBISTROM\r\n");
+          DebugP_log(" PBIST complete for C66 L1D\r\n");
+          DebugP_log(" PBIST complete for C66 L1P\r\n");
+          DebugP_log(" PBIST complete for PBIST C66 L2 TAG\r\n");
+          DebugP_log(" PBIST complete for DSS HWA\r\n");
+          DebugP_log(" PBIST complete for DSS HWA MBOX\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB0\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB0\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB0\r\n");
+          DebugP_log(" PBIST complete for DSS MBOX RAM\r\n");
+          DebugP_log(" PBIST complete for DSS TPCC RAM\r\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK0\r\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK1\r\n");
+          DebugP_log(" PBIST complete for DSS L2 PARITY\r\n");
+          DebugP_log(" PBIST complete for HWA RAM\r\n");
+          DebugP_log(" PBIST complete for DSS CBUF\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB1\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB1\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB2\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB1\r\n");
          }
          if (testResult == SDL_PASS)
          {
-             DebugP_log("\r\nAll tests have passed. \r\n");
+             DebugP_log("\r\r\nAll tests have passed. \r\r\n");
          }
          else
          {
-             DebugP_log("\r\nSome tests have failed. \r\n");
+             DebugP_log("\r\r\nSome tests have failed. \r\r\n");
          }
 
     #elif defined (R5F1_INPUTS)
     {
-        DebugP_log(" PBIST complete for MSS_TCMAROM_0\n");
-        DebugP_log(" PBIST complete for MSS_TCMAROM_1\n");
-        DebugP_log(" PBIST complete for PBISTROM\n");
-        DebugP_log(" PBIST complete for CORE A VIM\n");
-        DebugP_log(" PBIST complete for MSS_L2_0\n");
-        DebugP_log(" PBIST complete for CORE A ATCM\n");
-        DebugP_log(" PBIST complete for CORE A BTCM\n");
-        DebugP_log(" PBIST complete for CORE A R5SS RAM\n");
-        DebugP_log(" PBIST complete for MEM_TOP_AURORA\n");
-        DebugP_log(" PBIST complete for MEM_TOP_MDO\n");
-        DebugP_log(" PBIST complete for DBGSS_TRACE\n");
+        DebugP_log(" PBIST complete for MSS_TCMAROM_0\r\n");
+        DebugP_log(" PBIST complete for MSS_TCMAROM_1\r\n");
+        DebugP_log(" PBIST complete for PBISTROM\r\n");
+        DebugP_log(" PBIST complete for CORE A VIM\r\n");
+        DebugP_log(" PBIST complete for MSS_L2_0\r\n");
+        DebugP_log(" PBIST complete for CORE A ATCM\r\n");
+        DebugP_log(" PBIST complete for CORE A BTCM\r\n");
+        DebugP_log(" PBIST complete for CORE A R5SS RAM\r\n");
+        DebugP_log(" PBIST complete for MEM_TOP_AURORA\r\n");
+        DebugP_log(" PBIST complete for MEM_TOP_MDO\r\n");
+        DebugP_log(" PBIST complete for DBGSS_TRACE\r\n");
     }
     #endif
   }
@@ -875,69 +875,69 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
       #if defined (R5F0_INPUTS)
         if (gInst == SDL_PBIST_INST_TOP)
         {
-              DebugP_log(" PBIST complete for TPCC\n");
-              DebugP_log(" PBIST complete for MAILBOX\n");
-              DebugP_log(" PBIST complete for COREB VIM\n");
-              DebugP_log(" PBIST complete for MCAN\n");
-              DebugP_log(" PBIST complete for SPIA\n");
-              DebugP_log(" PBIST complete for SPIB\n");
-              DebugP_log(" PBIST complete for CORE B R5FSS RAM\n");
-              DebugP_log(" PBIST complete for MSS_L2_1\n");
-              DebugP_log(" PBIST complete for CPSW\n");
-              DebugP_log(" PBIST complete for GPADC\n");
-              DebugP_log(" PBIST complete for RETRAM\n");
-              DebugP_log(" PBIST complete for STCROM\n");
-              DebugP_log(" PBIST complete for CORE B ATCM\n");
-              DebugP_log(" PBIST complete for CORE B BTCM\n");
+              DebugP_log(" PBIST complete for TPCC\r\n");
+              DebugP_log(" PBIST complete for MAILBOX\r\n");
+              DebugP_log(" PBIST complete for COREB VIM\r\n");
+              DebugP_log(" PBIST complete for MCAN\r\n");
+              DebugP_log(" PBIST complete for SPIA\r\n");
+              DebugP_log(" PBIST complete for SPIB\r\n");
+              DebugP_log(" PBIST complete for CORE B R5FSS RAM\r\n");
+              DebugP_log(" PBIST complete for MSS_L2_1\r\n");
+              DebugP_log(" PBIST complete for CPSW\r\n");
+              DebugP_log(" PBIST complete for GPADC\r\n");
+              DebugP_log(" PBIST complete for RETRAM\r\n");
+              DebugP_log(" PBIST complete for STCROM\r\n");
+              DebugP_log(" PBIST complete for CORE B ATCM\r\n");
+              DebugP_log(" PBIST complete for CORE B BTCM\r\n");
 
         }
         else if (gInst == SDL_PBIST_INST_DSS)
         {
-          DebugP_log(" PBIST complete for DSS C66 STCROM\n");
-          DebugP_log(" PBIST complete for HWA STCROM\n");
-          DebugP_log(" PBIST complete for DSS PBISTROM\n");
-          DebugP_log(" PBIST complete for C66 L1D\n");
-          DebugP_log(" PBIST complete for C66 L1P\n");
-          DebugP_log(" PBIST complete for PBIST C66 L2 TAG\n");
-          DebugP_log(" PBIST complete for DSS HWA\n");
-          DebugP_log(" PBIST complete for DSS HWA MBOX\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB0\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB0\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB0\n");
-          DebugP_log(" PBIST complete for DSS MBOX RAM\n");
-          DebugP_log(" PBIST complete for DSS TPCC RAM\n");
-          DebugP_log(" PBIST complete for DSS L2 BANK0\n");
-          DebugP_log(" PBIST complete for DSS L2 BANK1\n");
-          DebugP_log(" PBIST complete for DSS L2 PARITY\n");
-          DebugP_log(" PBIST complete for HWA RAM\n");
-          DebugP_log(" PBIST complete for DSS CBUF\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB1\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB1\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB2\n");
-          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB1\n");
+          DebugP_log(" PBIST complete for DSS C66 STCROM\r\n");
+          DebugP_log(" PBIST complete for HWA STCROM\r\n");
+          DebugP_log(" PBIST complete for DSS PBISTROM\r\n");
+          DebugP_log(" PBIST complete for C66 L1D\r\n");
+          DebugP_log(" PBIST complete for C66 L1P\r\n");
+          DebugP_log(" PBIST complete for PBIST C66 L2 TAG\r\n");
+          DebugP_log(" PBIST complete for DSS HWA\r\n");
+          DebugP_log(" PBIST complete for DSS HWA MBOX\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB0\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB0\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB0\r\n");
+          DebugP_log(" PBIST complete for DSS MBOX RAM\r\n");
+          DebugP_log(" PBIST complete for DSS TPCC RAM\r\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK0\r\n");
+          DebugP_log(" PBIST complete for DSS L2 BANK1\r\n");
+          DebugP_log(" PBIST complete for DSS L2 PARITY\r\n");
+          DebugP_log(" PBIST complete for HWA RAM\r\n");
+          DebugP_log(" PBIST complete for DSS CBUF\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKA SUB1\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB1\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKB SUB2\r\n");
+          DebugP_log(" PBIST complete for PBIST DSS L3 BANKC SUB1\r\n");
          }
          if (testResult == SDL_PASS)
          {
-             DebugP_log("\r\nAll tests have passed. \r\n");
+             DebugP_log("\r\r\nAll tests have passed. \r\r\n");
          }
          else
          {
-             DebugP_log("\r\nSome tests have failed. \r\n");
+             DebugP_log("\r\r\nSome tests have failed. \r\r\n");
          }
 
     #elif defined (R5F1_INPUTS)
     {
-        DebugP_log(" PBIST complete for MSS_TCMAROM_0\n");
-        DebugP_log(" PBIST complete for MSS_TCMAROM_1\n");
-        DebugP_log(" PBIST complete for PBISTROM\n");
-        DebugP_log(" PBIST complete for CORE A VIM\n");
-        DebugP_log(" PBIST complete for MSS_L2_0\n");
-        DebugP_log(" PBIST complete for CORE A ATCM\n");
-        DebugP_log(" PBIST complete for CORE A BTCM\n");
-        DebugP_log(" PBIST complete for CORE A R5SS RAM\n");
-        DebugP_log(" PBIST complete for MEM_TOP_AURORA\n");
-        DebugP_log(" PBIST complete for MEM_TOP_MDO\n");
-        DebugP_log(" PBIST complete for DBGSS_TRACE\n");
+        DebugP_log(" PBIST complete for MSS_TCMAROM_0\r\n");
+        DebugP_log(" PBIST complete for MSS_TCMAROM_1\r\n");
+        DebugP_log(" PBIST complete for PBISTROM\r\n");
+        DebugP_log(" PBIST complete for CORE A VIM\r\n");
+        DebugP_log(" PBIST complete for MSS_L2_0\r\n");
+        DebugP_log(" PBIST complete for CORE A ATCM\r\n");
+        DebugP_log(" PBIST complete for CORE A BTCM\r\n");
+        DebugP_log(" PBIST complete for CORE A R5SS RAM\r\n");
+        DebugP_log(" PBIST complete for MEM_TOP_AURORA\r\n");
+        DebugP_log(" PBIST complete for MEM_TOP_MDO\r\n");
+        DebugP_log(" PBIST complete for DBGSS_TRACE\r\n");
     }
     #endif
   }
@@ -946,46 +946,46 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 #if defined (R5F0_INPUTS)
              if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
              {
-                 DebugP_log(" PBIST complete for R5 STC\n");
-                 DebugP_log(" PBIST complete for R51 STC\n");
-                 DebugP_log(" PBIST complete for PBISTROM\n");
-                 DebugP_log(" PBIST complete for CPSW\n");
-                 DebugP_log(" PBIST complete for ICSSM\n");
-                 DebugP_log(" PBIST complete for MBOX\n");
-                 DebugP_log(" PBIST complete for MCAN\n");
-                 DebugP_log(" PBIST complete for TPCC\n");
-                 DebugP_log(" PBIST complete for MSS_L2_1\n");
-                 DebugP_log(" PBIST complete for MSS_L2_2\n");
-                 DebugP_log(" PBIST complete for MSS_L2_3\n");
-                 DebugP_log(" PBIST complete for VIM1 R5SS0\n");
-                 DebugP_log(" PBIST complete for VIM0 R5SS1\n");
-                 DebugP_log(" PBIST complete for VIM1 R5SS1\n");
-                 DebugP_log(" PBIST complete for R5SS1 RAM\n");
-                 DebugP_log(" PBIST complete for MSS CR5B ATCM0\n");
-                 DebugP_log(" PBIST complete for MSS CR5B ATCM1\n");
-                 DebugP_log(" PBIST complete for MSS CR5B BTCM0\n");
-                 DebugP_log(" PBIST complete for MSS CR5B BTCM1\n");
+                 DebugP_log(" PBIST complete for R5 STC\r\n");
+                 DebugP_log(" PBIST complete for R51 STC\r\n");
+                 DebugP_log(" PBIST complete for PBISTROM\r\n");
+                 DebugP_log(" PBIST complete for CPSW\r\n");
+                 DebugP_log(" PBIST complete for ICSSM\r\n");
+                 DebugP_log(" PBIST complete for MBOX\r\n");
+                 DebugP_log(" PBIST complete for MCAN\r\n");
+                 DebugP_log(" PBIST complete for TPCC\r\n");
+                 DebugP_log(" PBIST complete for MSS_L2_1\r\n");
+                 DebugP_log(" PBIST complete for MSS_L2_2\r\n");
+                 DebugP_log(" PBIST complete for MSS_L2_3\r\n");
+                 DebugP_log(" PBIST complete for VIM1 R5SS0\r\n");
+                 DebugP_log(" PBIST complete for VIM0 R5SS1\r\n");
+                 DebugP_log(" PBIST complete for VIM1 R5SS1\r\n");
+                 DebugP_log(" PBIST complete for R5SS1 RAM\r\n");
+                 DebugP_log(" PBIST complete for MSS CR5B ATCM0\r\n");
+                 DebugP_log(" PBIST complete for MSS CR5B ATCM1\r\n");
+                 DebugP_log(" PBIST complete for MSS CR5B BTCM0\r\n");
+                 DebugP_log(" PBIST complete for MSS CR5B BTCM1\r\n");
              }
     #elif defined (R5F1_INPUTS)
      if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
             {
-               DebugP_log(" PBIST complete for  VIM0 R5SS0\n");
-               DebugP_log(" PBIST complete for MSS_L2_0\n");
-               DebugP_log(" PBIST complete for R5SS0 RAM\n");
-               DebugP_log(" PBIST complete for CR5A ROM0\n");
-               DebugP_log(" PBIST complete for TRACE\n");
-               DebugP_log(" PBIST complete for MMCH0\n");
-               DebugP_log(" PBIST complete for MSS CR5A ATCM0\n");
-               DebugP_log(" PBIST complete for MSS CR5A ATCM1\n");
-               DebugP_log(" PBIST complete for MSS CR5A BTCM0\n");
-               DebugP_log(" PBIST complete for MSS CR5A BTCM1\n");
+               DebugP_log(" PBIST complete for  VIM0 R5SS0\r\n");
+               DebugP_log(" PBIST complete for MSS_L2_0\r\n");
+               DebugP_log(" PBIST complete for R5SS0 RAM\r\n");
+               DebugP_log(" PBIST complete for CR5A ROM0\r\n");
+               DebugP_log(" PBIST complete for TRACE\r\n");
+               DebugP_log(" PBIST complete for MMCH0\r\n");
+               DebugP_log(" PBIST complete for MSS CR5A ATCM0\r\n");
+               DebugP_log(" PBIST complete for MSS CR5A ATCM1\r\n");
+               DebugP_log(" PBIST complete for MSS CR5A BTCM0\r\n");
+               DebugP_log(" PBIST complete for MSS CR5A BTCM1\r\n");
 
              }
 #endif
 #endif
     if((status == SDL_PASS) && (testType == SDL_PBIST_NEG_TEST))
     {
-        DebugP_log(" PBIST failure Insertion test complete for TOP BIST\n");
+        DebugP_log(" PBIST failure Insertion test complete for TOP BIST\r\n");
     }
 
 
@@ -1001,7 +1001,7 @@ int32_t PBIST_funcTest(void)
 
     if (testResult != 0)
     {
-        DebugP_log("  PBIST_commonInit ...FAILED \n");
+        DebugP_log("  PBIST_commonInit ...FAILED \r\n");
     }
     else
     {

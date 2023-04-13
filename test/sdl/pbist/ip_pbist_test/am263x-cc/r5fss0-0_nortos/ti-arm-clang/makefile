@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ip_pbist_test.$(PROFILE).out
+OUTNAME:=pbist_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=ip_pbist_test.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=ip_pbist_test.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=ip_pbist_test.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=ip_pbist_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ip_pbist_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ip_pbist_test.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ip_pbist_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ip_pbist_test.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=pbist_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=pbist_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=pbist_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=pbist_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=pbist_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=pbist_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=pbist_test_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=pbist_test_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -200,7 +200,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang ip_pbist_test ...
+	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang pbist_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

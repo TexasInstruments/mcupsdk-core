@@ -83,7 +83,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 static uint32_t arg;
 void  esm_init(SDL_ESM_Inst esmType)
 {
-    void *ptr = (void *)&arg; 
+    void *ptr = (void *)&arg;
     SDL_ErrType_t result = SDL_EBADARGS;
     /* Initialize MAIN ESM module */
     if(esmType == SDL_ESM_INST_MAIN_ESM0)
@@ -95,25 +95,25 @@ void  esm_init(SDL_ESM_Inst esmType)
     {
         result = SDL_ESM_init(esmType, &SDTF_esmInitConfig_MCU_config,SDL_ESM_applicationCallbackFunction,ptr);
     }
-#endif	
+#endif
     if (result != SDL_PASS) {
         /* print error and quit */
         if(esmType == SDL_ESM_INST_MAIN_ESM0){
-			DebugP_log("ESM_ECC_Example_init: Error initializing MAIN ESM: result = %d\n", result);
+			DebugP_log("ESM_ECC_Example_init: Error initializing MAIN ESM: result = %d\r\n", result);
         }
 #if defined (SOC_AM64X)
 		else{
-            DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\n", result);
+            DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\r\n", result);
         }
 #endif
     } else {
         if(esmType == SDL_ESM_INST_MAIN_ESM0){
-			DebugP_log("\nESM_ECC_Example_init: Init MAIN ESM complete \n");
+			DebugP_log("\r\nESM_ECC_Example_init: Init MAIN ESM complete \r\n");
         }
 #if defined (SOC_AM64X)
 		else{
-			DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
-            
+			DebugP_log("\r\nESM_ECC_Example_init: Init MCU ESM complete \r\n");
+
         }
 #endif
 	}
@@ -215,7 +215,7 @@ int32_t sdl_config_test(void)
     int32_t retVal = 0;
     int32_t i;
 
-    DebugP_log("\n Running all sdr test commands supported");
+    DebugP_log("\r\n Running all sdr test commands supported\r\n");
     for(i = 0u; i< SDTF_NUM_RUNALL_TEST_COMMANDS; i++) {
         if (SDTF_commandList_config[i].commandFunction!= ((void *)(0u))) {
             retVal = (*SDTF_commandList_config[i].commandFunction)();
@@ -227,11 +227,11 @@ int32_t sdl_config_test(void)
 
     if (retVal == 0)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\r\n All tests have passed. \r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\r\n Few/all tests Failed \r\n");
     }
 
 return retVal;

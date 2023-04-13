@@ -87,9 +87,9 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 {
     int32_t retVal = SDL_PASS;
     DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
+    DebugP_log("  Take action \r\n");
 
     /* Any additional customer specific actions can be added here */
 
@@ -181,7 +181,7 @@ static int32_t sdlApp_dplInit(void)
     ret = SDL_TEST_dplInit();
     if (ret != SDL_PASS)
     {
-        DebugP_log("Error: Init Failed\n");
+        DebugP_log("Error: Init Failed\r\n");
     }
 
     return ret;
@@ -194,32 +194,34 @@ static int32_t sdlApp_dplInit(void)
 void test_sdl_esm_baremetal_test_app (void *args)
 {
     /* Declarations of variables */
-    int32_t    testResult = SDL_APP_TEST_PASS;
-    int32_t    i;
+    volatile int32_t    testResult = SDL_APP_TEST_PASS;
+    volatile int32_t    testVar;
+    volatile int32_t delay;
 
     /* Init dpl */
     sdlApp_dplInit();
 
     sdlApp_print("\n ESM Test Application\r\n");
 
-    for ( i = 0; sdlEsmTestList[i].testFunction != NULL; i++)
+    for ( testVar = 0; sdlEsmTestList[testVar].testFunction != NULL; testVar++)
     {
-        testResult = sdlEsmTestList[i].testFunction();
-        sdlEsmTestList[i].testStatus = testResult;
+        for (delay=0; delay<0xfff; delay++);
+        testResult = sdlEsmTestList[testVar].testFunction();
+        sdlEsmTestList[testVar].testStatus = testResult;
     }
 
     testResult = SDL_APP_TEST_PASS;
-    for ( i = 0; sdlEsmTestList[i].testFunction != NULL; i++)
+    for ( testVar = 0; sdlEsmTestList[testVar].testFunction != NULL; testVar++)
     {
-        if (sdlEsmTestList[i].testStatus != SDL_APP_TEST_PASS)
+        if (sdlEsmTestList[testVar].testStatus != SDL_APP_TEST_PASS)
         {
-            DebugP_log("Test Name: %s  FAILED \n", sdlEsmTestList[i].name);
+            DebugP_log("Test Name: %s  FAILED \r\n", sdlEsmTestList[testVar].name);
             testResult = SDL_APP_TEST_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Test Name: %d  PASSED \n", i);
+            DebugP_log("Test Name: %d  PASSED \r\n", testVar);
         }
     }
 
@@ -227,12 +229,12 @@ void test_sdl_esm_baremetal_test_app (void *args)
     if (testResult == SDL_APP_TEST_PASS)
     {
 
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\n All tests have passed. \r\n");
     }
     else
     {
 
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\n Few/all tests Failed \r\n");
     }
 
 }
@@ -247,7 +249,14 @@ void test_sdl_esm_baremetal_test_app_runner(void)
 
 int32_t test_main(void)
 {
+    Drivers_open();
+    Board_driversOpen();
+
     test_sdl_esm_baremetal_test_app_runner();
+
+    Board_driversClose();
+    Drivers_close();
+
     return 0;
 }
 

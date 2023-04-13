@@ -46,6 +46,12 @@
 #include <unity.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/DebugP.h>
+
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_board_config.h"
+#include "ti_dpl_config.h"
 /*===========================================================================*/
 /*                         Declarations                                      */
 /*===========================================================================*/
@@ -200,7 +206,7 @@ void test_sdl_esm_baremetal_test_app (void *args)
     /* Declarations of variables */
     int32_t    testResult = SDL_APP_TEST_PASS;
     int32_t    i;
-DebugP_log("inside test_sdl_esm_baremetal_test_app \n");
+DebugP_log("inside test_sdl_esm_baremetal_test_app \r\n");
 
     /* Init dpl */
     sdlApp_dplInit();
@@ -218,23 +224,23 @@ DebugP_log("inside test_sdl_esm_baremetal_test_app \n");
     {
         if (sdlEsmTestList[i].testStatus != SDL_APP_TEST_PASS)
         {
-            DebugP_log("Test Name: %s  FAILED \n", sdlEsmTestList[i].name);
+            DebugP_log("Test Name: %s  FAILED \r\n", sdlEsmTestList[i].name);
             testResult = SDL_APP_TEST_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Test Name: %s  PASSED \n", sdlEsmTestList[i].name);
+            DebugP_log("Test Name: %s  PASSED \r\n", sdlEsmTestList[i].name);
         }
     }
 
     if (testResult == SDL_APP_TEST_PASS)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\r\n All tests have passed. \r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\r\n Few/all tests Failed \r\n");
     }
 #if defined (UNITY_INCLUDE_CONFIG_H)
     TEST_ASSERT_EQUAL_INT32(SDL_APP_TEST_PASS, testResult);
@@ -243,7 +249,7 @@ DebugP_log("inside test_sdl_esm_baremetal_test_app \n");
 
 void test_sdl_esm_baremetal_test_app_runner(void)
 {
-    DebugP_log("inside test_sdl_esm_baremetal_test_app_runner \n");
+    DebugP_log("inside test_sdl_esm_baremetal_test_app_runner \r\n");
 #if defined(UNITY_INCLUDE_CONFIG_H)
     UNITY_BEGIN();
     RUN_TEST (test_sdl_esm_baremetal_test_app,0, NULL);
@@ -256,7 +262,11 @@ void test_sdl_esm_baremetal_test_app_runner(void)
 
 int32_t test_main(void)
 {
+    Drivers_open();
+    Board_driversOpen();
     test_sdl_esm_baremetal_test_app_runner();
+    Board_driversClose();
+    Drivers_close();
     return 0;
 }
 

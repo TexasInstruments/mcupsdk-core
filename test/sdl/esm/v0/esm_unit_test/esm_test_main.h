@@ -49,6 +49,13 @@
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/include/hw_types.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
+
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_board_config.h"
+#include "ti_dpl_config.h"
+
 #define BITS_PER_WORD (32u)
 
 #if defined (SOC_AM64X)
