@@ -1328,6 +1328,10 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
                 status = SystemP_FAILURE;
             }
        }
+       else
+       {
+           status = SystemP_FAILURE;
+       }
     }
 
     if(SystemP_SUCCESS == status)
