@@ -155,42 +155,11 @@ static int32_t MCSPI_edmaChInit(MCSPI_Handle handle, const MCSPI_ChConfig *chCfg
 
         if((baseAddr != 0) && (regionId < SOC_EDMA_NUM_REGIONS))
         {
-            if((MCSPI_TR_MODE_TX_RX == chObj->chCfg.trMode) || (MCSPI_TR_MODE_RX_ONLY == chObj->chCfg.trMode))
-            {
-                /* Allocate EDMA channel for MCSPI RX transfer */
-                dmaRxCh = dmaChCfg->edmaRxChId;
-                status += EDMA_allocDmaChannel(mcspiEdmaHandle, &dmaRxCh);
-
-                /* Allocate EDMA TCC for MCSPI RX transfer */
-                tccRx = EDMA_RESOURCE_ALLOC_ANY;
-                status += EDMA_allocTcc(mcspiEdmaHandle, &tccRx);
-
-                /* Allocate a Param ID for MCSPI RX transfer */
-                paramRx = EDMA_RESOURCE_ALLOC_ANY;
-                status += EDMA_allocParam(mcspiEdmaHandle, &paramRx);
-
-                if(status == SystemP_SUCCESS)
-                {
-                    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-                    dmaRxCh, tccRx, paramRx, EDMA_MCSPI_RX_EVT_QUEUE_NO);
-
-                    /* Register RX interrupt */
-                    edmaIntrObjectRx->tccNum = tccRx;
-                    edmaIntrObjectRx->cbFxn  = &MCSPI_edmaIsrRx;
-                    edmaIntrObjectRx->appData = (void *) config;
-                    status += EDMA_registerIntr(mcspiEdmaHandle, edmaIntrObjectRx);
-                    DebugP_assert(status == SystemP_SUCCESS);
-                }
-
-                if(status == SystemP_SUCCESS)
-                {
-                    /* Store the EDMA parameters for McSPI RX*/
-                    dmaChConfig->edmaRxParam = paramRx;
-                    dmaChConfig->edmaRxChId  = dmaRxCh;
-                    dmaChConfig->edmaTccRx   = tccRx;
-                }
-            }
-
+        /*
+         * Note: In TX RX mode, we expect TX Interrupt to be triggered first
+         * and RX Interrupt next. To keep this flow, TX channel(TCC) should 
+         * be initialized first and then the RX channel(TCC).
+         */
             if((MCSPI_TR_MODE_TX_RX == chObj->chCfg.trMode) || (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg.trMode))
             {
                 /* Allocate EDMA channel for MCSPI TX transfer */
@@ -229,6 +198,42 @@ static int32_t MCSPI_edmaChInit(MCSPI_Handle handle, const MCSPI_ChConfig *chCfg
                     dmaChConfig->edmaDummyParam = paramDummy;
                     dmaChConfig->edmaTxChId  = dmaTxCh;
                     dmaChConfig->edmaTccTx   = tccTx;
+                }
+            }
+
+            if((MCSPI_TR_MODE_TX_RX == chObj->chCfg.trMode) || (MCSPI_TR_MODE_RX_ONLY == chObj->chCfg.trMode))
+            {
+                /* Allocate EDMA channel for MCSPI RX transfer */
+                dmaRxCh = dmaChCfg->edmaRxChId;
+                status += EDMA_allocDmaChannel(mcspiEdmaHandle, &dmaRxCh);
+
+                /* Allocate EDMA TCC for MCSPI RX transfer */
+                tccRx = EDMA_RESOURCE_ALLOC_ANY;
+                status += EDMA_allocTcc(mcspiEdmaHandle, &tccRx);
+
+                /* Allocate a Param ID for MCSPI RX transfer */
+                paramRx = EDMA_RESOURCE_ALLOC_ANY;
+                status += EDMA_allocParam(mcspiEdmaHandle, &paramRx);
+
+                if(status == SystemP_SUCCESS)
+                {
+                    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                    dmaRxCh, tccRx, paramRx, EDMA_MCSPI_RX_EVT_QUEUE_NO);
+
+                    /* Register RX interrupt */
+                    edmaIntrObjectRx->tccNum = tccRx;
+                    edmaIntrObjectRx->cbFxn  = &MCSPI_edmaIsrRx;
+                    edmaIntrObjectRx->appData = (void *) config;
+                    status += EDMA_registerIntr(mcspiEdmaHandle, edmaIntrObjectRx);
+                    DebugP_assert(status == SystemP_SUCCESS);
+                }
+
+                if(status == SystemP_SUCCESS)
+                {
+                    /* Store the EDMA parameters for McSPI RX*/
+                    dmaChConfig->edmaRxParam = paramRx;
+                    dmaChConfig->edmaRxChId  = dmaRxCh;
+                    dmaChConfig->edmaTccRx   = tccRx;
                 }
             }
 

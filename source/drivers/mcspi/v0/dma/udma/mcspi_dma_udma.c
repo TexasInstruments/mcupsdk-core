@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -104,8 +104,13 @@ static int32_t MCSPI_udmaChInit(MCSPI_Handle handle, const MCSPI_ChConfig *chCfg
 
     if(MCSPI_TR_MODE_TX_RX == chObj->chCfg.trMode)
     {
-        status  = MCSPI_udmaInitRxCh(handle, chObj);
-        status |= MCSPI_udmaInitTxCh(handle, chObj);
+    /*
+     * Note: In TX RX mode, we expect TX Interrupt to be triggered first
+     * and RX Interrupt next. To keep this flow, TX channel(shared event)
+     * should be initialized first and then the RX channel(shared event).
+     */
+        status  = MCSPI_udmaInitTxCh(handle, chObj);
+        status |= MCSPI_udmaInitRxCh(handle, chObj);
     }
     else if(MCSPI_TR_MODE_TX_ONLY == chObj->chCfg.trMode)
     {
