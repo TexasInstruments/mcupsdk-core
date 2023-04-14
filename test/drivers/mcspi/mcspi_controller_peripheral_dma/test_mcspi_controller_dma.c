@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-22 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -391,11 +391,7 @@ static void test_mcspi_set_master_params(MCSPI_MasterTestParams *testParams, uin
     {
         case 2411:
         testParams->dataSize           = 32;
-#if defined (SOC_AM263X)
         chConfigParams->trMode         = MCSPI_TR_MODE_TX_ONLY;
-#else
-        chConfigParams->trMode         = MCSPI_TR_MODE_TX_RX;
-#endif
         break;
     }
 
