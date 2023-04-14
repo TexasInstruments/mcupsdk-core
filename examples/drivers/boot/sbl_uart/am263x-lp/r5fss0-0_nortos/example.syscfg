@@ -20,7 +20,6 @@ const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();
 const mpu_armv73  = mpu_armv7.addInstance();
 const mpu_armv74  = mpu_armv7.addInstance();
-const mpu_armv75  = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -59,8 +58,3 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 
-mpu_armv75.$name        = "CONFIG_MPU_REGION4";
-mpu_armv75.baseAddr     = 0x80000000;
-mpu_armv75.allowExecute = false;
-mpu_armv75.attributes   = "Device";
-mpu_armv75.size         = 24;

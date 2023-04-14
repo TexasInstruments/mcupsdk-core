@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -95,11 +95,11 @@ int main(void)
         
         if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
         {
-            uint32_t fileSize;
+            uint32_t fileSize = 0;
             /* Xmodem Receive */
             status = Bootloader_xmodemReceive(CONFIG_UART0, gAppImageBuf, BOOTLOADER_APPIMAGE_MAX_FILE_SIZE, &fileSize);
 
-            if(SystemP_SUCCESS == status && fileSize == BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
+            if(SystemP_SUCCESS == status && fileSize >= BOOTLOADER_APPIMAGE_MAX_FILE_SIZE)
             {
                 /* A file larger than 384 KB was sent, and xmodem probably dropped bytes */
                 status = SystemP_FAILURE;
