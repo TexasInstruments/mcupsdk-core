@@ -606,6 +606,8 @@ static void MCSPI_udmaIsrTx(Udma_EventHandle eventHandle,
     uint32_t            chNum, effByteCnt, peerData;
     Udma_ChHandle       txChHandle;
     const MCSPI_Attrs  *attrs;
+    uint32_t            baseAddr;
+    volatile uint32_t   chStat;
 
     /* Check parameters */
     if(NULL != args)
@@ -621,6 +623,7 @@ static void MCSPI_udmaIsrTx(Udma_EventHandle eventHandle,
         chObj = &obj->chObj[chNum];
         txChHandle  = chObj->dmaChCfg.txChHandle;
         effByteCnt = transaction->count << chObj->bufWidthShift;
+        baseAddr = obj->baseAddr;
 
         if (eventType == UDMA_EVENT_TYPE_DMA_COMPLETION)
         {
@@ -652,6 +655,11 @@ static void MCSPI_udmaIsrTx(Udma_EventHandle eventHandle,
                 /* Get Byte count transmitted */
                 effByteCnt = (pHpd->descInfo & CSL_UDMAP_CPPI5_PD_DESCINFO_PKTLEN_MASK) >> CSL_UDMAP_CPPI5_PD_DESCINFO_PKTLEN_SHIFT;
                 obj->currTransaction->count = (effByteCnt >> chObj->bufWidthShift);
+
+                do{
+                    /* Wait for end of transfer. */
+                    chStat = CSL_REG32_RD(baseAddr + MCSPI_CHSTAT(chNum));
+                }while ((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0);
 
                 /* Stop MCSPI Channel */
                 MCSPI_udmaStop(obj, attrs, chObj, chNum);
