@@ -11,7 +11,7 @@
 \cond SOC_AM263X || SOC_AM273X
 - \subpage enetlld_performance
 \endcond
-\cond SOC_AM263X || SOC_AM243X || SOC_AM64X
+\cond SOC_AM263X || SOC_AM243X || SOC_AM64X || SOC_AM273X
 - \subpage enet_tas_top
 \endcond
 - \subpage enet_migration_guide_top

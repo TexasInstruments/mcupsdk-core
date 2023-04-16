@@ -37,6 +37,9 @@ AM263x| R5F             | AM263x ControlCard Revision E1  (referred to as am263x
 AM263x| R5F             | AM263x LaunchPad Revision E2  (referred to as am263x-lp in code)             | Windows 10 64b or Ubuntu 18.04 64b
 \endcond
 
+Refer here for information about using this release with E2 revision of ControlCard
+- \subpage RELEASE_NOTES_08_03_00_EVM_REV_E2_SUPPORT_PAGE
+
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
