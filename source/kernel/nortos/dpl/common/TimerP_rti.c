@@ -84,7 +84,7 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     DebugP_assert( timerCycles <= (0xFFFFFFFFU) );
 
     /* calculate count and reload value register value */
-    reloadVal = (uint32_t)timerCycles;
+    reloadVal = (uint32_t)timerCycles - 1U;
 
     /* reset up counter (UC) value  0 */
     addr = (volatile uint32_t *)(baseAddr + RTI_RTIUC0);
