@@ -55,6 +55,8 @@ void EnetApp_initPhyStateHandlerTask(EventP_Object* pEvent);
 
 void EnetApp_phyStateHandler();
 
+void EnetApp_doIetVerification(Enet_Handle hEnet, uint32_t coreId, Enet_MacPort macPort);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

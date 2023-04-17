@@ -4,6 +4,7 @@
 % let instance = module.$instances[0];
 % let common = system.getScript("/common");
 % let device = common.getDeviceName();
+% let soc = common.getSocName();
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -47,6 +48,7 @@
 #define ENETAPP_PHY_STATEHANDLER_TASK_PRIORITY        (7U)
 #define ENETAPP_PHY_STATEHANDLER_TASK_STACK     (3 * 1024)
 #define AppEventId_CPSW_PERIODIC_POLL    (1 << 3)
+#define ENETAPP_NUM_IET_VERIFY_ATTEMPTS               (20U)
 
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
 `system.getTemplate('./enet_init_cpdma.h.xdt')()`
@@ -649,6 +651,68 @@ static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
 
 %if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
 `system.getTemplate('./enet_init_udma.c.xdt')()`
+%}
+
+%if ((soc === "am64x") || (soc === "am243x")){
+/*
+ * Function to Poll the Verify status and restart verification.
+ * Application needs to call this after link-up, Verify timeout
+ * is set based on the link-speed from ENET handle.
+ */
+void EnetApp_doIetVerification(Enet_Handle hEnet,
+                               uint32_t coreId,
+                               Enet_MacPort macPort)
+{
+    uint32_t try = ENETAPP_NUM_IET_VERIFY_ATTEMPTS;
+    int32_t status = ENET_SOK;
+    EnetMacPort_GenericInArgs fpe;
+    Enet_IoctlPrms prms;
+    EnetMacPort_PreemptVerifyStatus verifyStatus;
+
+    fpe.macPort = macPort;
+    do{
+        ENET_IOCTL_SET_IN_ARGS(&prms, &fpe);
+        ENET_IOCTL(hEnet, coreId, ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION , &prms, status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to start IET verification: %d\r\n", status);
+            break;
+        }
+        /*
+         * Takes 10 msec to complete this in h/w assuming other
+         * side is already ready. However since both side might
+         * take variable setup/config time, need to Wait for
+         * additional time. Chose 50 msec through trials
+         */
+        ClockP_usleep(50000U);
+        ENET_IOCTL_SET_INOUT_ARGS(&prms, &fpe, &verifyStatus);
+        ENET_IOCTL(hEnet, coreId, ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS , &prms, status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to read IET verify status : %d\r\n", status);
+            break;
+        }
+        if(verifyStatus == ENET_MAC_VERIFYSTATUS_SUCCEEDED)
+        {
+            EnetAppUtils_print("IET verify Success \r\n");
+            break;
+        }
+        else if(verifyStatus == ENET_MAC_VERIFYSTATUS_FAILED )
+        {
+            EnetAppUtils_print("IET verify failed, trying again \r\n");
+        }
+        else
+        {
+            EnetAppUtils_print("Unexpected IET Failure : %d \r\n", verifyStatus);
+            break;
+        }
+        try--;
+    } while(try > 0);
+
+    if(try == 0){
+        EnetAppUtils_print("IET verify timeout \r\n");
+    }
+}
 %}
 
 %if(instance.RtosVariant == "NoRTOS"){
