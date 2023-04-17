@@ -13,6 +13,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MCU_ESM
 \endcond
 -# ECAP
+   -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
    -# \subpage EXAMPLES_DRIVERS_ECAP_EPWM_LOOPBACK
 -# EPWM
    -# \subpage EXAMPLES_DRIVERS_EPWM_DUTY_CYCLE

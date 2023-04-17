@@ -7,10 +7,32 @@
 This example uses the ECAP in APWM mode to generate a PWM signal.
 
 The example does the below
-- Configures ECAP in APWM mode and configures values in period and compare registers using sysconfig.
+- Configures ECAP in APWM mode and configures values in period and compare registers.
 - Waits for the specified time using the ECAP ISR.
 
 # External Connections
+
+\cond SOC_AM64X
+
+## AM64X-EVM
+
+- The signal can be probed on Pin 1 of the J12 header on the base board.
+
+\endcond
+
+\cond SOC_AM243X
+
+## AM243X-EVM
+
+- The signal can be probed on Pin 1 of the J12 header on the base board.
+
+## AM243X-LP
+
+- The signal can be probed on Pin 1 of the J21 header on the base board.
+
+\endcond
+
+\cond SOC_AM263X
 
 Connect OUTPUTXBAR1 output to oscilloscope
 
@@ -23,7 +45,33 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 When using AM263x-LP
 - Connect boosterpack header J6/J8 Pin 58 to oscilloscope
 
+\endcond
+
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_APWM_MODE_COMBOS}
+
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/ecap/ecap_apwm_mode/
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/ecap/ecap_apwm_mode/
+
+\endcond
 
 \cond SOC_AM263X
 
