@@ -325,7 +325,7 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
 </tr>
 \cond SOC_AM273X
 <tr>
-    <td> MCUSDK-9082
+    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
     <td> 8.6.0 onwards

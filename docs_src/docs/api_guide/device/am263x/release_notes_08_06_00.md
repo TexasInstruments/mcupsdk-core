@@ -501,6 +501,10 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> ENET: Connection reset while running HTTPS server due to insufficient packet buffers
     <td> ENET
     <td> 8.6.0 onwards
+    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0
     <td> -
 </tr>
 <tr>
