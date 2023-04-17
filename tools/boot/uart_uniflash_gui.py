@@ -116,15 +116,15 @@ class Flasher(QtCore.QObject):
         f_bytes = f.read()
         f.close()
 
-        num_parts   = int(len(f_bytes) / uu.BOOTLOADER_UNIFLASH_BUF_SIZE)
-        remain_size = len(f_bytes) % uu.BOOTLOADER_UNIFLASH_BUF_SIZE
+        num_parts   = int(len(f_bytes) / uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES)
+        remain_size = len(f_bytes) % uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
         total_time_taken = 0
 
 
         for i in range(0, num_parts):
 
-            start = i*uu.BOOTLOADER_UNIFLASH_BUF_SIZE
-            end = start+uu.BOOTLOADER_UNIFLASH_BUF_SIZE
+            start = i*uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
+            end = start+uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
 
             part_data = f_bytes[start:end]
             part_filename = orig_f_name + f".part{i+1}"
@@ -135,7 +135,7 @@ class Flasher(QtCore.QObject):
 
             # temporarily change this to the partial filename
             lCfg.filename = part_filename
-            lCfg.offset = hex(uu.get_numword(orig_offset) + i*uu.BOOTLOADER_UNIFLASH_BUF_SIZE)
+            lCfg.offset = hex(uu.get_numword(orig_offset) + i*uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES)
 
             # send the partial file normally
             tempfilename = uu.create_temp_file(lCfg)
@@ -148,7 +148,7 @@ class Flasher(QtCore.QObject):
 
         # Send the last part, if there were residual bytes
         if(remain_size > 0):
-            start = num_parts*uu.BOOTLOADER_UNIFLASH_BUF_SIZE
+            start = num_parts*uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
             # Read till the end of original file
             part_data = bytearray(f_bytes[start:])
             padding = 256 - (remain_size % 256) # page size adjustment
@@ -164,7 +164,7 @@ class Flasher(QtCore.QObject):
 
             # temporarily change this to the partial filename
             lCfg.filename = part_filename
-            lCfg.offset = hex(uu.get_numword(orig_offset) + num_parts*uu.BOOTLOADER_UNIFLASH_BUF_SIZE)
+            lCfg.offset = hex(uu.get_numword(orig_offset) + num_parts*uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES)
 
             # send the partial file normally
             tempfilename = uu.create_temp_file(lCfg)
@@ -212,7 +212,7 @@ class Flasher(QtCore.QObject):
                     if linecfg.filename is not None:
                         f_size = os.path.getsize(linecfg.filename)
                     
-                    if((f_size + uu.BOOTLOADER_UNIFLASH_HEADER_SIZE >= uu.BOOTLOADER_UNIFLASH_BUF_SIZE) and (linecfg.optype in ["flash", "flashverify"])):
+                    if((f_size + uu.BOOTLOADER_UNIFLASH_HEADER_SIZE >= uu.BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES) and (linecfg.optype in ["flash", "flashverify"])):
                         # Send by parts
                         self.logger.emit(f"[INFO] Size of the file {linecfg.filename} is more than receive buffer size, sending by parts ...")
                         status, timetaken = self.sendFileByParts(linecfg)

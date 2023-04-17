@@ -19,7 +19,10 @@ ERROR_BAD_ARGS      = 1
 ERROR_BAD_PORT      = 2
 ERROR_BAD_RESPONSE  = 3
 
-BOOTLOADER_UNIFLASH_BUF_SIZE                         = 1024*1024 # 1 MB This has to be a 256 KB aligned value, because flash writes will be block oriented
+CONST_KB = 1024
+CONST_MB = CONST_KB * CONST_KB
+
+BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES                   = CONST_MB # This has to be a 256 KB aligned value, because flash writes will be block oriented
 BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
 
 BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER         = 0x46554C42 # BLUF
@@ -80,10 +83,10 @@ and then the script can be called:
 python uart_uniflash.py -p <COM port> --cfg=myconfig.cfg
 '''
 
-def open_serial_port(serial_port, baudrate, timeout=10):
+def open_serial_port(serial_port, baudrate, timeout=60):
     ser = None
     try:
-        ser = serial.Serial(port=serial_port, baudrate=baudrate, timeout=10)
+        ser = serial.Serial(port=serial_port, baudrate=baudrate, timeout=timeout)
     except serial.serialutil.SerialException:
         print('[ERROR] Serial port [' + serial_port + '] not found or not accessible !!!')
         sys.exit(ERROR_BAD_PORT)
@@ -203,7 +206,7 @@ def parse_response_evm(filename):
     return status
 
 # Sends the file to EVM via xmodem, receives response from EVM and returns the response status
-def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response=True):
+def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response=True, read_timeout=60):
     status = False
     timetaken = 0
     if not os.path.exists(filename):
@@ -214,7 +217,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
 
     bar = tqdm(total=os.path.getsize(filename), unit="bytes", leave=False, desc="Sending {}".format(filename.replace(TMP_SUFFIX, "")))
 
-    ser = open_serial_port(serialport, baudrate)
+    ser = open_serial_port(serialport, baudrate, timeout=read_timeout)
 
     def getc(size, timeout=1):
         return ser.read(size) or None
@@ -227,7 +230,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
     try:
         modem = XMODEM1k(getc, putc)
         tstart = time.time()
-        status = modem.send(stream, quiet=True, timeout=10, retry=10)
+        status = modem.send(stream, quiet=True,  timeout=10, retry=10)
         tstop = time.time()
         timetaken = round(tstop-tstart, 2)
     except:
@@ -274,15 +277,15 @@ def send_file_by_parts(l_cfg, s_port):
     f_bytes = f.read()
     f.close()
 
-    num_parts   = int(len(f_bytes) / BOOTLOADER_UNIFLASH_BUF_SIZE)
-    remain_size = len(f_bytes) % BOOTLOADER_UNIFLASH_BUF_SIZE
+    num_parts   = int(len(f_bytes) / BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES)
+    remain_size = len(f_bytes) % BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
     total_time_taken = 0
 
 
     for i in range(0, num_parts):
 
-        start = i*BOOTLOADER_UNIFLASH_BUF_SIZE
-        end = start+BOOTLOADER_UNIFLASH_BUF_SIZE
+        start = i*BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
+        end = start+BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
 
         part_data = f_bytes[start:end]
         part_filename = orig_f_name + ".part{}".format(i+1)
@@ -293,7 +296,7 @@ def send_file_by_parts(l_cfg, s_port):
 
         # temporarily change this to the partial filename
         l_cfg.filename = part_filename
-        l_cfg.offset = hex(get_numword(orig_offset) + i*BOOTLOADER_UNIFLASH_BUF_SIZE)
+        l_cfg.offset = hex(get_numword(orig_offset) + i*BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES)
 
         # send the partial file normally
         tempfilename = create_temp_file(l_cfg)
@@ -306,7 +309,7 @@ def send_file_by_parts(l_cfg, s_port):
 
     # Send the last part, if there were residual bytes
     if(remain_size > 0):
-        start = num_parts*BOOTLOADER_UNIFLASH_BUF_SIZE
+        start = num_parts*BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
         # Read till the end of original file
         part_data = bytearray(f_bytes[start:])
         padding = 256 - (remain_size % 256) # page size adjustment
@@ -322,7 +325,7 @@ def send_file_by_parts(l_cfg, s_port):
 
         # temporarily change this to the partial filename
         l_cfg.filename = part_filename
-        l_cfg.offset = hex(get_numword(orig_offset) + num_parts*BOOTLOADER_UNIFLASH_BUF_SIZE)
+        l_cfg.offset = hex(get_numword(orig_offset) + num_parts*BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES)
 
         # send the partial file normally
         tempfilename = create_temp_file(l_cfg)
@@ -355,8 +358,12 @@ def main(argv):
     my_parser.add_argument('--flash-writer', required=False, help="Special option. This will load the sbl_uart_uniflash binary which will be booted by ROM. Other arguments are irrelevant and hence ignored when --flash-writer argument is present. Not required if using config mode (--cfg)")
     my_parser.add_argument('--erase-size', required=False, help='Size of flash to erase. Only valid when operation is "erase"')
     my_parser.add_argument('--cfg', required=False, help=g_cfg_file_description)
+    my_parser.add_argument('--chunk-size-kb', required=False, default=CONST_KB, help="Size of the receive buffer in multiples of KB. Defaults to 1024")
 
     args = my_parser.parse_args()
+    
+    global BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES
+    BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES = CONST_KB * int(args.chunk_size_kb)
 
     serialport = args.serial_port
     config_file = args.cfg
@@ -406,7 +413,7 @@ def main(argv):
                     if linecfg.filename is not None:
                         f_size = os.path.getsize(linecfg.filename)
 
-                    if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE) and (linecfg.optype in ["flash", "flashverify"])):
+                    if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES) and (linecfg.optype in ["flash", "flashverify"])):
                         # Send by parts
                         status, timetaken = send_file_by_parts(linecfg, serialport)
                     else:
@@ -448,7 +455,7 @@ def main(argv):
             if cmdlinecfg.filename is not None:
                 f_size = os.path.getsize(cmdlinecfg.filename)
 
-            if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE) and (cmdlinecfg.optype in ["flash", "flashverify"])):
+            if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES) and (cmdlinecfg.optype in ["flash", "flashverify"])):
                 # Send by parts
                 status, timetaken = send_file_by_parts(cmdlinecfg, serialport)
             else:
@@ -695,4 +702,5 @@ class FileCfg():
         return parse_status
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
+    

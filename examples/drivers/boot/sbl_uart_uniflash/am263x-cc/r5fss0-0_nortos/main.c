@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,7 +61,7 @@ int main(void)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t done = 0U;
-    uint32_t fileSize;
+    uint32_t fileSize = 0U;
     Bootloader_UniflashConfig uniflashConfig;
     Bootloader_UniflashResponseHeader respHeader;
 
@@ -77,6 +77,7 @@ int main(void)
     while(!done)
     {
         /* Xmodem Receive */
+        fileSize = 0U;
         status = Bootloader_xmodemReceive(CONFIG_UART0, gUniflashFileBuf, BOOTLOADER_UNIFLASH_MAX_FILE_SIZE, &fileSize);
 
         /* 
@@ -97,7 +98,7 @@ int main(void)
             Bootloader_xmodemTransmit(CONFIG_UART0, (uint8_t *)&respHeader, sizeof(Bootloader_UniflashResponseHeader));
         }
 
-        if(status == SystemP_SUCCESS)
+        if((status == SystemP_SUCCESS) && (fileSize != 0U))
         {
             uniflashConfig.flashIndex = CONFIG_FLASH0;
             uniflashConfig.buf = gUniflashFileBuf;
