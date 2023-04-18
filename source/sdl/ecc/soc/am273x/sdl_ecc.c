@@ -47,7 +47,6 @@
 #include <sdl/ecc/sdl_ecc_core.h>
 #include <sdl/ecc/sdl_ecc_priv.h>
 #include <sdl/dpl/sdl_dpl.h>
-#include <kernel/dpl/AddrTranslateP.h>
 
 /* Local defines */
 #define SDL_ECC_INVALID_ERROR_SOURCE      (0xffffffffu)

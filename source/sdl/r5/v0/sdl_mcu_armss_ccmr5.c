@@ -31,7 +31,6 @@
  *
  *  Name        : sdl_mcu_armss_ccmr5.h
 */
-#include <kernel/dpl/DebugP.h>
 #include "sdl_mcu_armss_ccmr5.h"
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdlr.h>

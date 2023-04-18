@@ -40,7 +40,7 @@
 #include <sdl/include/am273x/sdlr_mss_ctrl.h>
 #include <sdl/include/am273x/sdlr_dss_rcm.h>
 #include <sdl/include/am273x/sdlr_dss_ctrl.h>
-#include<drivers/soc/am273x/soc.h>
+
 
 #ifdef __cplusplus
 extern "C" {

@@ -40,7 +40,6 @@
 #include <sdl/include/awr294x/sdlr_mss_ctrl.h>
 #include <sdl/include/awr294x/sdlr_dss_rcm.h>
 #include <sdl/include/awr294x/sdlr_dss_ctrl.h>
-#include  <drivers/soc/awr294x/soc.h>
 
 #ifdef __cplusplus
 extern "C" {

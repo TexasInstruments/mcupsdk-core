@@ -34,7 +34,6 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <kernel/dpl/DebugP.h>
 #include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
 #include <sdl/r5/v0/sdl_ip_ccm.h>
 #include <sdl/sdl_ecc.h>

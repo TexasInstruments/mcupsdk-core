@@ -36,7 +36,6 @@
 #define SDLR_SOC_ECC_AGGR_H_
 
 #include <sdl/sdlr.h>
-#include <drivers/hw_include/tistdtypes.h>
 #ifdef __cplusplus
 extern "C"
 {

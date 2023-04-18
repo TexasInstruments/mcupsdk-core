@@ -49,7 +49,6 @@ extern "C"
  *  @{
  */
 #include <sdl/sdlr.h>
-#include <kernel/dpl/SystemP.h>
 #include <sdl/include/am273x/sdlr_dss_ctrl.h>
 #include <sdl/include/am273x/sdlr_dss_rcm.h>
 #include <sdl/include/am273x/sdlr_mss_ctrl.h>
