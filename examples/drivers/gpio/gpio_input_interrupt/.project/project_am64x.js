@@ -27,11 +27,18 @@ const libdirs = {
     ],
 };
 
-const libs = {
+const libs_r5f = {
     common: [
         "nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_a53 = {
+    common: [
+        "nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib",
+        "drivers.am64x.a53.gcc-aarch64.${ConfigName}.lib",
     ],
 };
 
@@ -60,8 +67,24 @@ const templates_nortos_r5f =
     },
 ];
 
+const templates_nortos_a53 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "gpio_input_interrupt_main",
+        },
+    },
+];
+
 const buildOptionCombos = [
     { device: "am64x", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+    { device: "am64x", cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am64x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -83,10 +106,17 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;
-    build_property.libs = libs;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    build_property.templates = templates_nortos_r5f;
+
+    if(buildOption.cpu.match(/r5f*/)) {
+        build_property.libs = libs_r5f;
+        build_property.templates = templates_nortos_r5f;
+    }
+    if(buildOption.cpu.match(/a53*/)) {
+        build_property.libs = libs_a53;
+        build_property.templates = templates_nortos_a53;
+    }
 
     return build_property;
 }

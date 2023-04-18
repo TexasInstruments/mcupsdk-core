@@ -84,6 +84,8 @@ void gpio_input_interrupt_main(void *args)
     hwiPrms.intNum   = intrNum;
     hwiPrms.callback = &GPIO_bankIsrFxn;
     hwiPrms.args     = (void *) pinNum;
+    /* GPIO interrupt is a pulse type interrupt */
+    hwiPrms.isPulse  = TRUE;
     retVal = HwiP_construct(&gGpioHwiObject, &hwiPrms);
     DebugP_assert(retVal == SystemP_SUCCESS );
 
