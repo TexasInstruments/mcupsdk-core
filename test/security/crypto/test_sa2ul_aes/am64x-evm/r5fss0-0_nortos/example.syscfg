@@ -10,6 +10,8 @@
  */
 const firewall   = scripting.addModule("/drivers/firewall/firewall", {}, false);
 const firewall1  = firewall.addInstance();
+const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1      = udma.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -32,6 +34,8 @@ firewall1.regCfg[0].instName  = "SA2_UL0";
 firewall1.regCfg[0].interName = "MMRA";
 firewall1.regCfg[0].fwlCache  = true;
 firewall1.regCfg[0].fwlPriv1  = "MAIN_0_R5_0_SECURE";
+
+udma1.$name = "CONFIG_UDMA0";
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
@@ -69,10 +73,9 @@ mpu_armv76.size     = 31;
 crypto1.$name       = "CONFIG_CRYPTO0";
 crypto1.sa2ul.$name = "CONFIG_SA2UL0";
 
-const udma               = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1              = udma.addInstance({}, false);
-udma1.$name              = "CONFIG_UDMA0";
-crypto1.sa2ul.udmaPKTDMA = udma1;
+const udma2              = udma.addInstance({}, false);
+udma2.$name              = "CONFIG_UDMA1";
+crypto1.sa2ul.udmaPKTDMA = udma2;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
