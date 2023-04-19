@@ -31,6 +31,8 @@ static uint8_t gMemDescr[SA2UL_UDMA_DESCRITPOR_MEM_SIZE] __attribute__ ((aligned
 /* SA2UL atrributes */
 SA2UL_Attrs gSA2ULAttrs[CONFIG_SA2UL_NUM_INSTANCES] =
 {
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
     {
         .saBaseAddr         = CSL_SA2_UL0_BASE,
         .txPsilThreadId     = 0x4001,
@@ -45,7 +47,7 @@ SA2UL_Attrs gSA2ULAttrs[CONFIG_SA2UL_NUM_INSTANCES] =
         .udmaSaTxGroupNum   = UDMA_MAPPED_TX_GROUP_SAUL,
         .udmaSaRxGroupNum   = UDMA_MAPPED_RX_GROUP_SAUL,
         .ringCnt            = SA2UL_RING_CNT,
-        .udmaHandle         = (uint32_t)&gUdmaDrvObj[0],
+        .udmaHandle         = (uint32_t)&gUdmaDrvObj[`instance.udmaPKTDMA.$name`],
         .contextIdStart     = 0x80,
         .contextIdMaxNum    = 16,
         .txRingNumInt       = 0,
@@ -55,6 +57,7 @@ SA2UL_Attrs gSA2ULAttrs[CONFIG_SA2UL_NUM_INSTANCES] =
         .priv               = 0,
         .secure             = 0,
     },
+% }
 };
 
 PKA_Attrs gPKA_Attrs[CONFIG_SA2UL_NUM_INSTANCES] =
