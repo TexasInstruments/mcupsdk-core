@@ -64,3 +64,4 @@ source/motor_control/position_sense/endat/firmware/*.lst
 source/motor_control/position_sense/endat/firmware/*.obj
 source/motor_control/position_sense/endat/firmware/*.b00
 source/motor_control/position_sense/endat/firmware/*.xml
+!*boardcfg_*.bin

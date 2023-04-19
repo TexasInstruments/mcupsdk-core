@@ -113,7 +113,7 @@ __attribute__(( aligned(128))) =
          * be given in steps of 4, which makes the size of cache to be
          * configured in steps on X/8 MB.
          */
-        .msmc_cache_size = 0x18,
+        .msmc_cache_size = 0x20,
     },
 
     /* tisci_boardcfg_dbg_cfg */
@@ -126,14 +126,7 @@ __attribute__(( aligned(128))) =
          * debug.
          */
 
-        .trace_dst_enables = (TISCI_BOARDCFG_TRACE_DST_UART0 |
-                              TISCI_BOARDCFG_TRACE_DST_ITM |
-                              TISCI_BOARDCFG_TRACE_DST_MEM),
-        .trace_src_enables = (TISCI_BOARDCFG_TRACE_SRC_PM |
-                              TISCI_BOARDCFG_TRACE_SRC_RM |
-                              TISCI_BOARDCFG_TRACE_SRC_SEC |
-                              TISCI_BOARDCFG_TRACE_SRC_BASE |
-                              TISCI_BOARDCFG_TRACE_SRC_USER |
-                              TISCI_BOARDCFG_TRACE_SRC_SUPR)
+        .trace_dst_enables = 0,
+        .trace_src_enables = 0
     },
 };

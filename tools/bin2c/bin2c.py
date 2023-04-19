@@ -12,7 +12,7 @@ if (os.path.isfile(sys.argv[1]) is False):
 
 ti_license = '''
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -50,7 +50,7 @@ tspa_license = '''
 * TECHNOLOGY AND SOFTWARE PUBLICLY AVAILABLE
 * SOFTWARE LICENSE
 *
-* Copyright (c) 2022, Texas Instruments Incorporated.
+* Copyright (c) 2023, Texas Instruments Incorporated.
 *
 * All rights reserved not granted herein.
 *

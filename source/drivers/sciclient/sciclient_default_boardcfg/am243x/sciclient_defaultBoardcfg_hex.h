@@ -1,7 +1,7 @@
 
 
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,7 +35,7 @@
 
 /* Input file name = sciclient_defaultBoardcfg_hex.bin.signed */
 
-/* Image generation timestamp : 2023-03-09 17:19:08.143915 */
+/* Image generation timestamp : 2023-05-02 07:17:23.185494 */
 
 #ifndef SCICLIENT_DEFAULTBOARDCFG_HEX_H_
 #define SCICLIENT_DEFAULTBOARDCFG_HEX_H_
@@ -49,7 +49,7 @@ extern "C"
 
 #define SCICLIENT_BOARDCFG { \
     0x00U, 0x01U, 0xd3U, 0xc1U, 0x07U, 0x00U, 0x5aU, 0x23U, 0x00U, 0x07U, 0x12U, 0x07U, 0x00U, 0x01U, 0x01U, 0x00U,  \
-    0xc3U, 0xa5U, 0x05U, 0x00U, 0x00U, 0x0cU, 0x02U, 0x08U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,  \
+    0xc3U, 0xa5U, 0x05U, 0x00U, 0x20U, 0x0cU, 0x02U, 0x08U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,  \
 } /* 29 bytes */
 
 #ifdef __cplusplus

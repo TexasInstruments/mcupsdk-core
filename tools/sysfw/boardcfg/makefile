@@ -137,7 +137,6 @@ configure:
 configure-gen:
 	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(K3_RESPART_PRODUCT) --output generated/ $(K3_RESPART_REPO)/out/$(SOC_RES)-evm.syscfg
 	$(COPY) generated/sciclient_defaultBoardcfg_rm_mcusdk.c $(CFG_DIR)/sciclient_defaultBoardcfg_rm.c
-	$(COPY) generated/sciclient_defaultBoardcfg_mcusdk.c $(CFG_DIR)/sciclient_defaultBoardcfg.c
 	$(RMDIR) generated/
 
 define CREATE_HEX_GEN
