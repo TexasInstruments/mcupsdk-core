@@ -16,7 +16,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechan
 The example does below
 - Initializes the ethernet driver for the underlying HW
 - Initializes the LwIP stack for TCP/UDP IP and Starts UDP (echo) IGMP Server task.
-- UDP Server task waits for a mg from with multicast IP address from client on port 2638 and echoes back the same message.
+- UDP Server task waits for a msg to the multicast IP address from client on port 2638 and echoes back the same message.
 
 \cond SOC_AM263X
 NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
@@ -138,7 +138,7 @@ NOTE: DSCP priority mapping is configured in the example but for the host port t
 </tr>
 </table>
 
-# TCP Server using ncat tool
+# UDP Client using ncat tool
 
 Ncat is a general-purpose command-line tool for reading, writing, redirecting, and encrypting data across a network. It aims to be your network Swiss Army knife, handling a wide variety of security testing and administration tasks. Ncat is suitable for interactive use or as a network-connected back end for other tools.
  - Ncat is started as server to which EVM connects.
@@ -153,6 +153,7 @@ Ncat is a general-purpose command-line tool for reading, writing, redirecting, a
 - When using makefiles to build, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 
+Note: For UDP transmission on LwIP based application, application should perform cache coherency operation on payload before submitting the packet for transmission. This is because zero copy is enabled for UDP packet transmission and cache operation in driver are disabled for UDP payload portions. This example application does this using CacheP_wbInv.
 ## HW Setup
 
 \note Make sure you have setup the EVM with cable connections as shown here, \ref EVM_SETUP_PAGE.
@@ -255,7 +256,7 @@ UDP server: joined Multicast group
      35.112s : CPU load =   1.72 %
      40.113s : CPU load =   1.71 %
      45.114s : CPU load =   1.68 %
-     50.115s : CPU load =  docs_src/docs/api_guide/examples/networking/enet_lwip_cpsw.md 1.71 %
+     50.115s : CPU load =   1.71 %
      55.116s : CPU load =   1.66 %
      60.117s : CPU load =   1.65 %
      65.118s : CPU load =   1.70 %
@@ -356,7 +357,7 @@ Echo pkt completed
     \endcode
     "192.168.1.10" should be replaced with IP of EVM.
 
-3. Start TCP client using 'ncat' cmds as shown below. Below steps have been tried with a Linux Ubuntu 18.04 host PC running bash shell
+3. Start UDP client using 'ncat' cmds as shown below. Below steps have been tried with a Linux Ubuntu 18.04 host PC running bash shell
 
    Install 'ncat' if not installed by doing below
     \code

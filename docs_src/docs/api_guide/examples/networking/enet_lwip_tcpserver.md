@@ -142,7 +142,7 @@ NOTE: DSCP priority mapping is configured in the example but for the host port t
 </tr>
 </table>
 
-# TCP Server using ncat tool
+# TCP Client using ncat tool
 
 Ncat is a general-purpose command-line tool for reading, writing, redirecting, and encrypting data across a network. It aims to be your network Swiss Army knife, handling a wide variety of security testing and administration tasks. Ncat is suitable for interactive use or as a network-connected back end for other tools.
  - Ncat is started as server to which EVM connects.

@@ -154,6 +154,8 @@ Ncat is a general-purpose command-line tool for reading, writing, redirecting, a
 - When using makefiles to build, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 
+Note: For UDP transmission on LwIP based application, application should perform cache coherency operation on payload before submitting the packet for transmission. This is because zero copy is enabled for UDP packet transmission and cache operation in driver are disabled for UDP payload portions. This example application does this using CacheP_wbInv.
+
 ## HW Setup
 
 \note Make sure you have setup the EVM with cable connections as shown here, \ref EVM_SETUP_PAGE.
