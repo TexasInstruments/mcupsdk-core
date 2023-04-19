@@ -51,11 +51,11 @@ int main(void)
     status = sciclient_load_sysfw();
     DebugP_assertNoLog(status == SystemP_SUCCESS);
 
-    System_init();
-    Board_init();
-
     status = sciclient_set_boardcfg();
     DebugP_assertNoLog(status == SystemP_SUCCESS);
+
+    System_init();
+    Board_init();
 
     if (!Bootloader_socIsMCUResetIsoEnabled())
     {
