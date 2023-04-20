@@ -12,6 +12,7 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
@@ -23,7 +24,14 @@ endif
 
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})
-BOOTIMAGE_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
+BOOTIMAGE_NAME_GP:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
+BOOTIMAGE_NAME_HS:=sbl_jtag_uniflash.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_jtag_uniflash.$(PROFILE).hs_fs.tiimage
+ifeq ($(DEVICE_TYPE),HS)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
+else
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
+endif
 BOOTIMAGE_BIN_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).bin
 
 #

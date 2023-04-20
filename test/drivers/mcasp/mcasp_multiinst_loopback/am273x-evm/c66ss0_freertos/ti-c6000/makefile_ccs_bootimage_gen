@@ -12,6 +12,7 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
 STRIP=$(CG_TOOL_ROOT)/bin/strip6x
 OBJCOPY=$(CG_TOOL_ROOT)/bin/
