@@ -10,6 +10,8 @@
  */
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
+const ddr         = scripting.addModule("/drivers/ddr/ddr", {}, false);
+const ddr1        = ddr.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
@@ -24,6 +26,8 @@ const mpu_armv76  = mpu_armv7.addInstance();
  */
 bootloader1.$name     = "CONFIG_BOOTLOADER0";
 bootloader1.bootMedia = "MEM";
+
+ddr1.$name = "CONFIG_DDR0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
