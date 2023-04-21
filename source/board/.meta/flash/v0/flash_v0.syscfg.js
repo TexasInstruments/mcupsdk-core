@@ -1039,7 +1039,44 @@ function fillConfigs(inst, cfg) {
         } else if(["8s_8s_8s", "8d_8d_8d"].includes(inst.protocol)) {
             inst.flash888Seq = pCfg.enableSeq;
         }
-        /* Custom */
+        /* Register configs */
+        /* Protocol config */
+        if(pCfg.protoCfg != null) {
+            inst.proto_isAddrReg = pCfg.protoCfg.isAddrReg;
+            inst.proto_cmdRegRd  = pCfg.protoCfg.cmdRegRd;
+            inst.proto_cmdRegWr  = pCfg.protoCfg.cmdRegWr;
+            inst.proto_cfgReg    = pCfg.protoCfg.cfgReg;
+            inst.proto_shift     = pCfg.protoCfg.shift;
+            inst.proto_mask      = pCfg.protoCfg.mask;
+            inst.proto_bitP      = pCfg.protoCfg.bitP;
+        } else {
+            inst.proto_isAddrReg = false;
+        }
+        /* Dummy config */
+        if(pCfg.dummyCfg != null) {
+            inst.dummy_isAddrReg = pCfg.dummyCfg.isAddrReg;
+            inst.dummy_cmdRegRd  = pCfg.dummyCfg.cmdRegRd;
+            inst.dummy_cmdRegWr  = pCfg.dummyCfg.cmdRegWr;
+            inst.dummy_cfgReg    = pCfg.dummyCfg.cfgReg;
+            inst.dummy_shift     = pCfg.dummyCfg.shift;
+            inst.dummy_mask      = pCfg.dummyCfg.mask;
+            inst.dummy_bitP      = pCfg.dummyCfg.bitP;
+        } else {
+            inst.dummy_isAddrReg = false;
+        }
+        /* Str-Dtr config */
+        if(pCfg.strDtrCfg != null) {
+            inst.strDtr_isAddrReg = pCfg.strDtrCfg.isAddrReg;
+            inst.strDtr_cmdRegRd  = pCfg.strDtrCfg.cmdRegRd;
+            inst.strDtr_cmdRegWr  = pCfg.strDtrCfg.cmdRegWr;
+            inst.strDtr_cfgReg    = pCfg.strDtrCfg.cfgReg;
+            inst.strDtr_shift     = pCfg.strDtrCfg.shift;
+            inst.strDtr_mask      = pCfg.strDtrCfg.mask;
+            inst.strDtr_bitP      = pCfg.strDtrCfg.bitP;
+        } else {
+            inst.strDtr_isAddrReg = false;
+        }
+            /* Custom */
         if(inst.protocol == "custom") {
             if(cfg.protos.pCustom != null) {
                 if(cfg.protos.pCustom != null) {
