@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -208,6 +208,11 @@ typedef struct Bootloader_Config_s
     uint32_t coresPresentMap;
     uint8_t *scratchMemPtr;
     void *socCoreOpMode;
+    /* These options are for supporting HS-FS development, should be removed
+       after the boot time degradation is fixed for HS devices. */
+    uint32_t isAppimageSigned;
+    uint32_t disableAppImageAuth;
+
 } Bootloader_Config;
 
 #include <drivers/bootloader/bootloader_flash.h>

@@ -109,7 +109,6 @@ Bootloader_socCoreOpModeConfig operatingMode=
 void* operatingMode = NULL;
 %}
 
-
 /* Bootloader driver configuration */
 Bootloader_Config gBootloaderConfig[CONFIG_BOOTLOADER_NUM_INSTANCES] =
 {
@@ -131,6 +130,13 @@ Bootloader_Config gBootloaderConfig[CONFIG_BOOTLOADER_NUM_INSTANCES] =
         0,
         NULL,
         .socCoreOpMode= (void *)&operatingMode,
+    % if(["am243x", "am64x"].includes(common.getSocName())) {
+        .isAppimageSigned = `instance.isAppimageSigned.toString(10).toUpperCase()`,
+        .disableAppImageAuth = `instance.disableAppImageAuth.toString(10).toUpperCase()`,
+    % } else {
+        .isAppimageSigned = TRUE,
+        .disableAppImageAuth = FALSE,
+    % }
     },
 % }
 };

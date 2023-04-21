@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -553,7 +553,7 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
 #endif
         if (config->bootMedia != BOOTLOADER_MEDIA_EMMC)
         {
-            // /* Read first 4 bytes of the appimage to determine if it is signed with x509 certificate */
+            /* Read first 4 bytes of the appimage to determine if it is signed with x509 certificate */
             config->fxns->imgReadFxn(x509Header, 4, config->args);
             config->fxns->imgSeekFxn(0, config->args);
 
@@ -569,11 +569,23 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
         /* Check if the certificate length is within valid range */
         if((certLen > 0x100) && (certLen < 0x800))
         {
-            authStatus = Bootloader_socAuthImage(certLoadAddr);
-
+            if(config->disableAppImageAuth == TRUE)
+            {
+                /* NOTE: This is an option to skip image authentication in a signed 
+                image to aid initial development on HS devices. If the user has 
+                opted to disable image authentication, do not authenticate/decrypt. 
+                Skip the certificate length and start loading as in GP */
+                authStatus = SystemP_SUCCESS;
+            }
+            else
+            {
+                authStatus = Bootloader_socAuthImage(certLoadAddr);
+            }
             if(config->bootMedia == BOOTLOADER_MEDIA_BUFIO)
             {
-                /* Authentication will fail in Buf Io because we don't have full data yet, so make it pass here for testing. Default behaviour is to assert. */
+                /* Authentication will fail in Buf Io because we don't have full data yet, 
+                so make it pass here for testing. Default behaviour is to assert. */
+
                 /* authStatus = SystemP_SUCCESS; */
                 DebugP_assertNoLog(authStatus == SystemP_SUCCESS);
             }
@@ -640,14 +652,14 @@ int32_t Bootloader_parseMultiCoreAppImage(Bootloader_Handle handle, Bootloader_B
         Bootloader_MetaHeaderCore  mHdrCore[BOOTLOADER_MAX_INPUT_FILES];
 
         /* Verify the multicore image if authentication is required */
-        if(Bootloader_socIsAuthRequired() == TRUE)
+        if((Bootloader_socIsAuthRequired() == TRUE) && (config->isAppimageSigned == TRUE))
         {
             /* Device is HS, verify image. */
             status = Bootloader_verifyMulticoreImage(handle);
         }
         else
         {
-            /* Device is GP, no authentication required */
+            /* Device is GP, no authentication required OR appimage is not signed, boot like GP */
             status = SystemP_SUCCESS;
         }
 

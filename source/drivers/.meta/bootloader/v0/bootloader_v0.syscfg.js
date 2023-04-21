@@ -83,7 +83,7 @@ function getConfig(){
             hidden: true,
         }
     ]
-    if(common.getSocName() == "am263x"){
+    if(common.getSocName() == "am263x") {
         cfg.push(
             {
                 name: "R5FSS0operatingMode",
@@ -101,7 +101,7 @@ function getConfig(){
                 options: soc.getOperatingMode(),
             })
     }
-    if(common.getSocName() == "am273x"){
+    if(common.getSocName() == "am273x") {
         cfg.push(
             {
                 name: "R5FSS0operatingMode",
@@ -110,6 +110,32 @@ function getConfig(){
                 default: "Lockstep",
                 options: soc.getOperatingMode(),
             });
+    }
+    if(["am243x", "am64x"].includes(common.getSocName())) {
+        cfg.push(
+            {
+                name: "isAppimageSigned",
+                displayName: "Application Image Is X509 Signed",
+                default: true,
+                onChange: function(inst, ui) {
+                    if(inst.isAppimageSigned) {
+                        ui.disableAppImageAuth.hidden = false;
+                    } else {
+                        ui.disableAppImageAuth.hidden = true;
+                        inst.disableAppImageAuth = true;
+                    }
+                }
+            }
+        )
+        cfg.push(
+            {
+                name: "disableAppImageAuth",
+                displayName: "Disable Auth For Application Image",
+                description: "Selecting this would disable authentication for application images. Make sure that encryption is also turned off for the application image if you're disabling authentication. ",
+                default: false,
+                hidden: false,
+            }
+        );
     }
     return cfg;
 }
