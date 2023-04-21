@@ -100,6 +100,24 @@ function getConfigurables()
                 displayFormat: "hex",
                 hidden: true,
             },
+            {
+                name: "mdioManualModeLinkPolling",
+                displayName: "MDIO Manual Mode Link Status Update",
+                default: "Polling",
+                options: [
+                    {
+                        name: "MLINK",
+                        displayName: "MLINK Based",
+                        description: "In this MLINK pins for getting link status updates from the PHY",
+                    },
+                    {
+                        name: "Polling",
+                        displayName: "PHY Polling Based",
+                        description: "In this MDIO workaround FW Polls the PHY register for link status",
+                    }
+                ],
+                hidden: true,
+            },
         );
     }
 

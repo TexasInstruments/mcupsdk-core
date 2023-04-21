@@ -61,6 +61,7 @@ uart1.$name                   = "CONFIG_UART1";
 uart1.MCU_UART.$assign        = "MCU_USART0";
 
 ethernetip1.$name                         = "CONFIG_ETHERNETIP0";
+ethernetip1.mdioManualModeLinkPolling     = "MLINK";
 ethernetip1.icss_emac[0].$name            = "CONFIG_ICSS_EMAC0";
 ethernetip1.icss_emac[0].learningEnable   = true;
 ethernetip1.icss_emac[0].linkTaskPriority = 24;
@@ -168,5 +169,7 @@ ethernetip1.PRU_ICSSG1_MII_G_RT.MII_MR0_CLK.$suggestSolution = "PRG1_PRU0_GPO6";
 ethernetip1.PRU_ICSSG1_MII_G_RT.MII_MR1_CLK.$suggestSolution = "PRG1_PRU1_GPO6";
 ethernetip1.PRU_ICSSG1_MII_G_RT.MII_MT0_CLK.$suggestSolution = "PRG1_PRU0_GPO16";
 ethernetip1.PRU_ICSSG1_MII_G_RT.MII_MT1_CLK.$suggestSolution = "PRG1_PRU1_GPO16";
+ethernetip1.PRU_ICSSG1_MII_G_RT.MII0_RXLINK.$suggestSolution = "PRG1_PRU0_GPO8";
+ethernetip1.PRU_ICSSG1_MII_G_RT.MII1_RXLINK.$suggestSolution = "PRG1_PRU1_GPO8";
 debug_log.uartLog.UART.RXD.$suggestSolution                  = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$suggestSolution                  = "UART0_TXD";

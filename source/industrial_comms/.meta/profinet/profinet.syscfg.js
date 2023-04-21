@@ -366,9 +366,15 @@ function getConfigurables()
                 {
                     name: "Polling",
                     displayName: "PHY Polling Based",
-                    description: "In this MDIO WA FW Polls the PHY register for link status",
-                }
+                    description: "In this MDIO workaround FW Polls the PHY register for link status",
+                },
             ],
+            getDisabledOptions: () => {
+                return [{
+                    name: "Polling",
+                    reason: "Currently Not Supported"
+                }]
+            },
         });
     }
 
@@ -461,6 +467,7 @@ function moduleInstances(instance) {
                                 mdioPort: instance.phyAddr0,
                                 manualMode: instance.manualMode,
                                 mdioManualModeBaseAddr: instance.mdioManualModeBaseAddr,
+                                mdioManualModeLinkPolling: instance.mdioManualModeLinkPolling,
                             };
                 } else {
                     return  {
@@ -485,6 +492,7 @@ function moduleInstances(instance) {
                                 mdioPort: instance.phyAddr1,
                                 manualMode: instance.manualMode,
                                 mdioManualModeBaseAddr: instance.mdioManualModeBaseAddr,
+                                mdioManualModeLinkPolling: instance.mdioManualModeLinkPolling,
                             };
                 } else {
                     return  {

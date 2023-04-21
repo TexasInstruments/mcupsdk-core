@@ -98,9 +98,10 @@
     %   }
 % }
 % }
-% if (ethphyModule?.$instances[0]?.manualMode) {
+% if (ethphyModule?.$instances[0]?.manualMode && (ethphyModule?.$instances[0]?.mdioManualModeLinkPolling === "Polling")) {
     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
+    % // It updates miiMdioRegBase for all added ICSSG instances in case of MDIO Polling mode wa, which might not be required.
     gPruIcssConfig[`i`].hwAttrs->miiMdioRegBase = CSL_PRU_`instance.instance`_DRAM0_SLV_RAM_BASE + 0x`(ethphyModule.$instances[0].mdioManualModeBaseAddr).toString(16)`;
     % }
 % }
