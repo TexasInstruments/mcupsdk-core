@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,6 +43,8 @@ extern "C"
 #include <drivers/secure_ipc_notify/soc/am263x/sipc_notify_cfg.h>
 #elif defined (SOC_AM273X)
 #include <drivers/secure_ipc_notify/soc/am273x/sipc_notify_cfg.h>
+#elif defined (SOC_AWR294X)
+#include <drivers/secure_ipc_notify/soc/awr294x/sipc_notify_cfg.h>
 #endif
 
 

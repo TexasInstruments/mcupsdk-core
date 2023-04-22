@@ -29,6 +29,9 @@ const driverVer = {
     "gpio": {
         version: "v1",
     },
+    "hsmclient": {
+        version: "v0",
+    },
     "gpadc": {
         version: "v0",
     },
@@ -72,6 +75,7 @@ const topModules_r5f = [
     "/drivers/esm/esm",
     "/drivers/gpadc/gpadc",
     "/drivers/gpio/gpio",
+    "/drivers/hsmclient/hsmclient",
     "/drivers/hwa/hwa",
     "/drivers/i2c/i2c",
     "/drivers/ipc/ipc",
@@ -90,11 +94,17 @@ const topModules_c66 = [
     "/drivers/csirx/csirx",
     "/drivers/edma/edma",
     "/drivers/esm/esm",
+    "/drivers/hsmclient/hsmclient",
     "/drivers/hwa/hwa",
     "/drivers/ipc/ipc",
     "/drivers/rti/rti",
     "/drivers/uart/uart",
     "/drivers/watchdog/watchdog",
+];
+
+const topModules_mcu = [
+    "/drivers/uart/uart",
+
 ];
 
 function getCpuID() {
@@ -103,6 +113,9 @@ function getCpuID() {
         "r5fss0-1" : "CSL_CORE_ID_R5FSS0_1",
         "c66ss0"   : "CSL_CORE_ID_C66SS0",
     };
+    if(common.getSelfSysCfgCoreName().includes("hsm")) {
+        corename_map = system.getScript(`/imports/drivers/soc/drivers_${common.getSocName()}_hsm.syscfg.js`).corename_map_hsm;
+    }
 
     return corename_map[common.getSelfSysCfgCoreName()];
 }
@@ -123,6 +136,10 @@ exports = {
 
         if(common.getSelfSysCfgCoreName().includes("c66")) {
             topModules = topModules_c66;
+        }
+
+        if(common.getSelfSysCfgCoreName().includes("hsm")) {
+            topModules = topModules_mcu;
         }
 
         return topModules;

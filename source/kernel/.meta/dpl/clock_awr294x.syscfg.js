@@ -110,6 +110,7 @@ function getDefaultInstance() {
         "r5fss0-0": 0,
         "r5fss0-1": 1,
         "c66ss0": 0,
+        "hsm0-0": 0,
     }
     return defaultInstanceMap[cpu];
 }
@@ -120,6 +121,9 @@ function getStaticConfigArr() {
 
     if(cpu.match(/r5f*/)) {
         staticConfigArr = staticConfig_r5f;
+    }
+    else if(cpu.match(/hsm*/) || cpu.match(/m4f*/)) {
+        staticConfigArr = system.getScript(`/imports/kernel/dpl/clock_${common.getSocName()}_hsm.syscfg.js`).staticConfig_m4f;
     }
     else
     {

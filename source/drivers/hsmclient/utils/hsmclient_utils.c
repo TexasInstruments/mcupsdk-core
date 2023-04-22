@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,10 +41,11 @@
 /*                             Constant Declaration                           */
 /* ========================================================================== */
 
-static const char soc_type_arr[NUM_SOC_TYPE][7] = {
+static const char soc_type_arr[NUM_SOC_TYPE][8] = {
 	"AM263x",
     "AM263p",
-    "AM273x"
+    "AM273x",
+    "AWR294x"
 };
 
 /* ========================================================================== */

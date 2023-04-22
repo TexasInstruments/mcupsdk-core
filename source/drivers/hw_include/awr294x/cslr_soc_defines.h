@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,7 +60,21 @@ extern "C" {
 #define CSL_CORE_ID_C66SS0           (2U)
 #define CSL_CORE_ID_RSS_R4           (3U)
 #define CSL_CORE_ID_MAX              (4U)
+
 /** @} */
+/**
+ * \anchor PrivID
+ * \name Priv ID's of core or CPUs present on this SOC
+ *
+ * @{
+ */
+#define PRIV_ID_HSMM4            (1U)
+#define PRIV_ID_R5FSS            (2U)
+#define PRIV_ID_R5FSSI           (3U)
+#define PRIV_ID_DSSTPTC          (5U)
+
+/** @} */
+
 
 /** @brief Number of ePWM instances */
 #define CSL_EPWM_PER_CNT (3U)

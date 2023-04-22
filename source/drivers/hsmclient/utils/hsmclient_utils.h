@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,8 +63,10 @@ extern "C" {
 #define SOC_TYPE_AM263P		0x2
 /** @brief SOC TYPE FLAG for AM273x */
 #define SOC_TYPE_AM273X		0x3
+/** @brief SOC TYPE FLAG for AWR294x */
+#define SOC_TYPE_AWR294X	0x4
 /** @brief Count of all supported SOC's */
-#define NUM_SOC_TYPE		0x3
+#define NUM_SOC_TYPE		0x4
 
 /** @brief Device type flag for HS-FS */
 #define DEVICE_TYPE_HS_FS   0x00

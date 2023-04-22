@@ -59,7 +59,8 @@
         "AWR294X": [
             "r5fss0-0",
             "r5fss0-1",
-            "c66ss0"
+            "c66ss0",
+            "hsm0-0",
         ],
         "AM263x_beta": [
             "r5fss0-0",

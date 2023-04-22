@@ -111,7 +111,8 @@
         "AWR294X": [
             "r5fss0-0",
             "r5fss0-1",
-            "c66ss0"
+            "c66ss0",
+            "hsm0-0",
         ],
 % }
 % if((args.device == "am263x") || (isDevelopmentMode)) {

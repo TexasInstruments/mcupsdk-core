@@ -41,6 +41,8 @@
 #define IOMUX_KICK0_UNLOCK_VAL                  (0x83E70B13U)
 #define IOMUX_KICK1_UNLOCK_VAL                  (0x95A4F1E0U)
 
+#define ARM_M4F_VIRT_TO_PHY_OFFSET              (0x50000000U)
+
 typedef struct
 {
     uint32_t tcmaSize;
@@ -392,6 +394,18 @@ uint64_t SOC_virtToPhy(void *virtAddr)
     }
 
     /* DSS L3 and MSS L2 - same view and no change needed */
+#endif
+
+#if (__ARM_ARCH == 7) && (__ARM_ARCH_PROFILE == 'M')
+
+    if ( ((temp >=  CSL_MSS_SPIA_RAM_U_BASE) &&
+        (temp < CSL_MSS_MCANA_CFG_U_BASE)) ||
+        ((temp >= CSL_MSS_TPCC_A_U_BASE) &&
+        (temp < CSL_MSS_ETPWMC_U_BASE)) )
+    {
+        phyAddr += ARM_M4F_VIRT_TO_PHY_OFFSET;
+    }
+
 #endif
 
     return (phyAddr);
