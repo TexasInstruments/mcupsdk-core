@@ -128,10 +128,11 @@ One way to define such boundary is to protect some predefined memory region in O
 - Registering HsmClient_t with client ID and requesting current TIFS-MCU Version.
 
 \snippet hsmclient.c hsm_ver
-
+\cond (!SOC_AWR294X)
 - Example UART getVersion output.
 \imageStyle{hsmrt_ver.png,width:40%}
 \image html hsmrt_ver.png "Demo Get Version UART log"
+\endcond
 
 ## HSM Client GetUID Service.
 
