@@ -256,9 +256,17 @@ $(BOOTIMAGE_NAME): $(BOOTIMAGE_BIN_NAME)
 	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifeq ($(DEVICE_TYPE),HS)
 ifeq ($(DEBUG_TIFS), yes)
+ifeq ($(ENC_SBL_ENABLED),yes)
+	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME)
+else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME)
+endif
+else
+ifeq ($(ENC_SBL_ENABLED),yes)
+	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
 else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+endif
 endif
 else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT

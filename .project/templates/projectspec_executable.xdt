@@ -52,12 +52,12 @@
         name = "`obj.name`_`obj.board`_`obj.cpu`_`obj.os`_`obj.cgt`"
         products="`products`"
         configurations="
-        % if(args.project.device == "am263x") 
+        % if(args.project.device == "am263x")
         %{
             `args.utils.capitalize(profile_list[1])`,
             `args.utils.capitalize(profile_list[0])`,
         %}
-        % else 
+        % else
         %{
             % for (profile of profile_list) {
                 `args.utils.capitalize(profile)`,
@@ -185,7 +185,7 @@
         "
         % } else if (args.project.cpu.includes("pru")) {
         % } else {
-        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=`args.project.device`"
         % }
 
         % if("syscfgfile" in args.project) {

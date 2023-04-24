@@ -8,8 +8,10 @@ SIGNING_TOOL_PATH=$(MCU_PLUS_SDK_PATH)/tools/boot/signing
 ROM_DEGENERATE_KEY:=$(SIGNING_TOOL_PATH)/rom_degenerateKey.pem
 ifeq ($(DEVICE),am263x)
     CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
+	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
 else ifeq ($(DEVICE),am273x)
     CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
+	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
 else ifeq ($(DEVICE),awr294x)
     CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
 else
