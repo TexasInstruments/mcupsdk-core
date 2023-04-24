@@ -115,6 +115,7 @@ const files_m4f = {
         "fsi_rx.c",
         "fsi_tx.c",
         "gpio.c",
+        "gtc.c",
         "i2c_v0.c",
         "ipc_notify_v0.c",
         "ipc_notify_v0_cfg.c",

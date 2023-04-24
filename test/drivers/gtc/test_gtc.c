@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,32 +30,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- *  \file   GTC.c
- *
- *  \brief  Low lever APIs performing hardware register writes and reads for
- *         GTC version 0.
- *
- *   This file contains the hardware register write/read APIs for GTC.
- */
-
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <inttypes.h>
+#include <unity.h>
 #include <drivers/gtc.h>
 #include <drivers/soc.h>
-#include <drivers/hw_include/hw_types.h>
 #include <drivers/hw_include/cslr.h>
-#include <drivers/hw_include/cslr_gtc.h>
+#include <kernel/nortos/dpl/m4/SysTickTimerP.h>
+#include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
+#include <kernel/nortos/dpl/common/ClockP_nortos_priv.h>
 #include <kernel/dpl/AddrTranslateP.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+#define SYST_BASE               (0xE000E010u)
+#define SYST_RVR                (volatile uint32_t *)((SYST_BASE) + 0x04u)
+#define SYST_MAX_COUNT_VALUE    (0xFFFFFFFFU)
+
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -67,75 +69,100 @@
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
 
-/* None */
+/* Testcases */
+static void test_gtc_output(void *args);
+static void test_systick_output(void *args);
+static uint64_t test_calc_time(uint32_t timerCount);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+extern ClockP_Control gClockCtrl;
+extern ClockP_Config gClockConfig;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t GTC_setFID(void)
+void test_main(void *args)
 {
-    int32_t status = SystemP_FAILURE;
-    uint64_t clkRate = 0;
-    uint32_t baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CSL_GTC0_GTC_CFG1_BASE);
+    /* Open drivers to open the UART driver for console */
+    Drivers_open();
+    UNITY_BEGIN();
 
-    status = SOC_moduleGetClockFrequency(TISCI_DEV_GTC0, TISCI_DEV_GTC0_GTC_CLK, &clkRate);
+    RUN_TEST(test_gtc_output,     0, NULL);
+    RUN_TEST(test_systick_output, 0, NULL);
 
-    if (status == SystemP_SUCCESS)
-    {
-        HW_WR_REG32((baseAddr + CSL_GTC_CFG1_CNTFID0), clkRate);
-    }
-
-    return status;
-}
-
-void GTC_enable(void)
-{
-    uint32_t value = 0;
-    uint32_t baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CSL_GTC0_GTC_CFG1_BASE);
-
-    value = HW_RD_REG32(baseAddr);
-    HW_WR_REG32(baseAddr, value | CSL_GTC_CFG1_CNTCR_EN_MASK | CSL_GTC_CFG1_CNTCR_HDBG_MASK);
+    UNITY_END();
+    Drivers_close();
 
     return;
 }
 
-int32_t GTC_init(void)
+/*
+ * Unity framework required functions
+ */
+void setUp(void)
 {
-    int32_t status = SystemP_FAILURE;
-
-    status = GTC_setFID();
-
-    if (status == SystemP_SUCCESS)
-    {
-        GTC_enable();
-    }
-
-    return status;
 }
 
-uint64_t GTC_getCount64(void)
+void tearDown(void)
 {
-    uint64_t count = 0;
-    uint32_t count_low = 0, count_high = 0;
-    uint32_t baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CSL_GTC0_GTC_CFG1_BASE);
+}
 
-    /* Read and check if count value (high) have changed in between */
-    /* Change in the higher 32b would result in invalid values as the read
-    was not atomic */
-    do
-    {
-        count_high = HW_RD_REG32(baseAddr + CSL_GTC_CFG1_CNTCV_HI);
-        count_low =  HW_RD_REG32(baseAddr + CSL_GTC_CFG1_CNTCV_LO);
-    } while(HW_RD_REG32(baseAddr + CSL_GTC_CFG1_CNTCV_HI) != count_high);
+/*
+ * Testcases
+ */
+static void test_gtc_output(void *args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint64_t gtcCount1 = 0, gtcCount2 = 0;
+    uint64_t clkRate = 0;
 
-    count = (uint64_t)((uint64_t)count_high << 32) | count_low;
+    DebugP_log("\ntest_gtc_output started...\r\n");
 
-    return count;
+    retVal = GTC_init();
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    retVal = SOC_moduleGetClockFrequency(TISCI_DEV_GTC0, TISCI_DEV_GTC0_GTC_CLK, &clkRate);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    gtcCount1 = GTC_getCount64();
+    ClockP_sleep(1);
+    gtcCount2 = GTC_getCount64();
+
+    TEST_ASSERT_UINT32_WITHIN(1000000, clkRate, (gtcCount2 - gtcCount1));
+
+    DebugP_log("%lf time taken in seconds for test_gtc_output!!!\r\n",((Float64)((Float64)gtcCount2 - (Float64)gtcCount1) / (Float64)clkRate));
+    DebugP_log("test_gtc_output end!!!\r\n");
+
+    return;
+}
+
+static void test_systick_output(void *args)
+{
+    uint32_t sysTickCount1 = 0, sysTickCount2 = 0;
+
+    DebugP_log("\ntest_systick_output started...\r\n");
+
+    sysTickCount1 = (uint32_t)test_calc_time(ClockP_getTimerCount(gClockCtrl.timerBaseAddr));
+    ClockP_sleep(1);
+    sysTickCount2 = (uint32_t)test_calc_time(ClockP_getTimerCount(gClockCtrl.timerBaseAddr));
+
+    TEST_ASSERT_UINT32_WITHIN(400000000, gClockConfig.timerInputClkHz, (sysTickCount2 - sysTickCount1));
+
+    DebugP_log("%lf time taken in seconds for test_systick_output!!!\r\n",((Float64)((sysTickCount2 - sysTickCount1)) / (Float64)1000000));
+    DebugP_log("test_systick_output end!!!\r\n");
+
+    return;
+}
+
+static uint64_t test_calc_time(uint32_t timerCount)
+{
+    volatile uint32_t *addrRVR = SYST_RVR;
+
+    /* Calculation needed as systick interrupt will be generated every 1000us/1ms and reload register is configured accordingly*/
+    return ((uint64_t)((gClockCtrl.ticks * 1000)) + (uint64_t)((((timerCount - (*addrRVR)) * 1000) / (SYST_MAX_COUNT_VALUE - (*addrRVR)))));
+
 }
