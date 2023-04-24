@@ -194,9 +194,9 @@ static int32_t sdlApp_dplInit(void)
 void test_sdl_esm_baremetal_test_app (void *args)
 {
     /* Declarations of variables */
-    volatile int32_t    testResult = SDL_APP_TEST_PASS;
-    volatile int32_t    testVar;
-    volatile int32_t delay;
+    int32_t    testResult = SDL_APP_TEST_PASS;
+    int32_t    testVar;
+    int32_t    delay;
 
     /* Init dpl */
     sdlApp_dplInit();
@@ -205,7 +205,8 @@ void test_sdl_esm_baremetal_test_app (void *args)
 
     for ( testVar = 0; sdlEsmTestList[testVar].testFunction != NULL; testVar++)
     {
-        for (delay=0; delay<0xfff; delay++);
+        /*Some delay for getting time for configuration*/
+        for(delay=0; delay<0xfff; delay++);
         testResult = sdlEsmTestList[testVar].testFunction();
         sdlEsmTestList[testVar].testStatus = testResult;
     }

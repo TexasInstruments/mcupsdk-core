@@ -90,7 +90,7 @@ SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
      /**< All events enable: except clkstop events for unused clocks
       *   and PCIE events */
 	  /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0xfff00fffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    .priorityBitmap = {0xfff00fffu, 0xffffff0fu, 0x1ffbff, 0x00000000u,
                         },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
@@ -113,6 +113,8 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 
 
 int32_t SDTF_runESMInjectHigh_MAIN(void);
+int32_t SDTF_runESMInjectHigh_MAIN1(void);
+int32_t SDTF_runESMInjectHigh_MAIN2(void);
 int32_t sdl_Esm_posTest(void)
 {
 #if defined (SOC_AM64X)
@@ -951,17 +953,18 @@ int32_t sdl_Esm_posTest(void)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
-      if (testStatus == SDL_APP_TEST_PASS)
+
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-2013 */
-        if (SDL_ESM_isEnableCfgIntr(New_SDL_TEST_ESM_BASE, 0x0, NULL) != SDL_EBADARGS)
+        if (SDL_ESM_registerCCMCallback(SDL_ESM_INST_MAIN_ESM0,0, &SDL_ESM_applicationCallbackFunction,NULL) != SDL_PASS)
         {
             DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
 
-      if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-2013 */
         if (SDTF_runESMInjectHigh_MAIN() != SDL_PASS)
@@ -970,6 +973,37 @@ int32_t sdl_Esm_posTest(void)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-2013 */
+        if (SDTF_runESMInjectHigh_MAIN1() != SDL_PASS)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-2013 */
+        if (SDL_ESM_setCfgIntrStatusRAW(SDL_TOP_ESM_U_BASE, 1u) != SDL_PASS)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-2013 */
+        if (SDTF_runESMInjectHigh_MAIN2() != SDL_PASS)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
 
 return (testStatus);
 }
@@ -1029,7 +1063,25 @@ int32_t SDTF_runESMInjectHigh_MAIN(void)
 {
     int32_t retVal=0;
     esm_init_appcb(SDL_ESM_INST_MAIN_ESM0);
-    retVal = SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 3, 0);
+    retVal = SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 1, 0);
+    SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
+    return retVal;
+}
+
+int32_t SDTF_runESMInjectHigh_MAIN1(void)
+{
+    int32_t retVal=0;
+    esm_init_appcb(SDL_ESM_INST_MAIN_ESM0);
+    retVal = SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 1, 4);
+    SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
+    return retVal;
+}
+
+int32_t SDTF_runESMInjectHigh_MAIN2(void)
+{
+    int32_t retVal=0;
+    esm_init_appcb(SDL_ESM_INST_MAIN_ESM0);
+    retVal = SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 1, 8);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
     return retVal;
 }

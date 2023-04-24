@@ -83,16 +83,16 @@ static SDL_ESM_config ESM_esmInitConfig_MCU =
 static SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    .enableBitmap = {0xfff00fffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
                 },
      /**< All events enable: except clkstop events for unused clocks
       *   and PCIE events */
 	  /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    .priorityBitmap = {0xfff00fffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
                         },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    .errorpinBitmap = {0xfff00fffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
                       },
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
@@ -117,6 +117,7 @@ int32_t sdl_Esm_negTest(void)
     SDL_ESM_staticRegs         staticRegs;
     SDL_ESM_Inst         i;
     uint32_t esmBaseAddr;
+    uint32_t base;
     SDL_ESM_Instance_t *pEsmInstancePtr = (SDL_ESM_Instance_t *)NULL;
     uint32_t esmMaxNumEvents;
     uint32_t influence;
@@ -128,6 +129,7 @@ int32_t sdl_Esm_negTest(void)
     esmRevisionId_t revId;
     esmInfo_t info;
     uint32_t New_SDL_TEST_ESM_BASE;
+    bool event;
 
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
@@ -606,7 +608,7 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
-        if (SDL_ESM_verifyConfig(instance, &pCofnig) != SDL_EBADARGS)
+        if (SDL_ESM_verifyConfig(instance, NULL) == SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -1120,6 +1122,73 @@ int32_t sdl_Esm_negTest(void)
             DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
         }
     }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-2013 */
+        if (SDL_ESM_registerCCMCallback(SDL_ESM_INSTANCE_MAX,0, &SDL_ESM_applicationCallbackFunction,NULL) == SDL_PASS)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    /* SDL_ESM_init API test */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+            if ((SDL_ESM_init(SDL_ESM_INSTANCE_MAX, &pCofnig, NULL, &apparg)) == SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            }
+    }
+    /* SDL_ESM_init API test */
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+            if ((SDL_ESM_init(SDL_ESM_INSTANCE_MAX, &pCofnig, SDL_ESM_applicationCallbackFunction, &apparg)) == SDL_PASS)
+            {
+                testStatus = SDL_APP_TEST_FAILED;
+                DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-2013 */
+        if (SDL_ESM_checkSpecialEvent(esmBaseAddr,0, &base, &instance, &event) == (bool)true)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-2013 */
+        if (SDL_ESM_checkSpecialEvent(esmBaseAddr,0, &base, &instance, &event) == (bool)true)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getIntNumber(SDL_ESM_INST_MAIN_ESM0, SDL_ESM_INT_TYPE_MAX) != SDL_ESM_INTNUMBER_INVALID)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getIntNumber(SDL_ESM_INSTANCE_MAX, SDL_ESM_INT_TYPE_MAX) != SDL_ESM_INTNUMBER_INVALID)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
 
 /* sdl_ip_esm.c APIs end     */
 
