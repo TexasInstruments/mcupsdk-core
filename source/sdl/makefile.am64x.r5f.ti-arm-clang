@@ -50,6 +50,9 @@ FILES_common := \
     sdl_ip_pbist.c \
     sdl_pbist_soc.c \
     sdl_pbist.c \
+    sdl_ip_lbist.c \
+    sdl_soc_lbist.c \
+    sdl_lbist.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -94,6 +97,10 @@ FILES_PATH_common = \
     pbist/v0 \
     pbist/v0/soc \
     pbist/v0/soc/am64x \
+    lbist \
+    lbist/V0 \
+    lbist/soc \
+    lbist/soc/am64x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

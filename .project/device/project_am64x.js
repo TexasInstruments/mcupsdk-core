@@ -241,6 +241,7 @@ const example_file_list = [
     "test/sdl/pok/pokFuncTest/.project/project.js",
 	"test/sdl/rti/rtiUt/.project/project.js",
     "test/sdl/rti/rtiFuncTest/.project/project.js",
+    "test/sdl/lbist/.project/project.js",
     "test/board/eeprom/.project/project.js",
     "test/board/flash/.project/project.js",
     "test/board/led/.project/project.js",

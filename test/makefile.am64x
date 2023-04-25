@@ -99,6 +99,7 @@ help:
 	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/lbist/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/flash/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/led/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -335,6 +336,7 @@ BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_lbist_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -595,6 +597,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_lbist_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/lbist/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -939,6 +944,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_lbist_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1196,6 +1202,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_lbist_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/lbist/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1540,6 +1549,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_lbist_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1797,6 +1807,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_lbist_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/lbist/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

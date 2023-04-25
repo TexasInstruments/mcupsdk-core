@@ -52,6 +52,10 @@ SDL consists of below sub-modules
 - \subpage SDL_ROM_CHECKSUM_PAGE
 \endcond
 
+\cond SOC_AM64X
+- \subpage SDL_LBIST_PAGE
+\endcond
+
 \cond SOC_AM263X || SOC_AM263PX || SOC_AWR294X
 - \subpage SDL_DPL_PAGE
 - \subpage SDL_ESM_PAGE
