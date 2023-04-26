@@ -211,6 +211,75 @@ int XBAR_ecap_output_selects[10]=
 #define FALLING  true
 #define GOOD     true
 #define BAD      false
+#define IOMUX_OFFSET (PIN_EPWM0_A-PIN_EPWM1_A)
+#define IOMUX_EPWM_OUTPUT_OFFSET (PIN_EPWM0_A-PIN_EPWM0_B)
+
+uint32_t epwm_pins[] = {
+    PIN_EPWM0_A,
+    PIN_EPWM0_B,
+    PIN_EPWM1_A,
+    PIN_EPWM1_B,
+    PIN_EPWM2_A,
+    PIN_EPWM2_B,
+    PIN_EPWM3_A,
+    PIN_EPWM3_B,
+    PIN_EPWM4_A,
+    PIN_EPWM4_B,
+    PIN_EPWM5_A,
+    PIN_EPWM5_B,
+    PIN_EPWM6_A,
+    PIN_EPWM6_B,
+    PIN_EPWM7_A,
+    PIN_EPWM7_B,
+    PIN_EPWM8_A,
+    PIN_EPWM8_B,
+    PIN_EPWM9_A,
+    PIN_EPWM9_B,
+    PIN_EPWM10_A,
+    PIN_EPWM10_B,
+    PIN_EPWM11_A,
+    PIN_EPWM11_B,
+    PIN_EPWM12_A,
+    PIN_EPWM12_B,
+    PIN_EPWM13_A,
+    PIN_EPWM13_B,
+    PIN_EPWM14_A,
+    PIN_EPWM14_B,
+    PIN_EPWM15_A,
+    PIN_EPWM15_B,
+    PIN_UART1_RXD,
+    PIN_UART1_TXD,
+    PIN_MMC_CLK,
+    PIN_MMC_CMD,
+    PIN_MMC_DAT0,
+    PIN_MMC_DAT1,
+    PIN_MMC_DAT2,
+    PIN_MMC_DAT3,
+    PIN_MMC_SDWP,
+    PIN_MMC_SDCD,
+    PIN_PR0_MDIO_MDIO,
+    PIN_PR0_MDIO_MDC,
+    PIN_PR0_PRU0_GPIO5,
+    PIN_PR0_PRU0_GPIO9,
+    PIN_PR0_PRU0_GPIO10,
+    PIN_PR0_PRU0_GPIO8,
+    PIN_PR0_PRU0_GPIO6,
+    PIN_PR0_PRU0_GPIO4,
+    PIN_PR0_PRU0_GPIO0,
+    PIN_PR0_PRU0_GPIO1,
+    PIN_PR0_PRU0_GPIO2,
+    PIN_PR0_PRU0_GPIO3,
+    PIN_PR0_PRU0_GPIO16,
+    PIN_PR0_PRU0_GPIO15,
+    PIN_PR0_PRU0_GPIO11,
+    PIN_PR0_PRU0_GPIO12,
+    PIN_PR0_PRU0_GPIO13,
+    PIN_PR0_PRU0_GPIO14,
+    PIN_PR0_PRU1_GPIO5,
+    PIN_PR0_PRU1_GPIO9,
+    PIN_PR0_PRU1_GPIO10,
+    PIN_PR0_PRU1_GPIO8,
+};
 
 uint32_t gpio_base_addr = CSL_GPIO0_U_BASE;
 
@@ -221,6 +290,19 @@ volatile uint32_t pwm_input = (PIN_EPWM13_A)>>2;
 
 volatile uint32_t inputxbar_base_addr = CSL_CONTROLSS_INPUTXBAR_U_BASE;
 
+typedef struct
+{
+    bool enable;
+    uint16_t monitoring_type;
+    uint32_t monitor_min;
+    uint32_t monitor_max;
+    bool sync_in_enable;
+    bool force_copy_from_shadow;
+    uint16_t shadow_load_mode;
+    uint32_t monitor_min_shadow;
+    uint32_t monitor_max_shadow;
+    bool debug_mode_enable;
+} signal_monitoring_uint;
 typedef struct
 {
     uint8_t emu_mode;
@@ -247,12 +329,17 @@ typedef struct
     bool soc_evt_en;
     uint16_t soc_evt_source;
     bool rearm;
+    uint32_t signal_monitor_global_trip;
+    uint32_t signal_monitor_global_load_strobe;
+    signal_monitoring_uint* munit1_ptr;
+    signal_monitoring_uint* munit2_ptr;
 } ECAP_config_t;
 
 ECAP_config_t ECAP_config;
+/* for used for configuration holding and initialising the ecap_config_ptr->munit1_ptr and ecap_config_ptr->munit2_ptr*/
+signal_monitoring_uint munit1, munit2;
 
 ECAP_config_t* ecap_config_ptr =(ECAP_config_t*) &ECAP_config;
-
 /*
     instance 0 prescaler div_1 all events disabled
     onshot - capture mode - stops at evt 1 (falling)
@@ -281,14 +368,18 @@ void util_ecap_config_reset(void)
 
     /* all to the falling edge polarity */
     for (int iter = 0; iter < 4; iter++)
-        ecap_config_ptr->polarity[iter] = PARAMS_RESET_VAL_POLARITY;
+    {
+            ecap_config_ptr->polarity[iter] = PARAMS_RESET_VAL_POLARITY;
+    }
     /* interrupt disable */
     ecap_config_ptr->int_en = false;
     /* No source*/
     ecap_config_ptr->int_source = 0x0;
     /* No event resets by default*/
     for (int iter = 0; iter < 4; iter++)
-        ecap_config_ptr->counter_reset_capture[iter] = false;
+    {
+            ecap_config_ptr->counter_reset_capture[iter] = false;
+    }
     /* 32-bit value. 0 by reset*/
     ecap_config_ptr->phase_shift_count = 0x0;
     /* disabling the load counter */
@@ -307,6 +398,48 @@ void util_ecap_config_reset(void)
     ecap_config_ptr->soc_evt_source = PARAMS_RESET_VAL_SOC_EVT_SOURCE;
     /* disabling by default. reset the counter, start loading on the cap registers*/
     ecap_config_ptr->rearm = false;
+
+    ecap_config_ptr->signal_monitor_global_load_strobe = ECAP_MUNIT_GLDSTRB_DISABLED;
+    ecap_config_ptr->signal_monitor_global_trip = ECAP_MUNIT_TRIP_DISABLED;
+}
+
+void util_ecap_signal_monitoring_config_reset(void)
+{
+    /* assigning the munit1 struct to the signal monitoring unit pointer in ecap_config*/
+    ecap_config_ptr->munit1_ptr = &munit1;
+    ecap_config_ptr->munit2_ptr = &munit2;
+
+    /* disabling by default */
+    ecap_config_ptr->munit1_ptr->enable = false;
+    ecap_config_ptr->munit2_ptr->enable = false;
+
+    /* copying reset values for the following parameters */
+    ecap_config_ptr->munit1_ptr->monitoring_type = ECAP_MUNIT_HIGH_PULSE_WIDTH;
+    ecap_config_ptr->munit2_ptr->monitoring_type = ECAP_MUNIT_HIGH_PULSE_WIDTH;
+
+    ecap_config_ptr->munit1_ptr->monitor_min = 0;
+    ecap_config_ptr->munit2_ptr->monitor_min = 0;
+
+    ecap_config_ptr->munit1_ptr->monitor_max = 0;
+    ecap_config_ptr->munit2_ptr->monitor_max = 0;
+
+    ecap_config_ptr->munit1_ptr->sync_in_enable = false;
+    ecap_config_ptr->munit2_ptr->sync_in_enable = false;
+
+    ecap_config_ptr->munit1_ptr->force_copy_from_shadow = false;
+    ecap_config_ptr->munit2_ptr->force_copy_from_shadow = false;
+
+    ecap_config_ptr->munit1_ptr->shadow_load_mode = ECAP_ACTIVE_LOAD_SYNC_EVT;
+    ecap_config_ptr->munit2_ptr->shadow_load_mode = ECAP_ACTIVE_LOAD_SYNC_EVT;
+
+    ecap_config_ptr->munit1_ptr->monitor_min_shadow = 0;
+    ecap_config_ptr->munit2_ptr->monitor_min_shadow = 0;
+
+    ecap_config_ptr->munit1_ptr->monitor_max_shadow = 0;
+    ecap_config_ptr->munit2_ptr->monitor_max_shadow = 0;
+
+    ecap_config_ptr->munit1_ptr->debug_mode_enable = false;
+    ecap_config_ptr->munit2_ptr->debug_mode_enable = false;
 }
 
 typedef struct{
@@ -356,6 +489,7 @@ static void ECAP_add_additional_input_trigger_sources(void *args);
 static void ECAP_support_interrupt_generation_on_either_of_4_events(void *args);
 static void ECAP_selection_of_soc_trigger_source(void *args);
 static void ECAP_selection_of_dma_trigger_source(void *args);
+static void ECAP_signal_monitoring_tests(void *args);
 
 int32_t test_ecap_cases(uint8_t in);
 
@@ -404,7 +538,9 @@ void util_edma_deconfigure(void);
 void util_epwm_enable_all(void);
 void util_epwm_enable(uint16_t epwm_instance);
 void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period);
+void util_epwm_setup_pulse(uint16_t epwm_instance, uint16_t ON_value, uint16_t OFF_value, uint16_t period);
 void util_epwm_enable_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type);
+void util_epwm_enable_global_strobe(uint16_t epwm_instance, uint16_t old_period, uint16_t new_period);
 bool util_epwm_wait_on_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type);
 void util_epwm_reset(int8_t epwm_instance);
 void util_epwm_sync(uint16_t epwm_instance, uint16_t main_pwm_instance, uint16_t phase_shift_value);
@@ -421,6 +557,8 @@ int32_t AM263x_ECAP_BTR_004(uint16_t instance);
 int32_t AM263x_ECAP_BTR_005(uint16_t instance);
 int32_t AM263x_ECAP_BTR_006(void);
 int32_t AM263x_ECAP_BTR_007(uint16_t instance);
+int32_t AM263x_ECAP_BTR_008(uint16_t instance);
+int32_t AM263x_ECAP_BTR_009(uint16_t instance);
 
 
 /* ========================================================================== */
@@ -605,7 +743,7 @@ void util_edma_deconfigure(void)
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-#define TOTAL_TEST_CASES (9)
+#define TOTAL_TEST_CASES (10)
 
 void test_main(void *args)
 {
@@ -619,15 +757,16 @@ void test_main(void *args)
 
     menu_input test_list_input_independent[TOTAL_TEST_CASES] =
     {
-        {0, 3330,  ECAP_setEventPrescalerApiCheck,                         "ECAP_setEventPrescalerApiCheck"},
-        {1, 9476,  ECAP_selection_of_dma_trigger_source,                   "ECAP_selection_of_dma_trigger_source"},
-        {1, 7906,  ECAP_selection_of_soc_trigger_source,                   "ECAP_selection_of_soc_trigger_source"},
-        {1, 3407,  ECAP_support_interrupt_generation_on_either_of_4_events,"ECAP_support_interrupt_generation_on_either_of_4_events"},
-        {2, 3406,  ECAP_add_additional_input_trigger_sources,              "ECAP_add_additional_input_trigger_sources"},
-        {2, 3403,  ECAP_input_evaluation_block,                            "ECAP_input_evaluation_block"},
-        {3, 3401,  ECAP_selection_of_sync_in_source,                       "ECAP_selection_of_sync_in_source"},
-        {4, 3404,  ECAP_capture_mode_tests,                                "ECAP_capture_mode_tests"},
-        {4, 9423,  ECAP_pwm_mode_features,                                 "ECAP_pwm_mode_features"},
+        {0, 3330,  ECAP_setEventPrescalerApiCheck,                          "ECAP_setEventPrescalerApiCheck"},
+        {1, 9476,  ECAP_selection_of_dma_trigger_source,                    "ECAP_selection_of_dma_trigger_source"},
+        {1, 7906,  ECAP_selection_of_soc_trigger_source,                    "ECAP_selection_of_soc_trigger_source"},
+        {1, 3407,  ECAP_support_interrupt_generation_on_either_of_4_events, "ECAP_support_interrupt_generation_on_either_of_4_events"},
+        {2, 3406,  ECAP_add_additional_input_trigger_sources,               "ECAP_add_additional_input_trigger_sources"},
+        {2, 3403,  ECAP_input_evaluation_block,                             "ECAP_input_evaluation_block"},
+        {3, 3401,  ECAP_selection_of_sync_in_source,                        "ECAP_selection_of_sync_in_source"},
+        {4, 3404,  ECAP_capture_mode_tests,                                 "ECAP_capture_mode_tests"},
+        {4, 9423,  ECAP_pwm_mode_features,                                  "ECAP_pwm_mode_features"},
+        {5, 9422,  ECAP_signal_monitoring_tests,                            "ECAP_signal_monitoring_tests"},
     };
 
     menu(TOTAL_TEST_CASES, test_list_input_independent, test_title);
@@ -686,7 +825,7 @@ void util_ecap_configure(uint16_t instance)
     if(ecap_config_ptr->int_en)
     {
         ECAP_enableInterrupt(base, ecap_config_ptr->int_source);
-    	ECAP_clearInterrupt(base, ecap_config_ptr->int_source);
+    	ECAP_clearInterrupt(base, ECAP_ISR_SOURCE_ALL);
     }else
     {
         ECAP_disableInterrupt(base, ECAP_ISR_SOURCE_ALL);
@@ -775,12 +914,102 @@ void util_ecap_configure(uint16_t instance)
     {
         ECAP_reArm(base);
     }
+
+    /* ------- signal monitoring init ------- */
+    /* Selecting Trip input */
+    ECAP_selectTripSignal(base, (ECAP_MunitTripInputSelect) ecap_config_ptr->signal_monitor_global_trip);
+    /* Selecting the Global strobe load (signal to load Shadow to active regs in the monitoring units) */
+    ECAP_selectGlobalLoadStrobe(base, (ECAP_MunitGlobalStrobeSelect) ecap_config_ptr->signal_monitor_global_load_strobe);
+
+
+    /* ------- signal monitoring unit 1 ------- */
+
+    if(ecap_config_ptr->munit1_ptr->enable)
+    {
+        ECAP_enableSignalMonitoringUnit(base, ECAP_MONITORING_UNIT_1);
+        ECAP_selectMonitoringType(base, ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->monitoring_type);
+        ECAP_configureMinValue(base, ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->monitor_min);
+        ECAP_configureMaxValue(base, ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->monitor_max);
+
+        if(ecap_config_ptr->munit1_ptr->sync_in_enable)
+        {
+            ECAP_enableShadowMinMaxRegisters(base, ECAP_MONITORING_UNIT_1);
+            ECAP_selectShadowLoadMode(base, ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->shadow_load_mode);
+            ECAP_configureShadowMinValue(base, ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->monitor_min_shadow);
+            ECAP_configureShadowMaxValue(base, ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->monitor_max_shadow);
+            if(ecap_config_ptr->munit1_ptr->force_copy_from_shadow)
+            {
+                ECAP_enableSoftwareSync(base, ECAP_MONITORING_UNIT_1);
+            }
+
+        }
+        else
+        {
+            ECAP_disableShadowMinMaxRegisters(base, ECAP_MONITORING_UNIT_1);
+        }
+
+        if(ecap_config_ptr->munit1_ptr->debug_mode_enable)
+        {
+            ECAP_enableDebugRange(base, ECAP_MONITORING_UNIT_1);
+        }
+        else
+        {
+            ECAP_disableDebugRange(base, ECAP_MONITORING_UNIT_1);
+        }
+    }
+    else
+    {
+        ECAP_disableSignalMonitoringUnit(base, ECAP_MONITORING_UNIT_1);
+    }
+
+    /* ------- signal monitoring unit 2 ------- */
+
+    if(ecap_config_ptr->munit2_ptr->enable)
+    {
+        ECAP_enableSignalMonitoringUnit(base, ECAP_MONITORING_UNIT_2);
+        ECAP_selectMonitoringType(base, ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->monitoring_type);
+        ECAP_configureMinValue(base, ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->monitor_min);
+        ECAP_configureMaxValue(base, ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->monitor_max);
+
+        if(ecap_config_ptr->munit2_ptr->sync_in_enable)
+        {
+            ECAP_enableShadowMinMaxRegisters(base, ECAP_MONITORING_UNIT_2);
+            ECAP_selectShadowLoadMode(base, ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->shadow_load_mode);
+            ECAP_configureShadowMinValue(base, ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->monitor_min_shadow);
+            ECAP_configureShadowMaxValue(base, ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->monitor_max_shadow);
+
+            if(ecap_config_ptr->munit2_ptr->force_copy_from_shadow)
+            {
+                ECAP_enableSoftwareSync(base, ECAP_MONITORING_UNIT_2);
+            }
+
+        }
+        else
+        {
+            ECAP_disableShadowMinMaxRegisters(base, ECAP_MONITORING_UNIT_2);
+        }
+
+        if(ecap_config_ptr->munit2_ptr->debug_mode_enable)
+        {
+            ECAP_enableDebugRange(base, ECAP_MONITORING_UNIT_2);
+        }
+        else
+        {
+            ECAP_disableDebugRange(base, ECAP_MONITORING_UNIT_2);
+        }
+    }
+    else
+    {
+        ECAP_disableSignalMonitoringUnit(base, ECAP_MONITORING_UNIT_2);
+    }
+
     return;
 }
 
 void util_ecap_start_timestamp(uint16_t instance)
 {
     uint32_t base = ecap_base_addr[instance];
+    ECAP_reArm(base);
     ECAP_enableTimeStampCapture(base);
     ECAP_startCounter(base);
     return;
@@ -798,14 +1027,15 @@ void util_ecap_deconfigure_and_reset(uint16_t instance)
 {
     SOC_generateEcapReset(instance);
     util_ecap_config_reset();
+    util_ecap_signal_monitoring_config_reset();
     util_ecap_configure(instance);
     return;
 }
 /* returns 1 if wait is successful i.e., interrupt flag set */
 bool util_ecap_wait_for_interrupt(uint16_t instance)
 {
-    int counter_max = 100;
-    int count = 0;
+    int32_t counter_max = 100;
+    int32_t count = 0;
     uint32_t base = ecap_base_addr[instance];
     while(count < counter_max)
     {
@@ -1230,6 +1460,7 @@ void util_gpio_pwm_input_configure(void)
     GPIO_setDirMode(gpio_base_addr, (PIN_I2C1_SDA)>>2, INPUT);
 }
 
+
 /* configures the XbarOut3 to be the ECAPx output and configures the pinMux and loopsback to inputXbar-0 via GPIO [no external LoopBack]*/
 void util_outputXbar_configure_loopback(uint16_t instance)
 {
@@ -1280,7 +1511,9 @@ void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period)
     uint32_t epwm_base = epwm_base_addr[epwm_instance];
     /* reset before setting up the configuration */
     util_epwm_reset(epwm_instance);
+    EPWM_disableGlobalLoad(epwm_base);
     EPWM_setClockPrescaler(epwm_base, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);
+    EPWM_setPeriodLoadMode(epwm_base, EPWM_PERIOD_DIRECT_LOAD);
     EPWM_setTimeBasePeriod(epwm_base, period);
     EPWM_disablePhaseShiftLoad(epwm_base);
     EPWM_setTimeBaseCounter(epwm_base, 0);
@@ -1298,9 +1531,23 @@ void util_epwm_setup(uint16_t epwm_instance, uint16_t ON_value, uint16_t period)
 
     EPWM_enableSyncOutPulseSource(epwm_base, EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO);
 
-    DebugP_testLog("\tPWM %d is set for Period : %d, ON_value : %d\r\n", epwm_instance, period, ON_value);
+    // DebugP_testLog("\tPWM %d is set for Period : %d, ON_value : %d\r\n", epwm_instance, period, ON_value);
 }
 
+void util_epwm_setup_pulse(uint16_t epwm_instance, uint16_t ON_value, uint16_t OFF_value, uint16_t period)
+{
+    uint32_t epwm_base = epwm_base_addr[epwm_instance];
+    EPWM_setTimeBaseCounter(epwm_base, 0);
+    EPWM_setTimeBasePeriod(epwm_base, period);
+    EPWM_setCounterCompareValue(epwm_base, EPWM_COUNTER_COMPARE_A, ON_value);
+    EPWM_setCounterCompareValue(epwm_base, EPWM_COUNTER_COMPARE_B, OFF_value);
+
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+    EPWM_setActionQualifierAction(epwm_base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+
+    return;
+}
 void util_epwm_enable_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type)
 {
     uint32_t epwm_base = epwm_base_addr[epwm_instance];
@@ -1310,6 +1557,26 @@ void util_epwm_enable_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConvers
 	EPWM_setADCTriggerEventPrescale(epwm_base, epwm_soc_type, 1);
 	EPWM_disableADCTriggerEventCountInit(epwm_base, epwm_soc_type);
 	EPWM_setADCTriggerEventCountInitValue(epwm_base, epwm_soc_type, 0);
+}
+void util_epwm_enable_global_strobe(uint16_t epwm_instance, uint16_t old_period, uint16_t new_period)
+{
+    uint32_t epwm_base = epwm_base_addr[epwm_instance];
+    /* use the following to force the global load event.*/
+    // EPWM_forceGlobalLoadOneShotEvent(epwm_base);
+	EPWM_enableGlobalLoadRegisters(epwm_base, EPWM_GL_REGISTER_TBPRD_TBPRDHR);
+	EPWM_setPeriodLoadMode(epwm_base, EPWM_PERIOD_SHADOW_LOAD);
+
+    /* as shown in the configurations : */
+    EPWM_enableGlobalLoad(epwm_base);
+	EPWM_setGlobalLoadTrigger(epwm_base, EPWM_GL_LOAD_PULSE_GLOBAL_FORCE);
+	EPWM_setGlobalLoadEventPrescale(epwm_base, 1);
+    EPWM_disableGlobalLoadOneShotMode(epwm_base);
+
+    EPWM_setTimeBasePeriod(epwm_base, old_period);  /* old_period to be loaded when global strobe occurs */
+    EPWM_forceGlobalLoadOneShotEvent(epwm_base);
+
+    EPWM_setTimeBasePeriod(epwm_base, new_period);  /* new_period to be loaded when global strobe occurs */
+
 }
 
 bool util_epwm_wait_on_soc_trigger(uint16_t epwm_instance, EPWM_ADCStartOfConversionType epwm_soc_type)
@@ -1367,13 +1634,13 @@ void util_epmw_pinmux_configure(uint32_t epwm_instance)
 
     if(epwm_instance < 16)
     {
-        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, 0x500) ;
-        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, 0x500) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, 0xC500) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, 0xC500) ;
     }
     else
     {
-        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, 0x505) ;
-        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, 0x505) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseA, 0xC505) ;
+        HW_WR_REG32(CSL_IOMUX_U_BASE + baseB, 0xC505) ;
     }
 }
 
@@ -1456,6 +1723,12 @@ static void ECAP_pwm_mode_features(void *args)
     DebugP_testLog("Test : PWM mode features of the ECAP\r\n");
     TEST_ASSERT_EQUAL_INT32(test_ecap_cases(8), 0);
 }
+
+static void ECAP_signal_monitoring_tests(void *args)
+{
+    DebugP_testLog("Test : Signal Monitoring features of the ECAP\r\n");
+    TEST_ASSERT_EQUAL_INT32(test_ecap_cases(9), 0);
+}
 /*
 configure and test the interrupt sources.
 interrupt sources for ECAP are the following
@@ -1469,7 +1742,8 @@ interrupt sources for ECAP are the following
 - ECAP_ISR_SOURCE_COUNTER_COMPARE   - Counter equal compare generates
                                       interrupt
 
-TODO : test the Signal monitoring events as sources and test.
+the Signal monitoring events as sources and tests are done in AM263x_ECAP_BTR_009.
+
 */
 int32_t AM263x_ECAP_BTR_001(uint16_t instance)
 {
@@ -3208,6 +3482,647 @@ int32_t AM263x_ECAP_BTR_008(uint16_t instance)
     return 0;
 }
 
+static inline bool util_ecap_signal_monitoring_error_check(uint16_t wait_status, uint16_t monitor_window_min, uint16_t monitor_window_max, uint16_t check_value, uint16_t interrupt_flags)
+{
+    bool status = GOOD;
+    if((monitor_window_min > check_value) || (check_value > monitor_window_max))
+    {
+        /* interrupt should be there and wait should have passed. */
+        if(wait_status != GOOD)
+        {
+            DebugP_logError("pulse width not in window, but interrupt didn't occur.\r\n");
+            status = BAD;
+        }
+        else
+        {
+            if( !(
+                ((check_value < monitor_window_max) && (interrupt_flags & (ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 | ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1)))
+                ||
+                ((check_value > monitor_window_max) && (interrupt_flags & (ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 | ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2)))
+                ))
+            {
+                /* min-max window violation happened. but the violation didn't flag appropriate flags */
+                DebugP_logError("min-max window violation happened. but the violation didn't flag appropriate flags\r\n");
+                status = BAD;
+            }
+        }
+    }
+    else
+    {
+        /* interrupt should not have happened and wait should have failed*/
+        if(wait_status != BAD)
+        {
+            DebugP_logError("min-max window violation didn't happened. but flags are set\r\n");
+            status = BAD;
+        }
+    }
+    if(status == BAD)
+    {
+        DebugP_logError("mode : %d\t check_value : %d\t min_window : %d\t max_window : %d\t flags_set : 0x%x\r\n",
+                        munit1.monitoring_type, check_value, monitor_window_min, monitor_window_max, interrupt_flags);
+    }
+    return status;
+}
+
+/*
+mode :
+    //! High Pulse Width
+    ECAP_MUNIT_HIGH_PULSE_WIDTH = 0U,
+    //! Low Pulse Width
+    ECAP_MUNIT_LOW_PULSE_WIDTH = 1U,
+    //! Period width from rise to rise
+    ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE = 2U,
+    //! Period width from fall to fall
+    ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL = 3U,
+    //! Monitor rise edge
+    ECAP_MUNIT_MONITOR_RISE_EDGE = 4U,
+    //! Monitor fall edge
+    ECAP_MUNIT_MONITOR_FALL_EDGE = 5U,
+*/
+bool signal_monitor_mode_test(uint16_t instance, uint16_t mode)
+{
+    bool status = GOOD;
+
+    /*
+    configure the input waveform period = 32bit high value. duty cycle varies from 0-prd
+    though the min-max registers are 32 bit long,
+    */
+    uint16_t test_pwm_instance = 13; /* we have a configuration that sets the input */
+    uint16_t period = 0xFFFF;
+    uint16_t on_value = 1000;
+
+    util_epmw_pinmux_configure(test_pwm_instance);
+    SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, pwm_input, 0);
+
+    util_epwm_setup(test_pwm_instance, on_value, period);    // these on-time and period will be overwritten in the pulse setup
+    util_epwm_enable(test_pwm_instance);
+
+    uint16_t off_value = on_value + 3; /* to have a pulse that is atleast 3 sysclks wide */
+    volatile uint16_t monitor_window_min, monitor_window_max;
+
+    uint16_t min_window_step = 0x1000;
+    uint16_t max_window_step = 0x1000;
+    uint16_t period_step = 0x100;
+    uint16_t on_value_step = 0x100;
+    uint16_t off_value_step = 0x100;
+
+    /* made for overnight looooooooong tests. expecting around 6-7 h of tests. */
+    // uint16_t min_window_step = 0x100;
+    // uint16_t max_window_step = 0x100;
+    // uint16_t period_step = 0x10;
+    // uint16_t on_value_step = 0x10;
+    // uint16_t off_value_step = 0x10;
+
+    uint16_t interrupt_sources =
+                    ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT1 |
+                    ECAP_ISR_SOURCE_MUNIT_1_ERROR_EVT2 |
+                    ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT1 |
+                    ECAP_ISR_SOURCE_MUNIT_2_ERROR_EVT2;
+    volatile uint16_t interrupt_flags;
+
+
+    ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;
+    ecap_config_ptr->capture_mode_continuous = ECAP_CONTINUOUS_CAPTURE_MODE;
+
+    ecap_config_ptr->int_en = true;
+    ecap_config_ptr->int_source = interrupt_sources;
+    ecap_config_ptr->rearm = true;
+
+    util_ecap_signal_monitoring_config_reset();
+    ecap_config_ptr->munit1_ptr = &munit1;
+    ecap_config_ptr->munit2_ptr = &munit2;
+    munit1.enable = true;
+    munit2.enable = true;
+    munit1.monitoring_type = mode;
+    munit2.monitoring_type = mode;
+
+    for(monitor_window_min = 0; (monitor_window_min < (0xFFFF - min_window_step))&&(status); monitor_window_min += min_window_step)
+// /* debug */    for(monitor_window_min = 0; (monitor_window_min < (0xFFFF - min_window_step))&&(1); monitor_window_min += min_window_step)
+    {
+// /* debug */        monitor_window_min = 53240; //  mode : 0        check_value : 1795      min_window : 53248      max_window : 53251      flags_set : 0x2
+        for(monitor_window_max = monitor_window_min+3; (monitor_window_max < (0xFFFF - max_window_step))&&(status); monitor_window_max += max_window_step)
+// /* debug */        for(monitor_window_max = monitor_window_min+3; (monitor_window_max < (0xFFFF - max_window_step))&&(1); monitor_window_max += max_window_step)
+        {
+            /* These loops sweep the entire min-max window range with steps */
+// /* debug */            monitor_window_max = 53251;
+            munit1.monitor_min = monitor_window_min;
+            munit1.monitor_max = monitor_window_max;
+            munit2.monitor_min = monitor_window_min;
+            munit2.monitor_max = monitor_window_max;
+
+            if((mode == ECAP_MUNIT_HIGH_PULSE_WIDTH) || (mode == ECAP_MUNIT_LOW_PULSE_WIDTH))
+            {
+                period = 0xFFFF;    //-> one period is 65535*sysclk or
+                uint32_t sleep_ns = period*5;
+// /* debug */                off_value = 65000;
+                on_value = 0;
+
+                /* in Pulse width monitoring minimum 2 captures, with the FR or RF should be configured. */
+                if(mode == ECAP_MUNIT_HIGH_PULSE_WIDTH)
+                {
+                    ecap_config_ptr->polarity[0] = RISING;
+                    ecap_config_ptr->polarity[1] = FALLING;
+                }
+                else
+                {
+                    ecap_config_ptr->polarity[0] = FALLING;
+                    ecap_config_ptr->polarity[1] = RISING;
+                }
+                ecap_config_ptr->wrap_capture = events[1];
+                ecap_config_ptr->sync_in_source = ECAP_SYNC_IN_PULSE_SRC_DISABLE;
+
+                for(off_value = 3; (off_value < (period - off_value_step)) && (status); off_value += off_value_step)
+// /* debug */                for(on_value = 3000; (on_value >= 0) && (1); on_value -= 1)
+                {
+                    volatile bool wait_status = GOOD;
+                    uint32_t ON_time = off_value;
+                    uint32_t OFF_time = period - off_value;
+                    uint32_t check_value;
+
+                    if(mode == ECAP_MUNIT_HIGH_PULSE_WIDTH)
+                    {
+                        check_value = ON_time;
+                        check_value = off_value - on_value;
+                    }
+                    else
+                    {
+                        check_value = OFF_time;
+                    }
+
+                    /* stopping the PWM counter to not generate any waveform*/
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+                    /* setting the pulse in the PWM */
+                    util_epwm_setup_pulse(test_pwm_instance, on_value, off_value, period);
+                    /* running the input */
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_UP);
+                    ClockP_usleep((sleep_ns)/1000);
+                    /* setting up the ECAP configurations */
+                    util_ecap_configure(instance);
+                    /* starting the ecap capture */
+                    util_ecap_start_timestamp(instance);
+
+// /* debug */                    for (uint16_t compb = on_value+3; compb <= period; compb+=2)
+// /* debug */                    {
+// /* debug */                        ECAP_clearGlobalInterrupt(ecap_base_addr[instance]);
+// /* debug */                        ECAP_clearInterrupt(ecap_base_addr[instance], ECAP_ISR_SOURCE_ALL);
+// /* debug */                        EPWM_setCounterCompareValue(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_COMPARE_B, compb);
+// /* debug */                        ECAP_enableSignalMonitoringUnit(ecap_base_addr[instance], ECAP_MONITORING_UNIT_1);
+// /* debug */                        ECAP_enableSignalMonitoringUnit(ecap_base_addr[instance], ECAP_MONITORING_UNIT_2);
+// /* debug */                        ECAP_enableTimeStampCapture(ecap_base_addr[instance]);
+// /* debug */                        // ClockP_usleep((sleep_ns*10)/1000);
+// /* debug */                        wait_status = util_ecap_wait_for_interrupt(instance);
+// /* debug */                        (void) wait_status;
+// /* debug */                        interrupt_flags = ECAP_getInterruptSource(ecap_base_addr[instance]);
+// /* debug */                        check_value = compb - on_value;
+// /* debug */                        DebugP_logInfo("mode : %d\t check_value : %d\t min_window : %d\t max_window : %d\t flags_set : 0x%x\r\n",
+// /* debug */                        mode, check_value, monitor_window_min, monitor_window_max, interrupt_flags);
+// /* debug */                        // status = util_ecap_signal_monitoring_error_check(wait_status, monitor_window_min, monitor_window_max, check_value, interrupt_flags);
+// /* debug */                    }
+                    ClockP_usleep((sleep_ns*2)/1000);
+                    wait_status = util_ecap_wait_for_interrupt(instance);
+                    interrupt_flags = ECAP_getInterruptSource(ecap_base_addr[instance]);
+                    status = util_ecap_signal_monitoring_error_check(wait_status, monitor_window_min, monitor_window_max, check_value, interrupt_flags);
+                    DebugP_logInfo("mode : %d\t check_value : %d\t min_window : %d\t max_window : %d\t flags_set : 0x%x\r\n",
+                        mode, check_value, monitor_window_min, monitor_window_max, interrupt_flags);
+                    /* stopping capture and pwm*/
+                    util_ecap_stop_timestamp(instance);
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+
+
+                }
+            }
+
+            if((mode == ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE) || (mode == ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL))
+            {
+                /* here Period is swept from 0 to 0xFFFF,*/
+                /* the On_value is kept at 0, and Off_value is set at period/2*/
+                /* hence a RR period or FF period can be monitored */
+                on_value = 0;
+
+                if(mode == ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE)
+                {
+                    ecap_config_ptr->polarity[0] = RISING;
+                    ecap_config_ptr->polarity[1] = RISING;
+                }
+                else
+                {
+                    ecap_config_ptr->polarity[0] = FALLING;
+                    ecap_config_ptr->polarity[1] = FALLING;
+                }
+                ecap_config_ptr->wrap_capture = events[1];
+                ecap_config_ptr->sync_in_source = ECAP_SYNC_IN_PULSE_SRC_DISABLE;
+
+                for(period = 0xF; (period < (0xFFFF - period_step)) && status; period += period_step)
+                {
+                    uint32_t check_value;
+                    off_value = period >> 1;
+                    uint32_t sleep_ns = period*5;
+                    volatile bool wait_status = GOOD;
+                    check_value = period;
+                    /* stopping the PWM counter to not generate any waveform*/
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+                    /* setting the pulse in the PWM */
+                    util_epwm_setup_pulse(test_pwm_instance, on_value, off_value, period);
+                    /* setting up the ECAP configurations */
+                    util_ecap_configure(instance);
+                    /* running the input */
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_UP);
+                    /* starting the ecap capture */
+                    util_ecap_start_timestamp(instance);
+                    /* sleep at least period */
+                    ClockP_usleep((sleep_ns*2)/1000);
+
+                    wait_status = util_ecap_wait_for_interrupt(instance);
+                    interrupt_flags = ECAP_getInterruptSource(ecap_base_addr[instance]);
+                    /* stopping capture and pwm*/
+                    util_ecap_stop_timestamp(instance);
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+
+
+                    DebugP_logInfo("mode : %d\t check_value : %d\t min_window : %d\t max_window : %d\t flags_set : 0x%x\r\n",
+                        mode, check_value, monitor_window_min, monitor_window_max, interrupt_flags);
+
+                    status = util_ecap_signal_monitoring_error_check(wait_status, monitor_window_min, monitor_window_max, check_value, interrupt_flags);
+                }
+            }
+
+            if((mode == ECAP_MUNIT_MONITOR_RISE_EDGE) || (mode == ECAP_MUNIT_MONITOR_FALL_EDGE))
+            {
+                /* the the pulse width stays constant = 3 tbclks*/
+                /* period stays constant */
+                /* sync in enabled with same EPWM */
+                /* only one capture, with required cap polarity. */
+                if(mode == ECAP_MUNIT_MONITOR_RISE_EDGE)
+                {
+                    ecap_config_ptr->polarity[0] = RISING;
+                }
+                else
+                {
+                    ecap_config_ptr->polarity[0] = FALLING;
+                }
+                ecap_config_ptr->wrap_capture = events[0];
+                ecap_config_ptr->load_counter_en = true;
+                ecap_config_ptr->sync_in_source = ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0 + test_pwm_instance;
+
+                /* move the pulse of constant width [3 tbclks] around the min_max window*/
+                period = 0xFFFF;
+
+                ecap_config_ptr->phase_shift_count = 0;
+                // for(on_value = 0; (on_value < (period - 3 - on_value_step))&&status; on_value += on_value_step)
+                /*
+                why not go till period ? and edge extend beyond max-window-value?
+                    - because the edge monitoring doesn't support max window violation error (error2).
+                    - this flags if there is no edge within the given min-max window and doesn't care for further monitor until a sync-in-pulse-from-pwm comes
+                */
+                for(on_value = 0; (on_value < monitor_window_max-3)&&(status); on_value += on_value_step)
+                {
+                    uint32_t check_value;
+                    off_value = on_value+3;
+                    uint32_t sleep_ns = 5*(period);
+                    volatile bool wait_status = GOOD;
+
+                    if(mode == ECAP_MUNIT_MONITOR_RISE_EDGE)
+                    {
+                        check_value = on_value;
+                    }
+                    else
+                    {
+                        check_value = off_value;
+                    }
+
+                    /* stopping the PWM counter to not generate any waveform*/
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+                    /* setting the pulse in the PWM */
+                    util_epwm_setup_pulse(test_pwm_instance, on_value, off_value, period);
+                    /* setting up the ECAP configurations */
+                    util_ecap_configure(instance);
+
+                    EPWM_forceSyncPulse(epwm_base_addr[test_pwm_instance]);
+
+                    /* running the input */
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_UP);
+                    /* starting the ecap capture */
+                    util_ecap_start_timestamp(instance);
+                    /* sleep at least period */
+                    ClockP_usleep((sleep_ns*2)/1000);
+                    wait_status = util_ecap_wait_for_interrupt(instance);
+                    interrupt_flags = ECAP_getInterruptSource(ecap_base_addr[instance]);
+                    /* stopping capture and pwm*/
+                    util_ecap_stop_timestamp(instance);
+                    EPWM_setTimeBaseCounterMode(epwm_base_addr[test_pwm_instance], EPWM_COUNTER_MODE_STOP_FREEZE);
+
+
+                    DebugP_logInfo("mode : %d\t check_value : %d\t min_window : %d\t max_window : %d\t flags_set : 0x%x\r\n",
+                        mode, check_value, monitor_window_min, monitor_window_max, interrupt_flags);
+
+                    status = util_ecap_signal_monitoring_error_check(wait_status, monitor_window_min, monitor_window_max, check_value, interrupt_flags);
+                }
+            }
+        }
+    }
+
+    /* setup Capture configurations for the monitor_options */
+
+    /* loop on the input waveform variations based on the mode */
+    /* if mode is edge monitorings, then the input is supposed to be the internal singals / epwm */
+    /* expect int flags only when violations otherwise error*/
+
+    util_epmw_pinmux_restore(test_pwm_instance);
+
+    return status;
+}
+
+bool global_strobe_load_tests(uint16_t instance)
+{
+    bool status = GOOD;
+    uint16_t errors = 0;
+    uint32_t shadow_value = 0xFEDCABCD;
+    volatile CSL_ecapRegs *ecap_regs = (CSL_ecapRegs *) ecap_base_addr[instance];
+
+    /* setting up another ecap module to capture the pulses from the input pwms to analyse
+    and read the period changes so that we can confirm the global load strobe occurance */
+    uint16_t ecap_capture_instance = 9;
+    uint32_t inputxbar_instance = ECAP_INPUT_INPUTXBAR1;
+    util_ecap_deconfigure_and_reset(ecap_capture_instance);
+    util_setup_capture_module(ecap_capture_instance, inputxbar_instance, false);
+    util_ecap_start_timestamp(ecap_capture_instance);
+
+    /* setup ecap and munits*/
+    util_ecap_config_reset();
+    ecap_config_ptr->input = ECAP_INPUT_INPUTXBAR0;             //any input.
+    ecap_config_ptr->capture_mode_continuous = ECAP_CONTINUOUS_CAPTURE_MODE;
+    ecap_config_ptr->rearm = true;
+    ecap_config_ptr->sync_in_source = ECAP_SYNC_IN_PULSE_SRC_DISABLE;
+    util_ecap_signal_monitoring_config_reset();
+    ecap_config_ptr->munit1_ptr = &munit1;
+    ecap_config_ptr->munit2_ptr = &munit2;
+
+    munit1.enable = true;
+    munit1.monitoring_type = ECAP_MUNIT_HIGH_PULSE_WIDTH;
+    munit1.sync_in_enable = true;               /* enables shadow mode and actions */
+    munit1.monitor_min_shadow = shadow_value;
+    munit1.monitor_max_shadow = shadow_value;
+
+    munit2.enable = true;
+    munit2.monitoring_type = ECAP_MUNIT_HIGH_PULSE_WIDTH;
+    munit2.sync_in_enable = true;               /* enables shadow mode and actions */
+    munit2.monitor_min_shadow = shadow_value;
+    munit2.monitor_max_shadow = shadow_value;
+
+    ECAP_MunitGlobalStrobeSelect global_load_strobe = ECAP_MUNIT_GLDSTRB_DISABLED;
+
+    ecap_config_ptr->signal_monitor_global_load_strobe = global_load_strobe;
+    util_ecap_configure(instance);
+
+     /* shadow load mode is selected as sync in by default. no sync in so no active == shadow*/
+    if(
+        ((ecap_regs->MUNIT_1_MIN) == (ecap_regs->MUNIT_1_MIN_SHADOW)) ||
+        ((ecap_regs->MUNIT_2_MIN) == (ecap_regs->MUNIT_2_MIN_SHADOW)) ||
+        ((ecap_regs->MUNIT_1_MAX) == (ecap_regs->MUNIT_1_MAX_SHADOW)) ||
+        ((ecap_regs->MUNIT_2_MAX) == (ecap_regs->MUNIT_2_MAX_SHADOW))
+    )
+    {
+        errors++;
+        DebugP_logError("shadow to active load happened without the global load strobe\r\n");
+    }
+    ecap_regs->MUNIT_1_MIN_SHADOW = (ecap_regs->MUNIT_1_MIN_SHADOW) >> 1;
+    ecap_regs->MUNIT_2_MIN_SHADOW = (ecap_regs->MUNIT_2_MIN_SHADOW) >> 1;
+    ecap_regs->MUNIT_1_MAX_SHADOW = (ecap_regs->MUNIT_1_MAX_SHADOW) >> 1;
+    ecap_regs->MUNIT_2_MAX_SHADOW = (ecap_regs->MUNIT_2_MAX_SHADOW) >> 1;
+
+    /* force sync at ecap */
+    ECAP_enableSoftwareSync(ecap_base_addr[instance], ECAP_MONITORING_UNIT_1);
+    ECAP_enableSoftwareSync(ecap_base_addr[instance], ECAP_MONITORING_UNIT_2);
+
+    if(
+        ((ecap_regs->MUNIT_1_MIN) != (ecap_regs->MUNIT_1_MIN_SHADOW)) ||
+        ((ecap_regs->MUNIT_2_MIN) != (ecap_regs->MUNIT_2_MIN_SHADOW)) ||
+        ((ecap_regs->MUNIT_1_MAX) != (ecap_regs->MUNIT_1_MAX_SHADOW)) ||
+        ((ecap_regs->MUNIT_2_MAX) != (ecap_regs->MUNIT_2_MAX_SHADOW))
+    )
+    {
+        errors++;
+        DebugP_logError("shadow to active load didn't happen with SwSync\r\n");
+    }
+
+    for(global_load_strobe = ECAP_MUNIT_GLDSTRB_EPWM0;
+    global_load_strobe <= ECAP_MUNIT_GLDSTRB_EPWM31;
+    global_load_strobe++)
+    {
+        uint16_t pwm_instance = global_load_strobe - ECAP_MUNIT_GLDSTRB_EPWM0;
+        volatile uint32_t period_before_GLS = 0, period_after_GLS = 0;
+
+        /*--------Pwm To Ecap_Capture_Instance Loopback Setting---------*/
+
+        util_epmw_pinmux_configure(pwm_instance);
+        uint8_t pwm_pin = (uint8_t) ((epwm_pins[pwm_instance*2])>>2);
+        SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 1, 0, pwm_pin, 0);
+        DebugP_logInfo("inputxbar 1 is set for the pwm_pin gpio of : %d for PWM instance : %d\r\n", pwm_pin, pwm_instance);
+
+        /*--------Pwm To Ecap_Capture_Instance Loopback Setting Complete---------*/
+
+        uint16_t on_time = 50;
+        volatile uint16_t period = pwm_instance*10 + 100;
+        volatile uint16_t period_after_global_load_strobe = period*100;
+
+        util_epwm_enable(pwm_instance);
+        util_epwm_setup(pwm_instance, on_time, period);
+        EPWM_disableSyncOutPulseSource(epwm_base_addr[pwm_instance], EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO);
+
+        util_epwm_enable_global_strobe(pwm_instance, period, period_after_global_load_strobe);
+
+        ecap_config_ptr->signal_monitor_global_load_strobe = global_load_strobe;
+        ecap_config_ptr->sync_in_source = ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0 + pwm_instance;
+
+        ecap_config_ptr->munit1_ptr->shadow_load_mode = ECAP_ACTIVE_LOAD_SYNC_EVT;
+        ecap_config_ptr->munit2_ptr->shadow_load_mode = ECAP_ACTIVE_LOAD_SYNC_EVT;
+
+        util_ecap_configure(instance);
+        ecap_regs->MUNIT_1_MIN_SHADOW = shadow_value;
+        ecap_regs->MUNIT_2_MIN_SHADOW = shadow_value;
+        ecap_regs->MUNIT_1_MAX_SHADOW = shadow_value;
+        ecap_regs->MUNIT_2_MAX_SHADOW = shadow_value;
+
+        /* with sync pulse from EPWMs */
+        EPWM_forceSyncPulse(epwm_base_addr[pwm_instance]);
+
+        if(
+            ((ecap_regs->MUNIT_1_MIN) != (ecap_regs->MUNIT_1_MIN_SHADOW)) ||
+            ((ecap_regs->MUNIT_2_MIN) != (ecap_regs->MUNIT_2_MIN_SHADOW)) ||
+            ((ecap_regs->MUNIT_1_MAX) != (ecap_regs->MUNIT_1_MAX_SHADOW)) ||
+            ((ecap_regs->MUNIT_2_MAX) != (ecap_regs->MUNIT_2_MAX_SHADOW))
+        )
+        {
+            errors++;
+            DebugP_logError("shadow to active load didn't happen when sync_pulse occured | PWM_instance : %d sync_in_source : %d \r\n", pwm_instance, ecap_config_ptr->sync_in_source );
+        }
+
+        ecap_regs->MUNIT_1_MIN_SHADOW = (ecap_regs->MUNIT_1_MIN_SHADOW) >> 1;
+        ecap_regs->MUNIT_2_MIN_SHADOW = (ecap_regs->MUNIT_2_MIN_SHADOW) >> 1;
+        ecap_regs->MUNIT_1_MAX_SHADOW = (ecap_regs->MUNIT_1_MAX_SHADOW) >> 1;
+        ecap_regs->MUNIT_2_MAX_SHADOW = (ecap_regs->MUNIT_2_MAX_SHADOW) >> 1;
+
+        /* with global strobe load from epwms*/
+        ecap_config_ptr->munit1_ptr->shadow_load_mode = ECAP_ACTIVE_LOAD_GLDLCSTRB_EVT;
+        ecap_config_ptr->munit2_ptr->shadow_load_mode = ECAP_ACTIVE_LOAD_GLDLCSTRB_EVT;
+        ECAP_selectShadowLoadMode(ecap_base_addr[instance], ECAP_MONITORING_UNIT_1, ecap_config_ptr->munit1_ptr->shadow_load_mode);
+        ECAP_selectShadowLoadMode(ecap_base_addr[instance], ECAP_MONITORING_UNIT_2, ecap_config_ptr->munit2_ptr->shadow_load_mode);
+
+        EPWM_disableSyncOutPulseSource(epwm_base_addr[pwm_instance], EPWM_SYNC_OUT_PULSE_ON_ALL);
+        util_ecap_start_timestamp(ecap_capture_instance);
+
+        EPWM_setTimeBaseCounterMode(epwm_base_addr[pwm_instance], 0);
+        ClockP_usleep(100);
+        period_before_GLS = ECAP_getEventTimeStamp(ecap_base_addr[ecap_capture_instance], events[1]);
+        EPWM_forceGlobalLoadOneShotEvent(epwm_base_addr[pwm_instance]);
+        ClockP_usleep(1000);
+        period_after_GLS = ECAP_getEventTimeStamp(ecap_base_addr[ecap_capture_instance], events[1]);
+        EPWM_setTimeBaseCounterMode(epwm_base_addr[pwm_instance], 3);
+
+
+        DebugP_logInfo("Period before GLS : %d, period after GLS : %d for the pwm_instance : %d\r\n", period_before_GLS, period_after_GLS, pwm_instance);
+        if(!util_compare_in_range(period_before_GLS, period_after_GLS/100, 2))
+        {
+            status = BAD;
+        }
+        else if(
+            ((ecap_regs->MUNIT_1_MIN) != (ecap_regs->MUNIT_1_MIN_SHADOW)) ||
+            ((ecap_regs->MUNIT_2_MIN) != (ecap_regs->MUNIT_2_MIN_SHADOW)) ||
+            ((ecap_regs->MUNIT_1_MAX) != (ecap_regs->MUNIT_1_MAX_SHADOW)) ||
+            ((ecap_regs->MUNIT_2_MAX) != (ecap_regs->MUNIT_2_MAX_SHADOW))
+        )
+        {
+            errors++;
+            DebugP_logError("shadow to active load didn't happen when global Load pulse occured | PWM_instance : %d, option selected : %d \r\n", pwm_instance, ecap_config_ptr->signal_monitor_global_load_strobe);
+        }
+        ecap_regs->MUNIT_1_MIN_SHADOW = (ecap_regs->MUNIT_1_MIN_SHADOW) >> 1;
+        ecap_regs->MUNIT_2_MIN_SHADOW = (ecap_regs->MUNIT_2_MIN_SHADOW) >> 1;
+        ecap_regs->MUNIT_1_MAX_SHADOW = (ecap_regs->MUNIT_1_MAX_SHADOW) >> 1;
+        ecap_regs->MUNIT_2_MAX_SHADOW = (ecap_regs->MUNIT_2_MAX_SHADOW) >> 1;
+
+        SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 1, 0, 0, 0); // setting a a GPIO 0 as a reset value.. not necessarily a reset option, but something thats not a pwm we are looking for.
+
+        util_epmw_pinmux_restore(pwm_instance);
+        util_epwm_reset(pwm_instance);
+        util_epwm_disable_all();
+    }
+    util_ecap_deconfigure_and_reset(ecap_capture_instance);
+
+    if(errors > 0)
+    {
+        status = BAD;
+    }
+    return status;
+}
+
+int32_t AM263x_ECAP_BTR_009(uint16_t instance)
+{
+    /*
+    Signal Monitoring Tests
+        Features :
+            1. Two Monitors that can check individual "pulse/edge actions [ECAP_MonitoringTypeSelect]" within their own Min-Max window.
+            2. Each monitor can generate 2 "interrupts" each based on event before/after Min-Max window.
+            3. Trip the monitoring (disable the monitoring) based on the TripOut signal from any of the EPWMs.
+            4. Global Strobe Load input from any of the EPWM and load its shadow contents to active Min/Max registers.
+            5. debug registers for the min-max ranges
+    */
+
+    /*
+    monitoring : the Capture block configuraitons
+    ---- enable interrupt for these and check the flags based on the variation of the input. ----
+    1. Absolute mode
+    2. Continuous mode (optional one shot mode/ limited use)
+    3. Sync not enabled for pulse monitoring, Sync in mandatory for edge monitoring.
+    4. minimum 2 captures are configured. i.e., stop_wrap >=1 [if more are used, the SMU will use ]
+        - High Pulse : RF
+        - Low Pulse  : RF
+        - Period RR  : RR
+        - Period FF  : FF
+    5. minimum 1 capture should be selected for edge monitoring / supposed to be internal pwm/signal monitoring.
+        - Counter should be synced with EPWM.
+        - Absolute mode
+        - Continuous mode
+        - CAP polarity should be of given interest.
+    */
+
+    /*
+    enable disable the debug features in any one of the above scenarios and see if the logs are ok.
+    */
+
+    /*
+    change the Min-Max shadow registers and select different xbar / epwm for the global strobe and validate one of the above scenarios.
+    */
+
+    /*
+    Change the trip function and use for disabling the MUNITs
+    */
+
+    volatile uint8_t errors = 0;
+    volatile bool status = GOOD;
+
+    status = signal_monitor_mode_test(instance, ECAP_MUNIT_HIGH_PULSE_WIDTH);
+    if(status == BAD)
+    {
+        DebugP_logError("High Pulse monitoring failed.\r\n");
+        errors++;
+    }
+
+    status = GOOD;
+    status = signal_monitor_mode_test(instance, ECAP_MUNIT_LOW_PULSE_WIDTH);
+    if(status == BAD)
+    {
+        DebugP_logError("Low Pulse monitoring failed.\r\n");
+        errors++;
+    }
+
+    status = GOOD;
+    status = signal_monitor_mode_test(instance, ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE);
+    if(status == BAD)
+    {
+        DebugP_logError("Rise to Rise Period monitoring failed.\r\n");
+        errors++;
+    }
+
+    status = GOOD;
+    status = signal_monitor_mode_test(instance, ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL);
+    if(status == BAD)
+    {
+        DebugP_logError("Fall to Fall Period monitoring failed.\r\n");
+        errors++;
+    }
+
+    status = GOOD;
+    status = signal_monitor_mode_test(instance, ECAP_MUNIT_MONITOR_RISE_EDGE);
+    if(status == BAD)
+    {
+        DebugP_logError("Rise Edge monitoring failed.\r\n");
+        errors++;
+    }
+
+    status = GOOD;
+    status = signal_monitor_mode_test(instance, ECAP_MUNIT_MONITOR_FALL_EDGE);
+    if(status == BAD)
+    {
+        DebugP_logError("Fall Edge monitoring failed.\r\n");
+        errors++;
+    }
+
+    status = GOOD;
+    status = global_strobe_load_tests(instance);
+    if(status == BAD)
+    {
+        DebugP_logError("Global Strobe load test failed.\r\n");
+        errors++;
+    }
+
+    if(errors > 0)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+
 int32_t test_ecap_cases(uint8_t in)
 {
     int32_t failcount = 0;
@@ -3280,6 +4195,18 @@ int32_t test_ecap_cases(uint8_t in)
                 break;
             }
             failcount += AM263x_ECAP_BTR_008(instance);
+            single_instance_test = true;
+            break;
+        }
+        case 9:
+        {
+            if(instance == 9)
+            {
+                DebugP_logError("resource busy for instance 9");
+                failcount++;
+                break;
+            }
+            failcount += AM263x_ECAP_BTR_009(instance);
             single_instance_test = true;
             break;
         }
