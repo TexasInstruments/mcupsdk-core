@@ -774,7 +774,7 @@ static void SDL_ecc_aggrReadSVBUSReg(SDL_ecc_aggrRegs *pEccAggrRegs,
         SDL_FMK(ECC_AGGR_VECTOR_RD_SVBUS, (uint32_t)1U) );
 
     /* Wait till read operation is complete */
-    while( !SDL_ecc_aggrIsSVBUSRegReadDone(pEccAggrRegs) );
+    while( (SDL_ecc_aggrIsSVBUSRegReadDone(pEccAggrRegs)) == (bool)false );
 
     /* Now read the read value */
     *pRegVal = SDL_REG32_RD((volatile uint32_t *)((uint32_t)pEccAggrRegs+regOffset));

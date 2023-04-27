@@ -68,7 +68,7 @@
 /* Event BitMap for ECC ESM callback for MAIN */
 uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
 {
-  0xfffffb0fu, 0xf7c0000fu, 0xffbffd8f, 0x00008f80u,
+  0xfffffb0fu, 0xf7c0000fu, 0xffbffd8fu, 0x00008f80u,
   0x00001800u, 0x00000000u, 0x00000000u, 0x00000000u,
   0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
   0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
@@ -1132,6 +1132,10 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
     int32_t retVal = SDL_PASS;
 #if defined (R5F_CORE)
     uint32_t retVal2 = 0U;
+	uint32_t memtype=35;
+#endif
+#if defined (M4F_CORE)
+	uint32_t memtype=28;
 #endif
     uint32_t timeCount = 0;
     uint32_t testLocationPreserve;
@@ -1170,13 +1174,13 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
             /* Get actual location address for the memory */
             testLocationAddress = pECCErrorConfig->pErrMem;
             #if defined (M4F_CORE)
-            if(eccMemType !=28)
+            if(eccMemType != memtype)
             {
               testLocationAddress = (uint32_t *)SDL_DPL_addrTranslate((uint64_t) testLocationAddress,size);
             }
             #endif
             #if defined (R5F_CORE)
-            if(eccMemType !=35)
+            if(eccMemType != memtype)
             {
               testLocationAddress = (uint32_t *)SDL_DPL_addrTranslate((uint64_t) testLocationAddress,size);
             }
