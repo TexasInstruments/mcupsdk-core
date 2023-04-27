@@ -94,9 +94,6 @@ click this button to reflect it in SysConfig`;
 //function to get router pin data from boardConfig
 function getRouterPins() {
     let socName = common.getSocName();
-    if (socName == "am64x" || socName == "am243x") {
-        socName = "am64x_am243x"
-    }
     let core = common.getSelfSysCfgCoreName();
     return boardConfig[socName][core]["outPinCfg"];
 }

@@ -42,11 +42,8 @@ function getCoreConfig(start, num) {
 
 //To get K3 board config soc name
 function getSocName(soc) {
-    if (soc === "am64x" || soc === "am243x") {
-        return "am64x_am243x"
-    }
-    else if (soc === "am62x") {
-        return "am62x"
+    if (soc === "am64x" || soc === "am243x" || soc === "am62x") {
+        return soc
     }
     else {
         writeErrorLog("Device not found !!\n")
@@ -73,7 +70,8 @@ function parseData(boardCfg, config, routerId, core, soc) {
                         startResource = parseInt(extractNumber(startArr[2]));
                         config[core] = getCoreConfig(startResource, numResource);
                         break;
-                    case "am64x_am243x":
+                    case "am64x":
+                    case "am243x":
                         numArr = tempArr[2].split(/[, ]+/);
                         startArr = tempArr[4].split(/[, ]+/);
                         numResource = parseInt(numArr[3]);
@@ -143,6 +141,7 @@ for (const core of coreList) {
     routerId = getRouterID(core)
     parseData(cfgData, config, routerId, core, soc);
 }
+
 boardCfg[soc] = config
 
 
