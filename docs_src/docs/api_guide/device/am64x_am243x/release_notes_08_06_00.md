@@ -24,6 +24,7 @@ HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency               
 Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
 EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
 Mbed-TLS library support (software cryptography)                                                | Networking
+Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
 \endcond
 
 \cond SOC_AM243X
@@ -35,6 +36,7 @@ Enable EnDat multi-channel using load share mode in PRU-ICSS                    
 EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
 Boosterpack support: EnDat, HDSL and Tamagawa                                                   | Position Sense
 Mbed-TLS library support (software cryptography)                                                | Networking
+Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
 \endcond
 
 ## Device and Validation Information
@@ -177,6 +179,21 @@ SPINLOCK   | R5F, M4F, A53  | NA                | No           | Lock, unlock HW
 UART       | R5F, M4F, A53  | YES               | Yes          | Basic read/write, polling, interrupt mode,                                                 | HW flow control not tested. DMA mode not supported
 UDMA       | R5F, A53       | YES               | Yes          | Basic memory copy, SW trigger, Chaining                                                    | -
 WDT        | R5F, A53       | YES               | No           | Interrupt after watchdog expiry                                                            | Reset not supported
+
+### Software Diagnostic Library (SDL)
+
+SDL Module| Supported CPUs | SysConfig Support
+----------|----------------|-------------------
+ESM       | M4F, R5F       | NO
+MCRC      | M4F, R5F       | NO
+RTI       | M4F, R5F       | NO
+DCC       | M4F, R5F       | NO
+VTM       | M4F, R5F       | NO
+STOG      | M4F, R5F       | NO
+PBIST     | M4F, R5F       | NO
+MTOG      | M4F            | NO
+POK       | M4F, R5F       | NO
+ECC       | M4F, R5F       | NO
 
 ### Board Device Drivers
 
@@ -637,6 +654,13 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.4.0
     <td> AM64x, AM243x
     <td> -
+</tr>
+<tr>
+    <td> PROC_SDL-6010
+    <td> ECC is not supported for 2 instances. These are SDL_ECC_AGGR1 Ram ID 4 fails on interconnect ram ID 4 checker group 4-14 and  SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR.
+    <td> SDL
+    <td> 8.6.0
+    <td> AM64X, AM243X
 </tr>
 <tr>
     <td> MCUSDK-8842
