@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -121,33 +121,47 @@ int32_t App_loadImages(Bootloader_Handle bootHandle, Bootloader_BootImageInfo *b
         /* Do not load M4 when MCU domain is reset isolated */
         if (!Bootloader_socIsMCUResetIsoEnabled())
         {
-            if(status == SystemP_SUCCESS)
+            if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
             {
                 bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_M4FSS0_0);
                 status = Bootloader_loadCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0]));
             }
         }
-        if(status == SystemP_SUCCESS)
+        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
         {
             bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
             status = Bootloader_loadCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_0]));
         }
-        if(status == SystemP_SUCCESS)
+        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
         {
             bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
             status = Bootloader_loadCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_1]));
         }
-        if(status == SystemP_SUCCESS)
+
+        /* Assume self boot for either of the cores of R50 cluster */
+        uint32_t isSelfBoot = FALSE;
+        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0))
+        {
+            isSelfBoot = TRUE;
+        }
+
+        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))
+        {
+            isSelfBoot = TRUE;
+        }
+
+        /* Self cores has to be reset together, so check for both */
+        if(status == SystemP_SUCCESS && (TRUE == isSelfBoot))
         {
             /* Set clocks for self cluster */
             bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
             bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
 
             /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
-            status = Bootloader_loadSelfCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_0]));
-            if(status == SystemP_SUCCESS)
+            status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
             {
-                status = Bootloader_loadSelfCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_1]));
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
         }
     }
@@ -180,14 +194,17 @@ int32_t App_runCpus(Bootloader_Handle bootHandle, Bootloader_BootImageInfo *boot
     /* Do not run M4 when MCU domain is reset isolated */
     if (!Bootloader_socIsMCUResetIsoEnabled())
     {
-	    status = Bootloader_runCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0]));
+        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
+        {
+	        status = Bootloader_runCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0]));
+        }
     }
 
-	if(status == SystemP_SUCCESS)
+	if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
 	{
 		status = Bootloader_runCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_0]));
 	}
-	if(status == SystemP_SUCCESS)
+	if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
 	{
 		status = Bootloader_runCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_R5FSS1_1]));
 	}
