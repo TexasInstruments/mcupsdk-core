@@ -2859,7 +2859,7 @@ void SOC_generateSwWarmReset(void)
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
-    
+
     CSL_FINS(ptrTOPRCMRegs->WARM_RESET_REQ, TOP_RCM_WARM_RESET_REQ_SW_RST, 0x0);
 
     /* Lock CONTROLSS_CTRL registers */
@@ -2881,7 +2881,7 @@ void SOC_configureWarmResetSource(uint32_t source)
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
 
-    regVal = ptrTOPRCMRegs->WARM_RESET_CONFIG;
+    regVal = (uint32_t)&(ptrTOPRCMRegs->WARM_RESET_CONFIG);
     CSL_REG32_WR(regVal, source);
 
     /* Lock CONTROLSS_CTRL registers */
@@ -2919,7 +2919,7 @@ void SOC_clearWarmResetCause(void)
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
-    
+
     CSL_FINS(ptrTOPRCMRegs->WARM_RST_CAUSE_CLR, TOP_RCM_WARM_RST_CAUSE_CLR_CLEAR, 0x7);
 
     /* Lock CONTROLSS_CTRL registers */
@@ -2937,7 +2937,7 @@ void SOC_configureWarmResetOutputDelay(uint16_t opDelayValue)
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
-    
+
     *ptrRstTime1Reg = SOC_rcmInsert16 (*ptrRstTime1Reg, 11U, 0U, opDelayValue);
 
     /* Lock CONTROLSS_CTRL registers */
@@ -2954,7 +2954,7 @@ void SOC_configureWarmResetInputRiseDelay(uint16_t inpRiseDelayValue)
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
-    
+
     *ptrRstTime2Reg = SOC_rcmInsert16 (*ptrRstTime2Reg, 11U, 0U, inpRiseDelayValue);
 
     /* Lock CONTROLSS_CTRL registers */
@@ -2971,7 +2971,7 @@ void SOC_configureWarmResetInputFallDelay(uint16_t inpFallDelayValue)
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_RCM_PARTITION0);
-    
+
     *ptrRstTime3Reg = SOC_rcmInsert16 (*ptrRstTime3Reg, 11U, 0U, inpFallDelayValue);
 
     /* Lock CONTROLSS_CTRL registers */
