@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,8 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BOOTLOADER_SOC_AM273X_H_
-#define BOOTLOADER_SOC_AM273X_H_
+#ifndef BOOTLOADER_SOC_AWR294X_H_
+#define BOOTLOADER_SOC_AWR294X_H_
 
 #ifdef __cplusplus
 extern "C"
@@ -40,9 +40,26 @@ extern "C"
 
 
 #include <drivers/hw_include/cslr_soc.h>
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /**
- * \brief Data structure containing information about a core specific to the AM64x SOC
+ *  \anchor DevTypes
+ *  \name Device Types
+ *  @{
+ */
+/** \brief device type HSSE */
+#define BOOTLOADER_DEVTYPE_HSSE         (0x0AU)
+/** \brief device type HSFS */
+#define BOOTLOADER_DEVTYPE_HSFS         (0xAAU)
+/** \brief device type GP   */
+#define BOOTLOADER_DEVTYPE_GP           (0x03U)
+
+
+/** @} */
+/**
+ * \brief Data structure containing information about a core specific to the AWR294x SOC
  *
  * This structure is used to store the data about cores in the SoC in the form of a lookup table which will be
  * used by various APIs.
@@ -233,6 +250,10 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr);
  */
 uint32_t Bootloader_socIsAuthRequired(void);
 
+/**
+ * \brief API to load hsm runtime firmware
+ */
+void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
 
 #ifdef __cplusplus
 }

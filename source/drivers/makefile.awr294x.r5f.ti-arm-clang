@@ -21,6 +21,7 @@ FILES_common := \
     bootloader_flash.c \
     bootloader_mem.c \
     bootloader_soc.c \
+    bootloader_hsmRt_load.c \
     bootloader_utils_addrxlate.c \
     bootloader_xmodem.c \
     bootloader_uniflash.c \

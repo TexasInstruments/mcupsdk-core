@@ -12,7 +12,7 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
-% if (["am243x", "am64x", "am263x", "am273x"].includes(args.project.device)) {
+% if (["am243x", "am64x", "am263x", "am273x","awr294x"].includes(args.project.device)) {
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 % }
 
@@ -27,7 +27,7 @@ endif
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})
 % if (args.project.isBootLoader) {
-% if (["am243x", "am64x", "am263x", "am273x"].includes(args.project.device)) {
+% if (["am243x", "am64x", "am263x", "am273x","awr294x"].includes(args.project.device)) {
 BOOTIMAGE_NAME_GP:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
 BOOTIMAGE_NAME_HS:=`args.project.name`.$(PROFILE).hs.tiimage
 BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).hs_fs.tiimage
