@@ -1351,7 +1351,7 @@ static inline uint16_t ECAP_getInterruptSource(uint32_t base)
     //
     // Return contents of ECFLG register
     //
-    return(HW_RD_REG16(base + CSL_ECAP_ECFLG) & 0xFEU);
+    return(HW_RD_REG16(base + CSL_ECAP_ECFLG) & 0x1EFEU);
 }
 
 //*****************************************************************************
