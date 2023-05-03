@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,6 +38,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
+#include <drivers/hsmclient/soc/awr294x/hsmRtImg.h> /* hsmRt bin   header file */
 
 #define BOOTLOADER_UART_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_UART_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
@@ -48,6 +49,9 @@
 
 #define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x100000) /* Size of section DSS L3 RAM specified in linker.cmd */
 uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.sbl_scratch")));
+
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
+    = HSMRT_IMG;
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -72,6 +76,7 @@ int main(void)
 
     System_init();
     Drivers_open();
+    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
 
     /* Initialize the DSP Core and DSS L3 Memory. */
     Bootloader_BootImageInfo_init(&bootImageInfo);
@@ -80,7 +85,6 @@ int main(void)
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
-
     Bootloader_xmodemSendAck(CONFIG_UART0);
 
     if(SystemP_SUCCESS == status)

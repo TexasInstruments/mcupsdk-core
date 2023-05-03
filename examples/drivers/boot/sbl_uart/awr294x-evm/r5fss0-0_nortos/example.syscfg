@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.12.1+2446"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -10,6 +10,10 @@
  */
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
+const hsmclient   = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
+const hsmclient1  = hsmclient.addInstance();
+const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1       = uart.addInstance();
 const clock       = scripting.addModule("/kernel/dpl/clock");
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -26,23 +30,24 @@ const mpu_armv76  = mpu_armv7.addInstance();
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_0";
 
-debug_log.enableUartLog           = true;
-debug_log.enableCssLog            = false;
-debug_log.uartLog.$name           = "CONFIG_UART0";
-debug_log.uartLog.intrEnable      = "DISABLE";
-debug_log.uartLog.UART.$assign    = "UARTA";
-debug_log.uartLog.UART.RX.$assign = "ball.B16";
-debug_log.uartLog.UART.TX.$assign = "ball.C16";
+hsmclient1.$name = "CONFIG_HSMCLIENT0";
+
+uart1.$name           = "CONFIG_UART0";
+uart1.intrEnable      = "DISABLE";
+uart1.UART.RX.$assign = "ball.B16";
+uart1.UART.TX.$assign = "ball.C16";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
 edma1.$name                        = "CONFIG_EDMA0";
-debug_log.uartLog.edmaConfig       = edma1;
+uart1.edmaConfig                   = edma1;
 edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
+
+debug_log.enableCssLog = false;
 
 mpu_armv71.$name        = "CONFIG_MPU_REGION0";
 mpu_armv71.attributes   = "Device";
@@ -70,3 +75,10 @@ mpu_armv76.baseAddr     = 0xC5000000;
 mpu_armv76.size         = 13;
 mpu_armv76.attributes   = "NonCached";
 mpu_armv76.allowExecute = false;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+uart1.UART.$suggestSolution = "UARTA";

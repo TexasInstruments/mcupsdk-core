@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,6 +34,9 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient/soc/awr294x/hsmRtImg.h> /* hsmRt bin   header file */
+
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -54,6 +57,7 @@ int main(void)
     Drivers_open();
 
     DebugP_log("\r\n");
+    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     DebugP_log("Starting NULL Bootloader ... \r\n");
 
     Bootloader_Params bootParams;

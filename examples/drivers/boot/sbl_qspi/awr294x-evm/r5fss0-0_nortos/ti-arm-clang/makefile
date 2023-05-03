@@ -24,9 +24,16 @@ ConfigName:=$(PROFILE)
 OUTNAME:=sbl_qspi.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=sbl_qspi.$(PROFILE).tiimage
+BOOTIMAGE_NAME_GP:=sbl_qspi.$(PROFILE).tiimage
+BOOTIMAGE_NAME_HS:=sbl_qspi.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_qspi.$(PROFILE).hs_fs.tiimage
 BOOTIMAGE_BIN_NAME:=sbl_qspi.$(PROFILE).bin
 
+ifeq ($(DEVICE_TYPE),HS)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
+else
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
+endif
 
 FILES_common := \
 	main.c \
@@ -240,10 +247,10 @@ $(BOOTIMAGE_BIN_NAME): $(OUTNAME)
 $(BOOTIMAGE_NAME): $(BOOTIMAGE_BIN_NAME)
 	@echo  Boot image: awr294x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifeq ($(DEVICE_TYPE),HS)
-ifeq ($(DBG_ENABLED),no)
-	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT
+ifeq ($(DEBUG_TIFS), yes)
+	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME)
 else
-	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug DBG_PUBLIC_ENABLE
+	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
 endif
 else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT

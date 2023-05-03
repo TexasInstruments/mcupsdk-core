@@ -99,8 +99,12 @@ SECTIONS
         RUN_END(__UNDEFINED_STACK_END)
     } > MSS_L2
 
-    /* any data buffer needed to be put in L2 can be assigned this section name */
-    .sbl_scratch {} > MSS_L2_SCRATCH
+    /* HSMRt image section */
+    .rodata.hsmrt : {} palign(8) > MSRAM_HSMRT
+
+    /* this is used only when Secure IPC is enabled */
+    .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
+    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
 
     /* any data buffer needed to be put in L3 can be assigned this section name */
     .bss.dss_l3 {} > DSS_L3
@@ -126,7 +130,6 @@ MEMORY
      */
     MSS_L2_RSVD : ORIGIN = 0x10200000 , LENGTH = SBL_INIT_CODE_SIZE
     MSS_L2      : ORIGIN = (0x10200000 + SBL_INIT_CODE_SIZE) , LENGTH = (0x20000 - SBL_INIT_CODE_SIZE)
-    MSS_L2_SCRATCH      : ORIGIN = (0x10220000) , LENGTH = 0x40000
 
     /* This is typically used to hold data IO buffers from accelerators like CSI, HWA, DSP */
     DSS_L3:   ORIGIN = 0x88000000, LENGTH = 0x00200000
@@ -139,4 +142,8 @@ MEMORY
     LOG_SHM_MEM             : ORIGIN = 0x102EC000, LENGTH = 0x00004000
     /* MSS mailbox memory is used as shared memory, we dont use bottom 32*6 bytes, since its used as SW queue by ipc_notify */
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xC5000000, LENGTH = 0x1F40
+
+    MSRAM_HSMRT  :  ORIGIN = (0x10200000 + 0x20000) , LENGTH = 0x20000
+    MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
+    MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
 }

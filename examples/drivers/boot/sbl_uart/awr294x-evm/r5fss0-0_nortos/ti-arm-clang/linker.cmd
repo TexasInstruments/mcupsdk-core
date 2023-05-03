@@ -102,6 +102,13 @@ SECTIONS
     /* any data buffer needed to be put in L3 Scratch Memory can be assigned this section name */
     .bss.sbl_scratch {} > DSS_L3_SCRATCH
 
+    /* HSMRt image section */
+    .rodata.hsmrt : {} palign(8) > MSRAM_HSMRT
+
+    /* this is used only when Secure IPC is enabled */
+    .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
+    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
+
     /* any data buffer needed to be put in L3 can be assigned this section name */
     .bss.dss_l3 {} > DSS_L3
 
@@ -139,4 +146,8 @@ MEMORY
     LOG_SHM_MEM             : ORIGIN = 0x102EC000, LENGTH = 0x00004000
     /* MSS mailbox memory is used as shared memory, we dont use bottom 32*6 bytes, since its used as SW queue by ipc_notify */
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xC5000000, LENGTH = 0x1F40
+
+    MSRAM_HSMRT  :  ORIGIN = (0x10200000 + 0x20000) , LENGTH = 0x20000
+    MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
+    MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
 }
