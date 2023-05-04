@@ -848,6 +848,15 @@ typedef enum
 #define ECAP_MONITORING_UNIT_2       1U
 
 //*****************************************************************************
+//
+//! Values that can be passed to ECAP_selectShadowLoadMode() as the
+//! \e loadMode parameter.
+//
+//*****************************************************************************
+//! Load on next sync event
+#define ECAP_ACTIVE_LOAD_SYNC_EVT            0U
+//! Load on EPWM GLDLCSTRB event
+#define ECAP_ACTIVE_LOAD_GLDLCSTRB_EVT       1U
 
 //*****************************************************************************
 //
