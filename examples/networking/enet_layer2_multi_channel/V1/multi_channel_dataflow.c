@@ -271,8 +271,8 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
 
         perCtxt->rxChNum = rxRegularChInfo.rxChNum;
         perCtxt->hRxCh   = rxRegularChInfo.hRxCh;
-        EnetAppUtils_assert(rxRegularChInfo.macAddressValid == true);
-        EnetUtils_copyMacAddr(perCtxt->macAddr, rxRegularChInfo.macAddr);
+        EnetAppUtils_assert(rxRegularChInfo.numValidMacAddress == 1);
+        EnetUtils_copyMacAddr(perCtxt->macAddr, rxRegularChInfo.macAddr[rxRegularChInfo.numValidMacAddress - 1]);
 
         if (perCtxt->hRxCh == NULL)
         {
@@ -301,7 +301,7 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
         perCtxt->rxPtpChNum = rxPtpChInfo.rxChNum;
         perCtxt->hRxPtpCh   = rxPtpChInfo.hRxCh;
 
-        EnetAppUtils_assert(rxPtpChInfo.macAddressValid == false);
+        EnetAppUtils_assert(rxPtpChInfo.numValidMacAddress == 0);
 
         if (perCtxt->hRxPtpCh == NULL)
         {

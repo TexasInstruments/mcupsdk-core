@@ -166,6 +166,10 @@ typedef struct EnetTas_PerCtxt_s
     /* ICSSG configuration */
     Icssg_Cfg icssgCfg;
 
+
+    /* Number of valid MAC address entries present in macAddr variable below*/
+    uint8_t numValidMacAddress;
+
     /* MAC address. It's port's MAC address in Dual-MAC or
      * host port's MAC addres in Switch */
     uint8_t macAddr[ENET_MAC_ADDR_LEN];
@@ -632,6 +636,9 @@ static int32_t EnetTas_open(EnetTas_PerCtxt *perCtxts,
     /* Prepare init configuration for all peripherals */
     EnetAppUtils_print("\nInit all configs\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
+
+    EnetApp_driverInit();
+
     for (i = 0U; i < numPerCtxts; i++)
     {
         EnetTas_PerCtxt *perCtxt = &perCtxts[i];
@@ -1077,7 +1084,7 @@ static int32_t EnetTas_openDma(EnetTas_PerCtxt *perCtxt, uint32_t perCtxtIndex)
 {
     EnetApp_GetDmaHandleInArgs     txInArgs;
     EnetApp_GetTxDmaHandleOutArgs  txChInfo;
-    uint32_t i;
+    uint32_t i, flowIdx;
     int32_t status = ENET_SOK;
 
     /* Open the TX channel */
@@ -1119,36 +1126,41 @@ static int32_t EnetTas_openDma(EnetTas_PerCtxt *perCtxt, uint32_t perCtxtIndex)
     {
         EnetApp_GetDmaHandleInArgs     rxInArgs;
         EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
-
-        perCtxt->numHwRxCh = (perCtxt->enetType == ENET_ICSSG_SWITCH) ? 2U : 1U;
+        perCtxt->numHwRxCh = ENET_SYSCFG_RX_CHANNELS_NUM;
 
         for (i = 0U; i < perCtxt->numHwRxCh; i++)
         {
-            rxInArgs.notifyCb = EnetTas_rxIsrFxn;
-            rxInArgs.cbArg   = perCtxt;
-
-            EnetApp_getRxDmaHandle((ENET_DMA_RX_CH0 + i) + (perCtxtIndex * ENETAPP_NUM_RX_FLOW_PER_PERCTXT),
-                                   &rxInArgs,
-                                   &rxChInfo);
-
-            perCtxt->rxStartFlowIdx[i] = rxChInfo.rxFlowStartIdx;
-            perCtxt->rxFlowIdx[i] = rxChInfo.rxFlowIdx;
-            perCtxt->hRxCh[i]  = rxChInfo.hRxCh;
-            if (rxChInfo.macAddressValid)
+            for (flowIdx = 0U; flowIdx < ENET_SYSCFG_RX_FLOWS_NUM; flowIdx++)
             {
-                EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr);
-            }
-            EnetAppUtils_assert(rxChInfo.useGlobalEvt == true);
-            EnetAppUtils_assert(rxChInfo.sizeThreshEn == 0U);
-            EnetAppUtils_assert(rxChInfo.maxNumRxPkts >= (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2U));
-            EnetAppUtils_assert(rxChInfo.chIdx == i);
-            EnetAppUtils_assert(rxChInfo.useDefaultFlow == true);
+                rxInArgs.notifyCb = EnetTas_rxIsrFxn;
+                rxInArgs.cbArg   = perCtxt;
 
-            if (perCtxt->hRxCh[i] == NULL)
-            {
-                EnetAppUtils_print("EnetTas_openRxCh() failed to open RX flow\r\n");
-                status = ENET_EFAIL;
-                EnetAppUtils_assert(perCtxt->hRxCh[i] != NULL);
+                EnetApp_getRxDmaHandle((ENET_DMA_RX_CH0 + i) + (perCtxtIndex * ENETAPP_NUM_RX_FLOW_PER_PERCTXT),
+                                       &rxInArgs,
+                                       &rxChInfo);
+
+                perCtxt->rxStartFlowIdx[i]    = rxChInfo.rxFlowStartIdx;
+                perCtxt->rxFlowIdx[i]         = rxChInfo.rxFlowIdx;
+                perCtxt->hRxCh[i]             = rxChInfo.hRxCh;
+                perCtxt->numValidMacAddress  += rxChInfo.numValidMacAddress;
+
+                for (uint32_t macAddrIdx = 0; macAddrIdx < rxChInfo.numValidMacAddress; macAddrIdx++)
+                {
+                    EnetUtils_copyMacAddr(perCtxt->macAddr, &rxChInfo.macAddr[macAddrIdx][0]);
+                    EnetAppUtils_printMacAddr(perCtxt->macAddr);
+                }
+                EnetAppUtils_assert(rxChInfo.useGlobalEvt == true);
+                EnetAppUtils_assert(rxChInfo.sizeThreshEn == 0U);
+                EnetAppUtils_assert(rxChInfo.maxNumRxPkts >= (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2U));
+                EnetAppUtils_assert(rxChInfo.chIdx == i);
+                EnetAppUtils_assert(rxChInfo.useDefaultFlow == true);
+
+                if (perCtxt->hRxCh[i] == NULL)
+                {
+                    EnetAppUtils_print("EnetTas_openRxCh() failed to open RX flow\r\n");
+                    status = ENET_EFAIL;
+                    EnetAppUtils_assert(perCtxt->hRxCh[i] != NULL);
+                }
             }
         }
     }

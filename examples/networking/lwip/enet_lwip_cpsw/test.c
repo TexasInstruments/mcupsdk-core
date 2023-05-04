@@ -157,6 +157,9 @@
  */
 #define UDP_IPERF_THREAD_PRIO  (14U)
 
+/* Handle to the Applciation interface for the LwIPIf Layer
+ */
+LwipifEnetApp_Handle hlwipIfApp = NULL;
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -285,12 +288,12 @@ status_callback(struct netif *state_netif)
 {
   if (netif_is_up(state_netif)) {
 #if LWIP_IPV4
-    DebugP_log("status_callback==UP, local interface IP is %s\r\n", ip4addr_ntoa(netif_ip4_addr(state_netif)));
+    DebugP_log("[%d]status_callback==UP, local interface IP is %s\r\n", state_netif->num, ip4addr_ntoa(netif_ip4_addr(state_netif)));
 #else
-    DebugP_log("status_callback==UP\r\n");
+    DebugP_log("[%d]status_callback==UP\r\n",  state_netif->num);
 #endif
   } else {
-    DebugP_log("status_callback==DOWN\r\n");
+    DebugP_log("[%d]status_callback==DOWN\r\n",  state_netif->num);
   }
 }
 #endif /* LWIP_NETIF_STATUS_CALLBACK */
@@ -379,14 +382,13 @@ test_netif_init(void)
 #endif /* LWIP_IPV4 */
 
 #if LWIP_IPV4
+  hlwipIfApp = LwipifEnetApp_getHandle();
   /* Open the netif and get it populated*/
-    for (i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
+  for (i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
   {
-      LwipifEnetApp_netifOpen(NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
-      netif[NETIF_INST_ID0 + i] = LwipifEnetApp_getNetifFromId(NETIF_INST_ID0 + i);
+      netif[i] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
   }
-
-    LwipifEnetApp_startSchedule(netif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
+  LwipifEnetApp_startSchedule(hlwipIfApp, netif[NETIF_INST_ID0]);
 #else
   init_default_netif();
 #endif
@@ -785,7 +787,7 @@ main_loop(void * a0)
   /* Close the netif */
   for (uint32_t i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
   {
-    LwipifEnetApp_netifClose(NETIF_INST_ID0 + i);
+    LwipifEnetApp_netifClose(hlwipIfApp, NETIF_INST_ID0 + i);
   }
 #endif /* USE_ETHERNET */
 }

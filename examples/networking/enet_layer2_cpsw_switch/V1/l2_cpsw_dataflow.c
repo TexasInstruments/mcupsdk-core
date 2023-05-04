@@ -129,8 +129,8 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt, uint32_t perCtxtIndex)
 
         perCtxt->rxChNum = rxChInfo.rxChNum;
         perCtxt->hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-        EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr);
+        EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
+        EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
 
         if (perCtxt->hRxCh == NULL)
         {

@@ -85,7 +85,7 @@ void EnetLpbk_mainTask(void *args)
     memset(&gEnetLpbk, 0, sizeof(gEnetLpbk));
     gEnetLpbk.exitFlag = false;
 
-    EnetApp_getEnetInstInfo(&gEnetLpbk.enetType,
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0, &gEnetLpbk.enetType,
                                 &gEnetLpbk.instId);
 
     EnetApp_getEnetInstMacInfo(gEnetLpbk.enetType,

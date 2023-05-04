@@ -220,6 +220,9 @@ typedef struct EnetMp_PerCtxt_s
     /* ICSSG configuration */
     Icssg_Cfg icssgCfg;
 
+    /* Number of valid MAC address entries present in macAddr variable below*/
+    uint8_t numValidMacAddress;
+
     /* MAC address. It's port's MAC address in Dual-MAC or
      * host port's MAC addres in Switch */
     uint8_t macAddr[ENET_MAC_ADDR_LEN];
@@ -527,8 +530,8 @@ UTILSfunc_t UtilsTestFunc[MAX_NO_OF_UTILS_CASES + 1] =
      {UTILS_NRT_cofig_port_state, "UTILS_NRT_cofig_port_state"},
      {UTILS_NRT_add_fid_vid_entry, "UTILS_NRT_add_fid_vid_entry for PORT1 and PORT2"},
      {UTILS_config_PVID, "UTILS_config_PVID"},
-	 {UTILS_config_get_rx_pkt_count, "UTILS_get_receive_packet_count"},
-	 {UTILS_config_clear_rx_pkt_count, "UTILS_clear_receive_packet_count"},
+     {UTILS_config_get_rx_pkt_count, "UTILS_get_receive_packet_count"},
+     {UTILS_config_clear_rx_pkt_count, "UTILS_clear_receive_packet_count"},
      {UTILS_Transmit_UC_packets, "UTILS_Transmit_UC_packets"},
      {TC_undef, "TC_undef"},
 };
@@ -847,6 +850,8 @@ static int32_t EnetMp_open(EnetMp_PerCtxt *perCtxts,
     /* Prepare init configuration for all peripherals */
     DebugP_log("\nInit all configs\r\n");
     DebugP_log("----------------------------------------------\r\n");
+
+    EnetApp_driverInit();
     for (i = 0U; i < numPerCtxts; i++)
     {
         EnetMp_PerCtxt *perCtxt = &perCtxts[i];
@@ -1351,7 +1356,7 @@ static void EnetMp_rxIsrFxn(void *appData)
 
 static int32_t EnetMp_openDma(EnetMp_PerCtxt *perCtxt,uint32_t  perCtxtIndex)
 {
-    uint32_t i;
+    uint32_t i, flowIdx;
     int32_t status = ENET_SOK;
     EnetApp_GetDmaHandleInArgs     txInArgs;
     EnetApp_GetTxDmaHandleOutArgs  txChInfo;
@@ -1395,33 +1400,37 @@ static int32_t EnetMp_openDma(EnetMp_PerCtxt *perCtxt,uint32_t  perCtxtIndex)
     {
         EnetApp_GetDmaHandleInArgs     rxInArgs;
         EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
-
-        perCtxt->numHwRxCh = (perCtxt->enetType == ENET_ICSSG_SWITCH) ? 2U : 1U;
+        perCtxt->numHwRxCh = ENET_SYSCFG_RX_CHANNELS_NUM;
 
         for (i = 0U; i < perCtxt->numHwRxCh; i++)
         {
-            rxInArgs.notifyCb = EnetMp_rxIsrFxn;
-            rxInArgs.cbArg    = perCtxt;
-            EnetApp_getRxDmaHandle((ENET_DMA_RX_CH0 + i) + (perCtxtIndex * ENETAPP_NUM_RX_FLOW_PER_PERCTXT),
-                                   &rxInArgs,
-                                   &rxChInfo);
-            EnetAppUtils_assert(rxChInfo.useDefaultFlow == true);
-            EnetAppUtils_assert(rxChInfo.chIdx == i);
-            EnetAppUtils_assert(rxChInfo.useGlobalEvt == true);
-            EnetAppUtils_assert(rxChInfo.sizeThreshEn == 0U);
-            EnetAppUtils_assert(rxChInfo.maxNumRxPkts >= (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2U));
-            perCtxt->rxStartFlowIdx[i] = rxChInfo.rxFlowStartIdx;
-            perCtxt->rxFlowIdx[i] = rxChInfo.rxFlowIdx;
-            perCtxt->hRxCh[i] = rxChInfo.hRxCh;
-            if (rxChInfo.macAddressValid == true)
+            for (flowIdx = 0U; flowIdx < ENET_SYSCFG_RX_FLOWS_NUM; flowIdx++)
             {
-                EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr);
-            }
-            if (perCtxt->hRxCh[i] == NULL)
-            {
-                DebugP_log("EnetMp_openRxCh() failed to open RX flow\r\n");
-                status = ENET_EFAIL;
-                EnetAppUtils_assert(perCtxt->hRxCh[i] != NULL);
+                rxInArgs.notifyCb = EnetMp_rxIsrFxn;
+                rxInArgs.cbArg    = perCtxt;
+                EnetApp_getRxDmaHandle((ENET_DMA_RX_CH0 + i) + (perCtxtIndex * ENETAPP_NUM_RX_FLOW_PER_PERCTXT),
+                                       &rxInArgs,
+                                       &rxChInfo);
+                EnetAppUtils_assert(rxChInfo.useDefaultFlow == true);
+                EnetAppUtils_assert(rxChInfo.chIdx == i);
+                EnetAppUtils_assert(rxChInfo.useGlobalEvt == true);
+                EnetAppUtils_assert(rxChInfo.sizeThreshEn == 0U);
+                EnetAppUtils_assert(rxChInfo.maxNumRxPkts >= (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2U));
+
+                perCtxt->rxStartFlowIdx[i]    = rxChInfo.rxFlowStartIdx;
+                perCtxt->rxFlowIdx[i]         = rxChInfo.rxFlowIdx;
+                perCtxt->hRxCh[i]             = rxChInfo.hRxCh;
+                perCtxt->numValidMacAddress  += rxChInfo.numValidMacAddress;
+                if (rxChInfo.numValidMacAddress > 0)
+                {
+                    EnetUtils_copyMacAddr(perCtxt->macAddr, &rxChInfo.macAddr[0][0]);
+                }
+                if (perCtxt->hRxCh[i] == NULL)
+                {
+                    DebugP_log("EnetMp_openRxCh() failed to open RX flow\r\n");
+                    status = ENET_EFAIL;
+                    EnetAppUtils_assert(perCtxt->hRxCh[i] != NULL);
+                }
             }
         }
     }
@@ -3957,7 +3966,7 @@ int32_t UTILS_config_PVID(void)
         taggedP2 = (uint8_t)temp;
     }
 
-	    //-----------------Make a default entry for Host port-----------------
+        //-----------------Make a default entry for Host port-----------------
     ret_val = add_default_host_vid(0, pVID);
 
     if (ret_val != TEST_SUCCESS)
@@ -3981,21 +3990,21 @@ int32_t UTILS_config_PVID(void)
         DebugP_log("\n ERROR: In updating default VLAN for P2 \n\r");
     }
 
-	ret_val = add_fid_vid_entry(pVID, 0, 1, memberP1, memberP2, 0, taggedP1, taggedP2, 0, 0);
+    ret_val = add_fid_vid_entry(pVID, 0, 1, memberP1, memberP2, 0, taggedP1, taggedP2, 0, 0);
 
     return ret_val;
 }
 
 int32_t UTILS_config_get_rx_pkt_count(void)
 {
-	DebugP_log("Receive Count: %d: \n\r", totalRxCnt);
+    DebugP_log("Receive Count: %d: \n\r", totalRxCnt);
     return TEST_SUCCESS;
 }
 
 int32_t UTILS_config_clear_rx_pkt_count(void)
 {
-	totalRxCnt=0;
-	DebugP_log("Cleared Receive count \n\r");
+    totalRxCnt=0;
+    DebugP_log("Cleared Receive count \n\r");
     return TEST_SUCCESS;
 }
 
@@ -4053,7 +4062,7 @@ int32_t setup_unit_test_default_settings(void)
 
     for (i = 0; i < ENET_PRI_NUM; i++)
     {
-    	prioRegenMap[i] = (uint32_t)(ENET_PRI_NUM-1-i);
+        prioRegenMap[i] = (uint32_t)(ENET_PRI_NUM-1-i);
         prioMap[i] = 0U;
     }
 

@@ -67,6 +67,9 @@ int32_t EnetAppSoc_getMacAddrList(Enet_Type enetType,
                                   uint32_t maxMacEntries,
                                   uint32_t *pAvailMacEntries);
 
+int32_t EnetAppSoc_releaseMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
+                                        uint32_t maxMacEntries);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

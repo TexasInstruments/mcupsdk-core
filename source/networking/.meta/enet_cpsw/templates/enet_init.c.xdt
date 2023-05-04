@@ -44,6 +44,7 @@
 #include "ti_enet_config.h"
 #include "ti_drivers_config.h"
 #include "ti_enet_open_close.h"
+#include <utils/include/enet_appsoc.h>
 
 #define ENETAPP_PHY_STATEHANDLER_TASK_PRIORITY        (7U)
 #define ENETAPP_PHY_STATEHANDLER_TASK_STACK     (3 * 1024)
@@ -130,8 +131,6 @@ void EnetApp_phyStateHandler();
 static Enet_Handle EnetApp_doCpswOpen(Enet_Type enetType, uint32_t instId, const Cpsw_Cfg *cpswCfg)
 {
     int32_t status = ENET_SOK;
-    EnetOsal_Cfg osalPrms;
-    EnetUtils_Cfg utilsPrms;
     void *perCfg = NULL_PTR;
     uint32_t cfgSize;
     Enet_Handle hEnet;
@@ -140,12 +139,6 @@ static Enet_Handle EnetApp_doCpswOpen(Enet_Type enetType, uint32_t instId, const
 
     perCfg = (void *)cpswCfg;
     cfgSize = sizeof(*cpswCfg);
-
-    /* Initialize Enet driver with default OSAL, utils */
-    Enet_initOsalCfg(&osalPrms);
-    Enet_initUtilsCfg(&utilsPrms);
-
-    Enet_init(&osalPrms, &utilsPrms);
 
     hEnet = Enet_open(enetType, instId, perCfg, cfgSize);
     if(hEnet == NULL_PTR)
@@ -243,6 +236,19 @@ void EnetApp_phyStateHandler()
 % }
 % }
 
+void EnetApp_driverInit()
+{
+/* keep this implementation that is generic across enetType and instId.
+ * Initialization should be done only once.
+ */
+    EnetOsal_Cfg osalPrms;
+    EnetUtils_Cfg utilsPrms;
+
+    /* Initialize Enet driver with default OSAL, utils */
+    Enet_initOsalCfg(&osalPrms);
+    Enet_initUtilsCfg(&utilsPrms);
+    Enet_init(&osalPrms, &utilsPrms);
+}
 
 int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 {
@@ -254,6 +260,7 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     EnetRm_ResCfg *resCfg = &cpswCfg.resCfg;
     EnetApp_HandleInfo handleInfo;
     EnetPer_AttachCoreOutArgs attachInfo;
+
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
     EnetUdma_Cfg dmaCfg;
 % }

@@ -65,7 +65,6 @@ static void EnetApp_handleLinkChangeEvent(Enet_Handle hEnet,
                                           Icssg_MdioLinkStateChangeInfo*
                                           pLinkChangeInfo);
 
-
 #define MII_LINK0_EVENT      41
 #define MII_LINK1_EVENT      53
 
@@ -91,8 +90,8 @@ typedef struct EnetAppPhyPollState_s
 
 typedef struct EnetAppPhyLinkEventCtx_s
 {
-    Enet_Type enetType;
-    uint32_t instId;
+    Enet_Type port2EnetType[ENET_SYSCFG_MAX_MAC_PORTS];
+    uint32_t port2InstId[ENET_SYSCFG_MAX_MAC_PORTS];
     uint32_t mdioLinkChangeIsrCount;
     QueueP_Object freeMsgQ;
     QueueP_Object processMsgQ;
@@ -109,18 +108,22 @@ typedef struct EnetAppPhyLinkEventCtx_s
     SemaphoreP_Object linkIntSem;
     uint8_t appMdioLinkIntHandlerTaskStack[ENETAPP_MDIOLINKINT_HANDLER_TASK_STACK] __attribute__ ((aligned(32)));
     EnetAppPhyPollState_s phyPollState;
+    bool isInitialized;
 } EnetAppPhyLinkEventCtx;
 
-EnetAppPhyLinkEventCtx gMdioLinkEventCtx;
+EnetAppPhyLinkEventCtx gMdioLinkEventCtx = {.isInitialized = false};
 
 
-void EnetApp_initPhyLinkHandlerCtx(EnetAppPhyLinkEventCtx * ctx, Enet_Type enetType, uint32_t instId)
+void EnetApp_initPhyLinkHandlerCtx(EnetAppPhyLinkEventCtx * ctx, Enet_Type port2EnetType[ENET_SYSCFG_MAX_MAC_PORTS], uint32_t port2InstId[ENET_SYSCFG_MAX_MAC_PORTS])
 {
     uint32_t i;
     int32_t status;
 
-    ctx->enetType = enetType;
-    ctx->instId   = instId;
+    for (uint32_t idx = 0; idx < ENET_SYSCFG_MAX_MAC_PORTS; idx++)
+    {
+        ctx->port2EnetType[idx] = port2EnetType[idx];
+        ctx->port2InstId[idx]   = port2InstId[idx];
+    }
     ctx->mdioLinkChangeIsrCount = 0;
     ctx->mdioLinkIntTaskShutDownFlag = false;
     status = SemaphoreP_constructCounting(&ctx->linkIntSem, 0, ENET_ARRAYSIZE(ctx->infoMsg));
@@ -152,8 +155,6 @@ static void EnetApp_mdioLinkIntHandler(void * appHandle)
             QueueP_Elem *qelem;
             EnetAppPhyLinkEventInfoMsg *infoMsg;
 
-            Enet_Handle hEnet = Enet_getHandle(linkIntCtx->enetType, linkIntCtx->instId);
-
             qelem = QueueP_get(linkIntCtx->hProcessMsgQ);
             EnetAppUtils_assert(qelem != NULL);
             infoMsg = container_of(qelem, EnetAppPhyLinkEventInfoMsg, elem);
@@ -161,7 +162,24 @@ static void EnetApp_mdioLinkIntHandler(void * appHandle)
 
             if (pLinkChangeInfo->linkChanged)
             {
-                EnetApp_handleLinkChangeEvent(hEnet, pLinkChangeInfo);
+
+                for (uint32_t macPort = 0; macPort < ENET_SYSCFG_MAX_MAC_PORTS; macPort++)
+                {
+                    const EnetExtPhy_Handle hPhy = EnetApp_getExtPhyHandle(macPort);
+                    if (hPhy == NULL)
+                    {
+                        continue;
+                    }
+                    const uint32_t phyAddress = hPhy->phyCfg.phyAddr;
+                    if (phyAddress == infoMsg->linkStateChangeInfo.phyAddr)
+                    {
+                        /* For here for the PHY whose link has changed */
+                        Enet_Handle hEnet = Enet_getHandle(linkIntCtx->port2EnetType[macPort], linkIntCtx->port2InstId[macPort]);
+                        EnetApp_handleLinkChangeEvent(hEnet, pLinkChangeInfo);
+                        break;
+                    }
+
+                }
             }
             status = QueueP_put(linkIntCtx->hFreeMsgQ, &infoMsg->elem);
             EnetAppUtils_assert(status == SystemP_SUCCESS);
@@ -211,12 +229,12 @@ static void EnetApp_handleLinkChangeEvent(Enet_Handle hEnet, Icssg_MdioLinkState
     EnetAppUtils_assert(status == ENET_SOK);
 }
 
-int32_t EnetApp_mdioLinkIntHandlerTask(Enet_Type enetType, uint32_t instId)
+int32_t EnetApp_mdioLinkIntHandlerTask(Enet_Type port2EnetType[ENET_SYSCFG_MAX_MAC_PORTS], uint32_t port2InstId[ENET_SYSCFG_MAX_MAC_PORTS])
 {
     TaskP_Params tskParams;
     int32_t status;
 
-    EnetApp_initPhyLinkHandlerCtx(&gMdioLinkEventCtx, enetType, instId);
+    EnetApp_initPhyLinkHandlerCtx(&gMdioLinkEventCtx, port2EnetType, port2InstId);
     /* Initialize the taskperiodicTick params. Set the task priority higher than the
      * default priority (1) */
     TaskP_Params_init(&tskParams);
@@ -278,19 +296,14 @@ static void EnetApp_phyRegPollHandler(void* appHandle)
         SemaphoreP_pend(pTimerSem, SystemP_WAIT_FOREVER);
         const uint32_t pollEnablePhyAddressMask = linkIntCtx->phyPollState.pollEnablePhyAddMask;
 
-        for (uint32_t portIdx = 0; portIdx < ENET_SYSCFG_MAX_MAC_PORTS; portIdx++)
+        for (uint32_t macPort = 0; macPort < ENET_SYSCFG_MAX_MAC_PORTS; macPort++)
         {
-            const EnetExtPhy_Handle hPhy = EnetApp_getExtPhyHandle(portIdx);
+            const EnetExtPhy_Handle hPhy = EnetApp_getExtPhyHandle(macPort);
             if (hPhy == NULL)
             {
                 continue;
             }
             const uint32_t phyAddress = hPhy->phyCfg.phyAddr;
-            if (phyAddress == 0)
-            {
-                // invalid PHY address
-                continue;
-            }
 
             const uint32_t phyaddressMask = (1 << phyAddress);
             if (pollEnablePhyAddressMask & phyaddressMask)
@@ -317,7 +330,7 @@ static void EnetApp_phyRegPollHandler(void* appHandle)
                                       .isLinked     = isLinked
                                       };
 
-                    Enet_Handle hEnet = Enet_getHandle(linkIntCtx->enetType, linkIntCtx->instId);
+                    Enet_Handle hEnet = Enet_getHandle(linkIntCtx->port2EnetType[macPort], linkIntCtx->port2InstId[macPort]);
                     EnetApp_handleLinkChangeEvent(hEnet, &info);
 
                 }
@@ -343,11 +356,14 @@ void EnetApp_enablePhyLinkPollingMask(const uint32_t phyEnableMask)
     gMdioLinkEventCtx.phyPollState.pollEnablePhyAddMask = phyEnableMask;
 }
 
-int32_t EnetApp_createPhyRegisterPollingTask(const uint32_t pollingPeriod_ms, const bool doStartimmediately, Enet_Type enetType, uint32_t instId)
+int32_t EnetApp_createPhyRegisterPollingTask(const uint32_t pollingPeriod_ms,
+                                             const bool doStartimmediately,
+                                             Enet_Type port2EnetType[ENET_SYSCFG_MAX_MAC_PORTS],
+                                             uint32_t port2InstId[ENET_SYSCFG_MAX_MAC_PORTS])
 {
     const uint32_t pollingPeriodTicks = ClockP_usecToTicks((ENETPHY_FSM_TICK_PERIOD_MS)*pollingPeriod_ms);  // Set timer expiry time in OS ticks
 
-    EnetApp_initPhyLinkHandlerCtx(&gMdioLinkEventCtx, enetType, instId);
+    EnetApp_initPhyLinkHandlerCtx(&gMdioLinkEventCtx, port2EnetType, port2InstId);
     EnetAppUtils_assert(SystemP_SUCCESS == SemaphoreP_constructCounting(&(gMdioLinkEventCtx.linkIntSem), 0, 128));
     ClockP_Params clkParams;
     ClockP_Params_init(&clkParams);

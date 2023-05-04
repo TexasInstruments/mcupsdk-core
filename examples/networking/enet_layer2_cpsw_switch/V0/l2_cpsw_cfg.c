@@ -236,6 +236,9 @@ int32_t EnetApp_open(EnetApp_PerCtxt *perCtxts,
     /* Open Enet driver for all peripherals */
     EnetAppUtils_print("\nOpen all peripherals\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
+
+    EnetApp_driverInit();
+
     for (i = 0U; i < numPerCtxts; i++)
     {
         EnetApp_PerCtxt *perCtxt = &perCtxts[i];

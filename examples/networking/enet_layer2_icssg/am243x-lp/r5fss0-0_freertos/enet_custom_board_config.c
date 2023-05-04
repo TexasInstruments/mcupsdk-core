@@ -176,11 +176,11 @@ static const EnetBoard_PortCfg gEnetCpbBoard_am243x_lp_EthPort[] =
     {    /* "ETH3" (ICSSG1 Dual-MAC port 2) */
         .enetType = ENET_ICSSG_DUALMAC,
         .instId   = 3U,
-        .macPort  = ENET_MAC_PORT_1,
+        .macPort  = ENET_MAC_PORT_2,
         .mii      = { ENET_MAC_LAYER_GMII, ENET_MAC_SUBLAYER_REDUCED },
         .phyCfg   =
         {
-            .phyAddr         = 3U,
+            .phyAddr         = 15U,
             .isStrapped      = false,
             .skipExtendedCfg = false,
             .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,

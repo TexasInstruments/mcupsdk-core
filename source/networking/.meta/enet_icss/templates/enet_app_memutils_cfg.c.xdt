@@ -35,10 +35,10 @@
 #include <networking/enet/core/src/dma/udma/enet_udma_priv.h>
 /* --------------------------------- ICSS-G MACROS --------------------------------- */
 
-#define ENET_MEM_LARGE_POOL_NUM_PKTS        (`Number(instance.LargePoolPktCount)`U)
-#define ENET_MEM_MEDIUM_POOL_NUM_PKTS       (`Number(instance.MediumPoolPktCount)`U)
-#define ENET_MEM_SMALL_POOL_NUM_PKTS        (`Number(instance.MediumPoolPktCount)`U)
-#define ENET_PKTINFOMEM_ONLY_NUM_PKTS        (`Number(instance.PktInfoOnlyCount)`U)
+#define ENET_MEM_LARGE_POOL_NUM_PKTS        (`Number(instance.LargePoolPktCount)`U + `Number(instance.LargePoolPktCount)`U)
+#define ENET_MEM_MEDIUM_POOL_NUM_PKTS       (`Number(instance.MediumPoolPktCount)`U + `Number(instance.MediumPoolPktCount)`U)
+#define ENET_MEM_SMALL_POOL_NUM_PKTS        (`Number(instance.MediumPoolPktCount)`U +`Number(instance.MediumPoolPktCount)`U)
+#define ENET_PKTINFOMEM_ONLY_NUM_PKTS        (`Number(instance.PktInfoOnlyCount)`U + `Number(instance.PktInfoOnlyCount)`U)
 
 
 /* ========================================================================== */
@@ -74,12 +74,12 @@ __attribute__ ((aligned(ENETDMA_CACHELINE_ALIGNMENT),
 
 /* RX & TX RingAcc memories */
 static EnetMem_RingMemPoolEntry gRingMemArray[(ENET_MEM_NUM_RINGS_TYPES *
-                                    (ENET_SYSCFG_TX_CHANNELS_NUM + ENET_SYSCFG_RX_FLOWS_NUM))]
+                                    (ENET_SYSCFG_TX_CHANNELS_NUM + (ENET_SYSCFG_RX_FLOWS_NUM)))]
 __attribute__ ((aligned(UDMA_CACHELINE_ALIGNMENT),
                 section(".bss:ENET_DMA_RING_MEMPOOL")));
 
 static EnetMem_RingMem gRingMemInfoArray[(ENET_MEM_NUM_RINGS_TYPES *
-                                    (ENET_SYSCFG_TX_CHANNELS_NUM + ENET_SYSCFG_RX_FLOWS_NUM))]
+                                    (ENET_SYSCFG_TX_CHANNELS_NUM + (ENET_SYSCFG_RX_FLOWS_NUM)))]
 __attribute__ ((aligned(UDMA_CACHELINE_ALIGNMENT),
                 section(".bss:ENET_DMA_RING_MEMPOOL")));
 
@@ -218,7 +218,7 @@ static const EnetMem_Cfg gEthMemCfg =
     .ringMem =
     {
         .numRings    =  (ENET_MEM_NUM_RINGS_TYPES *
-                                    (ENET_SYSCFG_TX_CHANNELS_NUM + ENET_SYSCFG_RX_FLOWS_NUM)),
+                                    (ENET_SYSCFG_TX_CHANNELS_NUM + (ENET_SYSCFG_RX_FLOWS_NUM))),
         .ringMemBase =  gRingMemArray,
         .ringMemSize =  sizeof(gRingMemArray),
         .ringInfoContainerBase = gRingMemInfoArray,
@@ -258,13 +258,13 @@ static const EnetUdma_MemCfg gEthUdmaCfg =
 #if (UDMA_SOC_CFG_UDMAP_PRESENT == 1)
     .ringMonObjMemCfg =
     {
-        .numRings = ENET_SYSCFG_RING_MON_NUM,
+        .numRings = ENET_SYSCFG_RING_MON_NUM*2,
         .ringMonObjMemContainerBase = gEnetUdmaRinMonObjMem,
         .ringMonObjMemContainerSize = sizeof(gEnetUdmaRinMonObjMem),
     },
     .tdCqRingObjMemCfg =
     {
-        .numRings = ENET_SYSCFG_RING_MON_NUM,
+        .numRings = ENET_SYSCFG_RING_MON_NUM*2,
         .tdCqRingObjMemContainerBase = gEnetUdmaTdCqRingObjMem,
         .tdCqRingObjMemContainerSize = sizeof(gEnetUdmaTdCqRingObjMem),
     },

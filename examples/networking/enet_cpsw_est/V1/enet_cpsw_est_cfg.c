@@ -188,6 +188,8 @@ int32_t EnetApp_open(void)
     /* Create RX task */
     EnetApp_createRxTask();
 
+    EnetApp_driverInit();
+
     status = EnetApp_driverOpen(gEnetApp.enetType, gEnetApp.instId);
 
     if (status != ENET_SOK)

@@ -111,6 +111,7 @@ extern "C" {
 #define ENET_CTRL_RGMII_ID_NODELAY          (1U)
 
 #define ENET_UTILS_MCU2_0_UART_INSTANCE     (2U)
+#define ENET_MAX_NUM_MAC_PER_PHER           (2U)
 
 #if defined(__KLOCWORK__)
 #define EnetAppUtils_assert(cond)       do { if (!(cond)) abort(); } while (0)
@@ -177,6 +178,9 @@ typedef struct EnetApp_HandleInfo_s
 
 typedef struct EnetApp_GetDmaHandleInArgs_s
 {
+    Enet_Type enetType;
+
+    uint32_t instId;
     /*! Enet CPDMA event callback function - this function will be called when
      *  the registered packets are transmitted on TX channel */
     EnetDma_PktNotifyCb notifyCb;
@@ -205,10 +209,10 @@ typedef struct EnetApp_GetRxDmaHandleOutArgs_s
     /* RX channel number */
     uint32_t rxChNum;
     /* mac Address valid */
-    bool macAddressValid;
+    uint32_t numValidMacAddress;
     /* MAC address. It's port's MAC address in Dual-MAC or
      * host port's MAC addres in Switch */
-    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+    uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN];
     /* max numTxPkts for the channel */
     uint32_t maxNumRxPkts;
 } EnetApp_GetRxDmaHandleOutArgs;
@@ -217,6 +221,9 @@ typedef struct EnetApp_GetRxDmaHandleOutArgs_s
 #if defined (ENET_SOC_HOSTPORT_DMA_TYPE_UDMA)
 typedef struct EnetApp_GetTxDmaHandleOutArgs_s
 {
+    Enet_Type enetType;
+
+    uint32_t instId;
     /* TX channel handle */
     EnetDma_TxChHandle hTxCh;
     /* TX channel number */
@@ -229,6 +236,9 @@ typedef struct EnetApp_GetTxDmaHandleOutArgs_s
 
 typedef struct EnetApp_GetRxDmaHandleOutArgs_s
 {
+    Enet_Type enetType;
+
+    uint32_t instId;
     /* RX channel handle */
     EnetDma_RxChHandle hRxCh;
     /* RX start flow index */
@@ -236,10 +246,10 @@ typedef struct EnetApp_GetRxDmaHandleOutArgs_s
     /* RX flow index */
     uint32_t rxFlowIdx;
     /* mac Address valid */
-    bool macAddressValid;
+    uint32_t numValidMacAddress;
     /* MAC address. It's port's MAC address in Dual-MAC or
      * host port's MAC addres in Switch */
-    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+    uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN];
     /* max numTxPkts for the channel */
     uint32_t maxNumRxPkts;
     /* flow uses global event */
@@ -262,6 +272,15 @@ typedef struct EnetApp_GetRxDmaHandleOutArgs_s
 } EnetApp_GetRxDmaHandleOutArgs;
 #endif
 
+typedef struct EnetApp_GetMacAddrOutArgs_s
+{
+    /* mac Address valid */
+    uint32_t macAddressCnt;
+
+    /* MAC address. It's port's MAC address in Dual-MAC or
+     * host port's MAC address in Switch */
+    uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN];
+} EnetApp_GetMacAddrOutArgs;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -513,7 +532,8 @@ int32_t EnetAppUtils_showRxFlowStats(EnetDma_RxChHandle hRxFlow);
 
 int32_t EnetAppUtils_showTxChStats(EnetDma_TxChHandle hTxCh);
 
-void EnetApp_getEnetInstInfo(Enet_Type *enetType, uint32_t *instId);
+void EnetApp_getEnetInstInfo(uint32_t enetInstanceId, Enet_Type *enetType, uint32_t *instId);
+
 void EnetApp_getEnetInstMacInfo(Enet_Type enetType, uint32_t instId,
                              Enet_MacPort macPortList[],   uint8_t *numMacPorts);
 void     EnetApp_acquireHandleInfo(Enet_Type enetType, uint32_t instId,
@@ -544,6 +564,9 @@ void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
                         uint32_t coreId,
                         EnetDma_PktQ *fqPktInfoQ,
                         EnetDma_PktQ *cqPktInfoQ);
+
+void EnetApp_getMacAddress(uint32_t enetRxDmaChId,
+                            EnetApp_GetMacAddrOutArgs *outArgs);
 
 void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,

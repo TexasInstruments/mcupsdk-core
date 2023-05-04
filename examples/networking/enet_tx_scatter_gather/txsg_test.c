@@ -169,6 +169,9 @@ int32_t EnetTxSG_txsgTest(void)
 
     /* Local core id */
     gEnetTxSG.coreId = EnetSoc_getCoreId();
+
+    EnetApp_driverInit();
+
     if (status == ENET_SOK)
     {
         status = EnetApp_driverOpen(gEnetTxSG.enetType, gEnetTxSG.instId);
@@ -1154,7 +1157,6 @@ static int32_t EnetTxSG_openDma(void)
                               &rxChInfo);
         gEnetTxSG.rxChNum = rxChInfo.rxChNum;
         gEnetTxSG.hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
 
         if (NULL == gEnetTxSG.hRxCh)
         {
@@ -1164,8 +1166,8 @@ static int32_t EnetTxSG_openDma(void)
         }
         else
         {
-            EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-            EnetUtils_copyMacAddr(gEnetTxSG.hostMacAddr, rxChInfo.macAddr);
+            EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
+            EnetUtils_copyMacAddr(gEnetTxSG.hostMacAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
             EnetApp_initEthFrameHdrSrcMacAddr(&gEnetTxSGPktHeader[0]);
             EnetAppUtils_print("Host MAC address: ");
             EnetAppUtils_printMacAddr(gEnetTxSG.hostMacAddr);

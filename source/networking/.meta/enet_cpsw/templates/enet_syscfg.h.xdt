@@ -1,14 +1,23 @@
 %%{
     let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/networking/soc/networking_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("enet_cpsw");
+    const netifScript = system.getScript(`/networking/enet_cpsw/${driverVer}/enet_cpsw_lwipif_netif`);
 %%}
 % let instance = module.$instances[0];
-/*
- * Enet DMA memory allocation utility functions.
- */
+% let instances = module.$instances;
 
 /* ========================================================================== */
 /*                         Macros & Typedefs                                  */
 /* ========================================================================== */
+
+/* ENET Pheriphel instance indexes. Name of ENET PHERIPHERAL can be changed in example syscfg */
+/* Application should use the defines below when opening a ENET Driver */
+% for (var i = 0; i < instances.length; i++) {
+#define `instances[i].$name.toUpperCase()`       (`i`U)
+% }
+#define ENET_SYSCFG_MAX_ENET_INSTANCES           (`instances.length`U)
 
 #define ENET_SYSCFG_TOTAL_NUM_TX_PKT      (`Number(module.getTxPacketsCount(instance))`U)
 #define ENET_SYSCFG_TOTAL_NUM_RX_PKT      (`Number(module.getRxPacketsCount(instance))`U)
@@ -44,6 +53,18 @@
 #define `module.getChannelConfig(instance, "RX", i).$name.toUpperCase()`_NUM_PKTS          (`Number(module.getChannelConfig(instance, "RX", i).PacketsCount)`U)
 % }
 
+
+/* NETIF indexes. Name of NETIF can be changed in example syscfg */
+/* Application should use the define below when opening a NETIF */
+% var idx = 0;
+% for (let inst in instances) {
+% for (let i = 0; i < module.getNetifCount(instances[inst]); i++) {
+#define `module.getNetifConfig(instances[inst], i).$name.toUpperCase()`          (`idx`U)
+% idx++;
+% }
+% }
+#define ENET_SYSCFG_NETIF_COUNT                    (`netifScript.getTotalNetIfCount(instances)`U)
+#define ENET_SYSCFG_DEFAULT_NETIF_IDX              (`netifScript.getDefaultNetifIndex()`)
 /*
  * Packet sizes for different pools. LARGE_POOL is largest packet size pool with MEDIUM_POOL
  * second largest and SMALL_POOL smallest

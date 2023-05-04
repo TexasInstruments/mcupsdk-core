@@ -144,6 +144,9 @@ int32_t EnetApp_loopbackTest(void)
 
     /* Local core id */
     gEnetLpbk.coreId = EnetSoc_getCoreId();
+
+    EnetApp_driverInit();
+
     if (status == ENET_SOK)
     {
         status = EnetApp_driverOpen(gEnetLpbk.enetType, gEnetLpbk.instId);
@@ -994,8 +997,8 @@ static int32_t EnetApp_openDma(void)
                               &rxInArgs,
                               &rxChInfo);
         gEnetLpbk.hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-        EnetUtils_copyMacAddr(gEnetLpbk.hostMacAddr, rxChInfo.macAddr);
+        EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
+        EnetUtils_copyMacAddr(gEnetLpbk.hostMacAddr, &rxChInfo.macAddr[rxChInfo.numValidMacAddress-1][0]);
         if (NULL == gEnetLpbk.hRxCh)
         {
             EnetAppUtils_print("EnetDma_openRxCh() failed to open: %d\r\n",

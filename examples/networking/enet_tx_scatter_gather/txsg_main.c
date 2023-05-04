@@ -83,7 +83,7 @@ void EnetTxSG_mainTask(void *args)
     memset(&gEnetTxSG, 0, sizeof(gEnetTxSG));
     gEnetTxSG.exitFlag = false;
 
-    EnetApp_getEnetInstInfo(&gEnetTxSG.enetType,
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0, &gEnetTxSG.enetType,
                                 &gEnetTxSG.instId);
 
     EnetApp_getEnetInstMacInfo(gEnetTxSG.enetType,

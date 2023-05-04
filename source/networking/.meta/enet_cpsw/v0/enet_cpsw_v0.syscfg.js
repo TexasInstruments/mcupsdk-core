@@ -263,6 +263,19 @@ function getDmaInterface(instance) {
     return cpswInstInfo.dmaIf;
 }
 
+function getInstIdTable(instances) {
+    let tbl = '{ '
+    for (var i = 0; i < instances.length; i++)
+    {
+        tbl += '{';
+        var matchedInst = getCpswInstInfo(instances[i])
+        tbl += i + ', ' + matchedInst.enetType + ', ' +  matchedInst.instId
+        tbl += '}, '
+    }
+    tbl += '}'
+    return tbl;
+}
+
 function getCpswInstInfo(instance) {
     const cpswInstInfoMap = new Map(
                                [
@@ -366,8 +379,21 @@ function getPacketsCount(instance, channelType) {
     return totalNumPackets;
 }
 
+function getMacAddrCount(instance) {
+    let totalMacAddr = 0;
+    let driverVer = soc.getDriverVer("enet_cpsw");
+    let dma_ch_instances = instance.rxDmaChannel;
+    let module_dma_ch = system.modules[`/networking/enet_cpsw/${driverVer}/enet_cpsw_${driverVer}_rx_channel`];
+
+    for(let ch = 0; ch < dma_ch_instances.length; ch++) {
+        let ch_instance = dma_ch_instances[ch];
+        let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
+        totalMacAddr += ch_config.macAddrCount;
+    }
+    return totalMacAddr;
+}
+
 function getChannelCount(instance, channelType) {
-    let totalNumChannels = 0;
     let driverVer = soc.getDriverVer("enet_cpsw");
     let dma_ch_instances;
     let module_dma_ch;
@@ -383,12 +409,7 @@ function getChannelCount(instance, channelType) {
         module_dma_ch = system.modules[`/networking/enet_cpsw/${driverVer}/enet_cpsw_${driverVer}_rx_channel`];
     }
 
-    for(let ch = 0; ch < dma_ch_instances.length; ch++) {
-        let ch_instance = dma_ch_instances[ch];
-        let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
-        totalNumChannels++;
-    }
-    return totalNumChannels;
+    return dma_ch_instances.length;
 }
 
 function getTxPacketsCount(instance) {
@@ -433,22 +454,9 @@ function getChannelConfig(instance, channelType, chTypeInstNum) {
     return channelCfgArray[chTypeInstNum];
 }
 
-
 function getNetifCount(instance) {
-    let driverVer = soc.getDriverVer("enet_cpsw");
-    let totalNumNetifs = 0;
-    let instances;
-    let module;
-
-    instances = instance.netifInstance;
-    module = system.modules[`/networking/enet_cpsw/${driverVer}/enet_cpsw_lwipif_netif`];
-
-    for(let num = 0; num < instances.length; num++) {
-        let num_instance = instances[num];
-        let num_config = module.getInstanceConfig(num_instance);
-        totalNumNetifs++;
-    }
-    return totalNumNetifs;
+    let instances = instance.netifInstance;
+    return instances.length;
 }
 
 function getNetifConfig(instance, InstNum) {
@@ -464,7 +472,7 @@ function getNetifConfig(instance, InstNum) {
 
     for(let num = 0; num < instances.length; num++) {
         let num_instance = instances[num];
-        let num_config = module.getInstanceConfig(num_instance);
+        let num_config = module.getInstanceConfig(num_instance)[`moduleInstance`];
         cfgArray.push(num_config);
     }
     return cfgArray[InstNum];
@@ -543,13 +551,15 @@ function validate(instance, report) {
 
     }
 
-    if (getNetifCount(instance) > 0)
+    let numNetifsCount = getNetifCount(instance);
+    if (numNetifsCount > 0)
     {
         if (getDefaultNetifCount(instance) != 1)
         {
             report.logError(`Only one netif can be set as default`, instance, "netifInstance");
         }
-        if (getNetifCount(instance) === 2)
+
+        if (numNetifsCount === 2)
         {
             if ((instance.DisableMacPort1 === true) || (instance.DisableMacPort2 === true))
             {
@@ -561,6 +571,11 @@ function validate(instance, report) {
                 report.logError("All Ports in 'ALE Config -> ALE Port Config -> MAC-only mode config' should be in MAC-only mode in case of two NetIfs", instance);
             }
         }
+
+        if (getMacAddrCount(instance) < numNetifsCount)
+        {
+             report.logError("Number of MAC address allocated is not enough to number of LwIP NetIFs", instance);
+    	}
     }
 }
 
@@ -735,6 +750,7 @@ let enet_cpsw_module = {
     getInterfaceNameList,
     getPeripheralPinNames,
     getDmaInterface,
+    getInstIdTable,
     getCpswInstInfo,
     getPhyMask,
     getCpuID,

@@ -29,7 +29,7 @@ function getRxAllocMacInfo(module, instance) {
 
     for (var i = 0; i < module.getRxChannelCount(instance); i++)
     {
-        rxPktAry.push((module.getChannelConfig(instance, "RX", i)).AllocMacAddr);
+        rxPktAry.push((module.getChannelConfig(instance, "RX", i)).macAddrCount);
     }
     return rxPktAry;
 }
@@ -213,8 +213,8 @@ static void EnetAppUtils_openRxCh(Enet_Handle hEnet,
                                   uint32_t *pRxChNum,
                                   EnetDma_RxChHandle *pRxChHandle,
                                   EnetCpdma_OpenRxChPrms *pCpswRxChCfg,
-                                  bool allocHostMacAddr,
-                                  uint8_t macAddr[])
+                                  uint32_t allocMacAddrCnt,
+                                  uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN])
 {
     EnetDma_Handle hDma = Enet_getDmaHandle(hEnet);
     int32_t status;
@@ -236,14 +236,14 @@ static void EnetAppUtils_openRxCh(Enet_Handle hEnet,
     *pRxChHandle = EnetDma_openRxCh(hDma, (void *)pCpswRxChCfg);
     EnetAppUtils_assert(NULL != *pRxChHandle);
 
-    if (allocHostMacAddr)
+    for (uint32_t i = 0; i < allocMacAddrCnt; i++)
     {
         status = EnetAppUtils_allocMac(hEnet,
                                        coreKey,
                                        coreId,
-                                       macAddr);
+                                       macAddr[i]);
         EnetAppUtils_assert(ENET_SOK == status);
-        EnetAppUtils_addHostPortEntry(hEnet, coreId, macAddr);
+        EnetAppUtils_addHostPortEntry(hEnet, coreId, macAddr[i]);
     }
 }
 
@@ -254,8 +254,8 @@ static void EnetAppUtils_closeRxCh(Enet_Handle hEnet,
                                    EnetDma_PktQ *pCqPktInfoQ,
                                    EnetDma_RxChHandle hRxChHandle,
                                    uint32_t rxChNum,
-                                   bool freeHostMacAddr,
-                                   uint8_t macAddr[])
+                                   uint32_t freeHostMacAddrCount,
+                                   uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN])
 {
     int32_t status;
 
@@ -264,13 +264,13 @@ static void EnetAppUtils_closeRxCh(Enet_Handle hEnet,
 
     status = EnetDma_closeRxCh(hRxChHandle, pFqPktInfoQ, pCqPktInfoQ);
     EnetAppUtils_assert(ENET_SOK == status);
-    if (freeHostMacAddr)
+    for (uint32_t macAdrIdx = 0;  macAdrIdx < freeHostMacAddrCount; macAdrIdx++)
     {
-        EnetAppUtils_delAddrEntry(hEnet, coreId, macAddr);
+        EnetAppUtils_delAddrEntry(hEnet, coreId, macAddr[macAdrIdx]);
         EnetAppUtils_freeMac(hEnet,
                              coreKey,
                              coreId,
-                             macAddr);
+                             macAddr[macAdrIdx]);
     }
 }
 
@@ -307,7 +307,7 @@ static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
                               Enet_Handle hEnet, 
                               uint32_t coreKey,
                               uint32_t coreId,
-                              bool allocMacAddr)
+                              uint32_t allocMacAddrCnt)
 {
     EnetCpdma_OpenRxChPrms rxChCfg;
 
@@ -327,16 +327,10 @@ static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
                           &rx->rxChNum,
                           &rx->hRxCh,
                           &rxChCfg,
-                          allocMacAddr,
+                          allocMacAddrCnt,
                           rx->macAddr);
-    if (allocMacAddr)
-    {
-        rx->macAddressValid = true;
-    }
-    else
-    {
-        rx->macAddressValid = false;
-    }
+
+    rx->numValidMacAddress = allocMacAddrCnt;
     return;
 }
 
@@ -362,20 +356,19 @@ static void EnetApp_openAllRxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                          uint32_t coreKey,
                                          uint32_t coreId)
 {
-    uint32_t rxNumPkts[ENET_SYSCFG_RX_FLOWS_NUM] = 
+    const uint32_t rxNumPkts[ENET_SYSCFG_RX_FLOWS_NUM] =
                            {
-                            `getRxNumPkts(module, instance)`   
+                            `getRxNumPkts(module, instance)`
                            };
-    bool     rxAllocMac[ENET_SYSCFG_RX_FLOWS_NUM] = 
+    const uint32_t allocMacAddrCnt[ENET_SYSCFG_RX_FLOWS_NUM] = 
                            {
-                            `getRxAllocMacInfo(module, instance)`   
+                            `getRxAllocMacInfo(module, instance)`
                            };
 
-    uint32_t i;
-    
-    for (i = 0; i < ENET_SYSCFG_RX_FLOWS_NUM;i++)
+
+    for (uint32_t i = 0; i < ENET_SYSCFG_RX_FLOWS_NUM;i++)
     {
-        EnetApp_openRxDma(&dma->rx[i], rxNumPkts[i], hEnet, coreKey, coreId,rxAllocMac[i]);
+        EnetApp_openRxDma(&dma->rx[i], rxNumPkts[i], hEnet, coreKey, coreId, allocMacAddrCnt[i]);
     }
 }
 
@@ -426,8 +419,10 @@ void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
                            cqPktInfoQ,
                            rx->hRxCh,
                            rx->rxChNum,
-                           rx->macAddressValid,
+                           rx->numValidMacAddress,
                            rx->macAddr);
+
+    EnetAppSoc_releaseMacAddrList(rx->macAddr, rx->numValidMacAddress);
     memset(rx, 0, sizeof(*rx));
 }
 
@@ -456,6 +451,21 @@ void EnetApp_getTxDmaHandle(uint32_t enetTxDmaChId,
     return;
 }
 
+void EnetApp_getMacAddress(uint32_t enetRxDmaChId,
+                            EnetApp_GetMacAddrOutArgs *outArgs)
+{
+
+    EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma.rx));
+    EnetAppRxDmaSysCfg_Obj* rx = &gEnetAppSysCfgObj.dma.rx[enetRxDmaChId];
+
+    outArgs->macAddressCnt = rx->numValidMacAddress;
+    EnetAppUtils_assert(outArgs->macAddressCnt <= ENET_MAX_NUM_MAC_PER_PHER);
+    for (uint32_t i = 0; i < outArgs->macAddressCnt; i++)
+    {
+        EnetUtils_copyMacAddr(outArgs->macAddr[i], rx->macAddr[i]);
+    }
+
+}
 
 void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,
@@ -477,11 +487,12 @@ void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
     
     outArgs->hRxCh = rx->hRxCh;
     outArgs->rxChNum = rx->rxChNum;
-    outArgs->macAddressValid = rx->macAddressValid;
-    if (rx->macAddressValid)
+    outArgs->numValidMacAddress = rx->numValidMacAddress;
+    for (uint32_t i = 0; i < outArgs->numValidMacAddress; i++)
     {
-        EnetUtils_copyMacAddr(outArgs->macAddr, rx->macAddr);
+        EnetUtils_copyMacAddr(outArgs->macAddr[i], rx->macAddr[i]);
     }
+
     EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(rxNumPkts));
     outArgs->maxNumRxPkts = rxNumPkts[enetRxDmaChId];
     return;

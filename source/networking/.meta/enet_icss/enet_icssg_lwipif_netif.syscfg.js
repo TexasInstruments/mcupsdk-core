@@ -1,4 +1,4 @@
-
+    
 let common = system.getScript("/common");
 
 let module = system.modules["/networking/enet_icss/enet_icss"];
@@ -12,7 +12,7 @@ function getInstanceConfig(moduleInstance) {
 function getDefaultNetifCount()
 {
     let defaultNetifCount = 0;
-    for(let i=0; i < module.$instances.length; i++) {
+    for(let i = 0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
         for (let Idx = 0; Idx < module.getNetifCount(instance); Idx++)
         {
@@ -22,25 +22,80 @@ function getDefaultNetifCount()
     return defaultNetifCount;
 }
 
+function getTotalNetIfCount(instances)
+{
+    let count = 0;
+    for(let inst in instances)
+    {
+        count += module.getNetifCount(instances[inst]);
+    }
+    return count;
+}
 
 function getDefaultNetifIndex()
 {
-    let defaultNetifIdx = -1;
-    for(let i=0; i < module.$instances.length; i++) {
+    let defaultNetifIdx = '';
+    for (let i = 0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
         for (let Idx = 0; Idx < module.getNetifCount(instance); Idx++)
         {
-            if(module.getNetifConfig(instance, Idx).isDefault === true)
+            if (module.getNetifConfig(instance, Idx).isDefault === true)
             {
-                defaultNetifIdx = Idx;
+                defaultNetifIdx = module.getNetifConfig(instance, Idx).$name;
                 break;
             }
+        }
+        if (defaultNetifIdx != '')
+        {
+            break;
         }
     }
     return defaultNetifIdx;
 }
 
-function netif_validate(instance, report)
+function getNetifIdx2EnetMap()
+{
+    var idx = 0;
+    var ret = '{';
+    for(let i = 0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        for (let Idx = 0; Idx < module.getNetifCount(instance); Idx++)
+        {
+            let matchedEntry = module.getInstId(instance);
+            ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + '},';
+        }
+    }
+    ret += '}'
+    return ret;
+}
+
+function getEnet2RxChIdMap()
+{
+    var idx = 0;
+    var ret = '{';
+    for(let i = 0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        let matchedEntry = module.getInstId(instance);
+        ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + ',' + module.getChannelConfig(instance, "RX", 0).$name.toUpperCase()  + ',' + module.getRxChannelCount(instance) + '},';
+    }
+    ret += '}'
+    return ret;
+}
+
+function getEnet2TxChIdMap()
+{
+    var idx = 0;
+    var ret = '{';
+    for(let i = 0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        let matchedEntry = module.getInstId(instance);
+        ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + ',' + module.getChannelConfig(instance, "TX", 0).$name.toUpperCase()  + ',' + module.getTxChannelCount(instance) + '},';
+    }
+    ret += '}'
+    return ret;
+}
+
+function validate(instance, report)
 {
     if (instance.mode === "SWITCH")
     {
@@ -71,10 +126,14 @@ let enet_icssg_lwipif_netif_module = {
             default: true,
         },
     ],
+    getTotalNetIfCount,
     getInstanceConfig,
     getDefaultNetifCount,
     getDefaultNetifIndex,
-    validate: netif_validate,
+    getNetifIdx2EnetMap,
+    getEnet2RxChIdMap,
+    getEnet2TxChIdMap,
+    validate: validate,
 };
 
 

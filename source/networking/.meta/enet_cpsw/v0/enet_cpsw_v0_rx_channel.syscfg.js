@@ -23,10 +23,12 @@ let enet_cpsw_rx_ch_module = {
             isInteger:true,
         },
         {
-            name: "AllocMacAddr",
-            description: "Enable allocation of mac address associated with the rx channel",
-            displayName: "Allocate Mac Addr For Rx Channel",
-            default:true,
+            name: "macAddrCount",
+            description: "Number of MAC address required for this Rx DMA channle",
+            displayName: "Number of MAC Address",
+            default:1,
+            isInteger:true,
+            range : [0,2],
         },
         {
             name: "useGlobalEvt",

@@ -137,6 +137,8 @@ int32_t EnetApp_open(void)
     /* Do peripheral dependent initalization */
     EnetAppUtils_enableClocks(gEnetApp.enetType, gEnetApp.instId);
 
+    EnetApp_driverInit();
+
     /* Open Enet driver for all peripherals */
     status = EnetApp_driverOpen(gEnetApp.enetType, gEnetApp.instId);
 

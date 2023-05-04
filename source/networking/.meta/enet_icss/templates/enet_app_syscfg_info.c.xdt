@@ -2,6 +2,7 @@
     let module = system.modules["/networking/enet_icss/enet_icss"];
 %%}
 % let instance = module.$instances[0];
+% let instances = module.$instances;
 % let common = system.getScript("/common");
 % let device = common.getDeviceName();
 /*
@@ -38,7 +39,29 @@
 #include "ti_drivers_config.h"
 #include "ti_enet_open_close.h"
 #include <networking/enet/utils/include/enet_appboardutils.h>
+#include <utils/include/enet_appsoc.h>
 
+/* Maximum number of MAC address to be set per CPSW peripheral.
+Since CPSW_3G can support upto two MACs, this is set to 2 here */
+#define MAC_ADDR_LIST_LEN_SHARED_PER_PER (1U)
+
+#define ENET_MAX_NUM_MAC_ADDR_STORED (5U)
+
+typedef struct EnetApp_MacAddrElem_s
+{
+    EnetQ_Node node;
+    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+} EnetApp_MacAddrElem;
+
+typedef struct EnetApp_MacAddrPool_s
+{
+    bool isInitialized;
+    uint32_t macAddrContainerLen;
+    EnetApp_MacAddrElem macAddrContainer[ENET_MAX_NUM_MAC_ADDR_STORED];
+    EnetQ freeMacAddrQ;
+} EnetApp_MacAddrPool;
+
+EnetApp_MacAddrPool gEnetMacAddrPool = { .isInitialized = false };
 
 const Icssg_FwPoolMem* EnetCb_GetFwPoolMem(Enet_Type enetType, uint32_t instId)
 {
@@ -66,27 +89,45 @@ const Icssg_FwPoolMem* EnetCb_GetFwPoolMem(Enet_Type enetType, uint32_t instId)
     return (fwPoolMem);
 }
 
-void EnetApp_getEnetInstInfo(Enet_Type *enetType,
-                             uint32_t *instId)
+void EnetApp_getEnetInstInfo(uint32_t enetInstanceId, Enet_Type *enetType, uint32_t *instId)
 {
-%{
-% let matchInstId = module.getInstId(instance);
-    *enetType = `matchInstId.enetType`;
-    *instId   = `Number(matchInstId.instId)`;
-% }
-}
+    uint32_t idx = 0;
+    const uint32_t instInfoTable[ENET_SYSCFG_MAX_ENET_INSTANCES][3] = `module.getInstIdTable(instances)`; 
 
+    EnetAppUtils_assert(enetInstanceId < ENET_SYSCFG_MAX_ENET_INSTANCES);
+    for (idx = 0; idx < ENET_SYSCFG_MAX_ENET_INSTANCES; idx++)
+    {
+        if (instInfoTable[idx][0] ==  enetInstanceId)
+        {
+            *enetType = (Enet_Type)instInfoTable[idx][1];
+            *instId   = instInfoTable[idx][2];
+            break;
+        }
+    }
+
+    /* assert if enetInstanceId is not found in the table. Wrong enetInstanceId parameter */
+    EnetAppUtils_assert(idx < ENET_SYSCFG_MAX_ENET_INSTANCES);
+}
 
 void EnetApp_getEnetInstMacInfo(Enet_Type enetType,
                              uint32_t instId,
                              Enet_MacPort macPortList[],
                              uint8_t *numMacPorts)
 {
-%{
-%let macPortInfo = module.getMacPortInfo(instance);
-    *numMacPorts = `(macPortInfo.numMacPorts)`;
+
+    *numMacPorts = 0;
+%for (var inst in instances) {
+%let macPortInfo = module.getMacPortInfo(instances[inst]);
+% if (instances[inst].mode == "DUAL MAC") {
+    if ((instId &0x01) ==  `(macPortInfo.macPortList[0])`)
+    {
+%}
+    *numMacPorts += `(macPortInfo.numMacPorts)`;
 %for (var i in macPortInfo.macPortList) {
     macPortList[`i`] = `(macPortInfo.macPortList[i])`;
+%}
+% if (instances[inst].mode == "DUAL MAC") {
+    }
 %}
 %}
 }
@@ -224,26 +265,122 @@ bool EnetApp_isPortLinked(Enet_Handle hEnet)
 }
 %}
 
-int32_t EnetAppSoc_getMacAddrList(Enet_Type enetType,
-                                  uint8_t macAddr[][ENET_MAC_ADDR_LEN],
+static int32_t EnetAppSoc_fillMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
                                   uint32_t maxMacEntries,
                                   uint32_t *pAvailMacEntries)
 {
+    uint32_t numEfusedMacAddrs;
+    uint32_t numBoardMacAddrs;
     int32_t status = ENET_SOK;
 
-    switch (enetType)
+    if (maxMacEntries >= 1)
     {
-        case ENET_ICSSG_DUALMAC:
-        case ENET_ICSSG_SWITCH:
-        {
-            EnetBoard_getMacAddrList(macAddr, maxMacEntries, pAvailMacEntries);
-        }
-        break;
+        numEfusedMacAddrs = maxMacEntries;
+        numBoardMacAddrs = 0;
+        EnetSoc_getEFusedMacAddrs(&macAddr[0], &numEfusedMacAddrs);
 
-        default:
-            status = ENET_EINVALIDPARAMS;
+        if (maxMacEntries > numEfusedMacAddrs)
+        {
+            EnetBoard_getMacAddrList(&macAddr[numEfusedMacAddrs], (maxMacEntries - numEfusedMacAddrs),&numBoardMacAddrs);
+        }
+        EnetAppUtils_assert(pAvailMacEntries != NULL);
+        *pAvailMacEntries = numEfusedMacAddrs + numBoardMacAddrs;
+    }
+    else
+    {
+        status = ENET_EINVALIDPARAMS;
     }
 
     return status;
 }
 
+static void EnetApp_initializeMacAddrPool()
+{
+    uint8_t macAddrList[ENET_MAX_NUM_MAC_ADDR_STORED][ENET_MAC_ADDR_LEN];
+    const uint32_t maxMacEntries = ENET_MAX_NUM_MAC_ADDR_STORED;
+    uint32_t filledMacEntries = 0;
+
+    if (!gEnetMacAddrPool.isInitialized)
+    {
+        EnetQueue_initQ(&gEnetMacAddrPool.freeMacAddrQ);
+
+        EnetAppSoc_fillMacAddrList(macAddrList, maxMacEntries, &filledMacEntries);
+        gEnetMacAddrPool.macAddrContainerLen =  filledMacEntries;
+
+        for (uint32_t entryIdx = 0; entryIdx < gEnetMacAddrPool.macAddrContainerLen; entryIdx++)
+        {
+            EnetApp_MacAddrElem* pElem = &gEnetMacAddrPool.macAddrContainer[entryIdx];
+            memcpy(pElem->macAddr, &macAddrList[entryIdx][0], ENET_MAC_ADDR_LEN);
+            EnetQueue_enq(&gEnetMacAddrPool.freeMacAddrQ, &pElem->node);
+        }
+        gEnetMacAddrPool.isInitialized = true;
+    }
+}
+
+static int32_t EnetApp_getMacAddrFromPool(uint8_t macAddr[ENET_MAC_ADDR_LEN])
+{
+    int32_t status = ENET_EALLOC;
+    EnetApp_MacAddrElem* pElem = (EnetApp_MacAddrElem*)EnetQueue_deq(&gEnetMacAddrPool.freeMacAddrQ);
+    if (pElem != NULL)
+    {
+        memcpy(macAddr, pElem->macAddr, ENET_MAC_ADDR_LEN);
+        status = ENET_SOK;
+    }
+    return status;
+}
+
+static int32_t EnetApp_releaseMacAddrToPool(uint8_t macAddr[ENET_MAC_ADDR_LEN])
+{
+    int32_t status = ENET_EALLOC;
+    
+    for (uint32_t entryIdx = 0; entryIdx < gEnetMacAddrPool.macAddrContainerLen; entryIdx++)
+    {
+        EnetApp_MacAddrElem* pElem = &gEnetMacAddrPool.macAddrContainer[entryIdx];
+        if (0 == memcmp(pElem->macAddr, &macAddr[0], ENET_MAC_ADDR_LEN))
+        {
+            EnetQueue_enq(&gEnetMacAddrPool.freeMacAddrQ, &pElem->node);
+            status = ENET_SOK;
+            break;
+        }
+    }
+    return status;
+}
+
+int32_t EnetAppSoc_getMacAddrList(Enet_Type enetType,
+                                  uint8_t macAddr[][ENET_MAC_ADDR_LEN],
+                                  uint32_t maxMacEntries,
+                                  uint32_t *pAvailMacEntries)
+{
+    const uint32_t sharedListLen = MAC_ADDR_LIST_LEN_SHARED_PER_PER;
+
+    EnetApp_initializeMacAddrPool();
+    *pAvailMacEntries = 0;
+    for (uint32_t idx = 0; idx < sharedListLen; idx++)
+    {
+        if (EnetApp_getMacAddrFromPool(macAddr[idx]) == ENET_SOK)
+        {
+            (*pAvailMacEntries)++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return ((*pAvailMacEntries) == 0) ? ENET_EINVALIDPARAMS : ENET_SOK;
+}
+
+int32_t EnetAppSoc_releaseMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
+                                        uint32_t maxMacEntries)
+{
+    int32_t status = ENET_SOK;
+    for (uint32_t idx = 0; idx < maxMacEntries; idx++)
+    {
+        status = EnetApp_releaseMacAddrToPool(macAddr[idx]);
+        if (status != ENET_SOK)
+        {
+            break;
+        }
+    }
+    return status;
+}

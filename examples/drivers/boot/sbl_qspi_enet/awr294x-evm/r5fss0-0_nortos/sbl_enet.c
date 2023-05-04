@@ -161,6 +161,7 @@ int32_t EnetSBL_setup(void)
 
     /* Local core id */
     gEnetSBL_LLDObj.coreId = EnetSoc_getCoreId();
+    EnetApp_driverInit();
     if (status == ENET_SOK)
     {
         status = EnetApp_driverOpen(gEnetSBL_LLDObj.enetType, gEnetSBL_LLDObj.instId);
@@ -1097,7 +1098,7 @@ static int32_t EnetSBL_openDma(void)
                               &rxChInfo);
         gEnetSBL_LLDObj.rxChNum = rxChInfo.rxChNum;
         gEnetSBL_LLDObj.hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
+        EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
 
         if (NULL == gEnetSBL_LLDObj.hRxCh)
         {
@@ -1107,8 +1108,8 @@ static int32_t EnetSBL_openDma(void)
         }
         else
         {
-            EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-            EnetUtils_copyMacAddr(gEnetSBL_LLDObj.hostMacAddr, rxChInfo.macAddr);
+            EnetAppUtils_assert(rxChInfo.numValidMacAddress > 0);
+            EnetUtils_copyMacAddr(gEnetSBL_LLDObj.hostMacAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
             EnetAppUtils_print("[ ENETSBL ] EVM MAC address: ");
             EnetAppUtils_printMacAddr(gEnetSBL_LLDObj.hostMacAddr);
             gEnetSBL_LLDObj.rxIsrCount = 0;

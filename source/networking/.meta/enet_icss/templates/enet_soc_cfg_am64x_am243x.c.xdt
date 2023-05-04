@@ -2,9 +2,32 @@
     let module = system.modules["/networking/enet_icss/enet_icss"];
 %%}
 % let instance = module.$instances[0];
+% let instances = module.$instances;
 % let common = system.getScript("/common");
 % let device = common.getDeviceName();
 
+%%{
+function isIcssgAnyEn(instances, mode, icssgInst, macPort)
+{
+    let isEnabled = false;
+    for(let i in instances)
+    {
+        let instance = instances[i];
+        isEnabled = (isEnabled || module.isIcssgIfEnabled(instance, mode, icssgInst, macPort));
+    }
+    return isEnabled;
+}
+
+function checkModeEn(value)
+{
+    let check = 0;
+    for(let i in instances)
+    {
+        check = (check || (instances[i].mode == value));
+    }
+    return check;
+}
+%%}
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -30,6 +53,7 @@
 #include <priv/per/icssg_priv.h>
 #include <soc/k3/icssg_soc.h>
 #include <src/dma/udma/enet_udma_priv.h>
+#include <networking/enet/utils/include/enet_appsoc.h>
 #pragma clang section rodata=".icssfw"
 #include <networking/enet/core/src/per/firmware/icssg/dualmac/RX_PRU_SLICE0_bin.h>
 #include <networking/enet/core/src/per/firmware/icssg/dualmac/RX_PRU_SLICE1_bin.h>
@@ -68,7 +92,8 @@
  */
 #define ICSSG_SWITCH_HOST_POOL_SIZE              ((ENET_SYSCFG_ENABLE_GIGABIT) ? ENET_UTILS_ALIGN((6 * 1024U),ICSSG_CACHELINE_ALIGNMENT) : ENET_UTILS_ALIGN((3 * 1024U),ICSSG_CACHELINE_ALIGNMENT))
 #define ICSSG_SWITCH_HOST_POOL_TOTAL_SIZE        (ICSSG_SWITCH_HOST_BUFFER_POOL_NUM_CFG * ICSSG_SWITCH_HOST_POOL_SIZE)
-#define ICSSG_HOST_POOL_TOTAL_SIZE               (ICSSG_SWITCH_HOST_POOL_TOTAL_SIZE)
+#define ICSSG_HOST_POOL_0_TOTAL_SIZE               (ICSSG_SWITCH_HOST_POOL_TOTAL_SIZE)
+#define ICSSG_HOST_POOL_1_TOTAL_SIZE               (ICSSG_SWITCH_HOST_POOL_TOTAL_SIZE)
 
 /*
  * ICSSG Host egress queue memory:
@@ -83,7 +108,7 @@
 % }
 
 
-% if(instance.mode == "DUAL MAC"){
+% if(checkModeEn("DUAL MAC")){
 /*DUAL MAC MODE*/
 /*
  * ICSSG Port buffer pool memory:
@@ -96,9 +121,18 @@
  *            Gigabit Support: No of pools based on QOS level and 8kB each
  *            100M Support:    No of pools based on QOS level and 4kB each
  */
-#define ICSSG_DUALMAC_HOST_POOL_SIZE             ((ENET_SYSCFG_ENABLE_GIGABIT) ? ENET_UTILS_ALIGN((8 * 1024U),ICSSG_CACHELINE_ALIGNMENT) : ENET_UTILS_ALIGN((4 * 1024U),ICSSG_CACHELINE_ALIGNMENT))
-#define ICSSG_DUALMAC_HOST_POOL_TOTAL_SIZE       (ICSSG_DUALMAC_HOST_BUFFER_POOL_NUM_CFG * ICSSG_DUALMAC_HOST_POOL_SIZE)
-#define ICSSG_HOST_POOL_TOTAL_SIZE               (ICSSG_DUALMAC_HOST_POOL_TOTAL_SIZE)
+% for(let i in instances){
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+#define ICSSG_DUALMAC_PORT_1_HOST_POOL_SIZE             ((ENET_SYSCFG_ENABLE_GIGABIT) ? ENET_UTILS_ALIGN((8 * 1024U),ICSSG_CACHELINE_ALIGNMENT) : ENET_UTILS_ALIGN((4 * 1024U),ICSSG_CACHELINE_ALIGNMENT))
+#define ICSSG_DUALMAC_PORT_1_HOST_POOL_TOTAL_SIZE       (ICSSG_DUALMAC_PORT_1_HOST_BUFFER_POOL_NUM_CFG * ICSSG_DUALMAC_PORT_1_HOST_POOL_SIZE )
+#define ICSSG_HOST_POOL_0_TOTAL_SIZE               (ICSSG_DUALMAC_PORT_1_HOST_POOL_TOTAL_SIZE)
+%}
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+#define ICSSG_DUALMAC_PORT_2_HOST_POOL_SIZE             ((ENET_SYSCFG_ENABLE_GIGABIT) ? ENET_UTILS_ALIGN((8 * 1024U),ICSSG_CACHELINE_ALIGNMENT) : ENET_UTILS_ALIGN((4 * 1024U),ICSSG_CACHELINE_ALIGNMENT))
+#define ICSSG_DUALMAC_PORT_2_HOST_POOL_TOTAL_SIZE       (ICSSG_DUALMAC_PORT_2_HOST_BUFFER_POOL_NUM_CFG * ICSSG_DUALMAC_PORT_2_HOST_POOL_SIZE )
+#define ICSSG_HOST_POOL_1_TOTAL_SIZE               (ICSSG_DUALMAC_PORT_2_HOST_POOL_TOTAL_SIZE)
+%}
+%}
 
 /*
  * ICSSG Host egress queue memory:
@@ -114,112 +148,105 @@
 
 
 /* --------------------------------- ICSS-G --------------------------------- */
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
-/* ICSSG0 memories */
+% for(let i in instances){
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0")) {
+/* ICSSG0 Port `i` memories */
 static uint8_t gEnetSoc_icssg0PortPoolMem_0[ICSSG_PORT_POOL_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
-static uint8_t gEnetSoc_icssg0HostPoolMem_0[ICSSG_HOST_POOL_TOTAL_SIZE]
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+static uint8_t gEnetSoc_icssg0HostPoolMem_0[ICSSG_HOST_POOL_`i`_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 static uint8_t gEnetSoc_icssg0HostQueueMem_0[ICSSG_HOST_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 static uint8_t gEnetSoc_icssg0ScratchMem_0[ICSSG_SCRATCH_BUFFER_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0")) {
 static uint8_t gEnetSoc_icssg0PortPoolMem_1[ICSSG_PORT_POOL_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
-static uint8_t gEnetSoc_icssg0HostPoolMem_1[ICSSG_HOST_POOL_TOTAL_SIZE]
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+static uint8_t gEnetSoc_icssg0HostPoolMem_1[ICSSG_HOST_POOL_`i`_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 static uint8_t gEnetSoc_icssg0HostQueueMem_1[ICSSG_HOST_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 static uint8_t gEnetSoc_icssg0ScratchMem_1[ICSSG_SCRATCH_BUFFER_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-/* ICSSG1 memories */
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+/* ICSSG1 Port `i` memories */
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1")) {
 static uint8_t gEnetSoc_icssg1PortPoolMem_0[ICSSG_PORT_POOL_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
-static uint8_t gEnetSoc_icssg1HostPoolMem_0[ICSSG_HOST_POOL_TOTAL_SIZE]
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+static uint8_t gEnetSoc_icssg1HostPoolMem_0[ICSSG_HOST_POOL_0_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 static uint8_t gEnetSoc_icssg1HostQueueMem_0[ICSSG_HOST_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 static uint8_t gEnetSoc_icssg1ScratchMem_0[ICSSG_SCRATCH_BUFFER_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1")) {
 static uint8_t gEnetSoc_icssg1PortPoolMem_1[ICSSG_PORT_POOL_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
-static uint8_t gEnetSoc_icssg1HostPoolMem_1[ICSSG_HOST_POOL_TOTAL_SIZE]
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+static uint8_t gEnetSoc_icssg1HostPoolMem_1[ICSSG_HOST_POOL_1_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 static uint8_t gEnetSoc_icssg1HostQueueMem_1[ICSSG_HOST_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 static uint8_t gEnetSoc_icssg1ScratchMem_1[ICSSG_SCRATCH_BUFFER_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 
-% if(instance.PremptionEnable == true){
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+% if(instances[i].PremptionEnable == true){
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 static uint8_t gEnetSoc_icssg0HostPreQueueMem_0[ICSSG_PRE_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 static uint8_t gEnetSoc_icssg0HostPreQueueMem_1[ICSSG_PRE_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 static uint8_t gEnetSoc_icssg1HostPreQueueMem_0[ICSSG_PRE_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
-
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 static uint8_t gEnetSoc_icssg1HostPreQueueMem_1[ICSSG_PRE_QUEUE_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 %}
+%}
 
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%for(let i in instances){
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 static Icssg_FwPoolMem gEnetSoc_Icssg0_0_FwPoolMem[] =
 {
     [0] =
@@ -229,12 +256,12 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_0_FwPoolMem[] =
             .portBufferPoolNum   = 0U,
 
             .hostBufferPoolMem   = gEnetSoc_icssg0HostPoolMem_0,
-            .hostBufferPoolSize  = ICSSG_DUALMAC_HOST_POOL_SIZE,
-            .hostBufferPoolNum   = ICSSG_DUALMAC_HOST_BUFFER_POOL_NUM_CFG,
+            .hostBufferPoolSize  = ICSSG_DUALMAC_PORT_1_HOST_POOL_SIZE,
+            .hostBufferPoolNum   = ICSSG_DUALMAC_PORT_1_HOST_BUFFER_POOL_NUM_CFG,
 
             .hostEgressQueueMem  = gEnetSoc_icssg0HostQueueMem_0,
             .hostEgressQueueSize = ICSSG_DUALMAC_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg0HostPreQueueMem_0,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -248,7 +275,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_0_FwPoolMem[] =
 };
 %}
 
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 static Icssg_FwPoolMem gEnetSoc_Icssg0_1_FwPoolMem[] =
 {
     [0] =
@@ -258,12 +285,12 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_1_FwPoolMem[] =
         .portBufferPoolNum   = 0U,
 
         .hostBufferPoolMem   = gEnetSoc_icssg0HostPoolMem_1,
-        .hostBufferPoolSize  = ICSSG_DUALMAC_HOST_POOL_SIZE,
-        .hostBufferPoolNum   = ICSSG_DUALMAC_HOST_BUFFER_POOL_NUM_CFG,
+        .hostBufferPoolSize  = ICSSG_DUALMAC_PORT_2_HOST_POOL_SIZE,
+        .hostBufferPoolNum   = ICSSG_DUALMAC_PORT_2_HOST_BUFFER_POOL_NUM_CFG,
 
         .hostEgressQueueMem  = gEnetSoc_icssg0HostQueueMem_1,
         .hostEgressQueueSize = ICSSG_DUALMAC_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg0HostPreQueueMem_1,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -277,7 +304,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_1_FwPoolMem[] =
 };
 %}
 
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 static Icssg_FwPoolMem gEnetSoc_Icssg1_0_FwPoolMem[] =
 {
     [0] =
@@ -287,12 +314,12 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_0_FwPoolMem[] =
             .portBufferPoolNum   = 0U,
 
             .hostBufferPoolMem   = gEnetSoc_icssg1HostPoolMem_0,
-            .hostBufferPoolSize  = ICSSG_DUALMAC_HOST_POOL_SIZE,
-            .hostBufferPoolNum   = ICSSG_DUALMAC_HOST_BUFFER_POOL_NUM_CFG,
+            .hostBufferPoolSize  = ICSSG_DUALMAC_PORT_1_HOST_POOL_SIZE,
+            .hostBufferPoolNum   = ICSSG_DUALMAC_PORT_1_HOST_BUFFER_POOL_NUM_CFG,
 
             .hostEgressQueueMem  = gEnetSoc_icssg1HostQueueMem_0,
             .hostEgressQueueSize = ICSSG_DUALMAC_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg1HostPreQueueMem_0,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -306,7 +333,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_0_FwPoolMem[] =
 };
 %}
 
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 static Icssg_FwPoolMem gEnetSoc_Icssg1_1_FwPoolMem[] =
 {
     [0] =
@@ -316,12 +343,12 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_1_FwPoolMem[] =
             .portBufferPoolNum   = 0U,
 
             .hostBufferPoolMem   = gEnetSoc_icssg1HostPoolMem_1,
-            .hostBufferPoolSize  = ICSSG_DUALMAC_HOST_POOL_SIZE,
-            .hostBufferPoolNum   = ICSSG_DUALMAC_HOST_BUFFER_POOL_NUM_CFG,
+            .hostBufferPoolSize  = ICSSG_DUALMAC_PORT_2_HOST_POOL_SIZE,
+            .hostBufferPoolNum   = ICSSG_DUALMAC_PORT_2_HOST_BUFFER_POOL_NUM_CFG,
 
             .hostEgressQueueMem  = gEnetSoc_icssg1HostQueueMem_1,
             .hostEgressQueueSize = ICSSG_DUALMAC_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg1HostPreQueueMem_1,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -335,7 +362,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_1_FwPoolMem[] =
 };
 % }
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0")) {
 static Icssg_FwPoolMem gEnetSoc_Icssg0_Swt_FwPoolMem[] =
 {
     [0] =
@@ -350,7 +377,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_Swt_FwPoolMem[] =
 
             .hostEgressQueueMem  = gEnetSoc_icssg0HostQueueMem_0,
             .hostEgressQueueSize = ICSSG_SWITCH_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg0HostPreQueueMem_0,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -373,7 +400,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_Swt_FwPoolMem[] =
 
             .hostEgressQueueMem  = gEnetSoc_icssg0HostQueueMem_1,
             .hostEgressQueueSize = ICSSG_SWITCH_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg0HostPreQueueMem_1,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -387,7 +414,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg0_Swt_FwPoolMem[] =
 };
 % }
 
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1")) {
 static Icssg_FwPoolMem gEnetSoc_Icssg1_Swt_FwPoolMem[] =
 {
     [0] =
@@ -402,7 +429,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_Swt_FwPoolMem[] =
 
             .hostEgressQueueMem  = gEnetSoc_icssg1HostQueueMem_0,
             .hostEgressQueueSize = ICSSG_SWITCH_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg1HostPreQueueMem_0,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -425,7 +452,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_Swt_FwPoolMem[] =
 
             .hostEgressQueueMem  = gEnetSoc_icssg1HostQueueMem_1,
             .hostEgressQueueSize = ICSSG_SWITCH_HOST_QUEUE_SIZE,
-% if(instance.PremptionEnable == true){
+% if(instances[i].PremptionEnable == true){
             .hostEgressPreQueueMem  = gEnetSoc_icssg1HostPreQueueMem_1,
 % } else {
             .hostEgressPreQueueMem  = NULL,
@@ -437,6 +464,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_Swt_FwPoolMem[] =
             .scratchBufferSize   = ICSSG_SCRATCH_BUFFER_SIZE,
         },
 };
+% }
 % }
 
 /* PRU_ICSSG 0 */
@@ -456,7 +484,8 @@ Icssg_Pruss gEnetSoc_PruIcssg1 =
     .iep0InUse   = false,
 };
 
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+% for(let i in instances){
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 /* ICSSG0 Dual-MAC Port 1 (ENET_ICSSG_DUALMAC, 0) */
 static Icssg_Obj gEnetSoc_icssg0DMacp1 =
 {
@@ -477,7 +506,7 @@ static Icssg_Obj gEnetSoc_icssg0DMacp1 =
         .ioctl        = &Icssg_ioctl,
         .poll         = &Icssg_poll,
         .convertTs    = &Icssg_convertTs,
-%if(instance.ExternalPhyMgmtEnable == false){
+%if(instances[i].ExternalPhyMgmtEnable == false){
         .periodicTick = &Icssg_periodicTick,
 %} else {
         .periodicTick = NULL,
@@ -588,7 +617,7 @@ static Icssg_Obj gEnetSoc_icssg0DMacp1 =
     },
 };
 % }
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 /* ICSSG0 Dual-MAC Port 2 (ENET_ICSSG_DUALMAC, 1) */
 static Icssg_Obj gEnetSoc_icssg0DMacp2 =
 {
@@ -609,7 +638,7 @@ static Icssg_Obj gEnetSoc_icssg0DMacp2 =
         .ioctl        = &Icssg_ioctl,
         .poll         = &Icssg_poll,
         .convertTs    = &Icssg_convertTs,
-%if(instance.ExternalPhyMgmtEnable == false){
+%if(instances[i].ExternalPhyMgmtEnable == false){
         .periodicTick = &Icssg_periodicTick,
 %} else {
         .periodicTick = NULL,
@@ -720,7 +749,7 @@ static Icssg_Obj gEnetSoc_icssg0DMacp2 =
     },
 };
 % }
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 /* ICSSG1 Dual-MAC Port 1 (ENET_ICSSG_DUALMAC, 2) */
 static Icssg_Obj gEnetSoc_icssg1DMacp1 =
 {
@@ -741,7 +770,7 @@ static Icssg_Obj gEnetSoc_icssg1DMacp1 =
         .ioctl        = &Icssg_ioctl,
         .poll         = &Icssg_poll,
         .convertTs    = &Icssg_convertTs,
-%if(instance.ExternalPhyMgmtEnable == false){
+%if(instances[i].ExternalPhyMgmtEnable == false){
         .periodicTick = &Icssg_periodicTick,
 %} else {
         .periodicTick = NULL,
@@ -852,7 +881,7 @@ static Icssg_Obj gEnetSoc_icssg1DMacp1 =
     },
 };
 % }
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 /* ICSSG1 Dual-MAC Port 2 (ENET_ICSSG_DUALMAC, 3) */
 static Icssg_Obj gEnetSoc_icssg1DMacp2 =
 {
@@ -873,7 +902,7 @@ static Icssg_Obj gEnetSoc_icssg1DMacp2 =
         .ioctl        = &Icssg_ioctl,
         .poll         = &Icssg_poll,
         .convertTs    = &Icssg_convertTs,
-%if(instance.ExternalPhyMgmtEnable == false){
+%if(instances[i].ExternalPhyMgmtEnable == false){
         .periodicTick = &Icssg_periodicTick,
 %} else {
         .periodicTick = NULL,
@@ -984,7 +1013,7 @@ static Icssg_Obj gEnetSoc_icssg1DMacp2 =
     },
 };
 % }
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0")) {
 /* ICSSG0 Switch (ENET_ICSSG_SWITCH, 0) */
 static Icssg_Obj gEnetSoc_icssg0Swt =
 {
@@ -1005,7 +1034,7 @@ static Icssg_Obj gEnetSoc_icssg0Swt =
         .ioctl        = &Icssg_ioctl,
         .poll         = &Icssg_poll,
         .convertTs    = &Icssg_convertTs,
-%if(instance.ExternalPhyMgmtEnable == false){
+%if(instances[i].ExternalPhyMgmtEnable == false){
         .periodicTick = &Icssg_periodicTick,
 %} else {
         .periodicTick = NULL,
@@ -1137,7 +1166,7 @@ static Icssg_Obj gEnetSoc_icssg0Swt =
     },
 };
 %}
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+%if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG1")) {
 /* ICSSG1 Switch (ENET_ICSSG_SWITCH, 1) */
 static Icssg_Obj gEnetSoc_icssg1Swt =
 {
@@ -1158,7 +1187,7 @@ static Icssg_Obj gEnetSoc_icssg1Swt =
         .ioctl        = &Icssg_ioctl,
         .poll         = &Icssg_poll,
         .convertTs    = &Icssg_convertTs,
-%if(instance.ExternalPhyMgmtEnable == false){
+%if(instances[i].ExternalPhyMgmtEnable == false){
         .periodicTick = &Icssg_periodicTick,
 %} else {
         .periodicTick = NULL,
@@ -1290,6 +1319,7 @@ static Icssg_Obj gEnetSoc_icssg1Swt =
     },
 };
 % }
+%}
 /* ---------------------------- Enet Peripherals ---------------------------- */
 %{ let numPerInstances = 0;
 Enet_Obj gEnetSoc_perObj[] =
@@ -1301,7 +1331,7 @@ Enet_Obj gEnetSoc_perObj[] =
 
     /* ICSSG0 Dual-MAC Port 1 Enet driver/peripheral */
     {
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
 %   numPerInstances++;
         .enetPer = &gEnetSoc_icssg0DMacp1.enetPer,
 %} else {
@@ -1310,7 +1340,7 @@ Enet_Obj gEnetSoc_perObj[] =
     },
 
     {
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
 %   numPerInstances++;
         /* ICSSG0 Dual-MAC Port 2 Enet driver/peripheral */
         .enetPer = &gEnetSoc_icssg0DMacp2.enetPer,
@@ -1320,7 +1350,7 @@ Enet_Obj gEnetSoc_perObj[] =
     },
 
     {
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 %   numPerInstances++;
         /* ICSSG1 Dual-MAC Port 1 Enet driver/peripheral */
         .enetPer = &gEnetSoc_icssg1DMacp1.enetPer,
@@ -1330,7 +1360,7 @@ Enet_Obj gEnetSoc_perObj[] =
     },
 
     {
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 %   numPerInstances++;
         /* ICSSG1 Dual-MAC Port 2 Enet driver/peripheral */
         .enetPer = &gEnetSoc_icssg1DMacp2.enetPer,
@@ -1340,7 +1370,7 @@ Enet_Obj gEnetSoc_perObj[] =
     },
 
     {
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
+%if (isIcssgAnyEn(instances, "SWITCH", "ICSSG0")) {
 %   numPerInstances++;
         /* ICSSG0 Switch Enet driver/peripheral */
         .enetPer = &gEnetSoc_icssg0Swt.enetPer,
@@ -1350,7 +1380,7 @@ Enet_Obj gEnetSoc_perObj[] =
     },
 
     {
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+%if (isIcssgAnyEn(instances, "SWITCH", "ICSSG1")) {
 %   numPerInstances++;
         /* ICSSG0 Switch Enet driver/peripheral */
         .enetPer = &gEnetSoc_icssg1Swt.enetPer,
@@ -1378,7 +1408,7 @@ const IcssgSoc_Cfg gEnetSoc_icssg1DMacSocCfg[ICSSG_MAC_PORT_MAX] =
     {
         .dmscDevId        = TISCI_DEV_PRU_ICSSG1,
         .txChPeerThreadId = CSL_PSILCFG_DMSS_ICSS_G1_PSILD_THREAD_OFFSET +
-                            ICSSG_DUALMAC_TX_CH_NUM,
+                            4U,
         .rxChPeerThreadId = CSL_PSILCFG_DMSS_ICSS_G1_PSILS_THREAD_OFFSET +
                             1U,
         .txChCount        = ICSSG_DUALMAC_TX_CH_NUM,
@@ -1430,7 +1460,7 @@ const IcssgSoc_Cfg gEnetSoc_icssg0SwtSocCfg =
 const  Icssg_FwPoolMem *Icssq_FwPoolMemInfo[2][4] =
 {
     [0] = {
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
               [0] = &gEnetSoc_Icssg0_0_FwPoolMem[0],
 %}
 %else {
@@ -1442,13 +1472,13 @@ const  Icssg_FwPoolMem *Icssq_FwPoolMemInfo[2][4] =
 %else {
               [1] = NULL,
 %}
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
               [2] = &gEnetSoc_Icssg1_0_FwPoolMem[0],
 %}
 %else {
               [2] = NULL,
 %}
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
               [3] = &gEnetSoc_Icssg1_1_FwPoolMem[0],
 %}
 %else {
@@ -1456,13 +1486,13 @@ const  Icssg_FwPoolMem *Icssq_FwPoolMemInfo[2][4] =
 %}
           },
     [1] = {
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
+%if (isIcssgAnyEn(instances, "SWITCH", "ICSSG0")) {
               [0] = &gEnetSoc_Icssg0_Swt_FwPoolMem[0],
 %}
 %else {
               [0] = NULL,
 %}
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+%if (isIcssgAnyEn(instances, "SWITCH", "ICSSG1")) {
               [1] = &gEnetSoc_Icssg1_Swt_FwPoolMem[0],
 %}
 %else {
@@ -1524,26 +1554,26 @@ EnetDma_Handle EnetSoc_getDmaHandle(Enet_Type enetType,
 
     switch (enetType)
     {
-% if(instance.mode == "DUAL MAC") {
+% if(checkModeEn('DUAL MAC')) {
         case ENET_ICSSG_DUALMAC:
             switch (instId)
             {
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
                 case 0:
                     hDma = &gEnetSoc_dmaObjMemInfo.drvObjMem[0U];
                     break;
 % }
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2")) {
                 case 1:
                     hDma = &gEnetSoc_dmaObjMemInfo.drvObjMem[0U];
                     break;
 % }
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
                 case 2:
                     hDma = &gEnetSoc_dmaObjMemInfo.drvObjMem[0U];
                     break;
 % }
-%if (module.isIcssgIfEnabled(instance, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (isIcssgAnyEn(instances, "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
                 case 3:
                     hDma = &gEnetSoc_dmaObjMemInfo.drvObjMem[0U];
                     break;
@@ -1554,16 +1584,16 @@ EnetDma_Handle EnetSoc_getDmaHandle(Enet_Type enetType,
             }
             break;
 % }
-% if(instance.mode == "SWITCH"){
+% if(checkModeEn('SWITCH')){
         case ENET_ICSSG_SWITCH:
             switch (instId)
             {
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG0")) {
+%if (isIcssgAnyEn(instances, "SWITCH", "ICSSG0")) {
                 case 0:
                     hDma = &gEnetSoc_dmaObjMemInfo.drvObjMem[0U];
                     break;
 % }
-%if (module.isIcssgIfEnabled(instance, "SWITCH", "ICSSG1")) {
+%if (isIcssgAnyEn(instances, "SWITCH", "ICSSG1")) {
                 case 1:
                     hDma = &gEnetSoc_dmaObjMemInfo.drvObjMem[0U];
                     break;

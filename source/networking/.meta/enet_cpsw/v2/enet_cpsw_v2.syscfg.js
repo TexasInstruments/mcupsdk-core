@@ -243,6 +243,19 @@ function getDmaInterface(instance) {
     return cpswInstInfo.dmaIf;
 }
 
+function getInstIdTable(instances) {
+    let tbl = '{ '
+    for (var i = 0; i < instances.length; i++)
+    {
+        tbl += '{';
+        var matchedInst = getCpswInstInfo(instances[i])
+        tbl += i + ', ' + matchedInst.enetType + ', ' +  matchedInst.instId
+        tbl += '}, '
+    }
+    tbl += '}'
+    return tbl;
+}
+
 function getCpswInstInfo(instance) {
     const cpswInstInfoMap = new Map(
                                [
@@ -432,7 +445,6 @@ function getNetifCount(instance) {
 
     for(let num = 0; num < instances.length; num++) {
         let num_instance = instances[num];
-        let num_config = module.getInstanceConfig(num_instance);
         totalNumNetifs++;
     }
     return totalNumNetifs;
@@ -451,7 +463,7 @@ function getNetifConfig(instance, InstNum) {
 
     for(let num = 0; num < instances.length; num++) {
         let num_instance = instances[num];
-        let num_config = module.getInstanceConfig(num_instance);
+        let num_config = module.getInstanceConfig(num_instance)[`moduleInstance`];
         cfgArray.push(num_config);
     }
     return cfgArray[InstNum];
@@ -683,6 +695,7 @@ let enet_cpsw_module = {
     getClockEnableIds,
     getClockFrequencies,
     getDmaInterface,
+    getInstIdTable,
     getCpswInstInfo,
     getPhyMask,
     getBoardConfigTemplateInfo,

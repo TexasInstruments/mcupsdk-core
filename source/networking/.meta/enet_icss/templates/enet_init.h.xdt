@@ -27,6 +27,11 @@
 /* ========================================================================== */
 
 /*!
+ * \brief  Initialize Enet Driver from Application.
+ *
+ */
+void EnetApp_driverInit();
+/*!
  * \brief  Opens Enet Driver from Application.
  *
  * \param enetType  Enet Peripheral type
@@ -44,6 +49,9 @@ extern int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId);
 void EnetApp_driverClose(Enet_Type enetType, uint32_t instId);
 % }
 
+void EnetApp_txChInPeripheral(Enet_Type enetType, uint32_t instId, uint32_t *startIdx, uint32_t *chCount);
+
+void EnetApp_rxChInPeripheral(Enet_Type enetType, uint32_t instId, uint32_t *startIdx, uint32_t *chCount);
 
 void EnetApp_initLinkArgs(Enet_Type enetType,  uint32_t instId, EnetPer_PortLinkCfg *linkArgs,   Enet_MacPort macPort);
 

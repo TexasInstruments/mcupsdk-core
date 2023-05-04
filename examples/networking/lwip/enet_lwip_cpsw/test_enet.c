@@ -205,11 +205,13 @@ int enet_lwip_example(void *args)
     DebugP_log("      ENET LWIP App       \r\n");
     DebugP_log("==========================\r\n");
 
-    EnetApp_getEnetInstInfo(&enetType,
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0,
+                            &enetType,
                             &instId);
 
 
     EnetAppUtils_enableClocks(enetType, instId);
+    EnetApp_driverInit();
     status = EnetApp_driverOpen(enetType, instId);
 
     if (status != ENET_SOK)

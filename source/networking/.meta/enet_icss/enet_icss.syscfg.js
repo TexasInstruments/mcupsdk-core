@@ -238,9 +238,16 @@ function pinmuxRequirements(inst) {
     else
     {
         let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
-        let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
 
-        return [mdio, iep, rgmii1, rgmii2];
+        if(inst.mdioMdcEnable == true)
+        {
+            return [mdio, iep, rgmii1];
+        }
+        else
+        {
+            let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
+            return [rgmii2];
+        }
     }
 }
 
@@ -258,13 +265,20 @@ function getInterfaceNameList(inst) {
     }
     else
     {
-        return [
-            getInterfaceName(inst, "MDIO"),
-            getInterfaceName(inst, "IEP"),
-            getInterfaceName(inst, "RGMII1" ),
-            getInterfaceName(inst, "RGMII2" ),
-        ];
-
+        if(inst.mdioMdcEnable == true)
+        {
+            return [
+                getInterfaceName(inst, "MDIO"),
+                getInterfaceName(inst, "IEP"),
+                getInterfaceName(inst, "RGMII1"),
+            ];
+        }
+        else
+        {
+            return [
+                getInterfaceName(inst, "RGMII2"),
+            ];
+        }
     }
 }
 
@@ -288,6 +302,19 @@ function getPeripheralPinNames(inst)
 
     }
     return pinList;
+}
+
+function getInstIdTable(instances) {
+    let tbl = '{ '
+    for (var i = 0; i < instances.length; i++)
+    {
+        tbl += '{';
+        var matchedInst = getInstId(instances[i])
+        tbl += i + ', ' + matchedInst.enetType + ', ' +  matchedInst.instId
+        tbl += '}, '
+    }
+    tbl += '}'
+    return tbl;
 }
 
 function getInstId(instance) {
@@ -378,6 +405,19 @@ function getPhyMask(instance) {
     return phyMask;
 }
 
+function getMacAddrCount(instance) {
+    let totalMacAddr = 0;
+    let dma_ch_instances = instance.rxDmaChannel;
+    let module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_tx_channel`];
+
+    for(let ch = 0; ch < dma_ch_instances.length; ch++) {
+        let ch_instance = dma_ch_instances[ch];
+        let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
+        totalMacAddr += ch_config.macAddrCount;
+    }
+    return totalMacAddr;
+}
+
 function getPacketsCount(instance, channelType) {
     let totalNumPackets = 0;
     let dma_ch_instances;
@@ -387,17 +427,24 @@ function getPacketsCount(instance, channelType) {
     {
         dma_ch_instances = instance.txDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_tx_channel`];
+        
+        for(let ch = 0; ch < dma_ch_instances.length; ch++) {
+        	let ch_instance = dma_ch_instances[ch];
+        	let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
+       	 	totalNumPackets += ch_config.PacketsCount;
+    	}
     }
     else
     {
         dma_ch_instances = instance.rxDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_rx_channel`];
-    }
 
-    for(let ch = 0; ch < dma_ch_instances.length; ch++) {
-        let ch_instance = dma_ch_instances[ch];
-        let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
-        totalNumPackets += ch_config.PacketsCount;
+        for(let ch = 0; ch < dma_ch_instances.length; ch++) 
+        {
+        	let ch_instance = dma_ch_instances[ch];
+        	let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
+       	 	totalNumPackets += ch_config.PacketsCount;
+    	}
     }
     return totalNumPackets;
 }
@@ -502,9 +549,8 @@ function getChannelConfig(instance, channelType, chTypeInstNum) {
         dma_ch_instances = instance.rxDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_rx_channel`];
     }
+
     let channelCfgArray = new Array();
-
-
     for(let ch = 0; ch < dma_ch_instances.length; ch++) {
         let ch_instance = dma_ch_instances[ch];
         let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
@@ -542,44 +588,67 @@ function getRxDefaultFlowCount(instance)
         defaultFlowCount += (getChannelConfig(instance, "RX", chIdx).useDefaultFlow === true) ? 1 : 0;
     }
     return defaultFlowCount;
+}
+
+function getRxChIdxCount(instance, RefChIdx)
+{
+    let count = 0;
+
+    for (let chIdx = 0; chIdx < getRxChannelCount(instance); chIdx++)
+    {
+        if (getChannelConfig(instance, "RX", chIdx).chIdx === RefChIdx)
+        {
+            count += 1;
+        }
+    }
+    return count;
+}
 
 
+function validateInstances(instance, report) {
+    let instances = system.modules["/networking/enet_icss/enet_icss"].$instances;
+
+    if (instances.length == 2)
+    {
+        if (instances[0].mode != "DUAL MAC")
+        {
+            report.logError(`ENET ICSSG mode setting should "DUAL MAC" in both the instances`, instance);
+        }
+        if (instances[1].mode != "DUAL MAC")
+        {
+            report.logError(`ENET ICSSG mode setting should "DUAL MAC" in both the instances`, instance);
+        }
+
+    /* if (instances[0].mdioMdcEnable != instances[1].mdioMdcEnable)
+        {
+            report.logError(`ENET ICSSG 'mdioMdcEnable' setting should be same across both the instances`, instance);
+        }
+    */
+
+        if (instances[0].dualMacPortSelected === instances[1].dualMacPortSelected)
+        {
+            report.logError(`ENET ICSSG 'Dual Mac Port' setting should be different across both the instances`, instance);
+        }
+    }
+    return instances;
 }
 
 function validate(instance, report) {
     pktPoolScript.validate(instance, report);
     mdioScript.validate(instance, report);
     timesyncScript.validate(instance, report);
+    validateInstances(instance, report)
     if (instance.mode === "SWITCH")
     {
-        if (getRxDefaultFlowCount(instance) != 2)
-        {
-            report.logError(`Both rx flow associated with switch should be designated as default rx flow`, instance, "rxDmaChannel");
-        }
-
-        if ((getRxChannelCount(instance) != 2))
-        {
-            report.logError(`ICSS switch should have two rx flows`, instance, "rxDmaChannel");
-        }
-        else
-        {
-            let rxCh0 = getChannelConfig(instance, "RX", 0);
-            let rxCh1 = getChannelConfig(instance, "RX", 1);
-
-            if ((rxCh0.chIdx ^ rxCh1.chIdx) != 1)
-            {
-                report.logError(`ICSS switch two rx flows should have chIdx of 0 and 1`, instance, "rxDmaChannel");
-            }
-            if (rxCh1.AllocMacAddr === true)
-            {
-                report.logError(`Dont allocate mac address for ICSS switch second rx flow for rx channel 1`, instance, "rxDmaChannel");
-            }
-        }
-
-        if(getNetifCount(instance) > 1)
+        if (getNetifCount(instance) > 1)
         {
             report.logError(`ICSSG Switch case should have only one netif `, instance, "netifInstance");
         }
+
+        if (getRxChIdxCount(instance, 0) != getRxChIdxCount(instance, 1))
+        {
+            report.logError(`Number of Rx Ch Index with value '1' should be same as'0'`, instance);
+        } 
     }
     if (instance.mode === "DUAL MAC")
     {
@@ -587,18 +656,23 @@ function validate(instance, report) {
         {
             report.logError(`Rx flow associated with dual mac instance should be designated as default rx flow`, instance, "rxDmaChannel");
         }
-        if(getNetifCount(instance) > 1)
+
+        let numNetifsCount = getNetifCount(instance);
+        if (numNetifsCount > 1)
         {
             report.logError(`ICSSG DUAL MAC case should have only one netif per ICSSG instance `, instance, "netifInstance");
         }
-        if (getNetifCount(instance) > 0)
+        if (numNetifsCount > 0)
         {
             if (getDefaultNetifCount(instance) !=1)
             {
                 report.logError(`Only one netif can be set as default`, instance, "netifInstance");
-
             }
+        }
 
+        if (getMacAddrCount(instance) < numNetifsCount)
+        {
+             report.logError("Number of MAC address allocated is not enough to number of LwIP NetIFs", instance);
         }
     }
 }
@@ -606,7 +680,7 @@ function validate(instance, report) {
 function moduleInstances(instance) {
 
     let Instances = new Array();
-    let maxCh     = 4;
+    let maxCh     = 8;
     let maxNetif  = 2;
 
     Instances.push({
@@ -796,6 +870,12 @@ let enet_icss_module = {
             ],
         },
         {
+            name: "mdioMdcEnable",
+            displayName: "Enable Mdio MDC Config",
+            description: "Enable MDIO MDC config for current module",
+            default: true,
+        },
+        {
             name: "dualMacPortSelected",
             displayName: "Dual-Mac Mode Port",
             default: 'ENET_MAC_PORT_1',
@@ -861,6 +941,7 @@ let enet_icss_module = {
     pinmuxRequirements,
     getInterfaceNameList,
     getPeripheralPinNames,
+    getInstIdTable,
     getInstId,
     isIcssgIfEnabled,
     getMacPortInfo,

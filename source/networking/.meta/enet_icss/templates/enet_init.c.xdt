@@ -36,6 +36,7 @@
 #include "ti_enet_config.h"
 #include "ti_drivers_config.h"
 #include "ti_enet_open_close.h"
+#include <utils/include/enet_appsoc.h>
 
 #define ENETAPP_PHY_STATEHANDLER_TASK_PRIORITY        (7U)
 #define ENETAPP_PHY_STATEHANDLER_TASK_STACK     (3 * 1024)
@@ -52,8 +53,8 @@ typedef struct EnetAppDmaSysCfg_Obj_s
 typedef struct EnetAppSysCfg_Obj_s
 {
 
-    Enet_Handle hEnet;
-    EnetAppDmaSysCfg_Obj dma;
+    Enet_Handle hEnet[ENET_SYSCFG_NUM_PERIPHERAL];
+    EnetAppDmaSysCfg_Obj dma[1];
 % if((instance.McmEnable == false) && (instance.ExternalPhyMgmtEnable == false)){
     ClockP_Object timerObj;
 
@@ -99,12 +100,20 @@ static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
 static void EnetApp_getIcssgInitCfg(Enet_Type enetType,
                                     uint32_t instId,
                                     Icssg_Cfg *pIcssgCfg);
-                                    
+
+static uint32_t EnetApp_getEnetIdx(Enet_Type enetType, uint32_t instId)
+{
+%if (instance.mode == "SWITCH"){
+    return 0;
+%}
+%else {
+    return instId & 0x01;
+%}
+}
+
 static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, const Icssg_Cfg *icssgCfg)
 {
     int32_t status = ENET_SOK;
-    EnetOsal_Cfg osalPrms;
-    EnetUtils_Cfg utilsPrms;
     void *perCfg = NULL_PTR;
     uint32_t cfgSize;
     Enet_Handle hEnet;
@@ -113,12 +122,6 @@ static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, cons
 
     perCfg = (void *)icssgCfg;
     cfgSize = sizeof(*icssgCfg);
-
-    /* Initialize Enet driver with default OSAL, utils */
-    Enet_initOsalCfg(&osalPrms);
-    Enet_initUtilsCfg(&utilsPrms);
-
-    Enet_init(&osalPrms, &utilsPrms);
 
     hEnet = Enet_open(enetType, instId, perCfg, cfgSize);
     if(hEnet == NULL_PTR)
@@ -145,7 +148,13 @@ static void EnetApp_phyStateHandler(void * appHandle)
     {
         SemaphoreP_pend(timerSem, SystemP_WAIT_FOREVER);
         /* Enet_periodicTick should be called from only task context */
-        Enet_periodicTick(hEnetAppObj->hEnet);
+        for  (uint32_t idx = 0; idx < ENET_SYSCFG_NUM_PERIPHERAL; idx++)
+        {
+            if (hEnetAppObj->hEnet[idx] != NULL)
+            {
+                Enet_periodicTick(hEnetAppObj->hEnet[idx]);
+            }
+        }
     }
     hEnetAppObj->timerTaskShutDownDoneFlag = true;
     TaskP_destruct(&hEnetAppObj->task_phyStateHandlerObj);
@@ -253,6 +262,20 @@ static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
     }
 }
 
+void EnetApp_driverInit()
+{
+/* keep this implementation that is generic across enetType and instId.
+ * Initialization should be done only once.
+ */
+    EnetOsal_Cfg osalPrms;
+    EnetUtils_Cfg utilsPrms;
+
+    /* Initialize Enet driver with default OSAL, utils */
+    Enet_initOsalCfg(&osalPrms);
+    Enet_initUtilsCfg(&utilsPrms);
+    Enet_init(&osalPrms, &utilsPrms);
+}
+
 int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 {
     int32_t status = ENET_SOK;
@@ -269,6 +292,7 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 % }
     EnetAppUtils_assert(Enet_isIcssFamily(enetType) == true);
     EnetApp_getEnetInstMacInfo(enetType, instId, macPortList, &numMacPorts);
+    const uint32_t hEnetIndex = EnetApp_getEnetIdx(enetType, instId);
 
     /* Open UDMA */
     dmaCfg.rxChInitPrms.dmaPriority = UDMA_DEFAULT_RX_CH_DMA_PRIORITY;
@@ -291,10 +315,10 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 %}
     icssgCfg.qosLevels = `Number(instance.QoS)`U;
     icssgCfg.isPremQueEnable = `instance.PremptionEnable`;
-    gEnetAppSysCfgObj.hEnet = EnetApp_doIcssgOpen(enetType, instId, &icssgCfg);
-    EnetAppUtils_assert(NULL != gEnetAppSysCfgObj.hEnet);
-    
-    EnetApp_enablePorts(gEnetAppSysCfgObj.hEnet, enetType, instId, selfCoreId, macPortList, numMacPorts);
+    gEnetAppSysCfgObj.hEnet[hEnetIndex] = EnetApp_doIcssgOpen(enetType, instId, &icssgCfg);
+    EnetAppUtils_assert(NULL != gEnetAppSysCfgObj.hEnet[hEnetIndex]);
+
+    EnetApp_enablePorts(gEnetAppSysCfgObj.hEnet[hEnetIndex], enetType, instId, selfCoreId, macPortList, numMacPorts);
     EnetApp_ConfigureDscpMapping(enetType, instId);
 % if(instance.McmEnable == true){
     enetMcmCfg.enetType           = enetType;
@@ -310,7 +334,10 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 % }
 % else {
 %if(instance.ExternalPhyMgmtEnable == false){
-    status = EnetApp_createPhyStateHandlerTask(&gEnetAppSysCfgObj);
+    if(hEnetIndex == 0)
+    {
+        status = EnetApp_createPhyStateHandlerTask(&gEnetAppSysCfgObj);
+    }
     EnetAppUtils_assert(status == SystemP_SUCCESS);
 % }
 % }
@@ -324,10 +351,10 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
                        instId,
                        selfCoreId,
                        &attachInfo);
-    EnetApp_openDmaChannels(&gEnetAppSysCfgObj.dma,
+    EnetApp_openDmaChannels(&gEnetAppSysCfgObj.dma[0],
                             enetType, 
                             instId,
-                            gEnetAppSysCfgObj.hEnet, 
+                            gEnetAppSysCfgObj.hEnet[hEnetIndex], 
                             attachInfo.coreKey,
                             selfCoreId);
     return status;
@@ -600,7 +627,7 @@ static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                  coreKey,
                                  coreId);
     EnetApp_openAllRxDmaChannels(dma,
-                                 hEnet, 
+                                 hEnet,
                                  coreKey,
                                  coreId);
 }

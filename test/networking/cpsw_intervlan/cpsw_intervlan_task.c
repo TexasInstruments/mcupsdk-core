@@ -138,6 +138,7 @@ int32_t EnetApp_cpswInterVlanTest(void)
 
     /* Local core id */
     gEnetCpswInterVlan.coreId = EnetSoc_getCoreId();
+    EnetApp_driverInit();
     if (status == ENET_SOK)
     {
         status = EnetApp_driverOpen(gEnetCpswInterVlan.enetType, gEnetCpswInterVlan.instId);
@@ -902,8 +903,8 @@ static int32_t EnetApp_openDma(void)
                               &rxChInfo);
         gEnetCpswInterVlan.rxChNum = rxChInfo.rxChNum;
         gEnetCpswInterVlan.hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-        EnetUtils_copyMacAddr(gEnetCpswInterVlan.hostMacAddr, rxChInfo.macAddr);
+        EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
+        EnetUtils_copyMacAddr(gEnetCpswInterVlan.hostMacAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
         if (NULL == gEnetCpswInterVlan.hRxCh)
         {
             EnetAppUtils_print("EnetDma_openRxCh() failed to open: %d\r\n",

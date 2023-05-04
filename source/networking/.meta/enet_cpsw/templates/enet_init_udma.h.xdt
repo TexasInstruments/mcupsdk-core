@@ -22,13 +22,18 @@ typedef struct EnetAppRxDmaSysCfg_Obj_s
     uint32_t rxFlowIdx;
     /* RX flow start index */
     uint32_t rxFlowStartIdx;
-    /* MAC address. It's port's MAC address in Dual-MAC or
-     * host port's MAC addres in Switch */
-    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+    /* num mac Address valid in macAddr[][] list below*/
+    uint32_t numValidMacAddress;
+    /* MAC address. It's port/ports MAC address in Dual-MAC or
+     * host port MAC address in Switch */
+    uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN];
 } EnetAppRxDmaSysCfg_Obj;
 
 typedef struct EnetAppRxDmaCfg_Info_s
 {
+    /* mac Address valid */
+    uint32_t     numValidMacAddress;
+    
     /*! Whether to use the shared global event or not. If set to false, a dedicated event
      *  will be used for this channel. */
     bool  useGlobalEvt;
@@ -106,11 +111,11 @@ static void EnetAppUtils_openRxFlowForChIdx(Enet_Type enetType,
                                             uint32_t coreKey,
                                             uint32_t coreId,
                                             bool useDfltFlow,
-                                            bool allocMacAddr,
+                                            uint32_t numAllocMacAddr,
                                             uint32_t chIdx,
                                             uint32_t *pRxFlowStartIdx,
                                             uint32_t *pRxFlowIdx,
-                                            uint8_t macAddr[ENET_MAC_ADDR_LEN],
+                                            uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN],
                                             EnetDma_RxChHandle *pRxFlowHandle,
                                             EnetUdma_OpenRxFlowPrms *pRxFlowPrms);
 
@@ -124,8 +129,8 @@ static void EnetAppUtils_closeRxFlowForChIdx(Enet_Type enetType,
                                             uint32_t chIdx,
                                             uint32_t rxFlowStartIdx,
                                             uint32_t rxFlowIdx,
-                                            bool macAddressValid,
-                                            uint8_t macAddr[ENET_MAC_ADDR_LEN],
+                                            uint32_t numValidMacAddress,
+                                            uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN],
                                             EnetDma_RxChHandle hRxFlow);
 
 static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
@@ -133,7 +138,7 @@ static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
                               Enet_Handle hEnet, 
                               uint32_t coreKey,
                               uint32_t coreId,
-                              bool allocMacAddr,
+                              uint32_t allocMacAddrCnt,
                               EnetAppRxDmaCfg_Info *rxCfg);
 
 static void EnetApp_openTxDma(EnetAppTxDmaSysCfg_Obj *tx,

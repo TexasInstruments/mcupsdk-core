@@ -19,10 +19,10 @@ typedef struct EnetAppRxDmaSysCfg_Obj_s
     /* RX channel number */
     uint32_t rxChNum;
     /* mac Address valid */
-    bool macAddressValid;
-    /* MAC address. It's port's MAC address in Dual-MAC or
-     * host port's MAC addres in Switch */
-    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+    uint32_t numValidMacAddress;
+    /* MAC address. It's port/ports MAC address in Dual-MAC or
+     * host port MAC address in Switch */
+    uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN];
 } EnetAppRxDmaSysCfg_Obj;
 
 
@@ -39,8 +39,8 @@ static void EnetAppUtils_openRxCh(Enet_Handle hEnet,
                                   uint32_t *pRxChNum,
                                   EnetDma_RxChHandle *pRxChHandle,
                                   EnetCpdma_OpenRxChPrms *pCpswRxChCfg,
-                                  bool allocHostMacAddr,
-                                  uint8_t macAddr[]);
+                                  uint32_t allocMacAddrCnt,
+                                  uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN]);
 
 static void EnetAppUtils_setCommonRxChPrms(EnetCpdma_OpenRxChPrms *pRxChPrms);
 
@@ -51,7 +51,7 @@ static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
                               Enet_Handle hEnet, 
                               uint32_t coreKey,
                               uint32_t coreId,
-                              bool allocMacAddr);
+                              uint32_t allocMacAddrCnt);
 
 static void EnetApp_openTxDma(EnetAppTxDmaSysCfg_Obj *tx,
                               uint32_t numTxPkts,
@@ -74,8 +74,8 @@ static void EnetAppUtils_closeRxCh(Enet_Handle hEnet,
                                    EnetDma_PktQ *pCqPktInfoQ,
                                    EnetDma_RxChHandle hRxChHandle,
                                    uint32_t rxChNum,
-                                   bool freeHostMacAddr,
-                                   uint8_t macAddr[]);
+                                   uint32_t freeHostMacAddrCount,
+                                   uint8_t macAddr[ENET_MAX_NUM_MAC_PER_PHER][ENET_MAC_ADDR_LEN]);
 
 static int32_t EnetAppUtils_allocRxFlow(Enet_Handle hEnet,
                                         uint32_t coreKey,

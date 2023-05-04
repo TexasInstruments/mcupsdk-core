@@ -70,7 +70,7 @@ enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH_PTP";
 enet_cpsw1.txDmaChannel[1].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel.create(2);
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH_PTP";
-enet_cpsw1.rxDmaChannel[0].AllocMacAddr    = false;
+enet_cpsw1.rxDmaChannel[0].macAddrCount    = 0;
 enet_cpsw1.rxDmaChannel[1].$name           = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].phyToMacInterfaceMode = "MSS_RGMII";

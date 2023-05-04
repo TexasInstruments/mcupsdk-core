@@ -4,6 +4,9 @@
     let common = system.getScript("/common");
     let device = common.getDeviceName();
     let soc = common.getSocName();
+    let socScript = system.getScript(`/networking/soc/networking_${common.getSocName()}`);
+    let driverVer = socScript.getDriverVer("enet_cpsw");
+    const netifScript = system.getScript(`/networking/enet_cpsw/${driverVer}/enet_cpsw_lwipif_netif`);
 
     function getLwipChecksumDisableFlags(instance)
     {
@@ -11,7 +14,6 @@
         if ((soc === "am273x") || (soc === "awr294x"))
         {
             // checksum offload is not supported on AM273x and AWR294x
-            console.log(soc)
             disableFlag = '0U';
         }
         else
@@ -49,15 +51,15 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include <assert.h>
 #include "ti_enet_config.h"
 #include "ti_enet_lwipif.h"
 #include <lwip/tcpip.h>
+#include <assert.h>
 
 #include <kernel/dpl/TaskP.h>
+#include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/SystemP.h>
-#include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/HwiP.h>
 
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
@@ -89,6 +91,13 @@
 #define ENETLWIP_PACKET_POLL_PERIOD_US (1000U)
 
 #define ENETLWIP_APP_POLL_PERIOD       (500U)
+
+#define LWIPIF_NUM_RX_PACKET_TASKS     (1U)
+
+#define LWIPIF_NUM_TX_PACKET_TASKS     (1U)
+
+#define NUM_NETIF_SUPPORTED_MAX        (2U)
+
 /*! \brief RX packet task stack size */
 #define LWIPIF_RX_PACKET_TASK_STACK    (1024U)
 
@@ -120,49 +129,81 @@
 /*                            Global Variables                                */
 /* ========================================================================== */
 %if(instance.RtosVariant == "FreeRTOS"){
-uint8_t gPktRxTaskStack[LWIPIF_RX_PACKET_TASK_STACK] __attribute__ ((aligned(sizeof(long long))));
-uint8_t gPktTxTaskStack[LWIPIF_TX_PACKET_TASK_STACK] __attribute__ ((aligned(sizeof(long long))));
-uint8_t gPollTaskStack[LWIPIF_POLL_TASK_STACK] __attribute__ ((aligned(sizeof(long long))));
 
-/*!* Handle to Rx semaphore, on which the rxTask awaits for notification
-* of used packets available.
-*/
-SemaphoreP_Object rxPktSem;
-/*!* Handle to Tx semaphore, on which the txTask awaits for notification
-* of used packets available.
-*/SemaphoreP_Object txPktSem;
-/*!
-* Handle to Polling task semaphore, on which the pollTask awaits for notification
-* of used packets available.
-*/
-SemaphoreP_Object pollSem;
+typedef struct LwipifEnetApp_RxTaskInfo_s
+{
+    TaskP_Object      task;
+    uint8_t stack[LWIPIF_RX_PACKET_TASK_STACK] __attribute__ ((aligned(sizeof(long long))));
+    SemaphoreP_Object sem;
+    struct netif *netif;
+    /*
+     * Handle to counting shutdown semaphore, which all subtasks created in the
+     * open function must post before the close operation can complete.
+     */
+    SemaphoreP_Object shutDownSemObj;
+    /** Boolean to indicate shutDownFlag status of translation layer.*/
+    volatile bool shutDownFlag;
+} LwipifEnetApp_RxTaskInfo;
 
-/*!
-* Handle to Rx task, whose job it is to receive packets used by the hardware
-* and give them to the stack, and return freed packets back to the hardware.
-*/
-    TaskP_Object rxTask;
-/*! Handle to Tx task whose job is to retrieve packets consumed by the hardware and
-*  give them to the stack */
-    TaskP_Object txTask;
-/*! Handle to polling task whose job is to retrieve packets consumed by the hardware and
-*  give them to the stack */
-    TaskP_Object pollTask;
+typedef struct LwipifEnetApp_TxTaskInfo_s
+{
+    TaskP_Object      task;
+    uint8_t stack[LWIPIF_TX_PACKET_TASK_STACK] __attribute__ ((aligned(sizeof(long long))));
+    SemaphoreP_Object sem;
+    struct netif *netif;
+    /*
+     * Handle to counting shutdown semaphore, which all subtasks created in the
+     * open function must post before the close operation can complete.
+     */
+    SemaphoreP_Object shutDownSemObj;
+    /** Boolean to indicate shutDownFlag status of translation layer.*/
+    volatile bool shutDownFlag;
+} LwipifEnetApp_TxTaskInfo;
 
-/*
- * Handle to counting shutdown semaphore, which all subtasks created in the
- * open function must post before the close operation can complete.
- */
-SemaphoreP_Object shutDownSemObj;
-/** Boolean to indicate shutDownFlag status of translation layer.*/
-volatile bool shutDownFlag;
+typedef struct LwipifEnetApp_PollTaskInfo_s
+{
+    TaskP_Object      task;
+    uint8_t stack[LWIPIF_POLL_TASK_STACK] __attribute__ ((aligned(sizeof(long long))));
+    SemaphoreP_Object sem;
+    struct netif *netif;
+    /*
+     * Handle to counting shutdown semaphore, which all subtasks created in the
+     * open function must post before the close operation can complete.
+     */
+    SemaphoreP_Object shutDownSemObj;
+    /** Boolean to indicate shutDownFlag status of translation layer.*/
+    volatile bool shutDownFlag;
+
+    /*
+     * Clock handle for triggering the packet Rx notify
+     */
+    ClockP_Object pollLinkClkObj;
+} LwipifEnetApp_PollTaskInfo;
+
+typedef struct LwipifEnetApp_TaskInfo_s
+{
+    LwipifEnetApp_RxTaskInfo rxTask[LWIPIF_NUM_RX_PACKET_TASKS];
+    LwipifEnetApp_TxTaskInfo txTask[LWIPIF_NUM_TX_PACKET_TASKS];
+    LwipifEnetApp_PollTaskInfo pollTask;
+} LwipifEnetApp_TaskInfo;
 %}
+
+typedef struct LwipifEnetApp_Object_s
+{
+%if(instance.RtosVariant == "FreeRTOS"){
+    LwipifEnetApp_TaskInfo task;
+%}
+    struct netif gNetif[ENET_SYSCFG_NETIF_COUNT];
+    /*
+    * Clock handle for triggering the packet Rx notify
+    */
+    ClockP_Object pollLinkClkObj;
+} LwipifEnetApp_Object;
 /*
  * Clock handle for triggering the packet Rx notify
  */
     ClockP_Object pollLinkClkObj;
 
-static struct netif gNetif[ENET_SYSCFG_NETIF_COUNT];
 
 /* For Cpdma Rx scatter-gather implies that #rxpkts = #rxbuffers = #rxpbufs
    For Udma's static Rx scatter-gather, #rxbuffers = #rxpbufs = 4 * #rxpkts */
@@ -182,26 +223,26 @@ LWIP_MEMPOOL_DECLARE(RX_POOL, ENET_SYSCFG_TOTAL_NUM_RX_PKT, sizeof(Rx_CustomPbuf
 pbufNode gFreePbufArr[ENET_SYSCFG_TOTAL_NUM_RX_PKT * 2];
 #endif
 %}
+static LwipifEnetApp_Object gLwipifEnetAppObj;
 /* ========================================================================== */
 /*                            Function Declaration                            */
 /* ========================================================================== */
 
 %if(instance.RtosVariant == "FreeRTOS"){
-void LwipifEnetApp_startSchedule(struct netif *netif);
-%}
-void LwipifEnetApp_createRxPktHandlerTask(struct netif *netif);
+void LwipifEnetApp_createRxPktHandlerTask(LwipifEnetApp_RxTaskInfo* pTxTaskInfo, struct netif *netif);
 
-void LwipifEnetApp_createTxPktHandlerTask(struct netif *netif);
+void LwipifEnetApp_createTxPktHandlerTask(LwipifEnetApp_TxTaskInfo* pTxTaskInfo, struct netif *netif);
 
 static void LwipifEnetApp_rxPacketTask(void *arg);
 
 static void LwipifEnetApp_txPacketTask(void *arg);
 
+static err_t LwipifEnetApp_createPollTask(LwipifEnetApp_PollTaskInfo* pPollTaskInfo);
+%}
+
 static void LwipifEnetApp_poll(void *arg);
 
 static void LwipifEnetApp_postPollLink(ClockP_Object *clkObj, void *arg);
-
-static err_t LwipifEnetApp_createPollTask (struct netif *netif);
 
 %if(instance.RtosVariant == "NoRTOS"){
 void LwipifEnetApp_eventSchedule(EventP_Object *obj);
@@ -213,9 +254,22 @@ static void LwipifEnetApp_postRxPktEvent(void* pArg);
 static void LwipifEnetApp_postTxPktEvent(void* pArg);
 %}
 
-void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const ip4_addr_t *netmask, const ip4_addr_t *gw)
+LwipifEnetApp_Handle LwipifEnetApp_getHandle()
 {
-    if(netifIdx < ENET_SYSCFG_NETIF_COUNT)
+    return (LwipifEnetApp_Handle)&gLwipifEnetAppObj;
+}
+
+struct netif* LwipifEnetApp_netifOpen(LwipifEnetApp_Handle handle, uint32_t netifIdx, const ip4_addr_t *ipaddr, const ip4_addr_t *netmask, const ip4_addr_t *gw)
+{
+    const uint32_t lwipIdx2Enet[ENET_SYSCFG_NETIF_COUNT][2] = `netifScript.getNetifIdx2EnetMap()`;
+        /* Peripheral type */
+    Enet_Type enetType = lwipIdx2Enet[netifIdx][0];
+
+    /* Peripheral instance */
+    uint32_t instId = lwipIdx2Enet[netifIdx][1];
+
+    LwipifEnetApp_Object* pObj = (LwipifEnetApp_Object*) handle;
+    if (netifIdx < ENET_SYSCFG_NETIF_COUNT)
     {
 #if ENET_CFG_IS_ON(CPSW_CSUM_OFFLOAD_SUPPORT)
 
@@ -223,7 +277,7 @@ void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const 
         const uint32_t lwIPChcksumDisableFlags = `getLwipChecksumDisableFlags(instance)`;
         const uint32_t lwIPChcksumSetFlags = (NETIF_CHECKSUM_ENABLE_ALL & ~lwIPChcksumDisableFlags);
 #endif
-        netif_add(&gNetif[netifIdx],
+        netif_add(&pObj->gNetif[netifIdx],
                     ipaddr, 
                     netmask,
                     gw,
@@ -234,14 +288,15 @@ void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const 
 %}if(instance.RtosVariant == "NoRTOS"){
                     netif_input
 %}
-                    );
+                 );
+        LWIPIF_LWIP_start(enetType, instId, &pObj->gNetif[netifIdx]);
 
         if(netifIdx == ENET_SYSCFG_DEFAULT_NETIF_IDX)
         {
-            netif_set_default(&gNetif[netifIdx]);
+            netif_set_default(&pObj->gNetif[netifIdx]);
         }
 #if ENET_CFG_IS_ON(CPSW_CSUM_OFFLOAD_SUPPORT)
-        NETIF_SET_CHECKSUM_CTRL(&gNetif[netifIdx], lwIPChcksumSetFlags);
+        NETIF_SET_CHECKSUM_CTRL(&pObj->gNetif[netifIdx], lwIPChcksumSetFlags);
 #endif
     }
     else
@@ -249,19 +304,22 @@ void LwipifEnetApp_netifOpen(uint32_t netifIdx, const ip4_addr_t *ipaddr, const 
         DebugP_log("ERROR: NetifIdx is out of valid range!\r\n");
         EnetAppUtils_assert(FALSE);
     }
+    return (&pObj->gNetif[netifIdx]);
 }
 
-void LwipifEnetApp_netifClose(uint32_t netifIdx)
+void LwipifEnetApp_netifClose(LwipifEnetApp_Handle handle, const uint32_t netifIdx)
 {
-    netif_remove(&gNetif[netifIdx]);
+    LwipifEnetApp_Object* pObj = (LwipifEnetApp_Object*) handle;
+    netif_remove(&pObj->gNetif[netifIdx]);
 }
 
-struct netif * LwipifEnetApp_getNetifFromId(uint32_t netifIdx)
+struct netif* LwipifEnetApp_getNetifFromId(LwipifEnetApp_Handle handle, uint32_t netifIdx)
 {
+    LwipifEnetApp_Object* pObj = (LwipifEnetApp_Object*) handle;
     struct netif * pNetif = NULL;
     if(netifIdx < ENET_SYSCFG_NETIF_COUNT)
     {
-        pNetif = &gNetif[netifIdx];
+        pNetif = &pObj->gNetif[netifIdx];
     }
     else{
             DebugP_log("ERROR: NetifIdx is out of valid range!\r\n");
@@ -271,50 +329,23 @@ struct netif * LwipifEnetApp_getNetifFromId(uint32_t netifIdx)
     return pNetif;
 }
 
-void LwipifEnetAppCb_getNetifInfo(struct netif *netif,
-                                  LwipifEnetAppIf_GetHandleNetifInfo *outArgs)
-{
-    outArgs->numRxChannels = ENET_SYSCFG_RX_FLOWS_NUM;
-    outArgs->numTxChannels = ENET_SYSCFG_TX_CHANNELS_NUM;
-%if(module.getNetifCount(instance) > 1)
-%{
-    outArgs->isDirected = true;
-%}
-%else{
-    outArgs->isDirected = false;
-%}
-}
-
-void LwipifEnetAppCb_getEnetLwipIfInstInfo(LwipifEnetAppIf_GetEnetLwipIfInstInfo *outArgs)
+void LwipifEnetAppCb_getEnetLwipIfInstInfo(Enet_Type enetType, uint32_t instId, LwipifEnetAppIf_GetEnetLwipIfInstInfo *outArgs)
 {
     EnetPer_AttachCoreOutArgs attachInfo;
     EnetApp_HandleInfo handleInfo;
-    Enet_Type enetType;
-    uint32_t instId;
 
     uint32_t coreId = EnetSoc_getCoreId();
 
-
-    EnetApp_getEnetInstInfo(&enetType,
-                            &instId);
-
+    EnetApp_coreAttach(enetType, instId, coreId, &attachInfo);
     EnetApp_acquireHandleInfo(enetType, instId, &handleInfo);
-    EnetApp_coreAttach(enetType,instId, coreId, &attachInfo);
 
-    outArgs->hEnet         = handleInfo.hEnet;
     outArgs->hostPortRxMtu = attachInfo.rxMtu;
     ENET_UTILS_ARRAY_COPY(outArgs->txMtu, attachInfo.txMtu);
     outArgs->isPortLinkedFxn = &EnetApp_isPortLinked;
     outArgs->timerPeriodUs   = ENETLWIP_PACKET_POLL_PERIOD_US;
-
-    outArgs->maxNumNetif = ENET_SYSCFG_NETIF_COUNT;
-    outArgs->numRxChannels = ENET_SYSCFG_RX_FLOWS_NUM;
-    outArgs->numTxChannels = ENET_SYSCFG_TX_CHANNELS_NUM;
-
     outArgs->pPbufInfo = gFreePbufArr;
     outArgs->pPbufInfoSize = sizeof(gFreePbufArr)/sizeof(pbufNode);
     LWIP_MEMPOOL_INIT(RX_POOL);
-
 
 #if ENET_CFG_IS_ON(CPSW_CSUM_OFFLOAD_SUPPORT)
     int32_t status;
@@ -339,16 +370,10 @@ void LwipifEnetAppCb_getEnetLwipIfInstInfo(LwipifEnetAppIf_GetEnetLwipIfInstInfo
 void LwipifEnetAppCb_getTxHandleInfo(LwipifEnetAppIf_GetTxHandleInArgs *inArgs,
                                      LwipifEnetAppIf_TxHandleInfo *outArgs)
 {
-    Enet_Type enetType;
-    uint32_t instId, i;
+    uint32_t i;
     EnetDma_Pkt *pPktInfo;
-    EnetApp_HandleInfo handleInfo;
     EnetApp_GetTxDmaHandleOutArgs  txChInfo;
     EnetApp_GetDmaHandleInArgs     txInArgs;
-
-    EnetApp_getEnetInstInfo(&enetType,
-                            &instId);
-    EnetApp_acquireHandleInfo(enetType, instId, &handleInfo);
 
     /* Open TX channel */
     txInArgs.cbArg     = inArgs->cbArg;
@@ -383,11 +408,9 @@ void LwipifEnetAppCb_getTxHandleInfo(LwipifEnetAppIf_GetTxHandleInArgs *inArgs,
 void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
                                      LwipifEnetAppIf_RxHandleInfo *outArgs)
 {
-    Enet_Type enetType;
-    uint32_t instId, i;
+    uint32_t i;
     EnetDma_Pkt *pPktInfo;
     Rx_CustomPbuf *cPbuf;
-    int32_t status;
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
     bool useRingMon = false;
 % }
@@ -408,10 +431,8 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
         ENET_MEM_LARGE_POOL_PKT_SIZE  /* Keep this size aligned with R5F cacheline of 32B */
     };
 % }
-    EnetApp_getEnetInstInfo(&enetType,
-                            &instId);
-    EnetApp_acquireHandleInfo(enetType, instId, &handleInfo);
-    EnetApp_coreAttach(enetType,instId, coreId, &attachInfo);
+    EnetApp_acquireHandleInfo(inArgs->enetType, inArgs->instId, &handleInfo);
+    EnetApp_coreAttach(inArgs->enetType, inArgs->instId, coreId, &attachInfo);
 
     /* Open RX channel */
     rxInArgs.cbArg     = inArgs->cbArg;
@@ -442,9 +463,9 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
 % } else{
     outArgs->disableEvent = true;
 % }
-    if(rxChInfo.macAddressValid)
+    for (uint32_t i = 0; i < rxChInfo.numValidMacAddress; i++)
     {
-        EnetUtils_copyMacAddr(&outArgs->macAddr[inArgs->chId][0U], rxChInfo.macAddr);
+        EnetUtils_copyMacAddr(&outArgs->macAddr[inArgs->chId][0U], rxChInfo.macAddr[i]);
         EnetAppUtils_print("Host MAC address-%d : ",inArgs->chId);
         EnetAppUtils_printMacAddr(&outArgs->macAddr[inArgs->chId][0U]);
     }
@@ -485,21 +506,6 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
         pbufQ_enQ(inArgs->pFreePbufInfoQ, &(cPbuf->p.pbuf));
     }
 
-    if(ENET_SYSCFG_NETIF_COUNT > 1U)
-    {
-        for(uint32_t i =1U; i<ENET_SYSCFG_NETIF_COUNT; i++)
-        {
-            /* Allocating another mac addresses for number of netifs supported*/
-            status = EnetAppUtils_allocMac(handleInfo.hEnet,
-                                        attachInfo.coreKey,
-                                        coreId,
-                                        &outArgs->macAddr[i][0U]);
-            EnetAppUtils_assert(ENET_SOK == status);
-            EnetAppUtils_addHostPortEntry(handleInfo.hEnet, coreId,  &outArgs->macAddr[i][0U]);
-            EnetAppUtils_print("Host MAC address-%d : ",i);
-            EnetAppUtils_printMacAddr(&outArgs->macAddr[i][0U]);
-        }
-    }
 }
 
 void LwipifEnetAppCb_releaseTxHandle(LwipifEnetAppIf_ReleaseTxHandleInfo *releaseInfo)
@@ -508,14 +514,10 @@ void LwipifEnetAppCb_releaseTxHandle(LwipifEnetAppIf_ReleaseTxHandleInfo *releas
     EnetPer_AttachCoreOutArgs attachInfo;
     EnetDma_PktQ fqPktInfoQ;
     EnetDma_PktQ cqPktInfoQ;
-    Enet_Type enetType;
-    uint32_t instId;
     uint32_t coreId = EnetSoc_getCoreId();
 
-    EnetApp_getEnetInstInfo(&enetType,
-                            &instId);
-    EnetApp_acquireHandleInfo(enetType, instId, &handleInfo);
-    EnetApp_coreAttach(enetType,instId, coreId, &attachInfo);
+    EnetApp_acquireHandleInfo(releaseInfo->enetType, releaseInfo->instId, &handleInfo);
+    EnetApp_coreAttach(releaseInfo->enetType, releaseInfo->instId, coreId, &attachInfo);
 
     /* Close TX channel */
     EnetQueue_initQ(&fqPktInfoQ);
@@ -527,8 +529,8 @@ void LwipifEnetAppCb_releaseTxHandle(LwipifEnetAppIf_ReleaseTxHandleInfo *releas
                        &fqPktInfoQ,
                        &cqPktInfoQ);
     releaseInfo->txFreePktCb(releaseInfo->txFreePktCbArg, &fqPktInfoQ, &cqPktInfoQ);
-    EnetApp_coreDetach(enetType, instId, coreId, attachInfo.coreKey);
-    EnetApp_releaseHandleInfo(enetType, instId);
+    EnetApp_coreDetach(releaseInfo->enetType, releaseInfo->instId, coreId, attachInfo.coreKey);
+    EnetApp_releaseHandleInfo(releaseInfo->enetType, releaseInfo->instId);
 }
 
 void LwipifEnetAppCb_releaseRxHandle(LwipifEnetAppIf_ReleaseRxHandleInfo *releaseInfo)
@@ -537,14 +539,10 @@ void LwipifEnetAppCb_releaseRxHandle(LwipifEnetAppIf_ReleaseRxHandleInfo *releas
     EnetPer_AttachCoreOutArgs attachInfo;
     EnetDma_PktQ fqPktInfoQ;
     EnetDma_PktQ cqPktInfoQ;
-    Enet_Type enetType;
-    uint32_t instId;
     uint32_t coreId = EnetSoc_getCoreId();
 
-    EnetApp_getEnetInstInfo(&enetType,
-                            &instId);
-    EnetApp_acquireHandleInfo(enetType, instId, &handleInfo);
-    EnetApp_coreAttach(enetType,instId, coreId, &attachInfo);
+    EnetApp_acquireHandleInfo(releaseInfo->enetType, releaseInfo->instId, &handleInfo);
+    EnetApp_coreAttach(releaseInfo->enetType, releaseInfo->instId, coreId, &attachInfo);
 
     /* Close RX channel */
     EnetQueue_initQ(&fqPktInfoQ);
@@ -557,8 +555,8 @@ void LwipifEnetAppCb_releaseRxHandle(LwipifEnetAppIf_ReleaseRxHandleInfo *releas
                        &cqPktInfoQ);
 
     releaseInfo->rxFreePktCb(releaseInfo->rxFreePktCbArg, &fqPktInfoQ, &cqPktInfoQ);
-    EnetApp_coreDetach(enetType, instId, coreId, attachInfo.coreKey);
-    EnetApp_releaseHandleInfo(enetType, instId);
+    EnetApp_coreDetach(releaseInfo->enetType, releaseInfo->instId, coreId, attachInfo.coreKey);
+    EnetApp_releaseHandleInfo(releaseInfo->enetType, releaseInfo->instId);
 }
 
 %if(instance.RtosVariant == "NoRTOS"){
@@ -600,50 +598,52 @@ static void LwipifEnetApp_postTxPktEvent(void* pArg)
 
 %}
 %if(instance.RtosVariant == "FreeRTOS"){
-static err_t LwipifEnetApp_createPollTask(struct netif *netif)
+static err_t LwipifEnetApp_createPollTask(LwipifEnetApp_PollTaskInfo* pPollTaskInfo)
 {
     TaskP_Params params;
     int32_t status;
     ClockP_Params clkPrms;
 
-
-    if (NULL != netif->state)
+    if (NULL != pPollTaskInfo)
     {
         /*Initialize semaphore to call synchronize the poll function with a timer*/
-        status = SemaphoreP_constructBinary(&pollSem, 0U);
+        status = SemaphoreP_constructBinary(&pPollTaskInfo->sem, 0U);
+        EnetAppUtils_assert(status == SystemP_SUCCESS);
+
+        /*Initialize semaphore to call synchronize the poll function with a timer*/
+        status = SemaphoreP_constructBinary(&pPollTaskInfo->shutDownSemObj, 0U);
         EnetAppUtils_assert(status == SystemP_SUCCESS);
 
         /* Initialize the poll function as a thread */
         TaskP_Params_init(&params);
-        params.name = "Lwipif_Lwip_poll";
+        params.name           = "Lwipif_Lwip_poll";
         params.priority       = LWIP_POLL_TASK_PRI;
-        params.stack          = &gPollTaskStack[0U];
-        params.stackSize      = sizeof(gPollTaskStack);
-        params.args           = &(gNetif[ENET_SYSCFG_NETIF_COUNT - 1]);
+        params.stack          = pPollTaskInfo->stack;
+        params.stackSize      = sizeof(pPollTaskInfo->stack);
+        params.args           = pPollTaskInfo;
         params.taskMain       = &LwipifEnetApp_poll;
 
-        status = TaskP_construct(&pollTask, &params);
+        status = TaskP_construct(&pPollTaskInfo->task, &params);
         EnetAppUtils_assert(status == SystemP_SUCCESS);
 
         ClockP_Params_init(&clkPrms);
         clkPrms.start     = 0;
         clkPrms.period    = ENETLWIP_APP_POLL_PERIOD;
-        clkPrms.args      = &pollSem;
+        clkPrms.args      = &pPollTaskInfo->sem; // make a proper semaphore structure for this.
         clkPrms.callback  = &LwipifEnetApp_postPollLink;
         clkPrms.timeout   = ENETLWIP_APP_POLL_PERIOD;
 
         /* Creating timer and setting timer callback function*/
-        status = ClockP_construct(&pollLinkClkObj,
-                                  &clkPrms);
+        status = ClockP_construct(&pPollTaskInfo->pollLinkClkObj, &clkPrms);
         if (status == SystemP_SUCCESS)
         {
             /* Set timer expiry time in OS ticks */
-            ClockP_setTimeout(&pollLinkClkObj, ENETLWIP_APP_POLL_PERIOD);
-            ClockP_start(&pollLinkClkObj);
+            ClockP_setTimeout(&pPollTaskInfo->pollLinkClkObj, ENETLWIP_APP_POLL_PERIOD);
+            ClockP_start(&pPollTaskInfo->pollLinkClkObj);
         }
         else
         {
-            EnetAppUtils_assert (status == SystemP_SUCCESS);
+            EnetAppUtils_assert(status == SystemP_SUCCESS);
         }
 
         /* Filter not defined */
@@ -667,40 +667,79 @@ static void LwipifEnetApp_postSemaphore(void *pArg)
     SemaphoreP_post(pSem);
 }
 
-void LwipifEnetApp_startSchedule(struct netif *netif
+int32_t LwipifEnetApp_getNetifIdx(LwipifEnetApp_Handle handle, struct netif* netif)
+{
+    LwipifEnetApp_Object* pObj = (LwipifEnetApp_Object*) handle;
+
+    int32_t idx = -1;
+
+    for (uint32_t i = 0; i < 2; i++)
+    {
+        if (&pObj->gNetif[i] == netif)
+        {
+            idx = i;
+            break;
+        }
+    }
+
+    return idx;
+}
+void LwipifEnetApp_startSchedule(LwipifEnetApp_Handle handle, struct netif *netif
 %if(instance.RtosVariant == "NoRTOS"){
     ,EventP_Object* p_hEvent
 %}
     )
 {
-    uint32_t status;
 %if(instance.RtosVariant == "FreeRTOS"){
-    status = SemaphoreP_constructBinary(&txPktSem, 0U);
+    LwipifEnetApp_Object* pObj = (LwipifEnetApp_Object*) handle;
+    uint32_t status = ENET_SOK;
+    const uint32_t netifIdx = LwipifEnetApp_getNetifIdx(handle, netif);
+
+    EnetAppUtils_assert(netifIdx < LWIPIF_NUM_TX_PACKET_TASKS);
+    EnetAppUtils_assert(netifIdx < LWIPIF_NUM_RX_PACKET_TASKS);
+
+    status = SemaphoreP_constructBinary(&pObj->task.txTask[netifIdx].shutDownSemObj, 0U);
     EnetAppUtils_assert(status == SystemP_SUCCESS);
 
-    status = SemaphoreP_constructBinary(&rxPktSem, 0U);
+    status = SemaphoreP_constructBinary(&pObj->task.rxTask[netifIdx].shutDownSemObj, 0U);
     EnetAppUtils_assert(status == SystemP_SUCCESS);
+
+    status = SemaphoreP_constructBinary(&pObj->task.txTask[netifIdx].sem, 0U);
+    EnetAppUtils_assert(status == SystemP_SUCCESS);
+
+    status = SemaphoreP_constructBinary(&pObj->task.rxTask[netifIdx].sem, 0U);
+    EnetAppUtils_assert(status == SystemP_SUCCESS);
+
+    Enet_notify_t txNotify =
+    {
+            .cbFxn = &LwipifEnetApp_postSemaphore,
+            .cbArg = &pObj->task.txTask[netifIdx].sem,
+    };
 
     Enet_notify_t rxNotify =
-        {
-           .cbFxn = &LwipifEnetApp_postSemaphore, //gives different cb fxn for different events.
-           .cbArg = &rxPktSem //
-        };
-    Enet_notify_t txNotify =
-        {
-                .cbFxn = &LwipifEnetApp_postSemaphore,
-                .cbArg = &txPktSem
-        };
+    {
+            .cbFxn = &LwipifEnetApp_postSemaphore,
+            .cbArg = &pObj->task.rxTask[netifIdx].sem,
+    };
 
     LWIPIF_LWIP_setNotifyCallbacks(netif, &rxNotify, &txNotify);
+
     /* Initialize Tx task*/
-    LwipifEnetApp_createTxPktHandlerTask(netif);
+    pObj->task.txTask[netifIdx].shutDownFlag =false;
+    LwipifEnetApp_createTxPktHandlerTask(&pObj->task.txTask[netifIdx], netif);
 
     /* Initialize Rx Task*/
-    LwipifEnetApp_createRxPktHandlerTask(netif);
+    pObj->task.rxTask[netifIdx].shutDownFlag =false;
+    LwipifEnetApp_createRxPktHandlerTask(&pObj->task.rxTask[netifIdx], netif);
 
-    /* Initialize Polling task*/
-    LwipifEnetApp_createPollTask(netif);
+    if (netifIdx == 0)
+    {
+        pObj->task.pollTask.shutDownFlag =false;
+        pObj->task.pollTask.netif = &pObj->gNetif[0]; // link to the first in the list
+        /* Initialize Polling task*/
+        LwipifEnetApp_createPollTask(&pObj->task.pollTask);
+    }
+
 %}
 %if(instance.RtosVariant == "NoRTOS"){
     ClockP_Params clkPrms;
@@ -727,7 +766,7 @@ void LwipifEnetApp_startSchedule(struct netif *netif
     clkPrms.timeout   = ENETLWIP_APP_POLL_PERIOD;
 
     /* Creating timer and setting timer callback function*/
-    status = ClockP_construct(&pollLinkClkObj, &clkPrms);
+    int32_t status = ClockP_construct(&pollLinkClkObj, &clkPrms);
     if (status == SystemP_SUCCESS)
     {
         /* Set timer expiry time in OS ticks */
@@ -741,6 +780,108 @@ void LwipifEnetApp_startSchedule(struct netif *netif
 %}
 }
 
+void LwipifEnetApp_getRxChIDs(const Enet_Type enetType, const uint32_t instId, uint32_t* pRxChIdCount, uint32_t rxChIdList[LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL])
+{
+    const uint32_t rxChIdMap[ENET_SYSCFG_MAX_ENET_INSTANCES][4] = `netifScript.getEnet2RxChIdMap()`;
+    uint32_t chCount = 0;
+    uint32_t chIdStrart = 0;
+    for (uint32_t idx = 0; idx < ENET_SYSCFG_MAX_ENET_INSTANCES; idx++)
+    {
+        if ((rxChIdMap[idx][0] == enetType) && (rxChIdMap[idx][1] == instId))
+        {
+            chIdStrart = rxChIdMap[idx][2];
+            chCount    = rxChIdMap[idx][3];
+        }
+    }
+
+    /* verifiy the user params */
+    switch (enetType)
+    {
+    case ENET_ICSSG_SWITCH:
+    {
+        EnetAppUtils_assert(chCount == 2);
+        break;
+    }
+    case ENET_ICSSG_DUALMAC:
+    case ENET_CPSW_3G:
+    case ENET_CPSW_2G:
+    {
+        EnetAppUtils_assert(chCount == 1);
+        break;
+    }
+    default:
+    {
+        EnetAppUtils_assert(false);
+    }
+    }
+
+    /* fill ChId List */
+    EnetAppUtils_assert(chCount <= LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL);
+    *pRxChIdCount = chCount;
+    for (uint32_t idx = 0; idx < chCount; idx++)
+    {
+        rxChIdList[idx] = chIdStrart + idx; 
+    }
+    return;
+}
+
+void LwipifEnetApp_getTxChIDs(const Enet_Type enetType, const uint32_t instId, uint32_t* pTxChIdCount, uint32_t txChIdList[LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL])
+{
+    const uint32_t txChIdMap[ENET_SYSCFG_MAX_ENET_INSTANCES][4] = `netifScript.getEnet2TxChIdMap()`;
+    uint32_t chCount = 0;
+    uint32_t chIdStrart = 0;
+    for (uint32_t idx = 0; idx < ENET_SYSCFG_MAX_ENET_INSTANCES; idx++)
+    {
+        if ((txChIdMap[idx][0] == enetType) && (txChIdMap[idx][1] == instId))
+        {
+            chIdStrart  = txChIdMap[idx][2];
+            chCount     = txChIdMap[idx][3];
+        }
+    }
+
+    /* verifiy the user params */
+    switch (enetType)
+    {
+    case ENET_ICSSG_SWITCH:
+    case ENET_ICSSG_DUALMAC:
+    case ENET_CPSW_3G:
+    case ENET_CPSW_2G:
+    {
+        EnetAppUtils_assert(chCount == 1);
+        break;
+    }
+    default:
+    {
+        EnetAppUtils_assert(false);
+    }
+    }
+
+    /* fill ChId List */
+    EnetAppUtils_assert(chCount <= LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL);
+    *pTxChIdCount = chCount;
+    for (uint32_t idx = 0; idx < chCount; idx++)
+    {
+        txChIdList[idx] = chIdStrart + idx; 
+    }
+    return;
+}
+
+Lwip2Enet_RxMode_t LwipifEnetAppCb_getRxMode(Enet_Type enetType, uint32_t instId)
+{
+    const bool hasSwitchModeEnabled = `(module.getNetifCount(instance) == 1)`; 
+    Lwip2Enet_RxMode_t rxMode = Lwip2Enet_RxMode_SwitchSharedChannel;
+    if (hasSwitchModeEnabled)
+    {
+        rxMode = Lwip2Enet_RxMode_SwitchSharedChannel;
+    }
+    else
+    {
+        rxMode = Lwip2Enet_RxMode_MacSharedChannel;
+    }
+    return rxMode;
+}
+
+
 %if(instance.RtosVariant == "NoRTOS"){
 void LwipifEnetApp_eventSchedule(EventP_Object *obj)
 {
@@ -748,101 +889,113 @@ void LwipifEnetApp_eventSchedule(EventP_Object *obj)
 }
 %}
 %if(instance.RtosVariant == "FreeRTOS"){
-void LwipifEnetApp_createRxPktHandlerTask(struct netif *netif)
+
+void LwipifEnetApp_createRxPktHandlerTask(LwipifEnetApp_RxTaskInfo* pRxTaskInfo, struct netif *netif)
 {
     TaskP_Params params;
     int32_t status;
+    pRxTaskInfo->netif = netif;
 
     /* Create RX packet task */
     TaskP_Params_init(&params);
-    params.name = "LwipifEnetApp_RxPacketTask";
-    params.priority       = LWIPIF_RX_PACKET_TASK_PRI;
-    params.stack          = &gPktRxTaskStack[0U];
-    params.stackSize      = sizeof(gPktRxTaskStack);
-    params.args           = netif;
-    params.taskMain       = &LwipifEnetApp_rxPacketTask;
+    params.name      = "LwipifEnetApp_RxPacketTask";
+    params.priority  = LWIPIF_RX_PACKET_TASK_PRI;
+    params.stack     = &pRxTaskInfo->stack[0];
+    params.stackSize = sizeof(pRxTaskInfo->stack);
+    params.args      = pRxTaskInfo;
+    params.taskMain  = &LwipifEnetApp_rxPacketTask;
 
-    status = TaskP_construct(&rxTask , &params);
+    status = TaskP_construct(&pRxTaskInfo->task, &params);
     EnetAppUtils_assert(status == SystemP_SUCCESS);
 }
 
-void LwipifEnetApp_createTxPktHandlerTask(struct netif *netif)
+void LwipifEnetApp_createTxPktHandlerTask(LwipifEnetApp_TxTaskInfo* pTxTaskInfo, struct netif *netif)
 {
     TaskP_Params params;
     int32_t status;
 
+    pTxTaskInfo->netif = netif;
     /* Create TX packet task */
     TaskP_Params_init(&params);
     params.name = "LwipifEnetApp_TxPacketTask";
     params.priority       = LWIPIF_TX_PACKET_TASK_PRI;
-    params.stack          = &gPktTxTaskStack[0U];
-    params.stackSize      = sizeof(gPktTxTaskStack);
-    params.args           = netif;
+    params.stack          = &pTxTaskInfo->stack[0];
+    params.stackSize      = sizeof(pTxTaskInfo->stack);
+    params.args           = pTxTaskInfo;
     params.taskMain       = &LwipifEnetApp_txPacketTask;
 
-    status = TaskP_construct(&txTask , &params);
+    status = TaskP_construct(&pTxTaskInfo->task , &params);
     EnetAppUtils_assert(status == SystemP_SUCCESS);
 }
 
 static void LwipifEnetApp_rxPacketTask(void *arg)
 {
-    struct netif *netif = (struct netif *) arg;
-    while (!shutDownFlag)
+    LwipifEnetApp_RxTaskInfo* pTaskInfo = (LwipifEnetApp_RxTaskInfo*) arg;
+
+    while (!pTaskInfo->shutDownFlag)
     {
         /* Wait for the Rx ISR to notify us that packets are available with data */
-        SemaphoreP_pend(&rxPktSem, SystemP_WAIT_FOREVER);
-        if (shutDownFlag)
+        SemaphoreP_pend(&pTaskInfo->sem, SystemP_WAIT_FOREVER);
+        if (pTaskInfo->shutDownFlag)
         {
             /* This translation layer is shutting down, don't give anything else to the stack */
             break;
         }
 
-        LWIPIF_LWIP_rxPktHandler(netif);
+        LWIPIF_LWIP_rxPktHandler(pTaskInfo->netif);
     }
 
     /* We are shutting down, notify that we are done */
-    SemaphoreP_post(&shutDownSemObj);
+    SemaphoreP_post(&pTaskInfo->shutDownSemObj);
 }
 
 static void LwipifEnetApp_txPacketTask(void *arg)
 {
-    struct netif *netif = (struct netif *) arg;
-    while (!shutDownFlag)
+    LwipifEnetApp_TxTaskInfo* pTaskInfo = (LwipifEnetApp_TxTaskInfo*) arg;
+
+    while (!pTaskInfo->shutDownFlag)
     {
         /*
          * Wait for the Tx ISR to notify us that empty packets are available
          * that were used to send data
          */
-        SemaphoreP_pend(&txPktSem, SystemP_WAIT_FOREVER);
-        LWIPIF_LWIP_txPktHandler(netif);
+        SemaphoreP_pend(&pTaskInfo->sem, SystemP_WAIT_FOREVER);
+        LWIPIF_LWIP_txPktHandler(pTaskInfo->netif);
     }
 
     /* We are shutting down, notify that we are done */
-    SemaphoreP_post(&shutDownSemObj);
+    SemaphoreP_post(&pTaskInfo->shutDownSemObj);
 }
 
 static void LwipifEnetApp_poll(void *arg)
 {
     /* Call the driver's periodic polling function */
-    volatile bool flag = 1;
-    struct netif* netif = (struct netif*) arg;
+    LwipifEnetApp_PollTaskInfo* pTaskInfo = (LwipifEnetApp_PollTaskInfo*)arg;
 
-    while (flag)
+    while (!pTaskInfo->shutDownFlag)
     {
-        SemaphoreP_pend(&pollSem, SystemP_WAIT_FOREVER);
+        SemaphoreP_pend(&pTaskInfo->sem, SystemP_WAIT_FOREVER);
         sys_lock_tcpip_core();
-        LWIPIF_LWIP_periodic_polling(netif);
+        for (uint32_t i = 0; i < ENET_SYSCFG_NETIF_COUNT; i++)
+        {
+            if (&pTaskInfo->netif[i] != NULL)
+            {
+                LWIPIF_LWIP_periodic_polling(&pTaskInfo->netif[i]);
+            }
+        }
         sys_unlock_tcpip_core();
     }
+    SemaphoreP_post(&pTaskInfo->shutDownSemObj);
 }
 %}
 
 static void LwipifEnetApp_postPollLink(ClockP_Object *clkObj, void *arg)
 {
-    if(arg != NULL)
+    if (arg != NULL)
     {
-        SemaphoreP_Object *hpollSem = (SemaphoreP_Object *) arg;
-        SemaphoreP_post(hpollSem);
+        SemaphoreP_Object *hPollSem = (SemaphoreP_Object *) arg;
+        SemaphoreP_post(hPollSem);
     }
 }
+
 %}

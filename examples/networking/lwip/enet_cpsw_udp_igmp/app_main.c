@@ -103,6 +103,9 @@ static void App_setIgmpCpswMacFilter(struct netif *netif);
 static struct dhcp g_netifDhcp[ENET_SYSCFG_NETIF_COUNT];
 struct netif *g_pNetif[ENET_SYSCFG_NETIF_COUNT];
 
+/* Handle to the Application interface for the LwIPIf Layer
+ */
+LwipifEnetApp_Handle hlwipIfApp = NULL;
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -119,9 +122,11 @@ int appMain(void *args)
     DebugP_log("  CPSW LWIP IGMP UDP SERVER \r\n");
     DebugP_log("============================\r\n");
 
-    EnetApp_getEnetInstInfo(&enetType, &instId);
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0, &enetType, &instId);
 
     EnetAppUtils_enableClocks(enetType, instId);
+
+    EnetApp_driverInit();
 
     const int32_t status = EnetApp_driverOpen(enetType, instId);
     if (ENET_SOK != status)
@@ -176,7 +181,7 @@ static void App_setupNetworkStack()
 
 static void App_shutdownNetworkStack()
 {
-    LwipifEnetApp_netifClose(NETIF_INST_ID0);
+    LwipifEnetApp_netifClose(hlwipIfApp, NETIF_INST_ID0);
     return;
 }
 
@@ -197,26 +202,23 @@ static void App_tcpipInitCompleteCb(void *pArg)
 
 static void App_setupNetif()
 {
-     ip4_addr_t ipaddr, netmask, gw;
+    ip4_addr_t ipaddr, netmask, gw;
 
-     ip4_addr_set_zero(&gw);
-     ip4_addr_set_zero(&ipaddr);
-     ip4_addr_set_zero(&netmask);
+    ip4_addr_set_zero(&gw);
+    ip4_addr_set_zero(&ipaddr);
+    ip4_addr_set_zero(&netmask);
 
-     DebugP_log("Starting lwIP, local interface IP is dhcp-enabled\r\n");
-
-     for (uint32_t i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
-     {
-         /* Open the netif and get it populated*/
-         LwipifEnetApp_netifOpen(NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
-         g_pNetif[NETIF_INST_ID0 + i] = LwipifEnetApp_getNetifFromId(NETIF_INST_ID0);
-         App_setIgmpCpswMacFilter(g_pNetif[NETIF_INST_ID0 + i]);
-         igmp_start(g_pNetif[NETIF_INST_ID0 + i]);
-         netif_set_status_callback(g_pNetif[NETIF_INST_ID0 + i], App_netifStatusChangeCb);
-         netif_set_link_callback(g_pNetif[NETIF_INST_ID0 + i], App_netifLinkChangeCb);
-         netif_set_up(g_pNetif[NETIF_INST_ID0 + i]);
+    DebugP_log("Starting lwIP, local interface IP is dhcp-enabled\r\n");
+    hlwipIfApp = LwipifEnetApp_getHandle();
+    for (uint32_t i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
+    {
+        /* Open the netif and get it populated*/
+        g_pNetif[i] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
+        netif_set_status_callback(g_pNetif[i], App_netifStatusChangeCb);
+        netif_set_link_callback(g_pNetif[i], App_netifLinkChangeCb);
+        netif_set_up(g_pNetif[NETIF_INST_ID0 + i]);
     }
-    LwipifEnetApp_startSchedule(g_pNetif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
+    LwipifEnetApp_startSchedule(hlwipIfApp, g_pNetif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
 }
 
 static void App_allocateIPAddress()
@@ -304,7 +306,7 @@ static err_t App_igmpMacFilter(struct netif *netif, const ip4_addr_t *group, enu
     mcastMacAddr[4] = (uint8_t) ip4_addr3(group);
     mcastMacAddr[5] = (uint8_t) ip4_addr4(group);
 
-    EnetApp_getEnetInstInfo(&enetType,
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0, &enetType,
                             &instId);
     hEnet = Enet_getHandle(enetType, instId);
 

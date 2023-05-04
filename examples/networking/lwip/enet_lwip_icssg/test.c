@@ -154,8 +154,8 @@
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
-
 /* globales variables for netifs */
+LwipifEnetApp_Handle hlwipIfApp = NULL;
 #if USE_ETHERNET
 #if LWIP_DHCP
 /* dhcp struct for the ethernet netif */
@@ -277,15 +277,15 @@ ppp_output_cb(ppp_pcb *pcb, u8_t *data, u32_t len, void *ctx)
 static void
 status_callback(struct netif *state_netif)
 {
-  if (netif_is_up(state_netif)) {
-#if LWIP_IPV4
-    DebugP_log("status_callback==UP, local interface IP is %s\r\n", ip4addr_ntoa(netif_ip4_addr(state_netif)));
-#else
-    DebugP_log("status_callback==UP\r\n");
-#endif
-  } else {
-    DebugP_log("status_callback==DOWN\r\n");
-  }
+    if (netif_is_up(state_netif)) {
+  #if LWIP_IPV4
+      DebugP_log("[%d]status_callback==UP, local interface IP is %s\r\n", state_netif->num, ip4addr_ntoa(netif_ip4_addr(state_netif)));
+  #else
+      DebugP_log("[%d]status_callback==UP\r\n",  state_netif->num);
+  #endif
+    } else {
+      DebugP_log("[%d]status_callback==DOWN\r\n",  state_netif->num);
+    }
 }
 #endif /* LWIP_NETIF_STATUS_CALLBACK */
 
@@ -373,11 +373,15 @@ test_netif_init(void)
 #endif /* LWIP_IPV4 */
 
 #if LWIP_IPV4
+  hlwipIfApp = LwipifEnetApp_getHandle();
   /* Open the netif and get it populated*/
-  LwipifEnetApp_netifOpen(NETIF_INST_ID0, &ipaddr, &netmask, &gw);
-  netif[NETIF_INST_ID0] = LwipifEnetApp_getNetifFromId(NETIF_INST_ID0);
+  for (i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
+  {
+    netif[i] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
+    LwipifEnetApp_startSchedule(hlwipIfApp, netif[i]);
+  }
 
-  LwipifEnetApp_startSchedule(netif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
+//  LwipifEnetApp_startSchedule(netif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
 #else
   init_default_netif();
 #endif
@@ -776,7 +780,7 @@ main_loop(void * a0)
   /* Close the netif */
   for (uint32_t i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
   {
-    LwipifEnetApp_netifClose(NETIF_INST_ID0 + i);
+    LwipifEnetApp_netifClose(hlwipIfApp, NETIF_INST_ID0 + i);
   }
 #endif /* USE_ETHERNET */
 }

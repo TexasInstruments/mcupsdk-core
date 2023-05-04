@@ -82,8 +82,9 @@ void EnetCpswInterVlan_mainTask(void *args)
     memset(&gEnetCpswInterVlan, 0, sizeof(gEnetCpswInterVlan));
     gEnetCpswInterVlan.exitFlag = false;
 
-    EnetApp_getEnetInstInfo(&gEnetCpswInterVlan.enetType,
-                                &gEnetCpswInterVlan.instId);
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0,
+                            &gEnetCpswInterVlan.enetType,
+                            &gEnetCpswInterVlan.instId);
 
     EnetApp_getEnetInstMacInfo(gEnetCpswInterVlan.enetType,
                                 gEnetCpswInterVlan.instId,

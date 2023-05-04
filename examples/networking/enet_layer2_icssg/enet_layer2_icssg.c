@@ -69,12 +69,13 @@
 /* ========================================================================== */
 
 /* Max number of ports supported per context */
-#define ENETMP_PORT_MAX                          (2U)
+#define ENETMP_PORT_MAX                          (ENET_SYSCFG_NUM_EXT_MAC_PORTS)
 
 
 /* Max number of hardware RX channels. Note that this is different than Enet LLD's
  * RX channel concept which maps to UDMA hardware RX flows */
 #define ENETMP_HW_RXCH_MAX                       (2U)
+#define ENETMP_HW_RXFLOW_MAX                     (8U)
 
 /* Local flag to disable a peripheral from test list */
 #define ENETMP_DISABLED                          (0U)
@@ -91,28 +92,15 @@
 
 /*Counting Semaphore count*/
 #define COUNTING_SEM_COUNT                       (10U)
-
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 /* Test parameters for each port in the multiport test */
-typedef struct EnetMp_TestParams_s
+typedef struct EnetMp_contextName_s
 {
-    /* Peripheral type */
-    Enet_Type enetType;
-
-    /* Peripheral instance */
-    uint32_t instId;
-
-    /* Peripheral's MAC ports to use */
-    Enet_MacPort macPort[ENETMP_PORT_MAX];
-
-    /* Number of MAC ports in macPorts array */
-    uint32_t macPortNum;
-
-    /* Name of this port to be used for logging */
+    /* Name to be used for logging */
     char *name;
-} EnetMp_TestParams;
+} EnetMp_contextName;
 
 /* Context of a peripheral/port */
 typedef struct EnetMp_PerCtxt_s
@@ -123,11 +111,27 @@ typedef struct EnetMp_PerCtxt_s
     /* Peripheral instance */
     uint32_t instId;
 
+    /* Number of RX Flows associated to this context */
+    uint32_t rxChCount;
+
+    /* Start Channel ID of the RX Flow associated to this context. It is assumed
+     * that 'rxChCount' number of Rx Flows for this context is allocated contiguously
+     * from rxChStartId. Note that concept of channels inside flows is hidden to application */
+    uint32_t rxChStartId;
+
+    /* Number of TX Channels associated to this context */
+    uint32_t txChCount;
+
+    /* Start Channel ID of the TX Channels associated to this context. It is assumed
+     * that 'txChCount' number of Tx Channels for this context is allocated contiguously
+     * from txChStartId */
+    uint32_t txChStartId;
+
     /* Peripheral's MAC ports to use */
     Enet_MacPort macPort[ENETMP_PORT_MAX];
 
     /* Number of MAC ports in macPorts array */
-    uint32_t macPortNum;
+    uint8_t macPortNum;
 
     /* Name of this port to be used for logging */
     char *name;
@@ -135,31 +139,30 @@ typedef struct EnetMp_PerCtxt_s
     /* ICSSG configuration */
     Icssg_Cfg icssgCfg;
 
+    /* Number of valid MAC address entries present in macAddr variable below*/
+    uint8_t numValidMacAddress;
+
     /* MAC address. It's port's MAC address in Dual-MAC or
      * host port's MAC addres in Switch */
-    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+    uint8_t macAddr[ENET_SYSCFG_RX_FLOWS_NUM][ENET_MAC_ADDR_LEN];
 
     /* UDMA driver configuration */
     EnetUdma_Cfg dmaCfg;
 
     /* TX channel number */
-    uint32_t txChNum;
+    uint32_t txChNum[ENET_SYSCFG_TX_CHANNELS_NUM];
 
     /* TX channel handle */
-    EnetDma_TxChHandle hTxCh;
+    EnetDma_TxChHandle hTxCh[ENET_SYSCFG_TX_CHANNELS_NUM];
 
     /* Start flow index */
-    uint32_t rxStartFlowIdx[ENETMP_HW_RXCH_MAX];
+    uint32_t rxStartFlowIdx[ENET_SYSCFG_RX_FLOWS_NUM];
 
     /* Flow index */
-    uint32_t rxFlowIdx[ENETMP_HW_RXCH_MAX];
+    uint32_t rxFlowIdx[ENET_SYSCFG_RX_FLOWS_NUM];
 
     /* RX channel handle */
-    EnetDma_RxChHandle hRxCh[ENETMP_HW_RXCH_MAX];
-
-    /* Number of RX channels in hardware. This value is 1 for all peripherals,
-     * except for ICSSG Switch where there are two UDMA RX channels */
-    uint32_t numHwRxCh;
+    EnetDma_RxChHandle hRxCh[ENET_SYSCFG_RX_FLOWS_NUM];
 
     /* RX task handle - receives packets, changes source/dest MAC addresses
      * and transmits the packets back */
@@ -286,24 +289,18 @@ IcssgStats_MacPort gEnetMp_icssgStats;
 IcssgStats_Pa gEnetMp_icssgPaStats;
 uint32_t reqTs = 0;
 
+uint32_t count[2][8] = {{0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0}};
+
 /* Test application stack */
-static uint8_t gEnetMpTaskStackRx[ENETMP_PER_MAX][ENETMP_TASK_STACK_SZ] __attribute__ ((aligned(32)));
+static uint8_t gEnetMpTaskStackRx[ENET_SYSCFG_MAX_ENET_INSTANCES][ENETMP_TASK_STACK_SZ] __attribute__ ((aligned(32)));
 
 // #define ENET_TEST_MII_MODE
 // #define DUAL_MAC_MODE  /* TODO: Need to allocate TX channels as 2 in enet_cfg.h file to get both MAC ports work simultaneously*/
 /* Use this array to select the ports that will be used in the test */
-static EnetMp_TestParams testParams[] =
+static EnetMp_contextName testParamsName[] =
 {
-#if ENET_SYSCFG_DUAL_MAC
-#if ENET_SYSCFG_DUALMAC_PORT1_ENABLED
-    { ENET_ICSSG_DUALMAC, 2U, { ENET_MAC_PORT_1 }, 1U, "icssg1-p1", },
-#endif
-#if ENET_SYSCFG_DUALMAC_PORT2_ENABLED
-    { ENET_ICSSG_DUALMAC, 3U, { ENET_MAC_PORT_2 }, 1U, "icssg1-p2", },
-#endif
-#else
-    { ENET_ICSSG_SWITCH, 1U, { ENET_MAC_PORT_1, ENET_MAC_PORT_2 }, 2U, "icssg1", },
-#endif
+    { "icssg1-p1" },
+    { "icssg1-p2" },
 };
 
 /* ========================================================================== */
@@ -325,7 +322,7 @@ static void EnetMp_showMenu(void)
 void EnetMp_mainTask(void *args)
 {
     char option;
-    uint32_t i, j;
+    uint32_t i;
     int32_t status = ENET_SOK;
 
     Drivers_open();
@@ -341,19 +338,17 @@ void EnetMp_mainTask(void *args)
     gEnetMp.promisc = false;
     gEnetMp.enableTs = false;
 
-    gEnetMp.numPerCtxts = ENET_ARRAYSIZE(testParams);
+    gEnetMp.numPerCtxts = ENET_SYSCFG_NUM_PERIPHERAL;
 
     for (i = 0U; i < gEnetMp.numPerCtxts; i++)
     {
-        gEnetMp.perCtxt[i].enetType = testParams[i].enetType;
-        gEnetMp.perCtxt[i].instId   = testParams[i].instId;
-        gEnetMp.perCtxt[i].name     = testParams[i].name; /* shallow copy */
+        EnetApp_getEnetInstInfo(CONFIG_ENET_ICSS0 + i, &gEnetMp.perCtxt[i].enetType, &gEnetMp.perCtxt[i].instId);
+        gEnetMp.perCtxt[i].name = testParamsName[i].name; /* shallow copy */
 
-        gEnetMp.perCtxt[i].macPortNum = testParams[i].macPortNum;
-        for (j = 0; j < gEnetMp.perCtxt[i].macPortNum; j++)
-        {
-            gEnetMp.perCtxt[i].macPort[j]  = testParams[i].macPort[j];
-        }
+        EnetApp_getEnetInstMacInfo(gEnetMp.perCtxt[i].enetType,
+                                   gEnetMp.perCtxt[i].instId,
+                                   gEnetMp.perCtxt[i].macPort,
+                                   &gEnetMp.perCtxt[i].macPortNum);
     }
 
     /* Init driver */
@@ -637,6 +632,9 @@ static int32_t EnetMp_open(EnetMp_PerCtxt *perCtxts,
     /* Open Enet driver for all peripherals */
     EnetAppUtils_print("\nOpen all peripherals\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
+
+    EnetApp_driverInit();
+
     for (i = 0U; i < numPerCtxts; i++)
     {
         EnetMp_PerCtxt *perCtxt = &perCtxts[i];
@@ -700,7 +698,7 @@ static int32_t EnetMp_open(EnetMp_PerCtxt *perCtxts,
 
             EnetAppUtils_print("%s: Create RX task\r\n", perCtxt->name);
 
-            EnetMp_createRxTask(perCtxt, &gEnetMpTaskStackRx[i][0U], sizeof(gEnetMpTaskStackRx[i]));
+            EnetMp_createRxTask(perCtxt, &gEnetMpTaskStackRx[i][0U], ENETMP_TASK_STACK_SZ);
         }
     }
 
@@ -911,7 +909,7 @@ static void EnetMp_printStats(EnetMp_PerCtxt *perCtxts,
 
         for (j = 0U; j < perCtxt->macPortNum; j++)
         {
-            macPort = perCtxt->macPort[j];
+            macPort = ENET_MAC_PORT_1 + j;
 
             EnetAppUtils_print("\n %s - Port %u statistics\r\n", perCtxt->name, ENET_MACPORT_ID(macPort));
             EnetAppUtils_print("--------------------------------\r\n");
@@ -974,16 +972,16 @@ static void EnetMp_resetStats(EnetMp_PerCtxt *perCtxts,
 static void EnetMp_showMacAddrs(EnetMp_PerCtxt *perCtxts,
                                 uint32_t numPerCtxts)
 {
-    uint32_t i;
-
     EnetAppUtils_print("\nAllocated MAC addresses\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
-    for (i = 0U; i < numPerCtxts; i++)
+    for (uint32_t ctxIdx = 0U; ctxIdx < numPerCtxts; ctxIdx++)
     {
-        EnetMp_PerCtxt *perCtxt = &gEnetMp.perCtxt[i];
-
+        EnetMp_PerCtxt *perCtxt = &gEnetMp.perCtxt[ctxIdx];
         EnetAppUtils_print("%s: \t", perCtxt->name);
-        EnetAppUtils_printMacAddr(&perCtxt->macAddr[0U]);
+        for (uint32_t macAddrIdx = 0U; macAddrIdx < perCtxt->numValidMacAddress; macAddrIdx++)
+        {
+                EnetAppUtils_printMacAddr(&perCtxt->macAddr[macAddrIdx][0]);
+        }
     }
 }
 
@@ -1198,46 +1196,58 @@ static void EnetMp_rxIsrFxn(void *appData)
     SemaphoreP_post(&perCtxt->rxSemObj);
 }
 
-#define ENETAPP_NUM_TX_CH_PER_PERCTXT     (ENET_SYSCFG_TX_CHANNELS_NUM/gEnetMp.numPerCtxts)
-#define ENETAPP_NUM_RX_FLOW_PER_PERCTXT   (ENET_SYSCFG_RX_FLOWS_NUM/gEnetMp.numPerCtxts)
-
-static int32_t EnetMp_openDma(EnetMp_PerCtxt *perCtxt,uint32_t  perCtxtIndex)
+static int32_t EnetMp_openDma(EnetMp_PerCtxt *perCtxt, uint32_t perCtxtIndex)
 {
     EnetApp_GetDmaHandleInArgs     txInArgs;
     EnetApp_GetTxDmaHandleOutArgs  txChInfo;
-    uint32_t i;
     int32_t status = ENET_SOK;
 
     /* Open the TX channel */
-    txInArgs.cbArg    = NULL;
-    txInArgs.notifyCb = NULL;
-
-    EnetApp_getTxDmaHandle((ENET_DMA_TX_CH0 + (perCtxtIndex * ENETAPP_NUM_TX_CH_PER_PERCTXT)),
-                           &txInArgs,
-                           &txChInfo);
-    perCtxt->txChNum = txChInfo.txChNum;
-    perCtxt->hTxCh   = txChInfo.hTxCh;
-    EnetAppUtils_assert(txChInfo.useGlobalEvt == true);
-    EnetAppUtils_assert(txChInfo.maxNumTxPkts >= (ENET_SYSCFG_TOTAL_NUM_TX_PKT/2U));
-
-    if (perCtxt->hTxCh == NULL)
-    {
-#if FIX_RM
-        /* Free the channel number if open Tx channel failed */
-        EnetAppUtils_freeTxCh(perCtxt->handleInfo.hEnet,
-                              perCtxt->attachInfo.coreKey,
-                              gEnetMp.coreId,
-                              gEnetMp.txChNum);
+#if (ENET_SYSCFG_MAX_ENET_INSTANCES > 1)
+    const uint32_t startChId = (perCtxtIndex == 0) ? CONFIG_ENET_ICSS0_TX_CH_START : CONFIG_ENET_ICSS1_TX_CH_START;
+    const uint32_t txChCount = (perCtxtIndex == 0) ? CONFIG_ENET_ICSS0_TX_CH_COUNT : CONFIG_ENET_ICSS1_TX_CH_COUNT;
+#else
+    const uint32_t startChId = CONFIG_ENET_ICSS0_TX_CH_START;
+    const uint32_t txChCount = CONFIG_ENET_ICSS0_TX_CH_COUNT;
 #endif
-        EnetAppUtils_print("EnetMp_openDma() failed to open TX channel\r\n");
-        status = ENET_EFAIL;
-        EnetAppUtils_assert(perCtxt->hTxCh != NULL);
-    }
-
-    /* Allocate TX packets and keep them locally enqueued */
-    if (status == ENET_SOK)
+    perCtxt->txChStartId = startChId;
+    perCtxt->txChCount   = txChCount;
+    for (uint32_t chIdx = 0; chIdx < txChCount; chIdx++)
     {
-        EnetMp_initTxFreePktQ();
+        /* Open the TX channel */
+        const uint32_t txChId = startChId + chIdx;
+        txInArgs.enetType = perCtxt->enetType;
+        txInArgs.instId   = perCtxt->instId;
+        txInArgs.cbArg    = NULL;
+        txInArgs.notifyCb = NULL;
+
+        EnetApp_getTxDmaHandle(txChId,
+                               &txInArgs,
+                               &txChInfo);
+
+        perCtxt->txChNum[chIdx] = txChInfo.txChNum;
+        perCtxt->hTxCh[chIdx]   = txChInfo.hTxCh;
+        EnetAppUtils_assert(txChInfo.useGlobalEvt == true);
+
+        if (perCtxt->hTxCh[chIdx] == NULL)
+        {
+#if FIX_RM
+            /* Free the channel number if open Tx channel failed */
+            EnetAppUtils_freeTxCh(perCtxt->handleInfo.hEnet,
+                                  perCtxt->attachInfo.coreKey,
+                                  appPnHandle->gEnetPn.coreId,
+                                  perCtxt->txChNum[chIdx]);
+#endif
+            EnetAppUtils_print("EnetMp_openDma() failed to open TX channel\r\n");
+            status = ENET_EFAIL;
+            EnetAppUtils_assert(perCtxt->hTxCh[chIdx] != NULL);
+        }
+
+        /* Allocate TX packets and keep them locally enqueued */
+        if (status == ENET_SOK)
+        {
+            EnetMp_initTxFreePktQ();
+        }
     }
 
     /* Open the RX flow */
@@ -1245,45 +1255,48 @@ static int32_t EnetMp_openDma(EnetMp_PerCtxt *perCtxt,uint32_t  perCtxtIndex)
     {
         EnetApp_GetDmaHandleInArgs     rxInArgs;
         EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
+#if (ENET_SYSCFG_MAX_ENET_INSTANCES > 1)
+        const uint32_t startChId = (perCtxtIndex == 0) ? CONFIG_ENET_ICSS0_RX_CH_START : CONFIG_ENET_ICSS1_RX_CH_START;
+        const uint32_t rxChCount = (perCtxtIndex == 0) ? CONFIG_ENET_ICSS0_RX_CH_COUNT : CONFIG_ENET_ICSS1_RX_CH_COUNT;
+#else
+    const uint32_t startChId = CONFIG_ENET_ICSS0_RX_CH_START;
+    const uint32_t rxChCount = CONFIG_ENET_ICSS0_RX_CH_COUNT;
+#endif
+        perCtxt->rxChStartId = startChId;
+        perCtxt->rxChCount   = rxChCount;
 
-        perCtxt->numHwRxCh = (perCtxt->enetType == ENET_ICSSG_SWITCH) ? 2U : 1U;
-
-        for (i = 0U; i < perCtxt->numHwRxCh; i++)
+        for (uint32_t flowIdx = 0U; flowIdx < rxChCount; flowIdx++)
         {
+            const uint32_t rxChId = startChId + flowIdx;
+            rxInArgs.enetType = perCtxt->enetType;
+            rxInArgs.instId   = perCtxt->instId;
             rxInArgs.notifyCb = EnetMp_rxIsrFxn;
             rxInArgs.cbArg    = perCtxt;
 
-            EnetApp_getRxDmaHandle((ENET_DMA_RX_CH0 + i) + (perCtxtIndex * ENETAPP_NUM_RX_FLOW_PER_PERCTXT),
-                                   &rxInArgs,
-                                   &rxChInfo);
+            EnetApp_getRxDmaHandle(rxChId,
+                                    &rxInArgs,
+                                    &rxChInfo);
 
             EnetAppUtils_assert(rxChInfo.useGlobalEvt == true);
-            EnetAppUtils_assert(rxChInfo.sizeThreshEn == 0U);
-            EnetAppUtils_assert(rxChInfo.maxNumRxPkts >= (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2U));
-            EnetAppUtils_assert(rxChInfo.useDefaultFlow == true);
-            EnetAppUtils_assert(rxChInfo.chIdx == i);
-            perCtxt->rxStartFlowIdx[i] = rxChInfo.rxFlowStartIdx;
-            perCtxt->rxFlowIdx[i]      = rxChInfo.rxFlowIdx;
-            perCtxt->hRxCh[i]          = rxChInfo.hRxCh;
-            if (rxChInfo.macAddressValid == true)
+
+            perCtxt->rxStartFlowIdx[flowIdx] = rxChInfo.rxFlowStartIdx;
+            perCtxt->rxFlowIdx[flowIdx]      = rxChInfo.rxFlowIdx;
+            perCtxt->hRxCh[flowIdx]          = rxChInfo.hRxCh;
+            perCtxt->numValidMacAddress      += rxChInfo.numValidMacAddress;
+            for (uint32_t macAddrIdx = 0; macAddrIdx < rxChInfo.numValidMacAddress; macAddrIdx++)
             {
-                EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr);
+                EnetUtils_copyMacAddr(&perCtxt->macAddr[perCtxt->numValidMacAddress - 1][0], &rxChInfo.macAddr[macAddrIdx][0]);
+                EnetAppUtils_printMacAddr(&perCtxt->macAddr[perCtxt->numValidMacAddress - 1][0]);
             }
-            if (perCtxt->hRxCh[i] == NULL)
+
+            if (perCtxt->hRxCh[flowIdx] == NULL)
             {
                 EnetAppUtils_print("EnetMp_openRxCh() failed to open RX flow\r\n");
                 status = ENET_EFAIL;
-                EnetAppUtils_assert(perCtxt->hRxCh[i] != NULL);
+                EnetAppUtils_assert(perCtxt->hRxCh[flowIdx] != NULL);
             }
-        }
-    }
-
-    /* Submit all ready RX buffers to DMA */
-    if (status == ENET_SOK)
-    {
-        for (i = 0U; i < perCtxt->numHwRxCh; i++)
-        {
-            EnetMp_initRxReadyPktQ(perCtxt->hRxCh[i]);
+            /* Submit all ready RX buffers to DMA */
+            EnetMp_initRxReadyPktQ(perCtxt->hRxCh[flowIdx]);
         }
     }
 
@@ -1294,15 +1307,15 @@ static void EnetMp_closeDma(EnetMp_PerCtxt *perCtxt, uint32_t perCtxtIndex)
 {
     EnetDma_PktQ fqPktInfoQ;
     EnetDma_PktQ cqPktInfoQ;
-    uint32_t i;
 
     EnetQueue_initQ(&fqPktInfoQ);
     EnetQueue_initQ(&cqPktInfoQ);
 
     /* Close RX channel */
-    for (i = 0U; i < perCtxt->numHwRxCh; i++)
+    for (uint32_t chIdx = 0; chIdx < perCtxt->rxChCount; chIdx++)
     {
-        EnetApp_closeRxDma((ENET_DMA_RX_CH0 + i) + (perCtxtIndex * ENETAPP_NUM_RX_FLOW_PER_PERCTXT),
+        const uint32_t chId = perCtxt->rxChStartId + chIdx;
+        EnetApp_closeRxDma(chId,
                            perCtxt->handleInfo.hEnet,
                            perCtxt->attachInfo.coreKey,
                            gEnetMp.coreId,
@@ -1319,16 +1332,20 @@ static void EnetMp_closeDma(EnetMp_PerCtxt *perCtxt, uint32_t perCtxtIndex)
     /* Retrieve any pending TX packets from driver */
     EnetMp_retrieveFreeTxPkts(perCtxt);
 
-    EnetApp_closeTxDma((ENET_DMA_TX_CH0 + (perCtxtIndex * ENETAPP_NUM_TX_CH_PER_PERCTXT)),
-                       perCtxt->handleInfo.hEnet,
-                       perCtxt->attachInfo.coreKey,
-                       gEnetMp.coreId,
-                       &fqPktInfoQ,
-                       &cqPktInfoQ);
+    for (uint32_t chIdx = 0; chIdx < perCtxt->txChCount; chIdx++)
+    {
+        const uint32_t chId = perCtxt->txChStartId + chIdx;
 
-    EnetAppUtils_freePktInfoQ(&fqPktInfoQ);
-    EnetAppUtils_freePktInfoQ(&cqPktInfoQ);
+        EnetApp_closeTxDma(chId,
+                           perCtxt->handleInfo.hEnet,
+                           perCtxt->attachInfo.coreKey,
+                           gEnetMp.coreId,
+                           &fqPktInfoQ,
+                           &cqPktInfoQ);
 
+        EnetAppUtils_freePktInfoQ(&fqPktInfoQ);
+        EnetAppUtils_freePktInfoQ(&cqPktInfoQ);
+    }
     EnetAppUtils_freePktInfoQ(&gEnetMp.txFreePktInfoQ);
 }
 
@@ -1339,7 +1356,7 @@ static void EnetMp_initTxFreePktQ(void)
     uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
 
     /* Initialize TX EthPkts and queue them to txFreePktInfoQ */
-    for (i = 0U; i < (ENET_SYSCFG_TOTAL_NUM_TX_PKT/2); i++)
+    for (i = 0U; i < (ENET_SYSCFG_TOTAL_NUM_TX_PKT/ENET_SYSCFG_TX_CHANNELS_NUM); i++)
     {
         pPktInfo = EnetMem_allocEthPkt(&gEnetMp,
                                        ENETDMA_CACHELINE_ALIGNMENT,
@@ -1360,24 +1377,22 @@ static void EnetMp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh)
     EnetDma_PktQ rxReadyQ;
     EnetDma_PktQ rxFreeQ;
     EnetDma_Pkt *pPktInfo;
-    uint32_t i;
     int32_t status;
     uint32_t scatterSegments[] = { ENET_MEM_LARGE_POOL_PKT_SIZE };
 
     EnetQueue_initQ(&rxFreeQ);
 
-    for (i = 0U; i < (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2); i++)
-    {
-        pPktInfo = EnetMem_allocEthPkt(&gEnetMp,
-                                       ENETDMA_CACHELINE_ALIGNMENT,
-                                       ENET_ARRAYSIZE(scatterSegments),
-                                       scatterSegments);
-        EnetAppUtils_assert(pPktInfo != NULL);
 
-        ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
+    pPktInfo = EnetMem_allocEthPkt(&gEnetMp,
+                                   ENETDMA_CACHELINE_ALIGNMENT,
+                                   ENET_ARRAYSIZE(scatterSegments),
+                                   scatterSegments);
+    EnetAppUtils_assert(pPktInfo != NULL);
 
-        EnetQueue_enq(&rxFreeQ, &pPktInfo->node);
-    }
+    ENET_UTILS_SET_PKT_APP_STATE(&pPktInfo->pktState, ENET_PKTSTATE_APP_WITH_FREEQ);
+
+    EnetQueue_enq(&rxFreeQ, &pPktInfo->node);
+
 
     /* Retrieve any packets which are ready */
     EnetQueue_initQ(&rxReadyQ);
@@ -1402,32 +1417,35 @@ static uint32_t EnetMp_retrieveFreeTxPkts(EnetMp_PerCtxt *perCtxt)
 {
     EnetDma_PktQ txFreeQ;
     EnetDma_Pkt *pktInfo;
-    uint32_t txFreeQCnt = 0U;
+    uint32_t i, txFreeQCnt = 0U;
     int32_t status;
 
     EnetQueue_initQ(&txFreeQ);
 
     /* Retrieve any packets that may be free now */
-    status = EnetDma_retrieveTxPktQ(perCtxt->hTxCh, &txFreeQ);
-    if (status == ENET_SOK)
+    for (i = 0; i < perCtxt->txChCount; i++)
     {
-        txFreeQCnt = EnetQueue_getQCount(&txFreeQ);
-
-        pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
-        while (NULL != pktInfo)
+        status = EnetDma_retrieveTxPktQ(perCtxt->hTxCh[i], &txFreeQ);
+        if (status == ENET_SOK)
         {
-            EnetDma_checkPktState(&pktInfo->pktState,
-                                    ENET_PKTSTATE_MODULE_APP,
-                                    ENET_PKTSTATE_APP_WITH_DRIVER,
-                                    ENET_PKTSTATE_APP_WITH_FREEQ);
+            txFreeQCnt = EnetQueue_getQCount(&txFreeQ);
 
-            EnetQueue_enq(&gEnetMp.txFreePktInfoQ, &pktInfo->node);
             pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
+            while (NULL != pktInfo)
+            {
+                EnetDma_checkPktState(&pktInfo->pktState,
+                                        ENET_PKTSTATE_MODULE_APP,
+                                        ENET_PKTSTATE_APP_WITH_DRIVER,
+                                        ENET_PKTSTATE_APP_WITH_FREEQ);
+
+                EnetQueue_enq(&gEnetMp.txFreePktInfoQ, &pktInfo->node);
+                pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
+            }
         }
-    }
-    else
-    {
-        EnetAppUtils_print("retrieveFreeTxPkts() failed to retrieve pkts: %d\r\n", status);
+        else
+        {
+            EnetAppUtils_print("retrieveFreeTxPkts() failed to retrieve pkts: %d\r\n", status);
+        }
     }
 
     return txFreeQCnt;
@@ -1451,7 +1469,7 @@ static void EnetMp_createRxTask(EnetMp_PerCtxt *perCtxt,
     taskParams.stackSize      = taskStackSize;
     taskParams.args           = (void*)perCtxt;
     taskParams.name           = "Rx Task";
-    taskParams.taskMain           = &EnetMp_rxTask;
+    taskParams.taskMain       = &EnetMp_rxTask;
 
     status = TaskP_construct(&perCtxt->rxTaskObj, &taskParams);
     DebugP_assert(SystemP_SUCCESS == status);
@@ -1462,6 +1480,34 @@ static void EnetMp_destroyRxTask(EnetMp_PerCtxt *perCtxt)
     SemaphoreP_destruct(&perCtxt->rxSemObj);
     SemaphoreP_destruct(&perCtxt->rxDoneSemObj);
     TaskP_destruct(&perCtxt->rxTaskObj);
+}
+
+static int32_t set_priority_queue_mapping(EnetMp_PerCtxt *perCtx, uint8_t port_num, uint32_t *prioQueuetMap)
+{
+    int32_t retVal;
+    int32_t i;
+    EnetMacPort_SetEgressPriorityMapInArgs testPortPrioMap;
+    Enet_IoctlPrms prms;
+    EnetMp_PerCtxt *perCtxt = perCtx;
+
+    testPortPrioMap.macPort = port_num;
+    /* Enable queue configuration as per requirement */
+    for (i = 0; i < ENET_PRI_NUM; i++)
+    {
+        testPortPrioMap.priorityMap.priorityMap[i] = prioQueuetMap[i];
+    }
+
+    ENET_IOCTL_SET_IN_ARGS(&prms, &testPortPrioMap);
+
+    /* Configure Priority Remapping */
+    ENET_IOCTL(perCtxt->handleInfo.hEnet, gEnetMp.coreId, ENET_MACPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP, &prms, retVal);
+    if (retVal != ENET_SOK)
+    {
+        EnetAppUtils_print("ERROR: IOCTL command for priority mapping for PORT 1\n\r");
+        retVal = ENET_EFAIL;
+    }
+
+    return retVal;
 }
 
 static void EnetMp_rxTask(void *args)
@@ -1479,8 +1525,17 @@ static void EnetMp_rxTask(void *args)
 #if DEBUG
     uint32_t totalRxCnt = 0U;
 #endif
-    uint32_t i;
+    uint32_t flowIdx, prioMap[ENET_SYSCFG_RX_FLOWS_NUM];
     int32_t status = ENET_SOK;
+
+
+    for(flowIdx = 0; flowIdx< 8; flowIdx++)
+    {
+        prioMap[flowIdx] =  flowIdx;
+    }
+
+    status = set_priority_queue_mapping(perCtxt, ENET_MAC_PORT_1, prioMap);
+    status = set_priority_queue_mapping(perCtxt, ENET_MAC_PORT_2, prioMap);
 
     status = EnetMp_waitForLinkUp(perCtxt);
     if (status != ENET_SOK)
@@ -1508,7 +1563,7 @@ static void EnetMp_rxTask(void *args)
     if ((status == ENET_SOK) && (Enet_isIcssFamily(perCtxt->enetType)))
     {
         EnetAppUtils_print("%s: Set MAC addr: ", perCtxt->name);
-        EnetAppUtils_printMacAddr(&perCtxt->macAddr[0U]);
+        EnetAppUtils_printMacAddr(&perCtxt->macAddr[0U][0U]);//[flowIdx][MAC addr length]
 
         if (perCtxt->enetType == ENET_ICSSG_DUALMAC)
         {
@@ -1516,7 +1571,7 @@ static void EnetMp_rxTask(void *args)
 
             memset(&inArgs, 0, sizeof(inArgs));
             inArgs.macPort = perCtxt->macPort[0U];
-            EnetUtils_copyMacAddr(&inArgs.macAddr[0U], &perCtxt->macAddr[0U]);
+            EnetUtils_copyMacAddr(&inArgs.macAddr[0U], &perCtxt->macAddr[0U][0U]);//[flowIdx][MAC addr length]
             ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
 
             ENET_IOCTL(perCtxt->handleInfo.hEnet, gEnetMp.coreId, ICSSG_MACPORT_IOCTL_SET_MACADDR, &prms, status);
@@ -1526,7 +1581,7 @@ static void EnetMp_rxTask(void *args)
             Icssg_MacAddr addr; // FIXME Icssg_MacAddr type
 
             /* Set host port's MAC address */
-            EnetUtils_copyMacAddr(&addr.macAddr[0U], &perCtxt->macAddr[0U]);
+            EnetUtils_copyMacAddr(&addr.macAddr[0U], &perCtxt->macAddr[0U][0U]);//[flowIdx][MAC addr length]
             ENET_IOCTL_SET_IN_ARGS(&prms, &addr);
 
             ENET_IOCTL(perCtxt->handleInfo.hEnet, gEnetMp.coreId, ICSSG_HOSTPORT_IOCTL_SET_MACADDR, &prms, status);
@@ -1538,8 +1593,6 @@ static void EnetMp_rxTask(void *args)
         }
     }
 
-    EnetAppUtils_print("%s: MAC port addr: ", perCtxt->name);
-    EnetAppUtils_printMacAddr(&perCtxt->macAddr[0U]);
 
     while ((ENET_SOK == status) && (gEnetMp.run))
     {
@@ -1549,132 +1602,140 @@ static void EnetMp_rxTask(void *args)
         /* All peripherals have single hardware RX channel, so we only need to retrieve
          * packets from a single flow.  But ICSSG Switch has two hardware channels, so
          * we need to retrieve packets from two flows, one flow per channel */
-        for (i = 0U; i < perCtxt->numHwRxCh; i++)
-        {
-            EnetQueue_initQ(&rxReadyQ);
-            EnetQueue_initQ(&rxFreeQ);
-            EnetQueue_initQ(&txSubmitQ);
 
-            /* Get the packets received so far */
-            status = EnetDma_retrieveRxPktQ(perCtxt->hRxCh[i], &rxReadyQ);
-            if (status != ENET_SOK)
+            for (flowIdx = 0; flowIdx < perCtxt->rxChCount; flowIdx++)
             {
-                /* Should we bail out here? */
-                EnetAppUtils_print("Failed to retrieve RX pkt queue: %d\r\n", status);
-                continue;
-            }
-#if DEBUG
-            EnetAppUtils_print("%s: Received %u packets\r\n", perCtxt->name, EnetQueue_getQCount(&rxReadyQ));
-            totalRxCnt += EnetQueue_getQCount(&rxReadyQ);
-#endif
-            reqTs = 0U;
+                EnetQueue_initQ(&rxReadyQ);
+                EnetQueue_initQ(&rxFreeQ);
+                EnetQueue_initQ(&txSubmitQ);
 
-            /* Consume the received packets and send them back */
-            rxPktInfo = (EnetDma_Pkt *)EnetQueue_deq(&rxReadyQ);
-            while (rxPktInfo != NULL)
-            {
-                rxFrame = (EthFrame *)rxPktInfo->sgList.list[0].bufPtr;
-                EnetDma_checkPktState(&rxPktInfo->pktState,
-                                      ENET_PKTSTATE_MODULE_APP,
-                                      ENET_PKTSTATE_APP_WITH_DRIVER,
-                                      ENET_PKTSTATE_APP_WITH_READYQ);
-
-                /* Retrieve TX packets from driver and recycle them */
-                EnetMp_retrieveFreeTxPkts(perCtxt);
-
-                /* Dequeue one free TX Eth packet */
-                txPktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gEnetMp.txFreePktInfoQ);
-                if (txPktInfo != NULL)
+                /* Get the packets received so far */
+                status = EnetDma_retrieveRxPktQ(perCtxt->hRxCh[flowIdx], &rxReadyQ);
+                if (status != ENET_SOK)
                 {
-                    /* Fill the TX Eth frame with test content */
-                    txFrame = (EthFrame *)txPktInfo->sgList.list[0].bufPtr;
-                    memcpy(txFrame->hdr.dstMac, rxFrame->hdr.srcMac, ENET_MAC_ADDR_LEN);
-                    memcpy(txFrame->hdr.srcMac, &perCtxt->macAddr[0U], ENET_MAC_ADDR_LEN);
-                    txFrame->hdr.etherType = rxFrame->hdr.etherType;
+                    /* Should we bail out here? */
+                    EnetAppUtils_print("Failed to retrieve RX pkt queue: %d\r\n", status);
+                    continue;
+                }
+#if DEBUG
+                EnetAppUtils_print("%s: Received %u packets\r\n", perCtxt->name, EnetQueue_getQCount(&rxReadyQ));
+                totalRxCnt += EnetQueue_getQCount(&rxReadyQ);
+#endif
+                reqTs = 0U;
+                count[0][flowIdx] += EnetQueue_getQCount(&rxReadyQ);
 
-                    memcpy(&txFrame->payload[0U],
-                           &rxFrame->payload[0U],
-                           rxPktInfo->sgList.list[0].segmentFilledLen - sizeof(EthFrameHeader));
+                /* Consume the received packets and send them back */
+                rxPktInfo = (EnetDma_Pkt *)EnetQueue_deq(&rxReadyQ);
+                while (rxPktInfo != NULL)
+                {
+                    rxFrame = (EthFrame *)rxPktInfo->sgList.list[0].bufPtr;
+                    EnetDma_checkPktState(&rxPktInfo->pktState,
+                                          ENET_PKTSTATE_MODULE_APP,
+                                          ENET_PKTSTATE_APP_WITH_DRIVER,
+                                          ENET_PKTSTATE_APP_WITH_READYQ);
 
-                    txPktInfo->sgList.list[0].segmentFilledLen = rxPktInfo->sgList.list[0].segmentFilledLen;
-                    txPktInfo->sgList.numScatterSegments = 1;
-                    txPktInfo->chkSumInfo = 0U;
-                    txPktInfo->appPriv = &gEnetMp;
+                    /* Retrieve TX packets from driver and recycle them */
+                    EnetMp_retrieveFreeTxPkts(perCtxt);
 
-                    /* Set timestamp info in DMA packet.
-                     * Packet timestamp currently enabled only for ICSSG. */
-                    if (gEnetMp.enableTs &&
-                        Enet_isIcssFamily(perCtxt->enetType))
+                    /* Dequeue one free TX Eth packet */
+                    txPktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gEnetMp.txFreePktInfoQ);
+                    if (txPktInfo != NULL)
                     {
-                        /* Save the timestamp of received packet that we are about to send back,
-                         * so we can calculate the RX-to-TX time diffence in TX timestamp callback */
-                        perCtxt->rxTs[perCtxt->txTsSeqId % ENET_SYSCFG_TOTAL_NUM_RX_PKT] = rxPktInfo->tsInfo.rxPktTs;
+                        /* Fill the TX Eth frame with test content */
+                        txFrame = (EthFrame *)txPktInfo->sgList.list[0].bufPtr;
+                        memcpy(txFrame->hdr.dstMac, rxFrame->hdr.srcMac, ENET_MAC_ADDR_LEN);
+                        memcpy(txFrame->hdr.srcMac, &perCtxt->macAddr[0U], ENET_MAC_ADDR_LEN);
+                        txFrame->hdr.etherType = rxFrame->hdr.etherType;
 
-                        txPktInfo->tsInfo.enableHostTxTs = true;
-                        txPktInfo->tsInfo.txPktSeqId     = perCtxt->txTsSeqId++;
-                        txPktInfo->tsInfo.txPktMsgType   = 0U; /* Don't care for ICSSG */
-                        txPktInfo->tsInfo.txPktDomain    = 0U; /* Don't care for ICSSG */
-                        reqTs++;
+                        memcpy(&txFrame->payload[0U],
+                               &rxFrame->payload[0U],
+                               rxPktInfo->sgList.list[0].segmentFilledLen - sizeof(EthFrameHeader));
+
+                        txPktInfo->sgList.list[0].segmentFilledLen = rxPktInfo->sgList.list[0].segmentFilledLen;
+                        txPktInfo->sgList.numScatterSegments = 1;
+                        txPktInfo->chkSumInfo = 0U;
+                        txPktInfo->appPriv = &gEnetMp;
+
+                        /* Set timestamp info in DMA packet.
+                         * Packet timestamp currently enabled only for ICSSG. */
+                        if (gEnetMp.enableTs &&
+                            Enet_isIcssFamily(perCtxt->enetType))
+                        {
+                            /* Save the timestamp of received packet that we are about to send back,
+                             * so we can calculate the RX-to-TX time diffence in TX timestamp callback */
+                            perCtxt->rxTs[perCtxt->txTsSeqId % ENET_SYSCFG_TOTAL_NUM_RX_PKT] = rxPktInfo->tsInfo.rxPktTs;
+
+                            txPktInfo->tsInfo.enableHostTxTs = true;
+                            txPktInfo->tsInfo.txPktSeqId     = perCtxt->txTsSeqId++;
+                            txPktInfo->tsInfo.txPktMsgType   = 0U; /* Don't care for ICSSG */
+                            txPktInfo->tsInfo.txPktDomain    = 0U; /* Don't care for ICSSG */
+                            reqTs++;
+                        }
+                        else
+                        {
+                            txPktInfo->tsInfo.enableHostTxTs = false;
+                        }
+
+                        EnetDma_checkPktState(&txPktInfo->pktState,
+                                              ENET_PKTSTATE_MODULE_APP,
+                                              ENET_PKTSTATE_APP_WITH_FREEQ,
+                                              ENET_PKTSTATE_APP_WITH_DRIVER);
+
+                        /* Enqueue the packet for later transmission */
+                        EnetQueue_enq(&txSubmitQ, &txPktInfo->node);
                     }
                     else
                     {
-                        txPktInfo->tsInfo.enableHostTxTs = false;
+                        EnetAppUtils_print("%s: Drop due to TX pkt not available\r\n", perCtxt->name);
                     }
 
-                    EnetDma_checkPktState(&txPktInfo->pktState,
+                    EnetDma_checkPktState(&rxPktInfo->pktState,
                                           ENET_PKTSTATE_MODULE_APP,
-                                          ENET_PKTSTATE_APP_WITH_FREEQ,
-                                          ENET_PKTSTATE_APP_WITH_DRIVER);
+                                          ENET_PKTSTATE_APP_WITH_READYQ,
+                                          ENET_PKTSTATE_APP_WITH_FREEQ);
 
-                    /* Enqueue the packet for later transmission */
-                    EnetQueue_enq(&txSubmitQ, &txPktInfo->node);
+                    /* Release the received packet */
+                    EnetQueue_enq(&rxFreeQ, &rxPktInfo->node);
+                    rxPktInfo = (EnetDma_Pkt *)EnetQueue_deq(&rxReadyQ);
                 }
-                else
+
+                /* Transmit all enqueued packets */
+#if ENET_SYSCFG_DUAL_MAC
+                const uint32_t txChIdx = flowIdx;
+#else
+                const uint32_t txChIdx = flowIdx / 2;
+#endif
+                status = EnetDma_submitTxPktQ(perCtxt->hTxCh[txChIdx], &txSubmitQ);
+                if (status != ENET_SOK)
                 {
-                    EnetAppUtils_print("%s: Drop due to TX pkt not available\r\n", perCtxt->name);
+                    EnetAppUtils_print("%s: Failed to submit TX pkt queue: %d\r\n", perCtxt->name, status);
                 }
 
-                EnetDma_checkPktState(&rxPktInfo->pktState,
-                                      ENET_PKTSTATE_MODULE_APP,
-                                      ENET_PKTSTATE_APP_WITH_READYQ,
-                                      ENET_PKTSTATE_APP_WITH_FREEQ);
+                EnetAppUtils_validatePacketState(&rxFreeQ,
+                                                 ENET_PKTSTATE_APP_WITH_FREEQ,
+                                                 ENET_PKTSTATE_APP_WITH_DRIVER);
 
-                /* Release the received packet */
-                EnetQueue_enq(&rxFreeQ, &rxPktInfo->node);
-                rxPktInfo = (EnetDma_Pkt *)EnetQueue_deq(&rxReadyQ);
-            }
-
-            /* Transmit all enqueued packets */
-            status = EnetDma_submitTxPktQ(perCtxt->hTxCh, &txSubmitQ);
-            if (status != ENET_SOK)
-            {
-                EnetAppUtils_print("%s: Failed to submit TX pkt queue: %d\r\n", perCtxt->name, status);
-            }
-
-            EnetAppUtils_validatePacketState(&rxFreeQ,
-                                             ENET_PKTSTATE_APP_WITH_FREEQ,
-                                             ENET_PKTSTATE_APP_WITH_DRIVER);
-
-            /* Wait for TX timestamp */
-            while (gEnetMp.run && (reqTs != 0U))
-            {
-                Enet_MacPort macPort = ENET_MACPORT_DENORM(i);
-
-                Enet_poll(perCtxt->handleInfo.hEnet, ENET_EVT_TIMESTAMP_TX, &macPort, sizeof(macPort));
-                semStatus = SemaphoreP_pend(&perCtxt->txTsSemObj, 1U);
-                if (semStatus == SystemP_SUCCESS)
+                /* Wait for TX timestamp */
+                while (gEnetMp.run && (reqTs != 0U))
                 {
-                    continue;
+                    Enet_MacPort macPort = perCtxt->macPort[0];
+
+                    Enet_poll(perCtxt->handleInfo.hEnet, ENET_EVT_TIMESTAMP_TX, &macPort, sizeof(macPort));
+                    semStatus = SemaphoreP_pend(&perCtxt->txTsSemObj, 1U);
+                    if (semStatus == SystemP_SUCCESS)
+                    {
+                        continue;
+                    }
+                }
+
+                /* Submit now processed buffers */
+                EnetDma_submitRxPktQ(perCtxt->hRxCh[flowIdx], &rxFreeQ);
+                if (status != ENET_SOK)
+                {
+                    EnetAppUtils_print("%s: Failed to submit RX pkt queue: %d\r\n", perCtxt->name, status);
                 }
             }
 
-            /* Submit now processed buffers */
-            EnetDma_submitRxPktQ(perCtxt->hRxCh[i], &rxFreeQ);
-            if (status != ENET_SOK)
-            {
-                EnetAppUtils_print("%s: Failed to submit RX pkt queue: %d\r\n", perCtxt->name, status);
-            }
-        }
     }
 
 #if DEBUG

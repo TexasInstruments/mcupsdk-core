@@ -162,8 +162,9 @@ int32_t EnetApp_openDma(void)
                               &rxChInfo);
         gEnetApp.rxChNum = rxChInfo.rxChNum;
         gEnetApp.hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-        EnetUtils_copyMacAddr(gEnetApp.macAddr, rxChInfo.macAddr);
+        EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
+        EnetUtils_copyMacAddr(gEnetApp.macAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
+
         if (gEnetApp.hRxCh == NULL)
         {
             EnetAppUtils_print("EnetApp_openRxCh() failed to open RX flow\r\n");

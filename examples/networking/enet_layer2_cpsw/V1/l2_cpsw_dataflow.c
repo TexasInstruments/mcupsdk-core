@@ -128,8 +128,8 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt, uint32_t perCtxtIndex)
                                &rxChInfo);
         perCtxt->rxChNum = rxChInfo.rxChNum;
         perCtxt->hRxCh  = rxChInfo.hRxCh;
-        EnetAppUtils_assert(rxChInfo.macAddressValid == true);
-        EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr);
+        EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1);
+        EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
 
         if (perCtxt->hRxCh == NULL)
         {
@@ -137,8 +137,8 @@ int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt, uint32_t perCtxtIndex)
             status = ENET_EFAIL;
             EnetAppUtils_assert(perCtxt->hRxCh != NULL);
         }
-		else
-		{
+        else
+        {
             /* Submit all ready RX buffers to DMA.*/
             EnetApp_initRxReadyPktQ(perCtxt->hRxCh);
 		}

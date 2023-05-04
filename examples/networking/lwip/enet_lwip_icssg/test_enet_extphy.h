@@ -67,13 +67,9 @@ int32_t   EnetApp_getExtPhyLinkCfgInfo(Enet_Type enetType,
                                        uint32_t phyAddr,
                                        EnetPhy_LinkCfg *phyLinkCfg);
 
-int32_t EnetApp_mdioLinkIntHandlerTask(Enet_Type enetType, uint32_t instId);
+int32_t EnetApp_mdioLinkIntHandlerTask(Enet_Type port2EnetType[ENET_SYSCFG_MAX_MAC_PORTS], uint32_t port2InstId[ENET_SYSCFG_MAX_MAC_PORTS]);
 
-
-int32_t EnetApp_createPhyRegisterPollingTask(const uint32_t pollingPeriod_ms,
-                                             const bool doStartimmediately,
-                                             Enet_Type enetType,
-                                             uint32_t instId);
+int32_t EnetApp_createPhyRegisterPollingTask(const uint32_t pollingPeriod_ms, const bool doStartimmediately, Enet_Type port2EnetType[ENET_SYSCFG_MAX_MAC_PORTS], uint32_t port2InstId[ENET_SYSCFG_MAX_MAC_PORTS]);
 
 void EnetApp_enablePhyLinkPollingMask(const uint32_t phyEnableMask);
 
