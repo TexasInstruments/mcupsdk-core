@@ -85,10 +85,10 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             void *arg)
 {
     int32_t retVal = SDL_PASS;
-    DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+    DebugP_log("\r\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
+    DebugP_log("  Take action \r\n");
     /* Disable the ESM Interrupt */
     deactivate_trigger(&intSrc);
     SDL_ESM_clrNError(esmInst);
@@ -157,11 +157,11 @@ int32_t SDL_POK_setConfig(SDL_POK_Inst instance, SDL_POK_config *pPokCfg)
     sdlRet = SDL_POK_init(instance, pPokCfg);
     if (sdlRet != SDL_PASS)
     {
-        DebugP_log("SDL_POK_init failed! \n");
+        DebugP_log("SDL_POK_init failed! \r\n");
     }
     else
     {
-        DebugP_log("Waiting for ESM to report the error \n");
+        DebugP_log("Waiting for ESM to report the error \r\n");
         /* Wait for the ESM interrupt to report the error */
         do {
             i++;
@@ -174,12 +174,12 @@ int32_t SDL_POK_setConfig(SDL_POK_Inst instance, SDL_POK_config *pPokCfg)
 
         if (ESM_Error == true)
         {
-            DebugP_log(" Got the ESM Error Interrupt \n");
-            DebugP_log("Action taken \n");
+            DebugP_log(" Got the ESM Error Interrupt \r\n");
+            DebugP_log("Action taken \r\n");
             ESM_Error = false;
             if (sdlRet != SDL_PASS)
             {
-                DebugP_log("SDL_POK_init failed! \n");
+                DebugP_log("SDL_POK_init failed! \r\n");
             }
         }
         else
@@ -199,7 +199,7 @@ int32_t sdlPOKInPor_func(void)
     instance = SDL_POR_VDDA_MCU_OV_ID;
 
 
-    DebugP_log("\n\n POK ID = %d , monitoring set to OV \n", instance);
+    DebugP_log("\r\n\r\n POK ID = %d , monitoring set to OV \r\n", instance);
     pPokCfg.voltDetMode = SDL_PWRSS_SET_OVER_VOLTAGE_DET_ENABLE;
     pPokCfg.trim = 0;
     pPokCfg.hystCtrl = SDL_PWRSS_HYSTERESIS_NO_ACTION;
@@ -220,7 +220,7 @@ int32_t sdlPOKInPor_func(void)
         testStatus = SDL_APP_TEST_FAILED;
         overallStatus = SDL_APP_TEST_FAILED;
     }
-    DebugP_log("Safety software Example UC-2 pok for instance  %d %s\n",
+    DebugP_log("Safety software Example UC-2 pok for instance  %d %s\r\n",
                 instance, (testStatus == SDL_APP_TEST_PASS) ? "PASSED" : "FAILED");
 
     return (overallStatus);
@@ -234,7 +234,7 @@ int32_t sdlPOK_func(void)
     instance = SDL_POK_VDDS_DDRIO_ID;
 
 
-    DebugP_log ("\n\n POK ID = %d , monitoring set to UV \n", instance);
+    DebugP_log ("\r\n\r\n POK ID = %d , monitoring set to UV \r\n", instance);
     pPokCfg.voltDetMode = SDL_PWRSS_SET_UNDER_VOLTAGE_DET_ENABLE;
     pPokCfg.trim = 127;
     pPokCfg.hystCtrl = SDL_PWRSS_HYSTERESIS_NO_ACTION;
@@ -255,7 +255,7 @@ int32_t sdlPOK_func(void)
         testStatus = SDL_APP_TEST_FAILED;
         overallStatus = SDL_APP_TEST_FAILED;
     }
-    DebugP_log("Safety software Example UC-1 pok for instance %d %s\n",
+    DebugP_log("Safety software Example UC-1 pok for instance %d %s\r\n",
                 instance, (testStatus == SDL_APP_TEST_PASS) ? "PASSED" : "FAILED");
 
     return (overallStatus);

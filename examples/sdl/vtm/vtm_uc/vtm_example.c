@@ -197,9 +197,9 @@ static int32_t vtmTriggerTh(int32_t lt_thr0_offset,
     (void) SDL_VTM_tsConvADCToTemp (adc_code_read, insTs, \
                                    &temp_milli_degrees_read);
 
-    DebugP_log ("sensor id                       : %d \n" \
-                 "adc_code                        : %d \n" \
-                 "temp in milli degree celcius    : %d \n", \
+    DebugP_log ("sensor id                       : %d \r\n" \
+                 "adc_code                        : %d \r\n" \
+                 "temp in milli degree celcius    : %d \r\n", \
                  insTs, adc_code_read, temp_milli_degrees_read);
 
 
@@ -224,15 +224,15 @@ static int32_t vtmTriggerTh(int32_t lt_thr0_offset,
 
 
     DebugP_log ("vtmTriggerTh: Setting lt_thr0_val temp to " \
-                 "%d millidegrees Celsius, and adc_code_lt_thr0 = %d\n",
+                 "%d millidegrees Celsius, and adc_code_lt_thr0 = %d\r\n",
                  lt_thr0_val,
                  adc_code_lt_thr0);
     DebugP_log ("vtmTriggerTh: Setting gt_thr1_val temp to " \
-                 "%d millidegrees Celsius, and adc_code_gt_thr1 = %d\n",
+                 "%d millidegrees Celsius, and adc_code_gt_thr1 = %d\r\n",
                  gt_thr1_val,
                  adc_code_gt_thr1);
     DebugP_log ("vtmTriggerTh: Setting gt_thr2_val temp to " \
-                 "%d millidegrees Celsius, and adc_code_gt_thr2 = %d\n",
+                 "%d millidegrees Celsius, and adc_code_gt_thr2 = %d\r\n",
                  gt_thr2_val,
                  adc_code_gt_thr2);
 
@@ -240,7 +240,7 @@ static int32_t vtmTriggerTh(int32_t lt_thr0_offset,
     setAllVTMTempThr(adc_code_lt_thr0, adc_code_gt_thr1, adc_code_gt_thr2);
 
 
-    DebugP_log("Finished VTM threshold setting\n");
+    DebugP_log("Finished VTM threshold setting\r\n");
 
     return (retVal);
 }
@@ -249,7 +249,7 @@ static int32_t SDL_VTM_config(void)
 {
     int32_t retVal = 0;
 #ifdef DEBUG
-    DebugP_log("SDL_VTM_config: starting test with threshold change\n");
+    DebugP_log("SDL_VTM_config: starting test with threshold change\r\n");
 #endif
     retVal = vtmTriggerTh(-4000, -2000, 5000);
 
@@ -274,9 +274,9 @@ void SDL_VTM_IntrruptLtThr0(void)
             SDL_VTM_VD_GT_THR2_INTR_RAW_CLR);
     SDL_VTM_intrCntrl(SDL_VTM_INSTANCE_VD_DOMAIN_0, ctrl);
     /* Print output ESM event to the screen */
-    DebugP_log ("\n    Got ltThr0 interrupt through ESM module\n");
-    DebugP_log ("\n    System at a temperature below the threshold of lt_thr0 \n"
-                 "    System running at a safe temperature \n");
+    DebugP_log ("\r\n    Got ltThr0 interrupt through ESM module\r\n");
+    DebugP_log ("\r\n    System at a temperature below the threshold of lt_thr0 \r\n"
+                 "    System running at a safe temperature \r\n");
 }
 
 /*
@@ -301,9 +301,9 @@ void SDL_VTM_IntrruptGtThr1(void)
     SDL_VTM_intrCntrl(SDL_VTM_INSTANCE_VD_DOMAIN_0, ctrl);
 
     /* Print output ESM event to the screen */
-    DebugP_log ("\n    Got gtThr1 interrupt through ESM module\n");
-    DebugP_log ("\n    Crossed early warning threshold of gt_thr1 \n"
-                 "    System should take action to implement system cooling \n");
+    DebugP_log ("\r\n    Got gtThr1 interrupt through ESM module\r\n");
+    DebugP_log ("\r\n    Crossed early warning threshold of gt_thr1 \r\n"
+                 "    System should take action to implement system cooling \r\n");
 }
 
 /*
@@ -318,9 +318,9 @@ void SDL_VTM_IntrruptGtThr2(void)
     SDL_VTM_intrCntrl(SDL_VTM_INSTANCE_VD_DOMAIN_0, ctrl);
 
     /* Print output ESM event to the screen */
-    DebugP_log ("\n    Got gtThr2 interrupt through ESM module\n");
-    DebugP_log ("\n    Crossed critical threshold of gt_thr2 \n"
-                 "    System should take critical action to implement system cooling \n");
+    DebugP_log ("\r\n    Got gtThr2 interrupt through ESM module\r\n");
+    DebugP_log ("\r\n    Crossed critical threshold of gt_thr2 \r\n"
+                 "    System should take critical action to implement system cooling \r\n");
 }
 
 
@@ -329,7 +329,7 @@ int32_t vtm_setThresholdsForCriticalTrigger(void)
     int32_t retVal = 0;
 #ifdef DEBUG
     DebugP_log("vtm_setThresholdsForCriticalTrigger: setting thresholds " \
-                "to trigger high priority thermal event.\n");
+                "to trigger high priority thermal event.\r\n");
 #endif
     retVal = vtmTriggerTh(-12000, -8000, -3000);
 
@@ -349,7 +349,7 @@ int32_t vtm_setNormalThresholds(void)
     SDL_VTM_intrCtrl  ctrl;
 
 #ifdef DEBUG
-    DebugP_log("Start changing to normal VTM threshold setting\n");
+    DebugP_log("Start changing to normal VTM threshold setting\r\n");
 #endif
 
     /* Disable interrupts while changing thresholds */
@@ -373,15 +373,15 @@ int32_t vtm_setNormalThresholds(void)
 
 #ifdef DEBUG
     DebugP_log ("vtm_setNormalThresholds: Setting lt_thr0_val temp to %d " \
-                 "millidegrees Celsius, and adc_code_lt_thr0 = %d\n",
+                 "millidegrees Celsius, and adc_code_lt_thr0 = %d\r\n",
                  lt_thr0_val,
                  adc_code_lt_thr0);
     DebugP_log ("vtm_setNormalThresholds: Setting gt_thr1_val temp to %d " \
-                 "millidegrees Celsius, and adc_code_gt_thr1 = %d\n",
+                 "millidegrees Celsius, and adc_code_gt_thr1 = %d\r\n",
                  gt_thr1_val,
                  adc_code_gt_thr1);
     DebugP_log ("vtm_setNormalThresholds: Setting gt_thr2_val temp to %d " \
-                 "millidegrees Celsius, and adc_code_gt_thr2 = %d\n",
+                 "millidegrees Celsius, and adc_code_gt_thr2 = %d\r\n",
                  gt_thr2_val,
                  adc_code_gt_thr2);
 #endif
@@ -389,7 +389,7 @@ int32_t vtm_setNormalThresholds(void)
     setAllVTMTempThr(adc_code_lt_thr0, adc_code_gt_thr1, adc_code_gt_thr2);
 
 #ifdef DEBUG
-    DebugP_log("Finished normal VTM threshold setting\n");
+    DebugP_log("Finished normal VTM threshold setting\r\n");
 #endif
 
     return (retVal);
@@ -403,7 +403,7 @@ int32_t vtm_setNormalThresholds(void)
 int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
 {
     int32_t       retVal = 0;
-    DebugP_log("\nStarting Use Case %d \n", useCaseId);
+    DebugP_log("\r\nStarting Use Case %d \r\n", useCaseId);
     switch(useCaseId)
     {
         case 0:
@@ -412,10 +412,10 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             currEsmInstance = SDL_ESM_INST_MAIN_ESM0;
             retVal = SDL_VTM_config();
             if (retVal == 0) {
-                DebugP_log("case 0 success\n");
+                DebugP_log("case 0 success\r\n");
                 vtmEventInputTrig[useCaseId] = USE_CASE_STATUS_COMPLETED_SUCCESS;
             } else{
-                DebugP_log("case 0 failure\n");
+                DebugP_log("case 0 failure\r\n");
                 vtmEventInputTrig[useCaseId] = USE_CASE_STATUS_COMPLETED_FAILURE;
             }
             break;
@@ -436,7 +436,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             break;
 
         default:
-            DebugP_log("ERR: Invalid Test Case ID %d \n", useCaseId);
+            DebugP_log("ERR: Invalid Test Case ID %d \r\n", useCaseId);
             retVal = -1;
             break;
     }

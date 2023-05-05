@@ -201,7 +201,7 @@ static int32_t sdlApp_dplInit(void)
     ret = SDL_TEST_dplInit();
     if (ret != SDL_PASS)
     {
-        DebugP_log("\rError: Init Failed\n");
+        DebugP_log("\rError: Init Failed\r\n");
     }
 
     for (int i = 0; i < AUX_NUM_DEVICES; i++)
@@ -214,7 +214,7 @@ static int32_t sdlApp_dplInit(void)
 
         if (status != SDL_PASS)
         {
-            DebugP_log("\r   Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\n",
+            DebugP_log("\r   Sciclient_pmSetModuleState 0x%x ...FAILED: retValue %d\r\n",
                         aux_devices[i], status);
         }
     }
@@ -229,7 +229,7 @@ void ECC_Example_app(void *args)
     Drivers_open();
     Board_driversOpen();
   	testResult = ECC_funcTest();
-  	DebugP_log("\r\n ECC UC-1 and UC-2 Test");
+  	DebugP_log("\r\n ECC UC-1 and UC-2 Test\r\n");
   	if (testResult == SDL_PASS)
       {
           DebugP_log("\r\nAll Use_Cases have passed. \r\n");

@@ -195,12 +195,12 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     deactivateTrigger(esmInstType, esmIntType, intSrc);
 
     /* Print information to screen */
-    DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+    DebugP_log("\r\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInstType, esmIntType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
+    DebugP_log("  Take action \r\n");
 
-    DebugP_log("  ESM instance #%d, ESM interrupt type = %s\n",
+    DebugP_log("  ESM instance #%d, ESM interrupt type = %s\r\n",
                 esmInstType, printEsmIntType(esmIntType));
 
     vtmOutputResult[currTestCase]= USE_CASE_STATUS_COMPLETED_SUCCESS;
@@ -233,11 +233,11 @@ int32_t VTM_ESM_init (void)
 #endif
 		if (result != SDL_PASS) {
             /* print error and quit */
-            DebugP_log("VTM_ESM_init: Error initializing MAIN ESM: result = %d\n", result);
+            DebugP_log("VTM_ESM_init: Error initializing MAIN ESM: result = %d\r\n", result);
 
             retValue = -1;
         } else {
-            DebugP_log("\nVTM_ESM_init: Init MAIN ESM complete \n");
+            DebugP_log("\r\nVTM_ESM_init: Init MAIN ESM complete \r\n");
         }
     return retValue;
 }
@@ -314,7 +314,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
             retVal = -1;
         }
     } else {
-        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \n",
+        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \r\n",
                     esmInstType, esmIntType);
         retVal = -1;
     }
@@ -398,7 +398,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
             retVal = -1;
         }
     } else {
-        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \n",
+        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \r\n",
                     esmInstType, esmIntType);
         retVal = -1;
     }
@@ -420,23 +420,23 @@ void VTM_test_printSummary(void)
 {
     int32_t i;
 
-    DebugP_log("\n\n");
-    DebugP_log("ESM Example Application summary\n");
-    DebugP_log("-------------------------------\n");
-    DebugP_log("Completed %d Test Cases\n", currTestCase);
-    DebugP_log("Received %d High Priority Interrupts\n", totalHiEventsLogged);
-    DebugP_log("Received %d Low Priority Interrupts\n", totalLoEventsLogged);
+    DebugP_log("\r\n\r\n");
+    DebugP_log("ESM Example Application summary\r\n");
+    DebugP_log("-------------------------------\r\n");
+    DebugP_log("Completed %d Test Cases\r\n", currTestCase);
+    DebugP_log("Received %d High Priority Interrupts\r\n", totalHiEventsLogged);
+    DebugP_log("Received %d Low Priority Interrupts\r\n", totalLoEventsLogged);
 
-    DebugP_log("\nTest Case Event Log\n");
-    DebugP_log("------------------\n");
+    DebugP_log("\r\nTest Case Event Log\r\n");
+    DebugP_log("------------------\r\n");
     for (i = 0; i < totalEventsLogged; i++) {
-        DebugP_log("\nTest Case %d: ESM Call back function called : grpChannel 0x%x, " \
-                    "index 0x%x, intSrc 0x%x \n",
+        DebugP_log("\r\nTest Case %d: ESM Call back function called : grpChannel 0x%x, " \
+                    "index 0x%x, intSrc 0x%x \r\n",
                     esmEventLog[i].useCaseNum,
                     esmEventLog[i].grpChannel,
                     esmEventLog[i].index,
                     esmEventLog[i].intSrc);
-        DebugP_log("  ESM instance #%d, ESM interrupt type = %s\n",
+        DebugP_log("  ESM instance #%d, ESM interrupt type = %s\r\n",
                     esmEventLog[i].esmInstance,
                     printEsmIntType(esmEventLog[i].intType));
 
@@ -462,18 +462,18 @@ void vtm_example_app(void)
 
     if (retValue < 0) {
         /* print and exit */
-        DebugP_log("\nERR: VTM_ESM_init failed");
+        DebugP_log("\r\nERR: VTM_ESM_init failed");
         testErrCount++;
     }
 
-    DebugP_log("\n VTM_ESM_init complete");
+    DebugP_log("\r\n VTM_ESM_init complete");
 
     /* Trigger each Test Case */
     for (i = START_USE_CASE; i < 2; i++) {
         retValue = vtm_runTestCaseTrigger(i);
 
         if (retValue != 0) {
-            DebugP_log("\nERR: Use Case Trigger for Use Case %d failed \n",
+            DebugP_log("\r\nERR: Use Case Trigger for Use Case %d failed \r\n",
                         retValue);
             break;
         }
@@ -482,12 +482,12 @@ void vtm_example_app(void)
               (vtmOutputResult[i] == USE_CASE_STATUS_NOT_RUN))
         {
 #ifdef DEBUG
-            DebugP_log("InputTrig = %d, OutputResult = %d, ClearResult = %d\n",
+            DebugP_log("InputTrig = %d, OutputResult = %d, ClearResult = %d\r\n",
                         vtmEventInputTrig[i],
                         vtmOutputResult[i]);
 #endif
         }
-        DebugP_log("\n Use Case %d completed: Input Event Trigger = %s, \n",
+        DebugP_log("\r\n Use Case %d completed: Input Event Trigger = %s, \r\n",
                     i,
                     printTestCaseStepResult(vtmEventInputTrig[i]));
         currTestCase++;
@@ -503,15 +503,15 @@ void vtm_example_app(void)
 
     /* Print results and logs of the Test Cases */
     VTM_test_printSummary();
-    DebugP_log("\n VTM Example Application: Complete");
+    DebugP_log("\r\n VTM Example Application: Complete");
 
     if (testErrCount == 0)
     {
-        DebugP_log("\n All Use cases have passed. \n");
+        DebugP_log("\r\n All Use cases have passed. \r\n");
     }
     else
     {
-        DebugP_log("\n VTM Example app failed. \n");
+        DebugP_log("\r\n VTM Example app failed. \r\n");
     }
     return;
 }
@@ -546,7 +546,7 @@ int32_t VTM_dplInit(void)
     ret = SDL_TEST_dplInit();
     if (ret != SDL_PASS)
     {
-        DebugP_log("Error: Init Failed\n");
+        DebugP_log("Error: Init Failed\r\n");
     }
 
     return ret;
@@ -572,7 +572,7 @@ int32_t test_main(void)
 	Board_driversOpen();
     VTM_dplInit();
 
-    DebugP_log("\n VTM Example Application\r\n");
+    DebugP_log("\r\n VTM Example Application\r\r\n");
     (void)vtm_example_test_app_runner();
 	Board_driversClose();
 	Drivers_close();

@@ -134,7 +134,7 @@ int32_t esmPinTimeInit(uint32_t pinClearTime)
     esm_base_addr = (uint32_t) AddrTranslateP_getLocalAddr(SDL_MCU_ESM0_CFG_BASE);
     SDL_ESM_getErrPinLowTimePreload(esm_base_addr, &gesmPinMinIntervalCycles);
 #ifdef PRINT_DEBUG
-    DebugP_log("  MCU ESM pin minimum interval is %d cycles\n",
+    DebugP_log("  MCU ESM pin minimum interval is %d cycles\r\n",
                 gesmPinMinIntervalCycles);
 #endif
 
@@ -149,7 +149,7 @@ int32_t esmPinTimeInit(uint32_t pinClearTime)
                                               0xFFFFFFFFU);
         if (retVal == SDL_PASS) {
 #ifdef PRINT_DEBUG
-            DebugP_log("  MCU ESM input clock is %d\n", esmInputClk);
+            DebugP_log("  MCU ESM input clock is %d\r\n", esmInputClk);
 #endif
         }
     }
@@ -158,12 +158,12 @@ int32_t esmPinTimeInit(uint32_t pinClearTime)
         /* Translate Pin Timer Time (microseconds) into number of ESM cycles */
         gpinClearTimeCycles = (uint32_t)((float)pinClearTime /
                              1000000 * (float)esmInputClk);
-        DebugP_log("\n  Any clear of MCU_SAFETY_ERRORn pin will first wait " \
+        DebugP_log("\r\n  Any clear of MCU_SAFETY_ERRORn pin will first wait " \
                     "%d usecs", pinClearTime);
         /* Translate Minimum Time Interval (cycles) into time (microseconds)*/
         gesmPinMinIntervalUsec = (uint32_t)((float)gesmPinMinIntervalCycles /
                                            (float)esmInputClk * 1000000);
-        DebugP_log("\n  Minimum Time Interval is %d usecs", gesmPinMinIntervalUsec);
+        DebugP_log("\r\n  Minimum Time Interval is %d usecs", gesmPinMinIntervalUsec);
     }
     else {
         retVal = SDL_EFAIL;
@@ -203,11 +203,11 @@ int32_t esm_timerInit(void)
 
 
     if (esmPinTimeInit(PIN_CLEAR_PERIOD_USEC) != 0) {
-       DebugP_log("ERR: Pin Time Init failed\n");
+       DebugP_log("ERR: Pin Time Init failed\r\n");
        return -1;
     }
 
-    DebugP_log("\nESM timer initialization complete\n");
+    DebugP_log("\r\nESM timer initialization complete\r\n");
 
     return 0;
 }
@@ -228,11 +228,11 @@ void timerExpPinDisable(uintptr_t arg)
 #endif
     pinStatus = SDL_ESM_getNErrorStatus(instance,&gpStatus);
     if (gpStatus != 0) {
-        DebugP_log("\n  timerExpPinDisable: Incorrect pin value before clearing\n");
+        DebugP_log("\r\n  timerExpPinDisable: Incorrect pin value before clearing\r\n");
         retVal = SDL_EFAIL;
     } else {
-    DebugP_log("\n  timerExpPinDisable: before clear, ESM instance %d view of " \
-                "MCU_SAFETY_ERRORn pin is %d\n",
+    DebugP_log("\r\n  timerExpPinDisable: before clear, ESM instance %d view of " \
+                "MCU_SAFETY_ERRORn pin is %d\r\n",
                 instance, pinStatus);
     }
 
@@ -244,27 +244,27 @@ void timerExpPinDisable(uintptr_t arg)
          * minimum time interval has expired */
         if ((gpinClearTimeCycles >= gesmPinMinIntervalCycles) ||
             (gimmediatePinClear)) {
-            DebugP_log("\n  timerExpPinDisable: ERROR - Failed to clear the error " \
-                        "pin from ESM Instance %d\n",
+            DebugP_log("\r\n  timerExpPinDisable: ERROR - Failed to clear the error " \
+                        "pin from ESM Instance %d\r\n",
                         instance);
             retVal = SDL_EFAIL;
         }
     } else {
 #ifdef DEBUG
         DebugP_log("  timerExpPinDisable: Cleared the error pin successfully from " \
-                    "ESM Instance %d\n",
+                    "ESM Instance %d\r\n",
                     instance);
 #endif
     }
 
     pinStatus = SDL_ESM_getNErrorStatus(instance,&gpStatus);
     if (gpStatus != 1) {
-        DebugP_log("\n  timerExpPinDisable: Incorrect pin value after clearing\n");
+        DebugP_log("\r\n  timerExpPinDisable: Incorrect pin value after clearing\r\n");
         retVal = SDL_EFAIL;
     }
 #ifdef DEBUG
     DebugP_log("  timerExpPinDisable: after clear, ESM instance %d view of " \
-                "MCU_SAFETY_ERRORn pin is %d\n\n",
+                "MCU_SAFETY_ERRORn pin is %d\r\n\r\n",
                 instance, pinStatus);
 #endif
 
@@ -301,7 +301,7 @@ int32_t cfgIntrTrigger(uint32_t group)
 int32_t useCaseTrigger(uint8_t useCaseId)
 {
     int32_t       retVal = SDL_PASS;
-    DebugP_log("\nStarting Test Case %d \n", useCaseId);
+    DebugP_log("\r\nStarting Test Case %d \r\n", useCaseId);
     SDL_ESM_ErrorConfig_t esmErrorConfig;
 
     switch(useCaseId)
@@ -363,7 +363,7 @@ int32_t useCaseTrigger(uint8_t useCaseId)
             break;
 
         default:
-            DebugP_log("ERR: Invalid Test Case ID %d \n", useCaseId);
+            DebugP_log("ERR: Invalid Test Case ID %d \r\n", useCaseId);
             retVal = SDL_EFAIL;
             break;
     }

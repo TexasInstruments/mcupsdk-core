@@ -192,7 +192,7 @@ static int32_t sdl_mcrc_full_cpu_test(void)
 
     for (useCase=0; useCase < MCRC_NUM_USE_CASES; useCase++)
     {
-        DebugP_log("\n MCRC FULL CPU mode : starting");
+        DebugP_log("\n MCRC FULL CPU mode : starting\r\n");
 
         mcrcData.pMCRCData       = (uint32_t *)params[useCase].sourceMemory;
         mcrcData.size            = params[useCase].dataSize;
@@ -244,23 +244,23 @@ static int32_t sdl_mcrc_full_cpu_test(void)
 #if defined (SOC_AM263X)
             if (params[useCase].instance == MCRC0 )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC0 \n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC0 \r\n");
             }
 #elif defined (SOC_AM64X)
             if (params[useCase].instance == MCU_MCRC64_0 )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \r\n");
             }
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
             if (params[useCase].instance == MCRC_INSTANCE )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed\n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed\r\n");
             }
 #endif
 #if defined (SOC_AM243X)
             if (params[useCase].instance == MCU_MCRC64_0 )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \r\n");
             }
 #endif
             retVal = SDL_EFAIL;
@@ -270,23 +270,23 @@ static int32_t sdl_mcrc_full_cpu_test(void)
 #if defined (SOC_AM263X)
             if (params[useCase].instance == MCRC0 )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC0 \n\n ");
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC0 \r\n ");
             }
 #elif defined (SOC_AM64X)
             if (params[useCase].instance == MCU_MCRC64_0  )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0  \n\n ");
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0  \r\n ");
             }
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
             if (params[useCase].instance == MCRC_INSTANCE )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification done successfull\n\n");
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfull\r\n");
             }
 #endif
 #if defined(SOC_AM243X)
             if (params[useCase].instance == MCU_MCRC64_0 )
             {
-                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0 \n\n ");
+                DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0 \r\n ");
             }
 #endif
             retVal = SDL_PASS;
@@ -334,23 +334,23 @@ void mcrc_full_cpu_main(void *args)
     {
         if (sdlmcrcAppList[i].status != SDL_APP_PASS)
         {
-            DebugP_log("Applications Name: %s  FAILED \n", sdlmcrcAppList[i].name);
+            DebugP_log("Applications Name: %s  FAILED\r\n", sdlmcrcAppList[i].name);
             result = SDL_APP_FAILED;
             break;
         }
         else
         {
-            DebugP_log("Applications Name: %s  PASSED \n", sdlmcrcAppList[i].name);
+            DebugP_log("Applications Name: %s  PASSED\r\n", sdlmcrcAppList[i].name);
         }
     }
 
     if (result == SDL_APP_PASS)
     {
-        DebugP_log("\n All tests have passed \n");
+        DebugP_log("\n All tests have passed\r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\n Few/all tests Failed\r\n");
     }
 	Board_driversClose();
 	Drivers_close();

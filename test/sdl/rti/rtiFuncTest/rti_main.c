@@ -301,9 +301,11 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
     uint32_t closedWindowstatus, currentDownCounter=0, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
 	baseAddr=getBaseAddr;
+#endif
 #endif
     int32_t retVal = SDL_EFAIL;
     if ((baseAddr        != ((uint32_t) NULL)) &&

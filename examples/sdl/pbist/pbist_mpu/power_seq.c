@@ -135,7 +135,7 @@ int32_t customPrepareForPowerUpSequence(uint8_t processorId)
             break;
 #endif
         default:
-            DebugP_log("customPrepareForPowerUpSequence - Invalid ProcId %d\n",
+            DebugP_log("customPrepareForPowerUpSequence - Invalid ProcId %d\r\n",
                         processorId);
             break;
     }
@@ -157,7 +157,7 @@ int32_t customPowerDownSequence(uint8_t processorId)
             break;
 #endif
         default:
-            DebugP_log("customPowerDownSequence - Invalid ProcId %d\n",
+            DebugP_log("customPowerDownSequence - Invalid ProcId %d\r\n",
                         processorId);
             break;
     }

@@ -119,9 +119,11 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
     uint32_t closedWindowstatus, currentDownCounter, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
 	baseAddr=getBaseAddr;
+#endif
 #endif
     int32_t retVal = SDL_EFAIL;
     if ((baseAddr        != ((uint32_t) NULL)) &&
@@ -256,7 +258,7 @@ int32_t SDL_RTI_exampleTest(void)
         {
 			/* UC-3 EARLY TRIGGER: Servicing DWWD before window open generates violation
 			   and generates interrupt to ESM module */
-            DebugP_log("\n\nRTI DWWD Early Trigger violation test running.\r\n");
+            DebugP_log("\r\nRTI DWWD Early Trigger violation test running.\r\n");
 
             RTIDwwdIsClosedWindow(rtiModule, &closedWinStatus);
 
@@ -264,7 +266,7 @@ int32_t SDL_RTI_exampleTest(void)
             {
                 loopBreak = TRUE;
 
-				DebugP_log("\n\nServicing before the window open.\r\n");
+				DebugP_log("\r\nServicing before the window open.\r\n");
 
 				/* Servicing the DWWD in closed window */
                 SDL_RTI_service(SDL_INSTANCE_RTI);
@@ -282,7 +284,7 @@ int32_t SDL_RTI_exampleTest(void)
         }
         if (retVal == SDL_PASS)
         {
-            DebugP_log("\n\nRTI DWWD Early Trigger violation test successful. \r\n\n");
+            DebugP_log("\r\nRTI DWWD Early Trigger violation test successful. \r\n");
         }
         else
         {

@@ -126,10 +126,10 @@ void MTOG_eventHandler( uint32_t instanceIndex )
 
     if (status == SDL_PASS)
     {
-        DebugP_log("\n MTOG Reset done\n");
+        DebugP_log("\r\n MTOG Reset done\r\n");
     }
     else{
-        DebugP_log("\n MTOG Reset failed");
+        DebugP_log("\r\n MTOG Reset failed");
     }
     doneFlag = true;
     return;
@@ -151,22 +151,22 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
 	ESMEventNumber         = SDLR_MCU_ESM0_ESM_LVL_EVENT_MCU_MASTER_SAFETY_GASKET0_TIMED_OUT_0 ;
     doneFlag               = false;
 
-    DebugP_log("\n Starting MTOG test on %s, index %d...",
+    DebugP_log("\r\n Starting MTOG test on %s, index %d...",
                 instanceName,
                 instanceIndex);
 
 #ifdef DEBUG
     char inputChar;
 
-    DebugP_log("\n Press 'n' to skip..Press any key to continue...");
+    DebugP_log("\r\n Press 'n' to skip..Press any key to continue...");
     inputChar = UART_getc();
 
     if (inputChar == 'n')
     {
-        DebugP_log("   Skipping this test. on request \n");
+        DebugP_log("   Skipping this test. on request \r\n");
         return 0;
     }
-    DebugP_log("\n  HwiP_Params_init complete \n");
+    DebugP_log("\r\n  HwiP_Params_init complete \r\n");
 #endif
 
     /* Initialize done flag */
@@ -176,7 +176,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
     startTime = ClockP_getTimeUsec();
     if (status != SDL_PASS)
     {
-        DebugP_log("   sdlAppEsmConfig Failed \n");
+        DebugP_log("   sdlAppEsmConfig Failed \r\n");
         result = -1;
     }
 
@@ -187,7 +187,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
         result = SDL_MTOG_init(instanceIndex, &config);
         if (status != SDL_PASS)
         {
-            DebugP_log("   SDL_MTOG_init Failed \n");
+            DebugP_log("   SDL_MTOG_init Failed \r\n");
             result = -1;
         }
     }
@@ -196,7 +196,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
         result = SDL_MTOG_verifyConfig(instanceIndex, &config);
         if (status != SDL_PASS)
         {
-            DebugP_log("   SDL_MTOG_verifyConfig Failed \n");
+            DebugP_log("   SDL_MTOG_verifyConfig Failed \r\n");
             result = -1;
         }
     }
@@ -205,7 +205,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
         result = SDL_MTOG_getStaticRegisters(instanceIndex, &staticRegs);
         if (status != SDL_PASS)
         {
-            DebugP_log("   SDL_MTOG_getStaticRegisters Failed \n");
+            DebugP_log("   SDL_MTOG_getStaticRegisters Failed \r\n");
             result = -1;
         }
     }
@@ -215,7 +215,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
         status = SDL_MTOG_start(instanceIndex);
         if (status != SDL_PASS)
         {
-            DebugP_log("   SDL_MTOG_start Failed \n");
+            DebugP_log("   SDL_MTOG_start Failed \r\n");
             result = -1;
         }
     }
@@ -227,7 +227,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
       status = SDL_MTOG_forceTimeout(instanceIndex);
       if (status != SDL_PASS)
       {
-          DebugP_log("\n SDL_MTOG_forceTimeout Failed \n");
+          DebugP_log("\r\n SDL_MTOG_forceTimeout Failed \r\n");
           result = -1;
       }
   }
@@ -243,7 +243,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
         }
         if(timeoutCount >= MTOG_MAX_TIMEOUT_VALUE)
         {
-            DebugP_log("\n MTOG Timed out  \n");
+            DebugP_log("\r\n MTOG Timed out  \r\n");
             result = -1;
         }
     }
@@ -256,7 +256,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
 	    status=SDL_ESM_disableIntr(SDL_ESM_INST_MCU_ESM0, ESMEventNumber);
         if (status != SDL_PASS)
         {
-            DebugP_log("   sdlAppEsmDisable Failed \n");
+            DebugP_log("   sdlAppEsmDisable Failed \r\n");
             result = -1;
         }
     }
@@ -267,11 +267,11 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
     prepTime = testStartTime - startTime;
     diffTime = testEndTime - testStartTime;
     restoreTime = endTime - testEndTime;
-    DebugP_log("\n Delta MTOG prep time in micro secs %d \n", (uint32_t)prepTime );
-    DebugP_log(" \n Delta MTOG execution time in micro secs %d \n", (uint32_t)diffTime );
-    DebugP_log(" \n  Delta MTOG restore time in micro secs %d \n", (uint32_t)restoreTime );
+    DebugP_log("\r\n Delta MTOG prep time in micro secs %d \r\n", (uint32_t)prepTime );
+    DebugP_log(" \r\n Delta MTOG execution time in micro secs %d \r\n", (uint32_t)diffTime );
+    DebugP_log(" \r\n  Delta MTOG restore time in micro secs %d \r\n", (uint32_t)restoreTime );
 
-    DebugP_log("  MTOG complete for %s \n",instanceName);
+    DebugP_log("  MTOG complete for %s \r\n",instanceName);
 
     return (result);
 }
@@ -286,11 +286,11 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntTyp
 {
     int32_t retVal = SDL_PASS;
     MTOG_eventHandler(1);
-    DebugP_log("\nInterrupt is generated to ESM\n");
+    DebugP_log("\r\nInterrupt is generated to ESM\r\n");
     DebugP_log("    ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInst, esmIntrType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
+    DebugP_log("  Take action \r\n");
 
     /* For clearing the interrupt */
     IntrDisable(intSrc);
@@ -306,11 +306,11 @@ int32_t MTOG_PrepareForTest(void)
 	sdlResult = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &MTOG_Example_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, &apparg);
     if (sdlResult != SDL_PASS) {
         /* print error and quit */
-        DebugP_log("\n TIMER_ESM_init: Error initializing MCU ESM: result = %d\n", sdlResult);
+        DebugP_log("\r\n TIMER_ESM_init: Error initializing MCU ESM: result = %d\r\n", sdlResult);
 
         retValue = -1;
     } else {
-        DebugP_log("\nTIMER_ESM_init: Init MCU ESM complete \n");
+        DebugP_log("\r\nTIMER_ESM_init: Init MCU ESM complete \r\n");
     }
     return retValue;
 }
@@ -323,7 +323,7 @@ int32_t MTOG_func(void)
     result = MTOG_PrepareForTest();
     if (result != 0)
     {
-        DebugP_log("   MTOG_PrepareForTest failed \n");
+        DebugP_log("   MTOG_PrepareForTest failed \r\n");
     }
     if (result == 0)
     {

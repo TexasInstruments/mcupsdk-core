@@ -460,7 +460,7 @@ static int32_t sdlApp_dplInit(void)
     ret = SDL_TEST_dplInit();
     if (ret != SDL_PASS)
     {
-        DebugP_log("Error: Init Failed\n");
+        DebugP_log("Error: Init Failed\r\n");
     }
 
     return ret;
@@ -533,15 +533,15 @@ static void SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
     {
         /* Seed values with drift exceeds maximum range */
         SDL_DCCAppPrint(APP_DCC_STR ": Seed values with drift exceeds"
-                        " allowed range\n");
+                        " allowed range\r\n");
         SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0% "
-                        " allowed drift\n");
+                        " allowed drift\r\n");
     }
     else if (100U < drfitPer)
     {
         /* Error percentage is greater than 100 */
-        SDL_DCCAppPrint(APP_DCC_STR ": Warning Wrong drift %,Not applying drift\n");
-        SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0% drift\n");
+        SDL_DCCAppPrint(APP_DCC_STR ": Warning Wrong drift %,Not applying drift\r\n");
+        SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0% drift\r\n");
     }
     else
     {
@@ -550,9 +550,9 @@ static void SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
         if (APP_DCC_SRC0_VALID_MAX_VAL < (maxRefCnt - minRefCnt))
         {
             SDL_DCCAppPrint(APP_DCC_STR ": Warning Seed value for valid count "
-                        "exceeds allowed range.\n");
+                        "exceeds allowed range.\r\n");
             SDL_DCCAppPrint(APP_DCC_STR ": Application will run with 0 allowed"
-                        " drift.\n");
+                        " drift.\r\n");
         }
         else
         {
@@ -567,7 +567,7 @@ static void SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
             }
         }
     }
-    SDL_DCCAppPrint(APP_DCC_STR ": Seed values calculation done.\n");
+    SDL_DCCAppPrint(APP_DCC_STR ": Seed values calculation done.\r\n");
 }
 
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
@@ -575,11 +575,11 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntTyp
 {
     int32_t retVal = SDL_PASS;
 
-   DebugP_log("\nInterrupt is generated to ESM\n");
+   DebugP_log("\r\nInterrupt is generated to ESM\r\n");
    DebugP_log("    ESM Call back function called : instType 0x%x, intType 0x%x, " \
-               "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+               "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                esmInst, esmIntrType, grpChannel, index, intSrc);
-   DebugP_log("    Take action \n\n");
+   DebugP_log("    Take action \r\n");
 
     isrFlag = DCC_INTERRUPT;
 
@@ -647,7 +647,7 @@ void test_sdl_dcc_test_app (void)
     SDL_DCC_Config configParams;
     uint32_t i;
 
-    DebugP_log("\n DCC Example Test Application\r\n");
+    DebugP_log("\r\n DCC Example Test Application\r\n");
 
     /* Init Dpl */
     sdlApp_dplInit();
@@ -658,27 +658,27 @@ void test_sdl_dcc_test_app (void)
     if (retVal != SDL_PASS)
     {
         /* print error and quit */
-        DebugP_log("DCC_Test_init: Error initializing MCU ESM: result = %d\n", retVal);
+        DebugP_log("DCC_Test_init: Error initializing MCU ESM: result = %d\r\n", retVal);
     }
     else
     {
-        DebugP_log("\nDCC_Test_init: Init MCU ESM complete \n\n");
+        DebugP_log("\r\nDCC_Test_init: Init MCU ESM complete \r\n");
         retVal = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_Main, SDL_ESM_applicationCallbackFunction, NULL);
 
         if (retVal != SDL_PASS)
         {
             /* print error and quit */
-            DebugP_log("DCC_Test_init: Error initializing ESM: result = %d\n", retVal);
+            DebugP_log("DCC_Test_init: Error initializing ESM: result = %d\r\n", retVal);
         }
     }
 
     for (i = 0; i < NUM_USE_CASES; i++)
     {
 
-        DebugP_log("\nUSECASE: %d\n", i);
+        DebugP_log("\r\nUSECASE: %d\r\n", i);
 
-        DebugP_log("Source clock: %s \n", DCC_Test_UseCaseArray[i].srcStr);
-        DebugP_log("Test clock: %s\n\n", DCC_Test_UseCaseArray[i].testStr);
+        DebugP_log("Source clock: %s \r\n", DCC_Test_UseCaseArray[i].srcStr);
+        DebugP_log("Test clock: %s\r\n", DCC_Test_UseCaseArray[i].testStr);
 
         gCurDccInst = DCC_Test_UseCaseArray[i].dccInst;
         clk0Freq = DCC_Test_UseCaseArray[i].clk0Freq;
@@ -753,13 +753,13 @@ void test_sdl_dcc_test_app (void)
 
                     if (SDL_PASS == SDL_DCCAppWaitForCompletion())
                     {
-                        SDL_DCCAppPrint(APP_DCC_STR ": DCC Generated completion interrupt \n");
-                        SDL_DCCAppPrint(APP_DCC_STR ": No Clock Drift was observed \n");
+                        SDL_DCCAppPrint(APP_DCC_STR ": DCC Generated completion interrupt \r\n");
+                        SDL_DCCAppPrint(APP_DCC_STR ": No Clock Drift was observed \r\n");
                     }
                     else
                     {
-                        SDL_DCCAppPrint(APP_DCC_STR ": Error : DCC Generated error interrupt\n");
-                        SDL_DCCAppPrint(APP_DCC_STR ": Error interrupt is not expected \n");
+                        SDL_DCCAppPrint(APP_DCC_STR ": Error : DCC Generated error interrupt\r\n");
+                        SDL_DCCAppPrint(APP_DCC_STR ": Error interrupt is not expected \r\n");
                         retVal = SDL_EFAIL;
                     }
 
@@ -772,11 +772,11 @@ void test_sdl_dcc_test_app (void)
                     if (DCC_Test_UseCaseArray[i].errorTest == 0x1)
                     {
                         SDL_DCCAppPrint(APP_DCC_STR ": Enabling DCC and waiting for "
-                                        "Error interrupt \n");
+                                        "Error interrupt \r\n");
                     }
                     else
                     {
-                        SDL_DCCAppPrint(APP_DCC_STR ": Enabling DCC and running for some time \n");
+                        SDL_DCCAppPrint(APP_DCC_STR ": Enabling DCC and running for some time \r\n");
                     }
 
                     SDL_DCC_enable(DCC_Test_UseCaseArray[i].dccInst);
@@ -791,7 +791,7 @@ void test_sdl_dcc_test_app (void)
                         {
                             /* Timeout for the wait */
 
-							//DebugP_log("\nDebug dcc_uc1 line no %d (TIMEOUT) \n\n",__LINE__);
+							//DebugP_log("\r\nDebug dcc_uc1 line no %d (TIMEOUT) \r\n",__LINE__);
                             break;
                         }
 
@@ -800,11 +800,11 @@ void test_sdl_dcc_test_app (void)
 
                     if (isrFlag == DCC_INTERRUPT)
                     {
-                        DebugP_log(APP_DCC_STR ": DCC Generated Error interrupt \n");
-                        DebugP_log(APP_DCC_STR ": Indicating clock drift/change \n");
+                        DebugP_log(APP_DCC_STR ": DCC Generated Error interrupt \r\n");
+                        DebugP_log(APP_DCC_STR ": Indicating clock drift/change \r\n");
                         if (DCC_Test_UseCaseArray[i].errorTest == 0x0)
                         {
-                            DebugP_log(APP_DCC_STR ":    Error Event was not expected \n");
+                            DebugP_log(APP_DCC_STR ":    Error Event was not expected \r\n");
                             retVal = SDL_EFAIL;
                         }
                     }
@@ -812,7 +812,7 @@ void test_sdl_dcc_test_app (void)
                     {
                         if (DCC_Test_UseCaseArray[i].errorTest == 0x1)
                         {
-                            DebugP_log(APP_DCC_STR ": Could not generate Error interrupt \n");
+                            DebugP_log(APP_DCC_STR ": Could not generate Error interrupt \r\n");
                             retVal = SDL_EFAIL;
                         }
                     }
@@ -829,22 +829,22 @@ void test_sdl_dcc_test_app (void)
 
         if (retVal != SDL_PASS)
         {
-            DebugP_log("UC-%d Failed\n", i);
+            DebugP_log("UC-%d Failed\r\n", i);
             break;
         }
         else
         {
-            DebugP_log("UC-%d Completed Successfully\n", i);
+            DebugP_log("UC-%d Completed Successfully\r\n", i);
         }
     }
 
     if (retVal == SDL_PASS)
     {
-        DebugP_log("\n All tests have passed. \n");
+        DebugP_log("\r\n All tests have passed. \r\n");
     }
     else
     {
-        DebugP_log("\n Few/all tests Failed \n");
+        DebugP_log("\r\n Few/all tests Failed \r\n");
     }
 }
 

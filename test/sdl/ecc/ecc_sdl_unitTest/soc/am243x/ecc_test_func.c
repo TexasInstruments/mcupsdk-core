@@ -542,7 +542,8 @@ int32_t ECC_Test_runECC1BitInjectTest(void)
 int32_t ECC_Test_runECC2BitInjectTest(void)
 {
     SDL_ErrType_t result;
-    int32_t retVal=0;
+    volatile  int32_t retVal=0;
+    volatile int32_t delayInject;
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
@@ -554,6 +555,7 @@ int32_t ECC_Test_runECC2BitInjectTest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0x200u);
 
     injectErrorConfig.flipBitMask = 0x101;
+    for(delayInject=0;delayInject<0xfffu;delayInject++);
     #if defined (M4F_CORE)
     result = SDL_ECC_injectError(geccMemType,
                                  SDL_MCU_M4FSS0_BLAZAR_ECC_BLAZAR_IIRAM_ECC_RAM_ID,
@@ -974,8 +976,9 @@ int32_t ECC_Test_runECC1BitRepeatInjectTest(void)
 
 int32_t ECC_Test_runECC2BitNrowInjectTest(void)
 {
-    SDL_ErrType_t result;
-    int32_t retVal=0;
+    volatile SDL_ErrType_t result;
+    volatile  int32_t retVal=0;
+    volatile uint32_t delay;
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
@@ -986,6 +989,7 @@ int32_t ECC_Test_runECC2BitNrowInjectTest(void)
 
     /* Run one shot test for M4FSS0 2 bit N row error */
     injectErrorConfig.flipBitMask = 0x101;
+    for(delay=0; delay<0xfffu; delay++);
     #if defined (M4F_CORE)
     result = SDL_ECC_injectError(geccMemType,
                                  SDL_MCU_M4FSS0_BLAZAR_ECC_BLAZAR_IIRAM_ECC_RAM_ID,

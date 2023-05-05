@@ -201,6 +201,7 @@ void test_sdl_pok_baremetal_test_app (void)
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (R5F_CORE)
     sdlRet = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &POK_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction,ptr);
+    sdlRet = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &POK_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction,ptr);
 #endif
 #endif
     if (sdlRet != SDL_PASS) {

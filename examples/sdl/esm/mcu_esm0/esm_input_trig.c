@@ -240,12 +240,12 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 
 
     /* Print information to screen */
-    DebugP_log("\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
-                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \n",
+    DebugP_log("\r\n  ESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
                 esmInstType, esmIntType, grpChannel, index, intSrc);
-    DebugP_log("  Take action \n");
+    DebugP_log("  Take action \r\n");
 
-    DebugP_log("  ESM instance #%d, ESM interrupt type = %s\n",
+    DebugP_log("  ESM instance #%d, ESM interrupt type = %s\r\n",
                 esmInstType, printEsmIntType(esmIntType));
 
     esmOutputResult[gcurrTestCase]= USE_CASE_STATUS_COMPLETED_SUCCESS;
@@ -271,11 +271,11 @@ int32_t ESM_example_init (void)
     result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &ESM_Example_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, &apparg);
     if (result != SDL_PASS) {
         /* print error and quit */
-        DebugP_log("TIMER_ESM_init: Error initializing MCU ESM: result = %d\n", result);
+        DebugP_log("TIMER_ESM_init: Error initializing MCU ESM: result = %d\r\n", result);
 
         retValue = -1;
     } else {
-        DebugP_log("\nTIMER_ESM_init: Init MCU ESM complete \n");
+        DebugP_log("\r\nTIMER_ESM_init: Init MCU ESM complete \r\n");
     }
 #endif
 #if defined (R5F_CORE)
@@ -283,11 +283,11 @@ int32_t ESM_example_init (void)
 
 	if (result != SDL_PASS) {
         /* print error and quit */
-        DebugP_log("TIMER_ESM_init: Error initializing MAIN ESM: result = %d\n", result);
+        DebugP_log("TIMER_ESM_init: Error initializing MAIN ESM: result = %d\r\n", result);
 
         retValue = -1;
     } else {
-        DebugP_log("\nTIMER_ESM_init: Init MAIN ESM complete \n");
+        DebugP_log("\r\nTIMER_ESM_init: Init MAIN ESM complete \r\n");
     }
 #endif
     return retValue;
@@ -316,7 +316,7 @@ if (esmInstType == SDL_ESM_INST_MAIN_ESM0) {
         }
 #endif
     } else {
-        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \n",
+        DebugP_log("ERR: Unexpected ESM Instance %d and ESM Interrupt Type %d \r\n",
                     esmInstType, esmIntType);
         retVal = SDL_EFAIL;
     }
@@ -337,24 +337,24 @@ void ESM_example_printSummary(void)
 {
     int32_t i;
 
-    DebugP_log("\n\n");
-    DebugP_log("ESM Example Application summary\n");
-    DebugP_log("-------------------------------\n");
-    DebugP_log("Completed %d Test Cases\n", gcurrTestCase);
-    DebugP_log("Received %d High Priority Interrupts\n", totalHiEventsLogged);
-    DebugP_log("Received %d Low Priority Interrupts\n", totalLoEventsLogged);
-    DebugP_log("Received %d Config Priority Interrupts\n", totalCfgEventsLogged);
+    DebugP_log("\r\n\r\n");
+    DebugP_log("ESM Example Application summary\r\n");
+    DebugP_log("-------------------------------\r\n");
+    DebugP_log("Completed %d Test Cases\r\n", gcurrTestCase);
+    DebugP_log("Received %d High Priority Interrupts\r\n", totalHiEventsLogged);
+    DebugP_log("Received %d Low Priority Interrupts\r\n", totalLoEventsLogged);
+    DebugP_log("Received %d Config Priority Interrupts\r\n", totalCfgEventsLogged);
 
-    DebugP_log("\nTest Case Event Log\n");
-    DebugP_log("------------------\n");
+    DebugP_log("\r\nTest Case Event Log\r\n");
+    DebugP_log("------------------\r\n");
     for (i = 0; i < totalEventsLogged; i++) {
-        DebugP_log("\nTest Case %d: ESM Call back function called : grpChannel 0x%x, " \
-                    "index 0x%x, intSrc 0x%x \n",
+        DebugP_log("\r\nTest Case %d: ESM Call back function called : grpChannel 0x%x, " \
+                    "index 0x%x, intSrc 0x%x \r\n",
                     esmEventLog[i].useCaseNum,
                     esmEventLog[i].grpChannel,
                     esmEventLog[i].index,
                     esmEventLog[i].intSrc);
-        DebugP_log("  ESM instance #%d, ESM interrupt type = %s\n",
+        DebugP_log("  ESM instance #%d, ESM interrupt type = %s\r\n",
                     esmEventLog[i].esmInstance,
                     printEsmIntType(esmEventLog[i].intType));
 
@@ -375,18 +375,18 @@ void esm_example_app(void *args)
 
     if (retValue < 0) {
         /* print and exit */
-        DebugP_log("\nERR: ESM_example_init failed");
+        DebugP_log("\r\nERR: ESM_example_init failed");
         testErrCount++;
     }
 
-    DebugP_log("\nESM example init complete");
+    DebugP_log("\r\nESM example init complete");
 
     /* Initialize the Timers for all the Use Cases */
     retValue = esm_timerInit();
 
     if (retValue < 0) {
         /* print and exit */
-        DebugP_log("\nERR: Timer initialization failed");
+        DebugP_log("\r\nERR: Timer initialization failed");
         testErrCount++;
     }
     /* Trigger each use Case */
@@ -394,7 +394,7 @@ void esm_example_app(void *args)
         retValue = useCaseTrigger(i);
 
         if (retValue != 0) {
-            DebugP_log("\nERR: Use Case Trigger for use Case %d failed \n",
+            DebugP_log("\r\nERR: Use Case Trigger for use Case %d failed \r\n",
                         retValue);
             break;
         }
@@ -404,15 +404,15 @@ void esm_example_app(void *args)
               (gesmPinClearResult[i] == USE_CASE_STATUS_NOT_RUN))
         {
 #ifdef DEBUG
-            DebugP_log("InputTrig = %d, OutputResult = %d, ClearResult = %d\n",
+            DebugP_log("InputTrig = %d, OutputResult = %d, ClearResult = %d\r\n",
                         gesmEventInputTrig[i],
                         esmOutputResult[i],
                         gesmPinClearResult[i]);
 #endif
         }
-        DebugP_log("\nUse Case %d completed: Input Event Trigger = %s, \n" \
-                    "                       Event Handler Complete = %s, \n" \
-                    "                       MCU_SAFETY_ERRORn Pin Clear = %s\n",
+        DebugP_log("\r\nUse Case %d completed: Input Event Trigger = %s, \r\n" \
+                    "                       Event Handler Complete = %s, \r\n" \
+                    "                       MCU_SAFETY_ERRORn Pin Clear = %s\r\n",
                     i,
                     printTestCaseStepResult(gesmEventInputTrig[i]),
                     printTestCaseStepResult(esmOutputResult[i]),
@@ -432,15 +432,15 @@ void esm_example_app(void *args)
 
     /* Print results and logs of the Test Cases */
     ESM_example_printSummary();
-    DebugP_log("\nESM Example Application: Complete");
+    DebugP_log("\r\nESM Example Application: Complete");
 
     if (testErrCount == 0)
     {
-        DebugP_log("\n All tests have passed!!\r\n");
+        DebugP_log("\r\n All tests have passed!!\r\r\n");
     }
     else
     {
-        DebugP_log("\n ESM Example app failed. \n");
+        DebugP_log("\r\n ESM Example app failed. \r\n");
     }
     return;
 }
@@ -475,7 +475,7 @@ static int32_t sdlApp_dplInit(void)
     ret = SDL_TEST_dplInit();
     if (ret != SDL_PASS)
     {
-        DebugP_log("Error: Init Failed\n");
+        DebugP_log("Error: Init Failed\r\n");
     }
 
     return ret;
@@ -485,7 +485,7 @@ int32_t mcu_esm0_main(void)
 {
     sdlApp_dplInit();
 
-    DebugP_log("\n ESM Example Application\r\n");
+    DebugP_log("\r\n ESM Example Application\r\r\n");
 	Drivers_open();
 	Board_driversOpen();
     (void)esm_example_app(NULL);

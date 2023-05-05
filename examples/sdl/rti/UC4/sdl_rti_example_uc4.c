@@ -120,9 +120,11 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
     uint32_t closedWindowstatus, currentDownCounter, windowSizeShift;
     uint32_t windowStartTime, timeOutValue, windowSize;
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (M4F_CORE)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(baseAddr,&getBaseAddr);
 	baseAddr=getBaseAddr;
+#endif
 #endif
     int32_t retVal = SDL_EFAIL;
     if ((baseAddr        != ((uint32_t) NULL)) &&
@@ -272,7 +274,7 @@ int32_t SDL_RTI_exampleTest(void)
 		/*LATE TRIGGER: Starting the DWWD again after previous feed and to service the DWWD */
 	    SDL_RTI_start(SDL_INSTANCE_RTI);
 
-        DebugP_log("\n\nRTI Late trigger servicing test running. \r\n\n");
+        DebugP_log("\r\nRTI Late trigger servicing test running. \r\n");
 
 		  DebugP_log("   Re-Opening the window to service after previous feed\r\n");
 
@@ -296,7 +298,7 @@ int32_t SDL_RTI_exampleTest(void)
         }
         if (retVal == SDL_PASS)
         {
-            DebugP_log("   RTI Late trigger servicing test successful. \r\n\n");
+            DebugP_log("   RTI Late trigger servicing test successful. \r\n");
         }
         else
         {
@@ -447,9 +449,11 @@ static void IntrDisable(uint32_t intsrc)
 static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size)
 {
 	#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    #if defined (M4F_CORE)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(rtiModule,&getBaseAddr);
 	rtiModule=getBaseAddr;
+    #endif
 	#endif
     /* Set dwwd window size to 100 percent. */
     SDL_RTI_writeWinSz(rtiModule, RTI_DWWD_WINDOWSIZE_100_PERCENT);

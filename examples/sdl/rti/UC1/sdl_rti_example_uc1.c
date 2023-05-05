@@ -245,7 +245,7 @@ int32_t SDL_RTI_exampleTest(void)
 
          /* UC1: Configure RTI and servicing for some time */
         DebugP_log("\nRTI DWWD proper servicing test running. \r\n");
-        DebugP_log("   Please wait for max %d ms. \r\n\n", RTI_WDT_TIMEOUT);
+        DebugP_log("   Please wait for max %d ms. \r\n", RTI_WDT_TIMEOUT);
 
       isrFlag = RTI_NO_INTERRUPT;
 
@@ -298,7 +298,7 @@ int32_t SDL_RTI_exampleTest(void)
 
         if (retVal == SDL_PASS)
         {
-            DebugP_log("\nRTI Window End time violation test successful. \r\n\n");
+            DebugP_log("\nRTI Window End time violation test successful. \r\n");
         }
         else
         {
@@ -315,9 +315,11 @@ int32_t SDL_RTI_exampleTest(void)
 static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size)
 {
 	#if defined (SOC_AM64X) || defined (SOC_AM243X)
+    #if defined (M4F_CORE)
 	uint32_t getBaseAddr;
 	SDL_RTI_getBaseaddr(rtiModule,&getBaseAddr);
 	rtiModule=getBaseAddr;
+    #endif
 	#endif
     /* Set dwwd window size to 100 percent. */
     SDL_RTI_writeWinSz(rtiModule, RTI_DWWD_WINDOWSIZE_100_PERCENT);
