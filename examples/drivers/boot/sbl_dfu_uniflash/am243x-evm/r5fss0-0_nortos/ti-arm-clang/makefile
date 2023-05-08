@@ -247,7 +247,7 @@ BOOTIMAGE_CERT_GEN_CMD=$(PYTHON) $(MCU_PLUS_SDK_PATH)/tools/boot/signing/rom_ima
 SYSFW_PATH=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/soc/am64x_am243x
 SYSFW_LOAD_ADDR=0x44000
 BOARDCFG_LOAD_ADDR=0x7B000
-BOARDCFG_BLOB=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/sciclient_default_boardcfg/am64x_am243x/boardcfg_blob.bin
+BOARDCFG_BLOB=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/sciclient_default_boardcfg/am243x/boardcfg_blob.bin
 
 
 SBL_RUN_ADDRESS=0x70000000

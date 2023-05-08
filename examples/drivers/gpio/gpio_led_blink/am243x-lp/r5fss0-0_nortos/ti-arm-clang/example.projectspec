@@ -14,8 +14,8 @@
         name = "gpio_led_blink_am243x-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
-            Release,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
@@ -53,7 +53,7 @@
             --reread_libs
         "
 
-        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}"
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am243x"
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
