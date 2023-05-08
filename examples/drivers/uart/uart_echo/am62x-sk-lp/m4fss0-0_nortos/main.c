@@ -36,7 +36,7 @@
 
 void uart_echo(void *args);
 
-int main(void)
+int main()
 {
     System_init();
     Board_init();

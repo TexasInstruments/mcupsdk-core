@@ -36,7 +36,7 @@
 
 void uart_echo_low_latency_polling(void *args);
 
-int main(void)
+int main()
 {
     System_init();
     Board_init();

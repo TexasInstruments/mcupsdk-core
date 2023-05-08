@@ -36,7 +36,7 @@
 
 void sciclient_get_version_main(void *args);
 
-int main(void)
+int main()
 {
     System_init();
     Board_init();

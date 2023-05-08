@@ -36,7 +36,7 @@
 
 void mcspi_loopback_main(void *args);
 
-int main(void)
+int main()
 {
     System_init();
     Board_init();

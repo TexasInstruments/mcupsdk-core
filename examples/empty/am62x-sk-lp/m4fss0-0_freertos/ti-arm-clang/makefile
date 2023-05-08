@@ -98,6 +98,7 @@ LIBS_common = \
 	-lfreertos.am62x.m4f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am62x.m4f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
+	-llibsysbm.a \
 
 LFLAGS_common = \
 	-Wl,--ram_model \
@@ -108,6 +109,7 @@ LIBS_NAME = \
 	freertos.am62x.m4f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am62x.m4f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
+	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
@@ -123,6 +125,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
 LIBS_PATH := $(LIBS_PATH_common) $(LIBS_PATH_$(PROFILE))
 LFLAGS := $(LFLAGS_common) $(LFLAGS_$(PROFILE))
+LNKOPTFLAGS := $(LNKOPTFLAGS_common) $(LNKOPTFLAGS_$(PROFILE))
 LNK_FILES := $(LNK_FILES_common) $(LNK_FILES_$(PROFILE))
 
 OBJDIR := obj/$(PROFILE)/
@@ -156,7 +159,7 @@ SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.
 $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
 	@echo  Linking: am62x:m4fss0-0:freertos:ti-arm-clang $@ ...
-	$(LNK) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
+	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
 	@echo  Linking: am62x:m4fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
