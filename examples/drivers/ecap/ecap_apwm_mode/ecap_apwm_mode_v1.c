@@ -92,6 +92,7 @@ void ecap_apwm_mode_main(void *args)
 
     /* Get ECAP address */
     gEcapBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_ECAP0_BASE_ADDR);
+    numIsrCnt = APP_ECAP_RUN_TIME * APP_ECAP_APWM_OUT_FREQ;
 
     status = SemaphoreP_constructCounting(&gEcapSyncSemObject, 0, numIsrCnt);
     DebugP_assert(SystemP_SUCCESS == status);
@@ -126,7 +127,6 @@ void ecap_apwm_mode_main(void *args)
         ECAP_APWM_polarityConfig(gEcapBaseAddr, APP_ECAP_APWM_OUT_POLARITY);
         ECAP_syncInOutSelect(gEcapBaseAddr, ECAP_SYNC_IN_DISABLE, ECAP_SYNC_OUT_DISABLE);
 
-        numIsrCnt = (APP_ECAP_RUN_TIME * APP_ECAP_APWM_OUT_FREQ);
         periodVal = ECAP_INPUT_CLK_FREQ/APP_ECAP_APWM_OUT_FREQ;
         /* if periodVal > 32b then we cannot give accurate timing */
         DebugP_assert(periodVal < 0xFFFFFFFFU);
