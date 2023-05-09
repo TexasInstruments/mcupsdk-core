@@ -239,7 +239,6 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     void *ptr = (void *)&arg;
     int32_t status = SDL_PASS;
     int32_t result = 0;
-    volatile uint32_t timeoutCount = 0;
     instance = instanceIndex;
     cfg.cfgCtrl = SDL_TOG_CFG_TIMEOUT;
 
@@ -311,21 +310,15 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     if (result == 0)
     {
         /* Timeout if exceeds time */
+        DebugP_log("\r\nWaiting for reading END_POINT_ACCESS by M4F core...\r\n");
         while (!handlerFlag)
         {
-            timeoutCount++;
+            /*Waiting for reading address by M4F core and getting interrupt */
         }
 
-        if (!(handlerFlag))
-        {
-            SDL_TOG_stop( instance );
-            DebugP_log("   TOG test timed out \r\n");
-            DebugP_log("   Few/all tests Failed  \r\n");
-            result = -1;
-        } else {
-            DebugP_log("\r\nSDL_TOG_stop complete \r\n");
-            DebugP_log("\r\nAll tests have passed.\r\n");
-        }
+        DebugP_log("\r\nSDL_TOG_stop complete \r\n");
+        DebugP_log("\r\nAll tests have passed.\r\n");
+
         /* reset Done flag so we can run again */
         handlerFlag = false;
     }

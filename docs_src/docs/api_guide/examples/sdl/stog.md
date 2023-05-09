@@ -42,6 +42,8 @@ Use Cases
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
 
+- **STOG_r5f**  STOG example for r5f core, First R5F binary should be loaded and run followed by M4F binary.
+
 # See Also
 
 \ref SDL_STOG_PAGE
@@ -49,7 +51,9 @@ Use Cases
 # Sample Output
 
 \cond SOC_AM64X || SOC_AM243X
+
 \code{.c}
+For M4F CORE
 
 TOG Sample Example
 
@@ -62,6 +66,29 @@ SDL_TOG_setIntrEnable complete
 SDL_TOG_init.timeout complete
 
 SDL_TOG_start complete
+
+SDL_TOG_stop complete
+
+All tests have passed.
+
+\endcode
+
+\code{.c}
+FOR R5F CORE
+
+TOG Sample Example
+
+ Init MCU ESM complete
+
+ Init MAIN ESM complete
+
+SDL_TOG_setIntrEnable complete
+
+SDL_TOG_init.timeout complete
+
+SDL_TOG_start complete
+
+Waiting for reading END_POINT_ACCESS by M4F core...
 
 SDL_TOG_stop complete
 
