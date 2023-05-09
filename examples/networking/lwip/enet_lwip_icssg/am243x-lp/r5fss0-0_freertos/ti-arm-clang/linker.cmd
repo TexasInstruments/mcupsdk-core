@@ -142,18 +142,9 @@ SECTIONS
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
-        .stack:  {} palign(8)   /* This is where the main() stack goes */
         .sysmem: {} palign(8)   /* This is where the malloc heap goes */
-    } > MSRAM
-
-
-    .enet_dma_mem {
-        *(*ENET_DMA_DESC_MEMPOOL)
-        *(*ENET_DMA_RING_MEMPOOL)
-#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)
-        *(*ENET_DMA_PKT_MEMPOOL)
-#endif
-    } (NOLOAD) > MSRAM
+        .stack:  {} palign(8)   /* This is where the main() stack goes */
+    } > MSRAM\
 
     GROUP {
         .bss:    {} palign(8)   /* This is where uninitialized globals go */
@@ -180,6 +171,17 @@ SECTIONS
         RUN_END(__UNDEFINED_STACK_END)
     } > MSRAM
 
+    .enet_dma_mem {
+        *(*ENET_DMA_DESC_MEMPOOL)
+        *(*ENET_DMA_RING_MEMPOOL)
+#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)
+        *(*ENET_DMA_PKT_MEMPOOL)
+#endif
+    } (NOLOAD) {} ALIGN (128) > MSRAM
+
+    .bss:ENET_DMA_OBJ_MEM (NOLOAD) {} ALIGN (128) > MSRAM
+    .bss:ENET_DMA_PKT_INFO_MEMPOOL (NOLOAD) {} ALIGN (128) > MSRAM
+    .bss:ENET_ICSSG_OCMC_MEM (NOLOAD) {} ALIGN (128) > MSRAM
 }
 
 /*

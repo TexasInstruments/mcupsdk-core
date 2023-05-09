@@ -48,9 +48,10 @@
 
 #include <kernel/dpl/TaskP.h>
 #include <kernel/dpl/ClockP.h>
-#include <kernel/dpl/ClockP.h>
-#include <networking/enet/utils/include/enet_apputils.h>
-#include <networking/enet/utils/include/enet_board.h>
+#include <kernel/dpl/QueueP.h>
+
+#include <enet_apputils.h>
+#include <enet_board.h>
 #include "ti_board_config.h"
 #include "ti_board_open_close.h"
 #include "ti_drivers_open_close.h"
@@ -69,6 +70,21 @@ static const uint8_t BROADCAST_MAC_ADDRESS[ENET_MAC_ADDR_LEN] = { 0xFF, 0xFF, 0x
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
+
+typedef struct EnetApp_AppEnetInfo
+{
+    /* Peripheral type */
+    Enet_Type enetType;
+
+    /* Peripheral instance */
+    uint32_t instId;
+
+    /* MAC ports List to use for the above EnetType & InstId*/
+    uint8_t     numMacPort;
+
+    /* Num MAC ports to use for the above EnetType & InstId*/
+    Enet_MacPort macPortList[ENET_SYSCFG_MAX_MAC_PORTS];
+} EnetApp_AppEnetInfo;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -97,7 +113,8 @@ static inline int32_t App_isNetworkUp(struct netif* netif_);
 
 /* dhcp struct for the ethernet netif */
 static struct dhcp g_netifDhcp[ENET_SYSCFG_NETIF_COUNT];
-struct netif *g_pNetif[ENET_SYSCFG_NETIF_COUNT];
+static struct netif *g_pNetif[ENET_SYSCFG_NETIF_COUNT];
+static EnetApp_AppEnetInfo gEnetAppParams[ENET_SYSCFG_MAX_ENET_INSTANCES];
 
 /* Handle to the Application interface for the LwIPIf Layer
  */
@@ -108,8 +125,7 @@ LwipifEnetApp_Handle hlwipIfApp = NULL;
 
 int appMain(void *args)
 {
-    Enet_Type enetType;
-    uint32_t instId;
+    int32_t status = ENET_SOK;
 
     Drivers_open();
     Board_driversOpen();
@@ -118,36 +134,59 @@ int appMain(void *args)
     DebugP_log("  CPSW LWIP TCP ECHO SERVER \r\n");
     DebugP_log("==========================\r\n");
 
-    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0, &enetType, &instId);
-
-    EnetAppUtils_enableClocks(enetType, instId);
-
-    EnetApp_driverInit();
-
-    const int32_t status = EnetApp_driverOpen(enetType, instId);
-    if (ENET_SOK != status)
+    /* Read MAC Port details and enable clock for each ENET instance */
+    for (uint32_t enetInstIdx = 0; enetInstIdx < ENET_SYSCFG_MAX_ENET_INSTANCES; enetInstIdx++)
     {
-        EnetAppUtils_print("Failed to open ENET: %d\r\n", status);
-        EnetAppUtils_assert(false);
-        return -1;
+        EnetApp_AppEnetInfo* pEnetInstInfo = &gEnetAppParams[enetInstIdx];
+        EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0 + enetInstIdx, &pEnetInstInfo->enetType, &pEnetInstInfo->instId);
+        EnetApp_getEnetInstMacInfo(pEnetInstInfo->enetType,
+                                   pEnetInstInfo->instId,
+                                   &pEnetInstInfo->macPortList[0],
+                                   &pEnetInstInfo->numMacPort);
+        EnetAppUtils_enableClocks(pEnetInstInfo->enetType, pEnetInstInfo->instId);
     }
 
-    EnetApp_addMCastEntry(enetType,
-                          instId,
-                          EnetSoc_getCoreId(),
-                          BROADCAST_MAC_ADDRESS,
-                          CPSW_ALE_ALL_PORTS_MASK);
-    //call createPhyHandler here
+    /* Open ENET driver for each ENET instance */
+
+    EnetApp_driverInit();
+    for(uint32_t enetInstIdx = 0; enetInstIdx < ENET_SYSCFG_MAX_ENET_INSTANCES; enetInstIdx++)
+    {
+        status = EnetApp_driverOpen(gEnetAppParams[enetInstIdx].enetType, gEnetAppParams[enetInstIdx].instId);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to open ENET[%d]: %d\r\n", enetInstIdx, status);
+            EnetAppUtils_assert(status == ENET_SOK);
+        }
+        
+        EnetApp_addMCastEntry(gEnetAppParams[enetInstIdx].enetType,
+                              gEnetAppParams[enetInstIdx].instId,
+                              EnetSoc_getCoreId(),
+                              BROADCAST_MAC_ADDRESS,
+                              CPSW_ALE_ALL_PORTS_MASK);
+    }
+
     App_setupNetworkStack();
 
-    while (false == App_isNetworkUp(netif_default))
+    uint32_t netupMask = 0;
+    /* wait for atleast one Network Interface to get IP */
+    while (netupMask == 0)
     {
-        DebugP_log("Waiting for network UP ...\r\n");
-        ClockP_sleep(2);
+        for(uint32_t netifIdx = 0; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
+        {
+            if (App_isNetworkUp(g_pNetif[netifIdx]))
+            {
+                netupMask |= (1 << netifIdx);
+            }
+            else
+            {
+                DebugP_log("[%d]Waiting for network UP ...\r\n",g_pNetif[netifIdx]->num);
+            }
+            ClockP_sleep(2);
+        }
     }
 
     DebugP_log("Network is UP ...\r\n");
-    ClockP_sleep(1);
+    ClockP_sleep(2);
     AppTcp_startServer();
 
     while (1)
@@ -177,7 +216,10 @@ static void App_setupNetworkStack()
 
 static void App_shutdownNetworkStack()
 {
-    LwipifEnetApp_netifClose(hlwipIfApp, NETIF_INST_ID0);
+    for (uint32_t netifIdx = 0U; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
+    {
+        LwipifEnetApp_netifClose(hlwipIfApp, NETIF_INST_ID0 + netifIdx);
+    }
     return;
 }
 
@@ -206,13 +248,13 @@ static void App_setupNetif()
 
     DebugP_log("Starting lwIP, local interface IP is dhcp-enabled\r\n");
     hlwipIfApp = LwipifEnetApp_getHandle();
-    for (uint32_t i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
+    for (uint32_t netifIdx = 0U; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
     {
         /* Open the netif and get it populated*/
-        g_pNetif[i] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
-        netif_set_status_callback(g_pNetif[i], App_netifStatusChangeCb);
-        netif_set_link_callback(g_pNetif[i], App_netifLinkChangeCb);
-        netif_set_up(g_pNetif[NETIF_INST_ID0 + i]);
+        g_pNetif[netifIdx] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + netifIdx, &ipaddr, &netmask, &gw);
+        netif_set_status_callback(g_pNetif[netifIdx], App_netifStatusChangeCb);
+        netif_set_link_callback(g_pNetif[netifIdx], App_netifLinkChangeCb);
+        netif_set_up(g_pNetif[NETIF_INST_ID0 + netifIdx]);
     }
     LwipifEnetApp_startSchedule(hlwipIfApp, g_pNetif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
 }
@@ -220,11 +262,11 @@ static void App_setupNetif()
 static void App_allocateIPAddress()
 {
     sys_lock_tcpip_core();
-    for (uint32_t  i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
+    for (uint32_t  netifIdx = 0U; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
     {
-        dhcp_set_struct(g_pNetif[NETIF_INST_ID0 + i], &g_netifDhcp[NETIF_INST_ID0 + i]);
+        dhcp_set_struct(g_pNetif[NETIF_INST_ID0 + netifIdx], &g_netifDhcp[NETIF_INST_ID0 + netifIdx]);
 
-        const err_t err = dhcp_start(g_pNetif[NETIF_INST_ID0 + i]);
+        const err_t err = dhcp_start(g_pNetif[NETIF_INST_ID0 + netifIdx]);
         EnetAppUtils_assert(err == ERR_OK);
     }
     sys_unlock_tcpip_core();
@@ -235,12 +277,12 @@ static void App_netifStatusChangeCb(struct netif *pNetif)
 {
     if (netif_is_up(pNetif))
     {
-        DebugP_log("Enet IF UP Event. Local interface IP:%s\r\n",
-                    ip4addr_ntoa(netif_ip4_addr(pNetif)));
+        DebugP_log("[%d]Enet IF UP Event. Local interface IP:%s\r\n",
+                    pNetif->num, ip4addr_ntoa(netif_ip4_addr(pNetif)));
     }
     else
     {
-        DebugP_log("Enet IF DOWN Event\r\n");
+        DebugP_log("[%d]Enet IF DOWN Event\r\n", pNetif->num);
     }
     return;
 }
@@ -249,11 +291,11 @@ static void App_netifLinkChangeCb(struct netif *pNetif)
 {
     if (netif_is_link_up(pNetif))
     {
-        DebugP_log("Network Link UP Event\r\n");
+        DebugP_log("[%d]Network Link UP Event\r\n", pNetif->num);
     }
     else
     {
-        DebugP_log("Network Link DOWN Event\r\n");
+        DebugP_log("[%d]Network Link DOWN Event\r\n", pNetif->num);
     }
     return;
 }

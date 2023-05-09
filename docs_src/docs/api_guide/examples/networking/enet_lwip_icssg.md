@@ -6,8 +6,7 @@
 
 \note lwIP features are made available as is from public lwIP project. SDK configuration may only enable and exercise a subset of these features.
 
-This example is a TCP/UDP IP application using the LwIP networking stack, coupled with
-ethernet driver (ENET)
+This example is a TCP/UDP IP application using the LwIP networking stack, coupled with ethernet driver (ENET-LLD)
 
 \cond SOC_AM64X || SOC_AM243X
 
@@ -26,6 +25,7 @@ The examples do below
 - Initializes the LwIP stack for TCP/UDP IP
 - Allows user to run and test basic networking features like DHCP, ping, iperf with TCP/UDP.
 
+\note ICSSG Switch mode is not functional in 8.6.0. Kindly follow and use 8.5.0 for switch functionality.
 # Supported Combinations
 
 \cond SOC_AM64X
@@ -100,7 +100,7 @@ The examples do below
 
 <tr>
     <td>Netif instance
-    <td>TI Networking / Enet (CPSW) / LWIP Interface config
+    <td>TI Networking / Enet (ICSSG) / LWIP Interface config
     <td>No of netifs allocated by the example
     <td>Only one netif should be set to default when more than one netif is allocated.
 </tr>
@@ -132,6 +132,23 @@ The examples do below
 - Configurations for Packet pool can be located in Syscfg Tool under path: "TI Networking"→"Enet (ICSS)"→ "Packet Pool Config"
   \imageStyle{icssg_dmac_packet_pool_config.png,width:30%}
   \image html icssg_dmac_packet_pool_config.png ICSSG DMAC Packet Pool configuration
+
+# Configuring ICSSG DUAL NETIF
+
+- Selecting DUAL MAC mode does not imply both the MAC ports being functional.
+- To setup Dual netif configuration, two instances of ICSSG have to be opened in total.
+- Both of the instances have to be setup as shown above in the DMAC configuration.
+- Dual MAC mode Port of the first instance has to be set to MAC_PORT_1.
+  \imageStyle{icssg_dmac_sysconfig_1.png,width:30%}
+  \image html icssg_dmac_sysconfig_1.png ICSSG DUAL MAC PORT-1 configuration.
+  
+- Dual MAC mode Port of the second instance has to be set to MAC_PORT_2.
+- Uncheck the option "Enable MDIO MDC Config" to prevent opening unwanted configs.
+  \imageStyle{icssg_dmac_sysconfig_2.png,width:30%}
+  \image html icssg_dmac_sysconfig_2.png ICSSG DUAL MAC PORT-2 configuration.
+  
+- A netif instance has to be present in both of the ICSS peripheral instances.
+
 # Iperf using LWIP
 
 - Iperf is a tool for network performance measurement and tuning. It is a cross-platform tool that can produce standardized performance measurements for any network. Iperf has client and server functionality, and can create data streams to measure the throughput between the two ends in one or both directions.

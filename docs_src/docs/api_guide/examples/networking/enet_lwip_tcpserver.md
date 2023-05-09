@@ -1,4 +1,4 @@
-# Enet Lwip TCP Server Example{#EXAMPLES_ENET_LWIP_CPSW_TCPSERVER}
+# Enet Lwip TCP Server Example on CPSW{#EXAMPLES_ENET_LWIP_CPSW_TCPSERVER}
 
 [TOC]
 

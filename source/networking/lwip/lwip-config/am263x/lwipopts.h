@@ -107,7 +107,7 @@ extern "C"
 #define LWIP_NETIF_STATUS_CALLBACK      1
 #define LWIP_NETIF_EXT_STATUS_CALLBACK  1
 
-#define LWIP_DEBUG			0
+#define LWIP_DEBUG                 0
 
 #ifdef LWIP_DEBUG
 
@@ -138,6 +138,7 @@ extern "C"
 #define TCP_FR_DEBUG               LWIP_DBG_OFF
 #define TCP_QLEN_DEBUG             LWIP_DBG_OFF
 #define TCP_RST_DEBUG              LWIP_DBG_OFF
+#define ETHARP_DEBUG               LWIP_DBG_OFF
 #endif
 
 #define LWIP_DBG_TYPES_ON         (LWIP_DBG_ON|LWIP_DBG_TRACE|LWIP_DBG_STATE|LWIP_DBG_FRESH|LWIP_DBG_HALT)

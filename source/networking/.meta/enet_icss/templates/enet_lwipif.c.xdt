@@ -28,7 +28,6 @@
 #include <drivers/udma.h>
 
 #include <enet.h>
-#include <networking/enet/core/include/per/cpsw.h>
 #include <networking/enet/utils/include/enet_appmemutils_cfg.h>
 #include <networking/enet/utils/include/enet_apputils.h>
 #include <networking/enet/utils/include/enet_appmemutils.h>

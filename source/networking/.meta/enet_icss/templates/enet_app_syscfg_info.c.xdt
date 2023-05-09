@@ -245,22 +245,35 @@ void EnetApp_releaseHandleInfo(Enet_Type enetType, uint32_t instId)
 %if(instance.ExternalPhyMgmtEnable == false){
 bool EnetApp_isPortLinked(Enet_Handle hEnet)
 {
-    uint32_t coreId = EnetSoc_getCoreId();
+    Enet_Type enetType;
+    uint32_t instId;
     uint32_t linkUpMask = 0U;
     bool linkUp;
-%{
-%let icssMacInfo = module.getMacPortInfo(instance);
-%for (var i in icssMacInfo.macPortList) {
-    linkUpMask |= (EnetAppUtils_isPortLinkUp(hEnet, coreId, `icssMacInfo.macPortList[i]`)) << `i`;     
-%}
+    Enet_IoctlPrms prms;
+    Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
+    uint8_t numMacPorts;
+    int32_t status;
+    uint32_t i;
+    uint32_t coreId = EnetSoc_getCoreId();
 
-%if (instance.AppLinkUpPortMask == 'ALL_PORTS') {
-    linkUp =  (linkUpMask == ((1 << `icssMacInfo.macPortList.length`) - 1))  ? true : false;
-%}
-%if (instance.AppLinkUpPortMask == 'ANY_PORT') {
+    status = Enet_getHandleInfo(hEnet, &enetType, &instId);
+    EnetAppUtils_assert(status == ENET_SOK);
+    EnetApp_getEnetInstMacInfo(enetType, instId, macPortList, &numMacPorts);
+    for (i = 0; i < numMacPorts; i++)
+    {
+        linkUp = false;
+        ENET_IOCTL_SET_INOUT_ARGS(&prms, &macPortList[i], &linkUp);
+
+        ENET_IOCTL(hEnet, coreId, ENET_PER_IOCTL_IS_PORT_LINK_UP, &prms, status);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to get port %u link status: %d\r\n",
+                               ENET_MACPORT_ID(macPortList[i]), status);
+        }
+        linkUpMask |= (linkUp << i);
+    }
+    
     linkUp =  (linkUpMask != 0) ? true : false;
-%}
-%}
     return linkUp;
 }
 %}

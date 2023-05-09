@@ -13,6 +13,7 @@
 
 #include <enet.h>
 #include <include/core/enet_types.h>
+#include <include/per/icssg.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */

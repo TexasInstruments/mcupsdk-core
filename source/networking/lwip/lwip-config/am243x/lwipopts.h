@@ -336,10 +336,10 @@ extern "C"
 #define PBUF_STATS              1
 #define SYS_STATS               1
 
-#define LWIP_SNMP                  LWIP_UDP
-#define MIB2_STATS                 LWIP_SNMP
+#define LWIP_SNMP               LWIP_UDP
+#define MIB2_STATS              LWIP_SNMP
 #ifdef LWIP_HAVE_MBEDTLS
-#define LWIP_SNMP_V3               0
+#define LWIP_SNMP_V3            0
 #endif
 
 #endif /* LWIP_STATS */

@@ -890,7 +890,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> CPSW UDP Iperf test instability on AM243x
     <td> Networking
     <td> 8.6.0
-    <td> AM243x
+    <td> AM64x, AM243x
     <td> -
 </tr>
 </table>
@@ -913,6 +913,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 7.3.0
     <td> AM64x, AM243x
     <td> Use bash for windows as part of git for windows or don't use -j option
+</tr>
+<tr>
+    <td> MCUSDK-10680
+    <td> ENET: AM243x: ICSSG Switch functionality degrade
+    <td> Networking (ICSSG)
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> Use 8.5.0 release for ICSSG switch functionality
 </tr>
 </table>
 

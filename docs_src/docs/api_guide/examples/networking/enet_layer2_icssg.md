@@ -15,6 +15,8 @@ On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG HW Mechanis
 
 \endcond
 
+\note ICSSG Switch mode is not functional in 8.6.0. Kindly follow and use 8.5.0 for switch functionality.
+
 This example do below:
 - Target-side application running on a Cortex R5F core.
 	- Application receives the packet, copies the payload into a new packet which is then sent back.
@@ -62,6 +64,22 @@ This example do below:
  Example folder | examples/networking/enet_layer2_icssg
 
 \endcond
+
+# Configuring ICSSG DUAL MAC with two MAC ports
+
+- Selecting DUAL MAC mode in ICSSG does not imply both the MAC ports being functional.
+- To setup Dual MAC configuration, two instances of ICSSG have to be opened.
+- Both of the instances have to be setup as shown above in the MAC configuration.
+- Unlike shown in the image, set the QoS level to 3 for layer 2 use cases.
+- Dual MAC mode Port of the first instance has to be set to MAC_PORT_1.
+  \imageStyle{icssg_dmac_sysconfig_1.png,width:30%}
+  \image html icssg_dmac_sysconfig_1.png ICSSG DUAL MAC PORT-1 configuration.
+  
+- Dual MAC mode Port of the second instance has to be set to MAC_PORT_2.
+- Uncheck the option "Enable MDIO MDC Config" in secode ICSSG isntance.
+- Set the QoS level to 3, same as the first instance.
+  \imageStyle{icssg_dmac_sysconfig_2.png,width:30%}
+  \image html icssg_dmac_sysconfig_2.png ICSSG DUAL MAC PORT-2 configuration.
 
 # Steps to Run the Example
 

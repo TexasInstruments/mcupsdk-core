@@ -26,6 +26,7 @@
 
 #include "ti_enet_config.h"
 
+#include <include/per/icssg.h>
 #include <drivers/hw_include/cslr_soc.h>
 #include <drivers/udma/include/udma_types.h>
 #include <drivers/udma/soc/am64x_am243x/udma_soc.h>

@@ -275,6 +275,7 @@ const example_file_list = [
     "examples/networking/lwip/enet_cpsw_socket/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
     "examples/networking/lwip/enet_lwip_icssg/.project/project.js",
+    "examples/networking/lwip/enet_icssg_tcpserver/.project/project.js",
     "examples/networking/enet_layer2_cpsw/.project/project.js",
     "examples/networking/enet_layer2_icssg/.project/project.js",
     "examples/networking/enet_vlan_icssg/.project/project.js",
