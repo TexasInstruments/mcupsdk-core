@@ -1,0 +1,15 @@
+[
+	{
+		"main_isolation_hostid": "TISCI_HOST_ID_MAIN_0_R5_0",
+		"mcusdkDeviceFolder": "am64x_am243x",
+		"mcusdkUsage": true,
+		"pdkUsage": false,
+		"sRAMSize": 8,
+		"sRamGranularity": 1,
+		"sciClientPrefixReplacement": "TISCI_",
+		"sciClientSocVersion": "V3",
+		"shortName": "am243x",
+		"soc": "AM243x_ALV_beta",
+		"wildCardPrivId": 195
+	}
+]

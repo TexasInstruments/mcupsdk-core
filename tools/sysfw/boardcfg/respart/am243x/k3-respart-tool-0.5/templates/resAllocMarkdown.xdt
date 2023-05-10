@@ -1,0 +1,73 @@
+%%{    
+var utils = system.getScript("/scripts/utils.js");
+var {mapByResources} = system.getScript("/scripts/allocation.js");
+
+const deviceSelected = utils.deviceSelected;
+const devData = utils.devData;
+const socName = utils.socName;
+
+const hostsArray = utils.getSelectedHostInstances();
+var resources = utils.resources;
+
+
+var resAlloc = mapByResources(true,false);
+var table = "";
+var hosts = "| Resources/Hosts | ";
+var pipes = "| --- | ";
+
+_.each(hostsArray, (host) => {
+        var moduleName = "/modules/" + socName + "/" + host.hostName;
+        if (system.modules[moduleName]) {
+                var inst = system.modules[moduleName].$static;
+                hosts += host.hostName;
+                if(inst.shareResource !== "none"){
+                        hosts += "/";
+                        hosts += inst.shareResource;
+                }
+                hosts += " | ";
+                pipes += "--- | ";
+        }
+})
+hosts += "HOST_ID_ALL";
+hosts += " | ";
+pipes += "--- | "
+table += hosts + "\n";
+table += pipes + "\n";
+
+_.each(resources, (resource) => {
+
+        if(resAlloc){
+                var line = "| " + resource.utype + " | ";
+                var utypeAlloc = resAlloc[resource.utype];
+                var perHost = _.groupBy(utypeAlloc, (r) => {
+                        return r.hostName;
+                })
+                _.each(hostsArray, (host) => {
+                        var moduleName = "/modules/" + socName + "/" + host.hostName;
+                        if(system.modules[moduleName]){
+                                var inst = system.modules[moduleName].$static;
+                                var resHostInfo = perHost[host.hostName];
+                                var cell = "";
+                                _.each(resHostInfo, (entry) => {
+                                        cell += "S = " + entry.start + ", " + "C = " + entry.count + "<br>";
+                                })
+
+                                if(args[0] && args[0] === inst && cell.length){
+                                        cell = "**" + cell + "**";
+                                }
+
+                                cell += " | ";
+                                line += cell;
+                        }
+                })
+                if(perHost["ALL"]){
+                        line += "S = " + perHost["ALL"][0].start + ", " + "C = " + perHost["ALL"][0].count + " | ";
+                }
+                table += line;
+                table += "\n";
+        }
+})
+
+%%}
+
+ `table`

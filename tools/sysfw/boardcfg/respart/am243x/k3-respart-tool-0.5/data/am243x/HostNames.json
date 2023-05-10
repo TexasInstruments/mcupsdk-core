@@ -1,0 +1,42 @@
+[
+	{
+		"displayName": "Device Management Security Controller",
+		"hostName": "DMSC"
+	},
+	{
+		"displayName": "M4 host",
+		"hostName": "M4_0"
+	},
+	{
+		"displayName": "Main R5F0 core0 Secure host",
+		"hostName": "MAIN_0_R5_0"
+	},
+	{
+		"displayName": "Main R5F0 core0 NonSecure host",
+		"hostName": "MAIN_0_R5_1"
+	},
+	{
+		"displayName": "Main R5F0 core1 Secure host",
+		"hostName": "MAIN_0_R5_2"
+	},
+	{
+		"displayName": "Main R5F0 core1 NonSecure host",
+		"hostName": "MAIN_0_R5_3"
+	},
+	{
+		"displayName": "Main R5F1 core0 Secure host",
+		"hostName": "MAIN_1_R5_0"
+	},
+	{
+		"displayName": "Main R5F1 core0 NonSecure host",
+		"hostName": "MAIN_1_R5_1"
+	},
+	{
+		"displayName": "Main R5F1 core1 Secure host",
+		"hostName": "MAIN_1_R5_2"
+	},
+	{
+		"displayName": "Main R5F1 core1 NonSecure host",
+		"hostName": "MAIN_1_R5_3"
+	}
+]

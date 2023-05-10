@@ -1,0 +1,60 @@
+%%{
+	var utils = system.getScript("/scripts/utils.js");
+	const deviceSelected = utils.deviceSelected;
+	const devData = utils.devData;
+	const socName = utils.socName;
+	const qos = utils.qos;
+	
+	var uniqueEndPoint = _.uniq(utils.endPoint());
+%%}
+
+/*
+ * `socName` Quality of Service (QoS) Configuration Data
+ * Auto generated from K3 Resource Partitioning tool
+ */
+#include <common.h>
+#include <asm/arch/hardware.h>
+#include "common.h"
+
+struct k3_qos_data `socName`_qos_data[] = {
+%if (system.modules["/modules/qosConfig"]) {
+%	for (let inst of system.modules["/modules/qosConfig"].$instances) {
+	/* `inst.$name` - `inst.qosdev.length` endpoints, `inst.chan.length` channels */
+%		_.each(inst.qosdev,(e) => {
+%			var n = inst.deviceName + "_" + e;
+%			for (var c = 0; c < inst.chan.length; c++) {
+%				var channel = inst.chan[c];
+	{
+		.reg = `qos[n].endpointName` + 0x100 + 0x4 * `channel`,
+		.val = `utils.getQosValue(inst)`,
+	},
+%			}
+%		})
+
+%	}
+%}
+
+	/* Following registers set 1:1 mapping for orderID MAP1/MAP2
+	 * remap registers. orderID x is remapped to orderID x again
+	 * This is to ensure orderID from MAP register is unchanged
+	 */
+%_.each(uniqueEndPoint,(u) => {
+%	var grp_cnt = qos[u].groupCount;
+
+	/* `qos[u].endpointName` - `grp_cnt` groups */
+%	for(var g = 0 ; g < grp_cnt ; g++ ){
+%		var map1_offset = 0x0 + g * 0x8;
+%		var map2_offset = 0x4 + g * 0x8;
+	{
+		.reg = `qos[u].endpointName` + `map1_offset`,
+		.val = 0x76543210,
+	},
+	{
+		.reg = `qos[u].endpointName` + `map2_offset`,
+		.val = 0xfedcba98,
+	},
+%	}
+%})
+};
+
+uint32_t `socName`_qos_count = sizeof(`socName`_qos_data) / sizeof(`socName`_qos_data[0]);

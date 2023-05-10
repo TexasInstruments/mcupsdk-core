@@ -1,0 +1,16 @@
+{
+	"components": [
+		"/modules/respart"
+	],
+	"devices": [
+		"AM243x_ALV_beta"
+	],
+	"displayName": "Keystone3 Resource Partitioning Tool",
+	"documentationPath": "docs/",
+	"includePaths": [
+		".."
+	],
+	"minToolVersion": "1.12.1",
+	"name": "K3-Respart-Tool",
+	"version": "0.5"
+}

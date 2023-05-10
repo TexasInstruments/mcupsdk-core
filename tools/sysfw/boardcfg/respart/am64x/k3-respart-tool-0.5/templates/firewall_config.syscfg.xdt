@@ -1,0 +1,35 @@
+%%{     
+	var utils = system.getScript("/scripts/utils.js");
+	
+	const deviceSelected = utils.deviceSelected;
+	const devData = utils.devData;
+	const socName = utils.socName;
+	var entries = utils.generateFirewallEntries();
+%%}
+/*
+ * `socName` Firewall Configuration Data
+ * Auto generated from K3 Resource Partitioning tool
+ */
+
+#include <common.h>
+#include "common.h"
+
+struct ti_sci_msg_fwl_region `socName`_fwl_data[] = {
+%_.each(entries,(e) => {
+%	if (e.comment != "") {
+
+	/* `e.comment` */
+%	}
+	{
+		.fwl_id = `e.fwl_id`,
+		.region = `e.region`,
+		.n_permission_regs = `e.n_permission_regs`,
+		.control = `e.control`,
+		.start_address = `e.start`,
+		.end_address = `e.end`,
+		.permissions = { `e.permissions` },
+	},
+%})
+};
+
+uint32_t `socName`_fwl_count = sizeof(`socName`_fwl_data) / sizeof(`socName`_fwl_data[0]);

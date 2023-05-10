@@ -1,0 +1,53 @@
+[
+	{
+		"end_address": "0x00004092FFFF",
+		"ids": [
+			35
+		],
+		"memory": false,
+		"name": "SA2UL Main",
+		"num_regions": 8,
+		"protected_inst": [
+			"sa2_ul_main_0"
+		],
+		"start_address": "0x000000712000"
+	},
+	{
+		"end_address": "0x0000FFFFFFFF",
+		"ids": [
+			1
+		],
+		"memory": false,
+		"name": "ZZZZ_0",
+		"num_regions": 8,
+		"protected_inst": [
+			"sam64_ddr_wrap_main_0"
+		],
+		"start_address": "0x000080000000"
+	},
+	{
+		"end_address": "0x0000701BFFFF",
+		"ids": [
+			14,
+			15,
+			16,
+			17,
+			18,
+			19,
+			23
+		],
+		"memory": false,
+		"name": "ZZZZ_1",
+		"num_regions": 4,
+		"protected_inst": [
+			"msram32kx64e_main_0",
+			"msram32kx64e_main_1",
+			"msram32kx64e_main_2",
+			"msram32kx64e_main_5",
+			"msram32kx64e_main_4",
+			"msram32kx64e_main_3",
+			"msram32kx64e_main_6"
+		],
+		"start_address": "0x0000440A0000"
+	}
+]

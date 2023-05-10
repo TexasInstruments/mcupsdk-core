@@ -1,0 +1,550 @@
+[
+	{
+		"name": "ADC MCU",
+		"protected_inst": [
+			"adc12l_gs80_mcu_0",
+			"adc12_gs80_mcu_1"
+		]
+	},
+	{
+		"name": "BOLT Main",
+		"protected_inst": [
+			"k3_boltv2_main_0",
+			"k3_boltv2_main_0"
+		]
+	},
+	{
+		"name": "CAL Main",
+		"protected_inst": [
+			"cal_main_0"
+		]
+	},
+	{
+		"name": "CBASS",
+		"protected_inst": [
+			"m4_main_dbg_cbass_main_0",
+			"m4_main_cbass_main_0",
+			"m4_main_fw_cbass_main_0",
+			"m4_main_infra_cbass_main_0",
+			"m4_wkup_cbass_wkup_0",
+			"m4_wkup_fw_cbass_wkup_0",
+			"m4_mcu_cbass_mcu_0",
+			"m4_mcu_dbg_cbass_mcu_0",
+			"m4_mcu_fw_cbass_mcu_0"
+		]
+	},
+	{
+		"name": "CBASS ECC Aggregators",
+		"protected_inst": [
+			"m4_mainclk2_ecc_aggr_main_0",
+			"m4_mainclk4_ecc_aggr_main_0",
+			"navss256l_main_0_udmass_eccaggr_0",
+			"navss_mcu_mcu_0_udmass_ecc_aggr_0",
+			"m4_main_infraclk4_ecc_aggr_main_0",
+			"m4_wkup_clk2_ecc_aggr_wkup_0",
+			"m4_mcuclk2_ecc_aggr_mcu_0",
+			"m4_mcuclk4_ecc_aggr_mcu_0"
+		]
+	},
+	{
+		"name": "CPSW2G MCU",
+		"protected_inst": [
+			"cpsw_2guss_mcu_0"
+		]
+	},
+	{
+		"name": "CPTS Main",
+		"protected_inst": [
+			"navss256l_main_0_cpts_0"
+		]
+	},
+	{
+		"name": "Compute Cluster",
+		"protected_inst": [
+			"compute_cluster_maxwell_tb_vdc_main_0"
+		]
+	},
+	{
+		"name": "DCC MCU",
+		"protected_inst": [
+			"dcc2_mcu_0",
+			"dcc2_mcu_1",
+			"dcc2_mcu_2"
+		]
+	},
+	{
+		"name": "DCC Main",
+		"protected_inst": [
+			"dcc_main_0",
+			"dcc_main_1",
+			"dcc_main_2",
+			"dcc_main_3",
+			"dcc_main_4",
+			"dcc_main_5",
+			"dcc_main_6",
+			"dcc_main_7"
+		]
+	},
+	{
+		"name": "DDRSS Main",
+		"protected_inst": [
+			"ddr39ss_gs80_main_0"
+		]
+	},
+	{
+		"name": "DEBUG",
+		"protected_inst": [
+			"pdma_debug_main_0",
+			"debugss_k3_wrap_cv0_main_0",
+			"k3_cc_debug_cell_main_0",
+			"k3_main_debug_cell_main_0",
+			"k3_mcu_debug_cell_main_0"
+		]
+	},
+	{
+		"name": "DMSC",
+		"protected_inst": [
+			"dmsc_wkup_0_ecc_aggr_0",
+			"dmsc_wkup_0_rom_0",
+			"dmsc_wkup_0_pwrctrl_0",
+			"dmsc_wkup_0_dmtimer_0",
+			"dmsc_wkup_0_dmtimer_1",
+			"dmsc_wkup_0_dmtimer_2",
+			"dmsc_wkup_0_dmtimer_3",
+			"dmsc_wkup_0_rti_0",
+			"dmsc_wkup_0_wdtctrl_0",
+			"dmsc_wkup_0_rat_0",
+			"dmsc_wkup_0_secctrl_0",
+			"dmsc_wkup_0_dbg_auth_0",
+			"dmsc_wkup_0_sec_mgr_0",
+			"dmsc_wkup_0_aes_0",
+			"dmsc_wkup_0_intaggr_0",
+			"dmsc_wkup_0_dram_1"
+		]
+	},
+	{
+		"name": "DMTIMER MCU",
+		"protected_inst": [
+			"dmtimer_dmc1ms_mcu_0",
+			"dmtimer_dmc1ms_mcu_1",
+			"dmtimer_dmc1ms_mcu_2",
+			"dmtimer_dmc1ms_mcu_3"
+		]
+	},
+	{
+		"name": "DMTIMER Main",
+		"protected_inst": [
+			"dmtimer_dmc1ms_main_0",
+			"dmtimer_dmc1ms_main_1",
+			"dmtimer_dmc1ms_main_2",
+			"dmtimer_dmc1ms_main_3",
+			"dmtimer_dmc1ms_main_4",
+			"dmtimer_dmc1ms_main_5",
+			"dmtimer_dmc1ms_main_6",
+			"dmtimer_dmc1ms_main_7",
+			"dmtimer_dmc1ms_main_8",
+			"dmtimer_dmc1ms_main_9",
+			"dmtimer_dmc1ms_main_10",
+			"dmtimer_dmc1ms_main_11"
+		]
+	},
+	{
+		"name": "DSS Main",
+		"protected_inst": [
+			"k3_dss_ul_main_0"
+		]
+	},
+	{
+		"name": "ECAP Main",
+		"protected_inst": [
+			"ecap_main_0"
+		]
+	},
+	{
+		"name": "ELM Main",
+		"protected_inst": [
+			"elm_main_0"
+		]
+	},
+	{
+		"name": "EMS Main",
+		"protected_inst": [
+			"esm_main_main_0"
+		]
+	},
+	{
+		"name": "EQEP Main",
+		"protected_inst": [
+			"eqep_main_0",
+			"eqep_main_1",
+			"eqep_main_2"
+		]
+	},
+	{
+		"name": "ESM MCU",
+		"protected_inst": [
+			"esm_mcu_mcu_0"
+		]
+	},
+	{
+		"name": "ESM WKUP",
+		"protected_inst": [
+			"esm_wkup_wkup_0"
+		]
+	},
+	{
+		"name": "Flash Subsystem MCU",
+		"protected_inst": [
+			"fss_mcu_0",
+			"fss_mcu_0",
+			"fss_mcu_0"
+		]
+	},
+	{
+		"name": "GIC Main",
+		"protected_inst": [
+			"gic500ss_main_0",
+			"gic500ss_main_0"
+		]
+	},
+	{
+		"name": "GPIO Main",
+		"protected_inst": [
+			"gpio_144_main_0",
+			"gpio_144_main_1"
+		]
+	},
+	{
+		"name": "GPIO WKUP",
+		"protected_inst": [
+			"gpio_144_wkup_0"
+		]
+	},
+	{
+		"name": "GPMC Main",
+		"protected_inst": [
+			"gpmc_main_0"
+		]
+	},
+	{
+		"name": "GTC Main",
+		"protected_inst": [
+			"gtc_r10_main_0"
+		]
+	},
+	{
+		"name": "I2C MCU",
+		"protected_inst": [
+			"mshsi2c_mcu_0"
+		]
+	},
+	{
+		"name": "I2C Main",
+		"protected_inst": [
+			"mshsi2c_main_0",
+			"mshsi2c_main_1",
+			"mshsi2c_main_2",
+			"mshsi2c_main_3"
+		]
+	},
+	{
+		"name": "I2C WKUP",
+		"protected_inst": [
+			"mshsi2c_wkup_0"
+		]
+	},
+	{
+		"name": "ICSSG Main",
+		"protected_inst": [
+			"icss_g_main_0",
+			"icss_g_main_1",
+			"icss_g_main_2"
+		]
+	},
+	{
+		"name": "MCAN MCU",
+		"protected_inst": [
+			"mcanss_mcu_0",
+			"mcanss_mcu_1"
+		]
+	},
+	{
+		"name": "MCASP Main",
+		"protected_inst": [
+			"mcasp_main_0",
+			"mcasp_main_0",
+			"mcasp_main_1",
+			"mcasp_main_1",
+			"mcasp_main_2",
+			"mcasp_main_2"
+		]
+	},
+	{
+		"name": "MCRC MCU",
+		"protected_inst": [
+			"navss_mcu_mcu_0_mcrc_0"
+		]
+	},
+	{
+		"name": "MCRC Main",
+		"protected_inst": [
+			"navss256l_main_0_mcrc_0"
+		]
+	},
+	{
+		"name": "MMC Main",
+		"protected_inst": [
+			"emmc4sd3ss_gs80_main_0",
+			"emmc2sd3ss_gs80_main_0"
+		]
+	},
+	{
+		"name": "NAVSS",
+		"protected_inst": [
+			"main_gpiomux_introuter_main_0",
+			"main2mcu_lvl_introuter_main_0",
+			"main2mcu_pls_introuter_main_0",
+			"cmp_event_introuter_main_0",
+			"timesync_event_introuter_main_0",
+			"wkup_gpiomux_introuter_wkup_0",
+			"navss256l_main_0_psilcfg_0",
+			"navss256l_main_0_psilss_0",
+			"pdma_main0_main_0",
+			"pdma_main1_main_0",
+			"pdma_mcu0_mcu_0",
+			"pdma_mcu1_mcu_0",
+			"navss256l_main_0",
+			"navss256l_main_0_modss_0",
+			"navss256l_main_0_modss_inta_0",
+			"navss256l_main_0_modss_inta_1",
+			"navss256l_main_0_dma_virtid_0",
+			"navss256l_main_0_dma_virtid_1",
+			"navss256l_main_0_spinlock_0",
+			"navss256l_main_0_mailbox_0",
+			"navss256l_main_0_proxy_0",
+			"navss256l_main_0_sec_proxy_0",
+			"navss256l_main_0_ringacc_0",
+			"navss256l_main_0_udmap_0",
+			"navss256l_main_0_udmass_inta_0",
+			"navss256l_main_0_intr_0",
+			"navss256l_main_0_nbss_0",
+			"navss_mcu_mcu_0_psilcfg_0",
+			"navss_mcu_mcu_0_psilss_0",
+			"navss_mcu_mcu_0_modss_0",
+			"navss_mcu_mcu_0_intr_0",
+			"navss_mcu_mcu_0_proxy_0",
+			"navss_mcu_mcu_0_sec_proxy_0",
+			"navss_mcu_mcu_0_ringacc_0",
+			"navss_mcu_mcu_0_udmap_0",
+			"navss_mcu_mcu_0_udmass_inta_0"
+		]
+	},
+	{
+		"name": "PBIST MCU",
+		"protected_inst": [
+			"k3_pbist_4c28p_wrap_mcu_0"
+		]
+	},
+	{
+		"name": "PBIST Main",
+		"protected_inst": [
+			"mx_dftss_wrap_main_0",
+			"k3_pbist_4c28p_wrap_main_0",
+			"k3_pbist_4c28p_wrap_main_1"
+		]
+	},
+	{
+		"name": "PCIE Main",
+		"protected_inst": [
+			"pcie_g3x2_main_0",
+			"pcie_g3x2_main_1",
+			"pcie_g3x2_main_0",
+			"pcie_g3x2_main_1"
+		]
+	},
+	{
+		"name": "PROM MCU",
+		"protected_inst": [
+			"k3_soc_49152x32_prom_mcu_0"
+		]
+	},
+	{
+		"name": "PSC PLL CTRL_MMR MCU",
+		"protected_inst": [
+			"mcu_ctrl_mmr_mcu_0",
+			"mcu_pll_mmr_mcu_0",
+			"k3_mcu_efuse_mcu_0"
+		]
+	},
+	{
+		"name": "PSC PLL CTRL_MMR Main",
+		"protected_inst": [
+			"k3_main_psc_wrap_main_0",
+			"k3_pll_ctrl_wrap_main_0",
+			"main_pll_mmr_main_0",
+			"main_ctrl_mmr_main_0",
+			"k3_main_efuse_main_0"
+		]
+	},
+	{
+		"name": "PSC PLL CTRL_MMR WKUP",
+		"protected_inst": [
+			"k3_wkup_psc_wrap_wkup_0",
+			"k3_pll_ctrl_wrap_wkup_0",
+			"m4_pg2_wkup_ctrl_mmr_wkup_0"
+		]
+	},
+	{
+		"name": "PSRAM MCU",
+		"protected_inst": [
+			"psram128x32_mcu_0"
+		]
+	},
+	{
+		"name": "PSRAm 256 Main",
+		"protected_inst": [
+			"psram256x32e_main_0",
+			"psram256x32e_main_0"
+		]
+	},
+	{
+		"name": "PVU",
+		"protected_inst": [
+			"navss256l_main_0_pvu_0",
+			"navss256l_main_0_pvu_1"
+		]
+	},
+	{
+		"name": "PWM Main",
+		"protected_inst": [
+			"ehrpwm_main_0",
+			"ehrpwm_main_0",
+			"ehrpwm_main_5",
+			"ehrpwm_main_5",
+			"ehrpwm_main_4",
+			"ehrpwm_main_4",
+			"ehrpwm_main_3",
+			"ehrpwm_main_3",
+			"ehrpwm_main_2",
+			"ehrpwm_main_2",
+			"ehrpwm_main_1",
+			"ehrpwm_main_1"
+		]
+	},
+	{
+		"name": "R5 MCU",
+		"protected_inst": [
+			"pulsar_sl_mcu_0",
+			"rti_cfg1_mcu_0",
+			"rti_cfg1_mcu_1"
+		]
+	},
+	{
+		"name": "RTI Main",
+		"protected_inst": [
+			"rti_cfg1_main_0",
+			"rti_cfg1_main_1",
+			"rti_cfg1_main_2",
+			"rti_cfg1_main_3"
+		]
+	},
+	{
+		"name": "SA2UL Main",
+		"protected_inst": [
+			"sa2_ul_main_0"
+		]
+	},
+	{
+		"name": "SERDES Main",
+		"protected_inst": [
+			"wiz8b2m4vsb_main_0",
+			"wiz8b2m4vsb_main_1"
+		]
+	},
+	{
+		"name": "SPI MCU",
+		"protected_inst": [
+			"spi_mcu_0",
+			"spi_mcu_1",
+			"spi_mcu_2"
+		]
+	},
+	{
+		"name": "SPI Main",
+		"protected_inst": [
+			"spi_main_0",
+			"spi_main_1",
+			"spi_main_2",
+			"spi_main_3",
+			"spi_main_4"
+		]
+	},
+	{
+		"name": "SRAM 64k MCU",
+		"protected_inst": [
+			"msram64kx64e_mcu_0",
+			"msram64kx64e_mcu_0"
+		]
+	},
+	{
+		"name": "SRAM MCU",
+		"protected_inst": [
+			"navss_mcu_mcu_0_msram_0",
+			"navss_mcu_mcu_0_msram_1"
+		]
+	},
+	{
+		"name": "SRAM NAVSS",
+		"protected_inst": [
+			"navss256l_main_0_msram_0"
+		]
+	},
+	{
+		"name": "STM Main",
+		"protected_inst": [
+			"cxstm500ss_main_0"
+		]
+	},
+	{
+		"name": "TIMERMGR Main",
+		"protected_inst": [
+			"navss256l_main_0_timermgr_0",
+			"navss256l_main_0_timermgr_1"
+		]
+	},
+	{
+		"name": "USART MCU",
+		"protected_inst": [
+			"usart_mcu_0"
+		]
+	},
+	{
+		"name": "USART Main",
+		"protected_inst": [
+			"usart_main_0",
+			"usart_main_1",
+			"usart_main_2"
+		]
+	},
+	{
+		"name": "USART WKUP",
+		"protected_inst": [
+			"usart_wkup_0"
+		]
+	},
+	{
+		"name": "USB3 Main",
+		"protected_inst": [
+			"usb3ss2p0_gs80_main_0",
+			"usb3ss2p0_gs80_main_0",
+			"usb3ss2p0_gs80_main_1",
+			"usb3ss2p0_gs80_main_1"
+		]
+	},
+	{
+		"name": "VTM WKUP",
+		"protected_inst": [
+			"k3vtm_wkup_0"
+		]
+	}
+]

@@ -4,9 +4,7 @@
 MCU_PLUS_SDK_PATH=$(abspath ../../../)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
-
-K3_RESPART_REPO=$(MCU_PLUS_SDK_PATH)/../k3-resource-partitioning
-K3_RESPART_PRODUCT=$(K3_RESPART_REPO)/.metadata/product.json
+THIS_PATH=$(abspath .)
 
 SOC?=am64x
 SOC_RES=
@@ -15,6 +13,9 @@ ifeq ($(SOC),$(filter $(SOC), am64x am243x))
   SOC_RES=$(SOC)
   SOC_PY=am64x
 endif
+
+K3_RESPART_REPO=$(THIS_PATH)/respart/$(SOC)/k3-respart-tool-0.5
+K3_RESPART_PRODUCT=$(K3_RESPART_REPO)/.metadata/product.json
 
 # Certificate Generation script and other commands
 ifeq ($(OS),Windows_NT)

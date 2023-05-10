@@ -1,0 +1,110 @@
+%%{    
+var utils = system.getScript("/scripts/utils.js");
+var resources = utils.resources;
+%%}
+
+<style>
+.Main {
+	table-layout: fixed;
+}
+
+.Cell {
+	border: solid 1px #000000;
+	text-align: center;
+}
+
+.ActiveCell {
+	background-color: #008C99;
+	color: #FFFFFF;
+}
+
+.SharedCell {
+	background-color: #d9f1f4;
+	color: #000000;
+}
+
+.ColHeader {
+	-ms-writing-mode: tb-rl;
+	-webkit-writing-mode: vertical-rl;
+	writing-mode: vertical-rl;
+	transform: rotate(0deg);
+}
+
+.RowHeader {
+	background-color: #DDDDDD;
+}
+
+.SubHeader {
+	color: #990000;
+	font-size: 120%;
+}
+
+.Tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.Tooltip .Tooltiptext {
+	visibility: hidden;
+	background-color: black;
+	color: #FFFFFF;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	width: 170px;
+	top: 120%;
+	left: 120%;
+
+	position: absolute;
+	z-index: 1;
+}
+
+.Cell:hover .Tooltiptext {
+	visibility: visible;
+}
+</style>
+
+<h3> Guide to update HWA entries </h3>
+<ul>
+  <li>"Extended Tx channels HWA Start" i/p for a host should be "Start" of any intended HWA Type</li>
+  <li>"Extended Tx channels HWA Count" i/p for a host should be either count of the single intended HWA type or sum of multiple intended HWA Types(starting from the "Start" specified)</li>
+</ul>
+% _.each(resources, (resource) => {
+%	if(resource.extended && !resource.copyFromUtype){
+<table class="Main">
+%		var n_cols = 1;
+%		_.each(resource.hwaRange, (entry) => {
+%			if(entry.hwaName !== "NA") {
+%				n_cols += 1;
+%}
+%})
+	<tr>
+		<th class="Cell SubHeader" colspan="`n_cols`"> `resource.utype` </th>
+	</tr>
+    <tr class="Cell RowHeader">
+		<th class="Cell ColHeader"> HWA Type </th>
+%		_.each(resource.hwaRange, (entry) => {
+%			if(entry.hwaName !== "NA") {
+				<th> `entry.hwaName` </th>
+%}
+%})
+    </tr>
+    <tr class="Cell">
+		<th class="Cell ColHeader"> Start </th>
+%		_.each(resource.hwaRange, (entry) => {
+%			if(entry.hwaName !== "NA") {
+				<th> `entry.start` </th>
+%}
+%})
+    </tr>
+    <tr class="Cell">
+		<th class="Cell ColHeader"> Count </th>
+%		_.each(resource.hwaRange, (entry) => {
+%			if(entry.hwaName !== "NA") {
+				<th> `entry.count` </th>
+%}
+%})
+    </tr>
+</table>
+%	}
+% })

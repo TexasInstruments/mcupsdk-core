@@ -1,0 +1,221 @@
+%%{
+var utils = system.getScript("/scripts/utils.js");
+
+const deviceSelected = utils.deviceSelected;
+const devData = utils.devData;
+const socName = utils.socName;
+const resources = utils.resources;
+const hosts = utils.getSelectedHostInstances();
+const resgroup = utils.resourcesByGroup;
+const groupNames = utils.groupNames;
+const sharedResources = utils.getSharedResourceMap();
+
+
+var {mapByResources} = system.getScript("/scripts/allocation.js");
+var resAlloc = mapByResources(true,false);
+var hostlist = [];
+var groups = [];
+var groups;
+var n_cols = 0;
+
+function populate_cell(entries, hostName, uType) {
+	var tooltip = "";
+	var text = "";
+	var count = 0;
+	var sharedRes = sharedResources[uType]
+	var shared = 0;
+	_.each(entries, entry => {
+		if (hostName != entry.hostName)
+			return;
+
+		if (text != "")
+			text += ", ";
+		text += entry.count;
+		if (tooltip != "")
+			tooltip += "<br>";
+
+		if (tooltip == "")
+			tooltip += hostName + "<br>";
+		tooltip += "Start = " + entry.start + ", Count = " + entry.count;
+		count += 1;
+	})
+
+	_.each(sharedRes, res => {
+		if(hostName == res.from){
+			shared +=1
+			if (tooltip != "")
+				tooltip += "<br>"
+				tooltip += "Resource shared with " + res.to
+		}
+		if(hostName == res.to){
+			shared +=1
+			if (tooltip != "")
+				tooltip += "<br>"
+				tooltip += "Resource shared from " + res.from
+				text = "*"
+		}
+	})
+	if (count == 0 && shared == 0) {
+		text = "&nbsp";
+		tooltip = null;
+	}
+	var cell = {
+		"cssClass": shared ? "SharedCell" : count ? "ActiveCell" : "",
+		"text": text,
+		"tooltip": tooltip
+	};
+
+	if (hostName == "ALL") {
+		cell.cssClass = "RowHeader";
+		if (count == 0)
+			cell.text = "0"
+	}
+
+	return cell;
+}
+
+_.each(hosts, (host) => {
+	var inst = host;
+
+	var header = host.hostName;
+	if(inst.shareResource !== "none"){
+		header += ", " + inst.shareResource;
+	}
+	hostlist.push({
+		"hostName": host.hostName,
+		"header": header
+	});
+	
+})
+
+hostlist.push({
+	"hostName": "ALL",
+	"header": "ALL"
+});
+
+n_cols = 1 + hostlist.length;
+
+_.each(groupNames, groupName=> {
+	var group = {
+		"name": groupName,
+		"resources": []
+	}
+	_.each(resgroup[groupName], res => {
+		var entries = resAlloc[res.utype]
+		res.allocation = {};
+		_.each(hostlist, host => {
+			var cell = populate_cell(entries, host.hostName,res.utype);
+			res.allocation[host.hostName] = cell;
+		})
+		res.displayName = utils.getDisplayPrefix(groupName, res.utype);
+		group.resources.push(res)
+	})
+	groups.push(group)
+})
+
+
+%%}
+
+<style>
+
+.Main {
+	table-layout: fixed;
+}
+
+.Cell {
+	border: solid 1px #000000;
+	text-align: center;
+}
+
+.ActiveCell {
+	background-color: #008C99;
+	color: #FFFFFF;
+}
+
+.SharedCell {
+	background-color: #d9f1f4;
+	color: #000000;
+}
+
+.ColHeader {
+	-ms-writing-mode: tb-rl;
+	-webkit-writing-mode: vertical-rl;
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+}
+
+.RowHeader {
+	background-color: #DDDDDD;
+}
+
+.SubHeader {
+	color: #990000;
+	font-size: 120%;
+}
+
+.Tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.Tooltip .Tooltiptext {
+	visibility: hidden;
+	background-color: black;
+	color: #FFFFFF;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	width: 170px;
+	top: 120%;
+	left: 120%;
+
+	position: absolute;
+	z-index: 1;
+}
+
+.Cell:hover .Tooltiptext {
+	visibility: visible;
+}
+</style>
+
+<table class="Main">
+	<tr>
+		<th class="Cell RowHeader">
+			Resources
+		</th>
+%	_.each(hostlist, host => {
+		<th class="Cell RowHeader">
+			<span class="ColHeader">
+				`host.hostName`
+			</span>
+		</th>
+%	})
+	</tr>
+%_.each(groups, group => {
+ 	<tr>
+ 		<th class ="Cell SubHeader" colspan="`n_cols`">
+ 			`group.name`
+ 		</th>
+ 	</tr>
+%	_.each(group.resources, res => {
+		<tr>
+			<th class="Cell RowHeader">
+				`res.displayName`
+			</th>
+%			_.each(hostlist, host => {
+%				var cell = res.allocation[host.hostName];
+				<th class="Cell `cell.cssClass`">
+					`cell.text`
+%					if (cell.tooltip) {
+						<div class="Tooltip">
+							<span class="Tooltiptext">
+								`cell.tooltip`
+							</span>
+						</div>
+%					}
+				</th>
+%			})
+		</tr>
+%	})
+%})
+</table>

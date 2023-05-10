@@ -1,0 +1,134 @@
+%%{
+	const utils = system.getScript("/scripts/utils.js");
+	const {allocateAndSort} = system.getScript("/scripts/allocation.js");
+
+	const deviceSelected = utils.deviceSelected;
+	const devData = utils.devData;
+	const socName = utils.socName;
+	const resources = utils.resources;
+    const remRes = utils.tifsResRem;
+	const hosts = utils.hosts;
+
+	var allocation = allocateAndSort(true,true);
+	var numEntries = 0;
+
+	_.each(allocation, a => {
+        var utype = a[0].utype;
+        if(!(resources[utype].subtypeName in remRes))
+        {
+            numEntries += a.length;
+        }
+	})
+%%}
+/*
+ * K3 System Firmware Resource Management Configuration Data
+ * Auto generated from K3 Resource Partitioning tool
+ *
+ * Copyright (c) 2018-2021, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/**
+ *  \file `devData[deviceSelected].sciClientSocVersion`/sciclient_defaultBoardcfg.c
+ *
+ *  \brief File containing the boardcfg default data structure to
+ *      send TISCI_MSG_BOARD_CONFIG message.
+ *
+ */
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <ti/drv/sciclient/soc/sysfw/include/`devData[deviceSelected].shortName`/tisci_hosts.h>
+#include <ti/drv/sciclient/soc/sysfw/include/`devData[deviceSelected].shortName`/tisci_boardcfg_constraints.h>
+#include <ti/drv/sciclient/soc/sysfw/include/`devData[deviceSelected].shortName`/tisci_devices.h>
+#include <ti/drv/sciclient/soc/`devData[deviceSelected].sciClientSocVersion`/sciclient_defaultBoardcfg.h>
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+#if defined (BUILD_MCU1_0)
+const struct tisci_local_rm_boardcfg gBoardConfigLow_rm
+__attribute__(( aligned(128), section(".boardcfg_data") )) =
+{
+    .rm_boardcfg = {
+        .rev = {
+            .tisci_boardcfg_abi_maj = TISCI_BOARDCFG_RM_ABI_MAJ_VALUE,
+            .tisci_boardcfg_abi_min = TISCI_BOARDCFG_RM_ABI_MIN_VALUE,
+        },
+        .host_cfg = {
+            .subhdr = {
+                .magic = TISCI_BOARDCFG_RM_HOST_CFG_MAGIC_NUM,
+                .size = (uint16_t) sizeof(struct tisci_boardcfg_rm_host_cfg),
+            },
+            .host_cfg_entries = {
+%_.each(hosts, (host) => {
+%    var moduleName = "/modules/" + socName + "/" + host.hostName;
+%    if (system.modules[moduleName]) {
+%        var inst = system.modules[moduleName].$static;
+                {
+                    .host_id = `utils.addPrefix("HOST_ID_" + host.hostName)`,
+                    .allowed_atype = `utils.decimalToBinary(utils.setBit(inst.allowedAtype,3))`,
+                    .allowed_qos   = `utils.decimalToHexadecimal(utils.setBit(inst.allowedqos,8))`,
+                    .allowed_orderid = `utils.toHexa(utils.unsignedToBinary(inst.allowedorderid))`,
+                    .allowed_priority = `utils.decimalToHexadecimal(utils.setBit(inst.allowedpriority,8))`,
+                    .allowed_sched_priority = `utils.decimalToHexadecimal(utils.setBit(inst.allowedschedpriority,4))`
+                },
+%    }
+%})
+            },
+        },
+        .resasg = {
+            .subhdr = {
+                .magic = TISCI_BOARDCFG_RM_RESASG_MAGIC_NUM,
+                .size = (uint16_t) sizeof(struct tisci_boardcfg_rm_resasg),
+            },
+            .resasg_entries_size = `numEntries` * sizeof(struct tisci_boardcfg_rm_resasg_entry),
+        },
+    },
+    .resasg_entries = {
+%	var allocation = allocateAndSort(true,true);
+%	_.each(allocation,(all) => {
+%		var utype = all[0].utype;
+%		_.each(all,(entry) => {
+%       if(!(resources[utype].subtypeName in remRes))
+%       {
+        {
+            .num_resource = `entry.count`,
+            .type = TISCI_RESASG_UTYPE (`utils.addPrefix(utils.removePrefix(resources[utype].deviceName))`, `utils.addPrefix(resources[utype].subtypeName)`),
+            .start_resource = `entry.start`,
+            .host_id = `utils.addPrefix("HOST_ID_" + entry.hostName)`,
+        },
+%       }
+%		})
+%	})
+    }
+};
+#endif

@@ -1,0 +1,137 @@
+[
+	{
+		"Description": "Device Management and Security Control",
+		"Security": "Secure",
+		"displayName": "Device Management Security Controller",
+		"hostId": 0,
+		"hostName": "DMSC"
+	},
+	{
+		"Description": "Cortex a53 context 0 on Main island",
+		"Security": "Secure",
+		"displayName": "A53_0 Secure host",
+		"hostId": 10,
+		"hostName": "A53_0",
+		"privId": 1
+	},
+	{
+		"Description": "Cortex A53 context 1 on Main island",
+		"Security": "Secure",
+		"displayName": "A53_1 Secure host",
+		"hostId": 11,
+		"hostName": "A53_1",
+		"privId": 1
+	},
+	{
+		"Description": "Cortex A53 context 2 on Main island",
+		"Security": "Non Secure",
+		"displayName": "A53_2 NonSecure host",
+		"hostId": 12,
+		"hostName": "A53_2",
+		"privId": 1
+	},
+	{
+		"Description": "Cortex A53 context 3 on Main island",
+		"Security": "Non Secure",
+		"displayName": "A53_3 NonSecure host",
+		"hostId": 13,
+		"hostName": "A53_3",
+		"privId": 1
+	},
+	{
+		"Description": "Cortex A53 context 1 on Main island",
+		"Security": "Non Secure",
+		"displayName": "A53_4 NonSecure host",
+		"hostId": 14,
+		"hostName": "A53_4",
+		"privId": 1
+	},
+	{
+		"Description": "M4",
+		"Security": "Non Secure",
+		"displayName": "M4 host",
+		"hostId": 30,
+		"hostName": "M4_0",
+		"privId": 100
+	},
+	{
+		"Description": "Cortex R5_0 context 0 on Main island(BOOT)",
+		"Security": "Secure",
+		"displayName": "Main R5F0 core0 Secure host",
+		"hostId": 35,
+		"hostName": "MAIN_0_R5_0",
+		"privId": 212
+	},
+	{
+		"Description": "Cortex R5_0 context 1 on Main island",
+		"Security": "Non Secure",
+		"displayName": "Main R5F0 core0 NonSecure host",
+		"hostId": 36,
+		"hostName": "MAIN_0_R5_1",
+		"privId": 212
+	},
+	{
+		"Description": "Cortex R5_0 context 2 on Main island",
+		"Security": "Secure",
+		"displayName": "Main R5F0 core1 Secure host",
+		"hostId": 37,
+		"hostName": "MAIN_0_R5_2",
+		"privId": 213
+	},
+	{
+		"Description": "Cortex R5_0 context 3 on Main island",
+		"Security": "Non Secure",
+		"displayName": "Main R5F0 core1 NonSecure host",
+		"hostId": 38,
+		"hostName": "MAIN_0_R5_3",
+		"privId": 213
+	},
+	{
+		"Description": "Cortex R5_1 context 0 on Main island",
+		"Security": "Secure",
+		"displayName": "Main R5F1 core0 Secure host",
+		"hostId": 40,
+		"hostName": "MAIN_1_R5_0",
+		"privId": 214
+	},
+	{
+		"Description": "Cortex R5_1 context 1 on Main island",
+		"Security": "Non Secure",
+		"displayName": "Main R5F1 core0 NonSecure host",
+		"hostId": 41,
+		"hostName": "MAIN_1_R5_1",
+		"privId": 214
+	},
+	{
+		"Description": "Cortex R5_1 context 2 on Main island",
+		"Security": "Secure",
+		"displayName": "Main R5F1 core1 Secure host",
+		"hostId": 42,
+		"hostName": "MAIN_1_R5_2",
+		"privId": 215
+	},
+	{
+		"Description": "Cortex R5_1 context 3 on Main island",
+		"Security": "Non Secure",
+		"displayName": "Main R5F1 core1 NonSecure host",
+		"hostId": 43,
+		"hostName": "MAIN_1_R5_3",
+		"privId": 215
+	},
+	{
+		"Description": "ICSSG context 0 on Main island",
+		"Security": "Non Secure",
+		"displayName": "ICSSG_0",
+		"hostId": 50,
+		"hostName": "ICSSG_0",
+		"privId": 136
+	},
+	{
+		"Description": "ICSSG context 1 on Main island",
+		"Security": "Non Secure",
+		"displayName": "ICSSG_1",
+		"hostId": 51,
+		"hostName": "ICSSG_1",
+		"privId": 137
+	}
+]

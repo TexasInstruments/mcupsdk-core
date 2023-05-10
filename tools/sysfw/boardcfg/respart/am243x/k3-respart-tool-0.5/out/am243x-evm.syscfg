@@ -1,0 +1,260 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --product "K3-Respart-Tool@0.5"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const M4_0              = scripting.addModule("/modules/am243x/M4_0");
+const MAIN_0_R5_0       = scripting.addModule("/modules/am243x/MAIN_0_R5_0");
+const MAIN_0_R5_1       = scripting.addModule("/modules/am243x/MAIN_0_R5_1");
+const MAIN_0_R5_3       = scripting.addModule("/modules/am243x/MAIN_0_R5_3");
+const MAIN_1_R5_1       = scripting.addModule("/modules/am243x/MAIN_1_R5_1");
+const MAIN_1_R5_3       = scripting.addModule("/modules/am243x/MAIN_1_R5_3");
+const boardConfig       = scripting.addModule("/modules/boardConfig", {}, false);
+const boardConfig1      = boardConfig.addInstance();
+const resourceSharing   = scripting.addModule("/modules/resourceSharing", {}, false);
+const resourceSharing1  = resourceSharing.addInstance();
+const resourceSharing2  = resourceSharing.addInstance();
+const resourceSharing3  = resourceSharing.addInstance();
+const resourceSharing4  = resourceSharing.addInstance();
+const resourceSharing5  = resourceSharing.addInstance();
+const resourceSharing6  = resourceSharing.addInstance();
+const resourceSharing7  = resourceSharing.addInstance();
+const resourceSharing8  = resourceSharing.addInstance();
+const resourceSharing9  = resourceSharing.addInstance();
+const resourceSharing10 = resourceSharing.addInstance();
+const resourceSharing11 = resourceSharing.addInstance();
+const resourceSharing12 = resourceSharing.addInstance();
+const resourceSharing13 = resourceSharing.addInstance();
+const resourceSharing14 = resourceSharing.addInstance();
+const resourceSharing15 = resourceSharing.addInstance();
+const resourceSharing16 = resourceSharing.addInstance();
+const resourceSharing17 = resourceSharing.addInstance();
+const resourceSharing18 = resourceSharing.addInstance();
+const resourceSharing19 = resourceSharing.addInstance();
+const resourceSharing20 = resourceSharing.addInstance();
+const resourceSharing21 = resourceSharing.addInstance();
+const resourceSharing22 = resourceSharing.addInstance();
+const resourceSharing23 = resourceSharing.addInstance();
+const resourceSharing24 = resourceSharing.addInstance();
+const resourceSharing25 = resourceSharing.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+M4_0.allocOrder                                          = 6;
+M4_0.Block_Copy_DMA_Block_copy_channels_count            = 1;
+M4_0.Packet_DMA_Free_Tx_channels_count                   = 1;
+M4_0.Packet_DMA_Free_Rx_channels_count                   = 1;
+M4_0.MCU_GPIO_Interrupt_Router_count                     = 4;
+M4_0.DMASS_Interrupt_aggregator_Virtual_interrupts_count = 16;
+M4_0.DMASS_Interrupt_aggregator_Global_events_count      = 96;
+
+MAIN_0_R5_0.allocOrder                                          = 1;
+MAIN_0_R5_0.Block_Copy_DMA_Block_copy_channels_count            = 12;
+MAIN_0_R5_0.Block_Copy_DMA_Split_TR_Rx_channels_count           = 6;
+MAIN_0_R5_0.Block_Copy_DMA_Split_TR_Tx_channels_count           = 6;
+MAIN_0_R5_0.Packet_DMA_Free_Tx_channels_count                   = 4;
+MAIN_0_R5_0.Packet_DMA_Free_Rx_channels_count                   = 4;
+MAIN_0_R5_0.Packet_DMA_CPSW_Tx_channels_count                   = 8;
+MAIN_0_R5_0.Packet_DMA_CPSW_Rx_channel_count                    = 1;
+MAIN_0_R5_0.Packet_DMA_SA2UL_Tx_channel1_count                  = 1;
+MAIN_0_R5_0.Packet_DMA_SA2UL_Rx_channel2_count                  = 1;
+MAIN_0_R5_0.Packet_DMA_SA2UL_Rx_channel3_count                  = 1;
+MAIN_0_R5_0.Packet_DMA_ICSSG0_Tx_channels_count                 = 8;
+MAIN_0_R5_0.Packet_DMA_ICSSG0_Rx_channel_count                  = 4;
+MAIN_0_R5_0.Packet_DMA_ICSSG1_Tx_channels_count                 = 8;
+MAIN_0_R5_0.Packet_DMA_ICSSG1_Rx_channel_count                  = 4;
+MAIN_0_R5_0.Packet_DMA_Rings_for_CPSW_Tx_channel_count          = 64;
+MAIN_0_R5_0.Packet_DMA_Rings_for_CPSW_Rx_channel_count          = 16;
+MAIN_0_R5_0.Packet_DMA_Rings_for_SA2UL_Tx_channel1_count        = 8;
+MAIN_0_R5_0.Packet_DMA_Rings_for_SA2UL_Rx_channel2_count        = 8;
+MAIN_0_R5_0.Packet_DMA_Rings_for_SA2UL_Rx_channel3_count        = 8;
+MAIN_0_R5_0.Packet_DMA_Rings_for_ICSSG0_Tx_channel_count        = 8;
+MAIN_0_R5_0.Packet_DMA_Rings_for_ICSSG1_Tx_channel_count        = 8;
+MAIN_0_R5_0.Packet_DMA_Rings_for_ICSSG1_Rx_channel_count        = 64;
+MAIN_0_R5_0.Packet_DMA_virt_id_range_start                      = 2;
+MAIN_0_R5_0.Packet_DMA_virt_id_range_count                      = 2;
+MAIN_0_R5_0.MCU_GPIO_Interrupt_Router_count                     = 4;
+MAIN_0_R5_0.DMASS_Interrupt_aggregator_Global_events_count      = 512;
+MAIN_0_R5_0.DMASS_Interrupt_aggregator_Virtual_interrupts_count = 14;
+MAIN_0_R5_0.Packet_DMA_Rings_for_ICSSG0_Rx_channel_count        = 64;
+MAIN_0_R5_0.Main_GPIO_Interrupt_Router_count                    = 8;
+
+MAIN_0_R5_1.allocOrder                                     = 2;
+MAIN_0_R5_1.Block_Copy_DMA_Block_copy_channels_count       = 6;
+MAIN_0_R5_1.Block_Copy_DMA_Split_TR_Rx_channels_count      = 6;
+MAIN_0_R5_1.Block_Copy_DMA_Split_TR_Tx_channels_count      = 6;
+MAIN_0_R5_1.Packet_DMA_Free_Tx_channels_count              = 3;
+MAIN_0_R5_1.Packet_DMA_Free_Rx_channels_count              = 3;
+MAIN_0_R5_1.Packet_DMA_Rings_for_IPC_count                 = 2;
+MAIN_0_R5_1.Compare_event_Interrupt_Router_count           = 4;
+MAIN_0_R5_1.DMASS_Interrupt_aggregator_Global_events_count = 256;
+
+MAIN_0_R5_3.allocOrder                                          = 3;
+MAIN_0_R5_3.Block_Copy_DMA_Block_copy_channels_count            = 2;
+MAIN_0_R5_3.Block_Copy_DMA_Split_TR_Rx_channels_count           = 2;
+MAIN_0_R5_3.Block_Copy_DMA_Split_TR_Tx_channels_count           = 2;
+MAIN_0_R5_3.Packet_DMA_Free_Tx_channels_count                   = 2;
+MAIN_0_R5_3.Packet_DMA_Free_Rx_channels_count                   = 2;
+MAIN_0_R5_3.Packet_DMA_Rings_for_IPC_count                      = 2;
+MAIN_0_R5_3.Compare_event_Interrupt_Router_count                = 4;
+MAIN_0_R5_3.DMASS_Interrupt_aggregator_Virtual_interrupts_count = 14;
+MAIN_0_R5_3.DMASS_Interrupt_aggregator_Global_events_count      = 192;
+MAIN_0_R5_3.Main_GPIO_Interrupt_Router_count                    = 4;
+
+MAIN_1_R5_1.allocOrder                                          = 4;
+MAIN_1_R5_1.Block_Copy_DMA_Block_copy_channels_count            = 4;
+MAIN_1_R5_1.Block_Copy_DMA_Split_TR_Rx_channels_count           = 4;
+MAIN_1_R5_1.Block_Copy_DMA_Split_TR_Tx_channels_count           = 4;
+MAIN_1_R5_1.Packet_DMA_Free_Tx_channels_count                   = 4;
+MAIN_1_R5_1.Packet_DMA_Free_Rx_channels_count                   = 4;
+MAIN_1_R5_1.Packet_DMA_Rings_for_IPC_count                      = 2;
+MAIN_1_R5_1.Compare_event_Interrupt_Router_count                = 4;
+MAIN_1_R5_1.Main_GPIO_Interrupt_Router_count                    = 2;
+MAIN_1_R5_1.DMASS_Interrupt_aggregator_Virtual_interrupts_count = 14;
+MAIN_1_R5_1.DMASS_Interrupt_aggregator_Global_events_count      = 256;
+
+MAIN_1_R5_3.allocOrder                                          = 5;
+MAIN_1_R5_3.Block_Copy_DMA_Block_copy_channels_count            = 2;
+MAIN_1_R5_3.Block_Copy_DMA_Split_TR_Rx_channels_count           = 2;
+MAIN_1_R5_3.Block_Copy_DMA_Split_TR_Tx_channels_count           = 2;
+MAIN_1_R5_3.Packet_DMA_Free_Tx_channels_count                   = 2;
+MAIN_1_R5_3.Packet_DMA_Free_Rx_channels_count                   = 2;
+MAIN_1_R5_3.Packet_DMA_Rings_for_IPC_count                      = 2;
+MAIN_1_R5_3.Compare_event_Interrupt_Router_count                = 4;
+MAIN_1_R5_3.Main_GPIO_Interrupt_Router_count                    = 2;
+MAIN_1_R5_3.DMASS_Interrupt_aggregator_Virtual_interrupts_count = 14;
+MAIN_1_R5_3.DMASS_Interrupt_aggregator_Global_events_count      = 192;
+
+boardConfig1.$name   = "modules_boardConfig0";
+boardConfig1.ramSize = 2;
+
+resourceSharing1.$name              = "modules_resourceSharing0";
+resourceSharing1.resourceName       = "Packet DMA CPSW Tx channels";
+resourceSharing1.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing1.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing2.$name              = "modules_resourceSharing1";
+resourceSharing2.resourceName       = "Packet DMA CPSW Rx channel";
+resourceSharing2.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing2.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing3.$name              = "modules_resourceSharing2";
+resourceSharing3.resourceName       = "Packet DMA ICSSG0 Tx channels";
+resourceSharing3.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing3.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing4.$name              = "modules_resourceSharing3";
+resourceSharing4.resourceName       = "Packet DMA ICSSG1 Tx channels";
+resourceSharing4.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing4.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing5.$name              = "modules_resourceSharing4";
+resourceSharing5.resourceName       = "Packet DMA ICSSG1 Rx channel";
+resourceSharing5.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing5.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing6.$name              = "modules_resourceSharing5";
+resourceSharing6.resourceName       = "Packet DMA Rings for CPSW Tx channel";
+resourceSharing6.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing6.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing7.$name              = "modules_resourceSharing6";
+resourceSharing7.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing7.sharedToHostName   = "MAIN_0_R5_1";
+resourceSharing7.resourceName       = "Packet DMA Rings for SA2UL Tx channel1";
+
+resourceSharing8.$name              = "modules_resourceSharing7";
+resourceSharing8.resourceName       = "Packet DMA SA2UL Rx channel2";
+resourceSharing8.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing8.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing9.$name              = "modules_resourceSharing8";
+resourceSharing9.resourceName       = "Packet DMA Rings for SA2UL Rx channel3";
+resourceSharing9.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing9.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing10.$name              = "modules_resourceSharing9";
+resourceSharing10.resourceName       = "Packet DMA Rings for SA2UL Rx channel2";
+resourceSharing10.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing10.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing11.$name              = "modules_resourceSharing10";
+resourceSharing11.resourceName       = "Main GPIO Interrupt Router";
+resourceSharing11.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing11.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing12.$name              = "modules_resourceSharing11";
+resourceSharing12.resourceName       = "MCU GPIO Interrupt Router";
+resourceSharing12.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing12.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing13.$name              = "modules_resourceSharing12";
+resourceSharing13.resourceName       = "Packet DMA Rings for CPSW Rx channel";
+resourceSharing13.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing13.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing14.$name              = "modules_resourceSharing13";
+resourceSharing14.resourceName       = "Packet DMA CPSW Rx flows";
+resourceSharing14.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing14.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing15.$name              = "modules_resourceSharing14";
+resourceSharing15.resourceName       = "Packet DMA ICSSG0 Rx channel";
+resourceSharing15.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing15.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing16.$name              = "modules_resourceSharing15";
+resourceSharing16.resourceName       = "Packet DMA Rings for ICSSG0 Tx channel";
+resourceSharing16.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing16.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing17.$name              = "modules_resourceSharing16";
+resourceSharing17.resourceName       = "Packet DMA Rings for ICSSG0 Rx channel";
+resourceSharing17.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing17.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing18.$name              = "modules_resourceSharing17";
+resourceSharing18.resourceName       = "Packet DMA Rings for ICSSG1 Tx channel";
+resourceSharing18.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing18.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing19.$name              = "modules_resourceSharing18";
+resourceSharing19.resourceName       = "Packet DMA Rings for ICSSG1 Rx channel";
+resourceSharing19.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing19.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing20.$name              = "modules_resourceSharing19";
+resourceSharing20.resourceName       = "Packet DMA ICSSG0 Rx flows";
+resourceSharing20.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing20.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing21.$name              = "modules_resourceSharing20";
+resourceSharing21.resourceName       = "Packet DMA ICSSG1 Rx flows";
+resourceSharing21.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing21.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing22.$name              = "modules_resourceSharing21";
+resourceSharing22.resourceName       = "DMASS Interrupt aggregator Virtual interrupts";
+resourceSharing22.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing22.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing23.$name              = "modules_resourceSharing22";
+resourceSharing23.resourceName       = "Packet DMA SA2UL Tx channel1";
+resourceSharing23.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing23.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing24.$name              = "modules_resourceSharing23";
+resourceSharing24.resourceName       = "Packet DMA SA2UL Rx channel3";
+resourceSharing24.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing24.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing25.$name              = "modules_resourceSharing24";
+resourceSharing25.resourceName       = "Packet DMA SA2UL Rx channel2 flows";
+resourceSharing25.sharedFromHostName = "MAIN_0_R5_0";
+resourceSharing25.sharedToHostName   = "MAIN_0_R5_1";
