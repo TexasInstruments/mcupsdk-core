@@ -85,9 +85,9 @@
  * architecture performing the role of a centralized SoC power, security
  * and device management controller.
  *
- * In effect, this is a microcontroller and runs a safety and security
- * certified firmware that provides services to the rest of the
- * OSes/Software running on various other processors on the SoC.
+ * In effect, this is a microcontroller and runs a firmware that provides
+ * services to the rest of the OSes/Software running on various other processors
+ * on the SoC.
  *
  * ### DMSC Power Management
  * DMSC controls the power management of the device, hence is responsible for
