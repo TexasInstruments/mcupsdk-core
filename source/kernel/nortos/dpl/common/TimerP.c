@@ -89,7 +89,7 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     DebugP_assert( timerCycles < 0xFFFFFFFFU );
 
     /* calculate count and reload value register value */
-    countVal = 0xFFFFFFFFu - timerCycles - 1;
+    countVal = 0xFFFFFFFFu - (timerCycles - 1);
 
     /* keep reload value as 0, later if is auto-reload is enabled, it will be set a value > 0 */
     reloadVal = 0;
