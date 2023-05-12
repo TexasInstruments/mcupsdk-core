@@ -553,15 +553,15 @@ void test_main(void *args)
 void set_command_source(void)
 {
     trans.buf   = &gCmdRxBuffer[0U];
-    trans.count = 1;
+    trans.count = 2; /* Read number followed by new line */
     transferOK = UART_read(gUartHandle[CONFIG_UART0], &trans);
 
-    if(gCmdRxBuffer[0]=='0')
+    if((gCmdRxBuffer[0]=='0') && (gCmdRxBuffer[1]==13)) /* accept 1 number and new line)
     {
         command_uart = CONFIG_UART0;
         DebugP_log("Tester uses CONFIG_UART0 (To XDS UART) for receiving commands\r\n");
     }
-    if(gCmdRxBuffer[0]=='1')
+    if((gCmdRxBuffer[0]=='1') && (gCmdRxBuffer[1]==13)) /* accept 1 number and new line)
     {
         command_uart = TESTER_UART;
         DebugP_log("Tester uses TESTER_UART (To DUT UART) for receiving commands\r\n");

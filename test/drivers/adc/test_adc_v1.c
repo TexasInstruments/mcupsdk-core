@@ -2318,7 +2318,7 @@ int32_t AM263x_ADC_BTR_009(uint32_t base)
 
     result_base = base - (uint32_t)0x001c0000;
 
-    channel         =   ADC_CH_ADCIN1;
+    channel         =   ADC_CH_ADCIN2;
     int_number      =   ADC_INT_NUMBER1;
     trigger         =   ADC_TRIGGER_SW_ONLY;
     sample_window   =   ((ADC_CLK_DIV_4_0 / 2 + 1) + 1);

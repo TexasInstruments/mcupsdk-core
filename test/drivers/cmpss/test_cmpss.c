@@ -50,7 +50,6 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-// #define NUM_TESTS               19
 #define LENGTH_OF_INPUT_INDEPENDENT_TEST_LIST   (11)
 #define LENGTH_OF_INPUT_DEPENDENT_TEST_LIST     (9)
 
@@ -99,11 +98,11 @@ static void CMPSS_enable_disable_comparator_dac_output(void *args);
 static void CMPSS_dac_ramp_generator_synchronization_with_epwm(void *args);
 static void CMPSS_diode_emulation_mode_with_pwm(void *args);
 static void CMPSS_cmpss_async_trip(void *args);
+/* Non-JIRA Test case*/
 static void CMPSS_apiCheck(void *args);
 
 /*Utility/helper functions*/
 int32_t apiCheck(uint32_t base);
-
 int32_t test_cmpss_cases(uint8_t in);
 
 

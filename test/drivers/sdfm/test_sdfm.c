@@ -43,6 +43,8 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#include "menu.h"
+
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -93,37 +95,52 @@ int32_t test_sdfm_cases(uint8_t in);
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+#define TOTAL_TEST_CASES (19)
+
 void test_main(void *args)
 {
     /* Open drivers */
     Drivers_open();
     Board_driversOpen();
 
+    tester_init();
     UNITY_BEGIN();
-
-    RUN_TEST(SDFM_setCompFilterHighThresholdApiCheck, 1, NULL);
-
-
-    RUN_TEST(SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel , 3210, NULL);
-    RUN_TEST(SDFM_configure_manchester_decoding_mode , 3211, NULL);
-    RUN_TEST(SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled , 3212, NULL);
-    RUN_TEST(SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled , 3213, NULL);
-    RUN_TEST(SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled , 3214, NULL);
-    RUN_TEST(SDFM_configure_comparator_filter , 3215, NULL);
-    RUN_TEST(SDFM_configure_event_filters_for_high_low_threshold_events , 3216, NULL);
-    RUN_TEST(SDFM_lock_access_to_event_filters_configuration_registers_for_an_sdfm_channel , 3217, NULL);
-    RUN_TEST(SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt , 3218, NULL);
-    RUN_TEST(SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt , 3219, NULL);
-    RUN_TEST(SDFM_pwm_sync_sources , 3220, NULL);
-    RUN_TEST(SDFM_sdfm1_clock_source_from_sdfm0 , 3221, NULL);
-    RUN_TEST(SDFM_sdfm_connectivity_to_dma_xbar , 3222, NULL);
-    RUN_TEST(SDFM_sdfm_connectivity_to_int_xbar , 3223, NULL);
-    RUN_TEST(SDFM_sdfm_connectivity_to_ecap_xbar , 3224, NULL);
-    RUN_TEST(SDFM_sdfm_connectivity_to_pwm_xbar , 3225, NULL);
-    RUN_TEST(SDFM_sdfm_connectivity_to_output_xbar , 3226, NULL);
-    RUN_TEST(SDFM_r5_to_sdfm_access_latency , 3227, NULL);
+    char test_title[] = "----------------------SDFM-TEST-CASES----------------------";
+    
 
 
+    menu_input test_list[TOTAL_TEST_CASES] =
+    {
+        {0, 3210,  SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel ,                    "SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel" },                   
+        {0, 3211,  SDFM_configure_manchester_decoding_mode ,                                       "SDFM_configure_manchester_decoding_mode" },                                      
+        {0, 3212,  SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled ,            "SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled" },           
+        {0, 3213,  SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled ,            "SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled" },           
+        {0, 3214,  SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled ,             "SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled" },            
+        {0, 3215,  SDFM_configure_comparator_filter ,                                              "SDFM_configure_comparator_filter" },                                             
+        {0, 3216,  SDFM_configure_event_filters_for_high_low_threshold_events ,                    "SDFM_configure_event_filters_for_high_low_threshold_events" },                   
+        {0, 3217,  SDFM_lock_access_to_event_filters_configuration_registers_for_an_sdfm_channel , "SDFM_lock_access_to_event_filters_configuration_registers_for_an_sdfm_channel" },
+        {0, 3218,  SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt ,             "SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt" },            
+        {0, 3219,  SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt ,                  "SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt" },                 
+        {0, 3220,  SDFM_pwm_sync_sources ,                                                         "SDFM_pwm_sync_sources" },                                                        
+        {0, 3221,  SDFM_sdfm1_clock_source_from_sdfm0 ,                                            "SDFM_sdfm1_clock_source_from_sdfm0" },                                           
+        {0, 3222,  SDFM_sdfm_connectivity_to_dma_xbar ,                                            "SDFM_sdfm_connectivity_to_dma_xbar" },                                           
+        {0, 3223,  SDFM_sdfm_connectivity_to_int_xbar ,                                            "SDFM_sdfm_connectivity_to_int_xbar" },                                           
+        {0, 3224,  SDFM_sdfm_connectivity_to_ecap_xbar ,                                           "SDFM_sdfm_connectivity_to_ecap_xbar" },                                          
+        {0, 3225,  SDFM_sdfm_connectivity_to_pwm_xbar ,                                            "SDFM_sdfm_connectivity_to_pwm_xbar" },                                           
+        {0, 3226,  SDFM_sdfm_connectivity_to_output_xbar ,                                         "SDFM_sdfm_connectivity_to_output_xbar" },                                        
+        {0, 3227,  SDFM_r5_to_sdfm_access_latency ,                                                "SDFM_r5_to_sdfm_access_latency" },                                               
+        {1, 1   ,  SDFM_setCompFilterHighThresholdApiCheck,                                        "SDFM_setCompFilterHighThresholdApiCheck" },                                       
+    };
+
+
+    
+    menu(TOTAL_TEST_CASES, test_list, test_title);
+
+    if(enableLog)
+    {
+        DebugP_logZoneEnable(DebugP_LOG_ZONE_ERROR);
+        DebugP_logZoneEnable(DebugP_LOG_ZONE_INFO);
+    }
     UNITY_END();
 
     /* Close drivers */
@@ -131,7 +148,10 @@ void test_main(void *args)
     Drivers_close();
 
     return;
+    
 }
+
+
 
 /* Unity framework required information */
 void setUp(void)

@@ -127,7 +127,10 @@ void wait_for_user_uart_input(void)
         trans.buf = &gCmdRxBuffer[0U];
         trans.timeout = TIMEOUT_UART_INFINITE;
         trans.count = 1;
+        
+        trans.count +=1;/* Read number followed by new line */
         transferOK = UART_read(gUartHandle[CONFIG_UART0], &trans);
+        ((uint8_t*)trans.buf)[trans.count - 1]=0; /*Null the location of new line*/
 
         correct_input = (gCmdRxBuffer[0] == 'y') || (gCmdRxBuffer[0] == 'Y');
     }
@@ -215,7 +218,9 @@ void menu(uint16_t total_test_cases, menu_input* test_list, char* test_title)
         trans.timeout   = TIMEOUT_UART_MENU;
 
         ((UART_Config *)gUartHandle[CONFIG_UART0])->object->readTrans = NULL;
+        trans.count +=1;/* Read number followed by new line */
         transferOK      = UART_read(gUartHandle[CONFIG_UART0], &trans);
+        ((uint8_t*)trans.buf)[trans.count - 1]=0; /*Null the location of new line*/
 
         if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
         {
@@ -299,7 +304,9 @@ void menu(uint16_t total_test_cases, menu_input* test_list, char* test_title)
         trans.buf       = &optionBuffer[0U];
         trans.count     = 2;
         trans.timeout   = TIMEOUT_UART_MENU;
+        trans.count +=1;/* Read number followed by new line */
         transferOK      = UART_read(gUartHandle[CONFIG_UART0], &trans);
+        ((uint8_t*)trans.buf)[trans.count - 1]=0; /*Null the location of new line*/
 
         if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
         {
@@ -318,7 +325,9 @@ void menu(uint16_t total_test_cases, menu_input* test_list, char* test_title)
             trans.buf       = &optionBuffer[0U];
             trans.count     = 1;
             trans.timeout   = TIMEOUT_UART_MENU;
+            trans.count +=1;/* Read number followed by new line */
             transferOK      = UART_read(gUartHandle[CONFIG_UART0], &trans);
+            ((uint8_t*)trans.buf)[trans.count - 1]=0; /*Null the location of new line*/
 
             if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_SUCCESS != trans.status))
             {

@@ -429,7 +429,7 @@ void test_main(void *args)
                 RUN_TEST(EPWM_select_one_shot_sync_out_trigger , 3439, NULL);
                 RUN_TEST(EPWM_grouping_aliasing_of_epwm_instances , 3455, NULL);
                 RUN_TEST(EPWM_XCMP,3850, NULL);
-                RUN_TEST(EPWM_DEL,144, NULL);
+                RUN_TEST(EPWM_DEL,4213, NULL);
                 /*
                 * RUN_TEST(EPWM_emustop_trip_pwm , 3362, NULL);
                 * RUN_TEST(EPWM_syserror_trips_pwm , 3364, NULL);
@@ -507,7 +507,7 @@ void test_main(void *args)
                 RUN_TEST(EPWM_XCMP,3850, NULL);
                 break;
             case 21:
-                RUN_TEST(EPWM_DEL,144, NULL);
+                RUN_TEST(EPWM_DEL,4213, NULL);
                 break;
             /* case 22:                                                                                         */
             /*      RUN_TEST(EPWM_emustop_trip_pwm , 3362, NULL);                                               */
@@ -607,7 +607,7 @@ void test_main(void *args)
                 RUN_TEST(EPWM_XCMP,3850, NULL);
 
 
-                /* RUN_TEST(EPWM_DEL,144, NULL); */
+                /* RUN_TEST(EPWM_DEL,4213, NULL); */
                 /* RUN_TEST(EPWM_emustop_trip_pwm , 3362, NULL); */
                 /* RUN_TEST(EPWM_syserror_trips_pwm , 3364, NULL); */
                 RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL);
