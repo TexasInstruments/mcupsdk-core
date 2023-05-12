@@ -141,6 +141,7 @@ const example_file_list = [
     "test/drivers/csirx/.project/project.js",
 	"test/drivers/ecap/.project/project.js",
     "test/drivers/edma/.project/project.js",
+	"test/drivers/edma/edma_ut_am273x/.project/project.js",
 	"test/drivers/epwm/.project/project.js",
     "test/drivers/esm/.project/project.js",
     "test/drivers/gpio/.project/project.js",

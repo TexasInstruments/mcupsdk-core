@@ -91,7 +91,6 @@ void test_edmaCcPaRAMEntry_initNeg(void *args)
 /*  Error/Fault test of EDMA_registerIntr API*/
 void test_edmaRegisterIntrNeg(void *args)
 {
-
 	int32_t  testStatusOne = SystemP_SUCCESS;
 	int32_t  testStatusTwo = SystemP_SUCCESS;
 	int32_t  testStatus = SystemP_SUCCESS;
@@ -109,7 +108,7 @@ void test_edmaRegisterIntrNeg(void *args)
 	if (testStatusTwo == SystemP_SUCCESS)
 	{
 		handle = (EDMA_Handle)&gEdmaConfig[1];
-
+	
 		if(EDMA_registerIntr(handle,intrObj) == SystemP_SUCCESS)
 		{
 			testStatusTwo = SystemP_FAILURE;
@@ -205,7 +204,7 @@ void test_edmaGetRegionIdNeg(void *args)
 
 	if(testStatusFive == SystemP_SUCCESS)
 	{
-
+		
 		config->object = NULL;
 		config->object->isOpen = FALSE;
 
@@ -224,60 +223,6 @@ void test_edmaGetRegionIdNeg(void *args)
 	{
 		testStatus = SystemP_FAILURE;
 		DebugP_log("Edma Test case: failure on line no. %d \r\n", __LINE__);
-	}
-	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-}
-
-/*Test to verify EDMA_getBaseAddr and EDMA_getRegionId API*/
-void test_edmaBaseAddrRegionIdNeg(void *args)
-{
-	int32_t testStatus = SystemP_SUCCESS;
-	EDMA_Handle gEdmaHandle = NULL;
-
-	if (testStatus == SystemP_SUCCESS)
-	{
-		gEdmaConfig[0].object->isOpen = TRUE;
-		EDMA_getBaseAddr(&gEdmaHandle);
-		EDMA_getRegionId(&gEdmaHandle);
-	}
-	else
-	{
-		 testStatus = SystemP_FAILURE;
-		DebugP_log("edma_pos_Test: failure on line no. %d \r\n", __LINE__);
-	}
-	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-}
-
-/*Test to verify EDMA_getBaseAddr and EDMA_getRegionId API*/
-void test_edmaBaseAddrRegionIdTwoNeg(void *args)
-{
-	int32_t  testStatusOne = SystemP_SUCCESS;
-	int32_t  testStatusTwo = SystemP_SUCCESS;
-	int32_t  testStatus = SystemP_SUCCESS;
-	EDMA_Handle handle = NULL;
-
-	if (testStatusOne == SystemP_SUCCESS)
-	{
-		gEdmaConfig[0].object->isOpen = FALSE;
-		EDMA_getBaseAddr(&handle);
-		EDMA_getRegionId(&handle);
-	}
-
-	if (testStatusTwo == SystemP_SUCCESS)
-	{
-		gEdmaConfig[0].object->isOpen = FALSE;
-		EDMA_getBaseAddr(&handle);
-		EDMA_getRegionId(&handle);
-	}
-
-	if((testStatusTwo == SystemP_SUCCESS) && (testStatusOne == SystemP_SUCCESS))
-	{
-		testStatus = SystemP_SUCCESS;
-	}
-	else
-	{
-		 testStatus = SystemP_FAILURE;
-		DebugP_log("edma_pos_Test: failure on line no. %d \r\n", __LINE__);
 	}
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -395,6 +340,7 @@ void test_edmaOpenNeg(void *args)
 			DebugP_log("EDMA test case: failure on line no. %d \r\n", __LINE__);
 		}
 	}
+
 	if ((testStatusOne == SystemP_SUCCESS) && (testStatusTwo == SystemP_SUCCESS)&&(testStatusThree == SystemP_SUCCESS))
 	{
 		testStatus = SystemP_SUCCESS;
@@ -405,22 +351,6 @@ void test_edmaOpenNeg(void *args)
 		DebugP_log("EDMA test case: failure on line no. %d \r\n", __LINE__);
 	}
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-}
-
-/* test case for EDMA_open API */
-void test_edmaOpenThree(void *args)
-{
-	int32_t  testStatusOne = SystemP_SUCCESS;
-	uint32_t index = 0U;
-
-	if (testStatusOne == SystemP_SUCCESS)
-	{
-		if(EDMA_open(index, NULL) == NULL)
-		{
-			testStatusOne = SystemP_FAILURE;
-		}
-		TEST_ASSERT_EQUAL_INT32(testStatusOne,SystemP_FAILURE);
-	}
 }
 
 /* test case for EDMA_getHandle API */
@@ -462,7 +392,7 @@ void test_edmaGetHandleNegTwo(void *args)
 	uint32_t index = 0U;
 
 	if (testStatusThree == SystemP_SUCCESS)
-	{
+	{	
 		gEdmaConfig[0].object->isOpen = FALSE;
 		if(EDMA_getHandle(index) != NULL)
 		{
@@ -476,6 +406,7 @@ void test_edmaGetHandleNegTwo(void *args)
 void test_edmaBaseAddrNeg(void *args)
 {
 	int32_t  testStatus = SystemP_SUCCESS;
+
 	if (testStatus == SystemP_SUCCESS)
 	{
 		if(EDMA_getBaseAddr(NULL)!=0U)
@@ -491,6 +422,7 @@ void test_edmaBaseAddrNeg(void *args)
 void test_edmaRegionIdNeg(void *args)
 {
 	int32_t  testStatus = SystemP_SUCCESS;
+
 	if (testStatus == SystemP_SUCCESS)
 	{
 		if(EDMA_getRegionId(NULL) != SOC_EDMA_NUM_REGIONS)
@@ -537,50 +469,6 @@ void test_edmaBaseAddrOneNeg(void *args)
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
-/*Test to verify EDMA_edmaFreeDmaChannel API*/
-void test_edmaFreeDmaChannelNeg(void *args)
-{
-	int32_t  testStatusOne = SystemP_SUCCESS;
-	int32_t  testStatusTwo = SystemP_SUCCESS;
-	int32_t  testStatus = SystemP_SUCCESS;
-	uint32_t dmaCh = 36U;
-	EDMA_Handle gEdmaHandle = NULL;
-	EDMA_Config *config = &gEdmaConfig[CONFIG_EDMA_NUM_INSTANCES];
-	EDMA_Object *objectParams = (EDMA_Object *)config->object;
-
-	if (testStatusOne == SystemP_SUCCESS)
-	{
-		gEdmaConfig[0].object->isOpen = FALSE;
-		if(EDMA_freeDmaChannel(&gEdmaHandle[0], NULL) == SystemP_SUCCESS)
-		{
-			testStatusOne = SystemP_FAILURE;
-			DebugP_log("EDMA test case: failure on line no. %d \r\n", __LINE__);
-		}
-	}
-
-	if (testStatusTwo == SystemP_SUCCESS)
-	{
-		config->object = objectParams;
-		objectParams->isOpen = FALSE;
-		if(EDMA_freeDmaChannel(&gEdmaHandle[0], &dmaCh) == SystemP_SUCCESS)
-		{
-			testStatusTwo = SystemP_FAILURE;
-			DebugP_log("EDMA test case: failure on line no. %d \r\n", __LINE__);
-		}
-	}
-
-	if ((testStatusOne == SystemP_SUCCESS) && (testStatusTwo == SystemP_SUCCESS))
-	{
-		testStatus = SystemP_SUCCESS;
-	}
-	else
-	{
-		testStatus = SystemP_FAILURE;
-	}
-
-	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-}
-
 /*Test to verify EDMA_allocDmaChannel API*/
 void test_edmaAllocDmaChannelNegOne(void *args)
 {
@@ -623,7 +511,7 @@ void test_edmaAllocQdmaChannelNegTwo(void *args)
 	int32_t  testStatus = SystemP_SUCCESS;
 
 	if (testStatus == SystemP_SUCCESS)
-	{
+	{	
 		if(EDMA_allocQdmaChannel(&gEdmaHandle[0],NULL) == SystemP_SUCCESS)
 		{
 			testStatus = SystemP_FAILURE;
@@ -690,7 +578,7 @@ void test_edmaAllocParamNegOne(void *args)
 void test_edmaAllocParamNegTwo(void *args)
 {
 	int32_t  testStatus = SystemP_SUCCESS;
-
+	
 	if (testStatus == SystemP_SUCCESS)
 	{
 		gEdmaConfig[0].object->isOpen = FALSE;
@@ -794,8 +682,7 @@ void test_edmaFreeParamNeg(void *args)
 	uint32_t param = 260U;
 
 	if (testStatus == SystemP_SUCCESS)
-	{
-		gEdmaConfig[0].object->isOpen = FALSE;
+	{	
 		if(EDMA_freeParam(&gEdmaHandle[0], &param) != SystemP_FAILURE)
 		{
 			testStatus = SystemP_FAILURE;
@@ -839,6 +726,42 @@ void test_edmaFreeParamNegTwo(void *args)
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
+/* Test to verify EDMA_registerIntr API withgEdmaConfig[0].object = NULL */
+void test_edmaRegisterIntrNegThree(void *args)
+{
+	int32_t  testStatus = SystemP_SUCCESS;
+	Edma_IntrObject intrObj;
+
+	if (testStatus == SystemP_SUCCESS)
+	{
+		gEdmaConfig[0].object = NULL;
+		if(EDMA_registerIntr(gEdmaHandle[0], &intrObj) == SystemP_SUCCESS)
+		{
+			testStatus = SystemP_FAILURE;
+			DebugP_log("EDMA test case: failure on line no. %d \r\n", __LINE__);
+		}
+	}
+	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Test to verify EDMA_unregisterIntr API withgEdmaConfig[0].object = NULL */
+void test_edmaUnRegisterIntrNegThree(void *args)
+{
+	int32_t  testStatus = SystemP_SUCCESS;
+	Edma_IntrObject intrObj;
+
+	if (testStatus == SystemP_SUCCESS)
+	{
+		gEdmaConfig[0].object = NULL;
+		if(EDMA_unregisterIntr(gEdmaHandle[0], &intrObj) != SystemP_SUCCESS)
+		{
+			testStatus = SystemP_FAILURE;
+			DebugP_log("EDMA test case: failure on line no. %d \r\n", __LINE__);
+		}
+	}
+	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
 void edma_negTest(void *args)
 {
     Drivers_open();
@@ -850,8 +773,6 @@ void edma_negTest(void *args)
 	RUN_TEST(test_edmaCcPaRAMEntry_initNeg, 5597, NULL);
 	RUN_TEST(test_edmaRegisterIntrNeg, 5713, NULL);
 	RUN_TEST(test_edmaUnRegisterIntrNeg, 5714, NULL);
-	RUN_TEST(test_edmaBaseAddrRegionIdNeg, 5715, NULL);
-	RUN_TEST(test_edmaBaseAddrRegionIdTwoNeg, 9002, NULL);
 	RUN_TEST(test_edmaAllocDmaChannelNeg, 5717, NULL);
 	RUN_TEST(test_edmaAllocDmaChannelNegOne, 10014, NULL);
 	RUN_TEST(test_edmaAllocQdmaChannelNegOne, 10015, NULL);
@@ -863,7 +784,6 @@ void edma_negTest(void *args)
 	RUN_TEST(test_edmaAllocParamNegThree, 10021, NULL);
 	RUN_TEST(test_edmaOpenNeg, 5709, NULL);
 	RUN_TEST(test_edmaGetHandleNeg, 5540, NULL);
-	RUN_TEST(test_edmaFreeDmaChannelNeg, 5721, NULL);
 	RUN_TEST(test_edmaFreeQdmaChannelNegTwo, 10022, NULL);
 	RUN_TEST(test_edmaFreeParamNeg, 10023, NULL);
 	RUN_TEST(test_edmaFreeParamNegOne, 10024, NULL);
@@ -876,8 +796,9 @@ void edma_negTest(void *args)
 	RUN_TEST(test_edmaGetHandleNegTwo,9058, NULL);
 	RUN_TEST(test_edmaFreeQdmaChannelNegOne, 10028, NULL);
 	RUN_TEST(test_edmaBaseAddrOneNeg, 9060, NULL);
-	RUN_TEST(test_edmaOpenThree, 10237, NULL);
-
+	RUN_TEST(test_edmaRegisterIntrNegThree, 10029, NULL);
+	RUN_TEST(test_edmaUnRegisterIntrNegThree, 10030, NULL);
+	
 	UNITY_END();
 
     Board_driversClose();

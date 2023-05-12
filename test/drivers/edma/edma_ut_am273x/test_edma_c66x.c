@@ -59,7 +59,6 @@
 #define EDMA_TEST_B_COUNT                (4U)
 #define EDMA_TEST_B_COUNT_ONE            (2U)
 #define EDMA_TEST_B_COUNT_TWO            (3U)
-//#define B_COUNT                          (1U)
 /* Value for C count */
 #define EDMA_TEST_C_COUNT               (2U)
 #define EDMA_TEST_C_COUNT_ONE            (1U)
@@ -108,8 +107,6 @@ static void test_edmaTccTransfer(void *args);
 static void test_edmaBufferParamCheck(void *args);
 static void test_edmaIntermediateInterruptCheck(void *args);
 static void test_transferFromOCRAMToOCRAM(void *args);
-static void test_transferFromR5TCMAToOCRAM(void *args);
-static void test_transferFromOCRAMToR5TCMA(void *args);
 static void EDMA_regionIsrFxn(Edma_IntrHandle intrHandle, void *args);
 static void test_edmaTransferCompleteInterruptEnableCheck(void *args);
 static void test_edmaTransferCompleteChainingEnableCheck(void *args);
@@ -120,7 +117,6 @@ static void test_edmaDestinationAddressingMode(void *args);
 static void test_edmaCoverageTransfer(void *args);
 static void test_qdmaCoverageTransfer(void *args);
 static void test_edmaMapUnMapEventQ(void *args);
-static void test_readIntrStatus(void *args);
 static void test_edmaValidateIntrObject(void *args);
 static void test_edmaOpen(void *args);
 static void test_edmaRegisterInt(void *args);
@@ -136,11 +132,9 @@ static void test_edmaRegisterAndUnregisterInterruptTwo(void *args);
 static void test_edmaRegisterAndUnregisterInterruptThree(void *args);
 static void test_edmaRegisterAndUnregisterInterruptFive(void *args);
 static void test_edmaRegisterAndUnregisterInterruptSix(void *args);
-static void test_edmaReadEventStatusRegionTwo(void *args);
 static void test_edmaFreeAndAllocResource(void *args);
 static void test_edmaInterruptTwo(void *args);
 static void test_edmaRegisterAndUnregisterInterruptSeven(void *args);
-static void test_edmaRegisterAndUnregisterInterruptEight(void *args);
 static void test_readIntrStatusRegionOne(void *args);
 static void test_edmaFreeAndAllocResourceOne(void *args);
 static void test_edmaRegisterAndUnregisterInterruptNine(void *args);
@@ -162,14 +156,12 @@ static SemaphoreP_Object gEdmaTestDoneSem,gEdmaTestDoneSemOne,gEdmaTestDoneSemTw
 /* The source buffer used for transfer */
 static uint8_t gEdmaTestSrcBuff[EDMA_TEST_BUFFER_SIZE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 static uint8_t gEdmaTestSrcBuffOne[EDMA_TEST_BUFFER_SIZE_ONE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
-static uint8_t gEdmaTestSrcBuffTwo[EDMA_TEST_BUFFER_SIZE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.edma_vring_mem")));
 static uint8_t gEdmaTestSrcBuffThree[EDMA_TEST_ARRAY_SIZE] __attribute__((aligned(256)));
 
 /* The destination buffer used for transfer */
 static uint8_t gEdmaTestDstBuff[EDMA_TEST_BUFFER_SIZE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 static uint8_t gEdmaTestDstBuffOne[EDMA_TEST_BUFFER_SIZE_ONE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 static uint8_t gEdmaTestDstBuffTwo[EDMA_TEST_BUFFER_SIZE_ONE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
-static uint8_t gEdmaTestDstBuffThree[EDMA_TEST_BUFFER_SIZE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT),section(".bss.edma_vring_mem")));
 static uint8_t gEdmaTestDstBuffFour[EDMA_TEST_ARRAY_SIZE] __attribute__((aligned(256)));
 
 static const uint16_t gEdmaTestSrcBuffFour[EDMA_TEST_C_COUNT_TWO] =
@@ -200,16 +192,12 @@ void edma_negTest(void *args);
 
 void testcase_main(void *args)
 {
-    uint32_t  baseAddr;
-
+    
     Drivers_open();
     Board_driversOpen();
 
-    baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
-    DebugP_assert(baseAddr != 0);
-
     UNITY_BEGIN();
-
+   
     RUN_TEST(test_qdmaTransfer, 1672, NULL);
     RUN_TEST(test_edmaATransfer, 1676, NULL);
     RUN_TEST(test_edmaABTransfer, 1675, NULL);
@@ -229,8 +217,6 @@ void testcase_main(void *args)
 	RUN_TEST(test_edmaDestinationBufferSizeCheck, 8638, NULL);
 	RUN_TEST(test_edmaIntermediateInterruptCheck, 8643, NULL);
 	RUN_TEST(test_transferFromOCRAMToOCRAM, 8548, NULL);
-	RUN_TEST(test_transferFromR5TCMAToOCRAM, 8549, NULL);
-	RUN_TEST(test_transferFromOCRAMToR5TCMA, 8550, NULL);
 	RUN_TEST(test_edmaPrivelegeLevelAndIdCheck, 8646, NULL);
 	RUN_TEST(test_edmaIntermediateChainingCheck, 8645,NULL);
 	RUN_TEST(test_edmaTransferCompleteInterruptEnableCheck, 8642, NULL);
@@ -242,7 +228,6 @@ void testcase_main(void *args)
 	RUN_TEST(test_edmaDestinationAddressingMode, 8649, NULL);
     RUN_TEST(test_edmaCoverageTransfer, 9004, NULL);
     RUN_TEST(test_qdmaCoverageTransfer, 9003, NULL);
-    RUN_TEST(test_readIntrStatus, 9521, NULL);
     RUN_TEST(test_edmaRegisterAndUnregisterInterrupt, 9529, NULL);
     RUN_TEST(test_edmaTransferCompletionMasterIsrFxn, 9513, NULL);
     RUN_TEST(test_edmaValidateIntrObject, 9006, NULL);
@@ -256,29 +241,25 @@ void testcase_main(void *args)
     RUN_TEST(test_edmaRegisterAndUnregisterInterruptOne, 9520, NULL);
     RUN_TEST(test_edmaFreeQdmaChannel, 9522, NULL);
     RUN_TEST(test_edmaRegisterAndUnregisterInterruptThree, 9519, NULL);
-    RUN_TEST(test_edmaReadEventStatusRegionTwo, 10056, NULL);
     RUN_TEST(test_edmaQDMAResourceAllocation, 9012, NULL);
     RUN_TEST(test_edmaRegisterAndUnregisterInterruptSeven, 10057, NULL);
     RUN_TEST(test_edmaInterruptTwo, 10058, NULL);
-    RUN_TEST(test_edmaRegisterAndUnregisterInterruptEight, 10059, NULL);
     RUN_TEST(test_edmaRegisterAndUnregisterInterruptNine, 10060, NULL);
     RUN_TEST(test_edmaFreeAndAllocResourceOne, 10061, NULL);
     RUN_TEST(test_readIntrStatusRegionOne, 10062, NULL);
     RUN_TEST(test_readIntrStatusRegion, 10063, NULL);
-
+   
     UNITY_END();
 
     Board_driversClose();
     Drivers_close();
-
-    edma_negTest(NULL);
-    edma_posTest(NULL);
 
 }
 
 /*
  *   In this test, EDMA transfer in interrupt mode is verified.
  */
+
 static void test_edmaInterrupt(void *args)
 {
     Edma_IntrObject     intrObj;
@@ -394,7 +375,7 @@ static void test_edmaInterrupt(void *args)
             break;
         }
     }
-
+    
     status = EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
     SemaphoreP_destruct(&gEdmaTestDoneSem);
 
@@ -624,7 +605,6 @@ static void test_edmaEventTrigger(void *args)
 /*
  *   In this test, EDMA transfer in interrupt mode is verified.
  */
-
 static void EDMA_regionIsrFxn(Edma_IntrHandle intrHandle, void *args)
 {
     SemaphoreP_Object *semObjPtr = (SemaphoreP_Object *)args;
@@ -650,11 +630,11 @@ static void EDMA_regionIsrFxnThree(Edma_IntrHandle intrHandle, void *args)
     DebugP_assert(semObjPtr3 != NULL);
     SemaphoreP_post(semObjPtr3);
 }
+
 /*
  *   In this test, EDMA transfer in A synchronized transfer is verified
  *   in polling mode.
  */
-
 static void test_edmaATransfer(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -770,6 +750,7 @@ static void test_edmaATransfer(void *args)
 /*
  *   In this test, EDMA transfer in AB synchronized mode is verified.
  */
+
 static void test_edmaABTransfer(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -883,7 +864,6 @@ static void test_edmaABTransfer(void *args)
 /*
  *   In this test, EDMA chaining functionality is tested.
  */
-
 static void test_edmaChainTransfer(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -1600,6 +1580,7 @@ static void test_qdmaEventQueue(void *args)
     DebugP_assert(status == SystemP_SUCCESS);
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
+
 }
 
 /*
@@ -1835,6 +1816,7 @@ static void test_edmaDestinationBufferSizeCheck(void *args)
 /*
  * Test to verify TCC Transfer
  */
+
 static void test_edmaTccTransfer(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -1950,6 +1932,7 @@ static void test_edmaTccTransfer(void *args)
 /*
  * Test to verify Buffer Parameters using Indexing feature from source to destination buffer
  */
+
 static void test_edmaBufferParamCheck(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -2043,6 +2026,7 @@ static void test_edmaBufferParamCheck(void *args)
 /*
  * Test is to verify Transfer complete interrupt enable condition
  */
+
 static void test_edmaTransferCompleteInterruptEnableCheck(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -2676,224 +2660,6 @@ static void test_transferFromOCRAMToOCRAM(void *args)
 }
 
 /*
- *Test case to verify the data tranfer from R5 TCMA to OCRAM Memory
- */
-static void test_transferFromR5TCMAToOCRAM(void *args)
-{
-    uint32_t            loopCnt = 0;
-    uint32_t            baseAddr, regionId;
-    uint32_t            dmaCh, tcc, param;
-    int32_t             testStatus = SystemP_SUCCESS;
-
-    baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
-    DebugP_assert(baseAddr != 0);
-
-    regionId = EDMA_getRegionId(gEdmaHandle[0]);
-    DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
-
-    dmaCh = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    tcc = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    param = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocParam(gEdmaHandle[0], &param);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    /*
-     * Initialize the source address with a pattern
-     * initialize dst address with zero/another pattern (optional)
-     */
-    srcBuffPtr = (uint8_t *)gEdmaTestSrcBuffTwo;
-    dstBuffPtr = (uint8_t *) gEdmaTestDstBuff;
-
-    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
-        dstBuffPtr[loopCnt] = 0;
-    }
-    CacheP_wb((void *)srcBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-    CacheP_wb((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
-    /* Request channel */
-    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Disable the interrupt for the channel to transfer in polled mode */
-    EDMA_disableEvtIntrRegion(baseAddr, regionId, dmaCh);
-
-    /* Program Param Set */
-    EDMA_ccPaRAMEntry_init(&edmaParam1);
-    edmaParam1.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
-    edmaParam1.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
-    edmaParam1.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
-    edmaParam1.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.srcBIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destBIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.linkAddr      = 0xFFFFU;
-    edmaParam1.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
-         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-    EDMA_setPaRAM(baseAddr, param, &edmaParam1);
-
-    /*
-     * Transfer is done in A sync mode
-     * Number of triggers required are B_COUNT * C_COUNT
-     */
-    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
-    {
-        EDMA_enableTransferRegion(baseAddr, regionId, dmaCh,
-             EDMA_TRIG_MODE_MANUAL);
-
-        while(EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1);
-
-        EDMA_clrIntrRegion(baseAddr, regionId, tcc);
-    }
-
-    /* Free channel */
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Free the EDMA resources managed by driver. */
-    testStatus = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-    testStatus = EDMA_freeTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-    testStatus = EDMA_freeParam(gEdmaHandle[0], &param);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    /* Invalidate destination buffer and compare with src buffer */
-    CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
-    for(loopCnt = 0; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        if(srcBuffPtr[loopCnt] != dstBuffPtr[loopCnt])
-        {
-            testStatus = SystemP_FAILURE;
-            break;
-        }
-    }
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
-}
-
-/*
- *Test case to verify the data tranfer from OCRAM Memory to R5 TCMA
- */
-
-static void test_transferFromOCRAMToR5TCMA(void *args)
-{
-    uint32_t            loopCnt = 0;
-    uint32_t            baseAddr, regionId;
-    uint32_t            dmaCh, tcc, param;
-    int32_t             testStatus = SystemP_SUCCESS;
-
-    baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
-    DebugP_assert(baseAddr != 0);
-
-    regionId = EDMA_getRegionId(gEdmaHandle[0]);
-    DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
-
-    dmaCh = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    tcc = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    param = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocParam(gEdmaHandle[0], &param);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    /*
-     * Initialize the source address with a pattern
-     * initialize dst address with zero/another pattern (optional)
-     */
-    srcBuffPtr = (uint8_t *)gEdmaTestSrcBuff;
-    dstBuffPtr = (uint8_t *)gEdmaTestDstBuffThree;
-
-    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
-        dstBuffPtr[loopCnt] = 0;
-    }
-    CacheP_wb((void *)srcBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-    CacheP_wb((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
-    /* Request channel */
-    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Disable the interrupt for the channel to transfer in polled mode */
-    EDMA_disableEvtIntrRegion(baseAddr, regionId, dmaCh);
-
-    /* Program Param Set */
-    EDMA_ccPaRAMEntry_init(&edmaParam1);
-    edmaParam1.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
-    edmaParam1.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
-    edmaParam1.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
-    edmaParam1.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.srcBIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destBIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.linkAddr      = 0xFFFFU;
-    edmaParam1.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
-         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-    EDMA_setPaRAM(baseAddr, param, &edmaParam1);
-
-    /*
-     * Transfer is done in A sync mode
-     * Number of triggers required are B_COUNT * C_COUNT
-     */
-    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
-    {
-        EDMA_enableTransferRegion(baseAddr, regionId, dmaCh,
-             EDMA_TRIG_MODE_MANUAL);
-
-        while(EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1);
-
-        EDMA_clrIntrRegion(baseAddr, regionId, tcc);
-    }
-
-    /* Free channel */
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Free the EDMA resources managed by driver. */
-    testStatus = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-    testStatus = EDMA_freeTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-    testStatus = EDMA_freeParam(gEdmaHandle[0], &param);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    /* Invalidate destination buffer and compare with src buffer */
-    CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
-    for(loopCnt = 0; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        if(srcBuffPtr[loopCnt] != dstBuffPtr[loopCnt])
-        {
-            testStatus = SystemP_FAILURE;
-            break;
-        }
-    }
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
-}
-
-/*
  *Test case to  Test the functionality of TCC Mode Flag of ParamSet
  */
 
@@ -3111,7 +2877,7 @@ static void test_edmaSourceAddressingMode(void *args)
 
 /*
  * Test case to capture Destination Addressing Mode in EDMA module
- */
+ */ 
 static void test_edmaDestinationAddressingMode(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -3216,7 +2982,6 @@ static void test_edmaDestinationAddressingMode(void *args)
 /*
  * Test for Transfer Complete Chaining Enable flag in OPT register field register
  */
-
 static void test_edmaTransferCompleteChainingEnableCheck(void *args)
 {
     uint32_t            loopCnt = 0;
@@ -3298,7 +3063,7 @@ static void test_edmaTransferCompleteChainingEnableCheck(void *args)
         (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | EDMA_OPT_SYNCDIM_MASK |
          ((((uint32_t)tcc0) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
     EDMA_setPaRAM(baseAddr, param0, &edmaParam1);
-
+	
     for(loopCnt = 0; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
     {
         EDMA_enableTransferRegion(
@@ -3399,7 +3164,7 @@ static void test_edmaTransferCompleteChainingEnableCheck(void *args)
 }
 
 /*
- * QDMA Link transfer
+ *QDMA Link transfer
  */
 static void test_qdmaLinkTransfer(void *args)
 {
@@ -3852,116 +3617,6 @@ static void test_edmaMapUnMapEventQ(void *args)
     DebugP_assert(testStatus == SystemP_SUCCESS);
     testStatus = EDMA_freeParam(gEdmaHandle[0], &param);
     DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
-}
-
-/*
- * Test performed to improve the code coverage by setting tcc to 33U in the interrupt mode
-*/
-static void test_readIntrStatus(void *args)
-{
-    Edma_IntrObject     intrObj;
-    uint32_t            loopCnt = 0;
-    uint32_t            baseAddr, regionId;
-    uint32_t            dmaCh, tcc, param;
-    int32_t             status = SystemP_SUCCESS;
-    int32_t             testStatus = SystemP_SUCCESS;
-
-    baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
-    DebugP_assert(baseAddr != 0);
-
-    regionId = EDMA_getRegionId(gEdmaHandle[0]);
-    DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
-
-    dmaCh = 33U;
-    status = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    tcc = 33U;
-    status = EDMA_allocTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    param = EDMA_RESOURCE_ALLOC_ANY;
-    status = EDMA_allocParam(gEdmaHandle[0], &param);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    /*
-     * Initialize the source address with a pattern
-     * initialize dst address with zero/another pattern (optional)
-     */
-    srcBuffPtr = (uint8_t *) gEdmaTestSrcBuff;
-    dstBuffPtr = (uint8_t *) gEdmaTestDstBuff;
-
-    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
-        dstBuffPtr[loopCnt] = 0;
-    }
-
-    /* Request channel */
-    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Program Param Set */
-    EDMA_ccPaRAMEntry_init(&edmaParam1);
-    edmaParam1.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
-    edmaParam1.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
-    edmaParam1.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
-    edmaParam1.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.srcBIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destBIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.linkAddr      = 0xFFFFU;
-    edmaParam1.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
-         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-    EDMA_setPaRAM(baseAddr, param, &edmaParam1);
-
-    status = SemaphoreP_constructBinary(&gEdmaTestDoneSem, 0);
-    DebugP_assert(SystemP_SUCCESS == status);
-
-    /* Register interrupt */
-    intrObj.tccNum = tcc;
-    intrObj.cbFxn  = &EDMA_regionIsrFxn;
-    intrObj.appData = (void *) &gEdmaTestDoneSem;
-    status = EDMA_registerIntr(gEdmaHandle[0], &intrObj);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    /* Clears Event Register */
-    EDMA_clearErrorBitsRegion(baseAddr, regionId, 65U, 0U);
-    /*
-     * Transfer is done in A sync mode
-     * Number of triggers required are B_COUNT * C_COUNT
-     */
-    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
-    {
-        EDMA_enableTransferRegion(
-            baseAddr, regionId, dmaCh, EDMA_TRIG_MODE_MANUAL);
-
-        EDMA_readEventStatusRegion(baseAddr,dmaCh);
-
-        SemaphoreP_pend(&gEdmaTestDoneSem, SystemP_WAIT_FOREVER);
-    }
-
-    /* Invalidate destination buffer and compare with src buffer */
-    status = EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
-    SemaphoreP_destruct(&gEdmaTestDoneSem);
-
-    /* Free channel */
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-        dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Free the EDMA resources managed by driver. */
-    status = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(status == SystemP_SUCCESS);
-    status = EDMA_freeTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(status == SystemP_SUCCESS);
-    status = EDMA_freeParam(gEdmaHandle[0], &param);
-    DebugP_assert(status == SystemP_SUCCESS);
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
 }
@@ -4463,6 +4118,7 @@ static void test_edmaRegisterAndUnregisterInterruptTwo(void *args)
     intrObj.tccNum = tcc;
     intrObj.cbFxn  = &EDMA_regionIsrFxn;
     intrObj.appData = (void *) &gEdmaTestDoneSem;
+    EDMA_registerIntr(&gEdmaHandle[0], &intrObj);
 
     /* Program Param Set */
     EDMA_ccPaRAMEntry_init(&edmaParam2);
@@ -4493,7 +4149,7 @@ static void test_edmaRegisterAndUnregisterInterruptTwo(void *args)
     intrObj2.appData = (void *) &gEdmaTestDoneSemTwo;
     EDMA_registerIntr(gEdmaHandle[0], &intrObj2);
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj2);
-
+    
     intrObj2.tccNum = tcc3;
     intrObj2.cbFxn  = &EDMA_regionIsrFxnTwo;
     intrObj2.appData = (void *) &gEdmaTestDoneSemThree;
@@ -4770,7 +4426,7 @@ static void test_edmaValidateIntrObject(void *args)
     intrObj.appData = (void *) &gEdmaTestDoneSem;
     testStatus = EDMA_registerIntr(gEdmaHandle[0], &intrObj);
     testStatus = EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
-
+  
     /* Free the EDMA resources managed by driver. */
     testStatus = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
     DebugP_assert(testStatus == SystemP_SUCCESS);
@@ -4895,8 +4551,8 @@ static void test_edmaOpen(void *args)
 static void test_edmaRegisterInt(void *args)
 {
     Edma_IntrObject     intrObj;
-    EDMA_Config         config;
-    EDMA_Object         object;
+    EDMA_Config         *config  = (EDMA_Config *) args;
+    EDMA_Object         *object  = (EDMA_Object *) args;
     uint32_t            loopCnt = 0;
     uint32_t            baseAddr, regionId;
     uint32_t            dmaCh, tcc, param;
@@ -4965,8 +4621,10 @@ static void test_edmaRegisterInt(void *args)
 
     EDMA_clearErrorBitsRegion(baseAddr,regionId,7U,1U);
 
-    config.object = NULL;
-    object.firstIntr = NULL;
+    config->object = NULL;
+    object->firstIntr = NULL;
+    DebugP_assert(config->object == NULL);
+    DebugP_assert(object->firstIntr == NULL);
 
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
 
@@ -5083,7 +4741,7 @@ static void test_edmaDMAResourceAllocated(void *args)
             break;
         }
     }
-    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, testStatus);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
 }
 
 /*
@@ -5154,99 +4812,6 @@ static void test_edmaReadEventStatusRegionOne(void *args)
 
     /* Clears Event Register */
     EDMA_clearErrorBitsRegion(baseAddr,regionId,7U,0U);
-    /*
-     * Transfer is done in A sync mode
-     * Number of triggers required are B_COUNT * C_COUNT
-     */
-    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
-    {
-        EDMA_enableTransferRegion(baseAddr, regionId, dmaCh,
-             EDMA_TRIG_MODE_MANUAL);
-
-        while(EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1);
-
-        EDMA_clrIntrRegion(baseAddr, regionId, tcc);
-    }
-
-    /* Free channel */
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Free the EDMA resources managed by driver. */
-    testStatus = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-    testStatus = EDMA_freeTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-    testStatus = EDMA_freeParam(gEdmaHandle[0], &param);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
-}
-/*
- *Test to verify the Read Event status Region API by setting tcc greater than 32
- */
-static void test_edmaReadEventStatusRegionTwo(void *args)
-{
-    uint32_t            loopCnt = 0;
-    uint32_t            baseAddr, regionId;
-    uint32_t            dmaCh, tcc, param;
-    int32_t             testStatus = SystemP_SUCCESS;
-
-    baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
-    DebugP_assert(baseAddr != 0);
-
-    regionId = EDMA_getRegionId(gEdmaHandle[0]);
-    DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
-
-    dmaCh = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    tcc = 39U;
-    EDMA_allocTcc(gEdmaHandle[0], &tcc);
-
-    param = EDMA_RESOURCE_ALLOC_ANY;
-    testStatus = EDMA_allocParam(gEdmaHandle[0], &param);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
-    /*
-     * Initialize the source address with a pattern
-     * initialize dst address with zero/another pattern (optional)
-     */
-    srcBuffPtr = (uint8_t *) gEdmaTestSrcBuff;
-    dstBuffPtr = (uint8_t *) gEdmaTestDstBuff;
-
-    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
-        dstBuffPtr[loopCnt] = 0;
-    }
-
-    /* Request channel */
-    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Disable the interrupt for the channel to transfer in polled mode */
-    EDMA_disableEvtIntrRegion(baseAddr, regionId, dmaCh);
-
-    /* Program Param Set */
-    EDMA_ccPaRAMEntry_init(&edmaParam1);
-    edmaParam1.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
-    edmaParam1.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
-    edmaParam1.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
-    edmaParam1.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.srcBIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destBIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.linkAddr      = 0xFFFFU;
-    edmaParam1.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
-         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-    EDMA_setPaRAM(baseAddr, param, &edmaParam1);
-
     /*
      * Transfer is done in A sync mode
      * Number of triggers required are B_COUNT * C_COUNT
@@ -5379,7 +4944,7 @@ static void test_edmaQDMAResourceAllocation(void *args)
         }
     }
 
-    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, testStatus);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
 }
 
 /*
@@ -5403,15 +4968,12 @@ static void test_readIntrStatusRegion(void *args)
 
     dmaCh = 8U;
     testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
 
     tcc = 31U;
     testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
 
     param = EDMA_RESOURCE_ALLOC_ANY;
     status = EDMA_allocParam(gEdmaHandle[0], &param);
-    DebugP_assert(status == SystemP_SUCCESS);
 
     /*
      * Initialize the source address with a pattern
@@ -5457,6 +5019,7 @@ static void test_readIntrStatusRegion(void *args)
     intrObj.tccNum = tcc;
     intrObj.cbFxn  = &EDMA_regionIsrFxn;
     intrObj.appData = (void *) &gEdmaTestDoneSem;
+    EDMA_registerIntr(&gEdmaHandle[0], &intrObj);
 
     /*
      * Transfer is done in A sync mode
@@ -5906,7 +5469,7 @@ static void test_edmaInterruptTwo(void *args)
 
     tcc = 60U;
     status = EDMA_allocTcc(gEdmaHandle[0], &tcc);
-
+    
     param = EDMA_RESOURCE_ALLOC_ANY;
     status = EDMA_allocParam(gEdmaHandle[0], &param);
     DebugP_assert(status == SystemP_SUCCESS);
@@ -5960,7 +5523,7 @@ static void test_edmaInterruptTwo(void *args)
     intrObj.cbFxn  = &EDMA_regionIsrFxn;
     intrObj.appData = (void *) &gEdmaTestDoneSem;
     status = EDMA_registerIntr(NULL, &intrObj);
-
+    
     /*
      * Transfer is done in A sync mode
      * Number of triggers required are B_COUNT * C_COUNT
@@ -6126,7 +5689,7 @@ static void test_edmaRegisterAndUnregisterInterruptSeven(void *args)
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj2);
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj1);
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
-
+    
     /* Free channel */
     EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
         dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
@@ -6150,14 +5713,14 @@ static void test_edmaRegisterAndUnregisterInterruptSeven(void *args)
 }
 
 /*
-* Test performed by setting tcc number greater than 32U in the interrupt mode
-*/
-static void test_edmaRegisterAndUnregisterInterruptEight(void *args)
+ * Test to verify EDMA_readIntrStatusRegion API having the QDMA = 10U
+ */
+static void test_readIntrStatusRegionOne(void *args)
 {
-    Edma_IntrObject     intrObj,intrObj1,intrObj2;
+    Edma_IntrObject     intrObj;
     uint32_t            loopCnt = 0;
     uint32_t            baseAddr, regionId;
-    uint32_t            dmaCh, tcc, tcc1, param;
+    uint32_t            qdmaCh, tcc, param;
     int32_t             status = SystemP_SUCCESS;
     int32_t             testStatus = SystemP_SUCCESS;
 
@@ -6167,149 +5730,17 @@ static void test_edmaRegisterAndUnregisterInterruptEight(void *args)
     regionId = EDMA_getRegionId(gEdmaHandle[0]);
     DebugP_assert(regionId < SOC_EDMA_NUM_REGIONS);
 
-    dmaCh = EDMA_RESOURCE_ALLOC_ANY;
-    status = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(status == SystemP_SUCCESS);
+    qdmaCh = 9U;
+    testStatus = EDMA_allocQdmaChannel(NULL, &qdmaCh);
+    DebugP_assert(testStatus == SystemP_FAILURE);
 
-    tcc = 33U;
-    EDMA_allocTcc(gEdmaHandle[0], &tcc);
-
-    tcc1 = 36U;
-    EDMA_allocTcc(gEdmaHandle[0], &tcc1);
+    tcc = 31U;
+    testStatus = EDMA_allocTcc(NULL, &tcc);
+    DebugP_assert(testStatus == SystemP_FAILURE);
 
     param = EDMA_RESOURCE_ALLOC_ANY;
     status = EDMA_allocParam(gEdmaHandle[0], &param);
     DebugP_assert(status == SystemP_SUCCESS);
-
-    /*
-     * Initialize the source address with a pattern
-     * initialize dst address with zero/another pattern (optional)
-     */
-    srcBuffPtr = (uint8_t *) gEdmaTestSrcBuff;
-    dstBuffPtr = (uint8_t *) gEdmaTestDstBuff;
-
-    for(loopCnt = 0U; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        srcBuffPtr[loopCnt] = (uint8_t)loopCnt;
-        dstBuffPtr[loopCnt] = 0;
-    }
-
-    CacheP_wb((void *)srcBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-    CacheP_wb((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
-    /* Request channel */
-    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Request channel */
-    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         dmaCh, tcc1, param, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Program Param Set */
-    EDMA_ccPaRAMEntry_init(&edmaParam1);
-    edmaParam1.srcAddr       = (uint32_t) SOC_virtToPhy(srcBuffPtr);
-    edmaParam1.destAddr      = (uint32_t) SOC_virtToPhy(dstBuffPtr);
-    edmaParam1.aCnt          = (uint16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.bCnt          = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.cCnt          = (uint16_t) EDMA_TEST_C_COUNT;
-    edmaParam1.bCntReload    = (uint16_t) EDMA_TEST_B_COUNT;
-    edmaParam1.srcBIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destBIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.srcCIdx       = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.destCIdx      = (int16_t) EDMA_TEST_A_COUNT;
-    edmaParam1.linkAddr      = 0xFFFFU;
-    edmaParam1.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK |
-         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-    EDMA_setPaRAM(baseAddr, param, &edmaParam1);
-
-    status = SemaphoreP_constructBinary(&gEdmaTestDoneSem, 0);
-    DebugP_assert(SystemP_SUCCESS == status);
-
-    /* Register interrupt */
-    intrObj.tccNum = tcc;
-    intrObj.cbFxn  = &EDMA_regionIsrFxn;
-    intrObj.appData = (void *) &gEdmaTestDoneSem;
-    status = EDMA_registerIntr(gEdmaHandle[0], &intrObj);
-
-    /* Register interrupt */
-    intrObj1.tccNum = tcc1;
-    intrObj1.cbFxn  = &EDMA_regionIsrFxnOne;
-    intrObj1.appData = (void *) &gEdmaTestDoneSemOne;
-    status = EDMA_registerIntr(gEdmaHandle[0], &intrObj1);
-
-    /*
-     * Transfer is done in A sync mode
-     * Number of triggers required are B_COUNT * C_COUNT
-     */
-    for(loopCnt = 0; loopCnt < (EDMA_TEST_B_COUNT * EDMA_TEST_C_COUNT); loopCnt++)
-    {
-        EDMA_enableTransferRegion(
-            baseAddr, regionId, dmaCh, EDMA_TRIG_MODE_MANUAL);
-
-    }
-
-    /* Invalidate destination buffer and compare with src buffer */
-    CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
-    for(loopCnt = 0; loopCnt < EDMA_TEST_BUFFER_SIZE; loopCnt++)
-    {
-        if(srcBuffPtr[loopCnt] != dstBuffPtr[loopCnt])
-        {
-            testStatus = SystemP_FAILURE;
-            break;
-        }
-    }
-
-    status = EDMA_unregisterIntr(gEdmaHandle[0], &intrObj2);
-    SemaphoreP_destruct(&gEdmaTestDoneSem);
-
-    status = EDMA_unregisterIntr(gEdmaHandle[0], &intrObj1);
-    SemaphoreP_destruct(&gEdmaTestDoneSem);
-
-    /* Free channel */
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-        dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
-
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-        dmaCh, EDMA_TRIG_MODE_MANUAL, tcc1, EDMA_TEST_EVT_QUEUE_NO);
-
-    /* Free the EDMA resources managed by driver. */
-    status = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh);
-    DebugP_assert(status == SystemP_SUCCESS);
-    status = EDMA_freeTcc(gEdmaHandle[0], &tcc);
-    DebugP_assert(status == SystemP_SUCCESS);
-    status = EDMA_freeTcc(gEdmaHandle[0], &tcc1);
-    DebugP_assert(status == SystemP_SUCCESS);
-    status = EDMA_freeParam(gEdmaHandle[0], &param);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
-}
-
-/*
- * Test to verify EDMA_readIntrStatusRegion API having the QDMA = 10U
- */
-static void test_readIntrStatusRegionOne(void *args)
-{
-    Edma_IntrObject     intrObj;
-    uint32_t            loopCnt = 0;
-    uint32_t            baseAddr, regionId;
-    uint32_t            qdmaCh, tcc, param;
-    int32_t             testStatus = SystemP_SUCCESS;
-
-    baseAddr = EDMA_getBaseAddr(gEdmaHandle[0]);
-
-    regionId = EDMA_getRegionId(gEdmaHandle[0]);
-
-    qdmaCh = 9U;
-    EDMA_allocQdmaChannel(NULL, &qdmaCh);
-
-    tcc = 31U;
-    EDMA_allocTcc(NULL, &tcc);
-
-    param = EDMA_RESOURCE_ALLOC_ANY;
-    EDMA_allocParam(gEdmaHandle[0], &param);
 
     /*
      * Initialize the source address with a pattern
@@ -6355,6 +5786,7 @@ static void test_readIntrStatusRegionOne(void *args)
     intrObj.tccNum = tcc;
     intrObj.cbFxn  = &EDMA_regionIsrFxn;
     intrObj.appData = (void *) &gEdmaTestDoneSem;
+    EDMA_registerIntr(&gEdmaHandle[0], &intrObj);
 
     /*
      * Transfer is done in A sync mode
@@ -6375,10 +5807,14 @@ static void test_readIntrStatusRegionOne(void *args)
         qdmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
 
     /* Free the EDMA resources managed by driver. */
-    EDMA_freeQdmaChannel(NULL, &qdmaCh);
-    EDMA_freeTcc(NULL, NULL);
-    EDMA_freeParam(NULL, NULL);
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
+    status = EDMA_freeQdmaChannel(NULL, &qdmaCh);
+    DebugP_assert(status == SystemP_FAILURE);
+    status = EDMA_freeTcc(NULL, NULL);
+    DebugP_assert(status == SystemP_FAILURE);
+    status = EDMA_freeParam(NULL, NULL);
+    DebugP_assert(status == SystemP_FAILURE);
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, testStatus);
 }
 
 /*
@@ -6527,7 +5963,7 @@ static void test_edmaRegisterAndUnregisterInterruptNine(void *args)
     /*Unregistering the interrupts */
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj1);
     EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
-
+    
     /* Free channel */
     EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
         dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_TEST_EVT_QUEUE_NO);
@@ -6549,7 +5985,7 @@ static void test_edmaRegisterAndUnregisterInterruptNine(void *args)
 }
 
 /*
-* Test performed for edmaReadEventStatusRegion API
+* Test performed for edmaReadEventStatusRegion API 
 */
 static void test_edmaReadEventStatusRegion(void *args)
 {
@@ -6566,16 +6002,13 @@ static void test_edmaReadEventStatusRegion(void *args)
 
     dmaCh0 = 0U;
     testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh0);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
+    
     tcc0 = 0U;
     testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc0);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
+    
     param0 = 0U;
     testStatus = EDMA_allocParam(gEdmaHandle[0], &param0);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
-
+    
     /*
      * Initialize the source address with a pattern
      * initialize dst address with zero/another pattern (optional)
@@ -6631,15 +6064,12 @@ static void test_edmaReadEventStatusRegion(void *args)
 
     dmaCh1 = 1U;
     testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh1);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
 
     tcc1 = 1U;
     testStatus = EDMA_allocTcc(gEdmaHandle[0], &tcc1);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
 
     param1 = 1U;
     testStatus = EDMA_allocParam(gEdmaHandle[0], &param1);
-    DebugP_assert(testStatus == SystemP_SUCCESS);
 
     /*
      * Initialize the source address with a pattern
@@ -6656,7 +6086,6 @@ static void test_edmaReadEventStatusRegion(void *args)
 
     CacheP_wb((void *)srcBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
     CacheP_wb((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-
 
     /* Request channel */
     EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,

@@ -55,6 +55,8 @@ help:
 	@echo  $(MAKE) -s -C drivers/ecap/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/edma/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/edma/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/edma/edma_ut_am273x/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/edma/edma_ut_am273x/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/epwm/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/gpio/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/gpio/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -222,6 +224,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_csirx_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_ecap_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_edma_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_edma_am273x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += test_edma_am273_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_edma_am273_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_epwm_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_gpio_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_gpio_am273x-evm_c66ss0_nortos_ti-c6000
@@ -347,6 +351,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_edma_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C drivers/edma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ test_edma_am273_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/edma/edma_ut_am273x/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_edma_am273_am273x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/edma/edma_ut_am273x/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
  test_epwm_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/epwm/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -603,6 +613,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_csirx_am273x-evm_c66ss0_nortos_ti-c6000_cl
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecap_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_am273_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_edma_am273_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_epwm_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am273x-evm_c66ss0_nortos_ti-c6000_clean
@@ -728,6 +740,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_edma_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C drivers/edma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ test_edma_am273_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/edma/edma_ut_am273x/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_edma_am273_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/edma/edma_ut_am273x/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
  test_epwm_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/epwm/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -984,6 +1002,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_csirx_am273x-evm_c66ss0_nortos_ti-c6000_sc
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecap_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_am273x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_am273_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_edma_am273_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_epwm_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am273x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -1109,6 +1129,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_edma_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C drivers/edma/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ test_edma_am273_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/edma/edma_ut_am273x/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_edma_am273_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/edma/edma_ut_am273x/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
  test_epwm_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/epwm/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
