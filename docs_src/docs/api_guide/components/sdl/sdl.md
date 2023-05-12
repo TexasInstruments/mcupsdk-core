@@ -2,10 +2,6 @@
 
 [TOC]
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
-\attention This is an engineering release of the Safety Diagnostics Library. Final release will be available in Q1-2023.
-\endcond
-
 # Introduction
 
 The @VAR_SOC_NAME family of SoCs provides various safety mechanisms and features, as well as recommendations for usage of these safety mechanisms and features. The Software Diagnostic Library (SDL) provides interfaces to these safety mechanisms and features. The provides these interfaces to assist in the development of software applications involving Functional Safety.
