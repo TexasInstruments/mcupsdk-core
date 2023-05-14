@@ -27,6 +27,7 @@ This page lists all the examples and demos supported in this SDK.
 
 \cond SOC_AM263X
 -# \subpage EXAMPLES_SDL
+-# \subpage EXAMPLES_PRU_IO
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X

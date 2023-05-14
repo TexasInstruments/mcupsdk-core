@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This example acts as a getting started point for PRU firmware development in assembly. It demoes how to access local memory locations of PRU.
+This example acts as a getting started point for PRU firmware development in assembly. It is a demo that shows how to access local memory locations of PRU.
 
 # Supported Combinations
 
@@ -13,6 +13,17 @@ This example acts as a getting started point for PRU firmware development in ass
  Parameter      | Value
  ---------------|-----------
  ICSSG          | ICSSG0 - PRU0
+ Toolchain      | pru-cgt
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/pru_io/empty/
+
+\endcond
+
+\cond SOC_AM263X
+
+ Parameter      | Value
+ ---------------|-----------
+ ICSSG          | ICSSM - PRU0
  Toolchain      | pru-cgt
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/pru_io/empty/
