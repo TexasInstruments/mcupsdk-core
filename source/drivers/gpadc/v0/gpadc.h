@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -120,58 +120,6 @@ extern "C" {
  *  Timout in terms of pmu count = 1ms/5ns = 200,000
  */
 #define GPADC_TIMEOUT_MAX         (200000U)
-
-/** \brief   Efuse Trime Constant Temperature */
-#define EFUSE_TRIM_TEMPERATURE_CONST           523
-/** \brief   Efuse Trime Constant Temperature Divider */
-#define EFUSE_TRIM_TEMPERATURE_DIV_CONST       10
-/** \brief   Zero point TRIM Fixed Temperature */
-#define ZERO_PT_TRIM_FIXED_TRIM_TEMP                    110
-/** \brief   Zero point TRIM Fixed  Digital Temperature */
-#define ZERO_PT_TRIM_FIXED_DIG_TEMP_SENSOR_TRIM_30C     305U
-/** \brief   Zero Value */
-#define ZERO                                            0
-
-/** \brief   Zero point TRIM Fixed Slope */
-#define ZERO_PT_TRIM_FIXED_SLOPE -1.05
-/** \brief   One point TRIM Fixed Slope */
-#define ONE_PT_TRIM_FIXED_SLOPE -1.05
-/** \brief   Efuse Version Start Bit */
-#define EFUSE1_ROW_14_FUSEROM_VER_START_BIT    20U
-/** \brief   Efuse Version Stop Bit */
-#define EFUSE1_ROW_14_FUSEROM_VER_STOP_BIT     24U
-/** \brief   Efuse Trim Temperature 30C Start Bit */
-#define EFUSE1_ROW_36_TRIM_TEMPERATURE_30C_START_BIT    15U
-/** \brief   Efuse Trim Temperature 30C Stop Bit */
-#define EFUSE1_ROW_36_TRIM_TEMPERATURE_30C_STOP_BIT     25U
-/** \brief   Efuse Trim Temperature 125C Start Bit */
-#define EFUSE1_ROW_33_TRIM_TEMPERATURE_125C_START_BIT    0U
-/** \brief   Efuse Trim Temperature 125C Stop Bit */
-#define EFUSE1_ROW_33_TRIM_TEMPERATURE_125C_STOP_BIT     10U
-/** \brief   Efuse Digital DSP Temperature 30C Sensor Start Bit */
-#define EFUSE1_ROW_37_DIG_DSP_TEMP_SENSOR_TRIM0_30C_START_BIT  5U
-/** \brief   Efuse Digital DSP Temperature 30C Sensor Stop Bit */
-#define EFUSE1_ROW_37_DIG_DSP_TEMP_SENSOR_TRIM0_30C_STOP_BIT   14U
-/** \brief   Efuse Digital HWA Temperature 30C Sensor Start Bit */
-#define EFUSE1_ROW_37_DIG_HWA_TEMP_SENSOR_TRIM1_30C_START_BIT  15U
-/** \brief   Efuse Digital HWA Temperature 30C Sensor Stop Bit */
-#define EFUSE1_ROW_37_DIG_HWA_TEMP_SENSOR_TRIM1_30C_STOP_BIT   24U
-/** \brief   Efuse Digital HSM Temperature 30C Sensor Start Bit */
-#define EFUSE1_ROW_38_DIG_HSM_TEMP_SENSOR_TRIM2_30C_START_BIT  0U
-/** \brief   Efuse Digital HSM Temperature 30C Sensor Stop Bit */
-#define EFUSE1_ROW_38_DIG_HSM_TEMP_SENSOR_TRIM2_30C_STOP_BIT  9U
-/** \brief   Efuse Digital DSP Temperature 125C Sensor Start Bit */
-#define EFUSE1_ROW_34_DIG_DSP_TEMP_SENSOR_TRIM0_125C_START_BIT  5U
-/** \brief   Efuse Digital DSP Temperature 125C Sensor Stop Bit */
-#define EFUSE1_ROW_34_DIG_DSP_TEMP_SENSOR_TRIM0_125C_STOP_BIT   14U
-/** \brief   Efuse Digital HWA Temperature 125C Sensor Start Bit */
-#define EFUSE1_ROW_34_DIG_HWA_TEMP_SENSOR_TRIM1_125C_START_BIT  15U
-/** \brief   Efuse Digital HWA Temperature 125C Sensor Stop Bit */
-#define EFUSE1_ROW_34_DIG_HWA_TEMP_SENSOR_TRIM1_125C_STOP_BIT   24U
-/** \brief   Efuse Digital HSM Temperature 125C Sensor Start Bit */
-#define EFUSE1_ROW_35_DIG_HSM_TEMP_SENSOR_TRIM2_125C_START_BIT  0U
-/** \brief   Efuse Digital HSM Temperature 125C Sensor Stop Bit */
-#define EFUSE1_ROW_35_DIG_HSM_TEMP_SENSOR_TRIM2_125C_STOP_BIT   9U
 
 /** \brief   GPADC Register Base Address */
 #define GPADC_REGS_PTR            ((T_GPADC_REGS*)CSL_MSS_GPADC_REG_U_BASE)
@@ -538,7 +486,7 @@ typedef struct
  * \brief
  *  GPADC Driver Object configuration
  *
- *  The structure holds the channel confiiguration structure,operation mode structure 
+ *  The structure holds the channel confiiguration structure,operation mode structure
  */
 typedef struct
 {
@@ -553,43 +501,6 @@ typedef struct
     /** \brief  Pointer to store conversion results */
 	uint16_t                        *ResultBufferPtr;
 }GPADC_DriverObjectType;
-
-/**
- * \brief
- *   The Temperature sensor trim parameters structure
- */
-typedef struct
-{
-   /** \brief FuseROM Version */
-   uint16_t      FuseROMVer;
-   /** \brief Efuse Tim Temperature30C Value */
-   uint16_t      TrimTemp30C;
-   /** \brief Efuse Tim Temperature125C Value */
-   uint16_t      TrimTemp125C;
-   /** \brief Efuse Tim Intercept30C Value */
-   uint16_t      TrimIntercept30C[MAX_GPADC_TEMP_SENSORS];
-   /** \brief Efuse Tim Intercept125C Value */
-   uint16_t      TrimIntercept125C[MAX_GPADC_TEMP_SENSORS];
-} GPADC_EfuseTempTrimType;
-
-/** \brief
- *    The Temperature sensor trim parameters structure
- */
-typedef struct
-{
-    /** \brief Temperature trim value */
-   uint16_t     TrimTemp30C;
-   /** \brief Temperature trim value */
-   uint16_t     TrimTemp125C;
-   /** \brief Intercept trim value */
-   uint16_t     TrimIntercept30C[MAX_GPADC_TEMP_SENSORS];
-   /** \brief Intercept trim value */
-   uint16_t     TrimIntercept125C[MAX_GPADC_TEMP_SENSORS];
-   /** \brief Slope value */
-   float        Slope[MAX_GPADC_TEMP_SENSORS];
-   /** \brief Intercept Temperature value */
-   float        InterceptTemp;
-} GPADC_TempSensTrimType;
 
 /** \brief
  *   Temperature sensors mux values
@@ -1083,7 +994,7 @@ int32_t GPADC_close(void);
  *
  *  \param[in]  channels
  *  	        Channel selection bitmap to start conversion together
- *  \param[in]  numChannels     
+ *  \param[in]  numChannels
  *              number of channels
  *
  *  \return     GPADC_CONV_ERROR: GPADC Conversion Error

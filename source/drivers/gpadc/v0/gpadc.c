@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -63,19 +63,12 @@
 /* ========================================================================== */
 
 static uint8_t GPADC_convSkipTimeToCode(uint32_t skipSamples);
-static void GPADC_convert(uint32_t cfgVal,
-                          uint32_t paramVal,
+static void GPADC_convert(uint32_t cfgVal, uint32_t paramVal,
                           GPADC_ResultType *gpAdcResult);
-static void GPADC_cfg(uint32_t cfgVal,
-                      uint32_t paramVal);
+static void GPADC_cfg(uint32_t cfgVal, uint32_t paramVal);
 static void GPADC_readSamplingResult(uint8_t numSamples,
-                                     GPADC_ResultType *gpAdcResult);
-static uint16_t GPADC_efuseExtractTrims (volatile uint32_t reg,
-                                        uint8_t msb, uint8_t lsb);
-static int32_t GPADC_calculateTemp(uint16_t gpadcTempCode,
-                                   uint8_t index);
+                                    GPADC_ResultType *gpAdcResult);
 static void GPADC_SWTrigger(void);
-static void GPADC_computeTempSlope(void);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -85,18 +78,12 @@ static void GPADC_computeTempSlope(void);
 Bool isGPADCInitialized = FALSE;
 /** \brief Externally defined GPADC Driver object */
 GPADC_DriverObjectType GPADCDrvObj;
-/** \brief Temperature sensor trim Slop Values */
-GPADC_TempSensTrimType tempSensTrimSlopeValues;
-/** \brief Efuse Temperature trim Values */
-GPADC_EfuseTempTrimType efuseTempTrimValues;
 
-
-/** \brief TopRCM Base Address */
-CSL_top_ctrlRegs *topCtrlRegs = (CSL_top_ctrlRegs *)CSL_MSS_TOPRCM_U_BASE;
 /** \brief Externally defined  GPADC Param Lut*/
 extern GPADC_CfgAndParamValuesType GPADC_ConfigParamLuTab[MAX_GPADC_MEAS_SOURCES];
 /** \brief Externally defined  GPADC Temperature Sensors Param Lookup Table*/
 extern GPADC_TempSensMuxType GPADC_TempSensConfigParamTab[MAX_GPADC_TEMP_SENSORS];
+
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -123,7 +110,7 @@ int32_t GPADC_open(GPADC_ConfigType *CfgPtr)
     uint8_t skipSamplesReg = 0U;
     int32_t status = SystemP_SUCCESS;
     GPADC_ConfigType *ConfigPtr;
-    
+
 	if(TRUE == isGPADCInitialized)
 	{
 		 status = SystemP_FAILURE;
@@ -178,7 +165,7 @@ int32_t GPADC_open(GPADC_ConfigType *CfgPtr)
                     skipSamples = GPADC_TempSensConfigParamTab[channelIndex].skipSamples;;
                     skipSamplesReg = GPADC_convSkipTimeToCode(skipSamples);
                     GPADCDrvObj.driverChannelConfig[channelIndex].channelParamValue.bits.b7_SkipSamples = (((uint32_t)skipSamplesReg & (uint32_t)0x7FU));
-                    GPADCDrvObj.driverChannelConfig[channelIndex].channelParamValue.bits.b9_Reserved = 0U; // Clear reserved 9 bits
+                    GPADCDrvObj.driverChannelConfig[channelIndex].channelParamValue.bits.b9_Reserved = 0U; /* Clear reserved 9 bits */
                 }
             }
         }
@@ -209,7 +196,7 @@ int32_t GPADC_open(GPADC_ConfigType *CfgPtr)
         /* Enable the GPADC FSM clock */
         REG_STRUCT_SWRITE(GPADC_REGS_PTR->r_Reg0.b1_GpadcFsmClkEnable, 1U, regWrSts);
 
-        /* Enable the GPADC clock */    
+        /* Enable the GPADC clock */
         REG_STRUCT_SWRITE(GPADC_REGS_PTR->r_Reg8.b1_GpadcClkEnable, 1U, regWrSts);
 
         /* Write the Mode of operation */
@@ -296,7 +283,7 @@ GPADC_ConvResultType GPADC_startGroupConversion(GPADC_channelsGroupSelectType ch
                     /* Check if the GPADC is not in use before using it */
                     DebugP_assert(GPADC_MODE_DISABLE == GPADC_REGS_PTR->r_Reg0.b2_DcbistMode);
 
-                        /* Change the Mode of operation to IFM */
+                    /* Change the Mode of operation to IFM */
                     REG_STRUCT_SWRITE(GPADC_REGS_PTR->r_Reg0.b2_DcbistMode, GPADC_MODE_IFM, regWrSts);
                     REG_STRUCT_SWRITE(GPADC_REGS_PTR->r_Reg0.b1_GpadcDebugModeEnable, 1U, regWrSts);
 
@@ -526,114 +513,7 @@ int32_t GPADC_close(void)
     return status;
 }
 
-void GPADC_initTempMeasurement(void)
-{
-    int16_t trimTemp;
-    memset(&efuseTempTrimValues,0,sizeof(efuseTempTrimValues));
 
-    efuseTempTrimValues.FuseROMVer = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_14, \
-            EFUSE1_ROW_14_FUSEROM_VER_STOP_BIT, EFUSE1_ROW_14_FUSEROM_VER_START_BIT);
-	trimTemp = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_36, \
-    		EFUSE1_ROW_36_TRIM_TEMPERATURE_30C_STOP_BIT , EFUSE1_ROW_36_TRIM_TEMPERATURE_30C_START_BIT);
-
-    efuseTempTrimValues.TrimTemp30C = trimTemp;
-
-    trimTemp = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_33, \
-            EFUSE1_ROW_33_TRIM_TEMPERATURE_125C_STOP_BIT , EFUSE1_ROW_33_TRIM_TEMPERATURE_125C_START_BIT);
-
-    efuseTempTrimValues.TrimTemp125C = trimTemp;
-
-
-	if((0U == efuseTempTrimValues.FuseROMVer) && (0U == efuseTempTrimValues.TrimTemp30C) \
-			&& (0U == efuseTempTrimValues.TrimTemp125C))
-	{
-		tempSensTrimSlopeValues.TrimTemp30C = ZERO;
-		tempSensTrimSlopeValues.TrimTemp125C = ZERO;
-
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR] = ZERO_PT_TRIM_FIXED_DIG_TEMP_SENSOR_TRIM_30C;
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR] = ZERO_PT_TRIM_FIXED_DIG_TEMP_SENSOR_TRIM_30C;
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR] = ZERO_PT_TRIM_FIXED_DIG_TEMP_SENSOR_TRIM_30C;
-
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR] = ZERO;
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR] = ZERO;
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR] = ZERO;
-
-		tempSensTrimSlopeValues.Slope[GPADC_DIG_DSP_TEMP_SENSOR] = ZERO_PT_TRIM_FIXED_SLOPE;
-		tempSensTrimSlopeValues.Slope[GPADC_DIG_HWA_TEMP_SENSOR] = ZERO_PT_TRIM_FIXED_SLOPE;
-		tempSensTrimSlopeValues.Slope[GPADC_DIG_HSM_TEMP_SENSOR] = ZERO_PT_TRIM_FIXED_SLOPE;
-
-		tempSensTrimSlopeValues.InterceptTemp = ZERO_PT_TRIM_FIXED_TRIM_TEMP;
-	}
-	else if((1U == efuseTempTrimValues.FuseROMVer) || (0U != efuseTempTrimValues.TrimTemp30C) \
-			|| (0U != efuseTempTrimValues.TrimTemp125C))
-	{
-		tempSensTrimSlopeValues.TrimTemp30C = efuseTempTrimValues.TrimTemp30C;
-		tempSensTrimSlopeValues.TrimTemp125C = efuseTempTrimValues.TrimTemp125C;
-
-		efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_37, \
-				EFUSE1_ROW_37_DIG_DSP_TEMP_SENSOR_TRIM0_30C_STOP_BIT, EFUSE1_ROW_37_DIG_DSP_TEMP_SENSOR_TRIM0_30C_START_BIT);
-		efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_37, \
-				EFUSE1_ROW_37_DIG_HWA_TEMP_SENSOR_TRIM1_30C_STOP_BIT, EFUSE1_ROW_37_DIG_HWA_TEMP_SENSOR_TRIM1_30C_START_BIT);
-		efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_38, \
-				EFUSE1_ROW_38_DIG_HSM_TEMP_SENSOR_TRIM2_30C_STOP_BIT, EFUSE1_ROW_38_DIG_HSM_TEMP_SENSOR_TRIM2_30C_START_BIT);
-
-
-		efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_34, \
-				EFUSE1_ROW_34_DIG_DSP_TEMP_SENSOR_TRIM0_125C_STOP_BIT, EFUSE1_ROW_34_DIG_DSP_TEMP_SENSOR_TRIM0_125C_START_BIT);
-		efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_34, \
-				EFUSE1_ROW_34_DIG_HWA_TEMP_SENSOR_TRIM1_125C_STOP_BIT, EFUSE1_ROW_34_DIG_HWA_TEMP_SENSOR_TRIM1_125C_START_BIT);
-		efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_35, \
-				EFUSE1_ROW_35_DIG_HSM_TEMP_SENSOR_TRIM2_125C_STOP_BIT, EFUSE1_ROW_35_DIG_HSM_TEMP_SENSOR_TRIM2_125C_START_BIT);
-
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR];
-
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR];
-
-		tempSensTrimSlopeValues.Slope[GPADC_DIG_DSP_TEMP_SENSOR] = ONE_PT_TRIM_FIXED_SLOPE;
-		tempSensTrimSlopeValues.Slope[GPADC_DIG_HWA_TEMP_SENSOR] = ONE_PT_TRIM_FIXED_SLOPE;
-		tempSensTrimSlopeValues.Slope[GPADC_DIG_HSM_TEMP_SENSOR] = ONE_PT_TRIM_FIXED_SLOPE;
-
-		tempSensTrimSlopeValues.InterceptTemp = ( tempSensTrimSlopeValues.TrimTemp30C - EFUSE_TRIM_TEMPERATURE_CONST )/ EFUSE_TRIM_TEMPERATURE_DIV_CONST;
-	}
-	else if(2U == efuseTempTrimValues.FuseROMVer)
-	{
-		tempSensTrimSlopeValues.TrimTemp30C = efuseTempTrimValues.TrimTemp30C;
-		tempSensTrimSlopeValues.TrimTemp125C = efuseTempTrimValues.TrimTemp125C;
-
-		efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_37, \
-				EFUSE1_ROW_37_DIG_DSP_TEMP_SENSOR_TRIM0_30C_STOP_BIT, EFUSE1_ROW_37_DIG_DSP_TEMP_SENSOR_TRIM0_30C_START_BIT);
-		efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_37, \
-				EFUSE1_ROW_37_DIG_HWA_TEMP_SENSOR_TRIM1_30C_STOP_BIT, EFUSE1_ROW_37_DIG_HWA_TEMP_SENSOR_TRIM1_30C_START_BIT);
-		efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_38, \
-				EFUSE1_ROW_38_DIG_HSM_TEMP_SENSOR_TRIM2_30C_STOP_BIT, EFUSE1_ROW_38_DIG_HSM_TEMP_SENSOR_TRIM2_30C_START_BIT);
-
-
-		efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_34, \
-				EFUSE1_ROW_34_DIG_DSP_TEMP_SENSOR_TRIM0_125C_STOP_BIT, EFUSE1_ROW_34_DIG_DSP_TEMP_SENSOR_TRIM0_125C_START_BIT);
-		efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_34, \
-				EFUSE1_ROW_34_DIG_HWA_TEMP_SENSOR_TRIM1_125C_STOP_BIT, EFUSE1_ROW_34_DIG_HWA_TEMP_SENSOR_TRIM1_125C_START_BIT);
-		efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR] = GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_35, \
-				EFUSE1_ROW_35_DIG_HSM_TEMP_SENSOR_TRIM2_125C_STOP_BIT, EFUSE1_ROW_35_DIG_HSM_TEMP_SENSOR_TRIM2_125C_START_BIT);
-
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_DSP_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HWA_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept30C[GPADC_DIG_HSM_TEMP_SENSOR];
-
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR];
-		tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR];
-
-
-		GPADC_computeTempSlope();
-
-		tempSensTrimSlopeValues.InterceptTemp = ( tempSensTrimSlopeValues.TrimTemp30C - EFUSE_TRIM_TEMPERATURE_CONST )/ EFUSE_TRIM_TEMPERATURE_DIV_CONST;
-
-	}
-}
 
 static uint8_t GPADC_convSkipTimeToCode(uint32_t skipSamples)
 {
@@ -779,93 +659,4 @@ static void GPADC_readSamplingResult(uint8_t numSamples, GPADC_ResultType *gpAdc
     REG_STRUCT_SWRITE(GPADC_REGS_PTR->r_Reg0.b2_DcbistMode, GPADC_MODE_DISABLE, regWrSts);
 
     return;
-}
-
-int32_t GPADC_readTemperature(uint8_t numAverages,uint8_t numChannels, GPADC_TempSensValueType * tempValuesPtr)
-{
-	uint16_t gpadcTempVal[3] = {0}, gpadcCode;
-	int32_t gpadcTempValSum[3] = {0}, tempVal;
-	uint8_t index, index2;
-	GPADC_channelsGroupSelectType channels;
-	GPADC_ConvResultType convRes;
-    uint32_t regWrSts = 0U;
-    static uint8_t avgSamples = 0;
-    int32_t status = SystemP_SUCCESS;
-    avgSamples = numAverages;
-
-	channels.bits.b9_ChannelSelectionBitMap = 0x007;
-
-    REG_STRUCT_SWRITE(MSS_TOPRCM_ANA_REG_TW_CTRL_REG_LOWV_PTR->b1_TsSeInpBufEn, 1U, regWrSts);
-    REG_STRUCT_SWRITE(MSS_TOPRCM_ANA_REG_TW_CTRL_REG_LOWV_PTR->b1_TsDiffInpBufEn, 0U, regWrSts);
-
-	GPADC_setupResultBuffer(&gpadcTempVal[0]);
-
-	for( index = 0; index < avgSamples; index++)
-	{
-		convRes = GPADC_startGroupConversion(channels, numChannels);
-
-		if(GPADC_CONV_DONE == convRes)
-		{
-			status = SystemP_SUCCESS;
-		}
-		else if(GPADC_CONV_CHANNEL_CONFIG_MISSING == convRes)
-		{
-			status = SystemP_FAILURE;
-			break;
-		}
-		else
-		{
-			status = SystemP_FAILURE;
-			break;
-		}
-
-		for( index2 = 0; index2 < MAX_GPADC_TEMP_SENSORS; index2++)
-		{
-			gpadcCode = gpadcTempVal[index2];
-			tempVal = GPADC_calculateTemp(gpadcCode, index2);
-			gpadcTempValSum[index2] = gpadcTempValSum[index2] + tempVal;
-		}
-	}
-
-	tempValuesPtr->DigDspTempValue = gpadcTempValSum[GPADC_DIG_DSP_TEMP_SENSOR] / avgSamples;
-	tempValuesPtr->DigHwaTempValue = gpadcTempValSum[GPADC_DIG_HWA_TEMP_SENSOR] / avgSamples;
-	tempValuesPtr->DigHsmTempValue = gpadcTempValSum[GPADC_DIG_HSM_TEMP_SENSOR] / avgSamples;
-
-	return status;
-}
-
-static uint16_t GPADC_efuseExtractTrims (volatile uint32_t reg, uint8_t msb, uint8_t lsb)
-{
-    uint32_t    mask;
-    uint8_t     bits;
-    uint16_t    value;
-
-    /* Compute the mask: */
-    bits = (msb - lsb + 1U);
-    mask = (uint32_t)((uint32_t)1U << bits);
-    mask = mask - 1U;
-
-    value = (uint16_t)((reg >> lsb) & mask);
-    return value;
-}
-
-static void GPADC_computeTempSlope(void)
-{
-    uint8_t index;
-
-    for( index = 0; index < MAX_GPADC_TEMP_SENSORS; index++)
-    {
-        tempSensTrimSlopeValues.Slope[index] = (tempSensTrimSlopeValues.TrimIntercept125C[index] - tempSensTrimSlopeValues.TrimIntercept30C[index]) \
-            / (tempSensTrimSlopeValues.TrimTemp125C - tempSensTrimSlopeValues.TrimTemp30C);
-    }
-}
-
-static int32_t GPADC_calculateTemp(uint16_t gpadcTempCode, uint8_t index)
-{
-	int32_t tempVal;
-
-	tempVal = ((((int32_t)gpadcTempCode - (int32_t)tempSensTrimSlopeValues.TrimIntercept30C[index]) \
-			/ (int32_t)tempSensTrimSlopeValues.Slope[index]) \
-			+ tempSensTrimSlopeValues.InterceptTemp);
-	return tempVal;
 }
