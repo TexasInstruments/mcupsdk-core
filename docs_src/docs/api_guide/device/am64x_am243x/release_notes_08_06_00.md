@@ -22,8 +22,16 @@ Feature                                                                         
 Tamagawa Multi Channel                                                                          | Position Sense Tamagawa
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
-EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
+EnDat Safety Readiness: Recovery Time Measurement                                               | Position Sense EnDat
 Mbed-TLS library support (software cryptography)                                                | Networking
+SBL PCIe support                                                                                | SBL
+PMU driver and example support                                                                  | PMU
+ECAP as PWM example                                                                             | ECAP
+CPSW_3G: IET support (packet preemption)                                                        | Networking (CPSW)
+Cut-through switching support                                                                   | Networking (CPSW)
+3G credit based shaper (802.1qav) support                                                       | Networking (CPSW)
+CPSW-3G DSCP priority mapping feature w/ RTOS                                                   | Networking (CPSW)
+Scatter/Gather support for receive packet buffer memory                                         | Networking (CPSW)
 Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
 \endcond
 
@@ -33,9 +41,16 @@ Feature                                                                         
 Tamagawa Multi Channel                                                                          | Position Sense Tamagawa
 HDSL FREE RUN MODE based on 300 MHz PRU-ICSS Core Clock Frequency                               | Position Sense HDSL
 Enable EnDat multi-channel using load share mode in PRU-ICSS                                    | Position Sense EnDat
-EnDat Safety Readiness: Recovery Time Measurement                                                         | Position Sense EnDat
-Boosterpack support: EnDat, HDSL and Tamagawa                                                   | Position Sense
+EnDat Safety Readiness: Recovery Time Measurement                                               | Position Sense EnDat
 Mbed-TLS library support (software cryptography)                                                | Networking
+SBL PCIe support                                                                                | SBL
+PMU driver and example support                                                                  | PMU
+ECAP as PWM example                                                                             | ECAP
+CPSW_3G: IET support (packet preemption)                                                        | Networking (CPSW)
+Cut-through switching support                                                                   | Networking (CPSW)
+3G credit based shaper (802.1qav) support                                                       | Networking (CPSW)
+CPSW-3G DSCP priority mapping feature w/ RTOS                                                   | Networking (CPSW)
+Scatter/Gather support for receive packet buffer memory                                         | Networking (CPSW)
 Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
 \endcond
 
@@ -240,8 +255,8 @@ Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NOR
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                                                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------
-LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, DHCP, ping, TCP iperf, TCP/UDP IP                                                                               | Other LwIP features, performance and memory optimizations pending, more robustness tests pending, checksum offload with VLAN_Tag
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW and ICSS, Layer 2 MAC, Layer 2 PTP Timestamping, CPSW Switch, Policer, MDIO Manual Mode, independent ICSSG and CPSW drivers execution on different R5 cores| Independent ICSSG and CPSW drivers execution on same R5 cores not supported
+LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
+Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW and ICSS,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, ICSSG as two port switch, Policer and Classifier, MDIO Manual Mode, independent ICSSG and CPSW drivers execution on different R5 cores, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW,  | Independent ICSSG and CPSW drivers execution on same R5 cores not supported, RMII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Tested switch mode with ethernetip_adapter_demo and hsr_prp_demo examples                                                                                                              | EMAC mode, VLAN/Multicast Filtering
 ICSS TimeSync               | R5F            | NO                | FreeRTOS    | Tested E2E mode with ethernetip_adapter_demo examples                                                                                                                                  | P2P mode, Transparent Clock mode
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
@@ -290,6 +305,37 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Resolution/Comments
 </tr>
 <tr>
+    <td> MCUSDK-4379
+    <td> Low Tx side throughput seen when tested using iperf application
+    <td> HSR-PRP
+    <td> 8.3.0
+    <td> AM64x, AM243x
+    <td>
+\cond SOC_AM64X
+    Replace mcu_plus_sdk\source\networking\lwip\lwip-config\am64x\lwipopts.h and mcu_plus_sdk\source\networking\lwip\lwip-config\am64x\lwippools.h from MCU PLUS SDK 8.2.0 release and rebuild lwip_freertos, lwip-contrib and icss_emac_lwip_if libraries.
+\endcond
+
+\cond SOC_AM243X
+    Replace mcu_plus_sdk\source\networking\lwip\lwip-config\am243x\lwipopts.h and mcu_plus_sdk\source\networking\lwip\lwip-config\am243x\lwippools.h from MCU PLUS SDK 8.2.0 release and rebuild lwip_freertos, lwip-contrib and icss_emac_lwip_if libraries.
+\endcond
+</tr>
+<tr>
+    <td> MCUSDK-4527
+    <td> USB recognition error occurs when USB conncect/disconnect executed repeatedly
+    <td> SBL Linux
+    <td> 8.2.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-4575
+    <td> ENET LWIP ICSSG Switch mode External Phy management is not functional when 2 ports are enabled
+    <td> ICSSG, Enet
+    <td> 8.3.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
     <td> MCUSDK-9458
     <td> Errata i2310 causes erroneous set of UART timeout interrut
     <td> UART
@@ -336,7 +382,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.4.0 onwards
     <td> AM64x, AM243x
     <td> Incorrect condition for loop termination
-</tr>\
+</tr>
 <tr>
     <td> MCUSDK-8383
     <td> Load from JSON feature fails in SysConfig in Windows PC
@@ -367,7 +413,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> ENET
     <td> 8.4.0 onwards
     <td> AM64x, AM243x
-    <td> Fixed
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9644
@@ -375,7 +421,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Profinet Device
     <td> 7.3.0 onwards
     <td> AM64x, AM243x
-    <td> Fixed
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9578
@@ -383,7 +429,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> ICSS-EMAC
     <td> 7.3.0 onwards
     <td> AM64x, AM243x
-    <td> Fixed
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9386
@@ -391,7 +437,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Profinet Device
     <td> 8.4.0 onwards
     <td> AM64x, AM243x
-    <td> Fixed
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9582
@@ -399,7 +445,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Profinet Device, EtherNet/IP Adapter
     <td> 8.4.0 onwards
     <td> AM64x, AM243x
-    <td> Fixed
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9640
@@ -407,13 +453,213 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> ICSS-EMAC
     <td> 8.2.0 onwards
     <td> AM64x, AM243x
-    <td> Fixed
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-8983
     <td> EtherCAT : EDIO pins for AL event is not supported in firmware.
     <td> EtherCAT
     <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8239
+    <td> EtherNet/IP : MDIO Manual Mode is not supported
+    <td> Ethernet/IP Adapter
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> MDIO Manual Mode is the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW and PRU-ICSS)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>)
+</tr>
+<tr>
+    <td> MCUSDK-8243
+    <td> EtherNet/IP : Examples do not work on HS-FS devices
+    <td> Ethernet/IP Adapter
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8403
+    <td> 1000000(1MHz) baud rate not working on UART
+    <td> UART
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8413
+    <td> ICSSG: Disabling MDIO manual mode with board phy config cause failure
+    <td> ICSSG
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8490
+    <td> HSR/PRP nodeTable semaphore causing a deadlock
+    <td> HSR_PRP
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9022
+    <td> USB: Enumeration Issues while running connect - data transfer - disconnect
+    <td> USB
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9023
+    <td> USB : CPU hangs with running connect/disconnect with power cycled inbetween
+    <td> USB
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9312
+    <td> ospi_flash_diag example not working
+    <td> OSPI
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> dummyCycles initialized to 0
+</tr>
+<tr>
+    <td> MCUSDK-9655
+    <td> ENET PHY state Machine: support to disable timeout for auto-negotiation
+    <td> ENET
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9705
+    <td> DPL: FreeRTOS tick interrupt preemption leading to System crash
+    <td> DPL
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> FreeRTOS timer tick increment shall be done from the critical section
+</tr>
+<tr>
+    <td> MCUSDK-9889
+    <td> Link Status Not getting updated correctly in lwip2emac interface
+    <td> HSR-PRP
+    <td> 8.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Incorrect assignment of link status from emac to lwip interface APIs
+</tr>
+<tr>
+    <td> MCUSDK-10640
+    <td> DPL: Timer drift on R5 core
+    <td> DPL
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Incorrect calculation for timer count value in timerP module
+</tr>
+<tr>
+    <td> MCUSDK-2419
+    <td> MCSPI TX Only mode is not functional in DMA mode
+    <td> MCSPI, UDMA
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8414
+    <td> SBL UART Uniflash: OSPI fails to boot application image with size > 1MB
+    <td> OSPI, Flash
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9790
+    <td> XIP Benchmark Example does not work
+    <td> XIP
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10205
+    <td> GTC Errorneous value returned while using "GTC_getCount64" API
+    <td> Timer
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10206
+    <td> Systick drift on M4
+    <td> Timer
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9596
+    <td> Enet loopback example version cleanup
+    <td> Networking
+    <td> 8.3.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9304
+    <td> LWIP CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
+    <td> Networking
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9185
+    <td> Enet Lwip CPSW example: Correct MAC address not available from EEPROM on custom board and Pg1.0 lp causes example crash
+    <td> Networking
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9577
+    <td> AM2432: Lwip concatenated pbuf isn't trasmitted complete
+    <td> Networking
+    <td> 8.5.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9655
+    <td> ENET PHY state Machine: support to disable timeout for auto-negotiation
+    <td> Networking
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9532
+    <td> Not getting PA-STATS for Port1 and Port2
+    <td> Networking
+    <td> 8.5.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9598
+    <td> IOCTL command "ENET_PHY_IOCTL_PRINT_REGS" not working
+    <td> Networking
+    <td> 8.5.0 onwards
+    <td> AM64x, AM243x
+    <td> Fixed
+</tr>
+<tr>
+    <td> MCUSDK-9656
+    <td> Documentation Missing: driver marks timeout and move to "STATE_FOUND driver re-starts the process from beginning (PHY reset)
+    <td> Networking
+    <td> 8.4.0 onwards
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
@@ -455,28 +701,75 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-2319
-    <td> 2 PRU(ICSS) driver instances are added while changing Enet ICSSG instance to ICSSG0 in SysConfig
-    <td> SYSCFG
-    <td> 8.1.0 onwards
-    <td> AM64x, AM243x
-    <td> Please remove the extra one manually
-</tr>
-<tr>
-    <td> MCUSDK-2419
-    <td> MCSPI TX Only mode is not functional in DMA mode
-    <td> MCSPI, UDMA
-    <td> 8.2.0 onwards
-    <td> AM64x, AM243x
-    <td> Use TX/RX mode and ignore RX.
-</tr>
-<tr>
     <td> MCUSDK-2512
     <td> [UART]Driver always assumes functional clock as 48 MHz
     <td> UART
     <td> 8.3.0 onwards
     <td> AM64x, AM243x
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-6262
+    <td> [AM243X] : MMCSD read io example is not functional on eMMC if the APP_MMCSD_START_BLK is changed for MMCSD_write and MMCSD_read
+    <td> MMCSD
+    <td> 8.3.0 owards
+    <td> AM243x, AM64x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8842
+    <td> OSPI Writes fail with multi threaded applications
+    <td> OSPI
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8938
+    <td> Last 512KB of memory is not accessible in dev boot mode flow
+    <td> SBL
+    <td> 8.4.0
+    <td> AM64x, AM243x
+    <td> Use other boot modes
+</tr>
+<tr>
+    <td> MCUSDK-8945
+    <td> Boot Time Degradation is observed for HS-FS device
+    <td> SBL
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> Skip the authentication of application Image using SysConfig
+</tr>
+<tr>
+    <td> PROC_SDL-6010
+    <td> ECC is not supported for 2 instances. These are SDL_ECC_AGGR1 Ram ID 4 fails on interconnect ram ID 4 checker group 4-14 and  SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR.
+    <td> SDL
+    <td> 8.6.0
+    <td> AM64X, AM243X
+</tr>
+<tr>
+    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0
+    <td> AM64x, AM243x, AM263X, AM273X
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10627
+    <td> Jtag Uniflash erase operation failure
+    <td> Flash
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-2319
+    <td> 2 PRU(ICSS) driver instances are added while changing Enet ICSSG instance to ICSSG0 in SysConfig
+    <td> SYSCFG
+    <td> 8.1.0 onwards
+    <td> AM64x, AM243x
+    <td> Please remove the extra one manually
 </tr>
 <tr>
     <td> MCUSDK-2715
@@ -495,45 +788,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> PHY delay is not tuned but set to value based on limited testing on a small set of boards.If packet drops are still seen, we can force the phy to set to 100mbps.Make below change in application code:
 	  linkCfg->speed     = ENET_SPEED_100MBIT;
       linkCfg->duplexity = ENET_DUPLEX_FULL;
-</tr>
-<tr>
-    <td> MCUSDK-4379
-    <td> Low Tx side throughput seen when tested using iperf application
-    <td> HSR-PRP
-    <td> 8.3.0
-    <td> AM64x, AM243x
-    <td>
-\cond SOC_AM64X
-    Replace mcu_plus_sdk\source\networking\lwip\lwip-config\am64x\lwipopts.h and mcu_plus_sdk\source\networking\lwip\lwip-config\am64x\lwippools.h from MCU PLUS SDK 8.2.0 release and rebuild lwip_freertos, lwip-contrib and icss_emac_lwip_if libraries.
-\endcond
-
-\cond SOC_AM243X
-    Replace mcu_plus_sdk\source\networking\lwip\lwip-config\am243x\lwipopts.h and mcu_plus_sdk\source\networking\lwip\lwip-config\am243x\lwippools.h from MCU PLUS SDK 8.2.0 release and rebuild lwip_freertos, lwip-contrib and icss_emac_lwip_if libraries.
-\endcond
-</tr>
-<tr>
-    <td> MCUSDK-4527
-    <td> USB recognition error occurs when USB conncect/disconnect executed repeatedly
-    <td> SBL Linux
-    <td> 8.2.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-4575
-    <td> ENET LWIP ICSSG Switch mode External Phy management is not functional when 2 ports are enabled
-    <td> ICSSG, Enet
-    <td> 8.3.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-6262
-    <td> [AM243X] : MMCSD read io example is not functional on eMMC if the APP_MMCSD_START_BLK is changed for MMCSD_write and MMCSD_read
-    <td> MMCSD
-    <td> 8.3.0 owards
-    <td> AM243x, AM64x
-    <td> -
 </tr>
 <tr>
     <td> MCUSDK-6318
@@ -576,14 +830,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-8239
-    <td> EtherNet/IP : MDIO Manual Mode is not supported
-    <td> Ethernet/IP Adapter
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> MDIO Manual Mode is the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW and PRU-ICSS)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>)
-</tr>
-<tr>
     <td> MCUSDK-8242
     <td> EtherCAT : MDIO Manual Mode is not supported in ethercat_slave_demo examples
     <td> EtherCAT SubDevice
@@ -592,50 +838,10 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> MDIO Manual Mode is the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW and PRU-ICSS)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>). Please note that the work-around is available for ethercat_slave_beckhoff_ssc_demo examples.
 </tr>
 <tr>
-    <td> MCUSDK-8243
-    <td> EtherNet/IP : Examples do not work on HS-FS devices
-    <td> Ethernet/IP Adapter
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-8376
     <td> LWIP web server application crashes in server stress test
     <td> Enet, LWIP
     <td> 8.3.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8403
-    <td> 1000000(1MHz) baud rate not working on UART
-    <td> UART
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8413
-    <td> ICSSG: Disabling MDIO manual mode with board phy config cause failure
-    <td> ICSSG
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8414
-    <td> SBL UART Uniflash: OSPI fails to boot application image with size > 1MB
-    <td> OSPI, Flash
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8490
-    <td> HSR/PRP nodeTable semaphore causing a deadlock
-    <td> HSR_PRP
-    <td> 8.4.0
     <td> AM64x, AM243x
     <td> -
 </tr>
@@ -656,26 +862,35 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> PROC_SDL-6010
-    <td> ECC is not supported for 2 instances. These are SDL_ECC_AGGR1 Ram ID 4 fails on interconnect ram ID 4 checker group 4-14 and  SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR.
-    <td> SDL
-    <td> 8.6.0
-    <td> AM64X, AM243X
-</tr>
-<tr>
-    <td> MCUSDK-8842
-    <td> OSPI Writes fail with multi threaded applications
-    <td> OSPI
+    <td> MCUSDK-8491
+    <td> Enet_loopback example: Non zero vlan priority Packets not recieved in loopback example
+    <td> Networking
     <td> 8.4.0
     <td> AM64x, AM243x
     <td> -
 </tr>
 <tr>
-    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
-    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
-    <td> Mbed-TLS
+    <td> MCUSDK-8361
+    <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK baord
+    <td> Networking
+    <td> 8.4.0
+    <td> AM64x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9739
+    <td> AM64B SK loss of packet on using CPSW switch
+    <td> Networking
+    <td> 8.5.0
+    <td> AM64x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10679
+    <td> CPSW UDP Iperf test instability on AM243x
+    <td> Networking
     <td> 8.6.0
-    <td> AM64x, AM243x, AM263X, AM273X
+    <td> AM243x
     <td> -
 </tr>
 </table>
@@ -848,10 +1063,43 @@ earlier SDKs.
     <th> Additional Remarks
 </tr>
 <tr>
-    <th> ICSS-EMAC
-    <th> \ref ICSS_EMAC_txPacket
-    <th> Return value is updated to provide detailed error codes.
-    <th> -
+    <td> ICSS-EMAC
+    <td> \ref ICSS_EMAC_txPacket
+    <td> Return value is updated to provide detailed error codes.
+    <td> -
+</tr>
+<tr>
+    <td> Ethernet CPSW
+    <td> Structure \ref CpswHostPort_Cfg in \ref Cpsw_Cfg \n
+    Function Enet_open
+    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn.
+    <td> This controls both support to control TXP/DUP checksum offload along both Rx and Tx direction
+</tr>
+<tr>
+    <td> Ethernet CPSW
+    <td> LwIP Interface
+    Function LwipifEnetApp_netifOpen
+    Function LwipifEnetApp_startSchedule
+    Function LWIPIF_LWIP_start
+    <td> Added enetType and instId as additional arguments.
+    <td> Based upon the association of LwIP NetIF, the above arguments needs to be populated.
+</tr>
+<tr>
+    <td> Ethernet (CPSW and ICSSG) - Networking
+    <td> LwIP Interface
+    Function LwipifEnetApp_netifOpen
+    Function LwipifEnetApp_startSchedule
+    Function LWIPIF_LWIP_start
+    <td> Added enetType and instId as additional arguments.
+    <td> Based upon the association of LwIP NetIF, the above arguments needs to be populated.
+</tr>
+<tr>
+    <td> Ethernet (CPSW and ICSSG) - Networking
+    <td> ENET SYSCFG Interface
+    Function EnetApp_getEnetInstInfo
+    Function EnetApp_getEnetInstMacInfo
+    <td> Added ENET INSTANCE NAME as input arguments.
+    <td> Based upon the ENET modules that are instantiated in syscfg, the name of Instance has to be passed to EnetApp_getEnetInstInfo. Instance names can be found in ti_enet_config.h file(generated) as per the syscfg settings.
 </tr>
 </table>
 
