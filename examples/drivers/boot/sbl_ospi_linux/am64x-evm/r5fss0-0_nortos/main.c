@@ -189,12 +189,12 @@ int32_t App_loadLinuxImages(Bootloader_Handle bootHandle, Bootloader_BootImageIn
 
 int32_t App_runCpus(Bootloader_Handle bootHandle, Bootloader_BootImageInfo *bootImageInfo)
 {
-	int32_t status = SystemP_FAILURE;
+	int32_t status = SystemP_SUCCESS;
 
     /* Do not run M4 when MCU domain is reset isolated */
     if (!Bootloader_socIsMCUResetIsoEnabled())
     {
-        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
+        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0))
         {
 	        status = Bootloader_runCpu(bootHandle, &(bootImageInfo->cpuInfo[CSL_CORE_ID_M4FSS0_0]));
         }
