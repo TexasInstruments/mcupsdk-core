@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -409,6 +409,11 @@ static uint32_t MCAN_CfgAddr(uint32_t baseAddr)
 
 void MCAN_reset(uint32_t baseAddr)
 {
+    /* Setting in SW init mode in which new interrupts and DMA requests
+    will not be issued */
+    MCAN_setOpMode(baseAddr, MCAN_OPERATION_MODE_SW_INIT);
+    while (MCAN_OPERATION_MODE_SW_INIT != MCAN_getOpMode(baseAddr))
+    {}
     return;
 }
 

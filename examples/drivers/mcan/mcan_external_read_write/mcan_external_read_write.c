@@ -220,6 +220,7 @@ void mcan_external_read_write_main(void *args)
     HwiP_destruct(&gMcanHwiObject);
     SemaphoreP_destruct(&gMcanTxDoneSem);
     SemaphoreP_destruct(&gMcanRxDoneSem);
+    MCAN_reset(gMcanBaseAddr);
 
     DebugP_log("All tests have passed!!\r\n");
 
