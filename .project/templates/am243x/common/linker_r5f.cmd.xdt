@@ -191,6 +191,11 @@ SECTIONS
     } > MSRAM
     % }
 
+    % if(useFlash) {
+    GROUP {
+        .rodata.cfg: {} palign(8) /* This is to keep the MPU config, Cache config and other consts */
+    } > MSRAM
+    % }
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
         % if(useDdr) {
