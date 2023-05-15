@@ -58,8 +58,8 @@ regarding the RBL and ROM Boot is out of scope for this user guide. Please refer
 the device for more details. But basically the ROM expects an x509 signed binary image of the secondary bootloader to be
 provided for boot.
 
-- As soon as the EVM is powered ON, the ROM bootloader or RBL starts running. The RBL is the primary bootloader.
-- Depending on which boot mode is selected on the EVM, the RBL will load the **secondary bootloader** or SBL from a boot
+- As soon as the board is powered ON, the ROM bootloader or RBL starts running. The RBL is the primary bootloader.
+- Depending on which boot mode is selected, the RBL will load the **secondary bootloader** or SBL from a boot
   media (OSPI flash, SD card or via UART).
 - Rest of the booting is done by the SBL.
 - The RBL expects the image it boots (SBL in our case) to always be signed as mentioned above. Refer \ref TOOLS_BOOT for
@@ -132,9 +132,14 @@ shaType = OID:SHAOID
 shaValue = FORMAT:HEX,OCT:0000
 \endcode
 
+Depending on the device type, these are the validation requirements for ROM:
+
+\imageStyle{device_types_validation_req.png,width:50%}
+\image html device_types_validation_req.png "Validation for Device Types"
+
 \cond SOC_AM64X || SOC_AM243X
 #### System Controller Firmware (SYSFW)
-- In case of @VAR_SOC_NAME EVM, there is one more component called the System Controller Firmware (SYSFW) which is
+- In case of @VAR_SOC_NAME, there is one more component called the System Controller Firmware (SYSFW) which is
   important in the booting process and SoC operation. As the name suggests it is controller firmware which runs in the
   Cortex M3 core and acts as a centralized server for the SoC which grants services in
 
@@ -159,13 +164,16 @@ shaValue = FORMAT:HEX,OCT:0000
     boot image for **HS-SE**  device.
   - `sysfw-hs-enc-cert.bin`: This is the x509 certificate binary generated while signing the above (`sysfw-hs-enc.bin`) image.
     This is also to be packaged with SBL when preparing the SBL boot image for **HS-SE** device.
+
+- For more information regarding the SYSFW please refer to the TISCI Documentation : https://software-dl.ti.com/tisci/esd/latest/index.html
 \endcond
 - For ROM to accept any image to boot, there are some restrictions in the image preparation
 
 #### Preparing the SBL for boot
 
-The SBL is like any other application, created using the same compiler and linker toolchain.
-However the steps to convert the application `.out` into a bootable image are different for SBL as listed below
+The SBL is like any other application, created using the same compiler and linker toolchain. It is an example implementation
+rather than a deliverable. It is customizable by users, but must adhere to the requirements by RBL which is a constant as mentioned above.
+However the steps to convert the application `.out` into a bootable image are different for SBL as listed below:
 
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
 - The SBL entry point needs to be different vs other applications. On @VAR_SOC_NAME after power-ON ROM boots the SBL and sets the entry point of SBL to
@@ -208,6 +216,21 @@ However the steps to convert the application `.out` into a bootable image are di
     - `sbl_xxx.release.hs.tiimage` [`hs` prefix before `.tiimage`]
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device and `hs_fs` or `hs-fs` is meant for **HS-FS** device.
 - The `.tiimage` file can then be flashed or copied to a boot image using the \ref TOOLS_FLASH
+
+\cond SOC_AM64X || SOC_AM243X
+- In case of AM243x/AM64x we use combined boot flow, so the tiimage will have SYSFW and BoardCfg as additional components
+  as ROM is going to boot these as well. As you can see from the image the signing is done for a concatenated binary of all three.
+  For more details on combined boot flow please refer to \ref BOOTFLOW_MIGRATION_GUIDE
+
+\imageStyle{tiimage_k3.png,width:20%}
+\image html tiimage_k3.png "TIIMAGE"
+\endcond
+
+\cond SOC_AM263X || SOC_AM273X
+\imageStyle{tiimage_normal.png,width:20%}
+\image html tiimage_normal.png "TIIMAGE"
+\endcond
+
 \endcond
 
 ### SBL Boot
@@ -251,7 +274,7 @@ and booting
      individual CPU specific RPRC files.
   - `multiCoreGen` is used again to combine all the XIP RPRC files per CPU into a single `.appimage_xip` file which is a concatenation of the
      individual CPU specific RPRC XIP files.
-- This `.appimage` and `.appimage_xip` is then flash to the EVM
+- This `.appimage` and `.appimage_xip` is then flashed to the board
 
 \imageStyle{bootflow_post_build_steps.png,width:50%}
 \image html bootflow_post_build_steps.png "Post build steps"
@@ -263,7 +286,7 @@ and booting
   - For each CPU, `out2rpc` is used to convert the ELF .out to a binary file containing only the loadable sections. This is called a RPRC file.
   - `multiCoreGen` is then used to combine all the RPRC files per CPU into a single `.appimage` file which is a concatenation of the
      individual CPU specific RPRC files.
-- This `.appimage` is then flash to the EVM
+- This `.appimage` is then flash to the board.
 
 \imageStyle{bootflow_post_build_steps_no_xip.png,width:50%}
 \image html bootflow_post_build_steps_no_xip.png "Post build steps"
@@ -305,7 +328,12 @@ some details regarding those.
 ### SBL NULL
 
 - The `sbl_null` is a secondary bootloader which doesn't load any application binary, but just does the SOC initialization and puts all the cores in WFI (Wait For Interrupt) mode.
-
+- This is supposed to be a "development form" bootloader which should be used only during initial development.
+- The other method is using NO-BOOT/DEV-BOOT boot modes of the devices and using GEL scripts to initialize the SoC via debugger. The application
+  binaries can then be side-loaded. ROM is not involved in this case. The `sbl_null` is an alternative to this process.
+\cond SOC_AM64X || SOC_AM243X
+- In HS-SE devices, the debugger is usually closed. So using the `sbl_null` is the only option to initialize the device in this case.
+\endcond
 - This is referred to as the SOC initialization binary, refer \ref EVM_FLASH_SOC_INIT for more on this.
 
 \cond SOC_AM64X || SOC_AM243X
@@ -330,7 +358,9 @@ some details regarding those.
 
 - To boot an application using the `sbl_ospi`, the application image needs to be flashed at a particular location in the OSPI flash memory.
 
-- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x80000
+- This location or offset is specified in the SysConfig of the `sbl_ospi` application. Currently this is 0x80000. This offset is chosen under the assumption that the `sbl_ospi`
+  application takes at max 512 KB from the start of the flash. If a custom bootloader is used, make sure that this offset is chosen in such a way that it is greater than the
+  size of the bootloader which is being flashed and also aligns with the block size of the flash.
 
 - To flash an application (or any file in fact) to a location in the OSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
 
@@ -339,7 +369,7 @@ some details regarding those.
 - The `sbl_ospi_multipartition` is a secondary bootloader which reads and parses core-specific application images for a system project from pre-defined locations
   in the OSPI flash and then moves on to core initialization and other steps
 
-- To boot an application using the `sbl_ospi_multipartition`, the application images needs to be flashed at specific locations in the OSPI flash memory. The default 
+- To boot an application using the `sbl_ospi_multipartition`, the application images needs to be flashed at specific locations in the OSPI flash memory. The default
   offsets are 512 KB apart.
 
 - This locations or offsets are specified in the SysConfig of the `sbl_ospi_multipartition` application.
@@ -357,7 +387,9 @@ some details regarding those.
 
 - To boot an application using the `sbl_qspi`, the application image needs to be flashed at a particular location in the QSPI flash memory.
 
-- This location or offset is specified in the SysConfig of the `sbl_qspi` application. Currently this is 0x80000. In most cases you wouldn't need to change this.
+- This location or offset is specified in the SysConfig of the `sbl_qspi` application. Currently this is 0x80000. This offset is chosen under the assumption that the `sbl_qspi`
+  application takes at max 512 KB from the start of the flash. If a custom bootloader is used, make sure that this offset is chosen in such a way that it is greater than the
+  size of the bootloader which is being flashed and also aligns with the block size of the flash.
 
 - To flash an application (or any file in fact) to a location in the QSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
 
@@ -371,11 +403,11 @@ some details regarding those.
 
 \cond SOC_AM64x || SOC_AM243x
 
-### SBL DFU 
+### SBL DFU
 
-- The SBL DFU is a secondary bootloader which receives the multicore appimage via USB DFU. It Stores the received appimage in RAM memory and boots the application. 
+- The SBL DFU is a secondary bootloader which receives the multicore appimage via USB DFU. It Stores the received appimage in RAM memory and boots the application.
 
-- Refer \ref EXAMPLES_DRIVERS_SBL_DFU to know more about SBL DFU. 
+- Refer \ref EXAMPLES_DRIVERS_SBL_DFU to know more about SBL DFU.
 
 - To boot an application using the `sbl_uart`, you can refer to \ref USB_BOOTLOADER subsection. Detailed steps on the usage is mentioned in the same subsection.
 
@@ -424,7 +456,7 @@ board running \ref EXAMPLES_DRIVERS_SBL_PCIE_HOST.
 
 - To boot Linux and RTOS/NORTOS applications using `sbl_ospi_linux`, the Linux appimage (see \ref LINUX_APPIMAGE_GEN_TOOL) and the RTOS/NORTOS application images needs to be flashed at a particular location in the OSPI flash memory.
 
-- This location or offset is specified in the SysConfig of the `sbl_ospi_linux` application. Currently this is 0x80000 for RTOS/NORTOS images and 0x300000 for Linux application image. In most cases you wouldn't need to change this.
+- This location or offset is specified in the SysConfig of the `sbl_ospi_linux` application. Currently this is 0x80000 for RTOS/NORTOS images and 0x300000 for Linux application image.
 
 - To flash an application (or any file in fact) to a location in the OSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
 

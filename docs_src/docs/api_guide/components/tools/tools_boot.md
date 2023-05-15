@@ -65,11 +65,47 @@ This section describes the various tools that are used to create boot images for
     \imageStyle{tools_rprc_format.png,width:40%}
     \image html tools_rprc_format.png "RPRC File Format"
 
+- Given below are the structs used in the bootloader library to parse an RPRC image
+
+```C
+typedef struct Bootloader_RprcFileHeader_s
+{
+    uint32_t magic;
+    uint32_t entry;
+    uint32_t rsvdAddr;
+    uint32_t sectionCount;
+    uint32_t version;
+
+} Bootloader_RprcFileHeader;
+
+typedef struct Bootloader_RprcSectionHeader_s
+{
+    uint32_t addr;
+    uint32_t rsvdAddr;
+    uint32_t size;
+    uint32_t rsvdCrc;
+    uint32_t rsvd;
+
+} Bootloader_RprcSectionHeader;
+```
+
 - This tool is provided as a minified JS script. To convert the application executable into RPRC image file, it can be used as
   \code
   cd ${SDK_INSTALL_PATH}/tools/boot/out2rprc
   ${NODE} elf2rprc.js {input application executable file (.out)}
   \endcode
+
+- RPRC mandates that the sections in the application image should be 8-byte aligned. Make sure that this is taken care
+  in the linker.cmd file. Sample:
+```
+GROUP {
+        .text.hwi: palign(8)
+        .text.cache: palign(8)
+        .text.mpu: palign(8)
+        .text.boot: palign(8)
+        .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
+    } > OCRAM
+```
 
 ## Multi-core Image Gen
 
@@ -79,7 +115,33 @@ This section describes the various tools that are used to create boot images for
   \imageStyle{tools_multicore_format.png,width:60%}
   \image html tools_multicore_format.png "Multi-core Image File Format"
 
-- The number of meta headers present is equal to the number of cores included.
+- Given below are the structs used in the bootloader library for parsing multicore images:
+
+```C
+typedef struct Bootloader_MetaHeaderStart_s
+{
+    uint32_t magicStr;
+    uint32_t numFiles;
+    uint32_t devId;
+    uint32_t rsvd;
+
+} Bootloader_MetaHeaderStart;
+
+typedef struct Bootloader_MetaHeaderCore_s
+{
+    uint32_t coreId;
+    uint32_t imageOffset;
+
+} Bootloader_MetaHeaderCore;
+
+typedef struct Bootloader_MetaHeaderEnd_s
+{
+    uint32_t rsvd;
+    uint32_t magicStringEnd;
+
+} Bootloader_MetaHeaderEnd;
+```
+- The number of core meta headers present is equal to the number of cores included.
 - The meta header magic word is `0x5254534D` - which is ASCII equivalent for `MSTR`
 - In Windows or Linux, use the following command to convert RPRC images into a multicore `.appimage` file
     \code
@@ -293,12 +355,12 @@ and waits for 5 seconds before running the application binary
   \endcode
 
 
-\cond SOC_AM243X || SOC_AM64X 
+\cond SOC_AM243X || SOC_AM64X
 
 ## USB Bootloader Python Script {#USB_BOOTLOADER}
 
-- This script is used in DFU boot mode for sending the SBL and appimage binaries to the EVM via USB DFU. 
-- Make sure that \ref INSTALL_DFU_UTIL tool is installed properly and the DFU enumeration is verified. 
+- This script is used in DFU boot mode for sending the SBL and appimage binaries to the EVM via USB DFU.
+- Make sure that \ref INSTALL_DFU_UTIL tool is installed properly and the DFU enumeration is verified.
 - Make sure that python3 and its dependent modules are installed in the host machine as mentioned in \ref INSTALL_PYTHON3
 - Change the boot mode to DFU boot mode \ref EVM_SETUP_PAGE
 - **POWER cycle the EVM**
@@ -308,10 +370,10 @@ and waits for 5 seconds before running the application binary
   python usb_bootloader.py --bootloader=sbl_prebuilt/{board}/sbl_dfu.release.hs_fs.tiimage --file=< path to multicore appimage of application binary
   \endcode
 - When you execute this, the script first sends the SBL USB bootloader, and then the multicore appimage
-- Connect to the UART terminal to see the booting information 
+- Connect to the UART terminal to see the booting information
 - Below are the logs of the script after all the files have been sent
 
-\code 
+\code
 	INFO: Bootloader_loadSelfCpu:207: CPU r5f0-0 is initialized to 800000000 Hz !!!
 	INFO: Bootloader_loadSelfCpu:207: CPU r5f0-1 is initialized to 800000000 Hz !!!
 	[BOOTLOADER_PROFILE] Boot Media       : USB DFU
