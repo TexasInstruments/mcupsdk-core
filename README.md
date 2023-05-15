@@ -14,7 +14,7 @@ MCU+ SDK is a software development package designed for usage with Sitara MCU+ c
 - [AM2431](https://www.ti.com/product/AM2431), [AM2432](https://www.ti.com/product/AM2432), [AM2434](https://www.ti.com/product/AM2434)
 - [AM2634](https://www.ti.com/product/AM2634), [AM2634-Q1](https://www.ti.com/product/AM2634-Q1)
 - [AM2732](https://www.ti.com/product/AM2732)
-- [AM6411](https://www.ti.com/product/AM6411), [AM6412](https://www.ti.com/product/AM6412), [AM6421](https://www.ti.com/product/AM6421), [AM6422](https://www.ti.com/product/AM6422), [AM6441](https://www.ti.com/product/AM6441), [AM6442](https://www.ti.com/product/AM6442) 
+- [AM6411](https://www.ti.com/product/AM6411), [AM6412](https://www.ti.com/product/AM6412), [AM6421](https://www.ti.com/product/AM6421), [AM6422](https://www.ti.com/product/AM6422), [AM6441](https://www.ti.com/product/AM6441), [AM6442](https://www.ti.com/product/AM6442)
 
 MCU+ SDK is designed with user experience and simplicity in mind. The SDK includes out-of-box application examples and peripheral usage examples to help users hit the ground running.
 
@@ -97,8 +97,8 @@ TI has an amazing collection of tutorials on MCU+ Academy to help you get starte
 
 MCU+ SDK has multiple components (in multiple repositories) and dependencies
 (like compiler, CCS and other tools). We use repo tool from Google to manage these
-multiple repositories. Currently there is no support for native windows shells like 
-CMD or Powershell. This will be added at a later point. Windows users can rely on 
+multiple repositories. Currently there is no support for native windows shells like
+CMD or Powershell. This will be added at a later point. Windows users can rely on
 Git Bash for the repo setup. Follow the below mentioned steps to setup repo tool:
 
 Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Download) and is in your OS path.
@@ -117,7 +117,7 @@ Make sure [python3 is installed](https://wiki.python.org/moin/BeginnersGuide/Dow
   ```bash
   mkdir -p /c/ti
   curl https://storage.googleapis.com/git-repo-downloads/repo > /c/ti/repo
-  echo "alias repo=\"python winpty /c/ti/repo\"" >> ~/.bashrc
+  echo "alias repo=\"winpty python /c/ti/repo\"" >> ~/.bashrc
   source ~/.bashrc
   ```
 
@@ -133,9 +133,9 @@ interest. For example, we are showing for am263x below.
 repo init -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m am263x/dev.xml -b main
 ```
 
-Note that repo uses symbolic links. So if you're on Windows and do not have permissions 
-to create symbolic links, the above command might fail for you. So you can either enable them 
-([refer this link](https://portal.perforce.com/s/article/3472)) or use the experimental 
+Note that repo uses symbolic links. So if you're on Windows and do not have permissions
+to create symbolic links, the above command might fail for you. So you can either enable them
+([refer this link](https://portal.perforce.com/s/article/3472)) or use the experimental
 worktree feature of repo. To do this, initialize the repo like so:
 
 ```bash
@@ -152,12 +152,12 @@ This should clone all the repositories required for MCU+ SDK development. Now do
 
 #### Downloading And Installing Dependencies
 
-Note that the dependencies are also soc specific, here we take an example of am263x. 
+Note that the dependencies are also soc specific, here we take an example of am263x.
 You can replace that with the SoC of your choice like the `repo init` step.
 
 **To download and install dependencies in linux, follow the below steps**:
 
-Run the following from the same location where you have `mcu_plus_sdk` and `mcupsdk_setup` 
+Run the following from the same location where you have `mcu_plus_sdk` and `mcupsdk_setup`
 folders.
 
 ```bash
@@ -165,15 +165,15 @@ folders.
 ```
 
 This will install all the required dependencies including Code Composer Studio (CCS).
-The script assumes that `mcu_plus_sdk` folder is in the same location from where 
-you have invoked the script, and that dependencies are installed into `${HOME}/ti` 
-location. If these defaults don't work for you, please pass these as arguments to 
+The script assumes that `mcu_plus_sdk` folder is in the same location from where
+you have invoked the script, and that dependencies are installed into `${HOME}/ti`
+location. If these defaults don't work for you, please pass these as arguments to
 the script like
 
 ```bash
 ./mcupsdk_setup/am263x/download_components.sh --install_dir=/path/to/tools
 
-OR 
+OR
 
 ./mcupsdk_setup/am263x/download_components.sh --mcu_plus_sdk_folder=/path/to/mcu_plus_sdk/folder
 ```
@@ -197,7 +197,7 @@ and so on. For a complete list of arguments you can pass to the script, please r
    - Install at default folder, C:/ti
 
 4. Download and install Node.js v12.18.4 LTS
-  - Go to the [NodeJS Website](https://nodejs.org/en/) and use the installer to 
+  - Go to the [NodeJS Website](https://nodejs.org/en/) and use the installer to
     download and install v12.18.4 of node. Install in the default directory.
   - After successful installation, run an `npm ci` inside the `mcu_plus_sdk` folder like so:
     ```bash
@@ -219,7 +219,7 @@ and so on. For a complete list of arguments you can pass to the script, please r
 
 **Installing OpenSSL**
 
-Some of the SDK signing scripts are dependent on OpenSSL v1.1.1. The v1.1.1 is 
+Some of the SDK signing scripts are dependent on OpenSSL v1.1.1. The v1.1.1 is
 important, OpenSSL 3.0 is not compatible with the current signing scripts of SDK.
 
 In Windows,
@@ -235,11 +235,11 @@ In Linux,
   - If you have Ubuntu 18.04, do below in Linux Ubuntu shell to install openssl
     -`$ sudo apt install openssl`
 
-    If you have an Ubuntu version higher than that, make sure that you install the 1.1.1 version. 
-    You can get the 1.1.1 packages from [here](http://security.ubuntu.com/ubuntu/pool/main/o/openssl/). 
+    If you have an Ubuntu version higher than that, make sure that you install the 1.1.1 version.
+    You can get the 1.1.1 packages from [here](http://security.ubuntu.com/ubuntu/pool/main/o/openssl/).
     The packages required are openssl, libssl and libssl-dev
 
-Test openssl version by running `openssl version` on a command prompt and make sure there is no error. 
+Test openssl version by running `openssl version` on a command prompt and make sure there is no error.
 Example output is shown below,
 
 ```bash
@@ -247,7 +247,7 @@ Example output is shown below,
   OpenSSL 1.1.1k  25 Mar 2021
 ```
 
-Now that the dependencies are installed, you can start the repositories with a 
+Now that the dependencies are installed, you can start the repositories with a
 default branch `dev` by doing below:
 
 ```bash
@@ -258,7 +258,7 @@ repo start dev --all
 
 **NOTE**
 
-- In Linux, you will need to run `$HOME/ti/ccs{version}/ccs/install_scripts/install_drivers.sh` script for setting COM 
+- In Linux, you will need to run `$HOME/ti/ccs{version}/ccs/install_scripts/install_drivers.sh` script for setting COM
   port accesses correctly. Also add your user to groups `tty` and `dialout`. You can do
 
   ```
@@ -278,12 +278,12 @@ repo start dev --all
 
 **NOTE**
 
-- Use `gmake` in windows, add path to gmake present in CCS at `C:\ti\ccsxxxx\ccs\utils\bin` to your windows PATH. We have 
-  used `make` in below instructions. 
+- Use `gmake` in windows, add path to gmake present in CCS at `C:\ti\ccsxxxx\ccs\utils\bin` to your windows PATH. We have
+  used `make` in below instructions.
 - Unless mentioned otherwise, all below commands are invoked from root folder of the "mcu_plus_sdk"  repository.
 - Current supported device names are am64x, am243x, am263x, am273x and awr294x
 - Pass one of these values to `"DEVICE="`
-- You can also build components (examples, tests or libraries) in `release` or `debug` 
+- You can also build components (examples, tests or libraries) in `release` or `debug`
   profiles. To do this pass one of these values to `"PROFILE="`
 
 ---
@@ -301,7 +301,7 @@ repo start dev --all
    ```
    This should show you commands to build specific libraries, examples or tests.
 
-3. Make sure to build the libraries before attempting to build an example. For example, 
+3. Make sure to build the libraries before attempting to build an example. For example,
    to build a Hello World example for AM263x, run the following:
    ```bash
    make -s -j4 libs DEVICE=am263x PROFILE=debug
@@ -356,4 +356,4 @@ The documentation can also be generated as mentioned in the below section.
 
 ## Contributing to the project
 
-This project is currently not accepting contributions. We expect to accept contributions from 1Q23.
+This project is currently not accepting contributions. We expect to accept contributions from 3Q23.
