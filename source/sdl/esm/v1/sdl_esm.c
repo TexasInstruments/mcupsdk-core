@@ -233,13 +233,6 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
         *groupNum = GROUP_ONE;
         *vecNum = vec;
     }
-    else if (vec < 128u)
-    {
-        while((bool)1u)
-		{
-			/* Reserved */
-		};
-    }
     else if (vec < 160u)
     {
         /* group 1 64-95 errors */
@@ -247,13 +240,6 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
         vec = vec - 64u;
         *groupNum = GROUP_ONE;
         *vecNum = vec;
-    }
-    else if (vec < 192u)
-    {
-        while((bool)1u)
-		{
-			/* Reserved */
-		};
     }
     else if (vec < 224u)
     {
@@ -265,12 +251,9 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
     }
     else
     {
-        while((bool)1u)
-		{
-			/* Reserved */
-		};
+        /*Required for MISRA C*/
     }
-
+	
     if (*groupNum != -1)
     {
         /* Clear the error status flag for group 1 errors. There is no need to clear group 2 errors,
