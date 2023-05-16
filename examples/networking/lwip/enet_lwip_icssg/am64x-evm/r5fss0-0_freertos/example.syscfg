@@ -28,7 +28,6 @@ const mpu_armv76 = mpu_armv7.addInstance();
 const mpu_armv77 = mpu_armv7.addInstance();
 const enet_icss  = scripting.addModule("/networking/enet_icss/enet_icss", {}, false);
 const enet_icss1 = enet_icss.addInstance();
-const enet_icss2 = enet_icss.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -104,21 +103,6 @@ enet_icss1.netifInstance.create(1);
 enet_icss1.netifInstance[0].$name         = "NETIF_INST_ID0";
 enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
 
-enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
-enet_icss2.mode                           = "DUAL MAC";
-enet_icss2.phyToMacInterfaceMode          = "RGMII";
-enet_icss2.mdioMdcEnable                  = false;
-enet_icss2.dualMacPortSelected            = "ENET_MAC_PORT_2";
-enet_icss2.GigabitSupportEnable           = false;
-enet_icss2.PktInfoOnlyEnable              = true;
-enet_icss2.LargePoolPktCount              = 32;
-enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
-enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
-enet_icss2.netifInstance.create(1);
-enet_icss2.netifInstance[0].$name         = "NETIF_INST_ID1";
-
-enet_icss2.icss                          = pruicss1;
 enet_icss1.icss                          = pruicss1;
 pruicss1.$name                           = "CONFIG_PRU_ICSS1";
 pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
@@ -134,7 +118,6 @@ pruicss1.intcMapping[1].event            = "53";
 
 const udma         = scripting.addModule("/drivers/udma/udma", {}, false);
 const udma1        = udma.addInstance({}, false);
-enet_icss2.udmaDrv = udma1;
 enet_icss1.udmaDrv = udma1;
 
 /**
@@ -163,16 +146,3 @@ enet_icss1.PRU_ICSSG1_RGMII1.TD2.$suggestSolution        = "ball.W9";
 enet_icss1.PRU_ICSSG1_RGMII1.TD3.$suggestSolution        = "ball.AA9";
 enet_icss1.PRU_ICSSG1_RGMII1.TXC.$suggestSolution        = "ball.V9";
 enet_icss1.PRU_ICSSG1_RGMII1.TX_CTL.$suggestSolution     = "ball.Y9";
-enet_icss2.PRU_ICSSG1_RGMII2.$suggestSolution            = "PRU_ICSSG1_RGMII2";
-enet_icss2.PRU_ICSSG1_RGMII2.RD0.$suggestSolution        = "ball.W11";
-enet_icss2.PRU_ICSSG1_RGMII2.RD1.$suggestSolution        = "ball.V11";
-enet_icss2.PRU_ICSSG1_RGMII2.RD2.$suggestSolution        = "ball.AA12";
-enet_icss2.PRU_ICSSG1_RGMII2.RD3.$suggestSolution        = "ball.Y12";
-enet_icss2.PRU_ICSSG1_RGMII2.RXC.$suggestSolution        = "ball.U11";
-enet_icss2.PRU_ICSSG1_RGMII2.RX_CTL.$suggestSolution     = "ball.W12";
-enet_icss2.PRU_ICSSG1_RGMII2.TD0.$suggestSolution        = "ball.AA10";
-enet_icss2.PRU_ICSSG1_RGMII2.TD1.$suggestSolution        = "ball.V10";
-enet_icss2.PRU_ICSSG1_RGMII2.TD2.$suggestSolution        = "ball.U10";
-enet_icss2.PRU_ICSSG1_RGMII2.TD3.$suggestSolution        = "ball.AA11";
-enet_icss2.PRU_ICSSG1_RGMII2.TXC.$suggestSolution        = "ball.Y10";
-enet_icss2.PRU_ICSSG1_RGMII2.TX_CTL.$suggestSolution     = "ball.Y11";

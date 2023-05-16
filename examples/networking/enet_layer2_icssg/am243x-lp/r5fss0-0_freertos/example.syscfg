@@ -70,16 +70,16 @@ mpu_armv76.baseAddr = 0x60000000;
 
 enet_icss1.$name                          = "CONFIG_ENET_ICSS0";
 enet_icss1.phyToMacInterfaceMode          = "RGMII";
-enet_icss1.GigabitSupportEnable           = false;
 enet_icss1.QoS                            = 3;
 enet_icss1.customBoardEnable              = true;
 enet_icss1.mdioMode                       = "MDIO_MODE_MANUAL";
-enet_icss1.LargePoolPktCount              = 32;
 enet_icss1.mode                           = "DUAL MAC";
+enet_icss1.LargePoolPktCount              = 16;
 enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
+enet_icss1.txDmaChannel[0].PacketsCount   = 8;
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
 enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
-enet_icss1.rxDmaChannel[0].PacketsCount   = 16;
+enet_icss1.rxDmaChannel[0].PacketsCount   = 8;
 enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
 
 enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
@@ -87,12 +87,13 @@ enet_icss2.mode                           = "DUAL MAC";
 enet_icss2.phyToMacInterfaceMode          = "RGMII";
 enet_icss2.mdioMdcEnable                  = false;
 enet_icss2.dualMacPortSelected            = "ENET_MAC_PORT_2";
-enet_icss2.LargePoolPktCount              = 32;
 enet_icss2.QoS                            = 3;
+enet_icss2.LargePoolPktCount              = 16;
 enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
+enet_icss2.txDmaChannel[0].PacketsCount   = 8;
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
-enet_icss2.rxDmaChannel[0].PacketsCount   = 16;
 enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
+enet_icss2.rxDmaChannel[0].PacketsCount   = 8;
 
 const pruicss                            = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
 const pruicss1                           = pruicss.addInstance({}, false);
