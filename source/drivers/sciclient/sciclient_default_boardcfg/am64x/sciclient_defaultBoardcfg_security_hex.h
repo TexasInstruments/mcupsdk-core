@@ -35,7 +35,7 @@
 
 /* Input file name = sciclient_defaultBoardcfg_security_hex.bin.signed */
 
-/* Image generation timestamp : 2023-05-15 19:26:05.329032 */
+/* Image generation timestamp : 2023-05-16 08:51:34.799920 */
 
 #ifndef SCICLIENT_DEFAULTBOARDCFG_SECURITY_HEX_H_
 #define SCICLIENT_DEFAULTBOARDCFG_SECURITY_HEX_H_

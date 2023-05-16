@@ -38,6 +38,7 @@ const resourceSharing20 = resourceSharing.addInstance();
 const resourceSharing21 = resourceSharing.addInstance();
 const resourceSharing22 = resourceSharing.addInstance();
 const resourceSharing23 = resourceSharing.addInstance();
+const resourceSharing24 = resourceSharing.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -244,3 +245,8 @@ resourceSharing23.$name              = "modules_resourceSharing22";
 resourceSharing23.resourceName       = "Packet DMA SA2UL Rx channel3 flows";
 resourceSharing23.sharedFromHostName = "A53_2";
 resourceSharing23.sharedToHostName   = "MAIN_0_R5_1";
+
+resourceSharing24.$name              = "modules_resourceSharing23";
+resourceSharing24.resourceName       = "Packet DMA Rings for SA2UL Tx channel1";
+resourceSharing24.sharedFromHostName = "A53_2";
+resourceSharing24.sharedToHostName   = "MAIN_0_R5_1";
