@@ -1,4 +1,4 @@
-# Ethernet Performance{#enetlld_performance}
+# Ethernet Performance{#enetlld_icssg_performance}
 [TOC]
 # Introduction
 This section provides the performance numbers of Ethernet drivers using ICSSG peripheral in MCU+ SDK.
@@ -20,7 +20,7 @@ Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 800 MHz                  |
 Ethernet Interface Type         | RGMII at 1 Gbps           |
 Packet buffer memory      | MSRAM (cached)                      |
-Hardware checksum offload | Enabled on Tx side \n Disabled on Rx Side |
+Hardware checksum offload | Disabled on both Tx andn Rx Side |
 Scatter-gather TX         | Yes                      |
 Scatter-gather RX         | Yes                      |
 CPDMA interrupt pacing    | Yes                      |

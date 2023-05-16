@@ -10,6 +10,7 @@ Core                  | R5F             |
 Core Operating Speed  | 800 MHz         |
 Memory Type           | MSRAM           |
 Cache status          | Enabled         |
+EVM Type              | AM243x-LP E3    |
 
 # TCP/IP Performance
 
@@ -20,12 +21,12 @@ Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 800 MHz                  |
 Ethernet Interface Type         | RGMII at 1 Gbps           |
 Packet buffer memory      | MSRAM (cached)                      |
-Hardware checksum offload | Enabled on Tx side \n Disabled on Rx Side |
+Hardware checksum offload | Enabled on both Tx and Rx Side |
 Scatter-gather TX         | Yes                      |
 Scatter-gather RX         | Yes                      |
-CPDMA interrupt pacing    | Yes                      |
+UDMA interrupt pacing     | Yes (realized with timer based interrupt pacing) |
 RTOS                            | FreeRTOS                 |
-RTOS application                | \ref EXAMPLES_ENET_LWIP_CPSW example   |
+RTOS application                | \ref EXAMPLES_ENET_LWIP_CPSW in examples   |
 TCP/IP stack                    | LwIP 2.1.2               |
 Host PC tool version            | iperf v2.0.10            |
 Number of Rx packet buffers     | 32                       |
@@ -101,7 +102,7 @@ Number of Tx packet buffers     | 16                       |
         <td>40</td><td>100</td><td>0.0</td>
         <td>90</td><td>100</td><td>0.0</td>
         <td>161</td><td>100</td><td>0.0</td>
-        <td>323</td><td>100</td><td>0.0</td>
+        <td>535</td><td>100</td><td>0.0</td>
     </tr>
 </table>
 

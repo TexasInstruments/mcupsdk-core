@@ -54,6 +54,20 @@ Tx packet length     | 200 B                       |
     </tr>
 </table>
 
+## Layer 2 Throughput
+<table>
+    <tr>
+        <td style="text-align: left;"><b>Test</b></td>
+        <td style="text-align: center;"><b>Bandwidth \n (Mbps)</b></td>
+        <td style="text-align: center;"><b>CPU Load \n (%) </b></td>
+        <td style="text-align: center;"><b>Packet Size \n (bytes)</b></td>
+    </tr>
+    <tr>
+        <td>Layer 2 Transmission</td><td>950</td><td>24</td><td>1500</td>
+    </tr>
+</table>
+
+
 # TCP/IP Performance
 
 ## Configuration Details
