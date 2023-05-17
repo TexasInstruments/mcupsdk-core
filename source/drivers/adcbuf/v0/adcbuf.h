@@ -163,6 +163,92 @@ typedef uint32_t ADCBufMMWave_CQType;
  */
 #define ADCBUF_IQSWAP_CFG_MAX                 ((uint32_t)(0x1U))
 
+/**
+ * \brief ADCBUF Command
+ * \details This Macros are used to define ADCBUF driver commands.
+ */
+ 
+ /**
+ * \brief   set ADCBUF source, it can be DFE or VIN.
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_SET_SRC    0U
+/**
+ * \brief   Set number of Chirps to be stored in each Ping and Pong buffer.
+ *          It should be programmed one less the actual number needed .
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_SET_CHIRP_THRESHHOLD    1U
+/**
+ * \brief   Set number of Chirps to be stored in each Ping buffer.
+ *          It should be programmed one less the actual number needed .
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD   2U
+/**
+ * \brief   Set number of Chirps to be stored in each  Pong buffer.
+ *          It should be programmed one less the actual number needed .
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD	3U
+/**
+ * \brief   Enables/Disables Continuous mode for ADCBUF.
+ *             1 to enable continuous mode.
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_SET_CONTINUOUS_MODE		4U
+/**
+ * \brief   Starts Continuous mode for ADCBUF.
+ *          Number of Samples to store in Ping/Pong buffer needs to be provided.
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_START_CONTINUOUS_MODE		5U
+/**
+ * \brief   Stops Continuous mode for ADCBUF.
+ *          The size of the argument size for this command is 0 bytes
+ */
+#define    ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE		6U
+/**
+ * \brief   Configures ADCBUF data format.
+ *          The size of the argument size for this command is size of \ref ADCBuf_dataFormat
+ */
+#define    ADCBufMMWave_CMD_CONF_DATA_FORMAT		7U
+/**
+ * \brief   Enable RX channels and configures the address offset in ADCBUF for the channel.
+ *          The size of the argument size for this command is size of \ref ADCBuf_RxChanConf
+ */
+#define    ADCBufMMWave_CMD_CHANNEL_ENABLE		8U
+/**
+ * \brief   Disable RX channels specified with RX channel bitmask
+ *          The size of the argument size for this command is 4 bytes
+ */
+#define    ADCBufMMWave_CMD_CHANNEL_DISABLE		9U
+/**
+ * \brief   Test pattern configuration.
+ *          The size of the argument size for this command is size of \ref ADCBuf_TestPatternConf
+ */
+#define    ADCBufMMWave_CMD_CONF_TEST_PATTERN		10U
+/**
+ * \brief   Starts Test pattern generation. Reboot is required when switching from Test pattern mode
+ *          to normal operation mode.
+ *          The size of the argument size for this command is 0 bytes
+ */
+#define    ADCBufMMWave_CMD_START_TEST_PATTERN		11U
+/**
+ * \brief   Stops Test pattern generation.
+ *          The size of the argument size for this command is 0 bytes
+ */
+#define    ADCBufMMWave_CMD_STOP_TEST_PATTERN		12U
+/**
+ * \brief   Chirp Quality configuration.
+ *          The size of the argument size for this command is size of \ref ADCBuf_CQConf
+ */
+#define    ADCBufMMWave_CMD_CONF_CQ		13U
+/**
+ * \brief  Last command.
+ */
+#define    ADCBufMMWave_CMD_LAST   14U
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
@@ -189,93 +275,6 @@ typedef enum ADCBufSource_e
     ADCBUF_SOURCE_HIL
 } ADCBufSource;
 
-/**
- * \brief ADCBUF Command
- * \details The structure is used to define ADCBUF driver commands.
- */
-typedef enum ADCBufMMWave_CMD_e
-{
-    /**
-     * \brief   set ADCBUF source, it can be DFE or VIN.
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_SET_SRC    = 0,
-    /**
-     * \brief   Set number of Chirps to be stored in each Ping and Pong buffer.
-     *          It should be programmed one less the actual number needed .
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_SET_CHIRP_THRESHHOLD,
-    /**
-     * \brief   Set number of Chirps to be stored in each Ping buffer.
-     *          It should be programmed one less the actual number needed .
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD,
-    /**
-     * \brief   Set number of Chirps to be stored in each  Pong buffer.
-     *          It should be programmed one less the actual number needed .
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD,
-    /**
-     * \brief   Enables/Disables Continuous mode for ADCBUF.
-     *             1 to enable continuous mode.
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_SET_CONTINUOUS_MODE,
-    /**
-     * \brief   Starts Continuous mode for ADCBUF.
-     *          Number of Samples to store in Ping/Pong buffer needs to be provided.
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_START_CONTINUOUS_MODE,
-    /**
-     * \brief   Stops Continuous mode for ADCBUF.
-     *          The size of the argument size for this command is 0 bytes
-     */
-    ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE,
-    /**
-     * \brief   Configures ADCBUF data format.
-     *          The size of the argument size for this command is size of \ref ADCBuf_dataFormat
-     */
-    ADCBufMMWave_CMD_CONF_DATA_FORMAT,
-    /**
-     * \brief   Enable RX channels and configures the address offset in ADCBUF for the channel.
-     *          The size of the argument size for this command is size of \ref ADCBuf_RxChanConf
-     */
-    ADCBufMMWave_CMD_CHANNEL_ENABLE,
-    /**
-     * \brief   Disable RX channels specified with RX channel bitmask
-     *          The size of the argument size for this command is 4 bytes
-     */
-    ADCBufMMWave_CMD_CHANNEL_DISABLE,
-    /**
-     * \brief   Test pattern configuration.
-     *          The size of the argument size for this command is size of \ref ADCBuf_TestPatternConf
-     */
-    ADCBufMMWave_CMD_CONF_TEST_PATTERN,
-    /**
-     * \brief   Starts Test pattern generation. Reboot is required when switching from Test pattern mode
-     *          to normal operation mode.
-     *          The size of the argument size for this command is 0 bytes
-     */
-    ADCBufMMWave_CMD_START_TEST_PATTERN,
-    /**
-     * \brief   Stops Test pattern generation.
-     *          The size of the argument size for this command is 0 bytes
-     */
-    ADCBufMMWave_CMD_STOP_TEST_PATTERN,
-    /**
-     * \brief   Chirp Quality configuration.
-     *          The size of the argument size for this command is size of \ref ADCBuf_CQConf
-     */
-    ADCBufMMWave_CMD_CONF_CQ,
-    /**
-     * \brief  Last command.
-     */
-    ADCBufMMWave_CMD_LAST
-} ADCBufMMWave_CMD;
 
 /**
  * \brief ADC Buffer data format Parameters
@@ -539,7 +538,22 @@ void ADCBuf_close(ADCBuf_Handle handle);
  *  \param[in]  handle
  *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
  *  \param[in] cmd
- *      A command value defined by the driver specific implementation \ref ADCBufMMWave_CMD. \n
+ *      A command value defined by the driver specific implementation.Refer Macros
+        ADCBufMMWave_CMD_SET_SRC
+        ADCBufMMWave_CMD_SET_CHIRP_THRESHHOLD
+		ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD
+		ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD
+		ADCBufMMWave_CMD_SET_CONTINUOUS_MODE
+		ADCBufMMWave_CMD_START_CONTINUOUS_MODE
+		ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE  
+		ADCBufMMWave_CMD_CONF_DATA_FORMAT 
+		ADCBufMMWave_CMD_CHANNEL_ENABLE	
+		ADCBufMMWave_CMD_CHANNEL_DISABLE	 
+		ADCBufMMWave_CMD_CONF_TEST_PATTERN	 
+		ADCBufMMWave_CMD_START_TEST_PATTERN	 
+		ADCBufMMWave_CMD_STOP_TEST_PATTERN	
+		ADCBufMMWave_CMD_CONF_CQ	
+		ADCBufMMWave_CMD_LAST
  *  \param[in] arg
  *      A pointer to an optional R/W (read/write) argument that is accompanied with cmd.
  *      arg should be 4 bytes aligned.

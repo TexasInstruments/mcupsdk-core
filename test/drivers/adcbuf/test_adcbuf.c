@@ -188,7 +188,7 @@ static void test_cmdParamsCheck(void *args)
     ADCBuf_Handle       handle;
     uint32_t            arg;
     int32_t             retVal;
-    ADCBufMMWave_CMD    command;
+    uint8_t    			command;
     ADCBuf_dataFormat   dataFormat;
     ADCBuf_RxChanConf   rxChanConf;
     ADCBuf_CQConf       cqConf;

@@ -342,6 +342,14 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
+\cond SOC_AWR294X
+<tr>
+    <td> ADCBUF
+    <td> Changed the argument type of ADCBUFCmdParamCheck api from ADCBufMMWave_CMD to uint8_t.
+    <td> Repace the enum type ADCBufMMWave_CMD with macros.	
+    <td> Safety driver update
+</tr>
+\endcond
 </table>
 
 ### Networking

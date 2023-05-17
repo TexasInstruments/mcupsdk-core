@@ -89,7 +89,7 @@ static void ADCBUFTestPatternStart(CSL_rss_ctrlRegs *rssCtrlRegs, uint32_t numOf
 static void ADCBUFTestPatternStop(CSL_rss_ctrlRegs *rssCtrlRegs);
 static void ADCBUFCQConfig(CSL_rss_ctrlRegs *rssCtrlRegs, ADCBuf_CQConf *cqCfg);
 static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params);
-static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg);
+static int32_t ADCBUFCmdParamCheck(uint8_t cmd, void* arg);
 static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs *rssCtrlRegs, uint32_t channel);
 static int32_t ADCBUFcheckForTimeout(uint32_t addr,
                                      uint32_t timeToWaitInTicks,
@@ -123,14 +123,14 @@ static int32_t ADCBUFcheckForTimeout(uint32_t addr,
                                      uint32_t value)
 {
     uint32_t curTicks = ClockP_getTicks();
-    uint32_t elaspedTicks, done = 0;
+    uint32_t elaspedTicks, done = 0U;
     int32_t status = SystemP_SUCCESS;
 
     do{
         if(CSL_REG32_RD(addr) == value)
         {
             status = SystemP_SUCCESS;
-            done = 1;
+            done = 1U;
         }
         if(done == 0U)
         {
@@ -139,10 +139,10 @@ static int32_t ADCBUFcheckForTimeout(uint32_t addr,
             if(elaspedTicks >= timeToWaitInTicks)
             {
                 status = SystemP_TIMEOUT;
-                done = 1;
+                done = 1U;
             }
         }
-    } while (done == 0);
+    } while (done == 0U);
 
     return status;
 }
@@ -202,6 +202,7 @@ void ADCBuf_deinit(void)
 ADCBuf_Handle ADCBuf_open(uint8_t index, const ADCBuf_Params *params)
 {
     ADCBuf_Handle handle;
+	ADCBuf_Params *localParams = (ADCBuf_Params *) params ;
 
     if(index >= gADCBufConfigNum)
     {
@@ -209,17 +210,17 @@ ADCBuf_Handle ADCBuf_open(uint8_t index, const ADCBuf_Params *params)
     }
     else
     {
-        /* If params are NULL use defaults */
-        if(params == NULL)
+        /* If localParams are NULL use defaults */
+        if(localParams == NULL)
         {
-            params = (ADCBuf_Params *) &gADCBufDefaultParams;
+            localParams = (ADCBuf_Params *) &gADCBufDefaultParams;
         }
 
         /* Get handle for this driver instance */
         handle = (ADCBuf_Handle)&(gADCBufConfig[index]);
 
         /* Open the ADCBUF mmWave Driver: */
-        handle = ADCBUF_MMWave_open(handle, params);
+        handle = ADCBUF_MMWave_open(handle, localParams);
     }
 
     return (handle);
@@ -291,7 +292,7 @@ int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg)
     ADCBuf_TestPatternConf *testPatternConf;
     ADCBuf_CQConf          *cqConf;
     uint32_t                chirpThreshold;
-    uint8_t                 channel;
+    uint32_t                 channel;
     uint32_t                channelMask;
 
     if(handle == (ADCBuf_Handle) NULL)
@@ -308,7 +309,7 @@ int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg)
         /* Stop doesn't need any error check */
         if(cmd != ADCBufMMWave_CMD_STOP_TEST_PATTERN)
         {
-            status = ADCBUFCmdParamCheck((ADCBufMMWave_CMD)cmd, arg);
+            status = ADCBUFCmdParamCheck(cmd, arg);
         }
     }
 
@@ -358,10 +359,10 @@ int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg)
             case ADCBufMMWave_CMD_CHANNEL_DISABLE:
                 channelMask = *(uint32_t *)arg;
                 for(channel = 0; channel < SOC_ADCBUF_NUM_RX_CHANNEL; channel++)
-                {
-                    if(channelMask & ((uint32_t)0x1U << channel))
+                {                   
+					if((channelMask & ((uint32_t)0x1U << channel)) != 0U)
                     {
-                        ADCBUFChannelDisable(rssCtrlRegs, channel);
+                        ADCBUFChannelDisable(rssCtrlRegs, (uint8_t)channel);
                     }
                 }
                 break;
@@ -439,7 +440,7 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
         /* Check if the channel is enabled? */
         if(ADCBUFIsChannelEnabled(rssCtrlRegs, channel) != (uint32_t)0U)
         {
-            uint32_t addrOffset;
+            uint32_t addrOffset = 0U;
 
             switch(channel)
             {
@@ -459,12 +460,15 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX2_MASK,
                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX2_SHIFT);
                     break;
-                default:
+
                 case 3U:
                     addrOffset = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG3,
                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX3_MASK,
                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX3_SHIFT);
                     break;
+					
+				default:
+					break;
             }
 
             /* Calculate the physical address for the channel */
@@ -802,7 +806,7 @@ static void ADCBUFContinuousModeStop(CSL_rss_ctrlRegs  *rssCtrlRegs)
  */
 static void ADCBUFConfigureDataFormat(CSL_rss_ctrlRegs  *rssCtrlRegs, uint8_t dataFormat, uint8_t interleave, uint8_t iqConfig)
 {
-    if(dataFormat == 0)    /* Complex data format */
+    if(dataFormat == 0U)    /* Complex data format */
     {
         /* The requested data format is complex */
         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
@@ -931,21 +935,21 @@ static void ADCBUFChannelEnSetOffset(CSL_rss_ctrlRegs  *rssCtrlRegs, uint8_t cha
 static void ADCBUFChannelDisable(CSL_rss_ctrlRegs  *rssCtrlRegs, uint8_t channel)
 {
     /* Disable the channel */
-    if(channel == 0)
+    if(channel == 0U)
     {
         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_MASK,
                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_SHIFT,
                             0U);
     }
-    else if(channel == 1)
+    else if(channel == 1U)
     {
         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_MASK,
                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_SHIFT,
                             0U);
     }
-    else if(channel == 2)
+    else if(channel == 2U)
     {
         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX2EN_MASK,
@@ -1227,7 +1231,7 @@ static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params)
  *  @retval
  *      N/A
  */
-static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg)
+static int32_t ADCBUFCmdParamCheck(uint8_t cmd, void* arg)
 {
     ADCBuf_dataFormat  *dataFormat;
     ADCBuf_RxChanConf  *rxChanConf;
@@ -1238,7 +1242,7 @@ static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg)
     /* Validate the pointer to the command arguments
      * validate argument is 4 bytes  aligned.
      */
-    if((arg == (void *)NULL) || (((uint32_t)arg % 4U) != 0))
+    if((arg == (void *)NULL) || (((uint32_t)arg % 4U) != 0U))
     {
         retCode = ADCBUF_STATUS_INVALID_PARAMS;
     }
@@ -1313,7 +1317,7 @@ static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg)
 
             case ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD:
             case ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD:
-                if(((*(uint8_t *)arg) == 0) || ((*(uint8_t *)arg) > (uint8_t)(0x1U <<ADCBUF_NUMBITS_CHIRPTHRESHOLD)))
+                if(((*(uint8_t *)arg) == 0U) || ((*(uint8_t *)arg) > (uint8_t)(0x1U <<ADCBUF_NUMBITS_CHIRPTHRESHOLD)))
                 {
                     retCode = ADCBUF_STATUS_INVALID_PARAMS;
                 }
@@ -1335,19 +1339,19 @@ static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs  *rssCtrlRegs, uint32_t 
 {
     uint32_t retVal = 0U;
 
-    if(channel == 0)
+    if(channel == 0U)
     {
         retVal = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG1,
                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_MASK,
                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_SHIFT);
     }
-    else if(channel == 1)
+    else if(channel == 1U)
     {
         retVal = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG1,
                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_MASK,
                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_SHIFT);
     }
-    else if(channel == 2)
+    else if(channel == 2u)
     {
         retVal = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG1,
                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX2EN_MASK,
