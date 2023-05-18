@@ -449,7 +449,7 @@ and waits for 5 seconds before running the application binary
 
 \cond SOC_AM64X || SOC_AM243X
 
-## SoC ID parser Python Script
+## SoC ID parser Python Script {#SOC_ID_PARSER}
 
 - Boot ROM reports SoC ID on UART console of the device when UART boot mode is selected. It reports on both GP and HS devices and it provides insights into device configuration which would be helpful for debugs.
 
@@ -490,6 +490,11 @@ Sec Key Count : 1 \n
 Sec TI MPK Hash : aa1f8e3095042e5c71ac40ede5b4e8c85fa87e03305ae0ea4f47933e89f4164aeb5a12ae13778f49de0622c1a578e6e747981d8c44a130f89a336a887a7955ee \n
 Sec Cust MPK Hash : 1f6002b07cd9b0b7c47d9ca8d1aae57b8e8784a12f636b2b760d7d98a18f189760dfd0f23e2b0cb10ec7edc7c6edac3d9bdfefe0eddc3fff7fe9ad875195527d \n
 Sec Unique ID : fd6e232b89dfc6ea125c2fa09f25f95034e08a54797490c32bf47c64bf4c8f21 \n
+\cond SOC_AM243X
+
+\note The DeviceName will show as am64x in the am243x devices because the Public ROM is same for both am243x and am64x devices.
+
+\endcond
 
 \endcond
 

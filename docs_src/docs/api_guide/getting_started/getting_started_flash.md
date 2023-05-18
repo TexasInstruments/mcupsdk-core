@@ -65,6 +65,10 @@ We can then boot this application without being connected to CCS via JTAG.
 
 \cond SOC_AM64X
 ## Flashing the application
+
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
+refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
+
 ### AM64X-EVM
 - **POWER-OFF** the EVM
 
@@ -275,6 +279,9 @@ We can then boot this application without being connected to CCS via JTAG.
 
 \cond SOC_AM243X
 ## Flashing the application
+
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
+refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
 
 ### AM243X-LP
 - **POWER-OFF** the AM243X-LP
@@ -637,7 +644,7 @@ We can then boot this application without being connected to CCS via JTAG.
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X
-## see also 
+## see also
 
 - \ref GETTING_STARTED_FLASH_DFU
 

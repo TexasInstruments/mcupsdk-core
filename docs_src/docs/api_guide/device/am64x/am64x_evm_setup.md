@@ -30,6 +30,11 @@ Refer to SK page for more details on the AM64X-SK, https://www.ti.com/tool/SK-AM
   \imageStyle{sk_overview.png,width:60%}
   \image html sk_overview.png "@VAR_SK_BOARD_NAME"
 
+## Device Type Identification {#DEVICE_TYPE}
+ - The MCU+SDK supports two device types: HS-FS (High Security - Field Securable) and GP (General Purpose). The HS-FS is the main device type and GP is supported for a limited time. Please use \ref SOC_ID_PARSER to identify the device type.
+
+ \note It is recommended to know the device type before loading or flashing the binary into the target.
+
 ## Setup UART Terminal {#CCS_UART_TERMINAL}
 ### AM64X-EVM
 - Many examples use a standard UART terminal to log the output from the examples.
@@ -693,9 +698,9 @@ This mode is used to flash files to the AM64X-SK flash via UART. It can also be 
 
 #### DFU BOOT MODE {#BOOTMODE_DFU}
 
-##### AM64x-EVM 
+##### AM64x-EVM
 
-This mode is used to flash files to the EVM flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU. 
+This mode is used to flash files to the EVM flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU.
 
     \code
     BOOTMODE [ 0 :  7 ] (SW2) = 1100 1010

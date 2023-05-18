@@ -40,6 +40,11 @@
   \imageStyle{evm_overview.png,width:50%}
   \image html evm_overview.png "@VAR_BOARD_NAME"
 
+## Device Type Identification {#DEVICE_TYPE}
+ - The MCU+SDK supports two device types: HS-FS (High Security - Field Securable) and GP (General Purpose). The HS-FS is the main device type and GP is supported for a limited time. Please use \ref SOC_ID_PARSER to identify the device type.
+
+ \note It is recommended to know the device type before loading or flashing the binary into the target.
+
 ## Setup UART Terminal {#CCS_UART_TERMINAL}
 
 ### AM243X-LP
@@ -616,7 +621,7 @@ This mode is used to flash files to the EVM flash via UART. It can also be used 
 
 #### DFU BOOT MODE {#BOOTMODE_DFU}
 
-##### AM243x-LP 
+##### AM243x-LP
 
 This mode is used to flash files to the AM243X-LP flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU
 
@@ -628,9 +633,9 @@ This mode is used to flash files to the AM243X-LP flash via USB2.0 DFU. It can a
   \image html bootpins-dfu-lp.jpg "DFU BOOT MODE"
 
 
-##### AM243x-EVM 
+##### AM243x-EVM
 
-This mode is used to flash files to the EVM flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU. 
+This mode is used to flash files to the EVM flash via USB2.0 DFU. It can also be used to boot applications via USB2.0 DFU.
 
     \code
     BOOTMODE [ 0 :  7 ] (SW2) = 1100 1010

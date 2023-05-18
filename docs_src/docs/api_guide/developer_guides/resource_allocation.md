@@ -137,8 +137,8 @@ make -s -C tools/sysfw/boardcfg configure-gen SOC=am243x
   - Re-build the `sciclient_ccs_init` example
   - Re-build the boardcfg binary blob by running the following from SDK root directory:
 
-    ```bash
-    make -s -C tools/sysfw/boardcfg sciclient_boardcfg SOC=am243x
-    ```
+```bash
+make -s -C tools/sysfw/boardcfg sciclient_boardcfg SOC=am243x
+```
 
 - This makes sure that boardcfg is updated for both SBL and CCS based boot flows.

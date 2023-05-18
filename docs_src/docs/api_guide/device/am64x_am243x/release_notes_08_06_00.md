@@ -33,6 +33,8 @@ Cut-through switching support                                                   
 CPSW-3G DSCP priority mapping feature w/ RTOS                                                   | Networking (CPSW)
 Scatter/Gather support for receive packet buffer memory                                         | Networking (CPSW)
 Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
+USB device with DFU class                                                                       | USB
+Resource allocation tool                                                                        | Sciclient
 \endcond
 
 \cond SOC_AM243X
@@ -52,6 +54,8 @@ Cut-through switching support                                                   
 CPSW-3G DSCP priority mapping feature w/ RTOS                                                   | Networking (CPSW)
 Scatter/Gather support for receive packet buffer memory                                         | Networking (CPSW)
 Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
+USB device with DFU class                                                                       | USB
+Resource allocation tool                                                                        | Sciclient
 \endcond
 
 ## Device and Validation Information
@@ -171,7 +175,7 @@ Peripheral | Supported CPUs | SysConfig Support |DMA Supported | Key features te
 ADC        | R5F            | YES               | Yes          | Single conversion (one-shot mode), interrupt mode, DMA mode                                | Continuous conversion not tested
 CRC        | R5F            | YES               | No           | CRC in full CPU mode                                                                       | -
 DDR        | R5F            | YES               | No           | Tested LPDDR4 at 400MHz frequency.                                                         | -
-ECAP       | R5F            | YES               | No           | Frequency, Duty cycle, interrupt mode                                                      | PWM mode not tested
+ECAP       | R5F            | YES               | No           | Frequency, Duty cycle, interrupt mode                                                      | -
 EPWM       | R5F            | YES               | No           | Different Frequency, Duty cycle, interrupt mode, Deadband and chopper module               | Tripzone module not tested
 EQEP       | R5F            | YES               | No           | Signal Frequency and Direction, interrupt mode                                             | -
 FSI (RX/TX)| R5F            | YES               | No           | RX, TX, polling, interrupt mode, single/dual lanes                                         | -
@@ -268,6 +272,7 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 USB SoC Porting Layer       | R5F            | YES               | FreeRTOS, NORTOS   | USB 2.0 device mode       | USB 3.0
 USB Device Driver           | R5F            | NO                | FreeRTOS, NORTOS   | USB 2.0 device mode       | USB Host driver
 TinyUSB Core and CDC Driver | R5F            | NO                | FreeRTOS, NORTOS   | USB device with CDC class | USB Host, other USB device class drivers
+TinyUSB Core and DFU Driver | R5F            | NO                | FreeRTOS, NORTOS   | USB device with DFU class | USB Host, other USB device class drivers
 
 ### SECURITY
 

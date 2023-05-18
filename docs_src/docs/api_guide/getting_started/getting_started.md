@@ -99,9 +99,11 @@ PTP Sync Receiver       | Ethernet device that is waiting for the master to poll
 
 - **Step 6:** Flash the "hello world" example on the EVM and boot without CCS, see \subpage GETTING_STARTED_FLASH or \subpage GETTING_STARTED_FLASH_DFU [**OPTIONAL and is typically needed after all development via CCS is done**]
 
-\endcond 
+\endcond
 
+\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X
 - **Step 6:** Flash the "hello world" example on the EVM and boot without CCS, see \subpage GETTING_STARTED_FLASH [**OPTIONAL and is typically needed after all development via CCS is done**]
+\endcond
 
 \endcond
 

@@ -10,14 +10,14 @@
 
 ## Introduction
 
-In this step we will flash the application that we have build and run using CCS to the EVM flash using 
+In this step we will flash the application that we have build and run using CCS to the EVM flash using
 USB DFU \ref TOOLS_FLASH_DFU_UNIFLASH
 We can then boot this application without being connected to CCS via JTAG.
 
 ## Getting ready to flash the application
 
 - A quick recap of steps done so far that are needed for the flashing to work
-  - Make sure that you have properly installed **dfu-util** tool and DFU device is getting enumerated. 
+  - Make sure that you have properly installed **dfu-util** tool and DFU device is getting enumerated.
 	-If you are using windows make sure that generic usb drivers have been installed correctly \ref INSTALL_DFU_UTIL
   - Make sure python3 is installed as mentioned in \ref INSTALL_PYTHON3
   - Make sure you have the EVM power cable and USB cable connected as shown in \ref EVM_CABLES
@@ -63,7 +63,11 @@ We can then boot this application without being connected to CCS via JTAG.
 - Save and close the config file.
 
 \cond SOC_AM64X
-## Flashing the application using USB DFU 
+## Flashing the application using USB DFU
+
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
+refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
+
 ### AM64X-EVM
 - **POWER-OFF** the EVM
 
@@ -74,9 +78,9 @@ We can then boot this application without being connected to CCS via JTAG.
 
 - **POWER-ON** the EVM
 
-- Open a command prompt or terminal and run the following command. To make sure that DFU device is getting enumerated. 
+- Open a command prompt or terminal and run the following command. To make sure that DFU device is getting enumerated.
 
-		$ dfu-util -l 
+		$ dfu-util -l
 
   \imageStyle{rom_dfu_enum.PNG,width:80%}
   \image html rom_dfu_enum.PNG "ROM DFU enumeration log"
@@ -94,7 +98,7 @@ We can then boot this application without being connected to CCS via JTAG.
   \imageStyle{rom_fw_boot.PNG,width:50%}
   \image html rom_fw_boot.PNG "DFU in progress"
 
-- If flashing has failed, you can see the cause of error displayed in the dfu-util logs. 
+- If flashing has failed, you can see the cause of error displayed in the dfu-util logs.
 
 - If flashing is successful, do the next steps ...
 
@@ -158,7 +162,10 @@ We can then boot this application without being connected to CCS via JTAG.
 \endcond
 
 \cond SOC_AM243X
-## Flashing the application
+## Flashing the application using USB DFU
+
+\note We have mentioned the steps for GP device. If you have an HS-FS device, please
+refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
 
 ### AM243X-LP
 - **POWER-OFF** the AM243X-LP
@@ -170,9 +177,9 @@ We can then boot this application without being connected to CCS via JTAG.
 
 - **POWER-ON** the AM243X-LP
 
-- Open a command prompt or terminal and run the following command. To make sure that DFU device is getting enumerated. 
+- Open a command prompt or terminal and run the following command. To make sure that DFU device is getting enumerated.
 
-		$ dfu-util -l 
+		$ dfu-util -l
 
   \imageStyle{rom_dfu_enum.PNG,width:80%}
   \image html rom_dfu_enum.PNG "ROM DFU enumeration log"
@@ -190,7 +197,7 @@ We can then boot this application without being connected to CCS via JTAG.
   \imageStyle{rom_fw_boot.PNG,width:50%}
   \image html rom_fw_boot.PNG "DFU in progress"
 
-- If flashing has failed, you can see the cause of error displayed in the dfu-util logs. 
+- If flashing has failed, you can see the cause of error displayed in the dfu-util logs.
 
 - If flashing is successful, do the next steps ...
 
@@ -204,9 +211,9 @@ We can then boot this application without being connected to CCS via JTAG.
 
 - **POWER-ON** the EVM
 
-- Open a command prompt or terminal and run the following command. To make sure that DFU device is getting enumerated. 
+- Open a command prompt or terminal and run the following command. To make sure that DFU device is getting enumerated.
 
-		$ dfu-util -l 
+		$ dfu-util -l
 
   \imageStyle{rom_dfu_enum.PNG,width:80%}
   \image html rom_dfu_enum.PNG "ROM DFU enumeration log"
@@ -224,7 +231,7 @@ We can then boot this application without being connected to CCS via JTAG.
   \imageStyle{rom_fw_boot.PNG,width:50%}
   \image html rom_fw_boot.PNG "DFU in progress"
 
-- If flashing has failed, you can see the cause of error displayed in the dfu-util logs. 
+- If flashing has failed, you can see the cause of error displayed in the dfu-util logs.
 
 - If flashing is successful, do the next steps ...
 
