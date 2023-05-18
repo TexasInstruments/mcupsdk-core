@@ -447,49 +447,58 @@ and waits for 5 seconds before running the application binary
 - The Linux appimage wil be generated at {SDK_INSTALL_PATH}/tools/boot/linuxAppimageGen after running the makefile
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 
 ## SoC ID parser Python Script {#SOC_ID_PARSER}
 
 - Boot ROM reports SoC ID on UART console of the device when UART boot mode is selected. It reports on both GP and HS devices and it provides insights into device configuration which would be helpful for debugs.
 
-- uart_boot_socid.py is a python based parser to convert the hexadecimal numbers reported by ROM to human readable text, below are the steps involved to use this parser. This will be helpful in debugging the device boot issue. This will also help to see important information about device like device type, prime/non-prime, key count, key revision, MPK hash etc.
+- uart_boot_socid.py is a python3 based parser to convert the hexadecimal numbers reported by ROM to human readable text, below are the steps involved to use this parser. This will be helpful in debugging the device boot issue. This will also help to see important information about device like device type, prime/non-prime, key count, key revision, MPK hash etc.
 
-- Steps to use the parser:
+- Make sure python3 is installed as mentioned in \ref INSTALL_PYTHON3
 
-1) Copy the soc id reported in UART console to socid.txt (socid.txt)
+- **Steps to use the parser:**
 
-2) execute
+    - Copy the soc id reported in UART console
 
-\code
-$python uart_boot_socid.py socid.txt
-\endcode
+    - pass the copied id to the script either as a plain string or saving it into a file
+
+    - execute the script
+    \code
+    $python uart_boot_socid.py -d am64x --string=<copied soc id>
+    or
+    $python uart_boot_socid.py -d am64x --file=soc_id.txt
+    \endcode
+
 
 - Example Output:
+    \code
+    -----------------------
+    SoC ID Header Info:
+    -----------------------
+    NumBlocks            : 2
+    -----------------------
+    SoC ID Public ROM Info:
+    -----------------------
+    SubBlockId           : 1
+    SubBlockSize         : 26
+    DeviceName           : am64x
+    DeviceType           : HSSE
+    DMSC ROM Version     : [0, 2, 0, 0]
+    R5 ROM Version       : [0, 2, 0, 0]
+    -----------------------
+    SoC ID Secure ROM Info:
+    -----------------------
+    Sec SubBlockId       : 2
+    Sec SubBlockSize     : 166
+    Sec Prime            : 0
+    Sec Key Revision     : 1
+    Sec Key Count        : 1
+    Sec TI MPK Hash      : b018658ad99dc903c8c9bfb27b12751099920a042ad1dfea7b7ba57369f15546de285edde6a7b39a8bdc40a27b237f8fb1e57f245e80b929c1e28b024aa2ecc6
+    Sec Cust MPK Hash    : 1f6002b07cd9b0b7c47d9ca8d1aae57b8e8784a12f636b2b760d7d98a18f189760dfd0f23e2b0cb10ec7edc7c6edac3d9bdfefe0eddc3fff7fe9ad875195527d
+    Sec Unique ID        : 01f22176afca3a82692ce53b2738b8c982f7538602871e0bdb7dc2f7668d04b2
+    \endcode
 
-SoC ID Header Info: \n  \n
-
-NumBlocks : [2] \n   \n
-
-SoC ID Public ROM Info: \n \n
-
-SubBlockId : 1 \n
-SubBlockSize : 26 \n
-DeviceName : am64x  \n
-DeviceType : HSSE \n
-DMSC ROM Version : [0, 1, 1, 1] \n
-R5 ROM Version : [0, 1, 1, 1] \n \n
-
-SoC ID Secure ROM Info: \n \n
-
-Sec SubBlockId : 2 \n
-Sec SubBlockSize : 166 \n
-Sec Prime : 0 \n
-Sec Key Revision : 1 \n
-Sec Key Count : 1 \n
-Sec TI MPK Hash : aa1f8e3095042e5c71ac40ede5b4e8c85fa87e03305ae0ea4f47933e89f4164aeb5a12ae13778f49de0622c1a578e6e747981d8c44a130f89a336a887a7955ee \n
-Sec Cust MPK Hash : 1f6002b07cd9b0b7c47d9ca8d1aae57b8e8784a12f636b2b760d7d98a18f189760dfd0f23e2b0cb10ec7edc7c6edac3d9bdfefe0eddc3fff7fe9ad875195527d \n
-Sec Unique ID : fd6e232b89dfc6ea125c2fa09f25f95034e08a54797490c32bf47c64bf4c8f21 \n
 \cond SOC_AM243X
 
 \note The DeviceName will show as am64x in the am243x devices because the Public ROM is same for both am243x and am64x devices.
