@@ -37,7 +37,7 @@ function pinmuxRequirements(inst) {
 
     let resources = [];
     let interfaceName = getInterfaceName(inst);
-  
+
 	const pullUpDownOption = {
                    name: "pu_pd",
                    displayName: "Pull Up/Down",
@@ -49,14 +49,14 @@ function pinmuxRequirements(inst) {
 				   {
                          name: "pd",
                          displayName: "Pull Down",
-                   }, 
+                   },
 				   {
                             name: "nopull",
                             displayName: "No Pull",
                     }
 				],
                 default: "pu",
-				
+
                 };
 
 	const clkPin =  {
@@ -65,21 +65,21 @@ function pinmuxRequirements(inst) {
                     interfaceNames: ["CLK"],
                     config: [pullUpDownOption],
 					};
-				
+
 	const misoPin = {
                      name: "MISO",
                      displayName: "MIBSPI MISO Pin",
                      interfaceNames: ["MISO"],
                      config: [pullUpDownOption],
 					};
-				
+
 	const mosiPin = {
                     name: "MOSI",
                     displayName: "MIBSPI MOSI Pin",
                     interfaceNames: ["MOSI"],
                     config: [pullUpDownOption],
 					};
-    
+
     const spiPeripheral = {
                     name: interfaceName,
                     displayName: "SPI Instance",
@@ -87,10 +87,10 @@ function pinmuxRequirements(inst) {
 					interfaceName: interfaceName,
                     resources: [clkPin,misoPin,mosiPin],
 					};
-				
+
      return [spiPeripheral];
-} 
-   
+}
+
 function getInterfaceName(inst) {
     return soc.getInterfaceName(inst);
 }
@@ -266,7 +266,7 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
                         ui.transferCallbackFxn.hidden = true;
                         inst.transferCallbackFxn = "NULL";
                 }
-                
+
                 if(inst.transferMode == "CALLBACK") {
                     /* multi iCount supported only in blocking mode */
                     ui.iCountSupport.hidden = true;
@@ -275,7 +275,7 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
                 {
                     ui.iCountSupport.hidden = false;
                 }
-                    
+
             },
             description: "This determines whether the driver operates synchronously or asynchronously",
         },
@@ -396,7 +396,7 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
                 },
             ],
             description: `Paralled mode feature: value 0 to disable, 1 to enable this feature`,
-        },     
+        },
         {
             name: "featureBitMap",
             displayName: "Bit Maps",
@@ -414,7 +414,7 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
             ],
             description: `Bit Map Feature: value 0 to disable, 4 to enable this feature`,
             hidden: true,
-        },     
+        },
         {
             name: "txDummyValue",
             displayName: "Transmit Dummy Value",
@@ -553,7 +553,7 @@ function validatePinmux(inst, report) {
  */
 function moduleInstances(inst) {
     let modInstances = new Array();
-    
+
     let maxCh = getMaxChannels(inst);
     modInstances.push({
         name: "mibspiChannel",
@@ -565,7 +565,9 @@ function moduleInstances(inst) {
         defaultInstanceCount: 1,
         args: {
         interfaceName: getInterfaceName(inst),
-        }, 
+        pinMode: inst.pinMode,
+        },
+
     });
 
     return (modInstances);

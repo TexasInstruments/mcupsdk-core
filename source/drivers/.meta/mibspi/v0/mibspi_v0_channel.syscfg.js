@@ -4,9 +4,17 @@ let soc = system.getScript(`/drivers/mibspi/soc/mibspi_${common.getSocName()}`);
 
 function getInstanceConfig(moduleInstance) {
 
-    let peripheralPinName = moduleInstance[getPinName(moduleInstance)].$solution.peripheralPinName;
-    /* last char is 0 or 1 or 2 i.e xyz_CSn */
-    let csNum = peripheralPinName[peripheralPinName.length-1];
+    let peripheralPinName = null;
+    if (moduleInstance[getPinName(moduleInstance)] != null)
+        peripheralPinName = moduleInstance[getPinName(moduleInstance)].$solution.peripheralPinName;
+    let csNum;
+    if (peripheralPinName != null) {
+        /* last char is 0 or 1 or 2 or 3 i.e xyz_CSn */
+        csNum = peripheralPinName[peripheralPinName.length-1];
+    } else {
+        /* If CS pin is unchecked/in 3 pin mode, use channel 0 for reigster access. */
+        csNum = 0;
+    }
 
     return {
         ...moduleInstance,
@@ -22,7 +30,8 @@ function pinmuxRequirements(inst) {
 
     if( parent[interfaceName] == undefined)
         return [];
-
+    if(inst.pinMode == "3PIN")
+        return [];
     if((interfaceName == "MSS_MIBSPI") || (interfaceName == "MIBSPI"))
     {
         return [{
@@ -33,7 +42,7 @@ function pinmuxRequirements(inst) {
             config: config,
         }];
     }
-    else if(interfaceName == "RCSS_MIBSPI")
+    if(interfaceName == "RCSS_MIBSPI")
     {
         return [{
             extend: parent[interfaceName],
@@ -43,6 +52,7 @@ function pinmuxRequirements(inst) {
             config: config,
         }];
     }
+    return [];
 }
 
 function getDefaultInterfaceName() {
@@ -50,8 +60,11 @@ function getDefaultInterfaceName() {
 }
 
 function getPinName(inst) {
-     if(inst.interfaceName.includes("RCSS_"))
+    if(inst.interfaceName.includes("RCSS_"))
         return "RCSS_CSn";
+
+    if(inst.pinMode == "3PIN")
+        return "";
 
     return "MSS_CSn";
 }
@@ -101,6 +114,23 @@ function getConfigurables()
             name: "interfaceName",
             default: getDefaultInterfaceName(),
             hidden: true,
+        },
+        {
+            name: "pinMode",
+            displayName: "Pin Mode",
+            default: "4PIN_CS",
+            options: [
+                {
+                    name: "3PIN",
+                    displayName: "3 Pin Mode"
+                },
+                {
+                    name: "4PIN_CS",
+                    displayName: "4 Pin Mode with CS"
+                },
+            ],
+            hidden: true,
+            description: "3 pin mode: Chip-select (CS) is not used and all related options to CS have no meaning. 4 pin mode: CS is used.",
         },
     );
 
