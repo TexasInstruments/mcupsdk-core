@@ -1521,7 +1521,7 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
                                          (((uint32_t)(obj->ecsd[213])) << 8) +
                                          (((uint32_t)(obj->ecsd[212])));
                     obj->size = (obj->blockCount * obj->blockSize);
-                    obj->busWidth = MMCSD_BUS_WIDTH_8BIT;
+                    obj->busWidth = MMCSD_BUS_WIDTH_4BIT;
                     obj->sdVer = obj->ecsd[192];
                 }
 
@@ -1586,14 +1586,14 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
                 obj->busWidth = controllerBuswidth;
 
                 /* Add delay */
-                MMCSD_delay(150U);
+                MMCSD_delay(100U);
 
                 if(SystemP_SUCCESS == status)
                 {
                     MMCSD_setBusWidth(attrs->baseAddr, controllerBuswidth);
                 }
 
-                MMCSD_delay(150U);
+                MMCSD_delay(100U);
 
                 if(SystemP_SUCCESS == status)
                 {
@@ -1603,7 +1603,7 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
                     status = MMCSD_transfer(handle, &trans);
                 }
 
-                MMCSD_delay(150U);
+                MMCSD_delay(100U);
             }
             if(SystemP_FAILURE == status)
             {

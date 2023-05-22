@@ -9,11 +9,11 @@ const mmcsd_config_r5fss = [
         instNum           : 0,
         intrNum           : 83,
 		inputClkFreq      : mmcsd_input_clk_freq,
-        outputClk         : 400000,
+        outputClk         : 25*1000000,
         iodelayFxn        : "NULL",
         switchVoltageFxn  : "NULL",
         inputClockControl : "NULL",
-		busWidth          : "MMCSD_BUS_WIDTH_8BIT",
+		busWidth          : "MMCSD_BUS_WIDTH_4BIT",
 		modes             : "MMCSD_SUPPORT_MMC_DS | MMCSD_SUPPORT_MMC_HS_SDR",
 		clockIds          : [ "SOC_RcmPeripheralId_MMC0" ],
 		clockFrequencies  : [

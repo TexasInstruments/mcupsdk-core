@@ -186,6 +186,16 @@ let mmcsd_module = {
             default: "VOLTAGE_3_3V",
             hidden: true,
         },
+        {
+            name: "supportedBusWidth",
+            displayName: "Data Width",
+            options: [
+                { name: "MMCSD_BUS_WIDTH_4BIT" },
+                { name: "MMCSD_BUS_WIDTH_1BIT" },
+            ],
+            default: "MMCSD_BUS_WIDTH_4BIT",
+            hidden: false,
+        },
 	],
 	getInstanceConfig,
 	pinmuxRequirements,
