@@ -11,6 +11,7 @@ from re import sub
 from random import randint
 import shutil
 from textwrap import dedent
+from hkdf import hkdf
 
 g_sha_to_use = "sha512"
 
@@ -58,6 +59,7 @@ basicConstraints = CA:true
 1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
 {EXT_ENC_SEQ}
 {DBG_EXT}
+{KD_EXT}
 
 [ boot_seq ]
 certType     =  INTEGER:{CERT_TYPE}
@@ -90,6 +92,11 @@ coreDbgEn    =  INTEGER:0
 coreDbgSecEn =  INTEGER:0
 '''
 
+g_kd_seq = '''
+[ key_derivation ]
+kd_salt = FORMAT:HEX,OCT:{KDSALT_VAL}
+'''
+
 def get_sha_val(f_name, sha_type):
     sha_val = subprocess.check_output('openssl dgst -{} -hex {}'.format(sha_type, f_name), shell=True).decode()
     return sub("^.*= ", r'', sha_val).strip('\n')
@@ -114,6 +121,8 @@ def get_cert(args):
     dbg_seq = ''
     ext_enc_seq = ''
     sbl_enc_seq = ''
+    ext_kd_seq = ''
+    kd_seq = ''
 
     if(args.debug is not None):
         if(args.debug in g_dbg_types):
@@ -126,6 +135,17 @@ def get_cert(args):
             exit(2)
 
     image_bin_name = args.image_bin
+
+    if (args.sbl_enc or args.tifs_enc):
+        enc_iter_count = ''
+        enc_salt = ''
+        if args.kd_salt:
+            enc_iter_count = 1
+            enc_salt = get_key_derivation_salt(args.kd_salt)
+        else:
+            enc_iter_count = 0
+            enc_salt = '0000'
+
     if args.sbl_enc:
         # SBL encryption is enabled
         encsbl_name, enc_iv, enc_rs = get_encrypted_file_iv_rs(args.image_bin, args.enc_key)
@@ -134,8 +154,8 @@ def get_cert(args):
                         NUM_COMP = 1,
                         ENC_IV = enc_iv,
                         ENC_RS = enc_rs,
-                        ENC_ITER_CNT = 0,
-                        ENC_SALT='0000',
+                        ENC_ITER_CNT = enc_iter_count,
+                        ENC_SALT = enc_salt,
                         extra_enc_comp='',
                         extra_enc_comp_seq='',
                         )
@@ -148,17 +168,25 @@ def get_cert(args):
                         NUM_COMP = 1,
                         ENC_IV = enc_iv,
                         ENC_RS = enc_rs,
-                        ENC_ITER_CNT = 0,
-                        ENC_SALT='0000',
+                        ENC_ITER_CNT = enc_iter_count,
+                        ENC_SALT = enc_salt,
                         extra_enc_comp='',
                         extra_enc_comp_seq='',
                         )
         image_bin_name = enctifs_name
+
+    if args.kd_salt:
+        ext_kd_seq = "1.3.6.1.4.1.294.1.5=ASN1:SEQUENCE:key_derivation"
+        kd_salt = get_key_derivation_salt(args.kd_salt)
+        kd_seq = g_kd_seq.format(
+                    KDSALT_VAL = kd_salt
+                    )
     ret_cert = g_x509_template.format(
                 DBG_EXT = dbg_seq,
                 SHA_OID = g_sha_oids[g_sha_to_use],
                 SWRV = swrev,
                 EXT_ENC_SEQ = ext_enc_seq,
+                KD_EXT = ext_kd_seq,
                 BOOT_CORE_ID = bootCore_id,
                 CERT_TYPE = certType,
                 BOOT_CORE_OPTS = bootCoreOptions,
@@ -170,6 +198,9 @@ def get_cert(args):
         ret_cert += sbl_enc_seq
     elif args.tifs_enc:
         ret_cert += tifs_enc_seq
+
+    if(args.kd_salt is not None):
+        ret_cert += kd_seq
 
     if(dbg_seq != ''):
         ret_cert += g_dbg_seq.format(
@@ -190,7 +221,13 @@ def get_encrypted_file_iv_rs(bin_file_name, enc_key):
         enckey = None
         with open(enc_key, "rb") as f:
             enckey = f.read()
-            enckey = binascii.hexlify(enckey).decode('ascii')
+            if(args.kd_salt is not None):
+                isalt = get_key_derivation_salt(args.kd_salt)
+                isalt = bytearray(binascii.unhexlify(isalt))
+                d_key = hkdf(32, enckey, isalt)
+                enckey = binascii.hexlify(d_key).decode('utf-8')
+            else:
+                enckey = binascii.hexlify(enckey).decode('ascii')
 
         # we need the value of enc_iv as hex, so convert the bytes output to hex
         enc_iv = subprocess.check_output('openssl rand 16', shell=True)
@@ -222,6 +259,19 @@ def get_encrypted_file_iv_rs(bin_file_name, enc_key):
 
         return encbin_name, v_TEST_IMAGE_ENC_IV, v_TEST_IMAGE_ENC_RS
 
+def get_key_derivation_salt(kd_salt_file_name):
+    if(not os.path.exists(kd_salt_file_name)):
+        # Error, key derivation salt has to be given
+        print("Please give the key derivation salt file name. It's either missing or file not found!")
+        exit(1)
+    else:
+        kd_salt = None
+        with open(kd_salt_file_name, "r") as f:
+            kd_salt = f.read()
+            kd_salt = kd_salt.strip('\n')
+
+    return kd_salt
+
 # MAIN
 my_parser = argparse.ArgumentParser(description="Creates a ROM-boot-able images for sbl and hsmRt")
 
@@ -233,6 +283,7 @@ my_parser.add_argument('--enc-key',     type=str, required=False, help='Path to 
 my_parser.add_argument('--swrv',        type=str, help='Software revision number')
 my_parser.add_argument('--loadaddr',    type=str, required=True, help='Load address at which SBL/hsmRT needs to be loaded')
 my_parser.add_argument('--sign-key',    type=str, required=True, help='Path to the signing key to be used while creating the certificate')
+my_parser.add_argument('--kd-salt' ,    type=str, required=False, help='Path to the salt required to calculate derived key from manufacturers encryption key')
 my_parser.add_argument('--out-image',   type=str, required=True, help='Output file of SBL/hsmRT images')
 my_parser.add_argument('--debug',       type=str, help='Debug options for the image')
 
