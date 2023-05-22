@@ -47,12 +47,12 @@ The IP supports the following features:
 \cond SOC_AM263X
 \note TRNG and PKA are single context engines and hence are secure assets on HS-SE devices. Should the system integrator choose to use these engines from R5F in HS-SE devices, they can do so by removing SOC and Device type checks in function defintions RNG_open() and PKA_open() in rng.c and pka.c respectively.
 \endcond
-\cond SOC_AM273X
+\cond SOC_AM273X || SOC_AWR294X
 \note TRNG and PKA are single context engines and hence are secure assets on HS-SE devices.
 \note HSM support for HS-FS devices for using crypto drivers on R5F will be provided in future releases.
 \note On GP devices, AES, PKA and TRNG are not supported. SHA examples will work as is.
 \endcond
-\cond SOC_AM273X
+\cond SOC_AM273X || SOC_AWR294X
 - \subpage DRIVERS_DTHE_SHA_PAGE
 	- <b>S</b>ecure <b>h</b>ash <b>a</b>lgorithms)
         - <b>SHA256</b>, <b>SHA512</b>
