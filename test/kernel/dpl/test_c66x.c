@@ -40,6 +40,10 @@
 #include <kernel/dpl/SemaphoreP.h>
 #include <unity.h>
 #include <drivers/hw_include/cslr_soc.h>
+#if defined (OS_SAFERTOS)
+#include "SafeRTOS_API.h"
+#include "portmacro.h"
+#endif
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -59,6 +63,9 @@
 /* ========================================================================== */
 
 static void test_cache(void *args);
+#if defined (OS_SAFERTOS)
+static void test_safeRtosUsermode(void *agrs);
+#endif
 
 static void test_setvalue(volatile uint32_t *addr, uint32_t value, uint32_t length);
 static uint32_t test_get_l2_sys_addr(uint32_t localAddr);
@@ -69,6 +76,10 @@ static uint32_t test_get_l2_sys_addr(uint32_t localAddr);
 
 static uint8_t gCacheTestLine[ARR_SIZE] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 
+#if defined (OS_SAFERTOS)
+volatile uint32_t gDspSWIsrCounter = 0;
+#endif
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -77,8 +88,48 @@ void test_c66x(void)
 {
     RUN_TEST(test_cache, 893, NULL);
 
+    #if defined (OS_SAFERTOS)
+    RUN_TEST(test_safeRtosUsermode, 10742, NULL);
+    #endif
+
     return;
 }
+
+#if defined (OS_SAFERTOS)
+static void dspSWinterCallback(void *args)
+{
+    gDspSWIsrCounter++;
+}
+
+static void test_safeRtosUsermode(void *agrs)
+{
+    HwiP_Params          hwiPrms;
+    HwiP_Object          hwiObj;
+    int32_t              status = SystemP_SUCCESS;
+    volatile CSL_dss_ctrlRegs*  ptrDssCtrlReg = (volatile CSL_dss_ctrlRegs*)(CSL_DSS_CTRL_U_BASE);
+
+    /* Lower the SafeRTOS privilege access */
+    portLOWER_PRIVILEGE();
+
+    /*  Register a DSS_SW_INT0 interrupt */
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = CSL_DSS_INTR_DSS_SW_INT0;
+    hwiPrms.callback    = &dspSWinterCallback;
+    status = HwiP_construct(&hwiObj, &hwiPrms);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    gDspSWIsrCounter = 0;
+    /* Trigger a DSS SW interrupt */
+    CSL_FINSR(ptrDssCtrlReg->DSS_SW_INT, 0U, 0U, 0x1U);
+
+    while(gDspSWIsrCounter == 0U)
+        ;
+
+    HwiP_destruct(&hwiObj);
+
+    return;
+}
+#endif
 
 static void test_cache(void *args)
 {

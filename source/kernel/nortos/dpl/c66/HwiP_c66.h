@@ -72,6 +72,16 @@ extern "C"
 typedef void (*HwiP_IntcIsr)(void);
 
 /**
+ * \brief typedef for RTOS hook to change Raise access from User to Supervisor Privilege.
+ */
+typedef int32_t (*HwiP_raisePrivilegeFxnPtr)(void);
+
+/**
+ * \brief typedef for RTOS hook to restore Privilege access.
+ */
+typedef void (*HwiP_restorPrivilegeFxnPtr)(int32_t runningPrivilege);
+
+/**
  *  \brief Enumeration of the exception
  *  These are the symbols used along with the Exception Clear API
  */
@@ -181,6 +191,20 @@ void HwiP_setPri(uint32_t intNum, uint32_t priority);
  * \note Currently enabled only for C66x SafeRTOS port
  */
 void HwiP_appInterruptHandlerHook(uint32_t interruptVectorNum );
+
+/**
+ * \brief Function to register Privilege access function.
+ *
+ * \param hookFxnPtr  [in] callback function pointer
+ */
+void HwiP_registerRaisePrivilegeHandlerHook(HwiP_raisePrivilegeFxnPtr hookFxnPtr);
+
+/**
+ * \brief Function to register Restore Privilege access function.
+ *
+ * \param hookFxnPtr  [in] callback function pointer
+ */
+void HwiP_registerRestorePrivilegeHandlerHook(HwiP_restorPrivilegeFxnPtr hookFxnPtr);
 
 
 #ifdef __cplusplus

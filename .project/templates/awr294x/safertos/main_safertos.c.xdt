@@ -47,9 +47,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <kernel/dpl/DebugP.h>
+#include <kernel/nortos/dpl/c66/HwiP_c66.h>
+#include <kernel/safertos/dpl/c66/HwiP_safertos.h>
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 #include "SafeRTOS_API.h"
+
 
 /* SafeRTOS inspects the vector table to ensure
  * the necessary handlers have been installed. */
@@ -137,6 +140,12 @@ static void SafeRTOS_init( void )
      * and return the resulting error code. */
     xInitSchedResult = xTaskInitializeScheduler( &gSafertosPortInit );
     DebugP_assertNoLog((xInitSchedResult == pdPASS));
+
+    /* Register Privilege handler hook. */
+    HwiP_registerRaisePrivilegeHandlerHook(&HwiP_portRaisePrivilege);
+
+    /* Register restore Privilege handler hook. */
+    HwiP_registerRestorePrivilegeHandlerHook(&HwiP_portRestorePrivilege);
 
     return;
 }

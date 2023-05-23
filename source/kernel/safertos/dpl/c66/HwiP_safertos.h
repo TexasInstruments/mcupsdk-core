@@ -78,6 +78,20 @@ typedef void (*HwiP_appInterruptHandlerHookFxnPtr)(uint32_t interruptVectorNum);
  */
 void HwiP_registerInterruptHandlerHook(HwiP_appInterruptHandlerHookFxnPtr hookFxnPtr);
 
+/**
+ * \brief Function to raise privilege acces to supervisor mode.
+ *
+ *  \return current tast execution state
+ */
+int32_t HwiP_portRaisePrivilege(void);
+
+/**
+ * \brief Function to restore privilege access.
+ *
+ * \param state [in] Access state to be restored.
+ */
+void HwiP_portRestorePrivilege(int32_t state);
+
 
 #ifdef __cplusplus
 }

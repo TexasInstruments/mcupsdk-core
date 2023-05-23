@@ -68,6 +68,9 @@ static inline void HwiP_intcMapEventVector(HwiP_IntcRegsOvly pIntcRegs,
 HwiP_Ctrl       gHwiCtrl;
 HwiP_IntcVect   gHwiIntcIntrTable;
 
+HwiP_raisePrivilegeFxnPtr gHwiRaisePrivilegeHook = NULL;
+HwiP_restorPrivilegeFxnPtr gHwiRestorePrivilegeHook = NULL;
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -77,6 +80,7 @@ void HwiP_init(void)
     uint32_t            i, key;
     uint32_t            vectId;
     HwiP_IntcRegsOvly   pIntcRegs;
+    int32_t             currentState;
 
     key = _disable_interrupts();
 
@@ -93,6 +97,11 @@ void HwiP_init(void)
     /* Assign dispatcher - gets set based on No-RTOS/FreeRTOS */
     HwiP_assignIntrHandlers();
     HwiP_intcIvpSet();
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
 
     /*
      * Disable and clear all ECM events
@@ -124,6 +133,11 @@ void HwiP_init(void)
     /* Set global interrupt enable bit (GIE) bit in the control status register (CSR) */
     (void) HwiP_intcGlobalEnable(NULL);
 
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
+
     (void) _restore_interrupts(key);
 
     return;
@@ -135,6 +149,7 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
     uint32_t            ecmId, eventId;
     HwiP_Struct        *obj;
     HwiP_IntcRegsOvly   pIntcRegs;
+    int32_t             currentState;
 
     obj = (HwiP_Struct *)handle;
     pIntcRegs = gHwiCtrl.pIntcRegs;
@@ -146,15 +161,25 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
 
     key = _disable_interrupts();
 
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
+
     gHwiCtrl.isr[params->intNum] = params->callback;
     gHwiCtrl.isrArgs[params->intNum] = params->args;
     obj->intNum = params->intNum;
 
-        /* TODO: Handle direct interrupts. */
-        /* Enable the event through ECM */
-        ecmId = params->intNum >> 5U;
-        eventId = params->intNum & 0x1FU;
-        pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
+    /* TODO: Handle direct interrupts. */
+    /* Enable the event through ECM */
+    ecmId = params->intNum >> 5U;
+    eventId = params->intNum & 0x1FU;
+    pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
 
    (void) _restore_interrupts(key);
 
@@ -167,6 +192,7 @@ void HwiP_destruct(HwiP_Object *handle)
     uint32_t            ecmId, eventId;
     HwiP_Struct        *obj;
     HwiP_IntcRegsOvly   pIntcRegs;
+    int32_t             currentState;
 
     obj = (HwiP_Struct *) handle;
     pIntcRegs = gHwiCtrl.pIntcRegs;
@@ -175,6 +201,11 @@ void HwiP_destruct(HwiP_Object *handle)
     DebugP_assertNoLog(obj->intNum >= HwiP_INTC_NUM_RESV_INTR);
 
     key = _disable_interrupts();
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
 
         /* TODO: Handle direct interrupts */
         /* Disable and clear event through ECM */
@@ -186,6 +217,11 @@ void HwiP_destruct(HwiP_Object *handle)
     /* clear interrupt data structure */
     gHwiCtrl.isr[obj->intNum] = NULL;
     gHwiCtrl.isrArgs[obj->intNum] = NULL;
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
 
     (void) _restore_interrupts(key);
 
@@ -238,23 +274,32 @@ void HwiP_enableInt(uint32_t intNum)
     uint32_t            key;
     uint32_t            ecmId, eventId;
     HwiP_IntcRegsOvly   pIntcRegs;
+    int32_t             currentState;
 
     pIntcRegs = gHwiCtrl.pIntcRegs;
     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
     /* Check for reserved event used by ECM - 0 to 3 */
     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
 
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
+
     //TODO: Handle direct interrupts
     //if(1)
-    {
-        /* Enable event through ECM */
-        ecmId = intNum >> 5U;
-        eventId = intNum & 0x1FU;
-        key = _disable_interrupts();
-        pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
-        (void) _restore_interrupts(key);
-    }
+    /* Enable event through ECM */
+    ecmId = intNum >> 5U;
+    eventId = intNum & 0x1FU;
+    key = _disable_interrupts();
+    pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
+    (void) _restore_interrupts(key);
     // else block here
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
 
     return;
 }
@@ -265,11 +310,17 @@ uint32_t HwiP_disableInt(uint32_t intNum)
     uint32_t            ecmId, eventId;
     HwiP_IntcRegsOvly   pIntcRegs;
     uint32_t            isEnable = 0;
+    int32_t             currentState;
 
     pIntcRegs = gHwiCtrl.pIntcRegs;
     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
     /* Check for reserved event used by ECM - 0 to 3 */
     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
 
     //TODO: Handle direct interrupts
     //if(1)
@@ -286,6 +337,12 @@ uint32_t HwiP_disableInt(uint32_t intNum)
         (void) _restore_interrupts(key);
     }
     // else block here
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
+
 
     return (isEnable);
 }
@@ -308,11 +365,17 @@ void HwiP_clearInt(uint32_t intNum)
 {
     uint32_t            ecmId, eventId;
     HwiP_IntcRegsOvly   pIntcRegs;
+    int32_t             currentState;
 
     pIntcRegs = gHwiCtrl.pIntcRegs;
     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
     /* Check for reserved event used by ECM - 0 to 3 */
     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
 
     //TODO: Handle direct interrupts
     //if(1)
@@ -323,6 +386,11 @@ void HwiP_clearInt(uint32_t intNum)
         pIntcRegs->EVTCLR[ecmId] = ((uint32_t) 1U << eventId);
     }
     // else block here
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
 
     return;
 }
@@ -337,11 +405,17 @@ void HwiP_post(uint32_t intNum)
 {
     uint32_t            ecmId, eventId;
     HwiP_IntcRegsOvly   pIntcRegs;
+    int32_t             currentState;
 
     pIntcRegs = gHwiCtrl.pIntcRegs;
     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
     /* Check for reserved event used by ECM - 0 to 3 */
     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
 
     //TODO: Handle direct interrupts
     //if(1)
@@ -352,6 +426,11 @@ void HwiP_post(uint32_t intNum)
         pIntcRegs->EVTSET[ecmId] = ((uint32_t) 1U << eventId);
     }
     // else block here
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
 
     return;
 }
@@ -392,9 +471,15 @@ void HwiP_intcEcmDispatcher(uint32_t ecmId)
     HwiP_IntcRegsOvly   pIntcRegs = gHwiCtrl.pIntcRegs;
     uint32_t            i, evtMask;
     volatile uint32_t   mevtFlag;
-	uint32_t flag = 0U;
+    uint32_t flag = 0U;
     uint32_t loop = 1U;
-	
+    int32_t             currentState;
+
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        currentState = gHwiRaisePrivilegeHook();
+    }
+
     isrStartIdx = HwiP_EVENTS_PER_ECM * ecmId;
     while(loop != 0U)
     {
@@ -428,6 +513,11 @@ void HwiP_intcEcmDispatcher(uint32_t ecmId)
         }
     }
 
+    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+    {
+        gHwiRestorePrivilegeHook(currentState);
+    }
+
     return;
 }
 
@@ -454,5 +544,17 @@ static inline void HwiP_intcMapEventVector(HwiP_IntcRegsOvly pIntcRegs,
     }
 
     return;
+}
+
+/* Register Raise Privilege Access hook. */
+void HwiP_registerRaisePrivilegeHandlerHook(HwiP_raisePrivilegeFxnPtr hookFxnPtr)
+{
+    gHwiRaisePrivilegeHook = hookFxnPtr;
+}
+
+/* Register Raise Privilege Access hook. */
+void HwiP_registerRestorePrivilegeHandlerHook(HwiP_restorPrivilegeFxnPtr hookFxnPtr)
+{
+    gHwiRestorePrivilegeHook = hookFxnPtr;
 }
 

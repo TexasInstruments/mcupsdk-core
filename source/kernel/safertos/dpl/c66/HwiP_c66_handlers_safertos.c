@@ -40,6 +40,7 @@
 #include <kernel/nortos/dpl/c66/HwiP_c66.h>
 #include <c6x.h>
 #include <kernel/safertos/dpl/c66/HwiP_safertos.h>
+#include "portmacro.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -183,4 +184,14 @@ void vApplicationInterruptHandlerHook( portUInt32Type ulInterruptVectorNum )
             gHwiIntHook(ulInterruptVectorNum);
         }
     }
+}
+
+int32_t HwiP_portRaisePrivilege(void)
+{
+    return (int32_t) portRAISE_PRIVILEGE();
+}
+
+void HwiP_portRestorePrivilege(int32_t state)
+{
+    portRESTORE_PRIVILEGE(state);
 }
