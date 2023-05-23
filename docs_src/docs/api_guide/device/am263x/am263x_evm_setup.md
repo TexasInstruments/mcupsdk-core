@@ -42,13 +42,13 @@ Important cable connections, ports and switches.
 
 - System Power On/Off
   - 5V power through Type-C 5V/3A
-  - HSEC 5V power is available only if Type-C is unavailable 
-  - No mechanical on/off switch on this EVM 
+  - HSEC 5V power is available only if Type-C is unavailable
+  - No mechanical on/off switch on this EVM
 
   \imageStyle{evm_overview_4.png,width:50%}
   \image html evm_overview_4.png "@VAR_BOARD_NAME Power "
 
-- JTAG Switch selection	
+- JTAG Switch selection
 
   \imageStyle{evm_overview_5.png,width:20%}
   \image html evm_overview_5.png "@VAR_BOARD_NAME JTAG selection"
@@ -156,7 +156,7 @@ Important cable connections, ports and switches.
 \note This section has more details on @VAR_BOARD_NAME and @VAR_LP_BOARD_NAME. This is mainly for reference and can be skiped unless referred to by
 other pages in this user guide.
 
-\note Make sure boot mode switch is setup to NOBOOT mode to use with CCS
+\note Make sure boot mode switch is setup to NOBOOT mode to use with CCS Scripting. please refer \ref EVM_SOC_INIT_NOBOOT_MODE
 
 ### BOOT MODE
 

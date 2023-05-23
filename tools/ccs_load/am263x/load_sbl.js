@@ -183,7 +183,7 @@ else {
     if (sdkPath == null) {
         // !!! EDIT THIS !!! Add absolute path to SDK in your environment variables
         // OR set this variable to the absolute path of the SDK
-        sdkPath = "/home/abishekss/workarea/mcupsdk/mcu_plus_sdk";
+        sdkPath = "C:/ti/mcu_plus_sdk";
     }
 }
 
