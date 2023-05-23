@@ -131,7 +131,7 @@ void MPU_SECTION MpuP_enable(void)
         /* get the current enabled bits */
         type = CacheP_getEnabled();
 
-        DebugP_assertNoLog ((type & CacheP_TYPE_ALL)  == 0);
+        DebugP_assertNoLog ((type & CacheP_TYPE_ALL)  == 0U);
 
         MpuP_enableAsm();
 

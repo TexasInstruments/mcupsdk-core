@@ -30,6 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "test_dpl.h"
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -830,6 +831,30 @@ void test_event(void *args)
     EventP_destruct(&gMyEvent);
 }
 
+/* Test to check different clock configurations */
+void test_clockConfig(void *args)
+{
+    uint32_t start, end, overhead;
+    /* Calculate overhead */
+    CycleCounterP_reset();
+    start = CycleCounterP_getCount32();
+    end = CycleCounterP_getCount32();
+    DebugP_log("Start: %d\r\n", start);
+    DebugP_log("End: %d\r\n", end);
+    overhead = end - start;
+    DebugP_log("Total Overhead: %d Cycles\r\n", overhead);
+    CycleCounterP_reset();
+ 
+    start = CycleCounterP_getCount32();
+    ClockP_usleep(1);
+    end = CycleCounterP_getCount32();
+    overhead = end - start;
+    DebugP_log("Start: %d\r\n", start);
+    DebugP_log("End: %d\r\n", end);
+    DebugP_log("Total Overhead: %d Cycles\r\n", overhead);
+    DebugP_log("Total: %d Cycles = %d microseconds @ 400MHz\r\n", overhead, overhead / 400);
+}
+
 void test_debugScanf(void *args)
 {
     int32_t status;
@@ -998,6 +1023,8 @@ void test_mainToIsrWithFloatOperations(void *args)
     TEST_ASSERT_UINT32_WITHIN(1, (numInterrupts / 100), (uint32_t)f);
     TEST_ASSERT_UINT32_WITHIN(1, 10 + (numInterrupts / 10), (uint32_t)gFloat);
 }
+
+
 
 void test_addrconversion(void *args)
 {
@@ -1174,6 +1201,7 @@ void test_main(void *args)
     RUN_TEST(test_debugLog, 292, NULL);
     RUN_TEST(test_hwiProfile, 293, NULL);
     RUN_TEST(test_queue, 3808, NULL);
+    RUN_TEST(test_clockConfig, 10782, NULL);
 
     /* tasks are not supported in nortos */
     #if defined (OS_FREERTOS) || defined (OS_SAFERTOS)
@@ -1206,7 +1234,9 @@ void test_main(void *args)
 
     RUN_TEST(test_addrconversion, 898, NULL);
 
+    test_pos_main(NULL);
+    
     UNITY_END();
-
+    
     Drivers_close();
 }

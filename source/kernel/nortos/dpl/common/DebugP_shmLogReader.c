@@ -167,7 +167,7 @@ void DebugP_shmLogRead(void)
 	{
 		DebugP_ShmLog *shmLog = &gDebugShmLogReaderCtrl.shmLog[i];
 
-		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0)
+		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0U)
 		{
 			if(shmLog->isValid == DebugP_SHM_LOG_IS_VALID)
 			{
@@ -176,7 +176,7 @@ void DebugP_shmLogRead(void)
 				shmLog->isValid = 0;
 			}
 		}
-		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i])
+		if((gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]!=0U))
 		{
 			uint32_t strLen;
 
@@ -185,11 +185,11 @@ void DebugP_shmLogRead(void)
 				strLen = DebugP_shmLogReaderGetString(shmLog,
 								gDebugShmLogReaderCtrl.lineBuf,
 								DEBUG_SHM_LOG_READER_LINE_BUF_SIZE);
-				if(strLen > 0)
+				if(strLen > 0U)
 				{
 					DebugP_log(gDebugShmLogReaderCtrl.lineBuf);
 				}
-			} while(strLen);
+			} while(strLen != 0U);
 		}
 	}
 }

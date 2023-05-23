@@ -35,6 +35,8 @@
 #include <kernel/nortos/dpl/common/printf.h>
 
 extern uint32_t gDebugLogZone;
+int32_t _DebugP_log(char *format, ...);
+void DebugP_shmLogReaderTaskCreate(void);
 
 void _DebugP_logZone(uint32_t logZone, char *format, ...)
 {

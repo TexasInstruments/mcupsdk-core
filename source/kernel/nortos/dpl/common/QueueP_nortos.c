@@ -94,20 +94,22 @@ void * QueueP_get(QueueP_Handle handle)
     QueueP_nortos *queue = (QueueP_nortos *)handle;
     QueueP_Elem      *pElem = NULL;
     QueueP_Elem      *q;
+    
+    if(QueueP_isEmpty(handle) != QueueP_EMPTY)
+    {
+        key = HwiP_disable();
 
-    key = HwiP_disable();
+        q = &queue->queueHndl;
 
-    q = &queue->queueHndl;
+        pElem = q->next;
 
-    pElem = q->next;
+        q->next = pElem->next;
+        pElem->next->prev = q;
 
-    q->next = pElem->next;
-    pElem->next->prev = q;
-
-    HwiP_restore(key);
-
+        HwiP_restore(key);
+    }
     return (pElem);
-}
+}   
 
 /*
  *  ======== QueueP_put ========

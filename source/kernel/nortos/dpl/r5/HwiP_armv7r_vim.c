@@ -36,7 +36,7 @@
 
 static volatile uint32_t gdummy;
 
-static void assembly(void)
+static void Hwip_dataAndInstructionBarrier(void)
 {
     __asm__ __volatile__ (" isb"   "\n\t": : : "memory");
     __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
@@ -55,7 +55,7 @@ void HWI_SECTION HwiP_enableInt(uint32_t intNum)
     volatile uint32_t *addr;
     uint32_t bitPos;
 
-    assembly();
+    Hwip_dataAndInstructionBarrier();
 
     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_EN(intNum));
     bitPos = VIM_BIT_POS(intNum);
@@ -79,7 +79,7 @@ uint32_t HWI_SECTION HwiP_disableInt(uint32_t intNum)
     *addr = ((uint32_t)0x1 << bitPos);
 
 
-    assembly();
+    Hwip_dataAndInstructionBarrier();
 
 
     return isEnable;
@@ -123,7 +123,7 @@ void HWI_SECTION HwiP_post(uint32_t intNum)
      * returns.
      */
 
-    assembly();
+    Hwip_dataAndInstructionBarrier();
 
 
 }

@@ -35,6 +35,7 @@
 #include <drivers/hw_include/csl_types.h>
 
 void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(void);
 
 /* compile flag to enable or disable interrupt nesting */
 #define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE

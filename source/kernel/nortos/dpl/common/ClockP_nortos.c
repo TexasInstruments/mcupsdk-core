@@ -298,9 +298,9 @@ uint64_t ClockP_getTimeUsec(void)
 
 
     /* Get the current time in microseconds */
-	ts = (ticks2 * (uint64_t)gClockCtrl.usecPerTick)
-    +(uint64_t)  ( /* convert timer count to usecs */
-	(uint64_t)((timerCount - gClockCtrl.timerReloadCount)*gClockCtrl.usecPerTick)/((uint64_t)MAX_TIMER_COUNT_VALUE - gClockCtrl.timerReloadCount)
+	ts = ((uint64_t) ticks2 * (uint64_t)gClockCtrl.usecPerTick)
+    +( /* convert timer count to usecs */
+	(((uint64_t)timerCount - (uint64_t)gClockCtrl.timerReloadCount)*(uint64_t)gClockCtrl.usecPerTick)/(uint64_t)(MAX_TIMER_COUNT_VALUE - (uint64_t)gClockCtrl.timerReloadCount)
     );
     return (ts);
 }
