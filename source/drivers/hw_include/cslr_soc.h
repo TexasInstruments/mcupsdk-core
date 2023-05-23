@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,6 +63,10 @@ extern "C"
 
 #if defined (SOC_AM62X)
 #include <drivers/hw_include/am62x/cslr_soc.h>
+#endif
+
+#if defined (SOC_AM65X)
+#include <drivers/hw_include/am65x/cslr_soc.h>
 #endif
 
 #ifdef __cplusplus
