@@ -1,0 +1,168 @@
+#
+# Auto generated makefile
+#
+
+all:
+	$(MAKE) -f makefile.am65x libs
+	$(MAKE) -f makefile.am65x sbl
+	$(MAKE) -f makefile.am65x examples
+
+
+clean: libs-clean sbl-clean examples-clean
+scrub: libs-scrub sbl-scrub examples-scrub
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=debug or PROFILE=release [default] to build in debug or release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am65x help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am65x all
+	@echo  $(MAKE) -s -f makefile.am65x clean  # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am65x scrub  # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am65x libs
+	@echo  $(MAKE) -s -f makefile.am65x libs-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am65x libs-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  $(MAKE) -s -f makefile.am65x examples
+	@echo  $(MAKE) -s -f makefile.am65x examples-clean # delete's tmp files for current profile
+	@echo  $(MAKE) -s -f makefile.am65x examples-scrub # delete's all tmp files and folders for all profiles
+	@echo  .
+	@echo  Library build targets,
+	@echo  ======================
+	@echo  .
+	@echo  Library clean targets,
+	@echo  ======================
+	@echo  .
+	@echo  Example build targets,
+	@echo  ======================
+	@echo  .
+	@echo  System Example build targets,
+	@echo  =============================
+	@echo  .
+
+# Various Component Targets
+
+
+# Combine all Components
+BUILD_COMBO_ALL =
+
+
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL =
+
+
+# Combine all Private Components
+BUILD_COMBO_PRIVATE_ALL =
+
+libs: $(BUILD_COMBO_ALL)
+
+libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
+
+libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+
+
+
+# Various Component Clean Targets
+
+
+# Combine all Components Clean
+BUILD_COMBO_CLEAN_ALL =
+
+
+# Combine all Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL =
+
+
+libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+
+
+
+# Various Component Scrub Targets
+
+
+# Combine all Components Scrub Targets
+BUILD_COMBO_SCRUB_ALL =
+
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL =
+
+
+libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+
+
+BUILD_COMBO_EXAMPLE_ALL =
+# Various Example Targets
+
+# Various System Example Targets
+
+
+
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+
+examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+
+
+examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+
+BUILD_COMBO_EXAMPLE_CLEAN_ALL =
+# Various Example Clean Targets
+# Various System Example Clean Targets
+
+
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
+
+examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+
+BUILD_COMBO_EXAMPLE_SCRUB_ALL =
+# Various Example Scrub Targets
+# Various System Example Scrub Targets
+
+
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
+# Various Private Example Targets
+# Various Private System Example Targets
+
+examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+
+examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+
+sbl: libs
+
+sbl-clean:
+
+sbl-scrub:
+
+
+
+
+.PHONY: all clean scrub help
+.PHONY: libs libs-clean libs-scrub
+.PHONY: libs-private
+.PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
+.PHONY: examples examples-clean examples-scrub
+.PHONY: examples-private examples-private-clean examples-private-scrub
+.PHONY: sbl sbl-clean sbl-scrub
+.PHONY: $(BUILD_COMBO_ALL) $(BUILD_COMBO_CLEAN_ALL) $(BUILD_COMBO_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_ALL) $(BUILD_COMBO_EXAMPLE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+.PHONY: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL) $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)

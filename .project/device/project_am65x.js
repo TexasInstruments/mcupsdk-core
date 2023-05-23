@@ -1,0 +1,98 @@
+const common = require("../common.js");
+
+const component_file_list = [
+];
+
+const device_defines = {
+    common: [
+        "SOC_AM65X",
+    ],
+};
+
+const example_file_list = [
+];
+
+function getProjectSpecCpu(cpu) {
+    let projectSpecCpu =
+    {
+        "r5fss0-0": "MAIN_PULSAR_Cortex_R5_0_0",
+        "r5fss0-1": "MAIN_PULSAR_Cortex_R5_0_1",
+    }
+
+    return projectSpecCpu[cpu];
+}
+
+function getComponentList() {
+    return component_file_list;
+}
+
+function getExampleList() {
+    return example_file_list;
+}
+
+function getSysCfgDevice(board) {
+    return "AM65xx_SR2.0_beta";
+}
+
+function getProjectSpecDevice(board) {
+    return "AM6548.IDK_AM65x";
+}
+
+function getSysCfgCpu(cpu) {
+    return cpu;
+}
+
+function getSysCfgPkg(board) {
+    return "ACD";
+}
+
+function getSysCfgPart(board) {
+    return "Default";
+}
+
+function getDevToolTirex(board) {
+    return "AM65x_GP_EVM";
+}
+
+function getProperty() {
+    let property = {};
+
+    property.defines = device_defines;
+
+    return property;
+}
+
+function getLinuxFwName(cpu) {
+
+    switch(cpu) {
+        case "r5fss0-0":
+            return "am65-mcu-r5f0_0-fw";
+        case "r5fss0-1":
+            return "am65-mcu-r5f0_1-fw";
+    }
+    return undefined;
+}
+
+function getProductNameProjectSpec() {
+    return "MCU_PLUS_SDK_AM65X";
+}
+
+function getFlashAddr() {
+    return 0x58000000;
+}
+
+module.exports = {
+    getComponentList,
+    getExampleList,
+    getSysCfgDevice,
+    getSysCfgCpu,
+    getSysCfgPkg,
+    getSysCfgPart,
+    getProjectSpecDevice,
+    getProjectSpecCpu,
+    getDevToolTirex,
+    getProperty,
+    getLinuxFwName,
+    getProductNameProjectSpec,
+    getFlashAddr,
+};

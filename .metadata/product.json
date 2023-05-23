@@ -10,12 +10,6 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
-        "/fs/fs",
-        "/networking/networking",
-        "/security/security",
-        "/usb/usb",
-        "/pru_io/pru_io",
-        "/memory_configurator/components"
     ],
     "devices": [
         "AM64x",
@@ -26,8 +20,16 @@
         "AM263x_beta",
         "AM263Px",
         "AM62x",
+        "AM65xx_SR2.0_beta",
     ],
     "contexts": {
+        "AM65xx_SR2.0_beta": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        }],
         "AM64x": [{
             "name": "r5fss0-0",
             "targetdbId": "r5fss0-0"
