@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,6 +62,10 @@ extern "C"
 
 #if defined (SOC_AM62X)
 #include <drivers/pinmux/am62x/pinmux.h>
+#endif
+
+#if defined (SOC_AM65X)
+#include <drivers/pinmux/am65x/pinmux.h>
 #endif
 
 #ifdef __cplusplus
