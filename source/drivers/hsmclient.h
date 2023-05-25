@@ -301,6 +301,26 @@ int32_t HsmClient_getOTPRowProtection(HsmClient_t* HsmClient,
 
 /**
  * @brief
+ *  The service issued to HSM Server helps with extended secure boot for
+ *  applications.
+ *
+ * @param timeout           [IN] amount of time to block waiting for
+ * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+ * @param HsmClient         [IN] Client object which is using this openDbgFirewalls API.
+ * @param cert              [IN] point to the location of certificate in the device memory.
+ * @param cert_size         [IN] size of certificate.
+ *
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ * 3. SystemP_TIMEOUT if timeout exception occours.
+ */
+int32_t HsmClient_procAuthBoot(HsmClient_t* HsmClient,
+                                        uint8_t* cert,
+                                        uint32_t cert_size,
+                                        uint32_t timeout);
+/**
+ * @brief
  * register a client to a particular ClientId
  *
  * @param HsmClient [IN] HsmClient object.

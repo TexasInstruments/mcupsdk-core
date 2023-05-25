@@ -60,7 +60,7 @@
 /* ========================================================================== */
 
 
-CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
+extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
 
 /* ========================================================================== */
 /*                             Function Definitions                           */

@@ -65,9 +65,10 @@ extern "C"
 #define HSM_MSG_PROT_OTP_ROW                     (0x9024)
 /** @brief Get Extended otp row protection type ID */
 #define HSM_MSG_GET_OTP_ROW_PROT                 (0x9026)
-/** @brief Get Extended otp row count */
+/** @brief Get Extended otp row count service type ID */
 #define HSM_MSG_GET_OTP_ROW_COUNT                (0x9027)
-
+/** @brief Secure Boot service type ID*/
+#define HSM_MSG_PROC_AUTH_BOOT					 (0xC120)
 
 /* message flags */
 /**

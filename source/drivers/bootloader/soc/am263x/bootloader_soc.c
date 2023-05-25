@@ -37,6 +37,8 @@
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/HwiP.h>
 
+#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
+
 Bootloader_resMemSections gResMemSection =
 {
     .numSections    = 1,
@@ -146,6 +148,8 @@ Bootloader_CoreAddrTranslateInfo gAddrTranslateInfo[] =
         },
     },
 };
+
+CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
 
 volatile uint32_t gR5ss0MemInitDone = FALSE, gR5ss1MemInitDone = FALSE, gR5ss1PORDone = FALSE;
 volatile uint32_t gR5ss0Core1ImagePresent = FALSE, gR5ss1Core1ImagePresent = FALSE;
@@ -462,12 +466,30 @@ Bootloader_resMemSections* Bootloader_socGetSBLMem(void)
 
 int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
 {
-    return SystemP_SUCCESS;
+    int32_t status = SystemP_FAILURE;
+    HsmClient_t client ;
+    status = HsmClient_register(&client, BOOTLOADER_CLIENT_ID);
+
+    /* Request TIFS-MCU to authenticate (and decrypt if mentioned in the x509 cert) the image */
+    status = HsmClient_procAuthBoot(&client, (uint8_t *)certLoadAddr, BOOTLOADER_SOC_APP_CERT_SIZE, SystemP_WAIT_FOREVER);
+
+    return status;
 }
 
 uint32_t Bootloader_socIsAuthRequired(void)
 {
-    return FALSE;
+    uint32_t isAuthRequired = TRUE;
+
+    if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
+    {
+        isAuthRequired = TRUE;
+    }
+    else
+    {
+        isAuthRequired = FALSE;
+    }
+
+    return isAuthRequired;
 }
 
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
