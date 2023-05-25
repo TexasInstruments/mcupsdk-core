@@ -48,6 +48,8 @@
 #include <drivers/sciclient/include/tisci/am64x_am243x/tisci_boardcfg_constraints.h>
 #include <drivers/sciclient/include/tisci/am64x_am243x/tisci_devices.h>
 
+#undef SYSFW_TRACE_ENABLE
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -67,7 +69,7 @@ __attribute__(( aligned(128))) =
             .magic = TISCI_BOARDCFG_CONTROL_MAGIC_NUM,
             .size = (uint16_t) sizeof(struct tisci_boardcfg_control),
         },
-        
+
         /* Enable/disable support for System Firmware main isolation.
          * If disabled, main isolation SCI message will be rejected with NAK.
          */
@@ -123,10 +125,21 @@ __attribute__(( aligned(128))) =
             .size = (uint16_t) sizeof(struct tisci_boardcfg_dbg_cfg),
         },
         /* This enables the trace for DMSC logging. Should be used only for
-         * debug.
+         * debug. Profiling should not be done with this enabled.
          */
-
+        #ifdef SYSFW_TRACE_ENABLE
+        .trace_dst_enables = (TISCI_BOARDCFG_TRACE_DST_UART0 |
+                              TISCI_BOARDCFG_TRACE_DST_ITM |
+                              TISCI_BOARDCFG_TRACE_DST_MEM),
+        .trace_src_enables = (TISCI_BOARDCFG_TRACE_SRC_PM |
+                              TISCI_BOARDCFG_TRACE_SRC_RM |
+                              TISCI_BOARDCFG_TRACE_SRC_SEC |
+                              TISCI_BOARDCFG_TRACE_SRC_BASE |
+                              TISCI_BOARDCFG_TRACE_SRC_USER |
+                              TISCI_BOARDCFG_TRACE_SRC_SUPR)
+        #else
         .trace_dst_enables = 0,
         .trace_src_enables = 0
+        #endif
     },
 };
