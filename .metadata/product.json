@@ -10,8 +10,11 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
+        "/fs/fs",
         "/networking/networking",
-        "/xbar/xbar",
+        "/security/security",
+        "/usb/usb",
+        "/pru_io/pru_io",
     ],
     "devices": [
         "AM64x_beta",

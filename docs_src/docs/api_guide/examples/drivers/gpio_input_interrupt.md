@@ -63,6 +63,8 @@ The RM board config need to have an entry for the interrupt router for the core 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ ^              | m4fss0-0 nortos
+ ^              | a53ss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/gpio/gpio_input_interrupt/
@@ -85,6 +87,7 @@ The RM board config need to have an entry for the interrupt router for the core 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ ^              | m4fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/drivers/gpio/gpio_input_interrupt/
