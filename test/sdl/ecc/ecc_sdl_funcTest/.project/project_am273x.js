@@ -102,7 +102,7 @@ const syscfgfile = "../example.syscfg"
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
+        input: ".project/templates/am273x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
     },
     {

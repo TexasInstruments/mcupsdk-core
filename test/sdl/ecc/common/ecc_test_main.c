@@ -61,7 +61,7 @@
 #include <sdl/include/am273x/sdlr_mss_ecc_agg_mss.h>
 #elif defined(C66_INPUTS)
 #include <sdl/include/am273x/sdlr_dss_ecc_agg.h>
-#include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
+#include <sdl/include/am273x/sdlr_intr_esm_dss.h>
 #endif
 #endif
 

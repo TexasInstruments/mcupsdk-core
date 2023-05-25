@@ -71,9 +71,6 @@ extern "C"
 #define  ECC_FUNC_TEST_ID           				(1U)
 #define  ECC_TOTAL_NUM_TESTS        				(2U)
 #endif
-#define  ECC_ERROR_TEST_ID                          (0U)
-#define  ECC_FUNC_TEST_ID                           (1U)
-#define  ECC_TOTAL_NUM_TESTS                        (2U)
 
 #define SDL_DSS_DSP_L2RAM_PARITY_CTRL               (0x0602006Cu)
 #define SDL_DSS_L2RAM_PARITY_ENABLE                 (0xffu)
