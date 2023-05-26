@@ -1485,6 +1485,8 @@ void util_outputXbar_configure_loopback(uint16_t instance)
     Pinmux_config(gPinMuxMainDomainCfg, PINMUX_DOMAIN_ID_MAIN);
 
     /* configuring the inputXbar0 to take in the GPIO 17 that reads the outputxbar 3*/
+    GPIO_setDirMode(gpio_base_addr, (PIN_SPI1_D0 >> 2), OUTPUT);
+
     SOC_xbarSelectInputXBarInputSource(inputxbar_base_addr, 0, 0, (PIN_SPI1_D0 >> 2), 0);
 }
 
@@ -3175,14 +3177,6 @@ bool active_shadow_tests(uint16_t instance)
         flags = (ECAP_ISR_SOURCE_COUNTER_PERIOD & ECAP_getInterruptSource(ecap_base_addr[instance]));
     } while(flags != ECAP_ISR_SOURCE_COUNTER_PERIOD);
 
-    // ECAP_clearInterrupt(ecap_base_addr[instance],ECAP_ISR_SOURCE_ALL);
-    // do
-    // {
-    //     flags = 0;
-    //     flags = (ECAP_ISR_SOURCE_COUNTER_PERIOD & ECAP_getInterruptSource(ecap_base_addr[instance]));
-    // } while(flags != ECAP_ISR_SOURCE_COUNTER_PERIOD);
-
-    // ClockP_usleep(10);
     DebugP_testLog("flags : %x\r\n",ECAP_ISR_SOURCE_COUNTER_PERIOD & ECAP_getInterruptSource(ecap_base_addr[instance]));
     /* stop the counter to make sure only one period occured*/
     ECAP_stopCounter(ecap_base_addr[instance]);
@@ -3246,7 +3240,7 @@ bool apwm_generation_test(uint16_t instance)
     ECAP_APWMPolarity test_runs[2] = {ECAP_APWM_ACTIVE_HIGH, ECAP_APWM_ACTIVE_LOW};
     for(int iter = 0; iter < 2; iter++)
     {
-        util_setup_capture_module(9, ECAP_INPUT_INPUTXBAR0, true);
+        util_setup_capture_module(9, ECAP_INPUT_INPUTXBAR0, false);
         util_ecap_config_reset();
         ecap_config_ptr->ecap_mode_apwm = true;
         ecap_config_ptr->apwm_period = period;
@@ -3262,7 +3256,7 @@ bool apwm_generation_test(uint16_t instance)
         ECAP_startCounter(ecap_base_addr[instance]);
 
         /* some delay */
-        ClockP_usleep(20);
+        ClockP_usleep(30);
 
         /*stop the timestamping*/
         util_ecap_stop_timestamp(9);
