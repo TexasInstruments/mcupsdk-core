@@ -37,6 +37,11 @@ FILES_common := \
 	test_enet_cpsw.c \
 	main.c \
 	udp_iperf.c \
+	enetextphy.c \
+	enetextphy_phymdio_dflt.c \
+	dp83867.c \
+	dp83869.c \
+	generic_phy.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -52,6 +57,7 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../extPhyMgmt \
 	generated \
 
 INCLUDES_common := \
@@ -76,6 +82,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
+	-I${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt \
 	-Igenerated \
 
 DEFINES_common := \

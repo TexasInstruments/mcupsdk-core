@@ -9,6 +9,11 @@ const files = {
             "test_enet_cpsw.c",
             "main.c",
             "udp_iperf.c",
+            "enetextphy.c",
+            "enetextphy_phymdio_dflt.c",
+            "dp83867.c",
+            "dp83869.c",
+            "generic_phy.c",
     ],
 };
 
@@ -19,6 +24,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "../../../extPhyMgmt", /* Example base */
     ],
 };
 
@@ -55,6 +61,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
+        "${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt"
     ],
 };
 

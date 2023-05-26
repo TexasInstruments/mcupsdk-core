@@ -50,6 +50,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x
+            -I${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -131,6 +132,16 @@
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../udp_iperf.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../extPhyMgmt/enetextphy.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../extPhyMgmt/enetextphy_phymdio_dflt.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../extPhyMgmt/dp83867.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../extPhyMgmt/dp83869.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../extPhyMgmt/generic_phy.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
