@@ -25,10 +25,8 @@
         "/board/board",
         "/fs/fs",
         "/networking/networking",
-        "/industrial_comms/industrial_comms",
         "/security/security",
         "/usb/usb",
-        "/motor_control/motor_control",
         "/pru_io/pru_io",
 % }
 % if(args.device == "am263x") {
@@ -36,7 +34,6 @@
         "/drivers/drivers",
         "/board/board",
         "/networking/networking",
-        "/industrial_comms/industrial_comms",
         "/xbar/xbar",
 % }
 % if((args.device == "am273x") || (args.device == "awr294x")) {

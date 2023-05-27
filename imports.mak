@@ -50,5 +50,3 @@ SYSCFG_NODE = $(SYSCFG_PATH)/nodejs/node
 SYSCFG_NWJS = $(SYSCFG_PATH)/nw/nw
 SYSCFG_SDKPRODUCT=$(MCU_PLUS_SDK_PATH)/.metadata/product.json
 
-# Variable pointing to location of prebuilt industrial communication libraries
-MCU_PLUS_SDK_IND_COMMS_LIBS_PATH ?= $(MCU_PLUS_SDK_PATH)/source/commercial/industrial_comms_libs

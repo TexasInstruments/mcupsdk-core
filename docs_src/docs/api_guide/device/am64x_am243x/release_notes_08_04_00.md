@@ -125,7 +125,7 @@ GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 ### Features not supported in release
 
 - The **ROM** startup model for runtime initializations in TI ARM CLANG is not supported/tested in the SDK. We use the **RAM** model because of the boot-time advantage. For more information on startup models in TI ARM CLANG, refer \htmllink{https://software-dl.ti.com/codegen/docs/tiarmclang/compiler_tools_user_guide/compiler_manual/program_loading_and_running/run-time-initialization-slau1316977.html#ram-model-vs-rom-model, RAM model v/s ROM model}
-- Profinet Device Stack and example. For more information, see \ref INDUSTRIAL_COMMS_TI_STACK_PROFINET_STACK_TRANSITION.
+- Profinet Device Stack and example. For more information, see INDUSTRIAL_COMMS_TI_STACK_PROFINET_STACK_TRANSITION.
 \cond SOC_AM243X
 
 ### AM243X LAUNCHPAD not tested/not supported features
@@ -721,7 +721,7 @@ earlier SDKs.
     <td> Industrial Communications Toolkit
     <td> \ref DRV_MDIO_MODULE
     <td> If MDIO Manual Mode is used as the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW and PRU-ICSS)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>), usage of MDIO APIs is affected.
-    <td> This work-around is enabled in EtherCAT SubDevice Beckhoff SSC examples and HSR-PRP examples. Please see \ref INDUSTRIAL_COMMS_MDIO_MANUALMODE_FW_USAGE for more details.
+    <td> This work-around is enabled in EtherCAT SubDevice Beckhoff SSC examples and HSR-PRP examples. Please see INDUSTRIAL_COMMS_MDIO_MANUALMODE_FW_USAGE for more details.
 </tr>
 </table>
 
@@ -789,7 +789,7 @@ earlier SDKs.
 <tr>
     <td> ICSS TimeSync
     <td> TimeSync_drvInit
-    <td> Added new members `delayReqSendTaskPriority`, `txTsTaskPriority`, `nrtTaskPriority`, and `backgroundTaskPriority` in \ref TimeSync_Config_t
+    <td> Added new members `delayReqSendTaskPriority`, `txTsTaskPriority`, `nrtTaskPriority`, and `backgroundTaskPriority` in `TimeSync_Config_t`
     <td> Allows configuration of task priority for task created by ICSS TimeSync driver
 </tr>
 </table>

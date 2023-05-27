@@ -38,8 +38,6 @@ FILES_common := \
     HeapP_sample.c \
     HwiP_sample.c \
     I2c_sample.c \
-    Icss_emac_sample.c \
-    Icss_timesync_sample.c \
     IpcNotify_sample.c \
     IpcRPMessage_sample.c \
     Led_sample.c \

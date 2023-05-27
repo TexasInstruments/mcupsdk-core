@@ -713,7 +713,7 @@ earlier SDKs.
 <tr>
     <td> EtherCAT SubDevice FWHAL
     <td> bsp_init
-    <td> Added new parameter `phy_rx_err_reg` in \ref bsp_params
+    <td> Added new parameter `phy_rx_err_reg` in bsp_params
     <td> Allows configuration of vendor specific 0x0E28 register in TI EtherCAT SubDevice Controller (ESC) for the RX Error counting during frames.
 </tr>
 </table>

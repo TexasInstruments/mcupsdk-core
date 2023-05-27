@@ -78,23 +78,12 @@ The main software components in the block diagram are described below
     <td>\ref BOARD_DRIVERS_PAGE
     <td>Device Drivers library and APIs for peripherals on the board or EVM. Example, Flash, EEPROM.
 </tr>
-<tr>
-    <td>Industrial Protocol Firmware (FW) HAL
-    <td> \ref INDUSTRIAL_COMMS_FWHAL
-    <td>Hardware abstraction layer APIs to higher level industrial protocol stacks. Example, EtherCAT FW HAL
-</tr>
 <tr><td colspan="3" bgcolor=#F0F0F0>**Protocol Stacks and Middleware**</td></tr>
 <tr>
-    <td>Motor Control
-    <td>\ref EXAMPLES_MOTORCONTROL
-    <td>Drive protocols for EnDAT, HDSL and Benchmark demo for CFFT, FIR and FOC.
-</tr>
-<tr>
     <td>LwIP
-    <td> \ref EXAMPLES_ENET_LWIP_CPSW \ref EXAMPLES_ENET_LWIP_ICSSG
+    <td> \ref EXAMPLES_ENET_LWIP_CPSW
     <td>TCP/UDP IP networking stack
 </tr>
-<tr>
     <td>Mbed-TLS
     <td> \ref EXAMPLES_CPSW_LWIP_HTTPS
     <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
@@ -103,11 +92,6 @@ The main software components in the block diagram are described below
     <td>TinyUSB
     <td> \ref USB_DEVICE_DRIVER
     <td>USB device stack. Example, CDC device.
-</tr>
-<tr>
-    <td>Industrial Protocol Stacks
-    <td> \ref INDUSTRIAL_COMMS
-    <td>Industrial protocol stacks for protocols like EtherCAT, Profinet, EtherNet/IP
 </tr>
 <tr>
     <td>FreeRTOS+FAT
@@ -211,20 +195,12 @@ Given below is a overview of the directory structure to help you navigate the SD
     <td>File System drivers</td>
 </tr>
 <tr>
-    <td>industrial_comms/
-    <td>Industrial Communication Protocol stacks and Industrial Protocol FW HAL(Firmware and Hardware Abstraction Layer)</td>
-</tr>
-<tr>
     <td>kernel/
     <td>NO RTOS and RTOS kernel and Driver Porting layer (DPL) for these environments</td>
 </tr>
 <tr>
-    <td>motor_control/
-    <td>Motor control related encoder libraries like HDSL and EnDATc</td>
-</tr>
-<tr>
     <td>networking/
-    <td>LwIP, ICSS-EMAC, ICSS Timesync and mbedtls_library</td>
+    <td>LwIP and mbedtls_library</td>
 </tr>
 \if (SOC_AM64X || SOC_AM243X)
 <tr>
@@ -250,16 +226,8 @@ Given below is a overview of the directory structure to help you navigate the SD
     <td>Template projects to copy to your workarea and then modify based on your custom application needs</td>
 </tr>
 <tr>
-    <td>industrial_comms/
-    <td>Examples for EtherCAT SubDevice, EtherNet/IP Adapter, IO-Link Controller and Profinet Device</td>
-</tr>
-<tr>
     <td>kernel/
     <td>NO RTOS and RTOS kernel focused examples</td>
-</tr>
-<tr>
-    <td>motor_control/
-    <td>Motor control encoder and benchmark focused examples</td>
 </tr>
 <tr>
     <td>networking/

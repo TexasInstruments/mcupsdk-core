@@ -61,15 +61,10 @@ The main software components in the block diagram are described below
     <td>\ref BOARD_DRIVERS_PAGE
     <td>Device Drivers library and APIs for peripherals on the board or EVM. Example, Flash, EEPROM.
 </tr>
-<tr>
-    <td>Industrial Protocol Firmware (FW) HAL
-    <td> \ref INDUSTRIAL_COMMS_FWHAL
-    <td>Hardware abstraction layer APIs to higher level industrial protocol stacks. Example, EtherCAT FW HAL
-</tr>
 <tr><td colspan="3" bgcolor=#F0F0F0>**Protocol Stacks and Middleware**</td></tr>
 <tr>
     <td>Industrial Protocol Stacks
-    <td> \ref INDUSTRIAL_COMMS
+    <td> INDUSTRIAL_COMMS
     <td>Industrial protocol stacks for protocols like EtherCAT
 </tr>
 <tr>

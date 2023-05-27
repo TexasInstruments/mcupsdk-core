@@ -49,16 +49,15 @@ SECTIONS
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
     } > MSRAM
 
-    GROUP {
-        .rodata.cfg: {} palign(8) /* This is to keep the MPU config, Cache config and other consts */
-    } > MSRAM
-
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .text:   {} palign(8)   /* This is where code resides */
         .rodata: {} palign(8)   /* This is where const's go */
     } > FLASH
 
+    GROUP {
+        .rodata.cfg: {} palign(8) /* This is to keep the MPU config, Cache config and other consts */
+    } > MSRAM
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .data:   {} palign(8)   /* This is where initialized globals and static go */

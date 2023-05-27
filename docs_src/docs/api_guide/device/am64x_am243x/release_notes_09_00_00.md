@@ -93,7 +93,6 @@ GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 
 ### Features not supported in release
 
-- Profinet Device Stack and example. For more information, see \ref INDUSTRIAL_COMMS_TI_STACK_PROFINET_STACK_TRANSITION.
 \cond SOC_AM243X
 
 ### AM243X LAUNCHPAD not tested/not supported features
@@ -101,7 +100,6 @@ GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 Below features are not support on AM243X LAUNCHPAD due to SOC or board constraints,
 
 - DDR is not supported on the AM243X 11x11 SOC used in AM243X LAUNCHPAD.
-- Motor control examples not validated, due to board limitation
 - I2C temperature sensor example not validated, due to board limitation.
 - M4F examples for UART, MCSPI and GPIO not validated, due to board limitation.
 \endcond
@@ -207,34 +205,12 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 ----------------------------|----------------|-------------------|-------------------|---------------------------------------------------------------------------------------------|------------------------
 CMSIS DSP                   | R5F            | NA                | FreeRTOS, NORTOS  | Basic math, complex math, controller, fast math, filtering, Matrix, statistics, transform   | -
 
-### Industrial Communications Toolkit
-
-Module                                | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                      | Key features not tested
---------------------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------|------------------------
-EtherCAT SubDevice FWHAL                  | R5F            | NO                | FreeRTOS    | Tested with ethercat_slave_beckhoff_ssc_demo example                                                     | Reset isolation
-EtherCAT SubDevice Evaluation Stack       | R5F            | NO                | FreeRTOS    | Tested with ethercat_slave_demo examples                                                                 | -
-EtherNet/IP Adapter FWHAL             | R5F            | NO                | FreeRTOS    | Tested with ethernetip_adapter_demo examples                                                             | Multicast Filtering
-EtherNet/IP Adapter Evaluation Stack  | R5F            | NO                | FreeRTOS    | Tested with ethernetip_adapter_demo examples                                                             | -
-IO-Link Controller Evaluation Stack       | R5F            | NO                | FreeRTOS    | Tested with iolink_master_demo example                                                                   | -
-Profinet Device FWHAL                 | R5F            | NO                | FreeRTOS    | -                                                                                                        | RT, IRT, MRP
-HSR-PRP FWHAL                         | R5F            | YES               | FreeRTOS    | Tested with hsr_prp_demo examples                                                                        | HSR/PRP RGMII Untested
-
-### Motor Control
-
-Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                                             | Key features not tested
-----------------------------|----------------|-------------------|-------------------|-----------------------------------------------------------------------------------------------------------------|------------------------
-Position Sense HDSL         | R5F            | YES               | FreeRTOS, NORTOS  | Freerun mode(300MHz,225MHz), Sync mode(225MHz), Short Message Read & Write, Long Message Read & Write, Boosterpack with AM243x-LP           |  Long cables
-Position Sense EnDat        | R5F            | YES               | FreeRTOS, NORTOS  | Single channel, Multi channel, Continuous mode for single channel, Load share mode, Recovery Time for 2.2 command set, Boosterpack with AM243x-LP              |  16 MHz Baud Rate Different cable lengths, Continuous clock mode for multi channel
-Position Sense Tamagawa     | R5F            | YES               | FreeRTOS, NORTOS  | Absolute position, Encoder ID, Reset, EEPROM Read, EEPROM Write, 2.5 Mbps and 5 Mbps Encoder Support, Boosterpack with AM243x-LP            |  -
-
 ### Networking
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                                                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------
 LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW and ICSS,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, ICSSG as two port switch, Policer and Classifier, MDIO Manual Mode, independent ICSSG and CPSW drivers execution on different R5 cores, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW,  | Independent ICSSG and CPSW drivers execution on same R5 cores not supported, RMII mode
-ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Tested switch mode with ethernetip_adapter_demo and hsr_prp_demo examples                                                                                                              | EMAC mode, VLAN/Multicast Filtering
-ICSS TimeSync               | R5F            | NO                | FreeRTOS    | Tested E2E mode with ethernetip_adapter_demo examples                                                                                                                                  | P2P mode, Transparent Clock mode
+Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW  | RMII mode
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
 ### USB
@@ -254,15 +230,6 @@ SA2UL AES       | R5F               | YES               | NORTOS            | AE
 SA2UL SHA       | R5F               | YES               | NORTOS            | SHA 512 single shot and multi-shot, SHA 256 single shot and multi-shot, HMAC SHA-256, HMAC SHA-512, HMAC SHA-1                                                                            | -
 SA2UL RNG       | R5F               | YES               | NORTOS            | RNG generate random number with size of 4 words(128 bit)                                                                                                                                  | -
 SA2UL PKA       | R5F               | YES               | NORTOS            | RSA Encryption and Decryption support upto 4k bit, RSA Signing and Verification support upto 4k bit, ECDSA Signing and Verification support with P-256 and P-384 curves                   | -
-
-### PRU IO
-
-Module          | Supported CPUs    | SysConfig Support | OS Support        | Key features tested                                                               | Key features not tested
-----------------|-------------------|-------------------|-------------------|-----------------------------------------------------------------------------------|-------------------------------------------------
-ADS85x8         | R5F               | YES               | FREERTOS          | Parallel 8 and 16 Bit Interface with ADS8598H IC                                  | OSR Modes, Other ICs
-ADS127L11       | R5F               | YES               | FREERTOS          | Serial Interface with ADS127L11 IC                                                | -
-Empty           | PRU               | NO                | Bare Metal        | Empty project to get started with PRU firmware development                        | -
-MDIO FW         | PRU               | NO                | Bare Metal        | MDIO Manual Mode firmware (tested with ethercat_slave_beckhoff_ssc_demo example)  | -
 
 ### Demos
 
@@ -382,14 +349,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-2319
-    <td> 2 PRU(ICSS) driver instances are added while changing Enet ICSSG instance to ICSSG0 in SysConfig
-    <td> SYSCFG
-    <td> 8.1.0 onwards
-    <td> AM64x, AM243x
-    <td> Please remove the extra one manually
-</tr>
-<tr>
     <td> MCUSDK-2715
     <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
     <td> SECURITY
@@ -408,14 +367,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
       linkCfg->duplexity = ENET_DUPLEX_FULL;
 </tr>
 <tr>
-    <td> MCUSDK-6318
-    <td> Enet icssg - dhcp functionality unstable
-    <td> Enet, ICSS
-    <td> 8.3.0
-    <td> AM243x
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-7905
     <td> EtherNet/IP : MDIO access can have race condition due to two parallel PHY drivers
     <td> Ethernet/IP Adapter
@@ -432,50 +383,18 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Value of OFFSET_THRESHOLD_FOR_RESET is set to 10000 ns by default in SDK.
 </tr>
 <tr>
-    <td> MCUSDK-8234
-    <td> HSR/PRP - PTP Device is unable to keep offset under 1000 ns
-    <td> HSR-PRP
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8236
-    <td> HSR/PRP is not functional in rgmii mode
-    <td> HSR-PRP
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-8242
     <td> EtherCAT : MDIO Manual Mode is not supported in ethercat_slave_demo examples
     <td> EtherCAT SubDevice
     <td> 8.4.0
     <td> AM64x, AM243x
-    <td> MDIO Manual Mode is the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW and PRU-ICSS)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>). Please note that the work-around is available for ethercat_slave_beckhoff_ssc_demo examples.
+    <td> MDIO Manual Mode is the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>). Please note that the work-around is available for ethercat_slave_beckhoff_ssc_demo examples.
 </tr>
 <tr>
     <td> MCUSDK-8376
     <td> LWIP web server application crashes in server stress test
     <td> Enet, LWIP
     <td> 8.3.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8564
-    <td> SysConfig Code generation error with basic PRU config on ICSS_G0 and ICSS_G1
-    <td> ICSSG
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8721
-    <td> Function for setting ICSSG SD/ENDAT alternate pin mux mode not working in all cases
-    <td> ICSSG
-    <td> 8.4.0
     <td> AM64x, AM243x
     <td> -
 </tr>
@@ -532,14 +451,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Use bash for windows as part of git for windows or don't use -j option
 </tr>
-<tr>
-    <td> MCUSDK-10680
-    <td> ENET: AM243x: ICSSG Switch functionality degrade
-    <td> Networking (ICSSG)
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> Use 8.5.0 release for ICSSG switch functionality
-</tr>
 </table>
 
 ## Upgrade and Compatibility Information
@@ -594,30 +505,7 @@ earlier SDKs.
     <th> Additional Remarks
 </tr>
 
-
-### Motor Control
-
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
-
 ### Networking
-
-<table>
-<tr>
-    <th> Module
-    <th> Affected API
-    <th> Change
-    <th> Additional Remarks
-</tr>
-</table>
-
-### PRU-IO
 
 <table>
 <tr>

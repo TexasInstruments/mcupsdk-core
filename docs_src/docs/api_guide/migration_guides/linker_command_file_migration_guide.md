@@ -99,9 +99,6 @@ It also lists down the sections which are no longer required in MCU+ SDK.
 
  - \ref KERNEL_FREERTOS_IMPORTANT_GUIDELINES_PAGE
  - \ref KERNEL_DPL_DEBUG_PAGE
- \cond SOC_AM64X || SOC_AM243X
- - \ref ICSS_EMAC
- \endcond
  - \ref BOOTFLOW_GUIDE
  \cond SOC_AM64X || SOC_AM243X
  - \ref BOOTFLOW_XIP

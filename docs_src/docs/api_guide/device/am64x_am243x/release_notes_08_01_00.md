@@ -684,15 +684,15 @@ earlier SDKs.
 </tr>
 <tr>
     <td> EtherNet/IP Adapter FWHAL
-    <td> \ref EIP_drvInit
-    <td> Added `pruicssHandle` in \ref EIP_Handle structure
-    <td> `pruicssHandle` should be set by user before calling \ref EIP_drvInit API.
+    <td> EIP_drvInit
+    <td> Added `pruicssHandle` in EIP_Handle structure
+    <td> `pruicssHandle` should be set by user before calling EIP_drvInit API.
 </tr>
 <tr>
     <td> Profinet Device FWHAL
-    <td> \ref PN_initDrv
-    <td> Added `latchIntConfig` in \ref PN_IntConfig structure
-    <td> `latchIntConfig` should be set by user before calling \ref PN_initDrv API, if ENABLE_LATCH_SUPPORT macro is enabled in `${SDK_INSTALL_PATH}/industrial_comms/profinet_device/icss_fwhal/IRT/pnDrvConfig.h` or `${SDK_INSTALL_PATH}/industrial_comms/profinet_device/icss_fwhal/RT_MRP/pnDrvConfig.h`.
+    <td> PN_initDrv
+    <td> Added `latchIntConfig` in PN_IntConfig structure
+    <td> `latchIntConfig` should be set by user before calling PN_initDrv API, if ENABLE_LATCH_SUPPORT macro is enabled in `${SDK_INSTALL_PATH}/industrial_comms/profinet_device/icss_fwhal/IRT/pnDrvConfig.h` or `${SDK_INSTALL_PATH}/industrial_comms/profinet_device/icss_fwhal/RT_MRP/pnDrvConfig.h`.
 </tr>
 <tr>
     <td> ICSS TimeSync

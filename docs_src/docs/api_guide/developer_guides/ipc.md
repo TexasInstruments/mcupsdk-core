@@ -41,7 +41,6 @@ See also these additional pages for more details and examples about IPC,
 \endcond
 \cond SOC_AM64X
   - \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO
-  - \ref EXAMPLE_MOTORCONTROL_BENCHMARKDEMO
 \endcond
 \cond SOC_AM62X
   - \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO

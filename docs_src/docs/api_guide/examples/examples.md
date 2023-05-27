@@ -9,8 +9,6 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_KERNEL
 -# \subpage EXAMPLES_DRIVERS
 -# \subpage EXAMPLES_DRIVERS_SBL
--# \subpage EXAMPLES_INDUSTRIAL_COMMS
--# \subpage EXAMPLES_MOTORCONTROL
 -# \subpage EXAMPLES_MATHLIB_BENCHMARK
 -# \subpage EXAMPLES_NETWORKING
 -# \subpage EXAMPLES_USB
@@ -57,8 +55,6 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_DRIVERS
 -# \subpage EXAMPLES_DRIVERS_SBL
 -# \subpage EXAMPLES_REAL_TIME_DEBUG
--# \subpage EXAMPLES_MOTORCONTROL
--# \subpage EXAMPLES_INDUSTRIAL_COMMS
 -# \subpage EXAMPLES_NETWORKING
 -# \subpage EXAMPLES_MATHLIB_BENCHMARK
 -# \subpage EXAMPLES_SECURITY

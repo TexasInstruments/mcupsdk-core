@@ -64,7 +64,7 @@ CFLAGS_common := \
 	-mfpu=vfpv3-d16 \
 	-mthumb \
 	-Wall \
-#	-Werror \
+	-Werror \
 	-g \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \

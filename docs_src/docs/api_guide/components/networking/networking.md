@@ -15,14 +15,6 @@ This document covers driver software architecture, Application Programming Inter
 **Networking is supported using following two hardware Peripherals:**
 - Common Port SWitch (**CPSW**) : CPSW subsystem provides IEEE 802.3 standard Ethernet gigabit speed packet communication for the device and can also be configured as an Ethernet switch. CPSW supports RGMII and RMII Interfaces.
 
-\cond SOC_AM64X || SOC_AM243X
-- Programmable Real-Time Unit and Industrial Communication Subsystem - Gigabit (**PRU-ICSSG**) : PRU-ICSSG is firmware programmable and can take on various personalities like Industrial Communication Protocol Switch (for protocols like EtherCAT, Profinet, EtherNet/IP), Ethernet Switch, Ethernet MAC, Industrial Drives, etc. PRU-ICSSG supports RGMII and MII modes.
-\endcond
-
-\cond  SOC_AM263X
-- Programmable Real-Time Unit and Industrial Communication Subsystem (PRU-ICSS) : PRU-ICSS is firmware programmable and can take on various personalities like Industrial Communication Protocol Switch (for protocols like EtherCAT, Profinet, EtherNet/IP), Ethernet Switch, Ethernet MAC, Industrial Drives, etc. PRU-ICSS supports MII mode.
-\endcond
-
 To know more about the hardware peripherals, please refer to datasheet and Technical Reference Manual (TRM) on the product page:
 - [AM2431](https://www.ti.com/product/AM2431), [AM2432](https://www.ti.com/product/AM2432), [AM2434](https://www.ti.com/product/AM2434)
 - [AM2634](https://www.ti.com/product/AM2634), [AM2634-Q1](https://www.ti.com/product/AM2634-Q1)
@@ -56,24 +48,10 @@ You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond
 
-### Driver
+### Ethernet Driver
 
-There are separate drivers based on the use-case :
-
-##### Enet LLD
-
-Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an unified interface for standard Ethernet MAC and switch using CPSW and PRU-ICSSG Peripherals.
+Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing the interface for standard Ethernet MAC and switch using CPSW Peripheral.
 - \subpage ENET_LLD
-
-##### ICSS-EMAC
-
-Industrial Communications Subsystem Ethernet Media Access Controller (\ref ICSS_EMAC) driver provide APIs to transmit and receive packets with a firmware based Ethernet switch that has been implemented on PRU-ICSS cores. It is used for 100M Industrial Ethernet Protocols like EtherNet/IP, Profinet etc.
-- \subpage ICSS_EMAC
-
-\cond SOC_AM64X || SOC_AM243X
-#### ICSS TimeSync
-\subpage ICSS_TIMESYNC is a separate driver based on ICSS-EMAC, which provides APIs for PTP/1588 v2 receiver implementation on PRU-ICSSG.
-\endcond
 
 \endcond
 

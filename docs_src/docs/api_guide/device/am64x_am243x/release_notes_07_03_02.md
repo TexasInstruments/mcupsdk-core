@@ -395,7 +395,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 <tr>
     <td> EtherCAT SubDevice FWHAL
     <td> bsp_init
-    <td> Added new parameter `enhancedlink_enable` in \ref bsp_params
+    <td> Added new parameter `enhancedlink_enable` in bsp_params
     <td> Provides flexibility to enable/disable enhanced link detection.
 </tr>
 <tr>
@@ -413,13 +413,13 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 <tr>
     <td> ICSS-EMAC
     <td> -
-    <td> Added `phyToMacInterfaceMod` and `txInterruptEnable` in \ref ICSS_EMAC_Attrs
+    <td> Added `phyToMacInterfaceMod` and `txInterruptEnable` in ICSS_EMAC_Attrs
     <td> ICSS configuration is done for MII/RGMII based on the mode selected using `phyToMacInterfaceMode`. Task and interrupt for TX will be created only if `txInterruptEnable` is enabled.
 </tr>
 <tr>
     <td> ICSS-EMAC
-    <td> \ref ICSS_EMAC_Params_init
-    <td> Moved `macId` from \ref ICSS_EMAC_Attrs to \ref ICSS_EMAC_Params
+    <td> ICSS_EMAC_Params_init
+    <td> Moved `macId` from ICSS_EMAC_Attrs to ICSS_EMAC_Params
     <td> It provides flexibility to provide the mac address during run-time.
 </tr>
 <tr>

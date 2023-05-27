@@ -263,17 +263,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ethercat_iolink_gateway_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ethercat_slave_cia402_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ethercat_slave_ctt_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ethercat_slave_simple_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ethernetip_adapter_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ethernetip_adapter_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hsr_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hsr_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += prp_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += prp_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += iolink_master_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
@@ -314,14 +303,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-sk_a53ss0-0_freer
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += smp_task_switch_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mathlib_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += endat_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += endat_diagnostic_multi_channel_load_share_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += endat_diagnostic_multi_channel_single_pru_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hdsl_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hdsl_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hdsl_diagnostic_ddr_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += tamagawa_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += tamagawa_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_128_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -369,13 +350,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_udpclient_am64x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_udp_igmp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_tcpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_am64x-evm_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_cpsw_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
@@ -408,25 +384,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am64x-sk_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += xip_benchmark_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += xip_benchmark_am64x-sk_system_freertos_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += benchmark_demo_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am64x-evm_system_nortos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-rtupru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-txpru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += endat_peripheral_interface_single_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += endat_peripheral_interface_multi_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += hdsl_master_freerun_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += hdsl_master_multichannel_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += tamagawa_multi_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += tamagawa_single_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build
@@ -1204,39 +1167,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world_cpp/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- ethercat_iolink_gateway_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/ethercat_iolink_gateway_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- ethercat_slave_cia402_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/cia402/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- ethercat_slave_ctt_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/ctt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- ethercat_slave_simple_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/simple/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- ethernetip_adapter_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/ethernetip_adapter_demo/mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- ethernetip_adapter_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/ethernetip_adapter_demo/rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hsr_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/hsr_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hsr_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/hsr_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- prp_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/prp_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- prp_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/prp_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- iolink_master_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/industrial_comms/iolink_master_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
  dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1357,30 +1287,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mathlib_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/mathlib/benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- endat_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- endat_diagnostic_multi_channel_load_share_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- endat_diagnostic_multi_channel_single_pru_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hdsl_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hdsl_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hdsl_diagnostic_ddr_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic_with_traces/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- tamagawa_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/tamagawa_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- tamagawa_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/motor_control/tamagawa_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
  runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1465,42 +1371,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-rtupru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-txpru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- endat_peripheral_interface_single_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- endat_peripheral_interface_multi_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- hdsl_master_freerun_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- hdsl_master_multichannel_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch1/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- tamagawa_multi_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
- tamagawa_single_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec all
-
  vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/vtm/vtm_uc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1558,26 +1428,11 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
  enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -1680,9 +1535,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  xip_benchmark_am64x-sk_system_freertos_build:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec all
-
- benchmark_demo_am64x-evm_system_nortos_build:
-	$(MAKE) -C examples/motor_control/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec all
 
  cdc_echo_nortos_am64x-evm_system_nortos_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec all
@@ -1953,17 +1805,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ethercat_iolink_gateway_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ethercat_slave_cia402_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ethercat_slave_ctt_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ethercat_slave_simple_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ethernetip_adapter_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ethernetip_adapter_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hsr_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hsr_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += prp_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += prp_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += iolink_master_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2004,14 +1845,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-sk_a53ss0-0_freer
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += smp_task_switch_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mathlib_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += endat_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += endat_diagnostic_multi_channel_load_share_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += endat_diagnostic_multi_channel_single_pru_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hdsl_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hdsl_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hdsl_diagnostic_ddr_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += tamagawa_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += tamagawa_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_128_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2059,13 +1892,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_udpclient_am64x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_udp_igmp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_tcpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_cpsw_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2098,25 +1926,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am64x-sk_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += xip_benchmark_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += xip_benchmark_am64x-sk_system_freertos_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += benchmark_demo_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am64x-evm_system_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-rtupru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-txpru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += endat_peripheral_interface_single_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += endat_peripheral_interface_multi_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += hdsl_master_freerun_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += hdsl_master_multichannel_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += tamagawa_multi_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += tamagawa_single_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
@@ -2894,39 +2709,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world_cpp/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- ethercat_iolink_gateway_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/ethercat_iolink_gateway_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- ethercat_slave_cia402_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/cia402/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- ethercat_slave_ctt_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/ctt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- ethercat_slave_simple_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/simple/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- ethernetip_adapter_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/ethernetip_adapter_demo/mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- ethernetip_adapter_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/ethernetip_adapter_demo/rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hsr_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/hsr_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hsr_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/hsr_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- prp_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/prp_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- prp_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/prp_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- iolink_master_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/industrial_comms/iolink_master_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
  dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3047,30 +2829,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mathlib_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/mathlib/benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- endat_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- endat_diagnostic_multi_channel_load_share_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- endat_diagnostic_multi_channel_single_pru_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hdsl_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hdsl_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hdsl_diagnostic_ddr_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic_with_traces/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- tamagawa_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/tamagawa_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- tamagawa_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/motor_control/tamagawa_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
  runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3155,42 +2913,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-rtupru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-txpru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- endat_peripheral_interface_single_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- endat_peripheral_interface_multi_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- hdsl_master_freerun_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- hdsl_master_multichannel_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch1/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- tamagawa_multi_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
- tamagawa_single_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
-
  vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/vtm/vtm_uc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3248,26 +2970,11 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
  enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -3370,9 +3077,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  xip_benchmark_am64x-sk_system_freertos_clean:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec clean
-
- benchmark_demo_am64x-evm_system_nortos_clean:
-	$(MAKE) -C examples/motor_control/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec clean
 
  cdc_echo_nortos_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec clean
@@ -3643,17 +3347,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ethercat_iolink_gateway_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ethercat_slave_cia402_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ethercat_slave_ctt_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ethercat_slave_simple_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ethernetip_adapter_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ethernetip_adapter_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hsr_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hsr_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += prp_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += prp_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += iolink_master_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
@@ -3694,14 +3387,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-sk_a53ss0-0_free
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += smp_task_switch_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mathlib_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += endat_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += endat_diagnostic_multi_channel_load_share_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += endat_diagnostic_multi_channel_single_pru_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hdsl_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hdsl_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hdsl_diagnostic_ddr_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += tamagawa_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += tamagawa_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_128_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -3749,13 +3434,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_udpclient_am64x-evm_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_udp_igmp_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_tcpclient_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_am64x-evm_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_cpsw_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
@@ -3788,25 +3468,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am64x-evm_system_nortos_expo
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am64x-sk_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += xip_benchmark_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += xip_benchmark_am64x-sk_system_freertos_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += benchmark_demo_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am64x-evm_system_nortos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-rtupru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-txpru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += endat_peripheral_interface_single_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += endat_peripheral_interface_multi_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += hdsl_master_freerun_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += hdsl_master_multichannel_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += tamagawa_multi_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += tamagawa_single_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export
@@ -4584,39 +4251,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world_cpp/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- ethercat_iolink_gateway_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/ethercat_iolink_gateway_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- ethercat_slave_cia402_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/cia402/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- ethercat_slave_ctt_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/ctt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- ethercat_slave_simple_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/ethercat_slave_demo/simple/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- ethernetip_adapter_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/ethernetip_adapter_demo/mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- ethernetip_adapter_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/ethernetip_adapter_demo/rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hsr_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/hsr_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hsr_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/hsr_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- prp_mii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/prp_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- prp_rgmii_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/hsr_prp_demo/prp_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- iolink_master_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/industrial_comms/iolink_master_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
  dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4737,30 +4371,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mathlib_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/mathlib/benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- endat_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- endat_diagnostic_multi_channel_load_share_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- endat_diagnostic_multi_channel_single_pru_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hdsl_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hdsl_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hdsl_diagnostic_ddr_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/hdsl_diagnostic_with_traces/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- tamagawa_diagnostic_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/tamagawa_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- tamagawa_diagnostic_single_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/motor_control/tamagawa_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
  runtime_swrev_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4845,42 +4455,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-rtupru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- endat_peripheral_interface_multi_ch_load_share_am64x-evm_icssg0-txpru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- endat_peripheral_interface_single_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- endat_peripheral_interface_multi_ch_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- hdsl_master_freerun_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- hdsl_master_freerun_300_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- hdsl_master_multichannel_ch0_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- hdsl_master_multichannel_ch1_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch1/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- hdsl_master_sync_225_mhz_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- tamagawa_multi_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
- tamagawa_single_channel_am64x-evm_icssg0-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec export
-
  vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/vtm/vtm_uc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4938,26 +4512,11 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  enet_cpsw_socket_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
  enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_l2_cpsw_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_layer2_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- enet_vlan_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- enet_icssg_tas_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  enet_l2_multi_channel_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -5060,9 +4619,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  xip_benchmark_am64x-sk_system_freertos_export:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec export
-
- benchmark_demo_am64x-evm_system_nortos_export:
-	$(MAKE) -C examples/motor_control/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec export
 
  cdc_echo_nortos_am64x-evm_system_nortos_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec export
@@ -5358,17 +4914,6 @@ help:
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/ethercat_iolink_gateway_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/ethercat_slave_demo/cia402/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/ethercat_slave_demo/ctt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/ethercat_slave_demo/simple/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/ethernetip_adapter_demo/mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/ethernetip_adapter_demo/rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/hsr_prp_demo/hsr_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/hsr_prp_demo/hsr_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/hsr_prp_demo/prp_mii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/hsr_prp_demo/prp_rgmii/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/industrial_comms/iolink_master_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5409,14 +4954,6 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/smp_task_switch/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/multi_channel_load_share/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/endat_diagnostic/multi_channel_single_pru/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/hdsl_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/hdsl_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/hdsl_diagnostic_with_traces/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/tamagawa_diagnostic/multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/tamagawa_diagnostic/single_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/otp/runtime_swrev/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5445,18 +4982,6 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-rtupru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_load_share/am64x-evm/icssg0-txpru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/endat/firmware/multi_channel_single_pru/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/freerun_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/freerun_300_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch0/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/multichannel_ch1/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/hdsl/firmware/sync_225_mhz/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/multi_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C source/motor_control/position_sense/tamagawa/firmware/single_channel/am64x-evm/icssg0-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/vtm/vtm_uc/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/vtm/vtm_uc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5476,13 +5001,8 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_tcpclient/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_socket/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_layer2_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/enet_icssg_tas/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_cpsw_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5520,7 +5040,6 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am64x-sk/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/motor_control/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec [export all clean]

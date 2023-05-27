@@ -357,20 +357,20 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 <tr>
     <td> EtherCAT SubDevice FW HAL
-    <td> \ref bsp_init
-    <td> Added new parameters in \ref bsp_params for PDI and SYNC ISR functions to be called when interrupt is received from PRU, if ENABLE_PDI_TASK or ENABLE_SYNC_TASK macros are disabled.
+    <td> bsp_init
+    <td> Added new parameters in bsp_params for PDI and SYNC ISR functions to be called when interrupt is received from PRU, if ENABLE_PDI_TASK or ENABLE_SYNC_TASK macros are disabled.
     <td> No change needed if ENABLE_PDI_TASK or ENABLE_SYNC_TASK are enabled. They are enabled by default.
 </tr>
 <tr>
     <td> ICSS-EMAC
-    <td> \ref ICSS_EMAC_open
-    <td> \ref ETHPHY_Handle is an addition in \ref ICSS_EMAC_Params structure
-    <td> \ref ETHPHY_Handle should be passed in the \ref ICSS_EMAC_Params structure while making the \ref ICSS_EMAC_open function call.
+    <td> ICSS_EMAC_open
+    <td> \ref ETHPHY_Handle is an addition in ICSS_EMAC_Params structure
+    <td> \ref ETHPHY_Handle should be passed in the ICSS_EMAC_Params structure while making the ICSS_EMAC_open function call.
 </tr>
 <tr>
     <td> ICSS-EMAC
-    <td> \ref ICSS_EMAC_Params_init
-    <td> ICSS_EMAC_params_init is renamed to \ref ICSS_EMAC_Params_init
+    <td> ICSS_EMAC_Params_init
+    <td> ICSS_EMAC_params_init is renamed to ICSS_EMAC_Params_init
     <td> NA
 </tr>
 </table>

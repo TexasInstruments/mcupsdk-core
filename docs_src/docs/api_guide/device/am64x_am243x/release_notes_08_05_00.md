@@ -112,7 +112,7 @@ GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
 
 ### Features not supported in release
 
-- Profinet Device Stack and example. For more information, see \ref INDUSTRIAL_COMMS_TI_STACK_PROFINET_STACK_TRANSITION.
+- Profinet Device Stack and example. For more information, see INDUSTRIAL_COMMS_TI_STACK_PROFINET_STACK_TRANSITION.
 \cond SOC_AM243X
 
 ### AM243X LAUNCHPAD not tested/not supported features
