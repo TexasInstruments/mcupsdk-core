@@ -1,4 +1,4 @@
-# Release Notes 08.06.01 {#RELEASE_NOTES_08_06_01_PAGE}
+# Release Notes 09.00.00 {#RELEASE_NOTES_09_00_00_PAGE}
 
 [TOC]
 
@@ -14,19 +14,7 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-CAN SBL (basic CAN) support                                                                     | SBL
-MMCSD SBL support                                                                               | SBL
-MCAN transceiver based example                                                                  | MCAN
-ECAP Type 3 driver and syconfig                                                                 | ECAP
-EPWM TYpe 5 sysconfig enhancement                                                               | EPWM
-EQEP example enhancements - Error check                                                         | EQEP
-Early Ethernet with PHY in strapped mode example                                                | Ethernet
-Receive packet Scatter-Gather feature support                                                   | Ethernet
-Support for custom modification receive packet buffer size                                      | Ethernet
-Mbed-TLS library support (software cryptography)                                                | Networking
-DSCP priority mapping support in CPSW                                                           | Ethernet
-ENET driver (enet-lld) APIs added to support IEEE 802.1Qav (TSN Credit Based Shapper) in CPSW   | Ethernet
-R5 PMU driver and example added                                                                 | PMU
+-                                                                                               | -
 
 ## Device and Validation Information
 
@@ -200,196 +188,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Applicable Releases
     <th> Applicable Devices
     <th> Resolution/Comments
-</tr>
-<tr>
-    <td> MCUSDK-9460
-    <td> LIN SDK function is setting a improper register bit for selecting the checksum type in the register
-    <td> LIN
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-9313
-    <td> EPWM : SYSCFG : Mixed Event selection is missing from the DC and ET Sub Modules
-    <td> EPWM
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-9044
-    <td> Strapping mode in phy is not giving correct link speed
-    <td> Ethernet
-    <td> 8.5.0 onwards
-    <td> AM263x
-    <td> Phy configuration for strapped and forced mode was not correctly handled
-</tr>
-<tr>
-    <td> MCUSDK-8994
-    <td> EQEP frequency measurement example fails
-    <td> EQEP
-    <td> 8.5.0 onwards
-    <td> AM263x
-    <td> Incorrect value used for pass/fail criteria and typecasting bug in EQEP frequency measurement example
-</tr>
-<tr>
-    <td> MCUSDK-8974
-    <td> LIN External Example is only sending the LIN ID and no packet data
-    <td> LIN
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> Incorrect lin configuration
-</tr>
-<tr>
-    <td> MCUSDK-8383
-    <td> Load from JSON feature fails in SysConfig in Windows PC
-    <td> Flash
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> Updated the sysconfig to use OS agnostic copy function
-</tr>
-<tr>
-    <td> MCUSDK-7320
-    <td> Errata ADC: DMA Read of Stale Result
-    <td> ADC
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> refer Errata i2355
-</tr>
-<tr>
-    <td> MCUSDK-2557
-    <td> AM263x_lp:EQEP examples are not working
-    <td> EQEP
-    <td> 8.2.0 onwards
-    <td> AM263x
-    <td> Incorrect value used for pass/fail criteria and typecasting bug in EQEP frequency measurement example
-</tr>
-<tr>
-    <td> MCUSDK-9304
-    <td> LWIP Ethernet CPSW Socket: Putting Udp application buffer in cached region of memory causes stale data to be sent out in Udp packets
-    <td> ENET
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> Fixed the udp examples and added udp client socket example
-</tr>
-<tr>
-    <td> MCUSDK-9185
-    <td> Enet Lwip Ethernet CPSW example: Correct MAC address not available from EEPROM on custom board and Pg1.0 lp causes example crash
-    <td> ENET
-    <td> 8.4.0 onwards
-    <td> AM263x
-    <td> Fixed
-</tr>
-<tr>
-    <td> PROC_SDL-5739
-    <td> MCRC Auto mode was not implemented correctly.
-    <td> SDL
-    <td> 8.5.0 onwards
-	<td> AM263x
-    <td> Fixed the source and example.
-</tr>
-<tr>
-    <td> MCUSDK-9578
-    <td> ICSS-EMAC : IOCTL for statistics always returns errors
-    <td> ICSS-EMAC
-    <td> 7.3.0 onwards
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-9640
-    <td> ICSS-EMAC : isNRT flag in ICSS_EMAC_pollPkt is not cleared appropriately
-    <td> ICSS-EMAC
-    <td> 8.2.0 onwards
-    <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-8403
-    <td> 1000000(1MHz) baud rate not working on UART
-    <td> UART
-    <td> 8.4.0
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-8983
-    <td> EtherCAT : EDIO pins for AL event is not supported in firmware.
-    <td> EtherCAT
-    <td> 7.3.0 onwards
-    <td> AM263x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-9051
-    <td> CAN : Sampling Point Calculation For Default Nominal and Data baud rate configuration not present in SysCfg
-    <td> CAN
-    <td> 8.5.0
-    <td> AM263x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-9523
-    <td> ENET : PhyState polling frequency is incorrectly set
-    <td> ENET
-    <td> 8.5.0
-    <td> AM263x
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-6909
-    <td> EPWM: Emulation mode doesn't work
-    <td> EPWM
-    <td> 8.4.0 onwards
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-7915
-    <td> SDFM: EPWM filter sync example does not configure and check the PWM synchronization
-    <td> SDFM
-    <td> 8.3.0 onwards
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-8348
-    <td> EnetDma_initPktInfo does not initialized chkSumInfo member
-    <td> Enet
-    <td> 8.4.0 onwards
-    <td> Fixed
-</tr>
-<tr>
-    <td> MCUSDK-8989
-    <td> WDT Reset example takes more than expiration time to reset.
-    <td> WDT
-    <td> 8.5.0
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-8072
-    <td> EnetBoard_setupPorts does not provide config option to enable internal delay for RGMII
-    <td> Enet
-    <td> 8.4.0 onwards
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-9480
-    <td> EPWM : HR Updown example crashing on AM263x-LP
-    <td> EPWM
-    <td> 8.5.0
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-9595
-    <td> MCPSI Lookback DMA example locks up when the Bit Rate is set to < 12.5Mhz
-    <td> McSPI
-    <td> 8.4.0 onwards
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-9651
-    <td> Enet - Host port statistics driver and CSL overlay is not correct
-    <td> Enet
-    <td> 8.5.0
-    <td> None
 </tr>
 </table>
 
@@ -574,40 +372,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Change
     <th> Additional Remarks
 </tr>
-<tr>
-    <td> ECAP
-    <td> HRCAP APIs and Macros
-- Removed 16 functions:
-    - HRCAP_enableHighResolution
-    - HRCAP_disableHighResolution
-    - HRCAP_enableHighResolutionClock
-    - HRCAP_disbleHighResolutionClock
-    - HRCAP_startCalibration
-    - HRCAP_setCalibrationMode
-    - HRCAP_enableCalibrationInterrupt
-    - HRCAP_disableCalibrationInterrupt
-    - HRCAP_getCalibrationFlags
-    - HRCAP_clearCalibrationFlags
-    - HRCAP_isCalibrationBusy
-    - HRCAP_forceCalibrationFlags
-    - HRCAP_setCalibrationPeriod
-    - HRCAP_getCalibrationClockPeriod
-    - HRCAP_getScaleFactor
-    - HRCAP_convertEventTimeStampNanoseconds
-- Removed a supported input macro from 5 functions and 1 macro:
-    - ECAP_ISR_SOURCE_HR_ERROR from ECAP_forceInterrupt, ECAP_clearInterrupt, ECAP_getInterruptSource, ECAP_disableInterrupt, ECAP_enableInterrupt. And from ECAP_ISR_SOURCE_ALL
-- Removed 2 enums and 3 macros:
-    - HRCAP_CalibrationClockSource,
-    - HRCAP_ContinuousCalibrationMode.
-    - HRCAP_GLOBAL_CALIBRATION_INTERRUPT,
-    - HRCAP_CALIBRATION_DONE and
-    - HRCAP_CALIBRATION_PERIOD_OVERFLOW
-- CSLR change:
-    - removed register offsets and related CSL for HRCAP in ECAP.
-    <td> removed
-    <td> HRCAP is not supported in AM263x.
-</tr>
-
 </table>
 
 <table>
@@ -617,44 +381,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Change
     <th> Additional Remarks
 </tr>
-<tr>
-    <td> FSI
-    <td> Macro FSI_RX_MASTER_CORE_RESET, FSI_TX_MASTER_CORE_RESET
-    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **MASTER** to **MAIN**
-    <td> Updated to use the inclusive naming
-</tr>
-<tr>
-    <td> I2C
-    <td> Structure I2C_Transaction member slaveAddress, masterMode
-    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **controller** and **slave** to **target**, for example..\n
-    slaveAddress->targetAddress
-    <td> Updated to use the inclusive naming
-</tr>
-<tr>
-    <td> LIN
-    <td> Enum LIN_LINMode member LIN_MODE_LIN_SLAVE, LIN_MODE_LIN_MASTER\n
-    Enum LIN_MessageFilter member LIN_MSG_FILTER_IDSLAVE\n
-    Function LIN_setIDSlaveTask
-    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **commander** and **slave** to **responder**, for example..\n
-    LIN_setIDSlaveTask->LIN_setIDResponderTask
-    <td> Updated to use the inclusive naming
-</tr>
-<tr>
-    <td> McSPI
-    <td> MACRO MCSPI_MS_MODE_MASTER, MCSPI_MS_MODE_SLAVE
-    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn and rxCsumOffloadEn.
-    <td> This enables support to control TXP/DUP checksum offload along Rx and Tx seperatly.
-</tr>
-<tr>
-    <td> SDFM
-    <td> MACRO SDFM_MASTER_INTERRUPT_FLAG\n
-    Function SDFM_enableMasterInterrupt\n
-    Function SDFM_disableMasterInterrupt\n
-    Function SDFM_enableMasterFilter\n
-    Function SDFM_disableMasterFilter
-    <td> API/MACRO/STRUCTURE name are updated while keeping the case sensitivity from **master** to **main**, for example..\n
-    SDFM_enableMasterFilter->SDFM_enableMainFilter
-    <td> Updated to use the inclusive naming
 </table>
 
 ### Networking
@@ -665,19 +391,5 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Affected API
     <th> Change
     <th> Additional Remarks
-</tr>
-<tr>
-    <td> Ethernet CPSW
-    <td> Structure \ref CpswHostPort_Cfg in \ref Cpsw_Cfg \n
-    Function Enet_open
-    <td> Replaced csumOffloadEn parameter with txCsumOffloadEn and rxCsumOffloadEn
-    <td> This enables support to control TXP/DUP checksum offload along Rx and Tx separately
-</tr>
-<tr>
-    <td> Ethernet CPSW
-    <td> Structure \ref EnetCpdma_Cfg in \ref Cpsw_Cfg \n
-    Function Enet_open
-    <td> Removed the parameter isCacheable.
-    <td> Support to place descriptor in cached memory is removed. CPDMA descriptiors has be placed un-cached memory section always.
 </tr>
 </table>
