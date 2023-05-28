@@ -1,12 +1,12 @@
 
 let common = system.getScript("/common");
 
-let wdt_func_clk = 5000000;
+let wdt_func_clk = 150000000;
 
 const watchdog_config_r5fss = [
     {
         name: "MSS_WDT",
-		wdtInstance: "0",
+        wdtInstance: "0",
         baseAddr: "CSL_MSS_WDT_U_BASE",
         funcClk: wdt_func_clk,
         clockIds        : [ "SOC_RcmPeripheralId_MSS_WDT" ],
@@ -23,7 +23,7 @@ const watchdog_config_r5fss = [
 const watchdog_config_c66ss = [
     {
         name: "DSS_WDT",
-		wdtInstance: "0",
+        wdtInstance: "0",
         baseAddr: "CSL_DSS_WDT_U_BASE",
         funcClk: wdt_func_clk,
         clockIds        : [ "SOC_RcmPeripheralId_DSS_WDT" ],
@@ -50,6 +50,25 @@ function getConfigArr() {
     return watchdog_config;
 }
 
+const SOC_RcmClkSrcInfo = [
+    {
+        name: "SOC_RcmPeripheralClockSource_XTAL_CLK",
+        displayName: "XTALCLK  (40 MHz)",
+        freq: 40000000
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_SYS_CLK",
+        freq: 150000000,
+        displayName: "SYS_CLK (150 MHz)"
+    },
+    {
+        name: "SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1",
+        freq: 200000000,
+        displayName: "DPLL_CORE_HSDIV0_CLKOUT1 (200 MHz)",
+    },
+]
+
 exports = {
     getConfigArr,
+    SOC_RcmClkSrcInfo
 };
