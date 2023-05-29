@@ -124,7 +124,7 @@ gconfig = gconfig.concat([
             },
             {
                 name: "Watchdog_RESET_OFF",
-                displayName: "trigger NMI interrupt"
+                displayName: "trigger WDT interrupt"
             },
         ],
         description: "Reaction to select on WDT expiry, currently supporting only to trigger warm reset",
