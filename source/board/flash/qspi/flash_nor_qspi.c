@@ -646,10 +646,16 @@ static int32_t Flash_norQspiErase(Flash_Config *config, uint32_t blkNum)
 
     uint8_t  cmd = QSPI_CMD_INVALID_OPCODE;
     uint32_t cmdAddr = QSPI_CMD_INVALID_ADDR;
+    uint32_t eraseTimeout = devCfg->flashBusyTimeout;
 
     if (blkNum == (uint32_t)(-1))
     {
         cmd    = devCfg->eraseCfg.cmdChipErase;
+        /* Chip erase times can be several minutes and can vary from flash to
+         * flash. Give UINT_MAX so that we wait for as much time it takes to
+         * erase the flash completely.
+         */
+        eraseTimeout = (uint32_t)(-1);
     }
     else
     {
@@ -670,10 +676,6 @@ static int32_t Flash_norQspiErase(Flash_Config *config, uint32_t blkNum)
     }
     if(status == SystemP_SUCCESS)
     {
-        status = Flash_norQspiWaitReady(config, devCfg->flashBusyTimeout);
-    }
-    if(status == SystemP_SUCCESS)
-    {
         status = Flash_norQspiCmdWrite(config, devCfg->cmdWren, QSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
     if(status == SystemP_SUCCESS)
@@ -686,7 +688,7 @@ static int32_t Flash_norQspiErase(Flash_Config *config, uint32_t blkNum)
     }
     if(status == SystemP_SUCCESS)
     {
-        status = Flash_norQspiWaitReady(config, devCfg->flashBusyTimeout);
+        status = Flash_norQspiWaitReady(config, eraseTimeout);
     }
 
     return status;
@@ -701,10 +703,16 @@ static int32_t Flash_norQspiEraseSector(Flash_Config *config, uint32_t sectorNum
 
     uint8_t cmd = QSPI_CMD_INVALID_OPCODE;
     uint32_t cmdAddr = QSPI_CMD_INVALID_ADDR;
+    uint32_t eraseTimeout = devCfg->flashBusyTimeout;
 
     if(sectorNum == (uint32_t)(-1))
     {
         cmd = devCfg->eraseCfg.cmdChipErase;
+        /* Chip erase times can be several minutes and can vary from flash to
+         * flash. Give UINT_MAX so that we wait for as much time it takes to
+         * erase the flash completely.
+         */
+        eraseTimeout = (uint32_t)(-1);
     }
     else
     {
@@ -725,10 +733,6 @@ static int32_t Flash_norQspiEraseSector(Flash_Config *config, uint32_t sectorNum
     }
     if(SystemP_SUCCESS == status)
     {
-        status = Flash_norQspiWaitReady(config, devCfg->flashBusyTimeout);
-    }
-    if(SystemP_SUCCESS == status)
-    {
         status = Flash_norQspiCmdWrite(config, devCfg->cmdWren, QSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
     if(SystemP_SUCCESS == status)
@@ -741,7 +745,7 @@ static int32_t Flash_norQspiEraseSector(Flash_Config *config, uint32_t sectorNum
     }
     if(SystemP_SUCCESS == status)
     {
-        status = Flash_norQspiWaitReady(config, devCfg->flashBusyTimeout);
+        status = Flash_norQspiWaitReady(config, eraseTimeout);
     }
 
     return status;

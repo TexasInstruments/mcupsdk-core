@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -962,10 +962,16 @@ static int32_t Flash_norOspiErase(Flash_Config *config, uint32_t blkNum)
 
     uint8_t cmd = OSPI_CMD_INVALID_OPCODE;
     uint32_t cmdAddr = OSPI_CMD_INVALID_ADDR;
+    uint32_t eraseTimeout = devCfg->flashBusyTimeout;
 
     if(blkNum == (uint32_t)(-1))
     {
         cmd = devCfg->eraseCfg.cmdChipErase;
+        /* Chip erase times can be several minutes and can vary from flash to
+         * flash. Give UINT_MAX so that we wait for as much time it takes to
+         * erase the flash completely.
+         */
+        eraseTimeout = (uint32_t)(-1);
     }
     else
     {
@@ -986,10 +992,6 @@ static int32_t Flash_norOspiErase(Flash_Config *config, uint32_t blkNum)
     }
     if(SystemP_SUCCESS == status)
     {
-        status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
-    }
-    if(SystemP_SUCCESS == status)
-    {
         status = Flash_norOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
     if(SystemP_SUCCESS == status)
@@ -1002,7 +1004,7 @@ static int32_t Flash_norOspiErase(Flash_Config *config, uint32_t blkNum)
     }
     if(SystemP_SUCCESS == status)
     {
-        status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+        status = Flash_norOspiWaitReady(config, eraseTimeout);
     }
 
     return status;
@@ -1017,10 +1019,16 @@ static int32_t Flash_norOspiEraseSector(Flash_Config *config, uint32_t sectorNum
 
     uint8_t cmd = OSPI_CMD_INVALID_OPCODE;
     uint32_t cmdAddr = OSPI_CMD_INVALID_ADDR;
+    uint32_t eraseTimeout = devCfg->flashBusyTimeout;
 
     if(sectorNum == (uint32_t)(-1))
     {
         cmd = devCfg->eraseCfg.cmdChipErase;
+        /* Chip erase times can be several minutes and can vary from flash to
+         * flash. Give UINT_MAX so that we wait for as much time it takes to
+         * erase the flash completely.
+         */
+        eraseTimeout = (uint32_t)(-1);
     }
     else
     {
@@ -1041,10 +1049,6 @@ static int32_t Flash_norOspiEraseSector(Flash_Config *config, uint32_t sectorNum
     }
     if(SystemP_SUCCESS == status)
     {
-        status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
-    }
-    if(SystemP_SUCCESS == status)
-    {
         status = Flash_norOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
     if(SystemP_SUCCESS == status)
@@ -1057,7 +1061,7 @@ static int32_t Flash_norOspiEraseSector(Flash_Config *config, uint32_t sectorNum
     }
     if(SystemP_SUCCESS == status)
     {
-        status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+        status = Flash_norOspiWaitReady(config, eraseTimeout);
     }
 
     return status;
