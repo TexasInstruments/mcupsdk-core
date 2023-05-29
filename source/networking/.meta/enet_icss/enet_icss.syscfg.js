@@ -113,7 +113,7 @@ const enet_icssg_board_config = {
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],
-            readOnly: true,
+               readOnly: true,
             getValue:function (inst) {
                 const icssgPhyAddrInfoMap = new Map(
                                            [
@@ -238,48 +238,75 @@ function pinmuxRequirements(inst) {
     else
     {
         let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
+        let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
 
-        if(inst.mdioMdcEnable == true)
+        let interfaceNameList = [];
+        if (inst.mdioMdcEnable == true)
         {
-            return [mdio, iep, rgmii1];
+            interfaceNameList.push(mdio, iep);
+        }
+        if (inst.mode == 'SWITCH')
+        {
+             interfaceNameList.push(rgmii1, rgmii2);
         }
         else
         {
-            let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
-            return [rgmii2];
+            if (inst.dualMacPortSelected == 'ENET_MAC_PORT_1')
+            {
+                interfaceNameList.push(rgmii1);
+            }
+            else
+            {
+                interfaceNameList.push(rgmii2);
+            }
         }
+
+        return interfaceNameList;
     }
 }
 
 
 
-function getInterfaceNameList(inst) {
-
-    if(inst.phyToMacInterfaceMode === "MII")
+function getInterfaceNameList(inst)
+{
+    let interfaceNameList = [];
+    if (inst.phyToMacInterfaceMode === "MII")
     {
-        return [
+        interfaceNameList.push(
             getInterfaceName(inst, "MDIO"),
             getInterfaceName(inst, "IEP"),
-            getInterfaceName(inst, "MII_G_RT" ),
-        ];
+            getInterfaceName(inst, "MII_G_RT" ));
     }
-    else
+    else if (inst.phyToMacInterfaceMode === "RGMII")
     {
-        if(inst.mdioMdcEnable == true)
+        if (inst.mdioMdcEnable == true)
         {
-            return [
+            interfaceNameList.push(
                 getInterfaceName(inst, "MDIO"),
-                getInterfaceName(inst, "IEP"),
+                getInterfaceName(inst, "IEP"));
+        }
+
+        if (inst.mode == 'SWITCH')
+        {
+             interfaceNameList.push(
                 getInterfaceName(inst, "RGMII1"),
-            ];
+                getInterfaceName(inst, "RGMII2"));
         }
         else
         {
-            return [
-                getInterfaceName(inst, "RGMII2"),
-            ];
+            if (inst.dualMacPortSelected == 'ENET_MAC_PORT_1')
+            {
+                interfaceNameList.push(
+                    getInterfaceName(inst, "RGMII1"));
+            }
+            else if (inst.dualMacPortSelected == 'ENET_MAC_PORT_2')
+            {
+                interfaceNameList.push(
+                    getInterfaceName(inst, "RGMII2"));
+            }
         }
     }
+    return interfaceNameList;
 }
 
 function getPeripheralPinNames(inst)

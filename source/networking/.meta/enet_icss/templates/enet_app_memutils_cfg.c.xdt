@@ -1,7 +1,9 @@
 %%{
     let module = system.modules["/networking/enet_icss/enet_icss"];
+    let instance = module.$instances[0];
+    let instances = module.$instances;
+    let pktPoolScript = system.getScript("../enet_pkt_pool_config");
 %%}
-% let instance = module.$instances[0];
 /*
  * Enet DMA memory allocation utility functions.
  */
@@ -36,10 +38,10 @@
 #include <networking/enet/core/src/dma/udma/enet_udma_priv.h>
 /* --------------------------------- ICSS-G MACROS --------------------------------- */
 
-#define ENET_MEM_LARGE_POOL_NUM_PKTS        (`Number(instance.LargePoolPktCount)`U + `Number(instance.LargePoolPktCount)`U)
-#define ENET_MEM_MEDIUM_POOL_NUM_PKTS       (`Number(instance.MediumPoolPktCount)`U + `Number(instance.MediumPoolPktCount)`U)
-#define ENET_MEM_SMALL_POOL_NUM_PKTS        (`Number(instance.MediumPoolPktCount)`U +`Number(instance.MediumPoolPktCount)`U)
-#define ENET_PKTINFOMEM_ONLY_NUM_PKTS        (`Number(instance.PktInfoOnlyCount)`U + `Number(instance.PktInfoOnlyCount)`U)
+#define ENET_MEM_LARGE_POOL_NUM_PKTS        (`Number(pktPoolScript.getLargePoolNumPkts(instances))`U)
+#define ENET_MEM_MEDIUM_POOL_NUM_PKTS       (`Number(pktPoolScript.getMediumPoolNumPkts(instances))`U)
+#define ENET_MEM_SMALL_POOL_NUM_PKTS        (`Number(pktPoolScript.getSmallPoolNumPkts(instances))`U)
+#define ENET_PKTINFOMEM_ONLY_NUM_PKTS       (`Number(pktPoolScript.getPktInfoNum(instances))`U)
 
 
 /* ========================================================================== */
@@ -259,13 +261,13 @@ static const EnetUdma_MemCfg gEthUdmaCfg =
 #if (UDMA_SOC_CFG_UDMAP_PRESENT == 1)
     .ringMonObjMemCfg =
     {
-        .numRings = ENET_SYSCFG_RING_MON_NUM*2,
+        .numRings = ENET_SYSCFG_RING_MON_NUM,
         .ringMonObjMemContainerBase = gEnetUdmaRinMonObjMem,
         .ringMonObjMemContainerSize = sizeof(gEnetUdmaRinMonObjMem),
     },
     .tdCqRingObjMemCfg =
     {
-        .numRings = ENET_SYSCFG_RING_MON_NUM*2,
+        .numRings = ENET_SYSCFG_RING_MON_NUM,
         .tdCqRingObjMemContainerBase = gEnetUdmaTdCqRingObjMem,
         .tdCqRingObjMemContainerSize = sizeof(gEnetUdmaTdCqRingObjMem),
     },
