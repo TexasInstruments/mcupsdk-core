@@ -175,7 +175,7 @@ def get_cert(args):
                         )
         image_bin_name = enctifs_name
 
-    if args.kd_salt:
+    if args.kd_salt and args.sbl_enc:
         ext_kd_seq = "1.3.6.1.4.1.294.1.5=ASN1:SEQUENCE:key_derivation"
         kd_salt = get_key_derivation_salt(args.kd_salt)
         kd_seq = g_kd_seq.format(
@@ -199,7 +199,7 @@ def get_cert(args):
     elif args.tifs_enc:
         ret_cert += tifs_enc_seq
 
-    if(args.kd_salt is not None):
+    if(args.kd_salt and args.sbl_enc):
         ret_cert += kd_seq
 
     if(dbg_seq != ''):
