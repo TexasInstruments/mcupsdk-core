@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1073,4 +1073,9 @@ int32_t SOC_isHsDevice(void)
     }
 
     return secDev;
+}
+
+uint32_t SOC_getFlashDataBaseAddr(void)
+{
+    return CSL_FSS0_DAT_REG1_BASE;
 }

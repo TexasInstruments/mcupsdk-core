@@ -599,3 +599,9 @@ void SOC_logAllClockHz(void)
     clkHz = SOC_rcmGetPeripheralClock(SOC_RcmPeripheralId_RCSS_MCASPC_AUX);
     DebugP_log("RCSS_MCASPC = %9d Hz\r\n", clkHz);
 }
+
+
+uint32_t SOC_getFlashDataBaseAddr(void)
+{
+    return CSL_EXT_FLASH_U_BASE;
+}

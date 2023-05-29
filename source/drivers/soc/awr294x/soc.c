@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -539,4 +539,9 @@ void SOC_logAllClockHz(void)
     DebugP_log("R5F         = %9d Hz\r\n", clkHz);
     clkHz = SOC_rcmGetDspClock();
     DebugP_log("DSP         = %9d Hz\r\n", clkHz);
+}
+
+uint32_t SOC_getFlashDataBaseAddr(void)
+{
+    return CSL_EXT_FLASH_U_BASE;
 }

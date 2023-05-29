@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -322,6 +322,14 @@ void SOC_waitForFwlUnlock(void);
  * \return TRUE on success, else failure
  */
 int32_t SOC_isHsDevice(void);
+
+/**
+ *  \brief  This function gets the SOC mapped data base address of the flash
+ *
+ *  \return Data BaseAddress of the flash
+ */
+uint32_t SOC_getFlashDataBaseAddr(void);
+
 /** @} */
 
 #ifdef __cplusplus

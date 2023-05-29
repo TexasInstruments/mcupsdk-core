@@ -522,7 +522,7 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
         else if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
         {
             Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
-            certLoadAddr = flashArgs->appImageOffset + 0x60000000;
+            certLoadAddr = flashArgs->appImageOffset + SOC_getFlashDataBaseAddr();
         }
 #ifdef DRV_VERSION_MMCSD_V0
         else if(config->bootMedia == BOOTLOADER_MEDIA_EMMC)
@@ -571,9 +571,9 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
         {
             if(config->disableAppImageAuth == TRUE)
             {
-                /* NOTE: This is an option to skip image authentication in a signed 
-                image to aid initial development on HS devices. If the user has 
-                opted to disable image authentication, do not authenticate/decrypt. 
+                /* NOTE: This is an option to skip image authentication in a signed
+                image to aid initial development on HS devices. If the user has
+                opted to disable image authentication, do not authenticate/decrypt.
                 Skip the certificate length and start loading as in GP */
                 authStatus = SystemP_SUCCESS;
             }
@@ -583,7 +583,7 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
             }
             if(config->bootMedia == BOOTLOADER_MEDIA_BUFIO)
             {
-                /* Authentication will fail in Buf Io because we don't have full data yet, 
+                /* Authentication will fail in Buf Io because we don't have full data yet,
                 so make it pass here for testing. Default behaviour is to assert. */
 
                 /* authStatus = SystemP_SUCCESS; */

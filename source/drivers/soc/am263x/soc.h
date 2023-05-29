@@ -361,6 +361,13 @@ uint64_t SOC_virtToPhy(void *virtAddr);
  */
 void *SOC_phyToVirt(uint64_t phyAddr);
 
+/**
+ *  \brief  This function gets the SOC mapped data base address of the flash
+ *
+ *  \return Data BaseAddress of the flash
+ */
+uint32_t SOC_getFlashDataBaseAddr(void);
+
 /** @} */
 
 #ifdef __cplusplus

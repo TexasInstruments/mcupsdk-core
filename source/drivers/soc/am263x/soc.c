@@ -951,3 +951,8 @@ void *SOC_phyToVirt(uint64_t phyAddr)
 
     return (virtAddr);
 }
+
+uint32_t SOC_getFlashDataBaseAddr(void)
+{
+    return CSL_EXT_FLASH0_U_BASE;
+}
