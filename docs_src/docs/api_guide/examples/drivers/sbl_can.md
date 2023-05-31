@@ -6,8 +6,8 @@
 
 This bootloader does SOC initializations and attempts to boot a multicore appimage received over CAN via custom-made protocol (see below). The image file is sent using a python script (See \ref CAN_BOOTLOADER_PYTHON_SCRIPT). Once image is received, the SBL then parses it, splits it into RPRCs for each core applicable. Each core is then initialized, RPRC image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
-\imageStyle{am263x_sbl_can_uniflash_process.PNG,width:60%}
-\image html am263x_sbl_can_uniflash_process.PNG MCAN SBL CAN UNIFLASH Process
+\imageStyle{sbl_can_uniflash_process.PNG,width:60%}
+\image html sbl_can_uniflash_process.PNG MCAN SBL CAN UNIFLASH Process
 
 This bootloader runs in two steps:
 - Flashing the SBL CAN at offset 0x0 (Setup the EVM in UART Boot Mode)
@@ -58,8 +58,8 @@ The CAN Uniflash provides a short list of commands that are used during the flas
 </table>
 Please refer the image below:
 
-\imageStyle{am263x_sbl_can_custom_protocol.png,width:50%}
-\image html am263x_sbl_can_custom_protocol.png SBL CAN Communication Protocol between Host Machine and the Board
+\imageStyle{sbl_can_custom_protocol.png,width:50%}
+\image html sbl_can_custom_protocol.png SBL CAN Communication Protocol between Host Machine and the Board
 
 # Settings Used in this Application
 In this application, the CAN settings are:

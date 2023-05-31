@@ -18,6 +18,7 @@ LIBNAME:=drivers.am273x.r5f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     bootloader.c \
     bootloader_buf_io.c \
+    bootloader_can.c \
     bootloader_flash.c \
     bootloader_mem.c \
     bootloader_soc.c \

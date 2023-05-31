@@ -14,6 +14,9 @@ Flashing tools allow to flash binaries to the flash on a EVM.
 \cond SOC_AWR294X
 - \ref TOOLS_FLASH_ENET_UNIFLASH
 \endcond
+\cond SOC_AM263X || SOC_AM273X
+- \ref TOOLS_FLASH_CAN_UNIFLASH
+\endcond
 
 ## UART Uniflash {#TOOLS_FLASH_UART_UNIFLASH}
 
@@ -568,7 +571,7 @@ JTAG is used as the transport or interface to send the file to flash to the EVM.
 
 Refer the example \ref EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM273X
 ## CAN Uniflash {#TOOLS_FLASH_CAN_UNIFLASH}
 
 CAN is used as the transport or interface to send the file to flash to the EVM.

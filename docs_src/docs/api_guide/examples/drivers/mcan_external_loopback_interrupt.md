@@ -33,7 +33,7 @@ Message is transmitted with the following configuration.
 - Data Bit Rate 5Mbps.
 - Buffer mode is used for both TX/RX to send/receive message in message RAM.
 
-This example runs for 10 iterations and in each 
+This example runs for 10 iterations and in each
 iteration the received message id and the data is compared with the transmitted
 one. After 10 iterations the example is completed.
 This is a example CAN communication, user can configure different message
@@ -77,7 +77,9 @@ Below are the connection details.
  CANL(Pin 1  of J3)      | CANL(Pin 1  of J2)
 \endcond
 
-
+\cond SOC_AM273X
+**NOTE: Transceiver is enabled for AM273x.**
+\endcond
 # Supported Combinations {#EXAMPLES_DRIVERS_MCAN_EXTERNAL_LOOPBACK_INTERRUPT_COMBOS}
 
 \cond SOC_AM64X

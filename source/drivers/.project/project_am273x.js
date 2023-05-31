@@ -6,6 +6,7 @@ const files_r5f = {
     common: [
         "bootloader.c",
         "bootloader_buf_io.c",
+        "bootloader_can.c",
         "bootloader_flash.c",
         "bootloader_mem.c",
         "bootloader_soc.c",

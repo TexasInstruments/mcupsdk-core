@@ -26,6 +26,9 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
    -# \subpage EXAMPLES_DRIVERS_SBL_UART_UNIFLASH
    -# \subpage EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
+    \cond SOC_AM273X
+   -# \subpage EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH
+    \endcond
 \endcond
 
 \cond SOC_AM263X
