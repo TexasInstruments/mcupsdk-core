@@ -152,6 +152,7 @@ const example_file_list = [
     "test/board/led/.project/project.js",
     "test/board/flash/.project/project.js",
     "test/drivers/adcbuf/.project/project.js",
+	"test/drivers/adcbuf/adcbuf_ut/.project/project.js",
     "test/drivers/boot/boot_testapp_mb/.project/project.js",
 	"test/drivers/crc/.project/project.js",
     "test/drivers/crc/crc_unit_test/.project/project.js",

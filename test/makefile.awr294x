@@ -89,6 +89,8 @@ help:
 	@echo  $(MAKE) -s -C board/flash/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/adcbuf/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/adcbuf/adcbuf_ut/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/adcbuf/adcbuf_ut/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/boot/boot_testapp_mb/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/crc/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/crc/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -286,6 +288,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000
+BUILD_COMBO_EXAMPLE_ALL += adcbuf_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adcbuf_ut_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += boot_testapp_mb_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_crc_awr294x-evm_c66ss0_nortos_ti-c6000
@@ -509,6 +513,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
+
+ adcbuf_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/adcbuf/adcbuf_ut/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adcbuf_ut_awr294x-evm_c66ss0_nortos_ti-c6000:
+	$(MAKE) -C drivers/adcbuf/adcbuf_ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
  boot_testapp_mb_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/boot/boot_testapp_mb/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -787,6 +797,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adcbuf_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adcbuf_ut_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += boot_testapp_mb_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_crc_awr294x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1010,6 +1022,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
+
+ adcbuf_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/adcbuf/adcbuf_ut/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adcbuf_ut_awr294x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C drivers/adcbuf/adcbuf_ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
  boot_testapp_mb_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/boot/boot_testapp_mb/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1288,6 +1306,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_awr294x-evm_r5fss0-0_nortos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbuf_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adcbuf_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adcbuf_ut_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += boot_testapp_mb_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_crc_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_crc_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -1511,6 +1531,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_adcbuf_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C drivers/adcbuf/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
+
+ adcbuf_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/adcbuf/adcbuf_ut/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adcbuf_ut_awr294x-evm_c66ss0_nortos_ti-c6000_scrub:
+	$(MAKE) -C drivers/adcbuf/adcbuf_ut/awr294x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
  boot_testapp_mb_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/boot/boot_testapp_mb/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
