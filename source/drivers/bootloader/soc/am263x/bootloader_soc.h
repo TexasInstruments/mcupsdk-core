@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -270,6 +270,14 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr);
  * \return TRUE (1U) if authentication required, FALSE (0U) if not.
  */
 uint32_t Bootloader_socIsAuthRequired(void);
+
+/**
+ * \brief API to get boot sequence oid
+ *
+ * \param boot_seq_oid [in] pointer to integer array for populating boot sequence oid
+ *
+ */
+void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 
 /**
  * \brief API to load hsm runtime firmware

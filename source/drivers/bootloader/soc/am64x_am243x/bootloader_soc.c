@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -927,7 +927,7 @@ int32_t Bootloader_socCpuResetReleaseSelf(void)
         bDualSelfR5F = TRUE;
     }
 
-    
+
     if(bDualSelfR5F == TRUE)
     {
         sciclientCpuProcIdCore1 = Bootloader_socGetSciclientCpuProcId(CSL_CORE_ID_R5FSS0_1);
@@ -1318,4 +1318,9 @@ void Bootloader_socNotifyFirewallOpen(void)
     uint32_t *psramPtr = (uint32_t *)AddrTranslateP_getLocalAddr(CSL_PSRAMECC0_RAM_BASE);
 
     CSL_REG32_WR(psramPtr, SOC_FWL_OPEN_MAGIC_NUM);
+}
+
+void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
+    uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x22};
+    memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
 }

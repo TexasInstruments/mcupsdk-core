@@ -422,3 +422,8 @@ uint32_t Bootloader_socIsAuthRequired(void)
 {
     return FALSE;
 }
+
+void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
+    uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x01};
+    memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
+}

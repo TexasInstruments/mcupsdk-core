@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -282,8 +282,8 @@ uint32_t Bootloader_socIsR5FSSDual(uint32_t ssNum);
  * \brief API to check the GPN variant of the SOC - whether it's a quad core,
  * dual core or a single core variant
  *
- * \return \ref BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE, 
- *         \ref BOOTLOADER_DEVICE_VARIANT_DUAL_CORE or 
+ * \return \ref BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE,
+ *         \ref BOOTLOADER_DEVICE_VARIANT_DUAL_CORE or
  *         \ref BOOTLOADER_DEVICE_VARIANT_QUAD_CORE or
  *          0xFFFFFFFF if invalid bit field read
  */
@@ -318,6 +318,14 @@ uint32_t Bootloader_socIsMCUResetIsoEnabled(void);
  * This function should only be called from SBL
  */
 void Bootloader_socNotifyFirewallOpen(void);
+
+/**
+ * \brief API to get boot sequence oid
+ *
+ * \param boot_seq_oid [in] pointer to integer array for populating boot sequence oid
+ *
+ */
+void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 
 #ifdef __cplusplus
 }
