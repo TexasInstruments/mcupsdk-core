@@ -1,6 +1,6 @@
 let common   = system.getScript("/common");
 let pinmux = system.getScript("/drivers/pinmux/pinmux");
-let device_peripheral = system.getScript("/drivers/epwm/soc/epwm_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/epwm/soc/epwm_${common.getSocName()}.syscfg.js`);
 let epwm_validation = system.getScript("/drivers/epwm/v1/epwm_validation.syscfg.js");
 
 device_peripheral.EPWM_CurrentLink.unshift(

@@ -30,7 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
+
 /**
  * \ingroup SDL_MODULE
  * \defgroup SDL_CCM_MODULE APIs for CCM MODULE
@@ -45,7 +45,7 @@
 #define SDL_CCM_H_
 
 #ifdef __cplusplus
-extern "C" 
+extern "C"
 {
 #endif
 
@@ -53,6 +53,9 @@ extern "C"
 
 #if defined (SOC_AM263X)
 #include <sdl/r5/v0/am263x/sdl_soc_ccm.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/r5/v0/am263px/sdl_soc_ccm.h>
 #endif
 #if defined (SOC_AM273X)
 #include <sdl/r5/v0/am273x/sdl_soc_ccm.h>
@@ -65,4 +68,4 @@ extern "C"
 }
 #endif  /* extern "C" */
 
-#endif 
+#endif

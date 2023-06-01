@@ -1,0 +1,74 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.15.0+2826"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ecap         = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1        = ecap.addInstance();
+const debug_log    = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7    = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71   = mpu_armv7.addInstance();
+const mpu_armv72   = mpu_armv7.addInstance();
+const mpu_armv73   = mpu_armv7.addInstance();
+const mpu_armv74   = mpu_armv7.addInstance();
+const int_xbar     = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1    = int_xbar.addInstance();
+const output_xbar  = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1 = output_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ecap1.$name               = "CONFIG_ECAP0";
+ecap1.ecapMode            = "APWM";
+ecap1.enableInterrupt     = true;
+ecap1.interruptSourceAPWM = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
+ecap1.syncOutMode         = "ECAP_SYNC_OUT_DISABLED";
+ecap1.apwmPeriod          = 200000;
+ecap1.apwmCompare         = 100000;
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["ECAP0_INT"];
+int_xbar1.instance   = "INT_XBAR_22";
+
+output_xbar1.$name      = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput = ["ECAP0_OUT"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.$suggestSolution          = "UART0";
+output_xbar1.OUTPUTXBAR.$suggestSolution         = "OUTPUTXBAR0";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "ball.R3";

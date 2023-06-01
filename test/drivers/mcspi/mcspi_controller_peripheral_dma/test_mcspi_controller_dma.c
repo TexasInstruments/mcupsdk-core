@@ -365,7 +365,7 @@ static void test_mcspi_set_master_params(MCSPI_MasterTestParams *testParams, uin
     openParams->transferCallbackFxn    = NULL;
     openParams->msMode                 = MCSPI_MS_MODE_CONTROLLER;
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     chConfigParams->chNum              = MCSPI_CHANNEL_0;
 #else
     /* Default Channel Config Parameters */

@@ -57,7 +57,7 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 % }
-% if (args.project.device == "am263x") {
+% if( (args.project.device == "am263x")  || (args.project.device == "am263px")){
 BOOTIMAGE_CORE_ID_r5fss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-1 = 1
 BOOTIMAGE_CORE_ID_r5fss1-0 = 2

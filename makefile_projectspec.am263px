@@ -1,0 +1,2334 @@
+#
+# Auto generated makefile
+#
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
+# Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_null_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_null_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_asynchronous_trip_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cmpss_asynchronous_trip_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_constant_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_constant_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_ramp_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_ramp_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_random_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_random_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_sine_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_sine_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_sine_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_sine_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_square_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dac_square_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_capture_pwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_capture_pwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_chain_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_link_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_link_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_position_speed_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_read_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_read_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_external_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_external_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lin_sci_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_read_write_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_read_write_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_read_write_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_read_write_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_32bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_32bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_32bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_32bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-cc_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-cc_r5fss1-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-lp_r5fss0-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-lp_r5fss1-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=  pmu_multievent_am263px-lp_r5fss1-1_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_callback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_reset_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_reset_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += interrupt_prioritization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += interrupt_prioritization_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += interrupt_prioritization_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += interrupt_prioritization_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+# Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-cc_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-lp_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-cc_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-lp_system_nortos_build
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
+# Various Private Example Projectspec Build Targets
+# Various Private System Example Projectspec Build Targets
+
+all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
+
+all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ sbl_null_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_null_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ cmpss_asynchronous_trip_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ cmpss_asynchronous_trip_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_constant_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_constant_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_ramp_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_ramp_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_random_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_random_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_random_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_random_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_sine_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_sine_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_sine_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_sine_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_sine_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_sine_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_sine_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_sine_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_square_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_square_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dac_square_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/dac/dac_square_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecap_apwm_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecap_apwm_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecap_capture_pwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ecap/ecap_capture_pwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecap_capture_pwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ecap/ecap_capture_pwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_chain_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_chain_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_link_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_link_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_polled_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_updown/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_updown/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ eqep_position_speed_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_read_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_read_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_external_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_external_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ lin_sci_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_external_read_write_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_external_read_write_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_external_read_write_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_external_read_write_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcan_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_32bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_32bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_32bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_32bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_8bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_8bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_8bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_performance_8bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mmcsd_file_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mmcsd_file_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mmcsd_raw_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ mmcsd_raw_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-cc_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-cc_r5fss1-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-lp_r5fss0-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-lp_r5fss1-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+  pmu_multievent_am263px-lp_r5fss1-1_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec all
+
+ rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_callback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_callback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_callback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_callback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_low_latency_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_low_latency_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_low_latency_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ watchdog_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ watchdog_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ watchdog_reset_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ watchdog_reset_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_cpp_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world_cpp/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_cpp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world_cpp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_cpp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world_cpp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ hello_world_cpp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/hello_world_cpp/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ dpl_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ interrupt_prioritization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ interrupt_prioritization_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ interrupt_prioritization_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ interrupt_prioritization_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ posix_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ posix_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ task_switch_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ task_switch_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ edma_interrupt_transfer_am263px-cc_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile_projectspec all
+
+ edma_interrupt_transfer_am263px-lp_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile_projectspec all
+
+ empty_am263px-cc_system_freertos_build:
+	$(MAKE) -C examples/empty/am263px-cc/system_freertos -f makefile_projectspec all
+
+ empty_am263px-lp_system_freertos_build:
+	$(MAKE) -C examples/empty/am263px-lp/system_freertos -f makefile_projectspec all
+
+ empty_am263px-cc_system_nortos_build:
+	$(MAKE) -C examples/empty/am263px-cc/system_nortos -f makefile_projectspec all
+
+ empty_am263px-lp_system_nortos_build:
+	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec all
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
+# Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_null_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_null_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_asynchronous_trip_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cmpss_asynchronous_trip_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_constant_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_constant_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_ramp_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_ramp_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_random_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_random_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_sine_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_sine_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_sine_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_sine_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_square_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dac_square_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_capture_pwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_capture_pwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_chain_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_link_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_link_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_position_speed_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_read_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_read_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_external_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_external_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lin_sci_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_read_write_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_read_write_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_read_write_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_read_write_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_32bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_32bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_32bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_32bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-cc_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-cc_r5fss1-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-lp_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-lp_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=  pmu_multievent_am263px-lp_r5fss1-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_callback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_reset_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_reset_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += interrupt_prioritization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += interrupt_prioritization_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += interrupt_prioritization_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += interrupt_prioritization_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+# Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-cc_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-lp_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-cc_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-lp_system_nortos_clean
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
+# Various Private Example Projectspec Clean Targets
+# Various Private System Example Projectspec Clean Targets
+
+clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
+
+clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ sbl_null_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_null_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ cmpss_asynchronous_trip_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ cmpss_asynchronous_trip_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_constant_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_constant_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_ramp_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_ramp_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_random_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_random_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_random_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_random_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_sine_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_sine_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_sine_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_sine_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_sine_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_sine_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_sine_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_sine_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_square_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_square_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dac_square_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_square_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecap_apwm_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecap_apwm_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecap_capture_pwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_capture_pwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecap_capture_pwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_capture_pwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_chain_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_chain_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_link_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_link_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_polled_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_updown/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_updown/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ eqep_position_speed_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_read_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_read_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_external_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_external_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ lin_sci_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_external_read_write_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_external_read_write_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_external_read_write_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_external_read_write_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcan_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_32bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_32bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_32bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_32bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_8bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_8bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_8bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_performance_8bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mmcsd_file_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mmcsd_file_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mmcsd_raw_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ mmcsd_raw_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-cc_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-cc_r5fss1-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-lp_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-lp_r5fss1-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+  pmu_multievent_am263px-lp_r5fss1-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_callback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_callback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_callback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_callback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_low_latency_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_low_latency_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_low_latency_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ watchdog_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ watchdog_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ watchdog_reset_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ watchdog_reset_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_cpp_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_cpp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_cpp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ hello_world_cpp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/hello_world_cpp/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ dpl_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ interrupt_prioritization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ interrupt_prioritization_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ interrupt_prioritization_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ interrupt_prioritization_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ posix_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ posix_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ task_switch_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ task_switch_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile_projectspec clean
+
+ edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile_projectspec clean
+
+ empty_am263px-cc_system_freertos_clean:
+	$(MAKE) -C examples/empty/am263px-cc/system_freertos -f makefile_projectspec clean
+
+ empty_am263px-lp_system_freertos_clean:
+	$(MAKE) -C examples/empty/am263px-lp/system_freertos -f makefile_projectspec clean
+
+ empty_am263px-cc_system_nortos_clean:
+	$(MAKE) -C examples/empty/am263px-cc/system_nortos -f makefile_projectspec clean
+
+ empty_am263px-lp_system_nortos_clean:
+	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec clean
+
+
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
+# Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_null_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_null_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_asynchronous_trip_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cmpss_asynchronous_trip_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_constant_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_constant_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_ramp_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_ramp_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_random_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_random_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_sine_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_sine_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_sine_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_sine_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_square_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dac_square_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_capture_pwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_capture_pwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_chain_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_link_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_link_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_position_speed_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_read_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_read_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_external_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_external_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lin_sci_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_read_write_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_read_write_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_read_write_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_read_write_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_32bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_32bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_32bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_32bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-cc_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-cc_r5fss1-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-lp_r5fss0-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-lp_r5fss1-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=  pmu_multievent_am263px-lp_r5fss1-1_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_callback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_reset_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_reset_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += interrupt_prioritization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += interrupt_prioritization_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += interrupt_prioritization_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += interrupt_prioritization_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+# Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-cc_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-lp_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-cc_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-lp_system_nortos_export
+
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
+# Various Private Example Projectspec Export Targets
+# Various Private System Example Projectspec Export Targets
+
+export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
+
+export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ sbl_null_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_null_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_uart_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sbl_uart_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ cmpss_asynchronous_trip_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ cmpss_asynchronous_trip_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_constant_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_constant_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_ramp_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_ramp_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_random_voltage_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_random_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_random_voltage_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_random_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_sine_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_sine_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_sine_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_sine_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_sine_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_sine_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_sine_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_sine_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_square_wave_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_square_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dac_square_wave_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/dac/dac_square_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecap_apwm_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecap_apwm_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecap_capture_pwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ecap/ecap_capture_pwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecap_capture_pwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ecap/ecap_capture_pwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_chain_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_chain_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_chain_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_link_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_link_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_link_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_polled_transfer_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_updown/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_hr_updown/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ eqep_position_speed_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_input_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_read_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_read_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_external_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_external_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ lin_sci_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_external_read_write_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_external_read_write_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_external_read_write_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_external_read_write_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_interrupt_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_interrupt_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_polling_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcan_loopback_polling_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_32bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_32bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_32bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_32bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_8bit_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_8bit_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_8bit_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_performance_8bit_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mmcsd_file_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mmcsd_file_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mmcsd_raw_io_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ mmcsd_raw_io_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-cc_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-cc_r5fss1-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-lp_r5fss0-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-lp_r5fss1-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+  pmu_multievent_am263px-lp_r5fss1-1_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec export
+
+ rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_callback_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_callback_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_callback_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_callback_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_low_latency_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_low_latency_polling_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_low_latency_polling_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ watchdog_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ watchdog_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ watchdog_reset_mode_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ watchdog_reset_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/watchdog/watchdog_reset/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_cpp_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world_cpp/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_cpp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world_cpp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_cpp_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world_cpp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ hello_world_cpp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/hello_world_cpp/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ dpl_low_latency_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ interrupt_prioritization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ interrupt_prioritization_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ interrupt_prioritization_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ interrupt_prioritization_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ posix_demo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ posix_demo_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/posix_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ task_switch_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ task_switch_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ edma_interrupt_transfer_am263px-cc_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile_projectspec export
+
+ edma_interrupt_transfer_am263px-lp_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile_projectspec export
+
+ empty_am263px-cc_system_freertos_export:
+	$(MAKE) -C examples/empty/am263px-cc/system_freertos -f makefile_projectspec export
+
+ empty_am263px-lp_system_freertos_export:
+	$(MAKE) -C examples/empty/am263px-lp/system_freertos -f makefile_projectspec export
+
+ empty_am263px-cc_system_nortos_export:
+	$(MAKE) -C examples/empty/am263px-cc/system_nortos -f makefile_projectspec export
+
+ empty_am263px-lp_system_nortos_export:
+	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec export
+
+
+
+help:
+	@echo  Notes,
+	@echo  - Use -j to invoke parallel builds
+	@echo  - Use PROFILE=Debug or PROFILE=Release [default] to build in Debug or Release profile
+	@echo  .
+	@echo  Overall build targets,
+	@echo  ======================
+	@echo  $(MAKE) -s -f makefile_projectspec.am263px help
+	@echo  .
+	@echo  $(MAKE) -s -f makefile_projectspec.am263px [export all clean]
+	@echo  .
+	@echo  export = export projectspec to CCS project in the folder ./ccs_projects/,
+	@echo           export MUST be called once before 'all' or 'clean'
+	@echo  all    = build the previously exported projectspecs
+	@echo  clean  = clean the previously exported projectspecs
+	@echo  .
+	@echo  Example ProjectSpec build targets,
+	@echo  ==================================
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_null/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_asynchronous_trip/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_ramp_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_ramp_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_random_voltage/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_random_voltage/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_sine_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_sine_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_sine_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_sine_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_square_wave/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_square_wave/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_capture_pwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_capture_pwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_chain_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_link_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_updown/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_updown/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_minimum_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_protection_pru/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_trip_zone/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_valley_switching/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_frequency_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_position_speed/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_position_speed/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_external/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_interrupts/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_interrupts/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_sci_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_32bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-1_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_callback/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_reset/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_reset/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/hello_world_cpp/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_low_latency_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/interrupt_prioritization/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  .
+	@echo  System Example ProjectSpec build targets,
+	@echo  =========================================
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/empty/am263px-cc/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/empty/am263px-cc/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec [export all clean]
+	@echo  .
+
+.PHONY: all all-private
+.PHONY: clean clean-private
+.PHONY: help

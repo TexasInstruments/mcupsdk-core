@@ -1,6 +1,6 @@
 let common   = system.getScript("/common");
 
-let device_peripheral = system.getScript("/drivers/ecap/soc/ecap_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/ecap/soc/ecap_${common.getSocName()}.syscfg.js`);
 let signalmonitoringunit = device_peripheral.ECAP_Monitoring_Unit;
 
 function onChangeECAPMode(inst, ui)

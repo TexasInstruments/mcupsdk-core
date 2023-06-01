@@ -47,6 +47,10 @@
 #if defined (SOC_AM263X)
 #include <drivers/watchdog/v0/soc/am263x/watchdog_soc.h>
 #endif
+#if defined (SOC_AM263PX)
+#include <drivers/watchdog/v0/soc/am263px/watchdog_soc.h>
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {

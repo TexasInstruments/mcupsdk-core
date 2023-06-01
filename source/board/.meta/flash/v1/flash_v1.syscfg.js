@@ -623,12 +623,13 @@ function validate(inst, report) {
 function moduleInstances(inst) {
 
     let modInstances = new Array();
+    let moduleName = soc.getDefaultDriver()
 
     if(inst.protocol == "custom") {
         modInstances.push({
             name: "peripheralDriver",
             displayName: "QSPI Driver Configuration",
-            moduleName: "/drivers/qspi/qspi",
+            moduleName: `/drivers/${moduleName}/${moduleName}`,
             useArray: false,
             requiredArgs: {
                 protocol: "custom",
@@ -641,7 +642,7 @@ function moduleInstances(inst) {
         modInstances.push({
             name: "peripheralDriver",
             displayName: "QSPI Driver Configuration",
-            moduleName: "/drivers/qspi/qspi",
+            moduleName: `/drivers/${moduleName}/${moduleName}`,
             useArray: false,
             requiredArgs: {
                 protocol: inst.protocol,

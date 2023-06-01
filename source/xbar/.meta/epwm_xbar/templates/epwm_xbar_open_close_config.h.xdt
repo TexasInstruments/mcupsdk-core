@@ -1,2 +1,6 @@
-#include <drivers/soc/am263x/soc_xbar.h>
+%%{
+    let common = system.getScript("/common");
+    let soc = `${common.getSocName()}`
+%%}
+#include <drivers/soc/`soc`/soc_xbar.h>
 void Drivers_epwmXbarOpen(void);

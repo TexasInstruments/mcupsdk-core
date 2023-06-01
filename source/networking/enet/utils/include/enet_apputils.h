@@ -72,7 +72,7 @@
 #include "enet_udmautils.h"
 #endif
 
-#if defined (SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X)
+#if defined (SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
 #include "enet_ioctlutils.h"
 #include "enet_cpdmautils.h"
 #endif
@@ -171,7 +171,7 @@ typedef enum
 typedef struct EnetApp_HandleInfo_s
 {
     Enet_Handle hEnet;
-#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X))
+#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX))
     Udma_DrvHandle hUdmaDrv;
 #endif
 } EnetApp_HandleInfo;
@@ -552,14 +552,14 @@ void     EnetApp_releaseHandleInfo(Enet_Type enetType, uint32_t instId);
 bool EnetApp_isPortLinked(Enet_Handle hEnet);
 
 void EnetApp_closeTxDma(uint32_t enetTxDmaChId,
-                        Enet_Handle hEnet, 
+                        Enet_Handle hEnet,
                         uint32_t coreKey,
                         uint32_t coreId,
                         EnetDma_PktQ *fqPktInfoQ,
                         EnetDma_PktQ *cqPktInfoQ);
 
 void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
-                        Enet_Handle hEnet, 
+                        Enet_Handle hEnet,
                         uint32_t coreKey,
                         uint32_t coreId,
                         EnetDma_PktQ *fqPktInfoQ,

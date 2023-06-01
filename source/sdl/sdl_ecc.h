@@ -52,7 +52,7 @@
 
 #include "sdl_common.h"
 #include <sdl/ecc/sdl_ip_ecc.h>
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -71,7 +71,7 @@ extern "C" {
     @{
  *
  */
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 #define SDL_SOC_ECC_AGGR                                            (0U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1U)
@@ -187,7 +187,7 @@ extern "C" {
 /* The following are the memory sub type for Memory type
    SDL_ECC_MEMTYPE_MCU_R5F0_CORE & SDL_ECC_MEMTYPE_MCU_R5F1_CORE */
 /* Keeping for backward-compatibility. Recommend to use RAM_ID directly from sdlr_soc_ecc_aggr.h file */
-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X) || defined(SOC_AM263PX)
 /** \brief Select memory subtype ATCM0 BANK0 */
 #define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID)
 /** \brief Select memory subtype ATCM0 BANK1 */
@@ -361,7 +361,7 @@ typedef struct SDL_ECC_ErrorInfo_s
  *
  */
 /** ============================================================================*
- * 
+ *
  * \brief   Initializes an  module for usage with ECC module
  *
  * \param   esmInstType: Instance of
@@ -525,10 +525,10 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
                                          uint32_t ramId,
                                          uint64_t bitErrorOffset,
                                          uint32_t bitErrorGroup);
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 /** ============================================================================
  *
- * \brief   Injects ECC TCM Parity error 
+ * \brief   Injects ECC TCM Parity error
  *
  * \param1  eccMemType: Memory type for ECC AGGR
  * \param2  memSubType: Memory subtype
@@ -541,17 +541,17 @@ int32_t SDL_ECC_tcmParity(SDL_ECC_MemType eccMemType,
 							  uint32_t bitValue);
 /** ============================================================================
  *
- * \brief   Clear TCM Parity Status Registers 
+ * \brief   Clear TCM Parity Status Registers
  *
  * \param1  clearVal  : Value to clear particular register
  *
- */							  
+ */
 int32_t SDL_cleartcmStatusRegs(uint32_t clearVal);
 #endif
 #if defined(SOC_AM273X)|| defined(SOC_AWR294X)
 /** ============================================================================
  *
- * \brief   Injects ECC TCM Parity error 
+ * \brief   Injects ECC TCM Parity error
  *
  * \param1  memSubType: Memory subtype
  * \param2  bitValue  : Bit Value to set particular register
@@ -645,7 +645,7 @@ void SDL_ECC_IDMA1_transfer(uint32_t srcAddr, uint32_t destAddr);
 
 /** ============================================================================
  *
- * \brief   Injects TPCC Parity error 
+ * \brief   Injects TPCC Parity error
  *
  * \param  eccMemType: Memory type for ECC AGGR
  * \param  bitValue  : Bit Value to set particular register

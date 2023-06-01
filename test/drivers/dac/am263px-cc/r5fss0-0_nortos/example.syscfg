@@ -1,0 +1,259 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.12.1+2446"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
+const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1      = epwm.addInstance();
+const epwm2      = epwm.addInstance();
+const epwm3      = epwm.addInstance();
+const epwm4      = epwm.addInstance();
+const epwm5      = epwm.addInstance();
+const epwm6      = epwm.addInstance();
+const epwm7      = epwm.addInstance();
+const epwm8      = epwm.addInstance();
+const epwm9      = epwm.addInstance();
+const epwm10     = epwm.addInstance();
+const epwm11     = epwm.addInstance();
+const epwm12     = epwm.addInstance();
+const epwm13     = epwm.addInstance();
+const epwm14     = epwm.addInstance();
+const epwm15     = epwm.addInstance();
+const epwm16     = epwm.addInstance();
+const epwm17     = epwm.addInstance();
+const epwm18     = epwm.addInstance();
+const epwm19     = epwm.addInstance();
+const epwm20     = epwm.addInstance();
+const epwm21     = epwm.addInstance();
+const epwm22     = epwm.addInstance();
+const epwm23     = epwm.addInstance();
+const epwm24     = epwm.addInstance();
+const epwm25     = epwm.addInstance();
+const epwm26     = epwm.addInstance();
+const epwm27     = epwm.addInstance();
+const epwm28     = epwm.addInstance();
+const epwm29     = epwm.addInstance();
+const epwm30     = epwm.addInstance();
+const epwm31     = epwm.addInstance();
+const epwm32     = epwm.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+edma1.$name                 = "CONFIG_EDMA0";
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
+epwm1.$name = "CONFIG_EPWM0";
+
+epwm2.$name = "CONFIG_EPWM1";
+
+epwm3.$name = "CONFIG_EPWM2";
+
+epwm4.$name = "CONFIG_EPWM3";
+
+epwm5.$name = "CONFIG_EPWM4";
+
+epwm6.$name = "CONFIG_EPWM5";
+
+epwm7.$name = "CONFIG_EPWM6";
+
+epwm8.$name = "CONFIG_EPWM7";
+
+epwm9.$name = "CONFIG_EPWM8";
+
+epwm10.$name = "CONFIG_EPWM9";
+
+epwm11.$name = "CONFIG_EPWM10";
+
+epwm12.$name = "CONFIG_EPWM11";
+
+epwm13.$name = "CONFIG_EPWM12";
+
+epwm14.$name = "CONFIG_EPWM13";
+
+epwm15.$name = "CONFIG_EPWM14";
+
+epwm16.$name = "CONFIG_EPWM15";
+
+epwm17.$name = "CONFIG_EPWM16";
+
+epwm18.$name = "CONFIG_EPWM17";
+
+epwm19.$name = "CONFIG_EPWM18";
+
+epwm20.$name = "CONFIG_EPWM19";
+
+epwm21.$name = "CONFIG_EPWM20";
+
+epwm22.$name = "CONFIG_EPWM21";
+
+epwm23.$name = "CONFIG_EPWM22";
+
+epwm24.$name = "CONFIG_EPWM23";
+
+epwm25.$name = "CONFIG_EPWM24";
+
+epwm26.$name = "CONFIG_EPWM25";
+
+epwm27.$name = "CONFIG_EPWM26";
+
+epwm28.$name = "CONFIG_EPWM27";
+
+epwm29.$name = "CONFIG_EPWM28";
+
+epwm30.$name = "CONFIG_EPWM29";
+
+epwm31.$name = "CONFIG_EPWM30";
+
+epwm32.$name = "CONFIG_EPWM31";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+timer1.$name = "CONFIG_TIMER0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.EPWM.$suggestSolution             = "EPWM31";
+epwm1.EPWM.A.$suggestSolution           = "ball.D17";
+epwm1.EPWM.B.$suggestSolution           = "ball.D18";
+epwm2.EPWM.$suggestSolution             = "EPWM30";
+epwm2.EPWM.A.$suggestSolution           = "ball.F15";
+epwm2.EPWM.B.$suggestSolution           = "ball.C18";
+epwm3.EPWM.$suggestSolution             = "EPWM29";
+epwm3.EPWM.A.$suggestSolution           = "ball.H17";
+epwm3.EPWM.B.$suggestSolution           = "ball.H16";
+epwm4.EPWM.$suggestSolution             = "EPWM28";
+epwm4.EPWM.A.$suggestSolution           = "ball.M16";
+epwm4.EPWM.B.$suggestSolution           = "ball.M15";
+epwm5.EPWM.$suggestSolution             = "EPWM27";
+epwm5.EPWM.A.$suggestSolution           = "ball.H18";
+epwm5.EPWM.B.$suggestSolution           = "ball.L16";
+epwm6.EPWM.$suggestSolution             = "EPWM26";
+epwm6.EPWM.A.$suggestSolution           = "ball.J18";
+epwm6.EPWM.B.$suggestSolution           = "ball.J17";
+epwm7.EPWM.$suggestSolution             = "EPWM25";
+epwm7.EPWM.A.$suggestSolution           = "ball.K17";
+epwm7.EPWM.B.$suggestSolution           = "ball.K18";
+epwm8.EPWM.$suggestSolution             = "EPWM24";
+epwm8.EPWM.A.$suggestSolution           = "ball.K15";
+epwm8.EPWM.B.$suggestSolution           = "ball.K16";
+epwm9.EPWM.$suggestSolution             = "EPWM23";
+epwm9.EPWM.A.$suggestSolution           = "ball.G18";
+epwm9.EPWM.B.$suggestSolution           = "ball.G15";
+epwm10.EPWM.$suggestSolution            = "EPWM22";
+epwm10.EPWM.A.$suggestSolution          = "ball.G17";
+epwm10.EPWM.B.$suggestSolution          = "ball.F17";
+epwm11.EPWM.$suggestSolution            = "EPWM21";
+epwm11.EPWM.A.$suggestSolution          = "ball.L17";
+epwm11.EPWM.B.$suggestSolution          = "ball.L18";
+epwm12.EPWM.$suggestSolution            = "EPWM20";
+epwm12.EPWM.A.$suggestSolution          = "ball.C6";
+epwm12.EPWM.B.$suggestSolution          = "ball.A5";
+epwm13.EPWM.$suggestSolution            = "EPWM19";
+epwm13.EPWM.A.$suggestSolution          = "ball.A3";
+epwm13.EPWM.B.$suggestSolution          = "ball.A2";
+epwm14.EPWM.$suggestSolution            = "EPWM18";
+epwm14.EPWM.A.$suggestSolution          = "ball.B5";
+epwm14.EPWM.B.$suggestSolution          = "ball.B4";
+epwm15.EPWM.$suggestSolution            = "EPWM17";
+epwm15.EPWM.A.$suggestSolution          = "ball.B6";
+epwm15.EPWM.B.$suggestSolution          = "ball.A4";
+epwm16.EPWM.$suggestSolution            = "EPWM16";
+epwm16.EPWM.A.$suggestSolution          = "ball.L3";
+epwm16.EPWM.B.$suggestSolution          = "ball.M3";
+epwm17.EPWM.$suggestSolution            = "EPWM15";
+epwm17.EPWM.A.$suggestSolution          = "ball.P15";
+epwm17.EPWM.B.$suggestSolution          = "ball.R16";
+epwm18.EPWM.$suggestSolution            = "EPWM14";
+epwm18.EPWM.A.$suggestSolution          = "ball.V17";
+epwm18.EPWM.B.$suggestSolution          = "ball.T16";
+epwm19.EPWM.$suggestSolution            = "EPWM13";
+epwm19.EPWM.A.$suggestSolution          = "ball.K4";
+epwm19.EPWM.B.$suggestSolution          = "ball.K3";
+epwm20.EPWM.$suggestSolution            = "EPWM12";
+epwm20.EPWM.A.$suggestSolution          = "ball.K2";
+epwm20.EPWM.B.$suggestSolution          = "ball.J4";
+epwm21.EPWM.$suggestSolution            = "EPWM11";
+epwm21.EPWM.A.$suggestSolution          = "ball.H1";
+epwm21.EPWM.B.$suggestSolution          = "ball.J1";
+epwm22.EPWM.$suggestSolution            = "EPWM10";
+epwm22.EPWM.A.$suggestSolution          = "ball.G4";
+epwm22.EPWM.B.$suggestSolution          = "ball.J3";
+epwm23.EPWM.$suggestSolution            = "EPWM9";
+epwm23.EPWM.A.$suggestSolution          = "ball.G1";
+epwm23.EPWM.B.$suggestSolution          = "ball.J2";
+epwm24.EPWM.$suggestSolution            = "EPWM8";
+epwm24.EPWM.A.$suggestSolution          = "ball.G3";
+epwm24.EPWM.B.$suggestSolution          = "ball.H2";
+epwm25.EPWM.$suggestSolution            = "EPWM7";
+epwm25.EPWM.A.$suggestSolution          = "ball.F4";
+epwm25.EPWM.B.$suggestSolution          = "ball.F1";
+epwm26.EPWM.$suggestSolution            = "EPWM6";
+epwm26.EPWM.A.$suggestSolution          = "ball.E1";
+epwm26.EPWM.B.$suggestSolution          = "ball.F3";
+epwm27.EPWM.$suggestSolution            = "EPWM5";
+epwm27.EPWM.A.$suggestSolution          = "ball.F2";
+epwm27.EPWM.B.$suggestSolution          = "ball.G2";
+epwm28.EPWM.$suggestSolution            = "EPWM4";
+epwm28.EPWM.A.$suggestSolution          = "ball.D1";
+epwm28.EPWM.B.$suggestSolution          = "ball.E4";
+epwm29.EPWM.$suggestSolution            = "EPWM3";
+epwm29.EPWM.A.$suggestSolution          = "ball.E2";
+epwm29.EPWM.B.$suggestSolution          = "ball.E3";
+epwm30.EPWM.$suggestSolution            = "EPWM2";
+epwm30.EPWM.A.$suggestSolution          = "ball.C2";
+epwm30.EPWM.B.$suggestSolution          = "ball.C1";
+epwm31.EPWM.$suggestSolution            = "EPWM1";
+epwm31.EPWM.A.$suggestSolution          = "ball.D3";
+epwm31.EPWM.B.$suggestSolution          = "ball.D2";
+epwm32.EPWM.$suggestSolution            = "EPWM0";
+epwm32.EPWM.A.$suggestSolution          = "ball.B2";
+epwm32.EPWM.B.$suggestSolution          = "ball.B1";
+debug_log.uartLog.UART.$suggestSolution = "UART0";
+timer1.RTI.$suggestSolution             = "RTI1";
+

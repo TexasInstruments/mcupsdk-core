@@ -38,7 +38,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#if defined(SOC_AM263X) || defined(SOC_AM64X) || defined(SOC_AM243X)
+#if defined(SOC_AM263X) || defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263PX)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -55,7 +55,7 @@
 #define SDL_EXCEPTION_SYNC_PARITY_OR_ECC_ERROR_MASK 		                0x409u
 #define SDL_EXCEPTION_ASYNC_PARITY_OR_ECC_ERROR_MASK 		                0x408u
 
-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X) || defined(SOC_AM263PX)
 #ifdef mcu1_0
 #define SDL_LOCAL_EXCEPTION_DED_ERROR SDL_ESM_ECC_PARAM_MCU_CPU0_DED_ERROR
 #else

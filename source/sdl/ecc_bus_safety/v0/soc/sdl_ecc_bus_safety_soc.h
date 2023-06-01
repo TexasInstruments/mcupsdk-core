@@ -43,6 +43,10 @@ extern "C" {
 #include <sdl/ecc_bus_safety/v0/soc/am263x/sdl_ecc_bus_safety_soc.h>
 #endif /* SOC_AM263x */
 
+#if defined (SOC_AM263PX)
+#include <sdl/ecc_bus_safety/v0/soc/am263px/sdl_ecc_bus_safety_soc.h>
+#endif /* SOC_AM263Px */
+
 #if defined (SOC_AM273X)
 #include <sdl/ecc_bus_safety/v0/soc/am273x/sdl_ecc_bus_safety_soc.h>
 #endif /* SOC_AM273x */

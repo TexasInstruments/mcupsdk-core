@@ -719,5 +719,4 @@ int32_t MMCSD_disableBootPartition(MMCSD_Handle handle);
 #ifdef __cplusplus
 }
 #endif
-
 #endif /* MMCSD_H_ */

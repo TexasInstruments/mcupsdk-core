@@ -1,0 +1,151 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.12.0+2406"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const fsi_rx     = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
+const fsi_rx1    = fsi_rx.addInstance();
+const fsi_rx2    = fsi_rx.addInstance();
+const fsi_rx3    = fsi_rx.addInstance();
+const fsi_rx4    = fsi_rx.addInstance();
+const fsi_tx     = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
+const fsi_tx1    = fsi_tx.addInstance();
+const fsi_tx2    = fsi_tx.addInstance();
+const fsi_tx3    = fsi_tx.addInstance();
+const fsi_tx4    = fsi_tx.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+fsi_rx1.$name                  = "CONFIG_FSI_RX0";
+fsi_rx1.FSIRX.$assign          = "FSIRX0";
+fsi_rx1.FSIRX.CLK.$assign      = "RGMII1_RD1";
+fsi_rx1.FSIRX.D0.$assign       = "RGMII1_RD2";
+fsi_rx1.FSIRX.D1.$assign       = "RGMII1_RD3";
+fsi_rx1.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR0";
+fsi_rx1.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR1";
+fsi_rx1.fsiRxIntXbar1.instance = "INT_XBAR_1";
+
+fsi_rx2.$name                  = "CONFIG_FSI_RX1";
+fsi_rx2.FSIRX.$assign          = "FSIRX1";
+fsi_rx2.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR2";
+fsi_rx2.fsiRxIntXbar0.instance = "INT_XBAR_2";
+fsi_rx2.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR3";
+fsi_rx2.fsiRxIntXbar1.instance = "INT_XBAR_3";
+
+fsi_rx3.$name                  = "CONFIG_FSI_RX2";
+fsi_rx3.FSIRX.$assign          = "FSIRX2";
+fsi_rx3.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR4";
+fsi_rx3.fsiRxIntXbar0.instance = "INT_XBAR_4";
+fsi_rx3.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR5";
+fsi_rx3.fsiRxIntXbar1.instance = "INT_XBAR_5";
+
+fsi_rx4.$name                  = "CONFIG_FSI_RX3";
+fsi_rx4.FSIRX.$assign          = "FSIRX3";
+fsi_rx4.fsiRxIntXbar0.$name    = "CONFIG_INT_XBAR6";
+fsi_rx4.fsiRxIntXbar0.instance = "INT_XBAR_6";
+fsi_rx4.fsiRxIntXbar1.$name    = "CONFIG_INT_XBAR7";
+fsi_rx4.fsiRxIntXbar1.instance = "INT_XBAR_7";
+
+fsi_tx1.$name                  = "CONFIG_FSI_TX0";
+fsi_tx1.FSITX.$assign          = "FSITX0";
+fsi_tx1.FSITX.CLK.$assign      = "RGMII1_RXC";
+fsi_tx1.FSITX.D0.$assign       = "RGMII1_RX_CTL";
+fsi_tx1.FSITX.D1.$assign       = "RGMII1_RD0";
+fsi_tx1.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR8";
+fsi_tx1.fsiTxIntXbar0.instance = "INT_XBAR_8";
+fsi_tx1.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR9";
+fsi_tx1.fsiTxIntXbar1.instance = "INT_XBAR_9";
+
+fsi_tx2.$name                  = "CONFIG_FSI_TX1";
+fsi_tx2.FSITX.$assign          = "FSITX1";
+fsi_tx2.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR10";
+fsi_tx2.fsiTxIntXbar0.instance = "INT_XBAR_10";
+fsi_tx2.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR11";
+fsi_tx2.fsiTxIntXbar1.instance = "INT_XBAR_11";
+
+fsi_tx3.$name                  = "CONFIG_FSI_TX2";
+fsi_tx3.FSITX.$assign          = "FSITX2";
+fsi_tx3.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR12";
+fsi_tx3.fsiTxIntXbar0.instance = "INT_XBAR_12";
+fsi_tx3.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR13";
+fsi_tx3.fsiTxIntXbar1.instance = "INT_XBAR_13";
+
+fsi_tx4.$name                  = "CONFIG_FSI_TX3";
+fsi_tx4.FSITX.$assign          = "FSITX3";
+fsi_tx4.fsiTxIntXbar0.$name    = "CONFIG_INT_XBAR14";
+fsi_tx4.fsiTxIntXbar0.instance = "INT_XBAR_14";
+fsi_tx4.fsiTxIntXbar1.$name    = "CONFIG_INT_XBAR15";
+fsi_tx4.fsiTxIntXbar1.instance = "INT_XBAR_15";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name             = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr          = 0x60000000;
+mpu_armv75.size              = 28;
+mpu_armv75.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv76.$name    = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+fsi_rx2.FSIRX.CLK.$suggestSolution = "RGMII1_TD1";
+fsi_rx2.FSIRX.D0.$suggestSolution  = "EPWM6_B";
+fsi_rx2.FSIRX.D1.$suggestSolution  = "EPWM7_A";
+fsi_rx3.FSIRX.CLK.$suggestSolution = "EPWM9_B";
+fsi_rx3.FSIRX.D0.$suggestSolution  = "EPWM10_A";
+fsi_rx3.FSIRX.D1.$suggestSolution  = "EPWM10_B";
+fsi_rx4.FSIRX.CLK.$suggestSolution = "PR0_PRU1_GPIO12";
+fsi_rx4.FSIRX.D0.$suggestSolution  = "PR0_PRU1_GPIO13";
+fsi_rx4.FSIRX.D1.$suggestSolution  = "PR0_PRU1_GPIO14";
+fsi_tx2.FSITX.CLK.$suggestSolution = "RGMII1_TXC";
+fsi_tx2.FSITX.D0.$suggestSolution  = "EPWM5_A";
+fsi_tx2.FSITX.D1.$suggestSolution  = "EPWM5_B";
+fsi_tx3.FSITX.CLK.$suggestSolution = "PR0_PRU1_GPIO6";
+fsi_tx3.FSITX.D0.$suggestSolution  = "EPWM8_B";
+fsi_tx3.FSITX.D1.$suggestSolution  = "EPWM9_A";
+fsi_tx4.FSITX.CLK.$suggestSolution = "PR0_PRU1_GPIO16";
+fsi_tx4.FSITX.D0.$suggestSolution  = "PR0_PRU1_GPIO15";
+fsi_tx4.FSITX.D1.$suggestSolution  = "PR0_PRU1_GPIO11";

@@ -1,6 +1,6 @@
 let common   = system.getScript("/common");
 let pinmux = system.getScript("/drivers/pinmux/pinmux");
-let device_peripheral = system.getScript("/drivers/eqep/soc/eqep_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/eqep/soc/eqep_${common.getSocName()}.syscfg.js`);
 
 function onChangeUseInterrupts(inst, ui)
 {

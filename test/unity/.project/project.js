@@ -12,6 +12,10 @@ const filedirs = {
     ],
 };
 
+const buildOptionCombos_am263px = [
+    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+];
+
 const buildOptionCombos_am64x = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
     { device: device, cpu: "r5f", cgt: "gcc-armv7"},
@@ -45,6 +49,7 @@ const buildOptionCombos_am62x = [
 function getComponentProperty(device) {
     let property = {};
     let buildOptionCombos = {
+		"am263px": buildOptionCombos_am263px,
         "am64x": buildOptionCombos_am64x,
         "am243x": buildOptionCombos_am243x,
         "am263x": buildOptionCombos_am263x,

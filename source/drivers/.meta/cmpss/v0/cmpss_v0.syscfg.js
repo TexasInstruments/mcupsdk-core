@@ -1,6 +1,6 @@
 let common   = system.getScript("/common");
 let pinmux = system.getScript("/drivers/pinmux/pinmux");
-let device_peripheral = system.getScript("/drivers/cmpss/soc/cmpss_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/cmpss/soc/cmpss_${common.getSocName()}.syscfg.js`);
 
 let numberOfInstance = 20;
 let CMPSS_INSTANCE = [
@@ -370,31 +370,31 @@ let config = [
         default     : CMPSS_INSTANCE[0].name,
         options     : CMPSS_INSTANCE,
         onChange    : (inst, ui) => {
-            if ( (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB0_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB1_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB2_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB3_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB4_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB5_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB6_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB7_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB8_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB9_U_BASE") 
+            if ( (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB0_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB1_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB2_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB3_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB4_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB5_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB6_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB7_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB8_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSB9_U_BASE")
                )
             {
                 ui.lowCompPositive.hidden = true
                 ui.highCompNegative.hidden = true
             }
-            if ( (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA0_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA1_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA2_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA3_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA4_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA5_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA6_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA7_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA8_U_BASE") || 
-                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA9_U_BASE") 
+            if ( (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA0_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA1_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA2_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA3_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA4_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA5_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA6_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA7_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA8_U_BASE") ||
+                 (inst.cmpssBase == "CSL_CONTROLSS_CMPSSA9_U_BASE")
                )
             {
                 ui.lowCompPositive.hidden = false
@@ -623,7 +623,7 @@ function onValidate(inst, validation) {
             "Enter an integer for low comparator DAC value2 between 0 and 4,095!",
             inst, "dacVal2Low");
     }
-    
+
     if (inst.maxRampVal < 0 || inst.maxRampVal > 65535)
     {
         validation.logError(

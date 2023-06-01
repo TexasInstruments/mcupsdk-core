@@ -38,7 +38,7 @@
 extern "C"
 {
 #endif
-/*#include <ti/csl/cslr.h>
+/*#include <drivers/hw_include/cslr.h>
 #include <stdint.h>*/
 
 /**************************************************************************

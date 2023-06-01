@@ -1,0 +1,254 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.14.0+2667"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ecap        = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1       = ecap.addInstance();
+const ecap2       = ecap.addInstance();
+const ecap3       = ecap.addInstance();
+const epwm        = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1       = epwm.addInstance();
+const epwm2       = epwm.addInstance();
+const epwm3       = epwm.addInstance();
+const epwm4       = epwm.addInstance();
+const epwm5       = epwm.addInstance();
+const epwm6       = epwm.addInstance();
+const epwm7       = epwm.addInstance();
+const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
+const input_xbar  = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
+const input_xbar1 = input_xbar.addInstance();
+const input_xbar2 = input_xbar.addInstance();
+const input_xbar3 = input_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ecap1.eventStop           = "ECAP_EVENT_2";
+ecap1.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
+ecap1.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+ecap1.reArm               = true;
+ecap1.counterResetOnEvent = ["ECAP_EVENT_2"];
+ecap1.resetCounters       = true;
+ecap1.ecapInput           = "ECAP_INPUT_INPUTXBAR0";
+ecap1.useInterrupts       = false;
+ecap1.$name               = "REF_CAPTURE";
+ecap1.enableLoadCounter   = true;
+ecap1.loadCounter         = true;
+
+ecap2.ecapBase            = "CSL_CONTROLSS_ECAP1_U_BASE";
+ecap2.reArm               = true;
+ecap2.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+ecap2.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
+ecap2.eventStop           = "ECAP_EVENT_2";
+ecap2.counterResetOnEvent = ["ECAP_EVENT_2"];
+ecap2.resetCounters       = true;
+ecap2.useInterrupts       = false;
+ecap2.$name               = "AH_A_CAPTURE";
+ecap2.enableLoadCounter   = true;
+ecap2.loadCounter         = true;
+
+ecap3.ecapBase            = "CSL_CONTROLSS_ECAP2_U_BASE";
+ecap3.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+ecap3.counterResetOnEvent = ["ECAP_EVENT_2"];
+ecap3.eventStop           = "ECAP_EVENT_2";
+ecap3.reArm               = true;
+ecap3.ecapInput           = "ECAP_INPUT_INPUTXBAR2";
+ecap3.resetCounters       = true;
+ecap3.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
+ecap3.useInterrupts       = false;
+ecap3.$name               = "AH_B_CAPTURE";
+ecap3.enableLoadCounter   = true;
+ecap3.loadCounter         = true;
+
+epwm1.$name                                                      = "CONFIG_EPWM0";
+epwm1.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm1.epwmTimebase_period                                        = 2000;
+epwm1.epwmCounterCompare_cmpA                                    = 500;
+epwm1.epwmCounterCompare_cmpB                                    = 1500;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm1.EPWM.$assign                                               = "EPWM0";
+
+epwm2.$name                                                      = "CONFIG_EPWM1";
+epwm2.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm2.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm2.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm2.epwmTimebase_period                                        = 2000;
+epwm2.epwmCounterCompare_cmpA                                    = 500;
+epwm2.epwmCounterCompare_cmpB                                    = 1500;
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmDeadband_enableRED                                     = true;
+epwm2.epwmDeadband_enableFED                                     = true;
+epwm2.epwmDeadband_delayRED                                      = 400;
+epwm2.epwmDeadband_delayFED                                      = 200;
+epwm2.epwmTimebase_phaseEnable                                   = true;
+epwm2.EPWM.$assign                                               = "EPWM1";
+
+epwm3.$name                                                      = "CONFIG_EPWM2";
+epwm3.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm3.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm3.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm3.epwmTimebase_period                                        = 2000;
+epwm3.epwmCounterCompare_cmpA                                    = 500;
+epwm3.epwmCounterCompare_cmpB                                    = 1500;
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmDeadband_enableFED                                     = true;
+epwm3.epwmDeadband_enableRED                                     = true;
+epwm3.epwmDeadband_delayRED                                      = 400;
+epwm3.epwmDeadband_delayFED                                      = 200;
+epwm3.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm3.epwmDeadband_polarityRED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm3.epwmTimebase_phaseEnable                                   = true;
+epwm3.EPWM.$assign                                               = "EPWM2";
+
+epwm4.$name                                                      = "CONFIG_EPWM3";
+epwm4.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm4.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm4.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm4.epwmTimebase_period                                        = 2000;
+epwm4.epwmCounterCompare_cmpA                                    = 500;
+epwm4.epwmCounterCompare_cmpB                                    = 1500;
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm4.epwmDeadband_enableFED                                     = true;
+epwm4.epwmDeadband_delayFED                                      = 200;
+epwm4.epwmDeadband_enableRED                                     = true;
+epwm4.epwmDeadband_delayRED                                      = 400;
+epwm4.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm4.epwmTimebase_phaseEnable                                   = true;
+epwm4.EPWM.$assign                                               = "EPWM3";
+
+epwm5.$name                                                      = "CONFIG_EPWM4";
+epwm5.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm5.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm5.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm5.epwmTimebase_period                                        = 2000;
+epwm5.epwmCounterCompare_cmpA                                    = 500;
+epwm5.epwmCounterCompare_cmpB                                    = 1500;
+epwm5.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm5.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm5.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm5.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm5.epwmDeadband_enableFED                                     = true;
+epwm5.epwmDeadband_delayFED                                      = 200;
+epwm5.epwmDeadband_enableRED                                     = true;
+epwm5.epwmDeadband_delayRED                                      = 400;
+epwm5.epwmDeadband_polarityRED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm5.epwmTimebase_phaseEnable                                   = true;
+epwm5.EPWM.$assign                                               = "EPWM13";
+
+epwm6.$name                                                      = "CONFIG_EPWM5";
+epwm6.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm6.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm6.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm6.epwmTimebase_period                                        = 2000;
+epwm6.epwmCounterCompare_cmpA                                    = 500;
+epwm6.epwmCounterCompare_cmpB                                    = 1500;
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm6.epwmDeadband_outputSwapOutB                                = true;
+epwm6.epwmDeadband_outputSwapOutA                                = true;
+epwm6.epwmTimebase_phaseEnable                                   = true;
+epwm6.EPWM.$assign                                               = "EPWM15";
+
+epwm7.$name                                                      = "CONFIG_EPWM6";
+epwm7.epwmDeadband_enableFED                                     = true;
+epwm7.epwmDeadband_delayFED                                      = 200;
+epwm7.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
+epwm7.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
+epwm7.epwmTimebase_period                                        = 2000;
+epwm7.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm7.epwmTimebase_phaseEnable                                   = true;
+epwm7.epwmCounterCompare_cmpA                                    = 500;
+epwm7.epwmCounterCompare_cmpB                                    = 1500;
+epwm7.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm7.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm7.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm7.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm7.epwmDeadband_enableRED                                     = true;
+epwm7.epwmDeadband_delayRED                                      = 400;
+epwm7.epwmDeadband_inputFED                                      = "EPWM_DB_INPUT_DB_RED";
+epwm7.epwmDeadband_outputSwapOutA                                = true;
+epwm7.EPWM.$assign                                               = "EPWM4";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
+input_xbar1.xbarOutput = "GPIO43";
+
+input_xbar2.$name      = "CONFIG_INPUT_XBAR1";
+input_xbar2.instance   = "INPUT_XBAR_1";
+input_xbar2.xbarOutput = "GPIO45";
+
+input_xbar3.$name      = "CONFIG_INPUT_XBAR2";
+input_xbar3.instance   = "INPUT_XBAR_2";
+input_xbar3.xbarOutput = "GPIO46";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
+epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
+epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
+epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
+epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
+epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
+epwm5.EPWM.A.$suggestSolution           = "EPWM13_A";
+epwm5.EPWM.B.$suggestSolution           = "EPWM13_B";
+epwm6.EPWM.A.$suggestSolution           = "EPWM15_A";
+epwm6.EPWM.B.$suggestSolution           = "EPWM15_B";
+epwm7.EPWM.A.$suggestSolution           = "EPWM4_A";
+epwm7.EPWM.B.$suggestSolution           = "EPWM4_B";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -1,0 +1,109 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+
+PROFILE?=release
+
+MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
+MULTI_CORE_BOOTIMAGE_NAME:=ipc_rpmsg_ut_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=ipc_rpmsg_ut_system.$(PROFILE).appimage_xip
+
+CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
+CORE_1=--script ../r5fss0-1_nortos/example.syscfg --context r5fss0-1 --output ../r5fss0-1_nortos/ti-arm-clang/generated
+CORE_2=--script ../r5fss1-0_nortos/example.syscfg --context r5fss1-0 --output ../r5fss1-0_nortos/ti-arm-clang/generated
+CORE_3=--script ../r5fss1-1_nortos/example.syscfg --context r5fss1-1 --output ../r5fss1-1_nortos/ti-arm-clang/generated
+
+CORES = \
+    $(CORE_3) \
+    $(CORE_2) \
+    $(CORE_1) \
+    $(CORE_0) \
+
+all: syscfg
+	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ all
+	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ all
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ all
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ all
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
+
+clean:
+	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ clean
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
+
+scrub:
+	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ scrub
+ifeq ($(OS),Windows_NT)
+	$(RM) \*.appimage
+	$(RM) \*.appimage.signed
+	$(RM) \*.appimage_xip
+else
+	$(RM) *.appimage
+	$(RM) *.appimage.signed
+	$(RM) *.appimage_xip
+endif
+
+syscfg:
+	@echo Generating SysConfig files ...
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) $(CORES)
+
+syscfg-gui:
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --part AM263P1 --package ZCZ_C $(CORES)
+
+#
+# Generation of multi-core boot image which can be loaded by Secondary Boot Loader (SBL)
+#
+ifeq ($(OS),Windows_NT)
+EXE_EXT=.exe
+endif
+BOOTIMAGE_TEMP_OUT_FILE=temp_stdout_$(PROFILE).txt
+
+BOOTIMAGE_CORE_ID_r5fss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-1 = 1
+BOOTIMAGE_CORE_ID_r5fss1-0 = 2
+BOOTIMAGE_CORE_ID_r5fss1-1 = 3
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+
+MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
+OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+
+MULTI_CORE_APP_PARAMS = \
+    ../r5fss0-0_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+    ../r5fss0-1_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss1-0_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
+    ../r5fss1-1_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
+
+MULTI_CORE_APP_PARAMS_XIP = \
+    ../r5fss0-0_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+    ../r5fss0-1_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss1-0_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
+    ../r5fss1-1_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
+
+MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
+    ../r5fss0-0_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc \
+    ../r5fss0-1_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc \
+    ../r5fss1-0_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc \
+    ../r5fss1-1_nortos/ti-arm-clang/ipc_rpmsg_ut.$(PROFILE).rprc \
+
+$(MULTI_CORE_BOOTIMAGE_DEPENDENCY):
+
+$(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
+	@echo  Boot multi-core image: $@ ...
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .

@@ -79,11 +79,11 @@ typedef struct EnetMcm_InitConfig_s
 
     Enet_Print print;
 
-#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X))
+#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX))
     Udma_DrvHandle hUdmaDrv;
 #endif
     uint32_t selfCoreId;
-    
+
     /* Disable Enet_periodic tick function */
     bool disablePeriodicFxn;
 }EnetMcm_InitConfig;

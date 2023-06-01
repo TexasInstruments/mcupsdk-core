@@ -640,14 +640,14 @@ int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
 		#endif
 		uint32_t instances_name_size = sizeof(instances_name)/sizeof(SDL_ESM_Inst);
 		for (uint32_t i = 0; i < instances_name_size; i++) {
-			
+
 			if (instances_name[i] ==instance) {
 				retval = Esmhandlerinit(instance);
 			}
 		}
 	}
 #endif
-#if defined (SOC_AM263X)		
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         retval = Esmhandlerinit(instance);
     }
 #endif

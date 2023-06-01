@@ -39,7 +39,7 @@ extern "C"
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
 #include <cpdma/V0/cslr_cpdma.h>
-#elif defined(SOC_AM263X)
+#elif defined(SOC_AM263X) || defined (SOC_AM263PX)
 #include <cpdma/V1/cslr_cpdma.h>
 #else
 #error "SOC not supported"

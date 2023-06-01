@@ -48,6 +48,11 @@ extern "C"
 #include <drivers/soc/am263x/soc.h>
 #include <drivers/soc/am263x/soc_rcm.h>
 #endif
+#if defined (SOC_AM263PX)
+#include <drivers/soc/am263px/soc.h>
+#include <drivers/soc/am263px/soc_rcm.h>
+#endif
+
 
 #if defined (SOC_AM273X)
 #include <drivers/soc/am273x/soc.h>

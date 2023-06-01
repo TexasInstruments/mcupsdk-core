@@ -1,5 +1,5 @@
 let common   = system.getScript("/common");
-let device_peripheral = system.getScript("/drivers/sdfm/soc/sdfm_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/sdfm/soc/sdfm_${common.getSocName()}.syscfg.js`);
 
 function onChangeComparatorEnable(inst, ui)
 {

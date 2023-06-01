@@ -45,7 +45,7 @@ extern "C"
 #endif
 
 
-#if defined(SOC_AM64X) || defined(SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X)
+#if defined(SOC_AM64X) || defined(SOC_AM243X) || defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X) || defined (SOC_AM263PX)
 
 #include <mdio/V4/cslr_mdio.h>
 

@@ -2,7 +2,7 @@ let common   = system.getScript("/common");
 
 let useComparator = system.getScript("/drivers/sdfm/v0/sdfm_comparatorFilter.syscfg.js");
 let useDatafilter = system.getScript("/drivers/sdfm/v0/sdfm_dataFilter.syscfg.js");
-let device_peripheral = system.getScript("/drivers/sdfm/soc/sdfm_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/sdfm/soc/sdfm_${common.getSocName()}.syscfg.js`);
 
 let CompEvent =
 [

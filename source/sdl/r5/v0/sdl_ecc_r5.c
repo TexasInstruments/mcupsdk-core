@@ -41,6 +41,9 @@
 #if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#endif
 #if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
@@ -121,7 +124,7 @@ uint32_t SDL_ECC_pollErrorEvent(SDL_ECC_MemType eccMemType,
     uint32_t retValue = 0u;
     uint32_t regValue;
     /* Polling only for R5F core self test */
-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X) || defined(SOC_AM263PX)
     if ((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR)
         || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)) {
         switch(errorType) {

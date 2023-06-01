@@ -29,10 +29,11 @@
         "/usb/usb",
         "/pru_io/pru_io",
 % }
-% if(args.device == "am263x") {
+% if((args.device == "am263x")  || (args.device == "am263px")){
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
+        "/fs/fs",
         "/networking/networking",
         "/security/security",
         "/xbar/xbar",
@@ -65,6 +66,9 @@
 % }
 % if((args.device == "am263x") || (isDevelopmentMode)) {
         "AM263x_beta",
+% }
+% if((args.device == "am263px") || (isDevelopmentMode)) {
+        "AM263Px",
 % }
 % if((args.device == "am62x") || (isDevelopmentMode)) {
         "AM62x",
@@ -158,6 +162,24 @@
 % }
 % if((args.device == "am263x") || (isDevelopmentMode)) {
         "AM263x_beta": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        },{
+            "name": "r5fss1-0",
+            "targetdbId": "r5fss1-0"
+        }, {
+            "name": "r5fss1-1",
+            "targetdbId": "r5fss1-1"
+        }, {
+            "name": "hsm0-0",
+            "targetdbId": "hsm0-0"
+        }],
+% }
+% if((args.device == "am263px") || (isDevelopmentMode)) {
+        "AM263Px": [{
             "name": "r5fss0-0",
             "targetdbId": "r5fss0-0"
         }, {

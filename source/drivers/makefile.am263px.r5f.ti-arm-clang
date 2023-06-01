@@ -1,0 +1,215 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+
+CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
+AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+LIBNAME:=drivers.am263px.r5f.ti-arm-clang.$(PROFILE).lib
+
+FILES_common := \
+    bootloader.c \
+    bootloader_buf_io.c \
+    bootloader_can.c \
+    bootloader_flash.c \
+    bootloader_hsmRt_load.c \
+    bootloader_mem.c \
+    bootloader_profile.c \
+    bootloader_soc.c \
+    bootloader_uniflash.c \
+    bootloader_xmodem.c \
+    xmodem.c \
+    crc16.c \
+    cmpss.c \
+    dac.c \
+    ecap.c \
+    edma.c \
+    eqep.c \
+    fsi_rx.c \
+    fsi_tx.c \
+    gpio.c \
+    hsmclient.c \
+    hsmclient_loadhsmrt.c \
+    hsmclient_utils.c \
+    i2c_v1.c \
+    ipc_notify_v1.c \
+    ipc_notify_v1_cfg.c \
+    ipc_rpmsg.c \
+    ipc_rpmsg_vring.c \
+    lin.c \
+    mcan.c \
+    mcspi_dma.c \
+    mcspi_dma_edma.c \
+    mcspi_v0.c \
+    mdio_v0.c \
+    mmcsd_v1.c \
+    pinmux.c \
+    pmu.c \
+    pruicss_m_v0.c \
+    pruicss_m_v0_cfg.c \
+    rti.c \
+    sipc_notify_cfg.c \
+    sipc_notify_src.c \
+    soc.c \
+    soc_rcm.c \
+    spinlock.c \
+    uart_dma.c \
+    uart_dma_edma.c \
+    uart_v0.c \
+    watchdog_rti.c \
+    watchdog_soc.c \
+
+ASMFILES_common := \
+    csl_arm_r5_pmu.S \
+
+FILES_PATH_common = \
+    pinmux/am263px \
+    pruicss/m_v0 \
+    pruicss/soc/am263px \
+    watchdog/v0/soc/am263px \
+    adc/v1_1 \
+    bootloader \
+    bootloader/soc/am263px \
+    cmpss/v0 \
+    csl_arm_r5_pmu.S \
+    dac/v0 \
+    ecap/v1 \
+    edma/v0 \
+    epwm/v1_1 \
+    eqep/v1 \
+    fsi/v1 \
+    gpio/v0 \
+    hsmclient \
+    hsmclient/soc/am263px \
+    hsmclient/utils \
+    i2c/v1 \
+    ipc_notify/v1 \
+    ipc_notify/v1/soc/am263px \
+    ipc_rpmsg/ \
+    lin/v0 \
+    mcan/v0 \
+    mcspi/v0 \
+    mcspi/v0/dma \
+    mcspi/v0/dma/edma \
+    mdio/v0 \
+    mmcsd/v1 \
+    pmu \
+    pmu/r5f \
+    rti/v0 \
+    sdfm/v0_1 \
+    secure_ipc_notify/ \
+    secure_ipc_notify/soc/ \
+    secure_ipc_notify/soc/am263px \
+    soc/am263px \
+    spinlock/v0 \
+    uart/v0 \
+    uart/v0/dma \
+    uart/v0/dma/edma \
+    watchdog/v0 \
+    pmu \
+    pmu/r5f \
+
+INCLUDES_common := \
+    -I${CG_TOOL_ROOT}/include/c \
+    -I${MCU_PLUS_SDK_PATH}/source \
+
+DEFINES_common := \
+    -DSOC_AM263PX \
+
+CFLAGS_release := \
+    -Os \
+    -Oz \
+    -flto \
+
+CFLAGS_common := \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -mthumb \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-gnu-variable-sized-type-not-at-end \
+    -Wno-unused-function \
+
+CFLAGS_cpp_common := \
+    -Wno-c99-designator \
+    -Wno-extern-c-compat \
+    -Wno-c++11-narrowing \
+    -Wno-reorder-init-list \
+    -Wno-deprecated-register \
+    -Wno-writable-strings \
+    -Wno-enum-compare \
+    -Wno-reserved-user-defined-literal \
+    -Wno-unused-const-variable \
+    -x c++ \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+ARFLAGS_common := \
+    rc \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am263px/ti-arm-clang/$(PROFILE)/r5f/drivers/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

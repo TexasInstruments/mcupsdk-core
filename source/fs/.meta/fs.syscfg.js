@@ -8,7 +8,7 @@ const topModulesNull = [
 ];
 
 function getTopModules() {
-    const fsSocList = ["am64x", "am243x", "am263x"];
+    const fsSocList = ["am64x", "am243x", "am263x", "am263px"];
 	if(fsSocList.includes(common.getSocName())) {
 		return topModules;
 	} else {

@@ -40,7 +40,7 @@ function moduleInstances(inst) {
     switch(inst.media) {
     	case "SD":
             let moduleSelectName = "MMC1";
-            if ((common.getSocName() == "am263x"))
+            if ((common.getSocName() == "am263x") || (common.getSocName() == "am263px"))
             {
                 moduleSelectName = "MMC";
             }

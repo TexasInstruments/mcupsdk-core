@@ -146,7 +146,7 @@ bool EnetAppUtils_isDescCached(void)
     uintptr_t descStartAddr, descEndAddr;
     uint32_t descSize;
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
     enetType = ENET_CPSW_3G;
 #elif (defined(SOC_AM273X) || defined(SOC_AWR294X))
     enetType = ENET_CPSW_2G;

@@ -1,0 +1,126 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2163"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
+const adc1       = adc.addInstance();
+const adc2       = adc.addInstance();
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
+const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1      = epwm.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const int_xbar   = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1  = int_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "CONFIG_ADC1";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc1.enableConverter                = true;
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.soc0InterruptTrigger           = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.enableInterrupt2               = true;
+adc1.enableInterrupt2ContinuousMode = true;
+adc1.soc0SampleWindow               = 20;
+adc1.enableInterrupt1               = true;
+adc1.ADC.$assign                    = "ADC1";
+
+adc2.$name                          = "CONFIG_ADC2";
+adc2.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc2.enableConverter                = true;
+adc2.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc2.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc2.soc0InterruptTrigger           = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc2.enableInterrupt2               = true;
+adc2.enableInterrupt2ContinuousMode = true;
+adc2.soc0SampleWindow               = 20;
+adc2.ADC.$assign                    = "ADC2";
+
+edma1.$name                                         = "CONFIG_EDMA0";
+edma1.edmaRmDmaCh[0].$name                          = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name                         = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name                            = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name                          = "CONFIG_EDMA_RM3";
+edma1.edmaChannel.create(2);
+edma1.edmaChannel[0].$name                          = "CONFIG_EDMA_CH0";
+edma1.edmaChannel[0].channelTrigger                 = "ADC1_INT2";
+edma1.edmaChannel[0].xbarConfig.$name               = "CONFIG_DMA_TRIG_XBAR0";
+edma1.edmaChannel[0].xbarConfig.xbarConfig.$name    = "CONFIG_DMA_XBAR0";
+edma1.edmaChannel[1].$name                          = "CONFIG_EDMA_CH1";
+edma1.edmaChannel[1].channelTrigger                 = "ADC2_INT2";
+edma1.edmaChannel[1].xbarConfig.$name               = "CONFIG_DMA_TRIG_XBAR1";
+edma1.edmaChannel[1].xbarConfig.instance            = "DMA_TRIG_XBAR_EDMA_MODULE_2";
+edma1.edmaChannel[1].xbarConfig.xbarConfig.$name    = "CONFIG_DMA_XBAR1";
+edma1.edmaChannel[1].xbarConfig.xbarConfig.instance = "DMA_XBAR_DMA_TRIG_XBAR_2";
+
+epwm1.$name                                                    = "CONFIG_EPWM0";
+epwm1.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwmTimebase_clockDiv                                    = "EPWM_CLOCK_DIVIDER_4";
+epwm1.epwmTimebase_period                                      = 4000;
+epwm1.epwmCounterCompare_cmpA                                  = 2000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["ADC1_INT1"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+adc1.ADC.AIN0.$suggestSolution          = "ADC1_AIN0";
+adc1.ADC.AIN1.$suggestSolution          = "ADC1_AIN1";
+adc1.ADC.AIN2.$suggestSolution          = "ADC1_AIN2";
+adc1.ADC.AIN3.$suggestSolution          = "ADC1_AIN3";
+adc1.ADC.AIN4.$suggestSolution          = "ADC1_AIN4";
+adc1.ADC.AIN5.$suggestSolution          = "ADC1_AIN5";
+adc2.ADC.AIN0.$suggestSolution          = "ADC2_AIN0";
+adc2.ADC.AIN1.$suggestSolution          = "ADC2_AIN1";
+adc2.ADC.AIN2.$suggestSolution          = "ADC2_AIN2";
+adc2.ADC.AIN3.$suggestSolution          = "ADC2_AIN3";
+adc2.ADC.AIN4.$suggestSolution          = "ADC2_AIN4";
+adc2.ADC.AIN5.$suggestSolution          = "ADC2_AIN5";
+epwm1.EPWM.$suggestSolution             = "EPWM0";
+epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

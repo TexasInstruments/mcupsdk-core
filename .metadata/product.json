@@ -10,7 +10,10 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
+        "/fs/fs",
         "/networking/networking",
+        "/security/security",
+        "/xbar/xbar",
     ],
     "devices": [
         "AM64x",
@@ -19,6 +22,7 @@
         "AM273x",
         "AWR294X",
         "AM263x_beta",
+        "AM263Px",
         "AM62x",
     ],
     "contexts": {
@@ -100,6 +104,22 @@
             "targetdbId": "hsm0-0"
         }],
         "AM263x_beta": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        },{
+            "name": "r5fss1-0",
+            "targetdbId": "r5fss1-0"
+        }, {
+            "name": "r5fss1-1",
+            "targetdbId": "r5fss1-1"
+        }, {
+            "name": "hsm0-0",
+            "targetdbId": "hsm0-0"
+        }],
+        "AM263Px": [{
             "name": "r5fss0-0",
             "targetdbId": "r5fss0-0"
         }, {

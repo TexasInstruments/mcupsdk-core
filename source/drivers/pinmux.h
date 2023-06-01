@@ -47,6 +47,10 @@ extern "C"
 #if defined (SOC_AM263X)
 #include <drivers/pinmux/am263x/pinmux.h>
 #endif
+#if defined (SOC_AM263PX)
+#include <drivers/pinmux/am263px/pinmux.h>
+#endif
+
 
 #if defined (SOC_AM273X)
 #include <drivers/pinmux/am273x/pinmux.h>

@@ -1,8 +1,8 @@
 void Drivers_ecapOpen()
 {
-% let module = system.modules['/drivers/ecap/ecap'];
-% let device_peripheral = system.getScript("/drivers/ecap/soc/ecap_am263x.syscfg.js");
 % let common   = system.getScript("/common");
+% let module = system.modules['/drivers/ecap/ecap'];
+% let device_peripheral = system.getScript(`/drivers/ecap/soc/ecap_${common.getSocName()}.syscfg.js`);
 % let nameOfModule = "ecap";
 % let nameOfPeripheral = module.peripheralName;
 %if (module != null)

@@ -82,6 +82,21 @@ function getGpioPinRequirements(interfaceName, pinName)
     return pin;
 }
 
+function getXbarPinRequirements(interfaceName, pinName)
+{
+    let pinConfig = soc.getPinConfigurables(interfaceName, pinName);
+
+    let interfacePins = Object.keys(system.deviceData.interfaces[interfaceName].interfacePins);
+
+    let pin = {
+		name           : "XBAROUT",
+		displayName    : "XBAR",
+        interfaceNames : interfacePins,
+        config         : pinConfig,
+    };
+    return pin;
+}
+
 exports = {
     getPinRequirements,
     getGpioPinRequirements,
@@ -89,4 +104,5 @@ exports = {
     getInterfacePinList,
     setConfigurableDefault,
     setPeripheralPinConfigurableDefault,
+    getXbarPinRequirements,
 };

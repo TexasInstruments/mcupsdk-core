@@ -80,7 +80,7 @@ Bootloader_`common.camelSentence(instance.bootMedia)`Args gBootloader`i`Args =
 % }
 
 /* Configuration option for lockstep or standalone */
-% if(common.getSocName() == "am263x"){
+% if((common.getSocName() == "am263x") || (common.getSocName() == "am263px")){
 Bootloader_socCoreOpModeConfig operatingMode=
 {
     % if(module.$instances[0].R5FSS0operatingMode == "Standalone"){

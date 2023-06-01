@@ -16,7 +16,7 @@ FF_MMCSD_Config gFFMmcsdConfig[CONFIG_FF_NUM_INSTANCES] =
     % let instance = module.$instances[i];
     % let peripheralDriver = instance.peripheralDriver;
     {
-        % if(common.getSocName() == "am263x"){
+        % if(common.getSocName() == "am263x" || common.getSocName() == "am263px"){
             .mediaType         = MMCSD_CARD_`peripheralDriver.cardType`,
         %}
         % else{

@@ -328,7 +328,7 @@ static const MCAN_OffsetAddr gMcanOffsetAddr =
 #if ((CSL_MSS_MCANA_CFG_U_BASE - CSL_MSS_MCANA_MSG_RAM_U_BASE) != (CSL_MSS_MCANB_CFG_U_BASE - CSL_MSS_MCANB_MSG_RAM_U_BASE))
      #error Offsets assumed donot match for MCAN
 #endif
-#elif defined (SOC_AM263X)
+#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
 static const MCAN_OffsetAddr gMcanOffsetAddr =
 {
     .mcanSsOffset       = ((int32_t) CSL_MCAN0_CFG_U_BASE                   - (int32_t) CSL_MCAN0_MSG_RAM_U_BASE),
@@ -2187,7 +2187,7 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
         case CSL_MSS_MCANB_MSG_RAM_U_BASE:
             eccAggrBase = CSL_MSS_MCANB_ECC_U_BASE;
             break;
-#elif defined (SOC_AM263X)
+#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
         case CSL_MCAN0_MSG_RAM_U_BASE:
             eccAggrBase = CSL_MCAN0_ECC_U_BASE;
             break;
@@ -2212,7 +2212,7 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
         case CSL_MCAN1_MSGMEM_RAM_BASE:
             eccAggrBase = CSL_MCAN1_ECC_AGGR_BASE;
             break;
-#endif /* #if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)*/
+#endif /* #if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)  || defined (SOC_AM263PX) */
         default:
             eccAggrBase = 0U;
             break;
@@ -2242,7 +2242,7 @@ static const MCAN_OffsetAddr* MCAN_getOffsetAddr(uint32_t baseAddr)
         case CSL_MSS_MCANB_MSG_RAM_U_BASE:
             offsetAddr = &gMcanOffsetAddr;
             break;
-#elif defined (SOC_AM263X)
+#elif defined (SOC_AM263X)  || defined (SOC_AM263PX)
         case CSL_MCAN0_MSG_RAM_U_BASE:
         case CSL_MCAN1_MSG_RAM_U_BASE:
         case CSL_MCAN2_MSG_RAM_U_BASE:

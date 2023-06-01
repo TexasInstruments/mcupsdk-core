@@ -2,7 +2,7 @@ let common   = system.getScript("/common");
 let pinmux = system.getScript("/drivers/pinmux/pinmux");
 let soc = system.getScript(`/drivers/sdfm/soc/sdfm_${common.getSocName()}`);
 let numberOfSDFMs = system.getScript(`/drivers/sdfm/soc/sdfm_${common.getSocName()}`).numberOfSDFMs;
-let device_peripheral = system.getScript("/drivers/sdfm/soc/sdfm_am263x.syscfg.js");
+let device_peripheral = system.getScript(`/drivers/sdfm/soc/sdfm_${common.getSocName()}.syscfg.js`);
 let sd_clk_config = system.getScript("/drivers/sdfm/v0/sdfm_clockConfiguration.syscfg.js");
 let sd_validate = system.getScript("/drivers/sdfm/v0/sdfm_validation.syscfg.js");
 

@@ -318,6 +318,7 @@ function getCpswInstInfo(instance) {
                                  ['awr294x',{enetType: 'ENET_CPSW_2G', numMacPorts: '1', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1']}],
                                  ['am273x', {enetType: 'ENET_CPSW_2G', numMacPorts: '1', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1']}],
                                  ['am263x',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
+                                 ['am263px',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
                                  ['am243x',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_UDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
                                  ['am64x',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_UDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
                                ],
@@ -352,6 +353,8 @@ function getBoardConfigTemplateInfo() {
                                  Header: "/networking/enet_cpsw/templates/am273x/enet_board_cfg.h.xdt"}],
                                  ['am263x',{Cfile: "/networking/enet_cpsw/templates/am263x/enet_board_cfg.c.xdt",
                                  Header: "/networking/enet_cpsw/templates/am263x/enet_board_cfg.h.xdt"}],
+                                 ['am263px',{Cfile: "/networking/enet_cpsw/templates/am263px/enet_board_cfg.c.xdt",
+                                 Header: "/networking/enet_cpsw/templates/am26p3x/enet_board_cfg.h.xdt"}],
                                ],
                              );
     return boardConfigTemplate.get(common.getSocName());
@@ -366,6 +369,7 @@ function getSocConfigTemplateInfo() {
                                  ['awr294x',{Cfile: "/networking/enet_cpsw/templates/awr294x/enet_soc_cfg.c.xdt"}],
                                  ['am273x', {Cfile: "/networking/enet_cpsw/templates/am273x/enet_soc_cfg.c.xdt"}],
                                  ['am263x',{Cfile: "/networking/enet_cpsw/templates/am263x/enet_soc_cfg.c.xdt"}],
+                                 ['am263px',{Cfile: "/networking/enet_cpsw/templates/am263px/enet_soc_cfg.c.xdt"}],
                                ],
                              );
     return socConfigTemplate.get(common.getSocName());

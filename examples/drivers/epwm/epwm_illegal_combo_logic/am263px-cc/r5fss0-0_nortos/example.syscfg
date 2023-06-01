@@ -1,0 +1,237 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1      = epwm.addInstance();
+const epwm2      = epwm.addInstance();
+const epwm3      = epwm.addInstance();
+const epwm4      = epwm.addInstance();
+const epwm5      = epwm.addInstance();
+const epwm6      = epwm.addInstance();
+const epwm7      = epwm.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const epwm_xbar  = scripting.addModule("/xbar/epwm_xbar/epwm_xbar", {}, false);
+const epwm_xbar1 = epwm_xbar.addInstance();
+const icl_xbar   = scripting.addModule("/xbar/icl_xbar/icl_xbar", {}, false);
+const icl_xbar1  = icl_xbar.addInstance();
+const icl_xbar2  = icl_xbar.addInstance();
+const icl_xbar3  = icl_xbar.addInstance();
+const icl_xbar4  = icl_xbar.addInstance();
+const icl_xbar5  = icl_xbar.addInstance();
+const icl_xbar6  = icl_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+epwm1.$name                                                    = "CONFIG_EPWM0";
+epwm1.epwmXCMP_SplitCheck                                      = true;
+epwm1.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmTimebase_period                                      = 24000;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT1                = "EPWM_TZ_ACTION_HIGH";
+epwm1.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A1                  = "EPWM_TZ_EVENT_DCXH_HIGH";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                    = "EPWM_TZ_ACTION_DISABLE";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                    = "EPWM_TZ_ACTION_DISABLE";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT2                = "EPWM_TZ_ACTION_DISABLE";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCBEVT1                = "EPWM_TZ_ACTION_DISABLE";
+epwm1.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCBEVT2                = "EPWM_TZ_ACTION_DISABLE";
+epwm1.epwmCounterCompare_cmpA                                  = 20000;
+epwm1.epwmTimebase_syncInPulseSource                           = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM1";
+epwm1.epwmICL_useICLB                                          = true;
+epwm1.epwmICLB_LUTDEC_1                                        = "1";
+epwm1.epwmICLB_LUTDEC_5                                        = "1";
+epwm1.EPWM.$assign                                             = "EPWM0";
+
+epwm2.$name                                                    = "CONFIG_EPWM1";
+epwm2.epwmCounterCompare_cmpA                                  = 8000;
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmCounterCompare_cmpB                                  = 9000;
+epwm2.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm2.epwmTimebase_period                                      = 24000;
+epwm2.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm2.EPWM.$assign                                             = "EPWM1";
+
+epwm3.$name              = "CONFIG_EPWM2";
+epwm3.epwmICL_useICLA    = true;
+epwm3.epwmICL_useICLB    = true;
+epwm3.epwmICLB_IN3source = "1";
+epwm3.epwmICLA_LUTDEC_4  = "1";
+epwm3.epwmICLA_LUTDEC_5  = "1";
+epwm3.epwmICLA_LUTDEC_6  = "1";
+epwm3.epwmICLA_LUTDEC_7  = "1";
+epwm3.epwmICLB_LUTDEC_4  = "1";
+epwm3.epwmICLB_LUTDEC_5  = "1";
+epwm3.epwmICLB_LUTDEC_6  = "1";
+epwm3.epwmICLB_LUTDEC_7  = "1";
+epwm3.EPWM.$assign       = "EPWM2";
+
+epwm4.$name                                                      = "CONFIG_EPWM3";
+epwm4.epwmTimebase_period                                        = 24000;
+epwm4.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm4.epwmCounterCompare_cmpA                                    = 8000;
+epwm4.epwmCounterCompare_cmpB                                    = 16000;
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_LOW";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
+epwm4.epwmICL_useICLA                                            = true;
+epwm4.epwmICL_useICLB                                            = true;
+epwm4.epwmICLA_LUTDEC_1                                          = "1";
+epwm4.epwmICLA_LUTDEC_2                                          = "1";
+epwm4.epwmICLA_LUTDEC_5                                          = "1";
+epwm4.epwmICLA_LUTDEC_6                                          = "1";
+epwm4.epwmICLB_LUTDEC_0                                          = "1";
+epwm4.epwmICLB_LUTDEC_4                                          = "1";
+epwm4.epwmICLB_LUTDEC_3                                          = "1";
+epwm4.epwmICLB_LUTDEC_7                                          = "1";
+epwm4.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm4.EPWM.$assign                                               = "EPWM3";
+
+epwm5.$name              = "CONFIG_EPWM4";
+epwm5.epwmICL_useICLA    = true;
+epwm5.epwmICL_useICLB    = true;
+epwm5.epwmICLA_LUTDEC_4  = "1";
+epwm5.epwmICLA_LUTDEC_5  = "1";
+epwm5.epwmICLA_LUTDEC_6  = "1";
+epwm5.epwmICLA_LUTDEC_7  = "1";
+epwm5.epwmICLB_LUTDEC_4  = "1";
+epwm5.epwmICLB_LUTDEC_5  = "1";
+epwm5.epwmICLB_LUTDEC_6  = "1";
+epwm5.epwmICLB_LUTDEC_7  = "1";
+epwm5.epwmICLA_IN3source = "2";
+epwm5.epwmICLB_IN3source = "3";
+epwm5.EPWM.$assign       = "EPWM4";
+
+epwm6.$name                                                      = "CONFIG_EPWM5";
+epwm6.epwmTimebase_period                                        = 24000;
+epwm6.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm6.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM3";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_LOW";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
+epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
+epwm6.epwmCounterCompare_cmpA                                    = 8000;
+epwm6.epwmCounterCompare_cmpB                                    = 16000;
+epwm6.epwmICL_useICLA                                            = true;
+epwm6.epwmICL_useICLB                                            = true;
+epwm6.epwmICLA_LUTDEC_0                                          = "1";
+epwm6.epwmICLA_LUTDEC_1                                          = "1";
+epwm6.epwmICLA_LUTDEC_2                                          = "1";
+epwm6.epwmICLA_LUTDEC_5                                          = "1";
+epwm6.epwmICLA_LUTDEC_4                                          = "1";
+epwm6.epwmICLA_LUTDEC_6                                          = "1";
+epwm6.epwmICLB_LUTDEC_0                                          = "1";
+epwm6.epwmICLB_LUTDEC_4                                          = "1";
+epwm6.EPWM.$assign                                               = "EPWM5";
+
+epwm7.$name              = "CONFIG_EPWM6";
+epwm7.epwmICL_useICLA    = true;
+epwm7.epwmICL_useICLB    = true;
+epwm7.epwmICLA_IN3source = "4";
+epwm7.epwmICLB_IN3source = "5";
+epwm7.epwmICLA_LUTDEC_4  = "1";
+epwm7.epwmICLA_LUTDEC_5  = "1";
+epwm7.epwmICLA_LUTDEC_6  = "1";
+epwm7.epwmICLA_LUTDEC_7  = "1";
+epwm7.epwmICLB_LUTDEC_4  = "1";
+epwm7.epwmICLB_LUTDEC_5  = "1";
+epwm7.epwmICLB_LUTDEC_6  = "1";
+epwm7.epwmICLB_LUTDEC_7  = "1";
+epwm7.EPWM.$assign       = "EPWM6";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+epwm_xbar1.$name                 = "CONFIG_EPWM_XBAR0";
+epwm_xbar1.xbarOutput            = ["GPIO45"];
+epwm_xbar1["xbarConfig-0"].$name = "CONFIG_INPUT_XBAR0";
+
+icl_xbar1.$name      = "CONFIG_ICL_XBAR0";
+icl_xbar1.xbarOutput = ["MDL0_OUTA"];
+
+icl_xbar2.$name      = "CONFIG_ICL_XBAR1";
+icl_xbar2.xbarOutput = ["MDL0_OUTB"];
+icl_xbar2.instance   = "ICL_XBAR_1";
+
+icl_xbar3.$name      = "CONFIG_ICL_XBAR2";
+icl_xbar3.xbarOutput = ["MDL3_OUTA"];
+icl_xbar3.instance   = "ICL_XBAR_2";
+
+icl_xbar4.$name      = "CONFIG_ICL_XBAR3";
+icl_xbar4.xbarOutput = ["MDL3_OUTB"];
+icl_xbar4.instance   = "ICL_XBAR_3";
+
+icl_xbar5.$name      = "CONFIG_ICL_XBAR4";
+icl_xbar5.xbarOutput = ["MDL5_OUTA"];
+icl_xbar5.instance   = "ICL_XBAR_4";
+
+icl_xbar6.$name      = "CONFIG_ICL_XBAR5";
+icl_xbar6.xbarOutput = ["MDL5_OUTB"];
+icl_xbar6.instance   = "ICL_XBAR_5";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
+epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
+epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
+epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
+epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
+epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
+epwm5.EPWM.A.$suggestSolution           = "EPWM4_A";
+epwm5.EPWM.B.$suggestSolution           = "EPWM4_B";
+epwm6.EPWM.A.$suggestSolution           = "EPWM5_A";
+epwm6.EPWM.B.$suggestSolution           = "EPWM5_B";
+epwm7.EPWM.A.$suggestSolution           = "EPWM6_A";
+epwm7.EPWM.B.$suggestSolution           = "EPWM6_B";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

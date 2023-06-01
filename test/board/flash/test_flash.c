@@ -48,7 +48,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define TEST_FLASH_OFFSET_BASE      (0x10000U)
 #else
 #define TEST_FLASH_OFFSET_BASE      (0x200000U)
@@ -106,7 +106,7 @@ void test_main(void *args)
     Drivers_open();
 
     RUN_TEST(test_flash_readwrite, 246, NULL);
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
     Drivers_qspiClose();
     Drivers_qspiOpen();
 #else

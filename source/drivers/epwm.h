@@ -48,8 +48,14 @@ extern "C"
 #include <drivers/epwm/v1/etpwm.h>
 #endif
 
+//FIXME: add epwm v1-1 when support is added
+#if defined (DRV_VERSION_EPWM_V1_1)
+#include <drivers/epwm/v1/etpwm.h>
+// #include <drivers/epwm/v1_1/epwm.h>
+#endif
+
 #if defined (DRV_VERSION_EPWM_V2)
-#include <drivers/epwm/v2/epwm.h>
+// #include <drivers/epwm/v2/epwm.h>
 #endif
 
 #ifdef __cplusplus

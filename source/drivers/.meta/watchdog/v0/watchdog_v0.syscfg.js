@@ -8,7 +8,7 @@ if (soc_name == "awr294x")
     srcclkfreq = 150000000;
 }
 
-if( soc_name == "am263x" || soc_name == "am273x" || soc_name == "awr294x")
+if( soc_name == "am263x" || soc_name == "am263px" || soc_name == "am273x" || soc_name == "awr294x")
 {
     clockSourcesInfo = system.getScript(`/drivers/watchdog/soc/watchdog_${common.getSocName()}`).SOC_RcmClkSrcInfo;
 }
@@ -34,7 +34,7 @@ function getClockEnableIds(instance) {
 
 function getClockFrequencies(inst) {
     let instConfig = getInstanceConfig(inst);
-    if( soc_name == "am263x" || soc_name == "am273x" || soc_name == "awr294x")
+    if( soc_name == "am263x" || soc_name == "am263px" || soc_name == "am273x" || soc_name == "awr294x")
     {
         instConfig.clockFrequencies[0].clkRate = inst["wdt_func_clk"];
         instConfig.clockFrequencies[0].clkId = inst["wdt_clk_src"];
@@ -90,7 +90,7 @@ function validateInputClkFreq(instance, report)
 function validate(instance, report) {
     common.validate.checkSameInstanceName(instance, report);
     common.validate.checkNumberRange(instance, report, "expirationTime", 0, 60000, "dec");
-    if( soc_name == "am263x" || soc_name == "am273x" || soc_name == "awr294x")
+    if( soc_name == "am263x" || soc_name == "am263px" || soc_name == "am273x" || soc_name == "awr294x")
     {
         validatePair(instance, report);
         validateInputClkFreq(instance, report);
@@ -99,7 +99,7 @@ function validate(instance, report) {
 
 let clock_sources = []
 
-if( soc_name == "am263x" || soc_name == "am273x" || soc_name == "awr294x")
+if( soc_name == "am263x" || soc_name == "am263px" || soc_name == "am273x" || soc_name == "awr294x")
 {
     for (let arg of clockSourcesInfo)
     {
@@ -163,7 +163,7 @@ gconfig = gconfig.concat([
     },
 ])
 
-if( soc_name == "am263x" || soc_name == "am273x" || soc_name == "awr294x")
+if( soc_name == "am263x" || soc_name == "am263px" || soc_name == "am273x" || soc_name == "awr294x")
 {
     gconfig = gconfig.concat([
     {

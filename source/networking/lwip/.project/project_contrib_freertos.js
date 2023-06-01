@@ -79,6 +79,9 @@ const deviceSpecificIncludes = {
     am263x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
     ],
+    am263px : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
+    ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x",
     ],
@@ -110,6 +113,8 @@ const deviceSpecific_cflags = {
     ],
     am263x : [
     ],
+    am263px : [
+    ],
     am273x : [
         "-fno-strict-aliasing",
     ],
@@ -121,6 +126,7 @@ const deviceSpecific_cflags = {
 
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},

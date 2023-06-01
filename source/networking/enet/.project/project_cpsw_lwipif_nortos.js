@@ -26,7 +26,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy",
-        
+
        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include",
@@ -48,16 +48,20 @@ const socIncludes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
     ],
+    am263px : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
+    ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am273x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x",
-    
+
     ],
     awr294x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/awr294x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/awr294x",
     ],
-    
+
 };
 
 const cflags = {
@@ -80,10 +84,13 @@ const soc_cflags = {
     am263x : [
         "-Wno-ti-macros",
     ],
+    am263px : [
+        "-Wno-ti-macros",
+    ],
     am273x : [
         "-Wno-ti-macros",
         "-fno-strict-aliasing",
-    
+
     ],
     awr294x : [
         "-Wno-ti-macros",
@@ -109,6 +116,7 @@ const defines_r5f = {
 
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
@@ -123,7 +131,7 @@ function getComponentProperty(device) {
     property.name = "lwipif-cpsw-nortos";
     property.tag =  "lwipif-cpsw-nortos";
     property.isInternal = false;
-    
+
     deviceBuildCombos = []
     for (buildCombo of buildOptionCombos)
     {

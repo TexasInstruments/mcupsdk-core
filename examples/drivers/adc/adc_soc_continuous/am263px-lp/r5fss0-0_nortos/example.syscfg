@@ -1,0 +1,100 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
+const adc1       = adc.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                 = "CONFIG_ADC1";
+adc1.soc0InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc1InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc2InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc3InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc4InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc5InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc6InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc7InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT2";
+adc1.soc8InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc9InterruptTrigger  = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc10InterruptTrigger = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc11InterruptTrigger = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc12InterruptTrigger = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc13InterruptTrigger = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc14InterruptTrigger = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc15InterruptTrigger = "ADC_INT_SOC_TRIGGER_ADCINT1";
+adc1.soc0SampleWindow      = 19;
+adc1.soc1SampleWindow      = 19;
+adc1.soc2SampleWindow      = 19;
+adc1.soc3SampleWindow      = 19;
+adc1.soc4SampleWindow      = 19;
+adc1.soc5SampleWindow      = 19;
+adc1.soc6SampleWindow      = 19;
+adc1.soc7SampleWindow      = 19;
+adc1.soc8SampleWindow      = 19;
+adc1.soc9SampleWindow      = 19;
+adc1.soc10SampleWindow     = 19;
+adc1.soc11SampleWindow     = 19;
+adc1.soc12SampleWindow     = 19;
+adc1.soc13SampleWindow     = 19;
+adc1.soc14SampleWindow     = 19;
+adc1.soc15SampleWindow     = 19;
+adc1.enableInterrupt1      = true;
+adc1.interrupt1SOCSource   = "ADC_SOC_NUMBER7";
+adc1.enableInterrupt2      = true;
+adc1.interrupt2SOCSource   = "ADC_SOC_NUMBER15";
+adc1.enableConverter       = true;
+adc1.adcClockPrescaler     = "ADC_CLK_DIV_3_0";
+adc1.ADC.$assign           = "ADC1";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+adc1.ADC.AIN0.$suggestSolution          = "ball.T11";
+adc1.ADC.AIN1.$suggestSolution          = "ball.U11";
+adc1.ADC.AIN2.$suggestSolution          = "ball.T12";
+adc1.ADC.AIN3.$suggestSolution          = "ball.V12";
+adc1.ADC.AIN4.$suggestSolution          = "ball.U12";
+adc1.ADC.AIN5.$suggestSolution          = "ball.R12";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

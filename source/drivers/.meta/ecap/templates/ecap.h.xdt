@@ -11,7 +11,7 @@
 /* ECAP Instance Macros */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
-    % if (["am263x"].includes(common.getSocName())) {
+    % if (["am263x", "am263px"].includes(common.getSocName())) {
     % let modInst  = instance["ecap"];
 #define `instance.$name`_BASE_ADDR (`instance.ecapBase`)
     % }

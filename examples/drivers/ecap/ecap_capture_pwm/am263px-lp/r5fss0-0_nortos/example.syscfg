@@ -1,0 +1,81 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2163"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ecap        = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1       = ecap.addInstance();
+const epwm        = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1       = epwm.addInstance();
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
+const input_xbar  = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
+const input_xbar1 = input_xbar.addInstance();
+const int_xbar    = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1   = int_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ecap1.$name                  = "CONFIG_ECAP0";
+ecap1.enableInterrupt        = true;
+ecap1.interruptSourceAPWM    = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
+ecap1.captureMode            = "ECAP_ONE_SHOT_CAPTURE_MODE";
+ecap1.eventStop              = "ECAP_EVENT_4";
+ecap1.eventOnePolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap1.eventThreePolarity     = "ECAP_EVNT_FALLING_EDGE";
+ecap1.interruptSourceCapture = ["ECAP_ISR_SOURCE_CAPTURE_EVENT_4"];
+ecap1.counterResetOnEvent    = ["ECAP_EVENT_1","ECAP_EVENT_2","ECAP_EVENT_3","ECAP_EVENT_4"];
+ecap1.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
+ecap1.reArm                  = true;
+ecap1.enableLoadCounter      = true;
+
+epwm1.epwmTimebase_counterMode                                = "EPWM_COUNTER_MODE_UP";
+epwm1.epwmTimebase_period                                     = 500;
+epwm1.epwmTimebase_hsClockDiv                                 = "EPWM_HSCLOCK_DIVIDER_2";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD = "EPWM_AQ_OUTPUT_TOGGLE";
+epwm1.$name                                                   = "CONFIG_EPWM9";
+epwm1.EPWM.$assign                                            = "EPWM9";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
+input_xbar1.xbarOutput = "GPIO61";
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["ECAP0_INT"];
+int_xbar1.instance   = "INT_XBAR_22";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.EPWM.A.$suggestSolution = "ball.G1";
+epwm1.EPWM.B.$suggestSolution = "ball.J2";

@@ -1,0 +1,179 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.13.0+2553"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
+const adc1       = adc.addInstance();
+const adc2       = adc.addInstance();
+const adc3       = adc.addInstance();
+const adc4       = adc.addInstance();
+const adc5       = adc.addInstance();
+const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1      = epwm.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const int_xbar   = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1  = int_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name              = "CONFIG_ADC0";
+adc1.soc0Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.soc2Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.soc3Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
+adc1.enableConverter    = true;
+adc1.ppb2SOCNumber      = "ADC_SOC_NUMBER1";
+adc1.ppb3SOCNumber      = "ADC_SOC_NUMBER2";
+adc1.ppb4SOCNumber      = "ADC_SOC_NUMBER3";
+adc1.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
+adc1.ADC.$assign        = "ADC0";
+
+adc2.$name              = "CONFIG_ADC1";
+adc2.soc0Trigger        = "ADC_TRIGGER_EPWM0_SOCB";
+adc2.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc2.soc2Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc2.soc3Trigger        = "ADC_TRIGGER_EPWM0_SOCB";
+adc2.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
+adc2.enableConverter    = true;
+adc2.ppb2SOCNumber      = "ADC_SOC_NUMBER1";
+adc2.ppb3SOCNumber      = "ADC_SOC_NUMBER2";
+adc2.ppb4SOCNumber      = "ADC_SOC_NUMBER3";
+adc2.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
+adc2.ADC.$assign        = "ADC1";
+
+adc3.$name               = "CONFIG_ADC2";
+adc3.soc0Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.soc1Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.soc2Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.soc3Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc3.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
+adc3.enableConverter     = true;
+adc3.ppb2SOCNumber       = "ADC_SOC_NUMBER1";
+adc3.ppb3SOCNumber       = "ADC_SOC_NUMBER2";
+adc3.ppb4SOCNumber       = "ADC_SOC_NUMBER3";
+adc3.interruptPulseMode  = "ADC_PULSE_END_OF_CONV";
+adc3.socHighPriorityMode = "ADC_PRI_THRU_SOC3_HIPRI";
+adc3.ADC.$assign         = "ADC2";
+
+adc4.$name               = "CONFIG_ADC3";
+adc4.soc0Trigger         = "ADC_TRIGGER_EPWM0_SOCB";
+adc4.soc1Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc4.soc2Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc4.soc3Trigger         = "ADC_TRIGGER_EPWM0_SOCB";
+adc4.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
+adc4.enableConverter     = true;
+adc4.ppb2SOCNumber       = "ADC_SOC_NUMBER1";
+adc4.ppb3SOCNumber       = "ADC_SOC_NUMBER2";
+adc4.ppb4SOCNumber       = "ADC_SOC_NUMBER3";
+adc4.interruptPulseMode  = "ADC_PULSE_END_OF_CONV";
+adc4.socHighPriorityMode = "ADC_PRI_THRU_SOC3_HIPRI";
+adc4.ADC.$assign         = "ADC3";
+
+adc5.$name                          = "CONFIG_ADC4";
+adc5.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc5.soc1Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc5.soc2Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc5.soc3Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
+adc5.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc5.enableConverter                = true;
+adc5.ppb2SOCNumber                  = "ADC_SOC_NUMBER1";
+adc5.ppb3SOCNumber                  = "ADC_SOC_NUMBER2";
+adc5.ppb4SOCNumber                  = "ADC_SOC_NUMBER3";
+adc5.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
+adc5.enableInterrupt1               = true;
+adc5.enableInterrupt1ContinuousMode = true;
+adc5.interrupt1SOCSource            = "ADC_SOC_NUMBER2";
+adc5.ADC.$assign                    = "ADC4";
+
+epwm1.$name                                             = "CONFIG_EPWM0";
+epwm1.epwmTimebase_clockDiv                             = "EPWM_CLOCK_DIVIDER_128";
+epwm1.epwmTimebase_period                               = 24000;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_U_CMPA";
+epwm1.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "15";
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEnable         = true;
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerSource         = "EPWM_SOC_TBCTR_U_CMPB";
+epwm1.epwmEventTrigger_EPWM_SOC_B_triggerEventPrescalar = "15";
+epwm1.epwmCounterCompare_cmpA                           = 1000;
+epwm1.epwmCounterCompare_cmpB                           = 1005;
+epwm1.EPWM.$assign                                      = "EPWM0";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "ball.A7";
+debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["ADC4_INT1"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+adc1.ADC.AIN0.$suggestSolution          = "ball.V15";
+adc1.ADC.AIN1.$suggestSolution          = "ball.U15";
+adc1.ADC.AIN2.$suggestSolution          = "ball.T14";
+adc1.ADC.AIN3.$suggestSolution          = "ball.U14";
+adc1.ADC.AIN4.$suggestSolution          = "ball.U13";
+adc1.ADC.AIN5.$suggestSolution          = "ball.R14";
+adc2.ADC.AIN0.$suggestSolution          = "ball.T11";
+adc2.ADC.AIN1.$suggestSolution          = "ball.U11";
+adc2.ADC.AIN2.$suggestSolution          = "ball.T12";
+adc2.ADC.AIN3.$suggestSolution          = "ball.V12";
+adc2.ADC.AIN4.$suggestSolution          = "ball.U12";
+adc2.ADC.AIN5.$suggestSolution          = "ball.R12";
+adc3.ADC.AIN0.$suggestSolution          = "ball.R10";
+adc3.ADC.AIN1.$suggestSolution          = "ball.T10";
+adc3.ADC.AIN2.$suggestSolution          = "ball.U10";
+adc3.ADC.AIN3.$suggestSolution          = "ball.T9";
+adc3.ADC.AIN4.$suggestSolution          = "ball.V9";
+adc3.ADC.AIN5.$suggestSolution          = "ball.T8";
+adc4.ADC.AIN0.$suggestSolution          = "ball.U7";
+adc4.ADC.AIN1.$suggestSolution          = "ball.U8";
+adc4.ADC.AIN2.$suggestSolution          = "ball.T7";
+adc4.ADC.AIN3.$suggestSolution          = "ball.R7";
+adc4.ADC.AIN4.$suggestSolution          = "ball.V8";
+adc4.ADC.AIN5.$suggestSolution          = "ball.U9";
+adc5.ADC.AIN0.$suggestSolution          = "ball.U6";
+adc5.ADC.AIN1.$suggestSolution          = "ball.V5";
+adc5.ADC.AIN2.$suggestSolution          = "ball.V4";
+adc5.ADC.AIN3.$suggestSolution          = "ball.U5";
+adc5.ADC.AIN4.$suggestSolution          = "ball.V3";
+adc5.ADC.AIN5.$suggestSolution          = "ball.U4";
+epwm1.EPWM.A.$suggestSolution           = "ball.B2";
+epwm1.EPWM.B.$suggestSolution           = "ball.B1";
+debug_log.uartLog.UART.$suggestSolution = "UART0";

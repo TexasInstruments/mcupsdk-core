@@ -58,6 +58,10 @@ extern "C" {
 #include <sdl/esm/soc/am263x/sdl_esm_soc.h>
 #endif /* SOC_AM263X */
 
+#if defined (SOC_AM263PX)
+#include <sdl/esm/soc/am263px/sdl_esm_soc.h>
+#endif /* SOC_AM263PX */
+
 #if defined (SOC_AM273X)
 #include <sdl/esm/soc/am273x/sdl_esm_soc.h>
 #include <sdl/include/am273x/sdlr_mss_ctrl.h>

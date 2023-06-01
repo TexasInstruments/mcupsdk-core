@@ -49,6 +49,11 @@ extern "C"
 #include <drivers/epwm/v1/cslr_ottocal.h>
 #endif
 
+#if defined (IP_VERSION_EPWM_V1_1)
+#include <drivers/epwm/v1_1/cslr_epwm.h>
+#include <drivers/epwm/v1_1/cslr_ottocal.h>
+#endif
+
 #if defined (IP_VERSION_EPWM_V2)
 #include <drivers/epwm/v2/cslr_epwm.h>
 #endif

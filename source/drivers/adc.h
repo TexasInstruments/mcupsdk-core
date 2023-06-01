@@ -48,6 +48,17 @@ extern "C"
 #include <drivers/adc/v1/adc.h>
 #endif
 
+// FIXME : ADD V1-1 when support is added
+#if defined (DRV_VERSION_ADC_V1_1)
+#include <drivers/adc/v1/adc.h>
+// #include <drivers/adc/v1_1/adc.h>
+#endif
+// FIXME : ADD V2 when support is added
+#if defined (DRV_VERSION_ADC_V2)
+#include <drivers/adc/v1/adc.h>
+// #include <drivers/adc/v2/adc_r.h>
+#endif
+
 #ifdef __cplusplus
 }
 #endif

@@ -105,7 +105,7 @@ extern "C" {
  *
  * ============================================================================
  */
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X) || defined (SOC_AM263PX)
 
 #include <cpdma/csl_cpdma.h>
 

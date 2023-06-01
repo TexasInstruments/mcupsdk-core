@@ -1,5 +1,5 @@
 let common   = system.getScript("/common");
-let device_driverlib_peripheral = system.getScript("/drivers/epwm/soc/epwm_am263x.syscfg.js");
+let device_driverlib_peripheral = system.getScript(`/drivers/epwm/soc/epwm_${common.getSocName()}.syscfg.js`);
 let epwm_json = system.getScript("/drivers/epwm/v1/epwm.json").epwm;
 
 let OPEN_PAR = "(";

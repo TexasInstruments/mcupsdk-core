@@ -54,6 +54,10 @@ extern "C" {
 #include <sdl/rti/v0/soc/am263x/sdl_soc_rti.h>
 #endif /* SOC_AM263X */
 
+#if defined (SOC_AM263PX)
+#include <sdl/rti/v0/soc/am263px/sdl_soc_rti.h>
+#endif /* SOC_AM263PX */
+
 #if defined (SOC_AM273X)
 #include <sdl/rti/v0/soc/am273x/sdl_soc_rti.h>
 #endif /* SOC_AM273X */

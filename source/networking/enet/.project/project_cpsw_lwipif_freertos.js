@@ -49,16 +49,20 @@ const socIncludes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
     ],
+    am263px : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
+    ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am273x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x",
-    
+
     ],
     awr294x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/awr294x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/awr294x",
     ],
-    
+
 };
 
 const cflags = {
@@ -79,10 +83,13 @@ const soc_cflags = {
     am263x : [
         "-Wno-ti-macros",
     ],
+    am263px : [
+        "-Wno-ti-macros",
+    ],
     am273x : [
         "-Wno-ti-macros",
         "-fno-strict-aliasing",
-    
+
     ],
     awr294x : [
         "-Wno-ti-macros",
@@ -108,6 +115,7 @@ const defines_r5f = {
 
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
@@ -122,7 +130,7 @@ function getComponentProperty(device) {
     property.name = "lwipif-cpsw-freertos";
     property.tag = "lwipif-cpsw-freertos";
     property.isInternal = false;
-    
+
     deviceBuildCombos = []
     for (buildCombo of buildOptionCombos)
     {
@@ -142,10 +150,10 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
-    
+
     cflags.common = _.union(cflags.common, soc_cflags[device])
     build_property.cflags = cflags;
-    
+
     includes.common = _.union(includes.common, socIncludes[device]);
     build_property.includes = includes;
     if(buildOption.cpu.match(/r5f*/))

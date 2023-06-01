@@ -101,7 +101,7 @@ void fsi_tx_main(void *args)
     status += FSI_executeTxFlushSequence(txBaseAddr, txTestParams->prescaleVal);
     DebugP_assert(status == SystemP_SUCCESS);
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (txTestParams->delayLineCtrlTest == TRUE)
     {
         FSI_configTxDelayLine(txBaseAddr, FSI_TX_DELAY_CLK, 5U);

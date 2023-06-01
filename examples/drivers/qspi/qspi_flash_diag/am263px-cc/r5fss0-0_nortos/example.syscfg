@@ -1,0 +1,75 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px_beta" --package "ZCZ" --part "AM263Px" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.10.0+2163"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const qspi       = scripting.addModule("/drivers/qspi/qspi", {}, false);
+const qspi1      = qspi.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+qspi1.$name              = "CONFIG_QSPI0";
+qspi1.advanced           = true;
+qspi1.baudRateDiv        = 1;
+qspi1.QSPI.QSPI_D2.pu_pd = "pu";
+qspi1.QSPI.QSPI_D3.pu_pd = "pu";
+
+const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                 = edma.addInstance({}, false);
+edma1.$name                 = "CONFIG_EDMA0";
+qspi1.edmaConfig            = edma1;
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+qspi1.QSPI.$suggestSolution             = "QSPI";
+qspi1.QSPI.QSPI_D0.$suggestSolution     = "QSPI_D0";
+qspi1.QSPI.QSPI_D1.$suggestSolution     = "QSPI_D1";
+qspi1.QSPI.QSPI_D2.$suggestSolution     = "QSPI_D2";
+qspi1.QSPI.QSPI_D3.$suggestSolution     = "QSPI_D3";
+qspi1.QSPI.QSPI_CLK.$suggestSolution    = "QSPI_CLK";
+qspi1.QSPI.QSPI_CSn0.$suggestSolution   = "QSPI_CSn0";
+debug_log.uartLog.UART.$suggestSolution = "UART0";
