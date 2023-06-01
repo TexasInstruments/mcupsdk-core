@@ -30,6 +30,12 @@ BOOTIMAGE_NAME_SIGNED:=dpl_ut_AddrTranslateP_null.$(PROFILE).appimage.signed
 BOOTIMAGE_RPRC_NAME:=dpl_ut_AddrTranslateP_null.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_AddrTranslateP_null.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_AddrTranslateP_null.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=dpl_ut_AddrTranslateP_null.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=dpl_ut_AddrTranslateP_null.$(PROFILE).appimage.hs_fs
+TARGETS := $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+endif
 
 FILES_common := \
 	test_dpl.c \
@@ -156,7 +162,7 @@ $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: am263x:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
-all: $(BOOTIMAGE_NAME)
+all: $(TARGETS)
 
 SYSCFG_GEN_FILES=generated/ti_drivers_config.c generated/ti_drivers_config.h
 SYSCFG_GEN_FILES+=generated/ti_drivers_open_close.c generated/ti_drivers_open_close.h
@@ -244,6 +250,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -273,4 +280,18 @@ endif
 	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
+$(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_HS)
+	$(RM) $(BOOTIMAGE_NAME)-enc
+endif
+	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  .
+endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))
