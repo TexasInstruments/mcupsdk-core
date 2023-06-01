@@ -278,3 +278,15 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_1[IPC_NOFTIY_INTERRUP
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss1_1 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_1_NUM;
+
+void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
+{
+    volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
+
+    /* trigger interrupt to other core */
+    *addr = (1U << intrBitPos);
+}
+
+void IpcNotify_wait(void)
+{
+}

@@ -107,6 +107,13 @@ void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint3
  */
 void IpcNotify_isr(void *args);
 
+/**
+ * \brief wait for approximatly 0.6usec as part of Mailbox Errata workaround.
+ *
+ * Note: This function is applicable for only AWR294x SOC.
+ */
+void IpcNotify_wait(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -57,6 +57,11 @@
 #define DSS_MBOX_MEM                (CSL_DSS_MAILBOX_U_BASE)
 #define DSS_MBOX_MEM_SIZE           (4U*1024U)
 
+/* A delay of 0.5uSec is recommended before clear pending read request from remote core
+ * This delay is implemented as a loop and is profiled to be approximately 0.6uSec
+ */
+#define IPC_NOTIFY_WAIT_CYCLES           (17U)
+
 /*
  * SW queue between each pair of CPUs
  *
@@ -204,3 +209,62 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_c66ss0[IPC_NOFTIY_INTERRUPT_
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_c66ss0 = IPC_NOFTIY_INTERRUPT_CONFIG_C66SS0_NUM;
+
+void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
+{
+    uint8_t loop = 0U;
+    volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
+    #if defined(__aarch64__) || defined(__arm__)
+    volatile uint32_t *ptrC66MboxReadReq = (volatile uint32_t *)C66SS0_MBOX_READ_REQ;
+    #endif
+    volatile uint32_t *ptrR5F0MboxReadReq = (volatile uint32_t *)R5FSS0_0_MBOX_READ_REQ;
+    volatile uint32_t *ptrR5F1MboxReadReq = (volatile uint32_t *)R5FSS0_1_MBOX_READ_REQ;
+
+    do
+    {
+        /* trigger interrupt to other core */
+        *addr = (1U << intrBitPos);
+
+        #if defined(__aarch64__) || defined(__arm__)
+
+        /* Check for the read request confirmation */
+        if((intrBitPos == C66SS0_MBOX_PROC_BIT_POS) && (*ptrC66MboxReadReq & (1U << R5FSS0_0_MBOX_PROC_BIT_POS)))
+            break;
+
+        if((intrBitPos == R5FSS0_0_MBOX_PROC_BIT_POS) && (*ptrR5F1MboxReadReq & (1U << R5FSS0_1_MBOX_PROC_BIT_POS)))
+            break;
+
+        if((intrBitPos == R5FSS0_1_MBOX_PROC_BIT_POS) && (*ptrR5F0MboxReadReq & (1U << R5FSS0_0_MBOX_PROC_BIT_POS)))
+            break;
+
+        #endif
+
+        #if defined(_TMS320C6X)
+
+        /* Check for the read request confirmation */
+        if((intrBitPos == R5FSS0_0_MBOX_PROC_BIT_POS) && (*ptrR5F0MboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS)))
+            break;
+
+        if((intrBitPos == R5FSS0_1_MBOX_PROC_BIT_POS) && (*ptrR5F1MboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS)))
+            break;
+
+        #endif
+
+    } while (++loop < 3U);
+}
+
+
+void IpcNotify_wait(void)
+{
+    volatile uint32_t loopCounter = 0U;
+
+    /* Processor sending will trigger read request multiple times and ensure
+    * that read request is reached to receiving processor. The delay implemented
+    * here is not to clear the interrupt while sending processor is reading back
+    * and verifying the interrupt is triggered at receving Processor
+    */
+    for(loopCounter = 0; loopCounter < IPC_NOTIFY_WAIT_CYCLES; loopCounter++);
+
+    return;
+}
+

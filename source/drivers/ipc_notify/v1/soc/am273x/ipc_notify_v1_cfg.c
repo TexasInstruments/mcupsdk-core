@@ -205,3 +205,15 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_c66ss0[IPC_NOFTIY_INTERRUPT_
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_c66ss0 = IPC_NOFTIY_INTERRUPT_CONFIG_C66SS0_NUM;
+
+void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
+{
+    volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
+
+    /* trigger interrupt to other core */
+    *addr = (1U << intrBitPos);
+}
+
+void IpcNotify_wait(void)
+{
+}

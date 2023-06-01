@@ -63,6 +63,8 @@ typedef struct {
 
 } IpcNotify_SwQueue;
 
+extern void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos);
+
 #if defined(__aarch64__) || defined(__arm__)
 static inline void IpcNotify_dataAndInstructionBarrier(void)
 {
@@ -119,8 +121,6 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t 
     {
         if( ( (wrIdx+1U)%MAILBOX_MAX_MSGS_IN_SW_FIFO ) != rdIdx )
         {
-            volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
-
             /* there is some space in the FIFO */
             swQ->fifo[wrIdx] = value;
 
@@ -139,7 +139,7 @@ static inline int32_t IpcNotify_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t 
             #endif
 
             /* trigger interrupt to other core */
-            *addr = ((uint32_t)1 << intrBitPos);
+            IpcNotify_trigInterrupt(mailboxBaseAddr, intrBitPos);
 
             status = SystemP_SUCCESS;
         }

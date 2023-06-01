@@ -114,6 +114,16 @@ void IpcNotify_isr(void *args)
     pendingIntr = IpcNotify_mailboxGetPendingIntr(mailboxBaseAddr);
     do
     {
+        /*
+         * Processor sending will trigger read request multiple times and ensure
+         * that read request is reached to receiving processor. The delay implemented
+         * here is not to clear the interrupt while sending processor is reading back
+         * and verifying the interrupt is triggered at receving Processor.
+         *
+         * NOTE: This workaround is currently implemented only for AWR294x SOC.
+         */
+        IpcNotify_wait();
+
         /* We clear pending interrupt unconditional here, and read all the SW queues later */
         IpcNotify_mailboxClearPendingIntr(mailboxBaseAddr, pendingIntr);
 
