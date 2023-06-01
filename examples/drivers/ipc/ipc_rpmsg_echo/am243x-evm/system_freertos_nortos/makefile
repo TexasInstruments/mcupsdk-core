@@ -148,3 +148,4 @@ endif
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
+
