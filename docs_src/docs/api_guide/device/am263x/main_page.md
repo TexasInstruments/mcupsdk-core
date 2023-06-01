@@ -28,7 +28,7 @@ The main software components in the block diagram are described below
     <th>Documentation Page
     <th>Description
 </tr>
-<tr><td colspan="3" bgcolor=#F0F0F0>**OS Kernel**</td></tr>
+<tr><td colspan="3" bgcolor=#F0F0F0><b>OS Kernel</b></td></tr>
 <tr>
     <td>No RTOS
     <td> \ref KERNEL_NORTOS_PAGE
@@ -50,7 +50,7 @@ The main software components in the block diagram are described below
     <td> \ref KERNEL_DPL_PAGE
     <td>APIs used by drivers to abstract the OS environment. Example, Semaphore, HW interrupts, mutex, clock.
 </tr>
-<tr><td colspan="3" bgcolor=#F0F0F0>**Device Drivers and HAL (Hardware Abstraction Layer)**</td></tr>
+<tr><td colspan="3" bgcolor=#F0F0F0><b>Device Drivers and HAL (Hardware Abstraction Layer)</b></td></tr>
 <tr>
     <td>SOC Peripheral Drivers
     <td>\ref DRIVERS_PAGE
@@ -61,7 +61,7 @@ The main software components in the block diagram are described below
     <td>\ref BOARD_DRIVERS_PAGE
     <td>Device Drivers library and APIs for peripherals on the board or EVM. Example, Flash, EEPROM.
 </tr>
-<tr><td colspan="3" bgcolor=#F0F0F0>**Protocol Stacks and Middleware**</td></tr>
+<tr><td colspan="3" bgcolor=#F0F0F0><b>Protocol Stacks and Middleware</b></td></tr>
 <tr>
     <td>Industrial Protocol Stacks
     <td> INDUSTRIAL_COMMS
@@ -72,20 +72,25 @@ The main software components in the block diagram are described below
     <td>\ref EXAMPLES_CPSW_LWIP_HTTPS
     <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
 </tr>
-<tr><td colspan="3" bgcolor=#F0F0F0>**Software Diagnostics Library**</td></tr>
+<tr><td colspan="3" bgcolor=#F0F0F0><b>Software Diagnostics Library</b></td></tr>
 <tr>
     <td>SDL
     <td>\ref SDL_PAGE
     <td>Software Diagnostics Libaray
 </tr>
 </tr>
-<tr><td colspan="3" bgcolor=#F0F0F0>**Examples and Demos**</td></tr>
+<tr><td colspan="3" bgcolor=#F0F0F0><b>Examples and Demos</b></td></tr>
 <tr>
     <td>Examples and Demos
     <td>\ref EXAMPLES
     <td>Examples and demos showing usage of different SW libraries and APIs
 </tr>
-<tr><td colspan="3" bgcolor=#F0F0F0>**Tools (used on host machine)**</td></tr>
+<tr><td colspan="3" bgcolor=#F0F0F0><b>Tools (used on host machine)</b></td></tr>
+<tr>
+    <td> OpTI-Flash: Smart Placement
+    <td>\ref SMART_PLACEMENT_AND_BENCHMARK
+    <td> Smart placement is a process which aims to place critical functions & data in faster memory and is usually used for large memory footprint application which requires XIP.
+</tr>
 <tr>
     <td>Code Composer Studio (CCS)
     <td>\ref CCS_PROJECTS_PAGE
