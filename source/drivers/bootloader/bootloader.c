@@ -580,6 +580,10 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
             {
                 authStatus = Bootloader_socAuthImage(certLoadAddr);
             }
+
+            /* Invalidate the cache before reading in case HSM decrypted image */
+            CacheP_inv((void *)certLoadAddr, cacheAlignedLen, CacheP_TYPE_ALL);
+
             if(config->bootMedia == BOOTLOADER_MEDIA_BUFIO)
             {
                 /* Authentication will fail in Buf Io because we don't have full data yet,
