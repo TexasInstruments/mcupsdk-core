@@ -4,11 +4,11 @@
 
 export `args.sdkName`?=$(abspath `args.relPath`)
 include $(`args.sdkName`)/imports.mak
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")) {
 include $(`args.sdkName`)/devconfig/devconfig.mak
 % }
 
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")) {
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -25,7 +25,7 @@ MULTI_CORE_BOOTIMAGE_NAME_XIP:=`args.project.name`_system.$(PROFILE).appimage_xi
 % if (args.project.device == "awr294x") {
 MULTI_CORE_BOOTIMAGE_NAME_QSPI:=`args.project.name`_system.$(PROFILE).appimage_qspi
 % }
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")) {
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 % }
 
@@ -45,7 +45,7 @@ all: syscfg
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all
 % }
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am273x")) {
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 endif
@@ -84,14 +84,14 @@ scrub:
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")) {
 	$(RM) \*.appimage.hs
 % }
 	$(RM) \*.appimage_xip
 else
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")) {
 	$(RM) \*.appimage.hs
 % }
 	$(RM) *.appimage_xip
@@ -166,6 +166,9 @@ OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.j
 % if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
+% if ((args.project.device == "am263x") || (args.project.device == "am273x")) {
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+% }
 
 MULTI_CORE_APP_PARAMS = \
 % for (let project of args.project.projects) {
@@ -219,3 +222,21 @@ endif
 	@echo  .
 endif
 % }
+% if ((args.project.device == "am263x") || (args.project.device == "am273x")) {
+$(MULTI_CORE_BOOTIMAGE_NAME_HS): $(MULTI_CORE_BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+endif
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_HS) Done !!!
+	@echo  .
+endif
+% }
+
