@@ -64,7 +64,6 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
-	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/ \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/sdl_ecc_r5_btcm/ \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/sdl_ecc_r5_btcm/am263x-cc/ \
 	-Igenerated \
