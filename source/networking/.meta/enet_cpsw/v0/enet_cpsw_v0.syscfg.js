@@ -101,6 +101,26 @@ const enet_cpsw_system_config = {
     ],
 };
 
+function enet_cpsw_getPhyaddress(platform, port)
+{
+    const cpswPhyAddrInfoMap = new Map(
+                                           [
+                                             ['am64x-evm',{phyAddr1: 0, phyAddr2: 3}],
+                                             ['am243x-evm', {phyAddr1: 0, phyAddr2: 3}],
+                                             ['am243x-lp',{phyAddr1: 3, phyAddr2: 15,}],
+                                           ],
+                                         );
+    let phyInfo =  cpswPhyAddrInfoMap.get(platform);
+    if (port == 1)
+    {
+        return phyInfo.phyAddr1;
+    }
+    else
+    {
+        return phyInfo.phyAddr2;
+    }
+}
+
 const enet_cpsw_phy1_config =
 {
     name: "phy1Config",
@@ -112,30 +132,16 @@ const enet_cpsw_phy1_config =
             name: "phyAddr1",
             description: "Phy Address of the port 1. Value MUST be between 0 .. 31",
             displayName: "Address",
-            default: 0,
+            default: enet_cpsw_getPhyaddress(device, 1),
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],
-            readOnly: true,
-            getValue:function (inst) {
-                const cpswPhyAddrInfoMap = new Map(
-                                           [
-                                             ['am64x-evm',{phyAddr1: 0, phyAddr2: 3}],
-                                             ['am243x-evm', {phyAddr1: 0, phyAddr2: 3}],
-                                             ['am243x-lp',{phyAddr1: 3, phyAddr2: 15,}],
-                                             ['am64x-sk',{phyAddr1: 0, phyAddr2: 1,}],
-                                           ],
-                                         );
-                let phyInfo =  cpswPhyAddrInfoMap.get(device);
-                return phyInfo.phyAddr1;
-            },
         },
         {
             name: "isC45Phy1",
             description: "Set if this PHY supports MDIO Clause 45 data format",
             displayName: "Clause 45 Support",
             default: false,
-            readOnly: true,
         },
         {
             name: "isStrappedPhy1",
@@ -157,30 +163,16 @@ const enet_cpsw_phy2_config =
             name: "phyAddr2",
             description: "Phy Address of the port 2. Value MUST be between 0 .. 31",
             displayName: "Address",
-            default: 3,
+            default: enet_cpsw_getPhyaddress(device, 2),
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],
-            readOnly: true,
-            getValue:function (inst) {
-                const cpswPhyAddrInfoMap = new Map(
-                                           [
-                                             ['am64x-evm',{phyAddr1: 0, phyAddr2: 3}],
-                                             ['am243x-evm', {phyAddr1: 0, phyAddr2: 3}],
-                                             ['am243x-lp',{phyAddr1: 3, phyAddr2: 15,}],
-                                             ['am64x-sk',{phyAddr1: 0, phyAddr2: 1,}],
-                                           ],
-                                         );
-                let phyInfo =  cpswPhyAddrInfoMap.get(device);
-                return phyInfo.phyAddr2;
-            },
         },
         {
             name: "isC45Phy2",
             description: "Set if this PHY supports MDIO Clause 45 data format",
             displayName: "Clause 45 Support",
             default: false,
-            readOnly: true,
         },
         {
             name: "isStrappedPhy2",

@@ -643,11 +643,10 @@ void EnetMem_deInit(void)
         }
 
 #endif
-        if (EnetQueue_getQCount(&gEnetMemObj.ethPktMem_LargePoolQ) !=
-                                 gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].numPkts)
+        if (gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].numPkts !=  EnetQueue_getQCount(&gEnetMemObj.ethPktMem_LargePoolQ))
         {
             EnetAppUtils_print("PktMemQ Large: Before: %d, after: %d\r\n",
-                               gEnetMemObj.cfg,
+                               gEnetMemObj.cfg.pktBufPool[ENET_MEM_POOLIDX_LARGE].numPkts,
                                EnetQueue_getQCount(&gEnetMemObj.ethPktMem_LargePoolQ));
             status = ENET_EFAIL;
         }

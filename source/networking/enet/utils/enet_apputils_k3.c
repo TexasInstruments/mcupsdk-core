@@ -550,7 +550,7 @@ void EnetAppUtils_disableClocks(Enet_Type enetType, uint32_t instId)
     uint32_t rgmii50MHzClkId;
     uint32_t rgmii5MHzClkId;
 
-    EnetAppUtils_print("Disabling clocks for CPSW!\r\n");
+    EnetAppUtils_print("Disabling clocks for ENET: %d, inst:%d!\r\n", enetType, instId);
 
     switch (enetType)
     {

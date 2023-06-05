@@ -652,13 +652,6 @@ static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                  coreId);
 }
 
-%if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
-`system.getTemplate('./enet_init_cpdma.c.xdt')()`
-%}
-
-%if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
-`system.getTemplate('./enet_init_udma.c.xdt')()`
-%}
 
 %if ((soc === "am64x") || (soc === "am243x")){
 /*
@@ -762,4 +755,12 @@ void EnetApp_initPhyStateHandlerTask(EventP_Object *pEvent)
         EnetAppUtils_assert(false);
     }
 }
+%}
+
+%if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
+`system.getTemplate('./enet_init_cpdma.c.xdt')()`
+%}
+
+%if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
+`system.getTemplate('./enet_init_udma.c.xdt')()`
 %}

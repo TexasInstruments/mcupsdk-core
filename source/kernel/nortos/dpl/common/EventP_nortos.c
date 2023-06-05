@@ -94,7 +94,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
     clockParams.timeout = SystemP_WAIT_FOREVER;
     ClockP_construct(&clockObj, &clockParams);
 
-    if ((timeout != 0U) && (timeout != SystemP_WAIT_FOREVER))
+    if ((timeout != SystemP_NO_WAIT) && (timeout != SystemP_WAIT_FOREVER))
     {
         ClockP_start(&clockObj);
     }
@@ -108,10 +108,18 @@ int32_t EventP_waitBits(EventP_Object  *obj,
 
         key = HwiP_disable();
 
-        if ((timeout != SystemP_WAIT_FOREVER) && (ClockP_isActive(&clockObj)!=0U))
+        if ((timeout != SystemP_WAIT_FOREVER) && (ClockP_isActive(&clockObj) == 0U))
         {
-            break;
+            /* Fall here when timeout has expired */
             status = SystemP_TIMEOUT;
+            break;
+        }
+
+        if (timeout == SystemP_NO_WAIT)
+        {
+            /* Break without waiting */
+            status = SystemP_TIMEOUT;
+            break;
         }
     }
     *eventBits = (pEvent->eventMask &  bitsToWaitFor);

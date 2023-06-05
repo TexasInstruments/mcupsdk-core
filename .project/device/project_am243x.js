@@ -218,7 +218,7 @@ const example_file_list = [
     "test/security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_rsa_signing_verification/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/.project/project.js",
-    "examples/networking/enet_loopback/.project/project.js",
+    "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_mqtt/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",

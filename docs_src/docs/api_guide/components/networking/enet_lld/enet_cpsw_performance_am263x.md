@@ -26,7 +26,7 @@ Scatter-gather TX         | Yes                      |
 Scatter-gather RX         | Yes                      |
 CPDMA interrupt pacing    | Yes                      |
 RTOS                            | FreeRTOS                 |
-RTOS application                | Modified \ref EXAMPLES_ENET_LOOPBACK \n example   |
+RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
 Host PC tool version            | nload                   |
 Rx packet length     | 200 B                       |
 Tx packet length     | 200 B                       |

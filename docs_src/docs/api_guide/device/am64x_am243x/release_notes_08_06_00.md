@@ -32,6 +32,7 @@ Cut-through switching support                                                   
 3G credit based shaper (802.1qav) support                                                       | Networking (CPSW)
 CPSW-3G DSCP priority mapping feature w/ RTOS                                                   | Networking (CPSW)
 Scatter/Gather support for receive packet buffer memory                                         | Networking (CPSW)
+ENET ICSSG PHY loopback (No-RTOS) example                                                       | Networking (CPSW)
 Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
 USB device with DFU class                                                                       | USB
 Resource allocation tool                                                                        | Sciclient
@@ -53,6 +54,7 @@ Cut-through switching support                                                   
 3G credit based shaper (802.1qav) support                                                       | Networking (CPSW)
 CPSW-3G DSCP priority mapping feature w/ RTOS                                                   | Networking (CPSW)
 Scatter/Gather support for receive packet buffer memory                                         | Networking (CPSW)
+ENET ICSSG PHY loopback (No-RTOS) example                                                       | Networking (CPSW)
 Support for ESM, MCRC, RTI, DCC, VTM, STOG, PBIST, MTOG, POK, ECC modules are added as part of SDL	|SDL
 USB device with DFU class                                                                       | USB
 Resource allocation tool                                                                        | Sciclient
@@ -668,6 +670,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Fixed
 </tr>
+<tr>
+    <td> MCUSDK-8361
+    <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK board
+    <td> Networking
+    <td> 8.4.0
+    <td> AM64x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10680
+    <td> ENET: AM243x: ICSSG Switch functionality degrade
+    <td> Networking (ICSSG)
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
 </table>
 
 ## Known Issues
@@ -875,14 +893,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-8361
-    <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK baord
-    <td> Networking
-    <td> 8.4.0
-    <td> AM64x
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-9739
     <td> AM64B SK loss of packet on using CPSW switch
     <td> Networking
@@ -918,14 +928,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 7.3.0
     <td> AM64x, AM243x
     <td> Use bash for windows as part of git for windows or don't use -j option
-</tr>
-<tr>
-    <td> MCUSDK-10680
-    <td> ENET: AM243x: ICSSG Switch functionality degrade
-    <td> Networking (ICSSG)
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> Use 8.5.0 release for ICSSG switch functionality
 </tr>
 </table>
 

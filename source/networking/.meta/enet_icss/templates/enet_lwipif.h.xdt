@@ -54,11 +54,11 @@ typedef enum AppEventId_e
     AppEventId_NETIFMNGR_POLL  = (1 << 0),
     AppEventId_NETIFMNGR_RXPKT = (1 << 1),
     AppEventId_NETIFMNGR_TXPKT = (1 << 2),
-    AppEventId_CPSW_PERIODIC_POLL = (1 << 3),
+    AppEventId_ICSSG_PERIODIC_POLL = (1 << 3),
     AppEventId_ANY_EVENT = (AppEventId_NETIFMNGR_POLL |
                             AppEventId_NETIFMNGR_RXPKT |
                             AppEventId_NETIFMNGR_TXPKT |
-                            AppEventId_CPSW_PERIODIC_POLL),
+                            AppEventId_ICSSG_PERIODIC_POLL),
 } AppEventId_t;
 %}
 

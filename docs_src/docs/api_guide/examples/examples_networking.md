@@ -4,12 +4,14 @@ This page lists all the examples related to Ethernet Communication.
 
 \cond SOC_AM243X
 ### Layer 2 Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
 -# \subpage EXAMPLES_ENET_CPSW_EST
+### Layer 2 Examples on Baremetal (NoRTOS)
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage ENET_LWIP_CPSW_OPERATING_MODES
@@ -23,13 +25,11 @@ This page lists all the examples related to Ethernet Communication.
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 
-### Layer 2 Examples on Baremetal (NoRTOS)
--# \subpage EXAMPLES_ENET_LAYER2_CPSW_FAST_STARTUP
 \endcond
 
 \cond SOC_AM64X
 ### Layer 2 Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
@@ -51,7 +51,7 @@ This page lists all the examples related to Ethernet Communication.
 
 \cond  SOC_AM263X
 ### Layer 2 Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
@@ -77,7 +77,7 @@ This page lists all the examples related to Ethernet Communication.
 
 \cond SOC_AM273X
 ### Layer 2 Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
 -# \subpage EXAMPLES_ENET_CPSW_EST
@@ -97,7 +97,7 @@ This page lists all the examples related to Ethernet Communication.
 
 \cond SOC_AWR294X
 ### Layer 2 Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_LOOPBACK
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
 ### TCP/IP Examples using LwIP Stack on FreeRTOS

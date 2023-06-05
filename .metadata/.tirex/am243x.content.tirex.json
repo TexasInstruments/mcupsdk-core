@@ -11177,9 +11177,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -11192,6 +11192,7 @@
         "subCategories": [
             "networking",
             "enet_loopback",
+            "enet_cpsw_loopback",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -11209,9 +11210,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
         ],
@@ -11224,6 +11225,7 @@
         "subCategories": [
             "networking",
             "enet_loopback",
+            "enet_cpsw_loopback",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

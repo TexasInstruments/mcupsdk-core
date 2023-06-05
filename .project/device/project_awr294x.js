@@ -75,7 +75,7 @@ const example_file_list = [
     "examples/kernel/dpl/dpl_demo/.project/project.js",
     "examples/kernel/freertos/posix_demo/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
-    "examples/networking/enet_loopback/.project/project.js",
+    "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_tcpserver/.project/project.js",
     "examples/networking/lwip/enet_cpsw_rawhttpserver/.project/project.js",

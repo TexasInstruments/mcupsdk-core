@@ -97,7 +97,7 @@ transfer of data between external ports along with internal traffic.
 
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X
 
 ## ICSSG Peripheral {#enetper_icssg}
 

@@ -678,9 +678,8 @@ void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
                         EnetDma_PktQ *fqPktInfoQ,
                         EnetDma_PktQ *cqPktInfoQ)
 {
-    EnetAppRxDmaSysCfg_Obj *rx;
     Enet_Type enetType;
-    uint32_t instId, flowIdx;
+    uint32_t instId;
     int32_t status;
     const EnetAppRxDmaCfg_Info rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] = 
     {
@@ -692,39 +691,29 @@ void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
                                 &enetType,
                                 &instId);
     EnetAppUtils_assert(status == ENET_SOK);
-    (void)instId; /* Instd id not used */
+    EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma[0].rx));
+    EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(rxDmaInfo));
 
+    /* Close RX channel */
+    EnetQueue_initQ(fqPktInfoQ);
+    EnetQueue_initQ(cqPktInfoQ);
 
-
-    for (flowIdx = 0; flowIdx < ENET_SYSCFG_RX_FLOWS_NUM/ENET_SYSCFG_NUM_PERIPHERAL; flowIdx++)
-    {
-        EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma[0].rx));
-        rx = &gEnetAppSysCfgObj.dma[0].rx[flowIdx];
-            /* Close RX channel */
-        EnetQueue_initQ(fqPktInfoQ);
-        EnetQueue_initQ(cqPktInfoQ);
-        EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(rxDmaInfo));
-
-        for (flowIdx = 0; flowIdx < ENET_SYSCFG_RX_FLOWS_NUM; flowIdx++)
-        {
-            rx = &gEnetAppSysCfgObj.dma[0].rx[flowIdx];
-            EnetAppUtils_closeRxFlowForChIdx(enetType,
-                                             hEnet,
-                                             coreKey,
-                                             coreId,
-                                             rxDmaInfo[enetRxDmaChId].useDefaultFlow,
-                                             fqPktInfoQ,
-                                             cqPktInfoQ,
-                                             enetRxDmaChId,
-                                             rx->rxFlowStartIdx,
-                                             rx->rxFlowIdx,
-                                             rx->numValidMacAddress,
-                                             rx->macAddr,
-                                             rx->hRxCh);
-            EnetAppSoc_releaseMacAddrList(rx->macAddr, rx->numValidMacAddress);
-        }
-        memset(rx, 0, sizeof(*rx));
-    }
+    EnetAppRxDmaSysCfg_Obj *pRx= &gEnetAppSysCfgObj.dma[0].rx[enetRxDmaChId];
+    EnetAppUtils_closeRxFlowForChIdx(enetType,
+                                         hEnet,
+                                         coreKey,
+                                         coreId,
+                                         rxDmaInfo[enetRxDmaChId].useDefaultFlow,
+                                         fqPktInfoQ,
+                                         cqPktInfoQ,
+                                         enetRxDmaChId,
+                                         pRx->rxFlowStartIdx,
+                                         pRx->rxFlowIdx,
+                                         pRx->numValidMacAddress,
+                                         pRx->macAddr,
+                                         pRx->hRxCh);
+    EnetAppSoc_releaseMacAddrList(pRx->macAddr, pRx->numValidMacAddress);
+    memset(pRx, 0, sizeof(*pRx));
 }
 
 void EnetApp_txChInPeripheral(Enet_Type enetType, uint32_t instId, uint32_t *startIdx, uint32_t *chCount)

@@ -30,6 +30,7 @@
 % }
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/TaskP.h>
+#include <kernel/dpl/EventP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/QueueP.h>
 
@@ -40,6 +41,7 @@
 
 #define ENETAPP_PHY_STATEHANDLER_TASK_PRIORITY        (7U)
 #define ENETAPP_PHY_STATEHANDLER_TASK_STACK     (3 * 1024)
+#define AppEventId_ICSSG_PERIODIC_POLL          (1 << 3)
 
 `system.getTemplate('./enet_init_udma.h.xdt')()`
 
@@ -101,13 +103,25 @@ static void EnetApp_getIcssgInitCfg(Enet_Type enetType,
                                     uint32_t instId,
                                     Icssg_Cfg *pIcssgCfg);
 
+%if(instance.RtosVariant == "NoRTOS"){
+void EnetApp_phyStateHandler();
+%}
+
+%if(instance.RtosVariant == "FreeRTOS"){
+static void EnetApp_phyStateHandler(void * appHandle);
+%}
+
 static uint32_t EnetApp_getEnetIdx(Enet_Type enetType, uint32_t instId)
 {
+%if (module.$instances.length == 1){
+    return 0;
+%}else{
 %if (instance.mode == "SWITCH"){
     return 0;
 %}
 %else {
     return instId & 0x01;
+%}
 %}
 }
 
@@ -137,6 +151,14 @@ static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, cons
 }
 
 % if((instance.McmEnable == false) && (instance.ExternalPhyMgmtEnable == false)){
+static void EnetApp_timerCb(ClockP_Object *clkInst, void * arg)
+{
+    SemaphoreP_Object *pTimerSem = (SemaphoreP_Object *)arg;
+
+    /* Tick! */
+    SemaphoreP_post(pTimerSem);
+}
+%if(instance.RtosVariant == "FreeRTOS"){
 static void EnetApp_phyStateHandler(void * appHandle)
 {
     SemaphoreP_Object *timerSem;
@@ -159,14 +181,6 @@ static void EnetApp_phyStateHandler(void * appHandle)
     hEnetAppObj->timerTaskShutDownDoneFlag = true;
     TaskP_destruct(&hEnetAppObj->task_phyStateHandlerObj);
     TaskP_exit();
-}
-
-static void EnetApp_timerCb(ClockP_Object *clkInst, void * arg)
-{
-    SemaphoreP_Object * pTimerSem = (SemaphoreP_Object *)arg;
-
-    /* Tick! */
-    SemaphoreP_post(pTimerSem);
 }
 
 static int32_t EnetApp_createPhyStateHandlerTask(EnetAppSysCfg_Obj *hEnetAppObj)
@@ -215,6 +229,19 @@ static int32_t EnetApp_createPhyStateHandlerTask(EnetAppSysCfg_Obj *hEnetAppObj)
     return status;
 
 }
+%}
+%if(instance.RtosVariant == "NoRTOS"){
+void EnetApp_phyStateHandler()
+{
+    for  (uint32_t idx = 0; idx < ENET_SYSCFG_NUM_PERIPHERAL; idx++)
+    {
+        if (gEnetAppSysCfgObj.hEnet[idx] != NULL)
+        {
+            Enet_periodicTick(gEnetAppSysCfgObj.hEnet[idx]);
+        }
+    }
+}
+% }
 % }
 
 static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
@@ -333,8 +360,8 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     status = EnetMcm_init(&enetMcmCfg);
 % }
 % else {
-%if(instance.ExternalPhyMgmtEnable == false){
-    if(hEnetIndex == 0)
+%if((instance.ExternalPhyMgmtEnable == false) && (instance.RtosVariant == "FreeRTOS")){
+    if (hEnetIndex == 0)
     {
         status = EnetApp_createPhyStateHandlerTask(&gEnetAppSysCfgObj);
     }
@@ -509,11 +536,9 @@ static int32_t EnetApp_enablePorts(Enet_Handle hEnet,
 %if(instance.ExternalPhyMgmtEnable == false){
 static void EnetApp_deleteClock(EnetAppSysCfg_Obj *hEnetAppObj)
 {
-
-    hEnetAppObj->timerTaskShutDownFlag = true;
-
     ClockP_stop(&hEnetAppObj->timerObj);
-
+%if(instance.RtosVariant == "FreeRTOS"){
+    hEnetAppObj->timerTaskShutDownFlag = true;
     /* Post Timer Sem once to get the Periodic Tick task terminated */
     SemaphoreP_post(&hEnetAppObj->timerSemObj);
 
@@ -522,9 +547,9 @@ static void EnetApp_deleteClock(EnetAppSysCfg_Obj *hEnetAppObj)
         ClockP_usleep(ClockP_ticksToUsec(1));
     } while (hEnetAppObj->timerTaskShutDownDoneFlag != true);
 
-    ClockP_destruct(&hEnetAppObj->timerObj);
     SemaphoreP_destruct(&hEnetAppObj->timerSemObj);
-
+%}
+    ClockP_destruct(&hEnetAppObj->timerObj);
 }
 %}
 void EnetApp_driverClose(Enet_Type enetType, uint32_t instId)
@@ -632,6 +657,48 @@ static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                  coreId);
 }
 
+
+%if(instance.RtosVariant == "NoRTOS"){
+static void EnetApp_postPollEvent(ClockP_Object *clkInst, void *pArg)
+{
+    EventP_Object* pEvent = (EventP_Object *) pArg;
+    const int32_t status = EventP_setBits(pEvent, AppEventId_ICSSG_PERIODIC_POLL);
+
+    if (status != SystemP_SUCCESS)
+    {
+        EnetAppUtils_print("Failed to post Poll Event handle\r\n");
+        EnetAppUtils_assert(false);
+    }
+}
+
+void EnetApp_initPhyStateHandlerTask(EventP_Object *pEvent)
+{
+    int32_t status;
+    ClockP_Params clkParams;
+    uint32_t timPeriodTicks = ClockP_usecToTicks((ENETPHY_FSM_TICK_PERIOD_MS)*1000U);  // Set timer expiry time in OS ticks
+
+    ClockP_Params_init(&clkParams);
+    clkParams.start     = TRUE;
+    clkParams.timeout   = timPeriodTicks;
+    clkParams.period    = timPeriodTicks;
+    clkParams.args      = pEvent;
+    clkParams.callback  = &EnetApp_postPollEvent;
+
+    /* Creating timer and setting timer callback function*/
+    status = ClockP_construct(&gEnetAppSysCfgObj.timerObj ,
+                              &clkParams);
+
+    if (status == SystemP_SUCCESS)
+    {
+        gEnetAppSysCfgObj.timerTaskShutDownFlag = false;
+    }
+    else
+    {
+        EnetAppUtils_print("Failed to construct clock handle\r\n");
+        EnetAppUtils_assert(false);
+    }
+}
+%}
 
 `system.getTemplate('./enet_init_udma.c.xdt')()`
 
