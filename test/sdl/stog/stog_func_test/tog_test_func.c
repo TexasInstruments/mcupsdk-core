@@ -330,8 +330,14 @@ void TOG_injectESMError(uint32_t instanceIndex)
         DebugP_log("   Inject SDL_TOG_init TimeoutVal Failed \r\n");
         /* Assert */
     }
+	if(instanceIndex==0)
+	{
+	  SDL_REG32_RD(END_POINT_ACCESS0);
+	}
+	else{
 
-    SDL_REG32_RD(END_POINT_ACCESS1);
+      SDL_REG32_RD(END_POINT_ACCESS1);
+	}
 
     /* Call SDL API to set configure back to original timeout value */
     cfg.timeoutVal = TOG_TEST_TIMEOUTVAL;
