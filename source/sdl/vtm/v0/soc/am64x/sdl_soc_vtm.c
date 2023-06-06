@@ -70,9 +70,7 @@ bool SDL_VTM_getBaseAddr(SDL_VTM_cfgReg cfgReg, uint32_t *vtmBaseAddr)
             default:
                 break;
         }
+	    *vtmBaseAddr = (uint32_t)SDL_DPL_addrTranslate(*vtmBaseAddr, size);
     }
-
-    *vtmBaseAddr = (uint32_t)SDL_DPL_addrTranslate(*vtmBaseAddr, size);
-
     return (instValid);
 }
