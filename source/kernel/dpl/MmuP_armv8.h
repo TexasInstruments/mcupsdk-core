@@ -128,7 +128,7 @@ void MmuP_MapAttrs_init(MmuP_MapAttrs *attrs);
 /**
  * \brief Enable MMU sub-system
  */
-void MmuP_enable();
+void MmuP_enable(void);
 
 /**
  * \brief Disable MMU sub-system
@@ -140,7 +140,7 @@ void MmuP_disable(void);
  *
  * \return 0: MMU sub-system is disabled, 1: MMU sub-system is enabled
  */
-uint32_t MmuP_isEnabled();
+uint32_t MmuP_isEnabled(void);
 
 /* Memory map */
 
@@ -160,7 +160,7 @@ int32_t MmuP_map(uintptr_t vaddr, uintptr_t paddr, uint32_t size, MmuP_MapAttrs 
  * \brief Initialize MMU sub-system, called by SysConfig, not to be called by end users
  *
  */
-void MmuP_init();
+void MmuP_init(void);
 
 /** @} */
 

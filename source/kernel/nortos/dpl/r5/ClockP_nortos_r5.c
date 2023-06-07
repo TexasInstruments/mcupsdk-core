@@ -32,6 +32,9 @@
 
 #include <kernel/nortos/dpl/common/ClockP_nortos_priv.h>
 #include <kernel/dpl/TimerP.h>
+void ClockP_init(void);
+void ClockP_timerClearOverflowInt(uint32_t timerBaseAddr);
+uint32_t ClockP_getTimerCount(uint32_t timerBaseAddr);
 
 void ClockP_timerClearOverflowInt(uint32_t timerBaseAddr)
 {

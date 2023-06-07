@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,7 +34,7 @@
 
 /* for CPU's that dont have a cache, use a 'NULL' implementation */
 
-void CacheP_init()
+void CacheP_init(void)
 {
 }
 
@@ -47,7 +47,7 @@ void CacheP_enable(uint32_t type)
 {
 }
 
-uint32_t CacheP_getEnabled()
+uint32_t CacheP_getEnabled(void)
 {
     return 0;
 }

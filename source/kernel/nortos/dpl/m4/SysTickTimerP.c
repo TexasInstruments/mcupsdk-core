@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,18 +56,18 @@ void SysTickTimerP_setup(TimerP_Params *params)
     uint64_t timeInNsec, timerCycles;
 
     /* There is no pre-scaler support for SysTick and its value is ignored */
-    DebugP_assert( params->inputClkHz != 0);
-    DebugP_assert( params->periodInUsec != 0);
+    DebugP_assert( params->inputClkHz != 0U);
+    DebugP_assert( params->periodInUsec != 0U);
     /* usec period MUST divide 1sec in integer units */
-    DebugP_assert( (1000000u % params->periodInUsec) == 0 );
+    DebugP_assert( (1000000u % params->periodInUsec) == 0U );
 
     /* stop timer and clear pending interrupts */
     SysTickTimerP_stop();
 
     timeInNsec = (uint64_t)params->periodInNsec;
-    if(timeInNsec == 0)
+    if(timeInNsec == 0U)
     {
-        timeInNsec = params->periodInUsec*1000U;
+        timeInNsec = (uint64_t)params->periodInUsec*1000U;
     }
 
     timerCycles =  ( (uint64_t)params->inputClkHz * timeInNsec ) / 1000000000U;
@@ -78,7 +78,7 @@ void SysTickTimerP_setup(TimerP_Params *params)
     /* calculate count and reload value register value */
     /* For generating a mutishot timer with period of N processor cycles,
        a reload count of N-1 is used */
-    countVal = timerCycles - 1;
+    countVal = timerCycles - 1U;
 
     /* keep reload value as 0, later if is auto-reload is enabled, it will be set a value > 0 */
     reloadVal = 0;
@@ -88,13 +88,13 @@ void SysTickTimerP_setup(TimerP_Params *params)
     /* select clock source as CPU clock */
     ctrlVal |= (1u << 2u);
     /* enable/disable interrupts */
-    if(params->enableOverflowInt)
+    if((params->enableOverflowInt) != 0U)
     {
         /* enable interrupt */
         ctrlVal |= (1u << 1u);
     }
 
-    if(params->oneshotMode==0)
+    if(params->oneshotMode==0U)
     {
         /* autoreload timer */
         reloadVal = countVal;
@@ -115,25 +115,25 @@ void SysTickTimerP_setup(TimerP_Params *params)
 }
 
 /* base address not used since, address is fixed for SysTick in M4F */
-void SysTickTimerP_start()
+void SysTickTimerP_start(void)
 {
     volatile uint32_t *addr = SYST_CSR;
 
     /* start timer */
-    *addr |= (0x1 << 0);
+    *addr |= ((uint32_t)0x1 << 0);
 }
 
 /* base address not used since, address is fixed for SysTick in M4F */
-void SysTickTimerP_stop()
+void SysTickTimerP_stop(void)
 {
     volatile uint32_t *addr = SYST_CSR;
 
     /* stop timer */
-    *addr &= ~(0x1 << 0);
+    *addr &= ~(0x1U << 0);
 }
 
 /* base address not used since, address is fixed for SysTick in M4F */
-uint32_t SysTickTimerP_getCount()
+uint32_t SysTickTimerP_getCount(void)
 {
     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
     return (0xFFFFFFFFu - CSL_REG32_RD(SYST_CVR));
@@ -141,16 +141,16 @@ uint32_t SysTickTimerP_getCount()
 }
 
 /* base address not used since, address is fixed for SysTick in M4F */
-uint32_t SysTickTimerP_getReloadCount()
+uint32_t SysTickTimerP_getReloadCount(void)
 {
     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
     return (0xFFFFFFFFu - CSL_REG32_RD(SYST_RVR));
 }
 
 /* base address not used since, address is fixed for SysTick in M4F */
-uint32_t SysTickTimerP_isOverflowed()
+uint32_t SysTickTimerP_isOverflowed(void)
 {
     volatile uint32_t *addr = SYST_CSR;
 
-    return ((*addr >> 16) & 0x1);
+    return ((*addr >> 16) & 0x1U);
 }

@@ -105,7 +105,7 @@ static inline void  HWI_SECTION HwiP_setAsFIQ(uint32_t intNum, uint32_t isFIQ)
 
     if(isFIQ != 0U)
     {
-        *addr |= (0x1u << bitPos);
+        *addr |= ((uint32_t)0x1u << bitPos);
     }
     else
     {
@@ -135,7 +135,7 @@ static inline void  HWI_SECTION HwiP_setAsPulse(uint32_t intNum, uint32_t isPuls
 
     if(isPulse != 0U)
     {
-        *addr |= (0x1u << bitPos);
+        *addr |= ((uint32_t)0x1u << bitPos);
     }
     else
     {

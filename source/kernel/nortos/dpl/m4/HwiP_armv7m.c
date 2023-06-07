@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -66,6 +66,10 @@ void HWI_SECTION HwiP_enableInt(uint32_t intNum)
         oldIntState = HwiP_disable();
         *addr |= 0x00000002U;   /* enable SysTick interrupt */
         HwiP_restore(oldIntState);
+    }
+    else
+    {
+        //do nothing
     }
 }
 
@@ -144,6 +148,10 @@ void HWI_SECTION HwiP_restoreInt(uint32_t intNum, uint32_t oldEnableState)
         }
         HwiP_restore(oldIntState);
     }
+    else
+    {
+        //do nothing
+    }
 
 }
 
@@ -166,22 +174,23 @@ void HWI_SECTION HwiP_clearInt(uint32_t intNum)
 
 void HWI_SECTION HwiP_setPri(uint32_t intNum, uint32_t priority)
 {
-    if(priority < HwiP_MAX_PRIORITY)
+    uint32_t value = priority;
+    if(value < HwiP_MAX_PRIORITY)
     {
         volatile uint32_t *addr;
 
-        priority = (priority << HwiP_NVIC_PRI_SHIFT);
+        value = (value << HwiP_NVIC_PRI_SHIFT);
         /* User interrupt (id >= 16) priorities are set in the IPR registers */
         if (intNum >= 16U) {
             uint32_t index, mask, shift;
 
-            shift = (((intNum - 16U) & 0x3U) * 8);
-            mask  = 0xFF << shift;
-            index = (intNum - 16U) / 4;
+            shift = (((intNum - 16U) & 0x3U) * 8U);
+            mask  = 0xFFU << shift;
+            index = (intNum - 16U) / 4U;
 
             addr = NVIC_IPRI(index);
             *addr &= ~(mask); /* clear priority */
-            *addr |= (priority << shift); /* set priority */
+            *addr |= (value << shift); /* set priority */
         }
         else
         if (intNum >= 4U)
@@ -189,13 +198,13 @@ void HWI_SECTION HwiP_setPri(uint32_t intNum, uint32_t priority)
             /* System interrupt (id >= 4) priorities are set in the SHPR registers */
             uint32_t index, mask, shift;
 
-            shift = (((intNum - 4U) & 0x3U) * 8);
-            mask  = 0xFF << shift;
-            index = (intNum - 4U) / 4;
+            shift = (((intNum - 4U) & 0x3U) * 8U);
+            mask  = (uint32_t)0xFFU << shift;
+            index = (intNum - 4U) / 4U;
 
             addr = SHPR(index);
             *addr &= ~(mask); /* clear priority */
-            *addr |= (priority << shift); /* set priority */
+            *addr |= (value << shift); /* set priority */
         }
         else
         {
@@ -210,7 +219,7 @@ void HWI_SECTION HwiP_Params_init(HwiP_Params *params)
     params->callback = NULL;
     params->args = NULL;
     params->eventId = 0; /* NOT USED */
-    params->priority = HwiP_MAX_PRIORITY-1; /* set default as lowest priority */
+    params->priority = HwiP_MAX_PRIORITY-1U; /* set default as lowest priority */
     params->isFIQ = 0; /* NOT USED */
     params->isPulse = 0; /* NOT USED */
 }
@@ -224,7 +233,7 @@ int32_t HWI_SECTION HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
     DebugP_assertNoLog( params->intNum < HwiP_MAX_INTERRUPTS );
     DebugP_assertNoLog( params->priority < HwiP_MAX_PRIORITY );
     /* can register user handlers only for systick and external NVIC interrupts */
-    DebugP_assertNoLog( params->intNum >= 15 );
+    DebugP_assertNoLog( params->intNum >= 15U );
 
     HwiP_disableInt(params->intNum);
     HwiP_clearInt(params->intNum);
@@ -259,7 +268,7 @@ void HWI_SECTION HwiP_destruct(HwiP_Object *handle)
      */
     HwiP_disableInt(obj->intNum);
     HwiP_clearInt(obj->intNum);
-    HwiP_setPri(obj->intNum, HwiP_MAX_PRIORITY-1);
+    HwiP_setPri(obj->intNum, HwiP_MAX_PRIORITY-1U);
 
     /* clear interrupt data structure */
     gHwiCtrl.isr[obj->intNum] = NULL;
@@ -278,12 +287,12 @@ void HWI_SECTION HwiP_post(uint32_t intNum)
     }
 }
 
-uintptr_t HWI_SECTION HwiP_disable()
+uintptr_t HWI_SECTION HwiP_disable(void)
 {
     return _set_interrupt_priority(HwiP_NVIC_PRI_DISABLE);
 }
 
-void HWI_SECTION HwiP_enable()
+void HWI_SECTION HwiP_enable(void)
 {
     _set_interrupt_priority(0u);
 }
@@ -293,7 +302,7 @@ void HWI_SECTION HwiP_restore(uintptr_t oldIntState)
     _set_interrupt_priority(oldIntState);
 }
 
-void HWI_SECTION HwiP_init()
+void HWI_SECTION HwiP_init(void)
 {
     uint32_t i;
     volatile uint32_t *addr;
@@ -307,16 +316,16 @@ void HWI_SECTION HwiP_init()
     /* initalize local data structure, and set all interrupts to lowest priority
      * and set ISR address as IRQ handler
      */
-    for(i=0; i<HwiP_MAX_INTERRUPTS;i++)
+    for(i=0U; i<HwiP_MAX_INTERRUPTS;i++)
     {
         gHwiCtrl.isr[i] = NULL;
         gHwiCtrl.isrArgs[i] = NULL;
 
-        if(i >= 15)
+        if(i >= 15U)
         {
             /* handler setup, interrupt disable/clear is allowed only for systick and external MVIC interrupts
              */
-            void HwiP_interrupt_handler();
+            void HwiP_interrupt_handler(void);
 
             gHwiP_vectorTable[i] = (uint32_t)&HwiP_interrupt_handler;
 
@@ -325,7 +334,7 @@ void HWI_SECTION HwiP_init()
         }
 
         /* keep all interrupt as low priority by default */
-        HwiP_setPri(i, HwiP_MAX_PRIORITY-1);
+        HwiP_setPri(i, HwiP_MAX_PRIORITY-1U);
     }
 
     /* keep interrupt disabled, they should be enabled during system init
@@ -337,7 +346,7 @@ uint32_t HwiP_inISR(void)
 {
     uint32_t stat;
 
-    if (( *ICSR & 0x000001ff) == 0)
+    if (( *ICSR & 0x000001ffU) == 0U)
     {
         stat = 0;
     }

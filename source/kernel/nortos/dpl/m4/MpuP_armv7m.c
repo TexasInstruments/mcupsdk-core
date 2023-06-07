@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,15 +55,15 @@ extern MpuP_RegionConfig gMpuRegionConfig[];
 static uint32_t MPU_SECTION MpuP_getAttrsAndSize(MpuP_RegionAttrs *region, uint32_t size)
 {
     uint32_t regionAttrs = 
-          ((uint32_t)(region->isExecuteNever & 0x1) << 28) 
-        | ((uint32_t)(region->accessPerm     & 0x7) << 24)
-        | ((uint32_t)(region->tex            & 0x7) << 19) 
-        | ((uint32_t)(region->isSharable     & 0x1) << 18) 
-        | ((uint32_t)(region->isCacheable    & 0x1) << 17) 
-        | ((uint32_t)(region->isBufferable   & 0x1) << 16)
-        | ((uint32_t)(region->subregionDisableMask & 0xFF) << 8)
-        | ((uint32_t)(size & 0x1F)                  << 1)
-        | ((uint32_t)(region->isEnable       & 0x1) << 0)
+          ((uint32_t)(region->isExecuteNever & (uint32_t)0x1) << 28) 
+        | ((uint32_t)(region->accessPerm     & (uint32_t)0x7) << 24)
+        | ((uint32_t)(region->tex            & (uint32_t)0x7) << 19) 
+        | ((uint32_t)(region->isSharable     & (uint32_t)0x1) << 18) 
+        | ((uint32_t)(region->isCacheable    & (uint32_t)0x1) << 17) 
+        | ((uint32_t)(region->isBufferable   & (uint32_t)0x1) << 16)
+        | ((uint32_t)(region->subregionDisableMask & (uint32_t)0xFF) << 8)
+        | ((uint32_t)(size & (uint32_t)0x1F)                  << 1)
+        | ((uint32_t)(region->isEnable       & (uint32_t)0x1) << 0)
         ; 
 
     return regionAttrs;
@@ -86,17 +86,18 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size, 
     uint32_t baseAddress, regionAndSizeAttrs;
     uint32_t enabled;
     uintptr_t key;
+    uint32_t setSize = size;
 
     DebugP_assertNoLog( regionNum < MpuP_MAX_REGIONS);
 
     /* size 5b field */
-    size = (size & 0x1F);
+    setSize = (setSize & 0x1FU);
 
     /* align base address to region size */
-    baseAddress = ((uint32_t)addr & ~( (1<<((uint64_t)size+1))-1 ));
+    baseAddress = ((uint32_t)addr & ~( (1U<<((uint64_t)setSize+1U))-1U ));
 
     /* get region attribute mask */
-    regionAndSizeAttrs = MpuP_getAttrsAndSize(attrs, size);
+    regionAndSizeAttrs = MpuP_getAttrsAndSize(attrs, setSize);
 
     enabled = MpuP_isEnable();
 
@@ -111,14 +112,14 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size, 
 
     HwiP_restore(key);
 
-    if (enabled) {
+    if ((enabled) != 0U) {
         MpuP_enable();
     }
 }
 
-void MPU_SECTION MpuP_enable()
+void MPU_SECTION MpuP_enable(void)
 {
-    if(!MpuP_isEnable())
+    if((MpuP_isEnable()) == 0U)
     {
         uint32_t value;
         uintptr_t key;
@@ -126,7 +127,7 @@ void MPU_SECTION MpuP_enable()
         key = HwiP_disable();
 
         value = 0;
-        if (gMpuConfig.enableBackgroundRegion) {
+        if ((gMpuConfig.enableBackgroundRegion) != 0U) {
             value |= (1u << 2u);  /* PRIVDEFENA, 0: Disables the default memory map, 
                                    *             1: enable default memory map for non mapped regions 
                                    */
@@ -143,9 +144,9 @@ void MPU_SECTION MpuP_enable()
     }
 }
 
-void MPU_SECTION MpuP_disable()
+void MPU_SECTION MpuP_disable(void)
 {
-    if(MpuP_isEnable())
+    if((MpuP_isEnable()) == 0U)
     {
         uintptr_t key;
 
@@ -159,16 +160,16 @@ void MPU_SECTION MpuP_disable()
     }
 }
 
-uint32_t MPU_SECTION MpuP_isEnable()
+uint32_t MPU_SECTION MpuP_isEnable(void)
 {
-    return (*MPU_CTRL & 0x1);
+    return (*MPU_CTRL & 0x1U);
 }
 
-void MPU_SECTION MpuP_init()
+void MPU_SECTION MpuP_init(void)
 {
     uint32_t i;
 
-    if (MpuP_isEnable()) {
+    if ((MpuP_isEnable()) != 0U) {
         MpuP_disable();
     }
 
@@ -186,7 +187,7 @@ void MPU_SECTION MpuP_init()
         );
     }
 
-    if (gMpuConfig.enableMpu) {
+    if ((gMpuConfig.enableMpu) != 0U) {
         MpuP_enable();
     }
 }

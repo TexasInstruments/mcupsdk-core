@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,8 +34,9 @@
 
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
+int32_t _system_pre_init(void);
 
-int _system_pre_init()
+int32_t _system_pre_init(void)
 {
     uint32_t bss_size = ((uintptr_t)&__BSS_END - (uintptr_t)&__BSS_START);
     memset((void*)&__BSS_START, 0x00, bss_size);
@@ -56,22 +57,22 @@ __asm__ __volatile__ (".set __TI_default_c_int00, 1": : : "memory");
 /* Define the user mode stack. The size will be determined by the linker.     */
 /*----------------------------------------------------------------------------*/
 __attribute__((section(".stack")))
-int __stack;
+int32_t __stack;
 
 /*----------------------------------------------------------------------------*/
 /* Linker defined symbol that will point to the end of the user mode stack.   */
 /* The linker will enforce 8-byte alignment.                                  */
 /*----------------------------------------------------------------------------*/
-extern int __STACK_END;
+extern int32_t __STACK_END;
 
 /*----------------------------------------------------------------------------*/
 /* Function declarations.                                                     */
 /*----------------------------------------------------------------------------*/
 __attribute__((weak)) extern void __mpu_init(void);
 extern void __TI_auto_init(void);
-extern void exit(int);
-extern int main(int argc, char **argv);
-
+extern void exit(int32_t argc);
+extern int32_t main(int32_t argc, char **argv);
+void _c_int00(void);
 /*----------------------------------------------------------------------------*/
 /* boot routine for Cortex-M                                          */
 /*----------------------------------------------------------------------------*/
@@ -91,15 +92,14 @@ void _c_int00(void)
    /* Initialize the stack pointer */
    register char* stack_ptr = (char*)&__STACK_END;
    __asm volatile ("MSR msp, %0" : : "r" (stack_ptr) : );
-
    /* Initialize the FPU if building for floating point */
    #ifdef __ARM_FP
-   volatile uint32_t* cpacr = (volatile uint32_t*)0xE000ED88;
-   *cpacr |= (0xf0 << 16);
+   volatile uint32_t* cpacr = (volatile uint32_t*)0xE000ED88U;
+   *cpacr |= ((uint32_t)0xf0 << 16);
    #endif
 
    __mpu_init();
-   if (_system_pre_init())
+   if ((_system_pre_init()) != 0)
    {
        __TI_auto_init();
    }
@@ -108,5 +108,5 @@ void _c_int00(void)
 
    exit(1);
 
-   while (1);
+   while(1);
 }

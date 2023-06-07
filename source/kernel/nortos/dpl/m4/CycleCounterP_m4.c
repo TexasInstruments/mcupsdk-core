@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,16 +37,16 @@
 #define DWT_CTRL    (volatile uint32_t *)(0xE0001000U)
 #define DWT_CYCCNT  (volatile uint32_t *)(0xE0001004U)
 
-uint32_t CycleCounterP_getCount32()
+uint32_t CycleCounterP_getCount32(void)
 {
     return *DWT_CYCCNT;
 }
 
-void CycleCounterP_reset()
+void CycleCounterP_reset(void)
 {
-    *DEMCR |= 0x01000000; /* enable ITM, DWT features */
-    *DWT_CTRL &= ~(0x1);  /* disable cycle counter */
+    *DEMCR |= 0x01000000U; /* enable ITM, DWT features */
+    *DWT_CTRL &= ~(0x1U);  /* disable cycle counter */
     *DWT_CYCCNT = 0; /* clear cycle counter */
-    *DWT_CTRL |= 1; /* enable cycle counter */
+    *DWT_CTRL |= 1U; /* enable cycle counter */
 }
 

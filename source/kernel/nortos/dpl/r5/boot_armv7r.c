@@ -33,6 +33,7 @@
 #include <string.h>
 
 int32_t _system_pre_init(void);
+void __TI_auto_init(void);
 
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
@@ -45,7 +46,7 @@ int32_t _system_pre_init(void)
 }
 
 #if !defined (__clang__)
-void __TI_auto_init()
+void __TI_auto_init(void)
 {
 }
 #endif

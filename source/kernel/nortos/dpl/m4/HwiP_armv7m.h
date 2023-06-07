@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,16 +49,16 @@ extern "C"
 #define HwiP_NVIC_PRI_BITS      (3u)
 #define HwiP_NVIC_PRI_SHIFT     (8u-(HwiP_NVIC_PRI_BITS))
 /* this is the value to use to disable all interrupts above this priority */
-#define HwiP_NVIC_PRI_DISABLE   (((HwiP_MAX_PRIORITY)-1) << (HwiP_NVIC_PRI_SHIFT))
+#define HwiP_NVIC_PRI_DISABLE   (((HwiP_MAX_PRIORITY)-1U) << (HwiP_NVIC_PRI_SHIFT))
 
 #define NVIC_BASE       (0xE000E000u)
-#define NVIC_ISER(x)    (volatile uint32_t *)((NVIC_BASE)+0x100u+4u*(x))
-#define NVIC_ICER(x)    (volatile uint32_t *)((NVIC_BASE)+0x180u+4u*(x))
+#define NVIC_ISER(x)    (volatile uint32_t *)((NVIC_BASE)+0x100u+(4u*(x)))
+#define NVIC_ICER(x)    (volatile uint32_t *)((NVIC_BASE)+0x180u+(4u*(x)))
 #define NVIC_ISPR(x)    (volatile uint32_t *)((NVIC_BASE)+0x200u+4u*(x))
-#define NVIC_ICPR(x)    (volatile uint32_t *)((NVIC_BASE)+0x280u+4u*(x))
-#define NVIC_IPRI(x)    (volatile uint32_t *)((NVIC_BASE)+0x400u+4u*(x))
+#define NVIC_ICPR(x)    (volatile uint32_t *)((NVIC_BASE)+0x280u+(4u*(x)))
+#define NVIC_IPRI(x)    (volatile uint32_t *)((NVIC_BASE)+0x400u+(4u*(x)))
 
-#define SHPR(x)         (volatile uint32_t *)((0xE000ED18)+4u*(x))
+#define SHPR(x)         (volatile uint32_t *)((0xE000ED18U)+(4u*(x)))
 
 #define SYSTICK_CSR     (volatile uint32_t *)(0xE000E010u)
 #define STIR            (volatile uint32_t *)(0xE000EF00u)

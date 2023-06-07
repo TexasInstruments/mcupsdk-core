@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,17 +33,38 @@
 #include <kernel/nortos/dpl/m4/HwiP_armv7m.h>
 #include <drivers/hw_include/csl_types.h>
 #include <ti_compatibility.h>
+#include <stdbool.h>
 
-void HWI_SECTION HwiP_interrupt_handler()
+void HWI_SECTION HwiP_busFault_handler(void);
+
+void HWI_SECTION HwiP_debugMon_handler(void);
+
+void HWI_SECTION HwiP_hardFault_handler(void);
+
+void HWI_SECTION HwiP_interrupt_handler(void);
+
+void HWI_SECTION HwiP_memFault_handler(void);
+
+void HWI_SECTION HwiP_nmi_handler(void);
+
+void HWI_SECTION HwiP_pendSV_handler(void);
+
+void HWI_SECTION HwiP_reserved_handler(void);
+
+void HWI_SECTION HwiP_svc_handler(void);
+
+void HWI_SECTION HwiP_usageFault_handler(void);
+
+void HWI_SECTION HwiP_interrupt_handler(void)
 {
     volatile uint32_t *addr;
     uint32_t activeIntNum;
 
     addr = ICSR;
-    activeIntNum = (*addr & 0xFF);
+    activeIntNum = (*addr & 0xFFU);
 
     if(    (activeIntNum < HwiP_MAX_INTERRUPTS)
-        && (activeIntNum >= 15) /* sys tick or external NIVC interrupt */
+        && (activeIntNum >= 15U) /* sys tick or external NIVC interrupt */
         && (gHwiCtrl.isr[activeIntNum] != NULL)
         )
     {
@@ -51,71 +72,62 @@ void HWI_SECTION HwiP_interrupt_handler()
     }
 }
 
-void HWI_SECTION HwiP_nmi_handler()
+void HWI_SECTION HwiP_nmi_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_hardFault_handler()
+void HWI_SECTION HwiP_hardFault_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_memFault_handler()
+void HWI_SECTION HwiP_memFault_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_busFault_handler()
+void HWI_SECTION HwiP_busFault_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_usageFault_handler()
+void HWI_SECTION HwiP_usageFault_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_reserved_handler()
+void HWI_SECTION HwiP_reserved_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_svc_handler()
+void HWI_SECTION HwiP_svc_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_debugMon_handler()
+void HWI_SECTION HwiP_debugMon_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
-void HWI_SECTION HwiP_pendSV_handler()
+void HWI_SECTION HwiP_pendSV_handler(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
-        ;
+    while(loop != 0U) {;}
 }
 
 extern uint32_t __STACK_END;
-extern void _c_int00();
+extern void _c_int00(void);
 
 uint32_t __attribute__((section(".vectors"), aligned(32))) gHwiP_vectorTable[HwiP_MAX_INTERRUPTS]  = {
     (uint32_t)&__STACK_END,             /* 0 */
