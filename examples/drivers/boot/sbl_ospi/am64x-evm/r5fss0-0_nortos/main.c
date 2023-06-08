@@ -82,6 +82,16 @@ int main(void)
 
         status = Sciclient_boardCfgPm(&boardCfgPrms_pm);
 
+        Sciclient_BoardCfgPrms_t boardCfgPrms_rm =
+        {
+            .boardConfigLow = (uint32_t)0,
+            .boardConfigHigh = 0,
+            .boardConfigSize = 0,
+            .devGrp = DEVGRP_ALL,
+        };
+
+        status = Sciclient_boardCfgRm(&boardCfgPrms_rm);
+
         /* Enable MCU PLL. MCU PLL will not be enabled by DMSC when devGrp is set
         to Main in boardCfg */
         Bootloader_enableMCUPLL();
