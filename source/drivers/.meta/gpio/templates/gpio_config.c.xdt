@@ -37,7 +37,15 @@ void GPIO_init()
  * Board info
  */
 /* This is based on DMSC board config and core */
+%if(config.routerId === 'MCU_M4FSS0_CORE0_NVIC_MCU_MCU') {
+/* On M4F, interrupt number as specified in TRM is input to the NVIC but from M4 point of view there are 16 internal interrupts
+ * and then the NVIC input interrupts start, hence we need to add +16 to the value specified by TRM */
+#define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut` + 16u)
+%}
+%else {
 #define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`)
+%}
+
 #define BOARD_BUTTON_GPIO_SWITCH_NUM    (5)
 
 /** \brief bank interrupt source index base */

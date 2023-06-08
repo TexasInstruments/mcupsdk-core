@@ -54,7 +54,7 @@ function getCpuRouterId() {
 
 function getTisciDestCoreID() {
     let corename_map = {
-        "m4fss0-0" : "MCU_M4FSS0",
+        "m4fss0-0" : "MCU_M4FSS0_CORE0",
         "r5fss0-0" : "R5FSS0_CORE0",
         "r5fss0-1" : "R5FSS0_CORE1",
         "r5fss1-0" : "R5FSS1_CORE0",
