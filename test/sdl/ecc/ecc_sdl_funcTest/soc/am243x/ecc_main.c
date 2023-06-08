@@ -45,6 +45,12 @@
 /* ========================================================================== */
 
 #include <drivers/sciclient.h>
+#if defined (R5F_CORE)
+#include <drivers/pcie.h>
+#include <drivers/hw_include/cslr_serdes.h>
+#include <drivers/hw_include/cslr_serdes_pcie.h>
+#include <kernel/dpl/AddrTranslateP.h>
+#endif
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <dpl_interface.h>
@@ -173,9 +179,8 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
 
 }
 
-#if defined (SOC_AM64X) || defined (SOC_AM243X)
 #define AUX_NUM_DEVICES 29
-#endif
+
 int32_t status = SDL_PASS;
 uint32_t aux_devices[AUX_NUM_DEVICES] =
 {
@@ -253,6 +258,78 @@ void ECC_func_app(void *args)
     }
 }
 
+
+#if defined(R5F_CORE) /* PCIE/Serdes driver is only supported from R5F core */
+#define SERDES_LANE_MASK  (0x3U)
+
+/* Minimal init taken from Drivers_open() for PCIE */
+void sdlApp_initSerdes(void)
+{
+    CSL_SerdesLaneEnableParams serdesLaneEnableParams;
+    uint32_t i, laneNum;
+
+    /* Since AM64x has a single PCIe instance initialize serdes corresponding to it */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 2);
+
+    memset(&serdesLaneEnableParams, 0, sizeof(serdesLaneEnableParams));
+    serdesLaneEnableParams.serdesInstance = (CSL_SerdesInstance)CSL_TORRENT_SERDES0;
+
+    /* For SERDES0 */
+    serdesLaneEnableParams.baseAddr         = (uint32_t)AddrTranslateP_getLocalAddr(CSL_SERDES_10G0_BASE);
+    serdesLaneEnableParams.refClock         = CSL_SERDES_REF_CLOCK_100M;
+    serdesLaneEnableParams.refClkSrc        = CSL_SERDES_REF_CLOCK_INT;
+    serdesLaneEnableParams.linkRate         = CSL_SERDES_LINK_RATE_3p125G;
+    serdesLaneEnableParams.numLanes         = 1;
+    serdesLaneEnableParams.laneMask         = SERDES_LANE_MASK;
+    serdesLaneEnableParams.SSC_mode         = CSL_SERDES_NO_SSC;
+    serdesLaneEnableParams.phyType          = CSL_SERDES_PHY_TYPE_PCIe;
+    serdesLaneEnableParams.pcieGenType      = PCIE_GEN1;
+    serdesLaneEnableParams.operatingMode    = CSL_SERDES_FUNCTIONAL_MODE;
+    serdesLaneEnableParams.phyInstanceNum   = 0;
+    serdesLaneEnableParams.refClkOut        = CSL_SERDES_REFCLK_OUT_EN;
+
+    for(i = 0; i< serdesLaneEnableParams.numLanes; i++)
+    {
+        serdesLaneEnableParams.laneCtrlRate[i] = CSL_SERDES_LANE_FULL_RATE;
+        serdesLaneEnableParams.loopbackMode[i] = CSL_SERDES_LOOPBACK_DISABLED; /* still have to change to correct loopback mode */
+    }
+    CSL_serdesPorReset(serdesLaneEnableParams.baseAddr);
+
+    /* Select the IP type, IP instance num, Serdes Lane Number */
+    for (laneNum = 0; laneNum < serdesLaneEnableParams.numLanes; laneNum++)
+    {
+        CSL_serdesIPSelect((uint32_t)AddrTranslateP_getLocalAddr(CSL_CTRL_MMR0_CFG0_BASE),
+                           serdesLaneEnableParams.phyType,
+                           serdesLaneEnableParams.phyInstanceNum,
+                           serdesLaneEnableParams.serdesInstance,
+                           laneNum);
+    }
+
+    /* selects the appropriate clocks for all serdes based on the protocol chosen */
+    status = CSL_serdesRefclkSel((uint32_t)AddrTranslateP_getLocalAddr(CSL_CTRL_MMR0_CFG0_BASE),
+                                  serdesLaneEnableParams.baseAddr,
+                                  serdesLaneEnableParams.refClock,
+                                  serdesLaneEnableParams.refClkSrc,
+                                  serdesLaneEnableParams.serdesInstance,
+                                  serdesLaneEnableParams.phyType);
+
+    /* Assert PHY reset and disable all lanes */
+    CSL_serdesDisablePllAndLanes(serdesLaneEnableParams.baseAddr, serdesLaneEnableParams.numLanes, serdesLaneEnableParams.laneMask);
+
+    /*Load the Serdes Config File */
+    status = CSL_serdesPCIeInit(&serdesLaneEnableParams); /* Use this for PCIe serdes config load */
+
+    /* Set this to standard mode defined by Cadence */
+    for (laneNum=0; laneNum < serdesLaneEnableParams.numLanes; laneNum++)
+    {
+        CSL_serdesPCIeModeSelect(serdesLaneEnableParams.baseAddr, serdesLaneEnableParams.pcieGenType, laneNum);
+    }
+
+    /* Common Lane Enable API for lane enable, pll enable etc */
+    status = CSL_serdesLaneEnable(&serdesLaneEnableParams);
+}
+#endif
+
 void ecc_app_runner(void)
 {
 #if defined(UNITY_INCLUDE_CONFIG_H)
@@ -267,6 +344,10 @@ void ecc_app_runner(void)
 
 int32_t test_main(void)
 {
+#if defined (R5F_CORE)
+    sdlApp_initSerdes();
+#endif
+
     sdlApp_dplInit();
     ecc_app_runner();
 

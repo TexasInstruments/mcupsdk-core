@@ -2,12 +2,14 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.9.0+2015","templates":null}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const pcie       = scripting.addModule("/drivers/pcie/pcie", {}, false);
+const pcie1      = pcie.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -20,8 +22,9 @@ const mpu_armv76 = mpu_armv7.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+pcie1.$name = "CONFIG_PCIE0";
+
 debug_log.enableUartLog        = true;
-debug_log.enableCssLog         = true;
 debug_log.uartLog.$name        = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign = "USART0";
 
@@ -59,5 +62,5 @@ mpu_armv76.size     = 31;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-debug_log.uartLog.UART.RXD.$suggestSolution = "ball.D15";
-debug_log.uartLog.UART.TXD.$suggestSolution = "ball.C16";
+debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";

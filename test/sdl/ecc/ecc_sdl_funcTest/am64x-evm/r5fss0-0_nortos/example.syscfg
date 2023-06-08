@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.14.0+2667"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -11,6 +11,8 @@
 const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1      = gpio.addInstance();
 const gpio2      = gpio.addInstance();
+const pcie       = scripting.addModule("/drivers/pcie/pcie", {}, false);
+const pcie1      = pcie.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -25,17 +27,19 @@ gpio1.useMcuDomainPeripherals  = true;
 gpio1.$name                    = "GPIO_LED";
 gpio1.pinDir                   = "OUTPUT";
 gpio1.MCU_GPIO.$assign         = "MCU_GPIO0";
-gpio1.MCU_GPIO.gpioPin.$assign = "ball.A7";
+gpio1.MCU_GPIO.gpioPin.$assign = "MCU_SPI1_CS0";
 
 gpio2.$name                = "GPIO_PUSH_BUTTON";
 gpio2.GPIO.$assign         = "GPIO1";
-gpio2.GPIO.gpioPin.$assign = "ball.C13";
+gpio2.GPIO.gpioPin.$assign = "SPI0_CS1";
+
+pcie1.$name = "CONFIG_PCIE0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "USART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.D15";
-debug_log.uartLog.UART.TXD.$assign = "ball.C16";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
