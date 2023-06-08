@@ -2925,7 +2925,7 @@ static uint16_t SOC_rcmGetPerTrimVal(void)
     return (perADPLLTrimVal);
 }
 
-uint32_t SOC_rcmIsR5FInLockStepMode(uint32_t r5fClusterGroupId)
+__attribute__((weak)) uint32_t SOC_rcmIsR5FInLockStepMode(uint32_t r5fClusterGroupId)
 {
     uint32_t retVal = FALSE;
     CSL_mss_ctrlRegs *mssCtrl = CSL_MSS_CTRL_getBaseAddress();

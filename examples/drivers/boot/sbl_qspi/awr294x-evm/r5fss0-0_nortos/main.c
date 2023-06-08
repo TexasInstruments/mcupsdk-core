@@ -49,6 +49,17 @@ void loop_forever(void)
     while(loop);
 }
 
+/* This function will always return true indicating that SOC is in LockStep mode.
+ * Usually the SBL application decides the mode of operation based on the available
+ * R5F core images in multicore image. If user wants SBL application to decide the
+ * execution mode (LockStep/dual-core), SBL applicatioon needs to be recompiled
+ * with below function commented.
+ */
+uint32_t SOC_rcmIsR5FInLockStepMode(uint32_t r5fClusterGroupId)
+{
+    return TRUE;
+}
+
 int main(void)
 {
     int32_t status;

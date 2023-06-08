@@ -769,7 +769,7 @@ void SOC_rcmPerPllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConfi
  * \param r5fClusterGroupId [in] R5F Cluster Group Id.
  *        Refer \ref CSL_ArmR5ClusterGroupID for applicable values.
  */
-uint32_t SOC_rcmIsR5FInLockStepMode(uint32_t r5fClusterGroupId);
+uint32_t SOC_rcmIsR5FInLockStepMode(uint32_t r5fClusterGroupId) __attribute__((weak));
 
 /**
  * \brief Generate SW WARM reset
