@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -106,7 +106,6 @@ HwiP_irq_handler:
         .global HwiP_data_abort_handler
         .type HwiP_data_abort_handler,%function
         .section ".text.hwi","ax",%progbits
-        .arm
         .align 2
 HwiP_data_abort_handler:
         /* Return to the instruction following the interrupted.
@@ -116,7 +115,18 @@ HwiP_data_abort_handler:
          * instruction set) points to the second instruction beyond the address where
          * the exception was generated.
          */
-        SUB		lr, lr, #6
+
+         /* Compare thumb state bit in CSPR */
+        MRS r0, CPSR
+        AND r1, r0, #0x20
+        CMP R1, #0
+
+        /* branches to label ARM_STATE if the thumb state bit is not set */
+        BEQ ARM_STATE
+        SUB lr, lr, #2
+        ARM_STATE:
+        SUB lr, lr, #4
+        END:
 
         /*   Push the return address and SPSR. */
         PUSH	{lr}
