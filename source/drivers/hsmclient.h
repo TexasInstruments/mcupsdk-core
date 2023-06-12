@@ -163,6 +163,33 @@ typedef struct keywriter_cert_header_t_
 
 /**
  * @brief
+ * This is a FirewallRegionReq type which holds the information
+ * of Firewall region configuration.
+ */
+typedef struct FirewallRegionReq_t_
+{
+    uint16_t  firewallId ;             /**< Index of the firewall. **/
+    uint16_t  region ;                 /**< Region number **/
+    uint32_t  permissionAttributes ;   /**< Memory Protection Permission Attributes corresponding to the firewall **/
+    uint32_t  startAddress;            /**< Start Address of the region **/
+    uint32_t  endAddress;              /**< End Address of the region **/
+} FirewallRegionReq_t ;
+
+/**
+ * @brief
+ * This is a FirewallReq_t type which holds the information
+ * of Firewall configuration.
+ */
+typedef struct FirewallReq_t_
+{
+    uint16_t regionCount;                             /**< Region count **/
+    uint16_t crcArr;                                  /**< crc of FirewallRegionArr **/
+    FirewallRegionReq_t* FirewallRegionArr;           /**< Array containing set firewall region request **/
+    uint16_t statusFirewallRegionArr;                 /**< Status of all region requests **/
+}FirewallReq_t ;
+
+/**
+ * @brief
  * Initialize the HSM client for current core.
  *
  * @param params [IN] SIPC_notify params.
@@ -332,6 +359,26 @@ int32_t HsmClient_procAuthBoot(HsmClient_t* HsmClient,
                                         uint8_t* cert,
                                         uint32_t cert_size,
                                         uint32_t timeout);
+
+/**
+ * @brief
+ *  The service issued to HSM Server sets the firewall for the given firewall id and
+ *  region.
+ *
+ * @param timeout           [IN] amount of time to block waiting for
+ * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+ * @param HsmClient              [IN] HsmClient object.
+ * @param FirewallReqObj         [IN] Pointer to FirewallReq_t struct which contains
+ *                                    information required for HSM to process set firewall request.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ * 3. SystemP_TIMEOUT if timeout exception occours.
+ */
+int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
+                                        FirewallReq_t* FirewallReqObj,
+                                        uint32_t timeout);
+
 /**
  * @brief
  * register a client to a particular ClientId
@@ -384,7 +431,7 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware);
  *  The service issued to HSM Server verifies the certificate and process the keywriter operations,
  * @param HsmClient         [IN] Client object which is using this openDbgFirewalls API.
  * @param certHeader        [IN] point to the location of certificate in the device memory.
- * @param timeout           [IN] amount of time to block waiting for 
+ * @param timeout           [IN] amount of time to block waiting for
  * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
  * @return
  * 1. SystemP_SUCCESS if returns successfully

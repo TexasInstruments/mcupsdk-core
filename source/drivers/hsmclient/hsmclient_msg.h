@@ -69,8 +69,11 @@ extern "C"
 #define HSM_MSG_GET_OTP_ROW_COUNT                (0x9027)
 /** @brief Secure Boot service type ID*/
 #define HSM_MSG_PROC_AUTH_BOOT					 (0xC120)
+/** @brief Set Firewall service type ID*/
+#define HSM_SET_FIREWALL                         (0x9000U)
 /** @brief send KeyWriter customer key certificate */
 #define HSM_KEYWRITER_SEND_CUST_KEY_CERT         (0x9028)
+
 /* message flags */
 /**
  * @brief
