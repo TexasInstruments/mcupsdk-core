@@ -20,6 +20,8 @@ function getSelfSysCfgCoreName() {
             return "r5fss0-0";
         case "am62x":
             return "m4fss0-0";
+        case "am65x":
+            return system.context;
     }
 };
 
@@ -28,6 +30,8 @@ function isSciClientSupported() {
         case "am243x":
             return true;
         case "am64x":
+            return true;
+        case "am65x":
             return true;
         case "am62x":
             return true;
@@ -52,6 +56,8 @@ function getSocName() {
         return "am263px";
     if(system.deviceData.device == "AM273x")
         return "am273x";
+    if(system.deviceData.device == "AM65xx_SR2.0_beta")
+        return "am65x";
     if((system.deviceData.device == "AWR294X") || (system.deviceData.device == "AWR294XLOP"))
         return "awr294x";
     if(system.deviceData.device == "AM62x")
@@ -61,6 +67,8 @@ function getSocName() {
 function getDeviceName() {
     if(system.deviceData.device == "AM64x")
         return "am64x-evm";
+    if(system.deviceData.device == "AM65xx_SR2.0_beta")
+        return "am65x-idk";
     if(system.deviceData.device == "AM243x_ALV_beta")
         return "am243x-evm";
     if(system.deviceData.device == "AM243x_ALX_beta")
@@ -203,6 +211,8 @@ function isMcuDomainSupported()
 {
     switch(getSocName()) {
         case "am243x":
+            return true;
+        case "am65x":
             return true;
         case "am64x":
             return true;

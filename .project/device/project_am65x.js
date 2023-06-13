@@ -2,6 +2,8 @@ const common = require("../common.js");
 
 const component_file_list = [
     "source/drivers/.project/project.js",
+    "source/kernel/freertos/.project/project.js",
+    "source/kernel/nortos/.project/project.js",
 ];
 
 const device_defines = {
