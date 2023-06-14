@@ -32,6 +32,9 @@ SDK features and tools.
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE
+\cond SOC_AM273X
+- \subpage SECURE_BOOT
+\endcond
 - \subpage SYSCONFIG_INTRO_PAGE
 - \subpage TIREX_INTRO_PAGE
 - \subpage CUSTOM_FLASH_SUPPORT_GUIDE
@@ -45,6 +48,7 @@ SDK features and tools.
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE
+- \subpage SECURE_BOOT
 - \subpage SYSCONFIG_INTRO_PAGE
 - \subpage TIREX_INTRO_PAGE
 - \subpage CUSTOM_FLASH_SUPPORT_GUIDE

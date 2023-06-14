@@ -210,17 +210,11 @@ r4          | 3
 
 - To run these scripts, one needs `openssl` installed as mentioned here, \ref INSTALL_OPENSSL
 - Signing scripts are a collection of scripts needed to sign ROM images (image booted by ROM - mostly the SBL) and application images (image booted by the SBL)
+\cond SOC_AM263X||SOC_AM273X
+### Signing SBL
+\endcond
 - The RBL requires the boot image (mostly SBL), to be signed always, even if we are not using secure boot.
-- Use the following command to sign the SBL image.
-    \code
-    cd ${SDK_INSTALL_PATH}/tools/boot/signing
-    x509CertificateGen.ps1 -b {BOOTIMAGE_BIN_NAME} -o {BOOTIMAGE_NAME} -c R5 -l {SBL_RUN_ADDRESS} -k {BOOTIMAGE_CERT_KEY} -d DEBUG -j DBG_FULL_ENABLE -m SPLIT_MODE
-    \endcode
-- In Windows, use powershell to execute the script file.
-    \code
-    powershell -executionpolicy unrestricted -command x509CertificateGen.ps1
-    \endcode
-\cond SOC_AM64X || SOC_AM243X
+  \cond SOC_AM64X || SOC_AM243X
 - We follow a combined boot method for ROM images. Here the ROM Bootloader (RBL) boots the SBL, SYSFW and BOARDCFG together. The boot image would be a binary concatenation of x509 Certificate, SBL, SYSFW, BOARDCFG (and the SYSFW inner certificate in case of HS device) binary blobs. We use a python script to generate this final boot image. This script has a dependency on `openssl` as mentioned before, so make sure you've installed it. To generate a combined boot image, one can do as below:
 
 - For GP devices
@@ -252,6 +246,283 @@ r4          | 3
 - These scripts are invoked in makefiles, and the image generation happens automatically along with the example build. So mostly these scripts need not be manually run.
 \endcond
 
+\cond SOC_AM263X || SOC_AM273X
+
+For SBL images, the script `/tools/boot/signing/mcu_rom_image_gen.py`.
+
+For HS-FS devices:
+\code
+cd ${SDK_INSTALL_PATH}/tools/boot/signing
+$(PYTHON) mcu_rom_image_gen.py --image-bin <path-to-the-binary> --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key <signing-key-configured-in-devconfig> --out-image <output-image-name> --debug $(DEBUG_OPTION)
+\endcode
+
+For HS-SE devices:
+\code
+cd ${SDK_INSTALL_PATH}/tools/boot/signing
+$(PYTHON) mcu_rom_image_gen.py --sbl-enc --enc-key <encryption-key-configured-in-devconfig> --image-bin <path-to-the-binary> --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key <signing-key-configured-in-devconfig> --kd-salt <path-to-key-derivation-salt> --out-image <output-image-name> --debug $(DEBUG_OPTION)
+\endcode
+
+Here, we deep dive into the extension supported in SBL and HSM Runtime (TIFS-MCU)
+certificate by ROM.
+To get access to the HSM Runtime code and ability to build it for HS-SE device,
+please contact your TI represntative to get access to the TIFS-MCU package from
+MySecureSW.
+
+#### Boot Information OID (1.3.6.1.4.1.294.1.1)
+\code
+bootInfo ::=  SEQUENCE {
+	cert_type:  INTEGER,		-- identifies the certificate type
+	boot_core:	INTEGER,		-- identifies the boot core
+	core_opts:	INTEGER,		-- Core Options
+	load_addr:	OCTET STRING,	-- Global address image destination
+	image_size:	INTEGER,		-- Image size in bytes
+}
+\endcode
+The Boot Information Object identifier provides information about the image
+which is being loaded. This information is mandatory and needs to be present
+else the image boot will fail.
+
+##### Elements of the extension:
+**Certificate Type**: The certificate type defines the type of the image which is
+being loaded by the Boot-ROM.
+
+These are the supported values:
+- 0x1	R5 SBL Boot Image
+- 0x2	HSM Runtime (TIFS-MCU) Image
+
+**Boot core**: The boot core identifies the core on which the image will be executing.
+
+These are the supported values:
+- 0x0	HSM Core
+- 0x10	R5 Core
+
+**Core Options**: The core options are documented in the table below.
+
+These are the supported values:
+- 0x0	    Lock Step Mode
+- Non-Zero	Dual Core Mode
+
+\note Currently, configuring this option is not supported with Signing scripts.
+This feature will be added in future releases.
+
+Core options are applicable only for the R5 SBL Images.
+
+**Load Address**: The load address will be address in the system where the
+ image will be loaded. This is applicable for both SBL and TIFS-MCU (HSMRt)
+images.
+
+**Image Size**: This is the size in bytes of the R5 SBL or HSM Runtime Image
+to which the certificate has been attached.
+
+#### Image Integrity OID (1.3.6.1.4.1.294.1.2)
+
+\code
+imageIntegrity ::= SEQUENCE {
+	sha_type:	OID,			-- Identifies the SHA type
+	hash:		OCTET STRING	-- The SHA of the boot image
+}
+\endcode
+
+If the X.509 certificate provides the image integrity boot extension,
+the Boot-ROM will perform the SHA-512 on the entire image and will verify
+ the computed hash with the hash provided in the boot extension.
+ In the case of a mismatch the boot will fail.
+
+##### Elements of the extension:
+
+**SHA Type**: The Boot-ROM only supports SHA-512.
+
+The following values are supported:
+
+2.16.840.1.101.3.4.2.3	SHA-512 Object Identifier
+
+Please refer to the Section 2.4 of the RFC-5754 for the SHA-512 Object Identifier.
+
+**Hash**: This is SHA-512 hash which is calculated over the image (R5 SBL/HSM Runtime)
+
+R5 SBL Image:
+-	HS-SE Device: Image Integrity is mandatory
+-	HS-FS Device: Image Integrity is optional
+
+HSM Runtime Image:
+-	HS-SE Device: Image Integrity is mandatory
+-	HS-FS Device: Image Integrity is mandatory
+
+#### Software Revision OID (1.3.6.1.4.1.294.1.3)
+
+\code
+softwareRevision ::= SEQUENCE {
+   revision:	INTEGER -- Software revision
+}
+\endcode
+
+The information in the software revision is used to indicate the version of
+the image which is being loaded.
+
+##### Elements of the extension:
+
+**revision**:
+This is the version number. This will be matched to the EFUSE programmed
+version to indicate if the image loading should be done or not. This is
+applicable only for SE devices.
+
+|EFUSE Revision|	Certificate Revision|	Description |
+|--------------|------------------------|---------------|
+|0 |	0 | Ignore the revision checking. Images will *always* be loaded|
+|0 | >0 | Device does not mandate revision checking. Images will be loaded|
+|>0|	0 |EFUSE Version > Certificate Version. Image will *never* be loaded.|
+|>0|	>0 |Image will be loaded only if the Certificate revision >= EFUSE revision|
+
+The following fields in efuse ROM help support the above feature:
+- SWRV_SBL- This is used to perform the revision checking while loading the R5 SBL
+- SWRV_HSM- This is used to perform the revision checking while loading the HSM Runtime
+
+For more information, about how to fuse in these values, please refer to OTP
+Keywriter Documentation available on MySecureSW.
+
+#### Image Encryption OID (1.3.6.1.4.1.294.1.4)
+
+\code
+imageEncryption ::= SEQUENCE {
+   iv:		OCTET STRING -- The initialization vector
+   rs:	      OCTET STRING -- Random string
+   iter:		INTEGER      -- Iteration count
+   salt:		OCTET STRING -- encryption salt value
+}
+\endcode
+
+The Boot-ROM only supports AES-CBC mode with 256bit keys. The information in the image encryption object identifier is used to decrypt the image.
+
+##### Elements of the extension:
+
+**IV**:
+The initialization vector is used during the AES-CBC decryption procedure. The initialization vector needs to be 16bytes.
+
+**rs**:
+This is the random string which is 32bytes long and is appended by the script
+at the end of the image. The Boot-ROM will decrypt the image and will perform
+ a random string comparison to determine if the decryption was successful.
+
+**iter**:
+Iteration Count which is used to determine if the HKDF needs to be performed
+and key derivation needs to be done. If the iteration count is 0 then the key
+from the e-fuse is used as is for the decryption. If the iteration count is
+non-zero then the Boot-ROM will perform the HKDF key derivation using the salt
+with exactly one iteration (even if iteration count is > 1).
+The derived key is then used for the decryption operation.
+
+**salt**:
+The salt is used only if the iteration count is non-zero and key derivation is
+being done. The salt is fed to the HKDF module to derive the key. The salt
+fields should be 32bytes.
+
+For recommendation on the salt, please refer to \ref SECURE_BOOT.
+
+\note It is recommended to update key derivation salt everytime there is a
+firmware upgrade. SBL, HSMRt and application images need to be prepared
+again, once the salt is changed.
+
+- HS-SE device: Image Encryption is optional
+- HS-FS device: Image Encryption is optional
+
+#### Derivation OID (1.3.6.1.4.1.294.1.5)
+
+\code
+derivationKey ::= SEQUENCE {
+   salt:      OCTET STRING -- encryption salt value
+}
+\endcode
+The Boot-ROM will leave a derived key in the assets interface for the
+TIFS-MCU. The key is derived using HKDF from the parameters specified here.
+This is useful for decrypting application images by sending request
+to TIFS-MCU.
+For recommendation on the salt, please refer to \ref SECURE_BOOT.
+
+##### Elements of the extension:
+
+salt:
+The salt is limited to be 32bytes and is used for key derivation
+
+This OID is ignored as part of HSM Runtime certificates. This OID is ignored
+as part of SBL certificates if the device type is HS-FS.
+Key derivation is always done using the active user symmetric key.
+
+#### Debug OID (1.3.6.1.4.1.294.1.8)
+
+\code
+Debug::= SEQUENCE {
+      uid          OCTET STRING     -- Device unique ID
+      debugType    INTEGER          -- Debug type
+      coreDbgEn    INTEGER          -- Enable core debug mask
+      secCoreDbgEn INTEGER          -- Enable secure core debug mask
+}
+\endcode
+The debug object identifier if specified allows the debug ports to be enabled
+for a specific device.
+
+##### Elements of the extension:
+
+**UID**: This is the unique identifier associated with the device.
+Device specific unique identifiers can be retrieved using the SOC_ID Parser.
+
+The UID field of all 0s is considered to be a wildcard. This is what is supported
+by default in the script.
+
+**Debug Type**:
+This is the privilege level of debug.
+
+The privilege levels supported by ROM are as follows:
+
+Privilege Level   | Value | Description
+------------------|-------|--------------------
+DBG_PERM_DISABLE  |	0     | Disable debug ports for all cores.
+DBG_SOC_DEFAULT   | 1     | Maintain debug ports for all cores to device type defaults.
+DBG_PUBLIC_ENABLE | 2     |	Enable debug ports on R5FSS0-0 core.
+
+coreDbgEn and secCoreDbgEn: These fields are not used and will be ignored.
+
+\note The Debug OID is not applicable for HSM Runtime (TIFS-MCU) image.
+
+In the SBL Signing scripts, `DEBUG_OPTION` is used to exercise the debug level
+if the SBL certificate has debug extension. The SBL certificate as mentioned
+before, is processed by ROM. This is different from the debug certificate
+supported by TIFS-MCU.
+
+This feature is leveraged via compile time flags in MCU+ SDK for SBL images.
+
+By default, in SDK, the debug extension is not engaged for SBL images.
+This is decided by the flag `DEBUG_TIFS` defined in `devconfig.mak`.
+By default, `DEBUG_TIFS` is set to `yes`.This means that the debug extension
+will not be added to SBL and if the debug needs to be exercised via the certificate
+to TIFS-MCU via the debug authentication service, it can be safely done.
+This is done to ensure that the registers are written once only to exercise the
+debug during a POR cycle.
+If the user wants to open up debug on an HS-SE device, they can set `DEBUG_TIFS=no`.
+This is when the debug extension is added to the certificate for SBL images.
+
+\note ROM does not allow FULL_ENABLE privilege level via SBL certificate. To open up
+debug on HSM core, please refer to Debug Authentication services provided via
+TIFS-MCU. In this case, please use the default value of `DEBUG_TIFS` i.e. `yes`
+when compiling SBL examples.
+
+The default debug privilege used in SDK is `DBG_SOC_DEFAULT`.
+
+To enable debug on public cores on HS-SE device, one can use the following command
+to compile SBL examples.
+
+\cond SOC_AM263X
+\code
+make -s -C examples/drivers/boot/sbl_qspi/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS DEBUG_TIFS=no DEBUG_OPTION=DBG_PUBLIC_ENABLE
+\endcode
+\endcond
+
+\cond SOC_AM273X
+\code
+make -s -C examples/drivers/boot/sbl_qspi/am273x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am273x DEVICE_TYPE=HS DEBUG_TIFS=no DEBUG_OPTION=DBG_PUBLIC_ENABLE
+\endcode
+\endcond
+
+\endcond
 
  - Here,
 \cond SOC_AM64X || SOC_AM243X
@@ -261,7 +532,148 @@ r4          | 3
 \endcond
 \cond SOC_AM263X
   - `SBL_RUN_ADDRESS` is `0x70002000`
-  - In the case of GP device, `BOOTIMAGE_CERT_KEY` is `am263x_gpkey.pem`
+  - In the case of HS-FS devices, the key value is disregarded. A degenerate RSA public key is used to sign the certificate. The image integrity is checked in ROM, nevertheless.
+  - In the case of HS-SE device, more details can be found at \ref SECURE_BOOT
+  - Refer to TRM Chapter on Initialization, section 5.6.4.1.1 to get help on RSA key pair generation.
+\endcond
+
+
+These scripts are invoked in makefiles, and the image generation happens
+automatically along with the example build. So mostly these scripts need
+not be manually run.
+If the user build-system is different from TI's makefile system, it needs to
+be ensured that the same is followed as part of the post build steps.
+The devconfig has ENC_SBL_ENABLED=yes and that is why for HS-SE devices, the SBL
+image is encrypted by default.
+
+\cond SOC_AM263X || SOC_AM273X
+### Application Signing
+
+For Application images, the script `/tools/boot/signing/mcu_appimage_x509_cert_gen.py`.
+
+For HS-SE devices:
+\code
+cd ${SDK_INSTALL_PATH}/tools/boot/signing
+$(PYTHON) mcu_appimage_x509_cert_gen.py --bin <path-to-the-binary> --key <signing-key-configured-in-devconfig>  --enc y --enckey <encryption-key-configured-in-devconfig>  --kd-salt  <path-to-key-derivation-salt> --output <output-image-name>
+\endcode
+
+Signing of application images is not required for HS-FS device types.
+
+Here, we deep dive into the extension supported with certificate for Application images
+as processed by TIFS-MCU.
+To get access to the HSM Runtime code and ability to build it for HS-SE device,
+please contact your TI represntative to get access to the TIFS-MCU package from
+MySecureSW.
+
+#### Boot Information OID (1.3.6.1.4.1.294.1.1)
+\code
+bootInfo ::=  SEQUENCE {
+	cert_type:  INTEGER,		-- identifies the certificate type
+	boot_core:	INTEGER,		-- Reserved
+	core_opts:	INTEGER,		-- Reserved
+	load_addr:	OCTET STRING,	-- Reserved
+	image_size:	INTEGER,		-- Image size in bytes
+}
+\endcode
+The Boot Information Object identifier provides information about the image
+which is being loaded.
+
+##### Elements of the extension:
+**Certificate Type**: The certificate type defines the type of the image which is
+being loaded by the Boot-ROM.
+
+These are the supported values:
+- 0xA5A50000	Application Image
+
+**Boot core**: This field is reserved and should be assigned with 0.
+
+**Core Options**: This field is reserved and should be assigned with 0.
+
+**Load Address**: This field is reserved and should be assigned with 0.
+
+**Image Size**: This is the size in bytes of the R5 SBL or HSM Runtime Image
+to which the certificate has been attached.
+
+#### Image Integrity OID (1.3.6.1.4.1.294.1.2)
+
+\code
+imageIntegrity ::= SEQUENCE {
+	sha_type:	OID,			-- Identifies the SHA type
+	hash:		OCTET STRING	-- The SHA of the boot image
+}
+\endcode
+
+If the X.509 certificate provides the image integrity boot extension,
+the TIFS-MCU will perform the hash calculation on the entire image and will verify
+the computed hash with the hash provided in the boot extension.
+In the case of a mismatch the boot will fail.
+
+##### Elements of the extension:
+
+**SHA Type**:
+
+The following values are supported:
+
+- 2.16.840.1.101.3.4.2.1	SHA-256 Object Identifier
+- 2.16.840.1.101.3.4.2.2	SHA-384 Object Identifier
+- 2.16.840.1.101.3.4.2.3	SHA-512 Object Identifier
+
+Amongst these, SDK has been validated against SHA-512 OID.
+
+**Hash**: This is SHA-512 hash which is calculated over the application image
+
+#### Software Revision OID (1.3.6.1.4.1.294.1.3)
+
+\code
+softwareRevision ::= SEQUENCE {
+   revision:	INTEGER -- Software revision
+}
+\endcode
+
+The information in the software revision is used to indicate the version of
+the image which is being loaded.
+
+##### Elements of the extension:
+
+**revision**:
+This is the version number. This will be matched to the EFUSE programmed
+version to indicate if the image loading should be done or not.
+
+The following fields in efuse ROM help support the above feature:
+- SWRV_APP- This is used to perform the revision checking while loading the application
+
+For more information, about how to fuse in these values, please refer to OTP
+Keywriter Documentation available on MySecureSW.
+
+#### Image Encryption OID (1.3.6.1.4.1.294.1.4)
+
+\code
+imageEncryption ::= SEQUENCE {
+   iv:		OCTET STRING -- The initialization vector
+   rs:	    OCTET STRING -- Random string
+   iter:	INTEGER      -- Reserved
+   salt:	OCTET STRING -- Reserved
+}
+\endcode
+
+TIFS-MCU only supports AES-CBC mode with 256bit keys. The information in the image encryption object identifier is used to decrypt the image.
+
+##### Elements of the extension:
+
+**IV**:
+The initialization vector is used during the AES-CBC decryption procedure. The initialization vector needs to be 16bytes.
+
+**rs**:
+This is the random string which is 32bytes long and is appended by the script
+at the end of the image. TIFS-MCU will decrypt the image and will perform
+a random string comparison to determine if the decryption was successful.
+
+**iter**:
+This field is unused and reserved.
+
+**salt**:
+This field is unused and reserved.
+
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X

@@ -67,6 +67,7 @@ provided for boot.
 
 The x509 template for ROM looks something like this:
 
+\cond SOC_AM64X || SOC_AM243X
 \code
 [ req ]
 distinguished_name     = req_distinguished_name
@@ -131,11 +132,60 @@ compSize = INTEGER:0000
 shaType = OID:SHAOID
 shaValue = FORMAT:HEX,OCT:0000
 \endcode
+\endcond
+
+\cond SOC_AM263X || SOC_AM273X
+\code
+[ req ]
+distinguished_name     = req_distinguished_name
+x509_extensions        = v3_ca
+prompt                 = no
+
+dirstring_type = nobmp
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = SC
+L                      = New York
+O                      = Texas Instruments., Inc.
+OU                     = SITARA MCU
+CN                     = Albert
+emailAddress           = Albert@gt.ti.com
+
+[ v3_ca ]
+basicConstraints = CA:true
+1.3.6.1.4.1.294.1.1=ASN1:SEQUENCE:boot_seq
+1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
+1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+
+[ boot_seq ]
+certType     =  INTEGER:1
+bootCore     =  INTEGER:16
+bootCoreOpts =  INTEGER:0
+destAddr     =  FORMAT:HEX,OCT:70002000
+imageSize    =  INTEGER:199488
+
+[ image_integrity ]
+shaType = OID:2.16.840.1.101.3.4.2.3
+shaValue = FORMAT:HEX,OCT:1d1b24e6487709f007d87c8b2b593abf1853a82a99a54650de85f40ddc7b5ae4558a68e49ea3668732ea34ff4bcf76cc73e4e354a3b8128726843c71b05c4168
+
+[ swrv ]
+swrv = INTEGER:1
+
+\endcode
+\endcond
 
 Depending on the device type, these are the validation requirements for ROM:
 
+\cond SOC_AM64X || SOC_AM243X || SOC_AM273X
 \imageStyle{device_types_validation_req.png,width:50%}
 \image html device_types_validation_req.png "Validation for Device Types"
+\endcond
+
+\cond SOC_AM263X
+\imageStyle{device_types_validation_req_am263x.png,width:50%}
+\image html device_types_validation_req_am263x.png "Validation for Device Types"
+\endcond
 
 \cond SOC_AM64X || SOC_AM243X
 #### System Controller Firmware (SYSFW)
@@ -189,11 +239,11 @@ However the steps to convert the application `.out` into a bootable image are di
 \cond SOC_AM263X
   - The linker command file for SBL has to place vectors at address `0x70002000` and this is the entry point for the SBL.
   - Nothing should be placed in ATCM or BTCM
-  - Only the region `0x70002000` to `0x70040000` should be used by SBL code, data, stack etc
+  - Currently, the region 0x70002000 to 0x70040000 is used by the SBL code, data, stack, etc.
 \endcond
 \cond SOC_AM273X
   - The linker command file for SBL has to place vectors at address `0x10200000` and this is the entry point for the SBL.
-  - Only the region `0x10200000` to `0x10220000` should be used by SBL code, data, stack etc
+  - Currently, the region `0x10200000` to `0x10220000` is used by the SBL code, data, stack, etc.
 \endcond
 \endcond
 - After building, the SBL application `.out` file is first converted to a binary format `.bin` using the TI ARM CLANG
@@ -204,17 +254,38 @@ However the steps to convert the application `.out` into a bootable image are di
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
 - This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
    - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
-   - A default key is used for this.
+   - The rom_degenerateKey.pem is used for this.
    - This is a ROM bootloader requirement and is needed even on a non-secure device.
    - The signing tools take the `.bin` file
+\cond SOC_AM263X
+- The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM. This firmware provides various foundational security services. For HS-FS ,this can be found at source/drivers/hsmclient/soc/am263x/hsmRtImg.h. For HS-SE devices, more information can be found at MySecureSW. For integrating HSM RunTime with SBL, the following should be taken care of:
+   - HSMClient should be initialized and registered.
+   - HSMRT (TIFS-MCU) image signed appropriately should be available. For HS-FS, this is already part of the SDK, for HS-SE, this can be compiled with TIFS-MCU package (available on MySecureSW)
+\endcond
+\cond SOC_AM273X
+- The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM on HS-SE devices. This firmware provides various foundational security services. More information can be found at MySecureSW. Support for HS-FS will be provided in upcoming releases. For integrating HSM RunTime with SBL, the following should be taken care of:
+   - HSMClient should be initialized and registered.
+   - HSMRT (TIFS-MCU) image signed appropriately should be available and this is already part of the SDK.
+\endcond
 - Depending on the device type for which we build the SBL, there will be certain prefixes to the `.tiimage` extension like so:
+\cond SOC_AM64X || SOC_AM243X
   - **GP** device:
     - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
   - **HS-FS** device:
     - `sbl_xxx.release.hs_fs.tiimage` [`hs_fs` prefix before `.tiimage`]
+\endcond
+\cond SOC_AM263X || SOC_AM273X
+  - **HS-FS** device:
+    - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
+\endcond
   - **HS-SE** device:
     - `sbl_xxx.release.hs.tiimage` [`hs` prefix before `.tiimage`]
+\cond SOC_AM64X || SOC_AM243X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device and `hs_fs` or `hs-fs` is meant for **HS-FS** device.
+\endcond
+\cond SOC_AM263X || SOC_AM273X
+- Note that if we just mentioned `hs` it is meant for **HS-SE** device.
+\endcond
 - The `.tiimage` file can then be flashed or copied to a boot image using the \ref TOOLS_FLASH
 
 \cond SOC_AM64X || SOC_AM243X
@@ -312,7 +383,7 @@ After a SBL and application image is flashed, shown below is the high level boot
 \imageStyle{bootflow_main.png,width:40%}
 \image html bootflow_main.png "HIGH LEVEL BOOTFLOW"
 
-\cond SOC_AM243X || SOC_AM64X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM263X || SOC_AM273X
 ## Secure Boot
 
 In secure device variants, there are slight differences in the bootflow. For details on secure boot, please refer \ref SECURE_BOOT
