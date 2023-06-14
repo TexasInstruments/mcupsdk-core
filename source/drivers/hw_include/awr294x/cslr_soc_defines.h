@@ -72,7 +72,7 @@ extern "C" {
 #define PRIV_ID_R5FSS            (2U)
 #define PRIV_ID_R5FSSI           (3U)
 #define PRIV_ID_DSSTPTC          (5U)
-
+#define PRIV_ID_RCSS             (6U)
 /** @} */
 
 
