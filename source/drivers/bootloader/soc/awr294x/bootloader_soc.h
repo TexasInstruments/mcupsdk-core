@@ -40,6 +40,7 @@ extern "C"
 
 
 #include <drivers/hw_include/cslr_soc.h>
+#include <drivers/hsmclient.h>
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
@@ -55,8 +56,8 @@ extern "C"
 #define BOOTLOADER_DEVTYPE_HSFS         (0xAAU)
 /** \brief device type GP   */
 #define BOOTLOADER_DEVTYPE_GP           (0x03U)
-
-
+/** \brief hsmclient ID for bootloader */
+#define BOOTLOADER_CLIENT_ID            (0x02)
 /** @} */
 /**
  * \brief Data structure containing information about a core specific to the AWR294x SOC

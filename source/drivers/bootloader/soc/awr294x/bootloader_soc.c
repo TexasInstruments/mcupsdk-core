@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,6 +39,7 @@
 
 #define CSL_MSS_TOP_PBIST_RINFOL_OFFSET    (0x000000C8U)
 #define CSL_MSS_TOP_PBIST_RINFOU_OFFSET    (0x000000CCU)
+#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
 
 Bootloader_resMemSections gResMemSection =
 {
@@ -154,6 +155,7 @@ int32_t Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz)
     }
     return SystemP_SUCCESS;
 }
+CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
 
 int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
 {
@@ -415,12 +417,30 @@ Bootloader_resMemSections* Bootloader_socGetSBLMem(void)
 
 int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
 {
-    return SystemP_SUCCESS;
+    int32_t status = SystemP_FAILURE;
+    HsmClient_t client ;
+    status = HsmClient_register(&client, BOOTLOADER_CLIENT_ID);
+
+    /* Request TIFS-MCU to authenticate (and decrypt if mentioned in the x509 cert) the image */
+    status = HsmClient_procAuthBoot(&client, (uint8_t *)certLoadAddr, BOOTLOADER_SOC_APP_CERT_SIZE, SystemP_WAIT_FOREVER);
+
+    return status;
 }
 
 uint32_t Bootloader_socIsAuthRequired(void)
 {
-    return FALSE;
+    uint32_t isAuthRequired = TRUE;
+
+    if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
+    {
+        isAuthRequired = TRUE;
+    }
+    else
+    {
+        isAuthRequired = FALSE;
+    }
+
+    return isAuthRequired;
 }
 
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){

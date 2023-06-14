@@ -20,6 +20,7 @@ docs/datasheet*
 *.appimage.signed
 *.appimage.hs
 *.appimage.hs_fs
+*.appimage_qspi.hs
 *.bin
 *.tiimage
 *.tiimage.hs
