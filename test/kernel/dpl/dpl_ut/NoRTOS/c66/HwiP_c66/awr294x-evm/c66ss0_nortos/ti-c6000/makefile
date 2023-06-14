@@ -31,6 +31,14 @@ BOOTIMAGE_NAME_SIGNED:=dpl_ut_HwiP_c66.$(PROFILE).appimage.signed
 BOOTIMAGE_RPRC_NAME:=dpl_ut_HwiP_c66.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_HwiP_c66.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_HwiP_c66.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=dpl_ut_HwiP_c66.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_QSPI_HS:=dpl_ut_HwiP_c66.$(PROFILE).appimage_qspi.hs
+BOOTIMAGE_NAME_HS_FS:=dpl_ut_HwiP_c66.$(PROFILE).appimage.hs_fs
+TARGETS := $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+   TARGETS += $(BOOTIMAGE_NAME_QSPI_HS)
+endif
 
 FILES_common := \
 	test_dpl.c \
@@ -64,15 +72,18 @@ DEFINES_common := \
 
 CFLAGS_common := \
 	-mv6600 \
-	--abi=eabi \
+	--c99 \
 	-q \
-	-mi10 \
 	-mo \
 	-pden \
-	-pds=238 \
-	-pds=880 \
-	-pds1110 \
 	--emit_warnings_as_errors \
+	--mem_model:const=data \
+	--mem_model:data=far_aggregates \
+	--remove_hooks_when_inlining \
+	-on2 \
+	--disable_push_pop \
+	--fp_mode=relaxed \
+	--assume_control_regs_read \
 
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
@@ -80,7 +91,7 @@ CFLAGS_debug := \
 CFLAGS_release := \
 	--program_level_compile \
 	-o3 \
-	-mf3 \
+	-mf2 \
 
 LNK_FILES_common = \
 	linker.cmd \
@@ -100,7 +111,7 @@ LIBS_common = \
 LFLAGS_common = \
 	--warn_sections \
 	--emit_warnings_as_errors \
-	--rom_model \
+	--ram_model \
 	-x \
 
 
@@ -146,7 +157,7 @@ $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: awr294x:c66ss0:nortos:ti-c6000 $(LIBNAME): $<
 	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fa=$<
 
-all: $(BOOTIMAGE_NAME)
+all: $(TARGETS)
 
 SYSCFG_GEN_FILES=generated/ti_drivers_config.c generated/ti_drivers_config.h
 SYSCFG_GEN_FILES+=generated/ti_drivers_open_close.c generated/ti_drivers_open_close.h
@@ -169,7 +180,10 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_QSPI)
+	$(RM) $(BOOTIMAGE_NAME_QSPI_HS)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
+	$(RM) $(BOOTIMAGE_NAME_HS)
+	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
 	$(RMDIR) generated/
@@ -236,6 +250,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -268,4 +283,23 @@ endif
 	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
+$(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_QSPI) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_QSPI_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_QSPI) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_QSPI_HS)
+
+	$(RM) $(BOOTIMAGE_NAME)-enc
+	$(RM) $(BOOTIMAGE_NAME_QSPI)-enc
+endif
+	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_QSPI_HS) Done !!!
+	@echo  .
+endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -4,7 +4,13 @@
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
+ifeq ($(OS), Windows_NT)
+	PYTHON=python
+else
+	PYTHON=python3
+endif
 
 PROFILE?=release
 
@@ -13,6 +19,8 @@ MULTI_CORE_BOOTIMAGE_NAME:=mcan_external_loopback_interrupt_system.$(PROFILE).ap
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
 MULTI_CORE_BOOTIMAGE_NAME_XIP:=mcan_external_loopback_interrupt_system.$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_QSPI:=mcan_external_loopback_interrupt_system.$(PROFILE).appimage_qspi
+MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS:=$(MULTI_CORE_BOOTIMAGE_NAME_QSPI).hs
+MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
 CORE_1=--script ../r5fss0-1_nortos/example.syscfg --context r5fss0-1 --output ../r5fss0-1_nortos/ti-arm-clang/generated
@@ -25,6 +33,10 @@ all: syscfg
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ all
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ all
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS)
+endif
 
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
@@ -33,6 +45,8 @@ clean:
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 
 scrub:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ scrub
@@ -40,10 +54,14 @@ scrub:
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
+	$(RM) \*.appimage.hs
+	$(RM) \*.appimage*
 	$(RM) \*.appimage_xip
 else
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
+	$(RM) \*.appimage.hs
+	$(RM) \*.appimage*
 	$(RM) *.appimage_xip
 endif
 
@@ -72,6 +90,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 
 MULTI_CORE_APP_PARAMS = \
     ../r5fss0-0_freertos/ti-arm-clang/mcan_external_loopback_interrupt.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
@@ -97,3 +116,22 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
+$(MULTI_CORE_BOOTIMAGE_NAME_HS): $(MULTI_CORE_BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_QSPI) --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME_QSPI) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI)-enc
+endif
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS) Done !!!
+	@echo  .
+endif

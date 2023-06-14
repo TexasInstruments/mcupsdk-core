@@ -12,6 +12,7 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
@@ -23,7 +24,14 @@ endif
 
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})
-BOOTIMAGE_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
+BOOTIMAGE_NAME_GP:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
+BOOTIMAGE_NAME_HS:=sbl_qspi_enet.$(PROFILE).hs.tiimage
+BOOTIMAGE_NAME_HS_FS:=sbl_qspi_enet.$(PROFILE).hs_fs.tiimage
+ifeq ($(DEVICE_TYPE),HS)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
+else
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
+endif
 BOOTIMAGE_BIN_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).bin
 
 #
@@ -57,10 +65,18 @@ else
 	@echo  Boot image: awr294x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) ...
 	$(OBJCOPY) --strip-sections -O binary $(OUTFILE) $(BOOTIMAGE_BIN_NAME)
 ifeq ($(DEVICE_TYPE),HS)
-ifeq ($(DBG_ENABLED),no)
-	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT
+ifeq ($(DEBUG_TIFS), yes)
+ifeq ($(ENC_SBL_ENABLED),yes)
+	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME)
 else
-	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug DBG_PUBLIC_ENABLE
+    $(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME)
+endif
+else
+ifeq ($(ENC_SBL_ENABLED),yes)
+    $(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY)  --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+else
+    $(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+endif
 endif
 else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT

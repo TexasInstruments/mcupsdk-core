@@ -31,6 +31,14 @@ BOOTIMAGE_NAME_SIGNED:=test_hwa.$(PROFILE).appimage.signed
 BOOTIMAGE_RPRC_NAME:=test_hwa.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=test_hwa.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=test_hwa.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=test_hwa.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_QSPI_HS:=test_hwa.$(PROFILE).appimage_qspi.hs
+BOOTIMAGE_NAME_HS_FS:=test_hwa.$(PROFILE).appimage.hs_fs
+TARGETS := $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+   TARGETS += $(BOOTIMAGE_NAME_QSPI_HS)
+endif
 
 FILES_common := \
 	test_hwa.c \
@@ -148,7 +156,7 @@ $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: awr294x:c66ss0:nortos:ti-c6000 $(LIBNAME): $<
 	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINES) -ppd=$(OBJDIR)/$(basename $@).d -ppa -fr=$(OBJDIR)/ -fa=$<
 
-all: $(BOOTIMAGE_NAME)
+all: $(TARGETS)
 
 SYSCFG_GEN_FILES=generated/ti_drivers_config.c generated/ti_drivers_config.h
 SYSCFG_GEN_FILES+=generated/ti_drivers_open_close.c generated/ti_drivers_open_close.h
@@ -171,7 +179,10 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_QSPI)
+	$(RM) $(BOOTIMAGE_NAME_QSPI_HS)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
+	$(RM) $(BOOTIMAGE_NAME_HS)
+	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
 	$(RMDIR) generated/
@@ -238,6 +249,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -270,4 +282,23 @@ endif
 	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
+$(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_QSPI) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_QSPI_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_QSPI) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_QSPI_HS)
+
+	$(RM) $(BOOTIMAGE_NAME)-enc
+	$(RM) $(BOOTIMAGE_NAME_QSPI)-enc
+endif
+	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_QSPI_HS) Done !!!
+	@echo  .
+endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))
