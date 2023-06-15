@@ -54,6 +54,14 @@ BOOTIMAGE_NAME_SIGNED:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage.signed
 BOOTIMAGE_RPRC_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
+% if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs_fs
+TARGETS := $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+endif
+% }
 % }
 
 % if (args.project.isBootLoader) {
@@ -233,6 +241,9 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
+% if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+% }
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -304,6 +315,21 @@ ifeq ($(DEVICE_TYPE),HS)
 	@echo  .
 else
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME).hs_fs Done !!!
+	@echo  .
+endif
+% }
+% if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_HS)
+	$(RM) $(BOOTIMAGE_NAME)-enc
+endif
+	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
 % }
