@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -47,29 +47,29 @@ extern "C" {
 #define MAILBOX_MAX_USER                        ( 4u)
 
 /* HW mailbox register address, parameterized via base addr, hw fifo num, user id that is used */
-#define MAILBOX_MESSAGE(base, fifo)             (volatile uint32_t*)((base) + 0x040u + 0x04u*((fifo) & (MAILBOX_MAX_FIFO-1)))
-#define MAILBOX_FIFO_STATUS(base, fifo)         (volatile uint32_t*)((base) + 0x080u + 0x04u*((fifo) & (MAILBOX_MAX_FIFO-1)))
-#define MAILBOX_MSG_STATUS(base, fifo)          (volatile uint32_t*)((base) + 0x0C0u + 0x04u*((fifo) & (MAILBOX_MAX_FIFO-1)))    
-#define MAILBOX_CLEAR_INT(base, user)           (volatile uint32_t*)((base) + 0x104u + 0x10u*((user) & (MAILBOX_MAX_USER-1)))
-#define MAILBOX_ENABLE_INT(base, user)          (volatile uint32_t*)((base) + 0x108u + 0x10u*((user) & (MAILBOX_MAX_USER-1)))
-#define MAILBOX_DISABLE_INT(base, user)         (volatile uint32_t*)((base) + 0x10Cu + 0x10u*((user) & (MAILBOX_MAX_USER-1)))
+#define MAILBOX_MESSAGE(base, fifo)             (volatile uint32_t*)((base) + 0x040u + (0x04u*((fifo) & (MAILBOX_MAX_FIFO-1U))))
+#define MAILBOX_FIFO_STATUS(base, fifo)         (volatile uint32_t*)((base) + 0x080u + (0x04u*((fifo) & (MAILBOX_MAX_FIFO-1U))))
+#define MAILBOX_MSG_STATUS(base, fifo)          (volatile uint32_t*)((base) + 0x0C0u + (0x04u*((fifo) & (MAILBOX_MAX_FIFO-1U))))
+#define MAILBOX_CLEAR_INT(base, user)           (volatile uint32_t*)((base) + 0x104u + (0x10u*((user) & (MAILBOX_MAX_USER-1U))))
+#define MAILBOX_ENABLE_INT(base, user)          (volatile uint32_t*)((base) + 0x108u + (0x10u*((user) & (MAILBOX_MAX_USER-1U))))
+#define MAILBOX_DISABLE_INT(base, user)         (volatile uint32_t*)((base) + 0x10Cu + (0x10u*((user) & (MAILBOX_MAX_USER-1U))))
 #define MAILBOX_EOI_INT(base)                   (volatile uint32_t*)((base) + 0x140u)
 
 /* value to construct to enable/disable/clear mew message interrupt for a given HW fifo */
-#define MAILBOX_NEW_MSG_INT(fifo)               (uint32_t)(1 << (((fifo) & (MAILBOX_MAX_FIFO-1))*2))
+#define MAILBOX_NEW_MSG_INT(fifo)               ((uint32_t)1U << (((uint32_t)(fifo) & (uint32_t)(MAILBOX_MAX_FIFO-(uint32_t)1U))*(uint32_t)2U))
 
 /* return number of messages pending in the HW fifo to be read within a mailbox */
 static inline uint32_t IpcNotify_mailboxGetNumMsg(uint32_t mailboxBaseAddr, uint32_t hwFifoNum)
 {
     volatile uint32_t *addr = MAILBOX_MSG_STATUS(mailboxBaseAddr, hwFifoNum);
-    return *addr & (MAILBOX_MAX_MSGS_IN_FIFO-1);
+    return *addr & (MAILBOX_MAX_MSGS_IN_FIFO-1U);
 }
 
 /* check if HW fifo is full within a mailbox */
 static inline uint32_t IpcNotify_mailboxIsFull(uint32_t mailboxBaseAddr, uint32_t hwFifoNum)
 {
     volatile uint32_t *addr = MAILBOX_FIFO_STATUS(mailboxBaseAddr, hwFifoNum);
-    return *addr & 0x1;
+    return *addr & 0x1U;
 }
 
 /* read from HW fifo within a mailbox  */

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,7 +37,7 @@
 
 /* All mailbox base addresses */
 #define IPC_NOTIFY_MAILBOX_MAX_INSTANCES    (8U)
-uint32_t gIpcNotifyMailboxBaseAddr[IPC_NOTIFY_MAILBOX_MAX_INSTANCES+1] = {
+uint32_t gIpcNotifyMailboxBaseAddr[IPC_NOTIFY_MAILBOX_MAX_INSTANCES+1U] = {
     0x29000000U,
     0x29010000U,
     0x29020000U,
@@ -294,7 +294,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_A53SS0_0,
         },
-    }    
+    }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss0_1 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS0_1_NUM;
 
