@@ -83,7 +83,9 @@ int32_t SDL_DPL_enableInterrupt(int32_t intNum)
     return ret;
 }
 
-
+/**
+ * Design: PROC_SDL-6203
+ */
 int32_t SDL_DPL_disableInterrupt(int32_t intNum)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -102,7 +104,7 @@ int32_t SDL_DPL_disableInterrupt(int32_t intNum)
 }
 
 /**
- * Design: PROC_SDL-1145,PROC_SDL-1146,PROC_SDL-5802
+ * Design: PROC_SDL-5802
  */
 
 int32_t SDL_DPL_registerInterrupt(SDL_DPL_HwipParams *pParams, pSDL_DPL_HwipHandle *handle)
@@ -126,7 +128,9 @@ int32_t SDL_DPL_registerInterrupt(SDL_DPL_HwipParams *pParams, pSDL_DPL_HwipHand
     return ret;
 }
 
-
+/**
+ * Design: PROC_SDL-6206
+ */
 int32_t SDL_DPL_deregisterInterrupt(pSDL_DPL_HwipHandle handle)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -178,7 +182,7 @@ void* SDL_DPL_addrTranslate(uint64_t addr, uint32_t size)
 }
 
 /**
- * Design: PROC_SDL-1143,PROC_SDL-1144
+ * Design: PROC_SDL-6205
  */
 int32_t SDL_DPL_globalDisableInterrupts(uintptr_t *key)
 {
@@ -202,7 +206,7 @@ int32_t SDL_DPL_globalDisableInterrupts(uintptr_t *key)
 }
 
 /**
- * Design: PROC_SDL-1141,PROC_SDL-1142
+ * Design: PROC_SDL-6204
  */
 int32_t SDL_DPL_globalRestoreInterrupts(uintptr_t key)
 {

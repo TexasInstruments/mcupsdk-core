@@ -39,9 +39,6 @@
  *            This also contains some related macros and Helper APIs.
  */
 
- /**
- * Design: PROC_SDL-1021
- */
 
 
 #include <sdl/stc/v0/sdl_stc.h>
@@ -51,7 +48,9 @@
 /********************************************************************************************************
 *   API for getting the status of specified STC instance
 *********************************************************************************************************/
-
+/**
+ *  Design:PROC_SDL-6019
+ */
 
 int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 {
@@ -113,6 +112,9 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
 /********************************************************************************************************
 * Helper  API for Configuring instance specified STC instance
 *********************************************************************************************************/
+/**
+ *  Design:PROC_SDL-6022
+ */
 
 static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig, SDL_STC_TestType testType)
 {
@@ -196,6 +198,10 @@ static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig,
 * Helper  API for Configuring to enable test for  specified STC instance
 *********************************************************************************************************/
 
+/**
+ *  Design:PROC_SDL-6023
+ */
+
 static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
 {
    int32_t sdlResult = SDL_EFAIL;
@@ -276,8 +282,9 @@ static void  __attribute__((noinline)) SDL_Delay(void)
 *   API for Performing STC test for specified STC instance
 *********************************************************************************************************/
 /**
- *  Design: PROC_SDL-3442
+ *  Design: PROC_SDL-6021
  */
+
 int32_t   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_TestType testType, SDL_STC_Config *pConfig )
 {
     int32_t sdlResult= SDL_EFAIL;

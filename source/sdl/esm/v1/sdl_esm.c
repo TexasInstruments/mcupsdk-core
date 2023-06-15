@@ -147,6 +147,10 @@ static int32_t SDL_ESM_configErrorGating(SDL_ESM_Handle gHandle, uint8_t groupNu
     return retVal;
 }
 
+/*
+ * Design: PROC_SDL-1047
+ */
+
 static void SDL_ESM_highpriority_interrupt(void *args)
 {
     uint32_t            esmioffhr, vec;
@@ -165,6 +169,10 @@ static void SDL_ESM_highpriority_interrupt(void *args)
 	SDL_ESM_processInterrupt(args, vec, &groupNum, &vecNum);
 
 }
+
+/*
+ * Design: PROC_SDL-1047
+ */
 
 static void SDL_ESM_lowpriority_interrupt(void *args)
 {
@@ -253,7 +261,7 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
     {
         /*Required for MISRA C*/
     }
-	
+
     if (*groupNum != -1)
     {
         /* Clear the error status flag for group 1 errors. There is no need to clear group 2 errors,
@@ -305,27 +313,30 @@ static void SDL_ESM_processInterrupt (void *arg, uint32_t vec, int32_t* groupNum
 						/*Nothing*/
 				   }
 				}
-			}	
+			}
         }
     }
 }
 
-static void SDL_ESM_memcpy(void *dest, void *src, size_t n) 
+static void SDL_ESM_memcpy(void *dest, void *src, size_t n)
 {
-    uint8_t *csrc = (uint8_t *)src; 
-    uint8_t *cdest = (uint8_t *)dest; 
+    uint8_t *csrc = (uint8_t *)src;
+    uint8_t *cdest = (uint8_t *)dest;
     uint32_t i=0U;
-  
+
     /* Copy contents of src[] to dest[] */
     for(i=0U; i<n; i++)
     {
-        cdest[i] = csrc[i]; 
+        cdest[i] = csrc[i];
     }
 }
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
+/*
+ * Design: PROC_SDL-1049, PROC_SDL-1048
+ */
 
 static SDL_Result SDL_esmgHandlerInit(SDL_ESM_Inst esmInstType, const SDL_ESM_Params  *hwAttrs, SDL_ESM_Object *object)
 {
@@ -408,7 +419,7 @@ SDL_Result SDL_ESM_init (const SDL_ESM_Inst esmInstType,
         retVal = SDL_EBADARGS;
     }
     else if (notifierIndex == SDL_ESM_MAX_NOTIFIERS)
-    {                        
+    {
         retVal = SDL_EBADARGS;
     }
     else
@@ -695,10 +706,10 @@ int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t ccmEvent,
     static uint8_t callbackcount1 = 0U;
     SDL_Result result = SDL_PASS;
 	SDL_ESM_Object          *object;
-	
+
 	if(callbackcount1 <= 255U)
-	{		
-		object = &gEsmObjects[CONFIG_ESM0];		
+	{
+		object = &gEsmObjects[CONFIG_ESM0];
 		object->ccmenableBitmap[callbackcount1] = ccmEvent;
 		object->ccmCallBackFunction[callbackcount1] = callBack;
 		object->ccmCallBackFunctionArg[callbackcount1] = callbackArg;

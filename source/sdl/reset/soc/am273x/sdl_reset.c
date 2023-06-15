@@ -39,9 +39,6 @@
  *            This also contains some related macros and Helper APIs.
  */
 
- /**
- * Design: PROC_SDL-5821
- */
 
 #include <sdl/reset/sdl_reset.h>
 
@@ -49,7 +46,9 @@
 *   API for genrate Warm reset.
 *********************************************************************************************************/
 
-/* [PROC_SDL-3641] */
+/**
+ * Design: PROC_SDL-6024
+ */
 void SDL_generateSwWarmReset(void)
 {
     /* Unlock CONTROLSS_CTRL registers */
@@ -66,7 +65,9 @@ void SDL_generateSwWarmReset(void)
 *   API for getting the status of warm reset cause
 *********************************************************************************************************/
 
-/* [PROC_SDL-3642] */
+/**
+ * Design: PROC_SDL-6027
+ */
 uint32_t SDL_getWarmResetCause(void)
 {
     uint32_t     resetCause = 0U;
@@ -90,7 +91,9 @@ uint32_t SDL_getWarmResetCause(void)
 *   API for getting the status of R5F Core reset cause
 *********************************************************************************************************/
 
-/* [PROC_SDL-3640]  */
+/**
+ * Design: PROC_SDL-6026
+ */
 uint32_t SDL_r5fGetResetCause(void)
 {
     uint32_t     resetCauseBits = 0U;
@@ -120,7 +123,9 @@ uint32_t SDL_r5fGetResetCause(void)
 *   API to generate localized reset for C66x DSP
 *********************************************************************************************************/
 
-/* [PROC_SDL-3643]  */
+/**
+ * Design: PROC_SDL-6025
+ */
 
 void SDL_rcmDspLocalReset(void)
 {

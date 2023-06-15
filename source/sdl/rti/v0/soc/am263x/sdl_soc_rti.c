@@ -47,7 +47,7 @@
 #include <sdl/dpl/sdl_dpl.h>
 
 /**
- *  Design:
+ *  Design:PROC_SDL-4528
  */
 int32_t SDL_RTI_getBaseaddr(SDL_RTI_InstanceType instance,
                              uint32_t *baseAddr)

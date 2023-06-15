@@ -209,7 +209,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedErrorClear(uint32_t busSftyNode)
 *   API to get DED error status
 *********************************************************************************************************/
 /**
- *  Design: PROC_SDL-3716
+ *  Design: PROC_SDL-6287
  */
 int32_t SDL_ECC_BUS_SAFETY_MSS_getDedErrorStatus(uint32_t busSftyNode , uint32_t *status)
 {
@@ -270,7 +270,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_redErrorClear(uint32_t busSftyNode)
 *   API to clear RED error
 *********************************************************************************************************/
 /**
- *  Design: PROC_SDL-3720
+ *  Design: PROC_SDL-6288
  */
 int32_t SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(uint32_t busSftyNode , uint32_t *status)
 {
