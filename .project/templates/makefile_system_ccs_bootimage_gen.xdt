@@ -10,11 +10,13 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(`args.sdkName`)/imports.mak
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") ||
+%(args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") ) {
 include $(`args.sdkName`)/devconfig/devconfig.mak
 % }
 
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
+% if ((args.project.device == "am64x") || (args.project.device == "am243x") ||
+%(args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -92,6 +94,9 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 % if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
+% if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+% }
 
 MULTI_CORE_APP_PARAMS = \
 % for (let project of args.project.projects) {
@@ -136,13 +141,26 @@ else
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 endif
 % }
-
+% if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+endif
+endif
+% }
 % for (let project of args.project.projects) {
 % if (project.isLinuxFwGen) {
 	$(COPY) ../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.device.getLinuxFwName(project.cpu)` $(PROFILE)/
 % }
 % }
-% if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
+
+% if ((args.project.device == "am243x") || (args.project.device == "am64x") || (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
 else
