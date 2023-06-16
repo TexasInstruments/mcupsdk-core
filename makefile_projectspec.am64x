@@ -388,6 +388,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am64x-sk_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += xip_benchmark_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += xip_benchmark_am64x-sk_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += wfi_standby_demo_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am64x-evm_system_nortos_build
@@ -1552,6 +1553,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  xip_benchmark_am64x-sk_system_freertos_build:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec all
 
+ wfi_standby_demo_am64x-evm_system_nortos_build:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile_projectspec all
+
  cdc_echo_nortos_am64x-evm_system_nortos_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec all
 
@@ -1946,6 +1950,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am64x-sk_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += xip_benchmark_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += xip_benchmark_am64x-sk_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += wfi_standby_demo_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am64x-evm_system_nortos_clean
@@ -3110,6 +3115,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  xip_benchmark_am64x-sk_system_freertos_clean:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec clean
 
+ wfi_standby_demo_am64x-evm_system_nortos_clean:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile_projectspec clean
+
  cdc_echo_nortos_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec clean
 
@@ -3504,6 +3512,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am64x-evm_system_nortos_expo
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am64x-sk_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += xip_benchmark_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += xip_benchmark_am64x-sk_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += wfi_standby_demo_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am64x-evm_system_nortos_export
@@ -4668,6 +4677,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  xip_benchmark_am64x-sk_system_freertos_export:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec export
 
+ wfi_standby_demo_am64x-evm_system_nortos_export:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile_projectspec export
+
  cdc_echo_nortos_am64x-evm_system_nortos_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec export
 
@@ -5092,6 +5104,7 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am64x-sk/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec [export all clean]

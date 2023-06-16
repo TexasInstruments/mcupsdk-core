@@ -482,6 +482,7 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am64x-sk/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
@@ -1230,6 +1231,7 @@ BUILD_COMBO_EXAMPLE_ALL += empty_am64x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am64x-sk_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += xip_benchmark_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += xip_benchmark_am64x-sk_system_freertos
+BUILD_COMBO_EXAMPLE_ALL += wfi_standby_demo_am64x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am64x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am64x-evm_system_nortos
@@ -2398,6 +2400,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  xip_benchmark_am64x-sk_system_freertos:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile all
 
+ wfi_standby_demo_am64x-evm_system_nortos:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile all
+
  cdc_echo_nortos_am64x-evm_system_nortos:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile all
 
@@ -2771,6 +2776,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am64x-sk_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += xip_benchmark_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += xip_benchmark_am64x-sk_system_freertos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += wfi_standby_demo_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am64x-evm_system_nortos_clean
@@ -3939,6 +3945,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  xip_benchmark_am64x-sk_system_freertos_clean:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile clean
 
+ wfi_standby_demo_am64x-evm_system_nortos_clean:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile clean
+
  cdc_echo_nortos_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile clean
 
@@ -4312,6 +4321,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am64x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am64x-sk_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += xip_benchmark_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += xip_benchmark_am64x-sk_system_freertos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += wfi_standby_demo_am64x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am64x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am64x-evm_system_nortos_scrub
@@ -5479,6 +5489,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  xip_benchmark_am64x-sk_system_freertos_scrub:
 	$(MAKE) -C examples/kernel/dpl/xip_benchmark/am64x-sk/system_freertos -f makefile scrub
+
+ wfi_standby_demo_am64x-evm_system_nortos_scrub:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos -f makefile scrub
 
  cdc_echo_nortos_am64x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile scrub

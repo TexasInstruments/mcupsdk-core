@@ -8984,6 +8984,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "WFI Standy mode example demo CPU is R5FSS0-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo CPU is R5FSS1-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am263x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mathlib Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mathlib_benchmark",
         "location": "../../examples/mathlib/benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -11985,6 +12051,36 @@
         ],
         "subCategories": [
             "empty",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo System project.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am263x-cc/system_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
             "system_nortos"
         ],
         "mainCategories": [

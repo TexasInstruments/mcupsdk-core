@@ -8649,6 +8649,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "WFI Standy mode example demo CPU is R5FSS0-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo CPU is R5FSS1-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am243x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Xip Benchmark Example. CPU is R5FSS1-1 running FREERTOS.",
         "name": "xip_benchmark",
         "location": "../../examples/kernel/dpl/xip_benchmark/am243x-lp/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
@@ -12352,6 +12418,36 @@
             "ipc",
             "ipc_rpmsg_echo",
             "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo System project.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am243x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "system_nortos"
         ],
         "mainCategories": [
             [
