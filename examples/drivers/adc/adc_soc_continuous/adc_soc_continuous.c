@@ -98,18 +98,28 @@ void adc_soc_continuous_main(void *args)
     {
         while(false == ADC_getInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER2));
         ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER2);
-        ResultAdc1Ch0 = 0;
-        for(ADC_SOCNumber soc_number = ADC_SOC_NUMBER0; soc_number < ADC_SOC_NUMBER8; soc_number++)
-        {
-            gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,soc_number);
-        }
+
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,0);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,1);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,2);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,3);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,4);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,5);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,7);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,8);
 
         while(false == ADC_getInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1));
         ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
-        for(ADC_SOCNumber soc_number = ADC_SOC_NUMBER8; soc_number < ADC_SOC_NUMBER15; soc_number++)
-        {
-            gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr, soc_number);
-        }
+
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,8);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,9);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,10);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,11);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,12);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,13);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,14);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,15);
+
         gAdcConversionCount++;
     }
 

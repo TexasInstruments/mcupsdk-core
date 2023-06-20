@@ -81,9 +81,10 @@
  */
 
 /* Size of buffer for storing conversion results */
-#define RESULTS_BUFFER_SIZE     1024
+#define RESULTS_BUFFER_SIZE     1024*16
 /* Event queue to be used for EDMA transfer */
-#define EDMA_TEST_EVT_QUEUE_NO  0U
+#define EDMA_TEST_EVT_QUEUE_NO_0  0U
+#define EDMA_TEST_EVT_QUEUE_NO_1  1U
 
 /* DMA channel number to transfer ADC1 and ADC2 conversion results*/
 /* the following channels will be used for empty transaction to comply to errata i2355
@@ -110,7 +111,7 @@ uint32_t gAdc2baseAddr = CONFIG_ADC2_BASE_ADDR;
 /* Function Prototypes */
 uint16_t App_dmaConfigure(const uint16_t *table, uint16_t table_size,
         EDMA_Handle dma_handle, uint32_t dma_ch,
-        uint32_t adc_base, uint32_t *tccAlloc);
+        uint32_t adc_base, uint32_t *tccAlloc, uint32_t event_queue_number);
 static void App_adcISR(void *args);
 static void App_dmach0ISR(Edma_IntrHandle intrHandle, void *args);
 
@@ -153,10 +154,10 @@ void adc_soc_continuous_dma_main(void *args)
 
     /* Configure DMA channels to transfer both ADC results */
     App_dmaConfigure(gAdc1DataBuffer, RESULTS_BUFFER_SIZE, gEdmaHandle[0],
-                ADC1_EDMA_CHANNEL, CONFIG_ADC1_RESULT_BASE_ADDR, &tccAlloc0);
+                ADC1_EDMA_CHANNEL, CONFIG_ADC1_RESULT_BASE_ADDR, &tccAlloc0, EDMA_TEST_EVT_QUEUE_NO_0);
 
     App_dmaConfigure(gAdc2DataBuffer, RESULTS_BUFFER_SIZE, gEdmaHandle[0],
-                ADC2_EDMA_CHANNEL, CONFIG_ADC2_RESULT_BASE_ADDR, &tccAlloc1);
+                ADC2_EDMA_CHANNEL, CONFIG_ADC2_RESULT_BASE_ADDR, &tccAlloc1, EDMA_TEST_EVT_QUEUE_NO_1);
 
     /* Register interrupt */
     intrObj.tccNum = tccAlloc0;
@@ -215,7 +216,7 @@ void adc_soc_continuous_dma_main(void *args)
 uint16_t App_dmaConfigure(
         const uint16_t *table, uint16_t table_size,
         EDMA_Handle dma_handle, uint32_t dma_ch,
-        uint32_t adc_base, uint32_t *tccAlloc)
+        uint32_t adc_base, uint32_t *tccAlloc, uint32_t event_queue_number)
 {
 
     uint32_t            baseAddr, regionId;
@@ -265,7 +266,7 @@ uint16_t App_dmaConfigure(
 
     /* Request channel */
     EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-         empty_dmaCh, empty_tcc, empty_param, EDMA_TEST_EVT_QUEUE_NO);
+         empty_dmaCh, empty_tcc, empty_param, event_queue_number);
 
     /* Program Param Set */
     EDMA_ccPaRAMEntry_init(&empty_edmaParam);
@@ -293,7 +294,7 @@ uint16_t App_dmaConfigure(
     EDMA_setPaRAM(baseAddr, empty_param, &empty_edmaParam);
 
     EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
-            dmaCh, tcc, param, EDMA_TEST_EVT_QUEUE_NO);
+            dmaCh, tcc, param, event_queue_number);
 
     /* Program Param Set */
     EDMA_ccPaRAMEntry_init(&edmaParam);
