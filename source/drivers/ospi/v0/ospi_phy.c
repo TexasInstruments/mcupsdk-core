@@ -32,6 +32,7 @@
 
 #include <string.h>
 #include <drivers/ospi.h>
+#include <drivers/ospi/v0/cslr_ospi.h>
 #include <drivers/hw_include/cslr.h>
 
 #define OSPI_PHY_INIT_RD_DELAY (0U)

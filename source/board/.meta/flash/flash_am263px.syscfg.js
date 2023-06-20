@@ -6,9 +6,9 @@ let supported_nor_spi_drivers = [
     },
 ];
 
-let defaultFlashConfig = system.getScript("/board/flash/S28HS512T.json");
+let defaultFlashConfig = system.getScript("/board/flash/IS25LX256.json");
 
-let defaultFlashConfigLP = system.getScript("/board/flash/S25HL512T.json");
+let defaultFlashConfigLP = system.getScript("/board/flash/IS25LX256.json");
 
 function getDriverOptions()
 {
@@ -23,9 +23,9 @@ function getDefaultDriver()
 function getDefaultFlashName()
 {
     if(system.deviceData.device == "AM263Px") {
-        return "S28HS512T";
+        return "IS25LX256";
     } else {
-        return "S25HL512T";
+        return "IS25LX256";
     }
 }
 
@@ -41,7 +41,7 @@ function getDefaultFlashConfig()
 function getDefaultProtocol()
 {
     if(system.deviceData.device == "AM263Px") {
-        return { name : "8d_8d_8d", displayName : "8D-8D-8D" };
+        return { name : "1s_1s_8s", displayName : "1S-1S-8D" };
     } else {
         return { name : "4s_4d_4d", displayName : "4S-4D-4D" };
     }
@@ -50,7 +50,7 @@ function getDefaultProtocol()
 function getDefaultProtocolJson()
 {
     if(system.deviceData.device == "AM263Px") {
-        return "p888d";
+        return "p118";
     } else {
         return "p444d";
     }

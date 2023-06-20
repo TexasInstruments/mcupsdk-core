@@ -1,0 +1,64 @@
+%%{
+    var common = system.getScript("/common");
+    var soc = system.getScript(`/optiflash/soc/optiflash_${common.getSocName()}`);
+    var driverVer = soc.getDriverVer("rl2");
+    var module = system.modules['/optiflash/RL2/RL2'];
+    var selfCoreName = common.getSelfSysCfgCoreName();
+    var baseaddress = 0;
+    switch(selfCoreName)
+    {
+        case 'r5fss0-0':
+            baseaddress = 'CSL_RL2_REGS_R5SS0_CORE0_U_BASE';
+            break;
+        case 'r5fss0-1':
+            baseaddress = 'CSL_RL2_REGS_R5SS0_CORE1_U_BASE';
+            break;
+        case 'r5fss1-0':
+            baseaddress = 'CSL_RL2_REGS_R5SS1_CORE0_U_BASE';
+            break;
+        case 'r5fss1-1':
+            baseaddress = 'CSL_RL2_REGS_R5SS1_CORE1_U_BASE';
+            break;
+        default:
+            baseaddress = 'CSL_RL2_REGS_R5SS1_CORE1_U_BASE';
+    };
+%%}
+
+/*
+ *   RL2
+ */
+
+RL2_Params gRL2Config[] =
+{
+% for(var j = 0; j < module.$instances.length; j++)
+% {
+    % let instance = module.$instances[j];
+    % if(instance.enable === true) {
+    {
+        .rangeStart     = `instance.rangeStart`,
+        .rangeEnd       = `instance.rangeEnd`,
+        .cacheSize      = `instance.cacheSize`,
+        .l2Sram0Base    = `instance.l2Sram0Base`,
+        .l2Sram0Len     = `instance.l2Sram0Len`,
+        .l2Sram1Base    = `instance.l2Sram1Base`,
+        .l2Sram1Len     = `instance.l2Sram1Len`,
+        .l2Sram2Base    = `instance.l2Sram2Base`,
+        .l2Sram2Len     = `instance.l2Sram2Len`,
+        .baseAddress    = `baseaddress`
+    },
+    %}
+% }
+};
+
+void Drivers_Rl2Open()
+{
+    for(uint32_t i = 0; i < sizeof(gRL2Config)/sizeof(gRL2Config[0]); i++)
+    {
+        RL2_configure(&(gRL2Config[i]));
+    }
+}
+
+void Drivers_Rl2Close()
+{
+
+}

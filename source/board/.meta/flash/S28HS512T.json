@@ -86,7 +86,8 @@
         "cmd": "0x9F",
         "numBytes": 3,
         "dummy4": 0,
-        "dummy8": 0
+        "dummy8": 4,
+        "addressBytesSize": 4
     },
     "xspiWipRdCmd": "0x65",
     "xspiWipReg": "0x00800000",

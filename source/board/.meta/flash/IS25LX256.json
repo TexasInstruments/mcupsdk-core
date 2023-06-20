@@ -1,0 +1,73 @@
+{
+  "flashSize": 33554432,
+  "flashPageSize": 256,
+  "flashManfId": "0x9D",
+  "flashDeviceId": "0x5A19",
+  "flashBlockSize": 131072,
+  "flashSectorSize": 4096,
+  "cmdBlockErase3B": "0xD8",
+  "cmdBlockErase4B": "0xDC",
+  "cmdSectorErase3B": "0x20",
+  "cmdSectorErase4B": "0x21",
+  "protos": {
+    "p111": {
+      "isDtr": false,
+      "cmdRd": "0x03",
+      "cmdWr": "0x02",
+      "modeClksCmd": 0,
+      "modeClksRd": 0,
+      "dummyClksCmd": 0,
+      "dummyClksRd": 0,
+      "enableType": "0",
+      "enableSeq": "0x00",
+      "dummyCfg": null,
+      "protoCfg": null,
+      "strDtrCfg": null
+    },
+    "p112": null,
+    "p114": null,
+    "p118": {
+      "isDtr": false,
+      "cmdRd": "0x7C",
+      "cmdWr": "0x84",
+      "modeClksCmd": 0,
+      "modeClksRd": 0,
+      "dummyClksCmd": 0,
+      "dummyClksRd": 12,
+      "enableType": "0",
+      "enableSeq": "0x00",
+      "dummyCfg": null,
+      "protoCfg": null,
+      "strDtrCfg": null
+    },
+    "p444s": null,
+    "p444d": null,
+    "p888s": null,
+    "p888d": null,
+    "pCustom": {
+      "fxn": null
+    }
+  },
+  "addrByteSupport": "1",
+  "fourByteAddrEnSeq": "0x22",
+  "cmdExtType": "REPEAT",
+  "resetType": "0x30",
+  "deviceBusyType": "0",
+  "cmdWren": "0x06",
+  "cmdRdsr": "0x05",
+  "srWip": 0,
+  "srWel": 1,
+  "cmdChipErase": "0xC7",
+  "rdIdSettings": {
+    "cmd": "0x9F",
+    "numBytes": 5,
+    "dummy4": 0,
+    "dummy8": 8,
+    "addressBytesSize": 0
+  },
+  "xspiWipRdCmd": "0x05",
+  "xspiWipReg": "0x00000000",
+  "xspiWipBit": 0,
+  "flashDeviceBusyTimeout": 72000000,
+  "flashPageProgTimeout": 120
+}

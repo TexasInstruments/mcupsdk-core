@@ -2,7 +2,7 @@ let path = require('path');
 
 const files_r5f = {
     common: [
-        "AddrTranslateP_null.c",
+        "AddrTranslateP_32bit.c",
         "boot_armv7r.c",
         "DebugP_shmLogWriter.c",
 		"DebugP_shmLogReader.c",
@@ -26,7 +26,6 @@ const files_r5f = {
         "HeapP_internal.c",
         "printf.c",
         "QueueP_nortos.c",
-        "AddrTranslateP.c",
         "PmuP_armv7r.c",
     ]
 };

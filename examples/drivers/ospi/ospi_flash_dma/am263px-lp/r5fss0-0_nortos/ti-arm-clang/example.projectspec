@@ -4,7 +4,7 @@
         <when>
             <context
                 deviceFamily="ARM"
-                deviceId="Cortex R.AM263P_ALX"
+                deviceId="Cortex R.AM263Px"
             />
         </when>
     </applicability>
@@ -14,13 +14,13 @@
         name = "ospi_flash_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-                Debug,
-                Release,
+            Release,
+            Debug,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
         cgtVersion="2.1.2"
-        device="Cortex R.AM263P_ALX"
+        device="Cortex R.AM263Px"
         deviceCore="MAIN_PULSAR_Cortex_R5_0_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
@@ -57,7 +57,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part ALX --package ALX
+            --context r5fss0-0 --part AM263P2 --package ZCZ_S
         "
 
         description="A Ospi Flash Dma NORTOS project">
@@ -87,7 +87,7 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../ospi_flash_dma.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../ospi_flash_dma.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

@@ -38,6 +38,7 @@
  */
 
 #include <drivers/ospi.h>
+#include <drivers/ospi/v0/cslr_ospi.h>
 #include <drivers/hw_include/cslr.h>
 #include <kernel/dpl/ClockP.h>
 

@@ -76,7 +76,7 @@ const driverVer = {
     },
     "watchdog": {
         version: "v0",
-    },
+    }
 };
 
 const topModules_main = [
@@ -104,7 +104,7 @@ const topModules_main = [
     "/drivers/rti/rti",
     "/drivers/sdfm/sdfm",
     "/drivers/uart/uart",
-    "/drivers/watchdog/watchdog",
+    "/drivers/watchdog/watchdog"
 ];
 
 const topModules_mcu = [

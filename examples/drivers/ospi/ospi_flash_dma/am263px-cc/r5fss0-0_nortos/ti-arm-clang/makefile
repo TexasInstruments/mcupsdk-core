@@ -30,12 +30,6 @@ BOOTIMAGE_NAME_SIGNED:=ospi_flash_dma.$(PROFILE).appimage.signed
 BOOTIMAGE_RPRC_NAME:=ospi_flash_dma.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=ospi_flash_dma.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ospi_flash_dma.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ospi_flash_dma.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ospi_flash_dma.$(PROFILE).appimage.hs_fs
-TARGETS := $(BOOTIMAGE_NAME)
-ifeq ($(DEVICE_TYPE), HS)
-   TARGETS += $(BOOTIMAGE_NAME_HS)
-endif
 
 FILES_common := \
 	ospi_flash_dma.c \
@@ -156,7 +150,7 @@ $(OBJDIR)/%.obj %.obj: %.S
 	@echo  Compiling: am263px:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
-all: $(TARGETS)
+all: $(BOOTIMAGE_NAME)
 
 SYSCFG_GEN_FILES=generated/ti_drivers_config.c generated/ti_drivers_config.h
 SYSCFG_GEN_FILES+=generated/ti_drivers_open_close.c generated/ti_drivers_open_close.h
@@ -179,8 +173,6 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
-	$(RM) $(BOOTIMAGE_NAME_HS)
-	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
 	$(RMDIR) generated/
@@ -218,10 +210,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part ALV --package ALV --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P1 --package ZCZ_C --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px_ALV_beta --context r5fss0-0 --part ALV --package ALV --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P1 --package ZCZ_C --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -236,19 +228,16 @@ else
 endif
 BOOTIMAGE_TEMP_OUT_FILE=temp_stdout_$(PROFILE).txt
 
-BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
 
-BOOTIMAGE_CORE_ID_r5fss0-0 = 4
-BOOTIMAGE_CORE_ID_r5fss0-1 = 5
-BOOTIMAGE_CORE_ID_r5fss1-0 = 6
-BOOTIMAGE_CORE_ID_r5fss1-1 = 7
-BOOTIMAGE_CORE_ID_m4fss0-0 = 14
-SBL_RUN_ADDRESS=0x70000000
+BOOTIMAGE_CORE_ID_r5fss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-1 = 1
+BOOTIMAGE_CORE_ID_r5fss1-0 = 2
+BOOTIMAGE_CORE_ID_r5fss1-1 = 3
+SBL_RUN_ADDRESS=0x70002000
 SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -273,27 +262,9 @@ endif
 	$(XIPGEN_CMD) -i $(BOOTIMAGE_RPRC_NAME_TMP) -o $(BOOTIMAGE_RPRC_NAME) -x $(BOOTIMAGE_RPRC_NAME_XIP) --flash-start-addr 0x60000000 -v > $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME) $(MULTI_CORE_IMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-# Sign the appimage for HS-FS using appimage signing script
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
-	@echo  .
 
-$(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
-ifeq ($(DEVICE_TYPE), HS)
-# Sign the appimage using appimage signing script
-ifeq ($(ENC_ENABLED),no)
-	@echo Boot image signing: Encryption is disabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
-else
-	@echo Boot image signing: Encryption is enabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_HS)
-	$(RM) $(BOOTIMAGE_NAME)-enc
-endif
-	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  .
-endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))

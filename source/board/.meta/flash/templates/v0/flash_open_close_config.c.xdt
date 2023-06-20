@@ -64,8 +64,9 @@ Flash_DevConfig gFlashDevCfg_`config.fname` =
     .idCfg = {
         .cmd = 0x9F, /* Constant */
         .numBytes = 3,
-        .dummy4 = 0,
-        .dummy8 = 0,
+        .dummy4 = `config.dummyId4`,
+        .dummy8 = `config.dummyId8`,
+        .addrSize = `config.rdIdAddressSzieInBytes`
     },
     .protocolCfg = {
         .protocol = FLASH_CFG_PROTO_`config.protocol.toUpperCase()`,

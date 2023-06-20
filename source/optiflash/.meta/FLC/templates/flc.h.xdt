@@ -1,0 +1,8 @@
+%%{
+    let module = system.modules['/optflash/FLC/FLC'];
+%%}
+/*
+ * Optiflash: FLC
+ */
+#include <drivers/optiflash.h>
+

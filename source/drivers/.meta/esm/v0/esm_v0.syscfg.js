@@ -68,7 +68,7 @@ let esm_module = {
  */
 function moduleInstances(inst) {
     let modInstances = new Array();
-    
+
     let maxNotifier = getMaxNotifier(inst);
     modInstances.push({
         name: "esmNotifier",

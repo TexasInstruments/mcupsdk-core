@@ -1,0 +1,19 @@
+%%{
+
+    var common = system.getScript("/common");
+    var soc = system.getScript(`/optiflash/soc/optiflash_${common.getSocName()}`);
+    var driverVer = soc.getDriverVer("rat");
+%%}
+
+/**
+ * OpTI-Flash: RAT
+ *
+ */
+
+#include <drivers/optiflash.h>
+#include <kernel/dpl/AddrTranslateP.h>
+
+extern AddrTranslateP_Params gRatConfig;
+
+void Drivers_RatOpen();
+void Drivers_RatClose();

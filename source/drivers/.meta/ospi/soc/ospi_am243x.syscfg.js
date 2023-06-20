@@ -12,8 +12,8 @@ const ospi_config_r5fss = [
         baudRateDiv     : 4,
         intrNum         : 171,
         clockIds        : [ "TISCI_DEV_FSS0", "TISCI_DEV_FSS0_FSAS_0", "TISCI_DEV_FSS0_OSPI_0" ],
-        clockFrequencies: [ 
-            { 
+        clockFrequencies: [
+            {
                 moduleId: "TISCI_DEV_FSS0_OSPI_0",
                 clkId   : "TISCI_DEV_FSS0_OSPI_0_OSPI_RCLK_CLK",
                 clkRate : ospi_input_clk_freq,
@@ -51,11 +51,57 @@ function getDmaRestrictedRegions() {
     return ospi_dma_restrict_regions;
 }
 
+function addModuleInstances(instance) {
+    let modInstances = new Array();
+
+    if(instance.dmaEnable == true) {
+        modInstances.push({
+            name: "udmaDriver",
+            displayName: "UDMA Configuration",
+            moduleName: "/drivers/udma/udma",
+        });
+    }
+
+    return modInstances;
+}
+
+let ospi_module_name = "/drivers/ospi/ospi";
+
+function getTemplates()
+{
+    return {
+        "/drivers/system/system_config.c.xdt": {
+            driver_config: "/drivers/ospi/templates/ospi_config.c.xdt",
+            driver_init: "/drivers/ospi/templates/ospi_init.c.xdt",
+            driver_deinit: "/drivers/ospi/templates/ospi_deinit.c.xdt",
+        },
+        "/drivers/system/system_config.h.xdt": {
+            driver_config: "/drivers/ospi/templates/ospi.h.xdt",
+        },
+        "/drivers/system/drivers_open_close.c.xdt": {
+            driver_open_close_config: "/drivers/ospi/templates/ospi_open_close_config.c.xdt",
+            driver_open: "/drivers/ospi/templates/ospi_open.c.xdt",
+            driver_close: "/drivers/ospi/templates/ospi_close.c.xdt",
+        },
+        "/drivers/system/drivers_open_close.h.xdt": {
+            driver_open_close_config: "/drivers/ospi/templates/ospi_open_close.h.xdt",
+        },
+        "/drivers/pinmux/pinmux_config.c.xdt": {
+            moduleName: ospi_module_name,
+        },
+        "/drivers/system/power_clock_config.c.xdt": {
+            moduleName: ospi_module_name,
+        },
+    };
+}
+
 exports = {
     getDefaultConfig,
     getConfigArr,
     getDmaRestrictedRegions,
     getSupportedDataLines,
+    addModuleInstances,
+    getTemplates
 };
 
 

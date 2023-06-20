@@ -53,6 +53,11 @@ FILES_common := \
     mcspi_v0.c \
     mdio_v0.c \
     mmcsd_v1.c \
+    ospi_dma.c \
+    ospi_dma_edma.c \
+    ospi_nor_flash.c \
+    ospi_phy.c \
+    ospi_v0.c \
     pinmux.c \
     pmu.c \
     pruicss_m_v0.c \
@@ -70,6 +75,8 @@ FILES_common := \
     uart_v0.c \
     watchdog_rti.c \
     watchdog_soc.c \
+    rl2.c \
+    flc.c \
 
 ASMFILES_common := \
     csl_arm_r5_pmu.S \
@@ -105,6 +112,10 @@ FILES_PATH_common = \
     mcspi/v0/dma/edma \
     mdio/v0 \
     mmcsd/v1 \
+    ospi \
+    ospi/v0 \
+    ospi/v0/dma \
+    ospi/v0/dma/edma \
     pmu \
     pmu/r5f \
     resolver/v0 \
@@ -119,6 +130,8 @@ FILES_PATH_common = \
     uart/v0/dma \
     uart/v0/dma/edma \
     watchdog/v0 \
+    optiflash/v0/flc \
+    optiflash/v0/rl2 \
     pmu \
     pmu/r5f \
 

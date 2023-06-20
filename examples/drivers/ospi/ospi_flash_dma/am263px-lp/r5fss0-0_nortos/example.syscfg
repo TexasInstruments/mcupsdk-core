@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
  */
 
@@ -10,8 +10,6 @@
  */
 const flash      = scripting.addModule("/board/flash/flash", {}, false);
 const flash1     = flash.addInstance();
-const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1      = udma.addInstance();
 const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -27,14 +25,20 @@ flash1.$name                         = "CONFIG_FLASH0";
 flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
 flash1.peripheralDriver.inputClkFreq = 100000000;
 flash1.peripheralDriver.phyEnable    = true;
+flash1.peripheralDriver.dmaEnable    = true;
 
-udma1.$name                       = "CONFIG_UDMA0";
-udma1.udmaBlkCopyChannel.create(1);
-udma1.udmaBlkCopyChannel[0].$name = "CONFIG_UDMA_BLKCOPY_CH0";
+const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                        = edma.addInstance({}, false);
+edma1.$name                        = "CONFIG_EDMA0";
+flash1.peripheralDriver.edmaDriver = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM4";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM5";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM6";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM7";
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_LOG";
-debug_log.uartLog.UART.$assign = "USART0";
+debug_log.uartLog.UART.$assign = "UART0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -62,11 +66,17 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "P20";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "L20";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "N19";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "L21";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "N20";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "L19";
-debug_log.uartLog.UART.RXD.$suggestSolution        = "B10";
-debug_log.uartLog.UART.TXD.$suggestSolution        = "B11";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "EPWM12_B";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "EPWM12_A";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+debug_log.uartLog.UART.$suggestSolution            = "UART0";
+debug_log.uartLog.UART.RXD.$suggestSolution        = "MMC0_CLK";
+debug_log.uartLog.UART.TXD.$suggestSolution        = "MMC0_CMD";

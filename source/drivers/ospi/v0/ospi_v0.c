@@ -44,6 +44,7 @@
 /* This is needed for memset/memcpy */
 #include <string.h>
 #include <drivers/ospi.h>
+#include <drivers/ospi/v0/cslr_ospi.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/CacheP.h>
@@ -183,7 +184,7 @@ static OSPI_DrvObj gOspiDrvObj =
 };
 
 /** \brief LUT table for log2 calculation using DeBruijn sequence */
-static const uint8_t gTable[32] = 
+static const uint8_t gTable[32] =
 {
     0, 9, 1, 10, 13, 21, 2, 29, 11, 14, 16, 18, 22, 25, 3, 30,
     8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
@@ -1121,7 +1122,7 @@ int32_t OSPI_readCmd(OSPI_Handle handle, OSPI_ReadCmdParams *rdParams)
         /* do nothing */
     }
 
-    if(rdParams->cmdAddr != OSPI_CMD_INVALID_ADDR)
+    if(rdParams->cmdAddr != OSPI_CMD_INVALID_ADDR && rdParams->numAddrBytes > 0)
     {
         /* Enable Command address in command control register */
         CSL_REG32_FINS(&pReg->FLASH_CMD_CTRL_REG, OSPI_FLASH_CFG_FLASH_CMD_CTRL_REG_ENB_COMD_ADDR_FLD, TRUE);
@@ -1396,6 +1397,28 @@ int32_t OSPI_writeCmd(OSPI_Handle handle, OSPI_WriteCmdParams *wrParams)
 int32_t OSPI_writeDirect(OSPI_Handle handle, OSPI_Transaction *trans)
 {
     /* Direct write is not supported in the xSPI, will implement this when suitable flash comes */
+       int32_t status = SystemP_SUCCESS;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    // OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+    const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
+
+    uint8_t *pSrc;
+    uint8_t *pDst;
+    uint32_t addrOffset;
+
+    addrOffset = trans->addrOffset;
+    pSrc = (uint8_t *) trans->buf;
+
+    /* Enable Direct Access Mode */
+    CSL_REG32_FINS(&pReg->CONFIG_REG, OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD, 1);
+    CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0x04000000);
+
+    pDst = (uint8_t *)(attrs->dataBaseAddr + addrOffset);
+
+
+    memcpy(pDst, pSrc, trans->count);
+
+    return status;
     return SystemP_SUCCESS;
 }
 

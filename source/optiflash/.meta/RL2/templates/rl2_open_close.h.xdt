@@ -1,0 +1,19 @@
+%%{
+
+    var common = system.getScript("/common");
+    var soc = system.getScript(`/optiflash/soc/optiflash_${common.getSocName()}`);
+    var driverVer = soc.getDriverVer("rl2");
+%%}
+
+/**
+ * OpTI-Flash
+ *
+ */
+
+#define DRV_VERSION_OPTIFLASH_`(""+driverVer).toUpperCase()` 1
+#include <drivers/optiflash.h>
+
+extern RL2_Params gRL2Config[];
+
+void Drivers_Rl2Open();
+void Drivers_Rl2Close();

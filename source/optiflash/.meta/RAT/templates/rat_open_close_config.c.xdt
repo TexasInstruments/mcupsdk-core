@@ -1,0 +1,58 @@
+%%{
+    var common = system.getScript("/common");
+    var soc = system.getScript(`/optiflash/soc/optiflash_${common.getSocName()}`);
+    var driverVer = soc.getDriverVer("rat");
+    var module = system.modules['/optiflash/RAT/RAT'];
+    var selfCoreName = common.getSelfSysCfgCoreName();
+    var baseaddress = 0;
+    switch(selfCoreName)
+    {
+        case 'r5fss0-0':
+            baseaddress = 'CSL_RL2_REGS_R5SS0_CORE0_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20';
+            break;
+        case 'r5fss0-1':
+            baseaddress = 'CSL_RL2_REGS_R5SS0_CORE1_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20';
+            break;
+        case 'r5fss1-0':
+            baseaddress = 'CSL_RL2_REGS_R5SS1_CORE0_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20';
+            break;
+        case 'r5fss1-1':
+            baseaddress = 'CSL_RL2_REGS_R5SS1_CORE1_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20';
+            break;
+        default:
+            baseaddress = 'CSL_RL2_REGS_R5SS1_CORE1_U_BASE + CSL_RL2_OF_R5FSS0_CORE0_RAT_CTL(0) - 0x20';
+    };
+%%}
+
+/*
+ *   RAT
+ */
+static AddrTranslateP_RegionConfig ratRegions[] =
+{
+% for(var j = 0; j < module.$instances.length; j++)
+% {
+    % let instance = module.$instances[j];
+    {
+        .systemAddr = `instance.translatedAddress`,
+        .localAddr = `instance.baseAddress`,
+        .size = `instance.size`
+    },
+% }
+};
+
+AddrTranslateP_Params gRatConfig =
+{
+    .numRegions     = `module.$instances.length`,
+    .ratBaseAddr    = `baseaddress`,
+    .regionConfig   = ratRegions
+};
+
+void Drivers_RatOpen()
+{
+    AddrTranslateP_init(&gRatConfig);
+}
+
+void Drivers_RatClose()
+{
+
+}

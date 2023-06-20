@@ -810,13 +810,12 @@ static int32_t Flash_norOspiReadId(Flash_Config *config)
     uint32_t cmdAddr = OSPI_CMD_INVALID_ADDR;
     uint32_t dummyBits = 0;
     uint32_t idNumBytes = 3;
-    uint32_t numAddrBytes = 0;
+    uint32_t numAddrBytes = idCfg->addrSize;
 
     if(obj->currentProtocol == FLASH_CFG_PROTO_8D_8D_8D)
     {
-        dummyBits = 4;
+        dummyBits = idCfg->dummy8;
         cmdAddr = 0U;
-        numAddrBytes = obj->numAddrBytes;
         idNumBytes = 4; /* Can't read odd bytes in octal DDR */
     }
     else

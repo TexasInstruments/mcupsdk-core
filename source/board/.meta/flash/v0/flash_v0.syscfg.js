@@ -683,6 +683,12 @@ let flash_module = {
                             default: soc.getDefaultFlashConfig().rdIdSettings.cmd,
                         },
                         {
+                            name: "rdIdAddressSzieInBytes",
+                            displayName: "Address Size (bytes)",
+                            description: "Number of address bytes that is required to be sent while reading ID.",
+                            default: soc.getDefaultFlashConfig().rdIdSettings.addressBytesSize
+                        },
+                        {
                             name: "idNumBytes",
                             displayName: "Number Of Bytes To Read",
                             default: soc.getDefaultFlashConfig().rdIdSettings.numBytes,

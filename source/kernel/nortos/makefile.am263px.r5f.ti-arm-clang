@@ -16,7 +16,7 @@ ConfigName:=$(PROFILE)
 LIBNAME:=nortos.am263px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    AddrTranslateP_null.c \
+    AddrTranslateP_32bit.c \
     boot_armv7r.c \
     DebugP_shmLogWriter.c \
     DebugP_shmLogReader.c \
@@ -40,7 +40,6 @@ FILES_common := \
     HeapP_internal.c \
     printf.c \
     QueueP_nortos.c \
-    AddrTranslateP.c \
     PmuP_armv7r.c \
 
 ASMFILES_common := \

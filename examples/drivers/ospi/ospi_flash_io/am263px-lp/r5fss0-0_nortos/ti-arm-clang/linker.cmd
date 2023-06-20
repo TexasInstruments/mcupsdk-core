@@ -19,7 +19,7 @@
  * - Here interrupt nesting is enabled
  * - This is the stack used by ISRs registered as type IRQ
  * In FreeRTOS,
- * - Here interrupt nesting is disabled
+ * - Here interrupt nesting is enabled
  * - This is stack that is used initally when a IRQ is received
  * - But then the mode is switched to SVC mode and SVC stack is used for all user ISR callbacks
  * - Hence in FreeRTOS, IRQ stack size is less and SVC stack size is more
@@ -47,18 +47,19 @@ SECTIONS
         .text.mpu: palign(8)
         .text.boot: palign(8)
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
-    } > MSRAM
+    } > OCRAM
 
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .text:   {} palign(8)   /* This is where code resides */
         .rodata: {} palign(8)   /* This is where const's go */
-    } > MSRAM
+    } > OCRAM
 
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
+
         .data:   {} palign(8)   /* This is where initialized globals and static go */
-    } > MSRAM
+    } > OCRAM
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
@@ -67,7 +68,7 @@ SECTIONS
         RUN_END(__BSS_END)
         .sysmem: {} palign(8)   /* This is where the malloc heap goes */
         .stack:  {} palign(8)   /* This is where the main() stack goes */
-    } > MSRAM
+    } > OCRAM
 
     /* This is where the stacks for different R5F modes go */
     GROUP {
@@ -86,14 +87,14 @@ SECTIONS
         .undefinedstack: {. = . + __UNDEFINED_STACK_SIZE;} align(8)
         RUN_START(__UNDEFINED_STACK_START)
         RUN_END(__UNDEFINED_STACK_END)
-    } > MSRAM
+    } > OCRAM
 
     /* Sections needed for C++ projects */
     GROUP {
         .ARM.exidx:  {} palign(8)   /* Needed for C++ exception handling */
         .init_array: {} palign(8)   /* Contains function pointers called before main */
         .fini_array: {} palign(8)   /* Contains function pointers called after main */
-    } > MSRAM
+    } > OCRAM
 
     /* General purpose user shared memory, used in some examples */
     .bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM
@@ -101,48 +102,36 @@ SECTIONS
     .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
     /* this is used only when IPC RPMessage is enabled, else this is not used */
     .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
-    /* General purpose non cacheable memory, used in some examples */
-    .bss.nocache (NOLOAD) : {} > NON_CACHE_MEM
+    /* this is used only when Secure IPC is enabled */
+    .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
+    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
 }
-
-/*
-NOTE: Below memory is reserved for DMSC usage
- - During Boot till security handoff is complete
-   0x701E0000 - 0x701FFFFF (128KB)
- - After "Security Handoff" is complete (i.e at run time)
-   0x701F4000 - 0x701FFFFF (48KB)
-
- Security handoff is complete when this message is sent to the DMSC,
-   TISCI_MSG_SEC_HANDOVER
-
- This should be sent once all cores are loaded and all application
- specific firewall calls are setup.
-*/
 
 MEMORY
 {
     R5F_VECS  : ORIGIN = 0x00000000 , LENGTH = 0x00000040
     R5F_TCMA  : ORIGIN = 0x00000040 , LENGTH = 0x00007FC0
-    R5F_TCMB0 : ORIGIN = 0x41010000 , LENGTH = 0x00008000
-
-    /* memory segment used to hold CPU specific non-cached data, MAKE to add a MPU entry to mark this as non-cached */
-    NON_CACHE_MEM : ORIGIN = 0x70060000 , LENGTH = 0x8000
+    R5F_TCMB  : ORIGIN = 0x00080000 , LENGTH = 0x00008000
 
     /* when using multi-core application's i.e more than one R5F/M4F active, make sure
      * this memory does not overlap with other R5F's
      */
-    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x40000
+    OCRAM     : ORIGIN = 0x70040000 , LENGTH = 0x40000
 
     /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
      * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
      */
     FLASH     : ORIGIN = 0x60100000 , LENGTH = 0x80000
 
-    /* shared memory segments */
+
+    /* shared memories that are used by RTOS/NORTOS cores */
     /* On R5F,
      * - make sure there is a MPU entry which maps below regions as non-cache
      */
-    USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x180
-    LOG_SHM_MEM             : ORIGIN = 0x701D0000 + 0x180, LENGTH = 0x00004000 - 0x180
-    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D4000, LENGTH = 0x0000C000
-}
+    USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x00004000
+    LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
+    /* MSS mailbox memory is used as shared memory, we dont use bottom 32*12 bytes, since its used as SW queue by ipc_notify */
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x72000000, LENGTH = 0x3E80
+    MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
+    MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
+    }

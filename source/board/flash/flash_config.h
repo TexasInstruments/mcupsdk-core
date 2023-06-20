@@ -95,7 +95,7 @@ typedef struct
     uint8_t numBytes;
     uint8_t dummy4;
     uint8_t dummy8;
-
+    uint8_t addrSize;
 } FlashCfg_ReadIDConfig;
 
 typedef struct

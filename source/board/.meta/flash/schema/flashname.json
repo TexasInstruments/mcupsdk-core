@@ -72,7 +72,8 @@
         "numBytes": "<Number of bytes to read when reading JEDEC ID in decimal>",
         "dummyCycles1": "<Number of dummy cycles to use to read JEDEC ID in 1s mode>",
         "dummyCycles4": "<Number of dummy cycles to use to read JEDEC ID in quad mode>",
-        "dummyCycles8": "<Number of dummy cycles to use to read JEDEC ID in quad mode>"
+        "dummyCycles8": "<Number of dummy cycles to use to read JEDEC ID in quad mode>",
+        "addressBytesSize": "<Number of address bytes that are required to be sent max us 4>"
     },
     "flashDeviceBusyTimeout": "<Timeout in microseconds to wait for device busy bit>",
     "flashPageProgTimeout": "<Timeout in microseconds to wait for page program>"
