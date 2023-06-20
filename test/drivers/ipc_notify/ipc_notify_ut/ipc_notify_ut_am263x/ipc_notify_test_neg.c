@@ -63,7 +63,7 @@ void negTest_ipcNotifyUnregisterclient(void *args)
 
 	if (testStatus == SystemP_SUCCESS)
     {
-        if(IpcNotify_unregisterClient(localClientId) != SystemP_SUCCESS)
+        if(IpcNotify_unregisterClient(localClientId) != SystemP_FAILURE)
         {
             DebugP_log("ipc_notify_neg_Test: failure on line no. %d \n", __LINE__);
             testStatus = SystemP_FAILURE;
@@ -102,7 +102,7 @@ void negTest_ipcNotifywaitSync(void *args)
     {
         remoteCoreId = 5U;
         timeout = 1000;
-        if(IpcNotify_waitSync (remoteCoreId,timeout) != SystemP_FAILURE)
+        if(IpcNotify_waitSync(remoteCoreId,timeout) != SystemP_FAILURE)
 
         {
             teststatus1 = SystemP_FAILURE;
@@ -165,7 +165,7 @@ void negTest_ipcNotifysendMsgOne(void *args)
     uint32_t waitForFifoNotFull = 1U;
     if (testStatus == SystemP_SUCCESS)
     {
-        if(IpcNotify_sendMsg(remoteCoreId,gServerClientId,msgValue,waitForFifoNotFull) != SystemP_FAILURE)
+        if(IpcNotify_sendMsg(remoteCoreId,gServerClientId,msgValue,waitForFifoNotFull) != SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
              DebugP_log("ipc_notify_neg_Test: failure on line no. %d \n", __LINE__);
@@ -194,7 +194,7 @@ void negTest_ipcNotifysendMsgWaitFifo(void *args)
             hwFifoFullCount++;
         }
     }
-    TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, testStatus);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
 }
 
 /* Negative test for IpcNotify_syncCallback API with invalid remotecoreID */
@@ -230,5 +230,4 @@ void test_neg_main(void *args)
 
     UNITY_END();
     Drivers_close();
-
 }

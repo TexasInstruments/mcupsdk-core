@@ -76,6 +76,8 @@ IpcRpmsg_Ctrl *msg_ctrl;
 RPMessage_Struct *structT;
 RPMessage_Object handle;
 
+RPMessage_CreateParams *createParams;
+
 /*Test for dynamic coverage of RPMessage_destruct API */
 void posTest_RPMessage_destruct(void *args)
 {
@@ -272,6 +274,142 @@ void posTest_RPMessage_send_mcdcSix(void *args)
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_FAILURE);
 }
 
+/* Postive test case for RPMessage_unblock API with obj as NULL */
+void posTest_RPMessage_unblock(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    if (testStatus == SystemP_SUCCESS)
+    {
+        RPMessage_unblock(NULL);
+    }
+    else
+    {
+        testStatus = SystemP_FAILURE;
+        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_construct API with obj as NULL */
+void posTest_RPMessage_construct(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(RPMessage_construct(NULL, createParams) != SystemP_FAILURE)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_construct API with createParams as NULL*/
+void posTest_RPMessage_construct_one(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    RPMessage_Object handle;
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(RPMessage_construct(&handle, NULL) != SystemP_FAILURE)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_destruct API with obj as NULL*/
+void posTest_RPMessage_destruct_one(void *args)
+{
+    int32_t testStatus = SystemP_SUCCESS;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        RPMessage_destruct(NULL);
+    }
+    else{
+        testStatus = SystemP_FAILURE;
+        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_Params_init API with params as NULL*/
+void posTest_RPMessage_Params_init(void *args)
+{
+    int32_t testStatus = SystemP_SUCCESS;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        RPMessage_Params_init(NULL);
+    }
+    else{
+        testStatus = SystemP_FAILURE;
+        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_announce API with valid parameters*/
+void posTest_RPMessage_announce(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    uint16_t remoteCoreId = 1U;
+    uint16_t localEndPt = 63U;
+    char n = 'Z';
+    char* name = &n;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(RPMessage_announce(remoteCoreId, localEndPt, name) != SystemP_SUCCESS)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_announce API with localEndPt as invalid */
+void posTest_RPMessage_announce_one(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    uint16_t remoteCoreId = 1U;
+    uint16_t localEndPt = 65U;
+    char n = 'Z';
+    char* name = &n;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(RPMessage_announce(remoteCoreId, localEndPt, name) != SystemP_FAILURE)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Postive test case for RPMessage_announce API with char *name as NULL */
+void posTest_RPMessage_announce_two(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    uint16_t remoteCoreId = 1U;
+    uint16_t localEndPt = 63U;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(RPMessage_announce(remoteCoreId, localEndPt, NULL) != SystemP_FAILURE)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
 /*Test for dynamic coverage of RPMessage_send API with a dataLen around 1200*/
 void posTest_RPMessage_send_datalen(void *args)
 {
@@ -308,6 +446,14 @@ void test_pos_main(void *args)
     RUN_TEST(posTest_RPMessage_send_mcdcFive, 10622, NULL);
     RUN_TEST(posTest_RPMessage_send_mcdcSix, 10623, NULL);
     RUN_TEST(posTest_RPMessage_send_datalen, 10718, NULL);
+	RUN_TEST(posTest_RPMessage_unblock, 10929, NULL);
+    RUN_TEST(posTest_RPMessage_construct, 10930, NULL);
+    RUN_TEST(posTest_RPMessage_construct_one, 10931, NULL);
+    RUN_TEST(posTest_RPMessage_destruct_one, 10932, NULL);
+    RUN_TEST(posTest_RPMessage_Params_init, 10933, NULL);
+    RUN_TEST(posTest_RPMessage_announce, 10934, NULL);
+    RUN_TEST(posTest_RPMessage_announce_one, 10935, NULL);
+    RUN_TEST(posTest_RPMessage_announce_two, 10936, NULL);
 
     UNITY_END();
     Drivers_close();

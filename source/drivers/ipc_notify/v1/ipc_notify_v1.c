@@ -60,6 +60,21 @@ typedef struct
 
 IpcNotify_Ctrl gIpcNotifyCtrl;
 
+/**
+ * \brief Callback that is invoked during initialization for a given client ID
+ *
+ * \param remoteCoreId  [in] Remote core that has sent the message
+ * \param localClientId [in] Local client ID to which the message is sent
+ * \param msgValue      [in] Message value that is sent
+ * \param args          [in] Argument pointer passed by user when \ref IpcNotify_registerClient is called
+ */
+void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
+
+/**
+ * \brief Callback to call when interrupt is received
+ */
+void IpcNotify_isr(void *args);
+
 static inline void IpcNotify_getWriteMailbox(uint32_t remoteCoreId, uint32_t *mailboxBaseAddr, uint32_t *intrBitPos, IpcNotify_SwQueue **swQ)
 {
     IpcNotify_MailboxConfig *pMailboxConfig;

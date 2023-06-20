@@ -243,6 +243,8 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_m4fss0_0[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_0,
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_A53SS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     }
 };
@@ -260,6 +262,9 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_0,
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_M4FSS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     },
     {
@@ -268,6 +273,12 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUP
         .numCores = 1U,  /* number of cores that send messages which tied to this interrupt line */
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_A53SS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     }
 };
@@ -285,6 +296,9 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_0,
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_M4FSS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     },
     {
@@ -293,6 +307,12 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
         .numCores = 1U,  /* number of cores that send messages which tied to this interrupt line */
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_A53SS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     }
 };
@@ -310,6 +330,9 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_0[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS0_1,
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_M4FSS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     },
     {
@@ -318,6 +341,12 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_0[IPC_NOFTIY_INTERRUP
         .numCores = 1U,  /* number of cores that send messages which tied to this interrupt line */
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_A53SS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     }
 };
@@ -335,6 +364,9 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_1[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS0_1,
             CSL_CORE_ID_R5FSS1_0,
             CSL_CORE_ID_M4FSS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     },
     {
@@ -343,6 +375,12 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_1[IPC_NOFTIY_INTERRUP
         .numCores = 1U,  /* number of cores that send messages which tied to this interrupt line */
         .coreIdList = { /* core ID's tied to this interrupt line */
             CSL_CORE_ID_A53SS0_0,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
+            CSL_CORE_ID_MAX,
         },
     }
 };

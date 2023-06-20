@@ -87,7 +87,7 @@ void negTest_RPMessage_recv(void *args)
         if(RPMessage_recv(obj, &data, &dataLen, &remoteCoreId, &remoteEndPt, SystemP_WAIT_FOREVER) == SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
-            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+            DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
         }
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
@@ -108,7 +108,7 @@ void negTest_RPMessage_recv(void *args)
         if(RPMessage_recv(obj, &data, &dataLen, &remoteCoreId, &remoteEndPt, 0) == SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
-            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+            DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
         }
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
@@ -129,7 +129,7 @@ void negTest_RPMessage_recv(void *args)
         if(RPMessage_recv(obj, &data, &dataLen, &remoteCoreId, &remoteEndPt, 0) == SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
-            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+            DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
         }
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
@@ -154,7 +154,7 @@ void negTest_RPMessage_send(void *args)
                     SystemP_WAIT_FOREVER) == SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
-            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+            DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
         }
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
@@ -172,7 +172,7 @@ void negTest_RPMessage_controlEndPtCallback(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -195,7 +195,7 @@ void negTest_RPMessage_controlEndPtHandler_dataLen(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -219,7 +219,7 @@ void negTest_RPMessage_controlEndPtHandler(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -241,7 +241,7 @@ void negTest_RPMessage_controlEndPtHandler_dataLen_Announce(void * args )
     else
     {
         testStatus = SystemP_FAILURE ;
-        DebugP_log ( "ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log ( "ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32 ( testStatus , SystemP_SUCCESS ) ;
 }
@@ -264,7 +264,7 @@ void negTest_RPMessage_send_localendpt(void *args)
                     SystemP_WAIT_FOREVER) == SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
-            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+            DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
         }
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
@@ -287,7 +287,7 @@ void negTest_RPMessage_notifyCallback(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -308,7 +308,7 @@ void negTest_RPMessage_notifyCallback_mcdcOne(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -331,7 +331,7 @@ void negTest_RPMessage_notifyCallback_mcdcTwo(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -351,7 +351,7 @@ void negTest_RPMessage_initOne(void *args)
         if( RPMessage_init(&rpmsgParams) != SystemP_SUCCESS)
         {
             testStatus = SystemP_FAILURE;
-            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+            DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
         }
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
@@ -369,7 +369,7 @@ void negTest_RPMessage_forceRecvMsgHandlers(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -386,7 +386,7 @@ void negTest_RPMessage_destruct(void *args)
     else
     {
         testStatus = SystemP_FAILURE;
-        DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log("ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -404,9 +404,25 @@ void negTest_RPMessage_allocEndPtMsg(void * args)
     else
     {
         testStatus = SystemP_FAILURE ;
-        DebugP_log ( "ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        DebugP_log ( "ipc_rpmsg_neg_Test: failure on line no. %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32 ( testStatus , SystemP_SUCCESS ) ;
+}
+
+/*Negative test case for dynamic coverage of params as NULL */
+void negTest_RPMessage_initTwo(void *args)
+{
+    int32_t testStatus = SystemP_SUCCESS;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if( RPMessage_init(NULL) != SystemP_SUCCESS)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("ipc_rpmsg_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
 void test_neg_main(void *args)
@@ -430,6 +446,7 @@ void test_neg_main(void *args)
     RUN_TEST(negTest_RPMessage_allocEndPtMsg, 10672, NULL);
     RUN_TEST(negTest_RPMessage_notifyCallback_mcdcOne, 10673, NULL);
     RUN_TEST(negTest_RPMessage_notifyCallback_mcdcTwo, 10674, NULL);
+    RUN_TEST(negTest_RPMessage_initTwo, 11077, NULL);
 
     UNITY_END();
     Drivers_close();

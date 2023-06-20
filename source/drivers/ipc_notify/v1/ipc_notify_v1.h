@@ -94,21 +94,6 @@ extern IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE
 void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *interruptConfigNum);
 
 /**
- * \brief Callback that is invoked during initialization for a given client ID
- *
- * \param remoteCoreId  [in] Remote core that has sent the message
- * \param localClientId [in] Local client ID to which the message is sent
- * \param msgValue      [in] Message value that is sent
- * \param args          [in] Argument pointer passed by user when \ref IpcNotify_registerClient is called
- */
-void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
-
-/**
- * \brief Callback to call when interrupt is received
- */
-void IpcNotify_isr(void *args);
-
-/**
  * \brief wait for approximatly 0.6usec as part of Mailbox Errata workaround.
  *
  * Note: This function is applicable for only AWR294x SOC.
@@ -120,4 +105,3 @@ void IpcNotify_wait(void);
 #endif
 
 #endif /* IPC_NOTIFY_V0_H_ */
-

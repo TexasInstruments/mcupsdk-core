@@ -38,9 +38,6 @@
  */
 #define IPC_NOTIFY_CLIENT_ID_SHIFT      (28U)
 
-void IpcNotify_isr(void *args);
-void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
-
 /*
  * global internal module state
  */
@@ -60,43 +57,41 @@ typedef struct
 
 IpcNotify_Ctrl gIpcNotifyCtrl;
 
+/**
+ * \brief Callback to call when interrupt is received
+ */
+void IpcNotify_isr(void *args);
+
+/**
+ * \brief Callback that is invoked during initialization for a given client ID
+ *
+ * \param remoteCoreId  [in] Remote core that has sent the message
+ * \param localClientId [in] Local client ID to which the message is sent
+ * \param msgValue      [in] Message value that is sent
+ * \param args          [in] Argument pointer passed by user when \ref IpcNotify_registerClient is called
+ */
+void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
 
 static inline void IpcNotify_getWriteMailbox(uint32_t remoteCoreId, uint32_t *mailboxBaseAddr, uint32_t *hwFifoId)
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if((gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX) && (remoteCoreId < CSL_CORE_ID_MAX))
-    {
-        pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][remoteCoreId];
+    pMailboxConfig = &gIpcNotifyMailboxConfig[gIpcNotifyCtrl.selfCoreId][remoteCoreId];
 
-        *mailboxBaseAddr = gIpcNotifyMailboxBaseAddr[ pMailboxConfig->mailboxId ];
-        *hwFifoId = pMailboxConfig->hwFifoId;
-    }
-    else
-    {
-        *mailboxBaseAddr = NULL;
-        *hwFifoId = 0;
-    }
+    *mailboxBaseAddr = gIpcNotifyMailboxBaseAddr[ pMailboxConfig->mailboxId ];
+    *hwFifoId = pMailboxConfig->hwFifoId;
+
 }
 
 static inline void IpcNotify_getReadMailbox(uint32_t remoteCoreId, uint32_t *mailboxBaseAddr, uint32_t *hwFifoId, uint32_t *userId)
 {
     IpcNotify_MailboxConfig *pMailboxConfig;
 
-    if((gIpcNotifyCtrl.selfCoreId < CSL_CORE_ID_MAX) && (remoteCoreId < CSL_CORE_ID_MAX))
-    {
-        pMailboxConfig = &gIpcNotifyMailboxConfig[remoteCoreId][gIpcNotifyCtrl.selfCoreId];
+    pMailboxConfig = &gIpcNotifyMailboxConfig[remoteCoreId][gIpcNotifyCtrl.selfCoreId];
 
-        *mailboxBaseAddr = gIpcNotifyMailboxBaseAddr[ pMailboxConfig->mailboxId ];
-        *hwFifoId = pMailboxConfig->hwFifoId;
-        *userId = pMailboxConfig->userId;
-    }
-    else
-    {
-        *mailboxBaseAddr = NULL;
-        *hwFifoId = 0;
-        *userId = 0;
-    }
+    *mailboxBaseAddr = gIpcNotifyMailboxBaseAddr[ pMailboxConfig->mailboxId ];
+    *hwFifoId = pMailboxConfig->hwFifoId;
+    *userId = pMailboxConfig->userId;
 }
 
 static inline uint32_t IpcNotify_makeMsg(uint16_t clientId, uint32_t msgValue)
@@ -181,6 +176,8 @@ int32_t IpcNotify_registerClient(uint16_t localClientId, IpcNotify_FxnCallback m
 {
     int32_t status = SystemP_FAILURE;
     uint32_t oldIntState;
+
+    DebugP_assert(msgCallback != NULL);
 
     if(localClientId < IPC_NOTIFY_CLIENT_ID_MAX)
     {

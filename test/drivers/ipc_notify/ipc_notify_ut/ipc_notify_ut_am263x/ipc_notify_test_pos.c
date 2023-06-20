@@ -114,6 +114,10 @@ void posTest_ipcNotifyinit(void *args)
     IpcNotify_Params notifyParams;
     IpcNotify_Params_init(&notifyParams);
     notifyParams.selfCoreId = 0;
+    notifyParams.numCores = 3;
+    notifyParams.coreIdList[0] = CSL_CORE_ID_R5FSS0_1;
+    notifyParams.coreIdList[1] = CSL_CORE_ID_R5FSS1_0;
+    notifyParams.coreIdList[2] = CSL_CORE_ID_R5FSS1_1;
 
     if (testStatus == SystemP_SUCCESS)
     {
@@ -169,6 +173,53 @@ void posTest_IpcNotify_syncAll(void *args)
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
+/* Positive test case of IpcNotify_init API for non notify cores */
+void posTest_ipcNotifyinitOne(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    IpcNotify_Params notifyParams;
+    IpcNotify_Params_init(&notifyParams);
+    notifyParams.selfCoreId = CSL_CORE_ID_R5FSS0_0;
+    notifyParams.numCores = 1;
+    notifyParams.coreIdList[0] = CSL_CORE_ID_R5FSS0_1;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(IpcNotify_init(&notifyParams) != SystemP_SUCCESS)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("nortos_common_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* Positive test case of IpcNotify_sendMsg API for valid remote core but core not enabled */
+void posTest_ipcNotifysendMsgTwo(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    IpcNotify_Params notifyParams;
+    IpcNotify_Params_init(&notifyParams);
+    notifyParams.selfCoreId = CSL_CORE_ID_R5FSS0_0;
+    notifyParams.numCores = 1;
+    notifyParams.coreIdList[0] = CSL_CORE_ID_R5FSS0_1;
+    uint32_t remoteCoreId = CSL_CORE_ID_R5FSS0_0;
+    uint32_t gServerClientId = 4u;
+    uint32_t msgValue = 0;
+    uint32_t waitForFifoNotFull = 1U;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        IpcNotify_init(&notifyParams);
+        if(IpcNotify_sendMsg(remoteCoreId,gServerClientId,msgValue,waitForFifoNotFull)!= SystemP_FAILURE)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("nortos_common_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
 void test_pos_main(void *args)
 {
     Drivers_open();
@@ -180,8 +231,9 @@ void test_pos_main(void *args)
     RUN_TEST(posTest_ipcNotifysendMsgOne, 9858, NULL);
     RUN_TEST(posTest_IpcNotify_syncAll, 9859, NULL);
     RUN_TEST(posTest_ipcNotifyinit, 9860, NULL);
+    RUN_TEST(posTest_ipcNotifyinitOne, 10928, NULL);
+    RUN_TEST(posTest_ipcNotifysendMsgTwo, 11094, NULL);
 
     UNITY_END();
     Drivers_close();
 }
-

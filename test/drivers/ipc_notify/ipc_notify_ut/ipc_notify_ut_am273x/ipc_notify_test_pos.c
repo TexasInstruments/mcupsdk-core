@@ -114,6 +114,9 @@ void posTest_ipcNotifyinit(void *args)
     IpcNotify_Params notifyParams;
     IpcNotify_Params_init(&notifyParams);
     notifyParams.selfCoreId = 0;
+    notifyParams.numCores = 2;
+    notifyParams.coreIdList[0] = CSL_CORE_ID_R5FSS0_1;
+    notifyParams.coreIdList[1] = CSL_CORE_ID_C66SS0;
 
     if (testStatus == SystemP_SUCCESS)
     {
@@ -169,6 +172,27 @@ void posTest_IpcNotify_syncAll(void *args)
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
+/* Positive test case of IpcNotify_init API for non notify cores */
+void posTest_ipcNotifyinitOne(void *args)
+{
+    int32_t    testStatus = SystemP_SUCCESS;
+    IpcNotify_Params notifyParams;
+    IpcNotify_Params_init(&notifyParams);
+    notifyParams.selfCoreId = CSL_CORE_ID_R5FSS0_0;
+    notifyParams.numCores = 1;
+    notifyParams.coreIdList[0] = CSL_CORE_ID_R5FSS0_1;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+        if(IpcNotify_init(&notifyParams) != SystemP_SUCCESS)
+        {
+            testStatus = SystemP_FAILURE;
+            DebugP_log("nortos_common_pos_Test: failure on line no. %d \n", __LINE__);
+        }
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
 void test_pos_main(void *args)
 {
     Drivers_open();
@@ -180,8 +204,8 @@ void test_pos_main(void *args)
     RUN_TEST(posTest_ipcNotifysendMsgOne, 9858, NULL);
     RUN_TEST(posTest_IpcNotify_syncAll, 9859, NULL);
     RUN_TEST(posTest_ipcNotifyinit, 9860, NULL);
+    RUN_TEST(posTest_ipcNotifyinitOne, 10928, NULL);
 
     UNITY_END();
     Drivers_close();
 }
-
