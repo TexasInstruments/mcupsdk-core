@@ -136,6 +136,11 @@
 /** \brief   Efuse Precision Temperature End Bit */
 #define EFUSE1_ROW_39_TRIM_PRECISION_TEMPERATURE_STOP_BIT            (13U)
 
+/* Relative offset to be applied to temp sensors, both at room and hot temp
+ * This value is computed based on the experiments to meet Design spec.
+ */
+#define GPADC_TEMP_SENSOR_OFFSET                                     (3.16f)
+
 /* ========================================================================== */
 /*                         Structure                                          */
 /* ========================================================================== */
@@ -365,6 +370,14 @@ void GPADC_initTempMeasurement(void)
         tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_DSP_TEMP_SENSOR];
         tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HWA_TEMP_SENSOR];
         tempSensTrimSlopeValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR] = efuseTempTrimValues.TrimIntercept125C[GPADC_DIG_HSM_TEMP_SENSOR];
+
+        /* Check if temp offset is required */
+        if((GPADC_efuseExtractTrims(topCtrlRegs->EFUSE1_ROW_11, 2U, 0U) == 0x3U) &&
+           (efuseTempTrimValues.FuseROMVer <= 17U))
+        {
+            /* Configure Offset for temperature sensors */
+            tempSensTrimSlopeValues.TrimTemp125C += GPADC_TEMP_SENSOR_OFFSET;
+        }
 
         /* Compute Slope */
         GPADC_computeTempSlope();
