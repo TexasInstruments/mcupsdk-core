@@ -41,7 +41,6 @@ ddr1.ddrConfigIncludeFileName = "drivers/ddr/v0/soc/am64x_am243x/board_lpddrRegi
 
 mmcsd1.$name        = "CONFIG_MMCSD0";
 mmcsd1.moduleSelect = "MMC0";
-mmcsd1.cardType     = "NO_DEVICE";
 
 uart1.$name        = "CONFIG_UART0";
 uart1.intrEnable   = "DISABLE";

@@ -37,7 +37,6 @@ ddr1.$name = "CONFIG_DDR0";
 
 mmcsd1.$name        = "CONFIG_MMCSD0";
 mmcsd1.moduleSelect = "MMC0";
-mmcsd1.cardType     = "NO_DEVICE";
 mmcsd1.MMC0.$assign = "MMC0";
 
 debug_log.enableLogZoneInfo = true;

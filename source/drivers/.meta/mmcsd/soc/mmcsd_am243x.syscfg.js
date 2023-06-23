@@ -10,7 +10,6 @@ const mmcsd_config_r5fss = [
 		inputClkFreq      : mmcsd_input_clk_freq,
 		intrNum           : 165,
 		busWidth          : "MMCSD_BUS_WIDTH_8BIT",
-		modes             : "MMCSD_SUPPORT_MMC_DS | MMCSD_SUPPORT_MMC_HS_SDR",
 		tuningType        : "MMCSD_PHY_TUNING_TYPE_AUTO", /* Make this configurable later */
 		clockIds          : [ "TISCI_DEV_MMCSD0" ],
 		clockFrequencies  : [
@@ -28,7 +27,6 @@ const mmcsd_config_r5fss = [
 		inputClkFreq      : mmcsd_input_clk_freq,
 		intrNum           : 166,
 		busWidth          : "MMCSD_BUS_WIDTH_4BIT",
-		modes             : "MMCSD_SUPPORT_SD_DS | MMCSD_SUPPORT_SD_HS",
 		tuningType        : "MMCSD_PHY_TUNING_TYPE_AUTO", /* Make this configurable later */
 		clockIds          : [ "TISCI_DEV_MMCSD1" ],
 		clockFrequencies  : [
@@ -41,6 +39,31 @@ const mmcsd_config_r5fss = [
 	},
 ];
 
+const operating_modes_sd = [
+    { name : "HS", displayName : "HS"},
+];
+
+const operating_modes_emmc = [
+    { name : "SDR50", displayName : "SDR50"},
+    { name : "HS200", displayName : "HS200"},
+];
+
+function getOperatingModesSD() {
+    return operating_modes_sd;
+}
+
+function getOperatingModesEMMC() {
+    return operating_modes_emmc;
+}
+
+function getDefaultOperatingModeEMMC() {
+    return { name : "HS200", displayName : "HS200"};
+}
+
+function getDefaultOperatingModeSD() {
+    return { name : "HS", displayName : "HS"};
+}
+
 function getDefaultConfig() {
 	return mmcsd_config_r5fss[0];
 }
@@ -52,4 +75,8 @@ function getConfigArr() {
 exports = {
 	getDefaultConfig,
 	getConfigArr,
+    getOperatingModesSD,
+    getOperatingModesEMMC,
+    getDefaultOperatingModeEMMC,
+    getDefaultOperatingModeSD,
 };

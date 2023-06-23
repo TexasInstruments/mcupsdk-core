@@ -19,6 +19,35 @@ function getInstanceConfig(moduleInstance) {
     };
 }
 
+function getOperatingMode(inst) {
+
+    if(inst.cardType == "EMMC")
+    {
+        switch(inst.modeSelectEMMC)
+        {
+            default:
+            case "HS200":
+                return "MMCSD_SUPPORT_MMC_DS | MMCSD_SUPPORT_MMC_HS200";
+                break;
+            case "DDR50":
+                return "MMCSD_SUPPORT_MMC_DS | MMCSD_SUPPORT_MMC_HS_DDR";
+                break;
+            case "SDR50":
+                return "MMCSD_SUPPORT_MMC_DS | MMCSD_SUPPORT_MMC_HS_SDR";
+                break;
+        }
+    }else if(inst.cardType == "SD")
+    {
+        switch(inst.modeSelectSD)
+        {
+            default:
+                return "MMCSD_SUPPORT_SD_DS | MMCSD_SUPPORT_SD_HS";
+                break;
+        }
+    }
+
+}
+
 function pinmuxRequirements(instance) {
 	let interfaceName = getInterfaceName(instance);
 
@@ -145,11 +174,31 @@ let mmcsd_module = {
                 if(inst.moduleSelect == "MMC0") {
                     inst.cardType = "EMMC";
                     inst.phyType = "HW_PHY";
+                    ui.modeSelectEMMC.hidden = false;
+                    ui.modeSelectSD.hidden = true;
                 } else {
                     inst.cardType = "SD";
                     inst.phyType = "SW_PHY";
+                    ui.modeSelectSD.hidden = false;
+                    ui.modeSelectEMMC.hidden = true;
                 }
             },
+        },
+        {
+            name: "modeSelectEMMC",
+            displayName: "EMMC Operating Mode",
+            description: "Select the operating mode for EMMC",
+            default: soc.getDefaultOperatingModeEMMC().name,
+            options: soc.getOperatingModesEMMC(),
+            hidden : true,
+        },
+        {
+            name: "modeSelectSD",
+            displayName: "SD Operating Mode",
+            description: "Select the operating mode for SD",
+            default: soc.getDefaultOperatingModeSD().name,
+            options: soc.getOperatingModesSD(),
+            hidden: false,
         },
 		{
 			name: "inputClkFreq",
@@ -197,6 +246,7 @@ let mmcsd_module = {
 	getPeripheralPinNames,
 	getClockEnableIds,
 	getClockFrequencies,
+    getOperatingMode,
 };
 
 function validate(inst, report) {

@@ -11,6 +11,7 @@ static MMCSD_Attrs gMmcsdAttrs[CONFIG_MMCSD_NUM_INSTANCES] =
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
+    % let operatingMode = module.getOperatingMode(instance);
     % let name = config.name;
     {
         .ctrlBaseAddr         = `config.ctrlBaseAddr`,
@@ -22,7 +23,7 @@ static MMCSD_Attrs gMmcsdAttrs[CONFIG_MMCSD_NUM_INSTANCES] =
         .phyType              = MMCSD_PHY_TYPE_`config.phyType`,
         .cardType             = MMCSD_CARD_TYPE_`config.cardType`,
         .busWidth             = `config.busWidth`,
-        .supportedModes       = `config.modes`,
+        .supportedModes       = `operatingMode`,
         .tuningType           = `config.tuningType`,
     },
 % }

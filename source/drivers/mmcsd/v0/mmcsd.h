@@ -507,6 +507,9 @@ typedef struct
     uint32_t isOpen;
     /**< Flag to indicate if the instance is already open */
 
+    uint32_t xferHighSpeedEn;
+    /**< Flag to indicate hs transfers */
+
     SemaphoreP_Object       cmdMutex;
     /**< Command Mutex */
 
