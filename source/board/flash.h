@@ -88,6 +88,19 @@ typedef struct Flash_DevConfig_s {
     uint8_t  cmdRdsr;
     uint8_t  srWip;
 
+    uint8_t  cmdPageLoadCyc1;
+    uint8_t  cmdPageLoadCyc2;
+    uint8_t  cmdRandomReadCyc1;
+    uint8_t  cmdRandomReadCyc2;
+    uint8_t  cmdRandomInput;
+    uint8_t  cmdPageProgCyc1;
+    uint8_t  cmdPageProgCyc2;
+    uint8_t  pageColAddrCyc;
+    uint8_t  pageRowAddrCyc;
+    uint8_t  cmdReadStatus;
+    uint8_t  cmdReset;
+
+
     uint8_t  srWel;
     uint8_t  resetType;
     uint8_t  deviceBusyType;
@@ -272,6 +285,7 @@ typedef struct Flash_Attrs_s {
     uint32_t pageSize;       /**< Size of each page, in bytes */
     uint32_t sectorCount;    /**< Number of sectors in the flash, if flash supports sectors */
     uint32_t sectorSize;     /**< Size of each flash sector, in bytes */
+    uint32_t spareAreaSize;  /**< Size of spare area in flash*/
 
 } Flash_Attrs;
 
@@ -294,6 +308,10 @@ typedef struct Flash_Config_s
 
 #if defined (DRV_VERSION_FLASH_V1)
 #include <board/flash/qspi/flash_nor_qspi.h>
+#endif
+
+#if defined (DRV_VERSION_GPMC_V0)
+#include <board/flash/gpmc/flash_nand_gpmc.h>
 #endif
 
 /**

@@ -74,9 +74,13 @@ FILES_PATH_common = \
     ecap/v0 \
     eqep/v0 \
     esm/v1 \
+    elm/v0 \
     firewall/v0 \
     fsi/v0 \
     gpio/v0 \
+    gpmc/v0 \
+    gpmc/v0/dma \
+    gpmc/v0/dma/udma \
     gtc/v0 \
     hw_include/ringacc/V0/priv \
     hw_include/serdes_cd/V1 \

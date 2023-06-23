@@ -21,6 +21,7 @@ FILES_common := \
     ethphy.c \
     ethphy_dp83869.c \
     flash.c \
+    flash_nand_gpmc.c \
     flash_nor_ospi.c \
     led.c \
     led_gpio.c \
@@ -33,6 +34,7 @@ FILES_PATH_common = \
     eeprom \
     ethphy \
     flash \
+    flash/gpmc \
     flash/sfdp \
     flash/ospi \
     led \

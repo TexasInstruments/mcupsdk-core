@@ -73,7 +73,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am243x_am64x \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \

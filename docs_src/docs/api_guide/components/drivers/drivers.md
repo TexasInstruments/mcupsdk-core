@@ -20,6 +20,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_FIREWALL_PAGE
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
+- \subpage DRIVERS_GPMC_PAGE
 - \subpage DRIVERS_GTC_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE

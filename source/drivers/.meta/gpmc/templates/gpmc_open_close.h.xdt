@@ -1,0 +1,23 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/gpmc/gpmc'];
+%%}
+/*
+ * GPMC
+ */
+#include <drivers/gpmc.h>
+
+/* GPMC Driver handles */
+extern GPMC_Handle gGpmcHandle[CONFIG_GPMC_NUM_INSTANCES];
+
+/*
+ * GPMC Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* GPMC Driver Parameters */
+extern GPMC_Params gGpmcParams[CONFIG_GPMC_NUM_INSTANCES];
+/* GPMC Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_gpmcOpen(void);
+void Drivers_gpmcClose(void);

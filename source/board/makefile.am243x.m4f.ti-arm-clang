@@ -30,6 +30,7 @@ FILES_PATH_common = \
     eeprom \
     ethphy \
     flash \
+    flash/gpmc \
     flash/sfdp \
     flash/ospi \
     led \

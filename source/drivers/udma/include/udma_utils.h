@@ -190,6 +190,25 @@ static inline uint32_t UdmaUtils_getTrpdTr15Response(const uint8_t *trpdMem,
 static inline CSL_UdmapTR15 *UdmaUtils_getTrpdTr15Pointer(uint8_t *trpdMem,
                                                           uint32_t trIndex);
 
+/**
+ *  \brief Map L2G event for BCDMA trigger
+ *
+ *  \param drvHandle    [IN] UDMA driver handle - static memory needs to
+ *                           allocated by caller. This is used by the driver to
+ *                           maintain the driver states.
+ *                           This cannot be NULL.
+ *  \param chHandle     [IN] UDMA channel handle.
+ *                           This parameter can't be NULL.
+ *  \param localeventID [IN] Local event ID for the corresponding IP.
+ *
+ *  \param eventMode    [IN] Edge triggering signal or pulsed signal.
+ *
+ *
+ *  \return SYSTEMP_SUCESS OR SYSTEMP_FAILURE.
+ */
+int32_t UdmaUtils_mapLocaltoGlobalEvent(Udma_DrvHandle drvHandle, Udma_ChHandle chHandle,
+                                        uint32_t localeventID, uint32_t eventMode);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

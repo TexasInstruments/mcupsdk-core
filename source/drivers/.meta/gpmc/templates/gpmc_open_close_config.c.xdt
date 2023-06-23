@@ -1,0 +1,86 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("gpmc");
+    let module = system.modules['/drivers/gpmc/gpmc'];
+%%}
+/*
+ * GPMC
+ */
+/* GPMC Driver handles */
+GPMC_Handle gGpmcHandle[CONFIG_GPMC_NUM_INSTANCES];
+
+/* GPMC Driver Parameters */
+GPMC_Params gGpmcParams[CONFIG_GPMC_NUM_INSTANCES] =
+{
+% let dmaInstanceIndex = 0;
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        %if(config.dmaEnable == true) {
+        .gpmcDmaChIndex = `dmaInstanceIndex`,
+        %dmaInstanceIndex++;
+        %}
+        %else {
+        .gpmcDmaChIndex = -1,
+        %}
+        .devType                =   CSL_GPMC_CONFIG1_DEVICETYPE_NANDLIKE,
+        %if(config.deviceWidth == "8 bit") {
+        .devSize                =   CSL_GPMC_CONFIG1_DEVICESIZE_EIGHTBITS,
+        %}
+        .chipSel                =   GPMC_CHIP_SELECT_`config.chipSelect`,
+        .intrEnable             =   `config.intrEnable.toString(10).toUpperCase()`,
+        .dmaEnable              =   `config.dmaEnable.toString(10).toUpperCase()`,
+        .transferMode           =   GPMC_TRANSFER_MODE_BLOCKING,
+        .transferCallBckFunc    =   NULL,
+    },
+% }
+};
+
+void Drivers_gpmcOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_GPMC_NUM_INSTANCES; instCnt++)
+    {
+        gGpmcHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_GPMC_NUM_INSTANCES; instCnt++)
+    {
+        gGpmcHandle[instCnt] = GPMC_open(instCnt, &gGpmcParams[instCnt]);
+        if(NULL == gGpmcHandle[instCnt])
+        {
+            DebugP_logError("GPMC open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_gpmcClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_gpmcClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_GPMC_NUM_INSTANCES; instCnt++)
+    {
+        if(gGpmcHandle[instCnt] != NULL)
+        {
+            GPMC_close(gGpmcHandle[instCnt]);
+            gGpmcHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}

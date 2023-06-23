@@ -21,6 +21,7 @@ const files = {
         "Flash_sample.c",
         "Fsi_sample.c",
         "Gpio_sample.c",
+        "Gpmc_sample_v0.c",
         "HeapP_sample.c",
         "HwiP_sample.c",
         "I2c_sample.c",

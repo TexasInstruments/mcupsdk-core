@@ -38,6 +38,9 @@ const driverVer = {
     "gpio": {
         version: "v0",
     },
+    "gpmc": {
+        version: "v0",
+    },
     "gtc": {
         version: "v0",
     },
@@ -95,6 +98,7 @@ const topModules_main = [
     "/drivers/fsi_rx/fsi_rx",
     "/drivers/fsi_tx/fsi_tx",
     "/drivers/gpio/gpio",
+    "/drivers/gpmc/gpmc",
     "/drivers/gtc/gtc",
     "/drivers/i2c/i2c",
     "/drivers/ipc/ipc",

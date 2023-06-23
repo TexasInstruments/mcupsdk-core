@@ -1,0 +1,182 @@
+%%{
+    let module = system.modules['/drivers/gpmc/gpmc'];
+    let gpmcUdmaInstances = [];
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.dmaEnable == true) {
+            gpmcUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
+        }
+    }
+%%}
+
+% let dmaRestrictRegions = module.getDmaRestrictedRegions();
+/*
+ * GPMC
+ */
+
+/* Regions restricted for DMA. We should use CPU memcpy in these cases */
+static GPMC_AddrRegion gGpmcDmaRestrictRegions[] =
+{
+% for(let i = 0; i < dmaRestrictRegions.length; i++) {
+    % let region = dmaRestrictRegions[i];
+    {
+        .regionStartAddr = `region.start`,
+        .regionSize      = `region.size`,
+    },
+% }
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+};
+
+
+/* GPMC attributes */
+static GPMC_HwAttrs gGpmcAttrs[CONFIG_GPMC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let deviceConfig = module.getGpmcDeviceConfig(instance);
+    % let name = config.name;
+    {
+        .gpmcBaseAddr         = `config.baseAddr`,
+        .dataBaseAddr         = `config.dataBaseAddr`,
+        .elmBaseAddr          = `config.elmBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .intrNum              = `config.intrNum`,
+        .intrPriority         = `config.intrPriority`U,
+        .chipSelBaseAddr      = `config.chipSelBaseAddr`U,
+        .chipSelAddrSize      = GPMC_CS_MASK_ADDR_SIZE_`config.chipSelAddrSize`,
+        % if(config.clockRateDiv == 1) {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY1,
+        % } else if (config.clockRateDiv == 2) {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY2,
+        % } else if (config.clockRateDiv == 3) {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY3,
+        % } else {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY4,
+        % }
+        % if(config.waitPinselect == "WAIT0 PIN") {
+        .waitPinNum           = CSL_GPMC_CONFIG1_WAITPINSELECT_W0,
+        % } else {
+        .waitPinNum           = CSL_GPMC_CONFIG1_WAITPINSELECT_W1,
+        % }
+        .addrDataMux          = `deviceConfig.addrDataMux`,
+        .timeLatency          = `deviceConfig.timeLatency`,
+        % if(config.waitPinPol == "ACTIVE LOW POLARITY") {
+        .waitPinPol           = CSL_GPMC_CONFIG_WAIT0PINPOLARITY_W0ACTIVEL,
+        % } else {
+        .waitPinPol           = CSL_GPMC_CONFIG_WAIT0PINPOLARITY_W0ACTIVEH,
+        % }
+        .timingParams         =
+        {
+            .csOnTime               =   `deviceConfig.timingParams.csOnTime`,
+            .csRdOffTime            =   `deviceConfig.timingParams.csRdOffTime`,
+            .csWrOffTime            =   `deviceConfig.timingParams.csWrOffTime`,
+            .advOnTime              =   `deviceConfig.timingParams.advOnTime`,
+            .advRdOffTime           =   `deviceConfig.timingParams.advRdOffTime`,
+            .advWrOffTime           =   `deviceConfig.timingParams.advWrOffTime`,
+            .advAadMuxOnTime        =   `deviceConfig.timingParams.advAadMuxOnTime`,
+            .advAadMuxRdOffTime     =   `deviceConfig.timingParams.advAadMuxRdOffTime`,
+            .advAadMuxWrOffTime     =   `deviceConfig.timingParams.advAadMuxWrOffTime`,
+            .weOnTtime              =   `deviceConfig.timingParams.weOnTtime`,
+            .weOffTime              =   `deviceConfig.timingParams.weOffTime`,
+            .oeOnTime               =   `deviceConfig.timingParams.oeOnTime`,
+            .oeOffTime              =   `deviceConfig.timingParams.oeOffTime`,
+            .oeAadMuxOnTime         =   `deviceConfig.timingParams.oeAadMuxOnTime`,
+            .oeAadMuxOffTime        =   `deviceConfig.timingParams.oeAadMuxOffTime`,
+            .pageBurstAccess        =   `deviceConfig.timingParams.pageBurstAccess`,
+            .rdAccessTime           =   `deviceConfig.timingParams.rdAccessTime`,
+            .wrAcessTime            =   `deviceConfig.timingParams.wrAcessTime`,
+            .rdCycleTime            =   `deviceConfig.timingParams.rdCycleTime`,
+            .wrCycleTime            =   `deviceConfig.timingParams.wrCycleTime`,
+            .wrDataOnMuxBusTime     =   `deviceConfig.timingParams.wrDataOnMuxBusTime`,
+            .cycle2CycleDelay       =   `deviceConfig.timingParams.cycle2CycleDelay`,
+            .cycleDelaySameChipSel  =   `deviceConfig.timingParams.cycleDelaySameChipSel`,
+            .cycleDelayDiffChipSel  =   `deviceConfig.timingParams.cycleDelayDiffChipSel`,
+            .busTurnAroundTime      =   `deviceConfig.timingParams.busTurnAroundTime`,
+        },
+        .eccAlgo                =   `deviceConfig.eccAlgo`,
+        .readType               =   `deviceConfig.readType`,
+        .csExDelay              =   `deviceConfig.csExDelay`,
+        .accessType             =   `deviceConfig.accessType`,
+        .dmaRestrictedRegions   =   gGpmcDmaRestrictRegions,
+    },
+% }
+};
+/* GPMC objects - initialized by the driver */
+static GPMC_Object gGpmcObjects[CONFIG_GPMC_NUM_INSTANCES];
+/* GPMC driver configuration */
+GPMC_Config gGpmcConfig[CONFIG_GPMC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gGpmcAttrs[`instance.$name.toUpperCase()`],
+        &gGpmcObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gGpmcConfigNum = CONFIG_GPMC_NUM_INSTANCES;
+
+% let instance = module.$instances[0];
+% let config = module.getInstanceConfig(instance);
+
+
+
+#include <drivers/gpmc/v0/dma/gpmc_dma.h>
+%if(gpmcUdmaInstances.length > 0) {
+#include <drivers/gpmc/v0/dma/udma/gpmc_dma_udma.h>
+#include <drivers/udma.h>
+
+
+/*
+ * GPMC UDMA Blockcopy Parameters
+ */
+#define GPMC_UDMA_BLK_COPY_CH_RING_ELEM_CNT (1U)
+#define GPMC_UDMA_BLK_COPY_CH_RING_MEM_SIZE (((GPMC_UDMA_BLK_COPY_CH_RING_ELEM_CNT * 8U) + UDMA_CACHELINE_ALIGNMENT) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
+#define GPMC_UDMA_BLK_COPY_CH_TRPD_MEM_SIZE (UDMA_GET_TRPD_TR15_SIZE(1U))
+#define GPMC_UDMA_NUM_BLKCOPY_CH (`gpmcUdmaInstances.length`U)
+
+/* GPMC UDMA Blockcopy Channel Objects */
+static Udma_ChObject gGpmcUdmaBlkCopyChObj[GPMC_UDMA_NUM_BLKCOPY_CH];
+
+/* GPMC UDMA Blockcopy Channel Ring Mem */
+%for(let i = 0; i < gpmcUdmaInstances.length; i++) {
+static uint8_t gGpmcUdmaBlkCopyCh`i`RingMem[GPMC_UDMA_BLK_COPY_CH_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+%}
+
+/* GPMC UDMA Blockcopy Channel TRPD Mem */
+%for(let i = 0; i < gpmcUdmaInstances.length; i++) {
+static uint8_t gGpmcUdmaBlkCopyCh`i`TrpdMem[GPMC_UDMA_BLK_COPY_CH_TRPD_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+%}
+
+%for(let i = 0; i < gpmcUdmaInstances.length; i++) {
+GpmcDma_UdmaArgs gGpmcUdma`i`Args =
+{
+    .drvHandle     = &gUdmaDrvObj[`gpmcUdmaInstances[i].$name`],
+    .chHandle      = &gGpmcUdmaBlkCopyChObj[`i`],
+    .trpdMem       = &gGpmcUdmaBlkCopyCh`i`TrpdMem,
+    .trpdMemSize   = GPMC_UDMA_BLK_COPY_CH_TRPD_MEM_SIZE,
+    .ringMem       = &gGpmcUdmaBlkCopyCh`i`RingMem,
+    .ringMemSize   = GPMC_UDMA_BLK_COPY_CH_RING_MEM_SIZE,
+    .ringElemCount = GPMC_UDMA_BLK_COPY_CH_RING_ELEM_CNT,
+    .localEventID  = `config.dmaLocalEventID`,
+};
+%}
+%}
+GPMC_DmaConfig gGpmcDmaConfig[CONFIG_GPMC_NUM_DMA_INSTANCES] =
+{
+%for(let i = 0; i < gpmcUdmaInstances.length; i++) {
+    {
+        .fxns        = &gGpmcDmaUdmaFxns,
+        .gpmcDmaArgs = (void *)&gGpmcUdma`i`Args,
+    }
+%}
+};
+
+uint32_t gGpmcDmaConfigNum = CONFIG_GPMC_NUM_DMA_INSTANCES;
+
+

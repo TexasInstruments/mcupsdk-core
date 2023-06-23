@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -80,8 +80,9 @@ typedef struct
     uint8_t  cmdSectorErase3B;
     uint8_t  cmdSectorErase4B;
     uint8_t  cmdChipErase;
-
-    uint8_t rsvd[3];
+    uint8_t  cmdBlockErase;
+    uint8_t  cmdBlockEraseCyc2;
+    uint8_t rsvd;
 
 } FlashCfg_EraseConfig;
 
