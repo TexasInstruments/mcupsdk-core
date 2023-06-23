@@ -134,7 +134,7 @@ shaValue = FORMAT:HEX,OCT:0000
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 \code
 [ req ]
 distinguished_name     = req_distinguished_name
@@ -177,7 +177,7 @@ swrv = INTEGER:1
 
 Depending on the device type, these are the validation requirements for ROM:
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM273X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM273X || SOC_AWR294X
 \imageStyle{device_types_validation_req.png,width:50%}
 \image html device_types_validation_req.png "Validation for Device Types"
 \endcond
@@ -225,10 +225,15 @@ The SBL is like any other application, created using the same compiler and linke
 rather than a deliverable. It is customizable by users, but must adhere to the requirements by RBL which is a constant as mentioned above.
 However the steps to convert the application `.out` into a bootable image are different for SBL as listed below:
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond ~SOC_AWR294X
 - The SBL entry point needs to be different vs other applications. On @VAR_SOC_NAME after power-ON ROM boots the SBL and sets the entry point of SBL to
   both R5FSS0-0 as well as R5FSS0-1. However for SBL we need to detect the core and run SBL only on Core0 and keep Core1 in `wfi` loop.
   This is done by specifying a different entry point `-e_vectors_sbl` in the linker command file for the SBL application. In `_vectors_sbl` the very first thing it does is detect the core and continue execution for Core0, while if the core is Core1 then it enters `wfi` loop.
+\endcond
+\cond SOC_AWR294X
+- The SBL entry point needs to be different vs other applications. On @VAR_SOC_NAME after power-ON ROM boots the SBL and sets the entry point of SBL to R5FSS0-0.
+\endcond
 - Other special factors for SBL application are listed below
 \cond SOC_AM64X || SOC_AM243X
   - After entering `main()`, make sure to call `Bootloader_socWaitForFWBoot` to wait for the boot notification from the SYSFW
@@ -241,7 +246,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - Nothing should be placed in ATCM or BTCM
   - Currently, the region 0x70002000 to 0x70040000 is used by the SBL code, data, stack, etc.
 \endcond
-\cond SOC_AM273X
+\cond SOC_AM273X || SOC_AWR294X
   - The linker command file for SBL has to place vectors at address `0x10200000` and this is the entry point for the SBL.
   - Currently, the region `0x10200000` to `0x10220000` is used by the SBL code, data, stack, etc.
 \endcond
@@ -251,7 +256,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - This copies the loadable sections from the .out into a binary image stripping all symbol and section information.
   - If there are two loadable sections in the image which are not contiguous then `objcopy` fills the gaps with `0x00`.
   - It is highly recommended to keep all loadable sections together within a SBL application.
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X || SOC_AWR294X
 - This `.bin` file is then signed using the \ref TOOLS_BOOT_SIGNING to create the final `.tiimage` bootable image.
    - The `.tiimage` file extension is kept to separate the SBL boot image from a normal application image
    - The rom_degenerateKey.pem is used for this.
@@ -262,7 +267,7 @@ However the steps to convert the application `.out` into a bootable image are di
    - HSMClient should be initialized and registered.
    - HSMRT (TIFS-MCU) image signed appropriately should be available. For HS-FS, this is already part of the SDK, for HS-SE, this can be compiled with TIFS-MCU package (available on MySecureSW)
 \endcond
-\cond SOC_AM273X
+\cond SOC_AM273X || SOC_AWR294X
 - The SBL communicates with ROM to get the HSMRt (TIFS-MCU) loaded on the HSM on HS-SE devices. This firmware provides various foundational security services. More information can be found at MySecureSW. Support for HS-FS will be provided in upcoming releases. For integrating HSM RunTime with SBL, the following should be taken care of:
    - HSMClient should be initialized and registered.
    - HSMRT (TIFS-MCU) image signed appropriately should be available and this is already part of the SDK.
@@ -274,7 +279,7 @@ However the steps to convert the application `.out` into a bootable image are di
   - **HS-FS** device:
     - `sbl_xxx.release.hs_fs.tiimage` [`hs_fs` prefix before `.tiimage`]
 \endcond
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
   - **HS-FS** device:
     - `sbl_xxx.release.tiimage` [No prefix before `.tiimage`, plain image]
 \endcond
@@ -283,7 +288,7 @@ However the steps to convert the application `.out` into a bootable image are di
 \cond SOC_AM64X || SOC_AM243X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device and `hs_fs` or `hs-fs` is meant for **HS-FS** device.
 \endcond
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 - Note that if we just mentioned `hs` it is meant for **HS-SE** device.
 \endcond
 - The `.tiimage` file can then be flashed or copied to a boot image using the \ref TOOLS_FLASH
@@ -297,7 +302,7 @@ However the steps to convert the application `.out` into a bootable image are di
 \image html tiimage_k3.png "TIIMAGE"
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 \imageStyle{tiimage_normal.png,width:20%}
 \image html tiimage_normal.png "TIIMAGE"
 \endcond
@@ -383,7 +388,7 @@ After a SBL and application image is flashed, shown below is the high level boot
 \imageStyle{bootflow_main.png,width:40%}
 \image html bootflow_main.png "HIGH LEVEL BOOTFLOW"
 
-\cond SOC_AM243X || SOC_AM64X || SOC_AM263X || SOC_AM273X
+\cond SOC_AM243X || SOC_AM64X || SOC_AM263X || SOC_AM273X || SOC_AWR294X
 ## Secure Boot
 
 In secure device variants, there are slight differences in the bootflow. For details on secure boot, please refer \ref SECURE_BOOT
@@ -457,11 +462,16 @@ some details regarding those.
 - The `sbl_qspi` is a secondary bootloader which reads and parses the application image from a location in the QSPI flash and then moves on to core initialization and other steps
 
 - To boot an application using the `sbl_qspi`, the application image needs to be flashed at a particular location in the QSPI flash memory.
-
+\cond ~SOC_AWR294X
 - This location or offset is specified in the SysConfig of the `sbl_qspi` application. Currently this is 0x80000. This offset is chosen under the assumption that the `sbl_qspi`
   application takes at max 512 KB from the start of the flash. If a custom bootloader is used, make sure that this offset is chosen in such a way that it is greater than the
   size of the bootloader which is being flashed and also aligns with the block size of the flash.
-
+\endcond
+\cond SOC_AWR294X
+- This location or offset is specified in the SysConfig of the `sbl_qspi` application. Currently this is 0xA0000. This offset is chosen under the assumption that the `sbl_qspi`
+  application takes at max 640 KB from the start of the flash. If a custom bootloader is used, make sure that this offset is chosen in such a way that it is greater than the
+  size of the bootloader which is being flashed and also aligns with the block size of the flash.
+\endcond
 - To flash an application (or any file in fact) to a location in the QSPI flash memory, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
 
 \endcond

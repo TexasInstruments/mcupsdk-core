@@ -44,6 +44,7 @@ This page lists all the examples and demos supported in this SDK.
 \endcond
 
 \cond SOC_AWR294X
+-# \subpage EXAMPLES_SECURITY
 -# \subpage EXAMPLES_HELLO_WORLD_SAFERTOS
 \endcond
 

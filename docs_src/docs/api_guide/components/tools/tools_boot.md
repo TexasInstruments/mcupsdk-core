@@ -210,7 +210,7 @@ r4          | 3
 
 - To run these scripts, one needs `openssl` installed as mentioned here, \ref INSTALL_OPENSSL
 - Signing scripts are a collection of scripts needed to sign ROM images (image booted by ROM - mostly the SBL) and application images (image booted by the SBL)
-\cond SOC_AM263X||SOC_AM273X
+\cond SOC_AM263X||SOC_AM273X||SOC_AWR294X
 ### Signing SBL
 \endcond
 - The RBL requires the boot image (mostly SBL), to be signed always, even if we are not using secure boot.
@@ -246,7 +246,7 @@ r4          | 3
 - These scripts are invoked in makefiles, and the image generation happens automatically along with the example build. So mostly these scripts need not be manually run.
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 
 For SBL images, the script `/tools/boot/signing/mcu_rom_image_gen.py`.
 
@@ -522,6 +522,12 @@ make -s -C examples/drivers/boot/sbl_qspi/am273x-cc/r5fss0-0_nortos/ti-arm-clang
 \endcode
 \endcond
 
+\cond SOC_AWR294X
+\code
+make -s -C examples/drivers/boot/sbl_qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang all DEVICE=awr294x DEVICE_TYPE=HS DEBUG_TIFS=no DEBUG_OPTION=DBG_PUBLIC_ENABLE
+\endcode
+\endcond
+
 \endcond
 
  - Here,
@@ -546,7 +552,7 @@ be ensured that the same is followed as part of the post build steps.
 The devconfig has ENC_SBL_ENABLED=yes and that is why for HS-SE devices, the SBL
 image is encrypted by default.
 
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM273X ||SOC_AWR294X
 ### Application Signing
 
 For Application images, the script `/tools/boot/signing/mcu_appimage_x509_cert_gen.py`.
