@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+/*********************************************************************
+ *   Copyright (c) Texas Instruments Incorporated 2023
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,28 +30,47 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef SDL_SOC_CONFIG_IN_H_
-#define SDL_SOC_CONFIG_IN_H_
 
-#ifdef __cplusplus
-extern "C"
+/**
+ * \file  sdl_rom_checksum.c
+ *
+ * \brief  SDL implementation file for the rom checksum module.
+ */
+
+#include <stdint.h>
+#include <string.h>
+#include <sdl/sdl_rom_checksum.h>
+#include <stdbool.h>
+#include <sdl/include/sdl_types.h>
+/**
+  Process full ROMChecksum for block of memory
+  @param in     Pointer to be message being hashed
+  @param inlen  The lenith of the data (octets)
+  @return SDL_PASS if successful
+ */
+
+/**
+ * Design: PROC_SDL-6002
+ */
+int32_t SDL_ROM_Checksum_compute (void)
 {
-#endif
-
-/* IP versions */
-#define IP_VERSION_ESM_V0
-#define IP_VERSION_ESM_V0_0
-#define IP_VERSION_MCRC_V0
-#define IP_VERSION_RTI_V0
-#define IP_VERSION_DCC_V0
-#define IP_VERSION_TOG_V0
-#define IP_VERSION_VTM_V0
-#define IP_VERSION_POK_V1
-#define IP_VERSION_ECC_V0
-#define IP_VERSION_PBIST_V0_1
-#define IP_VERSION_ROMCHECKSUM_V0
-#ifdef __cplusplus
+ 	uint8_t * in = SDL_DATA_TO_BE_HASHED_POINTER;
+	uint32_t inlen = SDL_LENGTH_OF_DATA_TO_BE_HASHED;
+ 	uint64_t * golden_vector_pointer = (uint64_t *)SDL_GOLDEN_DATA_POINTER;
+	uint64_t  golden_vector_buflen =  SDL_LENGTH_OF_GOLDEN_DATA;
+	SDL_ROM_Checksum_obj md;
+	int32_t sdl_result = SDL_PASS;
+	SDL_ROM_Checksum_init(&md);
+    sdl_result = SDL_ROM_Checksum_process(&md, in, (uint32_t)inlen);
+	if(sdl_result == SDL_PASS)
+	{
+    	sdl_result = SDL_ROM_Checksum_done(&md);
+	}
+	if(sdl_result == SDL_PASS)
+	{
+		sdl_result = SDL_ROM_Checksum_compareResult (golden_vector_buflen, &md, golden_vector_pointer);
+	}
+	return sdl_result;
 }
-#endif
 
-#endif
+

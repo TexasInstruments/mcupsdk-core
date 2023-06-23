@@ -80,6 +80,8 @@ const files_r5f = {
   		"sdl_exception.c",
         "sdl_ecc_r5.c",
         "sdl_r5f_utils.c",
+        "sdl_ip_rom_checksum.c",
+        "sdl_rom_checksum.c"
     ],
 };
 
@@ -123,6 +125,7 @@ const filedirs_r5f = {
         "pbist/v0/soc/am243x",
         "r5",
         "r5/v0",
+        "rom_checksum",
     ],
 };
 

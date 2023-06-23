@@ -54,6 +54,8 @@ FILES_common := \
     sdl_exception.c \
     sdl_ecc_r5.c \
     sdl_r5f_utils.c \
+    sdl_ip_rom_checksum.c \
+    sdl_rom_checksum.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -98,6 +100,7 @@ FILES_PATH_common = \
     pbist/v0/soc/am243x \
     r5 \
     r5/v0 \
+    rom_checksum \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
