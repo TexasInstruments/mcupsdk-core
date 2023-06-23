@@ -220,8 +220,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_ccs_init/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -899,8 +897,6 @@ BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-lp_r5fss0-1_nortos_ti-ar
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-lp_r5fss1-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-lp_r5fss1-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sciclient_set_boardcfg_am243x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sciclient_set_boardcfg_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_ccs_init_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += uart_echo_am243x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -1484,12 +1480,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- sciclient_set_boardcfg_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sciclient_set_boardcfg_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2182,8 +2172,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-lp_r5fss0-1_nortos
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-lp_r5fss1-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-lp_r5fss1-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_set_boardcfg_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_set_boardcfg_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_ccs_init_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2767,12 +2755,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sciclient_set_boardcfg_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sciclient_set_boardcfg_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3465,8 +3447,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-lp_r5fss0-1_nortos
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-lp_r5fss1-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-lp_r5fss1-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_set_boardcfg_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_set_boardcfg_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_ccs_init_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4050,12 +4030,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sciclient_set_boardcfg_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sciclient_set_boardcfg_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/sciclient/sciclient_set_boardcfg/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

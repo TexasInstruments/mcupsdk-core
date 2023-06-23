@@ -101,7 +101,6 @@ const example_file_list = [
     "examples/drivers/safety/reset_isolation/.project/project.js",
     "examples/drivers/safety/reset_isolation_ipc/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
-    "examples/drivers/sciclient/sciclient_set_boardcfg/.project/project.js",
 	"examples/drivers/sciclient/sciclient_ccs_init/.project/project",
     "examples/drivers/uart/uart_echo/.project/project.js",
     "examples/drivers/uart/uart_echo_callback/.project/project.js",

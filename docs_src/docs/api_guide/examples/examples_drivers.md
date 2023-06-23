@@ -89,7 +89,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
 -# SCICLIENT
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_GET_VERSION
-   -# \subpage EXAMPLES_DRIVERS_SCICLIENT_SET_BOARDCFG
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_CCS_INIT
 -# UART
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO
