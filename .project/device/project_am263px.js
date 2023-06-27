@@ -142,6 +142,13 @@ const example_file_list = [
 	"examples/security/crypto/dthe_sha/crypto_hmac_sha512/.project/project.js",
 	"examples/security/crypto/dthe_sha/crypto_sha_256/.project/project.js",
 	"examples/security/crypto/dthe_sha/crypto_sha_512/.project/project.js",
+        "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
+        "examples/networking/enet_layer2_cpsw/.project/project.js",
+        "examples/networking/enet_layer2_multi_channel/.project/project.js",
+	// "examples/kernel/dpl/dpl_low_latency_interrupt/.project/project.js",
+	// "examples/kernel/dpl/interrupt_prioritization/.project/project.js",
+    "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
+    "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	//"test/board/flash/.project/project.js",
 	"test/board/led/.project/project.js",
@@ -241,10 +248,10 @@ function getSysCfgCpu(cpu) {
 function getSysCfgPkg(board) {
     switch (board) {
         case "am263px-lp":
-            return "ZCZ_S";
+            return "ZCZ_C";
         default:
         case "am263px-cc":
-            return "ZCZ_C";
+            return "ZCZ_S";
     }
 }
 

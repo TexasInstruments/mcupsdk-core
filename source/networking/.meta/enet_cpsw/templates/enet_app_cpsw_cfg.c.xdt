@@ -388,6 +388,6 @@ static void EnetApp_getCpswInitCfg(Enet_Type enetType,
 
 static void EnetApp_getMacPortInitConfig(CpswMacPort_Cfg *pMacPortCfg, const Enet_MacPort portIdx)
 {
-    EnetAppUtils_assert(portIdx < ENET_SYSCFG_MAX_MAC_PORTS);
+    EnetAppUtils_assert(portIdx < ENET_ARRAYSIZE(enetAppCpswMacPortCfg));
     *pMacPortCfg = enetAppCpswMacPortCfg[portIdx];
 }

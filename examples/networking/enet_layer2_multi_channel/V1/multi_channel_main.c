@@ -86,6 +86,8 @@ void EnetApp_mainTask(void *args)
     memset(&gEnetApp, 0, sizeof(gEnetApp));
     gEnetApp.run = true;
     gEnetApp.enableTs = false;
+    Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
+    uint8_t numMacPorts;
 
     gEnetApp.numPerCtxts = ENET_ARRAYSIZE(testParams);
 
@@ -94,7 +96,9 @@ void EnetApp_mainTask(void *args)
         gEnetApp.perCtxt[i].enetType = testParams[i].enetType;
         gEnetApp.perCtxt[i].instId   = testParams[i].instId;
         gEnetApp.perCtxt[i].name     = (gEnetApp.perCtxt[i].enetType == ENET_CPSW_3G ? "cpsw-3g" : "cpsw-2g");
-        gEnetApp.perCtxt[i].macPort  = testParams[i].macPort;
+
+        EnetApp_getEnetInstMacInfo(gEnetApp.perCtxt[i].enetType, gEnetApp.perCtxt[i].instId, macPortList, &numMacPorts);
+        gEnetApp.perCtxt[i].macPort  = macPortList[0];
     }
 
     /* Init driver */

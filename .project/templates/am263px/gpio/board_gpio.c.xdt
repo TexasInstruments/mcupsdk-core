@@ -48,7 +48,7 @@
  */
 % if ( exampleType == "input_interrupt" ) {
 /* This is based on DMSC board config and core */
-%if((args.project.board == "am263px-lp")  || (args.project.board == "am263px-lp")){
+%if((args.project.board == "am263px-lp")){
 #define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_R5FSS0_CORE0_INTR_GPIO_INTRXBAR_OUT_14)
 #define BOARD_BUTTON_GPIO_SWITCH_NUM    (4)
 %}

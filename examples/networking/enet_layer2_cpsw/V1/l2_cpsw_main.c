@@ -74,8 +74,10 @@ void EnetApp_mainTask(void *args)
     char option;
     uint32_t i;
     int32_t status;
+    Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
+    uint8_t numMacPorts;
 
-	Drivers_open();
+    Drivers_open();
     Board_driversOpen();
 
     DebugP_log("==========================\r\n");
@@ -93,7 +95,8 @@ void EnetApp_mainTask(void *args)
         gEnetApp.perCtxt[i].enetType = testParams[i].enetType;
         gEnetApp.perCtxt[i].instId   = testParams[i].instId;
         gEnetApp.perCtxt[i].name     = testParams[i].name; /* shallow copy */
-        gEnetApp.perCtxt[i].macPort  = testParams[i].macPort;
+        EnetApp_getEnetInstMacInfo(gEnetApp.perCtxt[i].enetType, gEnetApp.perCtxt[i].instId, macPortList, &numMacPorts);
+        gEnetApp.perCtxt[i].macPort  = macPortList[0];
     }
 
     /* Init driver */

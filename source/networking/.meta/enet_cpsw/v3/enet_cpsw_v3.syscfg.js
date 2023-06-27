@@ -119,7 +119,9 @@ const enet_cpsw_phy1_config =
                 const cpswPhyAddrInfoMap = new Map(
                                            [
                                              ['am263x-cc',{phyAddr1: 0, phyAddr2: 3}],
+                                             ['am263px-cc',{phyAddr1: 3, phyAddr2: 0}],
                                              ['am263x-lp', {phyAddr1: 3, phyAddr2: 12}],
+                                             ['am263px-lp', {phyAddr1: 3, phyAddr2: 12}],
                                            ],
                                          );
                 let phyInfo =  cpswPhyAddrInfoMap.get(inst.BoardType);
@@ -168,7 +170,9 @@ const enet_cpsw_phy2_config =
                 const cpswPhyAddrInfoMap = new Map(
                                            [
                                              ['am263x-cc',{phyAddr1: 0, phyAddr2: 3}],
+                                             ['am263px-cc',{phyAddr1: 3, phyAddr2: 0}],
                                              ['am263x-lp', {phyAddr1: 3, phyAddr2: 12}],
+                                             ['am263px-lp', {phyAddr1: 3, phyAddr2: 12}],
                                            ],
                                          );
                 let phyInfo =  cpswPhyAddrInfoMap.get(inst.BoardType);
@@ -354,7 +358,7 @@ function getBoardConfigTemplateInfo() {
                                  ['am263x',{Cfile: "/networking/enet_cpsw/templates/am263x/enet_board_cfg.c.xdt",
                                  Header: "/networking/enet_cpsw/templates/am263x/enet_board_cfg.h.xdt"}],
                                  ['am263px',{Cfile: "/networking/enet_cpsw/templates/am263px/enet_board_cfg.c.xdt",
-                                 Header: "/networking/enet_cpsw/templates/am26p3x/enet_board_cfg.h.xdt"}],
+                                 Header: "/networking/enet_cpsw/templates/am263px/enet_board_cfg.h.xdt"}],
                                ],
                              );
     return boardConfigTemplate.get(common.getSocName());
@@ -751,6 +755,12 @@ let enet_cpsw_module = {
                 },
                 {
                     name: "am263x-lp",
+                },
+                {
+                    name: "am263px-cc",
+                },
+                {
+                    name: "am263px-lp",
                 },
             ],
         },

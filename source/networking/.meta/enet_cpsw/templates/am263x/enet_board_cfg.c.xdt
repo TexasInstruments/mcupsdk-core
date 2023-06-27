@@ -381,6 +381,7 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void)
 {
     I2C_Transaction i2cTransaction;
     uint8_t buffer[2];
+    int32_t status = -1;
 
     I2C_Transaction_init(&i2cTransaction);
     i2cTransaction.writeBuf     = buffer;
@@ -396,7 +397,8 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void)
     /* set pin to output */
     buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 1;
     buffer[1] = ~(0x1 << 4);
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    DebugP_assert(status == I2C_STS_SUCCESS);
 
     /* Configure RGMII2 sel pin */
     /* Set output to low */
@@ -406,7 +408,8 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void)
     /* set pin to output */
     buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 0;
     buffer[1] = ~(0x3 << 2);
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    DebugP_assert(status == I2C_STS_SUCCESS);
 
 }
 %}

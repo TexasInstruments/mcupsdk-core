@@ -359,7 +359,7 @@ static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
     int32_t status;
     EnetMacPort_SetIngressDscpPriorityMapInArgs setMacDscpInArgs;
     EnetPort_DscpPriorityMap setHostDscpInArgs;
-%if((device == 'am263x-cc' || device == 'am263x-lp') || (device == 'am263x-cc' || device == 'am263x-lp')){
+%if((device == 'am263x-cc' || device == 'am263x-lp') || (device == 'am263px-cc' || device == 'am263px-lp')){
     CpswAle_DfltThreadCfg dfltThreadCfg;
 %}
     uint32_t pri;
@@ -404,7 +404,7 @@ static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
     }
     /* Enable the p0_rx_remap_dscp_ipv4 in CPPI_P0_Control for host port, This is done through syscfg */
 
-%if((device == 'am263x-cc' || device == 'am263x-lp') || (device == 'am263x-cc' || device == 'am263x-lp')){
+%if((device == 'am263x-cc' || device == 'am263x-lp') || (device == 'am263px-cc' || device == 'am263px-lp')){
     /* Enable Channel override (in EnetApp_updateCpswInitCfg)*/
     /* Configure the default threadId */
     memset(&dfltThreadCfg, 0, sizeof(dfltThreadCfg));

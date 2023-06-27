@@ -26,7 +26,7 @@
 #define `instance.$name.toUpperCase()`_PHY0_ADDR (`instance.phyAddr1`U)
 #define `instance.$name.toUpperCase()`_PHY1_ADDR (`instance.phyAddr2`U)
 
-%if ((device === "am263px-cc") || (device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
+%if ((device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
 #include <ti_drivers_config.h>
 #include <drivers/i2c.h>
 
@@ -253,7 +253,7 @@ const EnetBoard_PhyCfg *EnetBoard_getPhyCfg(const EnetBoard_EthPort *ethPort)
 
 static void EnetBoard_enableExternalMux()
 {
-%if( (instance.BoardType === "am263px-lp")  || (instance.BoardType === "am263px-lp")){
+%if( (instance.BoardType === "am263px-lp") ){
     /* Enable the  External MUX selection. Applicable for AM263Px LP E2 ver board.
      * Has no effect on AM263Px LP E1 ver board.
      *
@@ -364,7 +364,7 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
 % } else {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT2_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RMII);
 %}
-%if ((device === "am263px-cc") || (device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
+%if ((device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
             EnetBoard_setMacPort2IOExpanderCfg();
 %}
             break;
@@ -376,79 +376,46 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
     return ENET_SOK;
 }
 
-%if ((device === "am263px-cc") || (device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
+%if ((device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
 static void EnetBoard_setMacPort2IOExpanderCfg(void)
 {
     I2C_Transaction i2cTransaction;
     uint8_t buffer[2];
+    int32_t status = -1;
 
     I2C_Transaction_init(&i2cTransaction);
+
     i2cTransaction.writeBuf     = buffer;
     i2cTransaction.writeCount   = 2U;
-    i2cTransaction.targetAddress = IO_EXPANDER_I2C_ADDR;
-
-    /* Configure MDIO sel pin */
-    /* Set output to high */
-    buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 1; /* Port 1 */
-    buffer[1] = (0x01 << 4); /* Pin 4 */
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-
-    /* set pin to output */
-    buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 1;
-    buffer[1] = ~(0x1 << 4);
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-
+    i2cTransaction.targetAddress = 0x20;
     /* Configure RGMII2 sel pin */
     /* Set output to low */
     buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 0; /* Port 0 */
     buffer[1] = ~(0x03 << 2); /* Pin 2 & 3 */
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    DebugP_assert(status == 0);
     /* set pin to output */
     buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 0;
     buffer[1] = ~(0x3 << 2);
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-
+    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    DebugP_assert(status == 0);
 }
 %}
 
+static const uint8_t gMacAddr[6U] = {
+                             0x70,
+                             0xFF,
+                             0x76,
+                             0x1D,
+                             0xEC,
+                             0xF2
+                            };
 void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
                               uint32_t maxMacEntries,
                               uint32_t *pAvailMacEntries)
 {
-    int32_t status = ENET_SOK;
-    uint32_t macAddrCnt;
-    uint32_t i;
-    uint8_t numMacMax;
-    uint8_t macAddrBuf[ENET_BOARD_NUM_MACADDR_MAX * ENET_MAC_ADDR_LEN];
-    uint8_t validNumMac = 0U;
-
-    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0],  I2C_EEPROM_MAC_CTRL_OFFSET, &numMacMax, sizeof(uint8_t));
-    EnetAppUtils_assert(status == ENET_SOK);
-    EnetAppUtils_assert(ENET_GET_NUM_MAC_ADDR(numMacMax) <= ENET_BOARD_NUM_MACADDR_MAX);
-    EnetAppUtils_assert(pAvailMacEntries != NULL);
-
-    macAddrCnt = EnetUtils_min(ENET_GET_NUM_MAC_ADDR(numMacMax), maxMacEntries);
-
-    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], I2C_EEPROM_MAC_DATA_OFFSET, macAddrBuf, (macAddrCnt * ENET_MAC_ADDR_LEN) );
-    EnetAppUtils_assert(status == ENET_SOK);
-
-    /* Save only those required to meet the max number of MAC entries */
-    /* Validating that the MAC addresses from the EEPROM are not MULTICAST addresses */
-    for (i = 0U; i < macAddrCnt; i++)
-    {
-        if(!(macAddrBuf[i * ENET_MAC_ADDR_LEN] & ENET_MAC_ADDR_VALIDATE_MASK)){
-            memcpy(macAddr[validNumMac], &macAddrBuf[i * ENET_MAC_ADDR_LEN], ENET_MAC_ADDR_LEN);
-            validNumMac++;
-        }
-    }
-
-    *pAvailMacEntries = validNumMac;
-
-    if (macAddrCnt == 0U)
-    {
-        EnetAppUtils_print("EnetBoard_getMacAddrList Failed - IDK not present\n");
-        EnetAppUtils_assert(false);
-    }
+    memcpy(macAddr, &gMacAddr, ENET_MAC_ADDR_LEN);
+    *pAvailMacEntries = 1U;
 }
 
 /*
