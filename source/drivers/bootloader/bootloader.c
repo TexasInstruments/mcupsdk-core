@@ -829,7 +829,7 @@ int32_t Bootloader_parseAndLoadLinuxAppImage(Bootloader_Handle handle, Bootloade
         }
         else
         {
-            status = SystemP_SUCCESS;
+            status = SystemP_FAILURE;
         }
     }
 
