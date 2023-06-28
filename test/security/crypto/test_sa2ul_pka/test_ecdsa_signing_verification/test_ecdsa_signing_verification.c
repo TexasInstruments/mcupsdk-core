@@ -42,6 +42,15 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#define TEST_PKA_ECDSA_COUNT                    (2U)
+
+#define TEST_PKA_ECDSA_P_256                    (256U)
+#define TEST_PKA_ECDSA_P_384                    (384U)
+
+#define TEST_PKA_SIGN                           (1U)
+#define TEST_PKA_VERIFY                         (2U)
+#define TEST_PKA_SIGN_VERIFY                    (3U)
+
 #define TEST_PKA_ECDSA_P_256_SIZE_IN_BYTES      (32U)
 #define TEST_PKA_ECDSA_P_384_SIZE_IN_BYTES      (48U)
 #define SA2UL_PKA_INSTANCE                      (0U)
@@ -219,12 +228,23 @@ static const uint32_t gPkaEcdsaHashP384 [] =
     0x2696EF7BUL, 0xAEC4BE31UL, 0x5BC92276UL, 0x9A908350UL,
 };
 
+typedef struct
+{
+    uint32_t curve;
+    uint32_t sign;
+    uint32_t verify;
+    uint32_t signVerify;
+}App_benchmark;
+
 /* Local test functions */
 static void test_pka_ecdsa_sign_verify_p_256(void *args);
 static void test_pka_ecdsa_sign_verify_p_384(void *args);
 
-void App_printPerformanceResults(uint64_t t1, uint64_t t2);
-void App_printTotalPerformanceResults(uint64_t tTotal);
+void App_fillPerformanceResults(uint64_t t1, uint64_t t2, uint32_t operation, uint32_t curve);
+void App_fillTotalPerformanceResults(uint64_t tTotal, uint32_t curve);
+void App_printPerformanceLogs();
+
+App_benchmark results[TEST_PKA_ECDSA_COUNT];
 
 /* PKA handle for processing every api's */
 PKA_Handle			gPkaHandle = NULL;
@@ -245,6 +265,7 @@ void test_main(void *args)
     RUN_TEST(test_pka_ecdsa_sign_verify_p_256,  2714, NULL);
 	RUN_TEST(test_pka_ecdsa_sign_verify_p_384,  2674, NULL);
 
+    App_printPerformanceLogs();
     /* Close PKA instance, disable PKA engine, deinitialize clocks*/
 	status = PKA_close(gPkaHandle);
 	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
@@ -279,7 +300,7 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Signing Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_SIGN, TEST_PKA_ECDSA_P_256);
 
     tTotal = t2 - t1;
 
@@ -291,11 +312,11 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Verification Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_VERIFY, TEST_PKA_ECDSA_P_256);
 
     tTotal = tTotal +(t2 - t1);
 
-    App_printTotalPerformanceResults(tTotal);
+    App_fillTotalPerformanceResults(tTotal, TEST_PKA_ECDSA_P_256);
     return;
 }
 
@@ -315,7 +336,7 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Signing Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_SIGN, TEST_PKA_ECDSA_P_384);
 
     tTotal = t2 - t1;
 
@@ -327,29 +348,71 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Verification Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_VERIFY, TEST_PKA_ECDSA_P_384);
 
     tTotal = tTotal +(t2 - t1);
-    App_printTotalPerformanceResults(tTotal);
+    App_fillTotalPerformanceResults(tTotal, TEST_PKA_ECDSA_P_384);
 
     return;
 }
 
-void App_printPerformanceResults(uint64_t t1, uint64_t t2)
+void App_fillPerformanceResults(uint64_t t1, uint64_t t2, uint32_t operation, uint32_t curve)
 {
     uint64_t totalTimeInMicroSec = t2 - t1;
     uint64_t throughputInOps = 1000000/totalTimeInMicroSec;
-
-    DebugP_log("[CRYPTO] Tstart(us) : %ld \r\n", t1);
-	DebugP_log("[CRYPTO] Tend(us)   : %ld \r\n", t2);
-	DebugP_log("[CRYPTO] Tdiff(us)   : %ld \r\n", totalTimeInMicroSec);
-    DebugP_log("[CRYPTO] Operations/seconds  : %ld \r\n", throughputInOps);
+    if(curve == TEST_PKA_ECDSA_P_256)
+    {
+        results[0].curve = TEST_PKA_ECDSA_P_256;
+        if(operation == TEST_PKA_SIGN)
+        {
+            results[0].sign = throughputInOps;
+        }
+        else if(operation == TEST_PKA_VERIFY)
+        {
+            results[0].verify = throughputInOps;
+        }
+    }
+    else
+    {
+        results[1].curve = TEST_PKA_ECDSA_P_384;
+        if(operation == TEST_PKA_SIGN)
+        {
+            results[1].sign = throughputInOps;
+        }
+        else if(operation == TEST_PKA_VERIFY)
+        {
+            results[1].verify = throughputInOps;
+        }
+    }
 }
 
-void App_printTotalPerformanceResults(uint64_t tTotal)
+void App_fillTotalPerformanceResults(uint64_t tTotal, uint32_t curve)
 {
     uint64_t throughputInOps = 1000000/tTotal;
 
-    DebugP_log("[CRYPTO] Ttotal(us) : %ld \r\n", tTotal);
-    DebugP_log("[CRYPTO] Sign and Verify Operations/seconds  : %ld \r\n", throughputInOps);
+    if(curve == TEST_PKA_ECDSA_P_256)
+    {
+        results[0].signVerify = throughputInOps;
+    }
+    else
+    {
+        results[1].signVerify = throughputInOps;
+    }
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - SA2UL - PKA - ECDSA \r\n");
+    DebugP_log("- Software/Application used : test_sa2ul_pka \r\n");
+    DebugP_log("- Supported Curves          : p-256 and p-384\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("- OS used                   : nortos \r\n\n");
+    DebugP_log("| ECDSA            | Sign/sec  | Verify/sec  | Sign and verify/sec |\r\n");
+    DebugP_log("|------------------|-----------|-------------|---------------------| \r\n");
+    for( uint32_t i = 0; i < TEST_PKA_ECDSA_COUNT; i++)
+    {
+        DebugP_log("| %d | %ld | %ld | %ld |\r\n", results[i].curve, results[i].sign, results[i].verify, results[i].signVerify);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }

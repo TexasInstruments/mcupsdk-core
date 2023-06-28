@@ -31,7 +31,7 @@
  */
 
 /* This test demonstrates the HW implementation of SHA */
-
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unity.h>
@@ -41,6 +41,14 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+
+/* Supported Operations */
+#define APP_OPERATION_ENCRYPT           (1U)
+#define APP_OPERATION_DECRYPT           (2U)
+
+/* Supported Key length*/
+#define APP_CRYPTO_AES_CBC_128          (128U)
+#define APP_CRYPTO_AES_CBC_256          (256U)
 
 /* input or output length*/
 #define APP_CRYPTO_AES_CBC_128_INOUT_LENGTH           (16U)
@@ -68,6 +76,8 @@
 #define TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN            (1024U)
 /* Aes 32k buf length*/
 #define TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN          (512U)
+/* Total number of Test case*/
+#define TEST_CRYPTO_AES_TEST_CASES_COUNT              (28U)
 
 /* The AES encryption algorithm encrypts and decrypts data in blocks of 128 bits. It can do this using 128-bit, 192-bit, or 256-bit keys */
 static uint8_t gCryptoAesCbc128Key[APP_CRYPTO_AES_CBC_128_MAXKEY_LENGTH] =
@@ -105,6 +115,13 @@ static Crypto_Context gCryptoAesCbcContext __attribute__ ((aligned (SA2UL_CACHEL
 /* Context Object */
 SA2UL_ContextObject  gSa2ulCtxObj __attribute__ ((aligned (SA2UL_CACHELINE_ALIGNMENT)));
 
+typedef struct
+{
+    uint16_t key;
+    char operation[20];
+    uint16_t dataSize;
+    double performance;
+}App_benchmark;
 
 /* Local test functions */
 static void test_aes_cbc128_32kBuf(void *args);
@@ -123,7 +140,12 @@ static void test_aes_cbc256_2kBuf(void *args);
 static void test_aes_cbc256_1kBuf(void *args);
 static void test_aes_cbc256_512bBuf(void *args);
 static void test_get_buf(uint8_t * buf, uint32_t sizeInBytes);
-void App_printPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes);
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation);
+static const char *bytesToString(uint64_t bytes);
+void App_printPerformanceLogs(void);
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
 
 void test_main(void *args)
 {
@@ -154,7 +176,8 @@ void test_main(void *args)
     RUN_TEST(test_aes_cbc256_2kBuf,   2314, NULL);
     RUN_TEST(test_aes_cbc256_1kBuf,   2315, NULL);
     RUN_TEST(test_aes_cbc256_512bBuf, 2316, NULL);
-    
+
+    App_printPerformanceLogs();
     /* Close AES instance */
     status = Crypto_close(aesHandle);
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
@@ -202,7 +225,7 @@ void test_aes_cbc128_32kBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -213,8 +236,7 @@ void test_aes_cbc128_32kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -233,8 +255,7 @@ void test_aes_cbc128_32kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN);
@@ -270,7 +291,7 @@ void test_aes_cbc128_16kBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -281,8 +302,7 @@ void test_aes_cbc128_16kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -301,8 +321,7 @@ void test_aes_cbc128_16kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN);
@@ -338,7 +357,7 @@ void test_aes_cbc128_8kBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -349,8 +368,7 @@ void test_aes_cbc128_8kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -369,8 +387,7 @@ void test_aes_cbc128_8kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN);
@@ -406,7 +423,7 @@ void test_aes_cbc128_4kBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -417,8 +434,7 @@ void test_aes_cbc128_4kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -437,8 +453,7 @@ void test_aes_cbc128_4kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN);
@@ -474,7 +489,7 @@ void test_aes_cbc128_2kBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -485,8 +500,7 @@ void test_aes_cbc128_2kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -505,8 +519,7 @@ void test_aes_cbc128_2kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN);
@@ -542,7 +555,7 @@ void test_aes_cbc128_1kBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -553,8 +566,7 @@ void test_aes_cbc128_1kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -573,8 +585,7 @@ void test_aes_cbc128_1kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN);
@@ -611,7 +622,7 @@ void test_aes_cbc128_512bBuf(void *args)
     /* Perform cache writeback */
     CacheP_wb(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, CacheP_TYPE_ALLD);
     CacheP_inv(gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, CacheP_TYPE_ALLD);
-    
+
     /* Encryption */
     /* Function to transfer and receive data buffer */
     status = SA2UL_contextProcess(&gSa2ulCtxObj,&gCryptoAesCbcInputBuf[0], TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, gCryptoAesCbcEncResultBuf);
@@ -622,8 +633,7 @@ void test_aes_cbc128_512bBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -642,8 +652,7 @@ void test_aes_cbc128_512bBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, APP_CRYPTO_AES_CBC_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN);
@@ -688,8 +697,7 @@ void test_aes_cbc256_32kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -708,8 +716,7 @@ void test_aes_cbc256_32kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN);
@@ -754,8 +761,7 @@ void test_aes_cbc256_16kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -774,8 +780,7 @@ void test_aes_cbc256_16kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN);
@@ -820,8 +825,7 @@ void test_aes_cbc256_8kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -840,8 +844,7 @@ void test_aes_cbc256_8kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN);
@@ -886,8 +889,7 @@ void test_aes_cbc256_4kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -906,8 +908,7 @@ void test_aes_cbc256_4kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN);
@@ -952,8 +953,7 @@ void test_aes_cbc256_2kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -972,8 +972,7 @@ void test_aes_cbc256_2kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN);
@@ -1018,8 +1017,7 @@ void test_aes_cbc256_1kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -1038,8 +1036,7 @@ void test_aes_cbc256_1kBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN);
@@ -1084,8 +1081,7 @@ void test_aes_cbc256_512bBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_ENCRYPT);
 
     CycleCounterP_reset();
     t1 = CycleCounterP_getCount32();
@@ -1104,28 +1100,70 @@ void test_aes_cbc256_512bBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN, APP_CRYPTO_AES_CBC_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesCbcDecResultBuf, gCryptoAesCbcInputBuf, TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN);
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 }
 
-void App_printPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes)
+static const char *bytesToString(uint64_t bytes)
+{
+	char *suffix[] = {"B", "KB", "MB", "GB", "TB"};
+	char length = sizeof(suffix) / sizeof(suffix[0]);
+
+	int i = 0;
+	double dblBytes = bytes;
+
+	if (bytes > 1024) {
+		for (i = 0; (bytes / 1024) > 0 && i<length-1; i++, bytes /= 1024)
+			dblBytes = bytes / 1024.0;
+	}
+
+	static char output[200];
+	sprintf(output, "%  .02lf %s", dblBytes, suffix[i]);
+	return output;
+}
+
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation)
 {
     uint32_t diffCnt = 0;
     double cpuClkMHz = 0;
     double throughputInMBps = 0;
     cpuClkMHz = SOC_getSelfCpuClk()/1000000;
     diffCnt = (t2 - t1);
-
-    DebugP_log("[CRYPTO] Tick-1 : %ld  \r\n", (uint64_t)t1);
-    DebugP_log("[CRYPTO] Tick-2 : %ld  \r\n", (uint64_t)t2);
-    DebugP_log("[CRYPTO] Data length : %d bytes \r\n", numBytes);
-    DebugP_log("[CRYPTO] Total ticks : %ld \r\n", (uint64_t)(diffCnt));
-
     throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
-    
-    DebugP_log("[CRYPTO] Total throughput In Mbps  : %lf \r\n", (double)(8 * throughputInMBps));
+
+    App_benchmark *table = &results[gCount++];
+    table-> key = key;
+    if(operation == APP_OPERATION_ENCRYPT)
+    {
+        strcpy(table->operation, "Encryption");
+    }
+    else
+    {
+        strcpy(table->operation, "Decryption");
+    }
+    table->dataSize = numBytes;
+    table->performance = (double)(8 * throughputInMBps);
+}
+
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - SA2UL - AES \r\n");
+    DebugP_log("- Software/Application used : test_sa2ul_aes \r\n");
+    DebugP_log("- Code Placement            : OCMC \r\n");
+    DebugP_log("- Data Placement            : OCMC \r\n");
+    DebugP_log("- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("| Key Length | operation  | Size | Performance (Mbps) | \r\n");
+    DebugP_log("|-------------|------------|------|-------------| \r\n");
+    for( uint32_t i = 0; i < TEST_CRYPTO_AES_TEST_CASES_COUNT; i++)
+    {
+        DebugP_log("| %d | %s | %s | %lf |\r\n", results[i].key,  \
+                    results[i].operation, bytesToString(results[i].dataSize), results[i].performance);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }

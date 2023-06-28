@@ -32,6 +32,7 @@
 
 /* This test demonstrates the HW implementation of SHA */
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unity.h>
@@ -44,6 +45,10 @@
 #include <security/crypto/dthe/dthe.h>
 #include <security/crypto/dthe/dthe_sha.h>
 
+#define APP_SHA_512                             (512U)
+#define APP_SHA_256                             (256U)
+
+#define TEST_CRYPTO_SHA_TEST_CASES_COUNT        (14U)
 /* SHA512 length */
 #define TEST_SHA512_LENGTH                      (64U)
 /* SHA256 length */
@@ -220,6 +225,13 @@ uint8_t gCryptoShaHw256_512bTestSum[TEST_SHA256_LENGTH] =
     0x68,0xc1,0x53,0xcc,0x55,0x00,0xc8,0x36
 };
 
+typedef struct
+{
+    uint16_t hashLength;
+    uint16_t dataSize;
+    double performance;
+}App_benchmark;
+
 /* Local test functions */
 static void test_sha512_32kBuf(void *args);
 static void test_sha512_16kBuf(void *args);
@@ -237,10 +249,13 @@ static void test_sha256_2kBuf(void *args);
 static void test_sha256_1kBuf(void *args);
 static void test_sha256_512bBuf(void *args);
 
-
-
 static void test_get_buf(uint8_t * buf, uint32_t sizeInBytes);
-void App_printPerformanceResults(double t1, double t2, uint32_t numBytes);
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t hash);
+static const char *bytesToString(uint64_t bytes);
+void App_printPerformanceLogs(void);
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_SHA_TEST_CASES_COUNT];
 
 void test_main(void *args)
 {
@@ -267,6 +282,7 @@ void test_main(void *args)
     RUN_TEST(test_sha256_1kBuf,   8474, NULL);
     RUN_TEST(test_sha256_512bBuf, 8474, NULL);
 
+    App_printPerformanceLogs();
     UNITY_END();
     Board_driversClose();
     Drivers_close();
@@ -315,7 +331,7 @@ void test_sha512_32kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_32K_BUF_LEN, APP_SHA_512);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(shaHandle))
@@ -366,7 +382,7 @@ void test_sha512_16kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_16K_BUF_LEN, APP_SHA_512);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(shaHandle))
@@ -417,7 +433,7 @@ void test_sha512_8kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_8K_BUF_LEN, APP_SHA_512);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(shaHandle))
@@ -468,7 +484,7 @@ void test_sha512_4kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_4K_BUF_LEN, APP_SHA_512);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(shaHandle))
@@ -519,7 +535,7 @@ void test_sha512_2kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_2K_BUF_LEN, APP_SHA_512);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(shaHandle))
@@ -570,7 +586,7 @@ void test_sha512_1kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_1K_BUF_LEN, APP_SHA_512);
 
 
     /* Closing DTHE driver */
@@ -622,7 +638,7 @@ void test_sha512_512bBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_512B_BUF_LEN, APP_SHA_512);
 
 
     /* Closing DTHE driver */
@@ -674,7 +690,7 @@ void test_sha256_32kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_32K_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -727,7 +743,7 @@ void test_sha256_16kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_16K_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -779,7 +795,7 @@ void test_sha256_8kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_8K_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -831,7 +847,7 @@ void test_sha256_4kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_4K_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -883,7 +899,7 @@ void test_sha256_2kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_2K_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -936,7 +952,7 @@ void test_sha256_1kBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_1K_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -988,7 +1004,7 @@ void test_sha256_512bBuf(void *args)
     DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_SHA_HW_TEST_512B_BUF_LEN, APP_SHA_256);
 
 
     /* Closing DTHE driver */
@@ -1006,22 +1022,19 @@ void test_sha256_512bBuf(void *args)
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 }
 
-void App_printPerformanceResults(double t1, double t2, uint32_t numBytes)
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t hash)
 {
     double diffCnt = 0;
     double cpuClkMHz = 0;
     double throughputInMBps = 0;
     cpuClkMHz = SOC_getSelfCpuClk()/1000000;
     diffCnt = (t2 - t1);
-
-    DebugP_log("[CRYPTO] Tick-1 : %ld  \r\n", (uint64_t)t1);
-    DebugP_log("[CRYPTO] Tick-2 : %ld  \r\n", (uint64_t)t2);
-    DebugP_log("[CRYPTO] Data length : %d bytes \r\n", numBytes);
-    DebugP_log("[CRYPTO] Total ticks : %ld \r\n", (uint64_t)(diffCnt));
-
     throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
 
-    DebugP_log("[CRYPTO] Total throughput In Mbps  : %lf \r\n", (double)(8 * throughputInMBps));
+    App_benchmark *table = &results[gCount++];
+    table->hashLength = hash;
+    table->dataSize = numBytes;
+    table->performance = (double)(8 * throughputInMBps);
 }
 
 void test_get_buf(uint8_t * buf, uint32_t sizeInBytes)
@@ -1031,6 +1044,42 @@ void test_get_buf(uint8_t * buf, uint32_t sizeInBytes)
     CacheP_wb(buf, sizeInBytes, CacheP_TYPE_ALLD);
     /* Perform cache writeback */
     CacheP_inv(buf, sizeInBytes, CacheP_TYPE_ALLD);
+}
+
+static const char *bytesToString(uint64_t bytes)
+{
+	char *suffix[] = {"B", "KB", "MB", "GB", "TB"};
+	char length = sizeof(suffix) / sizeof(suffix[0]);
+
+	int i = 0;
+	double dblBytes = bytes;
+
+	if (bytes > 1024) {
+		for (i = 0; (bytes / 1024) > 0 && i<length-1; i++, bytes /= 1024)
+			dblBytes = bytes / 1024.0;
+	}
+
+	static char output[200];
+	sprintf(output, "%  .02lf %s", dblBytes, suffix[i]);
+	return output;
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - DTHE - SHA \r\n");
+    DebugP_log("- Software/Application used : test_dthe_sha \r\n");
+    DebugP_log("- Code Placement            : OCMC \r\n");
+    DebugP_log("- Data Placement            : OCMC \r\n");
+    DebugP_log("- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("| SHA | Size | Performance (Mbps) | \r\n");
+    DebugP_log("|-----|------|-------------| \r\n");
+    for( uint32_t i = 0; i < TEST_CRYPTO_SHA_TEST_CASES_COUNT; i++)
+    {
+        DebugP_log("| %d | %s | %lf |\r\n", results[i].hashLength, bytesToString(results[i].dataSize), results[i].performance);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }
 
 /* Public context crypto dthe, aes and sha accelerators base address */

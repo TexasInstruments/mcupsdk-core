@@ -32,6 +32,7 @@
 
 /* This test demonstrates the HW implementation of AES CMAC */
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unity.h>
@@ -44,6 +45,10 @@
 #include <security/crypto/dthe/dthe.h>
 #include <security/crypto/dthe/dthe_aes.h>
 #include <security/crypto.h>
+
+/* Supported Key length*/
+#define APP_CRYPTO_AES_CMAC_128          (128U)
+#define APP_CRYPTO_AES_CMAC_256          (256U)
 
 /* Aes block length*/
 #define TEST_CRYPTO_AES_BLOCK_LENGTH                            (16U)
@@ -75,6 +80,8 @@
 #define CSL_DTHE_PUBLIC_AES_U_BASE                              (0xCE007000U)
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                              (0xCE005000U)
+/* Total number of Test case*/
+#define TEST_CRYPTO_AES_TEST_CASES_COUNT                        (14U)
 
 /** Input buffer sizes */
 uint32_t gCryptoCmacTestInputBufSizes[7]={TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_16K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_8K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_4K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_2K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_1K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_512B_BUF_LEN};
@@ -83,6 +90,13 @@ uint32_t gCryptoCmacTestInputBufSizes[7]={TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN,
 uint8_t gCryptoCmacTestInputBuf[TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN] __attribute__((aligned(TEST_CRYPTO_AES_CMAC_BUF_ALIGNMENT), section(".bss.filebuf")));
 /** Test output buffer for cmac operation  */
 uint8_t gCryptoCmacTestOutputBuf[TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] __attribute__((aligned(TEST_CRYPTO_AES_CMAC_BUF_ALIGNMENT), section(".bss.filebuf")));
+
+typedef struct
+{
+    uint16_t key;
+    uint16_t dataSize;
+    double performance;
+}App_benchmark;
 
 /** CMAC-256 test vectors,this is expected hash for the gCryptoCmacTestInputBuf buffer */
 uint8_t gCryptoAesCmac256_32KbTestSum[7][TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] =
@@ -142,13 +156,18 @@ void test_xor_128(uint8_t *a, uint8_t *b, uint8_t *out);
 static void test_leftShift(uint8_t *input, uint8_t *output);
 void crypto_aes_cmac_256_main(void *args);
 static void test_get_buf(uint8_t * buf, uint32_t sizeInBytes);
-void App_printPerformanceResults(double t1, double t2, uint32_t numBytes);
 int32_t test_aes_ecb_128(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t *output);
 void test_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac);
-
 int32_t test_cmacGenSubKeys(Crypto_Params *params);
 
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key);
+static const char *bytesToString(uint64_t bytes);
+void App_printPerformanceLogs(void);
+
 DTHE_Handle         gAesCmacHandle;
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
 
 void test_main(void *args)
 {
@@ -162,6 +181,7 @@ void test_main(void *args)
     /** cmac-128 with different input buffers*/
     RUN_TEST(crypto_aes_cmac_128_main,  8591, NULL);
 
+    App_printPerformanceLogs();
     UNITY_END();
     Board_driversClose();
     Drivers_close();
@@ -182,7 +202,7 @@ void crypto_aes_cmac_256_main(void *args)
     uint32_t            t1, t2;
 
     DebugP_log("[CRYPTO] AES CMAC-256 example started ...\r\n");
-    
+
     memset(gCryptoCmacTestInputBuf,0x61,TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN);
 
     /* opens DTHe driver */
@@ -200,7 +220,7 @@ void crypto_aes_cmac_256_main(void *args)
         t2 = CycleCounterP_getCount32();
 
         DebugP_log("[CRYPTO] AES CMAC-256 test with %d bytes input buffer...\r\n",gCryptoCmacTestInputBufSizes[i]);
-        App_printPerformanceResults(t1, t2, gCryptoCmacTestInputBufSizes[i]);
+        App_fillPerformanceResults(t1, t2, gCryptoCmacTestInputBufSizes[i], APP_CRYPTO_AES_CMAC_256);
 
         if(memcmp(gCryptoCmacTestOutputBuf, gCryptoAesCmac256_32KbTestSum[i], TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
         {
@@ -346,7 +366,7 @@ void crypto_aes_cmac_128_main(void *args)
         t2 = CycleCounterP_getCount32();
 
         DebugP_log("[CRYPTO] AES CMAC-128 test with %d bytes input buffer...\r\n",gCryptoCmacTestInputBufSizes[i]);
-        App_printPerformanceResults(t1, t2, gCryptoCmacTestInputBufSizes[i]);
+        App_fillPerformanceResults(t1, t2, gCryptoCmacTestInputBufSizes[i], APP_CRYPTO_AES_CMAC_128);
 
         /* Comparing final AES CMAC result with expected test results*/
         if(memcmp(gCryptoCmacTestOutputBuf, gCryptoAesCmac128_32KbTestSum[i], TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
@@ -550,24 +570,6 @@ static void test_leftShift(uint8_t *input, uint8_t *output)
     return;
 }
 
-void App_printPerformanceResults(double t1, double t2, uint32_t numBytes)
-{
-    double diffCnt = 0;
-    double cpuClkMHz = 0;
-    double throughputInMBps = 0;
-    cpuClkMHz = SOC_getSelfCpuClk()/1000000;
-    diffCnt = (t2 - t1);
-
-    DebugP_log("[CRYPTO] Tick-1 : %ld  \r\n", (uint64_t)t1);
-    DebugP_log("[CRYPTO] Tick-2 : %ld  \r\n", (uint64_t)t2);
-    DebugP_log("[CRYPTO] Data length : %d bytes \r\n", numBytes);
-    DebugP_log("[CRYPTO] Total ticks : %ld \r\n", (uint64_t)(diffCnt));
-
-    throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
-    
-    DebugP_log("[CRYPTO] Total throughput In Mbps  : %lf \r\n", (double)(8 * throughputInMBps));
-}
-
 void test_get_buf(uint8_t * buf, uint32_t sizeInBytes)
 {
     memset(buf,0x61,sizeInBytes);
@@ -575,6 +577,58 @@ void test_get_buf(uint8_t * buf, uint32_t sizeInBytes)
     CacheP_wb(buf, sizeInBytes, CacheP_TYPE_ALLD);
     /* Perform cache writeback */
     CacheP_inv(buf, sizeInBytes, CacheP_TYPE_ALLD);
+}
+
+static const char *bytesToString(uint64_t bytes)
+{
+	char *suffix[] = {"B", "KB", "MB", "GB", "TB"};
+	char length = sizeof(suffix) / sizeof(suffix[0]);
+
+	int i = 0;
+	double dblBytes = bytes;
+
+	if (bytes > 1024) {
+		for (i = 0; (bytes / 1024) > 0 && i<length-1; i++, bytes /= 1024)
+			dblBytes = bytes / 1024.0;
+	}
+
+	static char output[200];
+	sprintf(output, "%  .02lf %s", dblBytes, suffix[i]);
+	return output;
+}
+
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key)
+{
+    uint32_t diffCnt = 0;
+    double cpuClkMHz = 0;
+    double throughputInMBps = 0;
+    cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    diffCnt = (t2 - t1);
+    throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
+
+    App_benchmark *table = &results[gCount++];
+    table-> key = key;
+    table->dataSize = numBytes;
+    table->performance = (double)(8 * throughputInMBps);
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - DTHE - AES - CMAC \r\n");
+    DebugP_log("- Software/Application used : test_athe_aes_cmac \r\n");
+    DebugP_log("- Code Placement            : OCRAM \r\n");
+    DebugP_log("- Data Placement            : OCRAM \r\n");
+    DebugP_log("- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("| Key Length | Size | Performance (Mbps) | \r\n");
+    DebugP_log("|------------|------|--------------------| \r\n");
+    for( uint32_t i = 0; i < TEST_CRYPTO_AES_TEST_CASES_COUNT; i++)
+    {
+        DebugP_log("| %d | %s | %lf |\r\n", results[i].key,  \
+                    bytesToString(results[i].dataSize), results[i].performance);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }
 
 /* Public context crypto dthe, aes and sha accelerators base address */

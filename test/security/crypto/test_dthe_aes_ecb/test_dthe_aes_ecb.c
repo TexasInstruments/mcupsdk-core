@@ -32,6 +32,7 @@
 
 /* This test demonstrates the HW implementation of SHA */
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unity.h>
@@ -46,6 +47,14 @@
 #include <security/crypto/dthe/dthe.h>
 #include <security/crypto/dthe/dthe_aes.h>
 #include <kernel/dpl/ClockP.h>
+
+/* Supported Operations */
+#define APP_OPERATION_ENCRYPT           (1U)
+#define APP_OPERATION_DECRYPT           (2U)
+
+/* Supported Key length*/
+#define APP_CRYPTO_AES_ECB_128          (128U)
+#define APP_CRYPTO_AES_ECB_256          (256U)
 
 /* Aes max key length*/
 #define APP_CRYPTO_AES_ECB_128_MAXKEY_LENGTH          (16U)
@@ -71,6 +80,8 @@
 #define CSL_DTHE_PUBLIC_AES_U_BASE                    (0xCE007000U)
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                    (0xCE005000U)
+/* Total number of Test case*/
+#define TEST_CRYPTO_AES_TEST_CASES_COUNT              (28U)
 
 /* The AES encryption algorithm encrypts and decrypts data in blocks of 128 bits. It can do this using 128-bit, 192-bit, or 256-bit keys */
 static uint8_t gCryptoAesEcb128Key[APP_CRYPTO_AES_ECB_128_MAXKEY_LENGTH] =
@@ -95,6 +106,14 @@ uint8_t     gCryptoAesEcbEncResultBuf[TEST_CRYPTO_AES_TEST_32K_BUF_LEN] __attrib
 /* Decryption output buf */
 uint8_t     gCryptoAesEcbDecResultBuf[TEST_CRYPTO_AES_TEST_32K_BUF_LEN] __attribute__((aligned(128), section(".bss.filebuf")));
 
+typedef struct
+{
+    uint16_t key;
+    char operation[20];
+    uint16_t dataSize;
+    double performance;
+}App_benchmark;
+
 /* Local test functions */
 static void test_aes_ecb128_32kBuf(void *args);
 static void test_aes_ecb128_16kBuf(void *args);
@@ -111,9 +130,14 @@ static void test_aes_ecb256_4kBuf(void *args);
 static void test_aes_ecb256_2kBuf(void *args);
 static void test_aes_ecb256_1kBuf(void *args);
 static void test_aes_ecb256_512bBuf(void *args);
-void App_printPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes);
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation);
+static const char *bytesToString(uint64_t bytes);
+void App_printPerformanceLogs(void);
 
 DTHE_Handle         aesHandle;
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
 
 void loop_forever()
 {
@@ -152,7 +176,7 @@ void test_main(void *args)
     RUN_TEST(test_aes_ecb256_1kBuf,   8473, NULL);
     RUN_TEST(test_aes_ecb256_512bBuf, 8473, NULL);
 
-
+    App_printPerformanceLogs();
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(aesHandle))
     {
@@ -216,8 +240,7 @@ void test_aes_ecb128_32kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -244,8 +267,7 @@ void test_aes_ecb128_32kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
@@ -291,8 +313,7 @@ void test_aes_ecb128_16kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -320,8 +341,7 @@ void test_aes_ecb128_16kBuf(void *args)
 
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
@@ -367,8 +387,7 @@ void test_aes_ecb128_8kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -395,8 +414,7 @@ void test_aes_ecb128_8kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
@@ -443,8 +461,7 @@ void test_aes_ecb128_4kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -472,8 +489,7 @@ void test_aes_ecb128_4kBuf(void *args)
 
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
@@ -520,8 +536,7 @@ void test_aes_ecb128_2kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -549,8 +564,7 @@ void test_aes_ecb128_2kBuf(void *args)
 
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
@@ -597,8 +611,7 @@ void test_aes_ecb128_1kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -626,8 +639,7 @@ void test_aes_ecb128_1kBuf(void *args)
 
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
@@ -674,8 +686,7 @@ void test_aes_ecb128_512bBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -702,8 +713,7 @@ void test_aes_ecb128_512bBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
 
 
     /* comparing result with expected test results */
@@ -750,8 +760,7 @@ void test_aes_ecb256_32kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -778,8 +787,7 @@ void test_aes_ecb256_32kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
@@ -826,8 +834,7 @@ void test_aes_ecb256_16kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -854,8 +861,7 @@ void test_aes_ecb256_16kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
@@ -902,8 +908,7 @@ void test_aes_ecb256_8kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -930,8 +935,7 @@ void test_aes_ecb256_8kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
@@ -977,8 +981,7 @@ void test_aes_ecb256_4kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -1005,8 +1008,7 @@ void test_aes_ecb256_4kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
@@ -1052,8 +1054,7 @@ void test_aes_ecb256_2kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -1080,8 +1081,7 @@ void test_aes_ecb256_2kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
@@ -1127,8 +1127,7 @@ void test_aes_ecb256_1kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -1155,8 +1154,7 @@ void test_aes_ecb256_1kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
@@ -1202,8 +1200,7 @@ void test_aes_ecb256_512bBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Encryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
@@ -1230,8 +1227,7 @@ void test_aes_ecb256_512bBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    DebugP_log("Decryption Performance :\r\n");
-    App_printPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
+    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
     status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
@@ -1240,22 +1236,64 @@ void test_aes_ecb256_512bBuf(void *args)
 }
 
 
-void App_printPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes)
+static const char *bytesToString(uint64_t bytes)
+{
+	char *suffix[] = {"B", "KB", "MB", "GB", "TB"};
+	char length = sizeof(suffix) / sizeof(suffix[0]);
+
+	int i = 0;
+	double dblBytes = bytes;
+
+	if (bytes > 1024) {
+		for (i = 0; (bytes / 1024) > 0 && i<length-1; i++, bytes /= 1024)
+			dblBytes = bytes / 1024.0;
+	}
+
+	static char output[200];
+	sprintf(output, "%  .02lf %s", dblBytes, suffix[i]);
+    return output;
+}
+
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation)
 {
     uint32_t diffCnt = 0;
     double cpuClkMHz = 0;
     double throughputInMBps = 0;
     cpuClkMHz = SOC_getSelfCpuClk()/1000000;
     diffCnt = (t2 - t1);
-
-    DebugP_log("[CRYPTO] Tick-1 : %ld  \r\n", (uint64_t)t1);
-    DebugP_log("[CRYPTO] Tick-2 : %ld  \r\n", (uint64_t)t2);
-    DebugP_log("[CRYPTO] Data length : %d bytes \r\n", numBytes);
-    DebugP_log("[CRYPTO] Total ticks : %ld \r\n", (uint64_t)(diffCnt));
-
     throughputInMBps  = (numBytes * cpuClkMHz)/diffCnt;
 
-    DebugP_log("[CRYPTO] Total throughput In Mbps  : %lf \r\n", (double)(8 * throughputInMBps));
+    App_benchmark *table = &results[gCount++];
+    table-> key = key;
+    if(operation == APP_OPERATION_ENCRYPT)
+    {
+        strcpy(table->operation, "Encryption");
+    }
+    else
+    {
+        strcpy(table->operation, "Decryption");
+    }
+    table->dataSize = numBytes;
+    table->performance = (double)(8 * throughputInMBps);
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - SA2UL - AES - ECB \r\n");
+    DebugP_log("- Software/Application used : test_dthe_aes_ecb \r\n");
+    DebugP_log("- Code Placement            : OCRAM \r\n");
+    DebugP_log("- Data Placement            : OCRAM \r\n");
+    DebugP_log("- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("| Key Length | operation  | Size | Performance (Mbps) | \r\n");
+    DebugP_log("|-------------|------------|------|-------------| \r\n");
+    for( uint32_t i = 0; i < TEST_CRYPTO_AES_TEST_CASES_COUNT; i++)
+    {
+        DebugP_log("| %d | %s | %s | %lf |\r\n", results[i].key,  \
+                    results[i].operation, bytesToString(results[i].dataSize), results[i].performance);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }
 
 /* Public context crypto dthe, aes and sha accelerators base address */

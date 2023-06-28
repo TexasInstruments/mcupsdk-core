@@ -48,6 +48,15 @@ static uint32_t gPkaRsaShaHashWith32BitFormate[PKA_BIGINT_MAX];
 static uint32_t gPkaRsaShaHashWithBigIntFormate[PKA_BIGINT_MAX];
 static uint8_t  gPkaRsaShaHashWithPadding[(PKA_BIGINT_MAX * 4)];
 
+#define TEST_PKA_RSA_COUNT                      (2U)
+
+#define TEST_PKA_RSA_2048_BIT                   (2048U)
+#define TEST_PKA_RSA_4096_BIT                   (4096U)
+
+#define TEST_PKA_SIGN                           (1U)
+#define TEST_PKA_VERIFY                         (2U)
+#define TEST_PKA_SIGN_VERIFY                    (3U)
+
 /* SHA512 length */
 #define APP_SHA512_LENGTH                           (64U)
 
@@ -462,6 +471,14 @@ PKA_Handle			gPkaHandle = NULL;
 /* Crypto handle for processing SHA api's */
 Crypto_Handle       gShaHandle;
 
+typedef struct
+{
+    uint32_t curve;
+    uint32_t sign;
+    uint32_t verify;
+    uint32_t signVerify;
+}App_benchmark;
+
 /* Context memory */
 static Crypto_Context gCryptoShaContext __attribute__ ((aligned (SA2UL_CACHELINE_ALIGNMENT)));
 /* Context Object */
@@ -478,8 +495,12 @@ void app_getHashFormVerifyOutput(uint32_t *verifyOutput, uint8_t *hash, uint8_t 
 static void test_pka_rsa_sign_verify_2kBit_key(void *args);
 static void test_pka_rsa_sign_verify_4kBit_key(void *args);
 
-void App_printPerformanceResults(uint64_t t1, uint64_t t2);
-void App_printTotalPerformanceResults(uint64_t tTotal);
+void App_fillPerformanceResults(uint64_t t1, uint64_t t2, uint32_t operation, uint32_t curve);
+void App_fillTotalPerformanceResults(uint64_t tTotal, uint32_t curve);
+void App_printPerformanceLogs();
+
+App_benchmark results[TEST_PKA_RSA_COUNT];
+
 void test_main(void *args)
 {
     Drivers_open();
@@ -498,6 +519,7 @@ void test_main(void *args)
 
     RUN_TEST(test_pka_rsa_sign_verify_2kBit_key,  2525, NULL);
 	RUN_TEST(test_pka_rsa_sign_verify_4kBit_key,  2526, NULL);
+    App_printPerformanceLogs();
 
     /* Close PKA instance, disable PKA engine, deinitialize clocks*/
 	status = PKA_close(gPkaHandle);
@@ -544,8 +566,7 @@ void test_pka_rsa_sign_verify_2kBit_key(void *args)
 	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
-    DebugP_log("RSA Signing Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_SIGN, TEST_PKA_RSA_2048_BIT);
 
 	tTotal = t2 - t1;
 
@@ -556,14 +577,13 @@ void test_pka_rsa_sign_verify_2kBit_key(void *args)
 	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
-    DebugP_log("RSA Verification Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_VERIFY, TEST_PKA_RSA_2048_BIT);
 
     /* Extracting Message hash from verify output */
 	app_getHashFormVerifyOutput(gPkaRsaVerifyOutputResult, gCryptoShaHashBufForCompare, HASH_ALG_SHA2_512);
 
 	tTotal = tTotal +(t2 - t1);
-    App_printTotalPerformanceResults(tTotal);
+    App_fillTotalPerformanceResults(tTotal, TEST_PKA_RSA_2048_BIT);
 
     if (0 != memcmp(gCryptoShaOutputBuf, gCryptoShaHashBufForCompare, sizeof(gCryptoShaHashBufForCompare)))
 	{
@@ -597,8 +617,7 @@ void test_pka_rsa_sign_verify_4kBit_key(void *args)
 	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
-    DebugP_log("RSA Signing Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_SIGN, TEST_PKA_RSA_4096_BIT);
 
 	tTotal = t2 - t1;
 
@@ -609,14 +628,13 @@ void test_pka_rsa_sign_verify_4kBit_key(void *args)
 	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
 
     t2 = ClockP_getTimeUsec();
-    DebugP_log("RSA Verification Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_VERIFY, TEST_PKA_RSA_4096_BIT);
 
     /* Extracting Message hash from verify output */
 	app_getHashFormVerifyOutput(gPkaRsaVerifyOutputResult, gCryptoShaHashBufForCompare, HASH_ALG_SHA2_512);
 
 	tTotal = tTotal +(t2 - t1);
-    App_printTotalPerformanceResults(tTotal);
+    App_fillTotalPerformanceResults(tTotal, TEST_PKA_RSA_4096_BIT);
 
     if (0 != memcmp(gCryptoShaOutputBuf, gCryptoShaHashBufForCompare, sizeof(gCryptoShaHashBufForCompare)))
 	{
@@ -624,17 +642,6 @@ void test_pka_rsa_sign_verify_4kBit_key(void *args)
 		TEST_ASSERT_EQUAL_UINT32(SystemP_FAILURE, 0);
 	}
     return;
-}
-
-void App_printPerformanceResults(uint64_t t1, uint64_t t2)
-{
-    uint64_t totalTimeInMicroSec = t2 - t1;
-    uint64_t throughputInOps = 1000000/totalTimeInMicroSec;
-
-    DebugP_log("[CRYPTO] Tstart(us) : %ld \r\n", t1);
-	DebugP_log("[CRYPTO] Tend(us)   : %ld \r\n", t2);
-	DebugP_log("[CRYPTO] Tdiff(us)   : %ld \r\n", totalTimeInMicroSec);
-    DebugP_log("[CRYPTO] Operations/seconds  : %ld \r\n", throughputInOps);
 }
 
 int32_t sha512(uint8_t *inputBuf, uint32_t inputLength, uint8_t *output )
@@ -690,10 +697,65 @@ void app_getHashFormVerifyOutput(uint32_t *verifyOutput, uint8_t *hash, uint8_t 
 	return;
 }
 
-void App_printTotalPerformanceResults(uint64_t tTotal)
+void App_fillPerformanceResults(uint64_t t1, uint64_t t2, uint32_t operation, uint32_t curve)
+{
+    uint64_t totalTimeInMicroSec = t2 - t1;
+    uint64_t throughputInOps = 1000000/totalTimeInMicroSec;
+
+    if(curve == TEST_PKA_RSA_2048_BIT)
+    {
+        results[0].curve = TEST_PKA_RSA_2048_BIT;
+        if(operation == TEST_PKA_SIGN)
+        {
+            results[0].sign = throughputInOps;
+        }
+        else if(operation == TEST_PKA_VERIFY)
+        {
+            results[0].verify = throughputInOps;
+        }
+    }
+    else
+    {
+        results[1].curve = TEST_PKA_RSA_4096_BIT;
+        if(operation == TEST_PKA_SIGN)
+        {
+            results[1].sign = throughputInOps;
+        }
+        else if(operation == TEST_PKA_VERIFY)
+        {
+            results[1].verify = throughputInOps;
+        }
+    }
+}
+
+void App_fillTotalPerformanceResults(uint64_t tTotal, uint32_t curve)
 {
     uint64_t throughputInOps = 1000000/tTotal;
 
-    DebugP_log("[CRYPTO] Ttotal(us) : %ld \r\n", tTotal);
-    DebugP_log("[CRYPTO] Sign and Verify Operations/seconds  : %ld \r\n", throughputInOps);
+    if(curve == TEST_PKA_RSA_2048_BIT)
+    {
+        results[0].signVerify = throughputInOps;
+    }
+    else
+    {
+        results[1].signVerify = throughputInOps;
+    }
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - SA2UL - PKA - RSA SIGN VERIFY \r\n");
+    DebugP_log("- Software/Application used : test_sa2ul_pka \r\n");
+    DebugP_log("- Supported keys            : 4K and 2K\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("- OS used                   : nortos \r\n\n");
+    DebugP_log("| ECDSA            | Sign/sec  | Verify/sec  | Sign and verify/sec |\r\n");
+    DebugP_log("|------------------|-----------|-------------|---------------------| \r\n");
+    CacheP_wbAll(CacheP_TYPE_ALL);
+    for( uint32_t i = 0; i < TEST_PKA_RSA_COUNT; i++)
+    {
+        DebugP_log("| %d | %d | %d | %d |\r\n", results[i].curve, results[i].sign, results[i].verify, results[i].signVerify);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }

@@ -86,7 +86,15 @@ void mathlib_benchmark_main(void)
     Drivers_open();
     Board_driversOpen();
 
-    DebugP_log("\n\nTrig Benchmark Test \r\n");
+    DebugP_log("\n\nTrig Benchmark Test \r\n\n");
+
+    /* Print Benchmark conditions */
+    DebugP_log("BENCHMARK START - MATHLIB - MATHLIB BENCHMARK \r\n");
+    DebugP_log("- Calculated for the 500 samples taken between 0 and 2 * Pi \r\n");
+    DebugP_log("- Trignometric function timings compared between the optimized Mathlib mcusdk implementation and "
+                "the compiler mathlib version\r\n");
+    DebugP_log("- The max error for each operation between the optimized Mathlib mcusdk functions and"
+                " the compiler mathlib version is printed \r\n");
 
     DebugP_log("\n\nFunction\t| Err\t\t| Max Cycles Mathlib (mcusdk) \t| avg cycles Mathlib (mcusdk) \t| max cycles mathlib (clang) \t| avg cycles mathlib (clang) \t|\r\n");
         DebugP_log("----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|\r\n");
@@ -105,6 +113,7 @@ void mathlib_benchmark_main(void)
 
     if(status == SystemP_SUCCESS)
     {
+        DebugP_log("BENCHMARK END \r\n");
         DebugP_log("Trig Benchmark Test Completed!!\r\n");
         DebugP_log("All tests have passed!!\r\n");
     }

@@ -44,6 +44,15 @@
 #include <drivers/hw_include/am263x/cslr_soc_baseaddress.h>
 #include <security/crypto/pka/pka.h>
 
+#define TEST_PKA_ECDSA_COUNT                    (2U)
+
+#define TEST_PKA_ECDSA_P_256                    (256U)
+#define TEST_PKA_ECDSA_P_384                    (384U)
+
+#define TEST_PKA_SIGN                           (1U)
+#define TEST_PKA_VERIFY                         (2U)
+#define TEST_PKA_SIGN_VERIFY                    (3U)
+
 #define TEST_PKA_ECDSA_P_256_SIZE_IN_BYTES      (32U)
 #define TEST_PKA_ECDSA_P_384_SIZE_IN_BYTES      (48U)
 #define DTHE_PKA_INSTANCE                       (0U)
@@ -62,9 +71,9 @@ static const uint32_t gPkaEcdsaPrivateP256Key[] =
 };
 
 /* Openssl command To generate EC curve params: openssl ecparam -name prime256v1 -out prime256v1.pem
-Openssl cmd To see content of key in text form: openssl ecparam -in prime256v1.pem -text -param_enc explicit -noout 
+Openssl cmd To see content of key in text form: openssl ecparam -in prime256v1.pem -text -param_enc explicit -noout
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_ECPrimeCurveP gPkaEcPrimeP256CurveParams = 
+static const struct PKA_ECPrimeCurveP gPkaEcPrimeP256CurveParams =
 {
 	{
 		8UL,
@@ -102,7 +111,7 @@ static const struct PKA_ECPrimeCurveP gPkaEcPrimeP256CurveParams =
 
 /* Openssl command To generate public key: openssl ec -in ecdsa_prime256v1_private.pem -pubout -out ecdsa_prime256v1_public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format */
-static const struct PKA_ECPoint gPkaEcdsaPublicP256Key = 
+static const struct PKA_ECPoint gPkaEcdsaPublicP256Key =
 {
 	{
 		8UL,
@@ -117,7 +126,7 @@ static const struct PKA_ECPoint gPkaEcdsaPublicP256Key =
 };
 
 /* Random key with Bigint format */
-static const uint32_t gPkaEcdsaRandamP256Key[] = 
+static const uint32_t gPkaEcdsaRandamP256Key[] =
 {
 	8UL,
 	0x3D8AAD60UL, 0x4D612949UL, 0x3382B0F2UL, 0x3B17AA87UL,
@@ -125,7 +134,7 @@ static const uint32_t gPkaEcdsaRandamP256Key[] =
 };
 
 /* Sha256 hash of message "sample" with out null at end and Bigint format */
-static const uint32_t gPkaEcdsaHashP256 [] = 
+static const uint32_t gPkaEcdsaHashP256 [] =
 {
 	8UL,
 	0x62ADD1BFUL, 0x62113D8AUL, 0x68E98915UL, 0x1A831D02UL,
@@ -144,9 +153,9 @@ static const uint32_t gPkaEcdsaPrivateP384Key[] =
 };
 
 /* Openssl command To generate EC curve params: openssl ecparam -name secp384r1 -out secp384r1.pem
-Openssl cmd To see content of key in text form: openssl ecparam -in secp384r1.pem -text -param_enc explicit -noout 
+Openssl cmd To see content of key in text form: openssl ecparam -in secp384r1.pem -text -param_enc explicit -noout
 The below key is in Bigint format please check in Api guide to know about Bigint format*/
-static const struct PKA_ECPrimeCurveP gPkaEcPrimeP384CurveParams = 
+static const struct PKA_ECPrimeCurveP gPkaEcPrimeP384CurveParams =
 {
 	{
 		12UL,
@@ -190,7 +199,7 @@ static const struct PKA_ECPrimeCurveP gPkaEcPrimeP384CurveParams =
 
 /* Openssl command To generate public key: openssl ec -in ecdsa_secp384r1_private.pem -pubout -out ecdsa_secp384r1_public.pem
 The below key is in Bigint format please check in Api guide to know about Bigint format */
-static const struct PKA_ECPoint gPkaEcdsaPublicP384Key = 
+static const struct PKA_ECPoint gPkaEcdsaPublicP384Key =
 {
 	{
 		12UL,
@@ -207,7 +216,7 @@ static const struct PKA_ECPoint gPkaEcdsaPublicP384Key =
 };
 
 /* Random key with Bigint format */
-static const uint32_t gPkaEcdsaRandamP384Key[] = 
+static const uint32_t gPkaEcdsaRandamP384Key[] =
 {
 	12UL,
 	0x86915CF9UL, 0x623B8C46UL, 0x3BA95368UL, 0x2907E3E8UL,
@@ -216,7 +225,7 @@ static const uint32_t gPkaEcdsaRandamP384Key[] =
 };
 
 /* Sha384 hash of message "sample" with out null at end and Bigint format */
-static const uint32_t gPkaEcdsaHashP384 [] = 
+static const uint32_t gPkaEcdsaHashP384 [] =
 {
     12UL,
 	0xB1EE25FEUL, 0xFEE42C77UL, 0x9B5B890EUL, 0x313BCA4AUL,
@@ -224,12 +233,23 @@ static const uint32_t gPkaEcdsaHashP384 [] =
     0x2696EF7BUL, 0xAEC4BE31UL, 0x5BC92276UL, 0x9A908350UL,
 };
 
+typedef struct
+{
+    uint32_t curve;
+    uint32_t sign;
+    uint32_t verify;
+    uint32_t signVerify;
+}App_benchmark;
+
 /* Local test functions */
 static void test_pka_ecdsa_sign_verify_p_256(void *args);
 static void test_pka_ecdsa_sign_verify_p_384(void *args);
 
-void App_printPerformanceResults(uint64_t t1, uint64_t t2);
-void App_printTotalPerformanceResults(uint64_t tTotal);
+void App_fillPerformanceResults(uint64_t t1, uint64_t t2, uint32_t operation, uint32_t curve);
+void App_fillTotalPerformanceResults(uint64_t tTotal, uint32_t curve);
+void App_printPerformanceLogs();
+
+App_benchmark results[TEST_PKA_ECDSA_COUNT];
 
 /* PKA handle for processing every api's */
 PKA_Handle			gPkaHandle = NULL;
@@ -238,7 +258,7 @@ void test_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-    
+
 	PKA_Return_t             status = PKA_RETURN_SUCCESS;
 
     DebugP_log("[PKA] ECDSA Signing and verification example started ...\r\n");
@@ -249,7 +269,8 @@ void test_main(void *args)
 
     RUN_TEST(test_pka_ecdsa_sign_verify_p_256,  8477, NULL);
 	RUN_TEST(test_pka_ecdsa_sign_verify_p_384,  8476, NULL);
-    
+
+    App_printPerformanceLogs();
     /* Close PKA instance, disable PKA engine, deinitialize clocks*/
 	status = PKA_close(gPkaHandle);
 	TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
@@ -281,10 +302,10 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
     /* Openssl Command for Sign: openssl dgst -sha256 -sign ecdsa_prime256v1_private.pem -rand rand_key.bin -out ecdsa_sign.bin msg.bin */
     status = PKA_ECDSASign(gPkaHandle, &gPkaEcPrimeP256CurveParams, gPkaEcdsaPrivateP256Key, gPkaEcdsaRandamP256Key, gPkaEcdsaHashP256, &sig);
     TEST_ASSERT_EQUAL_UINT32(PKA_RETURN_SUCCESS, status);
-    
+
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Signing Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_SIGN, TEST_PKA_ECDSA_P_256);
 
     tTotal = t2 - t1;
 
@@ -296,11 +317,11 @@ void test_pka_ecdsa_sign_verify_p_256(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Verification Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_VERIFY, TEST_PKA_ECDSA_P_256);
 
     tTotal = tTotal +(t2 - t1);
 
-    App_printTotalPerformanceResults(tTotal);
+    App_fillTotalPerformanceResults(tTotal, TEST_PKA_ECDSA_P_256);
     return;
 }
 
@@ -320,7 +341,7 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Signing Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
+    App_fillPerformanceResults(t1, t2, TEST_PKA_SIGN, TEST_PKA_ECDSA_P_384);
 
     tTotal = t2 - t1;
 
@@ -332,31 +353,73 @@ void test_pka_ecdsa_sign_verify_p_384(void *args)
 
     t2 = ClockP_getTimeUsec();
     DebugP_log("ECDSA Verification Performance :\r\n");
-    App_printPerformanceResults(t1, t2);
-    
+    App_fillPerformanceResults(t1, t2, TEST_PKA_VERIFY, TEST_PKA_ECDSA_P_384);
+
     tTotal = tTotal +(t2 - t1);
-    App_printTotalPerformanceResults(tTotal);
+    App_fillTotalPerformanceResults(tTotal, TEST_PKA_ECDSA_P_384);
 
     return;
 }
 
-void App_printPerformanceResults(uint64_t t1, uint64_t t2)
+void App_fillPerformanceResults(uint64_t t1, uint64_t t2, uint32_t operation, uint32_t curve)
 {
     uint64_t totalTimeInMicroSec = t2 - t1;
     uint64_t throughputInOps = 1000000/totalTimeInMicroSec;
-    
-    DebugP_log("[CRYPTO] Tstart(us) : %ld \r\n", t1);
-	DebugP_log("[CRYPTO] Tend(us)   : %ld \r\n", t2);
-	DebugP_log("[CRYPTO] Tdiff(us)   : %ld \r\n", totalTimeInMicroSec);
-    DebugP_log("[CRYPTO] Operations/seconds  : %ld \r\n", throughputInOps);
+    if(curve == TEST_PKA_ECDSA_P_256)
+    {
+        results[0].curve = TEST_PKA_ECDSA_P_256;
+        if(operation == TEST_PKA_SIGN)
+        {
+            results[0].sign = throughputInOps;
+        }
+        else if(operation == TEST_PKA_VERIFY)
+        {
+            results[0].verify = throughputInOps;
+        }
+    }
+    else
+    {
+        results[1].curve = TEST_PKA_ECDSA_P_384;
+        if(operation == TEST_PKA_SIGN)
+        {
+            results[1].sign = throughputInOps;
+        }
+        else if(operation == TEST_PKA_VERIFY)
+        {
+            results[1].verify = throughputInOps;
+        }
+    }
 }
 
-void App_printTotalPerformanceResults(uint64_t tTotal)
+void App_fillTotalPerformanceResults(uint64_t tTotal, uint32_t curve)
 {
     uint64_t throughputInOps = 1000000/tTotal;
-    
-    DebugP_log("[CRYPTO] Ttotal(us) : %ld \r\n", tTotal);
-    DebugP_log("[CRYPTO] Sign and Verify Operations/seconds  : %ld \r\n", throughputInOps);
+
+    if(curve == TEST_PKA_ECDSA_P_256)
+    {
+        results[0].signVerify = throughputInOps;
+    }
+    else
+    {
+        results[1].signVerify = throughputInOps;
+    }
+}
+
+void App_printPerformanceLogs()
+{
+    double cpuClkMHz = SOC_getSelfCpuClk()/1000000;
+    DebugP_log("BENCHMARK START - DTHE - PKA - ECDSA \r\n");
+    DebugP_log("- Software/Application used : test_ecdsa_signing_verification \r\n");
+    DebugP_log("- Supported Curves          : p-256 and p-384\r\n");
+    DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
+    DebugP_log("- OS used                   : nortos \r\n\n");
+    DebugP_log("| ECDSA curve      | Sign/sec  | Verify/sec  | Sign and verify/sec |\r\n");
+    DebugP_log("|------------------|-----------|-------------|---------------------| \r\n");
+    for( uint32_t i = 0; i < TEST_PKA_ECDSA_COUNT; i++)
+    {
+        DebugP_log("| %d | %ld | %ld | %ld |\r\n", results[i].curve, results[i].sign, results[i].verify, results[i].signVerify);
+    }
+    DebugP_log("BENCHMARK END\r\n");
 }
 
 /* Public context crypto dthe and pka accelerators base address */
