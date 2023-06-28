@@ -342,7 +342,10 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
 
         IpcNotify_getReadMailbox(&mailboxBaseAddr);
 
-        IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
+        if((pInterruptConfig->clearIntOnInit) != 0U)
+        {
+            IpcNotify_mailboxClearAllInt(mailboxBaseAddr);
+        }
 
         HwiP_Params_init(&hwiParams);
         hwiParams.intNum = pInterruptConfig->intNum;

@@ -224,6 +224,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_0[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_MAX,
         },
+	.clearIntOnInit = 0,
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss0_0 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS0_0_NUM;
@@ -241,6 +242,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss0_1[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_MAX,
         },
+	.clearIntOnInit = 0,
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss0_1 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS0_1_NUM;
@@ -258,6 +260,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_0[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_1,
             CSL_CORE_ID_MAX,
         },
+	.clearIntOnInit = 0,
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss1_0 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_0_NUM;
@@ -275,6 +278,7 @@ IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_r5fss1_1[IPC_NOFTIY_INTERRUP
             CSL_CORE_ID_R5FSS1_0,
             CSL_CORE_ID_MAX,
         },
+	.clearIntOnInit = 0,
     }
 };
 uint32_t gIpcNotifyInterruptConfigNum_r5fss1_1 = IPC_NOFTIY_INTERRUPT_CONFIG_R5FSS1_1_NUM;
