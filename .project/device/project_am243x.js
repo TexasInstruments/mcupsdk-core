@@ -174,6 +174,7 @@ const example_file_list = [
     "examples/sdl/esm/mcu_esm0/.project/project.js",
     "examples/sdl/ecc/.project/project.js",
     "examples/sdl/stog_r5f/.project/project.js",
+    "examples/sdl/rom_checksum/.project/project.js",
     "test/sdl/dcc/dcc_unit_test/.project/project.js",
     "test/sdl/dcc/dcc_func_test/.project/project.js",
     "test/sdl/esm/esm_func_test/.project/project.js",

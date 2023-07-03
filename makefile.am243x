@@ -395,6 +395,7 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/rom_checksum/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -1072,6 +1073,7 @@ BUILD_COMBO_EXAMPLE_ALL += ecc_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecc_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am243x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rom_checksum_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += benchmark_demo_am243x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += benchmark_demo_am243x-lp_system_nortos
@@ -2016,6 +2018,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_stog_r5f_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ rom_checksum_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/rom_checksum/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  benchmark_demo_am243x-evm_system_nortos:
 	$(MAKE) -C examples/benchmarks/benchmark_demo/am243x-evm/system_nortos -f makefile all
 
@@ -2367,6 +2372,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_example_am243x-evm_m4fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecc_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rom_checksum_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += benchmark_demo_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += benchmark_demo_am243x-lp_system_nortos_clean
@@ -3311,6 +3317,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_stog_r5f_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ rom_checksum_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/rom_checksum/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  benchmark_demo_am243x-evm_system_nortos_clean:
 	$(MAKE) -C examples/benchmarks/benchmark_demo/am243x-evm/system_nortos -f makefile clean
 
@@ -3662,6 +3671,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_example_am243x-evm_m4fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecc_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rom_checksum_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += benchmark_demo_am243x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += benchmark_demo_am243x-lp_system_nortos_scrub
@@ -4605,6 +4615,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdl_stog_r5f_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rom_checksum_example_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/rom_checksum/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  benchmark_demo_am243x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/benchmarks/benchmark_demo/am243x-evm/system_nortos -f makefile scrub
