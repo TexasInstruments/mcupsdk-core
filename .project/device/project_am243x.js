@@ -198,6 +198,8 @@ const example_file_list = [
     "test/sdl/pbist/ip_pbist_test/.project/project.js",
     "test/sdl/utils/.project/project.js",
     "test/sdl/stog/stog_func_test_r5f/.project/project.js",
+    "test/sdl/rom_checksum/functional_test/.project/project.js",
+    "test/sdl/rom_checksum/unit_test/.project/project.js",
     "test/board/eeprom/.project/project.js",
     "test/board/flash/.project/project.js",
     "test/board/led/.project/project.js",
