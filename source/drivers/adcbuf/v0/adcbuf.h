@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -73,14 +73,7 @@ extern "C" {
  *
  * @{
  */
-/**
- * \brief  Success status code returned by:
- * ADCBuf_control()
- *
- * Functions return ADCBuf_STATUS_SUCCESS if the call was executed
- * successfully.
- */
-#define ADCBUF_STATUS_SUCCESS           (0U)
+
 /**
  * \brief   Generic error status code returned by ADCBuf_control().
  *
@@ -130,6 +123,45 @@ typedef uint32_t ADCBufMMWave_CQType;
 #define ADCBufMMWave_CQType_CQ1         ((uint32_t) 1) /**< CQ type for CQ1. */
 #define ADCBufMMWave_CQType_CQ2         ((uint32_t) 2) /**< CQ type for CQ2. */
 #define ADCBufMMWave_CQType_MAX_CQ      ((uint32_t) 3) /**< Maximum number of CQ which can be supported. */
+
+/**
+ * \brief  Macro defines maximum value of Source Selection.
+ */
+#define ADCBUF_SOURCE_SELECT_MAX         ((uint32_t)(0x1U))
+
+/**
+ * \brief  Macro defines maximum value of Number of Chirps in
+ *         PING memory.
+ */
+#define ADCBUF_PING_THRESHOLD_MAX         ((uint32_t)(0x1FU))
+
+/**
+ * \brief  Macro defines maximum value of Number of Chirps in
+ *         PONG memory.
+ */
+#define ADCBUF_PONG_THRESHOLD_MAX         ((uint32_t)(0x1FU))
+
+/**
+ * \brief  Macro defines maximum value of CONTINUOUS mode enable.
+ */
+#define ADCBUF_CONTINUOUS_MODE_MAX         ((uint32_t)(0x1U))
+
+/**
+ * \brief  Macro defines maximum value of DATA FORMAT Complex
+ *         data or Real data mode.
+ */
+#define ADCBUF_DATA_FMT_MAX                 ((uint32_t)(0x1U))
+
+/**
+ * \brief  Macro defines maximum value of Write mode interleave or
+ *         Non-interleave.
+ */
+#define ADCBUF_WRITEMODE_MAX                 ((uint32_t)(0x1U))
+
+/**
+ * \brief  Macro defines maximum value of IQSWAP mac value.
+ */
+#define ADCBUF_IQSWAP_CFG_MAX                 ((uint32_t)(0x1U))
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -403,6 +435,25 @@ extern ADCBuf_Config gADCBufConfig[];
 /** \brief Externally defined driver configuration array size */
 extern uint32_t      gADCBufConfigNum;
 
+/**
+ * \brief  ADCBUF static registers list.
+ */
+typedef struct
+{
+    volatile uint32_t ADCBUFCFG1;
+    /**< ADCBUFCFG1 Register */
+    volatile uint32_t ADCBUFCFG2;
+    /**< ADCBUFCFG4 Register */
+    volatile uint32_t ADCBUFCFG3;
+    /**< ADCBUFCFG3 Register */
+    volatile uint32_t ADCBUFCFG4;
+    /**< ADCBUFCFG4 Register */
+    volatile uint32_t DMMSWINT1;
+    /**< DMMSWINT1 Register */
+    volatile uint32_t CQCFG1;
+    /**< CQCFG1 Register */
+} ADCBUF_StaticRegs;
+
 /* ========================================================================== */
 /*                         Global Variables Declarations                      */
 /* ========================================================================== */
@@ -426,8 +477,9 @@ extern uint32_t      gADCBufConfigNum;
  *      This function initializes the ADC module. This function must be called
  *      before any other functions are called.
  *
+ *  \param[in] timeout Amount of time in units of ticks to wait
  */
-void ADCBuf_init(void);
+void ADCBuf_init(uint32_t timeout);
 
 /**
  *  \brief Driver deinit function
@@ -467,7 +519,7 @@ void ADCBuf_Params_init(ADCBuf_Params *params);
  *          opened already. If NULL is returned further ADC API calls will
  *          result in undefined behaviour.
  */
-ADCBuf_Handle ADCBuf_open(uint_fast8_t index, const ADCBuf_Params *params);
+ADCBuf_Handle ADCBuf_open(uint8_t index, const ADCBuf_Params *params);
 
 /**
  *  \brief Description
@@ -491,10 +543,10 @@ void ADCBuf_close(ADCBuf_Handle handle);
  *  \param[in] arg
  *      A pointer to an optional R/W (read/write) argument that is accompanied with cmd.
  *      arg should be 4 bytes aligned.
- *  \return Success     - \ref ADCBUF_STATUS_SUCCESS
+ *  \return Success     - \ref SystemP_SUCCESS
  *          Error       - one of \ref ADCBUF_ERROR_CODES
  */
-int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg);
+int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg);
 
 /**
  *  \brief Description
@@ -507,7 +559,7 @@ int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg);
  *      Receive channel number.
  *  \param[in] errCode
  *      Pointer to an error code populated by the driver.
- *  \return Success     - \ref ADCBUF_STATUS_SUCCESS
+ *  \return Success     - \ref SystemP_SUCCESS
  *          Error       - one of \ref ADCBUF_ERROR_CODES
  */
 uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *errCode);
@@ -523,10 +575,108 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
  *      Type of CQ that request the address.
  *  \param[in] errCode
  *      Pointer to an error code populated by the driver.
- *  \return Success     - \ref ADCBUF_STATUS_SUCCESS
+ *  \return Success     - \ref SystemP_SUCCESS
  *          Error       - one of \ref ADCBUF_ERROR_CODES
  */
 uint32_t ADCBUF_MMWave_getCQBufAddr(ADCBuf_Handle handle, ADCBufMMWave_CQType cqType, int32_t *errCode);
+
+/**
+ *  \brief Description
+ *  \n
+ *      This API verifies source selection configuration for ADCBUF peripheral.
+ *
+ *  \param[in]  handle
+ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
+ *
+ *  \param[in]  source  Source selected for ADCBUF peripheral read from DMMSWINT1 register
+ *                      0 -> Write to ADC BUF memory will happen from DFE
+ *                      1 -> Write to CQ memory will happen from ADCBUF_W slave port in DSS interconnect
+ *                           using DMM as master.
+ *
+ *  \return  status   ADCBUF channel configuration status
+ *                    SystemP_SUCCESS:     success
+ *                    ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
+ *                    SystemP_FAILURE: failure, indicate verification failed
+ */
+int32_t ADCBUF_verifySrcSelCfg(ADCBuf_Handle handle, uint32_t source);
+
+/**
+ *  \brief Description
+ *  \n
+ *      This API verifies ping threshold configuration for ADCBUF peripheral.
+ *
+ *  \param[in]  handle
+ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
+ *
+ *  \param[in]  pingThreshCfg Number of chirps to be stored in Ping Buffer
+ *
+ *  \param[in]  pongThreshCfg Number of chirps to be stored in Pong Buffer
+ *
+ *  \return  status    ADCBUF channel configuration status
+ *                     SystemP_SUCCESS:     success
+ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
+ *                     SystemP_FAILURE: failure, indicate verification failed
+ */
+int32_t ADCBUF_verifyChirpThreshold(ADCBuf_Handle handle, uint32_t pingThreshCfg, uint32_t pongThreshCfg);
+
+/**
+ *  \brief Description
+ *  \n
+ *      This API verifies continuous mode configuration for ADCBUF peripheral.
+ *
+ *  \param[in]  handle
+ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
+ *
+ *  \param[in]  continuousModeCfg continuous mode config for ADCBUF peripheral
+ *
+ *  \return  status    ADCBUF channel configuration status
+ *                     SystemP_SUCCESS:     success
+ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
+ *                     SystemP_FAILURE: failure, indicate verification failed
+ */
+int32_t ADCBUF_verifyContinuousModeCfg(ADCBuf_Handle handle, uint32_t continuousModeCfg);
+
+/**
+ *  \brief Description
+ *  \n
+ *      This API will verify the configuration of ADCBUF, dataFormat and interleave
+ *      iqConfig.
+ *
+ *  \param[in]  handle
+ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
+ *
+ *  \param[in]  dataFormat Complex Data mode or Real data mode
+ *
+ *  \param[in]  interleave ADCBUF Write mode interleave or Non-interleave
+ *
+ *  \param[in]  iqConfig IQSwap configuration
+ *
+ *  \return  status    ADCBUF channel configuration status
+ *                     SystemP_SUCCESS:     success
+ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
+ *                     SystemP_FAILURE: failure, indicate verification failed
+ */
+int32_t ADCBUF_verifyDataFormatCfg(ADCBuf_Handle handle, uint32_t dataFormat, uint32_t interleave, uint32_t iqConfig);
+
+
+/**
+ *  \brief Description
+ *  \n
+ *     This API is used to read static registers of ADCBUF module.
+ *     This API needs to be called after the initial configuration is done and
+ *     hence mutliple read between static registers do not change the values
+ *
+ *  \param[in]  handle
+ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
+ *
+ *  \param   pStaticRegs     pointer to static registers to be read
+ *
+ *
+ *  \return
+ *                     SystemP_SUCCESS:     success
+ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
+ */
+int32_t ADCBUF_readStaticRegs(ADCBuf_Handle handle, ADCBUF_StaticRegs *pStaticRegs);
 
 /** @} */
 

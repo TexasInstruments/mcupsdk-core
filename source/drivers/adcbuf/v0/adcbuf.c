@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -48,6 +48,7 @@
 #include <drivers/hw_include/hw_types.h>
 #include <drivers/hw_include/csl_types.h>
 #include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -90,6 +91,9 @@ static void ADCBUFCQConfig(CSL_rss_ctrlRegs *rssCtrlRegs, ADCBuf_CQConf *cqCfg);
 static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params);
 static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg);
 static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs *rssCtrlRegs, uint32_t channel);
+static int32_t ADCBUFcheckForTimeout(uint32_t addr,
+                                     uint32_t timeToWaitInTicks,
+                                     uint32_t value);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -114,12 +118,42 @@ const ADCBuf_Params gADCBufDefaultParams =
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void ADCBuf_init(void)
+static int32_t ADCBUFcheckForTimeout(uint32_t addr,
+                                     uint32_t timeToWaitInTicks,
+                                     uint32_t value)
 {
-    uint32_t            i;
+    uint32_t curTicks = ClockP_getTicks();
+    uint32_t elaspedTicks, done = 0;
+    int32_t status = SystemP_SUCCESS;
+
+    do{
+        if(CSL_REG32_RD(addr) == value)
+        {
+            status = SystemP_SUCCESS;
+            done = 1;
+        }
+        if(done == 0U)
+        {
+            elaspedTicks =  ClockP_getTicks() - curTicks;
+
+            if(elaspedTicks >= timeToWaitInTicks)
+            {
+                status = SystemP_TIMEOUT;
+                done = 1;
+            }
+        }
+    } while (done == 0);
+
+    return status;
+}
+
+void ADCBuf_init(uint32_t timeout)
+{
+    uint32_t           i;
     ADCBuf_Config      *config;
     ADCBuf_Attrs       *attrs;
-    CSL_rss_ctrlRegs  *rssCtrl;
+    CSL_rss_ctrlRegs   *rssCtrl;
+    int32_t            status = SystemP_SUCCESS;
 
     /* Call each driver's init function */
     for(i = 0; i < gADCBufConfigNum; i++)
@@ -133,19 +167,28 @@ void ADCBuf_init(void)
          * Initialize ADCBUF Ping Memory.
          */
         /* Clear MEMINIT DONE before initiating MEMINIT */
-        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE, 1);
-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE) != 0);
-        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_RSS_ADCBUF_PING_MEMINIT_START, 1);
-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE) != 1);
+        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE, 1U);
+
+        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, timeout, 0U);
+        DebugP_assert(status == SystemP_SUCCESS);
+
+        /* Start ADCBUF Ping memory Initialization */
+        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_RSS_ADCBUF_PING_MEMINIT_START, 1U);
+        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, timeout, 1U);
+        DebugP_assert(status == SystemP_SUCCESS);
 
         /*
          * Initialize ADCBUF Pong Memory.
          */
         /* Clear MEMINIT DONE before initiating MEMINIT */
-        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE, 1);
-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE) != 0);
-        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_RSS_ADCBUF_PONG_MEMINIT_START, 1);
-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE) != 1);
+        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE, 1U);
+
+        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, timeout, 0U);
+        DebugP_assert(status == SystemP_SUCCESS);
+
+        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_RSS_ADCBUF_PONG_MEMINIT_START, 1U);
+        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, timeout, 1U);
+        DebugP_assert(status == SystemP_SUCCESS);
     }
 
     return;
@@ -156,11 +199,11 @@ void ADCBuf_deinit(void)
     return;
 }
 
-ADCBuf_Handle ADCBuf_open(uint_fast8_t index, const ADCBuf_Params *params)
+ADCBuf_Handle ADCBuf_open(uint8_t index, const ADCBuf_Params *params)
 {
     ADCBuf_Handle handle;
 
-    if((int32_t)index >= gADCBufConfigNum)
+    if(index >= gADCBufConfigNum)
     {
         handle = (ADCBuf_Handle)NULL;
     }
@@ -237,12 +280,12 @@ void ADCBuf_close(ADCBuf_Handle handle)
  *  @retval
  *      Status of the command execution
  */
-int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg)
+int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg)
 {
     ADCBuf_Config          *config;
     ADCBuf_Attrs           *attrs;
-    CSL_rss_ctrlRegs      *rssCtrlRegs;
-    int_fast16_t            status = ADCBUF_STATUS_SUCCESS;
+    CSL_rss_ctrlRegs       *rssCtrlRegs;
+    int32_t                status = SystemP_SUCCESS;
     ADCBuf_dataFormat      *dataFormat;
     ADCBuf_RxChanConf      *rxChanConf;
     ADCBuf_TestPatternConf *testPatternConf;
@@ -269,7 +312,7 @@ int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg)
         }
     }
 
-    if(ADCBUF_STATUS_SUCCESS == status)
+    if(SystemP_SUCCESS == status)
     {
         switch(cmd)
         {
@@ -391,7 +434,7 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
         rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
 
         /* Set default value for errCode */
-        *errCode = ADCBUF_STATUS_SUCCESS;
+        *errCode = SystemP_SUCCESS;
 
         /* Check if the channel is enabled? */
         if(ADCBUFIsChannelEnabled(rssCtrlRegs, channel) != (uint32_t)0U)
@@ -467,7 +510,7 @@ uint32_t ADCBUF_MMWave_getCQBufAddr(ADCBuf_Handle handle,
     uint32_t                 addrOffset;
 
     /* Set default value for errCode */
-    *errCode = ADCBUF_STATUS_SUCCESS;
+    *errCode = SystemP_SUCCESS;
 
     /* Parameter check */
     if(handle == (ADCBuf_Handle)NULL)
@@ -508,7 +551,7 @@ uint32_t ADCBUF_MMWave_getCQBufAddr(ADCBuf_Handle handle,
                 break;
         }
 
-        if(*errCode == ADCBUF_STATUS_SUCCESS)
+        if(*errCode == SystemP_SUCCESS)
         {
             /* Calculate the physical address for the channel */
             chanAddress = attrs->cqbufBaseAddr + ((uint32_t)addrOffset << 4U);
@@ -563,24 +606,29 @@ static ADCBuf_Handle ADCBUF_MMWave_open(ADCBuf_Handle handle, const ADCBuf_Param
     {
         /* Allocate memory for the driver: */
         obj = config->object;
-        /* Initialize the memory: */
-        memset((void *)obj, 0, sizeof(ADCBuf_Object));
 
-        /* Get the DSS register base address  */
-        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+        /* Check if driver is not opened */
+        if(obj->isOpen != TRUE)
+        {
+            /* Initialize the memory: */
+            memset((void *)obj, 0, sizeof(ADCBuf_Object));
 
-        /* Configuration of ADCBUF params */
-        ADCBUFSrcSelect(rssCtrlRegs, (uint32_t)params->source);
-        ADCBUFContinuousModeCtrl(rssCtrlRegs, params->continousMode);
+            /* Get the DSS register base address  */
+            rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
 
-        /* Configurate chirp threshold */
-        ADCBUFSetPingNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPing - 1U));
-        ADCBUFSetPongNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPong - 1U));
+            /* Configuration of ADCBUF params */
+            ADCBUFSrcSelect(rssCtrlRegs, (uint32_t)params->source);
+            ADCBUFContinuousModeCtrl(rssCtrlRegs, params->continousMode);
 
-        /* Mark the handle as being used */
-        obj->isOpen = TRUE;
+            /* Configurate chirp threshold */
+            ADCBUFSetPingNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPing - 1U));
+            ADCBUFSetPongNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPong - 1U));
 
-        retHandle = config;
+            /* Mark the handle as being used */
+            obj->isOpen = TRUE;
+
+            retHandle = config;
+        }
     }
 
     return (retHandle);
@@ -1149,7 +1197,7 @@ static void ADCBUFCQConfig(CSL_rss_ctrlRegs *rssCtrlRegs, ADCBuf_CQConf *cqCfg)
  */
 static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params)
 {
-    int32_t     retCode = ADCBUF_STATUS_SUCCESS;
+    int32_t     retCode = SystemP_SUCCESS;
     uint32_t    paramVal;
 
     /* Check continuous mode of the ADCBUF */
@@ -1185,7 +1233,7 @@ static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg)
     ADCBuf_RxChanConf  *rxChanConf;
     ADCBuf_CQConf      *cqConf;
     uint32_t            paramVal;
-    int32_t             retCode = ADCBUF_STATUS_SUCCESS;
+    int32_t             retCode = SystemP_SUCCESS;
 
     /* Validate the pointer to the command arguments
      * validate argument is 4 bytes  aligned.
@@ -1314,3 +1362,213 @@ static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs  *rssCtrlRegs, uint32_t 
 
     return (retVal);
 }
+
+int32_t ADCBUF_verifySrcSelCfg(ADCBuf_Handle handle, uint32_t source)
+{
+    int32_t            status = SystemP_SUCCESS;
+    uint32_t           sourceSel;
+    ADCBuf_Config      *config;
+    ADCBuf_Attrs       *attrs;
+    CSL_rss_ctrlRegs   *rssCtrlRegs;
+
+    if((handle == (ADCBuf_Handle) NULL)   ||
+       (source > ADCBUF_SOURCE_SELECT_MAX))
+    {
+        status = ADCBUF_STATUS_INVALID_PARAMS;
+    }
+    else
+    {
+        /* Get the Object from ADCBuf Handle */
+        config = (ADCBuf_Config *) handle;
+        attrs = (ADCBuf_Attrs *) config->attrs;
+        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+
+        /* Read source select configuration field from DMMSWINT1 register*/
+        sourceSel = CSL_FEXT(rssCtrlRegs->DMMSWINT1,
+                             RSS_CTRL_DMMSWINT1_DMMSWINT1_DMMADCBUFWREN);
+
+        if(sourceSel != source)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    return (status);
+}
+
+int32_t ADCBUF_verifyChirpThreshold(ADCBuf_Handle handle,
+                                    uint32_t pingThreshCfg,
+                                    uint32_t pongThreshCfg)
+{
+    int32_t            status = SystemP_SUCCESS;
+    uint32_t           pingThresh;
+    uint32_t           pongThresh;
+    ADCBuf_Config      *config;
+    ADCBuf_Attrs       *attrs;
+    CSL_rss_ctrlRegs   *rssCtrlRegs;
+
+    if((handle == (ADCBuf_Handle) NULL)            ||
+       (pingThreshCfg > ADCBUF_PING_THRESHOLD_MAX) ||
+       (pongThreshCfg > ADCBUF_PONG_THRESHOLD_MAX))
+    {
+        status = ADCBUF_STATUS_INVALID_PARAMS;
+    }
+    else
+    {
+        /* Get the Object from ADCBuf Handle */
+        config = (ADCBuf_Config *) handle;
+        attrs = (ADCBuf_Attrs *) config->attrs;
+        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+
+        /* Read ping threshold configuration field */
+        pingThresh = CSL_FEXT(rssCtrlRegs->ADCBUFCFG4,
+                              RSS_CTRL_ADCBUFCFG4_ADCBUFCFG4_ADCBUFNUMCHRPPING);
+
+        if((pingThresh + 1U) != pingThreshCfg)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* Read pong threshold configuration field */
+        pongThresh = CSL_FEXT(rssCtrlRegs->ADCBUFCFG4,
+                              RSS_CTRL_ADCBUFCFG4_ADCBUFCFG4_ADCBUFNUMCHRPPONG);
+
+        if((pongThresh + 1U) != pongThreshCfg)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    return (status);
+}
+
+int32_t ADCBUF_verifyContinuousModeCfg(ADCBuf_Handle handle, uint32_t continuousModeCfg)
+{
+    int32_t            status = SystemP_SUCCESS;
+    uint32_t           continuousMode;
+    ADCBuf_Config      *config;
+    ADCBuf_Attrs       *attrs;
+    CSL_rss_ctrlRegs   *rssCtrlRegs;
+
+    if((handle == (ADCBuf_Handle) NULL)   ||
+       (continuousModeCfg > ADCBUF_CONTINUOUS_MODE_MAX))
+    {
+        status = ADCBUF_STATUS_INVALID_PARAMS;
+    }
+    else
+    {
+        /* Get the Object from ADCBuf Handle */
+        config = (ADCBuf_Config *) handle;
+        attrs = (ADCBuf_Attrs *) config->attrs;
+        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+
+        /* Read ADCBUFCONTMODEEN field of ADCBUFCFG1 register */
+        continuousMode = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
+                                  RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFCONTMODEEN);
+
+        if(continuousMode != continuousModeCfg)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    return (status);
+}
+
+int32_t ADCBUF_verifyDataFormatCfg(ADCBuf_Handle handle,
+                                   uint32_t dataFormatcfg,
+                                   uint32_t interleavecfg,
+                                   uint32_t iqConfig)
+{
+    int32_t            status = SystemP_SUCCESS;
+    uint32_t           dataFormat;
+    uint32_t           interleave;
+    uint32_t           iqCfg;
+    ADCBuf_Config      *config;
+    ADCBuf_Attrs       *attrs;
+    CSL_rss_ctrlRegs   *rssCtrlRegs;
+
+    if((handle == (ADCBuf_Handle) NULL)   ||
+       (dataFormatcfg > ADCBUF_DATA_FMT_MAX) ||
+       (interleavecfg > ADCBUF_WRITEMODE_MAX) ||
+       (iqConfig  > ADCBUF_IQSWAP_CFG_MAX))
+    {
+        status = ADCBUF_STATUS_INVALID_PARAMS;
+    }
+    else
+    {
+        /* Get the Object from ADCBuf Handle */
+        config = (ADCBuf_Config *) handle;
+        attrs = (ADCBuf_Attrs *) config->attrs;
+        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+
+        /* Read ADCBUFREALONLYMODE Complex Data mode or Real data mode */
+        dataFormat = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
+                              RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFREALONLYMODE);
+
+        if(dataFormat != dataFormatcfg)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* Read ADCBUFWRITEMODE field for interleave/Non-interleave Mode*/
+        interleave = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
+                              RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFWRITEMODE);
+
+        if(interleave != interleavecfg)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* Read ADCBUFWRITEMODE field for interleave/Non-interleave Mode*/
+        iqCfg = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
+                              RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFIQSWAP);
+
+        if(iqCfg != iqConfig)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    return (status);
+}
+
+int32_t ADCBUF_readStaticRegs(ADCBuf_Handle handle, ADCBUF_StaticRegs *pStaticRegs)
+{
+    int32_t                status = SystemP_SUCCESS;
+    ADCBuf_Config          *config;
+    ADCBuf_Attrs           *attrs;
+
+    if ((handle == (ADCBuf_Handle) NULL) ||
+       (pStaticRegs == (NULL_PTR)))
+    {
+        status = ADCBUF_STATUS_INVALID_PARAMS;
+    }
+    else
+    {
+        /* Get the Object from ADCBuf Handle */
+        config = (ADCBuf_Config *) handle;
+        attrs = config->attrs;
+
+        pStaticRegs->ADCBUFCFG1   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG1));
+        pStaticRegs->ADCBUFCFG2   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG2));
+        pStaticRegs->ADCBUFCFG3   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG3));
+        pStaticRegs->ADCBUFCFG4   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG4));
+        pStaticRegs->DMMSWINT1    = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_DMMSWINT1));
+        pStaticRegs->CQCFG1       = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_CQCFG1));
+
+        status = SystemP_SUCCESS;
+    }
+
+    return status;
+}
+
