@@ -101,6 +101,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_POK
 -# R5FCPU_UTILS
    -# \subpage EXAMPLES_SDL_R5F_CPU_STATIC_REGISTER
+-# ROM_CHECKSUM
+   -# \subpage EXAMPLES_SDL_ROM_CHECKSUM
 \endcond
 
 \cond SOC_AM273X
