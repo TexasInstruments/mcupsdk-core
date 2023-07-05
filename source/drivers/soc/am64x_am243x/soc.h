@@ -192,6 +192,11 @@ uint64_t SOC_virtToPhy(void *virtAddr);
 void *SOC_phyToVirt(uint64_t phyAddr);
 
 /**
+ * \brief Unlocks all the control MMRs
+ */
+void SOC_unlockAllMMR(void);
+
+/**
  * \brief Change boot mode by setting devstat register
  *
  * \param bootMode [IN] Boot mode switch value

@@ -31,6 +31,7 @@
  */
 
 #include <drivers/soc.h>
+#include <drivers/pinmux.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/CpuIdP.h>
 
@@ -683,6 +684,29 @@ void *SOC_phyToVirt(uint64_t phyAddr)
 #endif
 
     return (virtAddr);
+}
+
+void SOC_unlockAllMMR(void)
+{
+    /* Unlock PADCFG control MMRs */
+    Pinmux_unlockMMR(PINMUX_DOMAIN_ID_MAIN);
+
+    /* Unlock partitions in mcu domain */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 0);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 1);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 2);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 3);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 4);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MCU, 6);
+
+    /* Unlock partitions in main domain */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 0);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 1);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 2);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 3);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 5);
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, 6);
+
 }
 
 void SOC_setDevStat(uint32_t bootMode)

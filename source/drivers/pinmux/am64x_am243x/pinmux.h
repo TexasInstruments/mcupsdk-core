@@ -357,6 +357,22 @@ typedef struct Pinmux_PerCfg
  */
 void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId);
 
+/**
+ *  \brief  This API unlocks the PAD config control MMRs for the given domain
+ *
+ *  \param  domainId    Domain ID to unlock the PAD config MMRs.
+ *                      Refer \ref Pinmux_DomainId_t
+ */
+void Pinmux_unlockMMR(uint32_t domainId);
+
+/**
+ *  \brief  This API locks the PAD config control MMRs for the given domain
+ *
+ *  \param  domainId    Domain ID to lock the PAD config MMRs.
+ *                      Refer \ref Pinmux_DomainId_t
+ */
+void Pinmux_lockMMR(uint32_t domainId);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

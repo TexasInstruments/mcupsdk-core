@@ -74,8 +74,8 @@
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
 
-static void Pinmux_lockMMR(uint32_t domainId);
-static void Pinmux_unlockMMR(uint32_t domainId);
+void Pinmux_lockMMR(uint32_t domainId);
+void Pinmux_unlockMMR(uint32_t domainId);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -123,7 +123,7 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId)
     return;
 }
 
-static void Pinmux_lockMMR(uint32_t domainId)
+void Pinmux_lockMMR(uint32_t domainId)
 {
     uint32_t            baseAddr;
     volatile uint32_t  *kickAddr;
@@ -165,7 +165,7 @@ static void Pinmux_lockMMR(uint32_t domainId)
     return;
 }
 
-static void Pinmux_unlockMMR(uint32_t domainId)
+void Pinmux_unlockMMR(uint32_t domainId)
 {
     uint32_t            baseAddr;
     volatile uint32_t  *kickAddr;
