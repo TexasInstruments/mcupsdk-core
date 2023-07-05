@@ -73,8 +73,11 @@
 /* Use by this to receive ACK messages that it sends to other RTOS cores */
 #define IPC_RPMESSAGE_RNDPT_ACK_REPLY     (11U)
 
-/* maximum size that message can have in this example */
-#define IPC_RPMESSAGE_MAX_MSG_SIZE        (96u)
+/* Maximum size that message can have in this example
+ * RPMsg maximum size is 512 bytes in linux including the header of 16 bytes.
+ * Message payload size without the header is 512 - 16 = 496
+ */
+#define IPC_RPMESSAGE_MAX_MSG_SIZE        (496u)
 
 /*
  * Number of RP Message ping "servers" we will start,
