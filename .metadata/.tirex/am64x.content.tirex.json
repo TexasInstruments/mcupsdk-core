@@ -7,6 +7,134 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Benchmark Demo Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "benchmark_demo",
+        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "benchmark_demo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Benchmark Demo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "benchmark_demo",
+        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "benchmark_demo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Benchmark Demo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "benchmark_demo",
+        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "benchmark_demo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Benchmark Demo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "benchmark_demo",
+        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "benchmark_demo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An ADC singleshot example. This example demonstrates interrupts in ADC. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -13430,6 +13558,35 @@
             "rti",
             "UC4",
             "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Benchmark Demo System Example.",
+        "name": "benchmark_demo",
+        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "benchmark_demo",
+            "system_nortos"
         ],
         "mainCategories": [
             [

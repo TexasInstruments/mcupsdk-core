@@ -1,0 +1,85 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1       = i2c.addInstance();
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1      = uart.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const timer      = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1     = timer.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+i2c1.$name       = "CONFIG_I2C_INA_DEVICE";
+i2c1.I2C.$assign = "I2C1";
+
+ipc.m4fss0_0 = "NONE";
+ipc.r5fss0_1 = "notify";
+ipc.r5fss1_0 = "notify";
+ipc.r5fss1_1 = "notify";
+
+uart1.$name           = "CONFIG_UART0";
+uart1.readMode        = "CALLBACK";
+uart1.readCallbackFxn = "uart_read_callback";
+uart1.readReturnMode  = "PARTIAL";
+uart1.UART.$assign    = "USART0";
+
+debug_log.enableCssLog = false;
+debug_log.enableMemLog = true;
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION5";
+mpu_armv75.allowExecute = false;
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.baseAddr     = 0x701D0000;
+mpu_armv75.size         = 16;
+
+timer1.timerCallback = "App_timerCallback";
+timer1.startTimer    = true;
+timer1.$name         = "CONFIG_TIMER_BENCHMARKDEMO";
+timer1.TIMER.$assign = "DMTIMER1";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+i2c1.I2C.SCL.$suggestSolution   = "I2C1_SCL";
+i2c1.I2C.SDA.$suggestSolution   = "I2C1_SDA";
+uart1.UART.RXD.$suggestSolution = "UART0_RXD";
+uart1.UART.TXD.$suggestSolution = "UART0_TXD";

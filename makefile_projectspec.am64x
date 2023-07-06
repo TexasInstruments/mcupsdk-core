@@ -370,6 +370,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc3_am64x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc4_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_rti_example_uc4_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += benchmark_demo_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ddr_ecc_test_mcu_esm_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ddr_ecc_test_mcu_esm_am64x-sk_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am64x-evm_system_freertos_nortos_build
@@ -1497,6 +1498,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_rti_example_uc4_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/rti/UC4/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ benchmark_demo_am64x-evm_system_nortos_build:
+	$(MAKE) -C examples/benchmarks/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec all
+
  ddr_ecc_test_mcu_esm_am64x-evm_system_nortos_build:
 	$(MAKE) -C examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/system_nortos -f makefile_projectspec all
 
@@ -1924,6 +1928,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc3_am64x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc4_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_rti_example_uc4_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += benchmark_demo_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ddr_ecc_test_mcu_esm_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ddr_ecc_test_mcu_esm_am64x-sk_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am64x-evm_system_freertos_nortos_clean
@@ -3051,6 +3056,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_rti_example_uc4_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/rti/UC4/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ benchmark_demo_am64x-evm_system_nortos_clean:
+	$(MAKE) -C examples/benchmarks/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec clean
+
  ddr_ecc_test_mcu_esm_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/system_nortos -f makefile_projectspec clean
 
@@ -3478,6 +3486,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc3_am64x-evm_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc4_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_rti_example_uc4_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += benchmark_demo_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ddr_ecc_test_mcu_esm_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ddr_ecc_test_mcu_esm_am64x-sk_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am64x-evm_system_freertos_nortos_export
@@ -4605,6 +4614,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_rti_example_uc4_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/rti/UC4/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ benchmark_demo_am64x-evm_system_nortos_export:
+	$(MAKE) -C examples/benchmarks/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec export
+
  ddr_ecc_test_mcu_esm_am64x-evm_system_nortos_export:
 	$(MAKE) -C examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/system_nortos -f makefile_projectspec export
 
@@ -5062,6 +5074,7 @@ help:
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
+	@echo  $(MAKE) -s -C examples/benchmarks/benchmark_demo/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ddr/ddr_ecc_test_mcu_esm/am64x-sk/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am64x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
