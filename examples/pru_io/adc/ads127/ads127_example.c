@@ -140,15 +140,19 @@ void ads_example_main(void *args)
     DebugP_log("ADC Powered Up \r\n");
 
     DebugP_log("--------------------------------------------------\r\n");
+    DebugP_log("Resetting ADC \r\n");
+    ADC_reset();
+
+    DebugP_log("--------------------------------------------------\r\n");
     DebugP_log("Configuring ADC... \r\n");
     ADC_configure(noOfCommands, adcConfigCommands);
     DebugP_log("ADC Configuration completed \r\n");
 
-   DebugP_log("--------------------------------------------------\r\n");
-   DebugP_log("Starting ADC Conversion \r\n");
-   ADC_startConversion();
+    DebugP_log("--------------------------------------------------\r\n");
+    DebugP_log("Starting ADC Conversion \r\n");
+    ADC_startConversion();
     DebugP_log("Started ADC Conversion \r\n");
-   DebugP_log("--------------------------------------------------\r\n");
+    DebugP_log("--------------------------------------------------\r\n");
 
     while (1)
     {

@@ -203,6 +203,8 @@ void ADC_reset()
     /* Set the reset pin Low */
     GPIO_setDirMode(ADC_RESET_PIN_BASE_ADDR, ADC_RESET_PIN_PIN, GPIO_DIRECTION_OUTPUT);
     GPIO_pinWriteLow(ADC_RESET_PIN_BASE_ADDR, ADC_RESET_PIN_PIN);
+    /* Set the Standby pin High */
+    GPIO_pinWriteHigh(CONFIG_GPIO_STANDBY_BASE_ADDR, CONFIG_GPIO_STANDBY_PIN);
 }
 
 void ADC_startConversion()
