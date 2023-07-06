@@ -37,8 +37,11 @@
 #define CACHE_SECTION __attribute__((section(".text.cache")))
 
 /* APIs defined in CacheP_armv7r_asm.S */
-uint32_t CacheP_getCacheLevelInfo(uint32_t level);
 uint32_t CacheP_getEnabled(void);
+#ifdef __cplusplus
+extern "C" {
+#endif
+uint32_t CacheP_getCacheLevelInfo(uint32_t level);
 void CacheP_configForceWrThru(uint32_t enable);
 void CacheP_disableL1d(void);
 void CacheP_disableL1p(void);
@@ -47,9 +50,17 @@ void CacheP_enableL1p(void);
 void CacheP_invL1p(uint32_t blockPtr, uint32_t byteCnt);
 void CacheP_invL1d(uint32_t blockPtr, uint32_t byteCnt);
 void CacheP_setDLFO(void);
+#ifdef __cplusplus
+}
+#endif
 
+#ifdef __cplusplus
+extern const uint32_t  gCacheL1dCacheLineSize = 32;
+extern const uint32_t  gCacheL1pCacheLineSize = 32;
+#else
 const uint32_t  gCacheL1dCacheLineSize = 32;
 const uint32_t  gCacheL1pCacheLineSize = 32;
+#endif
 
 /* these are defined as part of SysConfig */
 extern const CacheP_Config gCacheConfig;

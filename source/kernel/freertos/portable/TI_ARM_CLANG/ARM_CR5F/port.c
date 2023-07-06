@@ -127,7 +127,13 @@ uint32_t ulPortSchedularRunning = pdFALSE;
  * Starts the first task executing.  This function is necessarily written in
  * assembly code so is implemented in portASM.s.
  */
+#ifdef __cplusplus
+extern "C" {
+#endif
 extern void vPortRestoreTaskContext( void );
+#ifdef __cplusplus
+}
+#endif
 
 static void prvTaskExitError( void )
 {

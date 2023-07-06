@@ -34,8 +34,14 @@
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 #include <drivers/hw_include/csl_types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(void);
+#ifdef __cplusplus
+}
+#endif
 
 /* compile flag to enable or disable interrupt nesting */
 #define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE

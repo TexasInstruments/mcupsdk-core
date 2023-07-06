@@ -277,7 +277,13 @@ void HWI_SECTION HwiP_init(void)
     /* HwiP_enable(); */
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 uint32_t HwiP_getCPSR(void);
+#ifdef __cplusplus
+}
+#endif
 
 uint32_t HWI_SECTION HwiP_inISR(void)
 {

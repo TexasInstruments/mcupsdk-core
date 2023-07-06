@@ -69,10 +69,17 @@ extern int32_t __STACK_END;
 /* Function declarations.                                                     */
 /*----------------------------------------------------------------------------*/
 __attribute__((weak)) extern void __mpu_init(void);
+#ifdef __cplusplus
+extern "C" {
+#endif
 extern void __TI_auto_init(void);
 extern void exit(int32_t argc);
-extern int32_t main(int32_t argc, char **argv);
 void _c_int00(void);
+#ifdef __cplusplus
+}
+#endif
+extern int32_t main(int32_t argc, char **argv);
+
 /*----------------------------------------------------------------------------*/
 /* boot routine for Cortex-M                                          */
 /*----------------------------------------------------------------------------*/

@@ -42,7 +42,13 @@ static int32_t Flash_norOspiWrite(Flash_Config *config, uint32_t offset, uint8_t
 static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params);
 static void Flash_norOspiClose(Flash_Config *config);
 static int32_t Flash_norOspiReset(Flash_Config *config);
+#ifdef __cplusplus
+extern "C" {
+#endif
 int32_t Flash_quirkSpansionUNHYSADisable(Flash_Config *config);
+#ifdef __cplusplus
+}
+#endif
 
 uint32_t gFlashToSpiProtocolMap[] =
 {

@@ -61,10 +61,16 @@
 PMU_DATA_SECTION
 static uint64_t gCounterFreqHz = 0;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void PmuP_enableCounters(uint32_t counterMask);
 void PmuP_disableCounters(uint32_t counterMask);
 void PmuP_clearOverflowStatus(uint32_t counterMask);
 void PmuP_setup(uint32_t setupFlags);
+#ifdef __cplusplus
+}
+#endif
 
 void PMU_TEXT_SECTION CycleCounterP_init(const uint64_t cpuFreqHz)
 {

@@ -42,6 +42,9 @@
 #define MpuP_MAX_REGIONS    (16u)
 
 /* APIs defined in MpuP_armv7r_asm.s */
+#ifdef __cplusplus
+extern "C" {
+#endif
 void MpuP_disableAsm(void);
 void MpuP_enableAsm(void);
 uint32_t MpuP_isEnableAsm(void);
@@ -49,6 +52,9 @@ void MpuP_disableBRAsm(void);
 void MpuP_enableBRAsm(void);
 void MpuP_setRegionAsm(uint32_t regionId, uint32_t regionBaseAddr,
               uint32_t sizeAndEnble, uint32_t regionAttrs);
+#ifdef __cplusplus
+}
+#endif
 
 /* these are defined as part of SysConfig */
 extern MpuP_Config gMpuConfig;

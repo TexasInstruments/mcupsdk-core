@@ -46,7 +46,13 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void);
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void);
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler(void);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void);
+#ifdef __cplusplus
+extern "C" {
+#endif
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void);
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef INTR_PROF
 void __attribute__((section(".text.hwi"))) HwiP_irq_profile_c(uint32_t intNum)
