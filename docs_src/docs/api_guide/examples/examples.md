@@ -3,6 +3,7 @@
 This page lists all the examples and demos supported in this SDK.
 
 \cond SOC_AM64X || SOC_AM243X
+-# \subpage EXAMPLES_BENCHMARKS
 -# \subpage EXAMPLES_EMPTY
 -# \subpage EXAMPLES_HELLO_WORLD
 -# \subpage EXAMPLES_HELLO_WORLD_CPP
@@ -49,6 +50,7 @@ This page lists all the examples and demos supported in this SDK.
 \endcond
 
 \cond SOC_AM263X
+-# \subpage EXAMPLES_BENCHMARKS
 -# \subpage EXAMPLES_EMPTY
 -# \subpage EXAMPLES_HELLO_WORLD
 -# \subpage EXAMPLES_HELLO_WORLD_CPP
