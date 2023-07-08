@@ -95,8 +95,6 @@ else
 endif
 endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
-	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
-	@echo  .
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME).hs Done !!!
 	@echo  .

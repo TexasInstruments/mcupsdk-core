@@ -286,8 +286,10 @@ endif
 	$(RM) $(PROFILE)/`args.linuxFwName`
 	$(STRIP) -o=$(PROFILE)/`args.linuxFwName` $(OUTFILE)
 % }
+% if ((!["am64x", "am243x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME) Done !!!
 	@echo  .
+% }
 % if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME).hs Done !!!

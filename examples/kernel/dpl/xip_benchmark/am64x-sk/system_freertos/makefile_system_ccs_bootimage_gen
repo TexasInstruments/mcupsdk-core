@@ -76,10 +76,10 @@ else
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
 endif
 endif
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
 else
-	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) Done !!!
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs Done !!!
 endif
 	@echo  .

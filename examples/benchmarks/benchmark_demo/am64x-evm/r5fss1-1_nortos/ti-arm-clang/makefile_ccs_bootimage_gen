@@ -83,6 +83,4 @@ else
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(PROFILE)/am64-main-r5f1_1-fw
 	$(STRIP) -o=$(PROFILE)/am64-main-r5f1_1-fw $(OUTFILE)
-	@echo  Boot image: am64x:r5fss1-1:nortos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
-	@echo  .
 endif
