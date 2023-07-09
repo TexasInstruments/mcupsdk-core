@@ -75,6 +75,12 @@ typedef struct
  */
 void CSL_armR5GetCpuID(CSL_ArmR5CPUInfo *cpuInfo);
 
+/**
+ *  \brief Set current R5 Core to Standby mode
+ *
+ */
+void CSL_armR5SetWFIMode(void);
+
 /** @} */
 
 #ifdef __cplusplus

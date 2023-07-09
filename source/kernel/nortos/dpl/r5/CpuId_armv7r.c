@@ -46,3 +46,8 @@ void CSL_armR5GetCpuID(CSL_ArmR5CPUInfo *cpuInfo)
                                             CSL_R5_MPIDR_AFF1_SHIFT);
     }
 }
+
+void CSL_armR5SetWFIMode()
+{
+    __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
+}
