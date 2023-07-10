@@ -9281,7 +9281,7 @@ HRPWM_getHiResCounterCompareValueOnly(uint32_t base,
 //! count(DBREDHR) value.
 //! The value of hrRedCount should be less than 128.
 //!
-//! \b Note: hrRedCount is a 9-bit value.
+//! \b Note: hrRedCount is a 7-bit value.
 //!
 //! \return None.
 //
@@ -9298,7 +9298,7 @@ HRPWM_setHiResRisingEdgeDelay(uint32_t base, uint16_t hrRedCount)
     // Set the High Resolution RED (Rising Edge Delay) count only
     //
     HW_WR_REG16(base + CSL_EPWM_DBREDHR,
-      HW_RD_REG16(base + CSL_EPWM_DBREDHR) |
+      (HW_RD_REG16(base + CSL_EPWM_DBREDHR) & ~CSL_EPWM_DBREDHR_DBREDHR_MASK ) |
       (hrRedCount << CSL_EPWM_DBREDHR_DBREDHR_SHIFT));
 }
 
@@ -9312,7 +9312,7 @@ HRPWM_setHiResRisingEdgeDelay(uint32_t base, uint16_t hrRedCount)
 //! This function sets only the high resolution FED (Falling Edge Delay) count
 //! (DBFEDHR)value. The value of hrFedCount should be less than 128.
 //!
-//! \b Note: hrFedCount is a 9-bit value.
+//! \b Note: hrFedCount is a 7-bit value.
 //!
 //! \return None.
 //
@@ -9329,8 +9329,8 @@ HRPWM_setHiResFallingEdgeDelayOnly(uint32_t base, uint16_t hrFedCount)
     // Set the high resolution FED (Falling Edge Delay) count
     //
     HW_WR_REG16(base + CSL_EPWM_DBFEDHR,
-        HW_RD_REG16(base + CSL_EPWM_DBFEDHR) &
-        ~CSL_EPWM_DBFEDHR_DBFEDHR_MASK |
+        (HW_RD_REG16(base + CSL_EPWM_DBFEDHR) &
+        ~CSL_EPWM_DBFEDHR_DBFEDHR_MASK) |
         (hrFedCount << CSL_EPWM_DBFEDHR_DBFEDHR_SHIFT));
 }
 
