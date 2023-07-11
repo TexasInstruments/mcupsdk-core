@@ -30,6 +30,7 @@ const files_r5f = {
         "sdl_ccm.c",
         "sdl_mcu_armss_ccmr5.c",
         "sdl_stc_soc.c",
+        "sdl_r5f_utils.c",
 
     ],
 };
