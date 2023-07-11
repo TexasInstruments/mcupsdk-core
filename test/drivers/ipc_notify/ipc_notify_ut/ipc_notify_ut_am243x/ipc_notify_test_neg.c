@@ -40,7 +40,7 @@
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <drivers/ipc_notify.h>
-#include <drivers/ipc_notify/v1/ipc_notify_v1.h>
+#include <drivers/ipc_notify/v0/ipc_notify_v0.h>
 #include <unity.h>
 #include "ti_drivers_open_close.h"
 
