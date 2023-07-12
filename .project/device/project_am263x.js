@@ -169,6 +169,7 @@ const example_file_list = [
     "examples/security/crypto/dthe_pka/rsa_signing_verification/.project/project.js",
     "examples/security/crypto/dthe_rng/rng/.project/project.js",
     "examples/security/crypto/dthe_rng/rng_drbg/.project/project.js",
+    "examples/sdl/r5f_cpu_utils/.project/project.js",
     "examples/sdl/pbist/pbist_mcu/.project/project.js",
     "examples/sdl/dcc/dcc_modes1/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_r5_atcm0/.project/project.js",
