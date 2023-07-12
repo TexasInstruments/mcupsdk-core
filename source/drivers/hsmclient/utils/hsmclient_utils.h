@@ -80,7 +80,8 @@ extern "C" {
 #define BIN_TYPE_STANDARD	0x55
 /** @brief Binary type flag for CUSTOM */
 #define BIN_TYPE_CUSTOM		0xAA
-
+/** @brief Binary type flag for OTPKW */
+#define BIN_TYPE_OTPKW      0x33
 
 typedef union HsmVer_t_ HsmVer_t;
 

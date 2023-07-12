@@ -190,6 +190,9 @@ static void HsmClient_getBinType(uint8_t bin_type, char* parsedVer)
         case BIN_TYPE_CUSTOM:
             strcat(parsedVer, "CUSTOM");
             break;
+        case BIN_TYPE_OTPKW:
+            strcat(parsedVer, "OTPKW");
+            break;
         default:
             break;
     }
@@ -207,7 +210,14 @@ int32_t HsmClient_parseVersion(HsmVer_t *tifsMcuVer, char* parsedVer)
 	HsmClient_getDeviceType(tifsMcuVer->VerStruct.DevType, parsedVer);
 	HsmClient_getHSMType(tifsMcuVer->VerStruct.HsmType, parsedVer);
 	HsmClient_getBinType(tifsMcuVer->VerStruct.BinType, parsedVer);
-	strcat(parsedVer, "\r\n[TIFS-MCU Version]  = ");
+    if(tifsMcuVer->VerStruct.BinType == BIN_TYPE_OTPKW)
+    {
+        strcat(parsedVer, "\r\n[OTP-KW Version]    = ");
+    }
+    else
+    {
+        strcat(parsedVer, "\r\n[TIFS-MCU Version]  = ");
+    }
 	lib_itoa(tifsMcuVer->VerStruct.MajorVer,
 	        (uint8_t *)&parsedVer[strlen(parsedVer)], 10);
 	parsedVer[strlen(parsedVer)] = '.';

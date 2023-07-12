@@ -150,6 +150,19 @@ typedef struct EfuseRowProt_t_
 
 /**
  * @brief
+ * This is a keywriter_cert_header type which holds the information
+ * of customer key certificate and debug responce.
+ */
+typedef struct keywriter_cert_header_t_
+{
+    uint8_t* cert;          /*For holding cerificate address*/
+    uint32_t certSize;      /*Cerificate size*/
+    uint32_t debugResponse; /*Debug response*/
+    uint32_t reserved;      /*reserved for future use*/
+} KeyWriterCertHeader_t;
+
+/**
+ * @brief
  * Initialize the HSM client for current core.
  *
  * @param params [IN] SIPC_notify params.
@@ -365,6 +378,22 @@ int32_t HsmClient_waitForBootNotify(HsmClient_t* HsmClient,uint32_t timeToWaitIn
  *
  */
 int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware);
+
+/**
+ * @brief
+ *  The service issued to HSM Server verifies the certificate and process the keywriter operations,
+ * @param HsmClient         [IN] Client object which is using this openDbgFirewalls API.
+ * @param certHeader        [IN] point to the location of certificate in the device memory.
+ * @param timeout           [IN] amount of time to block waiting for 
+ * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ * 3. SystemP_TIMEOUT if timeout exception occours.
+ */
+int32_t HsmClient_keyWriter(HsmClient_t* HsmClient,
+                                        KeyWriterCertHeader_t* certHeader,
+                                        uint32_t timeout);
 
 /** @} */
 
