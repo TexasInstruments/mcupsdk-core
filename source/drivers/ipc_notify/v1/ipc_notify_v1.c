@@ -291,7 +291,6 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     uint32_t coreID_Check = (params->selfCoreId < CSL_CORE_ID_MAX)?1U:0U;
     IpcNotify_getConfig(&gIpcNotifyCtrl.interruptConfig, &gIpcNotifyCtrl.interruptConfigNum);
 
-    DebugP_assert(params->numCores != 0U);
     DebugP_assert(coreID_Check!=0U);
 
     gIpcNotifyCtrl.selfCoreId = params->selfCoreId;

@@ -282,15 +282,9 @@ void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
         #if defined(__aarch64__) || defined(__arm__)
 
         /* Check for the read request confirmation */
-        if((intrBitPos == C66SS0_MBOX_PROC_BIT_POS) && ((*ptrC66MboxReadReq & (1U << R5FSS0_0_MBOX_PROC_BIT_POS))!=0U))
-        {
-            break;
-        }
-        if((intrBitPos == R5FSS0_0_MBOX_PROC_BIT_POS) && ((*ptrR5F1MboxReadReq & (1U << R5FSS0_1_MBOX_PROC_BIT_POS))!=0U))
-        {
-            break;
-        }
-        if((intrBitPos == R5FSS0_1_MBOX_PROC_BIT_POS) && ((*ptrR5F0MboxReadReq  & (1U << R5FSS0_0_MBOX_PROC_BIT_POS))!=0U))
+        if(((intrBitPos == C66SS0_MBOX_PROC_BIT_POS) && ((*ptrC66MboxReadReq & (1U << R5FSS0_0_MBOX_PROC_BIT_POS))!=0U))||
+			((intrBitPos == R5FSS0_0_MBOX_PROC_BIT_POS) && ((*ptrR5F1MboxReadReq & (1U << R5FSS0_1_MBOX_PROC_BIT_POS))!=0U))||
+			((intrBitPos == R5FSS0_1_MBOX_PROC_BIT_POS) && ((*ptrR5F0MboxReadReq  & (1U << R5FSS0_0_MBOX_PROC_BIT_POS))!=0U)))
         {
             break;
         }
@@ -300,15 +294,12 @@ void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
         #if defined(_TMS320C6X)
 
         /* Check for the read request confirmation */
-        if((intrBitPos == R5FSS0_0_MBOX_PROC_BIT_POS) && ((*ptrR5F0MboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS))!=0U))
+        if(((intrBitPos == R5FSS0_0_MBOX_PROC_BIT_POS) && ((*ptrR5F0MboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS))!=0U))||
+			((intrBitPos == R5FSS0_1_MBOX_PROC_BIT_POS) && ((*ptrR5F1MboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS))!=0U)))
         {
 			break;
 		}
-        if((intrBitPos == R5FSS0_1_MBOX_PROC_BIT_POS) && ((*ptrR5F1MboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS))!=0U))
-		{
-			break;
-		}
-
+		
         #endif
 
     } while (++loop < 3U);
