@@ -277,6 +277,7 @@ const example_file_list = [
     "test/sdl/ccm/ccm_func_test/.project/project.js",
     "test/sdl/stc/stc_mcu/stc_func_test/.project/project.js",
     "test/sdl/parity/sdl_dmaparity_functest/.project/project.js",
+    "test/sdl/utils/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {
