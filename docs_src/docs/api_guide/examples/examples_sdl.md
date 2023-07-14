@@ -52,6 +52,8 @@ This page lists all the examples related to usage of SDL.
 -# PARITY
    -# \subpage EXAMPLES_SDL_TCM_PARITY
    -# \subpage EXAMPLES_SDL_DMA_PARITY
+-# R5FCPU_UTILS
+   -# \subpage EXAMPLES_SDL_R5F_CPU_STATIC_REGISTER
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X
