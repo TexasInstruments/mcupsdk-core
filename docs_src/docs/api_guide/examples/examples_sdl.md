@@ -28,6 +28,8 @@ This page lists all the examples related to usage of SDL.
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX
+-# INTEGRATED SDL AND MCAN DRIVER
+    # \subpage EXAMPLES_SDL_INTEGRATED_MCAN
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
 -# RTI
