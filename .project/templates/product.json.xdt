@@ -50,7 +50,7 @@
     ],
     "devices": [
 % if((args.device == "am64x") || (isDevelopmentMode)) {
-        "AM64x_beta",
+        "AM64x",
 % }
 % if((args.device == "am243x") || (isDevelopmentMode)) {
         "AM243x_ALV_beta",
@@ -71,7 +71,7 @@
     ],
     "contexts": {
 % if((args.device == "am64x") || (isDevelopmentMode)) {
-        "AM64x_beta": [
+        "AM64x": [
             "r5fss0-0",
             "r5fss0-1",
             "r5fss1-0",

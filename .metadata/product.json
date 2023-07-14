@@ -17,7 +17,7 @@
         "/pru_io/pru_io",
     ],
     "devices": [
-        "AM64x_beta",
+        "AM64x",
         "AM243x_ALV_beta",
         "AM243x_ALX_beta",
         "AM273x",
@@ -26,7 +26,7 @@
         "AM62x",
     ],
     "contexts": {
-        "AM64x_beta": [
+        "AM64x": [
             "r5fss0-0",
             "r5fss0-1",
             "r5fss1-0",
@@ -78,5 +78,5 @@
         "showSignals": true,
         "showUsed": true
     },
-    "minToolVersion" : "1.14.0"
+    "minToolVersion" : "1.17.0"
 }

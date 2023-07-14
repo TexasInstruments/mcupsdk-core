@@ -16,7 +16,7 @@ A quick recap of the steps that need to have been done before you proceed
 \endcond
 \cond SOC_AM263X
 - Make sure to follow below steps while running multi core applications.
-  - Edit the CCS gel file at "{CCS_Installation_directory}\ccs1210\ccs\ccs_base\emulation\gel\AM263x\am263x.gel"
+  - Edit the CCS gel file at "{CCS_Installation_directory}\ccs1240\ccs\ccs_base\emulation\gel\AM263x\am263x.gel"
       \imageStyle{am263x_dualcore_gel_edit_path.PNG,width:50%}
       \image html am263x_dualcore_gel_edit_path.PNG "Gel file path"
 

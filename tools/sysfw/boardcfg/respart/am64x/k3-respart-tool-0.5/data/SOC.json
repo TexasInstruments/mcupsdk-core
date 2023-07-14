@@ -9,7 +9,7 @@
 		"sciClientPrefixReplacement": "TISCI_",
 		"sciClientSocVersion": "V3",
 		"shortName": "am64x",
-		"soc": "AM64x_beta",
+		"soc": "AM64x",
 		"wildCardPrivId": 195
 	}
 ]

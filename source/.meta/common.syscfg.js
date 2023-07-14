@@ -40,7 +40,7 @@ function getNodePath() {
 }
 
 function getSocName() {
-    if(system.deviceData.device == "AM64x_beta")
+    if(system.deviceData.device == "AM64x")
         return "am64x";
     if((system.deviceData.device == "AM243x_ALV_beta") || (system.deviceData.device == "AM243x_ALX_beta"))
         return "am243x";
@@ -55,7 +55,7 @@ function getSocName() {
 };
 
 function getDeviceName() {
-    if(system.deviceData.device == "AM64x_beta")
+    if(system.deviceData.device == "AM64x")
         return "am64x-evm";
     if(system.deviceData.device == "AM243x_ALV_beta")
         return "am243x-evm";

@@ -11,7 +11,7 @@ PROFILE?=release
 DEVICE_TYPE?=GP
 
 ifeq ($(DEVICE),$(filter $(DEVICE), am64x))
-  SYSCFG_DEVICE = AM64x_beta
+  SYSCFG_DEVICE = AM64x
   # default syscfg CPU to use,
   # options on am64x are r5fss0-0, r5fss0-1, r5fss1-0, r5fss1-1, m4fss0-0
   SYSCFG_CPU = r5fss0-0

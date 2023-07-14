@@ -3,7 +3,7 @@
 		"/modules/respart"
 	],
 	"devices": [
-		"AM64x_beta"
+		"AM64x"
 	],
 	"displayName": "Keystone3 Resource Partitioning Tool",
 	"documentationPath": "docs/",
