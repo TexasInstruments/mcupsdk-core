@@ -72,6 +72,9 @@ extern "C"
 /* PBIST header file */
 #include <drivers/hw_include/am273x/cslr_pbist.h>
 
+/* Firewall defines header file */
+#include <drivers/hw_include/am273x/cslr_firewall_defines.h>
+
 /* System control register header files */
 #include <drivers/hw_include/am273x/cslr_top_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_mss_ctrl.h>

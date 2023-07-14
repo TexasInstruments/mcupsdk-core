@@ -53,6 +53,8 @@ FILES_common := \
     mcspi_dma_edma.c \
     mdio_v0.c \
     mmcsd_v1.c \
+    mpu_firewall.c \
+    mpu_firewall_v0_cfg.c \
     pinmux.c \
     pmu.c \
     pruicss_m_v0.c \
@@ -101,6 +103,8 @@ FILES_PATH_common = \
     mcspi/v0/dma/edma \
     mdio/v0 \
     mmcsd/v1 \
+    mpu_firewall/v0 \
+    mpu_firewall/v0/soc/am263x \
     pinmux/am263x \
     pmu \
     pmu/r5f \

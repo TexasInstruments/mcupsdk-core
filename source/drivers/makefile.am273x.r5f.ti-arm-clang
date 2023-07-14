@@ -100,6 +100,8 @@ FILES_PATH_common = \
     mibspi/v0 \
     mibspi/v0/edma \
     mibspi/v0/soc/am273x \
+    mpu_firewall/v0 \
+    mpu_firewall/v0/soc/am273x \
     pinmux/am273x \
     rti/v0 \
     qspi/v0 \
