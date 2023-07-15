@@ -11168,72 +11168,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "WFI Standy mode example demo CPU is R5FSS0-0 running NORTOS.",
-        "name": "wfi_standby_demo",
-        "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "nortos",
-            "wfi_standby_demo",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "WFI Standy mode example demo CPU is R5FSS1-0 running NORTOS.",
-        "name": "wfi_standby_demo",
-        "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "nortos",
-            "wfi_standby_demo",
-            "r5fss1-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "A Task Switch Example. CPU is M4FSS0-0 running FREERTOS.",
@@ -11385,6 +11319,72 @@
             "freertos",
             "task_switch",
             "m4fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo CPU is R5FSS0-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo CPU is R5FSS1-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss1-0_nortos"
         ],
         "mainCategories": [
             [
@@ -13640,35 +13640,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Benchmark Demo System Example.",
-        "name": "benchmark_demo",
-        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/system_nortos/system.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "subCategories": [
-            "benchmarks",
-            "benchmark_demo",
-            "system_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc4",
         "location": "../../examples/sdl/rti/UC4/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -13686,6 +13657,35 @@
             "rti",
             "UC4",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Benchmark Demo System Example.",
+        "name": "benchmark_demo",
+        "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "benchmark_demo",
+            "system_nortos"
         ],
         "mainCategories": [
             [
@@ -14030,36 +14030,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "WFI Standy mode example demo System project.",
-        "name": "wfi_standby_demo",
-        "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos/system.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "subCategories": [
-            "kernel",
-            "nortos",
-            "wfi_standby_demo",
-            "system_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
@@ -14218,6 +14188,36 @@
             "dpl",
             "xip_benchmark",
             "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo System project.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am64x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "system_nortos"
         ],
         "mainCategories": [
             [

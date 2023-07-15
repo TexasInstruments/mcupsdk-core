@@ -63,7 +63,7 @@ CFLAGS_common := \
 	-mfloat-abi=hard \
 	-mthumb \
 	-Wall \
-#	-Werror \
+	-Werror \
 	-g \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \

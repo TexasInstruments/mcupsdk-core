@@ -65,7 +65,7 @@ CFLAGS_common := \
 	-q \
 	-mo \
 	-pden \
-	#--emit_warnings_as_errors \
+	--emit_warnings_as_errors \
 	--mem_model:const=data \
 	--mem_model:data=far_aggregates \
 	--remove_hooks_when_inlining \
@@ -169,7 +169,10 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_QSPI)
+	$(RM) $(BOOTIMAGE_NAME_QSPI_HS)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
+	$(RM) $(BOOTIMAGE_NAME_HS)
+	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
 	$(RMDIR) generated/

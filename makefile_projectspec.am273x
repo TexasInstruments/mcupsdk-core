@@ -145,16 +145,16 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_reset_am273x-evm_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build
@@ -602,34 +602,34 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ crypto_dthe_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ crypto_dthe_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ crypto_dthe_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ dthe_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+ dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
@@ -819,16 +819,16 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_reset_am273x-evm_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1276,34 +1276,34 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ crypto_dthe_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ crypto_dthe_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ crypto_dthe_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ dthe_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -1493,16 +1493,16 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_reset_am273x-evm_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export
@@ -1950,34 +1950,34 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ crypto_dthe_aes_ecb_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ crypto_dthe_aes_cmac_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ crypto_dthe_aes_cmac_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ dthe_sha_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- crypto_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+ dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:

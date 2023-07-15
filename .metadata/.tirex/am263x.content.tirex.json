@@ -8121,6 +8121,68 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-0 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-cc/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-1 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-cc/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running FREERTOS.",
         "name": "empty",
         "location": "../../examples/empty/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -8167,6 +8229,68 @@
         "subCategories": [
             "empty",
             "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-0 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-lp/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-1 running FREERTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-lp/r5fss1-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-1_freertos"
         ],
         "mainCategories": [
             [
@@ -8245,6 +8369,68 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-0 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-1 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
         "name": "empty",
         "location": "../../examples/empty/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -8291,6 +8477,68 @@
         "subCategories": [
             "empty",
             "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-0 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS1-1 running NORTOS.",
+        "name": "empty",
+        "location": "../../examples/empty/am263x-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "empty",
+            "r5fss1-1_nortos"
         ],
         "mainCategories": [
             [
@@ -10483,8 +10731,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_ecb_256",
+        "description": "A Crypto Dthe Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"

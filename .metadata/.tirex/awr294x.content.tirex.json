@@ -4727,8 +4727,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cbc_128",
+        "description": "A Crypto Dthe Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cbc_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4761,8 +4761,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cbc_256",
+        "description": "A Crypto Dthe Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cbc_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4795,8 +4795,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_ecb_128",
+        "description": "A Crypto Dthe Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4829,8 +4829,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_ecb_256",
+        "description": "A Crypto Dthe Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4863,8 +4863,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cmac_128",
+        "description": "A Crypto Dthe Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cmac_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4897,8 +4897,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_aes_cmac_256",
+        "description": "A Crypto Dthe Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cmac_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4931,8 +4931,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_sha_256",
+        "description": "A Dthe Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_sha_256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4965,8 +4965,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_sha_512",
+        "description": "A Dthe Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_sha_512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -4999,8 +4999,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_hmac_sha256",
+        "description": "A Dthe Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_hmac_sha256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
@@ -5033,8 +5033,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Crypto Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_hmac_sha512",
+        "description": "A Dthe Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_hmac_sha512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AWR294X_EVM"
