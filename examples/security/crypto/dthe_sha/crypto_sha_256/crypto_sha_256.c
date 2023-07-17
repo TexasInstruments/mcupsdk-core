@@ -118,6 +118,7 @@ void crypto_sha_256_main(void *args)
     else
     {
         DebugP_log("[CRYPTO] SHA-256 example completed!!\r\n");
+        DebugP_log("All tests have passed!!\r\n");
     }
 
     Board_driversClose();

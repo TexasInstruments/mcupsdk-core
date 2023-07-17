@@ -122,6 +122,7 @@ void crypto_sha_512_main(void *args)
     else
     {
         DebugP_log("[CRYPTO] SHA-512 example completed!!\r\n");
+        DebugP_log("All tests have passed!!\r\n");
     }
 
     Board_driversClose();

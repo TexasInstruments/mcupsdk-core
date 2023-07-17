@@ -21,19 +21,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=crypto_aes_ecb_128.$(PROFILE).out
+OUTNAME:=crypto_dthe_aes_ecb_128.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=crypto_aes_ecb_128.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=crypto_aes_ecb_128.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_QSPI:=crypto_aes_ecb_128.$(PROFILE).appimage_qspi
-BOOTIMAGE_NAME_SIGNED:=crypto_aes_ecb_128.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=crypto_aes_ecb_128.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=crypto_aes_ecb_128.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=crypto_aes_ecb_128.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=crypto_aes_ecb_128.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_QSPI_HS:=crypto_aes_ecb_128.$(PROFILE).appimage_qspi.hs
-BOOTIMAGE_NAME_HS_FS:=crypto_aes_ecb_128.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_QSPI:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage_qspi
+BOOTIMAGE_NAME_SIGNED:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=crypto_dthe_aes_ecb_128.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=crypto_dthe_aes_ecb_128.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=crypto_dthe_aes_ecb_128.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_QSPI_HS:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage_qspi.hs
+BOOTIMAGE_NAME_HS_FS:=crypto_dthe_aes_ecb_128.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -195,7 +195,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang crypto_aes_ecb_128 ...
+	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang crypto_dthe_aes_ecb_128 ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

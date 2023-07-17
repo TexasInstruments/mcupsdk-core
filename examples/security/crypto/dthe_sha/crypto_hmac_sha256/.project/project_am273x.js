@@ -133,7 +133,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "crypto_hmac_sha256";
+    property.name = "dthe_hmac_sha256";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

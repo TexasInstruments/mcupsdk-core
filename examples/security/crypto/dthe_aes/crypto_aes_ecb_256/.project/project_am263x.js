@@ -113,7 +113,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "crypto_aes_ecb_256";
+    property.name = "crypto_dthe_aes_ecb_256";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

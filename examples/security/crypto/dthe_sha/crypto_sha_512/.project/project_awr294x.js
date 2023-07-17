@@ -133,7 +133,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "crypto_sha_512";
+    property.name = "dthe_sha_512";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

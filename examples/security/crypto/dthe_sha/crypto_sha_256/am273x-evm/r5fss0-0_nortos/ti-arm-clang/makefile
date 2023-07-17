@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=crypto_sha_256.$(PROFILE).out
+OUTNAME:=dthe_sha_256.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=crypto_sha_256.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=crypto_sha_256.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=crypto_sha_256.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=crypto_sha_256.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=crypto_sha_256.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=crypto_sha_256.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=crypto_sha_256.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=crypto_sha_256.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=dthe_sha_256.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dthe_sha_256.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=dthe_sha_256.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dthe_sha_256.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dthe_sha_256.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dthe_sha_256.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=dthe_sha_256.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=dthe_sha_256.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -188,7 +188,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am273x:r5fss0-0:nortos:ti-arm-clang crypto_sha_256 ...
+	@echo  Scrubing: am273x:r5fss0-0:nortos:ti-arm-clang dthe_sha_256 ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
