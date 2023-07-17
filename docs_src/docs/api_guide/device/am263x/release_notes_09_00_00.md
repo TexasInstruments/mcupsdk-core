@@ -372,6 +372,12 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Change
     <th> Additional Remarks
 </tr>
+<tr>
+    <td> ECAP driver versions v0 and v2
+    <td> ECAP_continousmodeConfig
+    <td> Spell corrected to "ECAP_continuousmodeConfig"
+    <td> -
+</tr>
 </table>
 
 <table>

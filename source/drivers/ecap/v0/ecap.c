@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -160,7 +160,7 @@ void ECAP_captureEvtCntrRstConfig(uint32_t baseAddr, uint32_t counterRst1,
     HW_WR_REG16(temp_addr, value);
 }
 
-void ECAP_continousModeConfig(uint32_t baseAddr)
+void ECAP_continuousModeConfig(uint32_t baseAddr)
 {
     uint32_t temp_addr = baseAddr + ECAP_ECCTL2;
     uint16_t value = HW_RD_REG16(temp_addr);

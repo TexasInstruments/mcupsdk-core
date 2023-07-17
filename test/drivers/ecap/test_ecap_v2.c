@@ -175,7 +175,7 @@ guide for the test setup details. \r\n");
     test_ecap_init_test_params(&testParams, 1545);
     RUN_TEST(test_ecap_epwm_loopback, 1545, (void*)&testParams);
 #endif
-  
+
 
     UNITY_END();
 
@@ -360,7 +360,7 @@ static void App_ecapInit(void *args)
         }
         else
         {
-            ECAP_continousModeConfig(gEcapBaseAddr);
+            ECAP_continuousModeConfig(gEcapBaseAddr);
         }
         /* Set polarity of the events to rising, falling, rising, falling edge */
         ECAP_captureEvtPolarityConfig(gEcapBaseAddr,

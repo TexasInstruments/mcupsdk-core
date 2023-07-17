@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -339,7 +339,7 @@ void ECAP_captureEvtCntrRstConfig(uint32_t baseAddr, uint32_t counterRst1,
  *
  * \param   baseAddr   It is the Memory address of the ECAP instance used.
  */
-void ECAP_continousModeConfig(uint32_t baseAddr);
+void ECAP_continuousModeConfig(uint32_t baseAddr);
 
 /**
  * \brief   This function configures ECAP to One-shot mode and also
@@ -511,8 +511,8 @@ void ECAP_intrStatusClear(uint32_t baseAddr, uint32_t flag);
  * \param   baseAddr  It is the Memory address of the ECAP instance used.
  * \param   srcSelect Capture input select
  *                    0x0 capture input is ECAPxINPUT[0]
- *                    0x1 capture input is ECAPxINPUT[1] 
- *                    0x7F  capture input is ECAPxINPUT[127] 
+ *                    0x1 capture input is ECAPxINPUT[1]
+ *                    0x7F  capture input is ECAPxINPUT[127]
  */
 void ECAP_captureInputSourceSelect(uint32_t baseAddr, uint8_t srcSelect);
 
