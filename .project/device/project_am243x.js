@@ -161,6 +161,7 @@ const example_file_list = [
     "test/sdl/ecc/ecc_sdl_unitTest/.project/project.js",
     "test/sdl/pbist/sdl_pbist_test/.project/project.js",
     "test/sdl/pbist/ip_pbist_test/.project/project.js",
+    "test/sdl/utils/.project/project.js",
     "examples/sdl/vtm/vtm_uc/.project/project.js",
     "examples/sdl/dcc/dcc_modes/.project/project.js",
     "examples/sdl/pok/pok_mcu/.project/project.js",
