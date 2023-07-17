@@ -79,6 +79,7 @@ const files_r5f = {
   		"sdl_interrupt_register.c",
   		"sdl_exception.c",
         "sdl_ecc_r5.c",
+        "sdl_r5f_utils.c",
     ],
 };
 
