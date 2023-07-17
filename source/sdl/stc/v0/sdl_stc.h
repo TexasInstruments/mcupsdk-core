@@ -161,8 +161,9 @@ typedef struct
     /** Scan mode configuration. Fixed Configuration – Only this configuration value is supported  */
     uint32_t scanEnHighCap_idleCycle;
 
-}__attribute__((packed))
-SDL_STC_ScanModeconfig;
+}SDL_STC_ScanModeconfig;
+
+
 
 typedef struct
 {
@@ -183,14 +184,14 @@ typedef struct
     /** Configure scan mode configuration */
     SDL_STC_ScanModeconfig modeConfig;
 
-} __attribute__((packed))
-SDL_STC_Config;
+}SDL_STC_Config;
+
 
 /** @} */
 
 /**
 
-@addtogroup SDL_DCC_ENUM
+@addtogroup SDL_STC_ENUM
 @{
 */
 
