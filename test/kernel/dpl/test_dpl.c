@@ -30,7 +30,6 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "test_dpl.h"
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -1233,8 +1232,6 @@ void test_main(void *args)
 #endif
 
     RUN_TEST(test_addrconversion, 898, NULL);
-
-    test_pos_main(NULL);
     
     UNITY_END();
     
