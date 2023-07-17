@@ -452,11 +452,6 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
         return false;
       }
 
-      /* make sure the queued buffer is not exceed the maximum packet size */
-      CH9_UsbEndpointDescriptor *desc = (CH9_UsbEndpointDescriptor *)ep->desc;
-      if (desc->wMaxPacketSize<total_bytes)
-        total_bytes = desc->wMaxPacketSize;
-
       TU_LOG2("[dcd_edpt_xfer] waiting request(%d) for ep:%02X, %d bytes to buffer=%08X\n", reqIdx, ep_addr,
               total_bytes, (uint32_t)buffer);
 
