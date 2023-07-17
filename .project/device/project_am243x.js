@@ -139,6 +139,7 @@ const example_file_list = [
     "examples/usb/device/dfu/.project/project_nortos.js",
     "test/sdl/dcc/dcc_unit_test/.project/project.js",
     "test/sdl/dcc/dcc_func_test/.project/project.js",
+    "examples/sdl/r5f_cpu_utils/.project/project.js",
     "examples/sdl/esm/mcu_esm0/.project/project.js",
     "examples/sdl/ecc/.project/project.js",
     "test/sdl/esm/esm_func_test/.project/project.js",

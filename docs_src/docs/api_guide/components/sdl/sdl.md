@@ -64,6 +64,9 @@ SDL consists of below sub-modules
 \cond SOC_AM263X
 - \subpage SDL_R5FCPU_PAGE
 \endcond
+\cond SOC_AM243X
+- \subpage SDL_R5FCPU_PAGE
+\endcond
 
 \cond SOC_AM273X || SOC_AWR294X
 - \subpage SDL_HWA_PAGE

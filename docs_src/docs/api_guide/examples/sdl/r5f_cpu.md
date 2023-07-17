@@ -18,7 +18,7 @@ Use Cases
 # Supported Combinations {#EXAMPLES_SDL_RESET_COMBOS}
 
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
@@ -44,7 +44,7 @@ Use Cases
 
 # Sample Output
 
-\cond  SOC_AM263X
+\cond  SOC_AM263X || SOC_AM243X
 Shown below is a sample output when the application is run for R5F,
 
 For detail description of these register values, one can refer

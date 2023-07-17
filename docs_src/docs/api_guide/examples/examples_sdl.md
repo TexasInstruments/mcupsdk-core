@@ -99,6 +99,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_VTM
 -# POK
    -# \subpage EXAMPLES_SDL_POK
+-# R5FCPU_UTILS
+   -# \subpage EXAMPLES_SDL_R5F_CPU_STATIC_REGISTER
 \endcond
 
 \cond SOC_AM273X

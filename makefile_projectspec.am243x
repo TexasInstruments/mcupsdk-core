@@ -242,6 +242,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-e
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += r5f_cpu_utils_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcu_esm0_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcu_esm0_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecc_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build
@@ -1041,6 +1042,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/usb/device/dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ r5f_cpu_utils_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/r5f_cpu_utils/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  mcu_esm0_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/esm/mcu_esm0/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1532,6 +1536,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-e
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += r5f_cpu_utils_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcu_esm0_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcu_esm0_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecc_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -2331,6 +2336,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ r5f_cpu_utils_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/r5f_cpu_utils/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  mcu_esm0_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/esm/mcu_esm0/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2822,6 +2830,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += r5f_cpu_utils_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcu_esm0_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcu_esm0_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecc_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export
@@ -3621,6 +3630,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/usb/device/dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ r5f_cpu_utils_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/r5f_cpu_utils/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  mcu_esm0_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/esm/mcu_esm0/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4137,6 +4149,7 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/r5f_cpu_utils/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/esm/mcu_esm0/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/esm/mcu_esm0/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
