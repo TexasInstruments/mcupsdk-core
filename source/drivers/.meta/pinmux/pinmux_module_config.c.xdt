@@ -19,11 +19,11 @@
         %%}
         % if(doGenerateCode) {
             % let peripheral = (module.defaultInstanceName === "CONFIG_ENET_CPSW") ? (instance.pinmux[0])[interfaceName] :instance[interfaceName];
-    /* `peripheral.$solution.peripheralName` pin config */
             % let pinNames = module.getPeripheralPinNames(instance);
             % for (let pinName of pinNames) {
                 % let peripheralPin = peripheral[pinName];
                 % if (peripheralPin && peripheralPin.$solution.peripheralPinName) {
+    /* `peripheral.$solution.peripheralName` pin config */
     `soc.getPinConfigCStruct(peripheralPin, interfaceName)`
                 % }
             % }
@@ -45,11 +45,11 @@
         %        doGenerateCode = true;
         %    if(doGenerateCode) {
         %        let peripheral = (module.defaultInstanceName === "CONFIG_ENET_CPSW") ? (instance.pinmux[0])[interfaceName] :instance[interfaceName];
-    /* `peripheral.$solution.peripheralName` pin config */
         %        let pinNames = module.getPeripheralPinNames(instance);
         %        for (let pinName of pinNames) {
         %             let peripheralPin = peripheral[pinName];
         %             if (peripheralPin && peripheralPin.$solution.peripheralPinName) {
+    /* `peripheral.$solution.peripheralName` pin config */
     `soc.getPinConfigCStruct(peripheralPin, interfaceName)`
         %             }
         %        }
