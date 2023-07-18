@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.14.0+2667"}
  */
 
 /**
@@ -44,7 +44,6 @@ epwm1.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INT
 epwm1.$name                                                      = "CONFIG_EPWMx";
 epwm1.EPWM.$assign                                               = "EPWM9";
 epwm1.EPWM.B.$used                                               = false;
-
 epwm2.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
 epwm2.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
 epwm2.epwmTimebase_period                                        = 6000;
@@ -61,45 +60,35 @@ epwm2.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INT
 epwm2.$name                                                      = "CONFIG_EPWMy";
 epwm2.EPWM.$assign                                               = "EPWM1";
 epwm2.EPWM.B.$used                                               = false;
-
 gpio1.$name                = "EPWM_TRIP_INPUT";
-gpio1.GPIO.gpioPin.$assign = "ball.C11";
-
+gpio1.GPIO.gpioPin.$assign = "ball.C1";
 gpio2.$name                = "GPIO_OUTPUT";
 gpio2.pinDir               = "OUTPUT";
 gpio2.trigType             = "RISE_EDGE";
-gpio2.GPIO.gpioPin.$assign = "ball.A11";
-
+gpio2.GPIO.gpioPin.$assign = "ball.B16";
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";
 mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv71.allowExecute      = false;
-
 mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.size              = 15;
 mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
-
 mpu_armv73.$name             = "CONFIG_MPU_REGION2";
 mpu_armv73.baseAddr          = 0x80000;
 mpu_armv73.size              = 15;
 mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-
 mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
-
 input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
-input_xbar1.xbarOutput = "GPIO11";
-
+input_xbar1.xbarOutput = "GPIO48";
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
 int_xbar1.xbarOutput = ["EPWM9_TZINT"];
-
 int_xbar2.$name      = "CONFIG_INT_XBAR1";
 int_xbar2.instance   = "INT_XBAR_1";
 int_xbar2.xbarOutput = ["EPWM1_TZINT"];
-
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to

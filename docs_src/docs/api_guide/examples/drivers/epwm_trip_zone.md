@@ -28,17 +28,17 @@ For CBC as observed at the end, after exiting the loop, it recovers from trip st
 # External Connections
 
 - For AM263x-CC:
-    - GPIO60 is connected to GPIO64
-    - EPWM9_A and EPWM10_A pin can be connected to an oscilloscope to view the waveform.
+    - GPIO48 is connected to GPIO122
+    - EPWM9_A and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
 - For AM263x-LP:
     - GPIO11 is connected to GPIO12
     - EPWM9_A and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
 
 ## AM263X-CC
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Connect FSI header (on ControlCard) pin 6 to pin 7
-- Connect FSI header (on ControlCard) pin 8 to scope
-- Connect FSI header (on ControlCard) pin 5 to scope
+- Connect HSEC Pin 52 to HSEC Pin 72
+- Connect FSI header (on ControlCard) pin 8 to scope for epwm9_A
+- Connect HSEC Pin 53 to scope for epwm1_A
 
 
 ## AM263X-LP
