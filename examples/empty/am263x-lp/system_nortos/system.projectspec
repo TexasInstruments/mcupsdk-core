@@ -2,6 +2,8 @@
 <projectSpec>
     <import spec="../r5fss0-0_nortos/ti-arm-clang/example.projectspec"/>
     <import spec="../r5fss0-1_nortos/ti-arm-clang/example.projectspec"/>
+    <import spec="../r5fss1-0_nortos/ti-arm-clang/example.projectspec"/>
+    <import spec="../r5fss1-1_nortos/ti-arm-clang/example.projectspec"/>
     <project
         name="empty_am263x-lp_system_nortos"
         products="com.ti.MCU_PLUS_SDK_AMXXX"

@@ -22,14 +22,20 @@ MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
 CORE_1=--script ../r5fss0-1_nortos/example.syscfg --context r5fss0-1 --output ../r5fss0-1_nortos/ti-arm-clang/generated
+CORE_2=--script ../r5fss1-0_nortos/example.syscfg --context r5fss1-0 --output ../r5fss1-0_nortos/ti-arm-clang/generated
+CORE_3=--script ../r5fss1-1_nortos/example.syscfg --context r5fss1-1 --output ../r5fss1-1_nortos/ti-arm-clang/generated
 
 CORES = \
+    $(CORE_3) \
+    $(CORE_2) \
     $(CORE_1) \
     $(CORE_0) \
 
 all: syscfg
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ all
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ all
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ all
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ all
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
@@ -38,6 +44,8 @@ endif
 clean:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ clean
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
@@ -45,6 +53,8 @@ clean:
 scrub:
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ scrub
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss1-1_nortos/ti-arm-clang/ scrub
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
@@ -86,14 +96,20 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_c
 MULTI_CORE_APP_PARAMS = \
     ../r5fss0-0_nortos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
     ../r5fss0-1_nortos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss1-0_nortos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
+    ../r5fss1-1_nortos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
     ../r5fss0-0_nortos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
     ../r5fss0-1_nortos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss1-0_nortos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
+    ../r5fss1-1_nortos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
     ../r5fss0-0_nortos/ti-arm-clang/empty.$(PROFILE).rprc \
     ../r5fss0-1_nortos/ti-arm-clang/empty.$(PROFILE).rprc \
+    ../r5fss1-0_nortos/ti-arm-clang/empty.$(PROFILE).rprc \
+    ../r5fss1-1_nortos/ti-arm-clang/empty.$(PROFILE).rprc \
 
 $(MULTI_CORE_BOOTIMAGE_DEPENDENCY):
 
@@ -119,4 +135,3 @@ endif
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$(MULTI_CORE_BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
-
