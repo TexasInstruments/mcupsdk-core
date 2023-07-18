@@ -606,7 +606,11 @@ function validate(inst, report) {
         break;
     }
     common.validate.checkNumberRange(inst, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
-    common.validate.checkNumberRange(inst, report, "baudRate", 300, 12000000, "dec");
+    if(getInterfaceName(inst) == "MCU_UART") {
+        common.validate.checkNumberRange(inst, report, "baudRate", 300, 3700000, "dec");
+    } else {
+        common.validate.checkNumberRange(inst, report, "baudRate", 300, 12000000, "dec");
+    }
 }
 
 exports = uart_module;
