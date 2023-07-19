@@ -10739,6 +10739,39 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Interrupt Profiling Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "interrupt_profiling",
+        "location": "../../examples/kernel/freertos/interrupt_profiling/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "interrupt_profiling",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A Posix Demo Example. CPU is R5FSS0-0 running FREERTOS.",

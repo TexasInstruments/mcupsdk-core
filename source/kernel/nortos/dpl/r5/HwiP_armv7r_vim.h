@@ -80,8 +80,21 @@ typedef struct HwiP_Ctrl_s {
     uint32_t spuriousFIQCount;
 } HwiP_Ctrl;
 
+typedef struct HwiP_Prof_Ctrl_s {
+
+    uint32_t traceInterruptedISR[HwiP_MAX_INTERRUPTS];
+    uint32_t traceInterruptedISRIndex;
+    uint32_t readCounterStart;
+    uint32_t readCounterStop;
+    uint32_t gProfileIntr;
+    uint64_t pmuCountVal;
+    uint64_t pmuCalibration;
+
+} HwiP_Prof_Ctrl;
+
 extern HwiP_Ctrl gHwiCtrl;
 extern HwiP_Config gHwiConfig;
+extern HwiP_Prof_Ctrl gHwiCtrlProf;
 /* APIs defined in HwiP_armv7r_asm.S */
 uint32_t HwiP_disableFIQ(void);
 void HwiP_enableFIQ(void);

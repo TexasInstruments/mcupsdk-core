@@ -3180,6 +3180,39 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "A Interrupt Profiling Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "interrupt_profiling",
+        "location": "../../examples/kernel/freertos/interrupt_profiling/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "interrupt_profiling",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "A Task Switch Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

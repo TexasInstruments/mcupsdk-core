@@ -33,6 +33,8 @@
 #include <kernel/dpl/HwiP.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 #include <drivers/hw_include/csl_types.h>
+#include <drivers/hw_include/soc_config.h>
+#include <drivers/pmu.h>
 
 static volatile uint32_t gdummy;
 
@@ -45,6 +47,40 @@ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_han
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler(void);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void);
+
+void __attribute__((section(".text.hwi"))) HwiP_irq_profile_c(uint32_t intNum)
+{
+    uint32_t idx = 0, exists = 1;
+
+    for(idx = 0; idx <= gHwiCtrlProf.traceInterruptedISRIndex; idx++)
+    {
+        if(gHwiCtrlProf.traceInterruptedISR[idx] == intNum)
+        {
+            gHwiCtrlProf.traceInterruptedISR[idx] = 0;
+            gHwiCtrlProf.traceInterruptedISRIndex --;
+            if(gHwiCtrlProf.traceInterruptedISRIndex == 0)
+            {
+                gHwiCtrlProf.readCounterStop = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM);
+                if(gHwiCtrlProf.readCounterStop > gHwiCtrlProf.readCounterStart)
+                {
+                    gHwiCtrlProf.pmuCountVal += gHwiCtrlProf.readCounterStop - gHwiCtrlProf.readCounterStart - gHwiCtrlProf.pmuCalibration;
+                }
+                else
+                {
+                    gHwiCtrlProf.pmuCountVal += (0xFFFFFFFFU - gHwiCtrlProf.readCounterStart) + gHwiCtrlProf.readCounterStop - gHwiCtrlProf.pmuCalibration;
+                }
+            }
+            exists = 0;
+            break;
+        }
+    }
+    if(exists)
+    {
+        gHwiCtrlProf.traceInterruptedISR[(gHwiCtrlProf.traceInterruptedISRIndex)] = intNum;
+        gHwiCtrlProf.traceInterruptedISRIndex ++;
+        gHwiCtrlProf.readCounterStart = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM);
+    }
+}
 
 /* IRQ handler starts execution in HwiP_irq_handler, defined in portASM.S
  * After some initial assembly logic it then branches to this function.
@@ -66,6 +102,13 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
     status = HwiP_getIRQ(&intNum);
     if(status==SystemP_SUCCESS)
     {
+        #ifdef INTR_PROF
+        if(gHwiCtrlProf.gProfileIntr == 1)
+        {
+            HwiP_irq_profile_c(intNum);
+        }
+        #endif
+
         uint32_t isPulse = HwiP_isPulse(intNum);
         HwiP_FxnCallback isr;
         void *args;
@@ -96,6 +139,13 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
             HwiP_clearInt(intNum);
         }
         HwiP_ackIRQ(intNum);
+
+        #ifdef INTR_PROF
+        if(gHwiCtrlProf.gProfileIntr == 1)
+        {
+            HwiP_irq_profile_c(intNum);
+        }
+        #endif
     }
     else
     {

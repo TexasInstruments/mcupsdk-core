@@ -121,6 +121,7 @@ const example_file_list = [
     "examples/kernel/dpl/dpl_demo/.project/project.js",
     "examples/kernel/dpl/xip_benchmark/.project/project.js",
     "examples/kernel/freertos/dhrystone_benchmark/.project/project.js",
+    "examples/kernel/freertos/interrupt_profiling/.project/project.js",
     "examples/kernel/freertos/posix_demo/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/kernel/freertos/smp_task_switch/.project/project.js",

@@ -49,6 +49,7 @@ typedef struct HwiP_Struct_s {
 } HwiP_Struct;
 
 HwiP_Ctrl gHwiCtrl;
+HwiP_Prof_Ctrl gHwiCtrlProf;
 
 void HWI_SECTION HwiP_enableInt(uint32_t intNum)
 {

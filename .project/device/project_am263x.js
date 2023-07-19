@@ -132,6 +132,7 @@ const example_file_list = [
     "examples/kernel/dpl/dpl_demo/.project/project.js",
     "examples/kernel/dpl/dpl_low_latency_interrupt/.project/project.js",
     "examples/kernel/dpl/interrupt_prioritization/.project/project.js",
+    "examples/kernel/freertos/interrupt_profiling/.project/project.js",
     "examples/kernel/freertos/posix_demo/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/kernel/nortos/wfi_standby_demo/.project/project_am263x.js",

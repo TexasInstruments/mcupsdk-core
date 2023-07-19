@@ -116,6 +116,7 @@ const example_file_list = [
     "examples/hello_world_cpp/.project/project.js",
     "examples/kernel/dpl/dpl_demo/.project/project.js",
     "examples/kernel/dpl/xip_benchmark/.project/project.js",
+    "examples/kernel/freertos/interrupt_profiling/.project/project.js",
     "examples/kernel/freertos/posix_demo/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/kernel/nortos/wfi_standby_demo/.project/project_am243x.js",

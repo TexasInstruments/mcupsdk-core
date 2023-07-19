@@ -74,6 +74,7 @@ const example_file_list = [
     "examples/hello_world_safertos/.project/project.js",
     "examples/kernel/dpl/dpl_demo/.project/project.js",
     "examples/kernel/freertos/posix_demo/.project/project.js",
+    "examples/kernel/freertos/interrupt_profiling/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",

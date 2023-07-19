@@ -1,6 +1,14 @@
 
 let common = system.getScript("/common");
 
+const topModules_main = [
+    "/kernel/dpl/clock",
+    "/kernel/dpl/debug_log",
+    "/kernel/dpl/mpu_armv7",
+    "/kernel/dpl/timer",
+    "/kernel/dpl/profile",
+];
+
 const topModules_mcu = [
     "/kernel/dpl/clock",
     "/kernel/dpl/debug_log",
@@ -36,7 +44,7 @@ exports = {
         let cpu = common.getSelfSysCfgCoreName();
 
         if(cpu.match(/r5f*/)) {
-            return topModules_mcu;
+            return topModules_main;
         }
         if(cpu.includes("hsm")) {
             return topModules_mcu;

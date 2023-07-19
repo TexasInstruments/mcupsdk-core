@@ -1,0 +1,51 @@
+%%{
+    let module = system.modules['/kernel/dpl/profile'];
+    let common = system.getScript("/common");
+%%}
+
+/* ----------- ProfileP ----------- */
+extern HwiP_Prof_Ctrl gHwiCtrlProf;
+
+void ProfileP_init(void)
+{
+     /* User mode enable */
+    CSL_armR5PmuCfg(0, 0 ,1);
+    /* Configure cycle counter */
+    CSL_armR5PmuCfgCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM,
+                        CSL_ARM_R5_PMU_EVENT_TYPE_CYCLE_CNT);
+    /* Enable counter overflow interrupt */
+    CSL_armR5PmuEnableCntrOverflowIntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM, 0);
+    /* Reset counters */
+    CSL_armR5PmuResetCntrs();
+    CSL_armR5PmuResetCycleCnt();
+    /* Enable all counters */
+    CSL_armR5PmuEnableAllCntrs(1);
+    CSL_armR5PmuEnableCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM, 1);
+
+    /* Reset counters and get the pmu calibration value */
+    CSL_armR5PmuResetCycleCnt();
+    CSL_armR5PmuResetCntrs();
+    gHwiCtrlProf.pmuCalibration = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM);
+    gHwiCtrlProf.pmuCalibration = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM) - gHwiCtrlProf.pmuCalibration;
+
+    gHwiCtrlProf.gProfileIntr = 1;
+    CSL_armR5PmuResetCntrs();
+    CSL_armR5PmuResetCycleCnt();
+
+}
+
+float ProfileP_time(void)
+{
+    uint64_t cpuClockRate = SOC_getSelfCpuClk();
+    return (float)gHwiCtrlProf.pmuCountVal/(float)cpuClockRate;
+}
+
+uint64_t ProfileP_CycCount(void)
+{
+    return gHwiCtrlProf.pmuCountVal;
+}
+
+void ProfileP_deinit(void)
+{
+    gHwiCtrlProf.gProfileIntr = 0;
+}
