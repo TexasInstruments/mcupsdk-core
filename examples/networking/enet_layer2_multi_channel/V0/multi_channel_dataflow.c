@@ -1055,12 +1055,15 @@ int32_t EnetApp_setClockTime(EnetApp_PerCtxt* enet_perctxt,
 {
     int32_t status = TIMESYNC_OK;
     Enet_IoctlPrms prms;
-    uint64_t tsVal = 0U;
 
     if (enet_perctxt != NULL)
     {
-        tsVal = (uint64_t)(((uint64_t)seconds * (uint64_t)TIME_SEC_TO_NS) + nanoseconds);
-        ENET_IOCTL_SET_IN_ARGS(&prms, &tsVal);
+        EnetTimeSync_setTimestamp timestamp = {
+                .tsLoadVal = (uint64_t) (((uint64_t) seconds * (uint64_t) TIME_SEC_TO_NS) + nanoseconds), /*timestamp value to load in nanosec */
+                .clkMode = 0, /*Not applicable for CPSW */
+                .clkSign = 0, /*Not applicable for CPSW */
+        };
+        ENET_IOCTL_SET_IN_ARGS(&prms, &timestamp);
         ENET_IOCTL(enet_perctxt->hEnet, gEnetApp.coreId, ENET_TIMESYNC_IOCTL_SET_TIMESTAMP, &prms, status);
         EnetAppUtils_assert(status == TIMESYNC_OK);
     }

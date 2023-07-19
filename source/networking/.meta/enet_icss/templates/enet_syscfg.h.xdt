@@ -96,10 +96,10 @@ function getTotalTxChCount(instances)
 #define ENET_SYSCFG_PKT_POOL_ENABLE              (`Number(instance.PktPoolEnable)`U)
 #define ENET_SYSCFG_PKT_INFO_ONLY_ENABLE         (`Number(instance.PktInfoOnlyEnable)`U)
 %for(let i in instances) {
-%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 #define ENET_SYSCFG_MAC_PORT_1_QOS_LEVEL         (`instances[i].QoS`U)
 %}
-%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 #define ENET_SYSCFG_MAC_PORT_2_QOS_LEVEL         (`instances[i].QoS`U)
 %}
 %}
@@ -127,10 +127,10 @@ function getTotalTxChCount(instances)
 
 /*! \brief Number of host buffer pools required for Dual-MAC. */
 %for(let i in instances) {
-%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_1")) {
 #define ICSSG_DUALMAC_PORT_1_HOST_BUFFER_POOL_NUM_CFG        (ENET_SYSCFG_MAC_PORT_1_QOS_LEVEL)
 %}
-%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
+%if (module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_2") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG1", "ENET_MAC_PORT_2")) {
 #define ICSSG_DUALMAC_PORT_2_HOST_BUFFER_POOL_NUM_CFG        (ENET_SYSCFG_MAC_PORT_2_QOS_LEVEL)
 %}
 %}
