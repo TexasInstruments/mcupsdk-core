@@ -293,6 +293,7 @@ const example_file_list = [
     "test/security/crypto/test_dthe_aes_cmac/.project/project.js",
     "test/security/crypto/test_dthe_sha/.project/project.js",
     "test/security/crypto/test_dthe_hmac_sha/.project/project.js",
+    "tools/flasher/jtag_uniflash/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

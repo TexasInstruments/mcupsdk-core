@@ -343,6 +343,8 @@ help:
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -1664,6 +1666,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ flasher_jtag_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  stog_func_test_r5f_am243x-evm_system_nortos:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile all
 
@@ -2948,6 +2956,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ flasher_jtag_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  stog_func_test_r5f_am243x-evm_system_nortos_clean:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile clean
@@ -4234,6 +4248,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ flasher_jtag_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ flasher_jtag_uniflash_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  stog_func_test_r5f_am243x-evm_system_nortos_scrub:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am243x-evm/system_nortos -f makefile scrub
 
@@ -4290,16 +4310,28 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
 sbl-hs:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 
 sbl-hs-clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 
 sbl-hs-scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 
 .PHONY: all clean scrub help
 .PHONY: libs libs-clean libs-scrub

@@ -208,6 +208,7 @@ help:
 	@echo  $(MAKE) -s -C networking/mbedtls_benchmark/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/cpsw_intervlan/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -967,6 +968,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  stc_func_test_am273x-evm_system_nortos_nortos:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/system_nortos_nortos -f makefile all
 
@@ -1667,6 +1671,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  stc_func_test_am273x-evm_system_nortos_nortos_clean:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/system_nortos_nortos -f makefile clean
@@ -2369,6 +2376,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
+ flasher_jtag_uniflash_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  stc_func_test_am273x-evm_system_nortos_nortos_scrub:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am273x-evm/system_nortos_nortos -f makefile scrub
 
@@ -2392,10 +2402,13 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
 
 .PHONY: all clean scrub help

@@ -298,6 +298,7 @@ const example_file_list = [
     "test/security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_rsa_signing_verification/.project/project.js",
     "test/security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/.project/project.js",
+    "tools/flasher/jtag_uniflash/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

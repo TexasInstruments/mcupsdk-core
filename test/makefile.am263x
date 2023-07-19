@@ -204,6 +204,8 @@ help:
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_aes_cmac/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_sha/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_dthe_hmac_sha/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -967,6 +969,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_dthe_hmac_sha_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ flasher_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ flasher_jtag_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  stc_func_test_am263x-cc_system_nortos_nortos:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/system_nortos_nortos -f makefile all
 
@@ -1691,6 +1699,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_dthe_hmac_sha_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ flasher_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ flasher_jtag_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  stc_func_test_am263x-cc_system_nortos_nortos_clean:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/system_nortos_nortos -f makefile clean
@@ -2417,6 +2431,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_dthe_hmac_sha_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_dthe_hmac_sha/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ flasher_jtag_uniflash_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ flasher_jtag_uniflash_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  stc_func_test_am263x-cc_system_nortos_nortos_scrub:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263x-cc/system_nortos_nortos -f makefile scrub
 
@@ -2470,10 +2490,16 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
 sbl-clean:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
 sbl-scrub:
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C ../tools/flasher/jtag_uniflash/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
 
 .PHONY: all clean scrub help

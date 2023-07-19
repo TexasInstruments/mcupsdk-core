@@ -42,6 +42,7 @@
 
 static void Bootloader_uniflashInitRespHeader(Bootloader_UniflashResponseHeader *respHeader);
 static int32_t Bootloader_uniflashFlashFile(uint32_t flashIndex, uint8_t *buf, uint32_t fileSize, uint32_t flashOffset);
+static int32_t Bootloader_uniflashFlashFileSector(uint32_t flashIndex, uint8_t *buf, uint32_t fileSize, uint32_t flashOffset);
 static int32_t Bootloader_uniflashFlashVerifyFile(uint32_t flashIndex, uint8_t *fileBuf, uint32_t fileSize, uint8_t *verifyBuf, uint32_t verifyBufSize, uint32_t flashOffset);
 static int32_t Bootloader_uniflashFlashErase(uint32_t flashIndex, uint32_t flashOffset, uint32_t flashSize);
 static int32_t Bootloader_uniflashFlashXipFile(uint32_t flashIndex, uint8_t *fileBuf, uint32_t fileSize);
@@ -94,6 +95,23 @@ int32_t Bootloader_uniflashProcessFlashCommands(Bootloader_UniflashConfig *confi
 	        case BOOTLOADER_UNIFLASH_OPTYPE_FLASH:
 	            /* flash the file at the given offset*/
 	            status = Bootloader_uniflashFlashFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, fileHeader.offset);
+	            if(status != SystemP_SUCCESS)
+	            {
+	                respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERROR;
+	            }
+	            else
+	            {
+	                /* verify the file at the given offset */
+	                status = Bootloader_uniflashFlashVerifyFile(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, config->verifyBuf, config->verifyBufSize, fileHeader.offset);
+	                if(status != SystemP_SUCCESS)
+	                {
+	                    respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_VERIFY_ERROR;
+	                }
+	            }
+	            break;
+            case BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR:
+	            /* flash the file at the given offset*/
+	            status = Bootloader_uniflashFlashFileSector(config->flashIndex, config->buf + sizeof(Bootloader_UniflashFileHeader), config->bufSize, fileHeader.offset);
 	            if(status != SystemP_SUCCESS)
 	            {
 	                respHeader->statusCode = BOOTLOADER_UNIFLASH_STATUSCODE_FLASH_ERROR;
@@ -261,6 +279,71 @@ static int32_t Bootloader_uniflashFlashFile(uint32_t flashIndex, uint8_t *buf, u
 	        if(status == SystemP_SUCCESS)
 	        {
 	            status = Flash_eraseBlk(flashHandle, blockNum);
+	            if(status == SystemP_SUCCESS)
+	            {
+	                status = Flash_write(flashHandle, curOffset, srcAddr, chunkSize);
+	            }
+	        }
+	        curOffset += chunkSize;
+	        srcAddr += chunkSize;
+	        remainSize -= chunkSize;
+	        curChunk++;
+	    }
+	}
+
+	return status;
+}
+
+static int32_t Bootloader_uniflashFlashFileSector(uint32_t flashIndex, uint8_t *buf, uint32_t fileSize, uint32_t flashOffset)
+{
+	int32_t status = SystemP_SUCCESS;
+
+	Flash_Attrs *flashAttrs;
+	Flash_Handle flashHandle;
+	uint32_t eraseSectorSize;
+
+	flashAttrs = Flash_getAttrs(flashIndex);
+	flashHandle = Flash_getHandle(flashIndex);
+
+	if(flashAttrs == NULL || flashHandle == NULL)
+	{
+	   status=SystemP_FAILURE;
+	}
+	else
+	{
+	    eraseSectorSize = flashAttrs->sectorSize;
+	}
+
+	if((status == SystemP_SUCCESS) && ((flashOffset % eraseSectorSize) != 0))
+	{
+		/* Only flash to offsets which are a multiple of sectorSize */
+		status=SystemP_FAILURE;
+	}
+
+	if(status==SystemP_SUCCESS)
+	{
+	    uint32_t curOffset, totalChunks, curChunk, chunkSize, remainSize, sectorNum, pageNum;
+	    uint8_t *srcAddr;
+
+	    /* start writing from buffer to flash */
+	    chunkSize = eraseSectorSize;
+
+	    srcAddr = buf;
+	    remainSize = fileSize;
+	    curOffset = flashOffset;
+	    curChunk = 1;
+	    totalChunks = (fileSize + (chunkSize-1))/chunkSize;
+	    while(curChunk <= totalChunks)
+	    {
+	        if(remainSize < chunkSize)
+	        {
+	            chunkSize = remainSize;
+	        }
+
+	        status = Flash_offsetToSectorPage(flashHandle, curOffset, &sectorNum, &pageNum);
+	        if(status == SystemP_SUCCESS)
+	        {
+	            status = Flash_eraseSector(flashHandle, sectorNum);
 	            if(status == SystemP_SUCCESS)
 	            {
 	                status = Flash_write(flashHandle, curOffset, srcAddr, chunkSize);
