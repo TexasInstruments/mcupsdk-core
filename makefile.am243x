@@ -42,6 +42,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x mathlib_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x pru_ipc_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x sdl_m4f.ti-arm-clang sdl_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x security_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_freertos_r5f.ti-arm-clang
@@ -50,6 +51,9 @@ help:
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_rndis_nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_rndis_freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x enet-cpsw_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x lwipif-cpsw-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x lwipif-cpsw-nortos_r5f.ti-arm-clang
@@ -77,6 +81,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x mathlib_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x pru_ipc_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x sdl_m4f.ti-arm-clang_clean sdl_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x security_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_freertos_r5f.ti-arm-clang_clean
@@ -85,6 +90,9 @@ help:
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_rndis_nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_rndis_freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x enet-cpsw_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
@@ -434,9 +442,6 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_freertos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am243x-evm/system_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/usb/device/ncm/am243x-evm/system_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/usb/device/ncm/am243x-lp/system_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -449,6 +454,7 @@ BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang
 BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang
 BUILD_COMBO_mathlib = mathlib_r5f.ti-arm-clang
 BUILD_COMBO_pru_ipc = pru_ipc_r5f.ti-arm-clang
+BUILD_COMBO_sdl = sdl_m4f.ti-arm-clang sdl_r5f.ti-arm-clang
 BUILD_COMBO_security = security_r5f.ti-arm-clang
 BUILD_COMBO_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_cdn_freertos = usbd_cdn_freertos_r5f.ti-arm-clang
@@ -457,6 +463,9 @@ BUILD_COMBO_usbd_tusb_cdc_freertos = usbd_tusb_cdc_freertos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang
+BUILD_COMBO_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang
+BUILD_COMBO_usbd_tusb_rndis_nortos = usbd_tusb_rndis_nortos_r5f.ti-arm-clang
+BUILD_COMBO_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.ti-arm-clang
 BUILD_COMBO_enet-cpsw = enet-cpsw_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang
@@ -515,6 +524,9 @@ $(BUILD_COMBO_mathlib):
 $(BUILD_COMBO_pru_ipc):
 	$(MAKE) -C source/pru_io -f makefile.am243x.$(subst pru_ipc_,,$@) all
 
+$(BUILD_COMBO_sdl):
+	$(MAKE) -C source/sdl -f makefile.am243x.$(subst sdl_,,$@) all
+
 $(BUILD_COMBO_security):
 	$(MAKE) -C source/security -f makefile.am243x.$(subst security_,,$@) all
 
@@ -538,6 +550,15 @@ $(BUILD_COMBO_usbd_tusb_dfu_freertos):
 
 $(BUILD_COMBO_usbd_tusb_ncm_nortos):
 	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_nortos.am243x.$(subst usbd_tusb_ncm_nortos_,,$@) all
+
+$(BUILD_COMBO_usbd_tusb_ncm_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am243x.$(subst usbd_tusb_ncm_freertos_,,$@) all
+
+$(BUILD_COMBO_usbd_tusb_rndis_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_nortos.am243x.$(subst usbd_tusb_rndis_nortos_,,$@) all
+
+$(BUILD_COMBO_usbd_tusb_rndis_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_freertos.am243x.$(subst usbd_tusb_rndis_freertos_,,$@) all
 
 $(BUILD_COMBO_enet-cpsw):
 	$(MAKE) -C source/networking/enet -f makefile.cpsw.am243x.$(subst enet-cpsw_,,$@) all
@@ -595,6 +616,7 @@ BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang
 BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mathlib = mathlib_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_pru_ipc = pru_ipc_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_sdl = sdl_m4f.ti-arm-clang_clean sdl_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_cdn_freertos = usbd_cdn_freertos_r5f.ti-arm-clang_clean
@@ -603,6 +625,9 @@ BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos = usbd_tusb_cdc_freertos_r5f.ti-arm-cla
 BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos = usbd_tusb_rndis_nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
@@ -656,6 +681,9 @@ $(BUILD_COMBO_CLEAN_mathlib):
 $(BUILD_COMBO_CLEAN_pru_ipc):
 	$(MAKE) -C source/pru_io -f makefile.am243x.$(subst pru_ipc_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_sdl):
+	$(MAKE) -C source/sdl -f makefile.am243x.$(subst sdl_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_security):
 	$(MAKE) -C source/security -f makefile.am243x.$(subst security_,,$(subst _clean,,$@)) clean
 
@@ -679,6 +707,15 @@ $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos):
 
 $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos):
 	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_nortos.am243x.$(subst usbd_tusb_ncm_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am243x.$(subst usbd_tusb_ncm_freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_nortos.am243x.$(subst usbd_tusb_rndis_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_freertos.am243x.$(subst usbd_tusb_rndis_freertos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_enet-cpsw):
 	$(MAKE) -C source/networking/enet -f makefile.cpsw.am243x.$(subst enet-cpsw_,,$(subst _clean,,$@)) clean
@@ -736,6 +773,7 @@ BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_m4f.ti-arm-clang
 BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mathlib = mathlib_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_pru_ipc = pru_ipc_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_sdl = sdl_m4f.ti-arm-clang_scrub sdl_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_cdn_freertos = usbd_cdn_freertos_r5f.ti-arm-clang_scrub_scrub
@@ -744,6 +782,9 @@ BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos = usbd_tusb_cdc_freertos_r5f.ti-arm-cla
 BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos = usbd_tusb_rndis_nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_scrub_scrub
@@ -797,6 +838,9 @@ $(BUILD_COMBO_SCRUB_mathlib):
 $(BUILD_COMBO_SCRUB_pru_ipc):
 	$(MAKE) -C source/pru_io -f makefile.am243x.$(subst pru_ipc_,,$(subst _scrub,,$@)) scrub
 
+$(BUILD_COMBO_SCRUB_sdl):
+	$(MAKE) -C source/sdl -f makefile.am243x.$(subst sdl_,,$(subst _scrub,,$@)) scrub
+
 $(BUILD_COMBO_SCRUB_security):
 	$(MAKE) -C source/security -f makefile.am243x.$(subst security_,,$(subst _scrub,,$@)) scrub
 
@@ -820,6 +864,15 @@ $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos):
 
 $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos):
 	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_nortos.am243x.$(subst usbd_tusb_ncm_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am243x.$(subst usbd_tusb_ncm_freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_nortos.am243x.$(subst usbd_tusb_rndis_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_freertos.am243x.$(subst usbd_tusb_rndis_freertos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_enet-cpsw):
 	$(MAKE) -C source/networking/enet -f makefile.cpsw.am243x.$(subst enet-cpsw_,,$(subst _scrub,,$@)) scrub
@@ -1175,17 +1228,9 @@ BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am243x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am243x-lp_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am243x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am243x-lp_system_freertos
-BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am243x-evm_system_nortos
-BUILD_COMBO_EXAMPLE_ALL += ncm_echo_nortos_am243x-evm_system_nortos
-BUILD_COMBO_EXAMPLE_ALL += ncm_echo_nortos_am243x-lp_system_nortos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
-BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt
 # Various Private System Example Targets
 
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
@@ -2176,14 +2221,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  cdc_echo_freertos_am243x-lp_system_freertos:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile all
 
- sdl_stog_r5f_am243x-evm_system_nortos:
-	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile all
- ncm_echo_nortos_am243x-evm_system_nortos:
-	$(MAKE) -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile all
-
- ncm_echo_nortos_am243x-lp_system_nortos:
-	$(MAKE) -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile all
-
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
@@ -2493,17 +2530,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am243x-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am243x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am243x-lp_system_freertos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am243x-evm_system_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ncm_echo_nortos_am243x-evm_system_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ncm_echo_nortos_am243x-lp_system_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_clean
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
@@ -3494,14 +3523,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  cdc_echo_freertos_am243x-lp_system_freertos_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile clean
 
- sdl_stog_r5f_am243x-evm_system_nortos_clean:
-	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile clean
- ncm_echo_nortos_am243x-evm_system_nortos_clean:
-	$(MAKE) -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile clean
-
- ncm_echo_nortos_am243x-lp_system_nortos_clean:
-	$(MAKE) -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile clean
-
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
@@ -3811,17 +3832,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am243x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am243x-lp_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am243x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am243x-lp_system_freertos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am243x-evm_system_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ncm_echo_nortos_am243x-evm_system_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ncm_echo_nortos_am243x-lp_system_nortos_scrub
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_scrub
-BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_scrub
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
@@ -4811,14 +4824,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  cdc_echo_freertos_am243x-lp_system_freertos_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile scrub
-
- sdl_stog_r5f_am243x-evm_system_nortos_scrub:
-	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile scrub
- ncm_echo_nortos_am243x-evm_system_nortos_scrub:
-	$(MAKE) -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile scrub
-
- ncm_echo_nortos_am243x-lp_system_nortos_scrub:
-	$(MAKE) -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile scrub
 
 
 sbl: libs

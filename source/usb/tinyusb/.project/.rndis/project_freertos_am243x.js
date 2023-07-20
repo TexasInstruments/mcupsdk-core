@@ -20,7 +20,7 @@ const files = {
 		"dhserver.c",
 		"dnserver.c",
 
-		/* LWIP SRC code compiled lwip repo*/ 
+		/* LWIP SRC code */ 
 		"altcp.c",
 		"altcp_alloc.c",
 		"altcp_tcp.c",
@@ -82,13 +82,15 @@ const includes = {
         "../../drivers/hw_include",
         "../../drivers/hw_include/am64x_am243x",
         "../../drivers/soc/am64x_am243x",
-        "../tinyusb/config/nortos/am64x_am243x",
+        "../../kernel/freertos/FreeRTOS-Kernel/include",
+        "../../kernel/freertos/config/am243x/r5f",
+        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "../tinyusb/tinyusb-stack/src",
         "../tinyusb/tinyusb-stack/src/common",
         "../tinyusb/tinyusb-stack/src/device",
         "../tinyusb/tinyusb-stack/src/class/net",
         "../tinyusb/tinyusb-stack/lib/networking",
-        "../tinyusb/config/nortos/am64x_am243x/rndis_config",
+        "../tinyusb/config/freertos/am64x_am243x/rndis_config",
         "../cdn/core_driver/common/src",
         "../cdn/core_driver/common/include",
         "../cdn/core_driver/device/src",
@@ -106,6 +108,8 @@ const includes = {
 
 const defines = {
     common: [
+        "TINYUSB_INTEGRATION",
+        "CFG_TUSB_OS=OPT_OS_FREERTOS"
     ],
     debug: [
     ],
@@ -117,6 +121,8 @@ const cflags = {
     common: [
         "-Wno-address-of-packed-member",
     ],
+	release:[
+	]
 };
 
 const buildOptionCombos = [
@@ -128,11 +134,11 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "../..");
     property.type = "library";
-    property.name = "usbd_tusb_rndis_nortos";
+    property.name = "usbd_tusb_rndis_freertos";
     property.isInternal = false;
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
-    property.tag = "rndis_nortos";
+    property.tag = "rndis_freertos";
 
     return property;
 }

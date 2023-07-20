@@ -21,23 +21,23 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ncm_nortos.$(PROFILE).out
+OUTNAME:=rndis_nortos.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=ncm_nortos.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=ncm_nortos.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=ncm_nortos.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=ncm_nortos.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ncm_nortos.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ncm_nortos.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ncm_nortos.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ncm_nortos.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=rndis_nortos.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=rndis_nortos.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=rndis_nortos.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=rndis_nortos.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=rndis_nortos.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=rndis_nortos.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=rndis_nortos.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=rndis_nortos.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
 	usb_descriptors.c \
 	main.c \
-	ncm_main.c \
+	rndis_main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -54,7 +54,7 @@ FILES_PATH_common = \
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x/ncm_config \
+	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/config/nortos/am64x_am243x/rndis_config \
 	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/src \
 	-I${MCU_PLUS_SDK_PATH}/source/usb/tinyusb/tinyusb-stack/lib/networking \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
@@ -113,7 +113,7 @@ LIBS_common = \
 	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lusbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lusbd_tusb_rndis_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -128,7 +128,7 @@ LIBS_NAME = \
 	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	usbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	usbd_tusb_rndis_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -201,7 +201,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang ncm_nortos ...
+	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang rndis_nortos ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

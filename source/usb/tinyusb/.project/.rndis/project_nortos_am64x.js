@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am243x";
+let device = "am64x";
 
 const files = {
     common: [
@@ -99,7 +99,7 @@ const includes = {
 		"../../networking/lwip/lwip-stack/src/include/ipv4",
 		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
 		"../../networking/lwip/lwip-stack/src/include/lwip",
-		"../../networking/lwip/lwip-config/am243x/usb/",
+		"../../networking/lwip/lwip-config/am64x/usb/",
 		"../../networking/lwip/lwip-port/include/",
     ],
 };

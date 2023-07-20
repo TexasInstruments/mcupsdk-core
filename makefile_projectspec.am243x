@@ -331,19 +331,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-evm_system_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am243x-lp_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am243x-lp_system_freertos_build
-<<<<<<< HEAD
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am243x-evm_system_nortos_build
-=======
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ncm_echo_nortos_am243x-evm_system_nortos_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ncm_echo_nortos_am243x-lp_system_nortos_build
->>>>>>> working  commit for NCM class with lwip web server
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_build
 # Various Private System Example Projectspec Build Targets
 
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
@@ -1331,17 +1321,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  cdc_echo_freertos_am243x-lp_system_freertos_build:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec all
 
-<<<<<<< HEAD
- sdl_stog_r5f_am243x-evm_system_nortos_build:
-	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile_projectspec all
-=======
- ncm_echo_nortos_am243x-evm_system_nortos_build:
-	$(MAKE) -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile_projectspec all
-
- ncm_echo_nortos_am243x-lp_system_nortos_build:
-	$(MAKE) -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile_projectspec all
->>>>>>> working  commit for NCM class with lwip web server
-
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
@@ -1670,19 +1649,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-evm_system_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am243x-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am243x-lp_system_freertos_clean
-<<<<<<< HEAD
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am243x-evm_system_nortos_clean
-=======
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ncm_echo_nortos_am243x-evm_system_nortos_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ncm_echo_nortos_am243x-lp_system_nortos_clean
->>>>>>> working  commit for NCM class with lwip web server
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_clean
 # Various Private System Example Projectspec Clean Targets
 
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
@@ -2670,17 +2639,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  cdc_echo_freertos_am243x-lp_system_freertos_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec clean
 
-<<<<<<< HEAD
- sdl_stog_r5f_am243x-evm_system_nortos_clean:
-	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile_projectspec clean
-=======
- ncm_echo_nortos_am243x-evm_system_nortos_clean:
-	$(MAKE) -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile_projectspec clean
-
- ncm_echo_nortos_am243x-lp_system_nortos_clean:
-	$(MAKE) -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile_projectspec clean
->>>>>>> working  commit for NCM class with lwip web server
-
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
@@ -3009,19 +2967,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-evm_system_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am243x-lp_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am243x-lp_system_freertos_export
-<<<<<<< HEAD
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am243x-evm_system_nortos_export
-=======
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ncm_echo_nortos_am243x-evm_system_nortos_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ncm_echo_nortos_am243x-lp_system_nortos_export
->>>>>>> working  commit for NCM class with lwip web server
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt_export
 # Various Private System Example Projectspec Export Targets
 
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
@@ -4009,17 +3957,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  cdc_echo_freertos_am243x-lp_system_freertos_export:
 	$(MAKE) -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec export
 
-<<<<<<< HEAD
- sdl_stog_r5f_am243x-evm_system_nortos_export:
-	$(MAKE) -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile_projectspec export
-=======
- ncm_echo_nortos_am243x-evm_system_nortos_export:
-	$(MAKE) -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile_projectspec export
-
- ncm_echo_nortos_am243x-lp_system_nortos_export:
-	$(MAKE) -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile_projectspec export
->>>>>>> working  commit for NCM class with lwip web server
-
 
 # Import extra components into CCS workspace before creating a project
 # Setup dependency separately so that it runs if one or all projects are built via the makefile
@@ -4379,12 +4316,6 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am243x-lp/system_freertos -f makefile_projectspec [export all clean]
-<<<<<<< HEAD
-	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
-=======
-	@echo  $(MAKE) -s -C examples/usb/device/ncm/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/usb/device/ncm/am243x-lp/system_nortos -f makefile_projectspec [export all clean]
->>>>>>> working  commit for NCM class with lwip web server
 	@echo  .
 
 .PHONY: all all-private

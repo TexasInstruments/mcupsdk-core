@@ -10723,7 +10723,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../examples/networking/lwip/enet_lwip_cpsw/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "AM243x_GP_EVM"
+            "AM243x_LAUNCHPAD"
         ],
         "kernel": [
             "freertos"
@@ -13151,35 +13151,6 @@
             "device",
             "cdc_echo",
             "system_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) System project.",
-        "name": "sdl_stog_r5f",
-        "location": "../../examples/sdl/stog_r5f/am243x-evm/system_nortos/system.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "subCategories": [
-            "sdl",
-            "stog_r5f",
-            "system_nortos"
         ],
         "mainCategories": [
             [
