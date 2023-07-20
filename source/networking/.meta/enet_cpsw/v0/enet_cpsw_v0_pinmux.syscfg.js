@@ -338,42 +338,31 @@ function pinmuxRequirements(inst) {
 
 function getInterfaceNameList(inst)
 {
-    if (common.getSocName() === "am64x")
+    if (inst.phyToMacInterfaceMode === "RMII")
     {
-            return [
-                getInterfaceName(inst, "MDIO" ),
-                getInterfaceName(inst, "RGMII" ),
-            ];
+        return [
+            getInterfaceName(inst, "MDIO"),
+            getInterfaceName(inst, "RMII"),
+        ];
     }
     else
     {
-        if(inst.phyToMacInterfaceMode === "RMII")
+        if (common.getSocName() === "am64x")
         {
             return [
-                getInterfaceName(inst, "MDIO" ),
-                getInterfaceName(inst, "RMII" ),
+                getInterfaceName(inst, "MDIO"),
+                getInterfaceName(inst, "RGMII"),
             ];
         }
         else
         {
-            if (common.getSocName() === "am64x")
-            {
-                return [
-                    getInterfaceName(inst, "MDIO" ),
-                    getInterfaceName(inst, "RGMII" ),
-                ];
-            }
-            else
-            {
-                return [
-                    getInterfaceName(inst, "MDIO" ),
-                    getInterfaceName(inst, "RGMII1" ),
-                    getInterfaceName(inst, "RGMII2" ),
-                ];
-            }
-
+            return [
+                getInterfaceName(inst, "MDIO"),
+                getInterfaceName(inst, "RGMII1"),
+                getInterfaceName(inst, "RGMII2"),
+            ];
         }
-	}
+    }
 }
 
 function getPeripheralPinNames(inst)
@@ -401,7 +390,7 @@ function getPeripheralPinNames(inst)
         {
             for (let pin of cpswPinList)
             {
-                if (cpswPinList[pin].startsWith("RMII"))
+                if (pin.startsWith("RMII"))
                 {
                     xmiipinList.push(pin);
                 }
