@@ -21,7 +21,7 @@
         toolChain="TICLANG"
         cgtVersion="2.1.3"
         device="Cortex R.AM263x"
-        deviceCore="MAIN_PULSAR_Cortex_R5_0_0"
+        deviceCore="Cortex_R5_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"

@@ -2,10 +2,10 @@
 <system>
     <project configuration="@match" id="project_0" name="ipc_spinlock_sharedmem_am263x-lp_r5fss0-0_freertos_ti-arm-clang">
     </project>
-    <core id="MAIN_PULSAR_Cortex_R5_0_0" project="project_0"/>
+    <core id="Cortex_R5_0" project="project_0"/>
     <project configuration="@match" id="project_1" name="ipc_spinlock_sharedmem_am263x-lp_r5fss0-1_nortos_ti-arm-clang">
     </project>
-    <core id="MAIN_PULSAR_Cortex_R5_0_1" project="project_1"/>
+    <core id="Cortex_R5_1" project="project_1"/>
 	<preBuildSteps>
 	</preBuildSteps>
     <postBuildSteps>

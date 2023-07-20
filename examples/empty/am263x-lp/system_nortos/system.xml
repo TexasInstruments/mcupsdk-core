@@ -2,16 +2,16 @@
 <system>
     <project configuration="@match" id="project_0" name="empty_am263x-lp_r5fss0-0_nortos_ti-arm-clang">
     </project>
-    <core id="MAIN_PULSAR_Cortex_R5_0_0" project="project_0"/>
+    <core id="Cortex_R5_0" project="project_0"/>
     <project configuration="@match" id="project_1" name="empty_am263x-lp_r5fss0-1_nortos_ti-arm-clang">
     </project>
-    <core id="MAIN_PULSAR_Cortex_R5_0_1" project="project_1"/>
+    <core id="Cortex_R5_1" project="project_1"/>
     <project configuration="@match" id="project_2" name="empty_am263x-lp_r5fss1-0_nortos_ti-arm-clang">
     </project>
-    <core id="MAIN_PULSAR_Cortex_R5_1_0" project="project_2"/>
+    <core id="Cortex_R5_2" project="project_2"/>
     <project configuration="@match" id="project_3" name="empty_am263x-lp_r5fss1-1_nortos_ti-arm-clang">
     </project>
-    <core id="MAIN_PULSAR_Cortex_R5_1_1" project="project_3"/>
+    <core id="Cortex_R5_3" project="project_3"/>
 	<preBuildSteps>
 	</preBuildSteps>
     <postBuildSteps>
