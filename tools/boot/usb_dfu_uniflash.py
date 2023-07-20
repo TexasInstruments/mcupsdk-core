@@ -6,7 +6,7 @@ import struct
 import argparse
 import subprocess
 
-BOOTLOADER_UNIFLASH_BUF_SIZE                         = 1024*1024 # 1 MB This has to be a 256 KB aligned value, because flash writes will be block oriented
+BOOTLOADER_UNIFLASH_BUF_SIZE                         = 1024*512 # 512KB This has to be a 256 KB aligned value, because flash writes will be block oriented
 BOOTLOADER_UNIFLASH_HEADER_SIZE                      = 32 # 32 B
 
 BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER         = 0x46554C42 # BLUF
@@ -145,6 +145,8 @@ def wait_for_enumeration():
 
     enum_done = False
     ls_dfu = "dfu-util -l"
+    # To print banner that waiting for DFU enumeration 
+    flag = False
     while enum_done == False:
         subprocess.run(ls_dfu + " > temp_file",shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
         temp_file = open('temp_file')
@@ -153,9 +155,12 @@ def wait_for_enumeration():
         if ("Found DFU" in string and "UNKNOWN" not in string ):
             enum_done = True
         else:
-            print("------------------------------------------------------")
-            print("Waiting for DFU device to be enumerated ....")
-            print("------------------------------------------------------")
+            if flag == False: 
+                print("------------------------------------------------------")
+                print("Waiting for DFU device to be enumerated ....")
+                print("------------------------------------------------------")
+                # set flag so this will be printer only once 
+                flag = True 
             # If not detected then wait sometime before retrying
             time.sleep(0.5)
 
@@ -365,6 +370,7 @@ def main(argv):
                     print("Command arguments : {}".format(line.rstrip('\n')))
                     # Check if the size of application image is larger than buffer size in target side.
                     f_size = 0
+                    tempfilename = ""
                     if linecfg.filename is not None:
                         f_size = os.path.getsize(linecfg.filename)
 
