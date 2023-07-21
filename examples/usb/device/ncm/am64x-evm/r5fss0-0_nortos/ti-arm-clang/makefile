@@ -109,9 +109,9 @@ LIBS_PATH_common = \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lnortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lnortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lusbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -124,9 +124,9 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	usbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
@@ -306,7 +306,7 @@ endif
 	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 else
-	# Sign the appimage for HS-FS using appimage signing script
+# Sign the appimage for HS-FS using appimage signing script
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_NAME)
 	@echo  Boot image: am64x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!

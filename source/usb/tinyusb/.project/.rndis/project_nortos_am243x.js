@@ -133,6 +133,8 @@ function getComponentProperty() {
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
     property.tag = "rndis_nortos";
+    /* Ignore this library for cpp build */ 
+    property.ignore_cpp = true ;
 
     return property;
 }

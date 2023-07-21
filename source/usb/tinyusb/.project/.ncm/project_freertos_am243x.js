@@ -138,6 +138,8 @@ function getComponentProperty() {
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
     property.tag = "ncm_freertos";
+    /* Ignore this library for cpp build */ 
+    property.ignore_cpp = true ;  
 
     return property;
 }

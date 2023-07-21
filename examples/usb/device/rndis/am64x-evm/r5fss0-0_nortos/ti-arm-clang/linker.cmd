@@ -142,7 +142,7 @@ MEMORY
     /* On R5F,
      * - make sure there is a MPU entry which maps below regions as non-cache
      */
-    USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x180
-    LOG_SHM_MEM             : ORIGIN = 0x701D0000 + 0x180, LENGTH = 0x00004000 - 0x180
+    USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x80
+    LOG_SHM_MEM             : ORIGIN = 0x701D0000 + 0x80, LENGTH = 0x00004000 - 0x80
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D4000, LENGTH = 0x0000C000
 }

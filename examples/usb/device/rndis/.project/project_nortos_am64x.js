@@ -41,9 +41,9 @@ const includes_nortos_r5f = {
 
 const libs_nortos_r5f = {
     common: [
-        "nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "usbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "usbd_tusb_rndis_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
@@ -70,7 +70,7 @@ const syscfgfile = "../example.syscfg";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
+        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
         output: "linker.cmd",
     },
 ];

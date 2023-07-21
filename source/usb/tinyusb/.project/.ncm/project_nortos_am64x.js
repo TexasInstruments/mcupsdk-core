@@ -132,6 +132,8 @@ function getComponentProperty() {
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
     property.tag = "ncm_nortos";
+    /* flag to ignore cpp build */ 
+    property.ignore_cpp = true ;
 
     return property;
 }

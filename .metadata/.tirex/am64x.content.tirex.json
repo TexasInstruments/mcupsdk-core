@@ -12138,6 +12138,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A USB Device NCM example CPU is R5FSS0-0 running NORTOS.",
+        "name": "ncm_nortos",
+        "location": "../../examples/usb/device/ncm/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "ncm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A USB Device RNDIS example CPU is R5FSS0-0 running NORTOS.",
+        "name": "rndis_nortos",
+        "location": "../../examples/usb/device/rndis/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "rndis",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A USB DFU example CPU is R5FSS0-0 running NORTOS.",
         "name": "dfu_nortos",
         "location": "../../examples/usb/device/dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

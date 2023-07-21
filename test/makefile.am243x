@@ -49,8 +49,8 @@ help:
 	@echo  $(MAKE) -s -C sdl/dcc/dcc_func_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/esm/common/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -262,8 +262,8 @@ BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am243x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am243x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am243x-evm_m4fss0-0_nortos_ti-arm-clang
@@ -422,11 +422,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+ test_esm_unit_am243x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
 
- test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ test_esm_unit_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_esm_common_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/esm/common/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -827,8 +827,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am243x-evm_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -987,11 +987,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+ test_esm_unit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
 
- test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ test_esm_unit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_esm_common_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/esm/common/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1392,8 +1392,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am243x-evm_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
@@ -1552,11 +1552,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- test_esm_func_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+ test_esm_unit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- test_esm_func_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_func_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ test_esm_unit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_esm_common_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/esm/common/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
