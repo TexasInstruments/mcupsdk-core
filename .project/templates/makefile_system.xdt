@@ -211,6 +211,10 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_QSPI) $(MULTI_CORE_APP_PARAMS_QSPI) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 % }
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+% if (!["am64x", "am243x"].includes(args.project.device)) {
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+% }
 % if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script

@@ -46,7 +46,7 @@ else
 % if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS_FS)
 % } else {
-    BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
 %}
 endif
 % }
@@ -67,9 +67,12 @@ BOOTIMAGE_NAME_QSPI_HS:=`args.project.name`.$(PROFILE).appimage_qspi.hs
 % }
 BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-% if(args.project.device == "awr294x") {
+%if (!["am64x", "am243x"].includes(args.project.device)) {
 ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+% if(args.project.device == "awr294x") {
    TARGETS += $(BOOTIMAGE_NAME_QSPI_HS)
+% }
 endif
 % }
 % }
@@ -678,6 +681,10 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+% if (!["am64x", "am243x"].includes(args.project.device)) {
+	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+% }
 % if (args.project.device == "awr294x") {
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_QSPI) $(MULTI_CORE_IMAGE_PARAMS_QSPI) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 % }

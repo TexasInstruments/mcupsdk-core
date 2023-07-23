@@ -37,7 +37,7 @@ else
 % if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS_FS)
 % } else {
-    BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
 %}
 endif
 % } else {
@@ -286,7 +286,7 @@ endif
 	$(RM) $(PROFILE)/`args.linuxFwName`
 	$(STRIP) -o=$(PROFILE)/`args.linuxFwName` $(OUTFILE)
 % }
-% if ((!["am64x", "am243x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+% if ((!["am64x", "am243x"].includes(args.project.device))) {
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME) Done !!!
 	@echo  .
 % }
