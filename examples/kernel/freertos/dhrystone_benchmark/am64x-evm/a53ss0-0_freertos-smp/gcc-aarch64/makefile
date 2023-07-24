@@ -297,7 +297,7 @@ endif
 	@echo  Boot image: am64x:a53ss0-0:freertos-smp:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 else
-	# Sign the appimage for HS-FS using appimage signing script
+# Sign the appimage for HS-FS using appimage signing script
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_NAME)
 	@echo  Boot image: am64x:a53ss0-0:freertos-smp:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
