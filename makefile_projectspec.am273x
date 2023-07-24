@@ -145,6 +145,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_reset_am273x-evm_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -155,12 +161,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_sha_256_am273x-evm_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_build
@@ -602,6 +602,24 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_build:
+	$(MAKE) -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -631,24 +649,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_build:
-	$(MAKE) -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
-
- sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  ecap_epwm_loopback_am273x-evm_system_nortos_build:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile_projectspec all
@@ -819,6 +819,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_reset_am273x-evm_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -829,12 +835,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_sha_256_am273x-evm_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean
@@ -1276,6 +1276,24 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
+	$(MAKE) -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -1305,24 +1323,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
-
- sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  ecap_epwm_loopback_am273x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile_projectspec clean
@@ -1493,6 +1493,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_reset_am273x-evm_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ecc_bus_safety_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_cbc_256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_dthe_aes_ecb_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -1503,12 +1509,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_sha_256_am273x-evm_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_sha_512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha256_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_export
@@ -1950,6 +1950,24 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_ccm_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_export:
+	$(MAKE) -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  crypto_dthe_aes_cbc_128_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -1979,24 +1997,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  dthe_hmac_sha512_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- sdl_dma_parity_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- sdl_dma_parity_am273x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_dss_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_dss_l2_edc_example_am273x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_dss_l1_parity_example_am273x-evm_c66ss0_nortos_ti-c6000_export:
-	$(MAKE) -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
-
- sdl_vim_example_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  ecap_epwm_loopback_am273x-evm_system_nortos_export:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback_dsp/am273x-evm/system_nortos -f makefile_projectspec export
@@ -2183,6 +2183,12 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -2193,12 +2199,6 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_dsp_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_dss_l2_edc/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dss_l1_parity/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_vim/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

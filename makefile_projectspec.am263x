@@ -1296,12 +1296,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
-
- empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
-
  sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1319,6 +1313,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
  edma_interrupt_transfer_am263x-cc_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec all
@@ -2658,12 +2658,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
-
- empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
-
  sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2681,6 +2675,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
  edma_interrupt_transfer_am263x-cc_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec clean
@@ -4020,12 +4020,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
-
- empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
-
  sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4043,6 +4037,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
  edma_interrupt_transfer_am263x-cc_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec export
@@ -4421,14 +4421,14 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
