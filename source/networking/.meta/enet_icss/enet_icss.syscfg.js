@@ -265,8 +265,6 @@ function pinmuxRequirements(inst) {
     }
 }
 
-
-
 function getInterfaceNameList(inst)
 {
     let interfaceNameList = [];
@@ -454,7 +452,7 @@ function getPacketsCount(instance, channelType) {
     {
         dma_ch_instances = instance.txDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_tx_channel`];
-        
+
         for(let ch = 0; ch < dma_ch_instances.length; ch++) {
         	let ch_instance = dma_ch_instances[ch];
         	let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
@@ -466,7 +464,7 @@ function getPacketsCount(instance, channelType) {
         dma_ch_instances = instance.rxDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_rx_channel`];
 
-        for(let ch = 0; ch < dma_ch_instances.length; ch++) 
+        for(let ch = 0; ch < dma_ch_instances.length; ch++)
         {
         	let ch_instance = dma_ch_instances[ch];
         	let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
@@ -675,7 +673,7 @@ function validate(instance, report) {
         if (getRxChIdxCount(instance, 0) != getRxChIdxCount(instance, 1))
         {
             report.logError(`Number of Rx Ch Index with value '1' should be same as'0'`, instance);
-        } 
+        }
     }
     if (instance.mode === "DUAL MAC")
     {

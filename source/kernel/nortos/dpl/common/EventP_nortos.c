@@ -114,7 +114,6 @@ int32_t EventP_waitBits(EventP_Object  *obj,
             status = SystemP_TIMEOUT;
             break;
         }
-
         if (timeout == SystemP_NO_WAIT)
         {
             /* Break without waiting */

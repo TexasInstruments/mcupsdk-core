@@ -11177,6 +11177,76 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Testcase Singlepkt Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "testcase_singlepkt",
+        "location": "../../test/networking/enet_unittest/testcase_singlepkt/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "test",
+            "networking",
+            "enet_unittest",
+            "testcase_singlepkt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Testcase Singlepkt Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "testcase_singlepkt",
+        "location": "../../test/networking/enet_unittest/testcase_singlepkt/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "test",
+            "networking",
+            "enet_unittest",
+            "testcase_singlepkt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback",
         "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

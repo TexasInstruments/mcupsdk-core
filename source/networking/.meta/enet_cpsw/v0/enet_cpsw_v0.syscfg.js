@@ -557,7 +557,7 @@ function validate(instance, report) {
             {
                 report.logError("Both MAC ports in 'MAC PORT Config' should be enabled to support two NetIfs", instance);
             }
-            
+
             if ((instance.macOnlyEn_hostPort === false) || (instance.macOnlyEn_macPort1 === false) || (instance.macOnlyEn_macPort2 === false))
             {
                 report.logError("All Ports in 'ALE Config -> ALE Port Config -> MAC-only mode config' should be in MAC-only mode in case of two NetIfs", instance);

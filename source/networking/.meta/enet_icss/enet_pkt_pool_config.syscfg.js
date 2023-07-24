@@ -47,7 +47,7 @@ function enet_pkt_pool_validate(instance, report) {
 function getPktInfoNum(instances)
 {
     let count = 0;
-    
+
     for (let i in instances)
     {
         if (instances[i].PktInfoOnlyEnable)
@@ -61,7 +61,7 @@ function getPktInfoNum(instances)
 function getLargePoolNumPkts(instances)
 {
     let count = 0;
-    
+
     for (let i in instances)
     {
         count = count + instances[i].LargePoolPktCount;
@@ -72,7 +72,7 @@ function getLargePoolNumPkts(instances)
 function getMediumPoolNumPkts(instances)
 {
     let count = 0;
-    
+
     for (let i in instances)
     {
         count = count + instances[i].MediumPoolPktCount;
@@ -83,14 +83,13 @@ function getMediumPoolNumPkts(instances)
 function getSmallPoolNumPkts(instances)
 {
     let count = 0;
-    
+
     for (let i in instances)
     {
         count = count + instances[i].SmallPoolPktCount;
     }
     return count;
 }
-
 
 const enet_pkt_pool_config = {
     name: "enetPktPoolConfig",

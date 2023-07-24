@@ -234,6 +234,7 @@ const example_file_list = [
     "test/kernel/dpl/dpl_ut/NoRTOS/r5/CpuId_armv7r/.project/project.js",
     "test/kernel/dpl/dpl_ut/NoRTOS/r5/PmuP_armv7r/.project/project.js",
     "test/kernel/freertos/.project/project.js",
+    "test/networking/enet_unittest/testcase_singlepkt/.project/project.js",
     "test/networking/cpsw_intervlan/.project/project.js",
     "test/networking/mbedtls_test/test_aes/.project/project.js",
     "test/networking/mbedtls_test/test_pka/.project/project.js",
