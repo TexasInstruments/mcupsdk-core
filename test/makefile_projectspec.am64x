@@ -15,7 +15,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mbedtls_am64x-evm_r5fss0-0_fre
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mbedtls_sha_entropy_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stog_func_test_r5f_am64x-evm_system_nortos_build
 
@@ -51,8 +51,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+ testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  stog_func_test_r5f_am64x-evm_system_nortos_build:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec all
@@ -69,7 +69,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mbedtls_am64x-evm_r5fss0-0_fre
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mbedtls_sha_entropy_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stog_func_test_r5f_am64x-evm_system_nortos_clean
 
@@ -105,8 +105,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+ testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  stog_func_test_r5f_am64x-evm_system_nortos_clean:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec clean
@@ -123,7 +123,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mbedtls_am64x-evm_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mbedtls_sha_entropy_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stog_func_test_r5f_am64x-evm_system_nortos_export
 
@@ -159,8 +159,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+ testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  stog_func_test_r5f_am64x-evm_system_nortos_export:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec export
@@ -202,7 +202,7 @@ help:
 	@echo  $(MAKE) -s -C networking/mbedtls_test/test_sha_entropy/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/mbedtls_test/test_pka/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

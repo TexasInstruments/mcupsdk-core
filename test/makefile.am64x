@@ -43,6 +43,57 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/flash/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/led/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -114,67 +165,17 @@ help:
 	@echo  $(MAKE) -s -C networking/mbedtls_test/test_sha_entropy/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/mbedtls_test/test_pka/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_aes/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_rng/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_encryption_decryption/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_rsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
+	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/firewall/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/firewall/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -185,7 +186,6 @@ help:
 	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -258,6 +258,57 @@ $(BUILD_COMBO_SCRUB_doxy_samples):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -329,65 +380,15 @@ BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_sha_entropy_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
+BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am64x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_firewall_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_firewall_am64x-sk_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos
@@ -398,7 +399,6 @@ BUILD_COMBO_EXAMPLE_ALL += test_mcspi_controller_peripheral_am64x-evm_system_fre
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos
-BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am64x-evm_system_nortos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
@@ -407,6 +407,159 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -621,8 +774,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -642,158 +795,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
-
- sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ stog_func_test_r5f_am64x-evm_system_nortos:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile all
 
  test_firewall_am64x-evm_system_freertos_nortos:
 	$(MAKE) -C drivers/firewall/am64x-evm/system_freertos_nortos -f makefile all
@@ -825,12 +828,60 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_syscfg_combo_1_am64x-sk_system_freertos_nortos:
 	$(MAKE) -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos -f makefile all
 
- stog_func_test_r5f_am64x-evm_system_nortos:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile all
-
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -902,65 +953,15 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_am64x-evm_r5fss0-0_freertos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_sha_entropy_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_r5f_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_firewall_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_firewall_am64x-sk_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos_clean
@@ -971,7 +972,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_controller_peripheral_am64x-evm_syst
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += stog_func_test_r5f_am64x-evm_system_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
@@ -980,6 +980,159 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1194,8 +1347,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1215,158 +1368,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
-
- sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ stog_func_test_r5f_am64x-evm_system_nortos_clean:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile clean
 
  test_firewall_am64x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C drivers/firewall/am64x-evm/system_freertos_nortos -f makefile clean
@@ -1398,12 +1401,60 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean:
 	$(MAKE) -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos -f makefile clean
 
- stog_func_test_r5f_am64x-evm_system_nortos_clean:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile clean
-
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1475,65 +1526,15 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_am64x-evm_r5fss0-0_freertos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_sha_entropy_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mbedtls_pka_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_aes_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sa2ul_rng_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_encryption_decryption_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_r5f_am64x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_firewall_am64x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_firewall_am64x-sk_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am64x-evm_system_freertos_nortos_scrub
@@ -1544,7 +1545,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_controller_peripheral_am64x-evm_syst
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += stog_func_test_r5f_am64x-evm_system_nortos_scrub
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
@@ -1553,6 +1553,159 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_eeprom_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C board/eeprom/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -1767,8 +1920,8 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mbedtls_benchmark_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C networking/mbedtls_benchmark/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- testcase_singlepkt_icssg_nortos_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C networking/enet_unittest/testcase_singlepkt_icssg_nortos/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_sa2ul_sha_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_sa2ul_sha/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -1788,158 +1941,8 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_ecdsa_signing_verification_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C security/crypto/test_sa2ul_pka/test_ecdsa_signing_verification/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mcrc/mcrcUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_mcrc_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_mcrc_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mcrc/mcrcFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_func_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/esm_unit_test/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_common_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/common/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_common_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/common/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_common_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/common/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_esm_common_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/esm/common/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/dcc/dcc_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/dcc/dcc_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stog_func_test_r5f_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stog_func_test_r5f_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stog_unit_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stog/stog_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- stog_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/stog/stog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/vtm/vtm_func_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- vtm_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- vtm_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/vtm/vtm_unit_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_mtog_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mtog/mtog_func_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- mtog_unit_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/mtog/mtog_unit_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_func_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_func_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_func_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_func_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_funcTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_unit_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_unit_am64x-sk_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_unit_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_ecc_unit_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/ecc/ecc_sdl_unitTest/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pbist/sdl_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- pbist_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- pbist_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pbist/ip_pbist_test/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- pok_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pok/pokUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- pok_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pok/pokUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- pok_func_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- pok_func_test_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/pok/pokFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/rti/rtiUt/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_rti_test_app_am64x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- sdl_rti_test_app_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/rti/rtiFuncTest/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ stog_func_test_r5f_am64x-evm_system_nortos_scrub:
+	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile scrub
 
  test_firewall_am64x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C drivers/firewall/am64x-evm/system_freertos_nortos -f makefile scrub
@@ -1970,9 +1973,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub:
 	$(MAKE) -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos -f makefile scrub
-
- stog_func_test_r5f_am64x-evm_system_nortos_scrub:
-	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile scrub
 
 
 sbl: libs

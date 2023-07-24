@@ -7,6 +7,7 @@ const files = {
             "testcase_singlepkt_tc1.c",
             "testcase_singlepkt_tc2.c",
             "testcase_singlepkt_tc3.c",
+            "testcase_common_cfg.c",
             "testcase_main.c",
             "main.c",
     ],
@@ -137,7 +138,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "testcase_singlepkt";
-    property.isInternal = false;
+    property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
