@@ -3534,6 +3534,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcan Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcan_loopback_dma",
+        "location": "../../examples/drivers/mcan/mcan_loopback_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Dma Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcan_loopback_dma",
+        "location": "../../examples/drivers/mcan/mcan_loopback_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -12741,6 +12807,39 @@
         "subCategories": [
             "networking",
             "enet_cpsw_est",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Tsnapp Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "tsnapp",
+        "location": "../../examples/networking/tsn/tsn_apps/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "tsn",
+            "tsn_apps",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
