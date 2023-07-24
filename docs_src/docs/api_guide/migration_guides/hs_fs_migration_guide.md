@@ -3,9 +3,7 @@
 [TOC]
 
 \cond SOC_AM64X || SOC_AM243X
-The MCU+SDK primarily supported **GP** (General Purpose) as the main device type.
-MCU+SDK will now support **HS-FS** (High Security - Field Securable) in the SDK
-as the main device type with time-limited support for GP. This document aims to list out
+The MCU+SDK primarily supports **HS-FS** (High Security - Field Securable) as the main device and the support for GP is deprecated. This document aims to list out
 the differences between the two device types and aid the users to develop on HS-FS device type.
 
 ## System Firmware
@@ -39,13 +37,13 @@ This is taken care through an additional keyword in the file extension, **'hs_fs
 The `*.tiimage` would now become `*.hs_fs.tiimage` For example in the case of `sbl_ospi`,
 with release build profile, the final image in the case of GP device type would be
 
- - `sbl_ospi.release.tiimage` (Same as before)
+ - `sbl_ospi.release.tiimage`
 
 In case of HS-FS device type, it would be
 
  - `sbl_ospi.release.hs_fs.tiimage`
 
-HS-FS images will be built when you build SBLs for GP device itself, so no extra
+HS-FS images will be automatically built when you build SBLs, so no extra
 build options are required to be passed.
 
 ## Application boot using SBL (SBL OSPI, SBL NULL, SBL UART, SBL SD etc.) {#SBL_BOOT_HS_FS}
@@ -62,35 +60,20 @@ and application images `*.appimage.hs_fs` extension while flashing.
 ## Application boot using CCS + GELs {#CCS_BOOT_HS_FS}
 
 This section refers to the flow where users do not use any SBL, instead uses
-CCS + GELs and load_dmsc.js to initialize SoC, load the DMSC M3 and manually load
-user application to desired core. Most of this is possible in HS-FS with the notable difference:
+CCS + GELs and load_dmsc_hsfs.js to initialize SoC, load the DMSC M3 and manually load
+user application to desired core.
 
 - M3 JTAG is locked, so can't connect to M3 and run GELs
 
-To discuss the solution, let's revisit the old CCS + GELs flow from user perspective on GP device:
-
-- Set the board in NO-BOOT mode (recommended, but not mandatory)
-- Power ON the EVM/board
-- Launch the CCS target configuration file
-- Run the load_dmsc.js script from the scripting console
-
-While this seems simple enough, in the load_dmsc.js script there are quite a lot
-of things happening. It connects to the M3 core, runs the GELs, loads and runs
-the SYSFW and then proceeds to run the set_boardcfg application from R5.
-Once that is done, script finishes execution and user can now connect to any
-core and load application image.
-
-In case of HS-FS device, the flow is almost the same:
+Steps to do DMSC initialization from CCS
 
 - Set the board in DEV-BOOT mode (mandatory)
 - Power ON the EVM/board
 - Launch the CCS target configuration file
 - Run the load_dmsc_hs_fs.js script from the scripting console
 
-But now the load_dmsc.js would do something else. Since it can't connect to M3,
-it connects to R5. Now it runs an application (`sciclient_ccs_init`) similar to
-the `sciclient_set_boardcfg` application. The `sciclient_set_boardcfg` application
-just sets the boardcfg, but the new `sciclient_ccs_init` application will additionally
+Since it can't connect to M3, it connects to R5. Now it runs an application (`sciclient_ccs_init`).
+The `sciclient_ccs_init` application will load
 load M3 with SYSFW and set the boardcfg and initialize the other cores.
 
 The major difference here is the strict adherence of the boot mode to DEV-BOOT mode.

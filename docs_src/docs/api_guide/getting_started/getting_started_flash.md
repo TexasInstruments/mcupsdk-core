@@ -26,6 +26,21 @@ We can then boot this application without being connected to CCS via JTAG.
   we need to flash.
 
   - When building with makefiles and single-core projects, this file can be found here (shown for hello world example),
+\if SOC_AM64X || SOC_AM243X
+        ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.appimage.hs_fs
+
+  - When building with CCS and single-core projects, this file can be found here (shown for hello world example),
+
+        ${CCS_WORKSPACE_PATH}/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs
+
+  - When building with makefiles and multi-core system projects, this file can be found here (shown for IPC Notify example),
+
+        ${SDK_INSTALL_PATH}/examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs
+
+  - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
+
+        ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.appimage.hs_fs
+\else
 
         ${SDK_INSTALL_PATH}/examples/hello_world/{board}/r5fss0-0_freertos/ti-arm-clang/hello_world.release.appimage
 
@@ -40,23 +55,24 @@ We can then boot this application without being connected to CCS via JTAG.
   - When building with CCS and multi-core system projects, this file can be found here (shown for IPC Notify example),
 
         ${CCS_WORKSPACE_PATH}/ipc_notify_echo_{board}_system_freertos_nortos/Release/ipc_notify_echo_system.appimage
+\endif
 
   - **NOTE**: The folder name and file name in path can have "release", "Release" or "debug", "Debug" based on the profile that the application is built with.
 
 - Next, we need to list the files to flash in a flash configuration file. A default configuration file can be found at below path.
   You can edit this file directly or take a copy and edit this file.
-
 \cond SOC_AM273X || in a way that is connected with the meaning of words SOC_AWR294X || SOC_AM263X
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
 \endcond
-\cond SOC_AM64X || SOC_AM243X
-        ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_ospi.cfg
-\endcond
-
+\if SOC_AM64X || SOC_AM243X
+- Edit below line in the config file to point to your application `.appimage.hs_fs` file.
+  Give the absolute path to the `.appimage.hs_fs` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
+        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage.hs_fs --operation=flash --flash-offset=0x80000
+\else
 - Edit below line in the config file to point to your application `.appimage` file.
   Give the absolute path to the `.appimage` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
-
         --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.appimage --operation=flash --flash-offset=0x80000
+\endif
 
 - This file will additionally also list the flashing application that is run on the EVM and a OSPI flash bootloader that also
   needs to be flashed. You can keep this unchanged if you have not modified these applications.
@@ -65,9 +81,6 @@ We can then boot this application without being connected to CCS via JTAG.
 
 \cond SOC_AM64X
 ## Flashing the application
-
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please
-refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
 
 ### AM64X-EVM
 - **POWER-OFF** the EVM
@@ -112,17 +125,17 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
         Parsing config file ... SUCCESS. Found 3 command(s) !!!
 
         Executing command 1 of 3 ...
-        Found flash writer ... sending sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage
-        Sent flashwriter sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage of size 289169 bytes in 28.52s.
+        Found flash writer ... sending sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage
+        Sent flashwriter sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage of size 289169 bytes in 28.52s.
 
         Executing command 2 of 3 ...
-        Command arguments : --file=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.tiimage --operation=flash --flash-offset=0x0
-        Sent sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.tiimage of size 241937 bytes in 25.31s.
+        Command arguments : --file=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage of size 241937 bytes in 25.31s.
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!
@@ -174,17 +187,17 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
         Parsing config file ... SUCCESS. Found 3 command(s) !!!
 
         Executing command 1 of 3 ...
-        Found flash writer ... sending sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage
-        Sent flashwriter sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage of size 289169 bytes in 28.52s.
+        Found flash writer ... sending sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage
+        Sent flashwriter sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage of size 289169 bytes in 28.52s.
 
         Executing command 2 of 3 ...
-        Command arguments : --file=sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_ospi.release.tiimage --operation=flash --flash-offset=0x0
-        Sent sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_ospi.release.tiimage of size 241937 bytes in 25.31s.
+        Command arguments : --file=sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage of size 241937 bytes in 25.31s.
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!
@@ -280,9 +293,6 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
 \cond SOC_AM243X
 ## Flashing the application
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please
-refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
-
 ### AM243X-LP
 - **POWER-OFF** the AM243X-LP
 
@@ -326,17 +336,17 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
         Parsing config file ... SUCCESS. Found 3 command(s) !!!
 
         Executing command 1 of 3 ...
-        Found flash writer ... sending sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage
-        Sent flashwriter sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage of size 289169 bytes in 28.52s.
+        Found flash writer ... sending sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage
+        Sent flashwriter sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage of size 289169 bytes in 28.52s.
 
         Executing command 2 of 3 ...
-        Command arguments : --file=sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_ospi.release.tiimage --operation=flash --flash-offset=0x0
-        Sent sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_ospi.release.tiimage of size 241937 bytes in 25.31s.
+        Command arguments : --file=sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/@VAR_LP_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage of size 241937 bytes in 25.31s.
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!
@@ -388,17 +398,17 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
         Parsing config file ... SUCCESS. Found 3 command(s) !!!
 
         Executing command 1 of 3 ...
-        Found flash writer ... sending sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage
-        Sent flashwriter sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.tiimage of size 289169 bytes in 28.52s.
+        Found flash writer ... sending sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage
+        Sent flashwriter sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_uart_uniflash.release.hs_fs.tiimage of size 289169 bytes in 28.52s.
 
         Executing command 2 of 3 ...
-        Command arguments : --file=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.tiimage --operation=flash --flash-offset=0x0
-        Sent sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.tiimage of size 241937 bytes in 25.31s.
+        Command arguments : --file=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_ospi.release.hs_fs.tiimage of size 241937 bytes in 25.31s.
         [STATUS] SUCCESS !!!
 
         Executing command 3 of 3 ...
-        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage --operation=flash --flash-offset=0x80000
-        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage of size 58772 bytes in 8.43s.
+        Command arguments : --file=C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs --operation=flash --flash-offset=0x80000
+        Sent C:/Users/XYZ/workspace_v10/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang/Release/hello_world_{board}_r5fss0-0_freertos_ti-arm-clang.appimage.hs_fs of size 58772 bytes in 8.43s.
         [STATUS] SUCCESS !!!
 
         All commands from config file are executed !!!

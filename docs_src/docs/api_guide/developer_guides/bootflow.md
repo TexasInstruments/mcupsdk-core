@@ -421,7 +421,7 @@ some details regarding those.
 
 - Follow the steps in the above referred page to partition the SD card. For a complete boot from SD card, both the `sbl_sd` binary and the application image binary has to be present as files in the SD card. You have to rename the `sbl_sd` appimage as 'tiboot3.bin'.
 
-        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_sd.release.tiimage
+        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_sd.release.hs_fs.tiimage
         rename in SD card as => tiboot3.bin
 
 - Similarly you can copy any appimage file to the SD card and rename in the SD card as "app" so that the SBL can pick it up.

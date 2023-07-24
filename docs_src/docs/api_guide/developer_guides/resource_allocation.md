@@ -145,7 +145,6 @@ make -s -C tools/sysfw/boardcfg configure-gen SOC=am64x
 ## Rebuilding the board configuration
 
 - Once the changes are made in the file, there are three steps to be followed:
-  - Re-build the `sciclient_set_boardcfg` example
   - Re-build the `sciclient_ccs_init` example
   - Re-build the boardcfg binary blob by running the following from SDK root directory:
 

@@ -10,7 +10,7 @@
       Unless noted otherwise, the SW modules would work in both FreeRTOS and NORTOS environment. \n
       Unless noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
       Unless noted otherwise, the SW modules would work on all supported EVMs \n
-      M4F drivers support only MCU domain peripheral and peripheral instance while R5/A53 supports drivers support MAIN domain peripheral and peripheral instance. \n
+      M4F drivers support only MCU domain peripheral and peripheral instance while R5/A53 supports MAIN domain peripheral and peripheral instance. \n
 
 \attention Klockwork Static Analysis report is not updated for this release
 

@@ -35,6 +35,8 @@ This section describes the various tools used in conjunction with System Control
 
 ## SYSFW Board Config Generation {#BOARCFG_GEN}
 
+\note Please refer this \ref RESOURCE_ALLOCATION_GUIDE guide if you want to modify the default resources.
+
 SYSFW Board Config is a SOC specific configuration data regarding the various system attributes controlled by the SYSFW. These include resources, power and clock, security etc. This configuration is sent to SYSFW during boot time. The default configuration is stored in `source/drivers/sciclient/sciclient_defaultBoardCfg/{SOC}/`
 
 - Resource Management BoardCfg - sciclient_defaultBoardCfg_rm.c
@@ -43,30 +45,36 @@ SYSFW Board Config is a SOC specific configuration data regarding the various sy
 
 - For sending it to SYSFW, these files are converted to hex arrays. We use the bin2c.py python script to do this. This is done internally in the boardcfg makefile. If we change the boardcfg in the above mentioned files, run the following command to generate the hex array header files
 
-\code
-cd ${SDK_INSTALL_PATH}
-gmake -s -C tools/sysfw/boardcfg
-\endcode
+\cond SOC_AM243X
+```bash
+make -s -C tools/sysfw/boardcfg sciclient_boardcfg SOC=am243x
+```
+\endcond
+\cond SOC_AM64X
+```bash
+make -s -C tools/sysfw/boardcfg sciclient_boardcfg SOC=am64x
+```
+\endcond
 
 - Once these header files are generated, rebuild the libraries by doing
 
 \code
 cd ${SDK_INSTALL_PATH}
-gmake -s libs
+gmake -s libs DEVICE={device}
 \endcode
 
 - After this, make sure to rebuild the secondary bootloader (SBL) applications. You can do this by
 
 \code
 cd ${SDK_INSTALL_PATH}
-gmake -s sbl
+gmake -s sbl DEVICE={device}
 \endcode
 
-- If you're not using any of the SBLs (SBL UART, SBL OSPI, SBL NULL) and is following the CCS boot method (\ref EVM_SOC_INIT_NOBOOT_MODE), make sure to build the sciclient_set_boardcfg application by doing
+- If you're not using any of the SBLs (SBL UART, SBL OSPI, SBL NULL) and is following the CCS boot method (\ref EVM_SOC_INIT_NOBOOT_MODE), make sure to build the sciclient_ccs_init application by doing
 
 \code
 cd ${SDK_INSTALL_PATH}
-gmake -s -C examples/drivers/sciclient/sciclient_set_boardcfg/@VAR_SOC_NAME/r5fss0-0_nortos/ti-arm-clang
+gmake -s -C examples/drivers/sciclient/sciclient_ccs_init/{board}/r5fss0-0_nortos/ti-arm-clang
 \endcode
 
 \note This step is only needed if you are using the CCS boot method

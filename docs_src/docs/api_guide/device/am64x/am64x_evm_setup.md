@@ -31,7 +31,7 @@ Refer to SK page for more details on the AM64X-SK, https://www.ti.com/tool/SK-AM
   \image html sk_overview.png "@VAR_SK_BOARD_NAME"
 
 ## Device Type Identification {#DEVICE_TYPE}
- - The MCU+SDK supports two device types: HS-FS (High Security - Field Securable) and GP (General Purpose). The HS-FS is the main device type and GP is supported for a limited time. Please use \ref SOC_ID_PARSER to identify the device type.
+ - The MCU+SDK supports two device types: HS-FS (High Security - Field Securable) and GP (General Purpose). The HS-FS is the main device type and the support for GP device is deprecated. Please use \ref SOC_ID_PARSER to identify the device type.
 
  \note It is recommended to know the device type before loading or flashing the binary into the target.
 
@@ -124,9 +124,6 @@ Refer to SK page for more details on the AM64X-SK, https://www.ti.com/tool/SK-AM
 
 ## Flash SOC Initialization Binary {#EVM_FLASH_SOC_INIT}
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please
-refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BOOT_HS_FS for differences
-
 ### AM64X-EVM
 \attention This is a recommended one time step that needs to be done before
            you can load and run programs via CCS
@@ -173,13 +170,31 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
 
 - When the flashing is in progress you will see something like below
 
-  \imageStyle{flash_soc_init_in_progress.png,width:100%}
-  \image html flash_soc_init_in_progress.png "Flash in progress"
+        C:\ti\mcu_plus_sdk_am64x_09_00_00_00\tools\boot>python uart_uniflash.py -p COM13 --cfg=sbl_prebuilt\am64x-evm\default_sbl_null.cfg
+
+        Parsing config file ...
+        Parsing config file ... SUCCESS. Found 2 command(s) !
+
+        Executing command 1 of 2 ...
+        Found flash writer ... sending sbl prebuilt/am64x-evm/sbl_uart_uniflash.hs_fs.tiimage
+        Sending sbl_prebuilt/am64x-evm/sbl_uart_uniflash.release.hs_fs.tiimage: 24% ||||   | 58653/244220 [00:07<00:17, 10706.64bytes/s],
 
 - After all the flashing is done, you will see something like below
 
-  \imageStyle{flash_soc_init_success.png,width:80%}
-  \image html flash_soc_init_success.png "Flashing successful"
+        Parsing config file ...
+        Parsing config file ... SUCCESS. Found 2 command(s) !
+
+        Executing command 1 of 2 ...
+        Found flash writer ... sending sbl_prebuilt/am64x-evm/sbl_uart_uniflash.release.hs_fs.tiimage
+        Sent flashwriter sbl_prebuilt/am64x-evm/sbl_uart_uniflash.release.hs_fs.tiimage of size 244220 bytes in 24.84s.
+
+        Executing command 2 of 2
+        Command arguments : -—file=sbl _prebuilt/am64x-evm/sbl null.release.hs_fs.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/am64x-evm/sbl_null.release.hs_fs.tiimage of size 231036 bytes in 24.06s.
+
+        [STATUS] SUCCESS
+
+        All commands from config file are executed !
 
 - If flashing has failed, see \ref TOOLS_FLASH_ERROR_MESSAGES, and resolve the errors.
 
@@ -271,13 +286,32 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref SBL_BO
 
 - When the flashing is in progress you will see something like below
 
-  \imageStyle{flash_soc_init_in_progress.png,width:100%}
-  \image html flash_soc_init_in_progress.png "Flash in progress"
+        C:\ti\mcu_plus_sdk_am64x_09_00_00_00\tools\boot>python uart_uniflash.py -p COM13 --cfg=sbl_prebuilt\am64x-sk\default_sbl_null.cfg
+
+        Parsing config file ...
+        Parsing config file ... SUCCESS. Found 2 command(s) !
+
+        Executing command 1 of 2 ...
+        Found flash writer ... sending sbl prebuilt/am64x-sk/sbl_uart_uniflash.hs_fs.tiimage
+        Sending sbl_prebuilt/am64x-sk/sbl_uart_uniflash.release.hs_fs.tiimage: 24% ||||   | 58653/244220 [00:07<00:17, 10706.64bytes/s],
+
 
 - After all the flashing is done, you will see something like below
 
-  \imageStyle{sk_flash_soc_init_success.png,width:80%}
-  \image html sk_flash_soc_init_success.png "Flashing successful"
+        Parsing config file ...
+        Parsing config file ... SUCCESS. Found 2 command(s) !
+
+        Executing command 1 of 2 ...
+        Found flash writer ... sending sbl_prebuilt/am64x-sk/sbl_uart_uniflash.release.hs_fs.tiimage
+        Sent flashwriter sbl_prebuilt/am64x-sk/sbl_uart_uniflash.release.hs_fs.tiimage of size 244220 bytes in 24.84s.
+
+        Executing command 2 of 2
+        Command arguments : -—file=sbl _prebuilt/am64x-sk/sbl null.release.hs_fs.tiimage --operation=flash --flash-offset=0x0
+        Sent sbl_prebuilt/am64x-sk/sbl_null.release.hs_fs.tiimage of size 231036 bytes in 24.06s.
+
+        [STATUS] SUCCESS
+
+        All commands from config file are executed !
 
 - If flashing has failed, see \ref TOOLS_FLASH_ERROR_MESSAGES, and resolve the errors.
 
@@ -371,7 +405,7 @@ and flash driver is not yet available for that EVM.
 
 - Copy the below file to the newly formatted FAT partition on the SD card and **rename** it as `tiboot3.bin`
 
-        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_null.release.tiimage
+        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_null.release.hs_fs.tiimage
         rename in SD card as => tiboot3.bin
 
 - Eject the SD card
@@ -438,7 +472,7 @@ and flash driver is not yet available for that EVM.
 
 - Copy the below file to the newly formatted FAT partition on the SD card and **rename** it as `tiboot3.bin`
 
-        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_null.release.tiimage
+        copy file to SD card => ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/@VAR_SK_BOARD_NAME_LOWER/sbl_null.release.hs_fs.tiimage
         rename in SD card as => tiboot3.bin
 
 - Eject the SD card
@@ -478,15 +512,12 @@ and flash driver is not yet available for that EVM.
 
 #### SOC Initialization Using CCS Scripting {#EVM_SOC_INIT_NOBOOT_MODE}
 
-\note We have mentioned the steps for GP device. If you have an HS-FS device, please
-refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BOOT_HS_FS
-
 ##### Set Environment Variable
 
 \note This step needs to be done once and is needed for the
-  SOC initialization script `load_dmsc.js`/`load_dmsc_hsfs.js` to find certain initialization files within the SDK folder.
+  SOC initialization script `load_dmsc_hsfs.js` to find certain initialization files within the SDK folder.
   This variable is not used otherwise in the build process. If you dont like adding variables in the environment, then
-  you need to edit the file `${SDK_INSTALL_PATH}/tools/ccs_load/am64x/load_dmsc.js`/`${SDK_INSTALL_PATH}/tools/ccs_load/am64x/load_dmsc_hsfs.js`
+  you need to edit the file `${SDK_INSTALL_PATH}/tools/ccs_load/am64x/load_dmsc_hsfs.js`
   and specify the SDK path in the file itself.
 
 - Add path to the SDK folder as a environment variable in the host machine.
@@ -526,9 +557,9 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BO
   - Power cable
   - JTAG cable
 
-- Set EVM in NOBOOT mode as shown below
-  \imageStyle{boot_pins_noboot_mode.png,width:30%}
-  \image html boot_pins_noboot_mode.png "NO BOOT MODE"
+- Set EVM in DEV BOOT MODE mode as shown below
+    \imageStyle{boot_pins_devboot_mode.png,width:30%}
+    \image html boot_pins_devboot_mode.png "DEV BOOT MODE"
 
 - **POWER-ON** the EVM
 
@@ -547,27 +578,42 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BO
 - Type the below command in the scripting console and press "enter", to load DMSC FW and initialize the SOC
   - In Windows, assuming the SDK is installed at `C:/ti/mcu_plus_sdk_{soc}_{sdk version}`
 
-        loadJSFile "C:/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc.js" (GP device)
-
-        OR
-
         loadJSFile "C:/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc_hsfs.js" (HS-FS device)
 
     \imageStyle{ccs_load_dmsc_00.png,width:50%}
     \image html ccs_load_dmsc_00.png "Scripting Console"
 
-- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc.js` or
-`/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc_hsfs.js`
+- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc_hsfs.js`
 
 - After successful execution of this script one would see logs as below
 
   - In the scripting console, this is log from the script itself.
-    \imageStyle{ccs_load_dmsc_01.png,width:50%}
-    \image html ccs_load_dmsc_01.png "Scripting Console Log"
+
+        js:> LoadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/am64x/load_dmsc_hsfs.js"
+        Connecting to MCU Cortex_R5_0!
+        Writing While(1) for R5F
+        Running the board configuration initialization from R5!
+        Happy Debugging
 
   - In the @VAR_SOC_NAME "CIO" console, this is log from the R5F.
-    \imageStyle{ccs_load_dmsc_02.png,width:50%}
-    \image html ccs_load_dmsc_02.png "@VAR_SOC_NAME CIO Console R5F Log"
+
+        [MAIN_Cortex_R5_0_0]
+        DMSC Firmware Version AA.B.C-vDDDD.EEE-FF-gggggg (HHH
+        DMSC Firmware revision 0xNN
+        DMSC ABI revision x.y
+
+        [SCICLIENT] ABI check PASSED
+        [SCICLIENT] Board Configuration with Debug enabled ...
+        [SCICLIENT] Common Board Configuration PASSED
+        [SCICLIENT] PM Board Configuration PASSED
+        [SCICLIENT] RM Board Configuration PASSED
+        [SCICLIENT] Security Board Configuration PASSED
+
+        DMSC Firmware Version AA.B.C-vDDDD.EEE-FF-gggggg (HHH
+        DMSC Firmware revision 0xNN
+        DMSC ABI revision x.y
+
+        All tests have passed!!
 
   - In the @VAR_SOC_NAME console, this is log from the GEL scripts.
     \imageStyle{ccs_load_dmsc_03.png,width:50%}
@@ -612,22 +658,42 @@ refer to the migration guide \ref HSFS_MIGRATION_GUIDE, specifically \ref CCS_BO
 - Type the below command in the scripting console and press "enter", to load DMSC FW and initialize the SOC
   - In Windows, assuming the SDK is installed at `C:/ti/mcu_plus_sdk_{soc}_{sdk version}`
 
-        loadJSFile "C:/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc.js"
+        loadJSFile "C:/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc_hsfs.js"
 
     \imageStyle{ccs_load_dmsc_00.png,width:50%}
     \image html ccs_load_dmsc_00.png "Scripting Console"
 
-- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc.js`
+- In Linux, run the same command, only the path would be a Linux path like `/home/{username}/ti/mcu_plus_sdk_{soc}_{sdk version}/tools/ccs_load/am64x/load_dmsc_hsfs.js`
 
 - After successful execution of this script one would see logs as below
 
   - In the scripting console, this is log from the script itself.
-    \imageStyle{ccs_load_dmsc_01.png,width:50%}
-    \image html ccs_load_dmsc_01.png "Scripting Console Log"
+
+        js:> LoadJSFile "C:/ti/mcu_plus_sdk/tools/ccs_load/am243x/load_dmsc_hsfs.js"
+        Connecting to MCU Cortex_R5_0!
+        Writing While(1) for R5F
+        Running the board configuration initialization from R5!
+        Happy Debugging
 
   - In the @VAR_SOC_NAME "CIO" console, this is log from the R5F.
-    \imageStyle{ccs_load_dmsc_02.png,width:50%}
-    \image html ccs_load_dmsc_02.png "@VAR_SOC_NAME CIO Console R5F Log"
+
+        [MAIN_Cortex_R5_0_0]
+        DMSC Firmware Version AA.B.C-vDDDD.EEE-FF-gggggg (HHH
+        DMSC Firmware revision 0xNN
+        DMSC ABI revision x.y
+
+        [SCICLIENT] ABI check PASSED
+        [SCICLIENT] Board Configuration with Debug enabled ...
+        [SCICLIENT] Common Board Configuration PASSED
+        [SCICLIENT] PM Board Configuration PASSED
+        [SCICLIENT] RM Board Configuration PASSED
+        [SCICLIENT] Security Board Configuration PASSED
+
+        DMSC Firmware Version AA.B.C-vDDDD.EEE-FF-gggggg (HHH
+        DMSC Firmware revision 0xNN
+        DMSC ABI revision x.y
+
+        All tests have passed!!
 
   - In the @VAR_SOC_NAME console, this is log from the GEL scripts.
     \imageStyle{ccs_load_dmsc_03.png,width:50%}
@@ -754,16 +820,16 @@ This mode is used to boot applications via SD card on the AM64X-SK.
   \imageStyle{sk_boot_pins_sd_mode.png,width:30%}
   \image html sk_boot_pins_sd_mode.png "SD BOOT MODE"
 
-#### NOBOOT MODE  {#BOOTMODE_NOBOOT}
+#### DEV BOOT MODE {#BOOTMODE_NOBOOT}
 ##### AM64X-EVM
-This mode is used in conjunction with the `load_dmsc.js` script described here \ref EVM_SOC_INIT_NOBOOT_MODE,
+This mode is used in conjunction with the `load_dmsc_hsfs.js` script described here \ref EVM_SOC_INIT_NOBOOT_MODE,
     \code
-    BOOTMODE [ 0 :  7 ] (SW2) = 1101 1111
+    BOOTMODE [ 0 :  7 ] (SW2) = 1101 1110
     BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
     \endcode
 
-  \imageStyle{boot_pins_noboot_mode.png,width:30%}
-  \image html boot_pins_noboot_mode.png "NO BOOT MODE"
+  \imageStyle{boot_pins_devboot_mode.png,width:30%}
+  \image html boot_pins_devboot_mode.png "DEV BOOT MODE"
 
 ##### AM64X-SK
 This mode is used in conjunction with the `load_dmsc.js` script described here \ref EVM_SOC_INIT_NOBOOT_MODE,

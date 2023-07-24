@@ -99,11 +99,11 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
         {SDK_INSTALL_PATH}/examples/drivers/boot
 
-  - If you have modified the flashing or bootloader applications, make sure to rebuild these applications and note the path to the `.tiimage` files
+  - If you have modified the flashing or bootloader applications, make sure to rebuild these applications and note the path to the `hs_fs.tiimage` files
     that are generated as part of the build.
 
   - To build your application follow the steps mentioned in \ref GETTING_STARTED_BUILD to build the application you want.
-    Note the path to the `*.appimage` file that is generated as part of the build.
+    Note the path to the `*.appimage.hs_fs` file that is generated as part of the build.
 
 - Make sure you have installed python as mention in \ref INSTALL_PYTHON3
 
@@ -120,9 +120,9 @@ UART is used as the transport or interface to send the file to flash to the EVM.
         --flash-writer={path to flash application .tiimage}
         --file={path to OSPI bootloader .tiimage} --operation=flash --flash-offset=0x0
 
-- Edit below line to point to the user application (`.appimage`) file
+- Edit below line to point to the user application (`.appimage.hs_fs`) file
 
-        --file={path to your application .appimage file} --operation=flash --flash-offset=0x80000
+        --file={path to your application .appimage.hs_fs file} --operation=flash --flash-offset=0x80000
 
 \cond SOC_AM243X || SOC_AM64X
 - Edit below line to point to the user application XIP image (`.appimage_xip`) file. When not using XIP mode, this file input is optional.
@@ -295,9 +295,9 @@ The detailed sequence of steps that happen when flashing files is listed below, 
 \endcond
 \cond SOC_AM243X || SOC_AM64X
 - However typically one needs to at least send the below files to flash
-  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.tiimage`). If the OSPI bootloader is
+  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.hs_fs.tiimage`). If the OSPI bootloader is
     already flashed previously then this step can be skipped.
-  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage`).
+  - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage.hs_fs`).
     The offset 0x80000 is the offset that is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it
     will attempt to find a application at this location.
 - After flashing is done, power OFF the EVM
@@ -508,7 +508,7 @@ will be detected by **dfu-util** tool and will be displayed on console.
 The detailed sequence of steps that happen when flashing files is listed below, refer to the \ref EVM_SETUP_PAGE page to see how to setup the EVM in different boot modes that are needed for this sequence of steps.
 
 - Set EVM in DFU boot mode and power it on, the SOC ROM bootloader waits to receive a file using the USB2.0 DFU protocol.
-- PC sends the flashing application file (`sbl_dfu_uniflash.release.tiimage`) via the flashing tool using USB2.0 DFU protocol underneath.
+- PC sends the flashing application file (`sbl_dfu_uniflash.release.hs_fs.tiimage`) via the flashing tool using USB2.0 DFU protocol underneath.
 - The ROM bootloader, boots the flashing application
 - The flashing application now initializes the flash on the EVM and waits for additional commands using USB2.0 DFU protocol
 - The PC tool can now send one or more of below commands with the file data, one after the other, until it is done.
@@ -532,7 +532,7 @@ The detailed sequence of steps that happen when flashing files is listed below, 
 \endcond
 \cond SOC_AM243X || SOC_AM64X
 - However typically one needs to at least send the below files to flash
-  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.tiimage`). If the OSPI bootloader is
+  - Send a OSPI flash bootloader application and flash it at offset 0x0 (`sbl_ospi.release.hs_fs.tiimage`). If the OSPI bootloader is
     already flashed previously then this step can be skipped.
   - Send your application image multi-core image and flash it at offset 0x80000 (`*.appimage`).
     The offset 0x80000 is the offset that is specified in the OSPI bootloader and when the EVM boots in OSPI mode, it

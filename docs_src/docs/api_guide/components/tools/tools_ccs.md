@@ -86,8 +86,8 @@ This section describes CCS utility scripts that can optionally be used to make y
 \cond SOC_AM64X || SOC_AM243X
 ## DMSC loader
 
-`load_dmsc.js` located at `${SDK_INSTALL_PATH}/tools/ccs_load/{soc}` is useful to perform SOC initialization using CCS scripting.
-This script basically loads `sysfw.bin` to M3 core to initialize DMSC and then loads `sciclient_set_boardcfg.release.out` to R5F core to perform the default board configuration.
+`load_dmsc_hsfs.js` located at `${SDK_INSTALL_PATH}/tools/ccs_load/{soc}` is useful to perform SOC initialization using CCS scripting.
+This script basically loads `sciclient_ccs_init.release.out` from R5 to to initialize DMSC and perform the default board configuration.
 
 This script is especially useful for initial custom board bring up when only GEL files are available and nothing else.
 
