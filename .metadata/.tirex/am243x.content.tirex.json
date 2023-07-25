@@ -10356,891 +10356,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "This example verifies VTM operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "vtm_example",
-        "location": "../../examples/sdl/vtm/vtm_uc/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "vtm",
-            "vtm_uc",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies VTM operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "vtm_example",
-        "location": "../../examples/sdl/vtm/vtm_uc/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "vtm",
-            "vtm_uc",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "dcc_test",
-        "location": "../../examples/sdl/dcc/dcc_modes/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "dcc",
-            "dcc_modes",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies DCC in various modes of operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "dcc_test",
-        "location": "../../examples/sdl/dcc/dcc_modes/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "dcc",
-            "dcc_modes",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies POK operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "pok_example",
-        "location": "../../examples/sdl/pok/pok_mcu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "pok",
-            "pok_mcu",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies POK operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "pok_example",
-        "location": "../../examples/sdl/pok/pok_mcu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "pok",
-            "pok_mcu",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies CRC in full CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcrc_full_cpu",
-        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "mcrc",
-            "mcrc_full_cpu",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies CRC in full CPU mode of operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "mcrc_full_cpu",
-        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "mcrc",
-            "mcrc_full_cpu",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates error injecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_tog",
-        "location": "../../examples/sdl/stog/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "stog",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates the MTOG operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "mtog_example",
-        "location": "../../examples/sdl/mtog/mtog_example/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "mtog",
-            "mtog_example",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc1",
-        "location": "../../examples/sdl/rti/UC1/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC1",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc1",
-        "location": "../../examples/sdl/rti/UC1/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC1",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc2",
-        "location": "../../examples/sdl/rti/UC2/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC2",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc2",
-        "location": "../../examples/sdl/rti/UC2/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC2",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc3",
-        "location": "../../examples/sdl/rti/UC3/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC3",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc3",
-        "location": "../../examples/sdl/rti/UC3/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC3",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc4",
-        "location": "../../examples/sdl/rti/UC4/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC4",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc4",
-        "location": "../../examples/sdl/rti/UC4/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "rti",
-            "UC4",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies the PBIST CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_pbist_example",
-        "location": "../../examples/sdl/pbist/pbist_mpu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "pbist",
-            "pbist_mpu",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_pbist_example",
-        "location": "../../examples/sdl/pbist/pbist_mpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "pbist",
-            "pbist_mpu",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example read all r5f cpu static register CPU is R5FSS0-0 running NORTOS.",
-        "name": "r5f_cpu_utils",
-        "location": "../../examples/sdl/r5f_cpu_utils/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "r5f_cpu_utils",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates the ESM operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "mcu_esm0",
-        "location": "../../examples/sdl/esm/mcu_esm0/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "esm",
-            "mcu_esm0",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates the ESM operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcu_esm0",
-        "location": "../../examples/sdl/esm/mcu_esm0/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "esm",
-            "mcu_esm0",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Ecc Example Example. CPU is M4FSS0-0 running NORTOS.",
-        "name": "ecc_example",
-        "location": "../../examples/sdl/ecc/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "ecc",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Ecc Example Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ecc_example",
-        "location": "../../examples/sdl/ecc/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "ecc",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_stog_r5f",
-        "location": "../../examples/sdl/stog_r5f/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "stog_r5f",
-            "m4fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_stog_r5f",
-        "location": "../../examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "sdl",
-            "stog_r5f",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Enet Cpsw Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_loopback",
         "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -12237,6 +11352,891 @@
         "subCategories": [
             "networking",
             "enet_cpsw_fast_startup",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies VTM operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "vtm_example",
+        "location": "../../examples/sdl/vtm/vtm_uc/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "vtm",
+            "vtm_uc",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies VTM operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "vtm_example",
+        "location": "../../examples/sdl/vtm/vtm_uc/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "vtm",
+            "vtm_uc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "dcc_test",
+        "location": "../../examples/sdl/dcc/dcc_modes/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "dcc",
+            "dcc_modes",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies DCC in various modes of operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "dcc_test",
+        "location": "../../examples/sdl/dcc/dcc_modes/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "dcc",
+            "dcc_modes",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies POK operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "pok_example",
+        "location": "../../examples/sdl/pok/pok_mcu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pok",
+            "pok_mcu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies POK operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "pok_example",
+        "location": "../../examples/sdl/pok/pok_mcu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pok",
+            "pok_mcu",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in full CPU mode of operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcrc_full_cpu",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_full_cpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies CRC in full CPU mode of operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "mcrc_full_cpu",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mcrc",
+            "mcrc_full_cpu",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates error injecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_tog",
+        "location": "../../examples/sdl/stog/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the MTOG operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "mtog_example",
+        "location": "../../examples/sdl/mtog/mtog_example/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "mtog",
+            "mtog_example",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc1",
+        "location": "../../examples/sdl/rti/UC1/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc1",
+        "location": "../../examples/sdl/rti/UC1/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC1",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc2",
+        "location": "../../examples/sdl/rti/UC2/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC2",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc2",
+        "location": "../../examples/sdl/rti/UC2/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC2",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc3",
+        "location": "../../examples/sdl/rti/UC3/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC3",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc3",
+        "location": "../../examples/sdl/rti/UC3/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC3",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc4",
+        "location": "../../examples/sdl/rti/UC4/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC4",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_rti_example_uc4",
+        "location": "../../examples/sdl/rti/UC4/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "rti",
+            "UC4",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the PBIST CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_pbist_example",
+        "location": "../../examples/sdl/pbist/pbist_mpu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pbist",
+            "pbist_mpu",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_pbist_example",
+        "location": "../../examples/sdl/pbist/pbist_mpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "pbist",
+            "pbist_mpu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example read all r5f cpu static register CPU is R5FSS0-0 running NORTOS.",
+        "name": "r5f_cpu_utils",
+        "location": "../../examples/sdl/r5f_cpu_utils/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "r5f_cpu_utils",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the ESM operation CPU is M4FSS0-0 running NORTOS.",
+        "name": "mcu_esm0",
+        "location": "../../examples/sdl/esm/mcu_esm0/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "esm",
+            "mcu_esm0",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the ESM operation CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcu_esm0",
+        "location": "../../examples/sdl/esm/mcu_esm0/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "esm",
+            "mcu_esm0",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ecc Example Example. CPU is M4FSS0-0 running NORTOS.",
+        "name": "ecc_example",
+        "location": "../../examples/sdl/ecc/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ecc Example Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecc_example",
+        "location": "../../examples/sdl/ecc/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ecc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
+        "name": "sdl_stog_r5f",
+        "location": "../../examples/sdl/stog_r5f/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog_r5f",
+            "m4fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_stog_r5f",
+        "location": "../../examples/sdl/stog_r5f/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "stog_r5f",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
