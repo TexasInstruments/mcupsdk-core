@@ -25,7 +25,22 @@ SDK features and tools.
 - \subpage MCU_RESET_ISOLATION
 \endcond
 
-\cond SOC_AM273X || SOC_AWR294X
+\cond SOC_AM273X
+- \subpage INSTALL_NON_DEFAULT
+- \subpage IPC_GUIDE
+- \subpage BOOTFLOW_GUIDE
+- \subpage CCS_PROJECTS_PAGE
+- \subpage MAKEFILE_BUILD_PAGE
+- \subpage ROV_INTRO_PAGE
+- \subpage SECURE_BOOT
+- \subpage SYSCONFIG_INTRO_PAGE
+- \subpage TIREX_INTRO_PAGE
+- \subpage CUSTOM_FLASH_SUPPORT_GUIDE
+- \subpage CCS_CLOUD_INTRO_PAGE
+- \subpage SOC_MIGRATION
+\endcond
+
+\cond SOC_AWR294X
 - \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
 - \subpage BOOTFLOW_GUIDE
