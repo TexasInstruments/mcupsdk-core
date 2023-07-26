@@ -177,8 +177,6 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am273x-evm/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_cpsw_est/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC1/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -569,8 +567,6 @@ BUILD_COMBO_EXAMPLE_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-0_freertos_ti
 BUILD_COMBO_EXAMPLE_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000
@@ -961,12 +957,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
  sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000:
 	$(MAKE) -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
@@ -1241,8 +1231,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-0_freer
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1633,12 +1621,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
  sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
@@ -1913,8 +1895,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-0_freer
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_l2_multi_channel_am273x-evm_r5fss0-1_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_est_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc1_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc1_am273x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -2304,12 +2284,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  enet_txsg_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
-
- dcc_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
  sdl_hwa_example_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
 	$(MAKE) -C examples/sdl/hwa/hwa_main/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub

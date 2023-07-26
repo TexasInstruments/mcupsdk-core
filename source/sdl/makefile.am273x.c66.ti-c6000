@@ -17,7 +17,6 @@ LIBNAME:=sdl.am273x.c66.ti-c6000.$(PROFILE).lib
 
 FILES_common := \
     sdl_dpl.c \
-    sdl_dcc.c \
     sdl_ip_esm.c \
     sdl_esm.c \
     sdl_esm_core.c \
@@ -35,7 +34,6 @@ FILES_common := \
 
 FILES_PATH_common = \
     dpl \
-    dcc/v1 \
     esm \
     esm/v1 \
     esm/v1/v1_0 \

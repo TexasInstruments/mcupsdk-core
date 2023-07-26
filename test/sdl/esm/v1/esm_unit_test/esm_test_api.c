@@ -48,7 +48,6 @@
 #include <sdl/sdl_ccm.h>
 #include <sdl/r5/v0/sdl_ip_ccm.h>
 #include <sdl/sdl_ecc.h>
-#include "dcc_uc1.h"
 
 #define SDTF_NUM_RUNALL_TEST_COMMANDS 3
 #define MASK_BIT (1u)
@@ -412,14 +411,6 @@ int32_t sdl_Esm_posTest(void)
         DebugP_log("Parity Test cases Started...\r\n");
         parity_main(NULL);
         DebugP_log("Parity Test cases Finished.\r\n");
-    }
-
-    /* DCC test integrate to enject ESM error*/
-    if (testStatus == SDL_APP_TEST_PASS)
-    {
-        DebugP_log("DCC Test cases Started...\r\n");
-        dcc_test_main(NULL);
-        DebugP_log("DCC Test cases Finished.\r\n");
     }
 
     /* ESMSetInfluenceOnErrPin positive test */

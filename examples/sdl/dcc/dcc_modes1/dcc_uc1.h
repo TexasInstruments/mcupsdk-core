@@ -48,11 +48,7 @@
 #include <sdl/sdl_dcc.h>
 #include <sdl/esm/sdlr_esm.h>
 #include <sdl/include/sdl_types.h>
-#if defined (SOC_AM273X)
-#include <sdl/esm/v1/sdl_esm.h>
-#include <sdl/include/am273x/sdlr_intr_esm_dss.h>
-#include <sdl/include/am273x/sdlr_intr_esm_mss.h>
-#elif defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
 #include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
@@ -92,24 +88,6 @@
         APP_DCC_TEST_CLOCK_SRC_1, in this example to simulate an error*/
 #endif
 
-
-#if defined (SOC_AM273X)
-/* Defines that control the clock inputs to DCC and allowed variance */
-#define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_0)
-#define APP_DCC_TEST_CLOCK_SRC_1        (SDL_DCC_CLK1_SRC_CLOCKSRC5)
-
-#define APP_DCC_TEST_CLOCK_SRC_1_DRIFT  (2U)
-/**< Allowed drift in percentage (+/-) */
-
-#if defined (R5F_INPUTS)
-#define APP_DCC_MSS_TEST_CLOCK_SRC_1_HIGHER (SDL_DCC_CLK1_SRC_CLOCKSRC2) /* SYSCLK  (200MHZ) */
-#endif
-#if defined (C66_INPUTS)
-#define APP_DCC_DSS_TEST_CLOCK_SRC_1_HIGHER (SDL_DCC_CLK1_SRC_CLOCKSRC1) /* SYSCLK (200MHZ) */
-#endif
-/**< Clock source for Counter 1, expected to be higher than
-        APP_DCC_TEST_CLOCK_SRC_1, in this example to simulate an error*/
-#endif
 
 #if defined (SOC_AWR294X)
 /* Defines that control the clock inputs to DCC and allowed variance */
@@ -172,21 +150,8 @@ typedef struct {
 /*===========================================================================*/
 /*                      ESM ERROR Macros                                     */
 /*===========================================================================*/
-#if defined (SOC_AM273X)
 
-#define ESM_ERROR_GROUP_1    1U
-#define ESM_ERROR_GROUP_2    2U
-#define ESM_ERROR_GROUP_3    3U
-
-#define  DCCA_MSS_ESM_ERROR  SDL_ESMG1_DCCA_ERR
-#define  DCCB_MSS_ESM_ERROR  SDL_ESMG1_DCCB_ERR
-#define  DCCC_MSS_ESM_ERROR  SDL_ESMG1_DCCC_ERR
-#define  DCCD_MSS_ESM_ERROR  SDL_ESMG1_DCCD_ERR
-
-#define  DCCA_DSS_ESM_ERROR  SDL_DSS_ESMG2_DSS_DCCA_ERR
-#define  DCCB_DSS_ESM_ERROR  SDL_DSS_ESMG2_DSS_DCCB_ERR
-
-#elif defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 
 #define ESM_ERROR_GROUP_1    1U
 #define ESM_ERROR_GROUP_2    2U
@@ -205,7 +170,7 @@ typedef struct {
 /*                         External function declarations                    */
 /*===========================================================================*/
 
-#if defined (SOC_AM273X)|| (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             int grpChannel,

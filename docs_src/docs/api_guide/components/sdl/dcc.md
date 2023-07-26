@@ -89,7 +89,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_MCU =
                       },
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
-	 
+
 
 };
 
@@ -116,7 +116,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
  SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, NULL);
 \endcode
 \endcond
-\cond SOC_AM273X ||  SOC_AWR294X
+\cond  SOC_AWR294X
 \code{.c}
 SDL_ESM_NotifyParams gESM_Params=
 
@@ -294,7 +294,7 @@ SDL_DCC_enable(SDL_DCC_INST_MCU_DCC0);
 \endcode
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AWR294X
 Configure MAIN DCC Instance 0 seed values and clocks
 
 \code{.c}

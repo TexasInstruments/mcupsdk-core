@@ -98,7 +98,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 
 #endif
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 SDL_ESM_NotifyParams gESM_Params=
 
 {
@@ -157,28 +157,6 @@ static int32_t sdlApp_dplInit(void)
 
     return ret;
 }
-#if defined (SOC_AM273X)
-void SDL_DCCA_clockInit( void )
-{
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_RTIA_CLK_SRC_SEL,\
-        SDL_MSS_RCM_MSS_RTIA_CLK_SRC_SEL_MSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL,\
-        SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL_MSS_RTIA_CLK_DIV_VAL_CLKDIVR, 0X000U);
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_MCANA_CLK_SRC_SEL,\
-        SDL_MSS_RCM_MSS_MCANA_CLK_SRC_SEL_MSS_MCANA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_MCANA_CLK_DIV_VAL,\
-        SDL_MSS_RCM_MSS_MCANA_CLK_DIV_VAL_MSS_MCANA_CLK_DIV_VAL_CLKDIVR, 0X111U);
-
-    HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL),\
-       SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL_DSS_WDT_CLK_SRC_SEL_CLKSRCSEL, 0X222);
-    HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL),\
-       SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL_DSS_WDT_CLK_DIV_VAL_CLKDIV, 0X111);
-    HW_WR_FIELD32(SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL,\
-         SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL_DSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
-    HW_WR_FIELD32(SDL_DSS_RCM_U_BASE+SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL,\
-        SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL_DSS_RTIA_CLK_DIV_VAL_CLKDIV, 0X000U);
-}
-#endif
 
 #if defined (SOC_AWR294X)
 void SDL_DCCA_clockInit( void )
@@ -203,7 +181,7 @@ void SDL_DCCA_clockInit( void )
 }
 #endif
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             int grpChannel, int intSrc, void *arg);
 
@@ -223,7 +201,7 @@ void test_sdl_dcc_baremetal_test_app (void)
     Drivers_open();
     Board_driversOpen();
     sdlApp_dplInit();
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
     SDL_DCCA_clockInit();
 #endif
     sdlApp_print("\n DCC Function Test Application\r\n");
@@ -242,7 +220,7 @@ void test_sdl_dcc_baremetal_test_app (void)
     {
         sdlApp_print("\nDCC_Test_init: Init MCU ESM complete \r\n\n");
     }
-#elif  defined (SOC_AM273X) || defined (SOC_AWR294X)
+#elif  defined (SOC_AWR294X)
     #if defined (R5F_INPUTS)
     gESM_Params.groupNumber=ESM_ERROR_GROUP_1;
     gESM_Params.errorNumber=DCCA_MSS_ESM_ERROR;

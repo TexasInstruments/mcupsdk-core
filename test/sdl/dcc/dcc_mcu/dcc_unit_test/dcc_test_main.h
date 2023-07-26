@@ -117,7 +117,7 @@ extern int32_t SDL_DCC_negTest(void);
 #if defined (SOC_AM263X)
 #define DCC_INST_NUM     (SDL_DCC_INST_MSS_DCCA)
 #endif
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 #if defined (R5F_INPUTS)
 #define DCC_INST_NUM     (SDL_DCC_INST_MSS_DCCA)
 #endif

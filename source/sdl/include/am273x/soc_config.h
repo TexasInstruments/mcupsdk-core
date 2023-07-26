@@ -49,7 +49,6 @@ extern "C"
 
 /* IP versions */
 #define IP_VERSION_ESM_V1_0
-#define IP_VERSION_DCC_V1
 #define IP_VERSION_DSS_L3_V0
 #define IP_VERSION_HWA_V0
 #define IP_VERSION_MBOX_V0

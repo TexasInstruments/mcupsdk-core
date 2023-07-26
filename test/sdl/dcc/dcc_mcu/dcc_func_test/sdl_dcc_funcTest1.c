@@ -181,20 +181,6 @@ int32_t SDL_DCC_funcTest(void)
                     DebugP_log("\n Reference clock source: XTALCLK \r\n");
 					DebugP_log(" Test clock source: RCCLK32K CLOCK \r\n");
                 #endif
-                #if defined (SOC_AM273X)
-                    #if defined (R5F_INPUTS)
-					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
-					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC6;
-                    DebugP_log("\r\n Reference clock source: XTALCLK \r\n");
-					DebugP_log(" Test clock source: MCANA CLOCK \r\n");
-                    #endif
-                    #if defined (C66_INPUTS)
-					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
-					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC4;
-                    DebugP_log("\r\n Reference clock source: XTALCLK \r\n");
-					DebugP_log(" Test clock source: DSS_WDG CLOCK \r\n");
-                    #endif
-                #endif
                 #if defined (SOC_AWR294X)
                     #if defined (R5F_INPUTS)
 					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
@@ -217,20 +203,6 @@ int32_t SDL_DCC_funcTest(void)
 					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC0;
 					DebugP_log("\r\n Reference clock source: RCCLK10M\r\n");
 					DebugP_log(" Test clock source: SYS_CLK\r\n");
-                #endif
-                #if defined (SOC_AM273X)
-                    #if defined (R5F_INPUTS)
-					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
-					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC2;
-                    DebugP_log("\r\n Reference clock source: XTALCLK \r\n");
-					DebugP_log(" Test clock source: MCANA CLOCK \r\n");
-                    #endif
-                    #if defined (C66_INPUTS)
-					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
-					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC3;
-                    DebugP_log("\r\n Reference clock source: XTALCLK \r\n");
-					DebugP_log(" Test clock source: DSS_RTIA CLOCK \r\n");
-                    #endif
                 #endif
                 #if defined (SOC_AWR294X)
                     #if defined (R5F_INPUTS)
@@ -598,7 +570,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntTyp
     return retVal;
 }
 
-#elif defined (SOC_AM273X)|| defined (SOC_AWR294X)
+#elif defined (SOC_AWR294X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             int grpChannel, int intSrc, void *arg)
 {

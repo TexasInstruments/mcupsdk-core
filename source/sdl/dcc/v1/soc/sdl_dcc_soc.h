@@ -38,9 +38,6 @@
 extern "C" {
 #endif
 
-#if defined (SOC_AM273X)
-#include <sdl/dcc/v1/soc/am273x/sdl_soc_dcc.h>
-#endif /* SOC_AM273X */
 #if defined (SOC_AWR294X)
 #include <sdl/dcc/v1/soc/awr294x/sdl_soc_dcc.h>
 #endif /* SOC_AWR294X */
@@ -48,11 +45,6 @@ extern "C" {
 #if defined (SOC_AM263X)
 #include <sdl/dcc/v1/soc/am263x/sdl_soc_dcc.h>
 #endif /* SOC_AM263X */
-
-#if defined (SOC_AM273X)
-#include <sdl/esm/soc/am273x/sdl_esm_soc.h>
-#include <sdl/include/am273x/sdlr_mss_ctrl.h>
-#endif /* SOC_AM273X */
 
 #if defined (SOC_AWR294X)
 #include <sdl/esm/soc/awr294x/sdl_esm_soc.h>

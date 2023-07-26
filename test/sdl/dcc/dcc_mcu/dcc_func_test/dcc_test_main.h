@@ -66,16 +66,6 @@
 #include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
 #endif
 
-#if defined (SOC_AM273X)
-#include <sdl/esm/v1/sdl_esm.h>
-#include <sdl/include/am273x/sdlr_soc_baseaddress.h>
-#include <sdl/include/am273x/sdlr_intr_mss.h>
-#include <sdl/include/am273x/sdlr_intr_dss.h>
-#include <sdl/include/am273x/sdlr_dss_rcm.h>
-#include <sdl/include/am273x/sdlr_mss_rcm.h>
-#include <sdl/include/am273x/sdlr_intr_esm_dss.h>
-#include <sdl/include/am273x/sdlr_intr_esm_mss.h>
-#endif
 #if defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #include <sdl/include/awr294x/sdlr_soc_baseaddress.h>
@@ -103,7 +93,7 @@
 
 #define APP_DCC_STR                     "SDL DCC FUNCTION TEST"
 /**< Example Common display string */
-#if defined (SOC_AM273X)|| defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 #if defined (R5F_INPUTS)
 #define APP_DCC_MODULE_INST             (SDL_MSS_DCCA_U_BASE)
 #endif
@@ -134,17 +124,6 @@
 /**< Allowed drift in percentage (+/-) */
 
 
-#if defined (SOC_AM273X)
-#if defined (R5F_INPUTS)
-#define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_0) /*XTALCLK (40MHZ)*/
-#define APP_DCC_TEST_CLOCK_SRC_1        (SDL_DCC_CLK1_SRC_CLOCKSRC6) /* MSS_MCANA(100MHZ) */
-#endif
-#if defined (C66_INPUTS)
-#define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_0) /*XTALCLK (40MHZ)*/
-#define APP_DCC_TEST_CLOCK_SRC_1        (SDL_DCC_CLK1_SRC_CLOCKSRC4) /* DSS_WDG(100MHZ)*/
-#endif
-#endif
-
 #if defined (SOC_AWR294X)
 #if defined (R5F_INPUTS)
 #define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_0) /*XTALCLK (40MHZ)*/
@@ -156,28 +135,6 @@
 #endif
 #endif
 
-#if defined (SOC_AM273X)
-#if defined (R5F_INPUTS) /*FOR R5F CORE */
-#define APP_DCC_REF_CLOCK_FREQ_IN_KHZ   (40000U)
-/**< Clock source for Counter 0, 40 MHz for AM273X */
-#define APP_DCC_TEST_CLOCK_FREQ_IN_KHZ  (100000U)
-/**< Expected test clock frequency in KHz */
-/**< Clock source for Counter 1, 100 MHz for AM273X */
-#define APP_DCC_TEST_CLOCK_SRC_1_HIGHER (DCC_DCCCLKSRC1_CLKSRC_2)
-/**< Clock source for Counter 1, expected to be higher than
-        APP_DCC_TEST_CLOCK_SRC_1, in this Test to simulate an error*/
-#endif
-#if defined (C66_INPUTS) /*FOR DSP CORE */
-#define APP_DCC_REF_CLOCK_FREQ_IN_KHZ   (40000U)
-/**< Clock source for Counter 0, 40 MHz for AM273X */
-#define APP_DCC_TEST_CLOCK_FREQ_IN_KHZ  (100000U)
-/**< Expected test clock frequency in KHz */
-/**< Clock source for Counter 1, 100 MHz for AM273X */
-#define APP_DCC_TEST_CLOCK_SRC_1_HIGHER (DCC_DCCCLKSRC1_CLKSRC_3)
-/**< Clock source for Counter 1, expected to be higher than
-        APP_DCC_TEST_CLOCK_SRC_1, in this Test to simulate an error*/
-#endif
-#endif
 
 #if defined (SOC_AWR294X)
 #if defined (R5F_INPUTS)/*FOR R5F CORE */
@@ -223,7 +180,7 @@
 #define DCC_DONE_INTR_NUM  (SDL_R5FSS0_CORE0_INTR_DCC0_DONE)
 #endif
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 #if defined (R5F_INPUTS)
 #define ESM_INST_BASE      (SDL_TOP_ESM_U_BASE)
 #define DCC_INST_BASE      (SDL_MSS_DCCA_U_BASE)
@@ -239,21 +196,8 @@
 #endif
 
 /* ESM ERROR CONFIGURATION MACROS */
-#if defined (SOC_AM273X)
 
-#define ESM_ERROR_GROUP_1    1U
-#define ESM_ERROR_GROUP_2    2U
-#define ESM_ERROR_GROUP_3    3U
-
-#define  DCCA_MSS_ESM_ERROR  SDL_ESMG1_DCCA_ERR
-#define  DCCB_MSS_ESM_ERROR  SDL_ESMG1_DCCB_ERR
-#define  DCCC_MSS_ESM_ERROR  SDL_ESMG1_DCCC_ERR
-#define  DCCD_MSS_ESM_ERROR  SDL_ESMG1_DCCD_ERR
-
-#define  DCCA_DSS_ESM_ERROR  SDL_DSS_ESMG2_DSS_DCCA_ERR
-#define  DCCB_DSS_ESM_ERROR  SDL_DSS_ESMG2_DSS_DCCB_ERR
-
-#elif defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 
 #define ESM_ERROR_GROUP_1    1U
 #define ESM_ERROR_GROUP_2    2U
@@ -313,7 +257,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             uint32_t index,
                                             uint32_t intSrc,
                                             void *arg);
-#elif defined (SOC_AM273X)|| (SOC_AWR294X)
+#elif (SOC_AWR294X)
 
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             int grpChannel,

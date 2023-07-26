@@ -5,7 +5,6 @@ let device = "am273x";
 const files_r5f = {
     common: [
         "sdl_dpl.c",
-        "sdl_dcc.c",
         "sdl_ip_esm.c",
         "sdl_esm.c",
         "sdl_esm_core.c",
@@ -53,7 +52,6 @@ const asmfiles_r5f = {
 const files_c66 = {
     common: [
         "sdl_dpl.c",
-        "sdl_dcc.c",
         "sdl_ip_esm.c",
         "sdl_esm.c",
         "sdl_esm_core.c",
@@ -73,7 +71,6 @@ const files_c66 = {
 const filedirs = {
     common: [
         "dpl",
-        "dcc/v1",
         "esm",
         "esm/v1",
         "esm/v1/v1_0",

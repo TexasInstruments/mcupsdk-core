@@ -43,10 +43,6 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/ecc_bus_safety/eccBusSafetyUt/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -212,10 +208,6 @@ $(BUILD_COMBO_SCRUB_doxy_samples):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000
-BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_eccBusSafetyUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -315,18 +307,6 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
-
- dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
-
- dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile all
 
  test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -601,10 +581,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eccBusSafetyUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -704,18 +680,6 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
-
- dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
-
- dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000_clean:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile clean
 
  test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -990,10 +954,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyFuncTest_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eccBusSafetyUt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1093,18 +1053,6 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
-
- dcc_func_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_func_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
-
- dcc_test_app_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dcc_test_app_am273x-evm_c66ss0_nortos_ti-c6000_scrub:
-	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile scrub
 
  test_eccBusSafetyFuncTest_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/ecc_bus_safety/eccBussafetyFuncTest/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

@@ -199,310 +199,6 @@ static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
 };
 #endif
 
-#if defined (SOC_AM273X)
-
-#include <sdl/include/am273x/sdlr_intr_dss.h>
-#include <sdl/include/am273x/sdlr_intr_mss.h>
-#include <sdl/include/am273x/sdlr_dss_rcm.h>
-#include <sdl/include/am273x/sdlr_mss_rcm.h>
-#include <drivers/soc/am273x/soc.h>
-
-void SDL_DCCA_clockInit( void )
-{
-    /*for peripherals clock source frequency configuration */
-
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_RTIA_CLK_SRC_SEL,\
-        SDL_MSS_RCM_MSS_RTIA_CLK_SRC_SEL_MSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL,\
-        SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL_MSS_RTIA_CLK_DIV_VAL_CLKDIVR, 0X333U);
-  /* frequency division will be like -> if we want to divide frequency by n,
-   we should write division value n-1. */
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_MCANA_CLK_SRC_SEL,\
-        SDL_MSS_RCM_MSS_MCANA_CLK_SRC_SEL_MSS_MCANA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
-    HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_MCANA_CLK_DIV_VAL,\
-        SDL_MSS_RCM_MSS_MCANA_CLK_DIV_VAL_MSS_MCANA_CLK_DIV_VAL_CLKDIVR, 0X111U);
-
-    HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL),\
-       SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL_DSS_WDT_CLK_SRC_SEL_CLKSRCSEL, 0X222);
-    HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL),\
-       SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL_DSS_WDT_CLK_DIV_VAL_CLKDIV, 0X111);
-    HW_WR_FIELD32(SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL,\
-         SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL_DSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
-    HW_WR_FIELD32(SDL_DSS_RCM_U_BASE+SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL,\
-        SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL_DSS_RTIA_CLK_DIV_VAL_CLKDIV, 0X333U);
-
-
-}
-
-
-
-#define NUM_USE_CASES          (0x9U)
-
-static DCC_TEST_UseCase DCC_Test_UseCaseArray[NUM_USE_CASES] =
-{
- #if defined (R5F_INPUTS)
-    /* Continuous - error generated */
-    {
-        "XTAL_CLK",
-        "MSS_RTIA_CLK",
-        SDL_DCC_INST_MSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        50000, /* 50 MHz for RTIA */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        APP_DCC_MSS_TEST_CLOCK_SRC_1_HIGHER,
-        0x1
-    },
-    /* Single Shot - No error */
-    {
-        "XTAL_CLK",
-        "MSS_RTIA_CLK",
-        SDL_DCC_INST_MSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        50000, /* 50 MHz for RTIA */
-        SDL_DCC_MODE_SINGLE_SHOT,
-        SDL_MSS_INTR_MSS_DCCA_INT,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "MSS_RTIA_CLK",
-        SDL_DCC_INST_MSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        50000, /* 50 MHz for RTIA */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-    /* Single Shot - No error */
-    {
-        "XTAL_CLK",
-        "SYS_CLK",
-        SDL_DCC_INST_MSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC2,
-        200000, /* 200 MHz for SYSCLK0 */
-        SDL_DCC_MODE_SINGLE_SHOT,
-        SDL_MSS_INTR_MSS_DCCA_INT,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - error generated */
-    {
-        "XTAL_CLK",
-        "PLL_PER_HSDIV1_CLKOUT1",
-        SDL_DCC_INST_MSS_DCCD,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for RC OSC */
-        SDL_DCC_CLK1_SRC_CLOCKSRC0,
-        188802, /* 188.802 kHz for PLL_PER_HSDIV1_CLKOUT1*/
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        APP_DCC_MSS_TEST_CLOCK_SRC_1_HIGHER,
-        0x1
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "MSS_MCANA_CLK",
-        SDL_DCC_INST_MSS_DCCD,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC2,
-        100000, /* 200 MHz for MCANA*/
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "MSS_MCANA CLK",
-        SDL_DCC_INST_MSS_DCCD,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTALCLK */
-        SDL_DCC_CLK1_SRC_CLOCKSRC2,
-        100000, /* 100 MHz for MCANA */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - error generated */
-    {
-        "XTAL_CLK",
-        "MSS_MCANA CLK",
-        SDL_DCC_INST_MSS_DCCD,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 200 MHz for XTALClk */
-        SDL_DCC_CLK1_SRC_CLOCKSRC2,
-        100000, /* 100 MHz for MCAN */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        SDL_DCC2_DCCCLKSRC1_CLKSRC_OTHER,
-        0x1
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "SYS_CLK",
-        SDL_DCC_INST_MSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC2,
-        200000, /* 200 MHz for SYSCLK0 */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
- #endif
-#if defined (C66_INPUTS)
-    /* Continuous - error generated */
-    {
-        "XTAL_CLK",
-        "DSS_WDG_CLK",
-        SDL_DCC_INST_DSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        100000, /*  100 MHz for DSS_WDG */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        APP_DCC_DSS_TEST_CLOCK_SRC_1_HIGHER,
-        0x1
-    },
-    /* Single Shot - No error */
-    {
-        "XTAL_CLK",
-        "DSS_WDG_CLK",
-        SDL_DCC_INST_DSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        100000, /* 100 MHz for DSS_WDG */
-        SDL_DCC_MODE_SINGLE_SHOT,
-        SDL_DSS_INTR_DSS_DCCA_INT,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "DSS_RTIA_CLK",
-        SDL_DCC_INST_DSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC3,
-        50000, /* 50 MHz for DSS_RTIA */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-    /* Single Shot - No error */
-    {
-        "XTAL_CLK",
-        "DSS_RTIA_CLK",
-        SDL_DCC_INST_DSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC3,
-        50000, /* 50 MHz for DSS_RTIA */
-        SDL_DCC_MODE_SINGLE_SHOT,
-        SDL_DSS_INTR_DSS_DCCA_INT,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - error generated */
-    {
-        "XTAL_CLK",
-        "DSS_RTIA_CLK",
-        SDL_DCC_INST_DSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC3,
-        50000, /* 200 MHz for DSS_RTIA */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        APP_DCC_DSS_TEST_CLOCK_SRC_1_HIGHER,
-        0x1
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "DSS_WDG_CLK",
-        SDL_DCC_INST_DSS_DCCA,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        100000, /* 100 MHz for DSS_WDG */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "DSS_WDG CLK",
-        SDL_DCC_INST_DSS_DCCB,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAKCLK*/
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        100000, /* 100 MHz for DSS_WDG */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-    /* Continuous - error generated */
-    {
-        "XTAL_CLK",
-        "DSS_WDG CLK",
-        SDL_DCC_INST_DSS_DCCB,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTALCLK*/
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        100000, /* 100 MHz for DSS_WDG */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        SDL_DCC2_DCCCLKSRC1_CLKSRC_OTHER,
-        0x1
-    },
-    /* Continuous - no error */
-    {
-        "XTAL_CLK",
-        "DSS_WDG CLK",
-        SDL_DCC_INST_DSS_DCCB,
-        SDL_DCC_CLK0_SRC_CLOCK0_0,
-        40000, /* 40 MHz for XTAL */
-        SDL_DCC_CLK1_SRC_CLOCKSRC4,
-        100000, /* 100 MHz for DSS_WDG */
-        SDL_DCC_MODE_CONTINUOUS,
-        0x0,
-        0xFFFF,
-        0x0
-    },
-
-#endif
-};
-
-
-
-#endif
-
 #if defined (SOC_AWR294X)
 
 #include <sdl/include/awr294x/sdlr_intr_dss.h>
@@ -847,7 +543,7 @@ SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 #endif
 
 /* ESM configuration by default for DCCA Instance */
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AWR294X)
 SDL_ESM_NotifyParams gESM_Params=
 
 {
@@ -1021,7 +717,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntTyp
     return retVal;
 }
 
-#elif defined (SOC_AM273X)|| defined (SOC_AWR294X)
+#elif  defined (SOC_AWR294X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             int grpChannel, int intSrc, void *arg)
 {
@@ -1103,7 +799,7 @@ void test_sdl_dcc_test_app (void)
 
     /* Init Dpl */
     sdlApp_dplInit();
-    #if defined (SOC_AM273X)|| defined (SOC_AWR294X)
+    #if  defined (SOC_AWR294X)
     SDL_DCCA_clockInit();
     #endif
 
@@ -1135,7 +831,7 @@ void test_sdl_dcc_test_app (void)
         gCurDccInst = DCC_Test_UseCaseArray[i].dccInst;
         clk0Freq = DCC_Test_UseCaseArray[i].clk0Freq;
         clk1Freq = DCC_Test_UseCaseArray[i].clk1Freq;
-        #if defined (SOC_AM273X) || (SOC_AWR294X)
+        #if defined (SOC_AWR294X)
             #if defined (R5F_INPUTS)
             gESM_Params.groupNumber=ESM_ERROR_GROUP_1;
             if(gCurDccInst==SDL_DCC_INST_MSS_DCCA)
@@ -1306,7 +1002,7 @@ void test_sdl_dcc_test_app (void)
                 }
                 SDL_DCC_disable(DCC_Test_UseCaseArray[i].dccInst);
                 /*esm is not supported for DSP core so manually clear intrrupt for pooling mode */
-                #if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (C66_INPUTS)
+                #if defined (SOC_AWR294X) || defined (C66_INPUTS)
                 SDL_DCC_clearIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_ERR);
                 #endif
             }

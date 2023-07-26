@@ -142,7 +142,7 @@ typedef uint32_t SDL_DCC_mode;
 
 #define SDL_DCC_MODE_SINGLE_SHOT     (DCC_DCCGCTRL_SINGLESHOT_MODE)
 /**< Stop counting when counter0 and valid0 both reach zero */
-//#define SDL_DCC_MODE_SINGLE_SHOT_2     (DCC_DCCGCTRL_SINGLESHOT_MODE2) //not applicable for am273x
+
 /**< Stop counting when counter1 reaches zero */
 #define SDL_DCC_MODE_CONTINUOUS        (DCC_DCCGCTRL_SINGLESHOT_DISABLE)
 /**< Continuously repeat (until error) */
