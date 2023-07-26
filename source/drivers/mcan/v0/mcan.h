@@ -101,6 +101,11 @@ extern "C" {
                               MCAN_IR_ARA_MASK)
 
 /**
+ * \brief  Size of MCAN Header in bytes.
+ */
+#define MCAN_HEADER_SIZE_BYTES              (8U)
+
+/**
  * \brief  Maximum payload supported by CAN-FD protocol in bytes.
  */
 #define MCAN_MAX_PAYLOAD_BYTES              (64U)
@@ -1713,6 +1718,16 @@ void MCAN_eccConfig(uint32_t                    baseAddr,
  */
 int32_t MCAN_setBitTime(uint32_t                    baseAddr,
                         const MCAN_BitTimingParams *configParams);
+
+/**
+ * \brief   This API is used to write only the message header to MCAN TX data buffer
+ *          and is required in DMA mode.
+ *
+ * \param   data            MCAN TX data buffer pointer.
+ * \param   elem            Message Object.
+ *                          Refer struct MCAN_TxBufElement.
+ */
+int32_t MCAN_writeDmaHeader( const void* data, const MCAN_TxBufElement *elem);
 
 /**
  * \brief   This API will configure Different sections of Message RAM.

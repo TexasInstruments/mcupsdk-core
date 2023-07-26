@@ -2414,6 +2414,31 @@ void MCAN_initMsgRamConfigParams(MCAN_MsgRAMConfigParams *msgRAMConfigParams)
     return;
 }
 
+int32_t MCAN_writeDmaHeader( const void* data, const MCAN_TxBufElement *elem)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    if(elem != NULL)
+    {
+        *((uint32_t*)(data))= (((uint32_t) ((elem->id << MCANSS_TX_BUFFER_ELEM_ID_SHIFT)   & MCANSS_TX_BUFFER_ELEM_ID_MASK)) |
+                ((uint32_t) ((elem->rtr << MCANSS_TX_BUFFER_ELEM_RTR_SHIFT) & MCANSS_TX_BUFFER_ELEM_RTR_MASK)) |
+                ((uint32_t) ((elem->xtd << MCANSS_TX_BUFFER_ELEM_XTD_SHIFT) & MCANSS_TX_BUFFER_ELEM_XTD_MASK)) |
+                ((uint32_t) ((elem->esi << MCANSS_TX_BUFFER_ELEM_ESI_SHIFT) & MCANSS_TX_BUFFER_ELEM_ESI_MASK)));
+
+        *((uint32_t*)(((uint32_t*)data)+4))= (((uint32_t)((elem->dlc << MCANSS_TX_BUFFER_ELEM_DLC_SHIFT) & MCANSS_TX_BUFFER_ELEM_DLC_MASK)) |
+                ((uint32_t) ((elem->brs << MCANSS_TX_BUFFER_ELEM_BRS_SHIFT) & MCANSS_TX_BUFFER_ELEM_BRS_MASK)) |
+                ((uint32_t) ((elem->fdf << MCANSS_TX_BUFFER_ELEM_FDF_SHIFT) & MCANSS_TX_BUFFER_ELEM_FDF_MASK)) |
+                ((uint32_t) ((elem->efc << MCANSS_TX_BUFFER_ELEM_EFC_SHIFT) & MCANSS_TX_BUFFER_ELEM_EFC_MASK)) |
+                ((uint32_t) ((elem->mm << MCANSS_TX_BUFFER_ELEM_MM_SHIFT) & MCANSS_TX_BUFFER_ELEM_MM_MASK)));
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
 int32_t MCAN_calcMsgRamParamsStartAddr(MCAN_MsgRAMConfigParams *msgRAMConfigParams)
 {
     uint32_t startAddr, msgRAMSizeConfigured = 0U;
