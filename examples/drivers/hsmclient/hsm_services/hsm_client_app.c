@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,10 +42,36 @@
 #include <string.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_soc.h>
+#include <drivers/mpu_firewall.h>
 #include <drivers/soc.h>
+
+/* ========================================================================== */
+/*                          Macros And Typedefs                               */
+/* ========================================================================== */
 
 #define APP_CLIENT_ID                  (0x02)
 #define PARSED_VER_SIZE                (0X96)
+#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
+#define BYTE_TO_BINARY(byte)  \
+  ((byte) & 0x80 ? '1' : '0'), \
+  ((byte) & 0x40 ? '1' : '0'), \
+  ((byte) & 0x20 ? '1' : '0'), \
+  ((byte) & 0x10 ? '1' : '0'), \
+  ((byte) & 0x08 ? '1' : '0'), \
+  ((byte) & 0x04 ? '1' : '0'), \
+  ((byte) & 0x02 ? '1' : '0'), \
+  ((byte) & 0x01 ? '1' : '0')
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+extern FirewallRegionReq_t gMpuFirewallRegionConfig_0[FIREWALL_ARRAY0_NUM_REGIONS] ;
+extern FirewallRegionReq_t gMpuFirewallRegionConfig_1[FIREWALL_ARRAY1_NUM_REGIONS] ;
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 /* Demo Application code on R5 */
 void HsmClientApp_start(void)
@@ -53,13 +79,19 @@ void HsmClientApp_start(void)
     /* loop through and request get version from HSM */
     /* also calculate the time spent doing get version */
     int32_t status ;
+    uint16_t regionCount, uidSize;
     HsmClient_t client ;
     uint8_t *uid = malloc(HSM_UID_SIZE) ;
     char parsedVer[PARSED_VER_SIZE];
-    memset(parsedVer, '\0' , PARSED_VER_SIZE);
     HsmVer_t *hsmVer = malloc(sizeof(HsmVer_t)) ;
     uint32_t startCycleCount, endCycleCount;
     const uint32_t cpuMHz = SOC_getSelfCpuClk()/1000000;
+    /* struct instance used for fetching mpu region value */
+    MPU_FIREWALL_RegionParams mpuParams;
+    /* struct instance used for sending set firewall request */
+    FirewallReq_t FirewallReqObj;
+
+    memset(parsedVer, '\0' , PARSED_VER_SIZE);
 
     status = HsmClient_register(&client,APP_CLIENT_ID);
     DebugP_assert(status == SystemP_SUCCESS);
@@ -79,9 +111,9 @@ void HsmClientApp_start(void)
 
     /* print UID */
     DebugP_log("\r\n [HSM CLIENT] Device UID is : ");
-    for(uint8_t i = 0; i<HSM_UID_SIZE; i++)
+    for(uidSize = 0; uidSize<HSM_UID_SIZE; uidSize++)
     {
-        DebugP_log("%02X", uid[i]);
+        DebugP_log("%02X", uid[uidSize]);
     }
 
     /* Send Request for TIFS-MCU version to HSM Server */
@@ -92,5 +124,79 @@ void HsmClientApp_start(void)
     DebugP_log("[HSM CLIENT] TIFS-MCU 64bit version string = 0x00%llx\r\n",hsmVer->HsmrtVer);
     DebugP_log("\r\n [HSM CLIENT] TIFS-MCU Information");
     status = HsmClient_parseVersion(hsmVer, parsedVer);
-    DebugP_log("%s", parsedVer);
+    DebugP_log("%s \r\n\r\n", parsedVer);
+
+
+    /******* SET FIREWALL SERVICE DEMO *******/
+
+    /* region count and region configuration array is generated via sysconfig and is used
+        for populating  FirewallReqObj*/
+    FirewallReqObj.regionCount = FIREWALL_ARRAY0_NUM_REGIONS;
+    FirewallReqObj.FirewallRegionArr = gMpuFirewallRegionConfig_0;
+
+    /* This requests configures CONTROLSS_CTRL region and allow all permissions to only R5FSS0_0 */
+    status = HsmClient_setFirewall(&client,&FirewallReqObj,SystemP_WAIT_FOREVER);
+
+    DebugP_log("Firewall request #1 status = "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN "\r\n",
+        BYTE_TO_BINARY(FirewallReqObj.statusFirewallRegionArr>>8), BYTE_TO_BINARY(FirewallReqObj.statusFirewallRegionArr));
+
+    /* MPU_FIREWALL_getRegion is API from firewall driver for fetching MPU region configuration */
+    for(regionCount = 0U; regionCount < FIREWALL_ARRAY0_NUM_REGIONS; regionCount++)
+    {
+        mpuParams.id = gMpuFirewallRegionConfig_0[regionCount].firewallId;
+        mpuParams.regionNumber = gMpuFirewallRegionConfig_0[regionCount].region;
+
+        status = MPU_FIREWALL_getRegion(&mpuParams);
+
+        DebugP_log("Firewall Id = %d\r\n",mpuParams.id);
+        DebugP_log("Firewall region number = %x\r\n",mpuParams.regionNumber);
+        DebugP_log("Start Address = 0x%x\r\n",mpuParams.startAddress);
+        DebugP_log("End Address = 0x%x\r\n",mpuParams.endAddress);
+        DebugP_log("Aid Config = 0x%x\r\n",mpuParams.aidConfig);
+        DebugP_log("Supervisor Read = %x\r\n",mpuParams.supervisorReadConfig);
+        DebugP_log("Supervisor Write = %x\r\n",mpuParams.supervisorWriteConfig);
+        DebugP_log("Supervisor Execute = %x\r\n",mpuParams.supervisorExecConfig);
+        DebugP_log("User Read = %x\r\n",mpuParams.userReadConfig);
+        DebugP_log("User Write = %x\r\n",mpuParams.userWriteConfig);
+        DebugP_log("User Execute = %x\r\n",mpuParams.userExecConfig);
+        DebugP_log("Non Secure Access = %x\r\n",mpuParams.nonSecureConfig);
+        DebugP_log("Emulation = %x\r\n\r\n",mpuParams.debugConfig);
+    }
+
+
+
+    /* region count and region configuration array is generated via sysconfig and is used
+        for populating  FirewallReqObj*/
+    FirewallReqObj.regionCount = FIREWALL_ARRAY1_NUM_REGIONS;
+    FirewallReqObj.FirewallRegionArr = gMpuFirewallRegionConfig_1;
+
+    /* This requests configures a subset of MBOX_SRAM region (0x502F0000 - 0x50240FFF) and allow
+        all permissions to all R5 cores except R5FSS0_0 */
+    status = HsmClient_setFirewall(&client,&FirewallReqObj,SystemP_WAIT_FOREVER);
+
+    DebugP_log("Firewall request #2 status = "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN "\r\n",
+        BYTE_TO_BINARY(FirewallReqObj.statusFirewallRegionArr>>8), BYTE_TO_BINARY(FirewallReqObj.statusFirewallRegionArr));
+
+    /* MPU_FIREWALL_getRegion is API from firewall driver for fetching MPU region configuration */
+    for(regionCount = 0U; regionCount < FIREWALL_ARRAY1_NUM_REGIONS; regionCount++)
+    {
+        mpuParams.id = gMpuFirewallRegionConfig_1[regionCount].firewallId;
+        mpuParams.regionNumber = gMpuFirewallRegionConfig_1[regionCount].region;
+
+        status = MPU_FIREWALL_getRegion(&mpuParams);
+
+        DebugP_log("Firewall Id = %d\r\n",mpuParams.id);
+        DebugP_log("Firewall region number = %x\r\n",mpuParams.regionNumber);
+        DebugP_log("Start Address = 0x%x\r\n",mpuParams.startAddress);
+        DebugP_log("End Address = 0x%x\r\n",mpuParams.endAddress);
+        DebugP_log("Aid Config = 0x%x\r\n",mpuParams.aidConfig);
+        DebugP_log("Supervisor Read = %x\r\n",mpuParams.supervisorReadConfig);
+        DebugP_log("Supervisor Write = %x\r\n",mpuParams.supervisorWriteConfig);
+        DebugP_log("Supervisor Execute = %x\r\n",mpuParams.supervisorExecConfig);
+        DebugP_log("User Read = %x\r\n",mpuParams.userReadConfig);
+        DebugP_log("User Write = %x\r\n",mpuParams.userWriteConfig);
+        DebugP_log("User Execute = %x\r\n",mpuParams.userExecConfig);
+        DebugP_log("Non Secure Access = %x\r\n",mpuParams.nonSecureConfig);
+        DebugP_log("Emulation = %x\r\n\r\n",mpuParams.debugConfig);
+    }
 }

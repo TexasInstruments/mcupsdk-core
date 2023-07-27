@@ -1,27 +1,30 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "TIFS@07.03.01" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.12.1+2446"}
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const hsmclient  = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
-const hsmclient1 = hsmclient.addInstance();
-const clock      = scripting.addModule("/kernel/dpl/clock");
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
-const mpu_armv75 = mpu_armv7.addInstance();
-const mpu_armv76 = mpu_armv7.addInstance();
-const mpu_armv77 = mpu_armv7.addInstance();
-const mpu_armv78 = mpu_armv7.addInstance();
-const mpu_armv79 = mpu_armv7.addInstance();
+const hsmclient         = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
+const hsmclient1        = hsmclient.addInstance();
+const clock             = scripting.addModule("/kernel/dpl/clock");
+const debug_log         = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7         = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71        = mpu_armv7.addInstance();
+const mpu_armv72        = mpu_armv7.addInstance();
+const mpu_armv73        = mpu_armv7.addInstance();
+const mpu_armv74        = mpu_armv7.addInstance();
+const mpu_armv75        = mpu_armv7.addInstance();
+const mpu_armv76        = mpu_armv7.addInstance();
+const mpu_armv77        = mpu_armv7.addInstance();
+const mpu_armv78        = mpu_armv7.addInstance();
+const mpu_armv79        = mpu_armv7.addInstance();
+const firewall_service  = scripting.addModule("/security/firewall_service/firewall_service", {}, false);
+const firewall_service1 = firewall_service.addInstance();
+const firewall_service2 = firewall_service.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -36,8 +39,8 @@ debug_log.enableLogZoneError       = false;
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -88,3 +91,57 @@ mpu_armv79.$name      = "CONFIG_MPU_REGION8";
 mpu_armv79.baseAddr   = 0x44000000;
 mpu_armv79.size       = 11;
 mpu_armv79.attributes = "Cached+Sharable";
+
+firewall_service1.$name                          = "SET_MPU_FIREWALL_REQUEST_0";
+firewall_service1.mpu_region.create(6);
+firewall_service1.mpu_region[0].$name            = "CONFIG_MPU_FIREWALL_REGION0";
+firewall_service1.mpu_region[0].firewallId       = "SCRM2SCRP0_SLV";
+firewall_service1.mpu_region[0].startAddr        = 0x502F0000;
+firewall_service1.mpu_region[0].endAddr          = 0x502F0FFF;
+firewall_service1.mpu_region[0].aidConfig        = ["R5FSS0_0"];
+firewall_service1.mpu_region[0].permissionConfig = ["PER0","PER1","PER2","PER3","PER4","PER5","PER6","PER7"];
+firewall_service1.mpu_region[0].regionNum        = 2;
+firewall_service1.mpu_region[0].allPermissions   = true;
+firewall_service1.mpu_region[1].$name            = "CONFIG_MPU_FIREWALL_REGION1";
+firewall_service1.mpu_region[1].firewallId       = "SCRM2SCRP1_SLV";
+firewall_service1.mpu_region[1].regionNum        = 2;
+firewall_service1.mpu_region[1].endAddr          = 0x502F0FFF;
+firewall_service1.mpu_region[1].startAddr        = 0x502F0000;
+firewall_service1.mpu_region[1].aidConfig        = ["R5FSS0_0"];
+firewall_service1.mpu_region[1].permissionConfig = ["PER0","PER1","PER2","PER3","PER4","PER5","PER6","PER7"];
+firewall_service1.mpu_region[2].$name            = "CONFIG_MPU_FIREWALL_REGION2";
+firewall_service1.mpu_region[2].firewallId       = "R5SS0_CORE0_AHB_MST";
+firewall_service1.mpu_region[2].regionNum        = 2;
+firewall_service1.mpu_region[2].startAddr        = 0x502F0000;
+firewall_service1.mpu_region[2].endAddr          = 0x502F0FFF;
+firewall_service1.mpu_region[2].aidConfig        = ["R5FSS0_0"];
+firewall_service1.mpu_region[2].permissionConfig = ["PER0","PER1","PER2","PER3","PER4","PER5","PER6","PER7"];
+firewall_service1.mpu_region[3].$name            = "CONFIG_MPU_FIREWALL_REGION3";
+firewall_service1.mpu_region[3].firewallId       = "R5SS0_CORE1_AHB_MST";
+firewall_service1.mpu_region[3].startAddr        = 0x502F0000;
+firewall_service1.mpu_region[3].endAddr          = 0x502F0FFF;
+firewall_service1.mpu_region[3].aidConfig        = ["R5FSS0_0"];
+firewall_service1.mpu_region[3].permissionConfig = ["PER0","PER1","PER2","PER3","PER4","PER5","PER6","PER7"];
+firewall_service1.mpu_region[3].regionNum        = 2;
+firewall_service1.mpu_region[4].$name            = "CONFIG_MPU_FIREWALL_REGION4";
+firewall_service1.mpu_region[4].firewallId       = "R5SS1_CORE0_AHB_MST";
+firewall_service1.mpu_region[4].regionNum        = 2;
+firewall_service1.mpu_region[4].startAddr        = 0x502F0000;
+firewall_service1.mpu_region[4].endAddr          = 0x502F0FFF;
+firewall_service1.mpu_region[4].aidConfig        = ["R5FSS0_0"];
+firewall_service1.mpu_region[4].allPermissions   = true;
+firewall_service1.mpu_region[5].$name            = "CONFIG_MPU_FIREWALL_REGION5";
+firewall_service1.mpu_region[5].firewallId       = "R5SS1_CORE1_AHB_MST";
+firewall_service1.mpu_region[5].regionNum        = 2;
+firewall_service1.mpu_region[5].startAddr        = 0x502F0000;
+firewall_service1.mpu_region[5].endAddr          = 0x502F0FFF;
+firewall_service1.mpu_region[5].aidConfig        = ["R5FSS0_0"];
+firewall_service1.mpu_region[5].permissionConfig = ["PER0","PER1","PER2","PER3","PER4","PER5","PER6","PER7"];
+
+firewall_service2.$name                    = "SET_MPU_FIREWALL_REQUEST_1";
+firewall_service2.mpu_region.create(1);
+firewall_service2.mpu_region[0].$name      = "CONFIG_MPU_FIREWALL_REGION6";
+firewall_service2.mpu_region[0].firewallId = "MBOX_RAM_SLV";
+firewall_service2.mpu_region[0].endAddr    = 0x720007FF;
+firewall_service2.mpu_region[0].aidConfig  = ["R5FSS0_1","R5FSS1_0","R5FSS1_1"];
+firewall_service2.mpu_region[0].startAddr  = 0x72000400;
