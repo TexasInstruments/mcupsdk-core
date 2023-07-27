@@ -32,7 +32,7 @@ void GPIO_init()
 %for(let i = 0; i < module.$instances.length; i++) {
    % let instance = module.$instances[i];
    % let config = module.getInstanceConfig(instance);
-%if(config.enableIntr){
+%if(config.enableIntr && common.isSciClientSupported()){
  /*
  * Board info
  */

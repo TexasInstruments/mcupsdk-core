@@ -60,7 +60,7 @@ function validate(inst, report) {
 //Function to validate if same interrupt router is selected for other instances
 function validateInterruptRouter(instance, report, fieldname) {
     /* Verified by SYSCFG based on selected pin */
-    if (instance.enableIntr) {
+    if (instance.enableIntr && common.isSciClientSupported()) {
         common.validate.checkNumberRange(instance, report, fieldname, 0, soc.getMaxInterruptRouters(), "dec");
         if(errorFlag == 1) {
             report.logWarning(errorLog, instance, fieldname);
@@ -137,23 +137,25 @@ function getConfigurables() {
         ],
         description: "GPIO PIN Trigger Type",
     },
-    )
-
-    if (common.isMcuDomainSupported()) {
-        config.push(
+    {
+        name: "enableIntr",
+        displayName: "Enable Interrupt Configuration",
+        default: false,
+        onChange: function (inst, ui) {
+            if (common.isSciClientSupported())
             {
-                name: "enableIntr",
-                displayName: "Enable Interrupt Configuration",
-                default: false,
-                onChange: function (inst, ui) {
-                    let hideConfigs = true;
-                    if (inst.enableIntr == true) {
-                        hideConfigs = false;
-                    }
-                    ui.intrOut.hidden = hideConfigs;
-                    ui.getBoardCfg.hidden = hideConfigs;
-                },
-            },
+                let hideConfigs = true;
+                if (inst.enableIntr == true) {
+                    hideConfigs = false;
+                }
+                ui.intrOut.hidden = hideConfigs;
+                ui.getBoardCfg.hidden = hideConfigs;
+            }
+        },
+    },
+    )
+    if (common.isSciClientSupported()) {
+        config.push(
             {
                 name: "getBoardCfg",
                 displayName: "Fetch Board Configuration",

@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.10.0+2163"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -24,6 +24,7 @@ const gpio_int_xbar1 = gpio_int_xbar.addInstance();
  */
 gpio1.$name                = "GPIO_PUSH_BUTTON";
 gpio1.trigType             = "RISE_EDGE";
+gpio1.enableIntr           = true;
 gpio1.GPIO.gpioPin.$assign = "SDFM0_D0";
 
 debug_log.enableUartLog            = true;
@@ -61,5 +62,4 @@ gpio_int_xbar1.xbarOutput = "GPIO_INT_XBAR_GPIO_0_BANK_INTR_7";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-gpio1.GPIO.$suggestSolution             = "GPIO0";
-debug_log.uartLog.UART.$suggestSolution = "UART0";
+gpio1.GPIO.$suggestSolution = "GPIO0";
