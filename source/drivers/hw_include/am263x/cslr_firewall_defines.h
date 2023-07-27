@@ -186,10 +186,10 @@ extern "C" {
 #define CSL_FW_HSM_SLV_CFG_ADDR        (0x40240000)
 #define CSL_FW_HSM_SLV_NUM_REGION      (8)
 #define CSL_FW_HSM_SLV_NUM_PROTECTED   (2)
-#define CSL_FW_HSM_SLV_START_ADDR0     (0x2000C000)
-#define CSL_FW_HSM_SLV_REGION_SIZE0    (131024*1024)
+#define CSL_FW_HSM_SLV_START_ADDR0     (0x20000000)
+#define CSL_FW_HSM_SLV_REGION_SIZE0    (128*1024*1024)
 #define CSL_FW_HSM_SLV_START_ADDR1     (0x40000000)
-#define CSL_FW_HSM_SLV_REGION_SIZE1    (96*1024*1024)
+#define CSL_FW_HSM_SLV_REGION_SIZE1    (128*1024*1024)
 
 /***********************************************************************
  * FW DTHE_SLV
