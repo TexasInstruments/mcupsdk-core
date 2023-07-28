@@ -8,6 +8,7 @@ THIS_PATH=$(abspath .)
 
 SOC?=am64x
 SOC_RES=
+SYSFW_BIN_FOLDER?=am64x_am243x
 ifeq ($(SOC),$(filter $(SOC), am64x am243x))
   SOC_FOLDER=$(SOC)
   SOC_RES=$(SOC)
@@ -40,7 +41,7 @@ OBJCOPY=$(CCS_PATH)/utils/tiobj2bin/tiobj2bin
 BOARDCFG_GEN_CC?=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang$(EXE_EXT)
 
 # For converting sysfw binary to a .h file containing the hex array
-SYSFW_PATH=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/soc/$(SOC_FOLDER)
+SYSFW_PATH=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/soc/$(SYSFW_BIN_FOLDER)
 SYSFW_BIN_NAME=sysfw_hs_fs_signed.bin
 SYSFW_HEADER_NAME=$(subst .bin,.h,$(SYSFW_BIN_NAME))
 SYSFW_ARRAY_NAME=sysfw

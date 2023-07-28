@@ -83,7 +83,7 @@ static inline uint32_t get_mask(uint32_t end, uint32_t start);
  */
 static inline uint32_t get_mask(uint32_t end, uint32_t start)
 {
-    return ((1U << (end - start + 1)) - 1U) << start;
+    return ((1U << (end - start + 1U)) - 1U) << start;
 }
 
 /**

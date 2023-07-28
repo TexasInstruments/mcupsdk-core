@@ -296,6 +296,18 @@ struct tisci_sec_header {
 /** Message to write KEYREV value */
 #define TISCI_MSG_WRITE_KEYREV                  (0x9035U)
 
+/** Message to derive a SMEK and return it via TISCI */
+#define TISCI_MSG_SA2UL_GET_DSMEK               (0x9036U)
+
+/** Message to derive a SMEK and set SA2UL DKEK register */
+#define TISCI_MSG_SA2UL_SET_DSMEK               (0x9037U)
+
+/** Message to erase the DKEK register */
+#define TISCI_MSG_SA2UL_RELEASE_DSMEK           (0x9038U)
+
+/** Message to import keyring */
+#define TISCI_MSG_KEYRING_IMPORT                (0X9039U)
+
 /* Processor Control APIs */
 
 /** Message to get a Processor */
