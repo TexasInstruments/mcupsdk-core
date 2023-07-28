@@ -50,6 +50,7 @@
 #if defined (SOC_AM273X) || (SOC_AWR294X)
 extern uint32_t gInst;
 #endif
+
 static int32_t SDL_PBIST_prepareTest(SDL_PBIST_inst instance, const SDL_pbistInstInfo *pInfo,
                                      SDL_pbistRegs **pRegs,
                                      pSDL_DPL_HwipHandle *PBIST_intrHandle)
@@ -255,5 +256,3 @@ int32_t SDL_PBIST_selfTest(SDL_PBIST_inst instance, SDL_PBIST_testType testType,
 
     return ret;
 }
-
-/* Nothing past this point */

@@ -57,6 +57,9 @@ int main(void)
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
 
+    Bootloader_socSetAutoClock();
+    Bootloader_socInitL2MailBoxMemory();
+
     System_init();
     SOC_rcmMemInitL2Memory();
     Bootloader_profileAddProfilePoint("System_init");

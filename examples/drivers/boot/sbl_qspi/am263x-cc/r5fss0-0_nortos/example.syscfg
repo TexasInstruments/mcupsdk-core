@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.12.1+2446"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -49,8 +49,8 @@ hsmclient1.$name = "CONFIG_HSMCLIENT0";
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -85,10 +85,10 @@ mpu_armv75.size         = 24;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.QSPI.$suggestSolution           = "QSPI";
-flash1.peripheralDriver.QSPI.QSPI_D0.$suggestSolution   = "ball.N1";
-flash1.peripheralDriver.QSPI.QSPI_D1.$suggestSolution   = "ball.N4";
-flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution   = "ball.M4";
-flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution   = "ball.P3";
-flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution  = "ball.N2";
-flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution = "ball.P1";
+flash1.peripheralDriver.QSPI.QSPI_D0.$suggestSolution   = "QSPI_D0";
+flash1.peripheralDriver.QSPI.QSPI_D1.$suggestSolution   = "QSPI_D1";
+flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution   = "QSPI_D2";
+flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution   = "QSPI_D3";
+flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution  = "QSPI_CLK";
+flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution = "QSPI_CSn0";
 debug_log.uartLog.UART.$suggestSolution                 = "UART0";

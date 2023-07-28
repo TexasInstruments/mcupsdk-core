@@ -394,6 +394,97 @@ After a SBL and application image is flashed, shown below is the high level boot
 In secure device variants, there are slight differences in the bootflow. For details on secure boot, please refer \ref SECURE_BOOT
 \endcond
 
+\cond SOC_AM263X
+## PBIST For 200MHz and 400MHz R5F Core Variants
+
+pBIST (parallel Built-In Self-Test) can be performed for both 200MHz and 400MHz part numbers by including the instance of `mcu_bist` in the sys-config for the bootloader examples. By default it's enabled only for bootloader `sbl-sd`. For 400 MHz part numbers ROM performs pBIST on R5FSS0 Memories and L2 Memory - Bank-0 and Bank-1. But due to ROM limitation this test is not done by ROM for 200 MHz part numbers. The `mcu_bist` instance can be added or removed on the basis of use-case. pBIST is perfromed only on L2 memory - three banks (Bank-1,Bank-2,Bank3 (not on Bank-0)) and R5FSS1 TCM Memories. Please refer below for more information.
+
+This section provides instructions on a software workaround for ROM errata affecting 200 MHz R5F core variants. Due to the errata, the ROM is unable to perform pBIST (parallel Built-In Self-Test) on these variants. To address this limitation, a workaround has been implemented, allowing pBIST to be performed during the SBL startup based on efuse bit detection.
+
+  <p>\note Important Information:<br>
+    - pBIST is a destructive test and cannot be run on active memories.<br>
+    - Perform pBIST on specific sections of RAM and Subsystem 1 TCM, excluding active areas.<br>
+    - SBL code must resides in the 0th bank of L2 memory to perform pBIST on the other three banks, as `mcu_bist` instance will run pBIST on L2 memory - Bank 1, Bank 2, Bank 3. The `mcu_bist` instance can be added for `sbl_qspi` as it resides in Bank-0. If SBL resides in banks other than Bank-0, the pBIST setup must be updated with the specific memories.<br>
+  </p>
+
+<table>
+    <tr>
+      <th>Step</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>SBL Startup<br>
+        <ul>
+          <li>Ensure SBL is installed correctly on the target device</li>
+          <li>Power on or reset the device to initiate SBL startup</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Efuse Bit Detection<br>
+        <ul>
+          <li>During SBL startup, efuse bits will be checked</li>
+          <li>If 200 MHz variant is detected, proceed to Step 3</li>
+          <li>Otherwise, skip to the next startup process</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>pBIST Execution<br>
+        <ul>
+          <li>Initiating pBIST if 200 MHz variant is detected</li>
+          <li>pBIST performed on specific sections of RAM and Subsystem 1 TCM memories, excluding active areas i.e., Subsystem 0 TCM memories</li>
+          <li>SBL code resides in the 1st bank of L2 memory (Bank-0); So pBIST is performed on the other three banks of L2 memories.</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+ In software workaround, pBIST is perfromed only on L2 memory - three banks (Bank-1,Bank-2,Bank3 (and not on Bank-0)) and R5FSS1 TCM Memories. \n
+ User can perfrom pBIST on the remaining L2 Memory bank-0 and R5FSS0 TCM memories on their own by following the steps given below:
+ The following table provides an overview of the steps to perform pBIST on RFSS0 TCM and L2 Memory Bank-0:
+
+  <table>
+  <tr>
+  <th>Step</th>
+  <th>Description</th>
+  </tr>
+  <tr>
+  <td>1</td>
+  <td>Use the SDL example of pBIST that utilizes the SDL pBIST library.</td>
+  </tr>
+  <tr>
+  <td>2</td>
+  <td>Set up the test environment to specify L2 bank-0 and R5FSS0 TCM memories.</td>
+  </tr>
+  <tr>
+  <td>3</td>
+  <td>Update the SBL to be loaded on other memory banks (excluding bank 0).</td>
+  </tr>
+  <tr>
+  <td>4</td>
+  <td>The SBL will load the application on the RFSS1 core, which will run pBIST on the remaining L2 bank-0 and R5FSS0 TCM memories.</td>
+ </tr>
+  <tr>
+  <td>5</td>
+  <td>Once pBIST is completed, the device will be reset to proceed with normal booting.</td>
+  </tr>
+  </table>
+
+ By following these steps, you can perform pBIST on the specified L2 memory bank-0 and R5FSS0 TCM memories, ensuring proper self-testing, and allowing the device to boot normally afterwards.
+
+
+•	The pBIST can be run for both 200 MHz and 400 MHz part variants. To run the pBIST user can include `mcu_bist` instance for the specific bootloader in the syscfg. \n
+•   By default it's enabled only for bootloader `sbl-null`. \n
+•	The software workaround described in this user guide for L2 Memory Bank-0 and R5FSS0 TCM memories is specifically designed to address the ROM errata affecting 200 MHz R5F core variants. \n
+•	The pBIST procedure performed during the SBL startup helps mitigate the limitations imposed by the ROM. \n
+•	It is important to ensure that the SBL and associated software are correctly installed and configured on the target device for the workaround to function effectively.
+
+To know more about pBIST and overall SDL support for pBIST, please take a look at \ref SDL_PBIST_PAGE
+\endcond
 ## Deep Dive into SBLs
 
 The SBL is like any other example of the SDK. They use the bootloader library APIs to carry out the bootloading process.

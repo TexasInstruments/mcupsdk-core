@@ -41,11 +41,13 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM263X
+            -DR5F0_INPUTS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${CG_TOOL_ROOT}/lib
             -m=sbl_uart_uniflash.${ConfigName}.map
             --diag_suppress=10063
@@ -70,6 +72,7 @@
                 -lnortos.am263x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.debug.lib
                 -lboard.am263x.r5f.ti-arm-clang.debug.lib
+                -lsdl.am263x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -82,6 +85,7 @@
                 -lnortos.am263x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.release.lib
                 -lboard.am263x.r5f.ti-arm-clang.release.lib
+                -lsdl.am263x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

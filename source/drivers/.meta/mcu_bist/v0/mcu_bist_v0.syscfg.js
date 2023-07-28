@@ -14,8 +14,8 @@ function getConfigurables() {
     let configurables = [
         {
             name: "enableMcuPbist",
-            displayName: "Start MCU PBIST on System Init",
-            description: `Start MCU PBIST on System_Init()`,
+            displayName: "Start MCU PBIST On System Init",
+            description: `Start MCU PBIST On System_Init()`,
             default: true,
         },
     ];

@@ -33,6 +33,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib",
+        "${MCU_PLUS_SDK_PATH}/source/sdl/lib",
     ],
 };
 
@@ -42,6 +43,7 @@ const libs_nortos_r5f = {
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "freertos_fat.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -49,6 +51,13 @@ const lnkfiles = {
     common: [
         "linker.cmd",
     ]
+};
+
+const r5f0_macro = {
+    common: [
+        "R5F0_INPUTS",
+    ],
+
 };
 
 const syscfgfile = "../example.syscfg";
@@ -86,6 +95,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_nortos_r5f;
         build_property.includes = includes_r5f;
+        build_property.defines = r5f0_macro;
     }
 
     return build_property;

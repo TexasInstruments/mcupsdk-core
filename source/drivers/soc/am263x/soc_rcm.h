@@ -574,7 +574,12 @@ extern void SOC_rcmCoreApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDi
 /**
  * \brief Pre-requisite sequence to Re-configure CORE PLL
  */
-extern void SOC_rcmCoreApllRelockPreRequisite(void);
+extern uint32_t SOC_rcmCoreApllRelockPreRequisite(void);
+
+/**
+ * \brief Set R5 clock source
+ */
+extern void SOC_rcmSetR5ClockSource(uint32_t r5ClkSrc);
 
 /**
  * \brief Configure CORE PLL HSDIVIDERS

@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.14.0+2667"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -49,7 +49,7 @@ edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
 gpio1.$name                = "CONFIG_GPIO0";
 gpio1.GPIO.gpioPin.pu_pd   = "pu";
-gpio1.GPIO.gpioPin.$assign = "ball.B16";
+gpio1.GPIO.gpioPin.$assign = "SDFM0_CLK0";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
@@ -59,8 +59,8 @@ freertos_fat1.peripheralDriver.$name = "CONFIG_MMCSD0";
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -95,20 +95,20 @@ mpu_armv75.size         = 24;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.QSPI.$suggestSolution                = "QSPI";
-flash1.peripheralDriver.QSPI.QSPI_D0.$suggestSolution        = "ball.N1";
-flash1.peripheralDriver.QSPI.QSPI_D1.$suggestSolution        = "ball.N4";
-flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution        = "ball.M4";
-flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution        = "ball.P3";
-flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution       = "ball.N2";
-flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution      = "ball.P1";
+flash1.peripheralDriver.QSPI.QSPI_D0.$suggestSolution        = "QSPI_D0";
+flash1.peripheralDriver.QSPI.QSPI_D1.$suggestSolution        = "QSPI_D1";
+flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution        = "QSPI_D2";
+flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution        = "QSPI_D3";
+flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution       = "QSPI_CLK";
+flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution      = "QSPI_CSn0";
 gpio1.GPIO.$suggestSolution                                  = "GPIO0";
 freertos_fat1.peripheralDriver.MMC.$suggestSolution          = "MMC";
-freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution  = "ball.B6";
-freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution = "ball.C6";
-freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution  = "ball.A4";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution = "ball.B5";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution = "ball.B4";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution = "ball.A3";
-freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution = "ball.A2";
-freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution = "ball.A5";
+freertos_fat1.peripheralDriver.MMC.MMC_CLK.$suggestSolution  = "MMC_CLK";
+freertos_fat1.peripheralDriver.MMC.MMC_SDWP.$suggestSolution = "MMC_SDWP";
+freertos_fat1.peripheralDriver.MMC.MMC_CMD.$suggestSolution  = "MMC_CMD";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT0.$suggestSolution = "MMC_DAT0";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT1.$suggestSolution = "MMC_DAT1";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT2.$suggestSolution = "MMC_DAT2";
+freertos_fat1.peripheralDriver.MMC.MMC_DAT3.$suggestSolution = "MMC_DAT3";
+freertos_fat1.peripheralDriver.MMC.MMC_SDCD.$suggestSolution = "MMC_SDCD";
 debug_log.uartLog.UART.$suggestSolution                      = "UART0";

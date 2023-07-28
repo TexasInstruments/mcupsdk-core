@@ -113,7 +113,6 @@ typedef enum {
  */
 int32_t SDL_PBIST_selfTest(SDL_PBIST_inst instance, SDL_PBIST_testType testType,
                            uint32_t timeout, bool *pResult);
-
 /** @} */
 
 #ifdef __cplusplus

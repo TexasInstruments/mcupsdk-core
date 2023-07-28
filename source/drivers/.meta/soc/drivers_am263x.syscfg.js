@@ -80,7 +80,6 @@ const driverVer = {
 };
 
 const topModules_main = [
-    "drivers/mcu_bist/mcu_bist",
     "/drivers/adc/adc",
     "/drivers/bootloader/bootloader",
     "/drivers/cmpss/cmpss",
@@ -97,6 +96,7 @@ const topModules_main = [
     "/drivers/ipc/ipc",
     "/drivers/lin/lin",
     "/drivers/mcan/mcan",
+    "/drivers/mcu_bist/mcu_bist",
     "/drivers/mcspi/mcspi",
     "/drivers/mmcsd/mmcsd",
     "/drivers/pruicss/pruicss",

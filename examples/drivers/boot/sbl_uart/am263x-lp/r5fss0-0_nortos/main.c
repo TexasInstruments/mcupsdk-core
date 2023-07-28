@@ -69,11 +69,14 @@ int main(void)
 
     Bootloader_socConfigurePll();
 
+    Bootloader_socSetAutoClock();
+    Bootloader_socInitL2MailBoxMemory();
+
     System_init();
     Drivers_open();
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
-    
+
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
 
@@ -92,7 +95,7 @@ int main(void)
         bootParams.memArgsAppImageBaseAddr = (uintptr_t)gAppImageBuf;
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER_0, &bootParams);
-        
+
         if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
         {
             uint32_t fileSize = 0;

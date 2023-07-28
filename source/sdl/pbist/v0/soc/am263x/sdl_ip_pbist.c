@@ -58,8 +58,6 @@
 #define SDL_MSS_TOP_PBIST_SELF_TEST_KEY    ((uint8_t)0x05U)
 #define SDL_MSS_TOP_PBIST_MDP_LOGIC_RESET  ((uint8_t)0x0AU)
 
-SDL_mss_ctrlRegs * ptrMSSCtrlRegs = (SDL_mss_ctrlRegs *)SDL_MSS_CTRL_U_BASE;
-
 static void SDL_MSS_enableTopPbist (void)
 {
     /* Enable the TOP PBIST Self-Test Key */

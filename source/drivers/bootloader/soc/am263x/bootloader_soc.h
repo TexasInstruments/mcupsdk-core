@@ -287,6 +287,10 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
  */
 void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
 
+/**
+ * \brief API to set CPU clock to 200 MHz or 400 MHz on the basis of eFUSE bits configuration
+ */
+void Bootloader_socSetAutoClock();
 #ifdef __cplusplus
 }
 #endif
