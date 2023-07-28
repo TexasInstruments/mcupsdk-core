@@ -1,0 +1,64 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/mcu_bist/soc/mcu_bist_${common.getSocName()}`);
+    let module = system.modules['/drivers/mcu_bist/mcu_bist'];
+    let instance = module.$instances[0];
+%%}
+
+/*
+ * SDL Interface functions for BIST modules
+ */
+
+static HwiP_Object gSDLHwiObject;
+
+static pSDL_DPL_HwipHandle SDL_registerInterrupt(SDL_DPL_HwipParams *pParams)
+{
+    HwiP_Params hwipParams;
+    HwiP_Params_init(&hwipParams);
+
+    hwipParams.args = (void *)pParams->callbackArg;
+    hwipParams.intNum = pParams->intNum;
+    hwipParams.callback = pParams->callback;
+
+    HwiP_construct(&gSDLHwiObject, &hwipParams);
+
+    return &gSDLHwiObject;
+}
+
+static int32_t SDL_deregisterInterrupt(pSDL_DPL_HwipHandle handle)
+{
+    HwiP_destruct(handle);
+    return SDL_PASS;
+}
+
+static int32_t SDL_enableInterrupt(uint32_t intNum)
+{
+    HwiP_enableInt(intNum);
+    return SDL_PASS;
+}
+
+static int32_t SDL_disableInterrupt(uint32_t intNum)
+{
+    HwiP_disableInt(intNum);
+    return SDL_PASS;
+}
+
+static void* SDL_addrTranslate(uint64_t addr, uint32_t size)
+{
+    uint32_t transAddr = (uint32_t)(-1);
+
+    transAddr = (uint32_t)AddrTranslateP_getLocalAddr(addr);
+
+    return (void *)transAddr;
+}
+
+
+static SDL_DPL_Interface dpl_interface =
+{
+    .enableInterrupt = (pSDL_DPL_InterruptFunction) SDL_enableInterrupt,
+    .disableInterrupt = (pSDL_DPL_InterruptFunction) SDL_disableInterrupt,
+    .registerInterrupt = (pSDL_DPL_RegisterFunction) SDL_registerInterrupt,
+    .deregisterInterrupt = (pSDL_DPL_DeregisterFunction) SDL_deregisterInterrupt,
+    .delay = (pSDL_DPL_DelayFunction) ClockP_sleep,
+    .addrTranslate = (pSDL_DPL_AddrTranslateFunction) SDL_addrTranslate
+};

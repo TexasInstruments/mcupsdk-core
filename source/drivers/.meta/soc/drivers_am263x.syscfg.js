@@ -50,6 +50,9 @@ const driverVer = {
     "mcan": {
         version: "v0",
     },
+    "mcu_bist": {
+        version: "v0",
+    },
     "mcspi": {
         version: "v1",
     },
@@ -77,6 +80,7 @@ const driverVer = {
 };
 
 const topModules_main = [
+    "drivers/mcu_bist/mcu_bist",
     "/drivers/adc/adc",
     "/drivers/bootloader/bootloader",
     "/drivers/cmpss/cmpss",
