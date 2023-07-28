@@ -4412,6 +4412,224 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
    EPWM_disableDigitalCompareCounterCapture(base);
    EPWM_disableDigitalCompareTripCombinationInput(base, EPWM_DC_COMBINATIONAL_TRIPIN4, EPWM_DC_TYPE_DCBH);
 
+
+    /*----API checks for the DCCAP features start----*/
+    /*  EPWM_enableTripZoneInterrupt(base, tzInterrupt);
+        EPWM_disableTripZoneInterrupt(base, tzInterrupt);
+
+        base is EPWM Base addresses
+        tzInterrupt values are
+            -> EPWM_TZ_INTERRUPT_CBC       (0x2)    - Trip Zones Cycle By Cycle interrupt
+            -> EPWM_TZ_INTERRUPT_OST       (0x4)    - Trip Zones One Shot interrupt
+            -> EPWM_TZ_INTERRUPT_DCAEVT1   (0x8)    - Digital Compare A Event 1 interrupt
+            -> EPWM_TZ_INTERRUPT_DCAEVT2   (0x10)   - Digital Compare A Event 2 interrupt
+            -> EPWM_TZ_INTERRUPT_DCBEVT1   (0x20)   - Digital Compare B Event 1 interrupt
+            -> EPWM_TZ_INTERRUPT_DCBEVT2   (0x40)   - Digital Compare B Event 2 interrupt
+            -> EPWM_TZ_INTERRUPT_CAPEVT    (0x80)   - Digital Capture Event interrupt
+    */
+    for (   uint16_t option = EPWM_TZ_INTERRUPT_CBC;
+                     option <= EPWM_TZ_INTERRUPT_CAPEVT;
+                     option = (option << 1))
+    {
+        /* write option to the API, read from the expected register. */
+        volatile uint16_t (*value_enable)  = (uint16_t *) (base + CSL_EPWM_TZEINT);
+
+        EPWM_enableTripZoneInterrupt(base, option);
+        // TEST_ASSERT_BITS(mask, expected, actual)
+        TEST_ASSERT_BITS(option, option, *value_enable);
+
+        EPWM_disableTripZoneInterrupt(base, option);
+        // TEST_ASSERT_BITS(mask, expected, actual)
+        TEST_ASSERT_BITS(option, 0, *value_enable);
+    }
+
+    /* EPWM_forceTripZoneEvent(base, tzForceEvent)
+        base is EPWM BASE ADDRESSES
+        tzForceEvent takes values:
+            - EPWM_TZ_FORCE_EVENT_CBC     (0x2) - Force Trip Zones Cycle By Cycle event
+            - EPWM_TZ_FORCE_EVENT_OST     (0x4) - Force Trip Zones One Shot Event
+            - EPWM_TZ_FORCE_EVENT_DCAEVT1 (0x8) - Force Digital Compare A Event 1
+            - EPWM_TZ_FORCE_EVENT_DCAEVT2 (0x10)- Force Digital Compare A Event 2
+            - EPWM_TZ_FORCE_EVENT_DCBEVT1 (0x20)- Force Digital Compare B Event 1
+            - EPWM_TZ_FORCE_EVENT_DCBEVT2 (0x40)- Force Digital Compare B Event 2
+            - EPWM_TZ_FORCE_EVENT_CAPEVT  (0x80)- Force Capture Event
+
+        uint16_t EPWM_getTripZoneFlagStatus(base)
+        base is epwm base address
+        returns or-ed of the some following
+             - EPWM_TZ_INTERRUPT    - Trip Zone interrupt was generated
+                          due to the following TZ events.
+            - EPWM_TZ_FLAG_CBC     (0x2) - Trip Zones Cycle By Cycle event status flag
+            - EPWM_TZ_FLAG_OST     (0x4) - Trip Zones One Shot event status flag
+            - EPWM_TZ_FLAG_DCAEVT1 (0x8) - Digital Compare A Event 1 status flag
+            - EPWM_TZ_FLAG_DCAEVT2 (0x10)- Digital Compare A Event 2 status flag
+            - EPWM_TZ_FLAG_DCBEVT1 (0x20)- Digital Compare B Event 1 status flag
+            - EPWM_TZ_FLAG_DCBEVT2 (0x40)- Digital Compare B Event 2 status flag
+            - EPWM_TZ_FLAG_CAPEVT  (0x80)- Digital Capture Event flag
+
+        EPWM_clearTripZoneFlag (base, tzFlags)
+        base is epwm base address
+        tzFlags takes same args as EPWM_getTripZoneFlagStatus
+        */
+
+    for (   uint16_t option = EPWM_TZ_FORCE_EVENT_CBC;
+                option <= EPWM_TZ_FORCE_EVENT_CAPEVT;
+                option = (option << 1))
+    {
+        EPWM_forceTripZoneEvent(base, option);
+
+        uint16_t status = EPWM_getTripZoneFlagStatus(base);
+        volatile uint16_t (*status_reg)  = (uint16_t *) (base + CSL_EPWM_TZFLG);
+
+        // TEST_ASSERT_EQUAL_INT16(expected, actual);
+        TEST_ASSERT_EQUAL_INT16(status, *status_reg);
+
+        // TEST_ASSERT_BITS(mask, expected, actual)
+        TEST_ASSERT_BITS(option, option, status);
+
+        EPWM_clearTripZoneFlag(base, option);
+        status = EPWM_getTripZoneFlagStatus(base);
+        // TEST_ASSERT_BITS(mask, expected, actual)
+        TEST_ASSERT_BITS(option, 0, status);
+    }
+
+
+    /*  EPWM_enableCaptureInEvent(base)
+        EPWM_disableCaptureInEvent(base)
+            base is EPWM Base Address
+            writes to CSL_EPWM_CAPCTL, at CSL_EPWM_CAPCTL_SRCSEL_MASK, with no shift
+    */
+    volatile uint16_t (*regValue) = (uint16_t*) (base + CSL_EPWM_CAPCTL);
+    EPWM_enableCaptureInEvent(base);
+    TEST_ASSERT_BITS(CSL_EPWM_CAPCTL_SRCSEL_MASK, CSL_EPWM_CAPCTL_SRCSEL_MASK, *regValue);
+
+    EPWM_disableCaptureInEvent(base);
+    TEST_ASSERT_BITS(CSL_EPWM_CAPCTL_SRCSEL_MASK, 0, *regValue);
+
+    /*  EPWM_configCaptureGateInputPolarity(base, polSel)
+            base is EPWM base Address
+            polSel takes values :
+                - EPWM_CAPGATE_INPUT_ALWAYS_ON  - always on
+                - EPWM_CAPGATE_INPUT_ALWAYS_OFF  - always off
+                - EPWM_CAPGATE_INPUT_SYNC  - CAPGATE.sync
+                - EPWM_CAPGATE_INPUT_SYNC_INVERT  - CAPGATE.sync inverted
+    */
+    regValue = (uint16_t*) (base + CSL_EPWM_CAPCTL);
+    for(uint8_t polSel = EPWM_CAPGATE_INPUT_ALWAYS_ON;
+                polSel <= EPWM_CAPGATE_INPUT_SYNC_INVERT;
+                polSel++)
+    {
+        EPWM_configCaptureGateInputPolarity(base, polSel);
+        TEST_ASSERT_BITS(CSL_EPWM_CAPCTL_CAPGATEPOL_MASK, ((uint16_t)polSel) << CSL_EPWM_CAPCTL_CAPGATEPOL_SHIFT , *regValue);
+    }
+
+    /*  EPWM_invertCaptureInputPolarity(base, polSel)
+            base is EPWM base Address
+            polSel takes values :
+                - EPWM_CAPTURE_INPUT_CAPIN_SYNC         - not inverted
+                - EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT  - inverted
+    */
+    regValue = (uint16_t*) (base + CSL_EPWM_CAPCTL);
+    for(uint8_t polSel = EPWM_CAPTURE_INPUT_CAPIN_SYNC; polSel <= EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT; polSel++)
+    {
+        EPWM_invertCaptureInputPolarity(base, polSel);
+        TEST_ASSERT_BITS(CSL_EPWM_CAPCTL_CAPINPOL_MASK, ((uint16_t)polSel) << CSL_EPWM_CAPCTL_CAPINPOL_SHIFT , *regValue);
+    }
+
+    /*  EPWM_enableIndependentPulseLogic(base)
+        EPWM_disableIndependentPulseLogic(base)
+            base is EPWM base address
+            writes to CSL_EPWM_CAPCTL, at CSL_EPWM_CAPCTL_PULSECTL_MASK
+    */
+    regValue = (uint16_t*) (base + CSL_EPWM_CAPCTL);
+    EPWM_enableIndependentPulseLogic(base);
+    TEST_ASSERT_BITS(CSL_EPWM_CAPCTL_PULSECTL_MASK, ((uint16_t)1U) << CSL_EPWM_CAPCTL_PULSECTL_SHIFT , *regValue);
+
+    EPWM_disableIndependentPulseLogic(base);
+    TEST_ASSERT_BITS(CSL_EPWM_CAPCTL_PULSECTL_MASK, 0, *regValue);
+
+    /* EPWM_forceCaptureEventLoad(base) -> writes to a  CSL_EPWM_CAPCTL at CSL_EPWM_CAPCTL, but reads back 0. so functional check required
+        //TODO : ADD funcitonal check*/
+
+    /* EPWM_selectCaptureTripInput(base, tripSource, dcType)
+        tripSource takes
+            EPWM_DC_TRIP_TRIPIN1 = 0,  //!< Trip 1
+            EPWM_DC_TRIP_TRIPIN2 = 1,  //!< Trip 2
+            EPWM_DC_TRIP_TRIPIN3 = 2,  //!< Trip 3
+            EPWM_DC_TRIP_TRIPIN4 = 3,  //!< Trip 4
+            EPWM_DC_TRIP_TRIPIN5 = 4,  //!< Trip 5
+            EPWM_DC_TRIP_TRIPIN6 = 5,  //!< Trip 6
+            EPWM_DC_TRIP_TRIPIN7 = 6,  //!< Trip 7
+            EPWM_DC_TRIP_TRIPIN8 = 7,  //!< Trip 8
+            EPWM_DC_TRIP_TRIPIN9 = 8,  //!< Trip 9
+            EPWM_DC_TRIP_TRIPIN10 = 9,  //!< Trip 10
+            EPWM_DC_TRIP_TRIPIN11 = 10,  //!< Trip 11
+            EPWM_DC_TRIP_TRIPIN12 = 11,  //!< Trip 12
+            EPWM_DC_TRIP_TRIPIN13 = 12,  //!< Trip 13
+            EPWM_DC_TRIP_TRIPIN14 = 13,  //!< Trip 14
+            EPWM_DC_TRIP_TRIPIN15 = 14,  //!< Trip 15
+            EPWM_DC_TRIP_COMBINATION = 15 //!< All Trips (Trip1 - Trip 15) are selected
+        dcType takes
+            - EPWM_CAPTURE_GATE (1)
+            - EPWM_CAPTURE_INPUT (0)
+    */
+
+    for(uint8_t dcType = EPWM_CAPTURE_GATE; dcType >= EPWM_CAPTURE_INPUT; dcType--)
+    {
+        regValue = (uint16_t*) (base + CSL_EPWM_CAPTRIPSEL);
+        uint16_t mask;
+        uint16_t shift;
+        EPWM_DigitalCompareTripInput tripSource;
+        if(dcType == EPWM_CAPTURE_GATE)
+        {
+            mask = CSL_EPWM_CAPTRIPSEL_CAPGATECOMPSEL_MASK;
+            shift =  CSL_EPWM_CAPTRIPSEL_CAPGATECOMPSEL_SHIFT;
+        }
+        else
+        {
+            mask = CSL_EPWM_CAPTRIPSEL_CAPINCOMPSEL_MASK;
+            shift =  CSL_EPWM_CAPTRIPSEL_CAPINCOMPSEL_SHIFT;
+        }
+        for(tripSource = EPWM_DC_TRIP_TRIPIN1; tripSource <= EPWM_DC_TRIP_COMBINATION; tripSource++)
+        {
+            EPWM_selectCaptureTripInput(base, tripSource, dcType);
+            // TEST_ASSERT_BITS(mask, expected, actual);
+            TEST_ASSERT_BITS(mask, (tripSource << shift), *regValue);
+        }
+    }
+    /* EPWM_enableCaptureTripCombinationInput(base, tripInput, dcType)
+       EPWM_disableCaptureTripCombinationInput(base, tripInput, dcType)
+       tripInput takes Or-ed values of EPWM_DC_COMBINATIONAL_TRIPINx for x in [0,15]
+        */
+    for(uint8_t dcType = EPWM_CAPTURE_GATE; dcType >= EPWM_CAPTURE_INPUT; dcType--)
+    {
+        uint16_t mask;
+        uint16_t shift;
+        uint16_t tripSource;
+        mask = 0xFFFF;
+        if(dcType == EPWM_CAPTURE_GATE)
+        {
+            regValue = (uint16_t*) (base + CSL_EPWM_CAPGATETRIPSEL);
+            shift =  CSL_EPWM_CAPTRIPSEL_CAPGATECOMPSEL_SHIFT;
+        }
+        else
+        {
+            regValue = (uint16_t*) (base + CSL_EPWM_CAPINTRIPSEL);
+            shift =  CSL_EPWM_CAPTRIPSEL_CAPINCOMPSEL_SHIFT;
+        }
+        for(tripSource = EPWM_DC_COMBINATIONAL_TRIPIN1; tripSource < (EPWM_DC_COMBINATIONAL_TRIPIN15<<1); tripSource |= (tripSource<<1))
+        {
+            EPWM_enableCaptureTripCombinationInput(base, tripSource, dcType);
+            // TEST_ASSERT_BITS(mask, expected, actual);
+            TEST_ASSERT_BITS(mask, (tripSource << shift), *regValue);
+
+            EPWM_disableCaptureTripCombinationInput(base, tripSource, dcType);
+            TEST_ASSERT_BITS(tripSource, 0, *regValue);
+        }
+    }
+    /*----API checks for the DCCAP features complete----*/
+
+
    return error;
 }
 

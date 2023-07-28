@@ -1313,8 +1313,9 @@ typedef enum
 
 //*****************************************************************************
 //
-//! Values that can be passed to EPWM_selectDigitalCompareTripInput() as the
-//! \e tripSource parameter.
+//! Values that can be passed to EPWM_selectDigitalCompareTripInput() and
+//! and EPWM_selectCaptureTripInput()
+//! as the \e tripSource parameter.
 //
 //*****************************************************************************
 typedef enum
@@ -1340,6 +1341,8 @@ typedef enum
 //*****************************************************************************
 //
 // Values that can be passed to EPWM_enableDigitalCompareTripCombinationInput()
+// EPWM_enableCaptureTripCombinationInput(),
+// EPWM_disableCaptureTripCombinationInput(),
 // EPWM_disableDigitalCompareTripCombinationInput() as the tripInput
 // parameter.
 //
@@ -5196,6 +5199,7 @@ static inline void EPWM_setTripZoneAdvDigitalCompareActionB(uint32_t base,
 //!   - EPWM_TZ_INTERRUPT_DCAEVT2 - Digital Compare A Event 2 interrupt
 //!   - EPWM_TZ_INTERRUPT_DCBEVT1 - Digital Compare B Event 1 interrupt
 //!   - EPWM_TZ_INTERRUPT_DCBEVT2 - Digital Compare B Event 2 interrupt
+//!   - EPWM_TZ_INTERRUPT_CAPEVT  - Digital Capture Event interrupt
 //!
 //! \b note:  A logical OR of the valid values can be passed as the tzInterrupt
 //!           parameter.
@@ -5209,7 +5213,7 @@ EPWM_enableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
     //
     // Check the arguments
     //
-    DebugP_assert((tzInterrupt >= 0U) && (tzInterrupt < 0x80U));
+    DebugP_assert((tzInterrupt >= 0U) && (tzInterrupt <= 0x80U));
 
     //
     // Enable Trip zone interrupts
@@ -5233,6 +5237,7 @@ EPWM_enableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
 //!   - EPWM_TZ_INTERRUPT_DCAEVT2 - Digital Compare A Event 2 interrupt
 //!   - EPWM_TZ_INTERRUPT_DCBEVT1 - Digital Compare B Event 1 interrupt
 //!   - EPWM_TZ_INTERRUPT_DCBEVT2 - Digital Compare B Event 2 interrupt
+//!   - EPWM_TZ_INTERRUPT_CAPEVT  - Digital Capture Event interrupt
 //!
 //! \b note:  A logical OR of the valid values can be passed as the tzInterrupt
 //!           parameter.
@@ -5246,7 +5251,7 @@ EPWM_disableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
     //
     // Check the arguments
     //
-    DebugP_assert((tzInterrupt > 0U) && (tzInterrupt < 0x80U));
+    DebugP_assert((tzInterrupt > 0U) && (tzInterrupt <= 0x80U));
 
     //
     // Disable Trip zone interrupts
@@ -5273,6 +5278,7 @@ EPWM_disableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
 //!         - EPWM_TZ_FLAG_DCAEVT2 - Digital Compare A Event 2 status flag
 //!         - EPWM_TZ_FLAG_DCBEVT1 - Digital Compare B Event 1 status flag
 //!         - EPWM_TZ_FLAG_DCBEVT2 - Digital Compare B Event 2 status flag
+//!         - EPWM_TZ_FLAG_CAPEVT  - Digital Capture Event flag
 //
 //***************************************************************************
 static inline uint16_t
@@ -5395,6 +5401,7 @@ EPWM_selectCycleByCycleTripZoneClearEvent(uint32_t base,
 //!   - EPWM_TZ_FLAG_DCAEVT2 - Digital Compare A Event 2 flag
 //!   - EPWM_TZ_FLAG_DCBEVT1 - Digital Compare B Event 1 flag
 //!   - EPWM_TZ_FLAG_DCBEVT2 - Digital Compare B Event 2 flag
+//!   - EPWM_TZ_FLAG_CAPEVT  - Digital Capture Event flag
 //!
 //! \b note: A bitwise OR of the valid values can be passed as the tzFlags
 //! parameter.
@@ -5472,7 +5479,7 @@ EPWM_clearCycleByCycleTripZoneFlag(uint32_t base, uint16_t tzCBCFlags)
 //!  - EPWM_TZ_OST_FLAG_OST6      - OST flag for OST6
 //!  - EPWM_TZ_OST_FLAG_DCAEVT1   - OST flag for Digital compare event A1
 //!  - EPWM_TZ_OST_FLAG_DCBEVT1   - OST flag for Digital compare event B1
-//!  - EPWM_TZ_CBC_FLAG_CAPEVT    - CBC status flag for capture event
+//!  - EPWM_TZ_OST_FLAG_CAPEVT    - CBC status flag for capture event
 //!
 //! \return None.
 //
@@ -5507,6 +5514,7 @@ EPWM_clearOneShotTripZoneFlag(uint32_t base, uint16_t tzOSTFlags)
 //!   - EPWM_TZ_FORCE_EVENT_DCAEVT2 - Force Digital Compare A Event 2
 //!   - EPWM_TZ_FORCE_EVENT_DCBEVT1 - Force Digital Compare B Event 1
 //!   - EPWM_TZ_FORCE_EVENT_DCBEVT2 - Force Digital Compare B Event 2
+//!   - EPWM_TZ_FORCE_EVENT_CAPEVT  - Force Capture Event
 //!
 //! \return None.
 //
@@ -7552,6 +7560,365 @@ EPWM_disableDigitalCompareTripCombinationInput(uint32_t base,
     HW_WR_REG16(base + registerOffset,
         (HW_RD_REG16(base + registerOffset) & ~tripInput));
 }
+
+//
+// Event capture mode
+//
+//*****************************************************************************
+//
+//! Enables the Capture event .
+//!
+//! \param base is the base address of the EPWM module.
+//!
+//! This function enables the CAPIN.sync on which the edge detection logic
+//! is performed.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_enableCaptureInEvent(uint32_t base)
+{
+
+    //
+    // Enables CAPIN.sync signal
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+        (HW_RD_REG16(base + CSL_EPWM_CAPCTL) | CSL_EPWM_CAPCTL_SRCSEL_MASK)
+    );
+}
+
+//*****************************************************************************
+//
+//! Disables the Capture event.
+//!
+//! \param base is the base address of the EPWM module.
+//!
+//! This function disables the CAPIN.sync on which the edge detection logic
+//! is performed.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_disableCaptureInEvent(uint32_t base)
+{
+    //
+    // Disables CAPIN.sync signal
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+        (HW_RD_REG16(base + CSL_EPWM_CAPCTL) & (~CSL_EPWM_CAPCTL_SRCSEL_MASK))
+    );
+}
+
+//! Capture gate is always on
+#define EPWM_CAPGATE_INPUT_ALWAYS_ON             (0U)
+//! Capture gate is always off
+#define EPWM_CAPGATE_INPUT_ALWAYS_OFF            (1U)
+//! Capture gate input is CAPGATE.sync
+#define EPWM_CAPGATE_INPUT_SYNC                  (2U)
+//! Capture gate input is CAPGATE.sync inverted
+#define EPWM_CAPGATE_INPUT_SYNC_INVERT           (3U)
+//*****************************************************************************
+//
+//! Polarity selection for capture gate input.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param polSel is the polarity to be selected for CAPGATE.
+//!
+//! This function selects the input polarity for capture gate.
+//! Valid values for the \e polSel are:
+//!      - EPWM_CAPGATE_INPUT_ALWAYS_ON  - always on
+//!      - EPWM_CAPGATE_INPUT_ALWAYS_OFF  - always off
+//!      - EPWM_CAPGATE_INPUT_SYNC  - CAPGATE.sync
+//!      - EPWM_CAPGATE_INPUT_SYNC_INVERT  - CAPGATE.sync inverted
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_configCaptureGateInputPolarity(uint32_t base,
+                                    uint8_t polSel)
+{
+    //
+    // Configures polarity for CAPGATE
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+             (HW_RD_REG16(base + CSL_EPWM_CAPCTL) & (~CSL_EPWM_CAPCTL_CAPGATEPOL_MASK)) |
+              ((uint16_t)polSel << CSL_EPWM_CAPCTL_CAPGATEPOL_SHIFT));
+}
+
+
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_configCaptureGateInputPolarity()
+//! as the \e polSel parameter.
+//
+//*****************************************************************************
+//! Capture input is not inverted
+#define EPWM_CAPTURE_INPUT_CAPIN_SYNC            (0U)
+//! Capture input is inverted
+#define EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT     (1U)
+//*****************************************************************************
+//
+//! Polarity selection for capture input.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param polSel is the polarity to be selected for CAPIN.
+//!
+//! This function selects the input polarity for capture.
+//! Valid values for the \e polSel are:
+//!      - EPWM_CAPTURE_INPUT_CAPIN_SYNC         - not inverted
+//!      - EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT  - inverted
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_invertCaptureInputPolarity(uint32_t base,
+                                uint8_t polSel)
+{
+    //
+    // Configures polarity for Capture Input
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+             (HW_RD_REG16(base + CSL_EPWM_CAPCTL) & (~CSL_EPWM_CAPCTL_CAPINPOL_MASK)) |
+              ((uint16_t)polSel << CSL_EPWM_CAPCTL_CAPINPOL_SHIFT));
+}
+
+//*****************************************************************************
+//
+//! Enables independent pulse selection for Blanking and Capture Logic.
+//!
+//! \param base is the base address of the EPWM module.
+//!
+//! This function enables pulse selection determined by the CAPMIXSEL register.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_enableIndependentPulseLogic(uint32_t base)
+{
+    //
+    // Configures polarity for Capture Input
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+             (HW_RD_REG16(base + CSL_EPWM_CAPCTL) & (~CSL_EPWM_CAPCTL_PULSECTL_MASK)) |
+              (((uint16_t)1U) << CSL_EPWM_CAPCTL_PULSECTL_SHIFT));
+}
+
+//*****************************************************************************
+//
+//! Disables independent pulse selection for Blanking and Capture Logic.
+//!
+//! \param base is the base address of the EPWM module.
+//!
+//! This function disables pulse selection determined by the CAPMIXSEL register.
+//! The pulse selection is determined by DCFCTL[PULSESEL] bits.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_disableIndependentPulseLogic(uint32_t base)
+{
+    //
+    // Configures polarity for Capture Input
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+             (HW_RD_REG16(base + CSL_EPWM_CAPCTL) | (CSL_EPWM_CAPCTL_PULSECTL_MASK)) &
+              (~(((uint16_t)1U) << CSL_EPWM_CAPCTL_PULSECTL_SHIFT)));
+}
+
+//*****************************************************************************
+//
+//! Capture event force load.
+//!
+//! \param base is the base address of the EPWM module.
+//!
+//! This function forces a load to occur on DCCAP.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_forceCaptureEventLoad(uint32_t base)
+{
+    //
+    // Force a Capture Event Load
+    //
+    HW_WR_REG16(
+        base + CSL_EPWM_CAPCTL,
+             HW_RD_REG16(base + CSL_EPWM_CAPCTL) | (CSL_EPWM_CAPCTL_FRCLOAD_MASK));
+}
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_invertCaptureInputPolarity()
+//! EPWM_enableCaptureTripCombinationInput(),
+//! EPWM_disableCaptureTripCombinationInput()
+//! as the \e polSel parameter.
+//
+//*****************************************************************************
+//! Capture Gate
+#define EPWM_CAPTURE_GATE              (1U)
+//! Capture Input
+#define EPWM_CAPTURE_INPUT             (0U)
+//*****************************************************************************
+//
+//! Set the capture trip input.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tripSource is the tripSource.
+//! \param dcType is the Digital Compare type.
+//!
+//! This function sets the trip input to the Digital Compare (DC). For a given
+//! dcType the function sets the tripSource to be the input to the DC.
+//! Valid values for the parameter are:
+//!  - tripSource
+//!    - EPWM_DC_TRIP_TRIPINx - Trip x,where x ranges from 1 to 15 excluding 13
+//!    - EPWM_DC_TRIP_COMBINATION - selects all the Trip signals whose input
+//!                                 is enabled by the following function
+//!                                 EPWM_enableCaptureTripCombinationInput()
+//!  - dcType
+//!      - EPWM_CAPTURE_GATE
+//!      - EPWM_CAPTURE_INPUT
+//!
+//! \return None
+//
+//*****************************************************************************
+static inline void
+EPWM_selectCaptureTripInput(uint32_t base,
+                            EPWM_DigitalCompareTripInput tripSource,
+                            uint8_t dcType)
+{
+    //
+    // Set the Capture trip input
+    //
+    if(dcType == EPWM_CAPTURE_GATE)
+    {
+        HW_WR_REG16(
+        base + CSL_EPWM_CAPTRIPSEL,
+             (HW_RD_REG16(base + CSL_EPWM_CAPTRIPSEL) & (~CSL_EPWM_CAPTRIPSEL_CAPGATECOMPSEL_MASK)) |
+              (((uint16_t)tripSource) << CSL_EPWM_CAPTRIPSEL_CAPGATECOMPSEL_SHIFT));
+    }
+    else
+    {
+        HW_WR_REG16(
+        base + CSL_EPWM_CAPTRIPSEL,
+             (HW_RD_REG16(base + CSL_EPWM_CAPTRIPSEL) & (~CSL_EPWM_CAPTRIPSEL_CAPINCOMPSEL_MASK)) |
+              (((uint16_t)tripSource) << CSL_EPWM_CAPTRIPSEL_CAPINCOMPSEL_SHIFT));
+    }
+}
+
+
+//*****************************************************************************
+//
+//! Enable Capture TRIP combinational input.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tripInput is the Trip number.
+//! \param dcType is the Digital Compare module.
+//!
+//! This function enables the specified Trip input.
+//! Valid values for the parameters are:
+//!  - tripInput
+//!      - EPWM_DC_COMBINATIONAL_TRIPINx, where x is 1,2,...12,14,15
+//!  - dcType
+//!      - EPWM_CAPTURE_GATE
+//!      - EPWM_CAPTURE_INPUT
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_enableCaptureTripCombinationInput(uint32_t base,
+                                            uint16_t tripInput,
+                                            uint8_t dcType)
+{
+
+    if(dcType == EPWM_CAPTURE_GATE)
+    {
+        //
+        // Set the capture trip input
+        //
+        HW_WR_REG16(
+        base + CSL_EPWM_CAPGATETRIPSEL, tripInput);
+
+    }
+    else
+    {
+        //
+        // Set the capture trip input
+        //
+        HW_WR_REG16(
+        base + CSL_EPWM_CAPINTRIPSEL, tripInput);
+    }
+    //
+    // Enable the combination input
+    //
+    EPWM_DigitalCompareTripInput combinational_input = EPWM_DC_TRIP_COMBINATION;
+    EPWM_selectCaptureTripInput(base, combinational_input, dcType);
+}
+
+//*****************************************************************************
+//
+//! Disable Capture TRIP combinational input.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tripInput is the Trip number.
+//! \param dcType is the Digital Compare module.
+//!
+//! This function disables the specified Trip input.
+//! Valid values for the parameters are:
+//!  - tripInput
+//!      - EPWM_DC_COMBINATIONAL_TRIPINx, where x is 1,2,...12,14,15
+//!  - dcType
+//!      - EPWM_CAPTURE_GATE
+//!      - EPWM_CAPTURE_INPUT
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_disableCaptureTripCombinationInput(uint32_t base,
+                                         uint16_t tripInput,
+                                         uint8_t dcType)
+{
+    if(dcType == EPWM_CAPTURE_GATE)
+    {
+        //
+        // Set the capture trip input
+        //
+        HW_WR_REG16(
+        base + CSL_EPWM_CAPGATETRIPSEL,
+        HW_RD_REG16(base + CSL_EPWM_CAPGATETRIPSEL) & (~tripInput));
+
+    }
+    else
+    {
+        //
+        // Set the capture trip input
+        //
+        HW_WR_REG16(
+        base + CSL_EPWM_CAPINTRIPSEL,
+        HW_RD_REG16(base + CSL_EPWM_CAPGATETRIPSEL) & (~tripInput));
+    }
+}
+
+
+
+
+
+
+
+
 
 //
 // Valley switching
