@@ -40,6 +40,7 @@ extern "C"
 
 
 #include <kernel/dpl/HwiP.h>
+#include <drivers/hw_include/soc_config.h>
 
 /* compile flag to enable VIC mode of operation, undef this to use non-VIC mode */
 #define HWIP_VIM_VIC_ENABLE
@@ -80,21 +81,23 @@ typedef struct HwiP_Ctrl_s {
     uint32_t spuriousFIQCount;
 } HwiP_Ctrl;
 
+#ifdef INTR_PROF
 typedef struct HwiP_Prof_Ctrl_s {
 
     uint32_t traceInterruptedISR[HwiP_MAX_INTERRUPTS];
     uint32_t traceInterruptedISRIndex;
     uint32_t readCounterStart;
     uint32_t readCounterStop;
-    uint32_t gProfileIntr;
+    uint32_t profileIntr;
     uint64_t pmuCountVal;
     uint64_t pmuCalibration;
 
 } HwiP_Prof_Ctrl;
+extern HwiP_Prof_Ctrl gHwiCtrlProf;
+#endif
 
 extern HwiP_Ctrl gHwiCtrl;
 extern HwiP_Config gHwiConfig;
-extern HwiP_Prof_Ctrl gHwiCtrlProf;
 /* APIs defined in HwiP_armv7r_asm.S */
 uint32_t HwiP_disableFIQ(void);
 void HwiP_enableFIQ(void);

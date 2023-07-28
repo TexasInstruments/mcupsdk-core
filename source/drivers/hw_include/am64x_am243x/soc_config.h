@@ -72,7 +72,7 @@ extern "C"
 #define IP_VERSION_TIMER_MGR_V0
 #define IP_VERSION_UART_V0
 #define DDR_16BIT
-#define INTR_PROF
+// #define INTR_PROF
 
 /* Driver versions */
 #define DRV_VERSION_ADC_V0

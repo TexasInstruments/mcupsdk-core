@@ -8,6 +8,7 @@
 #include <string.h>
 #include <drivers/pmu.h>
 #include <kernel/dpl/HwiP.h>
+#include <drivers/hw_include/soc_config.h>
 % if (cpuName.match(/r5f*/)) {
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 % }

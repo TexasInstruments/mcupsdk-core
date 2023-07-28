@@ -48,6 +48,7 @@ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_ha
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void);
 void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void);
 
+#ifdef INTR_PROF
 void __attribute__((section(".text.hwi"))) HwiP_irq_profile_c(uint32_t intNum)
 {
     uint32_t idx = 0, exists = 1;
@@ -81,6 +82,7 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_profile_c(uint32_t intNum)
         gHwiCtrlProf.readCounterStart = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM);
     }
 }
+#endif
 
 /* IRQ handler starts execution in HwiP_irq_handler, defined in portASM.S
  * After some initial assembly logic it then branches to this function.
@@ -103,7 +105,7 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
     if(status==SystemP_SUCCESS)
     {
         #ifdef INTR_PROF
-        if(gHwiCtrlProf.gProfileIntr == 1)
+        if(gHwiCtrlProf.profileIntr == 1)
         {
             HwiP_irq_profile_c(intNum);
         }
@@ -141,7 +143,7 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
         HwiP_ackIRQ(intNum);
 
         #ifdef INTR_PROF
-        if(gHwiCtrlProf.gProfileIntr == 1)
+        if(gHwiCtrlProf.profileIntr == 1)
         {
             HwiP_irq_profile_c(intNum);
         }

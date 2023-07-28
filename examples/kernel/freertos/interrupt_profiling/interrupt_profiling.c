@@ -46,7 +46,7 @@
 /*
  * This example demonstrates profiling of interrupts (just for analysis)
  *
- * Here we creat two tasks i.e., ping and pong
+ * Here we create two tasks i.e., ping and pong
  * ping task - configures three interrupts with different
  *             priority levels, causing nesting. Later
  *             after servicing these, it configures another
@@ -124,6 +124,7 @@ volatile uint32_t gLoopVar0;
 volatile uint32_t gLoopVar1;
 volatile uint32_t gLoopVar2;
 volatile int32_t  status = SystemP_SUCCESS;
+uint64_t pingIsrLoad = 0, pongIsrLoad = 0, cpuClockRate = 0;
 
 /* Task, Semaphore and Hwi objects */
 TaskP_Object gPingTaskObj;
@@ -172,6 +173,7 @@ static void ping_isr(void *arg)
 
     xSemaphoreGiveFromISR( gPongSem, &doTaskSwitch); /* wake up pong task */
     portYIELD_FROM_ISR( doTaskSwitch );
+    pingIsrLoad = (ProfileP_CycCount()*100)/cpuClockRate;
 }
 
 /* pong ISR */
@@ -207,6 +209,7 @@ static void pong_isr(void *arg)
 
     xSemaphoreGiveFromISR( gPingSem, &doTaskSwitch); /* wake up ping task */
     portYIELD_FROM_ISR( doTaskSwitch );
+    pongIsrLoad = ((ProfileP_CycCount()*100)/cpuClockRate) - pingIsrLoad;
 }
 
 void ping_main(void *args)
@@ -214,7 +217,8 @@ void ping_main(void *args)
     uint32_t cpuLoad = 0;
     uint64_t isrload = 0;
     HwiP_Params hwiParams;
-    uint64_t cpuClockRate = SOC_getSelfCpuClk();
+    TaskP_Load taskLoad;
+    cpuClockRate = SOC_getSelfCpuClk();
 
     DebugP_log("\r\n");
     DebugP_log("\r\n[FreeRTOS] profiling ... start !!!\r\n");
@@ -263,6 +267,12 @@ void ping_main(void *args)
 
     cpuLoad = TaskP_loadGetTotalCpuLoad() - isrload;
     DebugP_log("LOAD: CPU = %2d.%2d %%\r\n", cpuLoad/100, cpuLoad%100 );
+
+    TaskP_loadGet(&gPingTaskObj, &taskLoad);
+    DebugP_log("LOAD: %s = %0.2f %%\r\n", taskLoad.name, ((float)taskLoad.cpuLoad/100)-((float)pingIsrLoad/100) );
+
+    TaskP_loadGet(&gPongTaskObj, &taskLoad);
+    DebugP_log("LOAD: %s = %0.2f %%\r\n", taskLoad.name, ((float)taskLoad.cpuLoad/100)-((float)pongIsrLoad/100) );
     DebugP_log("\r\n");
 
     if(status == SystemP_SUCCESS)

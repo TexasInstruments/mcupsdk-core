@@ -33,6 +33,7 @@
 #include <kernel/dpl/HwiP.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 #include <drivers/hw_include/csl_types.h>
+#include <drivers/hw_include/soc_config.h>
 
 static volatile uint32_t gdummy;
 
@@ -49,7 +50,9 @@ typedef struct HwiP_Struct_s {
 } HwiP_Struct;
 
 HwiP_Ctrl gHwiCtrl;
+#ifdef INTR_PROF
 HwiP_Prof_Ctrl gHwiCtrlProf;
+#endif
 
 void HWI_SECTION HwiP_enableInt(uint32_t intNum)
 {

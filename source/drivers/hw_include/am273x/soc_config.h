@@ -55,7 +55,7 @@ extern "C"
 #define IP_VERSION_QSPI_V0
 #define IP_VERSION_RTI_V0
 #define IP_VERSION_UART_V1
-#define INTR_PROF
+// #define INTR_PROF
 
 /* Driver versions */
 #define DRV_VERSION_CBUFF_V1

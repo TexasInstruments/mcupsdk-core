@@ -59,7 +59,7 @@ extern "C"
 #define IP_VERSION_SDFM_V0
 #define IP_VERSION_SPINLOCK_V0
 #define IP_VERSION_UART_V0
-#define INTR_PROF
+// #define INTR_PROF
 
 /* Driver versions */
 #define DRV_VERSION_ADC_V1
