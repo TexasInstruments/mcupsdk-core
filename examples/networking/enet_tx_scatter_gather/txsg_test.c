@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-23
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -702,7 +702,8 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
         {
             if (gEnetTxSG.testLoopBackType == TXSG_LOOPBACK_TYPE_PHY)
             {
-                linkCfg->speed = ENET_SPEED_1GBIT;
+                /* Speed is always 100 Mbits on AM273x and AWR294x */
+                linkCfg->speed = ENET_SPEED_100MBIT;
             }
             else
             {
@@ -1111,7 +1112,7 @@ static int32_t EnetTxSG_openDma(void)
     if (status == ENET_SOK)
     {
         EnetApp_GetDmaHandleInArgs     txInArgs;
-        EnetApp_GetTxDmaHandleOutArgs  txChInfo; 
+        EnetApp_GetTxDmaHandleOutArgs  txChInfo;
 
         txInArgs.cbArg   = &gEnetTxSG;
         txInArgs.notifyCb = EnetTxSG_txIsrFxn;
