@@ -1,0 +1,65 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/security/soc/security_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("firewall_service");
+    let module = system.modules['/security/firewall_service/firewall_service'];
+    let module_reg = system.modules[`/security/firewall_service/${driverVer}/firewall_service_v0_region`];
+    let module_array = system.modules[`/security/firewall_service/${driverVer}/firewall_service_v0`];
+%%}
+/*
+ * SET MPU Firewall Configuration
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+FirewallRegionReq_t gMpuFirewallRegionConfig_`i`[FIREWALL_ARRAY`i`_NUM_REGIONS] =
+{
+
+
+    % let region_instances = instance.mpu_region;
+    % for(let reg = 0; reg < region_instances.length; reg++) {
+        % let reg_instance = region_instances[reg];
+        % let reg_config = module_reg.getInstanceConfig(reg_instance);
+    {
+            .firewallId = CSL_FW_`reg_config.firewallId.toUpperCase()`_ID,
+            .region = `reg_config.regionNum`U,
+            % var permissionConf = reg_config.permissionConfig;
+            % var permArray = [];
+            % for (let i = 0; i < module_reg.permission_list.length; i++) {
+            %     permArray[i] = 0
+            % }
+            % var mppa = 0
+            % for (var permissionConfigIndex in permissionConf)
+			% {
+            %     var name = permissionConf[permissionConfigIndex];
+            %     for (var perm_loop in module_reg.permission_list) {
+            %         if(name == module_reg.permission_list[perm_loop].name) {
+            %             permArray[perm_loop] = 1
+            %             mppa += Math.pow(2,perm_loop)
+            %         }
+            %     }
+            % }
+            % var aidConfigurationOutput = ""
+            % var aidConf = reg_config.aidConfig
+            % var aidxEnable = 0
+            %for (var aidConfigIndex in aidConf)
+			%{
+            %   var nameId = aidConf[aidConfigIndex];
+            %   if(nameId != "AIDX") {
+            %       if(aidConfigurationOutput != "") {
+            %           aidConfigurationOutput += " | "
+            %       }
+            %       aidConfigurationOutput += "(0x1<<PRIV_ID_" + nameId + ")"
+            %   }
+            %   else {
+            %       aidxEnable = 1
+            % }
+            %}
+            .permissionAttributes = (0x`mppa.toString(16).toUpperCase()`) | ((`aidConfigurationOutput`)<<10U),
+            .startAddress = 0x`reg_config.startAddr.toString(16).toUpperCase()`u,
+            %let endAddr = reg_config.endAddr
+            .endAddress   = 0x`endAddr.toString(16).toUpperCase()`u,
+    },
+    % }
+
+};
+% }

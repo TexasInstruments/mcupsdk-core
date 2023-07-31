@@ -34,6 +34,7 @@
         "/drivers/drivers",
         "/board/board",
         "/networking/networking",
+        "/security/security",
         "/xbar/xbar",
 % }
 % if((args.device == "am273x") || (args.device == "awr294x")) {

@@ -1,0 +1,19 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/security/soc/security_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("firewall_service");
+    let module = system.modules['/security/firewall_service/firewall_service'];
+    let module_reg = system.modules[`/security/firewall_service/${driverVer}/firewall_service_v0_region`];
+%%}
+/*
+ * MPU Firewall
+ */
+
+/* HSM MPU Firewall Service Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let region_instances = instance.mpu_region;
+    #define FIREWALL_ARRAY`i`_NUM_REGIONS (`region_instances.length`U)
+% }
+
+
