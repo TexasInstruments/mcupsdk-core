@@ -45,7 +45,6 @@ FILES_common := \
 	esm_test_err.c \
 	esm_test_main.c \
 	dpl_interface.c \
-	dcc_uc1.c \
 	parity_main.c \
 	parity_trigger.c \
 	main.c \
