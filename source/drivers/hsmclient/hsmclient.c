@@ -798,6 +798,7 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
     /* Calculates CRC of the array containing firewall regions to be configured */
     crcFirewallRegionArr = crc16_ccit((uint8_t*) FirewallReqObj->FirewallRegionArr, (FirewallReqObj->regionCount)*sizeof(FirewallRegionReq_t));
     FirewallReqObj->crcArr = crcFirewallRegionArr;
+    FirewallReqObj->FirewallRegionArr = (FirewallRegionReq_t*)(uintptr_t) SOC_virtToPhy(FirewallReqObj->FirewallRegionArr);
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) FirewallReqObj, sizeof(FirewallReq_t));
