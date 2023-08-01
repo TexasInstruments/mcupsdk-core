@@ -37,16 +37,26 @@ function getConfigurables()
       });
 
     let hideVringConfig = false;
+    let hideSafeIpcConfig = false;
+
     /*
-     * AM62x currently supports only LinuxIPC (M4 <---> A53), hide vringNumBuff, vringMsgSize and  vringSize
+     * AM62x currently supports only LinuxIPC (M4 <---> A53), hide vringNumBuff and vringMsgSize
      * This can be removed once full RP Msg IPC is supported.
      */
     if (common.getSocName().match(/am62x/))
     {
         hideVringConfig = true;
+        hideSafeIpcConfig = true;
     }
     /* to this add the configurable for RP Message buffer size and number */
     config.push(
+        {
+            name: "enableSafeIpc",
+            displayName: "Enable SafeIPC",
+            default: false,
+            description: "Enable/Disable SafeIPC",
+            hidden: hideSafeIpcConfig,
+        },
         {
             name: "vringNumBuf",
             displayName: "RP Message Number of Buffers",
@@ -91,18 +101,24 @@ function getConfigurables()
     /* add a read only configurable to show the shared memory size based on current config set by user */
     config.push(
             {
-                name: "vringSize",
-                displayName: "RP Message Shared Memory (Bytes)",
-                description: `Amount of shared memory needed for current user configuration`,
-                default: getRPMessageVringSize(instanceLikeObj), /* set initial value based on defaults */
+                name: "sharedMemAvailable",
+                displayName: "IPC Shared Memory Available (Bytes)",
+                description: `Amount of shared memory available for user configuration`,
+                default: ipc_soc.getIpcSharedMemAvailable(), /* set initial value based on defaults */
                 readOnly: true,
-                hidden: hideVringConfig,
+            },
+            {
+                name: "sharedMemUsed",
+                displayName: "IPC Shared Memory Used (Bytes)",
+                description: `Amount of shared memory needed for current user configuration`,
+                default: getIpcSharedMemUsed(instanceLikeObj), /* set initial value based on defaults */
+                readOnly: true,
             },
         );
 
-    /* add onChange to each configurable in config, except the 'vringSize' since we update this inside onChange  */
+    /* add onChange to each configurable in config, except the 'sharedMemUsed' since we update this inside onChange and 'sharedMemAvailable' since it's fixed */
     config.forEach( function (element) {
-        if(element.name != "vringSize" && !element.readOnly)
+        if(element.name != "sharedMemUsed" && element.name != "sharedMemAvailable" && !element.readOnly)
             element.onChange = onChange;
       });
 
@@ -111,7 +127,7 @@ function getConfigurables()
 
 function onChange(instance, ui)
 {
-    instance.vringSize = getRPMessageVringSize(instance);
+    instance.sharedMemUsed = getIpcSharedMemUsed(instance);
     instance[getSelfIpcCoreName()] = "NONE";
     if(getEnabledCpus(instance).length>0)
     {
@@ -125,52 +141,92 @@ function onChange(instance, ui)
     {
         ui.vringNumBuf.hidden = false;
         ui.vringMsgSize.hidden = false;
-        ui.vringSize.hidden = false;
+        if(getImplementationVersion() == "v0")
+        {
+            ui.sharedMemUsed.hidden = false;
+            ui.sharedMemAvailable.hidden = false;
+            if (!common.getSocName().match(/am62x/))
+            {
+                ui.enableSafeIpc.hidden = false;
+            }
+        }
     }
     else
     {
         ui.vringNumBuf.hidden = true;
         ui.vringMsgSize.hidden = true;
-        ui.vringSize.hidden = true;
+        if(getImplementationVersion() == "v0")
+        {
+            ui.sharedMemUsed.hidden = true;
+            ui.sharedMemAvailable.hidden = true;
+            ui.enableSafeIpc.hidden = true;
+        }
     }
 }
 
-function getRPMessageVringSize(instance) {
+function getIpcSharedMemUsed(instance) {
+    let sharedMemSize = 0;
+    let enabledCpus = getEnabledCpus(instance);
     let enabledRPMessageCpus = getEnabledRPMessageCpus(instance);
+    let allEnabledCpus = getAllEnabledCpus(instance);
+    let allEnabledRPMessageCpus = getAllEnabledRPMessageCpus(instance);
 
-    return (enabledRPMessageCpus.length+1) * (enabledRPMessageCpus.length+1 - 1)
+    if(instance.enableSafeIpc)
+    {
+        let alignSize = 0, ipcNotifyOnlySize = 0, ipcTotalSize = 0, firewallSizeNotifyOnly = 0, firewallSize = 0;
+        let firewallGranularity = ipc_soc.getFirewallGranularity();
+        let vringSize = (instance.vringNumBuf * (instance.vringMsgSize + 32)) + 32;
+
+        if(getImplementationVersion() == "v0")
+        {
+            ipcTotalSize = vringSize * (allEnabledRPMessageCpus.length - 1);
+            firewallSize = firewallGranularity * Math.trunc(ipcTotalSize / firewallGranularity);
+            if((ipcTotalSize < firewallGranularity) || (ipcTotalSize % firewallGranularity != 0)) {
+                firewallSize += firewallGranularity;
+            }
+
+            alignSize = ((firewallSize - ipcTotalSize) * allEnabledRPMessageCpus.length);
+            sharedMemSize = (ipcTotalSize * allEnabledRPMessageCpus.length) + alignSize;
+        }
+        else
+        {
+            /* Some cores might be Notify only and some might be Notify + RPMsg */
+            ipcNotifyOnlySize = 32 * enabledCpus.length;
+            ipcTotalSize = (32 * enabledCpus.length) + (vringSize * enabledRPMessageCpus.length);
+            firewallSizeNotifyOnly = firewallGranularity * Math.trunc(ipcNotifyOnlySize / firewallGranularity);
+            firewallSize = firewallGranularity * Math.trunc(ipcTotalSize / firewallGranularity);
+            if((ipcTotalSize < firewallGranularity) || (ipcTotalSize % firewallGranularity != 0)) {
+                firewallSize += firewallGranularity;
+            }
+            if((ipcNotifyOnlySize < firewallGranularity) || (ipcNotifyOnlySize % firewallGranularity != 0)) {
+                firewallSizeNotifyOnly += firewallGranularity;
+            }
+            if(enabledRPMessageCpus.length == allEnabledCpus.length) {
+                alignSize = ((firewallSize - ipcTotalSize) * allEnabledRPMessageCpus.length);
+            } else {
+                alignSize = ((firewallSize - ipcTotalSize) * allEnabledRPMessageCpus.length) + ((firewallSizeNotifyOnly - ipcNotifyOnlySize) * (allEnabledCpus.length - allEnabledRPMessageCpus.length));
+            }
+
+            sharedMemSize = (ipcNotifyOnlySize * (allEnabledCpus.length - allEnabledRPMessageCpus.length)) + (ipcTotalSize * allEnabledRPMessageCpus.length) + alignSize;
+        }
+    }
+    else
+    {
+        let totalVringSize = (enabledRPMessageCpus.length+1) * (enabledRPMessageCpus.length+1 - 1)
         * ( instance.vringNumBuf * (instance.vringMsgSize + 32) + 32);
-}
 
-
-function getRPMessageVringRxTxMap(instance)
-{
-    let enabledCpus = [];
-    let config = ipc_soc.getConfigurables();
-    let rxTxMap = {};
-    let vringId = 0;
-
-    /* get names of RPMessage enabled CPUs, add self CPU to this list */
-    for( let cpuConfig of config) {
-        if(cpuConfig.name != "enableLinuxIpc") {
-            if(instance[cpuConfig.name] == "notify_rpmsg" || cpuConfig.name == ipc_soc.getSelfIpcCoreName()) {
-                enabledCpus.push(cpuConfig.name);
-            }
+        if(getImplementationVersion() == "v0")
+        {
+            sharedMemSize = totalVringSize;
+        }
+        else
+        {
+            let totalNotifySize = 32 * allEnabledCpus.length * (allEnabledCpus.length - 1)
+            sharedMemSize = totalNotifySize + totalVringSize;
         }
     }
-    /* for each name, construct a N x N object mapping SRC CPU to DST CPU VRING ID,
-       Assign VRING IDs to each SRC/DST pair, skip assignment when SRC == DST */
-    for( let src of enabledCpus ) {
-        rxTxMap[src] = {};
-        for( let dst of enabledCpus ) {
-            rxTxMap[src][dst] = -1;
-            if(dst != src) { /* NO VRING for a CPU to itself */
-                rxTxMap[src][dst] = vringId;
-                vringId++;
-            }
-        }
-    }
-    return rxTxMap;
+
+    return sharedMemSize;
 }
 
 function getEnabledCpus(instance) {
@@ -189,6 +245,22 @@ function getEnabledCpus(instance) {
     return enabledCpus;
 }
 
+function getAllEnabledCpus(instance) {
+    let allEnabledCpus = [];
+    let config = ipc_soc.getConfigurables();
+
+    for( let cpuConfig of config)
+    {
+        if(cpuConfig.name != "enableLinuxIpc" && cpuConfig.name != "enableMailboxIpc" ) {
+            if(instance[cpuConfig.name] != "NONE")
+            {
+                allEnabledCpus.push(cpuConfig.name);
+            }
+        }
+    }
+    return allEnabledCpus;
+}
+
 function getEnabledRPMessageCpus(instance) {
     let enabledCpus = [];
     let config = ipc_soc.getConfigurables();
@@ -205,6 +277,22 @@ function getEnabledRPMessageCpus(instance) {
     return enabledCpus;
 }
 
+function getAllEnabledRPMessageCpus(instance) {
+    let allEnabledCpus = [];
+    let config = ipc_soc.getConfigurables();
+
+    for( let cpuConfig of config)
+    {
+        if(cpuConfig.name != "enableLinuxIpc") {
+            if(instance[cpuConfig.name] == "notify_rpmsg")
+            {
+                allEnabledCpus.push(cpuConfig.name);
+            }
+        }
+    }
+    return allEnabledCpus;
+}
+
 function getSelfIpcCoreName() {
     return ipc_soc.getSelfIpcCoreName();
 }
@@ -212,6 +300,15 @@ function getSelfIpcCoreName() {
 function getImplementationVersion() {
     return ipc_soc.getImplementationVersion();
 }
+
+function getFirewallGranularity() {
+    return ipc_soc.getFirewallGranularity();
+}
+
+function getSharedMemAddress() {
+    return ipc_soc.getSharedMemAddress();
+}
+
 function validate(instance, report) {
 
     /* multi-script validation  */
@@ -221,6 +318,7 @@ function validate(instance, report) {
 
     common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, "vringNumBuf");
     common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, "vringMsgSize");
+    common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, "enableSafeIpc");
 
     for ( let config of configs)
     {
@@ -236,14 +334,16 @@ function validate(instance, report) {
                 {
                     report.logError(`Value MUST match with core ${sysCfgCoreName}`, instance, remoteCoreName);
                 }
+                
+                common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, remoteCoreName);
             }
         }
     }
 
-    if( instance.vringSize > ipc_soc.getMaxVringSize() )
+    if(getIpcSharedMemUsed(instance) > ipc_soc.getIpcSharedMemAvailable())
     {
-        report.logError(`RP Message Shared Memory size must be <= ${ipc_soc.getMaxVringSize()} bytes. Reduce RP Message number of buffers or buffer size`,
-            instance, "vringSize" );
+        report.logError(`Total Shared Memory used for IPC must be <= ${ipc_soc.getIpcSharedMemAvailable()} bytes. Reduce RP Message number of buffers or buffer size`,
+            instance, "sharedMemUsed" );
 
     }
 }
@@ -277,7 +377,7 @@ enabled for IPC RP Message, lesser the shared memory that is required.
         `,
     templates: {
         "/drivers/system/system_config.c.xdt": {
-            driver_config: "/drivers/ipc/templates/ipc_v0_config.c.xdt",
+            driver_config: "/drivers/ipc/templates/ipc_"+ipc_soc.getImplementationVersion()+"_config.c.xdt",
             driver_init: "/drivers/ipc/templates/ipc_v0_init.c.xdt",
             driver_deinit: "/drivers/ipc/templates/ipc_v0_deinit.c.xdt",
         },
@@ -302,11 +402,13 @@ enabled for IPC RP Message, lesser the shared memory that is required.
     },
 
     getSelfIpcCoreName,
-    getRPMessageVringRxTxMap,
-    getRPMessageVringSize,
     getEnabledCpus,
+    getAllEnabledCpus,
     getEnabledRPMessageCpus,
+    getAllEnabledRPMessageCpus,
     getImplementationVersion,
+    getFirewallGranularity,
+    getSharedMemAddress,
 };
 
 exports = ipc_module;

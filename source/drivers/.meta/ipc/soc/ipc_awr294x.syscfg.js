@@ -79,14 +79,10 @@ function getSysCfgCoreName(ipcCoreName)
     }
 }
 
-function getMaxVringSize()
+function getIpcSharedMemAvailable()
 {
-    /* size of MSS mailbox memory - space reserved for SW queues (32B per SW queue),
-     * right now assume all SW queus are in MSS mailbox memory area
-     * 3 CPUs = 3 x (3-1) = 6 SW queues
-     * Each SW queue size is 32 bytes
-     */
-    return ( (8*1024)-(32*6) );
+    /* Size of MSS mailbox memory */
+    return ((8*1024) - 512 );
 }
 
 function getImplementationVersion()
@@ -94,10 +90,22 @@ function getImplementationVersion()
     return "v1";
 }
 
+function getFirewallGranularity()
+{
+    return 1024;
+}
+
+function getSharedMemAddress()
+{
+    return 0xC5000200;
+}
+
 exports = {
     getConfigurables,
     getSelfIpcCoreName,
     getSysCfgCoreName,
-    getMaxVringSize,
+    getIpcSharedMemAvailable,
     getImplementationVersion,
+    getFirewallGranularity,
+    getSharedMemAddress,
 };
