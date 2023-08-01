@@ -94,7 +94,6 @@ ch7_syncpulse_max_dur       .set   600*56
 
     .global     main
     .sect       ".text"
-
 ;************************************************************************************
 ;
 ;   Macro: m_update_lut
@@ -164,7 +163,7 @@ m_update_lut .macro increment
 m_multiply .macro op1, op2
 ;Load R28 and R29 with multiplication factors
     mov     R29, op1
-    mov     r28, op2
+    mov     R28, op2
     NOP
 ;Fetch quotient from R26 and R27 register
     xin     MAC_XID, &R26, 8
@@ -287,7 +286,7 @@ process_ch2:
     ldi     R0.b0, 19
     xin     PRU_SPAD_B0_XID, &R3, 4
     mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch2_data_error)
     jal     return_addr1, CH2_STATE
 process_ch3:
     qbbc    process_ch4, STATE_CHANGE_MASK, 3
@@ -300,7 +299,7 @@ process_ch3:
     ldi     R0.b0, 20
     xin     PRU_SPAD_B0_XID, &R3, 4
     mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch3_data_error)
     jal     return_addr1, CH3_STATE
 process_ch4:
     qbbc    process_ch5, STATE_CHANGE_MASK, 4
@@ -313,7 +312,7 @@ process_ch4:
     ldi     R0.b0, 21
     xin     PRU_SPAD_B0_XID, &R3, 4
     mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch4_data_error)
     jal     return_addr1, CH4_STATE
 process_ch5:
     qbbc    process_ch6, STATE_CHANGE_MASK, 5
@@ -326,7 +325,7 @@ process_ch5:
     ldi     R0.b0, 22
     xin     PRU_SPAD_B0_XID, &R3, 4
     mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch5_data_error)
     jal     return_addr1, CH5_STATE
 process_ch6:
     qbbc    process_ch7, STATE_CHANGE_MASK, 6
@@ -339,7 +338,7 @@ process_ch6:
     ldi     R0.b0, 23
     xin     PRU_SPAD_B0_XID, &R3, 4
     mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch6_data_error)
     jal     return_addr1, CH6_STATE
 process_ch7:
     qbbc    restart_loop, STATE_CHANGE_MASK, 8
@@ -352,7 +351,7 @@ process_ch7:
     ldi     R0.b0, 24
     xin     PRU_SPAD_B0_XID, &R3, 4
     mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch7_data_error)
     jal     return_addr1, CH7_STATE
 restart_loop:
 	jmp     loop_process
@@ -368,15 +367,15 @@ CH0_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH0_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch0_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH0_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch0 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH0_LUT_BASE
     ldi    TEMP_REG, CH0_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -490,15 +489,15 @@ CH1_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH1_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch1_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH1_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch1 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH1_LUT_BASE
     ldi     TEMP_REG, CH1_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -611,15 +610,15 @@ CH2_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH2_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch2_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH2_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch2 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH2_LUT_BASE
     ldi     TEMP_REG, CH2_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -733,15 +732,15 @@ CH3_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH3_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch3_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH3_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch3 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH3_LUT_BASE
     ldi     TEMP_REG, CH3_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -856,15 +855,15 @@ CH4_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH4_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch4_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH4_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch4 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH4_LUT_BASE
     ldi     TEMP_REG, CH4_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -979,15 +978,15 @@ CH5_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH5_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch5_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH5_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch5 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH5_LUT_BASE
     ldi     TEMP_REG, CH5_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -1101,15 +1100,15 @@ CH6_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH6_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch6_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH6_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch6 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH6_LUT_BASE
     ldi     TEMP_REG, CH6_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64
@@ -1225,15 +1224,15 @@ CH7_SYNC:
     lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
     ldi32 	TEMP_REG, TICK_7_CONST
     m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     CHX_UPDATED_TT, R27.w0
-    mov     CH7_BUF.w0, CHX_UPDATED_TT.w0
-;Update the Hash table with ch7_updated_tp, store in hash table
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     CH7_BUF.w0, TEMP_REG0.w0
+;Update the Hash table with ch7 temp tickperiod placeholder(R0), store in hash table
 	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, CHX_UPDATED_TT
+    m_multiply TEMP_REG, TEMP_REG0
 ;update the lut using R4 to R20 registers(16 reg)
     xout	PRU_SPAD_B1_XID, &R4, 64
     mov     R4, R26
-    m_update_lut CHX_UPDATED_TT
+    m_update_lut TEMP_REG0
 ;Store lookup table in dmem at CH7_LUT_BASE
     ldi     TEMP_REG, CH7_LUT_BASE
     sbbo    &R4, TEMP_REG, 0, 64

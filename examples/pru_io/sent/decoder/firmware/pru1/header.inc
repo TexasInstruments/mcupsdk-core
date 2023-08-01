@@ -68,7 +68,7 @@ TICK_7_CONST            .set   613566757
     .asg    R14.b2, CH6_CRC4_RES
     .asg    R14.b3, CH7_CRC4_RES
     ;Need: 1 Reg for 4 crc res
-    .asg    R15, CHX_UPDATED_TT
+    ;.asg    R15, unused
     .asg    R16, CH0_BUF
     .asg    R17, CH1_BUF
     .asg    R18, CH2_BUF
