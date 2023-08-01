@@ -42,42 +42,9 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/AddrTranslateP.h>
 
-#if defined (SOC_AM64X)
-static SDL_ESM_config ESM_esmInitConfig_MCU =
-{
-    .esmErrorConfig = {0u, 0u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                },
-     /**< No events enable */
-    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                         0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                        },
-    /**< All events low priority */
-    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                      },
-};
-
-#endif
+    uint32_t base;
+    bool event;
+    uint32_t esmBaseAddr;
 
 #if defined (SOC_AM263X)
 static SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
@@ -116,8 +83,6 @@ int32_t sdl_Esm_negTest(void)
     uint32_t             val;
     SDL_ESM_staticRegs         staticRegs;
     SDL_ESM_Inst         i;
-    uint32_t esmBaseAddr;
-    uint32_t base;
     SDL_ESM_Instance_t *pEsmInstancePtr = (SDL_ESM_Instance_t *)NULL;
     uint32_t esmMaxNumEvents;
     uint32_t influence;
@@ -129,7 +94,6 @@ int32_t sdl_Esm_negTest(void)
     esmRevisionId_t revId;
     esmInfo_t info;
     uint32_t New_SDL_TEST_ESM_BASE;
-    bool event;
 
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
@@ -196,8 +160,6 @@ int32_t sdl_Esm_negTest(void)
     {
 #if defined (SOC_AM263X)
         instance = SDL_ESM_INST_MAIN_ESM0;
-#elif defined (SOC_AM64X)
-        instance = SDL_ESM_INST_MCU_ESM0;
 #endif
 
         if (SDL_ESM_getNErrorStatus(instance, NULL) != SDL_EBADARGS)
@@ -418,8 +380,6 @@ int32_t sdl_Esm_negTest(void)
     {
 #if defined (SOC_AM263X)
         instance = SDL_ESM_INST_MAIN_ESM0;
-#elif defined (SOC_AM64X)
-        instance = SDL_ESM_INST_MCU_ESM0;
 #endif
         if (SDL_ESM_getStaticRegisters(instance, NULL) != SDL_EBADARGS)
         {
@@ -485,9 +445,6 @@ int32_t sdl_Esm_negTest(void)
 #if defined (SOC_AM263X)
 		if ((SDL_ESM_registerECCCallback(instance, ESM_esmInitConfig_MAIN_appcallback.enableBitmap,
                                              SDL_ESM_applicationCallbackFunction, &apparg) != SDL_EFAIL))
-#elif defined (SOC_AM64X)
-        if ((SDL_ESM_registerECCCallback(instance, ESM_esmInitConfig_MCU.enableBitmap,
-                                             SDL_ESM_applicationCallbackFunction, &apparg) != SDL_EFAIL))
 #endif
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -505,8 +462,6 @@ int32_t sdl_Esm_negTest(void)
     {
 #if defined (SOC_AM263X)
         instance = SDL_ESM_INST_MAIN_ESM0;
-#elif defined (SOC_AM64X)
-        instance = SDL_ESM_INST_MCU_ESM0;
 #endif
         if (SDL_ESM_init(instance, NULL, NULL, NULL) != SDL_EBADARGS)
         {
@@ -1132,6 +1087,8 @@ int32_t sdl_Esm_negTest(void)
         }
     }
 
+    for (uint32_t i=0;i<0xfff;i++);
+
     /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -1150,6 +1107,8 @@ int32_t sdl_Esm_negTest(void)
                 DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
             }
     }
+
+      for (uint32_t i=0;i<0xfff;i++);
 
     if (testStatus == SDL_APP_TEST_PASS)
     {

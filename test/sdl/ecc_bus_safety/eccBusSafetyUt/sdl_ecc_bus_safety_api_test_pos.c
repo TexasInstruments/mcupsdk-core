@@ -166,6 +166,8 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+
+#if defined (SOC_AM273X) || defined (SOC_AWR294X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_WR) != SDL_PASS)
@@ -173,11 +175,13 @@ int32_t sdl_ecc_bus_safety_posTest(void)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
+
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_MCRC) != SDL_PASS)
@@ -230,7 +234,6 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#endif
 
     if (testStatus == SDL_APP_TEST_PASS)
       {
@@ -244,6 +247,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB) != SDL_PASS)
