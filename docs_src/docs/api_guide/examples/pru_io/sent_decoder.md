@@ -64,6 +64,7 @@ PR0_PRU0_GPIO4 -> PR0_PRU0_GPIO4 (Pin no. 124)
 PR0_PRU0_GPIO5 -> PR0_PRU0_GPIO5 (Pin no. 108)
 PR0_PRU0_GPIO6 -> PR0_PRU0_GPIO6 (Pin no. 123)
 PR0_PRU0_GPIO8 -> PR0_PRU0_GPIO8 (Pin no. 122)
+Ground Pin(Any) -> Ground Pin(Any) [To Make sure both boards are having common ground]
 ```
 \imageStyle{sent_decoder_pins_config.png,width:60%}
 \image html sent_decoder_pins_config.png "HW setup"
