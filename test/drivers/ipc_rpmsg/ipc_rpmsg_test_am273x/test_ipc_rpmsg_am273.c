@@ -41,7 +41,7 @@
 #include "ti_drivers_open_close.h"
 #include "test_ipc_rpmsg_am273.h"
 
-extern uint8_t gRPMessageVringMem[12][1312];
+extern uint8_t gIpcSharedMem[12][1312];
 
 RPMessage_Object gRecvMsgObject;
 
