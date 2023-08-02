@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -44,7 +44,7 @@ void EPWM_setEmulationMode(uint32_t base, EPWM_EmulationMode emulationMode)
     // Write to FREE_SOFT bits
     //
     HW_WR_REG16(base + CSL_EPWM_TBCTL,
-    ((HW_RD_REG16(base + CSL_EPWM_TBCTL) & (~CSL_EPWM_TBCTL_FREE_SOFT_MASK)) |
+    ((HW_RD_REG16(base + CSL_EPWM_TBCTL) & (uint16_t)(~CSL_EPWM_TBCTL_FREE_SOFT_MASK)) |
             ((uint16_t)emulationMode << CSL_EPWM_TBCTL_FREE_SOFT_SHIFT)));
 }
 
@@ -74,42 +74,46 @@ void EPWM_configureSignal(uint32_t base, const EPWM_SignalParams *signalParams)
     // achieving desired signal
     //
     tbClkInHz = ((Float32)signalParams->sysClkInHz /
-                (1U << (uint16_t)signalParams->tbClkDiv));
+                ((Float32)(1U << (uint16_t)signalParams->tbClkDiv)));
 
     if(signalParams->tbHSClkDiv <= EPWM_HSCLOCK_DIVIDER_4)
     {
-        tbClkInHz /= (1U << (uint16_t)signalParams->tbHSClkDiv);
+        tbClkInHz /= (Float32)(1U << (uint16_t)signalParams->tbHSClkDiv);
     }
     else
     {
-        tbClkInHz /= (2U * (uint16_t)signalParams->tbHSClkDiv);
+        tbClkInHz /= (Float32)(2U * (uint16_t)signalParams->tbHSClkDiv);
     }
 
     if(signalParams->tbCtrMode == EPWM_COUNTER_MODE_UP)
     {
         tbPrdVal = (uint16_t)((tbClkInHz / signalParams->freqInHz) - 1.0f);
-        cmpAVal = (uint16_t)((Float32)signalParams->dutyValA *
-                             (tbPrdVal + 1U));
-        cmpBVal = (uint16_t)((Float32)signalParams->dutyValB *
-                             (tbPrdVal + 1U));
+        cmpAVal = (uint16_t)(signalParams->dutyValA *
+                         (Float32)(tbPrdVal + 1U));
+        cmpBVal = (uint16_t)(signalParams->dutyValB *
+                         (Float32)(tbPrdVal + 1U));
     }
     else if(signalParams->tbCtrMode == EPWM_COUNTER_MODE_DOWN)
     {
         tbPrdVal = (uint16_t)((tbClkInHz / signalParams->freqInHz) - 1.0f);
-        cmpAVal = (uint16_t)((tbPrdVal + 1U) -
-                       ((Float32)signalParams->dutyValA * (tbPrdVal + 1U)));
-        cmpBVal = (uint16_t)((tbPrdVal + 1U) -
-                       ((Float32)signalParams->dutyValB * (tbPrdVal + 1U)));
+        cmpAVal = (uint16_t)((Float32)(tbPrdVal + 1U) -
+                   (signalParams->dutyValA * (Float32)(tbPrdVal + 1U)));
+        cmpBVal = (uint16_t)((Float32)(tbPrdVal + 1U) -
+                   (signalParams->dutyValB * (Float32)(tbPrdVal + 1U)));
     }
     else if((signalParams->tbCtrMode == EPWM_COUNTER_MODE_UP_DOWN))
     {
         tbPrdVal = (uint16_t)(tbClkInHz / (2.0f * signalParams->freqInHz));
         cmpAVal = (uint16_t)(((Float32)tbPrdVal -
-                             ((Float32)(signalParams->dutyValA *
-                              tbPrdVal))) + 0.5f);
+                         ((signalParams->dutyValA *
+                          (Float32)tbPrdVal))) + 0.5f);
         cmpBVal = (uint16_t)(((Float32)tbPrdVal -
-                             ((Float32)(signalParams->dutyValB *
-                              tbPrdVal))) + 0.5f);
+                         ((signalParams->dutyValB *
+                          (Float32)tbPrdVal))) + 0.5f);
+    }
+    else
+    {
+        /* No action */
     }
 
     //
@@ -327,6 +331,10 @@ void EPWM_configureSignal(uint32_t base, const EPWM_SignalParams *signalParams)
                                           EPWM_AQ_OUTPUT_LOW,
                                           EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);
         }
+    }
+    else
+    {
+        /* No action */
     }
 }
 

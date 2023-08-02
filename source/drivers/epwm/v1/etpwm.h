@@ -1720,9 +1720,9 @@ typedef enum
 //
 //*****************************************************************************
 //!< Minimum Dead Band Block A
-#define EPWM_MINDB_BLOCK_A    (0x0)
+#define EPWM_MINDB_BLOCK_A    (0x0U)
 //!< Minimum Dead Band Block B
-#define EPWM_MINDB_BLOCK_B    (0x1)
+#define EPWM_MINDB_BLOCK_B    (0x1U)
 
 //*****************************************************************************
 //
@@ -2049,13 +2049,13 @@ typedef enum
 //
 //*****************************************************************************
 //!< XCMP set = Active
-#define EPWM_XCMP_ACTIVE   (0x0)
+#define EPWM_XCMP_ACTIVE   (0x0U)
 //!< XCMP set = Shadow 1
-#define EPWM_XCMP_SHADOW1    (0x1)
+#define EPWM_XCMP_SHADOW1    (0x1U)
 //!< XCMP set = Shadow 2
-#define EPWM_XCMP_SHADOW2    (0x2)
+#define EPWM_XCMP_SHADOW2    (0x2U)
 //!< XCMP set = Shadow 3
-#define EPWM_XCMP_SHADOW3    (0x3)
+#define EPWM_XCMP_SHADOW3    (0x3U)
 
 //*****************************************************************************
 //
@@ -2465,9 +2465,9 @@ typedef enum{
 //
 //*****************************************************************************
 //!< Diode emulation channel A
-#define EPWM_DE_CHANNEL_A    (0x0)
+#define EPWM_DE_CHANNEL_A    (0x0U)
 //!< Diode emulation channel B
-#define EPWM_DE_CHANNEL_B    (0x1)
+#define EPWM_DE_CHANNEL_B    (0x1U)
 
 //*****************************************************************************
 //
@@ -2476,9 +2476,9 @@ typedef enum{
 //*****************************************************************************
 
 //!< Diode emulation count up step size
-#define EPWM_DE_COUNT_UP    (0x0)
+#define EPWM_DE_COUNT_UP    (0x0U)
 //!< Diode emulation count down step size
-#define EPWM_DE_COUNT_DOWN    (0x1)
+#define EPWM_DE_COUNT_DOWN    (0x1U)
 
 //*****************************************************************************
 //
@@ -2487,9 +2487,9 @@ typedef enum{
 //*****************************************************************************
 
 //!< Diode emulation Trip L
-#define EPWM_DE_TRIPL    (0x1)
+#define EPWM_DE_TRIPL    (0x1U)
 //!< Diode emulation Trip H
-#define EPWM_DE_TRIPH    (0x0)
+#define EPWM_DE_TRIPH    (0x0U)
 
 //*****************************************************************************
 //
@@ -2683,8 +2683,8 @@ EPWM_setClockPrescaler(uint32_t base, EPWM_ClockDivider prescaler,
     HW_WR_REG16(base + CSL_EPWM_TBCTL,
         ((HW_RD_REG16(base + CSL_EPWM_TBCTL) &
         ~(CSL_EPWM_TBCTL_CLKDIV_MASK | CSL_EPWM_TBCTL_HSPCLKDIV_MASK)) |
-        (((uint16_t)prescaler << CSL_EPWM_TBCTL_CLKDIV_SHIFT) |
-        ((uint16_t)highSpeedPrescaler << CSL_EPWM_TBCTL_HSPCLKDIV_SHIFT))));
+        (uint16_t)(((uint16_t)prescaler << CSL_EPWM_TBCTL_CLKDIV_SHIFT) |
+        (uint16_t)((uint16_t)highSpeedPrescaler << CSL_EPWM_TBCTL_HSPCLKDIV_SHIFT))));
 }
 
 //*****************************************************************************
@@ -2748,8 +2748,8 @@ EPWM_setSyncInPulseSource(uint32_t base, EPWM_SyncInPulseSource source)
     //
     HW_WR_REG16(base + CSL_EPWM_EPWMSYNCINSEL,
         ((HW_RD_REG16(base + CSL_EPWM_EPWMSYNCINSEL) &
-        (~CSL_EPWM_EPWMSYNCINSEL_SEL_MASK)) |
-        ((uint16_t)source & CSL_EPWM_EPWMSYNCINSEL_SEL_MASK)));
+        (~(uint16_t)CSL_EPWM_EPWMSYNCINSEL_SEL_MASK)) |
+        (uint16_t)((uint16_t)source & CSL_EPWM_EPWMSYNCINSEL_SEL_MASK)));
 }
 
 //*****************************************************************************
@@ -3015,8 +3015,8 @@ EPWM_selectPeriodLoadEvent(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_TBCTL2,
         ((HW_RD_REG16(base + CSL_EPWM_TBCTL2) &
-        ~(CSL_EPWM_TBCTL2_PRDLDSYNC_MASK)) |
-        ((uint16_t)shadowLoadMode << CSL_EPWM_TBCTL2_PRDLDSYNC_SHIFT)));
+        ~(uint16_t)(CSL_EPWM_TBCTL2_PRDLDSYNC_MASK)) |
+        (uint16_t)((uint16_t)shadowLoadMode << CSL_EPWM_TBCTL2_PRDLDSYNC_SHIFT)));
 }
 //*****************************************************************************
 //
@@ -3355,16 +3355,17 @@ EPWM_setupEPWMLinks(uint32_t base, EPWM_CurrentLink epwmLink,
                     EPWM_LinkComponent linkComp)
 {
     uint32_t registerOffset;
+    uint32_t linkComponent = (uint32_t)linkComp;
 
-    if((linkComp == EPWM_LINK_DBRED) || (linkComp == EPWM_LINK_DBFED))
+    if((linkComponent == (uint32_t)EPWM_LINK_DBRED) || (linkComponent == (uint32_t)EPWM_LINK_DBFED))
     {
         registerOffset = base + CSL_EPWM_EPWMXLINK2;
-        linkComp = (EPWM_LinkComponent) (linkComp - 1);
+        linkComponent = (uint32_t)linkComponent - 1U;
     }
-    else if (linkComp == EPWM_LINK_XLOAD)
+    else if (linkComponent == (uint32_t)EPWM_LINK_XLOAD)
     {
          registerOffset = base + CSL_EPWM_EPWMXLINKXLOAD;
-         linkComp = (EPWM_LinkComponent) (linkComp - 2);
+         linkComponent = (uint32_t)linkComponent - 2U;
     }
     else
     {
@@ -3375,9 +3376,9 @@ EPWM_setupEPWMLinks(uint32_t base, EPWM_CurrentLink epwmLink,
     // Configure EPWM links
     //
     HW_WR_REG32(registerOffset,
-        ((HW_RD_REG32(registerOffset) &
-        ~((uint32_t)CSL_EPWM_EPWMXLINK_TBPRDLINK_MASK << linkComp)) |
-        ((uint32_t)epwmLink << linkComp)));
+        ((uint32_t)(HW_RD_REG32(registerOffset) &
+        ~((uint32_t)CSL_EPWM_EPWMXLINK_TBPRDLINK_MASK << linkComponent)) |
+        ((uint32_t)epwmLink << linkComponent)));
 }
 
 //*****************************************************************************
@@ -3516,7 +3517,7 @@ EPWM_disableCounterCompareShadowLoadMode(uint32_t base,
     //
     HW_WR_REG16(registerOffset,
         (HW_RD_REG16(registerOffset) |
-        (CSL_EPWM_CMPCTL_SHDWAMODE_MAX << shadowModeOffset)));
+        ((uint32_t)CSL_EPWM_CMPCTL_SHDWAMODE_MAX << shadowModeOffset)));
 }
 
 //*****************************************************************************
@@ -3778,11 +3779,11 @@ EPWM_setActionQualifierShadowLoadMode(uint32_t base,
     // Set the appropriate sync and load mode bits and also enable shadow
     // load mode. Shadow to active load can also be frozen.
     //
-    HW_WR_REG16(base + CSL_EPWM_AQCTL,
+    HW_WR_REG16((base + CSL_EPWM_AQCTL),
         ((HW_RD_REG16(base + CSL_EPWM_AQCTL) &
-        (~((CSL_EPWM_AQCTL_LDAQAMODE_MASK << (uint16_t)aqModule) |
+        ((~((CSL_EPWM_AQCTL_LDAQAMODE_MASK << (uint16_t)aqModule) |
         (CSL_EPWM_AQCTL_LDAQASYNC_MAX << (uint16_t)syncModeOffset))) |
-        (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset)) |
+        (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset))) |
         ((((uint16_t)loadMode >> 2U) << syncModeOffset) |
         (((uint16_t)loadMode & CSL_EPWM_AQCTL_LDAQAMODE_MASK) <<
         (uint16_t)aqModule))));
@@ -3887,8 +3888,8 @@ EPWM_setActionQualifierT2TriggerSource(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_AQTSRCSEL,
         ((HW_RD_REG16(base + CSL_EPWM_AQTSRCSEL) &
-        (~CSL_EPWM_AQTSRCSEL_T2SEL_MASK)) |
-        ((uint16_t)trigger << CSL_EPWM_AQTSRCSEL_T2SEL_SHIFT)));
+        (~(uint16_t)CSL_EPWM_AQTSRCSEL_T2SEL_MASK)) |
+        (uint16_t)((uint16_t)trigger << CSL_EPWM_AQTSRCSEL_T2SEL_SHIFT)));
 }
 
 //*****************************************************************************
@@ -3945,8 +3946,8 @@ EPWM_setActionQualifierAction(uint32_t base,
     //
     // Get the register offset
     //
-    registerOffset = CSL_EPWM_AQCTLA + (uint16_t)epwmOutput;
-    registerTOffset = CSL_EPWM_AQCTLA2 + (uint16_t)epwmOutput;
+    registerOffset = (uint32_t)CSL_EPWM_AQCTLA + (uint16_t)epwmOutput;
+    registerTOffset = (uint32_t)CSL_EPWM_AQCTLA2 + (uint16_t)epwmOutput;
 
     //
     // If the event occurs on T1 or T2 events
@@ -4067,7 +4068,7 @@ EPWM_setActionQualifierActionComplete(uint32_t base,
     //
     // Get the register offset
     //
-    registerOffset = CSL_EPWM_AQCTLA + (uint16_t)epwmOutput;
+    registerOffset = (uint32_t)CSL_EPWM_AQCTLA + (uint16_t)epwmOutput;
 
     //
     // Write to ZRO, PRD, CAU, CAD, CBU or CBD bits of AQCTLA register
@@ -4146,7 +4147,7 @@ EPWM_setAdditionalActionQualifierActionComplete(uint32_t base,
     //
     // Get the register offset
     //
-    registerTOffset = CSL_EPWM_AQCTLA2 + (uint16_t)epwmOutput;
+    registerTOffset = (uint32_t)CSL_EPWM_AQCTLA2 + (uint16_t)epwmOutput;
 
     //
     // Write to T1U, T1D, T2U or T2D of AQCTLA2 register
@@ -4186,8 +4187,8 @@ EPWM_setActionQualifierContSWForceShadowMode(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_AQSFRC,
         ((HW_RD_REG16(base + CSL_EPWM_AQSFRC) &
-        ~CSL_EPWM_AQSFRC_RLDCSF_MASK) |
-        ((uint16_t)mode << CSL_EPWM_AQSFRC_RLDCSF_SHIFT)));
+        ~(uint16_t)CSL_EPWM_AQSFRC_RLDCSF_MASK) |
+        (uint16_t)((uint16_t)mode << CSL_EPWM_AQSFRC_RLDCSF_SHIFT)));
 }
 
 //*****************************************************************************
@@ -4231,8 +4232,8 @@ EPWM_setActionQualifierContSWForceAction(uint32_t base,
     {
         HW_WR_REG16(base + CSL_EPWM_AQCSFRC,
             ((HW_RD_REG16(base + CSL_EPWM_AQCSFRC) &
-            ~CSL_EPWM_AQCSFRC_CSFB_MASK) |
-            ((uint16_t)output << CSL_EPWM_AQCSFRC_CSFB_SHIFT)));
+            ~(uint16_t)CSL_EPWM_AQCSFRC_CSFB_MASK) |
+            (uint16_t)((uint16_t)output << CSL_EPWM_AQCSFRC_CSFB_SHIFT)));
     }
 }
 
@@ -4317,8 +4318,8 @@ EPWM_setActionQualifierSWAction(uint32_t base,
     {
         HW_WR_REG16(base + CSL_EPWM_AQSFRC,
             ((HW_RD_REG16(base + CSL_EPWM_AQSFRC) &
-            ~CSL_EPWM_AQSFRC_ACTSFB_MASK) |
-            ((uint16_t)output << CSL_EPWM_AQSFRC_ACTSFB_SHIFT)));
+            ~(uint16_t)CSL_EPWM_AQSFRC_ACTSFB_MASK) |
+            (uint16_t)((uint16_t)output << CSL_EPWM_AQSFRC_ACTSFB_SHIFT)));
     }
 }
 
@@ -4438,7 +4439,7 @@ EPWM_setDeadBandDelayMode(uint32_t base, EPWM_DeadBandDelayMode delayMode,
 {
     uint16_t mask;
 
-    mask = 1U << ((uint16_t)(delayMode + CSL_EPWM_DBCTL_OUT_MODE_SHIFT));
+    mask = (uint16_t)1U << ((uint16_t)((uint16_t)delayMode + (uint16_t)CSL_EPWM_DBCTL_OUT_MODE_SHIFT));
 
     if(enableDelayMode)
     {
@@ -4528,7 +4529,7 @@ EPWM_setRisingEdgeDeadBandDelayInput(uint32_t base, uint16_t input)
     HW_WR_REG16(base + CSL_EPWM_DBCTL,
         ((HW_RD_REG16(base + CSL_EPWM_DBCTL) &
         ~(1U << (CSL_EPWM_DBCTL_IN_MODE_SHIFT))) |
-        (input << CSL_EPWM_DBCTL_IN_MODE_SHIFT)));
+        ((uint32_t)input << CSL_EPWM_DBCTL_IN_MODE_SHIFT)));
 }
 
 //*****************************************************************************
@@ -4585,7 +4586,7 @@ EPWM_setFallingEdgeDeadBandDelayInput(uint32_t base, uint16_t input)
         HW_WR_REG16(base + CSL_EPWM_DBCTL,
             ((HW_RD_REG16(base + CSL_EPWM_DBCTL) &
             ~(1U << (CSL_EPWM_DBCTL_IN_MODE_SHIFT + 1U))) |
-            (input << (CSL_EPWM_DBCTL_IN_MODE_SHIFT + 1U))));
+            ((uint32_t)input << (CSL_EPWM_DBCTL_IN_MODE_SHIFT + 1U))));
     }
 }
 
@@ -4617,8 +4618,8 @@ EPWM_setDeadBandControlShadowLoadMode(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_DBCTL2,
         ((HW_RD_REG16(base + CSL_EPWM_DBCTL2) &
-        ~CSL_EPWM_DBCTL2_LOADDBCTLMODE_MASK) |
-        (CSL_EPWM_DBCTL2_LOADDBCTLMODE_MASK | (uint16_t)loadMode)));
+        ~(uint16_t)CSL_EPWM_DBCTL2_LOADDBCTLMODE_MASK) |
+        (uint16_t)(CSL_EPWM_DBCTL2_LOADDBCTLMODE_MASK | (uint16_t)loadMode)));
 }
 
 //*****************************************************************************
@@ -4671,9 +4672,9 @@ EPWM_setRisingEdgeDelayCountShadowLoadMode(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_DBCTL,
         ((HW_RD_REG16(base + CSL_EPWM_DBCTL) &
-        ~CSL_EPWM_DBCTL_LOADREDMODE_MASK) |
-        ((uint16_t)CSL_EPWM_DBCTL_SHDWDBREDMODE_MASK |
-        ((uint16_t)loadMode << CSL_EPWM_DBCTL_LOADREDMODE_SHIFT))));
+        ~(uint16_t)CSL_EPWM_DBCTL_LOADREDMODE_MASK) |
+        (uint16_t)(CSL_EPWM_DBCTL_SHDWDBREDMODE_MASK |
+        (uint16_t)((uint16_t)loadMode << CSL_EPWM_DBCTL_LOADREDMODE_SHIFT))));
 
 }
 
@@ -4726,9 +4727,9 @@ EPWM_setFallingEdgeDelayCountShadowLoadMode(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_DBCTL,
         ((HW_RD_REG16(base + CSL_EPWM_DBCTL) &
-        ~CSL_EPWM_DBCTL_LOADFEDMODE_MASK) |
-        (CSL_EPWM_DBCTL_SHDWDBFEDMODE_MASK |
-        ((uint16_t)loadMode << CSL_EPWM_DBCTL_LOADFEDMODE_SHIFT))));
+        ~(uint16_t)CSL_EPWM_DBCTL_LOADFEDMODE_MASK) |
+        (uint16_t)(CSL_EPWM_DBCTL_SHDWDBFEDMODE_MASK |
+        (uint16_t)((uint16_t)loadMode << CSL_EPWM_DBCTL_LOADFEDMODE_SHIFT))));
 }
 
 //*****************************************************************************
@@ -4781,8 +4782,8 @@ EPWM_setDeadBandCounterClock(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_DBCTL,
         ((HW_RD_REG16(base + CSL_EPWM_DBCTL) &
-        ~CSL_EPWM_DBCTL_HALFCYCLE_MASK) |
-        ((uint16_t)clockMode << CSL_EPWM_DBCTL_HALFCYCLE_SHIFT)));
+        ~(uint16_t)CSL_EPWM_DBCTL_HALFCYCLE_MASK) |
+        (uint16_t)((uint16_t)clockMode << CSL_EPWM_DBCTL_HALFCYCLE_SHIFT)));
 }
 
 //*****************************************************************************
@@ -4912,7 +4913,8 @@ EPWM_setChopperDutyCycle(uint32_t base, uint16_t dutyCycleCount)
     //
     HW_WR_REG16(base + CSL_EPWM_PCCTL,
         ((HW_RD_REG16(base + CSL_EPWM_PCCTL) & ~CSL_EPWM_PCCTL_CHPDUTY_MASK) |
-        (dutyCycleCount << CSL_EPWM_PCCTL_CHPDUTY_SHIFT)));
+        ((uint32_t)dutyCycleCount << CSL_EPWM_PCCTL_CHPDUTY_SHIFT)));
+
 }
 
 //*****************************************************************************
@@ -4944,7 +4946,7 @@ EPWM_setChopperFreq(uint32_t base, uint16_t freqDiv)
     HW_WR_REG16(base + CSL_EPWM_PCCTL,
         ((HW_RD_REG16(base + CSL_EPWM_PCCTL) &
         ~(uint16_t)CSL_EPWM_PCCTL_CHPFREQ_MASK) |
-        (freqDiv << CSL_EPWM_PCCTL_CHPFREQ_SHIFT)));
+        ((uint32_t)freqDiv << CSL_EPWM_PCCTL_CHPFREQ_SHIFT)));
 }
 
 //*****************************************************************************
@@ -4976,7 +4978,7 @@ EPWM_setChopperFirstPulseWidth(uint32_t base, uint16_t firstPulseWidth)
     HW_WR_REG16(base + CSL_EPWM_PCCTL,
         ((HW_RD_REG16(base + CSL_EPWM_PCCTL) &
         ~(uint16_t)CSL_EPWM_PCCTL_OSHTWTH_MASK) |
-        (firstPulseWidth << CSL_EPWM_PCCTL_OSHTWTH_SHIFT)));
+        ((uint32_t)firstPulseWidth << CSL_EPWM_PCCTL_OSHTWTH_SHIFT)));
 }
 
 //
@@ -5389,7 +5391,7 @@ EPWM_enableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
     //
     // Check the arguments
     //
-    DebugP_assert((tzInterrupt >= 0U) && (tzInterrupt <= 0x80U));
+    DebugP_assert((tzInterrupt <= 0x80U));
 
     //
     // Enable Trip zone interrupts
@@ -5557,8 +5559,8 @@ EPWM_selectCycleByCycleTripZoneClearEvent(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_TZCLR,
         ((HW_RD_REG16(base + CSL_EPWM_TZCLR) &
-        ~CSL_EPWM_TZCLR_CBCPULSE_MASK) |
-        ((uint16_t)clearEvent << CSL_EPWM_TZCLR_CBCPULSE_SHIFT)));
+        ~(uint16_t)CSL_EPWM_TZCLR_CBCPULSE_MASK) |
+        (uint16_t)((uint16_t)clearEvent << CSL_EPWM_TZCLR_CBCPULSE_SHIFT)));
 }
 
 //*****************************************************************************
@@ -6254,7 +6256,7 @@ EPWM_setADCTriggerSource(uint32_t base,
         HW_WR_REG16(base + CSL_EPWM_ETSEL,
             ((HW_RD_REG16(base + CSL_EPWM_ETSEL) &
             ~CSL_EPWM_ETSEL_SOCASEL_MASK) |
-            (source << CSL_EPWM_ETSEL_SOCASEL_SHIFT)));
+            ((uint32_t)source << CSL_EPWM_ETSEL_SOCASEL_SHIFT)));
 
         //
         // Enable the comparator selection
@@ -6305,7 +6307,7 @@ EPWM_setADCTriggerSource(uint32_t base,
         HW_WR_REG16(base + CSL_EPWM_ETSEL,
             ((HW_RD_REG16(base + CSL_EPWM_ETSEL) &
             ~CSL_EPWM_ETSEL_SOCBSEL_MASK) |
-            (source << CSL_EPWM_ETSEL_SOCBSEL_SHIFT)));
+            ((uint32_t)source << CSL_EPWM_ETSEL_SOCBSEL_SHIFT)));
 
         //
         // Enable the comparator selection
@@ -6408,7 +6410,7 @@ EPWM_setADCTriggerEventPrescale(uint32_t base,
         HW_WR_REG16(base + CSL_EPWM_ETSOCPS,
             ((HW_RD_REG16(base + CSL_EPWM_ETSOCPS) &
             ~CSL_EPWM_ETSOCPS_SOCBPRD2_MASK) |
-            (preScaleCount << CSL_EPWM_ETSOCPS_SOCBPRD2_SHIFT)));
+            ((uint32_t)preScaleCount << CSL_EPWM_ETSOCPS_SOCBPRD2_SHIFT)));
     }
 }
 
@@ -6464,7 +6466,7 @@ EPWM_clearADCTriggerFlag(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_ETCLR,
         (HW_RD_REG16(base + CSL_EPWM_ETCLR) |
-        1U << ((uint16_t)adcSOCType + CSL_EPWM_ETCLR_SOCA_SHIFT)));
+        ((uint16_t)1U << ((uint16_t)adcSOCType + CSL_EPWM_ETCLR_SOCA_SHIFT))));
 }
 
 //*****************************************************************************
@@ -6494,8 +6496,8 @@ EPWM_enableADCTriggerEventCountInit(uint32_t base,
     // Enable SOC event count initializing/loading
     //
     HW_WR_REG16(base + CSL_EPWM_ETCNTINITCTL,
-        (HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) | 1U <<
-        ((uint16_t)adcSOCType + CSL_EPWM_ETCNTINITCTL_SOCAINITEN_SHIFT)));
+        (HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) | ((uint16_t)1U <<
+        ((uint16_t)adcSOCType + CSL_EPWM_ETCNTINITCTL_SOCAINITEN_SHIFT))));
 }
 
 //*****************************************************************************
@@ -6554,8 +6556,8 @@ EPWM_forceADCTriggerEventCountInit(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_ETCNTINITCTL,
         (HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) |
-        1U << ((uint16_t)adcSOCType +
-        CSL_EPWM_ETCNTINITCTL_SOCAINITFRC_SHIFT)));
+        ((uint16_t)1U << ((uint16_t)adcSOCType +
+        CSL_EPWM_ETCNTINITCTL_SOCAINITFRC_SHIFT))));
 }
 
 //*****************************************************************************
@@ -6600,7 +6602,7 @@ EPWM_setADCTriggerEventCountInitValue(uint32_t base,
         HW_WR_REG16(base + CSL_EPWM_ETCNTINIT,
             ((HW_RD_REG16(base + CSL_EPWM_ETCNTINIT) &
             ~CSL_EPWM_ETCNTINIT_SOCBINIT_MASK) |
-            (eventCount << CSL_EPWM_ETCNTINIT_SOCBINIT_SHIFT)));
+            ((uint32_t)eventCount << CSL_EPWM_ETCNTINIT_SOCBINIT_SHIFT)));
     }
 }
 
@@ -6667,7 +6669,7 @@ EPWM_forceADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
     //
     HW_WR_REG16(base + CSL_EPWM_ETFRC,
         (HW_RD_REG16(base + CSL_EPWM_ETFRC) |
-        1U << ((uint16_t)adcSOCType + CSL_EPWM_ETFRC_SOCA_SHIFT)));
+        ((uint16_t)1U << ((uint16_t)adcSOCType + CSL_EPWM_ETFRC_SOCA_SHIFT))));
 }
 
 //
@@ -6948,7 +6950,7 @@ EPWM_setDigitalCompareEdgeFilterMode(uint32_t base,
     HW_WR_REG16(base + CSL_EPWM_DCFCTL,
         (HW_RD_REG16(base + CSL_EPWM_DCFCTL) &
         ~CSL_EPWM_DCFCTL_EDGEMODE_MASK) |
-        (edgeMode << CSL_EPWM_DCFCTL_EDGEMODE_SHIFT));
+        ((uint32_t)edgeMode << CSL_EPWM_DCFCTL_EDGEMODE_SHIFT));
 }
 
 //*****************************************************************************
@@ -6982,7 +6984,7 @@ EPWM_setDigitalCompareEdgeFilterEdgeCount(uint32_t base,
     HW_WR_REG16(base + CSL_EPWM_DCFCTL,
         (HW_RD_REG16(base + CSL_EPWM_DCFCTL) &
         ~CSL_EPWM_DCFCTL_EDGECOUNT_MASK) |
-        (edgeCount << CSL_EPWM_DCFCTL_EDGECOUNT_SHIFT));
+        ((uint32_t)edgeCount << CSL_EPWM_DCFCTL_EDGECOUNT_SHIFT));
 }
 
 //*****************************************************************************
@@ -7153,7 +7155,7 @@ EPWM_setDigitalCompareEventSource(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Set the DC event 1 source source
@@ -7169,8 +7171,8 @@ EPWM_setDigitalCompareEventSource(uint32_t base,
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT2SRCSEL_MASK) |
-            ((uint16_t)dcEventSource << CSL_EPWM_DCACTL_EVT2SRCSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT2SRCSEL_MASK) |
+            (uint16_t)((uint16_t)dcEventSource << CSL_EPWM_DCACTL_EVT2SRCSEL_SHIFT)));
     }
 }
 
@@ -7208,7 +7210,7 @@ EPWM_setDigitalCompareEventSyncMode(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Set the DC event sync mode
@@ -7217,15 +7219,15 @@ EPWM_setDigitalCompareEventSyncMode(uint32_t base,
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT1FRCSYNCSEL_MASK) |
-            ((uint16_t)syncMode << CSL_EPWM_DCACTL_EVT1FRCSYNCSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT1FRCSYNCSEL_MASK) |
+            (uint16_t)((uint16_t)syncMode << CSL_EPWM_DCACTL_EVT1FRCSYNCSEL_SHIFT)));
     }
     else
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT2FRCSYNCSEL_MASK) |
-            ((uint16_t)syncMode << CSL_EPWM_DCACTL_EVT2FRCSYNCSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT2FRCSYNCSEL_MASK) |
+            (uint16_t)((uint16_t)syncMode << CSL_EPWM_DCACTL_EVT2FRCSYNCSEL_SHIFT)));
     }
 }
 
@@ -7251,7 +7253,7 @@ EPWM_enableDigitalCompareADCTrigger(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Enable Digital Compare start of conversion generation
@@ -7282,7 +7284,7 @@ EPWM_disableDigitalCompareADCTrigger(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Disable Digital Compare start of conversion generation
@@ -7313,7 +7315,7 @@ EPWM_enableDigitalCompareSyncEvent(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Enable Digital Compare sync out pulse generation
@@ -7344,7 +7346,7 @@ EPWM_disableDigitalCompareSyncEvent(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Disable Digital Compare sync out pulse generation
@@ -7386,7 +7388,7 @@ EPWM_setDigitalCompareCBCLatchMode(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Set the DC CBC Latch Mode
@@ -7395,15 +7397,15 @@ EPWM_setDigitalCompareCBCLatchMode(uint32_t base,
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT1LATSEL_MASK) |
-            ((uint16_t)latchMode << CSL_EPWM_DCACTL_EVT1LATSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT1LATSEL_MASK) |
+           (uint16_t)((uint16_t)latchMode << CSL_EPWM_DCACTL_EVT1LATSEL_SHIFT)));
     }
     else
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT2LATSEL_MASK) |
-            ((uint16_t)latchMode << CSL_EPWM_DCACTL_EVT2LATSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT2LATSEL_MASK) |
+            (uint16_t)((uint16_t)latchMode << CSL_EPWM_DCACTL_EVT2LATSEL_SHIFT)));
     }
 }
 
@@ -7444,7 +7446,7 @@ EPWM_selectDigitalCompareCBCLatchClearEvent(uint32_t base,
 {
     uint32_t registerOffset;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Set the DC CBC Latch Clear Event
@@ -7453,15 +7455,15 @@ EPWM_selectDigitalCompareCBCLatchClearEvent(uint32_t base,
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT1LATCLRSEL_MASK) |
-            ((uint16_t)clearEvent << CSL_EPWM_DCACTL_EVT1LATCLRSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT1LATCLRSEL_MASK) |
+            (uint16_t)((uint16_t)clearEvent << CSL_EPWM_DCACTL_EVT1LATCLRSEL_SHIFT)));
     }
     else
     {
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
-            ~CSL_EPWM_DCACTL_EVT2LATCLRSEL_MASK) |
-            ((uint16_t)clearEvent << CSL_EPWM_DCACTL_EVT2LATCLRSEL_SHIFT)));
+            ~(uint16_t)CSL_EPWM_DCACTL_EVT2LATCLRSEL_MASK) |
+            (uint16_t)((uint16_t)clearEvent << CSL_EPWM_DCACTL_EVT2LATCLRSEL_SHIFT)));
     }
 }
 
@@ -7496,7 +7498,7 @@ EPWM_getDigitalCompareCBCLatchStatus(uint32_t base,
     uint32_t registerOffset;
     uint16_t status;
 
-    registerOffset = CSL_EPWM_DCACTL + (uint16_t)dcModule * EPWM_DCxCTL_STEP;
+    registerOffset = CSL_EPWM_DCACTL + (uint32_t)((uint16_t)dcModule * (uint32_t)EPWM_DCxCTL_STEP);
 
     //
     // Get DC CBC Latch Clear Event
@@ -7678,7 +7680,7 @@ EPWM_enableDigitalCompareTripCombinationInput(uint32_t base,
     // offset with respect to DCAHTRIPSEL
     //
     registerOffset = CSL_EPWM_DCAHTRIPSEL +
-                     (uint16_t)dcType * EPWM_DCxxTRIPSEL;
+                     (uint32_t)((uint16_t)dcType * (uint32_t)EPWM_DCxxTRIPSEL);
 
     //
     // Set the DC trip input
@@ -7691,7 +7693,7 @@ EPWM_enableDigitalCompareTripCombinationInput(uint32_t base,
     //
     HW_WR_REG16(base + CSL_EPWM_DCTRIPSEL,
         (HW_RD_REG16(base + CSL_EPWM_DCTRIPSEL) |
-        (CSL_EPWM_DCTRIPSEL_DCAHCOMPSEL_MASK << ((uint16_t)dcType << 2U))));
+        ((uint16_t)CSL_EPWM_DCTRIPSEL_DCAHCOMPSEL_MASK << ((uint16_t)dcType << 2U))));
 }
 
 //*****************************************************************************
@@ -7727,7 +7729,7 @@ EPWM_disableDigitalCompareTripCombinationInput(uint32_t base,
     // offset with respect to DCAHTRIPSEL
     //
     registerOffset = CSL_EPWM_DCAHTRIPSEL +
-                     (uint16_t)dcType * EPWM_DCxxTRIPSEL;
+                     (uint32_t)((uint16_t)dcType * (uint32_t)EPWM_DCxxTRIPSEL);
 
     //
     // Set the DC trip input
@@ -8151,8 +8153,8 @@ EPWM_setValleyTriggerSource(uint32_t base, EPWM_ValleyTriggerSource trigger)
     //
     HW_WR_REG16(base + CSL_EPWM_VCAPCTL,
         ((HW_RD_REG16(base + CSL_EPWM_VCAPCTL) &
-        ~CSL_EPWM_VCAPCTL_TRIGSEL_MASK) |
-        ((uint16_t)trigger << CSL_EPWM_VCAPCTL_TRIGSEL_SHIFT)));
+        ~(uint16_t)CSL_EPWM_VCAPCTL_TRIGSEL_MASK) |
+        (uint16_t)((uint16_t)trigger << CSL_EPWM_VCAPCTL_TRIGSEL_SHIFT)));
 }
 
 //*****************************************************************************
@@ -8190,7 +8192,7 @@ EPWM_setValleyTriggerEdgeCounts(uint32_t base, uint16_t startCount,
     HW_WR_REG16(base + CSL_EPWM_VCNTCFG,
         ((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) &
         ~(CSL_EPWM_VCNTCFG_STARTEDGE_MASK | CSL_EPWM_VCNTCFG_STOPEDGE_MASK)) |
-        (startCount | (stopCount << CSL_EPWM_VCNTCFG_STOPEDGE_SHIFT))));
+        ((uint32_t)startCount | ((uint32_t)stopCount << CSL_EPWM_VCNTCFG_STOPEDGE_SHIFT))));
 }
 
 //*****************************************************************************
@@ -8278,8 +8280,8 @@ EPWM_setValleyDelayDivider(uint32_t base, EPWM_ValleyDelayMode delayMode)
     //
     HW_WR_REG16(base + CSL_EPWM_VCAPCTL,
         ((HW_RD_REG16(base + CSL_EPWM_VCAPCTL) &
-        ~CSL_EPWM_VCAPCTL_VDELAYDIV_MASK) |
-        ((uint16_t)delayMode << CSL_EPWM_VCAPCTL_VDELAYDIV_SHIFT)));
+        ~(uint16_t)CSL_EPWM_VCAPCTL_VDELAYDIV_MASK) |
+        (uint16_t)((uint16_t)delayMode << CSL_EPWM_VCAPCTL_VDELAYDIV_SHIFT)));
 }
 
 //*****************************************************************************
@@ -8301,26 +8303,35 @@ EPWM_setValleyDelayDivider(uint32_t base, EPWM_ValleyDelayMode delayMode)
 static inline bool
 EPWM_getValleyEdgeStatus(uint32_t base, EPWM_ValleyCounterEdge edge)
 {
+    bool status = true;
     if(edge == EPWM_VALLEY_COUNT_START_EDGE)
     {
-        //
-        // Returns STARTEDGESTS status
-        //
-        return(((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) &
-               CSL_EPWM_VCNTCFG_STARTEDGESTS_MASK) ==
-               CSL_EPWM_VCNTCFG_STARTEDGESTS_MASK) ? true : false);
+        if((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) & CSL_EPWM_VCNTCFG_STARTEDGESTS_MASK)
+         == CSL_EPWM_VCNTCFG_STARTEDGESTS_MASK)
+            {
+                status = true;
+            }
+        else
+            {
+                status = false;
+            }
     }
     else
     {
-        //
-        // Returns STOPEDGESTS status
-        //
-        return(((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) &
+        if((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) &
                 CSL_EPWM_VCNTCFG_STOPEDGESTS_MASK) ==
-                CSL_EPWM_VCNTCFG_STOPEDGESTS_MASK) ? true : false);
+                CSL_EPWM_VCNTCFG_STOPEDGESTS_MASK)
+            {
+                status = true;
+            }
+        else
+            {
+                status = false;
+            }
     }
-}
 
+    return status;
+}
 //*****************************************************************************
 //
 //! Get the Valley Counter value.
@@ -8446,8 +8457,8 @@ EPWM_setGlobalLoadTrigger(uint32_t base, EPWM_GlobalLoadTrigger loadTrigger)
     //
     HW_WR_REG16(base + CSL_EPWM_GLDCTL,
         ((HW_RD_REG16(base + CSL_EPWM_GLDCTL) &
-        ~CSL_EPWM_GLDCTL_GLDMODE_MASK) |
-        ((uint16_t)loadTrigger << CSL_EPWM_GLDCTL_GLDMODE_SHIFT)));
+        ~(uint16_t)CSL_EPWM_GLDCTL_GLDMODE_MASK) |
+        (uint16_t)((uint16_t)loadTrigger << CSL_EPWM_GLDCTL_GLDMODE_SHIFT)));
 }
 
 //*****************************************************************************
@@ -8479,7 +8490,7 @@ EPWM_setGlobalLoadEventPrescale(uint32_t base, uint16_t prescalePulseCount)
     //
     HW_WR_REG16(base + CSL_EPWM_GLDCTL,
         ((HW_RD_REG16(base + CSL_EPWM_GLDCTL) & ~CSL_EPWM_GLDCTL_GLDPRD_MASK) |
-        (prescalePulseCount << CSL_EPWM_GLDCTL_GLDPRD_SHIFT)));
+        ((uint32_t)prescalePulseCount << CSL_EPWM_GLDCTL_GLDPRD_SHIFT)));
 }
 
 //*****************************************************************************
@@ -9090,6 +9101,10 @@ EPWM_setLutDecX(uint32_t base, uint32_t block, uint32_t decx, uint32_t force)
             (CSL_EPWM_LUTCTLB_LUTDEC0_SHIFT+decx))) |
             (force<<(CSL_EPWM_LUTCTLB_LUTDEC0_SHIFT+decx))));
     }
+    else
+    {
+        /* do nothing */
+    }
 }
 
 //*****************************************************************************
@@ -9118,7 +9133,7 @@ HRPWM_setPhaseShift(uint32_t base, uint32_t phaseCount)
     //
     // Check the arguments
     //
-    DebugP_assert(phaseCount <= 0xFFFFFFFF);
+    DebugP_assert(phaseCount <= 0xFFFFFFFFU);
 
     //
     // Write to TBPHS:TBPHSHR bits
@@ -9379,8 +9394,8 @@ HRPWM_setChannelBOutputPath(uint32_t base, HRPWM_ChannelBOutput outputOnB)
     // Set the output on ePWM B
     //
     HW_WR_REG16(base + CSL_EPWM_HRCNFG,
-        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG) & ~(CSL_EPWM_HRCNFG_SELOUTB_MASK)) |
-        ((uint16_t)outputOnB << CSL_EPWM_HRCNFG_SELOUTB_SHIFT)));
+        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG) & ~(uint16_t)(CSL_EPWM_HRCNFG_SELOUTB_MASK)) |
+        (uint16_t)((uint16_t)outputOnB << CSL_EPWM_HRCNFG_SELOUTB_SHIFT)));
 }
 
 //*****************************************************************************
@@ -9551,13 +9566,13 @@ HRPWM_setSyncPulseSource(uint32_t base, HRPWM_SyncPulseSource syncPulseSource)
         HW_WR_REG16(base + CSL_EPWM_HRPCTL,
             ((HW_RD_REG16(base + CSL_EPWM_HRPCTL) &
             ~(CSL_EPWM_HRPCTL_PWMSYNCSELX_MASK | CSL_EPWM_HRPCTL_PWMSYNCSEL_MASK)) |
-            ((uint16_t)syncPulseSource << 1U)));
+            (uint16_t)((uint16_t)syncPulseSource << 1U)));
     }
     else
     {
         HW_WR_REG16(base + CSL_EPWM_HRPCTL,
-            ((HW_RD_REG16(base + CSL_EPWM_HRPCTL) & ~CSL_EPWM_HRPCTL_PWMSYNCSELX_MASK) |
-            ((uint16_t)syncPulseSource << CSL_EPWM_HRPCTL_PWMSYNCSELX_SHIFT)));
+            ((HW_RD_REG16(base + CSL_EPWM_HRPCTL) & ~(uint16_t)CSL_EPWM_HRPCTL_PWMSYNCSELX_MASK) |
+            (uint16_t)((uint16_t)syncPulseSource << CSL_EPWM_HRPCTL_PWMSYNCSELX_SHIFT)));
     }
 }
 
@@ -9616,7 +9631,7 @@ HRPWM_setCounterCompareValue(uint32_t base,
     //
     // Check the arguments
     //
-    DebugP_assert(compCount <= 0xFFFFFFFF);
+    DebugP_assert(compCount <= 0xFFFFFFFFU);
 
     //
     // Write to counter compare registers
@@ -9719,7 +9734,7 @@ HRPWM_setHiResCounterCompareValue(uint32_t base,
         // Write to CMPAHR
         //
         HW_WR_REG32(base + CSL_EPWM_CMPA,
-            HW_RD_REG32(base + CSL_EPWM_CMPA) | ((hrCompCount & CSL_EPWM_CMPA_CMPAHR_MASK) << 8U));
+            HW_RD_REG32(base + CSL_EPWM_CMPA) | (((uint32_t)hrCompCount & CSL_EPWM_CMPA_CMPAHR_MASK) << 8U));
     }
     else
     {
@@ -9727,7 +9742,7 @@ HRPWM_setHiResCounterCompareValue(uint32_t base,
         // Write to CMPBHR
         //
         HW_WR_REG32(base + CSL_EPWM_CMPB,
-            HW_RD_REG32(base + CSL_EPWM_CMPB) | ((hrCompCount & CSL_EPWM_CMPB_CMPBHR_MASK) << 8U));
+            HW_RD_REG32(base + CSL_EPWM_CMPB) | (((uint32_t)hrCompCount & CSL_EPWM_CMPB_CMPBHR_MASK) << (uint32_t)8U));
     }
 }
 
@@ -9803,7 +9818,7 @@ HRPWM_setHiResRisingEdgeDelay(uint32_t base, uint16_t hrRedCount)
     //
     HW_WR_REG16(base + CSL_EPWM_DBREDHR,
       (HW_RD_REG16(base + CSL_EPWM_DBREDHR) & ~CSL_EPWM_DBREDHR_DBREDHR_MASK ) |
-      (hrRedCount << CSL_EPWM_DBREDHR_DBREDHR_SHIFT));
+      ((uint32_t)hrRedCount << CSL_EPWM_DBREDHR_DBREDHR_SHIFT));
 }
 
 //*****************************************************************************
@@ -9835,7 +9850,7 @@ HRPWM_setHiResFallingEdgeDelayOnly(uint32_t base, uint16_t hrFedCount)
     HW_WR_REG16(base + CSL_EPWM_DBFEDHR,
         (HW_RD_REG16(base + CSL_EPWM_DBFEDHR) &
         ~CSL_EPWM_DBFEDHR_DBFEDHR_MASK) |
-        (hrFedCount << CSL_EPWM_DBFEDHR_DBFEDHR_SHIFT));
+        ((uint32_t)hrFedCount << CSL_EPWM_DBFEDHR_DBFEDHR_SHIFT));
 }
 
 //*****************************************************************************
@@ -9865,7 +9880,7 @@ HRPWM_setMEPStep(uint32_t base, uint16_t mepCount)
     //
     HW_WR_REG16(base + CSL_OTTOCAL_HRMSTEP,
         ((HW_RD_REG16(base + CSL_OTTOCAL_HRMSTEP) & ~CSL_OTTOCAL_HRMSTEP_HRMSTEP_MASK) |
-        mepCount << CSL_OTTOCAL_HRMSTEP_HRMSTEP_SHIFT));
+        ((uint32_t)mepCount << CSL_OTTOCAL_HRMSTEP_HRMSTEP_SHIFT)));
 }
 
 //*****************************************************************************
@@ -9897,8 +9912,8 @@ HRPWM_setDeadbandMEPEdgeSelect(uint32_t base,
     // Set the HRPWM DB edge mode
     //
     HW_WR_REG16(base + CSL_EPWM_HRCNFG2,
-        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG2) & ~CSL_EPWM_HRCNFG2_EDGMODEDB_MASK) |
-        ((uint16_t)mepDBEdge << CSL_EPWM_HRCNFG2_EDGMODEDB_SHIFT)));
+        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG2) & ~(uint16_t)CSL_EPWM_HRCNFG2_EDGMODEDB_MASK) |
+        (uint16_t)((uint16_t)mepDBEdge << CSL_EPWM_HRCNFG2_EDGMODEDB_SHIFT)));
 }
 
 //*****************************************************************************
@@ -9927,8 +9942,8 @@ HRPWM_setRisingEdgeDelayLoadMode(uint32_t base,
     // Set the HRPWM RED load mode
     //
     HW_WR_REG16(base + CSL_EPWM_HRCNFG2,
-        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG2) & ~CSL_EPWM_HRCNFG2_CTLMODEDBRED_MASK) |
-        ((uint16_t)loadEvent << CSL_EPWM_HRCNFG2_CTLMODEDBRED_SHIFT)));
+        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG2) & ~(uint16_t)CSL_EPWM_HRCNFG2_CTLMODEDBRED_MASK) |
+        (uint16_t)((uint16_t)loadEvent << CSL_EPWM_HRCNFG2_CTLMODEDBRED_SHIFT)));
 }
 
 //*****************************************************************************
@@ -9956,8 +9971,8 @@ HRPWM_setFallingEdgeDelayLoadMode(uint32_t base, HRPWM_LoadMode loadEvent)
     // Set the HRPWM FED load mode
     //
     HW_WR_REG16(base + CSL_EPWM_HRCNFG2,
-        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG2) & ~CSL_EPWM_HRCNFG2_CTLMODEDBFED_MASK) |
-        ((uint16_t)loadEvent << CSL_EPWM_HRCNFG2_CTLMODEDBFED_SHIFT)));
+        ((HW_RD_REG16(base + CSL_EPWM_HRCNFG2) & ~(uint16_t)CSL_EPWM_HRCNFG2_CTLMODEDBFED_MASK) |
+        (uint16_t)((uint16_t)loadEvent << CSL_EPWM_HRCNFG2_CTLMODEDBFED_SHIFT)));
 }
 
 //*****************************************************************************
@@ -10057,7 +10072,7 @@ EPWM_enableSplitXCMP(uint32_t base)
     uint32_t offset = CSL_EPWM_XCMPCTL1_XCMPSPLIT_SHIFT;
 
     HW_WR_REG32(registerOffset,
-        (HW_RD_REG32(registerOffset) | ( CSL_EPWM_XCMPCTL1_XCMPSPLIT_MAX << offset )));
+        (HW_RD_REG32(registerOffset) | ((uint32_t) CSL_EPWM_XCMPCTL1_XCMPSPLIT_MAX << offset )));
 }
 
 //*****************************************************************************
@@ -10112,7 +10127,7 @@ EPWM_allocAXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPA alloctype)
     uint32_t offset = CSL_EPWM_XCMPCTL1_XCMPA_ALLOC_SHIFT;
 
    HW_WR_REG32(registerOffset,
-        ( (HW_RD_REG32(registerOffset) & ~CSL_EPWM_XCMPCTL1_XCMPA_ALLOC_MASK) | ( alloctype << offset )));
+        ( (HW_RD_REG32(registerOffset) & ~(uint32_t)CSL_EPWM_XCMPCTL1_XCMPA_ALLOC_MASK) | ( (uint32_t)alloctype << offset )));
 }
 
 //*****************************************************************************
@@ -10139,7 +10154,7 @@ EPWM_allocBXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPB alloctype)
     uint32_t offset = CSL_EPWM_XCMPCTL1_XCMPB_ALLOC_SHIFT;
 
     HW_WR_REG32(registerOffset,
-        ( (HW_RD_REG32(registerOffset) & ~CSL_EPWM_XCMPCTL1_XCMPB_ALLOC_MASK) | ( alloctype << offset )));
+        ( (HW_RD_REG32(registerOffset) & ~(uint32_t)CSL_EPWM_XCMPCTL1_XCMPB_ALLOC_MASK) | ( (uint32_t)alloctype << offset )));
 }
 
 //*****************************************************************************
@@ -10298,7 +10313,7 @@ EPWM_setXCMPActionQualifierAction(uint32_t base, uint32_t shadowset,
 
     if(shadowset == EPWM_XCMP_ACTIVE)
     {
-        registerOffset = CSL_EPWM_XAQCTLA_ACTIVE + (uint16_t)(epwmOutput/2);
+        registerOffset = (uint32_t)CSL_EPWM_XAQCTLA_ACTIVE + (uint16_t)((uint16_t)epwmOutput/(uint32_t)2);
 
         HW_WR_REG16(base + registerOffset,
             ((HW_RD_REG16(base + registerOffset) &
@@ -10307,7 +10322,7 @@ EPWM_setXCMPActionQualifierAction(uint32_t base, uint32_t shadowset,
     }
     else if(shadowset == EPWM_XCMP_SHADOW1)
     {
-        registerOffset = CSL_EPWM_XAQCTLA_SHDW1 + (uint16_t)(epwmOutput/2);
+        registerOffset = (uint32_t)CSL_EPWM_XAQCTLA_SHDW1 + (uint16_t)((uint16_t)epwmOutput/(uint32_t)2);
 
         HW_WR_REG16(base + registerOffset,
         ((HW_RD_REG16(base + registerOffset) &
@@ -10316,7 +10331,7 @@ EPWM_setXCMPActionQualifierAction(uint32_t base, uint32_t shadowset,
     }
     else if(shadowset == EPWM_XCMP_SHADOW2)
     {
-        registerOffset = CSL_EPWM_XAQCTLA_SHDW2 + (uint16_t)(epwmOutput/2);
+        registerOffset = (uint32_t)CSL_EPWM_XAQCTLA_SHDW2 + (uint16_t)((uint16_t)epwmOutput/(uint32_t)2);
 
         HW_WR_REG16(base + registerOffset,
         ((HW_RD_REG16(base + registerOffset) &
@@ -10325,12 +10340,16 @@ EPWM_setXCMPActionQualifierAction(uint32_t base, uint32_t shadowset,
     }
     else if(shadowset == EPWM_XCMP_SHADOW3)
     {
-        registerOffset = CSL_EPWM_XAQCTLA_SHDW3 + (uint16_t)(epwmOutput/2);
+        registerOffset = (uint32_t)CSL_EPWM_XAQCTLA_SHDW3 + (uint32_t)((uint16_t)epwmOutput/(uint32_t)2);
 
         HW_WR_REG16(base + registerOffset,
         ((HW_RD_REG16(base + registerOffset) &
         ~(CSL_EPWM_XAQCTLA_SHDW3_XCMP1_MAX << (uint16_t)event)) |
         ((uint16_t)output << (uint16_t)event)));
+    }
+    else
+    {
+        /* do nothing */
     }
 
 }
@@ -10434,6 +10453,10 @@ EPWM_setXCMPLoadMode(uint32_t base,EPWM_XCMPXloadCtlLoadMode mode)
         HW_WR_REG32(registerOffset,
         (HW_RD_REG32(registerOffset) | CSL_EPWM_XLOADCTL_LOADMODE_MASK));
     }
+    else
+    {
+        /* do nothing */
+    }
 }
 
 //*****************************************************************************
@@ -10464,7 +10487,7 @@ EPWM_setXCMPShadowLevel(uint32_t base, EPWM_XCMP_XLOADCTL_SHDWLEVEL level)
 
     HW_WR_REG32(registerOffset,
         ((HW_RD_REG32(registerOffset) & ~CSL_EPWM_XLOADCTL_SHDWLEVEL_MASK) |
-        ((uint16_t)level << CSL_EPWM_XLOADCTL_SHDWLEVEL_SHIFT)));
+        (uint32_t)((uint16_t)level << CSL_EPWM_XLOADCTL_SHDWLEVEL_SHIFT)));
 }
 
 //*****************************************************************************
@@ -10495,7 +10518,7 @@ EPWM_setXCMPShadowBufPtrLoadOnce(uint32_t base, EPWM_XCMP_XLOADCTL_SHDWBUFPTR pt
 
     HW_WR_REG32(registerOffset,
         ((HW_RD_REG32(registerOffset) & ~CSL_EPWM_XLOADCTL_SHDWBUFPTR_LOADONCE_MASK) |
-        ((uint16_t)ptr << CSL_EPWM_XLOADCTL_SHDWBUFPTR_LOADONCE_SHIFT)));
+        (uint32_t)((uint16_t)ptr << CSL_EPWM_XLOADCTL_SHDWBUFPTR_LOADONCE_SHIFT)));
 }
 
 //*****************************************************************************
@@ -10529,13 +10552,17 @@ EPWM_setXCMPShadowRepeatBufxCount(uint32_t base, uint32_t bufferset, uint8_t cou
     {
         HW_WR_REG32(registerOffset,
             ((HW_RD_REG32(registerOffset) & ~(CSL_EPWM_XLOADCTL_RPTBUF2PRD_MASK))
-            | (count<<CSL_EPWM_XLOADCTL_RPTBUF2PRD_SHIFT)) );
+            | ((uint32_t)count<<CSL_EPWM_XLOADCTL_RPTBUF2PRD_SHIFT)) );
     }
     else if(bufferset == EPWM_XCMP_SHADOW3)
     {
          HW_WR_REG32(registerOffset,
         ((HW_RD_REG32(registerOffset) & ~(CSL_EPWM_XLOADCTL_RPTBUF3PRD_MASK))
-        | (count<<CSL_EPWM_XLOADCTL_RPTBUF3PRD_SHIFT)) );
+        | ((uint32_t)count<<CSL_EPWM_XLOADCTL_RPTBUF3PRD_SHIFT)) );
+    }
+    else
+    {
+        /*do nothing */
     }
 }
 
@@ -10634,6 +10661,10 @@ EPWM_setDiodeEmulationMode(uint32_t base,EPWM_DiodeEmulationMode mode)
         HW_WR_REG32(registerOffset,
         (HW_RD_REG32(registerOffset) | CSL_EPWM_DECTL_MODE_MASK));
     }
+    else
+    {
+        /* do nothing */
+    }
 }
 
 //*****************************************************************************
@@ -10661,7 +10692,7 @@ EPWM_setDiodeEmulationReentryDelay(uint32_t base,uint8_t delay)
 
      HW_WR_REG32(registerOffset,
         ((HW_RD_REG32(registerOffset) & ~(CSL_EPWM_DECTL_REENTRYDLY_MASK))
-        | (delay<<CSL_EPWM_DECTL_REENTRYDLY_SHIFT)) );
+        | ((uint32_t)delay<<CSL_EPWM_DECTL_REENTRYDLY_SHIFT)) );
 }
 
 //*****************************************************************************
@@ -10698,14 +10729,18 @@ EPWM_configureDiodeEmulationTripSources(uint32_t base, EPWM_DiodeEmulationTripSo
         HW_WR_REG32(registerOffset,
             ((HW_RD_REG32(registerOffset) &
             ~CSL_EPWM_DECOMPSEL_TRIPL_MASK) |
-            (source<<CSL_EPWM_DECOMPSEL_TRIPL_SHIFT)));
+            ((uint32_t)source<<CSL_EPWM_DECOMPSEL_TRIPL_SHIFT)));
     }
     else if(tripLorH == EPWM_DE_TRIPH)
     {
         HW_WR_REG32(registerOffset,
             ((HW_RD_REG32(registerOffset) &
             ~CSL_EPWM_DECOMPSEL_TRIPH_MASK) |
-            (source<<CSL_EPWM_DECOMPSEL_TRIPH_SHIFT)));
+            ((uint32_t)source<<CSL_EPWM_DECOMPSEL_TRIPH_SHIFT)));
+    }
+    else
+    {
+        /* do nothing */
     }
 
 }
@@ -10745,14 +10780,14 @@ EPWM_selectDiodeEmulationPWMsignal(uint32_t base,uint32_t channel,
         HW_WR_REG32(registerOffset,
             ((HW_RD_REG32(registerOffset) &
             ~CSL_EPWM_DEACTCTL_PWMA_MASK) |
-            (signal<<CSL_EPWM_DEACTCTL_PWMA_SHIFT)));
+            ((uint32_t)signal<<CSL_EPWM_DEACTCTL_PWMA_SHIFT)));
     }
     else
     {
         HW_WR_REG32(registerOffset,
             ((HW_RD_REG32(registerOffset) &
             ~CSL_EPWM_DEACTCTL_PWMB_MASK) |
-            (signal<<CSL_EPWM_DEACTCTL_PWMB_SHIFT)));
+            ((uint32_t)signal<<CSL_EPWM_DEACTCTL_PWMB_SHIFT)));
     }
 }
 
@@ -10969,14 +11004,18 @@ EPWM_setDiodeEmulationMonitorModeStep(uint32_t base,uint32_t direction,
     {
         HW_WR_REG32(registerOffset,
         (HW_RD_REG32(registerOffset) & ~CSL_EPWM_DEMONSTEP_INCSTEP_MASK)
-        | (stepsize<<CSL_EPWM_DEMONSTEP_INCSTEP_SHIFT));
+        | ((uint32_t)stepsize<<CSL_EPWM_DEMONSTEP_INCSTEP_SHIFT));
     }
     else if(direction == EPWM_DE_COUNT_DOWN)
     {
         HW_WR_REG32(registerOffset,
             ((HW_RD_REG32(registerOffset) &
             ~CSL_EPWM_DEMONSTEP_DECSTEP_MASK) |
-            (stepsize<<CSL_EPWM_DEMONSTEP_DECSTEP_SHIFT)));
+            ((uint32_t)stepsize<<CSL_EPWM_DEMONSTEP_DECSTEP_SHIFT)));
+    }
+    else
+    {
+        /* do nothing */
     }
 }
 
@@ -11001,7 +11040,7 @@ EPWM_setDiodeEmulationMonitorCounterThreshold(uint32_t base,uint16_t threshold)
 
      HW_WR_REG32(registerOffset,
         ((HW_RD_REG32(registerOffset) & ~(CSL_EPWM_DEMONTHRES_THRESHOLD_MASK))
-        | (threshold<<CSL_EPWM_DEMONTHRES_THRESHOLD_SHIFT)) );
+        | ((uint32_t)threshold<<CSL_EPWM_DEMONTHRES_THRESHOLD_SHIFT)) );
 }
 
 
