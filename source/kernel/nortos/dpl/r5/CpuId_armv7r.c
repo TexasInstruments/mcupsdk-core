@@ -47,7 +47,7 @@ void CSL_armR5GetCpuID(CSL_ArmR5CPUInfo *cpuInfo)
     }
 }
 
-void CSL_armR5SetWFIMode()
+void CSL_armR5SetWFIMode(void)
 {
     __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
 }

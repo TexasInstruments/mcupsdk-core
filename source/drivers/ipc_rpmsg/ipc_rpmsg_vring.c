@@ -304,13 +304,13 @@ uint8_t *RPMessage_vringGetRxBufAddr(uint16_t remoteCoreId, uint16_t vringBufId)
 uint32_t RPMessage_vringGetSize(uint16_t numBuf, uint16_t msgSize, uint32_t align)
 {
     return  RPMessage_align(
-               (uint32_t)((sizeof(struct vring_desc) * numBuf) /* buffer descriptors for each buffer */
-              +(sizeof(uint16_t) * (uint16_t)(2U + numBuf)))    /* avail queue */
+               (uint32_t)((sizeof(struct vring_desc) * (uint32_t)numBuf) /* buffer descriptors for each buffer */
+              +(uint32_t)(sizeof(uint16_t) * (2U + (uint32_t)numBuf)))    /* avail queue */
               , align
             )
             +
             RPMessage_align(
-                (uint32_t)((sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * numBuf)) /* used queue */
+                (uint32_t)((sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * (uint32_t)numBuf)) /* used queue */
                 , align
                 )
             +
@@ -408,8 +408,8 @@ void RPMessage_vringReset(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_
      */
     offset_desc  = 0;
     offset_avail = offset_desc  + (sizeof(struct vring_desc) * numBuf);
-    offset_used  = offset_avail + RPMessage_align( (sizeof(uint16_t) * (uint16_t)(2U + numBuf)), align);
-    offset_buf   = offset_used  + RPMessage_align( (sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * numBuf), align);
+    offset_used  = offset_avail + RPMessage_align( (sizeof(uint16_t) * (uint32_t)(2U + (uint32_t)numBuf)), align);
+    offset_buf   = offset_used  + RPMessage_align( (sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * (uint32_t)numBuf), align);
 
     RPMessage_vringResetInternal(vringObj,
         numBuf, msgSize,
@@ -453,8 +453,8 @@ void RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const RPMes
      */
     offset_desc  = 0;
     offset_avail = offset_desc  + (sizeof(struct vring_desc) * numBuf);
-    offset_used  = offset_avail + RPMessage_align( (sizeof(uint16_t) * (uint16_t)(2U + numBuf)), align);
-    offset_buf   = offset_used  + RPMessage_align( (sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * numBuf), align);
+    offset_used  = offset_avail + RPMessage_align( (sizeof(uint16_t) * (uint32_t)(2U + (uint32_t)numBuf)), align);
+    offset_buf   = offset_used  + RPMessage_align( (sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * (uint32_t)numBuf), align);
     /* buffer offset is aligned to numBuf*msgSize*2, eg, 512*256*2 = 256KB after offset_used */
     offset_buf   = RPMessage_align( offset_buf, (uint32_t) numBuf*msgSize*2U);
 
