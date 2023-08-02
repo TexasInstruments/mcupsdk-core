@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title=" Pmu Multievent"
-        name = " pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang"
+        title="Pmu Multievent"
+        name = "pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -46,7 +46,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${CG_TOOL_ROOT}/lib
-            -m= pmu_multievent.${ConfigName}.map
+            -m=pmu_multievent.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -59,7 +59,7 @@
             --context r5fss0-0 --part AM263x --package ZCZ
         "
 
-        description="A  Pmu Multievent NORTOS project">
+        description="A Pmu Multievent NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

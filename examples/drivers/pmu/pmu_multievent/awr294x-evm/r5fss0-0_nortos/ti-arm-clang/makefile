@@ -21,19 +21,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:= pmu_multievent.$(PROFILE).out
+OUTNAME:=pmu_multievent.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:= pmu_multievent.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:= pmu_multievent.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_QSPI:= pmu_multievent.$(PROFILE).appimage_qspi
-BOOTIMAGE_NAME_SIGNED:= pmu_multievent.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:= pmu_multievent.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:= pmu_multievent.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:= pmu_multievent.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:= pmu_multievent.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_QSPI_HS:= pmu_multievent.$(PROFILE).appimage_qspi.hs
-BOOTIMAGE_NAME_HS_FS:= pmu_multievent.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=pmu_multievent.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=pmu_multievent.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_QSPI:=pmu_multievent.$(PROFILE).appimage_qspi
+BOOTIMAGE_NAME_SIGNED:=pmu_multievent.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=pmu_multievent.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=pmu_multievent.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=pmu_multievent.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=pmu_multievent.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_QSPI_HS:=pmu_multievent.$(PROFILE).appimage_qspi.hs
+BOOTIMAGE_NAME_HS_FS:=pmu_multievent.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -187,7 +187,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang  pmu_multievent ...
+	@echo  Scrubing: awr294x:r5fss0-0:nortos:ti-arm-clang pmu_multievent ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
