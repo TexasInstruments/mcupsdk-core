@@ -24,6 +24,10 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_SDL
 \endcond
 
+\cond SOC_AM243X
+-# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
+\endcond
+
 \cond SOC_AM263X
 -# \subpage EXAMPLES_PRU_IO
 \endcond
@@ -61,6 +65,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_MATHLIB_BENCHMARK
 -# \subpage EXAMPLES_SECURITY
 -# \subpage EXAMPLES_SDL
+-# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
 \endcond
 
 \cond SOC_AM62X

@@ -17,7 +17,7 @@ This example just does driver and board initialization and prints the string, He
  ^              | r5fss0-0 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/empty/
+ Example folder | examples/hello_world/
 
 \endcond
 
@@ -29,7 +29,7 @@ This example just does driver and board initialization and prints the string, He
  ^              | m4fss0-0 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER
- Example folder | examples/empty/
+ Example folder | examples/hello_world/
 
 \endcond
 
@@ -47,7 +47,7 @@ This example just does driver and board initialization and prints the string, He
  Toolchain      | ti-arm-clang
  ^              | arm.gnu.aarch64-none
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
- Example folder | examples/empty/
+ Example folder | examples/hello_world/
 
 \endcond
 # Steps to Run the Example

@@ -87,8 +87,8 @@ The main software components in the block diagram are described below
 </tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Tools (used on host machine)</b></td></tr>
 <tr>
-    <td> OpTI-Flash: Smart Placement
-    <td>\ref SMART_PLACEMENT_AND_BENCHMARK
+    <td> Smart Placement
+    <td>\ref SMART_PLACEMENT
     <td> Smart placement is a process which aims to place critical functions & data in faster memory and is usually used for large memory footprint application which requires XIP.
 </tr>
 <tr>

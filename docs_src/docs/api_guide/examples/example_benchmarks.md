@@ -8,9 +8,9 @@ This page lists all the examples related to benchmarks of SOC and board peripher
 
 \cond SOC_AM243X
    -# \subpage EXAMPLE_BENCHMARKDEMO
-   -# \subpage SMART_PLACEMENT_AND_BENCHMARK
+   -# \subpage BENCHMARK_SMART_PLACEMENT
 \endcond
 
 \cond SOC_AM263X
-   -# \subpage SMART_PLACEMENT_AND_BENCHMARK
+   -# \subpage BENCHMARK_SMART_PLACEMENT
 \endcond

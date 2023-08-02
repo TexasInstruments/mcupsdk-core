@@ -15,3 +15,6 @@ It consists of below sub-modules
 \cond SOC_AM64X || SOC_AM243X
 - \subpage TOOLS_SYSFW
 \endcond
+\cond SOC_AM243X || SOC_AM263X
+- \subpage SMART_PLACEMENT
+\endcond
