@@ -63,6 +63,19 @@ In this example,
 
 \endcond
 
+\cond SOC_AM273X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ ^              | r5fss0-1 nortos
+ ^              | c66ss0_nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/ipc/ipc_notify_echo
+
+\endcond
+
 # Steps to Run the Example
 
 \note This is a `system` or multi-core project, so refer to system project build instructions for CCS project or makefiles when building the example.
@@ -114,6 +127,18 @@ All tests have passed!!
 [IPC RPMSG ECHO] Number of remote cores = 4
 [IPC RPMSG ECHO] Total execution time = 2918245 usecs
 [IPC RPMSG ECHO] One way message latency = 3647 nsec
+All tests have passed!!
+\endcode
+\elseif SOC_AM273X
+\code
+[r5f0-1]     0.000025s : [IPC RPMSG ECHO] Remote Core waiting for messages from main core ... !!!
+[c66ss0]     2.046407s : [IPC RPMSG ECHO] Remote Core waiting for messages from main core ... !!!
+[IPC RPMSG ECHO] Message exchange started by main core !!!
+[IPC RPMSG ECHO] All echoed messages received by main core from 2 remote cores !!!
+[IPC RPMSG ECHO] Messages sent to each core = 100000
+[IPC RPMSG ECHO] Number of remote cores = 2
+[IPC RPMSG ECHO] Total execution time = 3647263 usecs
+[IPC RPMSG ECHO] One way message latency = 9118 nsec
 All tests have passed!!
 \endcode
 \else
