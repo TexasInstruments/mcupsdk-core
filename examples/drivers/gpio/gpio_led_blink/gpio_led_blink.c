@@ -59,6 +59,7 @@ void gpio_led_blink_main(void *args)
     /* Get address after translation translate */
     gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_LED_BASE_ADDR);
     pinNum       = GPIO_LED_PIN;
+    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_LED_DIR);
     while(loopcnt > 0)
     {
         GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
