@@ -64,7 +64,8 @@ void  test_sdl_baremetal_app_runner (void);
 /*                         Global Variables                                  */
 /*===========================================================================*/
 sdlasmTest_t  sdlasmTestList[] = {
-    {sdl_apiTest,        "ASM API TEST" ,            SDL_APP_TEST_NOT_RUN },
+    {sdl_apiTest,        " SDL_CPU_staticRegisterRead API TEST" ,            SDL_APP_TEST_NOT_RUN },
+    {sdl_apiNegTest,        " SDL_CPU_staticRegisterRead API NEG TEST" ,            SDL_APP_TEST_NOT_RUN },
     {NULL,                  "TERMINATING CONDITION",    SDL_APP_TEST_NOT_RUN }
 };
 
@@ -96,7 +97,7 @@ void test_sdl_baremetal_app (void)
     TEST_ASSERT_EQUAL_INT32(BOARD_SOK, status);
 #endif
 
-    DebugP_log("\r\n ASM Test Application\r\n");
+    DebugP_log("\r\n SDL_CPU_staticRegisterRead Test Application\r\n");
 
     for ( i = 0; sdlasmTestList[i].testFunction != NULL; i++)
     {

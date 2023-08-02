@@ -96,6 +96,7 @@ void sdlApp_print(const char * str);
 /*                         External function declarations                    */
 /*===========================================================================*/
 extern int32_t sdl_apiTest(void);
+extern int32_t sdl_apiNegTest(void);
 
 /*===========================================================================*/
 /*                   Local Function definitions                              */

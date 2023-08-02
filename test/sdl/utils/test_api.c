@@ -51,6 +51,7 @@
 SDL_R5FCPU_StaticRegs  pCPUStaticRegs;
 
 int32_t  sdl_apiTest(void);
+int32_t  sdl_apiNegTest(void);
 void    print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs);
 
 /*===========================================================================*/
@@ -121,7 +122,7 @@ void  print_CPU_RegisterValue(SDL_R5FCPU_StaticRegs  *pCPUStaticRegs)
 }
 int32_t sdl_apiTest(void)
 {
-    uint32_t testResult=0;
+    int32_t testResult=0;
     /*Read all R5F cpu static registers*/
     testResult = SDL_CPU_staticRegisterRead(&pCPUStaticRegs);
 
@@ -202,4 +203,26 @@ int32_t sdl_apiTest(void)
 	return (testResult);
 
 }
+
+int32_t sdl_apiNegTest(void)
+{
+    int32_t testResult=0;
+
+    /*Read all R5F cpu static registers with negative arguments*/
+    testResult = SDL_CPU_staticRegisterRead(NULL);
+
+    if (testResult==SDL_PASS)
+    {
+        DebugP_log("\n SDL_CPU_staticRegisterRead API Neg test failed on line no: %d\r\n", __LINE__);
+        testResult = -1;
+    }
+    else
+    {
+        testResult=SDL_PASS;
+    }
+
+    return (testResult);
+
+}
+
 /* Nothing past this point */
