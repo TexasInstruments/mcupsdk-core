@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -48,7 +48,7 @@ void ADC_setMode(uint32_t base, ADC_Resolution resolution,
         ((HW_RD_REG16(base + CSL_ADC_ADCCTL2) &
         ~(CSL_ADC_ADCCTL2_RESOLUTION_MASK | CSL_ADC_ADCCTL2_SIGNALMODE_MASK)) |
         (((uint16_t)resolution<<CSL_ADC_ADCCTL2_RESOLUTION_SHIFT) |
-        ((uint16_t)signalMode)<<CSL_ADC_ADCCTL2_SIGNALMODE_SHIFT)));
+        (((uint16_t)signalMode)<<CSL_ADC_ADCCTL2_SIGNALMODE_SHIFT))));
 }
 
 //*****************************************************************************

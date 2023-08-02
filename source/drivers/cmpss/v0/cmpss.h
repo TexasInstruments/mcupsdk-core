@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2021 Texas Instruments Incorporated.
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -813,13 +813,13 @@ CMPSS_configBlanking(uint32_t base, uint16_t pwmBlankSrc)
     //Program COMPDACCTL and COMPDACCTL2
     HW_WR_REG16((base + CSL_CMPSSA_COMPDACCTL),
         (HW_RD_REG16(base + CSL_CMPSSA_COMPDACCTL) &
-        ~CSL_CMPSSA_COMPDACCTL_BLANKSOURCE_MASK) | (((pwmBlankSrc - 1U)&0xF) <<
+        ~CSL_CMPSSA_COMPDACCTL_BLANKSOURCE_MASK) | (((pwmBlankSrc - 1U)&0xFU) <<
         CSL_CMPSSA_COMPDACCTL_BLANKSOURCE_SHIFT));
 
 
     HW_WR_REG16((base + CSL_CMPSSA_COMPDACCTL2),
         (HW_RD_REG16(base + CSL_CMPSSA_COMPDACCTL2) &
-        ~CSL_CMPSSA_COMPDACCTL2_BLANKSOURCEUSEL_MASK) | ((((pwmBlankSrc-1)>>4) <<
+        ~CSL_CMPSSA_COMPDACCTL2_BLANKSOURCEUSEL_MASK) | ((((pwmBlankSrc-1U)>>4U) <<
         CSL_CMPSSA_COMPDACCTL2_BLANKSOURCEUSEL_SHIFT) &
         CSL_CMPSSA_COMPDACCTL2_BLANKSOURCEUSEL_MASK));
 }
@@ -886,8 +886,8 @@ CMPSS_enableDEmode(uint32_t base)
 {
     HW_WR_REG16((base + CSL_CMPSSA_COMPDACCTL2),
         HW_RD_REG16(base + CSL_CMPSSA_COMPDACCTL2) |
-        (0x1<<CSL_CMPSSA_COMPDACCTL2_DEENABLE_SHIFT) &
-        CSL_CMPSSA_COMPDACCTL2_DEENABLE_MASK);
+        ((0x1U<<CSL_CMPSSA_COMPDACCTL2_DEENABLE_SHIFT) &
+        CSL_CMPSSA_COMPDACCTL2_DEENABLE_MASK));
 
 }
 
@@ -907,7 +907,7 @@ CMPSS_disableDEmode(uint32_t base)
 {
     HW_WR_REG16((base + CSL_CMPSSA_COMPDACCTL2),
         HW_RD_REG16(base + CSL_CMPSSA_COMPDACCTL2) &
-        ~((0x1<<CSL_CMPSSA_COMPDACCTL2_DEENABLE_SHIFT) &
+        ~((0x1U<<CSL_CMPSSA_COMPDACCTL2_DEENABLE_SHIFT) &
         CSL_CMPSSA_COMPDACCTL2_DEENABLE_MASK));
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -670,7 +670,7 @@ ADC_forceSOC(uint32_t base, ADC_SOCNumber socNumber)
     //
     // Write to the register that will force a 1 to the corresponding SOC flag
     //
-    HW_WR_REG16(base + CSL_ADC_ADCSOCFRC1, (1U << (uint16_t)socNumber));
+    HW_WR_REG16(base + CSL_ADC_ADCSOCFRC1, ((uint16_t)1U << (uint16_t)socNumber));
 }
 
 //*****************************************************************************
@@ -755,7 +755,7 @@ ADC_clearInterruptStatus(uint32_t base, ADC_IntNumber adcIntNum)
     //
     // Clear the specified interrupt.
     //
-    HW_WR_REG16(base + CSL_ADC_ADCINTFLGCLR, (1U << (uint16_t)adcIntNum));
+    HW_WR_REG16(base + CSL_ADC_ADCINTFLGCLR, ((uint16_t)1U << (uint16_t)adcIntNum));
 }
 
 //*****************************************************************************
@@ -811,7 +811,7 @@ ADC_clearInterruptOverflowStatus(uint32_t base, ADC_IntNumber adcIntNum)
     //
     // Clear the specified interrupt overflow bit.
     //
-    HW_WR_REG16(base + CSL_ADC_ADCINTOVFCLR, (1U << (uint16_t)adcIntNum));
+    HW_WR_REG16(base + CSL_ADC_ADCINTOVFCLR, ((uint16_t)1U << (uint16_t)adcIntNum));
 }
 
 //*****************************************************************************
@@ -840,7 +840,7 @@ ADC_readResult(uint32_t resultBase, ADC_SOCNumber socNumber)
     // Return the ADC result for the selected SOC.
     //
     return(HW_RD_REG16(resultBase + CSL_ADC_RESULT_ADCRESULT0 +
-        socNumber * ADC_RESULT_ADCRESULTx_STEP));
+        ((uint32_t)socNumber * ADC_RESULT_ADCRESULTx_STEP)));
 }
 
 //*****************************************************************************
@@ -895,7 +895,7 @@ ADC_setBurstModeConfig(uint32_t base, ADC_Trigger trigger, uint16_t burstSize)
     //
     // Check the arguments.
     //
-    DebugP_assert((trigger & ~0x7FU) == 0U);
+    DebugP_assert(((uint32_t)trigger & ~0x7FU) == 0U);
     DebugP_assert((burstSize >= 1U) && (burstSize <= 16U));
 
     //
@@ -1219,7 +1219,7 @@ ADC_clearPPBEventStatus(uint32_t base, ADC_PPBNumber ppbNumber,
     //
     HW_WR_REG16(base + CSL_ADC_ADCEVTCLR,
         (HW_RD_REG16(base + CSL_ADC_ADCEVTCLR) |
-        evtFlags << ((uint16_t)ppbNumber * 4U)));
+        (evtFlags << ((uint16_t)ppbNumber * 4U))));
 }
 
 //*****************************************************************************
@@ -1246,7 +1246,7 @@ ADC_readPPBResult(uint32_t resultBase, ADC_PPBNumber ppbNumber)
     // Return the result of selected PPB.
     //
     return((int32_t)HW_RD_REG32(resultBase + CSL_ADC_RESULT_ADCPPB1RESULT +
-           (ppbNumber * ADC_RESULT_ADCPPBxRESULT_STEP)));
+           ((uint32_t)ppbNumber * ADC_RESULT_ADCPPBxRESULT_STEP)));
 }
 
 //*****************************************************************************
@@ -1533,7 +1533,7 @@ ADC_enableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
     // even, we'll be accessing the upper byte and will need to shift.
     //
     intRegAddr = base + CSL_ADC_ADCINTSEL1N2 +
-        ((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP;
+        (((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP);
     shiftVal = ((uint16_t)adcIntNum & 0x1U) << 3U;
 
     //
@@ -1573,7 +1573,7 @@ ADC_disableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
     // even, we'll be accessing the upper byte and will need to shift.
     //
     intRegAddr = base + CSL_ADC_ADCINTSEL1N2 +
-        ((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP;
+        (((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP);
     shiftVal = ((uint16_t)adcIntNum & 0x1U) << 3U;
 
     //
@@ -1617,7 +1617,7 @@ ADC_setInterruptSource(uint32_t base, ADC_IntNumber adcIntNum,
     // even, we'll be accessing the upper byte and will need to shift.
     //
     intRegAddr = base + CSL_ADC_ADCINTSEL1N2 +
-        ((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP;
+        (((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP);
     shiftVal = ((uint16_t)adcIntNum & 0x1U) << 3U;
 
     //
@@ -1659,7 +1659,7 @@ ADC_enableContinuousMode(uint32_t base, ADC_IntNumber adcIntNum)
     // even, we'll be accessing the upper byte and will need to shift.
     //
     intRegAddr = base + CSL_ADC_ADCINTSEL1N2 +
-        ((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP;
+        (((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP);
     shiftVal = ((uint16_t)adcIntNum & 0x1U) << 3U;
 
     //
@@ -1701,7 +1701,7 @@ ADC_disableContinuousMode(uint32_t base, ADC_IntNumber adcIntNum)
     // even, we'll be accessing the upper byte and will need to shift.
     //
     intRegAddr = base + CSL_ADC_ADCINTSEL1N2 +
-        ((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP;
+        (((uint32_t)adcIntNum >> 1) * ADC_ADCINTSELxNy_STEP);
     shiftVal = ((uint16_t)adcIntNum & 0x1U) << 3U;
 
     //
