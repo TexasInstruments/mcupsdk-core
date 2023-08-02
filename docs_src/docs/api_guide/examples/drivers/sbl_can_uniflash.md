@@ -162,14 +162,14 @@ In this application, the CAN settings are:
     - Create a flash configuration file, using the default flash configuration file present, at below as reference
 
     \code
-        ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_can.cfg
+        ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_can_uniflash.cfg
     \endcode
 
     - In this config file, modify the paths to the flashing application and CAN bootloader, in case you are not using the pre-built applications
 
         \code
         --flash-writer={path to flash application .tiimage}
-        --file={path to CAN bootloader .tiimage} --operation=flash --flash-offset=0x0
+        --file={path to CAN Uniflash .tiimage} --operation=flash --flash-offset=0x0
         \endcode
 
     - Run below python command on the Windows command prompt (`cmd.exe`) or Linux bash shell to flash the files.
@@ -184,13 +184,8 @@ In this application, the CAN settings are:
     - After flashing the bootloader, Setup the EVM in QSPI Boot Mode.
 
     - **CAN Uniflash Python Script**
-    - The application image file is sent using a python script:
 
-        \code
-        cd ${SDK_INSTALL_PATH}/tools/boot
-        python can_uniflash.py --cfg={path to your edited config file}
-        \endcode
-
+    - For sending the app-image default_sbl_can_uniflash_app.cfg can be editted with the path of the app-image of the desired application.
     - cfg file contains only one command with arguments like --file, --operation and --flash-offset. For example,
 
         For AM263x, Default Flash Offset is at 0x80000.
@@ -202,6 +197,14 @@ In this application, the CAN settings are:
         \code
         --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0xA0000
         \endcode
+    - The application image file is sent using `can_uniflash.py` python script:
+
+        \code
+        cd ${SDK_INSTALL_PATH}/tools/boot
+        python can_uniflash.py --cfg={path to your edited sbl_can_uniflash_app config file}
+        \endcode
+
+
 
 
 # See Also
