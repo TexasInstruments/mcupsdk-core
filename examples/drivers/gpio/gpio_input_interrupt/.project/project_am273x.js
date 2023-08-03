@@ -59,14 +59,6 @@ const libs_freertos_r5f = {
     ],
 };
 
-const libs_nortos_c66 = {
-    common: [
-        "nortos.am273x.c66.ti-c6000.${ConfigName}.lib",
-        "drivers.am273x.c66.ti-c6000.${ConfigName}.lib",
-        "board.am273x.c66.ti-c6000.${ConfigName}.lib",
-    ],
-};
-
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -107,24 +99,8 @@ const templates_freertos_r5f =
     }
 ];
 
-const templates_nortos_c66 =
-[
-    {
-        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
-        input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "gpio_input_interrupt_main",
-        },
-    },
-];
-
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
-    { device: device, cpu: "c66ss0",   cgt: "ti-c6000",     board: "am273x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -144,7 +120,7 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-	build_property.libdirs = libdirs_nortos;										
+	build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
@@ -153,10 +129,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
     }
-    if(buildOption.cpu.match(/c66*/)) {
-        build_property.libs = libs_nortos_c66;
-        build_property.templates = templates_nortos_c66;
-    }
+
     return build_property;
 }
 

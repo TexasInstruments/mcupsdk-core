@@ -1063,39 +1063,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Gpio Input Interrupt Example. CPU is C66SS0 running NORTOS.",
-        "name": "gpio_input_interrupt",
-        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am273x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
-        "devtools": [
-            "AM273x_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ccs"
-        ],
-        "subCategories": [
-            "drivers",
-            "gpio",
-            "gpio_input_interrupt",
-            "c66ss0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "An Gpio Led Blink example. This example demonstrates Gpio Led BlinkAn Gpio Led Blink example. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
