@@ -31,9 +31,3 @@ This page lists all the examples related to Security.
 -# \subpage EXAMPLES_DRIVERS_DTHE_HMAC_SHA_256
 -# \subpage EXAMPLES_DRIVERS_DTHE_HMAC_SHA_512
 \endcond
-\cond SOC_AM263X
--# \subpage EXAMPLES_DRIVERS_DTHE_PKA_ECDSA_SIGN_VERIFY
--# \subpage EXAMPLES_DRIVERS_DTHE_PKA_RSA_ENC_DEC
--# \subpage EXAMPLES_DRIVERS_DTHE_PKA_RSA_SIGN_VERIFY
--# \subpage EXAMPLES_DRIVERS_DTHE_RNG
-\endcond
