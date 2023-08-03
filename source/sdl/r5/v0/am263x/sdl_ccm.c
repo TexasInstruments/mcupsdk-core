@@ -43,6 +43,7 @@
 /*                             Global Variables                               */
 /* ========================================================================== */
 volatile bool Erroresm = false;
+volatile uint8_t CCMInstance = 0u;
 /* ========================================================================== */
 /*                             Macros                                 */
 /* ========================================================================== */
@@ -57,7 +58,7 @@ volatile bool Erroresm = false;
                                             | SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR1_STET1_MASK \
                                             | SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR1_STC1_MASK \
                                             | SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR1_CMPE1_MASK)
-											
+
 #define        SDL_ESM_CCM_0_SELF_TEST_ERR_INT   83U
    /**< R5F0 CCM Interrupt source Self test error */
 #define        SDL_ESM_CCM_0_LOCKSTEP_COMPARE   84U
@@ -68,7 +69,7 @@ volatile bool Erroresm = false;
    /**< R5F0 VIM Interrupt source Self test error */
 #define        SDL_ESM_R5F1_VIM_COMPARE_ERR_INT   75U
    /**< R5F1 VIM Interrupt lockstep error */
-   
+
 #define SDL_INTR_PRIORITY_LVL             1U
 #define SDL_ENABLE_ERR_PIN                1U
 #define SDL_ESM_MAX_EVENT_MAP_WORDS       4U
@@ -132,7 +133,7 @@ static int32_t SDL_CCM_CheckSelfTestErrorSource(SDL_CCM_MonitorType *monitorType
     int32_t retVal = SDL_PASS;
 
     /* Read status register of CPU output compare block  */
-    (void)SDL_armR5ReadCCMRegister (BASEADDRESS,
+    (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                            SDL_MCU_ARMSS_CCMR5_CCMSR1_REGID,
                                            &statusValue,
                                            NULL);
@@ -143,7 +144,7 @@ static int32_t SDL_CCM_CheckSelfTestErrorSource(SDL_CCM_MonitorType *monitorType
         } else {
 
             /* Read status register of VIM compare block  */
-            (void)SDL_armR5ReadCCMRegister (BASEADDRESS,
+            (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                                    SDL_MCU_ARMSS_CCMR5_CCMSR2_REGID,
                                                    &statusValue,
                                                    NULL);
@@ -153,7 +154,7 @@ static int32_t SDL_CCM_CheckSelfTestErrorSource(SDL_CCM_MonitorType *monitorType
              } else {
 
                  /* Read status register of Inactivity monitor block  */
-                 (void)SDL_armR5ReadCCMRegister (BASEADDRESS,
+                 (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                                         SDL_MCU_ARMSS_CCMR5_CCMSR3_REGID,
                                                         &statusValue,
                                                         NULL);
@@ -290,7 +291,7 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
 
     /* Read polarity convert register */
     /* Read status register 1 */
-	retVal = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[0],
+	retVal = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                         SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID,
                                         &polarityRegValue,
                                         NULL);
@@ -298,7 +299,7 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
 	{
 	    if(polarityRegValue != (uint32_t)0U) {
 	        /* If polarity reverted; switch back to 0 */
-					(void)SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[0],
+					(void)SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[CCMInstance],
 	                                                   SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID,
 	                                                   0u,
 	                                                       NULL);
@@ -318,7 +319,7 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
 
     if (retVal == SDL_PASS) {
         /* Read status register 1 */
-        (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[0],
+        (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                                monitorTypeStatusRegister,
                                                &status,
                                                NULL);
@@ -330,7 +331,7 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
     if (retVal == SDL_PASS) {
         /* Read polarity convert register */
          /* Read status register 1 */
-         retVal = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[0],
+         retVal = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                                 monitorTypeKeyRegister,
                                                 &keyRegValue,
                                                 NULL);
@@ -339,13 +340,13 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
     if (retVal == SDL_PASS) {
         if (keyRegValue == (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_MODE) {
             /* Switch it back to active mode */
-            (void)SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[0],
+            (void)SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[CCMInstance],
                                                        monitorTypeKeyRegister,
                                                        ((uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE),
                                                        NULL);
         }
             /* Clear status register */
-        retVal = SDL_armR5ConfigureCCMRegister (SDL_CCM_baseAddress[0],
+        retVal = SDL_armR5ConfigureCCMRegister (SDL_CCM_baseAddress[CCMInstance],
                                                        monitorTypeStatusRegister,
                                                        status,
                                                     NULL);
@@ -590,12 +591,15 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
     uint32_t timesCount=0;
     SDL_McuArmssCcmR5RegId monitorTypeKeyRegister;
     SDL_McuArmssCcmR5RegId monitorTypeStatusRegister;
+
+
     if((instance >= SDL_CCM_MAX_INSTANCE) || (monitorType > SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR))
     {
         sdlResult = SDL_EBADARGS;
     }
     else
     {
+        CCMInstance = instance;
         /* Get the Key register for the monitor type */
         sdlResult = SDL_CCM_getMonitorKeyRegister(monitorType, &monitorTypeKeyRegister);
     }
@@ -862,24 +866,24 @@ int32_t SDL_VIM_cfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL
 				(((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))) )
 		{
 			bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
-	
+
 			/* Configure INTMAP */
 			regMask = (uint32_t)(1U) << bitNum;
 			regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
 			regVal &= ~regMask;
 			regVal |= intrMap;
 			SDL_REG32_WR( &pRegs->GRP[groupNum].INTMAP, regVal );
-	
+
 			/* Configure INTTYPE */
 			regMask = (uint32_t)(1U) << bitNum;
 			regVal = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
 			regVal &= ~regMask;
 			regVal |= intrType << bitNum;
 			SDL_REG32_WR( &pRegs->GRP[groupNum].INTTYPE, regVal );
-	
+
 			/* Configure PRI */
 			SDL_REG32_WR( &pRegs->PRI[intrNum].INT, SDL_FMK( VIM_PRI_INT_VAL, pri ) );
-	
+
 			/* Configure VEC */
 			SDL_REG32_WR( &pRegs->VEC[intrNum].INT, vecAddr );
 				retVal = SDL_PASS;
@@ -903,7 +907,7 @@ int32_t SDL_VIM_verifyCfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pr
     {
         maxIntrs   = pRegs->INFO;
         groupNum = intrNum / SDL_VIM_NUM_INTRS_PER_GROUP;
-    
+
 		/* Condition "(vecAddr - 1U)" is need for THUMB Mode as TI ARM CLANG marks LSB as '1' */
 		if( (intrNum < maxIntrs)                              &&
 			(pri <= SDL_VIM_PRI_INT_VAL_MAX)                  &&
@@ -913,22 +917,22 @@ int32_t SDL_VIM_verifyCfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pr
 				(((vecAddr - (uint32_t)1U) & SDL_VIM_VEC_INT_VAL_MASK) == (vecAddr - (uint32_t)1U))))
 		{
 			bitNum = intrNum & (SDL_VIM_NUM_INTRS_PER_GROUP-1U);
-	
+
 			/* Read INTMAP */
 			intrMapVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTMAP );
 			/* Get the interrupt map value */
 			intrMapVal  = intrMapVal >> bitNum;
 			intrMapVal &= (uint32_t)(0x1U);
-	
+
 			/* Read INTTYPE */
 			intrTypeVal  = SDL_REG32_RD( &pRegs->GRP[groupNum].INTTYPE );
 			/* Get the interrupt type value */
 			intrTypeVal  = intrTypeVal >> bitNum;
 			intrTypeVal &= (uint32_t)(0x1U);
-	
+
 			/* Read PRI */
 			priVal = SDL_REG32_RD( &pRegs->PRI[intrNum].INT);
-	
+
 			/* Read VEC */
 			vecVal = SDL_REG32_RD( &pRegs->VEC[intrNum].INT);
 				retVal = SDL_PASS;
@@ -938,7 +942,7 @@ int32_t SDL_VIM_verifyCfgIntr( SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pr
     if (retVal != SDL_EFAIL)
     {
         /* verify if parameter matches */
-        if ((intrMapVal != intrMap) || 
+        if ((intrMapVal != intrMap) ||
 			(intrTypeVal != (uint32_t)intrType) ||
 			(priVal != pri) ||
 			(vecVal != vecAddr))
