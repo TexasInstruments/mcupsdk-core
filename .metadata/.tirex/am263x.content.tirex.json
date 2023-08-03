@@ -6640,8 +6640,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
@@ -6673,8 +6673,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
@@ -6706,8 +6706,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
@@ -6739,8 +6739,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"
@@ -6772,8 +6772,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263"
@@ -6805,8 +6805,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263"
@@ -6838,8 +6838,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263"
@@ -6871,8 +6871,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263"
@@ -11185,176 +11185,6 @@
             "crypto",
             "dthe_sha",
             "crypto_hmac_sha512",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Dthe Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "dthe_ecdsa_signing_verification",
-        "location": "../../examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "dthe_pka",
-            "ecdsa_signing_verification",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Crypto Rsa Encryption Decryption Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "crypto_rsa_encryption_decryption",
-        "location": "../../examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "dthe_pka",
-            "rsa_encryption_decryption",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Dthe Rsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "dthe_rsa_signing_verification",
-        "location": "../../examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "dthe_pka",
-            "rsa_signing_verification",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Dthe Rng Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "dthe_rng",
-        "location": "../../examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "dthe_rng",
-            "rng",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Dthe Rng Drbg Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "dthe_rng_drbg",
-        "location": "../../examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "security",
-            "crypto",
-            "dthe_rng",
-            "rng_drbg",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

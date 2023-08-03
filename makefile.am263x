@@ -371,11 +371,6 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_512/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/r5f_cpu_utils/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/pbist_mcu/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/pbist/pbist_mcu/am263x-cc/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -829,14 +824,14 @@ BUILD_COMBO_EXAMPLE_ALL += mmcsd_file_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -951,11 +946,6 @@ BUILD_COMBO_EXAMPLE_ALL += dthe_sha_256_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_sha_512_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha256_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += r5f_cpu_utils_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang
@@ -1529,28 +1519,28 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+ pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang:
+ pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang:
+ pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang:
+ pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+ pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang:
+ pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang:
+ pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang:
+ pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile all
 
  qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
@@ -1904,21 +1894,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  r5f_cpu_utils_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/r5f_cpu_utils/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2202,14 +2177,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_file_io_am263x-cc_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2324,11 +2299,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_256_am263x-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_512_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha256_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += r5f_cpu_utils_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean
@@ -2902,28 +2872,28 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_clean:
+ pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile clean
 
  qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -3277,21 +3247,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  r5f_cpu_utils_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/r5f_cpu_utils/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3575,14 +3530,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_file_io_am263x-cc_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_file_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_raw_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -3697,11 +3652,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_256_am263x-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_512_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha256_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += r5f_cpu_utils_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_example_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub
@@ -4275,28 +4225,28 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mmcsd_raw_io_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-cc_r5fss0-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-cc_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-cc_r5fss1-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-cc/r5fss1-1_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-lp_r5fss0-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-lp_r5fss1-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-0_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_scrub:
+ pmu_multievent_am263x-lp_r5fss1-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/am263x-lp/r5fss1-1_nortos/ti-arm-clang -f makefile scrub
 
  qspi_flash_dma_transfer_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
@@ -4649,21 +4599,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dthe_hmac_sha512_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_hmac_sha512/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dthe_ecdsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/security/crypto/dthe_pka/ecdsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- crypto_rsa_encryption_decryption_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_encryption_decryption/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dthe_rsa_signing_verification_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/security/crypto/dthe_pka/rsa_signing_verification/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dthe_rng_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/security/crypto/dthe_rng/rng/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- dthe_rng_drbg_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/security/crypto/dthe_rng/rng_drbg/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  r5f_cpu_utils_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/r5f_cpu_utils/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
