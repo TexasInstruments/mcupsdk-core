@@ -5260,8 +5260,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
@@ -5293,8 +5293,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
@@ -5326,8 +5326,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
@@ -5359,8 +5359,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-evm/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
@@ -5392,8 +5392,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
@@ -5425,8 +5425,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
@@ -5458,8 +5458,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
@@ -5491,8 +5491,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am64x-sk/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
@@ -12138,6 +12138,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A USB DFU example CPU is R5FSS0-0 running NORTOS.",
+        "name": "dfu_nortos",
+        "location": "../../examples/usb/device/dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "usb",
+            "device",
+            "dfu",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A USB Device NCM example CPU is R5FSS0-0 running NORTOS.",
         "name": "ncm_nortos",
         "location": "../../examples/usb/device/ncm/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -12187,39 +12220,6 @@
             "usb",
             "device",
             "rndis",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A USB DFU example CPU is R5FSS0-0 running NORTOS.",
-        "name": "dfu_nortos",
-        "location": "../../examples/usb/device/dfu/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "usb",
-            "device",
-            "dfu",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

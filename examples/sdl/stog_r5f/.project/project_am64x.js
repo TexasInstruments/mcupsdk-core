@@ -70,19 +70,6 @@ const libs_nortos_r5f = {
 
 const readmeDoxygenPageTag = "EXAMPLES_SDL_STOG"
 
-const systemProjects = [
-    {
-        name: "sdl_stog_r5f",
-        tag: "nortos",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am64x-evm",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
-            { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
-        ],
-    }
-];
 
 const lnkfiles = {
     common: [
@@ -119,9 +106,24 @@ const templates_nortos_r5f =
     }
 ];
 
+
 const buildOptionCombos = [
-    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos",isPartOfSystemProject: true},
+];
+
+const systemProjects = [
+    {
+        name: "sdl_stog_r5f",
+        tag: "nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am64x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+            { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+        ],
+    }
 ];
 
 function getComponentProperty(device) {
