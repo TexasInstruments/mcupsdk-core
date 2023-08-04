@@ -120,6 +120,7 @@ void IpcNotify_isr(void *args)
     IpcNotify_SwQueue *swQ;
     uint32_t core, value;
     uint16_t clientId;
+    uint32_t remoteCoreId;
     int32_t status;
     uint32_t pendingIntr;
 
@@ -156,27 +157,31 @@ void IpcNotify_isr(void *args)
 
         for(core=0; core<pInterruptConfig->numCores; core++)
         {
-            IpcNotify_getReadSwQ(pInterruptConfig->coreIdList[core], &swQ);
-            DebugP_assertNoLog(swQ!=NULL);
+            remoteCoreId = pInterruptConfig->coreIdList[core];
 
-            do
+            if(gIpcNotifyCtrl.isCoreEnabled[remoteCoreId] != 0U)
             {
-                status = IpcNotify_mailboxReadSwQ(swQ, &value);
-                if(status == SystemP_SUCCESS)
+                IpcNotify_getReadSwQ(remoteCoreId, &swQ);
+                DebugP_assertNoLog(swQ!=NULL);
+                do
                 {
-                    clientId = (value >> IPC_NOTIFY_CLIENT_ID_SHIFT) & (IPC_NOTIFY_CLIENT_ID_MAX-1U);
-
-                    if(gIpcNotifyCtrl.callback[clientId]!=NULL)
+                    status = IpcNotify_mailboxReadSwQ(swQ, &value);
+                    if(status == SystemP_SUCCESS)
                     {
-                        gIpcNotifyCtrl.callback[clientId](
-                                pInterruptConfig->coreIdList[core],
-                                clientId,
-                                (value & (IPC_NOTIFY_MSG_VALUE_MAX-1U)),
-                                gIpcNotifyCtrl.callbackArgs[clientId]
-                                );
+                        clientId = (value >> IPC_NOTIFY_CLIENT_ID_SHIFT) & (IPC_NOTIFY_CLIENT_ID_MAX-1U);
+
+                        if(gIpcNotifyCtrl.callback[clientId]!=NULL)
+                        {
+                            gIpcNotifyCtrl.callback[clientId](
+                                    pInterruptConfig->coreIdList[core],
+                                    clientId,
+                                    (value & (IPC_NOTIFY_MSG_VALUE_MAX-1U)),
+                                    gIpcNotifyCtrl.callbackArgs[clientId]
+                                    );
+                        }
                     }
-                }
-            } while(status == SystemP_SUCCESS);
+                } while(status == SystemP_SUCCESS);
+            }
         }
 
         /* we need to keeping doing this until all status bits are 0, else we dont get new interrupt at R5F */
