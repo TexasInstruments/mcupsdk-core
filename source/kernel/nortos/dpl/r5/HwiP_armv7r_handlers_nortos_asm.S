@@ -116,8 +116,11 @@ HwiP_data_abort_handler:
          * the exception was generated.
          */
 
-         /* Compare thumb state bit in CSPR */
-        MRS r0, CPSR
+        /*   Push used registers. */
+        PUSH	{r0-r4, r12}
+
+        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
+        MRS r0, SPSR
         AND r1, r0, #0x20
         CMP R1, #0
 
@@ -133,18 +136,15 @@ HwiP_data_abort_handler:
         MRS	lr, SPSR
         PUSH	{lr}
 
-        /*   Push used registers. */
-        PUSH	{r0-r4, r12}
-
         /*   Call the interrupt handler. */
         LDR	r1, HwiP_data_abort_handler_const
         BLX	r1
 
         /*  Restore used registers, LR and SPSR before  returning. */
-        POP	{r0-r4, r12}
         POP	{LR}
         MSR	SPSR_cxsf, LR
         POP	{LR}
+        POP	{r0-r4, r12}
         MOVS	PC, LR
 
 HwiP_irq_handler_const: .word HwiP_irq_handler_c

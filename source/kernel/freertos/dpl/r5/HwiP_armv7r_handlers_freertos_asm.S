@@ -48,25 +48,36 @@ HwiP_data_abort_handler:
          * instruction set) points to the second instruction beyond the address where
          * the exception was generated.
          */
-        SUB		lr, lr, #6
+
+        /*   Push used registers. */
+        PUSH	{r0-r4, r12}
+
+        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
+        MRS r0, SPSR
+        AND r1, r0, #0x20
+        CMP R1, #0
+
+        /* branches to label ARM_STATE if the thumb state bit is not set */
+        BEQ ARM_STATE
+        SUB lr, lr, #2
+        ARM_STATE:
+        SUB lr, lr, #4
+        END:
 
         /*   Push the return address and SPSR. */
         PUSH	{lr}
         MRS	lr, SPSR
         PUSH	{lr}
 
-        /*   Push used registers. */
-        PUSH	{r0-r4, r12}
-
         /*   Call the interrupt handler. */
         LDR	r1, HwiP_data_abort_handler_const
         BLX	r1
 
         /*  Restore used registers, LR and SPSR before  returning. */
-        POP	{r0-r4, r12}
         POP	{LR}
         MSR	SPSR_cxsf, LR
         POP	{LR}
+        POP	{r0-r4, r12}
         MOVS	PC, LR
 
 HwiP_data_abort_handler_const: .word HwiP_data_abort_handler_c
