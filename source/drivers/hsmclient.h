@@ -190,6 +190,22 @@ typedef struct FirewallReq_t_
 
 /**
  * @brief
+ * This is SWRev type which holds the information
+ * regarding Revision identifier and value corresponding to it .
+ *
+ * @param revValue  stores software revision value retreived from sec manager.
+ * @param revId    revision identifier
+ * @param rsvd     reserved for future use.
+ */
+typedef struct SWRev_t_
+{
+    uint32_t revValue; /**< Value for sw rev retreived from sec manager.*/
+    uint8_t  revId;      /**< revision identifier*/
+    uint8_t  rsvd[3];     /**< Reserved */
+} SWRev_t;
+
+/**
+ * @brief
  * Initialize the HSM client for current core.
  *
  * @param params [IN] SIPC_notify params.
@@ -381,6 +397,36 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
 
 /**
  * @brief
+ *  The service issued to HSM Server verifies the certificate and process the keywriter operations,
+ * @param HsmClient         [IN] Client object which is using this openDbgFirewalls API.
+ * @param certHeader        [IN] point to the location of certificate in the device memory.
+ * @param timeout           [IN] amount of time to block waiting for
+ * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ * 3. SystemP_TIMEOUT if timeout exception occours.
+ */
+int32_t HsmClient_keyWriter(HsmClient_t* HsmClient,
+                                        KeyWriterCertHeader_t* certHeader,
+                                        uint32_t timeout);
+
+/**
+ * @brief
+ *  The service issued to HSM Server retrieves the SWRevision value
+ *  based on identifier as param.
+ *
+ * @param HsmClient [IN] HsmClient object.
+ * @param readSWRev [IN] populates SWRev_t struct with SWRev value
+ *                       corresponding to identifier.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_readSWRev(HsmClient_t* HsmClient,
+                                        SWRev_t* readSWRev);
+/**
+ * @brief
  * register a client to a particular ClientId
  *
  * @param HsmClient [IN] HsmClient object.
@@ -425,22 +471,6 @@ int32_t HsmClient_waitForBootNotify(HsmClient_t* HsmClient,uint32_t timeToWaitIn
  *
  */
 int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware);
-
-/**
- * @brief
- *  The service issued to HSM Server verifies the certificate and process the keywriter operations,
- * @param HsmClient         [IN] Client object which is using this openDbgFirewalls API.
- * @param certHeader        [IN] point to the location of certificate in the device memory.
- * @param timeout           [IN] amount of time to block waiting for
- * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
- * @return
- * 1. SystemP_SUCCESS if returns successfully
- * 2. SystemP_FAILURE if NACK message is received or client id not registered.
- * 3. SystemP_TIMEOUT if timeout exception occours.
- */
-int32_t HsmClient_keyWriter(HsmClient_t* HsmClient,
-                                        KeyWriterCertHeader_t* certHeader,
-                                        uint32_t timeout);
 
 /** @} */
 

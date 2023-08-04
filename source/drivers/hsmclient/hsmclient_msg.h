@@ -73,6 +73,8 @@ extern "C"
 #define HSM_SET_FIREWALL                         (0x9000U)
 /** @brief send KeyWriter customer key certificate */
 #define HSM_KEYWRITER_SEND_CUST_KEY_CERT         (0x9028)
+/** @brief Read Software Revision service type ID */
+#define HSM_MSG_READ_SWREV						 (0x9033)
 
 /* message flags */
 /**
