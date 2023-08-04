@@ -101,8 +101,8 @@ int32_t EventP_waitBits(EventP_Object  *obj,
 
     key = HwiP_disable();
 
-    while (((waitForAll!=0U) && ((pEvent->eventMask &  bitsToWaitFor) != bitsToWaitFor)) ||
-            ((waitForAll==0U) && ((pEvent->eventMask &  bitsToWaitFor) == 0U)))
+    while ((((waitForAll!=0U) && ((pEvent->eventMask &  bitsToWaitFor) != bitsToWaitFor)) ||
+            ((waitForAll==0U) && ((pEvent->eventMask &  bitsToWaitFor) == 0U))) && (status == SystemP_SUCCESS))
     {
         HwiP_restore(key);
 
@@ -112,13 +112,11 @@ int32_t EventP_waitBits(EventP_Object  *obj,
         {
             /* Fall here when timeout has expired */
             status = SystemP_TIMEOUT;
-            break;
         }
         if (timeout == SystemP_NO_WAIT)
         {
             /* Break without waiting */
             status = SystemP_TIMEOUT;
-            break;
         }
     }
     *eventBits = (pEvent->eventMask &  bitsToWaitFor);

@@ -338,7 +338,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
         pInterruptConfig = &gIpcNotifyCtrl.interruptConfig[i];
 
         /* numCores can be 0 if only Mailbox IPC is enabled*/
-        if(!(params->isMailboxIpcEnabled))
+        if((params->isMailboxIpcEnabled) == 0U)
         {
             DebugP_assert(pInterruptConfig->numCores > 0U );
         }

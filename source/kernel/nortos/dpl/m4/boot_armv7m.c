@@ -35,6 +35,17 @@
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
 int32_t _system_pre_init(void);
+void stack_init(register char* stack_ptr);
+
+void stack_init(register char* stack_ptr)
+{
+   __asm__ __volatile__  ("mrs r1, control"   "\n\t": : : "cc");
+   __asm__ __volatile__  ("bic r1, r1, #0x2"  "\n\t": : : "cc");
+   __asm__ __volatile__  ("msr control, r1"   "\n\t": : : "cc");
+   __asm__ __volatile__  ("isb sy"            "\n\t": : : "memory");
+   __asm volatile ("MSR msp, %0" : : "r" (stack_ptr) : );
+
+}
 
 int32_t _system_pre_init(void)
 {
@@ -86,19 +97,15 @@ extern int32_t main(int32_t argc, char **argv);
 __attribute__((section(".text:_c_int00"), noreturn))
 void _c_int00(void)
 {
+    /* Initialize the stack pointer */
+   register char* stack_ptr = (char*)&__STACK_END;
    /*
     * Initialize the CONTROL register to change to Main
     * Stack Pointer (MSP) by setting SPSEL to 0.
     *
     */
-   __asm__ __volatile__  ("mrs r1, control"   "\n\t": : : "cc");
-   __asm__ __volatile__  ("bic r1, r1, #0x2"  "\n\t": : : "cc");
-   __asm__ __volatile__  ("msr control, r1"   "\n\t": : : "cc");
-   __asm__ __volatile__  ("isb sy"            "\n\t": : : "memory");
+   stack_init(stack_ptr);
 
-   /* Initialize the stack pointer */
-   register char* stack_ptr = (char*)&__STACK_END;
-   __asm volatile ("MSR msp, %0" : : "r" (stack_ptr) : );
    /* Initialize the FPU if building for floating point */
    #ifdef __ARM_FP
    volatile uint32_t* cpacr = (volatile uint32_t*)0xE000ED88U;
@@ -115,5 +122,5 @@ void _c_int00(void)
 
    exit(1);
 
-   while(1);
+   while (1){;}
 }

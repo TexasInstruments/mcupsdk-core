@@ -214,7 +214,7 @@ void IpcNotify_trigInterrupt(uint32_t mailboxBaseAddr, uint32_t intrBitPos)
     volatile uint32_t *addr = (uint32_t *)mailboxBaseAddr;
 
     /* trigger interrupt to other core */
-    *addr = (1U << intrBitPos);
+    *addr = ((uint32_t)1U << intrBitPos);
 }
 
 void IpcNotify_wait(void)
