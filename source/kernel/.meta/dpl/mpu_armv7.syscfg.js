@@ -197,8 +197,8 @@ let mpu_armv7_module = {
                 },
                 {
                     "name": "Cached+Sharable",
-                    "displayName": "Cached+Sharable",
-                    "description": "Cache enabled and region marked as sharable. Outer and inner write-back, write-allocate.",
+                    "displayName": "Shareable",
+                    "description": "Region marked as shareable. Outer and inner write-back, write-allocate.",
                 },
                 {
                     "name": "CUSTOM",
@@ -336,7 +336,7 @@ let mpu_armv7_module = {
 
         if(instance.attributes == "Cached+Sharable")
         {
-            attributes.isCacheable = 1;
+            attributes.isCacheable = 0;
             attributes.isBufferable = 1;
             attributes.isSharable = 1;
             attributes.tex = 1;
