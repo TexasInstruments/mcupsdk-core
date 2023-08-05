@@ -53,11 +53,12 @@ OsalNoRtosReturn_t OsalNoRtosQueue_init(
 			   uint16_t eleSize )
 {
 	OsalNoRtosReturn_t status = OSAL_NO_RTOS_RETURN_SUCCESS ; 
-    memset((void *) queue,0,sizeof(OsalNoRtosQueue_t));
 	/* parameters sanity check */ 
 	if ((queue != NULL) && (buffer != NULL) &&  \
 			   (maxDepth != 0) && (eleSize != 0) && (bufferSize >= maxDepth*eleSize))
 	{
+		memset((void *) queue,0,sizeof(OsalNoRtosQueue_t));
+		
 		queue->fifo = buffer; 
 		queue->maxDepth = maxDepth ; 
 		queue->eleSize = eleSize ; 

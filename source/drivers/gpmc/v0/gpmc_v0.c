@@ -1238,11 +1238,12 @@ static int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t t
 
     int32_t status  =   SystemP_SUCCESS;
     const GPMC_HwAttrs *hwAttrs = NULL;
-    hwAttrs = ((GPMC_Config*)handle)->attrs;
     uint64_t curTime= 0;
 
     if(handle != NULL)
     {
+        hwAttrs = ((GPMC_Config*)handle)->attrs;
+        
         if(timeOut != 0)
         {
             curTime = ClockP_getTimeUsec();

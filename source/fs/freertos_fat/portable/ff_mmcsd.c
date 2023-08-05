@@ -114,9 +114,15 @@ FF_Disk_t * FF_MMCSDDiskInit( char * pcName,
 {
     FF_Error_t xError;
     FF_CreationParameters_t xParameters;
+    MMCSD_Handle deviceHandle;
     uint32_t ulSectorCount;
+    int32_t status = SystemP_SUCCESS;
 
-    if( (pxDisk != NULL) && (config != NULL) && (pcName != NULL) )
+    if( (pxDisk == NULL) || (config == NULL) || (pcName == NULL) )
+    {
+        status = SystemP_FAILURE;
+    }
+    if(SystemP_SUCCESS == status)
     {
         /* Start with every member of the structure set to zero. */
         memset( pxDisk, '\0', sizeof( FF_Disk_t ) );
@@ -124,12 +130,16 @@ FF_Disk_t * FF_MMCSDDiskInit( char * pcName,
         /* Set the pvTag to be MMCSD config */
         pxDisk->pvTag = ( void * )config;
 
-        MMCSD_Handle deviceHandle = MMCSD_getHandle(config->mmcsdInstance);
+        deviceHandle = MMCSD_getHandle(config->mmcsdInstance);
 
-        if(deviceHandle != NULL)
+        if(deviceHandle == NULL)
         {
-            ulSectorCount = MMCSD_getBlockCount(deviceHandle);
+            status = SystemP_FAILURE;
         }
+    }
+    if(SystemP_SUCCESS == status)
+    {
+        ulSectorCount = MMCSD_getBlockCount(deviceHandle);
 
         /* The signature is used by the disk read and disk write functions to
          * ensure the disk being accessed is a MMCSD disk. */
@@ -172,7 +182,7 @@ FF_Disk_t * FF_MMCSDDiskInit( char * pcName,
             xError = FF_Mount( pxDisk, partitionNum );
             FF_PRINTF( "FF_SDDiskInit: FF_Mount: %s\n", ( const char * ) FF_GetErrMessage( xError ) );
 
-            if( FF_isERR( xError ) == pdFALSE )
+            if(FF_isERR( xError ) == pdFALSE )
             {
                 /* The partition mounted successfully, add it to the virtual
                  * file system - where it will appear as a directory off the file
@@ -188,9 +198,11 @@ FF_Disk_t * FF_MMCSDDiskInit( char * pcName,
              * not be allocated, so free the disk again. */
             FF_MMCSDDiskDelete( pxDisk );
             pxDisk = NULL;
+            status = SystemP_FAILURE;
         }
     }
-    else
+
+    if (SystemP_FAILURE == status)
     {
         FF_PRINTF( "FF_SDDiskInit: Malloc failed\n" );
     }

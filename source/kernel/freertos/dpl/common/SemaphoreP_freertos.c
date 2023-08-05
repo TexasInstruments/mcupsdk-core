@@ -44,27 +44,36 @@ typedef struct SemaphoreP_Struct_ {
 
 int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
 {
-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
-    int32_t status;
+    SemaphoreP_Struct *pSemaphore = NULL;
+    int32_t status = SystemP_FAILURE;
 
     DebugP_assert(sizeof(SemaphoreP_Struct) <= sizeof(SemaphoreP_Object) );
 
-    pSemaphore->isRecursiveMutex = 0;
-    pSemaphore->semHndl = xSemaphoreCreateBinaryStatic(&pSemaphore->semObj);
-    if( pSemaphore->semHndl == NULL )
+    if(obj != NULL)
     {
-        status = SystemP_FAILURE;
-    }
-    else
-    {
-        vQueueAddToRegistry(pSemaphore->semHndl, "Binary Sem (DPL)");
-
-        if(initCount == 1U)
-        {
-            /* post a semaphore to increment initial count to 1 */
-            (void)xSemaphoreGive(pSemaphore->semHndl);
-        }
+        pSemaphore = (SemaphoreP_Struct *)obj;
         status = SystemP_SUCCESS;
+    }
+
+    if (SystemP_SUCCESS == status)
+    {
+        pSemaphore->isRecursiveMutex = 0;
+        pSemaphore->semHndl = xSemaphoreCreateBinaryStatic(&pSemaphore->semObj);
+        if( pSemaphore->semHndl == NULL )
+        {
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            vQueueAddToRegistry(pSemaphore->semHndl, "Binary Sem (DPL)");
+
+            if(initCount == 1U)
+            {
+                /* post a semaphore to increment initial count to 1 */
+                (void)xSemaphoreGive(pSemaphore->semHndl);
+            }
+            status = SystemP_SUCCESS;
+        }
     }
 
     return status;

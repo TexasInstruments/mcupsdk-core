@@ -1624,15 +1624,36 @@ static int32_t MMCSD_isReadyForTransfer(MMCSD_Handle handle)
 static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc, uint64_t bufAddr, uint32_t dataSize)
 {
     int32_t status = SystemP_SUCCESS;
-    MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
-    const MMCSD_Attrs *attrs;
-    const CSL_mmc_ctlcfgRegs *pReg;
+    MMCSD_Object *obj = NULL;
+    const MMCSD_Attrs *attrs = NULL;
+    const CSL_mmc_ctlcfgRegs *pReg = NULL;
     uint32_t dmaParams = 0U;
 
-    if((desc != NULL) && (handle != NULL) && (((MMCSD_Config *)handle)->attrs != NULL))
+    if((desc == NULL) || (handle == NULL))
+    {
+        status = SystemP_FAILURE;
+    }
+    if (SystemP_SUCCESS == status) 
     {
         attrs = ((MMCSD_Config *)handle)->attrs;
-        pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
+        obj = ((MMCSD_Config *)handle)->object;
+
+        if ((attrs == NULL) || (obj == NULL))
+        {
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
+        }
+        if (pReg == NULL)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+    if (SystemP_SUCCESS == status) 
+    {        
+        
         dmaParams = dataSize << 16U;
         dmaParams |= (((dataSize >> 16U) << 6U) | 0x0023U);
 

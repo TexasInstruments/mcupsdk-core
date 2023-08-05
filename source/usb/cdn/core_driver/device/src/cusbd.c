@@ -3026,10 +3026,10 @@ static void handleEp0IrqIoc(CUSBD_PrivateData* dev, CUSBDMA_DmaChannel *channel)
         if (dev->request->complete != NULL) {
             dev->request->complete(&dev->ep0.ep, dev->request);
         }
+	    if (dev->request->deferStatusStage)  /* please put it above the line dev->ep0NextState = CH9_EP0_SETUP_PHASE; */
+		    return;
+    
     }
-	 if (dev->request->deferStatusStage)  /* please put it above the line dev->ep0NextState = CH9_EP0_SETUP_PHASE; */
-		return;
-
 
     dev->ep0NextState = CH9_EP0_SETUP_PHASE;
     CPS_UncachedWrite32(&dev->reg->USBR_EP_SEL, 0x00U);
