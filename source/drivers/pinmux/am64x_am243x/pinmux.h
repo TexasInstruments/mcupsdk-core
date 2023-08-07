@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -184,6 +184,7 @@ enum Pinmux_MainOffsets
     PIN_OSPI0_D6                = 0x0024,
     PIN_OSPI0_D7                = 0x0028,
     PIN_OSPI0_DQS               = 0x0008,
+    PIN_OSPI0_LBCLKO            = 0x0004,
     PIN_PRG0_MDIO0_MDC          = 0x0204,
     PIN_PRG0_MDIO0_MDIO         = 0x0200,
     PIN_PRG0_PRU0_GPO0          = 0x0160,
