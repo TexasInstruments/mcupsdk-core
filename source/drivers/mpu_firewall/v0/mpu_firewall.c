@@ -103,7 +103,7 @@ static void MPU_FIREWALL_getPermissionAttributes(uint32_t baseAddr, uint32_t reg
                                                         CSL_MPU_PROG_MPPA_EMU_MASK,
                                                         CSL_MPU_PROG_MPPA_EMU_SHIFT);
 
-    mpuParams->debugConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
+    mpuParams->supervisorReadConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
                                                         CSL_MPU_PROG_MPPA_SR_MASK,
                                                         CSL_MPU_PROG_MPPA_SR_SHIFT);
 
