@@ -792,7 +792,7 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
 
     /* Always expect acknowledgement from HSM server */
     HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
-    HsmClient->ReqMsg.serType = HSM_SET_FIREWALL;
+    HsmClient->ReqMsg.serType = HSM_MSG_SET_FIREWALL;
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(FirewallReqObj);
 
     /* Calculates CRC of the array containing firewall regions to be configured */
