@@ -40,7 +40,7 @@ function getConfigurables() {
 
     mailboxConfig.name = "enableMailboxIpc";
     mailboxConfig.displayName = "Enable Mailbox IPC With RSS R4";
-    mailboxConfig.readOnly = true;
+    mailboxConfig.readOnly = false;
     mailboxConfig.description = "IPC with RSS R4 and this CPU using the 'mailbox' driver API";
     mailboxConfig.default = true;
 

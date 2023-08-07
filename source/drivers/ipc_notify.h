@@ -126,6 +126,8 @@ typedef struct IpcNotify_Params_ {
 
     uint32_t linuxCoreId; /**< When linux IPC is enabled, this is the core ID of linux */
     uint8_t  intrPriority; /**< Interrupt priority */
+
+    uint8_t  isMailboxIpcEnabled; /**< This is used to check if Mailbox IPC is enabled*/
 } IpcNotify_Params;
 
 /**

@@ -120,7 +120,7 @@ function onChange(instance, ui)
 {
     instance.vringSize = getRPMessageVringSize(instance);
     instance[getSelfIpcCoreName()] = "NONE";
-    if(getEnabledCpus(instance).length>0)
+    if(getEnabledCpus(instance).length>0 || instance.enableMailboxIpc === true)
     {
         instance[getSelfIpcCoreName()] = "notify";
     }

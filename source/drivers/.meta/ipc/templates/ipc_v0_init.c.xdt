@@ -39,6 +39,13 @@
         notifyParams.linuxCoreId = CSL_CORE_ID_A53SS0_0;
         % }
 
+        % if( instance.enableMailboxIpc === true ) {
+        notifyParams.isMailboxIpcEnabled = 1;
+        % }
+        % else {
+        notifyParams.isMailboxIpcEnabled = 0;
+        % }
+
         /* initialize the IPC Notify module */
         status = IpcNotify_init(&notifyParams);
         DebugP_assert(status==SystemP_SUCCESS);
