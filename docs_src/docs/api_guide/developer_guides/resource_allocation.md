@@ -34,6 +34,18 @@ It should open up the resource management configuration sysconfig window like so
 - Once you have identified for which host you need to assign resources to, and the resource type which you want to modify,
   click on that particular host to see the currently assigned resources.
 
+- A host is defined as a logically distinct high level software entity along with a particular security status. This is mostly a
+  particular piece of software running on a physical core.
+
+- In the RTOS world this does not have a lot of significance, where mostly it is going to be one piece of software which
+  is going to run in a core - be it a bare-metal application or an RTOS based one. In linux/HLOS, it is possible that a
+  core has multiple SW entities running, mostly as VMs.
+
+- In a case where a security firmware and the Linux OS is running in the same core, both these SW entities would be considered
+  as different hosts, because of the difference in security status.
+
+- Each of these 'hosts' are given an ID by the SYSFW:
+
 - Here is the host id to core mapping:
 <table>
 <tr>
@@ -83,14 +95,18 @@ It should open up the resource management configuration sysconfig window like so
 </tr>
 <tr>
     <td>TISCI_HOST_ID_A53_1 (11U)
-    <td>Cortex A53SS0_0 (Non-Secure Context)
+    <td>Cortex A53SS0_0 (Secure Context)
 </tr>
 <tr>
     <td>TISCI_HOST_ID_A53_2 (12U)
-    <td>Cortex A53SS0_1 (Secure Context)
+    <td>Cortex A53SS0_1 (Non-Secure Context)
 </tr>
 <tr>
     <td>TISCI_HOST_ID_A53_3 (13U)
+    <td>Cortex A53SS0_1 (Non-Secure Context)
+</tr>
+<tr>
+    <td>TISCI_HOST_ID_A53_4 (14U)
     <td>Cortex A53SS0_1 (Non-Secure Context)
 </tr>
 \endcond
@@ -102,7 +118,16 @@ It should open up the resource management configuration sysconfig window like so
     <td>TISCI_HOST_ID_ICSSG_0 (50U)
     <td>ICSSG_0 (Non-Secure Context)
 </tr>
+<tr>
+    <td>TISCI_HOST_ID_ICSSG_1 (51U)
+    <td>ICSSG_0 (Non-Secure Context)
+</tr>
 </table>
+
+- For all general purpose use-cases in RTOS, you would want to allocate resources to the
+  non-secure host. Secure hosts in RTOS are reserved special softwares like the secondary
+  bootloader which would need elevated security privileges to perform actions like
+  opening firewalls, booting other cores etc.
 
 \imageStyle{respart_tool_res.png,width:50%}
 \image html respart_tool_res.png "Resource Allocation"
