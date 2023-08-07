@@ -5,7 +5,7 @@
 
 ## Optimizations {#CHAPTER_OPTIMIZATION}
 
-Here is a short summary of the optimizations discussed in detail in this document.
+Here is a short summary of the performance optimizations discussed in detail in this document.
 
 - \ref CHAPTER_OPTIMIZATION_SECTION_1
 - \ref CHAPTER_OPTIMIZATION_SECTION_2
@@ -13,8 +13,11 @@ Here is a short summary of the optimizations discussed in detail in this documen
 - \ref CHAPTER_OPTIMIZATION_SECTION_4
 - \ref CHAPTER_OPTIMIZATION_SECTION_5
 
+Memory optimizations
 
-### Optimize Interrupt handling {#CHAPTER_OPTIMIZATION_SECTION_1}
+- \ref CHAPTER_OPTIMIZATION_SECTION_6
+
+### Optimize Interrupt handling (IRQ/FIQ) {#CHAPTER_OPTIMIZATION_SECTION_1}
 
 \note Following optimizations are specific to ARM R5 architecture.
 
@@ -45,7 +48,7 @@ The Cortex-R5 processor implements the following exceptions:
 Interrupt Request (IRQ)
 
 The nIRQ is an input to the processor core, a low signal on the nIRQ input causes the processor to take the IRQ exception, if not masked. 
-On the Sitara MCU’s the nIRQ pin is connected to the VIM. 
+On the Sitara MCU’s the nIRQ is connected to the VIM. 
 It is usually used as “general-purpose” interrupt line and interrupt dispatching is usually handled by the VIM. 
 The Cortex-R5 processor offers a so called VIC port to supply the interrupt vector address directly to the processor, in order to reduce interrupt latency for IRQ’s. 
 
@@ -73,7 +76,7 @@ Hardware Vectored Interrupts (only IRQ)
  \image html Fig17.PNG "Hardware Vectored Interrupt Connection Scheme in ARM Cortex R5F in AM263x"
 
 
-#### Understand NORTOS IRQ handler in MCU PLUS SDK DPL
+#### Understanding NORTOS IRQ handler in MCU PLUS SDK DPL
 
 The ARM Cortex-R5 (ARMv7-R architecture) processor does not support interrupt nesting in hardware, as some Cortex-M (ARMv7-M architecture) processors do. 
 Only a two level nesting is possible when using IRQ and FIQ, where the FIQ can interrupt the IRQ.
@@ -114,10 +117,11 @@ Modified IRQ Handler Flow to Work With VIM
 \imageStyle{Fig13.PNG,width:80%}
  \image html Fig13.PNG "ARM Cortex R5 interrupt handling in MCU PLUS SDK for AM263x"
 
+The OS abstraction layer (DPL) of MCU PLUS SDK architected for networking applications introduces performance overheads (interrupt latencies). To support Real Time Control use cases the IRQ handlers are optimized, reducing software overheads down to 150ns. Use below steps to utilize the optimized IRQ handlers.
 
 #### Step by step guide for optimizations
 
-\note Please refer \ref EXAMPLES_KERNEL_DPL_LOW_LATENCY_INTERRUPT example
+\note Please refer \ref EXAMPLES_KERNEL_DPL_LOW_LATENCY_INTERRUPT example which demonstrates the steps to register a custom interrupt using optimized approach
 
 Steps to register a custom interrupt using MCU SDK (default approach)
 
@@ -135,6 +139,7 @@ Choose IRQ handler macro based on application need:
  \image html Fig16.PNG "IRQ handler macros - functionality and latency"
 
 
+For FIQ, use the default approach in MCU SDK. The Fast Interrupt operating mode has eight processor registers banked (R8 - R12, the SP, LR and the SPSR) and has the advantage that these registers do not have to be preserved or saved to the stack in order to use them in an interrupt handler. This improves interrupt latency for FIQ. In the case only one interrupt is mapped to the FIQ, the whole interrupt service handler could be placed at this address (0x1C) to further improve interrupt latency (avoiding unnecessary branches).
 
 
 
@@ -179,12 +184,13 @@ For example, in below snippet from linker.cmd file the .text.hwi is placed in TC
 \endcode
 
 
-\note Refer this link for infon on how to capture and use core trace data to visualize code profiling and coverage data in CCS. https://www.youtube.com/watch?v=4hEY0sZToUE
+\note Refer this link for info on how to capture and use core trace data to visualize code profiling and coverage data in CCS. https://www.youtube.com/watch?v=4hEY0sZToUE
 
 
 ### Optimize R5F MPU settings {#CHAPTER_OPTIMIZATION_SECTION_3}
 
 \note  Recommended R5 MPU settings for control peripherals: Device, Non-Shareable. 
+\note  MPU settings for On-Chip RAM shall not be kept shareable unless specifically intended shared region for IPC. 
 
 Modify R5F MPU configuration for the ControlSS register space to enable posted writes.
 
@@ -311,35 +317,39 @@ External memories (accessed via EMIF module)
 
 
 
+
+
 ### Optimize compiler settings {#CHAPTER_OPTIMIZATION_SECTION_4}
 
-\note Recommended optimization level to use with MCU SDK: -Os
+\note Recommended optimization level to use with MCU SDK: -Os. This option gives balance between code size and performance.
+Please note -O3 option is recommended for optimizing performance, but it is likely to increase compiler generated code size.
+Refer https://software-dl.ti.com/codegen/docs/tiarmclang/rel2_1_0_LTS/compiler_manual/using_compiler/compiler_options/optimization_options.html
 
 Choose compiler code generation settings (optimization levels O[0|1|2|3|fast|g|s|z]) according to application need.
 
 The tiarmclang compiler supports a variety of different optimization options, including:
 
--O0 - no optimization; generates code that is debug-friendly
-
--O1 - restricted optimizations, providing a good trade-off between code size and debuggability
-
--O2 or -O - most optimizations enabled with an eye towards preserving a reasonable compile-time
-
--O3 - in addition to optimizations available at -O2, -O3 enables optimizations that take longer to perform, trading an increase in compile-time for potential performance improvements
-
--Ofast - enables all optimizations from -O3 along with other aggressive optimizations that may realize additional performance gains, but also may violate strict compliance with language standards
-
--Os - enables all optimizations from -O2 plus some additional optimizations intended to reduce code size while mitigating negative effects on performance
-
--Oz - enables all optimizations from -Os plus additional optimizations to further reduce code size with the risk of sacrificing performance
-
--Og - enables most optimizations from -O1, but may disable some optimizations to improve debuggability.
+- -O0 - no optimization; generates code that is debug-friendly
+- -O1 - restricted optimizations, providing a good trade-off between code size and debuggability
+- -O2 or -O - most optimizations enabled with an eye towards preserving a reasonable compile-time
+- -O3 - in addition to optimizations available at -O2, -O3 enables optimizations that take longer to perform, trading an increase in compile-time for potential performance improvements
+- -Ofast - enables all optimizations from -O3 along with other aggressive optimizations that may realize additional performance gains, but also may violate strict compliance with language standards
+- -Os - enables all optimizations from -O2 plus some additional optimizations intended to reduce code size while mitigating negative effects on performance
+- -Oz - enables all optimizations from -Os plus additional optimizations to further reduce code size with the risk of sacrificing performance
+- -Og - enables most optimizations from -O1, but may disable some optimizations to improve debuggability.
 
 
 
 Offload floating point calculations to R5 FPU
 
--mfpu=vfpv3-d16
+- Use -mfpu=vfpv3-d16
+
+
+Decide Thumb vs ARM mode based on profiling
+ - Compiler option -mthumb
+  - Instruct the compiler to generate THUMB mode instructions
+ - Compiler option -marm
+  - Instruct the compiler to generate ARM mode instructions
 
 
 ### Optimize application code {#CHAPTER_OPTIMIZATION_SECTION_5}
@@ -349,6 +359,7 @@ Offload floating point calculations to R5 FPU
 3. Use MCU SDK R5 trig math library functions for Trigonometric calculations
 4. Contiguous allocation of ADC results to take advantage of 32-it read to get two 16-bit ADC results
 5. Program specific parts of the control loop using R5F assembly to get greater control over the access pattern and sequence to achieve better utilization of R5F cycles.
+6. IPC read buffers to be allocated from memory closer to CPU. R5F TCM, ICSS DMEM, M4 TCM etc
 
 
 SoC hardware features:
@@ -388,6 +399,13 @@ The target ports are based on number of ADCs in the design.
 Each initiator can independently access any ADC register without any arbitration.
 
 
+### Memory optimization {#CHAPTER_OPTIMIZATION_SECTION_6}
 
-
-
+Code Size optimizations
+- The -Oz option is recommended for optimizing code size.
+- The -O3 option is recommended for optimizing performance, but it is likely to increase compiler generated code size.
+- ARM/ Thumb
+ - -mthumb
+  - Instruct the compiler to generate THUMB mode instructions (16-bit THUMB or T32 THUMB depending on which processor variant is selected) for current compilation
+ - -marm
+  - Instruct the compiler to generate ARM mode instructions for current compilation

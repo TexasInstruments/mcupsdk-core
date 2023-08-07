@@ -4,12 +4,12 @@
 
 # Introduction
 
-This examples demonstrates the performance and features of R5F IRQ handler in DPL of MCU_PLUS_SDK
+This examples demonstrates the performance and features of optimized R5F IRQ handler in DPL of MCU_PLUS_SDK
 
-1. Interrupt Latency
-2. Nesting/Re-entrancy support and floating point (FPU) save/restore support
+- Part 1 demonstrates Interrupt Latency
+- Part 2 demsontrates Nesting/Re-entrancy support and floating point (FPU) save/restore support
 
-Refer \ref PERFORMANCE_OPTIMIZATIONS_GUIDE
+Also refer \ref PERFORMANCE_OPTIMIZATIONS_GUIDE
 
 
 \imageStyle{am263_dpl_low_latency_interrupt_a.png,width:80%}
@@ -31,7 +31,7 @@ This example uses following assembly macros for IRQ handling. These are defined 
 - ISR_CALL_LEVEL_FLOAT_REENTRANT and ISR_CALL_PULSE_FLOAT_REENTRANT
  - Use this if nesting of another interrupt inside this IRQ handler is required and R5F Floating Point Unit is used inside user ISR code
 
-Refer the page \ref CHAPTER_OPTIMIZATION_SECTION_1 for steps to register custom interrupt using above macros.
+Refer the page \ref CHAPTER_OPTIMIZATION_SECTION_1 for steps to register custom interrupt using above macros and expected latency (cycles) improvements.
 
 
 Benchmarks:
