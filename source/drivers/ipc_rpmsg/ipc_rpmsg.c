@@ -230,7 +230,7 @@ int32_t RPMessage_send( void*    data,
     int32_t status = SystemP_FAILURE;
 
     if(((remoteCoreId < CSL_CORE_ID_MAX)) && ((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] != 0U))
-        && ((data != NULL)) && ((dataLength != 0U)) && (remoteEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
+        && ((data != NULL)) && ((dataLength != 0U)) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
         )
     {
         uint16_t vringBufId;
