@@ -99,32 +99,32 @@ void adc_soc_continuous_main(void *args)
         while(false == ADC_getInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER2));
         ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER2);
 
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,0);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,1);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,2);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,3);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,4);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,5);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,7);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,8);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER0);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER1);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER2);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER3);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER4);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER5);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER7);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER8);
 
         while(false == ADC_getInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1));
         ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
 
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,8);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,9);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,10);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,11);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,12);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,13);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,14);
-        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,15);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER8);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER9);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER10);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER11);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER12);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER13);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER14);
+        gAdc1Result0[gIndex++] = ADC_readResult(gAdc1resultBaseAddr,ADC_SOC_NUMBER15);
 
         gAdcConversionCount++;
     }
 
     uint32_t gSkipIterations = 1600;
-    DebugP_log("ADC 1 channel 1 output:\r\n");
+    DebugP_log("ADC 1 channel 0 output:\r\n");
     for(gIndex = 0; gIndex < SAMPLES_COUNT; gIndex += gSkipIterations)
     {
         DebugP_log("\t%d\r\n",gAdc1Result0[gIndex]);
