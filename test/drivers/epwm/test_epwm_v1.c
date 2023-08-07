@@ -433,8 +433,9 @@ void test_main(void *args)
                 /*
                 * RUN_TEST(EPWM_emustop_trip_pwm , 3362, NULL);
                 * RUN_TEST(EPWM_syserror_trips_pwm , 3364, NULL);
-                * RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL);
-                * RUN_TEST(EPWM_pwm_latency_through_r5f_cores , 3376, NULL);
+                */
+                RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL);
+                /* RUN_TEST(EPWM_pwm_latency_through_r5f_cores , 3376, NULL);
                 * RUN_TEST(EPWM_pwm_latency_through_dma , 3377, NULL);
                 * RUN_TEST(EPWM_latency_of_fast_access_bridge_registers_through_r5f , 3378, NULL);
                 * RUN_TEST(EPWM_latency_of_fast_access_bridge_shadow_registers_through_r5f , 3379, NULL);
@@ -514,9 +515,9 @@ void test_main(void *args)
             /* case 23:                                                                                         */
             /*      RUN_TEST(EPWM_syserror_trips_pwm , 3364, NULL);                                             */
             /*     break;                                                                                       */
-            /* case 24:                                                                                         */
-            /*      RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL);                                              */
-            /*     break;                                                                                       */
+            case 24:
+                 RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL);
+                break;
             /* case 25:                                                                                         */
             /*      RUN_TEST(EPWM_pwm_latency_through_r5f_cores , 3376, NULL);                                  */
             /*     break;                                                                                       */
@@ -609,7 +610,7 @@ void test_main(void *args)
                 /* RUN_TEST(EPWM_DEL,144, NULL); */
                 /* RUN_TEST(EPWM_emustop_trip_pwm , 3362, NULL); */
                 /* RUN_TEST(EPWM_syserror_trips_pwm , 3364, NULL); */
-                /* RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL); */
+                RUN_TEST(EPWM_pwm_latency_basic , 3375, NULL);
                 /* RUN_TEST(EPWM_pwm_latency_through_r5f_cores , 3376, NULL); */
                 /* RUN_TEST(EPWM_pwm_latency_through_dma , 3377, NULL); */
                 /* RUN_TEST(EPWM_latency_of_fast_access_bridge_registers_through_r5f , 3378, NULL); */
@@ -3238,34 +3239,43 @@ int32_t AM263x_EPWM_xTR_0024(uint32_t base, uint32_t i)
 {
     int errors = 0;
 
-    uint64_t counter_start_stop_latency = 0;
-    uint64_t epwm_result_read_latency = 0;
-    uint64_t epwm_result_write_latency = 0;
+    volatile uint64_t counter_start_stop_latency = 0;
+    volatile uint64_t epwm_flag_read_latency = 0;
+    volatile uint64_t epwm_compare_value_write_latency = 0;
 
-    uint16_t result_dummy = 0;
+    volatile uint16_t flag_read_dummy = 0;
 
-    CycleCounterP_reset();
-    counter_start_stop_latency = CycleCounterP_getCount32();
-    uint32_t result_addr = base + CSL_EPWM_CMPA;
-    CycleCounterP_reset();
-    result_dummy = HW_RD_REG16(result_addr);
-    epwm_result_read_latency = CycleCounterP_getCount32() - counter_start_stop_latency;
+    for(int test_iter = 2; test_iter > 0; test_iter--)
+    {
+        CycleCounterP_reset();
+        counter_start_stop_latency = CycleCounterP_getCount32();
+        CycleCounterP_reset();
+        flag_read_dummy = EPWM_getTripZoneFlagStatus(base);
+        epwm_flag_read_latency = CycleCounterP_getCount32() - counter_start_stop_latency;
+
+        CycleCounterP_reset();
+        EPWM_setTimeBaseCounter(base, 0xFFFF);
+        epwm_compare_value_write_latency = CycleCounterP_getCount32() - counter_start_stop_latency;
+    }
+
     if(enableLog)
     {
-        DebugP_log("Value:%u and %d is epwm_result_read_latency\r\r\n", result_dummy, epwm_result_read_latency);
+        DebugP_log("Value:%u and %d is epwm_flag_read_latency\r\r\n", flag_read_dummy, epwm_flag_read_latency);
     }
-    /* observation 19 or 20 cycles*/
-    if((epwm_result_read_latency < 17) || (epwm_result_read_latency > 22))
+    /* observation around 25 cycles*/
+    if((epwm_flag_read_latency < 21) || (epwm_flag_read_latency > 28))
     {
         errors++;
     }
 
-    CycleCounterP_reset();
-    HW_WR_REG16(result_addr, 0XFFFFFFFF);
-    epwm_result_write_latency = CycleCounterP_getCount32() - counter_start_stop_latency;
 
-    /* observation 19 or 20 cycles*/
-    if((epwm_result_write_latency < 17) || (epwm_result_write_latency > 22))
+    if(enableLog)
+    {
+        DebugP_log("%d is epwm_compare_value_write_latency\r\r\n", epwm_compare_value_write_latency);
+    }
+
+    /* observation 11 cycles*/
+    if((epwm_compare_value_write_latency < 9) || (epwm_compare_value_write_latency > 13))
     {
         errors++;
     }
