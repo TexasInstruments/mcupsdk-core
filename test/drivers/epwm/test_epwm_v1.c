@@ -4629,6 +4629,59 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     }
     /*----API checks for the DCCAP features complete----*/
 
+    /* ---- API checks for Optimized APIs ---- */
+    /*
+    EPWM_setCounterCompareValue_opt_cmpA(base, uint16_t compCount)
+    EPWM_setCounterCompareValue_opt_cmpB(base, uint16_t compCount)
+    EPWM_setCounterCompareValue_opt_cmpC(base, uint16_t compCount)
+    EPWM_setCounterCompareValue_opt_cmpD(base, uint16_t compCount)
+    */
+    regValue = (uint16_t*) (base + CSL_EPWM_CMPA + 2U);
+    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    {
+        EPWM_setCounterCompareValue_opt_cmpA(base, cmp);
+        TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
+    }
+    regValue = (uint16_t*) (base + CSL_EPWM_CMPB + 2U);
+    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    {
+        EPWM_setCounterCompareValue_opt_cmpB(base, cmp);
+        TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
+    }
+    regValue = (uint16_t*) (base + CSL_EPWM_CMPC);
+    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    {
+        EPWM_setCounterCompareValue_opt_cmpC(base, cmp);
+        TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
+    }
+    regValue = (uint16_t*) (base + CSL_EPWM_CMPD);
+    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    {
+        EPWM_setCounterCompareValue_opt_cmpD(base, cmp);
+        TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
+    }
+    /*
+    EPWM_setActionQualifierContSWForceAction_opt_outputs(uint32_t base, uint8_t outputAB)
+        outputAB accepts values :
+             - EPWM_AQ_A_SW_DISABLED_B_SW_DISABLED          - 0x0U
+             - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_DISABLED
+             - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_DISABLED
+             - EPWM_AQ_A_SW_DISABLED_B_SW_OUTPUT_LOW
+             - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_LOW
+             - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_LOW
+             - EPWM_AQ_A_SW_DISABLED_B_SW_OUTPUT_HIGH
+             - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_HIGH
+             - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_HIGH    - 0xAU
+    */
+    volatile uint8_t (*regValue8) = (uint8_t*)(base + CSL_EPWM_AQCSFRC);
+    for(uint8_t outputAB = EPWM_AQ_A_SW_DISABLED_B_SW_DISABLED;
+                outputAB <= EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_HIGH;
+                outputAB++)
+    {
+        EPWM_setActionQualifierContSWForceAction_opt_outputs(base, outputAB);
+        TEST_ASSERT_EQUAL_UINT8(*regValue8, outputAB);
+    }
+
 
    return error;
 }

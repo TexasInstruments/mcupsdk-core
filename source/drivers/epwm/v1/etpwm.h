@@ -2532,6 +2532,32 @@ typedef enum{
 
 //*****************************************************************************
 //
+//! Values that can be passed to EPWM_setActionQualifierContSWForceAction_opt_outputs()
+//! as the \e outputAB parameter.
+//
+//*****************************************************************************
+//! software force disabled on A, B
+#define EPWM_AQ_A_SW_DISABLED_B_SW_DISABLED        (0x0U)
+//! software force Low Action on A, software force disabled B
+#define EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_DISABLED      (0x1U)
+//! software force High Action on A, software force disabled B
+#define EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_DISABLED     (0x2U)
+//! software force disabled on A, software force Low Action on B
+#define EPWM_AQ_A_SW_DISABLED_B_SW_OUTPUT_LOW      (0x4U)
+//! software force Low Action on A, software force Low Action on B
+#define EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_LOW    (0x5U)
+//! software force High Action on A, software force Low Action on B
+#define EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_LOW   (0x6U)
+//! software force disabled on A, software force High Action on B
+#define EPWM_AQ_A_SW_DISABLED_B_SW_OUTPUT_HIGH     (0x8U)
+//! software force Low Action on A, software force High Action on B
+#define EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_HIGH   (0x9U)
+//! software force High Action on A, software force High Action on B
+#define EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_HIGH  (0xAU)
+
+
+//*****************************************************************************
+//
 //! Defines to be used by the driver
 //
 //*****************************************************************************
@@ -3542,6 +3568,81 @@ EPWM_setCounterCompareValue(uint32_t base, EPWM_CounterCompareModule compModule,
         HW_WR_REG16(registerOffset, compCount);
     }
 }
+//*****************************************************************************
+//
+//! Set counter compare A value.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param compCount is the counter compare count value.
+//!
+//! This function sets the counter compare value for counter compare A register.
+//! The maximum value for compCount is 0xFFFF.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_setCounterCompareValue_opt_cmpA(uint32_t base, uint16_t compCount)
+{
+    HW_WR_REG16(base + CSL_EPWM_CMPA + 0x2U, compCount);
+}
+
+//*****************************************************************************
+//
+//! Set counter compare B value.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param compCount is the counter compare count value.
+//!
+//! This function sets the counter compare value for counter compare B register.
+//! The maximum value for compCount is 0xFFFF.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_setCounterCompareValue_opt_cmpB(uint32_t base, uint16_t compCount)
+{
+    HW_WR_REG16(base + CSL_EPWM_CMPB + 0x2U, compCount);
+}
+
+//*****************************************************************************
+//
+//! Set counter compare C value.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param compCount is the counter compare count value.
+//!
+//! This function sets the counter compare value for counter compare C register.
+//! The maximum value for compCount is 0xFFFF.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_setCounterCompareValue_opt_cmpC(uint32_t base, uint16_t compCount)
+{
+    HW_WR_REG16(base + CSL_EPWM_CMPC, compCount);
+}
+
+//*****************************************************************************
+//
+//! Set counter compare D value.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param compCount is the counter compare count value.
+//!
+//! This function sets the counter compare value for counter compare D register.
+//! The maximum value for compCount is 0xFFFF.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_setCounterCompareValue_opt_cmpD(uint32_t base, uint16_t compCount)
+{
+    HW_WR_REG16(base + CSL_EPWM_CMPD, compCount);
+}
 
 //*****************************************************************************
 //
@@ -4133,6 +4234,44 @@ EPWM_setActionQualifierContSWForceAction(uint32_t base,
             ~CSL_EPWM_AQCSFRC_CSFB_MASK) |
             ((uint16_t)output << CSL_EPWM_AQCSFRC_CSFB_SHIFT)));
     }
+}
+
+//*****************************************************************************
+//
+//! Triggers a continuous software forced event.
+//!
+//! \param base is the base address of the EPWM module.
+//! \param outputAB is the Action Qualifier output.
+//!
+//! This function triggers a continuous software forced Action Qualifier output
+//! on ePWM A and B based on the value of outputAB.
+//! Valid values for the parameters are:
+//!   - outputAB
+//!     - EPWM_AQ_A_SW_DISABLED_B_SW_DISABLED        - software force disabled on Outputs A & B
+//!     - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_DISABLED      - software force Low Action on Output A,
+//!                                                     software force disabled Output B
+//!     - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_DISABLED     - software force High Action on Output A,
+//!                                                     software force disabled Output B
+//!     - EPWM_AQ_A_SW_DISABLED_B_SW_OUTPUT_LOW      - software force disabled on Output A,
+//!                                                     software force Low Action on Output B
+//!     - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_LOW    - software force Low Action on Output A,
+//!                                                     software force Low Action on Output B
+//!     - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_LOW   - software force High Action on Output A,
+//!                                                     software force Low Action on Output B
+//!     - EPWM_AQ_A_SW_DISABLED_B_SW_OUTPUT_HIGH     - software force disabled on Output A,
+//!                                                     software force High Action on Output B
+//!     - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_HIGH   - software force Low Action on Output A,
+//!                                                     software force High Action on Output B
+//!     - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_HIGH  - software force High Action on Output A,
+//!                                                         software force High Action on Output B
+//! \return None.
+//! \note this API overwrites the last 8 bits of the register. make sure if any
+//!       to the lower 8 bits of the CSL_EPWM_AQCSFRC register.
+//*****************************************************************************
+static inline void
+EPWM_setActionQualifierContSWForceAction_opt_outputs(uint32_t base, uint8_t outputAB)
+{
+    HW_WR_REG8(base + CSL_EPWM_AQCSFRC, outputAB);
 }
 
 //*****************************************************************************
@@ -5835,8 +5974,7 @@ EPWM_clearEventTriggerInterruptFlag(uint32_t base)
     //
     // Clear INT bit of ETCLR register
     //
-    HW_WR_REG16(base + CSL_EPWM_ETCLR,
-        (HW_RD_REG16(base + CSL_EPWM_ETCLR) | CSL_EPWM_ETCLR_INT_MASK));
+    HW_WR_REG16(base + CSL_EPWM_ETCLR, (CSL_EPWM_ETCLR_INT_MASK));
 }
 
 //*****************************************************************************
