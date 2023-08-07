@@ -159,7 +159,7 @@ int32_t Bootloader_runCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
     return status;
 }
 
-int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
+int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t skipLoad)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t cpuId = cpuInfo->cpuId;
@@ -190,7 +190,7 @@ int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpu
     {
         status = Bootloader_socMemInitCpu(cpuId);
     }
-    if(SystemP_SUCCESS == status)
+    if((SystemP_SUCCESS == status) && (skipLoad == FALSE))
     {
         if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
         {
@@ -259,7 +259,7 @@ int32_t Bootloader_bootSelfCpu(Bootloader_Handle handle, Bootloader_BootImageInf
 
     while( selfCpuList[i] != BOOTLOADER_INVALID_ID)
     {
-        status = Bootloader_loadSelfCpu(handle, &bootImageInfo->cpuInfo[ selfCpuList[i] ] );
+        status = Bootloader_loadSelfCpu(handle, &bootImageInfo->cpuInfo[ selfCpuList[i] ], FALSE);
         if(status!=SystemP_SUCCESS)
         {
             break;

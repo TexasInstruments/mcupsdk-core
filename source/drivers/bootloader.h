@@ -310,13 +310,14 @@ int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo
  * NOTE: No checks are done to confirm self CPU ID is passed, user need to make sure self CPU ID is passed, else
  *       the load could fail.
  *
- * \param handle        [in] Bootloader driver handle from \ref Bootloader_open
- * \param cpuInfo [in] Data structure containing information regarding the CPU. This should have been filled
+ * \param handle       [in] Bootloader driver handle from \ref Bootloader_open
+ * \param cpuInfo      [in] Data structure containing information regarding the CPU. This should have been filled
  *                     by the \ref Bootloader_parseMultiCoreAppImage API
+ * \param skipLoad     [in] Skip the image load, only do the initialization
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo);
+int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t skipLoad);
 
 /**
  * \brief API to run a non-self CPU

@@ -115,7 +115,7 @@ int32_t App_bootLoadSelfCpu(uint32_t bootDrvInstanceId, uint32_t cpuId)
         if(status == SystemP_SUCCESS)
         {
             bootImageInfo.cpuInfo[cpuId].clkHz = Bootloader_socCpuGetClkDefault(cpuId);
-            status = Bootloader_loadSelfCpu( bootHandle, &bootImageInfo.cpuInfo[cpuId] );
+            status = Bootloader_loadSelfCpu( bootHandle, &bootImageInfo.cpuInfo[cpuId], FALSE);
         }
         Bootloader_close(bootHandle);
     }
