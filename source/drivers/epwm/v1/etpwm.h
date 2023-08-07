@@ -2491,7 +2491,44 @@ typedef enum{
 //!< Diode emulation Trip H
 #define EPWM_DE_TRIPH    (0x0)
 
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_configCaptureGateInputPolarity()
+//! as \e polSel parameter.
+//
+//*****************************************************************************
+//! Capture gate is always on
+#define EPWM_CAPGATE_INPUT_ALWAYS_ON             (0U)
+//! Capture gate is always off
+#define EPWM_CAPGATE_INPUT_ALWAYS_OFF            (1U)
+//! Capture gate input is CAPGATE.sync
+#define EPWM_CAPGATE_INPUT_SYNC                  (2U)
+//! Capture gate input is CAPGATE.sync inverted
+#define EPWM_CAPGATE_INPUT_SYNC_INVERT           (3U)
 
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_invertCaptureInputPolarity()
+//! as the \e polSel parameter.
+//
+//*****************************************************************************
+//! Capture input is not inverted
+#define EPWM_CAPTURE_INPUT_CAPIN_SYNC            (0U)
+//! Capture input is inverted
+#define EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT     (1U)
+
+//*****************************************************************************
+//
+//! Values that can be passed to EPWM_invertCaptureInputPolarity()
+//! EPWM_enableCaptureTripCombinationInput(),
+//! EPWM_disableCaptureTripCombinationInput()
+//! as the \e polSel parameter.
+//
+//*****************************************************************************
+//! Capture Gate
+#define EPWM_CAPTURE_GATE              (1U)
+//! Capture Input
+#define EPWM_CAPTURE_INPUT             (0U)
 
 //*****************************************************************************
 //
@@ -7613,14 +7650,6 @@ EPWM_disableCaptureInEvent(uint32_t base)
     );
 }
 
-//! Capture gate is always on
-#define EPWM_CAPGATE_INPUT_ALWAYS_ON             (0U)
-//! Capture gate is always off
-#define EPWM_CAPGATE_INPUT_ALWAYS_OFF            (1U)
-//! Capture gate input is CAPGATE.sync
-#define EPWM_CAPGATE_INPUT_SYNC                  (2U)
-//! Capture gate input is CAPGATE.sync inverted
-#define EPWM_CAPGATE_INPUT_SYNC_INVERT           (3U)
 //*****************************************************************************
 //
 //! Polarity selection for capture gate input.
@@ -7651,17 +7680,6 @@ EPWM_configCaptureGateInputPolarity(uint32_t base,
               ((uint16_t)polSel << CSL_EPWM_CAPCTL_CAPGATEPOL_SHIFT));
 }
 
-
-//*****************************************************************************
-//
-//! Values that can be passed to EPWM_configCaptureGateInputPolarity()
-//! as the \e polSel parameter.
-//
-//*****************************************************************************
-//! Capture input is not inverted
-#define EPWM_CAPTURE_INPUT_CAPIN_SYNC            (0U)
-//! Capture input is inverted
-#define EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT     (1U)
 //*****************************************************************************
 //
 //! Polarity selection for capture input.
@@ -7758,18 +7776,7 @@ EPWM_forceCaptureEventLoad(uint32_t base)
         base + CSL_EPWM_CAPCTL,
              HW_RD_REG16(base + CSL_EPWM_CAPCTL) | (CSL_EPWM_CAPCTL_FRCLOAD_MASK));
 }
-//*****************************************************************************
-//
-//! Values that can be passed to EPWM_invertCaptureInputPolarity()
-//! EPWM_enableCaptureTripCombinationInput(),
-//! EPWM_disableCaptureTripCombinationInput()
-//! as the \e polSel parameter.
-//
-//*****************************************************************************
-//! Capture Gate
-#define EPWM_CAPTURE_GATE              (1U)
-//! Capture Input
-#define EPWM_CAPTURE_INPUT             (0U)
+
 //*****************************************************************************
 //
 //! Set the capture trip input.
@@ -7911,14 +7918,6 @@ EPWM_disableCaptureTripCombinationInput(uint32_t base,
         HW_RD_REG16(base + CSL_EPWM_CAPGATETRIPSEL) & (~tripInput));
     }
 }
-
-
-
-
-
-
-
-
 
 //
 // Valley switching
