@@ -88,15 +88,7 @@ int32_t test_eqep_cases(uint8_t in);
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* Tester dependent */
-uint8_t gCmdTxBuffer[CMD_TX_BUFSIZE];
-uint8_t gCmdRxBuffer[CMD_RX_BUFSIZE];
-volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U;
-int32_t          transferOK;
-UART_Transaction trans;
-
-bool enableLog;
-bool manual_mode;
+/* None */
 
 /* ========================================================================== */
 /*                          Function Definitions                              */

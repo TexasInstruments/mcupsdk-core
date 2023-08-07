@@ -362,6 +362,22 @@ Decide Thumb vs ARM mode based on profiling
 6. IPC read buffers to be allocated from memory closer to CPU. R5F TCM, ICSS DMEM, M4 TCM etc
 
 
+Disable assertions used in the MCU PLUS SDK driver libraries. 
+Debug assertions (DebugP_assert) are used for validation of inputs or arguments passed to driver functions. This introduces latency/delay in the execution of driver functions. Once the application code is validated (tested for passing valid inputs/arguments), the debug assertions can be disabled to reduce the overhead.
+To disable the debug assertions, 
+- Update (following line of in DPL `\source\kernel\dpl\DebugP.h`)
+\code
+#define DebugP_ASSERT_ENABLED 1
+\endcode
+to
+\code
+#define DebugP_ASSERT_ENABLED 0
+\endcode
+- Or define DebugP_ASSERT_ENABLED as compiler build macro and assign the value 0
+- Rebuild all the libraries. (Refer \ref MAKEFILE_BUILD_PAGE -> Building Libraries with Makefiles )
+- Rebuild the application.
+
+
 SoC hardware features:
 1. Enhanced topology for non-conflicting access to the significant number of control peripherals from multiple R5F cores (discussed below)
 2. Enhanced interconnect for

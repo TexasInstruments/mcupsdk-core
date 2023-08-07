@@ -1,10 +1,13 @@
-# EPWM HR duty cycle {#EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO}
+# EPWM HR Deadband SFO {#EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO}
 
 [TOC]
 
 # Introduction
 
 This example modifies the MEP control registers to show edge displacement for high-resolution deadband with ePWM in Up count mode due to the HRPWM control extension of the respective ePWM module.
+
+\imageStyle{am263_hrpwm_deadband_sfo_fig1.PNG,width:80%}
+\image html am263_hrpwm_deadband_sfo_fig1.PNG "Block diagram"
 
 # External Connections
 - EPWM0_A/B pin can be connected to an oscilloscope to view the waveform.
@@ -49,5 +52,42 @@ Shown below is a sample output when the application is run,
 \code
 EPWM High Resolution Deadband Test Started ...
 Please observe pins HSEC 49 and HSEC 51.
+High Resolution Deadband 20.00 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 0
+
+Calibration... Running...
+
+High Resolution Deadband 20.14 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 7
+
+Calibration... Running...
+
+High Resolution Deadband 20.29 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 15
+
+Calibration... Running...
+
+High Resolution Deadband 20.44 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 23
+
+Calibration... Running...
+
+High Resolution Deadband 20.59 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 30
+
+Calibration... Complete
+SFO status=1 , MEP_ScaleFactor=46
+
+High Resolution Deadband 20.74 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 38
+
+Calibration... Running...
+
+High Resolution Deadband 20.89 ns. 
+EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 46
+
 \endcode
+
+\imageStyle{am263_hrpwm_deadband_sfo_fig2.PNG,width:80%}
+\image html am263_hrpwm_deadband_sfo_fig2.PNG "Expected output"
 
