@@ -77,7 +77,6 @@ int main(void)
 
     DebugP_log("\r\n");
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     DebugP_log("Starting SD Bootloader ... \r\n");
     status = Board_driversOpen();
