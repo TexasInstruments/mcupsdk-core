@@ -264,19 +264,20 @@ void SOC_setEpwmTbClk(uint32_t epwmInstance, uint32_t enable)
         uint32_t epwmPartition = 1;
         SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MSS_RCM, epwmPartition);
 
+        uint32_t bitPosOffset = 24;
         if(TRUE == enable)
         {
             /* Enable Time base clock in CTRL MMR */
-            CSL_REG32_WR(CSL_MSS_RCM_U_BASE + CSL_MSS_CTRL_MSS_EPWM_CFG,
-                ((CSL_REG32_RD(CSL_MSS_RCM_U_BASE +
-                  CSL_MSS_CTRL_MSS_EPWM_CFG) & 0x7000000) | (1 << epwmInstance)));
+            CSL_REG32_WR(CSL_MSS_CTRL_U_BASE  + CSL_MSS_CTRL_MSS_EPWM_CFG,
+                ((CSL_REG32_RD(CSL_MSS_CTRL_U_BASE  +
+                  CSL_MSS_CTRL_MSS_EPWM_CFG) & 0x7000000) | (1 << (epwmInstance + bitPosOffset))));
         }
         else
         {
             /* Disable Time base clock in CTRL MMR */
-            CSL_REG32_WR(CSL_MSS_RCM_U_BASE + CSL_MSS_CTRL_MSS_EPWM_CFG,
-                ((CSL_REG32_RD(CSL_MSS_RCM_U_BASE +
-                  CSL_MSS_CTRL_MSS_EPWM_CFG) & 0x7000000) & ~(1 << epwmInstance)));
+            CSL_REG32_WR(CSL_MSS_CTRL_U_BASE  + CSL_MSS_CTRL_MSS_EPWM_CFG,
+                ((CSL_REG32_RD(CSL_MSS_CTRL_U_BASE  +
+                  CSL_MSS_CTRL_MSS_EPWM_CFG) & 0x7000000) & ~(1 << (epwmInstance + bitPosOffset))));
         }
 
         /* Lock CTRL_MMR0 registers */
