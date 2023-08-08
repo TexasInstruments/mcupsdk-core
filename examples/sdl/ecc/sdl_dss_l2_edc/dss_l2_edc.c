@@ -104,7 +104,7 @@ SDL_ESM_NotifyParams EDC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
            .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
            .callBackFunction = &SDL_ESM_applicationCallbackFunction,
       },
-	
+
 };
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -121,9 +121,9 @@ int32_t EDC_dummyFunction(void);
 **********************************************************************/
 int32_t EDC_dummyFunction(void)
 {
-    int32_t a = 0;
-    int32_t b = 4;
-    int32_t i;
+    volatile int32_t a = 0;
+    volatile int32_t b = 4;
+    volatile int32_t i;
     for (i = 0; i <= 3; i++)
     {
         b = b + 7;

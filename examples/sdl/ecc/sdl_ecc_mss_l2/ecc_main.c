@@ -165,17 +165,17 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_Ecc_AggrIntrSrc eccIntrSrc;
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
-    printf("\r\nESM Call back function called : instType 0x%x, " \
+    DebugP_log("\r\nESM Call back function called : instType 0x%x, " \
                 "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
-    printf("\r\nTake action \r\n");
+    DebugP_log("\r\nTake action \r\n");
 
     retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
 
     /* Any additional customer specific actions can be added here */
     retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 
-    printf("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
+    DebugP_log("\r\nECC Error Call back function called : eccMemType %d, errorSrc 0x%x, " \
                "ramId %d, bitErrorOffset 0x%04x%04x, bitErrorGroup %d\r\n",
                eccmemtype, eccIntrSrc, eccErrorInfo.memSubType, (uint32_t)(eccErrorInfo.bitErrorOffset >> 32),
                (uint32_t)(eccErrorInfo.bitErrorOffset & 0x00000000FFFFFFFF), eccErrorInfo.bitErrorGroup);

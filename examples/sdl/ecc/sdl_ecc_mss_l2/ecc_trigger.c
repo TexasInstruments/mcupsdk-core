@@ -261,7 +261,7 @@ int32_t ECC_Test_run_MSS_L2RAMB_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nMSS L2 RAMB Single bit error inject: starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
 
@@ -303,7 +303,7 @@ int32_t ECC_Test_run_MSS_L2RAMB_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nMSS L2 RAMB Double bit error inject: starting \r\n");
-	
+
     /* Run one shot test for MSS L2 RAMB 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
@@ -404,7 +404,7 @@ static int32_t ECC_sdlFuncTest(void)
         }
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AWR294X)
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X)
         /* Initialize ECC Memory */
         SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 #endif
