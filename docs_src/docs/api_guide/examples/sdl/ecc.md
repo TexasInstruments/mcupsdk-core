@@ -126,3 +126,68 @@ All Use_Cases have passed.
 1 Tests 0 Failures 0 Ignored
 All tests have passed
 \endcode
+
+\code
+[R5F]
+ECC Example Application
+
+ECC_Test_init: Exception init complete
+
+ECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete
+ECC_Example_init: Init MAIN ESM complete
+
+ECC_Example_init: Init MCU ESM complete
+
+
+
+SDTF_init: AGGR1 ECC Init complete
+
+
+
+ ESM Safety Example tests: starting
+
+ AGGR1 Double bit error inject Example test UC-1: starting
+
+ AGGR1 Double bit error inject test: Subtype 0x00000002 test complete
+
+ Waiting for ESM Interrupt
+
+
+
+UC-1: Got Low priority ESM Interrupt
+
+
+
+ AGGR1 Double bit error inject Example test UC-2: starting
+
+ AGGR1 Double bit error inject test: Subtype 0x00000001 test complete
+
+ Waiting for ESM Interrupt
+
+
+
+ UC-2: Got High priority ESM Interrupt
+
+
+
+
+
+**** AGGR1 Memory Parity TEST ****
+
+
+
+ AGGR1 Single bit error self test: Subtype 0x00000002 test complete
+
+ Waiting for ESM Interrupt
+
+
+
+ Memory Parity Error Test Complete
+
+
+
+ ECC Safety Example tests: success
+ ECC UC-1 and UC-2 Test
+
+All Use_Cases have passed.
+\endcode
