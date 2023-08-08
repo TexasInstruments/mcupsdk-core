@@ -131,7 +131,7 @@ void posTest_adcbuf_Params_init(void *args)
     int32_t        testStatus 		= SystemP_SUCCESS;
 	ADCBuf_Params  *paramsPointer 	= NULL;
 	ADCBuf_Params  params;
-	
+
 
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -142,7 +142,7 @@ void posTest_adcbuf_Params_init(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		ADCBuf_Params_init(&params);
@@ -162,7 +162,7 @@ void posTest_adcbuf_control(void *args)
     int32_t    				testStatus     	= SystemP_SUCCESS;
 	uint32_t            	arg;
 	ADCBuf_Handle       	handle;
-    ADCBufMMWave_CMD    	command;
+    uint8_t    	            command;
 	ADCBuf_Params       	params;
     int32_t             	retVal;
     ADCBuf_dataFormat   	dataFormat;
@@ -173,8 +173,8 @@ void posTest_adcbuf_control(void *args)
 	ADCBuf_TestPatternConf  testPatternConf;
 	uint32_t                numOfClks 		= 0x32;
 	uint32_t                rxChanMask 		= 0xF;
-	
-	
+
+
 	handle         = (ADCBuf_Handle) NULL;
 	command        = ADCBufMMWave_CMD_START_CONTINUOUS_MODE;
 	arg            = 0x5U;
@@ -186,7 +186,7 @@ void posTest_adcbuf_control(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
 	if (testStatus == SystemP_SUCCESS)
@@ -232,7 +232,7 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
+
     memset((void *)&dataFormat, 0, sizeof(dataFormat));
     dataFormat.sampleInterleave = 2;
 	if (testStatus == SystemP_SUCCESS)
@@ -281,7 +281,7 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
+
 
     command = ADCBufMMWave_CMD_START_CONTINUOUS_MODE;
     arg = 0x1U<<16;
@@ -388,7 +388,7 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
+
 	/* Configure ADC buffer in continuous mode */
     arg = 1;
 	if (testStatus == SystemP_SUCCESS)
@@ -412,7 +412,7 @@ void posTest_adcbuf_control(void *args)
 	}
 
 	/* Configure ADC buffer data format */
-	dataFormat = gADCBufDataFmtTestCase[0];	
+	dataFormat = gADCBufDataFmtTestCase[0];
 	if (testStatus == SystemP_SUCCESS)
     {
 		if((retVal = ADCBuf_control(handle, ADCBufMMWave_CMD_CONF_DATA_FORMAT, (void *)ptrDataFormat)) < 0)
@@ -421,7 +421,7 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
+
 	/* Configure Test Pattern generation */
     testPatternConf.period = 255;
     testPatternConf.numSamples = gADCBufTestParam.numSamples;
@@ -429,7 +429,7 @@ void posTest_adcbuf_control(void *args)
 	testPatternConf.rxConfig[0].rxIInc      = 2;
 	testPatternConf.rxConfig[0].rxQOffset   = 0x1000 ;
 	testPatternConf.rxConfig[0].rxQInc      = 2;
-    
+
 
     /* Send control command to driver */
 	if (testStatus == SystemP_SUCCESS)
@@ -440,7 +440,7 @@ void posTest_adcbuf_control(void *args)
 			TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 		}
 	}
-	
+
     /* Start Test Pattern generation */
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -450,7 +450,7 @@ void posTest_adcbuf_control(void *args)
 			TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 		}
 	}
-	
+
 	command = ADCBufMMWave_CMD_CONF_DATA_FORMAT;
     memset((void *)&dataFormat, 0, sizeof(dataFormat));
     dataFormat.adcOutFormat = 1;
@@ -462,7 +462,7 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		if((retVal = ADCBuf_control(handle, ADCBufMMWave_CMD_CHANNEL_DISABLE, (void *)&rxChanMask)) < 0)
@@ -471,7 +471,7 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
+
 	/* StopTest Pattern generation */
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -481,12 +481,12 @@ void posTest_adcbuf_control(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-		
+
     /* Close ADCbuf driver */
     ADCBuf_close(handle);
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
-	
+
 /* Positive test for ADCBuf_getChanBufAddr API */
 void posTest_adcbuf_getChanBufAddr(void *args)
 {
@@ -499,16 +499,16 @@ void posTest_adcbuf_getChanBufAddr(void *args)
 	uint32_t channelAddr 			= 0;
 	uint16_t offset 				= 0;
 	uint32_t     rxChanMask         = 0x01;
-	
-	
+
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		rxChanConf.channel   = 0;
 		rxChanConf.offset    = 0;
-		ADCBuf_control(handle, ADCBufMMWave_CMD_CHANNEL_DISABLE, (void *)&rxChanMask);      
+		ADCBuf_control(handle, ADCBufMMWave_CMD_CHANNEL_DISABLE, (void *)&rxChanMask);
 		ADCBuf_getChanBufAddr(handle, channel, &retVal);
 		if(retVal != ADCBUF_STATUS_INVALID_PARAMS)
 		{
@@ -516,20 +516,20 @@ void posTest_adcbuf_getChanBufAddr(void *args)
 			testStatus = SystemP_FAILURE;
 		}
 	}
-	
-			
+
+
 	ADCBuf_close(handle);
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
-	
+
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		memset((void *)&rxChanConf, 0, sizeof(rxChanConf));
 		rxChanConf.channel = 0;
 		rxChanConf.offset  = 0;
-		ADCBuf_control(handle, ADCBufMMWave_CMD_CHANNEL_ENABLE, (void *)&rxChanConf);		
+		ADCBuf_control(handle, ADCBufMMWave_CMD_CHANNEL_ENABLE, (void *)&rxChanConf);
 		ADCBuf_getChanBufAddr(handle, channel, &retVal);
 
         if( retVal != SystemP_SUCCESS)
@@ -538,10 +538,10 @@ void posTest_adcbuf_getChanBufAddr(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
-	
+
 		for(channel=0; channel < SOC_ADCBUF_NUM_RX_CHANNEL; channel++)
 		{
 			rxChanConf.channel   = channel;
@@ -552,7 +552,7 @@ void posTest_adcbuf_getChanBufAddr(void *args)
 				testStatus = SystemP_FAILURE;
 			}
 			/* Verify channel address */
-			{            
+			{
 
 				if((channelAddr = ADCBuf_getChanBufAddr(handle, channel, &retVal)) != 0)
 				{
@@ -580,24 +580,11 @@ void posTest_adcbuf_getChanBufAddr(void *args)
 		}
 	}
 	ADCBuf_close(handle);
-	
-	
+
+
 	channel = 4U; /*invalid*/
 	retVal = 0;
-	
-	if (testStatus == SystemP_SUCCESS)
-    {
-		ADCBuf_getChanBufAddr(handle, channel, &retVal);
-        if( retVal != ADCBUF_STATUS_INVALID_PARAMS)
-        {
-            DebugP_log("adcbuf_pos_Test: failure on line no. %d \n", __LINE__);
-            testStatus = SystemP_FAILURE;
-        }			
-    }
-		
-	channel = SOC_ADCBUF_NUM_RX_CHANNEL;
-	retVal = 0;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		ADCBuf_getChanBufAddr(handle, channel, &retVal);
@@ -607,11 +594,24 @@ void posTest_adcbuf_getChanBufAddr(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
+	channel = SOC_ADCBUF_NUM_RX_CHANNEL;
+	retVal = 0;
+
+	if (testStatus == SystemP_SUCCESS)
+    {
+		ADCBuf_getChanBufAddr(handle, channel, &retVal);
+        if( retVal != ADCBUF_STATUS_INVALID_PARAMS)
+        {
+            DebugP_log("adcbuf_pos_Test: failure on line no. %d \n", __LINE__);
+            testStatus = SystemP_FAILURE;
+        }
+    }
+
 	handle = (ADCBuf_Handle)NULL;
 	channel = 0;
 	retVal = 0;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		ADCBuf_getChanBufAddr(handle, channel, &retVal);
@@ -629,13 +629,13 @@ void posTest_adcbuf_mmwave_open(void *args)
 {
     int32_t    				testStatus = SystemP_SUCCESS;
 	ADCBuf_Params        	params;
-	
-	
+
+
     ADCBuf_Params_init(&params);
-	
+
 	params.continousMode =(uint32_t)0x1U << 1U;
     params.chirpThresholdPing =0U;
-    params.chirpThresholdPong =0U;	
+    params.chirpThresholdPong =0U;
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBuf_open(CONFIG_ADCBUF0, &params) != (ADCBuf_Handle)NULL)
@@ -674,14 +674,14 @@ void posTest_adcbufCmdParamCheck(void *args)
     uint32_t            	arg;
 	ADCBuf_Params       	params;
 	ADCBuf_Handle        	handle;
-	ADCBufMMWave_CMD    	command;
+	uint8_t    	            command;
 	ADCBuf_dataFormat  		dataFormat;
 	ADCBuf_CQConf      		cqConf;
 	ADCBuf_RxChanConf  		rxChanConf;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	command        = ADCBufMMWave_CMD_START_TEST_PATTERN;
 	arg            = 0xFFFU;
 
@@ -696,10 +696,10 @@ void posTest_adcbufCmdParamCheck(void *args)
 	ADCBuf_close(handle);
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 
-	
+
 	command        					= ADCBufMMWave_CMD_CONF_DATA_FORMAT;
     dataFormat.adcOutFormat 		= (uint8_t)(0x1U << 1U) ;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBuf_control(handle,command,(void *)&dataFormat) != ADCBUF_STATUS_INVALID_PARAMS)
@@ -718,7 +718,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
     dataFormat.sampleInterleave 	= (uint8_t)(0x1U << 1U);
 		if (testStatus == SystemP_SUCCESS)
     {
@@ -728,7 +728,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	command   = ADCBufMMWave_CMD_CONF_CQ;
 	cqConf.cqDataWidth 			= (uint8_t)((0x1U<<2U) +1U);
     cqConf.cq96BitPackEn 			= (uint8_t)((0x1U<<1U) +1U);
@@ -740,7 +740,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	cqConf.cqDataWidth 			= (uint8_t)((0x1U<<2U));
     cqConf.cq96BitPackEn 			= (uint8_t)((0x1U<<1U) +1U);
 	if (testStatus == SystemP_SUCCESS)
@@ -751,7 +751,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	cqConf.cqDataWidth 			= (uint8_t)((0x1U<<2U) +1);
     cqConf.cq96BitPackEn 			= (uint8_t)((0x1U<<1U));
 	if (testStatus == SystemP_SUCCESS)
@@ -762,7 +762,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	cqConf.cqDataWidth 			= (uint8_t)((0x1U<<2U) -1U);
     cqConf.cq96BitPackEn 			= (uint8_t)((0x1U<<1U) -1U);
 	if (testStatus == SystemP_SUCCESS)
@@ -773,11 +773,11 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	command = ADCBufMMWave_CMD_CHANNEL_ENABLE;
 	rxChanConf.channel = SOC_ADCBUF_NUM_RX_CHANNEL;
-	rxChanConf.offset  = 0U;	
-	
+	rxChanConf.offset  = 0U;
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBuf_control(handle,command,(void *)&rxChanConf) != ADCBUF_STATUS_INVALID_PARAMS)
@@ -786,7 +786,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	uint32_t        *paramArg = NULL;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -796,7 +796,7 @@ void posTest_adcbufCmdParamCheck(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
@@ -806,7 +806,7 @@ void posTest_adcbufVerifySrcSelCfg(void *args)
 	int32_t    				testStatus = SystemP_SUCCESS;
 	uint32_t            	source;
 	ADCBuf_Handle        	handle;
-	
+
 	handle         = (ADCBuf_Handle) NULL;
 	source         = 3U;
 	if (testStatus == SystemP_SUCCESS)
@@ -818,7 +818,7 @@ void posTest_adcbufVerifySrcSelCfg(void *args)
         }
     }
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 /* Positive test for ADCBUF_verifyChirpThreshold API */
@@ -828,10 +828,10 @@ void posTest_adcbufVerifyChirpThreshold(void *args)
 	uint32_t            	pingThreshCfg, pongThreshCfg;
 	ADCBuf_Handle        	handle;
 	ADCBuf_Params       	params;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	pongThreshCfg         = 1U;
 	pingThreshCfg		  = 1U;
 	if (testStatus == SystemP_SUCCESS)
@@ -844,7 +844,7 @@ void posTest_adcbufVerifyChirpThreshold(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 /* Positive test for ADCBUF_verifyContinuousModeCfg API */
@@ -854,10 +854,10 @@ void posTest_adcbufVerifyContinuousModeCfg(void *args)
 	uint32_t            	continuousModeCfg;
 	ADCBuf_Handle        	handle;
 	ADCBuf_Params       	params;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	continuousModeCfg         = 0U;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -869,7 +869,7 @@ void posTest_adcbufVerifyContinuousModeCfg(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 /* Positive test for ADCBUF_readStaticRegs API */
@@ -880,10 +880,10 @@ void posTest_adcbufrRadStaticRegs(void *args)
 	ADCBuf_Params       	params;
 	ADCBUF_StaticRegs   dummyStaticRegs;
 	ADCBUF_StaticRegs   *pStaticRegs = &dummyStaticRegs;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_readStaticRegs(handle,pStaticRegs) != SystemP_SUCCESS)
@@ -894,9 +894,9 @@ void posTest_adcbufrRadStaticRegs(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
-								
+
 /* Positive test for ADCBUF_verifyDataFormatCfg API */
 void posTest_adcbufVerifyDataFormatCfg(void *args)
 {
@@ -906,14 +906,14 @@ void posTest_adcbufVerifyDataFormatCfg(void *args)
 	uint32_t 				dataFormatcfg;
 	uint32_t 				interleavecfg;
 	uint32_t 				iqConfig;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	dataFormatcfg = 1U;
 	interleavecfg = 0U;
 	iqConfig	  = 0U;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != SystemP_SUCCESS)
@@ -924,21 +924,21 @@ void posTest_adcbufVerifyDataFormatCfg(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 void test_pos_main(void *args)
 {
-	RUN_TEST(posTest_adcbuf_open, 10883, NULL); 
-	RUN_TEST(posTest_adcbuf_Params_init, 10884, NULL); 
-	RUN_TEST(posTest_adcbuf_control, 10885, NULL); 
-	RUN_TEST(posTest_adcbuf_getChanBufAddr, 10886, NULL); 
-	RUN_TEST(posTest_adcbuf_mmwave_open, 10887, NULL); 
+	RUN_TEST(posTest_adcbuf_open, 10883, NULL);
+	RUN_TEST(posTest_adcbuf_Params_init, 10884, NULL);
+	RUN_TEST(posTest_adcbuf_control, 10885, NULL);
+	RUN_TEST(posTest_adcbuf_getChanBufAddr, 10886, NULL);
+	RUN_TEST(posTest_adcbuf_mmwave_open, 10887, NULL);
 	RUN_TEST(posTest_adcbufmmwave_get_cqbufferaddr, 10889, NULL);
-	RUN_TEST(posTest_adcbufCmdParamCheck, 10888, NULL); 
-	RUN_TEST(posTest_adcbufVerifySrcSelCfg, 11197, NULL); 
+	RUN_TEST(posTest_adcbufCmdParamCheck, 10888, NULL);
+	RUN_TEST(posTest_adcbufVerifySrcSelCfg, 11197, NULL);
 	RUN_TEST(posTest_adcbufVerifyChirpThreshold, 11198, NULL);
 	RUN_TEST(posTest_adcbufVerifyContinuousModeCfg, 11201, NULL);
 	RUN_TEST(posTest_adcbufrRadStaticRegs, 11202, NULL);
-	RUN_TEST(posTest_adcbufVerifyDataFormatCfg, 11206, NULL);	
+	RUN_TEST(posTest_adcbufVerifyDataFormatCfg, 11206, NULL);
 
 }

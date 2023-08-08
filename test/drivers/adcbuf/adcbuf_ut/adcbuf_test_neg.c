@@ -50,7 +50,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 #define CONFIG_ADCBUF10   						10
-#define ADCBufMMWave_CMD_DEFAULT_MODE        	100U   
+#define ADCBufMMWave_CMD_DEFAULT_MODE        	100U
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -62,7 +62,7 @@ void negTest_adcbuf_open(void *args)
     int32_t    testStatus = SystemP_SUCCESS;
 	ADCBuf_Params        params;
     ADCBuf_Params_init(&params);
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBuf_open(CONFIG_ADCBUF10, &params) != (ADCBuf_Handle)NULL)
@@ -71,7 +71,7 @@ void negTest_adcbuf_open(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
@@ -81,13 +81,13 @@ void negTest_adcbuf_control(void *args)
     int32_t    			testStatus = SystemP_SUCCESS;
 	uint32_t            arg;
 	ADCBuf_Handle       handle;
-    ADCBufMMWave_CMD    command;
+    uint8_t             command;
 	ADCBuf_Params       params;
 	ADCBuf_CQConf      cqConf;
-	
+
 	command        = ADCBufMMWave_CMD_START_CONTINUOUS_MODE;
 	arg            = 0x5U;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
 
@@ -99,10 +99,10 @@ void negTest_adcbuf_control(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	command        = ADCBufMMWave_CMD_SET_SRC;
 	arg            = (uint32_t)((0x1U << 1U) -1);
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBuf_control(handle, command, (void *)&arg) != (int32_t)SystemP_SUCCESS)
@@ -112,8 +112,8 @@ void negTest_adcbuf_control(void *args)
         }
 
     }
-	
-	command        = ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD;	
+
+	command        = ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD;
 	arg            = 0x5U;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -123,19 +123,8 @@ void negTest_adcbuf_control(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	command        = ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD;
-	arg            = 0x5U;	
-	if (testStatus == SystemP_SUCCESS)
-    {
-        if(ADCBuf_control(handle, command, (void *)&arg) != (int32_t)SystemP_SUCCESS)
-        {
-            DebugP_log("adcbuf_neg_Test: failure on line no. %d \n", __LINE__);
-            testStatus = SystemP_FAILURE;
-        }
-    }
-	
-	command        = ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE;	
 	arg            = 0x5U;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -145,8 +134,19 @@ void negTest_adcbuf_control(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
-	command        = ADCBufMMWave_CMD_CONF_CQ;	
+
+	command        = ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE;
+	arg            = 0x5U;
+	if (testStatus == SystemP_SUCCESS)
+    {
+        if(ADCBuf_control(handle, command, (void *)&arg) != (int32_t)SystemP_SUCCESS)
+        {
+            DebugP_log("adcbuf_neg_Test: failure on line no. %d \n", __LINE__);
+            testStatus = SystemP_FAILURE;
+        }
+    }
+
+	command        = ADCBufMMWave_CMD_CONF_CQ;
 	cqConf.cqDataWidth 			= (uint8_t)((0x1U<<2U) -1U);
     cqConf.cq96BitPackEn 			= (uint8_t)((0x1U<<1U) -1U);
 	if (testStatus == SystemP_SUCCESS)
@@ -157,7 +157,7 @@ void negTest_adcbuf_control(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBuf_control(handle, ADCBufMMWave_CMD_DEFAULT_MODE, (void *)&arg) != (int32_t)ADCBUF_STATUS_UNDEFINEDCMD)
@@ -178,7 +178,7 @@ void negTest_adcbufmmwave_get_cqbufferaddr(void *args)
 	ADCBuf_Params       params;
 	ADCBuf_Handle       handle;
 	handle 				= (ADCBuf_Handle)NULL;
-		
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
 
@@ -191,7 +191,7 @@ void negTest_adcbufmmwave_get_cqbufferaddr(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		ADCBUF_MMWave_getCQBufAddr(handle, ADCBufMMWave_CQType_CQ0, &retVal);
@@ -201,7 +201,7 @@ void negTest_adcbufmmwave_get_cqbufferaddr(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		ADCBUF_MMWave_getCQBufAddr(handle, ADCBufMMWave_CQType_CQ1, &retVal);
@@ -211,7 +211,7 @@ void negTest_adcbufmmwave_get_cqbufferaddr(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 		if (testStatus == SystemP_SUCCESS)
     {
 		ADCBUF_MMWave_getCQBufAddr(handle, ADCBufMMWave_CQType_CQ2, &retVal);
@@ -221,7 +221,7 @@ void negTest_adcbufmmwave_get_cqbufferaddr(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
 		ADCBUF_MMWave_getCQBufAddr(handle, ADCBufMMWave_CQType_MAX_CQ, &retVal);
@@ -242,10 +242,10 @@ void negTest_adcbufverifySrcSelCfg(void *args)
 	uint32_t            	source;
 	ADCBuf_Params       	params;
 	ADCBuf_Handle        	handle;
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	source = 0U;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -255,7 +255,7 @@ void negTest_adcbufverifySrcSelCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	source = ADCBUF_SOURCE_SELECT_MAX;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -276,7 +276,7 @@ void negTest_adcbufVerifyChirpThreshold(void *args)
 	uint32_t            	pingThreshCfg, pongThreshCfg;
 	ADCBuf_Handle        	handle;
 	ADCBuf_Params       	params;
-	
+
 	handle         = (ADCBuf_Handle) NULL;
 	pongThreshCfg         = ADCBUF_PING_THRESHOLD_MAX;
 	pingThreshCfg		  = ADCBUF_PONG_THRESHOLD_MAX;
@@ -288,10 +288,10 @@ void negTest_adcbufVerifyChirpThreshold(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	pongThreshCfg         = ADCBUF_PING_THRESHOLD_MAX +1U;
 	pingThreshCfg		  = ADCBUF_PONG_THRESHOLD_MAX;
 	if (testStatus == SystemP_SUCCESS)
@@ -302,7 +302,7 @@ void negTest_adcbufVerifyChirpThreshold(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	pongThreshCfg         = ADCBUF_PING_THRESHOLD_MAX;
 	pingThreshCfg		  = ADCBUF_PONG_THRESHOLD_MAX +1U;
 	if (testStatus == SystemP_SUCCESS)
@@ -313,7 +313,7 @@ void negTest_adcbufVerifyChirpThreshold(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-		
+
 	pingThreshCfg		  = 1U;
 	pongThreshCfg         = ADCBUF_PING_THRESHOLD_MAX;
 	if (testStatus == SystemP_SUCCESS)
@@ -324,7 +324,7 @@ void negTest_adcbufVerifyChirpThreshold(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-   
+
    pongThreshCfg         = ADCBUF_PING_THRESHOLD_MAX;
 	pingThreshCfg		  = ADCBUF_PING_THRESHOLD_MAX;
 	if (testStatus == SystemP_SUCCESS)
@@ -337,7 +337,7 @@ void negTest_adcbufVerifyChirpThreshold(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 /* Negative test for ADCBUF_verifyContinuousModeCfg API */
@@ -347,7 +347,7 @@ void negTest_adcbufVerifyContinuousModeCfg(void *args)
 	uint32_t            	continuousModeCfg;
 	ADCBuf_Handle        	handle;
 	ADCBuf_Params       	params;
-	
+
 	handle         			  = (ADCBuf_Handle) NULL;
 	continuousModeCfg         = ADCBUF_CONTINUOUS_MODE_MAX;
 	if (testStatus == SystemP_SUCCESS)
@@ -358,10 +358,10 @@ void negTest_adcbufVerifyContinuousModeCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	ADCBuf_Params_init(&params);
     handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
-	
+
 	continuousModeCfg         = ADCBUF_CONTINUOUS_MODE_MAX +1U;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -371,7 +371,7 @@ void negTest_adcbufVerifyContinuousModeCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	continuousModeCfg         = ADCBUF_CONTINUOUS_MODE_MAX;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -381,10 +381,10 @@ void negTest_adcbufVerifyContinuousModeCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 /* Negative test for ADCBUF_readStaticRegs API */
@@ -395,7 +395,7 @@ void negTest_adcbufrRadStaticRegs(void *args)
 	ADCBuf_Params       	params;
 	ADCBUF_StaticRegs   dummyStaticRegs;
 	ADCBUF_StaticRegs   *pStaticRegs = &dummyStaticRegs;
-		
+
 	handle         			  = (ADCBuf_Handle) NULL;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -405,7 +405,7 @@ void negTest_adcbufrRadStaticRegs(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	handle         			  = (ADCBuf_Handle) NULL;
 	pStaticRegs                = NULL;
 	if (testStatus == SystemP_SUCCESS)
@@ -416,9 +416,9 @@ void negTest_adcbufrRadStaticRegs(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	ADCBuf_Params_init(&params);
-    handle = ADCBuf_open(CONFIG_ADCBUF0, &params);	
+    handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
 	pStaticRegs                = NULL;
 	if (testStatus == SystemP_SUCCESS)
     {
@@ -430,7 +430,7 @@ void negTest_adcbufrRadStaticRegs(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 /* Negavtive test for ADCBUF_verifyDataFormatCfg API */
@@ -442,12 +442,12 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
 	uint32_t 				dataFormatcfg;
 	uint32_t 				interleavecfg;
 	uint32_t 				iqConfig;
-	
+
 	handle         			  = (ADCBuf_Handle) NULL;
 	dataFormatcfg = ADCBUF_DATA_FMT_MAX;
 	interleavecfg = ADCBUF_WRITEMODE_MAX;
 	iqConfig	  = ADCBUF_IQSWAP_CFG_MAX;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != ADCBUF_STATUS_INVALID_PARAMS)
@@ -456,14 +456,14 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	ADCBuf_Params_init(&params);
-    handle = ADCBuf_open(CONFIG_ADCBUF0, &params);	
-	
+    handle = ADCBuf_open(CONFIG_ADCBUF0, &params);
+
 	dataFormatcfg = ADCBUF_DATA_FMT_MAX +1U;
 	interleavecfg = ADCBUF_WRITEMODE_MAX;
 	iqConfig	  = ADCBUF_IQSWAP_CFG_MAX;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != ADCBUF_STATUS_INVALID_PARAMS)
@@ -472,11 +472,11 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	dataFormatcfg = ADCBUF_DATA_FMT_MAX;
 	interleavecfg = ADCBUF_WRITEMODE_MAX +1U;
 	iqConfig	  = ADCBUF_IQSWAP_CFG_MAX;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != ADCBUF_STATUS_INVALID_PARAMS)
@@ -485,11 +485,11 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	dataFormatcfg = ADCBUF_DATA_FMT_MAX;
 	interleavecfg = ADCBUF_WRITEMODE_MAX;
 	iqConfig	  = ADCBUF_IQSWAP_CFG_MAX +1U;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != ADCBUF_STATUS_INVALID_PARAMS)
@@ -498,11 +498,11 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	dataFormatcfg = ADCBUF_DATA_FMT_MAX - 1U;
 	interleavecfg = 0U;
 	iqConfig	  = 0U;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != SystemP_FAILURE )
@@ -511,11 +511,11 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
             testStatus = SystemP_FAILURE;
         }
     }
-	
+
 	dataFormatcfg = 1U;
 	interleavecfg = ADCBUF_WRITEMODE_MAX;
 	iqConfig	  = 0U;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != SystemP_FAILURE )
@@ -527,7 +527,7 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
 	dataFormatcfg = 1U;
 	interleavecfg = 0U;
 	iqConfig	  = ADCBUF_IQSWAP_CFG_MAX;
-	
+
 	if (testStatus == SystemP_SUCCESS)
     {
         if(ADCBUF_verifyDataFormatCfg(handle,dataFormatcfg,interleavecfg,iqConfig) != SystemP_FAILURE )
@@ -538,17 +538,17 @@ void negTest_adcbufVerifyDataFormatCfg(void *args)
     }
 	ADCBuf_close(handle);
    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
-	
+
 }
 
 void test_neg_main(void *args)
 {
 	RUN_TEST(negTest_adcbuf_open, 10891, NULL);
 	RUN_TEST(negTest_adcbuf_control, 10892, NULL);
-	RUN_TEST(negTest_adcbufmmwave_get_cqbufferaddr, 10890, NULL);	
+	RUN_TEST(negTest_adcbufmmwave_get_cqbufferaddr, 10890, NULL);
 	RUN_TEST(negTest_adcbufverifySrcSelCfg, 11196, NULL);
 	RUN_TEST(negTest_adcbufVerifyChirpThreshold, 11199, NULL);
-	RUN_TEST(negTest_adcbufVerifyContinuousModeCfg, 11200, NULL);	
+	RUN_TEST(negTest_adcbufVerifyContinuousModeCfg, 11200, NULL);
 	RUN_TEST(negTest_adcbufrRadStaticRegs, 11203, NULL);
 	RUN_TEST(negTest_adcbufVerifyDataFormatCfg, 11204, NULL);
 }
