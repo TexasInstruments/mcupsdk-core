@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -79,7 +79,7 @@
  *
  * 1. Am263x-CC
  *      Loop DAC output back to ADC1 Channel 0
- *      Connect HSEC Pin 9 to HSEC Pin 18
+ *      Connect HSEC Pin 9 to HSEC Pin 12
  *
  * 2. Am263x-LP
  *      Loop DAC output back to ADC1 Channel 0

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,7 +57,7 @@
  *
  * External Connections :
  * - CC:
- *     feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 18
+ *     feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 12
  * - LP:
  *     feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
  *

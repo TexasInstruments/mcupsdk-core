@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -76,12 +76,12 @@
  * - gAdc1result3[] : Digital representation of the voltage sampled on pin ADC0_AIN3
  *
  * External Connections :
- * AM263x-CC :
+ * AM263x-CC E2 :
  *      Feed analog voltages on
- *      - ADC1_AIN0, i.e., HSEC PIN  18
- *      - ADC1_AIN1, i.e., HSEC PIN  20
- *      - ADC1_AIN2, i.e., HSEC PIN  21
- *      - ADC1_AIN3, i.e., HSEC PIN  23
+ *      - ADC1_AIN0, i.e., HSEC PIN  12
+ *      - ADC1_AIN1, i.e., HSEC PIN  14
+ *      - ADC1_AIN2, i.e., HSEC PIN  18
+ *      - ADC1_AIN3, i.e., HSEC PIN  20
  * AM263x-LP :
  *      Feed analog voltages on
  *      - ADC1_AIN0, i.e., J1/3 PIN  24

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -74,7 +74,7 @@
  *      ADC1_INT1 is set to EOC/SOC1.
  *
  * External Connections :
- * AM263X-CC    :   Feed Analog Input to ADC1_AIN0, HSEC Pin 18
+ * AM263X-CC    :   Feed Analog Input to ADC1_AIN0, HSEC Pin 12
  * AM263X-LP    :   Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
  *
  * Watch Variables :

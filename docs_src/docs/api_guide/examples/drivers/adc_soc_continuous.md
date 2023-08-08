@@ -22,8 +22,12 @@ given channel. The ADC clock is prescaled to a factor of 3.
 5. EOC/SOC15 provides INT2.
 
 # External Connections
-- CC:   feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 18
-- LP:   feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
+## AM263X-CC E2
+feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 12
+## AM263X-CC E1
+feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 18
+## AM263X-LP
+feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
 
 ## Watch Variables
 - gAdc1Result0 : the array holds the sampled values of the ADC 1 Channel 0

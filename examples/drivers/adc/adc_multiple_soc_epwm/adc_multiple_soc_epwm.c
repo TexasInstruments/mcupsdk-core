@@ -41,20 +41,20 @@
 
 /*
  * This example sets up ePWM0 to periodically trigger a set of conversions
- * (SOC0,1,2) on ADC0 and ADC1. This demonstrates multiple ADCs working
+ * (SOC0,1,2) on ADC2 and ADC1. This demonstrates multiple ADCs working
  * together to process a batch of conversions using the available parallelism
  * across multiple ADCs.
- * ADC0 Interrupt ISR is used to read results of both ADC0 and ADC1.
+ * ADC2 Interrupt ISR is used to read results of both ADC2 and ADC1.
  * The below watch variables can be used to view ADC conversion results.
  *
  * External Connections
- * ADC0_AIN0, ADC0_AIN1, ADC0_AIN2 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins
+ * ADC2_AIN0, ADC2_AIN1, ADC2_AIN2 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins
  * should be connected to signals to be converted.
  *
  * Watch Variables
- * gAdc0Result0 - Digital representation of the voltage on pin ADC0_AIN0
- * gAdc0result1 - Digital representation of the voltage on pin ADC0_AIN1
- * adc0Result2 - Digital representation of the voltage on pin ADC0_AIN2
+ * gAdc2Result0 - Digital representation of the voltage on pin ADC2_AIN0
+ * gAdc2result1 - Digital representation of the voltage on pin ADC2_AIN1
+ * adc2Result2 - Digital representation of the voltage on pin ADC2_AIN2
  * adc1Result0 - Digital representation of the voltage on pin ADC1_AIN0
  * adc1Result1 - Digital representation of the voltage on pin ADC1_AIN1
  * adc1Result2 - Digital representation of the voltage on pin ADC1_AIN2
@@ -65,14 +65,14 @@
 
 /* Global variables and objects */
 /* Variable to store conversion results from all 6 pins  */
-uint16_t gAdc0Result0[ADC_CONVERSION_COUNT];
-uint16_t gAdc0Result1[ADC_CONVERSION_COUNT];
-uint16_t gAdc0Result2[ADC_CONVERSION_COUNT];
+uint16_t gAdc2Result0[ADC_CONVERSION_COUNT];
+uint16_t gAdc2Result1[ADC_CONVERSION_COUNT];
+uint16_t gAdc2Result2[ADC_CONVERSION_COUNT];
 uint16_t gAdc1Result0[ADC_CONVERSION_COUNT];
 uint16_t gAdc1Result1[ADC_CONVERSION_COUNT];
 uint16_t gAdc1Result2[ADC_CONVERSION_COUNT];
 
-uint32_t gAdc0baseAddr = CONFIG_ADC0_BASE_ADDR;
+uint32_t gAdc2baseAddr = CONFIG_ADC2_BASE_ADDR;
 static HwiP_Object  gAdcHwiObject;
 /* Variable to store the count of completed conversions */
 volatile uint32_t gAdcConversionCount = 0;
@@ -117,14 +117,14 @@ void adc_multiple_soc_epwm_main(void *args)
     /* Remove ePWM trigger to stop ADC conversions */
     EPWM_disableADCTrigger(CONFIG_EPWM0_BASE_ADDR, EPWM_SOC_A);
 
-    DebugP_log("ADC0 SOC0 : SOC1 : SOC2 : ADC1 SOC0 : SOC1: SOC2 Result register value :\r\n");
+    DebugP_log("ADC2 SOC0 : SOC1 : SOC2 : ADC1 SOC0 : SOC1: SOC2 Result register value :\r\n");
 
     loopCnt = 0;
     /* Print few elements from the result buffer */
     while(loopCnt < ADC_CONVERSION_COUNT)
     {
-        DebugP_log("%d : %d : %d : %d : %d : %d\r\n", gAdc0Result0[loopCnt],
-         gAdc0Result1[loopCnt], gAdc0Result2[loopCnt], gAdc1Result0[loopCnt],
+        DebugP_log("%d : %d : %d : %d : %d : %d\r\n", gAdc2Result0[loopCnt],
+         gAdc2Result1[loopCnt], gAdc2Result2[loopCnt], gAdc1Result0[loopCnt],
          gAdc1Result1[loopCnt], gAdc1Result2[loopCnt]);
         loopCnt += 100;
     }
@@ -139,9 +139,9 @@ void adc_multiple_soc_epwm_main(void *args)
 static void App_adcISR(void *args)
 {
     /* Store results */
-    gAdc0Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
-    gAdc0Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
-    gAdc0Result2[gAdcConversionCount] = ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER2);
+    gAdc2Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
+    gAdc2Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
+    gAdc2Result2[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER2);
     gAdc1Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
     gAdc1Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
     gAdc1Result2[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER2);
@@ -150,12 +150,12 @@ static void App_adcISR(void *args)
     gAdcConversionCount++;
 
     /* Clear the interrupt flag */
-    ADC_clearInterruptStatus(gAdc0baseAddr, ADC_INT_NUMBER1);
+    ADC_clearInterruptStatus(gAdc2baseAddr, ADC_INT_NUMBER1);
 
     /* Check if overflow has occurred */
-    if(true == ADC_getInterruptOverflowStatus(gAdc0baseAddr, ADC_INT_NUMBER1))
+    if(true == ADC_getInterruptOverflowStatus(gAdc2baseAddr, ADC_INT_NUMBER1))
     {
-        ADC_clearInterruptOverflowStatus(gAdc0baseAddr, ADC_INT_NUMBER1);
-        ADC_clearInterruptStatus(gAdc0baseAddr, ADC_INT_NUMBER1);
+        ADC_clearInterruptOverflowStatus(gAdc2baseAddr, ADC_INT_NUMBER1);
+        ADC_clearInterruptStatus(gAdc2baseAddr, ADC_INT_NUMBER1);
     }
 }

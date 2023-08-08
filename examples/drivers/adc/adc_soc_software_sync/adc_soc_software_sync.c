@@ -63,13 +63,13 @@
  * - App_adcISR read the results stored by SOC0,1 in ADC1,2.
  *
  * External Connections
- * - AM263x-CC
+ * - AM263x-CC E2
  *      - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85.
  *      - Feed Analog voltage on
- *          - ADC 1 Channel 0 : HSEC PIN 18
- *          - ADC 1 Channel 1 : HSEC PIN 20
- *          - ADC 2 Channel 0 : HSEC PIN 24
- *          - ADC 2 Channel 1 : HSEC PIN 26
+ *          - ADC 1 Channel 0 : HSEC PIN 12
+ *          - ADC 1 Channel 1 : HSEC PIN 14
+ *          - ADC 2 Channel 0 : HSEC PIN 31
+ *          - ADC 2 Channel 1 : HSEC PIN 33
  * - AM263x-LP
  *      - Connect loopback on GPIO 24, GPIO 23, i.e., J5/7 PINS 49,50.
  *      - Feed Analog voltage on
@@ -150,7 +150,7 @@ void adc_soc_software_sync_main(void *args)
     }
 
     /* Printing some of the conversion values*/
-    DebugP_log("\tADC1\t\tADC1\r\n");
+    DebugP_log("\tADC1\t\tADC2\r\n");
     DebugP_log("\tSOC0  SOC1\tSOC0  SOC1\r\n");
     int skipCount = 100;
     for(int iter = 0; iter < ADC_CONVERSION_COUNT; iter+= skipCount)
@@ -158,8 +158,8 @@ void adc_soc_software_sync_main(void *args)
         DebugP_log("\t%d \t%d \t%d \t%d\r\n",
                 gAdc1Result0[iter],
                 gAdc1Result1[iter],
-                gAdc1Result0[iter],
-                gAdc1Result1[iter]);
+                gAdc2Result0[iter],
+                gAdc2Result1[iter]);
     }
 
     DebugP_log("ADC Synchronous Software Triggered Conversion Test Passed!!\r\n");

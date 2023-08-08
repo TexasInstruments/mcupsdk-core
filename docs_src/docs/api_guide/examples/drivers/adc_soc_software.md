@@ -14,9 +14,10 @@ The example does the below
 # External Connections
 - ADC0_AIN0 pin should be connected to signals to be converted.
 
-## AM263X-CC
+## AM263X-CC E2 or AM263X-CC E1
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Feed analog input (non-zero voltage) to HSEC Pin 12
+- Feed analog input for the following
+    - ADC0_AIN2 - HSEC 15
 
 ## AM263X-LP
 When using AM263x-LP

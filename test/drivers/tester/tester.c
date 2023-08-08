@@ -416,7 +416,7 @@ void test_main(void *args)
             ECAP_setSyncInPulseSource(ecap_base, ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0 + epwm_offset);
 
             uint16_t duty_cycle_arbitrary = 50;
-            uint16_t period_arbitrary = 50;
+            uint16_t period_arbitrary = 0xFFFF;
             SyncEPWM(epwm_offset, (Float32)duty_cycle_arbitrary, period_arbitrary);
         }
 
@@ -574,7 +574,7 @@ void set_command_source(void)
             DebugP_log("Invalid Input. Tester uses TESTER_UART (To DUT UART) for receiving commands\r\n");
         }
     }
-    
+
 }
 
 /*

@@ -109,8 +109,8 @@ static uint8_t channel_availability = 6;
 static SemaphoreP_Object  gEpwmSyncSemObject;
 static SemaphoreP_Object  gEpwmIsrSemObject;
 
-uint16_t adc_output_16 __attribute__((__section__(".controldata")));
-uint32_t adc_output_32 __attribute__((__section__(".controldata")));
+volatile uint16_t adc_output_16 __attribute__((__section__(".controldata")));
+volatile uint32_t adc_output_32 __attribute__((__section__(".controldata")));
 uint32_t adc_output_32_write[4] __attribute__((__section__(".controldata")));
 
 /* TA-DUT UART communincation related definitions, macros, variables */
@@ -3500,8 +3500,8 @@ int32_t AM263_ADC_TTR_0001(uint32_t base)
     for(int iter = latency_test_max_iterations; iter >= 0; iter--)
     {
         int errors_count = 0;
-        volatile uint64_t counter_start_stop_read_latency = 0;
-        volatile uint64_t adc_result_read_latency = 0;
+        volatile uint32_t counter_start_stop_read_latency = 0;
+        volatile uint32_t adc_result_read_latency = 0;
 
         uint16_t result_dummy = 0;
 
@@ -3511,16 +3511,14 @@ int32_t AM263_ADC_TTR_0001(uint32_t base)
 
         for(int soc_number = 0; soc_number <= 15; soc_number++)
         {
-            uint32_t result_addr = (base - 0x001c0000) + CSL_ADC_RESULT_ADCRESULT0;
-            result_addr += soc_number*ADC_RESULT_ADCRESULTx_STEP;
+            uint32_t result_addr = (base - 0x001c0000);
             CycleCounterP_reset();
-            result_dummy = HW_RD_REG16(result_addr);
-            (void)result_dummy; /* Presently set but not used. Suppress warning */
+            result_dummy = ADC_readResult(result_addr, soc_number);
             adc_result_read_latency = CycleCounterP_getCount32();
             adc_result_read_latency -= counter_start_stop_read_latency;
             if((enableLog==1) && (iter == 0))
             {
-                DebugP_log("%d is adc_result_read_latency\r\n",adc_result_read_latency);
+                DebugP_log("%d is adc_result_read_latency, %d is result \r\n", adc_result_read_latency, result_dummy);
             }
             /* observation 19 or 20 cycles*/
             if((adc_result_read_latency < MIN_SAMPLE_WINDOW) || (adc_result_read_latency > 22))
@@ -3752,14 +3750,16 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
 
         /* 16 bit read */
         CycleCounterP_reset();
-        adc_output_16 = HW_RD_REG16(base + CSL_ADC_ADCINTSOCSEL1);
+        adc_output_16 = ADC_getPPBDelayTimeStamp(0,0);
         temp_count = CycleCounterP_getCount32();
         counter_values_for_read[0] = temp_count - counter_read_latency;
         temp_count = 0;
+        (void)adc_output_16;
 
         /* 16 bit write */
         CycleCounterP_reset();
-        HW_WR_REG16((base + CSL_ADC_ADCINTSOCSEL1), adc_output_16);
+        // HW_WR_REG16((base + CSL_ADC_ADCINTSOCSEL1), adc_output_16);
+        ADC_clearInterruptStatus(base, 0);
         temp_count = CycleCounterP_getCount32();
         counter_values_for_write[0]= temp_count - counter_read_latency;
         temp_count = 0;
@@ -3784,6 +3784,7 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
         temp_count = CycleCounterP_getCount32();
         counter_values_for_read[2] = temp_count - counter_read_latency;
         temp_count = 0;
+        (void) adc_output_16;
 
         /*32 bit result space read */
         CycleCounterP_reset();
@@ -3791,6 +3792,7 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
         temp_count = CycleCounterP_getCount32();
         counter_values_for_read[3] = temp_count - counter_read_latency;
         temp_count = 0;
+        (void) adc_output_32;
 
         /* 32 bit burst write*/
         CycleCounterP_reset();

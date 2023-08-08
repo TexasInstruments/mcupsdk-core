@@ -27,7 +27,15 @@ software to toggle to the loopback GPIO trigger the conversions.
 ## ISR
 - App_adcISR read the results stored by SOC0,1 in ADC1,2.
 # External Connections
-## AM263x-CC
+## AM263x-CC E2
+     - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85.
+     - Feed Analog voltage on
+         - ADC 1 Channel 0 : HSEC PIN 12
+         - ADC 1 Channel 1 : HSEC PIN 14
+         - ADC 2 Channel 0 : HSEC PIN 31
+         - ADC 2 Channel 1 : HSEC PIN 33
+
+## AM263x-CC E1
      - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85.
      - Feed Analog voltage on
          - ADC 1 Channel 0 : HSEC PIN 18
@@ -80,7 +88,7 @@ Shown below is a sample output when the application is run,
 
 \code
 ADC Synchronous Software Triggered Conversion Test Started ...
-	ADC1		ADC1
+	ADC1		ADC2
 	SOC0  SOC1	SOC0  SOC1
 	450 	619 	450 	619
 	678 	974 	678 	974

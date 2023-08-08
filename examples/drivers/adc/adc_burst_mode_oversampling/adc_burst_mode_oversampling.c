@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,13 +42,13 @@
 
 /*
  * This example sets up ePWM0 to periodically trigger a set of conversions
- * (SOC0,1,12,13,14,15) on ADC0 for conversion of inputs on ADC_AIN0, ADC_AIN1 and
+ * (SOC0,1,12,13,14,15) on ADC1 for conversion of inputs on ADC_AIN0, ADC_AIN1 and
  * burst mode conversion on ADC_AIN3.
  *
- * This demonstrates a batch of conversion on ADC0 (inputs on ADC_AIN0 and ADC_AIN1)
- * and burst mode conversion on ADC0 (input ADC_AIN3)
+ * This demonstrates a batch of conversion on ADC1 (inputs on ADC_AIN0 and ADC_AIN1)
+ * and burst mode conversion on ADC1 (input ADC_AIN3)
  *
- * ADC0 Interrupt ISR is used to read results of ADC0 (i.e. digital representations
+ * ADC1 Interrupt ISR is used to read results of ADC1 (i.e. digital representations
  * of inputs ADC_AIN0, ADC_AIN1 and average of oversampled ADC_AIN3)
  *
  *
@@ -56,12 +56,12 @@
  * The below watch variables can be used to view ADC conversion results.
  *
  * Watch Variables
- * gAdc0Result0 - Digital representation of the voltage on pin ADC0_AIN0
- * gAdc0result1 - Digital representation of the voltage on pin ADC0_AIN1
- * gadc0Result2 - Digital representation of the voltage on pin ADC0_AIN3
+ * gAdc1Result0 - Digital representation of the voltage on pin ADC1_AIN0
+ * gAdc1result1 - Digital representation of the voltage on pin ADC1_AIN1
+ * gadc1Result2 - Digital representation of the voltage on pin ADC1_AIN3
  *
  * External Connections
- * ADC0_AIN0, ADC0_AIN1, ADC0_AIN3 pins
+ * ADC1_AIN0, ADC1_AIN1, ADC1_AIN3 pins
  * should be connected to signals to be converted.
  *
  * Check example.syscfg
@@ -74,13 +74,13 @@
 
 /* Global variables and objects */
 /* Variable to store conversion results from all 3 pins  */
-uint16_t gAdc0Result0[ADC_CONVERSION_COUNT];
-uint16_t gAdc0Result1[ADC_CONVERSION_COUNT];
-uint16_t gAdc0Result2[ADC_CONVERSION_COUNT];
+uint16_t gAdc1Result0[ADC_CONVERSION_COUNT];
+uint16_t gAdc1Result1[ADC_CONVERSION_COUNT];
+uint16_t gAdc1Result2[ADC_CONVERSION_COUNT];
 
 
 
-uint32_t gAdc0baseAddr = CONFIG_ADC0_BASE_ADDR;
+uint32_t gAdc1baseAddr = CONFIG_ADC1_BASE_ADDR;
 
 
 static HwiP_Object  gAdcHwiObject;
@@ -150,14 +150,14 @@ void adc_burst_mode_oversampling_main(void *args)
 
 
     /* Print few elements from the result buffer */
-        DebugP_log("ADC0\r\nSOC0    :   SOC1    :   SOC12    :   Result register value :\r\n");
+        DebugP_log("ADC1\r\nSOC0    :   SOC1    :   SOC12    :   Result register value :\r\n");
 
         while(loopCnt < ADC_CONVERSION_COUNT)
         {
             DebugP_log("%d  :   %d  :   %d\r\n",
-                        gAdc0Result0[loopCnt],
-                        gAdc0Result1[loopCnt],
-                        gAdc0Result2[loopCnt]);
+                        gAdc1Result0[loopCnt],
+                        gAdc1Result1[loopCnt],
+                        gAdc1Result2[loopCnt]);
 
             loopCnt += 100;
         }
@@ -174,27 +174,27 @@ static void App_adcISR(void *args)
     /* Store results */
 
         /* storing the results of ADC_AIN0 and ADC_AIN1 */
-        gAdc0Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
-        gAdc0Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
+        gAdc1Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
+        gAdc1Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
 
         /* Averaging the results of four SOCs (12-15) since burst size is configured for 4 SOCs */
-        gAdc0Result2[gAdcConversionCount] =(
-            ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER12)+
-            ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER13)+
-            ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER14)+
-            ADC_readResult(CONFIG_ADC0_RESULT_BASE_ADDR, ADC_SOC_NUMBER15)
+        gAdc1Result2[gAdcConversionCount] =(
+            ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER12)+
+            ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER13)+
+            ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER14)+
+            ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER15)
             )>>2;
 
     /* Update the conversion count */
     gAdcConversionCount++;
 
     /* Clear the interrupt flag */
-    ADC_clearInterruptStatus(gAdc0baseAddr, ADC_INT_NUMBER1);
+    ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
 
     /* Check if overflow has occurred */
-    if(true == ADC_getInterruptOverflowStatus(gAdc0baseAddr, ADC_INT_NUMBER1))
+    if(true == ADC_getInterruptOverflowStatus(gAdc1baseAddr, ADC_INT_NUMBER1))
     {
-        ADC_clearInterruptOverflowStatus(gAdc0baseAddr, ADC_INT_NUMBER1);
-        ADC_clearInterruptStatus(gAdc0baseAddr, ADC_INT_NUMBER1);
+        ADC_clearInterruptOverflowStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
+        ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
     }
 }

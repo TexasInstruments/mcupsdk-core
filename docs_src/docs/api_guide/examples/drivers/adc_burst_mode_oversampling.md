@@ -4,29 +4,40 @@
 
 # Introduction
 
-This example sets up ePWM0 to periodically trigger a set of conversions (SOC0,1,12,13,14,15) on ADC0 for conversion of inputs on ADC_AIN0, ADC_AIN1 and burst mode conversion on ADC_AIN3. This demonstrates a batch of conversion on ADC0 (inputs on ADC_AIN0 and ADC_AIN1) and burst mode conversion on ADC0 (input ADC_AIN3). ADC0 Interrupt ISR is used to read results of ADC0 (i.e. digital representations of inputs ADC_AIN0, ADC_AIN1 and average of oversampled ADC_AIN3)
+This example sets up ePWM0 to periodically trigger a set of conversions (SOC0,1,12,13,14,15) on ADC1 for conversion of inputs on ADC_AIN0, ADC_AIN1 and burst mode conversion on ADC_AIN3. This demonstrates a batch of conversion on ADC1 (inputs on ADC_AIN0 and ADC_AIN1) and burst mode conversion on ADC1 (input ADC_AIN3). ADC1 Interrupt ISR is used to read results of ADC1 (i.e. digital representations of inputs ADC_AIN0, ADC_AIN1 and average of oversampled ADC_AIN3)
 
 \imageStyle{am263_adc_burst_mode_oversampling.png,width:50%}
 \image html am263_adc_burst_mode_oversampling.png "Module Block diagram"
 
 The example does the below
-- Configures SOC0,1,2 of ADC0, as high priority SOCs, to be triggered by EPWM0.
+- Configures SOC0,1,2 of ADC1, as high priority SOCs, to be triggered by EPWM0.
 - Configures ADC interrupt 0 to be generated at end of conversion of SOC12.
-- ADC0 Interrupt ISR is used to read results of ADC0 from SOC0,SOC1 and average of SOC12 through SOC15.
+- ADC1 Interrupt ISR is used to read results of ADC1 from SOC0,SOC1 and average of SOC12 through SOC15.
 
 Watch  Variables
-- The watch variables gAdc0Result0, gAdc0Result1, gAdc0Result2 storing ADC conversion outputs can be used to view the results.
+- The watch variables gAdc1Result0, gAdc1Result1, gAdc1Result2 storing ADC conversion outputs can be used to view the results.
 
 # External Connections
-- ADC0_AIN0, ADC0_AIN1, ADC0_AIN3 pins should be connected to signals to be converted.
+- ADC1_AIN0, ADC1_AIN1, ADC1_AIN3 pins should be connected to signals to be converted.
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Feed analog inputs (non-zero voltage) to HSEC Pin 12, HSEC Pin 14, HSEC Pin 15
+## AM263X-CC E2
+When using AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Feed analog inputs
+    - ADC1_AIN0 - HSEC 12
+    - ADC1_AIN1 - HSEC 14
+    - ADC1_AIN3 - HSEC 20
+
+## AM263X-CC E1
+When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Feed analog inputs
+    - ADC1_AIN0 - HSEC 18
+    - ADC1_AIN1 - HSEC 20
+    - ADC1_AIN3 - HSEC 23
+
 
 ## AM263X-LP
 When using LP
-- Feed analog inputs (non-zero volatage) to Boosterpack header Pin 23,Pin 28 and Pin 2.
+- Feed analog inputs (non-zero volatage) to Boosterpack header Pin 24, Pin 29 and Pin 6.
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_BURST_MODE_OVERSAMPLING_COMBOS}
@@ -63,7 +74,7 @@ Shown below is a sample output when the application is run,
 
 \code
 ADC EPWM Triggered Burst Mode Conversions Test Started ...
-ADC0 SOC0 : SOC1 : SOC2 : Result register value :
+ADC1 SOC0 : SOC1 : SOC2 : Result register value :
 3379 : 2364 : 1524
 1158 : 2314 : 1519
 1158 : 2314 : 1522
