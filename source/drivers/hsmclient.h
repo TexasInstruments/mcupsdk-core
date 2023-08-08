@@ -425,6 +425,22 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient,
  */
 int32_t HsmClient_readSWRev(HsmClient_t* HsmClient,
                                         SWRev_t* readSWRev);
+
+/**
+ * @brief
+ *  The service issued to HSM Server writes the SWRevision value
+ *  based on identifier as param.
+ *
+ * @param HsmClient [IN] HsmClient object.
+ * @param writeSWRev [IN] updates the SWRev efuses with SWRev value
+ *                       corresponding to identifier.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_writeSWRev(HsmClient_t* HsmClient,
+                                        SWRev_t* writeSWRev);
+
 /**
  * @brief
  * register a client to a particular ClientId

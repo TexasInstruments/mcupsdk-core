@@ -75,6 +75,8 @@ extern "C"
 #define HSM_KEYWRITER_SEND_CUST_KEY_CERT         (0x9028)
 /** @brief Read Software Revision service type ID */
 #define HSM_MSG_READ_SWREV						 (0x9033)
+/** @brief Write Software Revision service type ID */
+#define HSM_MSG_WRITE_SWREV						 (0x9032)
 
 /* message flags */
 /**

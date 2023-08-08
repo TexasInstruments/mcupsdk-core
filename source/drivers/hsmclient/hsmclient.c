@@ -999,3 +999,65 @@ int32_t HsmClient_readSWRev(HsmClient_t* HsmClient,
     return status;
 }
 
+int32_t HsmClient_writeSWRev(HsmClient_t* HsmClient,
+                                        SWRev_t* writeSWRev)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+    uint32_t timeout = SystemP_WAIT_FOREVER;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_WRITE_SWREV;
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(writeSWRev);
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)writeSWRev, sizeof(SWRev_t));
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the readRow has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Write SWRev request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(SWRev_t));
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for write SWRev response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
