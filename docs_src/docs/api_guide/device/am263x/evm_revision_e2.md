@@ -57,6 +57,8 @@ ADC4            |ADC4_AIN3		|-
 ADC4            |ADC4_AIN4		|-
 ADC4            |ADC4_AIN5		|-
 
+# Note
+The following changes are required to run the examples on AM263x CC E2 version, and are applicable for releases 08.03.00 through 08.06.00.
 # CMPSS Asynchronous Trip
 \ref EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP
 
