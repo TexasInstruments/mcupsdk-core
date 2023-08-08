@@ -16,7 +16,7 @@ CTRIPOUTH signal to the XBAROUT0 pin and CTRIPH to EPWM0B.
 \image html am263_cmpss_asynchronous_trip.png "Block diagram"
 
 CMPSS is configured to generate trip signals to trip the EPWM signals.
-CMPIN1P is used to give positive input and internal DAC is configured 
+CMPIN1P is used to give positive input and internal DAC is configured
 to provide the negative input. Internal DAC is configured to provide a
 signal at VDD/2. An EPWM signal is generated at EPWM0B and is configured
 to be tripped by CTRIPOUTH.
@@ -31,7 +31,7 @@ When a high input(higher than VDD/2) is provided to CMPIN1P,
 
 
 # @VAR_LP_BOARD_NAME
-This example enables the CMPSSA0 COMPH comparator and feeds the asynchronous
+This example enables the CMPSSA1 COMPH comparator and feeds the asynchronous
 CTRIPOUTH signal to the XBAROUT10 pin and CTRIPH to EPWM0B.
 
 CMPSS is configured to generate trip signals to trip the EPWM signals.
@@ -49,12 +49,12 @@ When a high input(higher than VDD/2) is provided to CMPIN1P,
     - EPWM0B gets tripped and outputs as high
 
 # External Connections
- - Give input on CMPIN1P (HSEC Pin 12)
+ - Give input on CMPIN1P (HSEC Pin 15)
  - Outputs can be observed on XBAROUT0 and EPWM0B using an oscilloscope
- 
-## AM263X-CC
+
+## AM263X-CC E2
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Feed analog input on HSEC Pin 12
+- Feed analog input on HSEC Pin 15
 - Capture and analyze waveforms on USER_LED1 and HSEC pin 51
 
 ## AM263X-LP
@@ -96,6 +96,22 @@ Shown below is a sample output when the application is run,
 
 \code
 [Cortex_R5_0] CMPSS asynchronous trip Test Started ...
-CTRIP signal is asserted 
+CMPSS asynchronous trip Test Passed!!!All tests have Passed!!!CMPSS asynchronous trip Test Started ...
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CTRIP signal is asserted
+CMPSS asynchronous trip Test Passed!!!All tests have Passed!!!
 \endcode
 

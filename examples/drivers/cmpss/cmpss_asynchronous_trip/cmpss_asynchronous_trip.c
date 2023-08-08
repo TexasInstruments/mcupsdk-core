@@ -42,30 +42,30 @@
 /*
  * A CMPSS example that enables the CMPSS High comparator and feeds the
  * asynchronous output to GPIO and EPWM
- 
+
  * This example enables the CMPSSA0 COMPH comparator and feeds the asynchronous
  * CTRIPOUTH signal to the XBAROUT0 pin and CTRIPH to EPWM0B.
- * 
+ *
  * CMPSS is configured to generate trip signals to trip the EPWM signals.
- * CMPIN1P is used to give positive input and internal DAC is configured 
+ * CMPIN1P is used to give positive input and internal DAC is configured
  * to provide the negative input. Internal DAC is configured to provide a
  * signal at VDD/2. An EPWM signal is generated at EPWM0B and is configured
  * to be tripped by CTRIPOUTH.
- * 
+ *
  * When a low input(VSS) is provided to CMPIN1P,
  *     - Trip signal(XBAROUT0) output is low
  *     - EPWM0B gives a PWM signal
- * 
+ *
  * When a high input(higher than VDD/2) is provided to CMPIN1P,
  *     - Trip signal(XBAROUT0) output turns high
  *     - EPWM0B gets tripped and outputs as high
- * 
+ *
  * External Connections \n
  *  - Give input on CMPIN1P (ControlCard HSEC Pin 12)
- *  - Outputs can be observed on 
- *    - XBAROUT0 (SOC pin QSPI0_CSN1. USER_LED1 on ControlCard) 
+ *  - Outputs can be observed on
+ *    - XBAROUT0 (SOC pin QSPI0_CSN1. USER_LED1 on ControlCard)
  *    - and EPWM0B (ControlCard HSEC pin 51) using an oscilloscope
- * 
+ *
  */
 
 void cmpss_asynchronous_trip(void *args)
@@ -82,14 +82,15 @@ void cmpss_asynchronous_trip(void *args)
     EPWM_disableTripZoneAdvAction(CONFIG_EPWM0_BASE_ADDR);
     /* Clear trip flags */
     EPWM_clearTripZoneFlag(CONFIG_EPWM0_BASE_ADDR, EPWM_TZ_INTERRUPT | EPWM_TZ_FLAG_OST);
-
+    int loopCount = 15;
     /* Loop indefinitely*/
-    while(1)
+    while(loopCount > 0)
     {
         /* Trip flag is set when CTRIP signal is asserted*/
         if((EPWM_getTripZoneFlagStatus(CONFIG_EPWM0_BASE_ADDR) &
             EPWM_TZ_FLAG_OST) != 0U)
         {
+            loopCount--;
             DebugP_log("CTRIP signal is asserted \r\n");
 
             /* Wait for comparator CTRIP to de-assert*/
@@ -100,5 +101,7 @@ void cmpss_asynchronous_trip(void *args)
                                    EPWM_TZ_FLAG_OST);
         }
     }
+    DebugP_log("CMPSS asynchronous trip Test Passed!!!");
+    DebugP_log("All tests have Passed!!!");
 }
 
