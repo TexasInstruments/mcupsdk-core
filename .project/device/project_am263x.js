@@ -66,6 +66,7 @@ const example_file_list = [
     "examples/drivers/edma/edma_chain_transfer/.project/project.js",
     "examples/drivers/edma/edma_interrupt_transfer/.project/project.js",
     "examples/drivers/edma/edma_link_transfer/.project/project.js",
+    "examples/drivers/edma/edma_multimem_transfer/.project/project.js",
     "examples/drivers/edma/edma_polled_transfer/.project/project.js",
     "examples/drivers/epwm/epwm_dma/.project/project.js",
     "examples/drivers/epwm/epwm_hr_duty_cycle/.project/project.js",

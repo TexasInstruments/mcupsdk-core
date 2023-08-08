@@ -667,6 +667,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An EDMA Multi Memory transfer example. This example demonstrates transfer between multip memory types using EDMA. CPU is R5FSS0-0 running NORTOS.",
+        "name": "edma_multimem_transfer",
+        "location": "../../examples/drivers/edma/edma_multimem_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_multimem_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Multi Memory transfer example. This example demonstrates transfer between multip memory types using EDMA. CPU is C66SS0 running NORTOS.",
+        "name": "edma_multimem_transfer",
+        "location": "../../examples/drivers/edma/edma_multimem_transfer/awr294x-evm/c66ss0_nortos/ti-c6000/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ccs"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_multimem_transfer",
+            "c66ss0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EDMA Polled transfer example. This example demonstrates polling in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_polled_transfer",
         "location": "../../examples/drivers/edma/edma_polled_transfer/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

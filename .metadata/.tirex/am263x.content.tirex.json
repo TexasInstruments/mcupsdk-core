@@ -2647,6 +2647,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An EDMA Multi Memory transfer example. This example demonstrates transfer between multip memory types using EDMA. CPU is R5FSS0-0 running NORTOS.",
+        "name": "edma_multimem_transfer",
+        "location": "../../examples/drivers/edma/edma_multimem_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_multimem_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EDMA Multi Memory transfer example. This example demonstrates transfer between multip memory types using EDMA. CPU is R5FSS0-0 running NORTOS.",
+        "name": "edma_multimem_transfer",
+        "location": "../../examples/drivers/edma/edma_multimem_transfer/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "edma",
+            "edma_multimem_transfer",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EDMA Polled transfer example. This example demonstrates polling in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_polled_transfer",
         "location": "../../examples/drivers/edma/edma_polled_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -9098,72 +9164,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A Interrupt Profiling Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "interrupt_profiling",
-        "location": "../../examples/kernel/freertos/interrupt_profiling/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "freertos",
-            "interrupt_profiling",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A Interrupt Profiling Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "interrupt_profiling",
-        "location": "../../examples/kernel/freertos/interrupt_profiling/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "freertos",
-            "interrupt_profiling",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.general"
         ],
         "description": "An interrupt prioritization example. This example demonstrates prioritization of interrupts. CPU is R5FSS0-0 running FREERTOS.",
@@ -9248,6 +9248,72 @@
             "kernel",
             "dpl",
             "interrupt_prioritization",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Interrupt Profiling Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "interrupt_profiling",
+        "location": "../../examples/kernel/freertos/interrupt_profiling/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "interrupt_profiling",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A Interrupt Profiling Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "interrupt_profiling",
+        "location": "../../examples/kernel/freertos/interrupt_profiling/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "freertos",
+            "interrupt_profiling",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
