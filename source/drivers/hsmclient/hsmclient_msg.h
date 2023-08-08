@@ -77,6 +77,8 @@ extern "C"
 #define HSM_MSG_READ_SWREV						 (0x9033)
 /** @brief Write Software Revision service type ID */
 #define HSM_MSG_WRITE_SWREV						 (0x9032)
+/** @brief Get DKEK service type ID*/
+#define HSM_MSG_GET_DKEK                         (0x9029)
 
 /* message flags */
 /**

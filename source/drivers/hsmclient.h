@@ -52,7 +52,7 @@ extern "C" {
  *
  * @{
  */
-
+#define LABEL_AND_CONTEXT_LEN_MAX  48U
 
 /**
  * @brief
@@ -203,6 +203,24 @@ typedef struct SWRev_t_
     uint8_t  revId;      /**< revision identifier*/
     uint8_t  rsvd[3];     /**< Reserved */
 } SWRev_t;
+
+/**
+ * @brief
+ * This is DKEK type which holds the label and context for derivation.
+ * This also holds the 256 derived KEK value which is returned by TIFS.
+ *
+ * @param label_length		length of label.
+ * @param context_length	length of context
+ * @param label_and_context holds the label and context as an array
+ * @param dkek				holds the derived key as returned by TIFS.
+ */
+typedef struct DKEK_t_
+{
+    uint8_t label_length; /**< label length.*/
+    uint8_t context_length; /**< context length.*/
+    uint8_t label_and_context[LABEL_AND_CONTEXT_LEN_MAX]; /**< label_and_context array */
+    uint32_t dkek[8]; /**< derived KEK. */
+} DKEK_t;
 
 /**
  * @brief
@@ -397,8 +415,8 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
 
 /**
  * @brief
- *  The service issued to HSM Server verifies the certificate and process the keywriter operations,
- * @param HsmClient         [IN] Client object which is using this openDbgFirewalls API.
+ * The service issued to HSM Server verifies the certificate and process the keywriter operations,
+ * @param HsmClient         [IN] Client object which is using this API.
  * @param certHeader        [IN] point to the location of certificate in the device memory.
  * @param timeout           [IN] amount of time to block waiting for
  * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
@@ -443,6 +461,25 @@ int32_t HsmClient_writeSWRev(HsmClient_t* HsmClient,
 
 /**
  * @brief
+ *  The service issued to HSM Server retrieves the derived KEK
+ *  based on identifier as param.
+ *
+ *  The service issued to HSM Server retrieves the derived KEK.
+ *
+ * @param timeout           [IN] amount of time to block waiting for
+ * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+ * @param HsmClient         [IN] HsmClient object.
+ * @param getDKEK           [IN] Pointer to DKEK_t which contains the request
+ *								 structure for Derived KEK.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_getDKEK(HsmClient_t* HsmClient,
+                                        DKEK_t* getDKEK,
+                                        uint32_t timeout);
+/**
+ * @brief
  * register a client to a particular ClientId
  *
  * @param HsmClient [IN] HsmClient object.
@@ -463,6 +500,7 @@ int32_t HsmClient_register(HsmClient_t* HsmClient, uint8_t clientId);
  *
  */
 void HsmClient_unregister(HsmClient_t* HsmClient,uint8_t clientId);
+
 /**
  * @brief
  * Current core will wait for bootnotify message from HSM core.
