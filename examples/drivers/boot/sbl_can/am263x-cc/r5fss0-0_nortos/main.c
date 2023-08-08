@@ -64,7 +64,6 @@ int main()
     int32_t status;
 
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -73,6 +72,7 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
     DebugP_log("\r\n");
 
     status = Board_driversOpen();
