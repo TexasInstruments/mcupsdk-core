@@ -56,9 +56,7 @@ int main(void)
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
-
     Bootloader_socSetAutoClock();
-    Bootloader_socInitL2MailBoxMemory();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -68,6 +66,7 @@ int main(void)
 
     DebugP_log("\r\n");
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     DebugP_log("Starting NULL Bootloader ... \r\n");
