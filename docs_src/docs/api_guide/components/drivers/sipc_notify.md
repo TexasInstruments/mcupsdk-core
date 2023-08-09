@@ -115,6 +115,8 @@ For the initialization on R5F side,
 be initialized in then mentioned memory sections.
 \snippet sipc_setup_sample.c linker
 
+- In order to inherit the HSM services, the application must comply the uses of IPC via shared memory i.e. a memory region should be designated to both the CPUs. Make sure to mark this section as non-cached in the R5F MPU. However if the cache is enabled, for the shared region its application responsibility to bypass cache or invalidate the cache.
+
 ### Message format.
 
  Unlike @ref DRIVERS_IPC_NOTIFY_PAGE the message size of SIPC can be in the range
