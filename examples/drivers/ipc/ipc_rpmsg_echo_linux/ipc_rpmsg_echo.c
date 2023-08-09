@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -40,8 +40,8 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-/* This example shows message exchange bewteen Linux and RTOS/NORTOS cores.
- * This example also does message exchange between the RTOS/NORTOS cores themselves
+/* This example shows message exchange between Linux and RTOS/NORTOS cores.
+ * This example also does message exchange between the RTOS/NORTOS cores themselves.
  *
  * The Linux core initiates IPC with other core's by sending it a message.
  * The other cores echo the same message to the Linux core.
@@ -57,8 +57,8 @@
 /*
  * Remote core service end point
  *
- * pick any unique value on that core between 0..RPMESSAGE_MAX_LOCAL_ENDPT-1
- * the value need not be unique across cores
+ * Pick any unique value on that core between 0..RPMESSAGE_MAX_LOCAL_ENDPT-1.
+ * The value need not be unique across cores.
  *
  * The service names MUST match what linux is expecting
  */
@@ -93,9 +93,9 @@ RPMessage_Object gIpcRecvMsgObject[IPC_RPMESSAGE_NUM_RECV_TASKS];
 RPMessage_Object gIpcAckReplyMsgObject;
 
 /* Task priority, stack, stack size and task objects, these MUST be global's */
-#define IPC_RPMESSAFE_TASK_PRI         (8U)
-#define IPC_RPMESSAFE_TASK_STACK_SIZE  (8*1024U)
-uint8_t gIpcTaskStack[IPC_RPMESSAGE_NUM_RECV_TASKS][IPC_RPMESSAFE_TASK_STACK_SIZE] __attribute__((aligned(32)));
+#define IPC_RPMESSAGE_TASK_PRI         (8U)
+#define IPC_RPMESSAGE_TASK_STACK_SIZE  (8*1024U)
+uint8_t gIpcTaskStack[IPC_RPMESSAGE_NUM_RECV_TASKS][IPC_RPMESSAGE_TASK_STACK_SIZE] __attribute__((aligned(32)));
 TaskP_Object gIpcTask[IPC_RPMESSAGE_NUM_RECV_TASKS];
 
 /* number of iterations of message exchange to do */
@@ -264,9 +264,9 @@ void ipc_rpmsg_create_recv_tasks(void)
     /* Create the tasks which will handle the ping service */
     TaskP_Params_init(&taskParams);
     taskParams.name = "RPMESSAGE_PING";
-    taskParams.stackSize = IPC_RPMESSAFE_TASK_STACK_SIZE;
+    taskParams.stackSize = IPC_RPMESSAGE_TASK_STACK_SIZE;
     taskParams.stack = gIpcTaskStack[0];
-    taskParams.priority = IPC_RPMESSAFE_TASK_PRI;
+    taskParams.priority = IPC_RPMESSAGE_TASK_PRI;
     /* we use the same task function for echo but pass the appropiate rpmsg handle to it, to echo messages */
     taskParams.args = &gIpcRecvMsgObject[0];
     taskParams.taskMain = ipc_recv_task_main;
@@ -276,9 +276,9 @@ void ipc_rpmsg_create_recv_tasks(void)
 
     TaskP_Params_init(&taskParams);
     taskParams.name = "RPMESSAGE_CHAR_PING";
-    taskParams.stackSize = IPC_RPMESSAFE_TASK_STACK_SIZE;
+    taskParams.stackSize = IPC_RPMESSAGE_TASK_STACK_SIZE;
     taskParams.stack = gIpcTaskStack[1];
-    taskParams.priority = IPC_RPMESSAFE_TASK_PRI;
+    taskParams.priority = IPC_RPMESSAGE_TASK_PRI;
     /* we use the same task function for echo but pass the appropiate rpmsg handle to it, to echo messages */
     taskParams.args = &gIpcRecvMsgObject[1];
     taskParams.taskMain = ipc_recv_task_main;
