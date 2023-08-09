@@ -159,6 +159,9 @@ function addModuleInstances(instance) {
             name: "udmaDriver",
             displayName: "UDMA Configuration",
             moduleName: "/drivers/udma/udma",
+            requiredArgs: {
+                instance: "PKTDMA_0",
+            }
         });
     }
 
