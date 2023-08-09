@@ -87,22 +87,22 @@ static int32_t ECC_funcAPITest(void)
     /* SDL_ecc_aggrGetRevision API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrGetRevision(pEccAggrRegs, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrGetNumRams API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrGetNumRams(pEccAggrRegs, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -112,228 +112,228 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrReadEccRamReg(pEccAggrRegs, 0U, SDL_ECC_RAM_WRAP_REV, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrReadEccRamReg(pEccAggrRegs, 0U, SDL_ECC_RAM_ERR_CTRL2, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrReadEccRamWrapRevReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrReadEccRamWrapRevReg(pEccAggrRegs, 0U, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrReadEccRamCtrlReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrReadEccRamCtrlReg(pEccAggrRegs, 0U, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrReadEccRamErrCtrlReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrReadEccRamErrCtrlReg(pEccAggrRegs, 0U, 0U, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrReadEccRamErrStatReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrReadEccRamErrStatReg(pEccAggrRegs, 0U, 0U, &val) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrWriteEccRamReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrWriteEccRamReg(pEccAggrRegs, 0U, SDL_ECC_RAM_WRAP_REV, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrWriteEccRamCtrlReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrWriteEccRamCtrlReg(pEccAggrRegs, 0U, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrWriteEccRamErrCtrlReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrWriteEccRamErrCtrlReg(pEccAggrRegs, 0U, 0U, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrWriteEccRamErrStatReg API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrWriteEccRamErrStatReg(pEccAggrRegs, 0U, 0U, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrConfigEccRam API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrConfigEccRam(pEccAggrRegs, 0U, 0U, 0U, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrVerifyConfigEccRam API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrVerifyConfigEccRam(pEccAggrRegs, 0U, 0U, 0U, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrConfigEccRam(pEccAggrRegs, 10U, (bool)true, (bool)true, (bool)true) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         /*To get EFAIL, given different values*/
         if (SDL_ecc_aggrVerifyConfigEccRam(pEccAggrRegs, 0U, 0U, 0U, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrGetEccRamGetErrorStatus API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrGetEccRamErrorStatus(pEccAggrRegs, 0U, &eccRamErrorStatus) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrForceEccRamError API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrForceEccRamError(pEccAggrRegs, 0U, &eccErrorInfo) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         eccErrorInfo.intrSrc = SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT;
         eccErrorInfo.bNextRow = false;
         eccErrorInfo.bOneShotMode = false;
         if (SDL_ecc_aggrForceEccRamError(pEccAggrRegs, 0U, &eccErrorInfo) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         eccErrorInfo.intrSrc = SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT;
         eccErrorInfo.bNextRow = true;
         eccErrorInfo.bOneShotMode = true;
         if (SDL_ecc_aggrForceEccRamError(pEccAggrRegs, 0U, &eccErrorInfo) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrGetEccRamErrorStatus(pEccAggrRegs, 0U, &eccRamErrorStatus) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrAckIntr API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrAckIntr(pEccAggrRegs, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrAckIntr(pEccAggrRegs, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrSetEccRamIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -341,290 +341,290 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrSetEccRamNIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, 3U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIsEccRamIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamNIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, 3U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamNIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT, 3U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIsEccRamIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamNIntrPending(pEccAggrRegs, 5U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS, 3U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIsEccRamIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrSetEccRamNIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamNIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, 3U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrSetEccRamNIntrPending(pEccAggrRegs, 0U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS, 2U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrClrEccRamIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrClrEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrClrEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrClrEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, 5U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrClrEccRamNIntrPending API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrClrEccRamNIntrPending(pEccAggrRegs, 0U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, 1U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrClrEccRamNIntrPending(pEccAggrRegs, 0U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS, 1U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrClrEccRamNIntrPending(pEccAggrRegs, 0U, SDL_ECC_ADDR_ERROR_TYPE_SUCCESSIVE_SINGLE_BITS, 1U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrEnableIntr API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrEnableIntr(pEccAggrRegs, 0U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrDisableIntr API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrDisableIntr(pEccAggrRegs, 0U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrEnableAllIntr API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrEnableAllIntr(pEccAggrRegs, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrDisableAllIntr API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrDisableAllIntr(pEccAggrRegs, 0U) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrEnableIntrs API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrEnableIntrs(pEccAggrRegs, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrDisableIntrs API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrDisableIntrs(pEccAggrRegs, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrEnableAllIntrs API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrEnableAllIntrs(pEccAggrRegs) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrDisableAllIntrs API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrDisableAllIntrs(pEccAggrRegs) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrReadStaticRegs API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         if (SDL_ecc_aggrReadStaticRegs(pEccAggrRegs, &eccStaticRegs) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrIntrEnableCtrl API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         SDL_ecc_aggrEnableCtrl enableCtrl;
 
         enableCtrl.validCfg = (SDL_ECC_AGGR_VALID_TIMEOUT_ERR | \
@@ -634,14 +634,14 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrEnableCtrl(pEccAggrRegs, &enableCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
     /* SDL_ecc_aggrIntrEnableCtrl API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         SDL_ecc_aggrEnableCtrl enableCtrl;
 
         enableCtrl.validCfg = (SDL_ECC_AGGR_VALID_TIMEOUT_ERR | \
@@ -651,13 +651,13 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrEnableCtrl(pEccAggrRegs, &enableCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIntrEnableCtrl API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         SDL_ecc_aggrEnableCtrl enableCtrl;
 
         enableCtrl.validCfg = (SDL_ECC_AGGR_VALID_TIMEOUT_ERR | \
@@ -667,13 +667,13 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrEnableCtrl(pEccAggrRegs, &enableCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIntrEnableCtrl API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         SDL_ecc_aggrEnableCtrl enableCtrl;
 
         enableCtrl.validCfg = (SDL_ECC_AGGR_VALID_TIMEOUT_ERR | \
@@ -683,24 +683,24 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrEnableCtrl(pEccAggrRegs, &enableCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         SDL_ecc_aggrEnableCtrl enableCtrl;
         enableCtrl.validCfg = 0U;
         if (SDL_ecc_aggrIntrEnableCtrl(pEccAggrRegs, &enableCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIntrStatusCtrl API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        DebugP_log("sdlEccAggr_apiTest: inProgess\n\n");
+        DebugP_log("sdlEccAggr_apiTest: inProgess\r\n");
         SDL_ecc_aggrStatusCtrl statusCtrl;
 
         statusCtrl.validCfg = (SDL_ECC_AGGR_VALID_TIMEOUT_ERR | \
@@ -712,7 +712,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrStatusCtrl(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIntrStatusCtrl API test */
@@ -730,7 +730,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrStatusCtrl(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIntrStatusCtrl API test */
@@ -748,7 +748,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrStatusCtrl(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     /* SDL_ecc_aggrIntrStatusCtrl API test */
@@ -766,7 +766,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrStatusCtrl(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -783,7 +783,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrGetStatus(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -800,7 +800,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrGetStatus(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -817,7 +817,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrGetStatus(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -834,7 +834,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIntrGetStatus(pEccAggrRegs, &statusCtrl) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -845,7 +845,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsIntrPending(pEccAggrRegs, 0U, SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -854,7 +854,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsIntrPending(pEccAggrRegs, 0U, SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -865,7 +865,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsAnyIntrPending(pEccAggrRegs, 0U, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -880,7 +880,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, subMemType, 0U, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
 
@@ -895,12 +895,12 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, subMemType, errSrc, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
         if (SDL_ecc_aggrIsAnyIntrPending(pEccAggrRegs, subMemType, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -915,12 +915,12 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, subMemType, errSrc, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
         if (SDL_ecc_aggrIsAnyIntrPending(pEccAggrRegs, subMemType, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -935,12 +935,12 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, subMemType, errSrc, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
         if (SDL_ecc_aggrIsAnyIntrPending(pEccAggrRegs, subMemType, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -954,7 +954,7 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, subMemType, 0U, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
     if (testStatus == SDL_APP_TEST_PASS)
@@ -969,15 +969,15 @@ static int32_t ECC_funcAPITest(void)
         if (SDL_ecc_aggrIsEccRamIntrPending(pEccAggrRegs, subMemType, errSrc, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
         if (SDL_ecc_aggrIsAnyIntrPending(pEccAggrRegs, subMemType, &isPend) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
-            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
+            DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-	DebugP_log("ALL sdlEccAggr_apiTest are passed\n");
+	DebugP_log("ALL sdlEccAggr_apiTest are passed\r\n");
     return (testStatus);
 }
 

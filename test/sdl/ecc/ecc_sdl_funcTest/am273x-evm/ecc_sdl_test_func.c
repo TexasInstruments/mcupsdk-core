@@ -1,6 +1,6 @@
 /*
  *   Copyright (c) Texas Instruments Incorporated 2022-2023
- * 
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
  *  are met:
@@ -188,7 +188,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MCANB_ECCInitConfig =
 
 static SDL_ECC_MemSubType ECC_Test_MSSsubMemTypeList[SDL_MSS_MAX_MEM_SECTIONS] =
 {
-	
+
 	SDL_MSS_ECC_AGG_MSS_MSS_L2RAMA_ECC_RAM_ID,
 	SDL_MSS_ECC_AGG_MSS_MSS_L2RAMB_ECC_RAM_ID,
     SDL_MSS_ECC_AGG_MSS_MSS_MBOX_ECC_RAM_ID,
@@ -417,8 +417,8 @@ void ECC_Test_exceptionInit(void)
 **********************************************************************/
 int32_t ECC_Test_MCAN_init (void)
 {
-    int32_t retValue=0U;
-    SDL_ErrType_t result;
+   volatile int32_t retValue=0U;
+   volatile  SDL_ErrType_t result;
 
     if (retValue == 0U) {
 		/* Initialize ECC Memory */
@@ -445,7 +445,7 @@ int32_t ECC_Test_MCAN_init (void)
 			DebugP_log("\r\nECC_Test_init: Initialize of MCANB ECC Memory is complete \r\n");
 		}
     }
-	
+
     if (retValue == 0U) {
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_MSS_MCANA_ECC, &ECC_Test_MCANA_ECCInitConfig);
@@ -458,7 +458,7 @@ int32_t ECC_Test_MCAN_init (void)
             DebugP_log("\r\nECC_Test_init: MCANA ECC initialization is completed \r\n");
         }
     }
-	
+
     if (retValue == 0U) {
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_MSS_MCANB_ECC, &ECC_Test_MCANB_ECCInitConfig);
@@ -492,7 +492,7 @@ int32_t ECC_Test_R5F_CACHE_init (void)
     ECC_Test_exceptionInit();
 
     DebugP_log("\r\nECC_Test_init: Exception init complete \r\n");
-	
+
 	/*Enabling the Cache Event bus*/
 	SDL_UTILS_enable_cache_event_bus();
 
@@ -526,13 +526,13 @@ int32_t ECC_Test_R5F_init (void)
     SDL_ErrType_t result;
 	SDL_ECC_staticRegs staticRegs;
 	uint8_t u8Counter = 0;
-	
+
     /*Enabling the ECC module*/
     SDL_ECC_UTILS_enableECCATCM();
-	
+
 	/*Enabling the B0TCM ECC module*/
 	SDL_ECC_UTILS_enableECCB0TCM();
-	
+
 	/*Enabling the B0TCM ECC module*/
 	SDL_ECC_UTILS_enableECCB1TCM();
 
@@ -560,7 +560,7 @@ int32_t ECC_Test_R5F_init (void)
              DebugP_log("\r\nECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete \r\n");
          }
     }
-	
+
     if (retValue == 0U) {
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_R5FSS0_CORE0_ECC_AGGR, &ECC_Test_R5FSS0_CORE0_ECCInitConfig);
@@ -657,7 +657,7 @@ int32_t ECC_Test_run_MCANA_1BitInjectTest(void)
     int32_t retVal=0U;
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-	
+
 	DebugP_log("\r\nMCANA Single bit error self test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -697,7 +697,7 @@ int32_t ECC_Test_run_MCANB_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 	volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANB Single bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -738,7 +738,7 @@ int32_t ECC_Test_run_MCANA_1Bit_N_ROWInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANA N ROW Single bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -779,7 +779,7 @@ int32_t ECC_Test_run_MCANA_1Bit_Repeat_InjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANA Repeat Single bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -820,7 +820,7 @@ int32_t ECC_Test_run_MCANA_1Bit_N_ROW_RepeatInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANA N ROW Repeat Single bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -861,7 +861,7 @@ int32_t ECC_Test_run_MCANA_2BitInjectTest(void)
     int32_t retVal=0U;
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-	
+
 	DebugP_log("\r\nMCANA Double bit error self test: starting \r\n");
 
     /* Run one shot test for MCANA  2 bit error */
@@ -901,7 +901,7 @@ int32_t ECC_Test_run_MCANB_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 	volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANB Double bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -942,7 +942,7 @@ int32_t ECC_Test_run_MCANA_2Bit_N_ROWInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANB N ROW Double bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -983,7 +983,7 @@ int32_t ECC_Test_run_MCANA_2Bit_Repeat_InjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANB Repeat Double bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -1024,7 +1024,7 @@ int32_t ECC_Test_run_MCANA_2Bit_N_ROW_RepeatInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANB N ROW Repeat Double bit error inject test: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -1066,9 +1066,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM0_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM0 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1107,7 +1107,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM0 2 bit error */
@@ -1149,9 +1149,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM1_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM1 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1190,7 +1190,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM1_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM1 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM1 2 bit error */
@@ -1232,9 +1232,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM2_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM2 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1273,7 +1273,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM2_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM2 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM2 2 bit error */
@@ -1315,9 +1315,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM3_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM3 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1356,7 +1356,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ITAG_RAM3_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ITAG RAM3 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ITAG RAM3 2 bit error */
@@ -1398,9 +1398,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM0_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM0 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1439,7 +1439,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM0 2 bit error */
@@ -1481,9 +1481,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM1_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM1 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1522,7 +1522,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM1_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM1 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM1 2 bit error */
@@ -1564,9 +1564,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM2_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM2 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1605,7 +1605,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM2_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM2 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM2 2 bit error */
@@ -1647,9 +1647,9 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM3_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM3 Single bit error inject test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x10200000u);
 
@@ -1688,7 +1688,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_DTAG_RAM3_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 DTAG RAM3 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 DTAG RAM3 2 bit error */
@@ -1731,7 +1731,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK0 Single bit error self test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00000510u);
 
@@ -1770,7 +1770,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 2 bit error */
@@ -1813,7 +1813,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK1 Single bit error self test: starting \r\n");
-		
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00000514u);
 
@@ -1852,7 +1852,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK1_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK1 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK1 2 bit error */
@@ -1895,7 +1895,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B0TCM0 BANK0 single bit error self test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00080000u);
 
@@ -1906,7 +1906,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_1BitInjectTest(void)
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig,
 					    	  10000);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -1935,7 +1935,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B0TCM0 BANK0 double bit error inject : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00080000u);
 
@@ -1945,7 +1945,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK0_2BitInjectTest(void)
 								SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_ID,
 								SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
 								&injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -1976,7 +1976,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B0TCM0 BANK1 single bit error inject : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00080004u);
 
@@ -1986,7 +1986,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_1BitInjectTest(void)
                               SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -2017,7 +2017,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B0TCM0 BANK1 double bit error inject : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00080004u);
 
@@ -2027,7 +2027,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B0TCM0_BANK1_2BitInjectTest(void)
                               SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -2058,7 +2058,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK0_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B1TCM0 BANK0 single bit error inject : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00080008u);
 
@@ -2099,7 +2099,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK0_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B1TCM0 BANK0 double bit error inject : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00080008u);
 
@@ -2140,7 +2140,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK1_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B1TCM0 BANK1 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x0008000cu);
 
@@ -2181,7 +2181,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK1_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 B1TCM0 BANK1 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x0008000cu);
 
@@ -2304,7 +2304,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK0_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 ATCM1 BANK0 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00004510u);
 
@@ -2345,7 +2345,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK0_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 ATCM1 BANK0 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00004510u);
 
@@ -2386,7 +2386,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK1_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 ATCM1 BANK1 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00004514u);
 
@@ -2427,7 +2427,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK1_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 ATCM1 BANK1 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00004514u);
 
@@ -2468,7 +2468,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK0_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B0TCM1 BANK0 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00084000u);
 
@@ -2478,7 +2478,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK0_1BitInjectTest(void)
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -2509,7 +2509,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK0_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B0TCM1 BANK0 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00084000u);
 
@@ -2519,7 +2519,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK0_2BitInjectTest(void)
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -2550,7 +2550,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK1_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B0TCM1 BANK1 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00084004u);
 
@@ -2560,7 +2560,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK1_1BitInjectTest(void)
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                               &injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -2591,7 +2591,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK1_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B0TCM1 BANK1 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00084004u);
 
@@ -2601,7 +2601,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B0TCM1_BANK1_2BitInjectTest(void)
                               SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID,
                               SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                               &injectErrorConfig);
-		
+
     if (result != SDL_PASS ) {
         retVal = -1;
     } else {
@@ -2632,7 +2632,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK0_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B1TCM1 BANK0 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00084008u);
 
@@ -2673,7 +2673,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK0_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B1TCM1 BANK0 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x00084008u);
 
@@ -2714,7 +2714,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B1TCM1 BANK1 single bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x0008400cu);
 
@@ -2755,7 +2755,7 @@ int32_t ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE1 B1TCM1 BANK1 double bit error inject test : starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x0008400cu);
 
@@ -2794,7 +2794,7 @@ int32_t ECC_Test_run_MSS_L2_RAMA_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS L2 RAMA Single bit error inject: starting \r\n");
 
     /* Run one shot test for MSS L2 RAMA 1 bit error */
@@ -2835,7 +2835,7 @@ int32_t ECC_Test_run_MSS_L2_RAMA_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS L2 RAMA Double bit error inject: starting \r\n");
 
     /* Run one shot test for MSS L2 RAMA 2 bit error */
@@ -2876,7 +2876,7 @@ int32_t ECC_Test_run_MSS_L2_RAMB_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS L2 RAMB Single bit error inject: starting \r\n");
 
     /* Run one shot test for MSS L2 RAMB 1 bit error */
@@ -2917,7 +2917,7 @@ int32_t ECC_Test_run_MSS_L2_RAMB_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS L2 RAMB Double bit error inject: starting \r\n");
 
     /* Run one shot test for MSS L2 RAMB 2 bit error */
@@ -2958,7 +2958,7 @@ int32_t ECC_Test_run_MSS_MAILBOX_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS MAILBOX Single bit error inject : starting \r\n");
 
     /* Run one shot test for MSS MAILBOX 1 bit error */
@@ -2999,7 +2999,7 @@ int32_t ECC_Test_run_MSS_MAILBOX_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS MAILBOX Double bit error inject : starting \r\n");
 
     /* Run one shot test for MSS MAILBOX 2 bit error */
@@ -3040,7 +3040,7 @@ int32_t ECC_Test_run_MSS_RETRAM_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS RETRAM Single bit error inject : starting \r\n");
 
     /* Run one shot test for MSS RETRAM 1 bit error */
@@ -3081,7 +3081,7 @@ int32_t ECC_Test_run_MSS_RETRAM_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS RETRAM Double bit error inject : starting \r\n");
 
     /* Run one shot test for MSS RETRAM 2 bit error */
@@ -3122,7 +3122,7 @@ int32_t ECC_Test_run_MSS_GPADC_DATA_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS GPADC DATA Single bit error inject : starting \r\n");
 
     /* Run one shot test for MSS GPADC DATA 1 bit error */
@@ -3163,7 +3163,7 @@ int32_t ECC_Test_run_MSS_GPADC_DATA_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS GPADC DATA Double bit error inject : starting \r\n");
 
     /* Run one shot test for MSS GPADC DATA 2 bit error */
@@ -3204,7 +3204,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS TPTC A0 Single bit error inject: starting \r\n");
 
     /* Run one shot test for MSS TPTC A0 1 bit error */
@@ -3245,7 +3245,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS TPTC A0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for MSS TPTC A0 2 bit error */
@@ -3286,7 +3286,7 @@ int32_t ECC_Test_run_MSS_TPTC_A1_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS TPTC A1 Single bit error inject: starting \r\n");
 
     /* Run one shot test for MSS TPTC A1 1 bit error */
@@ -3327,7 +3327,7 @@ int32_t ECC_Test_run_MSS_TPTC_A1_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS TPTC A1 Double bit error inject: starting \r\n");
 
     /* Run one shot test for MSS TPTC A1 2 bit error */
@@ -3368,7 +3368,7 @@ int32_t ECC_Test_run_MSS_TPTC_B0_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS TPTC B0 Single bit error inject: starting \r\n");
 
     /* Run one shot test for MSS TPTC B0 1 bit error */
@@ -3409,7 +3409,7 @@ int32_t ECC_Test_run_MSS_TPTC_B0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMSS TPTC B0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for MSS TPTC B0 2 bit error */
@@ -3475,19 +3475,19 @@ static int32_t ECC_sdlFuncTest(void)
         {
             DebugP_log("\r\nESM_Test_init: Init R5FSS0 CORE0 CACHE ESM single bit complete \r\n");
         }
-		
+
 		/*Writing '000' will ungate the ESM_GRP3_ERROR_7 for double bit ITAG*/
         SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_ITAG0_UERR ) % 8)*4)));
-		
+
 		/*Writing '000' will ungate the ESM_GRP3_ERROR_7 for double bit IDATA*/
         SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_IDATA0_UERR ) % 8)*4)));
-		
+
 		/*Writing '000' will ungate the ESM_GRP3_ERROR_7 for double bit DTAG*/
         SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_DTAG0_UERR ) % 8)*4)));
-		
+
 		/*Writing '000' will ungate the ESM_GRP3_ERROR_7 for double bit DDATA*/
         SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_DDATA0_UERR ) % 8)*4)));
-		
+
 	}
 
 	if (retVal == 0) {
@@ -3646,7 +3646,7 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_DTAG_RAM3_1BitInjectTest has failed...\r\n");
         }
     }
-	
+
 	if (retVal == 0) {
 	    ecc_syncup_delay();
 		DebugP_log("\r\nR5FSS0 CORE0 DTAG CACHE Test\r\n");
@@ -3727,7 +3727,7 @@ static int32_t ECC_sdlFuncTest(void)
         {
             DebugP_log("\r\nESM_Test_init: Init R5FSS0 CORE0 ESM single bit complete \r\n");
         }
-		
+
         /*Writing '000' will ungate the ESM_GRP3_ERROR_7 for double bit ATCM*/
         SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_ATCM0_UERR ) % 8)*4)));
 
@@ -3735,8 +3735,8 @@ static int32_t ECC_sdlFuncTest(void)
         SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_B0TCM0_UERR ) % 8)*4)));
 
         /*Writing '000' will ungate the ESM_GRP3_ERROR_7 for double bit ATCM*/
-        SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_B1TCM0_UERR ) % 8)*4)));		
-		
+        SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0U << (((SDL_ESMG3_B1TCM0_UERR ) % 8)*4)));
+
         gMsmcMemParityInterrupt = false;
     }
 	if (retVal == 0) {
@@ -3870,7 +3870,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK1_2BitInjectTest has failed... \r\n");
 		}
 	}
-	
+
     if (retVal == 0) {
         ecc_syncup_delay();
         result = ECC_Test_run_R5FSS0_CORE0_VIM_1BitInjectTest();
@@ -4021,7 +4021,7 @@ static int32_t ECC_sdlFuncTest(void)
 		gMsmcMemParityInterrupt = false;
 		if (result != SDL_PASS) {
 			retVal = -1;
-			DebugP_log("\r\ECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_2BitInjectTest has failed... \r\n");
+			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_2BitInjectTest has failed... \r\n");
 		}
 	}
 
@@ -4059,6 +4059,9 @@ static int32_t ECC_sdlFuncTest(void)
             /*Low priority MCANA interrupt */
         }
 
+        retVal = ECC_Test_MCAN_init();
+        for (int32_t i =0; i<0xfffu; i++);
+
         result = ECC_Test_run_MCANA_1Bit_N_ROW_RepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -4066,7 +4069,10 @@ static int32_t ECC_sdlFuncTest(void)
             /* Low priority MCANA interrupt */
         }
     }
-    if (retVal == 0U) 
+
+    retVal = ECC_Test_MCAN_init();
+
+    if (retVal == 0U)
 	{
         result = ECC_Test_run_MCANA_2BitInjectTest();
 
@@ -4075,7 +4081,7 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nECC_Test_run_MCANA_2BitInjectTest has failed.... \r\n");
             /*High priority MCANA interrupt */
         }
-		
+
         result = ECC_Test_run_MCANA_2Bit_N_ROWInjectTest();
 		if (result != SDL_PASS) {
 			retVal = -1;
@@ -4089,7 +4095,10 @@ static int32_t ECC_sdlFuncTest(void)
             DebugP_log("\r\nECC_Test_run_MCANA_2Bit_Repeat_InjectTest has failed... \r\n");
             /*High priority MCANA interrupt */
         }
-        
+
+        retVal = ECC_Test_MCAN_init();
+        for (int32_t i =0; i<0xfffu; i++);
+
 		result = ECC_Test_run_MCANA_2Bit_N_ROW_RepeatInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
@@ -4097,8 +4106,8 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority MCANA interrupt */
         }
     }
-	
-	if (retVal == 0U) 
+
+	if (retVal == 0U)
 	{
 		result = ECC_Test_run_MCANB_1BitInjectTest();
         if (result != SDL_PASS) {
@@ -4107,8 +4116,8 @@ static int32_t ECC_sdlFuncTest(void)
             /*Low priority MCANA interrupt */
         }
 	}
-	
-	if (retVal == 0U) 
+
+	if (retVal == 0U)
 	{
 		result = ECC_Test_run_MCANB_2BitInjectTest();
         if (result != SDL_PASS) {
@@ -4117,7 +4126,7 @@ static int32_t ECC_sdlFuncTest(void)
             /*Low priority MCANA interrupt */
         }
 	}
-	
+
     if (retVal == 0U) {
         /*Init of MSS*/
         retVal = ECC_Test_MSS_init();
@@ -4138,7 +4147,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority L2 RAMA interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
         /* Initialize ECC Memory */
@@ -4162,7 +4171,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority L2 RAMB interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
 		/* Initialize ECC Memory */
@@ -4176,7 +4185,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority L2 RAMB interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
         result = ECC_Test_run_MSS_MAILBOX_1BitInjectTest();
@@ -4186,7 +4195,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority MBOX interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
         result = ECC_Test_run_MSS_MAILBOX_2BitInjectTest();
@@ -4206,7 +4215,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority RETRAM interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
         result = ECC_Test_run_MSS_RETRAM_2BitInjectTest();
@@ -4216,7 +4225,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority RETRAM interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
         result = ECC_Test_run_MSS_GPADC_DATA_1BitInjectTest();
@@ -4226,7 +4235,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority MCAN0 interrupt */
         }
 	}
-	
+
     if (retVal == 0U)
     {
         result = ECC_Test_run_MSS_GPADC_DATA_2BitInjectTest();
@@ -4236,18 +4245,7 @@ static int32_t ECC_sdlFuncTest(void)
             /* High priority MCAN0 interrupt */
         }
 	}
-	
-//	if (retVal == 0)
-//    {
-//
-//        result = edma_interrupt_transfer(CONFIG_EDMA0, SDL_ECC_SEC, 0u, EDMA_MSS_TPCC_A_EVT_FREE_0);
-//        if (result != SDL_PASS) {
-//            retVal = -1;
-//            DebugP_log("\r\nedma_interrupt_transfer has failed... \r\n");
-//            /* High priority MCAN0 interrupt */
-//        }
-//	}
-	
+
     if ( retVal == 0U) {
         DebugP_log("\r\nECC SDL API tests: success\r\n");
     } else {
@@ -4282,7 +4280,7 @@ int32_t ECC_sdl_funcTest(void)
 	} else {
 		DebugP_log("\r\nECC_Test_init: ECC Callback Init complete for DSS ESM \r\n");
 	}
-	
+
     /*Execute ECC sdl function test*/
     testResult = ECC_sdlFuncTest();
 
