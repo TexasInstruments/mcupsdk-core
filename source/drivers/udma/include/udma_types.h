@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -76,7 +76,7 @@ typedef void *                          Udma_FlowHandle;
 #define UDMA_CACHELINE_ALIGNMENT        (128U)
 
 /** \brief Macro to align the size in bytes to UDMA cache line alignment */
-#define UDMA_ALIGN_SIZE(x)              (((x) + UDMA_CACHELINE_ALIGNMENT) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
+#define UDMA_ALIGN_SIZE(x)              (((x) + UDMA_CACHELINE_ALIGNMENT - 1U) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
 
 /** \brief Default UDMA channel disable timeout */
 #define UDMA_DEFAULT_CH_DISABLE_TIMEOUT (100U)
