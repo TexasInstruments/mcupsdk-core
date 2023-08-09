@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.10.0+2163"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -32,7 +32,7 @@ bootloader1.$name               = "CONFIG_BOOTLOADER_FLASH0";
 bootloader1.appImageBaseAddress = "0x60080000";
 
 bootloader2.$name          = "CONFIG_BOOTLOADER_FLASH_LINUX";
-bootloader2.appImageOffset = "0x300000";
+bootloader2.appImageOffset = "0x800000";
 
 flash1.$name                         = "CONFIG_FLASH0";
 bootloader1.flashDriver              = flash1;
