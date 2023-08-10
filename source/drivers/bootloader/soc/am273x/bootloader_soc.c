@@ -221,14 +221,14 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
             }
             break;
         case CSL_CORE_ID_C66SS0:
-            if (gR5ss0MemInitDone == FALSE)
+            if (gDssMemInitDone == FALSE)
             {
                 SOC_rcmStartMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
                 SOC_rcmStartMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
                 SOC_rcmWaitMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
                 SOC_rcmWaitMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
                 SOC_rcmMemInitDssMailboxMemory();
-                gR5ss0MemInitDone = TRUE;
+                gDssMemInitDone = TRUE;
             }
             break;
         default:
