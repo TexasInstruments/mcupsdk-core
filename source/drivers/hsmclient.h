@@ -155,7 +155,7 @@ typedef struct EfuseRowProt_t_
  */
 typedef struct keywriter_cert_header_t_
 {
-    uint8_t* cert;          /*For holding cerificate address*/
+    uint8_t* certAddress;   /*For holding cerificate address*/
     uint32_t certSize;      /*Cerificate size*/
     uint32_t debugResponse; /*Debug response*/
     uint32_t reserved;      /*reserved for future use*/
