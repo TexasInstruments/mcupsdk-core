@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -87,6 +87,8 @@
 #define SOC_RCM_XTAL_CLK_22p5792MHZ                 (22579200U)
 
 #define SOC_RCM_UTILS_ARRAYSIZE(x)                  (sizeof(x)/sizeof(x[0]))
+
+#define SOC_RCM_FREQ_1GHZ                           (1000*1000*1000)
 
 typedef enum SOC_RcmXtalFreqId_e
 {
@@ -2329,6 +2331,8 @@ void SOC_rcmCoreApllHSDivConfig(SOC_RcmPllHsDivOutConfig *hsDivCfg)
     uint32_t Fout;
     uint32_t Finp;
     SOC_RcmXtalFreqId clkFreqId;
+    volatile uint32_t *ptrFracMReg;
+    volatile uint32_t *ptrCoreClkCtrlReg;
 
     /* Core PLL settings */
     ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
@@ -2380,6 +2384,17 @@ void SOC_rcmCoreApllHSDivConfig(SOC_RcmPllHsDivOutConfig *hsDivCfg)
     if (hsDivCfg->hsdivOutEnMask & SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
     {
         ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2, 8U, 8U, 0x1U);
+    }
+    /* If the PLL lock frequency is less than 1GHz, update the sigma delta divider and DCO frequency. Errata: i2389 */
+    if(Fout < SOC_RCM_FREQ_1GHZ)
+    {
+        ptrFracMReg = &(ptrTopRCMRegs->PLL_DSP_FRACDIV);
+        /* PLL_CORE_FRACDIV_REGSD_SHIFT, PLL_CORE_FRACDIV_REGSD_MASK */
+        *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, 0x4);
+
+        ptrCoreClkCtrlReg = &(ptrTopRCMRegs->PLL_CORE_CLKCTRL);
+        /* PLL_CORE_CLKCTRL_SELFREQDCO_SHIFT, PLL_CORE_CLKCTRL_SELFREQDCO_MASK */
+        *ptrCoreClkCtrlReg = SOC_rcmInsert8 (*ptrCoreClkCtrlReg, 12U, 10U, 0x2);
     }
 
     return;
@@ -3527,7 +3542,7 @@ void SOC_clearWarmResetCause(void)
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MSS_TOP_RCM, 0);
-    
+
     CSL_FINS(ptrTOPRCMRegs->SYS_RST_CAUSE_CLR, MSS_TOPRCM_SYS_RST_CAUSE_CLR_SYS_RST_CAUSE_CLR_CLEAR, 0x1);
 
     /* Lock CONTROLSS_CTRL registers */
