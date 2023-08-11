@@ -342,10 +342,17 @@ void timer0_ISR(void)
 void timer1_ISR(void)
 {
     /* Check if the previous trace element is as expected */
+    #if defined SOC_AM64X || SOC_AM243X || SOC_AM263X
     if((gTraceISRIndex != 0) && (gTraceISR[(gTraceISRIndex-1) % TRACE_SIZE] != 0xA2))
     {
         status = SystemP_FAILURE;
     }
+    #else
+    if((gTraceISRIndex != 0) && (gTraceISR[(gTraceISRIndex-1) % TRACE_SIZE] != 0xB1))
+    {
+        status = SystemP_FAILURE;
+    }
+    #endif
 
     /* Add Timer 1 ISR start to trace */
     gTraceISR[gTraceISRIndex % TRACE_SIZE] = 0xA1;
