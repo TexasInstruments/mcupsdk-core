@@ -2653,20 +2653,61 @@ int32_t SOC_rcmSetR5Clock(uint32_t r5FreqHz, uint32_t sysClkFreqHz)
     uint32_t moduleClkDivVal;
 
     Finp = SOC_rcmGetR5ClockFrequency();
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
     moduleClkDivVal = SOC_rcmGetModuleClkDivVal(Finp, r5FreqHz);
 
-    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+    /* Errata i2387 fix: set staggered PLL config to nullify the GCM circuit glitch in case of 200 MHz and 400 MHz */
+    if(r5FreqHz == 400*1000000)
+    {
+        /* Switch back to XTAL */
+        ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL = 0U;
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = 0U;
+        ptrTopRCMRegs->SYS_CLK_DIV_VAL = 0U;
 
-    /* Divide by 1 to get the R5 Core Clock */
-    ptrTopRCMRegs->MSS_CR5_DIV_VAL = SOC_rcmInsert16 (ptrTopRCMRegs->MSS_CR5_DIV_VAL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(moduleClkDivVal));
+        /* Suppress the glitch */
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = 0x111;
 
-    /* Divide by 2 to get the VCLK */
-    moduleClkDivVal = SOC_rcmGetModuleClkDivVal(Finp, sysClkFreqHz);
+        /* R5F and SYS clocks are in the ratio 1:2 */
+        ptrTopRCMRegs->SYS_CLK_DIV_VAL = 0x111;
 
-    ptrTopRCMRegs->SYS_CLK_DIV_VAL = SOC_rcmInsert16 (ptrTopRCMRegs->SYS_CLK_DIV_VAL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(moduleClkDivVal));
+        /* Switch to PLL clock */
+        ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL = 0x222;
 
-    /* Select CLKOUT2 as clock for R5 Core */
-    ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL = SOC_rcmInsert16 (ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL, 11U, 0U, gSocRcmR5ClkSrcValMap[SOC_RcmR5ClockSource_DPLL_CORE_HSDIV0_CLKOUT2]);
+        /* Switch back to 400 MHz */
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = 0U;
+    }
+    else if(r5FreqHz == 200*1000000)
+    {
+        /* Switch back to XTAL */
+        ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL = 0U;
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = 0U;
+        ptrTopRCMRegs->SYS_CLK_DIV_VAL = 0U;
+
+        /* Suppress the glitch */
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = 0x111;
+
+        /* R5F and SYS clocks are in the ratio 1:1 */
+        ptrTopRCMRegs->SYS_CLK_DIV_VAL = 0U;
+
+        /* Switch to PLL clock */
+        ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL = 0x222;
+
+        /* Switch back to 200 MHz */
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = 0U;
+    }
+    else
+    {
+        /* Divide by 1 to get the R5 Core Clock */
+        ptrTopRCMRegs->MSS_CR5_DIV_VAL = SOC_rcmInsert16 (ptrTopRCMRegs->MSS_CR5_DIV_VAL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(moduleClkDivVal));
+
+        /* Divide by 2 to get the VCLK */
+        moduleClkDivVal = SOC_rcmGetModuleClkDivVal(Finp, sysClkFreqHz);
+
+        ptrTopRCMRegs->SYS_CLK_DIV_VAL = SOC_rcmInsert16 (ptrTopRCMRegs->SYS_CLK_DIV_VAL, 11U, 0U, SOC_rcmGetModuleClkDivRegVal(moduleClkDivVal));
+
+        /* Select CLKOUT2 as clock for R5 Core */
+        ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL = SOC_rcmInsert16 (ptrTopRCMRegs->MSS_CR5_CLK_SRC_SEL, 11U, 0U, gSocRcmR5ClkSrcValMap[SOC_RcmR5ClockSource_DPLL_CORE_HSDIV0_CLKOUT2]);
+    }
 
     return SystemP_SUCCESS;
 }
