@@ -28,6 +28,8 @@ Below features are supported in the SDK
 - USB device
 - USB CDC Class
 - USB DFU Class 
+- USB NCM Class 
+- USB RNDIS Class 
 
 \note Supported TinyUSB version is [0.14.0](https://github.com/hathach/tinyusb/tree/0.14.0) 
 
@@ -59,7 +61,7 @@ and does the below,
 
 ## Features Not Supported
 
-- TinyUSB Class Drivers Other Than CDC
+- TinyUSB Class Drivers Other Than CDC,DFU,NCM & RNDIS 
 - TinyUSB Host Core Driver and Class Drivers
 - USB 3.0
 - USB 2.0 Host Mode
@@ -144,6 +146,12 @@ and does the below,
 </tr>
 <tr>
     <td>\ref EXAMPLES_USB_DFU
+</tr>
+<tr>
+    <td>\ref EXAMPLES_USB_NCM
+</tr>
+<tr>
+    <td>\ref EXAMPLES_USB_RNDIS
 </tr>
 <tr><td colspan="1" bgcolor=#F0F0F0> TinyUSB </td></tr>
 <tr>
