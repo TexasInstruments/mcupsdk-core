@@ -142,15 +142,14 @@ MEMORY
      * this memory does not overlap with other R5F's
      */
     /* Resource table must be placed at the start of DDR_0 when R5 cores are early booting with Linux */
-    DDR_0       : ORIGIN = 0xA1100000 , LENGTH = 0x1000
-    DDR_1       : ORIGIN = 0xA1101000 , LENGTH = 0xEFF000
+    DDR_0       : ORIGIN = 0xA1100000 , LENGTH = 0x100000
+    DDR_1       : ORIGIN = 0xA1200000 , LENGTH = 0xE00000
 
     /* shared memory segments */
     /* On R5F,
      * - make sure there is a MPU entry which maps below regions as non-cache
      */
-    USER_SHM_MEM            : ORIGIN = 0xA5000000, LENGTH = 0x80
-    LOG_SHM_MEM             : ORIGIN = 0xA5000000 + 0x80, LENGTH = 0x00004000 - 0x80
-    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xA5004000, LENGTH = 0x0000C000
-    LINUX_IPC_SHM_MEM       : ORIGIN = 0xA1000000 , LENGTH = 0x100000
+    USER_SHM_MEM            : ORIGIN = 0xA5800000, LENGTH = 0x80
+    LOG_SHM_MEM             : ORIGIN = 0xA5800000 + 0x80, LENGTH = 0x00004000 - 0x80
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xA5000000, LENGTH = 0x00800000
 }

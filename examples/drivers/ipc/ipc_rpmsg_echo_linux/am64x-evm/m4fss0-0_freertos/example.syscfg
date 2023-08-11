@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.9.0+2015","templates":null}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -23,6 +23,8 @@ const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -76,3 +78,15 @@ mpu_armv71.attributes   = "NonCached";
 
 mpu_armv72.$name = "CONFIG_MPU_REGION1";
 mpu_armv72.size  = 18;
+
+mpu_armv73.$name        = "CONFIG_MPU_REGION2";
+mpu_armv73.attributes   = "NonCached";
+mpu_armv73.allowExecute = false;
+mpu_armv73.baseAddr     = 0xA5000000;
+mpu_armv73.size         = 23;
+
+mpu_armv74.$name        = "CONFIG_MPU_REGION3";
+mpu_armv74.size         = 14;
+mpu_armv74.attributes   = "NonCached";
+mpu_armv74.allowExecute = false;
+mpu_armv74.baseAddr     = 0xA5800000;

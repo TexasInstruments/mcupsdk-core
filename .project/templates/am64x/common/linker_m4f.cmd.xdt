@@ -74,13 +74,13 @@ MEMORY
      * this memory does not overlap with R5F's
      */
     /* Resource table must be placed at the start of DDR_0 when M4 core is early booting with Linux */
-    DDR_0       : ORIGIN = 0xA4100000 , LENGTH = 0x1000
+    DDR_0       : ORIGIN = 0xA4100000 , LENGTH = 0x100000
 
     % }
     % if(args.project.isLinuxInSystem) {
-    USER_SHM_MEM    : ORIGIN = 0xA5000000, LENGTH = 0x80
-    LOG_SHM_MEM     : ORIGIN = 0xA5000000 + 0x80, LENGTH = 0x00004000 - 0x80
-    IPC_VRING_MEM   : ORIGIN = 0xA5004000, LENGTH = 0x0000C000
+    USER_SHM_MEM    : ORIGIN = 0xA5800000, LENGTH = 0x80
+    LOG_SHM_MEM     : ORIGIN = 0xA5800000 + 0x80, LENGTH = 0x00004000 - 0x80
+    IPC_VRING_MEM   : ORIGIN = 0xA5000000, LENGTH = 0x00800000
     % } else {
     /* shared memories that are used by all cores */
     /* On M4F,

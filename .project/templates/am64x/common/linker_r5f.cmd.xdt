@@ -73,7 +73,7 @@
         codeDataSizeFlash = 0x80000;
         codeDataSizeDdr = 0x1000000;
         nocacheDataSize = 0x8000;
-        resourceTableSizeDdr = 0x1000;
+        resourceTableSizeDdr = 0x100000;
     }
 
     /* offset from  top of codeDataAddrDdr where the code/data is actually placed,
@@ -348,15 +348,12 @@ MEMORY
      * - make sure there is a MPU entry which maps below regions as non-cache
      */
     % if(args.project.isLinuxInSystem) {
-    USER_SHM_MEM            : ORIGIN = 0xA5000000, LENGTH = 0x80
-    LOG_SHM_MEM             : ORIGIN = 0xA5000000 + 0x80, LENGTH = 0x00004000 - 0x80
-    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xA5004000, LENGTH = 0x0000C000
+    USER_SHM_MEM            : ORIGIN = 0xA5800000, LENGTH = 0x80
+    LOG_SHM_MEM             : ORIGIN = 0xA5800000 + 0x80, LENGTH = 0x00004000 - 0x80
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xA5000000, LENGTH = 0x00800000
     % } else {
     USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x80
     LOG_SHM_MEM             : ORIGIN = 0x701D0000 + 0x80, LENGTH = 0x00004000 - 0x80
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D4000, LENGTH = 0x0000C000
-    % }
-    % if(args.project.isLinuxInSystem) {
-    LINUX_IPC_SHM_MEM       : ORIGIN = 0x`codeDataAddrDdr.toString(16).toUpperCase()` , LENGTH = 0x`codeDataOffsetDdr.toString(16).toUpperCase()`
     % }
 }
