@@ -278,6 +278,7 @@ void IpcNotify_Params_init(IpcNotify_Params *params)
 {
     uint32_t i;
 
+    params->intrPriority = IPC_NOTIFY_DEFAULT_INTR_PRIORITY;
     params->numCores = 0;
     for(i=0; i<CSL_CORE_ID_MAX; i++)
     {
@@ -370,6 +371,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
 
         HwiP_Params_init(&hwiParams);
         hwiParams.intNum = pInterruptConfig->intNum;
+        hwiParams.priority = params->intrPriority;
         hwiParams.callback = IpcNotify_isr;
         hwiParams.args = (void*)pInterruptConfig;
         hwiParams.eventId = pInterruptConfig->eventId;

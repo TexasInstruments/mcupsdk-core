@@ -1,6 +1,6 @@
 
 let common = system.getScript("/common");
-
+let hwi = system.getScript("/kernel/dpl/hwi.js");
 let ipc_soc = system.getScript(`/drivers/ipc/soc/ipc_${common.getSocName()}`)
 
 let ipc_options = [
@@ -50,6 +50,13 @@ function getConfigurables()
     }
     /* to this add the configurable for RP Message buffer size and number */
     config.push(
+        {
+            name: "intrPriority",
+            displayName: "Interrupt Priority",
+            default: 4,
+            hidden: false,
+            description: `Interrupt Priority: 0 (highest) to ${hwi.getHwiMaxPriority()} (lowest)`,
+        },
         {
             name: "enableSafeIpc",
             displayName: "Enable SafeIPC",
@@ -319,6 +326,8 @@ function validate(instance, report) {
     common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, "vringNumBuf");
     common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, "vringMsgSize");
     common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, "enableSafeIpc");
+
+    common.validate.checkNumberRange(instance, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
 
     for ( let config of configs)
     {

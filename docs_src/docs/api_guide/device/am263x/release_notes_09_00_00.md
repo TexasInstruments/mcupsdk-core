@@ -522,6 +522,12 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Spell corrected to "ECAP_continuousmodeConfig"
     <td> -
 </tr>
+<tr>
+    <td> IPC Notify version v0 and v1
+    <td> IpcNotify_init
+    <td> IntrPriority added as an element in IpcNotify_Params structure to make interrupt priority configurable.
+    <td> -
+</tr>
 </table>
 
 <table>

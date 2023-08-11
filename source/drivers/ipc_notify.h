@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -66,6 +66,11 @@ extern "C" {
 #define IPC_NOTIFY_CLIENT_ID_SYNC  (1U)
 
 /**
+ * \brief Default Interrupt priority for IPC Notify.
+ */
+#define IPC_NOTIFY_DEFAULT_INTR_PRIORITY  (4U)
+
+/**
  * \brief Maximum value of message that can be sent and received.
  */
 #define IPC_NOTIFY_MSG_VALUE_MAX    (0x10000000U)
@@ -120,6 +125,8 @@ typedef struct IpcNotify_Params_ {
                           */
 
     uint32_t linuxCoreId; /**< When linux IPC is enabled, this is the core ID of linux */
+
+    uint8_t  intrPriority; /**< Interrupt priority */
 } IpcNotify_Params;
 
 /**
