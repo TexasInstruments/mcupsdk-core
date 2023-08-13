@@ -562,7 +562,7 @@ const enet_cpsw_port_mac_mode_config_common = {
         },
         {
             name: "macOnlyCafEn_#",
-            description: "MAC-only Copy all frames",
+            description: "Promiscuous Mode. MAC-only Copy all frames",
             displayName: "Copy All Frames From MAC-only",
             longDescription:
 `MAC-only Copy All Frames \n
@@ -578,7 +578,7 @@ ALE destination address lookup operation`,
 const enet_cpsw_port_mac_mode_config = {
     name: "macModeCfg",
     displayName: "MAC-only mode config",
-    longDescription: "Port specific mac only mode configuration",
+    longDescription: "Port specific mac only mode configuration, and Promiscuous Mode configuration",
     config: [
         utilsScript.getPortSpecificConfig(enet_cpsw_port_mac_mode_config_common, "#", "hostPort"),
         utilsScript.getPortSpecificConfig(enet_cpsw_port_mac_mode_config_common, "#", "macPort1"),

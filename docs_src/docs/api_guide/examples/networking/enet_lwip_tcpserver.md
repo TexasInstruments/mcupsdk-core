@@ -218,6 +218,9 @@ to a network which has a DHCP server running.
 - After we run the example on the EVM (next step), the EVM will similarly be assigned a IP address, and then host
   can communicate with the EVM using the assigned IP address.
 
+- To enable static IP, set the static IP in the ipAddr variable in the App_setupNetif() before passing it as arguement
+  to initiate the netif, and stop the dhcp from starting in the App_allocateIPAddress() function.
+
 ## Run the example
 
 \attention If you need to reload and run again, a CPU power-cycle is MUST
