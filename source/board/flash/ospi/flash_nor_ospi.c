@@ -806,7 +806,7 @@ static int32_t Flash_norOspiReadId(Flash_Config *config)
     Flash_DevConfig *devCfg = config->devConfig;
     FlashCfg_ReadIDConfig *idCfg = &(devCfg->idCfg);
 
-    uint8_t  idCode[FLASH_OSPI_JEDEC_ID_SIZE_MAX];
+    uint8_t  idCode[FLASH_OSPI_JEDEC_ID_SIZE_MAX] = {0};
     uint32_t cmdAddr = OSPI_CMD_INVALID_ADDR;
     uint32_t dummyBits = 0;
     uint32_t idNumBytes = 3;

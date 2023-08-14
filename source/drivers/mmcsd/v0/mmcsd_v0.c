@@ -1633,7 +1633,7 @@ static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc
     {
         status = SystemP_FAILURE;
     }
-    if (SystemP_SUCCESS == status) 
+    if (SystemP_SUCCESS == status)
     {
         attrs = ((MMCSD_Config *)handle)->attrs;
         obj = ((MMCSD_Config *)handle)->object;
@@ -1651,9 +1651,9 @@ static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc
             status = SystemP_FAILURE;
         }
     }
-    if (SystemP_SUCCESS == status) 
-    {        
-        
+    if (SystemP_SUCCESS == status)
+    {
+
         dmaParams = dataSize << 16U;
         dmaParams |= (((dataSize >> 16U) << 6U) | 0x0023U);
 
@@ -2039,6 +2039,8 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
     volatile uint32_t dataLength = 0U;
     uint32_t remainingBlocks = 0U, offset = 0U;
     uint32_t tempWord = 0xDEADBABE;
+    uint8_t *pTempWord = NULL;
+    uint32_t i;
 
     uint16_t normalIntrStatus = MMCSD_halNormalIntrStatusGet(attrs->ctrlBaseAddr, MMCSD_INTERRUPT_ALL_NORMAL);
     uint16_t errorIntrStatus = MMCSD_halErrorIntrStatusGet(attrs->ctrlBaseAddr, MMCSD_INTERRUPT_ALL_ERROR);
@@ -2056,12 +2058,10 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
                 remainingBlocks = obj->readBlockCount;
                 offset = (obj->dataBlockCount - remainingBlocks) * (obj->dataBlockSize);
 
-                volatile uint32_t i;
-
                 for(i = 0; i < dataLength; i += 4U)
                 {
                     tempWord = CSL_REG32_RD(&pReg->DATA_PORT);
-                    uint8_t *pTempWord = (uint8_t *)&tempWord;
+                    pTempWord = (uint8_t *)&tempWord;
                     obj->dataBufIdx[offset + i] = *(pTempWord);
                     obj->dataBufIdx[offset + i + 1U] = *(pTempWord + 1U);
                     obj->dataBufIdx[offset + i + 2U] = *(pTempWord + 2U);
@@ -2085,14 +2085,13 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
                 remainingBlocks = obj->writeBlockCount;
                 offset = (obj->dataBlockCount - remainingBlocks) * (obj->dataBlockSize);
 
-                volatile uint32_t i;
-
                 for(i = 0; i < dataLength; i += 4U)
                 {
-                    *((uint8_t *)&tempWord)      = obj->dataBufIdx[offset + i];
-                    *((uint8_t *)&tempWord + 1U) = obj->dataBufIdx[offset + i + 1U];
-                    *((uint8_t *)&tempWord + 2U) = obj->dataBufIdx[offset + i + 2U];
-                    *((uint8_t *)&tempWord + 3U) = obj->dataBufIdx[offset + i + 3U];
+                    pTempWord = (uint8_t *)&tempWord;
+                    *(pTempWord)      = obj->dataBufIdx[offset + i];
+                    *(pTempWord + 1U) = obj->dataBufIdx[offset + i + 1U];
+                    *(pTempWord + 2U) = obj->dataBufIdx[offset + i + 2U];
+                    *(pTempWord + 3U) = obj->dataBufIdx[offset + i + 3U];
                     CSL_REG32_WR(&pReg->DATA_PORT, tempWord);
                 }
                 obj->writeBlockCount--;
