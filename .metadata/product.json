@@ -10,11 +10,7 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
-        "/fs/fs",
         "/networking/networking",
-        "/security/security",
-        "/usb/usb",
-        "/pru_io/pru_io",
     ],
     "devices": [
         "AM64x",
@@ -26,50 +22,103 @@
         "AM62x",
     ],
     "contexts": {
-        "AM64x": [
-            "r5fss0-0",
-            "r5fss0-1",
-            "r5fss1-0",
-            "r5fss1-1",
-            "m4fss0-0",
-            "a53ss0-0",
-        ],
-        "AM243x_ALV_beta": [
-            "r5fss0-0",
-            "r5fss0-1",
-            "r5fss1-0",
-            "r5fss1-1",
-            "m4fss0-0",
-        ],
-        "AM243x_ALX_beta": [
-            "r5fss0-0",
-            "r5fss0-1",
-            "r5fss1-0",
-            "r5fss1-1",
-            "m4fss0-0",
-        ],
-        "AM273x": [
-            "r5fss0-0",
-            "r5fss0-1",
-            "c66ss0",
-            "hsm0-0",
-        ],
-        "AWR294X": [
-            "r5fss0-0",
-            "r5fss0-1",
-            "c66ss0",
-            "hsm0-0",
-        ],
-        "AM263x_beta": [
-            "r5fss0-0",
-            "r5fss0-1",
-            "r5fss1-0",
-            "r5fss1-1",
-            "hsm0-0",
-        ],
-        "AM62x": [
-            "m4fss0-0",
-        ],
+        "AM64x": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        },{
+            "name": "r5fss1-0",
+            "targetdbId": "r5fss1-0"
+        }, {
+            "name": "r5fss1-1",
+            "targetdbId": "r5fss1-1"
+        }, {
+            "name": "m4fss0-0",
+            "targetdbId": "m4fss0-0"
+        }, {
+            "name": "a53ss0-0",
+            "targetdbId": "a53ss0-0"
+        }],
+        "AM243x_ALV_beta": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        },{
+            "name": "r5fss1-0",
+            "targetdbId": "r5fss1-0"
+        }, {
+            "name": "r5fss1-1",
+            "targetdbId": "r5fss1-1"
+        }, {
+            "name": "m4fss0-0",
+            "targetdbId": "m4fss0-0"
+        }],
+        "AM243x_ALX_beta": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        },{
+            "name": "r5fss1-0",
+            "targetdbId": "r5fss1-0"
+        }, {
+            "name": "r5fss1-1",
+            "targetdbId": "r5fss1-1"
+        }, {
+            "name": "m4fss0-0",
+            "targetdbId": "m4fss0-0"
+        }],
+        "AM273x": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        }, {
+            "name": "c66ss0",
+            "targetdbId": "c66ss0"
+        }, {
+            "name": "hsm0-0",
+            "targetdbId": "hsm0-0"
+        }],
+        "AWR294X": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        }, {
+            "name": "c66ss0",
+            "targetdbId": "c66ss0"
+        }, {
+            "name": "hsm0-0",
+            "targetdbId": "hsm0-0"
+        }],
+        "AM263x_beta": [{
+            "name": "r5fss0-0",
+            "targetdbId": "r5fss0-0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "r5fss0-1"
+        },{
+            "name": "r5fss1-0",
+            "targetdbId": "r5fss1-0"
+        }, {
+            "name": "r5fss1-1",
+            "targetdbId": "r5fss1-1"
+        }, {
+            "name": "hsm0-0",
+            "targetdbId": "hsm0-0"
+        }],
+        "AM62x": [{
+            "name": "m4fss0-0",
+            "targetdbId": "m4fss0-0"
+        }],
     },
     "pinmuxUIOptions": {
         "group": "merged",
