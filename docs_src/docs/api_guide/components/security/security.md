@@ -40,6 +40,40 @@ int main()
 
 \endcode
 
+#### HSMRt Firewall Configurations {#SECURITY_HSFS_BOOTTIME_FIREWALL}
+
+HSMRt does the following firewall configurations. These configurations gives necessary access of various memory regions to host cores.
+\cond SOC_AM263X
+\note
+Following configurations are done considering **R5FSS0_0** as *secure host 0*
+and **R5FSS0_1** as *secure host 1*.
+
+
+| **Firewall/MPU**          | **Programmable Region Num.** | **Start Address** | **End Address** | **AID/privID permissions**                          | **SR** | **SW** | **SX** | **UR** | **UW** | **UX** | **NS** | **Debug** | **Comments**                                |
+|---------------------------|------------------------------|-------------------|-----------------|-----------------------------------------------------|--------|--------|--------|--------|--------|--------|--------|-----------|---------------------------------------------|
+| FW HSM\_SLV               | 0                            | 0x44000400        | 0x44000800      | HSM, R5FSS0\_0,<br>R5FSS0\_1                        | 1      | 1      | 0      | 1      | 1      | 0      | 1      | 1         | HSM MBOX region<br>R5->HSM queues           |
+|                           | 1                            | 0x44000000        | 0x44000400      | HSM, R5FSS0\_0,<br>R5FSS0\_1                        | 1      | 0      | 0      | 1      | 0      | 0      | 1      | 1         | HSM MBOX region<br>HSM->R5 queues           |
+|                           | 2                            | 0x40020000        | 0x4011FFFF      | R5FSS0\_0,<br>R5FSS0\_1,<br>R5FSS1\_0,<br>R5FSS1\_1 | 1      | 0      | 0      | 1      | 0      | 0      | 1      | 1         | MPU Region Space                            |
+|                           | 3                            | 0x40140000        | 0x4023FFFF      | R5FSS0\_0,<br>R5FSS0\_1,<br>R5FSS1\_0,<br>R5FSS1\_1 | 1      | 0      | 0      | 1      | 0      | 0      | 1      | 1         | MPU Region Space                            |
+| FW DTHE\_SLV              | 0                            | 0xCE007000        | 0xCE0073FF      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | HSM AES (public context)                    |
+|                           | 1                            | 0xCE005000        | 0xCE0053FF      | All AIDs can acces                                  | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | HSM SHA (public context)                    |
+|                           | 2                            | 0xCE000000        | 0xCEFFFFFF      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | HSM DTHE and Crpyto                         |
+| FW SCRM2SCRP0             | 0                            | 0x53600000        | 0x53600400      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | Secure Asset and is protected during runtime |
+|                           | 1                            | 0x50000000        | 0x53600000      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | To access peripheral region master side MPU |
+| FW SCRM2SCRP1             | 0                            | 0x53600000        | 0x53600400      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | Secure Asset and is protected during runtime |
+|                           | 1                            | 0x50000000        | 0x53600000      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | To access peripheral region master side MPU |
+| FW R5SS0\_CORE0\_AHB\_MST | 0                            | 0x53600000        | 0x53600400      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | Secure Asset and is protected during runtime |
+|                           | 1                            | 0x50000000        | 0x53600000      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | To access peripheral region master side MPU |
+| FW R5SS0\_CORE1\_AHB\_MST | 0                            | 0x53600000        | 0x53600400      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | Secure Asset and is protected during runtime |
+|                           | 1                            | 0x50000000        | 0x53600000      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | To access peripheral region master side MPU |
+| FW R5SS1\_CORE0\_AHB\_MST | 0                            | 0x53600000        | 0x53600400      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | Secure Asset and is protected during runtime |
+|                           | 1                            | 0x50000000        | 0x53600000      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | To access peripheral region master side MPU |
+| FW R5SS1\_CORE1\_AHB\_MST | 0                            | 0x53600000        | 0x53600400      | HSM                                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | Secure Asset and is protected during runtime |
+|                           | 1                            | 0x50000000        | 0x53600000      | All AIDs can access                                 | 1      | 1      | 1      | 1      | 1      | 1      | 1      | 1         | To access peripheral region master side MPU |
+
+
+\endcond
+
 ### Resources available
 By default, the access to the crypto resources are firewalled on HS-FS devices.
 The HSM firmware so loaded, bypasses the firewalls and makes the following
@@ -47,16 +81,12 @@ crypto modules available for the R5FSS to use.
 
 * AES (public context)
 * SHA (public context)
-* PKA
-* TRNG
 
 This provides ability for the R5F core to be able to do the following
 computations:
 
 * AES encryption/decryption
 * SHA/HMAC hash calculation
-* RSA encryption/decryption, signing/verification
-* ECDSA encryption/decryption, signing/verification
 
 SBL should always wait for `HSM_MSG_BOOT_NOTIFY` before using the
 crypto accelerator because HSM firmware initializes these firewalls.
@@ -69,11 +99,13 @@ The TIFS-MCU firmware that gets loaded on HSM provides the following services.
 
 * Get Version
 	- This service when invoked provides the version of the TIFS-MCU firmware
-      loaded on HSM. Please refer to \ref EXAMPLES_HSM_SERVICES.
+      loaded on HSM. Please refer to \ref DRIVERS_HSMCLIENT_GET_VERSION.
 
 * Get UID
 	- This service when invoked provides the unique identifier (UID) of the device.
-       Please refer to \ref EXAMPLES_HSM_SERVICES.
+       Please refer to \ref DRIVERS_HSMCLIENT_GET_UID.
+* Set Firewall
+    - This service when invoked is used to configure MPU firewall regions. Please refer to \ref DRIVERS_HSMCLIENT_SET_FIREWALL.
 
 \endcond
 

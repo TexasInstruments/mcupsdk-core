@@ -6,9 +6,10 @@
 
 This example demonstrates the use of HSM services.
 
-Two services are available.
-1. UID is a unique identifier for each device. It can be extracted  using **get_uid service**.
-2. HSM **get_version_service** serves the client with TIFS-MCU version information.
+Three services are available.
+1. UID is a unique identifier for each device. It can be extracted  using **get uid service**.
+2. HSM **get version service** serves the client with TIFS-MCU version information.
+3. HSM **set firewall service** is used to configure MPU firewall regions.
 
 # Supported Combinations {#EXAMPLES_HSM_SERVICES_COMBOS}
 
@@ -81,8 +82,7 @@ make -s -C examples/drivers/boot/sbl_uart_uniflash/am263x-cc/r5fss0-0_nortos/ti-
 
 On successful boot, following message will be seen on terminal.
 
-\imageStyle{hsmrt_ver.png,width:50%}
-\image html hsmrt_ver.png "Services Sample Output"
+\snippet hsmclient.c hsm_services_example_qspi
 
 ### Set board for UART boot
 
@@ -96,6 +96,5 @@ Power cycle and load image via xmodem (teraterm/minicom, baud rate 115200bps)
 
 On successful boot, following message will be seen on terminal. Please note that
 the R5F application has not been side-loaded yet.
-\imageStyle{hsmrt_ver_uart.PNG,width:50%}
-\image html hsmrt_ver_uart.PNG "Sample Output"
+\snippet hsmclient.c hsm_services_example_uart
 

@@ -235,6 +235,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
    -# \subpage EXAMPLES_DRIVERS_GPIO_MULTI_LED_BLINK
+-# HSMCLIENT
+   -# \subpage EXAMPLES_HSM_SERVICES
 -# I2C
    -# \subpage EXAMPLES_DRIVERS_I2C_LED_BLINK
    -# \subpage EXAMPLES_DRIVERS_I2C_READ
@@ -243,8 +245,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
    -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO
    -# \subpage EXAMPLES_DRIVERS_IPC_SPINLOCK_SHAREDMEM
--# HSMCLIENT
-   -# \subpage EXAMPLES_HSM_SERVICES
 -# LIN
    -# \subpage EXAMPLES_DRIVERS_LIN_INTERNAL_LOOPBACK_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_SCI_INTERNAL_LOOPBACK_INTERRUPT

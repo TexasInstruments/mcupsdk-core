@@ -18,10 +18,12 @@ note that the terms 1.**HSMRt Firmware** and 2.**HSMRt** are synonymous to **TIF
 - Along side providing services at runtime **TIFS-MCU** also enables **secure boot flow**. It is responsible for decrypting and authenticating R5Fs application images and sends a notification to SBL if it is a valid app image , later SBL will boot the R5 applications to respective cores.
 - The trusted R5Fs cores which can communicate with HSM are known as **Secure hosts**.
 
-- **Following services are supported in MCU+SDK v8.4.0**
+- **Following services are supported in MCU+SDK v9.0.0**
 	- **BootNotify** -: A special message sent by TIFS-MCU Firmware to indicate **SBL** that **TIFS-MCU boot** was successful.
 	- **GetVersion** -: Get The current version of TIFS-MCU Firmware.
+    - **GetUID**     -: Get the unique ID of the device.
 	- **Debug Services** -: For (HS-SE) device only. By default debug port for all R5F and HSM is closed. Secure R5Fs can request debug port access via runtime **Debug services**.
+    - **Firewall Service** -: Configures the MPU firewall configuration.
 
 
 ## HSM Client message format.
@@ -114,7 +116,7 @@ One way to define such boundary is to protect some predefined memory region in O
 
 - refer @ref BOOTFLOW_GUIDE for more information on SBL(Secondary Boot loader)
 
-## HSM Client GetVersion Service.
+## HSM Client GetVersion Service. {#DRIVERS_HSMCLIENT_GET_VERSION}
 - This service is used to get the current version of **TIFS-MCU** **Firmware** running on HSM core.
 - User needs to instantiate HsmVer_t object and call HsmClient_getVersion() API to get the current TIFS-MCU's version.
 - Refer to HsmVer_t_ for the description of different fields that defines a unique TIFS-MCU Firmware version. If User needs to know just the unique 64 bit version ID then, user should read HsmVer_t_::HsmrtVer a 64 bit field which combines all the different fields of HsmVer_t_.
@@ -134,9 +136,9 @@ One way to define such boundary is to protect some predefined memory region in O
 \image html hsmrt_ver.png "Demo Get Version UART log"
 \endcond
 
-## HSM Client GetUID Service.
+## HSM Client GetUID Service. {#DRIVERS_HSMCLIENT_GET_UID}
 
-- This service is only available for **HS-SE** devices.
+- This service is available on both **HS-FS** and **HS-SE** devices.
 - This service is used to get UID or Unique ID of the device running TIFS_MCU Firmware.
 - UID is a 64 byte unique ID for a device which user needs to instantiate as an uint8_t * object and call HsmClient_getUID() API to get the device UID.
 
@@ -146,18 +148,64 @@ One way to define such boundary is to protect some predefined memory region in O
 
 \snippet hsmclient.c hsm_uid
 
-## HSM Client OpenDbgFirewall Service.
+## HSM Client SetFirewall Service. {#DRIVERS_HSMCLIENT_SET_FIREWALL}
+\note For boot time firewall configuration, Please refer \ref SECURITY_HSFS_BOOTTIME_FIREWALL
 
-- This service is only available for **HS-SE** devices.
-- As debug is closed for both HSM (M4) core and R5F cores in HS-SE device, this service is used to open debug firewall on device running TIFS-MCU Firmware.
-- User needs to create a signed certificate with correct cert type as a part of boot extensions, correct sw revision and correct UID in debug extensions.
-- User needs to instantiate a uint8_t * pointing to the certificate with certificate length and call HsmClient_openDbgFirewall() API to send the certificate to TIFS-MCU Firmware.
+- This service is used to configure MPU firewall regions.
+- User needs to instantiate FirewallReq_t object and populate regionCount and FirewallRegionArr. FirewallRegionArr is an array of mpu firewall regions(FirewallRegionReq_t) to be configured. User can configure 16 MPU firewall configurations in one request and hence the size of array can not be more than 16.
+- Once the request is processed, HSM populates `statusFirewallRegionArr`. Each bit of `statusFirewallRegionArr` represents the status of each region request from FirewallRegionArr. If some region configuration request was not honoured then the corresponding bit position in statusFirewallRegionArr as returned from HSM is 0, otherwise one.
+For example if a setFirewall request is sent for configuring 6 mpu regions and out of which 1st and 6th region request
+were illegal configuration then HSM will populate the statusFirewallRegionArr with **0xFFDE (1111 1111 1101 1110)**.
+- If status of HsmClient_setFirewall will return SystemP_SUCCESS only when all regions requested were configured by HSM.
 
-#### Example Usage
+- User can use sysconfig for generation of region configurations and can use the array directly for instantiating FirewallReq_t object.
+\imageStyle{syscfg_firewall.png,width:60%}
+\image html syscfg_firewall.png "Sysconfig interface for generating region configurations"
 
-- Registering HsmClient_t with client ID and requesting TIFS-MCU Firmware to open Debug Firewalls.
+- Region to be configured should be **1KB (0x400)** aligned and 1KB is the minimum granularity supported for the protected memory map targets size.
+    - Start Address should be a multiple of 1KB (0x400)
+    - (End Address + 1) should be a multiple of 1KB (0x400)
 
-\snippet hsmclient.c hsm_open_dbg_firewall
+- Each Configurable System MPU region details , Configuration address, number of programmable regions are captured in the
+table below
+| MPU Firewall Id | MPU Region                  | MPU Config Addr | Num of Programmable MPU Regions | Target Start Address | Target Size  | Target name        |
+|-----------------|-----------------------------|-----------------|---------------------------------|----------------------|--------------|--------------------|
+| 0               | CSL_FW_R5SS0_CORE0_AXIS_SLV | 0x400A0000      | 8 (0-7)                         | 0x78000000           | 64KB         | R5SS0_CORE0_TCMA   |
+|                 |                             |                 |                                 | 0x78100000           | 64KB         | R5SS0_CORE0_TCMB   |
+|                 |                             |                 |                                 | 0x74000000           | 8MB          | R5SS0_CORE0_ICACHE |
+|                 |                             |                 |                                 | 0x74800000           | 8MB          | R5SS0_CORE0_DCACHE |
+| 1               | CSL_FW_R5SS0_CORE1_AXIS_SLV | 0x400C0000      | 8 (0-7)                         | 0x78200000           | 32KB         | R5SS0_CORE1_TCMA   |
+|                 |                             |                 |                                 | 0x78300000           | 32KB         | R5SS0_CORE1_TCMB   |
+|                 |                             |                 |                                 | 0x75000000           | 8MB          | R5SS0_CORE1_ICACHE |
+|                 |                             |                 |                                 | 0x75800000           | 8MB          | R5SS0_CORE1_DCACHE |
+| 2               | CSL_FW_R5SS1_CORE0_AXIS_SLV | 0x400E0000      | 8 (0-7)                         | 0x78400000           | 64KB         | R5SS1_CORE0_TCMA   |
+|                 |                             |                 |                                 | 0x78500000           | 64KB         | R5SS1_CORE0_TCMB   |
+|                 |                             |                 |                                 | 0x76000000           | 8MB          | R5SS1_CORE0_ICACHE |
+|                 |                             |                 |                                 | 0x76800000           | 8MB          | R5SS1_CORE0_DCACHE |
+| 3               | CSL_FW_R5SS1_CORE1_AXIS_SLV | 0x40100000      | 8 (0-7)                         | 0x78600000           | 32KB         | R5SS1_CORE1_TCMA   |
+|                 |                             |                 |                                 | 0x78700000           | 32KB         | R5SS1_CORE1_TCMB   |
+|                 |                             |                 |                                 | 0x77000000           | 8MB          | R5SS1_CORE1_ICACHE |
+|                 |                             |                 |                                 | 0x77800000           | 8MB          | R5SS1_CORE1_DCACHE |
+| 4               | CSL_FW_L2OCRAM_BANK0_SLV    | 0x40020000      | 8 (0-7)                         | 0x70000000           | 512 KB       | L2OCRAM_BANK0      |
+| 5               | CSL_FW_L2OCRAM_BANK1_SLV    | 0x40040000      | 8 (0-7)                         | 0x70080000           | 512 KB       | L2OCRAM_BANK1      |
+| 6               | CSL_FW_L2OCRAM_BANK2_SLV    | 0x40060000      | 8 (0-7)                         | 0x70100000           | 512 KB       | L2OCRAM_BANK2      |
+| 7               | CSL_FW_L2OCRAM_BANK3_SLV    | 0x40080000      | 8 (0-7)                         | 0x70180000           | 512 KB       | L2OCRAM_BANK3      |
+| 8               | CSL_FW_MBOX_RAM_SLV         | 0x40140000      | 8 (0-7)                         | 0x72000000           | 16 KB        | MBOX_RAM           |
+| 11              | CSL_FW_QSPI0_SLV            | 0x40160000      | 8 (0-7)                         | 0x48200000           | 256 KB       | QSPI0              |
+|                 |                             |                 |                                 | 0x60000000           | 32 MB        | EXT_FLASH0         |
+|                 |                             |                 |                                 | 0x62000000           | 32 MB        | EXT_FLASH1         |
+| 12              | CSL_FW_SCRM2SCRP0_SLV       | 0x40180000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP0         |
+| 13              | CSL_FW_SCRM2SCRP1_SLV       | 0x401A0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP1         |
+| 14              | CSL_FW_R5SS0_CORE0_AHB_MST  | 0x401C0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE0_AHB    |
+| 15              | CSL_FW_R5SS0_CORE1_AHB_MST  | 0x401E0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE1_AHB    |
+| 16              | CSL_FW_R5SS1_CORE0_AHB_MST  | 0x40200000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE0_AHB    |
+| 17              | CSL_FW_R5SS1_CORE1_AHB_MST  | 0x40220000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE1_AHB    |
 
+
+\snippet hsmclient.c hsm_set_firewall
+
+- Example UART getVersion output.
+\imageStyle{set_firewall_output.png,width:40%}
+\image html set_firewall_output.png "Demo Set Firewall UART log"
 ## APIs
 @ref DRV_HSMCLIENT_MODULE
