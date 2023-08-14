@@ -27,7 +27,7 @@ In the case where SBL is not used, and boot is completely carried out in linux f
 \imageStyle{msram_usage.png,width:95%}
 \image html msram_usage.png "MSRAM usage"
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM65X
 ## DDR(with Linux)
 
 Below picture shows the memory layout details of DDR. If Linux and RTOS are used in a project, only memory sections

@@ -5,8 +5,12 @@
 # Introduction
 
 This example demonstrates setting of multiple LED at the same time connected to the same I2C controller.
+\if SOC_AM65X
+The application will blink all the I2C controlled LED in the IDK.
+\else
 The application will blink all the I2C controlled LED in the EVM.
 
+\endif
 Application exits after 10 iterations..
 
 # Supported Combinations {#EXAMPLES_DRIVERS_I2C_LED_BLINK_COMBOS}
@@ -51,6 +55,17 @@ Application exits after 10 iterations..
  ^              | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/i2c/i2c_led_blink
+
+\endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/i2c/i2c_led_blink
 
 \endcond

@@ -65,6 +65,19 @@ We also fetch the clock frequency of the current CPU using Sciclient and print t
  Example folder | examples/drivers/sciclient/sciclient_get_version
 
 \endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+  ^             | r5fss0-1 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/sciclient/sciclient_get_version
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination
@@ -81,7 +94,7 @@ We also fetch the clock frequency of the current CPU using Sciclient and print t
 
 Shown below is a sample output when the application is run,
 
-\cond !SOC_AM62X
+\cond !SOC_AM62X && !SOC_AM65X
 \code
 DMSC Firmware Version 21.1.1--v2021.01a (Terrific Lla
 Firmware revision 0x15
@@ -94,6 +107,16 @@ All tests have passed!!
 \cond SOC_AM62X
 \code
 DMSC Firmware Version 21.5.1--w2022.07-am62x (Terrifi
+Firmware revision 0x15
+ABI revision 3.1
+[SCICLIENT] CPU clock frequency = 400000000 Hz
+All tests have passed!!
+\endcode
+\endcond
+
+\cond SOC_AM65X
+\code
+DMSC Firmware Version 22.1.1--v2022.01a (Terrific Lla
 Firmware revision 0x15
 ABI revision 3.1
 [SCICLIENT] CPU clock frequency = 400000000 Hz

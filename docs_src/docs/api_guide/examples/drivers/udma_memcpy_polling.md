@@ -6,8 +6,11 @@
 
 This example performs UDMA block copy transfer using Type 15 Transfer Record (TR15)
 using Transfer Record Packet Descriptor (TRPD) in polling mode.
-
+\if SOC_AM65X
+The application opens and configures a UDMA channel using SysConfig.
+\else
 The application opens and configures a BCDMA channel using SysConfig.
+\endif
 Then the application prepares a TRPD for a 1D transfer from source to
 destination buffer, submits the request to DMA, waits for the DMA to complete
 by polling the channels's completion ring accelerator (RA).
@@ -45,6 +48,17 @@ and compares the source and destination buffers for any data mismatch.
  ^              | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/udma/udma_memcpy_polling
+
+\endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/udma/udma_memcpy_polling
 
 \endcond

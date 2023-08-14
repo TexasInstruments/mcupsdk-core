@@ -51,6 +51,18 @@ In this example,
  Example folder | examples/drivers/ipc/ipc_rpmsg_echo_linux
 
 \endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ ^              | r5fss0-1 freertos
+ Toolchain      | ti-arm-clang
+ Board          | am65x-idk
+ Example folder | examples/drivers/ipc/ipc_rpmsg_echo_linux
+
+\endcond
 # Steps to Run the Example
 
 \note This is a `system` or multi-core project, so refer to system project build instructions for CCS project or makefiles when building the example.

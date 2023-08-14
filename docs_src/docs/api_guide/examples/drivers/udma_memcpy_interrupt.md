@@ -7,7 +7,11 @@
 This example performs UDMA block copy transfer using Type 15 Transfer Record (TR15)
 using Transfer Record Packet Descriptor (TRPD) in interrupt mode.
 
+\if SOC_AM65X
+The application opens and configures a UDMA channel using SysConfig.
+\else
 The application opens and configures a BCDMA channel using SysConfig.
+\endif
 It also configures the interrupt mode of operation through the SysConfig
 which ensures that all required interrupt configuration are done.
 The callback function App_udmaEventCb is registered via SysConfig.
@@ -55,6 +59,17 @@ and compares the source and destination buffers for any data mismatch.
  ^              | r5fss1-1 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/udma/udma_memcpy_interrupt
+
+\endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/udma/udma_memcpy_interrupt
 
 \endcond

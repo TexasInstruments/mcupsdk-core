@@ -32,7 +32,7 @@ See also these additional pages for more details and examples about IPC,
 - Debug logging in multi-core environment
   - \ref KERNEL_DPL_DEBUG_PAGE
 - Examples using IPC
-\cond !SOC_AM62X
+\cond !SOC_AM62X && !SOC_AM65X
   - \ref EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
   - \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO
 \endcond
@@ -42,7 +42,7 @@ See also these additional pages for more details and examples about IPC,
 \cond SOC_AM64X
   - \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO
 \endcond
-\cond SOC_AM62X
+\cond SOC_AM62X || SOC_AM65X
   - \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO
 \endcond
 
@@ -54,6 +54,10 @@ Shown below is a block diagram of the SW modules involved in IPC,
 \cond SOC_AM64X
 \imageStyle{ipc_block_diagram_am64.png,width:70%}
 \image html ipc_block_diagram_am64.png "IPC SW Block Diagram"
+\endcond
+\cond SOC_AM65X
+\imageStyle{ipc_block_diagram_am65x.png,width:70%}
+\image html ipc_block_diagram_am65x.png "IPC SW Block Diagram"
 \endcond
 \cond SOC_AM243X
 \imageStyle{ipc_block_diagram_am243.png,width:70%}
@@ -101,7 +105,7 @@ There are two APIs to exchange messages between the CPUs
   - This allows users to use both RP Message and Notify together in the same application based on their requirements.
   \endcond
 
-\cond SOC_AM64X || SOC_AM62X
+\cond SOC_AM64X || SOC_AM62X || SOC_AM65X
 ### When using Linux
 
 When using Linux,
@@ -186,12 +190,16 @@ Below are the summary of steps a application writer on RTOS/NORTOS needs to do e
 - Step 1: Enable IPC RPMessage and/or IPC Notify in SysConfig for the CPUs of interest.
 - Step 2: Update linker command file to place the shared memory sections at the right place in the memory map
 - Step 3: Mark the shared memory sections as non-cached in the MPU/MMU of the CPU. This can be done via SysConfig
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM65X
 - Step 4.a: When IPC with Linux is enabled, sync with Linux during system initialization phase.
 \endcond
 - Step 4: Start using the IPC message passing APIs
 
+\if SOC_AM65X
+We use \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO example as reference to go through
+\else
 We use \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example as reference to go through
+\endif
 \endcond
 
 \cond SOC_AM62X
@@ -220,7 +228,10 @@ read through the instructions below.
   \imageStyle{ipc_enable_am273.png,width:70%}
   \image html ipc_enable_am273.png "IPC SysConfig"
 \endcond
-
+\cond SOC_AM65X
+  \imageStyle{ipc_enable_am65.png,width:70%}
+  \image html ipc_enable_am65.png "IPC SysConfig"
+\endcond
 \cond SOC_AM62X
   \imageStyle{ipc_enable_am62.png,width:70%}
   \image html ipc_enable_am62.png "IPC SysConfig"
@@ -264,9 +275,12 @@ read through the instructions below.
 \cond !SOC_AM62X
 - When IPC RP Message is enabled, a shared memory is used to exchange packet buffers between different CPUs.
   This shared memory MUST be mapped to the same address across all CPUs.
-
+\if SOC_AM65X
+- This is done via the linker command file as shown in below snippet taken from  \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO example
+\else
 - This is done via the linker command file as shown in below snippet taken from  \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example
-
+\endif
+\cond !SOC_AM65X
     \code
     /* specify the memory segment */
     MEMORY
@@ -296,7 +310,38 @@ read through the instructions below.
         .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
     }
     \endcode
+\endcond
+\cond SOC_AM65X
+    \code
+    /* specify the memory segment */
+    MEMORY
+    {
+        ...
 
+        /* shared memories that are used by RTOS/NORTOS cores */
+        /* On R5F,
+        * - make sure there is a MPU entry which maps below regions as non-cache
+        */
+        USER_SHM_MEM            : ORIGIN = 0xA5000000, LENGTH = 0x00000080
+        LOG_SHM_MEM             : ORIGIN = 0xA5000080, LENGTH = 0x00000080
+        RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0xA2000000, LENGTH = 0x00200000
+    }
+
+
+    /* map the shared memory section to the memory segment */
+    SECTION
+    {
+        ...
+
+        /* General purpose user shared memory, used in some examples */
+        .bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM
+        /* this is used when Debug log's to shared memory are enabled, else this is not used */
+        .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
+        /* this is used only when IPC RPMessage is enabled, else this is not used */
+        .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
+    }
+    \endcode
+\endcond
 - Strictly speaking for IPC RP Message only `RTOS_NORTOS_IPC_SHM_MEM` is needed.
 
 - However the example also shows the below,
@@ -308,7 +353,7 @@ read through the instructions below.
 - Need less to say other memory segments, except the shared memory segments, like code/data/stack
   across all CPUs should be non-overlapping else each CPU will trample over each other and things will not work as expected.
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM65X
 - When there is Linux in the system, the shared memory is specified via the below additional lines in each CPUs linker command file
 
     \code
@@ -364,16 +409,18 @@ read through the instructions below.
 - This can be done via SysConfig, by adding additional MPU entries using the `MPU` module under `TI DRIVER PORTING LAYER` in SysConfig.
 
 - Once again
-\cond !SOC_AM62X
+\cond !SOC_AM62X && !SOC_AM65X
   - Refer to MPU settings for each CPU in \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example for RTOS/NORTOS applications WITHOUT Linux.
 \endcond
 \cond SOC_AM64X || SOC_AM62X
   - And refer to MPU settings for each CPU in \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO example when Linux is also present in the system
 \endcond
-
+\cond SOC_AM65X
+  - Refer to MPU settings for each CPU in \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO example when Linux is also present in the system
+\endcond
 ### Sync with CPUs
 
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM65X
 - When Linux is present in the system, additionally one needs to call below API at each CPU that has Linux IPC enabled **after** `System_init` is done
   but before any IPC message exchange with Linux is started.
 

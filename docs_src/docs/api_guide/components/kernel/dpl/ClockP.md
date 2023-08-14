@@ -35,7 +35,9 @@ NA
 - Recommended value of tick period is 1ms or 1000us
 - Adding any module in SysConfig, automatically adds a clock module with a timer configured for 1ms. The default timer is chosen
   such that it does not overlap with a timer from another CPU.
+\cond !SOC_AM65X
 - In M4F, the M4F internal SysTick timer is used.
+\endcond
 \cond !SOC_AM62X
 - In R5F, one of the many SOC level timer is used.
 \endcond

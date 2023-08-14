@@ -7,8 +7,11 @@
 UDMA chaining sample application performs a chain of block copy transfer
 using channel global trigger.
 Channel 0 completion triggers Channel 1 transfer: CH0 -> CH1.
-
+\if SOC_AM65X
+The application opens and configures two UDMA channel using SysConfig.
+\else
 The application opens and configures two BCDMA channel using SysConfig.
+\endif
 
 The first channel doesn't user a global trigger and each channel triggers
 the next channel's global trigger through the channel's TR event register.
@@ -49,6 +52,17 @@ and compares the source and destination buffers for any data mismatch.
  CPU + OS       | r5fss0-0 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/udma/udma_chaining
+
+\endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/udma/udma_chaining
 
 \endcond

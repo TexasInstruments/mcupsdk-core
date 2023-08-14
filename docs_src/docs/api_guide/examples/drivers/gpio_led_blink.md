@@ -3,8 +3,11 @@
 [TOC]
 
 # Introduction
-
+\if SOC_AM65X
+This example configures a GPIO pin connected to an LED on the IDK in output mode.
+\else
 This example configures a GPIO pin connected to an LED on the EVM in output mode.
+\endif
 The application toggles the LED on/off for 10 seconds and exits.
 \cond SOC_AM62X
 We have not any LED connected direct from MCU connection for testing gpio pins on the board, So we are using MCU_HEADER pins for gpio pins for glowing LED.
@@ -113,6 +116,16 @@ Make the following connections for this example to work on the AM62X-SK-EVM.
 
 \endcond
 
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/gpio/gpio_led_blink/
+
+\endcond
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination

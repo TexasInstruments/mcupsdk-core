@@ -173,6 +173,12 @@ const files_am62x = {
     ],
 };
 
+const files_am65x = {
+    common: [
+        "IpcRPMessage_linux_sample.c",
+    ],
+};
+
 
 const filedirs = {
     common: [
@@ -257,6 +263,10 @@ function getComponentBuildProperty(buildOption) {
     {
         build_property.files = files_am62x;
         build_property.files.common.push("I2c_lld_sample_v0.c");
+    }
+    if(buildOption.device=="am65x")
+    {
+        build_property.files = files_am65x;
     }
     build_property.filedirs = filedirs;
 

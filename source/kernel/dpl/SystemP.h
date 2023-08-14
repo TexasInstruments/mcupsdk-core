@@ -105,7 +105,7 @@ extern "C" {
 
 
 /**
- * \cond !SOC_AM62X
+ * \cond !SOC_AM62X && !SOC_AM65X
  */
 /**
  * \defgroup BOARD_MODULE APIs for Board Specific Device Drivers

@@ -5,7 +5,11 @@
 # Introduction
 
 This example demonstrates probing of sensor via I2C and read data from it.
+\if SOC_AM65X
+The application reads data from the temperature sensor in the IDK.
+\else
 The application reads data from the temperature sensor in the EVM.
+\endif
 Application reads 20 samples from the sensor and exits.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_I2C_TEMPERATURE_COMBOS}
@@ -52,6 +56,17 @@ Application reads 20 samples from the sensor and exits.
  ^              | r5fss0-0 freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/i2c/i2c_temperature
+
+\endcond
+
+\cond SOC_AM65X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/i2c/i2c_temperature
 
 \endcond

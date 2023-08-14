@@ -85,7 +85,17 @@ For all other cores, CCS prints are used.
 
 \endcond
 \endcond
+\cond SOC_AM65X
 
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ ^              | r5fss0-1 freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/empty/
+
+\endcond
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination

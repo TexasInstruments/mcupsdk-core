@@ -12,7 +12,9 @@ the device drivers to run either in no-RTOS mode or with a RTOS.
 
 Common across all CPUs,
 - Clock APIs to initialize a system tick ISR and allow SW to create multiple SW timers using a single underlying HW timer.
+\cond !SOC_AM65X
 - Address translate APIs to translate system address to local address, needed for M4F
+\endcond
 - Heap APIs to create arbitrary heaps at user defined memory locations
 - Semaphore APIs to model a semaphore in no-RTOS environment
 - HW Timer APIs to setup user defined HW timers beyond the system tick timer.
@@ -31,7 +33,7 @@ R5F features,
     - nested interrupts supported
     - FPU save/restore supported
 \endcond
-
+\cond !SOC_AM65X
 M4F features,
 - CPU start up code
 - Memory protection unit (MPU) APIs to enable, disable multiple regions in the MPU
@@ -41,7 +43,7 @@ M4F features,
 - SysTick timer APIs
 - M4F ISRs
   - Nested interrupts
-
+\endcond
 
 \cond SOC_AM64X
 A53 features,
@@ -64,11 +66,19 @@ A53 features,
 SysConfig can be used to configure below modules with NORTOS
 - Clock module to setup system tick timer including the tick duration
 - Debug Log module to select the console to use for logging as well as enable/disable logging zones
+\if SOC_AM65X
+- MPU ARMv7 to setup different MPU regions for R5F
+\else
 - MPU ARMv7 to setup different MPU regions for R5F and M4F CPUs
+\endif
 \cond SOC_AM64X
 - MMU ARMV8 to setup different MMU regions for A53 CPU
 \endcond
+\if SOC_AM65X
+- RAT to setup  address translation regions, needed for M3F
+\else
 - RAT to setup  address translation regions, needed for M4F
+\endif
 - Timer to setup HW timer available on the SOC, including enabling timer interrupt and ISR registration
 
 ## Features Not Supported
@@ -80,8 +90,10 @@ SysConfig can be used to configure below modules with NORTOS
     - nested interrupts not supported
     - FPU save/restore not supported.
 \endcond
+\cond !SOC_AM65X
 - M4F ISRs,
   - FPU save/restore not supported.
+\endcond
 \cond SOC_AM64X
 - A53 ISRs,
   - FIQ mode ISRs not supported.
@@ -109,10 +121,12 @@ SysConfig can be used to configure below modules with NORTOS
     <td>dpl/common/
     <td>NORTOS APIs that are common across all CPUs
 </tr>
+\cond !SOC_AM65X
 <tr>
     <td>dpl/m4/
     <td>NORTOS APIs that are specific to M4F CPUs
 </tr>
+\endcond
 \cond !SOC_AM62X
 <tr>
     <td>dpl/r5/
@@ -151,6 +165,7 @@ features like MPU, MMU, cache and interrupts.
     <td>Information about ARM architecture that is implemented by R5F. Should be used in conjunction with R5F TRM to understand R5F architecture details.
 </tr>
 \endcond
+\cond !SOC_AM65X
 <tr>
     <td>ARM v7M Architecture Reference Manual
     <td>Information about ARM architecture that is implemented by M4F. Should be used in conjunction with M4F TRM to understand M4F architecture details.
@@ -160,15 +175,18 @@ features like MPU, MMU, cache and interrupts.
     <td>ARM v8A Architecture Reference Manual
     <td>Information about ARM architecture that is implemented by A53. Should be used in conjunction with A53 TRM to understand A53 architecture details.
 </tr>
+\endcond
+\endcond
 <tr>
     <td>ARM Cortex R5F Technical Reference Manual
     <td>Information about R5F CPU architecture.
 </tr>
-\endcond
+\cond !SOC_AM65X
 <tr>
     <td>ARM Cortex M4F Technical Reference Manual
     <td>Information about M4F CPU architecture.
 </tr>
+\endcond
 \cond SOC_AM64X
 <tr>
     <td>ARM Cortex A53 Technical Reference Manual

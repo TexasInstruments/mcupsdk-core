@@ -15,9 +15,11 @@
   - Ability to specify interrupt as FIQ or IRQ, level or pulse
   - Ability to specify interrupt priority
 \endcond
+\cond !SOC_AM65X
 - For ARM M4,
   - Ability to specify interrupt priority
   - Ability to specify systick ISR and NVIC external interrupt ISR
+\endcond
 \cond SOC_AM64X
 - For ARM A53,
   - Ability to specify interrupt priority
@@ -38,6 +40,7 @@ See also \ref KERNEL_FREERTOS_PAGE, \ref KERNEL_NORTOS_PAGE for list of unsuppor
   - To enable save/restore FPU context in FIQ, uncomment macro **EN_SAVE_RESTORE_FPU_CONTEXT** in source/kernel/dpl/HwiP.h (Disabled by default)
   - Refer ARMv7-R Architecture reference manual and SOC TRM for more details.
 \endcond
+\cond !SOC_AM65X
 - For ARM M4,
   - ARM NVIC is the interrupt controller that is supported.
   - Interrupt numbers 0 to 15 are for internal interrupts,
@@ -46,6 +49,7 @@ See also \ref KERNEL_FREERTOS_PAGE, \ref KERNEL_NORTOS_PAGE for list of unsuppor
     The TRM will document M4F interrupt numbers as xxx_M4FSSx_COREx_NVIC_IN_n.
     This corresponds to interrupt number (16 + n) at NVIC and (16 + n) is used as input to the HwiP APIs
   - Refer ARMv7-M Architecture reference manual and SOC TRM for more details.
+\endcond
 \cond SOC_AM64X
 - For ARM A53,
   - GIC V3 is the interrupt controller that is supported.
@@ -74,6 +78,13 @@ See also \ref KERNEL_FREERTOS_PAGE, \ref KERNEL_NORTOS_PAGE for list of unsuppor
     CPU type  | Valid interrupt numbers  | Valid interrupt priorities
     ----------|--------------------------|---------------------------
     M4F       | 15 ..  79                | 0 (highest) ..  7 (lowest)
+\endcond
+
+\cond SOC_AM65X
+- On @VAR_SOC_NAME,
+    CPU type  | Valid interrupt numbers  | Valid interrupt priorities
+    ----------|--------------------------|---------------------------
+    R5F       | 0  .. 511                | 0 (highest) .. 15 (lowest)
 \endcond
 
 ## Example Usage

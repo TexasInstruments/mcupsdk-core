@@ -2,15 +2,24 @@
 
 [TOC]
 
+\if SOC_AM65X
+\note The steps on this page should be done each time IDK is power cycled or when a
+      new CCS session is started.
+\else
 \note The steps on this page should be done each time EVM is power cycled or when a
       new CCS session is started.
 
+\endif
 ## Prerequisites {#PREREQUISITES}
 
 A quick recap of the steps that need to have been done before you proceed
 - Make sure you have installed CCS as mentioned in \ref CCS_SETUP_PAGE
 - Make sure the UART port used for console is identified as mentioned in \ref CCS_UART_TERMINAL
+\if SOC_AM65X
+- Make sure you have the IDK power cable, JTAG cable, UART cable connected as shown in \ref EVM_CABLES
+\else
 - Make sure you have the EVM power cable, JTAG cable, UART cable connected as shown in \ref EVM_CABLES
+\endif
 \cond SOC_AM273X
 - Make sure you have done the steps for a SOC initialization method using \ref EVM_SOC_INIT
 \endcond
@@ -33,6 +42,12 @@ A quick recap of the steps that need to have been done before you proceed
   - Other options, if recommended method cannot be used, are mentioned in \ref EVM_SOC_INIT
 - Make sure EVM boot mode switch is setup correctly based on the SOC initilization method
 \endcond
+\cond SOC_AM65X
+- Make sure you have done the steps for a SOC initialization method
+  - Recommended method is \ref EVM_SOC_INIT
+- Make sure EVM boot mode switch is setup correctly based on the SOC initilization method
+  - For the **RECOMMENDED** method, \ref EVM_SOC_INIT, the boot mode should be \ref BOOTMODE_NOBOOT
+\endcond
 \cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX
   - For the **RECOMMENDED** method, \ref EVM_FLASH_SOC_INIT, the boot mode should be \ref BOOTMODE_QSPI
 \endcond
@@ -42,7 +57,11 @@ A quick recap of the steps that need to have been done before you proceed
 \cond SOC_AM62X
 - Make sure you have done the steps for a SOC initialization method as per \ref EVM_SOC_INIT
 \endcond
+\if SOC_AM65X
+- Make sure the UART or CCS console logs on doing **IDK POWER-ON** indicate that SOC initization is successful
+\else
 - Make sure the UART or CCS console logs on doing **EVM POWER-ON** indicate that SOC initization is successful
+\endif
 - Make sure you have built the example of interest as mentioned in \ref GETTING_STARTED_BUILD
 
 ## Launch CCS {#CCS_LAUNCH}
@@ -83,7 +102,11 @@ user can wait for Linux to boot till prompt and connect to the core of interest 
 continue debugging or reload application of interest on the cores.
 \endcond
 
+\if SOC_AM65X
+- **POWER-ON** the IDK
+\else
 - **POWER-ON** the EVM
+\endif
 
 \cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X
 - If you dont see the expected SOC initialization logs on UART or CCS console, then recheck your \ref EVM_SETUP_PAGE
@@ -196,9 +219,17 @@ continue debugging or reload application of interest on the cores.
 
 - It is especially important to "reset the CPU" before reloading the program.
 
+\if SOC_AM65X
+- In most cases, you dont need to power-cycle the IDK to reload the program or load a new program.
+\else
 - In most cases, you dont need to power-cycle the EVM to reload the program or load a new program.
 
+\endif
 - In some cases, depending on whether the previous program execution was successful or not, the
   CPU or some SOC peripheral may be in a exception or hang state.
   In this case program reload may not work.
+\if SOC_AM65X
+  - **SOLUTION**: Power cycle the IDK and repeat all steps shown on this page.
+\else
   - **SOLUTION**: Power cycle the EVM and repeat all steps shown on this page.
+\endif

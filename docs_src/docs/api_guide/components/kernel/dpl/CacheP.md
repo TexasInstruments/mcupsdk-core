@@ -42,8 +42,9 @@ NA
   - A53: 32B
 \endcond
 - On R5F, It is recommended to enable both program and data cache in R5F in all applications. In R5F for cache to be enabled MPU needs to be enabled.
+\cond !SOC_AM65X
 - On M4F, the CPU does not support cache so these APIs when used with M4F, will be blank and will have no effect
-
+\endcond
 ## Example Usage
 
 Include the below file to access the APIs,

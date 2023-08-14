@@ -81,7 +81,7 @@ has been completed, the UART driver calls a user-provided callback function.
 Callback mode is supported in the execution context of tasks and
 hardware interrupt routines.
 
-\cond !SOC_AM62X
+\cond !SOC_AM62X && !SOC_AM65X
 ## Important Usage Guidelines
 
 - In case of DMA mode, as R5F core is not Cache Coherent, Cache Writeback is required if R5F writes to the buffers.

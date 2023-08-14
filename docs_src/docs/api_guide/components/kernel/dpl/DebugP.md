@@ -50,7 +50,7 @@
 - Make sure the selected UART driver is opened for the logs to be output to UART.
   - When enabled via SysCfg, calling the function `Drivers_open` opens and initializes the UART for logging.
 
-\cond !SOC_AM62X
+\cond !SOC_AM62X && !SOC_AM65X
 ### Memory logging
 - When log to memory is enabled, the log can be viewed via ROV (see \ref ROV_INTRO_PAGE) in CCS
 - The memory used for logging is limited. The writer is typically faster than the ROV reader, so here the writer will overwrite

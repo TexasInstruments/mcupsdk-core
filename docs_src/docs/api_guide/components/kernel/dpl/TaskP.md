@@ -15,10 +15,13 @@
 NA
 
 ## Important Usage Guidelines
-
+\if SOC_AM65X
+- On R5F, make sure memory provided as stack is 32b aligned and size is also multiple of 32b
+- Stack and stack size MUST be provided by application and is not allocated internally
+\else
 - On R5F, and M4F, make sure memory provided as stack is 32b aligned and size is also multiple of 32b
 - Stack and stack size MUST be provided by application and is not allocated internally
-
+\endif
 ## Example Usage
 
 Include the below file to access the APIs,

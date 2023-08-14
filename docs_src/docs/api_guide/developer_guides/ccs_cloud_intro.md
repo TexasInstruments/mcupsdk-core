@@ -8,7 +8,11 @@
 
 ## Introduction
 
-CCS Cloud is a web-based IDE which can be used to edit, build or even debug (limited to single stepping, adding breakpoints and watch expressions) applications running on an EVM/LaunchPad connected to the PC all from just the browser. While this is a great tool for starting evaluation and development on a particular EVM/LaunchPad, it is recommended to make a switch to the Desktop version of CCS for advanced debugging capabilities. 
+\if SOC_AM65X
+CCS Cloud is a web-based IDE which can be used to edit, build or even debug (limited to single stepping, adding breakpoints and watch expressions) applications running on an IDK/LaunchPad connected to the PC all from just the browser. While this is a great tool for starting evaluation and development on a particular IDK/LaunchPad, it is recommended to make a switch to the Desktop version of CCS for advanced debugging capabilities.
+\else
+CCS Cloud is a web-based IDE which can be used to edit, build or even debug (limited to single stepping, adding breakpoints and watch expressions) applications running on an EVM/LaunchPad connected to the PC all from just the browser. While this is a great tool for starting evaluation and development on a particular EVM/LaunchPad, it is recommended to make a switch to the Desktop version of CCS for advanced debugging capabilities.
+\endif
 
 ## Importing an example project to CCS Cloud
 
@@ -40,12 +44,17 @@ CCS Cloud is a web-based IDE which can be used to edit, build or even debug (lim
     \image html ccs_cloud_example_build.png "Example Project Build"
 
 - Build logs will be shown in the `Output` panel in the bottom. Once the example builds successfully, it should say `Build Finished`
+\if SOC_AM65X
+## Running an example on the IDK/LaunchPad connected to the PC
 
+- Power on the IDK, this should have ideally started SOC initialization and made the board ready to load application binaries.
+\else
 ## Running an example on the EVM/LaunchPad connected to the PC
 
 - EVM should be connected to the PC properly and an SOC initialization binary should be flashed on to the board. Follow the steps in \ref EVM_FLASH_SOC_INIT to do this.
 
 - Power on the EVM, this should have ideally started SOC initialization and made the board ready to load application binaries.
+\endif
 
 - To load the application, go to `Run -> Debug Selected Project` in the menu bar. It might take a while to load the debugger for the first time. Once its done, the application should ideally halt in `main()` as shown below.
 

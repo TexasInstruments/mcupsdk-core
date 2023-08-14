@@ -244,6 +244,7 @@ Once the Drivers are installed successfully, user should be able to use the \ref
 
             $ dfu-util --version
 \endcond
+\cond !SOC_AM65X
 ### PRU-CGT {#INSTALL_PRU-CGT}
 
 \attention You MUST install PRU-CGT if trying to build PRU firmware.
@@ -264,6 +265,7 @@ Once the Drivers are installed successfully, user should be able to use the \ref
 
         $ sudo apt install mono-runtime
 
+\endcond
 ### Code Composer Studio (CCS)
 
 To download, install and setup CCS, follow instructions on this page, \ref CCS_SETUP_PAGE .

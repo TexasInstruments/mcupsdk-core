@@ -7,7 +7,9 @@
 FreeRTOS is a market-leading real-time operating system (RTOS) for microcontrollers and small microprocessors. Distributed freely under the MIT open source license, FreeRTOS includes a kernel and a growing set of libraries suitable for use across all industry sectors. FreeRTOS is built with an emphasis on reliability and ease of use.
 
 MCU+ SDK supports FreeRTOS on below CPUS
+\cond !SOC_AM65X
 - ARM M4F
+\endcond
 \cond !SOC_AM62X
 - ARM R5F
 \cond SOC_AM64X
@@ -37,13 +39,15 @@ MCU+ SDK supports FreeRTOS on below CPUS
 - R5F ISRs,
   - IRQ mode,
     - FPU save/restore is supported.
-    \cond !SOC_AM273X
+    \cond !SOC_AM273X && !SOC_AM65X
     - Priority based interrupt masking in critical section is supported using configMAX_SYSCALL_INTERRUPT_PRIORITY, uncomment macro **EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION** in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h to enable.(Disabled by default)
     \endcond
     - nested interrupts are supported.
 \endcond
+\cond !SOC_AM65X
 - M4F ISRs,
   - nested interrupts supported
+\endcond
 \cond SOC_AM64X
 - A53 ISRs,
   - IRQ mode,
@@ -79,11 +83,19 @@ MCU+ SDK supports FreeRTOS on below CPUS
 SysConfig can be used to configure below modules with FreeRTOS
 - Clock module, to setup system tick timer including the tick duration
 - Debug Log module, to select the console to use for logging as well as enable/disable logging zones
+\cond !SOC_AM65X
 - MPU ARMv7, to setup different MPU regions for R5F and M4F CPUs
+- Address Translate module, to setup  address translation regions, needed for M4F
+\endcond
+\cond SOC_AM65X
+- MPU ARMv7, to setup different MPU regions for R5F CPUs
+\endcond
 \cond SOC_AM64X
 - MMU ARMv8, to setup different MMU regions for A53 CPUs
 \endcond
+\cond !SOC_AM65X
 - Address Translate module, to setup  address translation regions, needed for M4F
+\endcond
 - HW Timer module, to setup HW timer available on the SOC, including enabling timer interrupt and ISR registration
 
 ## Important files and directory structure
@@ -132,10 +144,12 @@ FreeRTOS source is distributed along with MCU+ SDK and given below are some impo
     <td>common/
     <td>FreeRTOS DPL APIs that are common across all CPUs
 </tr>
+\cond !SOC_AM65X
 <tr>
     <td>m4/
     <td>FreeRTOS DPL APIs that are specific to M4F CPUs
 </tr>
+\endcond
 \cond !SOC_AM62X
 <tr>
     <td>r5/

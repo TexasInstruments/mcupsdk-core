@@ -115,3 +115,9 @@ There are changes in functions names, structure names and macro names. The chang
  - \ref DRIVERS_UART_PAGE
  - \ref EXAMPLES_DRIVERS_UART_ECHO
  - \ref EXAMPLES_DRIVERS_UART_ECHO_CALLBACK
+\cond SOC_AM65X
+ - \ref EXAMPLES_DRIVERS_UART_ECHO_DMA
+ - \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT
+ - \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING
+
+\endcond

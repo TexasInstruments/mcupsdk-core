@@ -95,3 +95,14 @@ SDK features and tools.
 - \subpage SYSCONFIG_INTRO_PAGE
 - \subpage TIREX_INTRO_PAGE
 \endcond
+
+\cond SOC_AM65X
+- \subpage INSTALL_NON_DEFAULT
+- \subpage IPC_GUIDE
+- \subpage CCS_PROJECTS_PAGE
+- \subpage MAKEFILE_BUILD_PAGE
+- \subpage SYSCONFIG_INTRO_PAGE
+- \subpage TIREX_INTRO_PAGE
+- \subpage CCS_CLOUD_INTRO_PAGE
+- \subpage RESOURCE_ALLOCATION_GUIDE
+\endcond

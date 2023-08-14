@@ -62,7 +62,7 @@ make -s -C tools/sysfw/boardcfg sciclient_boardcfg SOC=am64x
 cd ${SDK_INSTALL_PATH}
 gmake -s libs DEVICE={device}
 \endcode
-
+\cond !SOC_AM65X
 - After this, make sure to rebuild the secondary bootloader (SBL) applications. You can do this by
 
 \code
@@ -84,4 +84,5 @@ gmake -s -C examples/drivers/sciclient/sciclient_ccs_init/{board}/r5fss0-0_norto
 \endcond
 \cond SOC_AM243X
 - Once the build is completed, copy the .out file generated and replace with the one already present in ${SDK_INSTALL_PATH}/tools/ccs_load/am243x/ folder.
+\endcond
 \endcond
