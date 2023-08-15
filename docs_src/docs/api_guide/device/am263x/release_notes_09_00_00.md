@@ -16,6 +16,13 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 SFO calibration library and examples                                                            | EPWM
 Optimized IRQ handler and low latency interrupt example                                         | DPL
+Standby (WFI) mode support DPL noRTOS                                                           | DPL
+EDMA example to transfer between different memories                                             | EDMA
+SysConfig option to enable pBIST for SBL                                                        | SBL
+Interrupt profiling support and example                                                         | DPL
+Support for loading HS-FS firmware view CCS load script                                         | Common
+Safe IPC support                                                                                | IPC
+MbedTLS MQTT example                                                                            | Networking
 
 ## Device and Validation Information
 
@@ -190,6 +197,125 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-8526
+    <td> SBL examples should be calling Bootloader_loadSelfCpu for R5_0-0 core
+    <td> SBL
+    <td> 8.4.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-9309
+    <td> IpcRPmsg : Invalid TX RX queue buffer allocation via syscfg for multicore project
+    <td> IPC
+    <td> 8.1.0 onwards
+    <td> Updated memory allocation for IPC
+</tr>
+<tr>
+    <td> MCUSDK-9662
+    <td> QSPI LLD EDMA Transfer fails for size (Unaligned) > MAX EDMA CNT
+    <td> QSPI
+    <td> 8.4.0 onwards
+    <td> Initiate trasfer with aligned data
+</tr>
+<tr>
+    <td> MCUSDK-9811
+    <td> IPC Notify unregister client always returns success
+    <td> IPC
+    <td> 8.05.00 onwards
+    <td> Added status variable check
+</tr>
+<tr>
+    <td> MCUSDK-9835
+    <td> SBL should support HS-SE device build via CCS
+    <td> SBL
+    <td> 8.05.00 onwards
+    <td> Added devconfig for CCS build
+</tr>
+<tr>
+    <td> MCUSDK-10102
+    <td> Trip Zone example not working
+    <td> EPWM
+    <td> 8.6.0
+    <td> Gpio changes needed on E1 to E2 migration
+</tr>
+<tr>
+    <td> MCUSDK-10119
+    <td> MCAN External read write example fails for multirun
+    <td> MCAN
+    <td> 8.5.0 onwards
+    <td> Interrupt reset is required during init in example
+</tr>
+<tr>
+    <td> MCUSDK-10144
+    <td> RTI driver Up Counter calculation in driver is incorrect
+    <td> Timer
+    <td> 8.06.00 onwards
+    <td> Updated calculation to subtract reload value by one
+</tr>
+<tr>
+    <td> MCUSDK-10167
+    <td> All the system project are made based on AM2631
+    <td> CCS
+    <td> 8.6.0
+    <td> Updated to CCS12.4 and latest CSP
+</tr>
+<tr>
+    <td> MCUSDK-10295
+    <td> ECAP : driver : Flags read doesn't include the Signal Monitoring errors
+    <td> ECAP
+    <td> 8.5.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10550
+    <td> Global Strobe Load Signal from EPWMs is not taking effect on ECAP Signal Monitoring
+    <td> ECAP
+    <td> 8.5.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10712
+    <td> GPIO_Input_Interrupt Example not working
+    <td> GPIO
+    <td> 8.6.0
+    <td> Added Interrupt config call in template
+</tr>
+<tr>
+    <td> MCUSDK-10713
+    <td> Interrupt registration fixed in the IPC Driver code
+    <td> IPC
+    <td> 8.5.0 onwards
+    <td> Added Sysconfig based interrupt registration
+</tr>
+<tr>
+    <td> MCUSDK-10841
+    <td> SBL needs to copy the vector table for self core right before the self-core reset release
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> Move the image load for self core just before the release reset instead of doing it early
+</tr>
+<tr>
+    <td> MCUSDK-11290
+    <td> EPWM: High Resolution DeadBand APIs does not write to registers properly
+    <td> EPWM
+    <td> 8.6.0
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11354
+    <td> EPWM_clearTripZoneFlag() function in the SDK does not clear the CAPEVT signal
+    <td> EPWM
+    <td> 8.6.0
+    <td> Updated EPWM_clearTripZoneFlag API to accept CAPEVT as input
+</tr>
+<tr>
+    <td> MCUSDK-11401
+    <td> Mailbox memory needs to be cleared after HSMRt load
+    <td> SBL
+    <td> 8.6.0
+    <td> -
+</tr>
 </table>
 
 ## Known Issues
@@ -200,13 +326,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <th> Module
     <th> Reported in release
     <th> Workaround
-</tr>
-<tr>
-    <td> MCUSDK-2294
-    <td> GPIO Pin Direction
-    <td> GPIO. GPIO Pin Direction not getting automatically configured.
-    <td> 8.0.0
-    <td> Use GPIO_setDirMode to set pin direction for GPIO pin.
 </tr>
 <tr>
     <td> MCUSDK-4234
@@ -237,32 +356,11 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Avoid back-to-back writes within three SD-modulator clock cycles or have the SDCPARMx register bit fields configured in one register write.
 </tr>
 <tr>
-    <td> MCUSDK-7811
-    <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
-    <td> Ethernet CPSW
-    <td> 8.3.0 onwards
-    <td> Ensure from application side single ethernet packet does not span across memory banks.
-</tr>
-<tr>
     <td> MCUSDK-8073
     <td> UART1 not working as expected while configuring two uarts i.e UART0 and UART1 for two different cores
     <td> UART
     <td> 8.4.0 onwards
     <td> UART1 configuration from other core should be done after UART0 is configured and initialized
-</tr>
-<tr>
-    <td> MCUSDK-8391
-    <td> PRU Pin Mux configuration missing in syscfg am263x
-    <td> PRU
-    <td> 8.4.0
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8825
-    <td> MCAN bit timing parameters not correct in Sysconfig generated code
-    <td> MCAN
-    <td> 8.4.0
-    <td> -
 </tr>
 <tr>
     <td> MCUSDK-9082
@@ -272,11 +370,25 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> -
 </tr>
 <tr>
-    <td> PROC_SDL-5159
-    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
+    <td> MCUSDK-10626
+    <td> FSI DMA loopback example TX and RX mismatching on 2nd run
+    <td> FSI
+    <td> 8.6.0
+    <td> Reset board between 2 runs
+</tr>
+<tr>
+    <td> MCUSDK-11147
+    <td> LIN Master does not works as a transmitter after a single pkt is sent and received as receiver
+    <td> LIN
+    <td> 8.6.0
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11462
+    <td> EPWM: Illegal Combo Logic example fails
+    <td> EPWM
+    <td> 9.0.0
+    <td> -
 </tr>
 <tr>
     <td> PROC_SDL-5616
@@ -299,42 +411,73 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> 8.5.0 onwards
     <td> None.
 </tr>
+</table>
+
+## Errata
+<table>
 <tr>
-    <td> MCUSDK-9800
-    <td> ENET: Connection reset while running HTTPS server due to insufficient packet buffers
-    <td> ENET
-    <td> 8.6.0 onwards
-    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
-    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
-    <td> Mbed-TLS
-    <td> 8.6.0
-    <td> -
+    <th> ID
+    <th> Head Line
+    <th> Module
+    <th> SDK Status
 </tr>
 <tr>
-    <td> MCUSDK-9813
-    <td> WDT: Time to reset or generate interrupt is incorrect when run on CCS
-    <td> WDT
-    <td> 8.6.0 onwards
-    <td> -
+    <td> i2311
+    <td> USART: Spurious DMA Interrupts
+    <td> UART
+    <td> Implemented
 </tr>
 <tr>
-    <td> MCUSDK-9662
-    <td> QSPI LLD EDMA Transfer fails for size (Unaligned) > MAX EDMA CNT
-    <td> QSPI
-    <td> 8.4.0 onwards
-    <td> Initiate trasfer with aligned data
+    <td> i2354
+    <td> SDFM: Two Back-to-Back Writes to SDCPARMx Register Bit Fields CEVT1SEL, CEVT2SEL, and HZEN Within Three SD-Modulator Clock Cycles can Corrupt SDFM State Machine, Resulting in Spurious Comparator Events
+    <td> SDFM
+    <td> Open
 </tr>
 <tr>
-    <td> MCUSDK-9813
-    <td> WDT takes incorrect time to reset or generate interrupt when run on CCS
-    <td> WDT
-    <td> 8.6.0
-    <td> None. Works when run with sbl
+    <td> i2355
+    <td> ADC: DMA Read of Stale Result
+    <td> ADC
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2345
+    <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
+    <td> CPSW
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2350
+    <td> McSPI data transfer using EDMA in 'ABSYNC' mode stops after 32 bits transfer
+    <td> McSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2356
+    <td> ADC: Interrupts may Stop if INTxCONT (Continue-to-Interrupt Mode) is not Set
+    <td> ADC
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2324
+    <td> No synchronizer present between GCM and GCD status signals
+    <td> Common
+    <td> Open
+</tr>
+<tr>
+    <td> i2375
+    <td> SDFM module event flags (SDIFLG.FLTx_FLG_CEVTx) do not get set again if the comparator event is still active and digital filter path (using SDCOMPxCTL.CEVTxDIGFILTSEL) is being selected
+    <td> SDFM
+    <td> Open
+</tr>
+<tr>
+    <td> i2313
+    <td> GPMC: Sub-32-bit read issue with NAND and FPGA/FIFO
+    <td> GPMC
+    <td> Open
 </tr>
 </table>
 
 ## Limitations
-
 <table>
 <tr>
     <th> ID

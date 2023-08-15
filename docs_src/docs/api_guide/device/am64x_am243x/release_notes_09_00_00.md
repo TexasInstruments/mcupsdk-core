@@ -12,21 +12,34 @@
       Unless noted otherwise, the SW modules would work on all supported EVMs \n
       M4F drivers support only MCU domain peripheral and peripheral instance while R5/A53 supports MAIN domain peripheral and peripheral instance. \n
 
-\attention Klockwork Static Analysis report is not updated for this release
+\attention Industrial Protocol and Motor control libraries and examples are no longer part of MCU+ SDK and will be available as separate release
 
 ## New in this Release
 
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+Descoped GP support                                                                             | Common
+RNDIS device class support                                                                      | USB
+NCM device class support                                                                        | USB
+GPMC support for NAND Flash                                                                     | GPMC
+EMMC high speed support                                                                         | MMCSD
+Interrupt profiling support and example                                                         | DPL
+Safe IPC support                                                                                | IPC
+MbedTLS MQTT example                                                                            | Networking
 
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+Descoped GP support                                                                             | Common
+RNDIS device class support                                                                      | USB
+NCM device class support                                                                        | USB
+GPMC support for NAND Flash                                                                     | GPMC
+EMMC high speed support                                                                         | MMCSD
+Interrupt profiling and example                                                                 | DPL
+Safe IPC support                                                                                | IPC
 
 \endcond
 
@@ -248,6 +261,107 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-9811
+    <td> IPC Notify unregister client always returns success
+    <td> IPC
+    <td> 8.05.00 onwards
+    <td> Added status variable check
+</tr>
+<tr>
+    <td> MCUSDK-10213
+    <td> GPIO interrrupt resource allocation is not happening for m4 core
+    <td> GPIO
+    <td> 8.05.00 onwards
+    <td> Updated RM config to DEVGRP_APP
+</tr>
+<tr>
+    <td> MCUSDK-10551
+    <td> UDMA_ALIGN_SIZE macro implementation is incorrect
+    <td> UDMA
+    <td> 8.06.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10577
+    <td> PIN_OSPI0_LBCLKO is not defined in pinmux.h
+    <td> Pinmux
+    <td> 8.05.00 onwards
+    <td> Added pinmux definition
+</tr>
+<tr>
+    <td> MCUSDK-10704
+    <td> SocId parser is not working with python3
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> Migrated the script to python 3
+</tr>
+<tr>
+    <td> MCUSDK-10841
+    <td> SBL needs to copy the vector table for self core right before the self-core reset release
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> Move the image load for self core just before the release reset instead of doing it early
+</tr>
+<tr>
+    <td> MCUSDK-10895
+    <td> Baud Rate of MCU_UART limited to 3.7 Mbps but SysConfig shows no warning
+    <td> UART
+    <td> 8.06.00 onwards
+    <td> Enabled warning in Sysconfig
+</tr>
+<tr>
+    <td> MCUSDK-10904
+    <td> DFU Uniflash gives TIMEOUT on sending a file of 1MB
+    <td> USB
+    <td> 8.06.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10905
+    <td> Python Uniflash scripts (UART & DFU) generates exception at the end on trying to send a file of size more than 1MB
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11178
+    <td> CCS is not generating a encrypted SBL image for HS-SE device
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> ENC_SBL_ENABLED condition was missing from the ccs bootimage gen makefile
+</tr>
+<tr>
+    <td> MCUSDK-11264
+    <td> UART syscfg DMA mode defaults to BCDMA instead of PKT DMA causes assert
+    <td> UDMA
+    <td> 8.06.00 onwards
+    <td> Sysconfig update to use PKT DMA instead of BCDMA
+</tr>
+<tr>
+    <td> MCUSDK-8361
+    <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK baord
+    <td> Networking
+    <td> 8.4.0
+    <td> AM64x
+    <td> -
+</tr>
+\cond SOC_AM64X
+<tr>
+    <td> MCUSDK-10715
+    <td> Conflict between the flashing address of linux.appimage & u-boot.img in OSPI
+    <td> SBL
+    <td> 8.05.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10840
+    <td> SBL-to-Linux Boot Flow must leave control MMRs unlocked - Just like U-Boot/SPL
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> -
+</tr>
+\endcond
 </table>
 
 ## Known Issues
@@ -286,14 +400,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-2512
-    <td> [UART]Driver always assumes functional clock as 48 MHz
-    <td> UART
-    <td> 8.3.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-6262
     <td> [AM243X] : MMCSD read io example is not functional on eMMC if the APP_MMCSD_START_BLK is changed for MMCSD_write and MMCSD_read
     <td> MMCSD
@@ -326,33 +432,58 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Skip the authentication of application Image using SysConfig
 </tr>
 <tr>
-    <td> PROC_SDL-6010
-    <td> ECC is not supported for 2 instances. These are SDL_ECC_AGGR1 Ram ID 4 fails on interconnect ram ID 4 checker group 4-14 and  SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR.
-    <td> SDL
-    <td> 8.6.0
-    <td> AM64X, AM243X
-</tr>
-<tr>
     <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
     <td> 8.6.0
     <td> AM64x, AM243x, AM263X, AM273X
     <td> -
+</tr>   
+<tr>
+    <td> MCUSDK-2715
+    <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
+    <td> SECURITY
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> -
 </tr>
 <tr>
-    <td> MCUSDK-10627
-    <td> Jtag Uniflash erase operation failure
+    <td> MCUSDK-10691
+    <td> flash sequence does not work for MX25U51245G (4-4-4 mode)
     <td> Flash
     <td> 8.6.0
     <td> AM64x, AM243x
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-2715
-    <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
-    <td> SECURITY
-    <td> 8.2.0 onwards
+    <td> MCUSDK-10781
+    <td> Flash Re-Init is not supported
+    <td> Flash
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10783
+    <td> Flash Driver is not supported with XIP
+    <td> Flash
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10939
+    <td> PCIe MSI error when connected to Linux Root Complex
+    <td> PCIe
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11028
+    <td> PCIe as End Point throwing error when changing BAR aperture
+    <td> PCIe
+    <td> 8.6.0
     <td> AM64x, AM243x
     <td> -
 </tr>
@@ -367,51 +498,11 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
       linkCfg->duplexity = ENET_DUPLEX_FULL;
 </tr>
 <tr>
-    <td> MCUSDK-7905
-    <td> EtherNet/IP : MDIO access can have race condition due to two parallel PHY drivers
-    <td> Ethernet/IP Adapter
-    <td> 8.3.0
-    <td> AM64x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8108
-    <td> EtherNet/IP : PTP Device is unable to keep offset under 1000 ns
-    <td> Ethernet/IP Adapter
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> Value of OFFSET_THRESHOLD_FOR_RESET is set to 10000 ns by default in SDK.
-</tr>
-<tr>
-    <td> MCUSDK-8242
-    <td> EtherCAT : MDIO Manual Mode is not supported in ethercat_slave_demo examples
-    <td> EtherCAT SubDevice
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> MDIO Manual Mode is the work-around for issue "i2329 - MDIO: MDIO interface corruption (CPSW)" (described in <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf">AM64x/AM243x Processor Silicon Revision 1.0, 2.0 (Rev. E)</a>). Please note that the work-around is available for ethercat_slave_beckhoff_ssc_demo examples.
-</tr>
-<tr>
     <td> MCUSDK-8376
     <td> LWIP web server application crashes in server stress test
     <td> Enet, LWIP
     <td> 8.3.0 onwards
     <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8491
-    <td> Enet_loopback example: Non zero vlan priority Packets not recieved in loopback example
-    <td> Networking
-    <td> 8.4.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-8361
-    <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK baord
-    <td> Networking
-    <td> 8.4.0
-    <td> AM64x
     <td> -
 </tr>
 <tr>
@@ -432,8 +523,71 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 </table>
 
-## Limitations
+## Errata
+<table>
+<tr>
+    <th> ID
+    <th> Head Line
+    <th> Module
+    <th> SDK Status
+</tr>
+<tr>
+    <td> i2311
+    <td> USART: Spurious DMA Interrupts
+    <td> UART
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2313
+    <td> GPMC: Sub-32-bit read issue with NAND and FPGA/FIFO
+    <td> GPMC
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2331
+    <td> CPSW: Device lockup when reading CPSW registers
+    <td> CPSW, SBL
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2345
+    <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
+    <td> CPSW
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2326
+    <td> PCIe: MAIN_PLLx operating in fractional mode, which is required for enabling SSC, is not compliant with PCIe Refclk jitter limits
+    <td> PCIe
+    <td> Open
+</tr>
+<tr>
+    <td> i2312
+    <td> MMCSD: HS200 and SDR104 Command Timeout Window Too Small
+    <td> MMCSD
+    <td> Open
+</tr>
+<tr>
+    <td> i2310
+    <td> USART: Erroneous clear/trigger of timeout interrupt
+    <td> UART
+    <td> Open
+</tr>
+<tr>
+    <td> i2279
+    <td> MCAN: Specification Update for dedicated Tx Buffers and Tx Queues configured with same Message ID
+    <td> MCAN
+    <td> Open
+</tr>
+<tr>
+    <td> i2278
+    <td> MCAN: Message Transmit order not guaranteed from dedicated Tx Buffers configured with same Message ID
+    <td> MCAN
+    <td> Open
+</tr>
+</table>
 
+## Limitations
 <table>
 <tr>
     <th> ID

@@ -16,7 +16,15 @@
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
--                                                                                               | -
+Standby (WFI) mode support DPL noRTOS                                                           | DPL
+EDMA example to transfer between different memories                                             | EDMA
+Interrupt profiling support and example                                                         | DPL
+Support for loading HS-FS firmware view CCS load script                                         | Common
+Safe IPC support                                                                                | IPC
+SBL over CAN example                                                                            | SBL
+SDK migration script from ZCE to NZN package                                                    | Common
+MbedTLS MQTT example                                                                            | Networking
+
 \endcond
 \cond SOC_AWR294X
 Feature                                                                                         | Module
@@ -190,6 +198,41 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <th> Applicable Releases
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-9811
+    <td> IPC Notify unregister client always returns success
+    <td> IPC
+    <td> 8.05.00 onwards
+    <td> Added status variable check
+</tr>
+<tr>
+    <td> MCUSDK-9835
+    <td> SBL should support HS-SE device build via CCS
+    <td> SBL
+    <td> 8.05.00 onwards
+    <td> Added devconfig for CCS build
+</tr>
+<tr>
+    <td> MCUSDK-10144
+    <td> RTI driver Up Counter calculation in driver is incorrect
+    <td> Timer
+    <td> 8.06.00 onwards
+    <td> Updated calculation to subtract reload value by one
+</tr>
+<tr>
+    <td> MCUSDK-10690
+    <td> EPWM Driver configures wrong register in "SOC_setEpwmTbClk" API
+    <td> EPWM
+    <td> 8.05.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10841
+    <td> SBL needs to copy the vector table for self core right before the self-core reset release
+    <td> SBL
+    <td> 8.06.00 onwards
+    <td> Move the image load for self core just before the release reset instead of doing it early
+</tr>
 </table>
 
 ## Known Issues
@@ -218,11 +261,11 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-7811
-    <td> Ethernet CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
-    <td> Ethernet CPSW
-    <td> 8.03.00 onwards
-    <td> Ensure from application side single ethernet packet does not span across memory banks
+    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0 onwards
+    <td> -
 </tr>
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
@@ -236,13 +279,6 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
 <tr>
     <td> PROC_SDL-4749
     <td> AXI DED Bus Safety fail.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-5159
-    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
     <td> SDL
     <td> 8.5.0 onwards
     <td> None.
@@ -275,27 +311,118 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> 8.6.0 onwards
     <td> None.
 </tr>
-\cond SOC_AM273X
-<tr>
-    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
-    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
-    <td> Mbed-TLS
-    <td> 8.6.0 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-9800
-    <td> ENET: Connection reset while running HTTPS server due to insufficient packet buffers
-    <td> ENET
-    <td> 8.6.0 onwards
-    <td> -
-</tr>
-\endcond
 \endcond
 </table>
 
-## Limitations
+\cond SOC_AM273X
+## Errata
+<table>
+<tr>
+    <th> ID
+    <th> Head Line
+    <th> Module
+    <th> SDK Status
+</tr>
+<tr>
+    <td> i2338
+    <td> Spurious RX DMA REQ From a Peripheral Mode MibSPI
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2345
+    <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
+    <td> CPSW
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2387
+    <td> PLL: Boot fails sometimes because of possible glitch in R5F GCM
+    <td> SBL
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2389
+    <td> Recommended PLL Configuration if locked below 1GHz
+    <td> SBL
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2394
+    <td> Race condition in interrupt and error aggregator capture registers resulting in events miss
+    <td> Interrupt
+    <td> Open
+</tr>
+<tr>
+    <td> i2392
+    <td> Race condition in capture registers resulting in events miss
+    <td> Interrupt
+    <td> Open
+</tr>
+<tr>
+    <td> i2339
+    <td> MibSPI RX RAM RXEMPTY Bit Does Not Get Cleared After Reading
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2390
+    <td> Recommended HWA memInit Sequence
+    <td> HWA
+    <td> Open
+</tr>
+<tr>
+    <td> i2342
+    <td> 2D Stats sample value RAM processor write back issue during FFT execution on HWA
+    <td> HWA
+    <td> Open
+</tr>
+<tr>
+    <td> i2341
+    <td> Unallocated space access to DSP L2 - DSP IP is not blocking access to reserved space causing aliasing and L2 parity error
+    <td> DSP-L2
+    <td> Open
+</tr>
+<tr>
+    <td> i2337
+    <td> A Data Length Error is Generated Repeatedly in Peripheral Mode When IO Loopback is Enabled
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2336
+    <td> MibSPI in Peipheral Mode in 3- or 4-Pin Communication Transmits Data Incorrectly for Slow SPICLK Frequencies and for Clock Phase = 1
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2297
+    <td> CSI Careabouts
+    <td> CSI
+    <td> Open
+</tr>
+<tr>
+    <td> i2294
+    <td> Subsequent memory initialisation configuration of L3 Bank D will not trigger a memory initialisation
+    <td> Common
+    <td> Open
+</tr>
+<tr>
+    <td> i2289
+    <td> Unaligned access from DSS CM4 could cause data integrity failure and hang
+    <td> HWA
+    <td> Open
+</tr>
+<tr>
+    <td> i2288
+    <td> EDMA transfer that spans M1+M2 memories of HWA could result in data corruption
+    <td> HWA
+    <td> Open
+</tr>
+</table>
+\endcond
 
+## Limitations
 <table>
 <tr>
     <th> ID
