@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am64x";
+let device = "am243x";
 
 const files = {
     common: [
@@ -9,7 +9,6 @@ const files = {
         "enet_custom_board_config.c",
         "tsnapp_main.c",
         "main.c",
-        "uc_client.c",
     ],
 };
 
@@ -38,7 +37,7 @@ const includes_freertos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
@@ -62,19 +61,18 @@ const includes_freertos_r5f = {
 
 const libs_freertos_r5f = {
     common: [
-        "freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "enet-cpsw.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "enet-cpsw.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "libc.a",
         "libsysbm.a",
-        "tsn_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "tsn_unibase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "tsn_gptp-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "tsn_uniconf-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
-
 
 const linker_includePath_freertos = {
     common: [
@@ -114,14 +112,8 @@ const lflags_r5f = {
     common: [
         "--zero_init=on",
         "--use_memset=fast",
-        "--use_memcpy=fast",
+        "--use_memcpy=fast"
     ],
-};
-
-const lnkfiles = {
-    common: [
-        "./linker.cmd",
-    ]
 };
 
 const loptflags_r5f = {
@@ -135,14 +127,20 @@ const loptflags_r5f = {
     ],
 };
 
+const lnkfiles = {
+    common: [
+        "./linker.cmd",
+    ]
+};
+
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "TSN_APP_EXAMPLE";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_TSN_GPTP";
 
 const templates_freertos_r5f =
 [
     {
-        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
+        input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
             entryFunction: "EnetApp_mainTask",
@@ -153,7 +151,8 @@ const templates_freertos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -161,7 +160,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "tsnapp";
+    property.name = "gptp_app";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -177,7 +176,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.projecspecFileAction = "link";
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
         {
@@ -210,5 +208,3 @@ module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
 };
-
-

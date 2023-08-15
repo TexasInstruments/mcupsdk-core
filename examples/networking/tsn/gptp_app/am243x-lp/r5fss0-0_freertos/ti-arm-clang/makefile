@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=tsnapp.$(PROFILE).out
+OUTNAME:=gptp_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=tsnapp.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=tsnapp.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=tsnapp.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=tsnapp.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=tsnapp.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=tsnapp.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=tsnapp.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=tsnapp.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=gptp_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=gptp_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=gptp_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=gptp_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=gptp_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=gptp_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=gptp_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=gptp_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
@@ -40,7 +40,6 @@ FILES_common := \
 	enet_custom_board_config.c \
 	tsnapp_main.c \
 	main.c \
-	uc_client.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -261,7 +260,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am243x:r5fss0-0:freertos:ti-arm-clang tsnapp ...
+	@echo  Scrubing: am243x:r5fss0-0:freertos:ti-arm-clang gptp_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

@@ -11666,9 +11666,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Tsnapp Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "tsnapp",
-        "location": "../../examples/networking/tsn/tsn_apps/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Gptp App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gptp_app",
+        "location": "../../examples/networking/tsn/gptp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
         ],
@@ -11681,7 +11681,7 @@
         "subCategories": [
             "networking",
             "tsn",
-            "tsn_apps",
+            "gptp_app",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -11699,9 +11699,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Tsnapp Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "tsnapp",
-        "location": "../../examples/networking/tsn/tsn_apps/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Gptp App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gptp_app",
+        "location": "../../examples/networking/tsn/gptp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
         ],
@@ -11714,7 +11714,7 @@
         "subCategories": [
             "networking",
             "tsn",
-            "tsn_apps",
+            "gptp_app",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

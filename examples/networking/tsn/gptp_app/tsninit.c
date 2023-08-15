@@ -11,7 +11,6 @@
 #include "enet_types.h"
 #include "debug_log.h"
 #include "tsninit.h"
-#include "uc_client.h"
 
 typedef void* (*on_module_start)(void *arg);
 
@@ -40,13 +39,9 @@ struct module_ctx
 
 #define UNICONF_TASK_PRIORITY   (2)
 #define GPTP_TASK_PRIORITY      (2)
-#define UCCLIENT_TASK_PRIORITY  (2)
 
 #define GPTP_TASK_NAME		"gptp2d_task"
 #define UNICONF_TASK_NAME	"uniconf_task"
-#ifndef DISABLE_UC_CLIENT
-#define UCLIENT_TASK_NAME	"ucclient_task"
-#endif
 
 #define TSN_TSK_STACK_SIZE (16U*1024)
 #define TSN_TSK_STACK_ALIGN (TSN_TSK_STACK_SIZE)
@@ -54,26 +49,17 @@ struct module_ctx
 
 static uint8_t g_gptp_stack_buf[TSN_TSK_STACK_SIZE] __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
 
-typedef struct gptpdpd
-{
-    const char **netdevs;
-} gptpdpd_t;
-
 typedef struct gptpoptd
 {
     char *devlist;
     const char **conf_files;
     const char *db_file;
-    int netdnum;
     int domain_num;
     int instnum;
     int numconf;
 } gptpoptd_t;
 
 static uint8_t g_uniconf_stack_buf[TSN_TSK_STACK_SIZE] __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
-#ifndef DISABLE_UC_CLIENT
-static uint8_t g_uclient_stack_buf[TSN_TSK_STACK_SIZE] __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
-#endif
 
 #define MAX_KEY_SIZE      (256)
 static int set_gptp_run_time_config(int instance, int domain,
@@ -263,135 +249,10 @@ static int set_gptp_run_time_config(int instance, int domain,
         }
 
         snprintf(buffer, sizeof(buffer),
-              "/ieee1588-ptp/ptp/instances/instance|instance-index:%d|"
-                     "/ports/port|port-index:%d|/port-ds/log-sync-interval",
-                     instance, 0);
-        strcpy(value_str, "-3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/current-log-pdelay-req-interval",
-                 instance, domain, 0);
-        strcpy(value_str, "0");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/initial-log-pdelay-req-interval",
-                 instance, domain, 0);
-        strcpy(value_str, "0");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                     "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                     "/ports/port|port-index:%d|/port-ds/log-announce-interval",
-                     instance, domain, 0);
-        strcpy(value_str, "0");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/current-log-sync-interval",
-                 instance, domain, 0);
-        strcpy(value_str, "-3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/initial-log-sync-interval",
-                 instance, domain, 0);
-        strcpy(value_str, "-3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/sync-receipt-timeout",
-                 instance, domain, 0);
-        strcpy(value_str, "3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/port-enable", instance, domain, 0);
-        strcpy(value_str, "true");
-
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/current-log-gptp-cap-interval",
-                 instance, domain, 0);
-        strcpy(value_str, "3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/gptp-cap-receipt-timeout",
-                 instance, domain, 0);
-        strcpy(value_str, "3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/initial-log-announce-interval",
-                 instance, domain, 0);
-        strcpy(value_str, "0");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/announce-receipt-timeout",
-                 instance, domain, 0);
-        strcpy(value_str, "3");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:%d|/port-ds/minor-version-number",
-                 instance, domain, 0);
-        strcpy(value_str, "1");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        // Use port=0 data for all ports
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:0|/port-ds/allowed-lost-responses",
-                 instance, domain);
-        strcpy(value_str, "9");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:0|/port-ds/allowed-faults",
-                 instance, domain);
-        strcpy(value_str, "9");
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/ports/port|port-index:0|/port-ds/mean-link-delay-thresh",
-                 instance, domain);
-        strcpy(value_str, "0x27100000"); //10000<<16, 10000nsec
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
-
-        snprintf(buffer, sizeof(buffer),
                  "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
                  "/default-ds/priority1",
                  instance, domain);
-        snprintf(value_str, sizeof(value_str), "%d", 240+instance);
+        snprintf(value_str, sizeof(value_str), "%d", 250+instance);
         yang_db_runtime_put_oneline(ydrd, buffer,
                                     value_str, YANG_DB_ONHW_NOACTION);
 
@@ -473,16 +334,13 @@ static void *gptp_task(void *arg)
     struct tsn_app_ctx * ctx = mdctx->app_ctx;
     int res = 0;
     int i;
-
     uint8_t use_hwphase = 1;
     uint8_t single_clock = 1;
-    gptpdpd_t gpdpd;
     gptpoptd_t gpoptd;
     bool stop_flag = false;
+    const char *netdevs[CB_MAX_NETDEVNAME];
 
-    memset(&gpdpd, 0, sizeof(gpdpd));
     memset(&gpoptd, 0, sizeof(gpoptd));
-
     /* Waiting for the uniconf to be ready */
     CB_SEM_WAIT(&ctx->uc_ready_sem);
     gpoptd.instnum=0;
@@ -490,20 +348,16 @@ static void *gptp_task(void *arg)
     gpoptd.db_file = ctx->db_name;
     gpoptd.conf_files=NULL;
 
-    gpoptd.netdnum=ctx->netdev_size;
-    gpdpd.netdevs=UB_SD_GETMEM(GPTP_SMALL_ALLOC,
-                               (gpoptd.netdnum+1) * sizeof(char *));
-    for (i=0; i<gpoptd.netdnum; i++)
+    for (i = 0; i < ctx->netdev_size; i++)
     {
-        gpdpd.netdevs[i] = ctx->netdev[i];
+        netdevs[i] = ctx->netdev[i];
     }
-    gpdpd.netdevs[i] = NULL;
-
+    netdevs[i] = NULL;
     if (gpoptd.numconf == 0)
     {
         /* There is no config file is specified, set config file for gptp*/
-        res = set_gptp_run_time_config(gpoptd.instnum, gpoptd.domain_num, gpdpd.netdevs,
-                                       gpoptd.netdnum, 0);
+        res = set_gptp_run_time_config(gpoptd.instnum, gpoptd.domain_num, netdevs,
+                                       ctx->netdev_size, 0);
         if (res)
         {
             DPRINT("Failed to set gptp run time config"LINE_FEED);
@@ -532,8 +386,8 @@ static void *gptp_task(void *arg)
         }
 
         /* This function has a true loop inside */
-        if (gptpman_run(gpoptd.instnum, gpdpd.netdevs,
-                        gpoptd.netdnum, gpoptd.domain_num, NULL, &stop_flag) < 0)
+        if (gptpman_run(gpoptd.instnum, netdevs,
+                        ctx->netdev_size, gpoptd.domain_num, NULL, &stop_flag) < 0)
         {
             DPRINT("%s: gptpman_run() error"LINE_FEED, __func__);
         }
@@ -556,33 +410,11 @@ static void *uniconf_task(void *arg)
     return uniconf_main(&ctx->uc_ctx);
 }
 
-#ifndef DISABLE_UC_CLIENT
-static void* ucclient_task(void *arg)
-{
-    struct module_ctx *mdctx = (struct module_ctx *)arg;
-    struct tsn_app_ctx * ctx = mdctx->app_ctx;
-    char *netdev[MAX_NUMBER_ENET_DEVS+1] = {0};
-    int i;
-
-    for (i = 0; i < ctx->netdev_size; i++)
-    {
-        netdev[i] = &ctx->netdev[i][0];
-    }
-    netdev[i] = NULL;
-    return uc_client_main(netdev);
-}
-#endif
-
 static struct module_ctx g_ctx_table[] =
 {
     {.task_priority = UNICONF_TASK_PRIORITY, .task_name = UNICONF_TASK_NAME,
      .stack_buffer = g_uniconf_stack_buf, .stack_size = sizeof(g_uniconf_stack_buf),
      .module_runner = uniconf_task, .app_ctx = &g_app_ctx},
-#ifndef DISABLE_UC_CLIENT
-    {.task_priority = UCCLIENT_TASK_PRIORITY, .task_name = UCLIENT_TASK_NAME,
-     .stack_buffer = g_uclient_stack_buf, .stack_size = sizeof(g_uclient_stack_buf),
-     .module_runner = ucclient_task, .app_ctx = &g_app_ctx},
-#endif
     {.task_priority = GPTP_TASK_PRIORITY, .task_name = GPTP_TASK_NAME,
      .stack_buffer = g_gptp_stack_buf, .stack_size = sizeof(g_gptp_stack_buf),
      .module_runner = gptp_task, .app_ctx = &g_app_ctx},

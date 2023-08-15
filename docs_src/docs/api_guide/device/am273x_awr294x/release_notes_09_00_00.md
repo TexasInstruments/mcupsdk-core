@@ -24,6 +24,7 @@ Safe IPC support                                                                
 SBL over CAN example                                                                            | SBL
 SDK migration script from ZCE to NZN package                                                    | Common
 MbedTLS MQTT example                                                                            | Networking
+Support added for Single Packet reception from DMA                                              | Networking
 
 \endcond
 \cond SOC_AWR294X
@@ -233,6 +234,20 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> 8.06.00 onwards
     <td> Move the image load for self core just before the release reset instead of doing it early
 </tr>
+<tr>
+    <td> MCUSDK-11207
+    <td> Incorrect IOCTL params for CPSW ENET_TIMESYNC_IOCTL_SET_TIMESTAMP
+    <td> Networking
+    <td> 8.5.0
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10775
+    <td> Example build failing on enabling External Phy Management
+    <td> Networking
+    <td> 8.6.0
+    <td> -
+</tr>
 </table>
 
 ## Known Issues
@@ -310,6 +325,20 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> SDL
     <td> 8.6.0 onwards
     <td> None.
+</tr>
+<tr>
+    <td> MCUSDK-11506
+    <td> ENET: CPDMA Goes To Lockup State.
+    <td> CPSW
+    <td> 8.5.0 onwards
+    <td> Disable THOST checksum Offload.
+</tr>
+<tr>
+    <td> MCUSDK-11507
+    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
+    <td> CPSW
+    <td> 8.2.0 onwards
+    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
 </tr>
 \endcond
 </table>

@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=tsnapp.$(PROFILE).out
+OUTNAME:=gptp_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=tsnapp.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=tsnapp.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=tsnapp.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=tsnapp.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=tsnapp.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=tsnapp.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=tsnapp.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=tsnapp.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=gptp_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=gptp_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=gptp_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=gptp_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=gptp_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=gptp_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=gptp_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=gptp_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
@@ -40,7 +40,6 @@ FILES_common := \
 	enet_custom_board_config.c \
 	tsnapp_main.c \
 	main.c \
-	uc_client.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -63,7 +62,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
@@ -85,7 +84,7 @@ INCLUDES_common := \
 	-Igenerated \
 
 DEFINES_common := \
-	-DSOC_AM64X \
+	-DSOC_AM243X \
 	-DENET_ENABLE_PER_CPSW=1 \
 	-DPRINT_FORMAT_NO_WARNING \
 	-DCB_ETHERNET_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_ethernet.h\" \
@@ -144,16 +143,16 @@ LIBS_PATH_common = \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lfreertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lenet-cpsw.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lfreertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lenet-cpsw.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
-	-ltsn_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ltsn_unibase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ltsn_gptp-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ltsn_uniconf-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -174,16 +173,16 @@ LNKOPTFLAGS_release = \
 	       -flto \
 
 LIBS_NAME = \
-	freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	enet-cpsw.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	enet-cpsw.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
-	tsn_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	tsn_unibase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	tsn_gptp-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	tsn_uniconf-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -220,11 +219,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am64x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am243x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am64x:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am243x:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -242,13 +241,13 @@ SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
 
 $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
-	@echo  Linking: am64x:r5fss0-0:freertos:ti-arm-clang $@ ...
+	@echo  Linking: am243x:r5fss0-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
-	@echo  Linking: am64x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am243x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am64x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am243x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -261,7 +260,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:freertos:ti-arm-clang tsnapp ...
+	@echo  Scrubing: am243x:r5fss0-0:freertos:ti-arm-clang gptp_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -293,10 +292,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part Default --package ALV --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part ALV --package ALV --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM64x --context r5fss0-0 --part Default --package ALV --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM243x_ALV_beta --context r5fss0-0 --part ALV --package ALV --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -313,7 +312,6 @@ BOOTIMAGE_TEMP_OUT_FILE=temp_stdout_$(PROFILE).txt
 
 BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
 
-BOOTIMAGE_CORE_ID_a53ss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-0 = 4
 BOOTIMAGE_CORE_ID_r5fss0-1 = 5
 BOOTIMAGE_CORE_ID_r5fss1-0 = 6
@@ -339,7 +337,7 @@ MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am64x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am243x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -363,13 +361,13 @@ else
 	$(RM) $(BOOTIMAGE_NAME)-enc
 endif
 	$(RM) $(BOOTIMAGE_NAME)
-	@echo  Boot image: am64x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am243x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 else
 # Sign the appimage for HS-FS using appimage signing script
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_NAME)
-	@echo  Boot image: am64x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
+	@echo  Boot image: am243x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))

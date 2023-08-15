@@ -27,7 +27,8 @@ EMMC high speed support                                                         
 Interrupt profiling support and example                                                         | DPL
 Safe IPC support                                                                                | IPC
 MbedTLS MQTT example                                                                            | Networking
-
+Support added for Single Packet reception from DMA                                              | Networking
+Integrated with industry grade with TSN gPTP protocol stack with example                        | Networking
 \endcond
 
 \cond SOC_AM243X
@@ -40,6 +41,8 @@ GPMC support for NAND Flash                                                     
 EMMC high speed support                                                                         | MMCSD
 Interrupt profiling and example                                                                 | DPL
 Safe IPC support                                                                                | IPC
+Support added for Single Packet reception from DMA                                              | Networking
+Integrated with production grade with TSN gPTP protocol stack with example                      | Networking
 
 \endcond
 
@@ -222,6 +225,7 @@ CMSIS DSP                   | R5F            | NA                | FreeRTOS, NOR
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                                                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------
+TSN                         | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
 LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
 Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW,  MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav) on CPSW, IET (IEEE 802.1Qbu) on CPSW, Strapped PHY (Early Ethernet), cut through switch on CPSW  | RMII mode
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
@@ -343,7 +347,20 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK baord
     <td> Networking
     <td> 8.4.0
-    <td> AM64x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11207
+    <td> Incorrect IOCTL params for CPSW ENET_TIMESYNC_IOCTL_SET_TIMESTAMP
+    <td> Networking
+    <td> 8.5.0
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-10775
+    <td> Example build failing on enabling External Phy Management
+    <td> Networking
+    <td> 8.6.0
     <td> -
 </tr>
 \cond SOC_AM64X
@@ -520,6 +537,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.6.0
     <td> AM64x, AM243x
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11507
+    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
+    <td> CPSW
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
 </tr>
 </table>
 

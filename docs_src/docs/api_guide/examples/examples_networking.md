@@ -24,7 +24,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
-
+### Enet TSN Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 \endcond
 
 \cond SOC_AM64X
@@ -47,6 +48,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+### Enet TSN Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 \endcond
 
 \cond  SOC_AM263X

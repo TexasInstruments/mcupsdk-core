@@ -297,7 +297,7 @@ void EnetApp_mainTask(void *args)
     int32_t status = ENET_SOK;
 
     DebugP_log("=========================="LINE_FEED);
-    DebugP_log("         TSN App          "LINE_FEED);
+    DebugP_log("          gPTP App        "LINE_FEED);
     DebugP_log("=========================="LINE_FEED);
 
     /* To support gptp switch mode, we must configure from syscfg file:
