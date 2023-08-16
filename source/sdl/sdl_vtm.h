@@ -48,9 +48,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
-
 #include <sdl/include/soc_config.h>
-
 #if defined (IP_VERSION_VTM_V0)
 #include <sdl/vtm/v0/sdlr_vtm.h>
 #include <sdl/vtm/v0/sdl_ip_vtm.h>
@@ -58,7 +56,7 @@ extern "C" {
 
 /**
  *
- *   @defgroup SDL_VTM_API Voltage and Thermal Monitor(VTM)
+ *   @defgroup SDL_VTM_API APIs for VTM
  *   Provides the APIs for VTM.
  */
 
@@ -71,11 +69,9 @@ extern "C" {
 @ingroup SDL_VTM_API
 */
 
-
-/** ===========================================================================
+/**
  *  @addtogroup SDL_VTM_DATASTRUCT
     @{
- * ============================================================================
  */
 
 
@@ -151,11 +147,11 @@ typedef struct {
     uint32_t                    vtm_ts_th2;
 } SDL_VTM_staticRegsTs;
 
+/** @} */
 
-/** ============================================================================
+/**
  *  @addtogroup SDL_VTM_FUNCTION
     @{
- * ============================================================================
  */
 
 /**
@@ -294,3 +290,4 @@ int32_t SDL_VTM_getStaticRegistersTs(SDL_VTM_InstTs instance, SDL_VTM_staticRegs
 #endif  /* extern "C" */
 
 #endif  /* end of SDL_VTM_H definition */
+/** @} */

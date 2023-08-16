@@ -42,28 +42,6 @@ extern "C"
 {
 #endif
 
-/**
- *
- * @ingroup  SDL_MODULE
- * @defgroup SDL_VTM_API Voltage and Thermal Monitor(VTM)
- *
- * 
- */
-
-/**
-@defgroup SDL_VTM_ENUM VTM Enum Data defines
-@ingroup SDL_VTM_API
-*/
-
-/** ===========================================================================
- *  @addtogroup SDL_VTM_ENUM
-    @{
- * ============================================================================
- */
-
-/*
-* SDL definitions for SoC VTM Instances:
-*/
 /** ---------------------------------------------------------------------------
  * @brief This enumerator defines the VTM Temperature sensor
  *

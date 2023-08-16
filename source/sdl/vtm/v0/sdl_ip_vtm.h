@@ -48,29 +48,19 @@ extern "C" {
 #include <sdl/vtm/v0/soc/am243x/sdl_soc_vtm.h>
 #endif
 /**
- *  @ingroup SDL_IP_MODULE
- *  @defgroup SDL_IP_VTM_API VTM Low-Level API
+ *  \defgroup SDL_IP_VTM_API VTM Low-Level API
+ *  \ingroup SDL_VTM_API
  *
- *  Provides the APIs for VTM IP.
+ *  This module contains the Low-Level APIs to program and use the VTM module.
+ *
+ *  @{
  */
 
 /**
-@defgroup SDL_IP_VTM_DATASTRUCT  VTM Data Structures
-@ingroup SDL_IP_VTM_API
-*/
-/**
-@defgroup SDL_IP_VTM_FUNCTION  VTM Functions
-@ingroup SDL_IP_VTM_API
-*/
-/**
-@defgroup SDL_IP_VTM_ENUMS VTM Enum Data defines
-@ingroup SDL_IP_VTM_API
-*/
-
-/** ===========================================================================
- *  @addtogroup SDL_IP_VTM_ENUMS
-    @{
- * ============================================================================
+ * \ingroup SDL_VTM_API
+ * \defgroup SDL_IP_VTM_Enum VTM IP Enumerated Data Types
+ * @{
+ *  Provides the APIs for VTM IP.
  */
 
 /**
@@ -87,7 +77,6 @@ typedef uint8_t SDL_VTM_configVdCtrl;
  * \brief This enumerator define for VTM TS configuration valid map
  *
  *  \anchor SDL_VTM_configTsCtrl
- *  \name   VTM temperature sensor STAT read valid map
  */
 
 typedef uint8_t SDL_VTM_configTsCtrl;
@@ -101,7 +90,6 @@ typedef uint8_t SDL_VTM_configTsCtrl;
  *        voltage domain supply voltages
  *
  *  \anchor SDL_VTM_vid_opp
- *  \name VTM OPP VID Codes
  *
  */
 
@@ -122,7 +110,6 @@ typedef  uint8_t SDL_VTM_vid_opp;
  * \brief This enumerator defines the core voltage domain mapping of VTM VD
  *
  *  \anchor SDL_VTM_ts_stat_vd_map
- *  \name VTM Core Voltage domain map
  */
 typedef  uint8_t SDL_VTM_ts_stat_vd_map;
     /** RTC Voltage Domain map */
@@ -141,8 +128,6 @@ typedef  uint8_t SDL_VTM_ts_stat_vd_map;
  * \brief This enumerator define for VTM Voltage domain threshold interrupt control
  *
  *  \anchor SDL_VTM_intrCtrl
- *  \name VTM Voltage domain threshold interrupt control
- *
  */
 
 typedef uint16_t SDL_VTM_intrCtrl;
@@ -166,7 +151,6 @@ typedef uint16_t SDL_VTM_intrCtrl;
  * \brief This enumerator define for VTM Voltage domain Event selection set
  *
  *  \anchor SDL_VTM_vdEvtSel_set
- *  \name VTM Voltage domain Event selection set
  */
 
 typedef uint16_t SDL_VTM_vdEvtSel_set;
@@ -186,7 +170,6 @@ typedef uint16_t SDL_VTM_vdEvtSel_set;
  *         update of the fields in the temperature sensor control field.
  *
  *  \anchor SDL_VTM_tsGlobal_ctrl_valid_map
- *  \name VTM temperature sensor id
  *
  */
 
@@ -204,7 +187,6 @@ typedef uint32_t SDL_VTM_tsGlobal_ctrl_valid_map;
  *        select options
  *
  *  \anchor SDL_VTM_tsGlobal_clkSel
- *  \name VTM Temperature Sensor global control clock select
  *
  */
 
@@ -219,7 +201,6 @@ typedef uint8_t SDL_VTM_tsGlobal_clkSel;
  *        divide options
  *
  *  \anchor SDL_VTM_tsGlobal_clkDiv
- *  \name VTM Temperature Sensor global control clock divide
  *
  */
 
@@ -295,8 +276,6 @@ typedef uint8_t SDL_VTM_tsGlobal_clkDiv;
  *        max temperature alert enable control
  *
  *  \anchor SDL_VTM_tsGlobal_any_maxt_outrg_alert_en
- *  \name VTM Temperature Sensor global control any
- *        maximum temperature alert enable
  *
  */
 
@@ -310,8 +289,6 @@ typedef uint8_t  SDL_VTM_tsGlobal_any_maxt_outrg_alert_en;
  *        samples per count
  *
  *  \anchor SDL_VTM_tsGlobal_samples_per_count
- *  \name VTM Temperature Sensor global control samples per count
- *
  */
 
 typedef uint16_t SDL_VTM_tsGlobal_samples_per_count;
@@ -321,7 +298,6 @@ typedef uint16_t SDL_VTM_tsGlobal_samples_per_count;
  * \brief This enumerator define for VTM Temperature sensor control valid map
  *
  *  \anchor SDL_VTM_tsCtrl_valid_map
- *  \name VTM Temperature Sensor control valid map
  *
  */
 typedef uint8_t SDL_VTM_tsCtrl_valid_map;
@@ -336,8 +312,6 @@ typedef uint8_t SDL_VTM_tsCtrl_valid_map;
  *        maximum temperature out of range alert control
  *
  *  \anchor SDL_VTM_tsCtrl_max_outrg_alert
- *  \name   VTM temperature sensor band gap maximum temperature
- *          out of range alert control
  *
  */
 
@@ -351,8 +325,6 @@ typedef uint8_t  SDL_VTM_tsCtrl_max_outrg_alert;
  *        VTM temperature sensor band gap reset  control bits
  *
  *  \anchor SDL_VTM_tsCtrl_resetCtrl
- *  \name   VTM temperature sensor band gap reset  control bits
- *
  */
 
 typedef  uint8_t SDL_VTM_tsCtrl_resetCtrl;
@@ -365,8 +337,6 @@ typedef  uint8_t SDL_VTM_tsCtrl_resetCtrl;
  *        VTM temperature sensor mode control bits
  *
  *  \anchor SDL_VTM_tsCtrl_mode
- *  \name   VTM temperature sensor mode control bits
- *
  */
 
 typedef  uint8_t    SDL_VTM_tsCtrl_mode;
@@ -380,8 +350,6 @@ typedef  uint8_t    SDL_VTM_tsCtrl_mode;
  *        VTM temperature sensor band gap single shot mode start of conversion trigger
  *
  *  \anchor SDL_VTM_tsCtrl_singleshot_conv_stat
- *  \name   VTM temperature sensor band gap single shot mode start of conversion trigger
- *
  */
 
 typedef  uint8_t SDL_VTM_tsCtrl_singleshot_conv_stat;
@@ -394,8 +362,6 @@ typedef  uint8_t SDL_VTM_tsCtrl_singleshot_conv_stat;
  *        VTM Temperature Sensor thresholds valid bit map
  *
  *  \anchor SDL_VTM_thr_valid_map
- *  \name   VTM Temperature Sensor thresholds valid bit map
- *
  */
 
 typedef uint8_t  SDL_VTM_thr_valid_map;
@@ -409,8 +375,6 @@ typedef uint8_t  SDL_VTM_thr_valid_map;
  *        VTM temperature sensor STAT read valid map
  *
  *  \anchor SDL_VTM_Stat_read_ctrl
- *  \name   VTM temperature sensor STAT read valid map
- *
  */
 
 typedef uint8_t SDL_VTM_Stat_read_ctrl;
@@ -427,7 +391,6 @@ typedef uint8_t SDL_VTM_Stat_read_ctrl;
  *        This is the data_out value of the temperature sensor stat register
  *
  *  \anchor SDL_VTM_adc_code
- *  \name   VTM temperature sensor ADC code
  */
 
 typedef  int16_t SDL_VTM_adc_code;
@@ -437,7 +400,6 @@ typedef  int16_t SDL_VTM_adc_code;
  * \brief This enumerator define for VTM Voltage domain event status
  *
  *  \anchor SDL_VTM_vdEvt_status
- *  \name VTM Voltage domain event status
  *
  */
 
@@ -448,11 +410,12 @@ typedef uint8_t SDL_VTM_vdEvt_status;
 #define SDL_VTM_VD_EVT_STAT_GT_TH1_ALERT                  (1u)
 #define SDL_VTM_VD_EVT_STAT_GT_TH2_ALERT                  (2u)
 
-
-/** ============================================================================
- *  @addtogroup SDL_IP_VTM_DATASTRUCT
-    @{
- * ============================================================================
+/** @} */
+/**
+ * \ingroup SDL_VTM_API
+ * \defgroup SDL_IP_VTM_DATASTRUCT VTM IP Data Structures
+ * @{
+ *  Provides the APIs for VTM IP.
  */
 
 /** \brief VTM Global Configuration Registers
@@ -575,12 +538,13 @@ typedef struct {
     SDL_VTM_adc_code           data_out;
 } SDL_VTM_Stat_val;
 
+/** @} */
 
-/** ============================================================================
- *  @addtogroup SDL_IP_VTM_FUNCTION
-    @{
- * ============================================================================
- */
+/**
+* \defgroup SDL_IP_VTM_FUNCTION  VTM IP Functions
+* \ingroup SDL_VTM_API
+* @{
+*/
 
 /**
  *  \brief get sensor and VD count
@@ -822,6 +786,8 @@ int32_t SDL_VTM_tsSetMaxTOutRgAlertThr(const SDL_VTM_cfg2Regs    	*p_cfg2,
                                       int32_t               low_temp_in_milli_degree_celcius);
 
 
+/** @} */
+/** @} */
 #ifdef __cplusplus
 }
 #endif  /* extern "C" */
