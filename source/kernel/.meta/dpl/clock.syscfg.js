@@ -1,6 +1,7 @@
 
 let common = system.getScript("/common");
 let soc = system.getScript(`/kernel/dpl/clock_${common.getSocName()}`);
+let hwi = system.getScript("/kernel/dpl/hwi.js");
 
 function getInstanceConfig(moduleInstance) {
     let staticConfigArr = soc.getStaticConfigArr();
@@ -43,11 +44,19 @@ let clock_module = {
                 default: 1000,
                 description: "Timer tick period in units of usecs. MUST be >= 100 and <= 1000000. MUST divide 1000000, i.e 1sec in integer units.",
             },
+            {
+                name: "intrPriority",
+                displayName: "Tick Interrupt Priority",
+                default: hwi.getHwiDefaultPriority(),
+                hidden: !hwi.getPriorityConfigSupported(),
+                description: `Interrupt Priority: 0 (highest) to ${hwi.getHwiMaxPriority()} (lowest)`,
+            },
         ],
 
         validate : function (instance, report) {
             common.validate.checkNumberRange(instance, report, "usecPerTick", 100, 1000000, "dec");
             common.validate.checkNumberRange(instance, report, "timerInputClkHz", 32000, 1000000000, "dec");
+            common.validate.checkNumberRange(instance, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
 
             if( (1000000 % instance.usecPerTick) != 0) {
                 report.logError( `Tick period must divide 1000000 usecs (1sec) in integer multiples`, instance, "usecPerTick");

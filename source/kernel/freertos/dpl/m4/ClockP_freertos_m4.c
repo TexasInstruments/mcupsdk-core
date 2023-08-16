@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -87,6 +87,7 @@ void ClockP_init(void)
     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
     timerHwiParams.callback = ClockP_timerTickIsr;
     timerHwiParams.isPulse = 0;
+    timerHwiParams.priority = gClockConfig.intrPriority;
     HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
 
     /* start the tick timer */

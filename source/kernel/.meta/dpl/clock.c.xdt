@@ -16,4 +16,5 @@ ClockP_Config gClockConfig = {
     .timerInputClkHz = `config.timerInputClkHz`,
     .timerInputPreScaler = `config.timerInputPreScaler`,
     .usecPerTick = `config.usecPerTick`,
+    .intrPriority = `config.intrPriority`,
 };

@@ -15,8 +15,35 @@ function getHwiMaxPriority() {
     return maxPriority;
 }
 
+function getPriorityConfigSupported()
+{
+    let isPriorityConfigSupported = true;
+
+    if(common.getSelfSysCfgCoreName().includes("c66"))
+    {
+        isPriorityConfigSupported = false;
+    }
+
+    return isPriorityConfigSupported;
+}
+
+function getHwiDefaultPriority() {
+    let defaultPriority = 15;
+    
+    if(common.getSelfSysCfgCoreName().includes("m4f")) {
+        defaultPriority = 7;
+    }
+    if(common.getSelfSysCfgCoreName().includes("a53")) {
+        defaultPriority = 9;
+    }
+
+    return defaultPriority;
+}
+
 exports = {
     getIntcBaseAddr,
     getHwiMaxPriority,
+    getPriorityConfigSupported,
+    getHwiDefaultPriority,
 };
 

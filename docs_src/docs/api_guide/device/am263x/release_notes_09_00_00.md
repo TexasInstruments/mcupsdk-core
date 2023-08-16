@@ -528,6 +528,12 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> IntrPriority added as an element in IpcNotify_Params structure to make interrupt priority configurable.
     <td> -
 </tr>
+<tr>
+    <td> ClockP
+    <td> ClockP_init
+    <td> IntrPriority added as an element in ClockP_Params structure to make Tick interrupt priority configurable.
+    <td> -
+</tr>
 </table>
 
 <table>

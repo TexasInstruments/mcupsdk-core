@@ -79,6 +79,7 @@ typedef struct ClockP_Config_
     uint32_t timerInputClkHz; /**< Timer clock in units of Hz */
     uint32_t timerInputPreScaler; /**< Timer divider to apply to the input clock */
     uint32_t usecPerTick; /**< period of one timer tick in units of usecs */
+    uint8_t  intrPriority; /**< Tick Interrupt priority */
 
 } ClockP_Config;
 
@@ -228,6 +229,11 @@ uint64_t ClockP_ticksToUsec(uint32_t ticks);
 
 /**
  * \brief Get current time in units of usecs
+ * 
+ * \note This API shouldn't be called from an ISR with priority higher than 
+ *       that of Tick Interrupt. This is because Tick interrupt won't be able  
+ *       to preempt the current ISR and \ref ClockP_getTimeUsec may return 
+ *       incorrect value.
  */
 uint64_t ClockP_getTimeUsec(void);
 

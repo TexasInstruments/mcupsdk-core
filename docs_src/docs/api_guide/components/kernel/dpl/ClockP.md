@@ -39,6 +39,7 @@ NA
 \cond !SOC_AM62X
 - In R5F, one of the many SOC level timer is used.
 \endcond
+- \ref ClockP_getTimeUsec shouldn't be called from an ISR with priority higher than that of Tick Interrupt. This is because Tick interrupt won't be able to preempt the current ISR and \ref ClockP_getTimeUsec may return incorrect value.
 
 ## Example Usage
 
